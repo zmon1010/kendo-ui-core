@@ -557,7 +557,7 @@
         while (i < args.length) {
             chunks.push({
                 matrix: args[i++],
-                pred: parseComparator(args[i++])
+                pred: parseCriteria(args[i++])
             });
         }
         ROW: for (var row = 0; row < matrix.height; ++row) {
@@ -625,7 +625,7 @@
     }).args(ARGS_SUMIFS);
 
     defineFunction("countif", function(matrix, criteria){
-        criteria = parseComparator(criteria);
+        criteria = parseCriteria(criteria);
         var count = 0;
         matrix.each(function(val){
             if (criteria(val)) {
@@ -650,7 +650,7 @@
 
     defineFunction("sumif", function(range, criteria, sumRange){
         var sum = 0;
-        criteria = parseComparator(criteria);
+        criteria = parseCriteria(criteria);
         range.each(function(val, row, col){
             if (criteria(val)) {
                 var v = sumRange.get(row, col);
@@ -664,7 +664,7 @@
 
     defineFunction("averageif", function(range, criteria, sumRange){
         var sum = 0, count = 0;
-        criteria = parseComparator(criteria);
+        criteria = parseCriteria(criteria);
         range.each(function(val, row, col){
             if (criteria(val)) {
                 var v = sumRange.get(row, col);
@@ -1488,11 +1488,11 @@
     defineFunction("match", function(val, m, type){
         var index = 1, cmp;
         if (type === 0) {
-            cmp = parseComparator(val);
+            cmp = parseCriteria(val);
         } else if (type === -1) {
-            cmp = parseComparator("<=" + val);
+            cmp = parseCriteria("<=" + val);
         } else if (type === 1) {
-            cmp = parseComparator(">=" + val);
+            cmp = parseCriteria(">=" + val);
         }
         if (m.each(function(el, row, col){
             if (el != null && cmp(el)) {
@@ -2243,88 +2243,90 @@
 
     //// utils
 
-    function makeComparator(cmp, x) {
-        if (typeof x == "string") {
-            var num = parseFloat(x);
-            if (!isNaN(num)) {
-                x = num;
+    var parseCriteria = (function(){
+        var RXCACHE = {};
+
+        function makeComparator(cmp, x) {
+            if (typeof x == "string") {
+                var num = parseFloat(x);
+                if (!isNaN(num)) {
+                    x = num;
+                }
             }
+            return function(a) {
+                var b = x;
+                if (typeof a == "string" && typeof b == "string") {
+                    a = a.toLowerCase();
+                    b = b.toLowerCase();
+                }
+                return cmp(a, b);
+            };
         }
-        return function(a) {
-            var b = x;
-            if (typeof a == "string" && typeof b == "string") {
-                a = a.toLowerCase();
-                b = b.toLowerCase();
+
+        function lc(a) {
+            if (typeof a == "string") {
+                return a.toLowerCase();
             }
-            return cmp(a, b);
+            return a;
+        }
+
+        function compLT(a, b) { return lc(a) < lc(b); }
+        function compLTE(a, b) { return lc(a) <= lc(b); }
+        function compGT(a, b) { return lc(a) > lc(b); }
+        function compGTE(a, b) { return lc(a) >= lc(b); }
+        function compNE(a, b) { return lc(a) != lc(b); }
+        function compEQ(a, b) {
+            if (b instanceof RegExp) {
+                return b.test(a);
+            }
+            return lc(a) == lc(b);
+        }
+
+        return function(cmp) {
+            if (typeof cmp == "function") {
+                return cmp;
+            }
+            var m;
+            if ((m = /^=(.*)$/.exec(cmp))) {
+                return makeComparator(compEQ, m[1]);
+            }
+            if ((m = /^<>(.*)$/.exec(cmp))) {
+                return makeComparator(compNE, m[1]);
+            }
+            if ((m = /^<=(.*)$/.exec(cmp))) {
+                return makeComparator(compLTE, m[1]);
+            }
+            if ((m = /^<(.*)$/.exec(cmp))) {
+                return makeComparator(compLT, m[1]);
+            }
+            if ((m = /^>=(.*)$/.exec(cmp))) {
+                return makeComparator(compGTE, m[1]);
+            }
+            if ((m = /^>(.*)$/.exec(cmp))) {
+                return makeComparator(compGT, m[1]);
+            }
+            if (/[?*]/.exec(cmp)) {
+                // has wildchars
+                var rx;
+                if (Object.prototype.hasOwnProperty.call(RXCACHE, cmp)) {
+                    rx = RXCACHE[cmp];
+                } else {
+                    rx = cmp.replace(/(~\?|~\*|[\]({\+\.\|\^\$\\})\[]|[?*])/g, function(s){
+                        switch (s) {
+                          case "~?" : return "\\?";
+                          case "~*" : return "\\*";
+                          case "?"  : return ".";
+                          case "*"  : return ".*";
+                          default   : return "\\" + s;
+                        }
+                    });
+                    rx = RXCACHE[cmp] = new RegExp("^" + rx + "$", "i");
+                }
+                return makeComparator(compEQ, rx);
+            }
+            return makeComparator(compEQ, cmp);
         };
-    }
-
-    function lc(a) {
-        if (typeof a == "string") {
-            return a.toLowerCase();
-        }
-        return a;
-    }
-
-    function compLT(a, b) { return lc(a) < lc(b); }
-    function compLTE(a, b) { return lc(a) <= lc(b); }
-    function compGT(a, b) { return lc(a) > lc(b); }
-    function compGTE(a, b) { return lc(a) >= lc(b); }
-    function compNE(a, b) { return lc(a) != lc(b); }
-    function compEQ(a, b) {
-        if (b instanceof RegExp) {
-            return b.test(a);
-        }
-        return lc(a) == lc(b);
-    }
-
-    var RXCACHE = {};
-
-    function parseComparator(cmp) {
-        if (typeof cmp == "function") {
-            return cmp;
-        }
-        var m;
-        if ((m = /^=(.*)$/.exec(cmp))) {
-            return makeComparator(compEQ, m[1]);
-        }
-        if ((m = /^<>(.*)$/.exec(cmp))) {
-            return makeComparator(compNE, m[1]);
-        }
-        if ((m = /^<=(.*)$/.exec(cmp))) {
-            return makeComparator(compLTE, m[1]);
-        }
-        if ((m = /^<(.*)$/.exec(cmp))) {
-            return makeComparator(compLT, m[1]);
-        }
-        if ((m = /^>=(.*)$/.exec(cmp))) {
-            return makeComparator(compGTE, m[1]);
-        }
-        if ((m = /^>(.*)$/.exec(cmp))) {
-            return makeComparator(compGT, m[1]);
-        }
-        if (/[?*]/.exec(cmp)) {
-            // has wildchars
-            var rx;
-            if (Object.prototype.hasOwnProperty.call(RXCACHE, cmp)) {
-                rx = RXCACHE[cmp];
-            } else {
-                rx = cmp.replace(/(~\?|~\*|[\]({\+\.\|\^\$\\})\[]|[?*])/g, function(s){
-                    switch (s) {
-                      case "~?" : return "\\?";
-                      case "~*" : return "\\*";
-                      case "?"  : return ".";
-                      case "*"  : return ".*";
-                      default   : return "\\" + s;
-                    }
-                });
-                rx = RXCACHE[cmp] = new RegExp("^" + rx + "$", "i");
-            }
-            return makeComparator(compEQ, rx);
-        }
-        return makeComparator(compEQ, cmp);
-    }
+    })();
 
     function numericPredicate(val) {
         return typeof val == "number"
