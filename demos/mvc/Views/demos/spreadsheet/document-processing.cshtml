@@ -1,0 +1,55 @@
+<div id="example">
+    <div class="box wide">
+        <div class="box-col">
+            <input type="file" name="file" id="upload" />
+        </div>
+        <div class="box-col">
+            <form action="@Url.Action("Download", "Spreadsheet")" method="POST">
+                <input type="hidden" id="download-data" name="data" />
+                <input type="hidden" id="download-extension" name="extension" />
+                <input type="submit" class="k-button download" data-extension=".xlsx" value="Save as XLSX" />
+                <input type="submit" class="k-button download" data-extension=".csv" value="Save as CSV" />
+                <input type="submit" class="k-button download" data-extension=".txt" value="Save as Tab-delimited text" />
+                <input type="submit" class="k-button download" data-extension=".json" value="Save as JSON" />
+            </form>
+        </div>
+    </div>
+    <div class="demo-section k-content">
+        <div id="spreadsheet"></div>
+    </div>
+    <script>
+        $(function() {
+            $("#spreadsheet").kendoSpreadsheet();
+            var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+
+            var ALLOWED_EXTENSIONS = [".xlsx", ".csv", ".txt", ".json"];
+
+            $("#upload").kendoUpload({
+                async: {
+                    saveUrl: "@Url.Action("Upload", "Spreadsheet")"
+                },
+                multiple: false,
+                localization: {
+                    "select": "Load File..."
+                },
+                select: function(e) {
+                    var extension = e.files[0].extension.toLowerCase();
+                    if (ALLOWED_EXTENSIONS.indexOf(extension) == -1) {
+                        alert("Please, select a supported file format");
+                        e.preventDefault();
+                    }
+                },
+                success: function(e) {
+                    // Load the converted document into the spreadsheet
+                    spreadsheet.fromJSON(e.response);
+                }
+            });
+
+            $(".download").click(function () {
+                $("#download-data").val(JSON.stringify(spreadsheet.toJSON()));
+                $("#download-extension").val($(this).data("extension"));
+            });
+        });
+    </script>
+
+</div>

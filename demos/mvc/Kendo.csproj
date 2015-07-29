@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\SpreadsheetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MobileAppsController.cs" />
     <Compile Include="Controllers\ResponsiveController.cs" />
@@ -1192,6 +1193,8 @@
     <Content Include="Views\demos\mvvm\class.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\demos\spreadsheet\index.cshtml" />
+    <Content Include="Views\demos\spreadsheet\document-processing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
@@ -1203,6 +1206,12 @@
     <None Include="content\web\24x24\Thumbs.db" />
     <None Include="content\web\32x32\Thumbs.db" />
     <None Include="content\web\48x48\Thumbs.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\dpl\Kendo.Spreadsheet\Kendo.Spreadsheet.csproj">
+      <Project>{d697e6a6-319f-44fa-a757-443415ff43bb}</Project>
+      <Name>Kendo.Spreadsheet</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
