@@ -81,7 +81,7 @@
             schema: {
                 data: "Data",
                 model: {
-                    id: "<#= PrimaryKeyName#>" <# RenderFields(PrimaryKeyName); #>
+                    id: "<#= PrimaryKeyName#>"<# RenderFields(PrimaryKeyName); #>
                 }
             }<#=ServerOperation ? ", "+ newLine +"\t\t\tserverPaging: true,"+ newLine + "\t\t\tserverSorting: true,"+ newLine+"\t\t\tserverSorting: true" : "," #>,
         },
@@ -211,14 +211,12 @@
 
         for (int i = 0; i < transportOptions.Length; i++) {
             var operation = transportOptions[i].Substring(0, 1).ToUpper() + transportOptions[i].Substring(1);
-        
+            result += GetTabs(4) + transportOptions[i] + ": { " + newLine + GetTabs(5) +"url: \"" + EntitySetName + "_" + operation + "\""+ newLine + GetTabs(4) + "}";
             if (i != transportOptions.Length - 1){
-                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: \"" + EntitySetName + "_" + operation + "\""+ newLine +"\t\t\t\t}," + newLine;
-            } else {
-                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: \"" + EntitySetName + "_" + operation + "\"" + newLine + "\t\t\t\t}";
-            }
+                result += "," + newLine;
+            } 
         }
-        result += newLine + "\t\t\t},";
+        result += newLine + GetTabs(3) + "},";
 #>
 <#=result#>
 <#+
@@ -226,22 +224,28 @@
 #>
 
 <#+
+    private string GetTabs(int count)
+    {
+        return String.Concat(Enumerable.Repeat("\t", count));
+    }
+
     private string RenderSchemaFields(KeyValuePair<string, Dictionary<string, string>> model, bool isLast)
     {
             bool distinctValidators = GetDistinctValidation(model.Value).Count > 0 ? true : false;
             var newLine = Environment.NewLine;
             string result = "";
-            result += "\t\t\t\t\t\t\"" + model.Key + "\"" + ": {" + newLine;
-            result += "\t\t\t\t\t\t\ttype: " + "\"" + model.Value["type"] + "\"";
+            result += GetTabs(6) + "\"" + model.Key + "\"" + ": {" + newLine;
+            result += GetTabs(7) + "type: " + "\"" + model.Value["type"] + "\"";
             result += distinctValidators ? "" : newLine;
         
             if (distinctValidators) 
             {
-                result += "," + newLine + "\t\t\t\t\t\t\tvalidation: {";
+                result += "," + newLine + GetTabs(7) + "validation: {";
                 result += RenderValidationAttributes(model);
                 result += "}" + newLine;
             }
-            result +=  isLast? "\t\t\t\t\t\t}" : "\t\t\t\t\t\t}," + Environment.NewLine;
+            result += GetTabs(6);
+            result +=  isLast? "}" : "}," + Environment.NewLine;
 
             return result;
     }
@@ -284,7 +288,9 @@
     private void RenderFields(string primaryKey) 
     {
         var newLine = Environment.NewLine;
-        string result = "," + newLine + "\t\t\t\t\tfields: {" + newLine;    
+        string tabs = GetTabs(5);
+        string result = "," + newLine + tabs + "fields: {" + newLine;   
+ 
         DataAnnotationAttributes.Remove(primaryKey);
         
         foreach (var model in DataAnnotationAttributes)
@@ -296,8 +302,7 @@
             }
 
         }
-
-        result += newLine + "\t\t\t\t\t}";
+        result += newLine + tabs + "}";
 #>
 <#=result#>
 <#+
