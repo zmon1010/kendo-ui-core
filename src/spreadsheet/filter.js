@@ -336,18 +336,6 @@
             }
 
             return false;
-        },
-        quarter1: function(value) {
-            return sameQuarter(value, 1);
-        },
-        quarter2: function(value) {
-            return sameQuarter(value, 2);
-        },
-        quarter3: function(value) {
-            return sameQuarter(value, 3);
-        },
-        quarter4: function(value) {
-            return sameQuarter(value, 4);
         }
     });
 
@@ -355,6 +343,16 @@
         kendo.spreadsheet.DynamicFilter.prototype["quarter" + target] = function(value) {
            if (value instanceof Date) {
               return quarter(value) === target;
+           }
+
+           return false;
+        };
+    });
+
+    kendo.cultures["en-US"].calendar.months.names.forEach(function(month, index) {
+        kendo.spreadsheet.DynamicFilter.prototype[month.toLowerCase()] = function(value) {
+           if (value instanceof Date) {
+               return value.getMonth() === index;
            }
 
            return false;

@@ -964,4 +964,20 @@
         equal(filter.matches(""), false);
         equal(filter.matches(1), false);
     });
+
+    test("months", function() {
+        var months = kendo.cultures["en-US"].calendar.months.names;
+
+        months.forEach(function(month, index) {
+            filter = new DynamicFilter({ type: month.toLowerCase() });
+
+            equal(filter.matches(new Date((index + 1) + "/1/1990")), true);
+
+            equal(filter.matches(new Date((index + 2) + "/1/1990")), false);
+
+            equal(filter.matches(true), false);
+            equal(filter.matches(""), false);
+            equal(filter.matches(1), false);
+        });
+    });
 })();

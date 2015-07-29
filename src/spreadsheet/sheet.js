@@ -716,8 +716,6 @@
 
                         if (column.filter.matches(value) === false) {
                             this.hideRow(cell.row);
-                        } else {
-                            this.unhideRow(cell.row);
                         }
                     }
                 }, this);
