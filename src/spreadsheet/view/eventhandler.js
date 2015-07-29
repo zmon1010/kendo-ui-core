@@ -25,6 +25,7 @@
         "shift+tab": "previous",
         "enter": "lower",
         "shift+enter": "upper"
+        "*+char": "edit"
     };
 
     var CONTAINER_EVENTS = {
@@ -75,11 +76,13 @@
             this.view = view;
             this.container = $(view.container);
             this.clipboard = $(view.clipboard);
+            this.editor = $(view.editor);
             this.scroller = view.scroller;
 
             $(view.scroller).on("scroll", this.onScroll.bind(this));
             this.listener = new kendo.spreadsheet.EventListener(this.container, this, CONTAINER_EVENTS);
             this.keyListener = new kendo.spreadsheet.EventListener(this.clipboard, this, CLIPBOARD_EVENTS);
+            this.editListener = new kendo.spreadsheet.EventListener(this.editor, this, EDITOR_EVENTS);
         },
 
         sheet: function(sheet) {
@@ -123,6 +126,11 @@
         },
 
         onEntryAction: function(event, action) {
+            if (action === "char") {
+                alert("char");
+                return;
+            }
+
             this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
             event.preventDefault();
         },

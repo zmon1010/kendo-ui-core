@@ -21,6 +21,28 @@
 
     var Mac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 
+    var isChar = function(keyCode) {
+        if ((keyCode > 47 && keyCode < 58)   || // number keys
+            (keyCode > 64 && keyCode < 91)   || // letter keys
+            (keyCode > 95 && keyCode < 112)  || // numpad keys
+            (keyCode > 185 && keyCode < 193) || // ;=,-./` (in order)
+            (keyCode > 218 && keyCode < 223)) {   // [\]' (in order)
+            return true;
+        }
+
+        return false;
+    };
+
+    var keyName = function(keyCode) {
+        var name = KEY_NAMES[keyCode];
+
+        if (!name && isChar(keyCode)) {
+            name = "char";
+        }
+
+        return name;
+    };
+
     var EventListener = kendo.Class.extend({
         init: function(target, observer, handlers) {
             this._handlers = {};
@@ -44,7 +66,7 @@
         },
 
         keyDown: function(e) {
-            this.handleEvent(e, KEY_NAMES[e.keyCode]);
+            this.handleEvent(e, keyName(e.keyCode));
         },
 
         mouse: function(e) {

@@ -77,7 +77,7 @@
         }
     });
 
-    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><textarea tabindex="0" class="k-spreadsheet-clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>';
+    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><textarea tabindex="0" class="k-spreadsheet-clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea><div class="k-spreadsheet-editor" contenteditable="true"></div>';
 
     function within(value, min, max) {
         return value >= min && value <= max;
@@ -97,6 +97,8 @@
             this.container = viewElement.find(".k-spreadsheet-fixed-container")[0];
             this.scroller = viewElement.find(".k-spreadsheet-scroller")[0];
             this.clipboard = viewElement.find(".k-spreadsheet-clipboard");
+            this.editor = viewElement.find(".k-spreadsheet-editor");
+
             this.viewSize = $(this.scroller.firstChild);
 
             this.tree = new kendo.dom.Tree(this.container);
