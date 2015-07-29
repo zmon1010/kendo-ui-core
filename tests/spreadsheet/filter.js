@@ -653,4 +653,197 @@
         equal(filter.matches(""), false);
         equal(filter.matches(1), false);
     });
+
+    test("nextWeek", function() {
+        filter = new DynamicFilter({ type: "nextWeek" });
+
+        var today = kendo.date.today();
+
+        var nextweek = kendo.date.addDays(today, 7);
+
+        equal(filter.matches(today), false);
+        equal(filter.matches(nextweek), true);
+        nextweek.setHours(10);
+        equal(filter.matches(nextweek), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("thisWeek", function() {
+        filter = new DynamicFilter({ type: "thisWeek" });
+
+        var today = kendo.date.today();
+
+        var thisWeek = kendo.date.dayOfWeek(today, 1);
+
+        equal(filter.matches(today), true);
+        equal(filter.matches(thisWeek), true);
+        thisWeek.setHours(10);
+        equal(filter.matches(thisWeek), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("lastWeek", function() {
+        filter = new DynamicFilter({ type: "lastWeek" });
+
+        var today = kendo.date.today();
+
+        var lastWeek = kendo.date.addDays(today, -7);
+
+        equal(filter.matches(today), false);
+        equal(filter.matches(lastWeek), true);
+        lastWeek.setHours(10);
+        equal(filter.matches(lastWeek), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("nextMonth", function() {
+        filter = new DynamicFilter({ type: "nextMonth" });
+
+        var today = kendo.date.today();
+
+        var nextMonth = kendo.date.firstDayOfMonth(today);
+
+        nextMonth.setMonth(nextMonth.getMonth() + 1, 1);
+
+        equal(filter.matches(today), false);
+        equal(filter.matches(nextMonth), true);
+        nextMonth.setDate(10);
+        equal(filter.matches(nextMonth), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("thisMonth", function() {
+        filter = new DynamicFilter({ type: "thisMonth" });
+
+        var today = kendo.date.today();
+
+        var thisMonth = kendo.date.firstDayOfMonth(today);
+
+        equal(filter.matches(today), true);
+        equal(filter.matches(thisMonth), true);
+        thisMonth.setDate(10);
+        equal(filter.matches(thisMonth), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("lastMonth", function() {
+        filter = new DynamicFilter({ type: "lastMonth" });
+
+        var today = kendo.date.today();
+
+        var lastMonth = kendo.date.firstDayOfMonth(today);
+
+        lastMonth.setMonth(lastMonth.getMonth() - 1, 1);
+
+        equal(filter.matches(today), false);
+        equal(filter.matches(lastMonth), true);
+        lastMonth.setDate(10);
+        equal(filter.matches(lastMonth), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("nextQuarter", function() {
+        filter = new DynamicFilter({ type: "nextQuarter" });
+
+        var today = kendo.date.today();
+
+        var month = today.getMonth() + 1;
+
+        if (month >= 1 && month <= 3) {
+            // make it second quarter
+            today.setMonth(4, 1);
+        } else if (month >= 4 && month <= 6) {
+            // make it third quarter
+            today.setMonth(7, 1);
+        } else if (month >= 7 && month <= 9) {
+            // make it fourth quarter
+            today.setMonth(10, 1);
+        } else {
+            // make it first quarter, next year
+            today.setMonth(1, 1);
+            today.setFullYear(today.getFullYear() + 1);
+        }
+
+        equal(filter.matches(today), true);
+        today.setDate(10);
+        equal(filter.matches(today), true);
+        equal(filter.matches(new Date()), false);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("thisQuarter", function() {
+        filter = new DynamicFilter({ type: "thisQuarter" });
+
+        var today = kendo.date.today();
+
+        var month = today.getMonth() + 1;
+
+        if (month >= 1 && month <= 3) {
+            // make it second quarter
+            today.setMonth(4, 1);
+        } else if (month >= 4 && month <= 6) {
+            // make it third quarter
+            today.setMonth(7, 1);
+        } else if (month >= 7 && month <= 9) {
+            // make it fourth quarter
+            today.setMonth(10, 1);
+        } else {
+            // make it first quarter, next year
+            today.setMonth(1, 1);
+            today.setFullYear(today.getFullYear() + 1);
+        }
+
+        equal(filter.matches(today), false);
+        today = kendo.date.today();
+        equal(filter.matches(today), true);
+        today.setDate(10);
+        equal(filter.matches(today), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("lastQuarter", function() {
+        filter = new DynamicFilter({ type: "lastQuarter" });
+
+        var today = kendo.date.today();
+
+        var month = today.getMonth() + 1;
+
+        if (month >= 1 && month <= 3) {
+            // make it fourth quarter, previous year
+            today.setMonth(10, 1);
+            today.setFullYear(today.getFullYear() - 1);
+        } else if (month >= 4 && month <= 6) {
+            // make it first quarter
+            today.setMonth(1, 1);
+        } else if (month >= 7 && month <= 9) {
+            // make it second quarter
+            today.setMonth(4, 1);
+        } else {
+            // make it third quarter, next year
+            today.setMonth(7, 1);
+        }
+        equal(filter.matches(today), true);
+        today.setDate(10);
+        equal(filter.matches(today), true);
+        equal(filter.matches(new Date()), false);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
 })();

@@ -265,8 +265,107 @@
             }
 
             return false;
-        }
+        },
+        nextWeek: function(value) {
+            return sameWeek(kendo.date.addDays(kendo.date.today(), 7), value);
+        },
+        thisWeek: function(value) {
+            return sameWeek(kendo.date.today(), value);
+        },
+        lastWeek: function(value) {
+            return sameWeek(kendo.date.addDays(kendo.date.today(), -7), value);
+        },
+        nextMonth: function(value) {
+            var today = kendo.date.today();
+
+            var nextMonth = kendo.date.firstDayOfMonth(today);
+
+            nextMonth.setMonth(nextMonth.getMonth() + 1, 1);
+
+            return sameMonth(nextMonth, value);
+        },
+        thisMonth: function(value) {
+            return sameMonth(kendo.date.firstDayOfMonth(kendo.date.today()), value);
+        },
+        lastMonth: function(value) {
+            var today = kendo.date.today();
+
+            var lastMonth = kendo.date.firstDayOfMonth(today);
+
+            lastMonth.setMonth(lastMonth.getMonth() - 1, 1);
+
+            return sameMonth(lastMonth, value);
+        },
+        nextQuarter: function(value) {
+            if (value instanceof Date) {
+                var today = kendo.date.today();
+
+                var diff = quarter(value) - quarter(today);
+
+                return (diff === 1 && today.getFullYear() === value.getFullYear()) ||
+                       (diff == -3 && today.getFullYear() + 1 === value.getFullYear());
+            }
+
+            return false;
+        },
+        thisQuarter: function(value) {
+            if (value instanceof Date) {
+                var today = kendo.date.today();
+
+                var diff = quarter(value) - quarter(today);
+
+                return diff === 0 && today.getFullYear() === value.getFullYear();
+            }
+
+            return false;
+        },
+        lastQuarter: function(value) {
+            if (value instanceof Date) {
+                var today = kendo.date.today();
+
+                var diff = quarter(today) - quarter(value);
+
+                return (diff === 1 && today.getFullYear() === value.getFullYear()) ||
+                       (diff == -3 && today.getFullYear() - 1 === value.getFullYear());
+            }
+
+            return false;
+        },
     });
+
+    function quarter(value) {
+        var month = value.getMonth() + 1;
+
+        if (month >= 1 && month <= 3) {
+            return 1;
+        } else if(month >= 4 && month <= 6) {
+            return 2;
+        } else if (month >= 7 && month <= 9) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
+    function sameMonth(a, b) {
+        if (b instanceof Date) {
+            return a.getTime() === kendo.date.firstDayOfMonth(b).getTime();
+        }
+
+        return false;
+    }
+
+    function sameWeek(a, b) {
+        if (b instanceof Date) {
+            var firstWeek = kendo.date.dayOfWeek(kendo.date.getDate(a), 1);
+
+            var secondWeek = kendo.date.dayOfWeek(kendo.date.getDate(b), 1);
+
+            return firstWeek.getTime() === secondWeek.getTime();
+        }
+
+        return false;
+    }
 
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
