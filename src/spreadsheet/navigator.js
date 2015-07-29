@@ -293,6 +293,21 @@
                             }
                         }
                         break;
+                    case "previous":
+                        if (topLeft.eq(selTopLeft)) {
+                            selection = sheet.previousSelectionRange();
+                            row = selection.bottomRight.row;
+                            column = selection.bottomRight.col;
+                        } else {
+                            column = columns.prevVisible(topLeftCol);
+                            if (column < selTopLeft.col) {
+                                column = selBottomRight.col;
+                                row --;
+                            }
+                        }
+                        break;
+                    default:
+                        throw new Error("Unknown entry navigation: " + direction);
                 }
 
                 done = !this.shouldSkip(row, column);

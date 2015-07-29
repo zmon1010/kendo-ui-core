@@ -42,6 +42,20 @@
         }
     }
 
+    function previous(times) {
+        times = times || 1;
+        for (var i = 0; i < times; i++) {
+            navigator.navigateInSelection("previous");
+        }
+    }
+
+    module("next navigation", {
+        setup: function() {
+            sheet = newSheet();
+            navigator = new kendo.spreadsheet.SheetNavigator(sheet, 1000);
+        }
+    });
+
     test("next moves over the entire sheet if selection is a single cell", function() {
         sheet.range("B2").select();
         next();
@@ -93,6 +107,63 @@
     test("next eventually comes back to the first range", function() {
         sheet.range("B2:C3,D4:E5").select();
         next(8);
+        activeCellEqual("B2");
+    });
+
+    module("previous navigation", {
+        setup: function() {
+            sheet = newSheet();
+            navigator = new kendo.spreadsheet.SheetNavigator(sheet, 1000);
+        }
+    });
+
+    test("moves over the entire sheet if selection is a single cell", function() {
+        sheet.range("B2").select();
+        previous();
+        activeCellEqual("A2");
+        selectionEqual("A2");
+    });
+
+    test("previous selects previous cell in selection", function() {
+        sheet.range("B2:C3").select();
+        activeCellEqual("B2");
+        previous();
+        activeCellEqual("C3");
+    });
+
+    test("previous moves to the previous row", function() {
+        sheet.range("B2:C3").select();
+        activeCellEqual("B2");
+        previous(2);
+        activeCellEqual("B3");
+    });
+
+    test("previous rewinds back to the first cell", function() {
+        sheet.range("B2:C3").select();
+        previous(4);
+        activeCellEqual("B2");
+    });
+
+    test("previous skips merged cells", function() {
+        sheet.range("B2:C3").merge();
+        sheet.range("B2:D4").select();
+        activeCellEqual("B2:C3");
+
+        previous(4);
+        activeCellEqual("D3");
+        previous();
+        activeCellEqual("D2");
+    });
+
+    test("previous moves to the previous range", function() {
+        sheet.range("B2:C3,D4:E5").select();
+        previous(2);
+        activeCellEqual("D5");
+    });
+
+    test("previous eventually comes back to the first range", function() {
+        sheet.range("B2:C3,D4:E5").select();
+        previous(8);
         activeCellEqual("B2");
     });
 

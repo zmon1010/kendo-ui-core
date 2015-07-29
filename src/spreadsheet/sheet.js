@@ -383,6 +383,13 @@
             return this.currentSelectionRange();
         },
 
+        previousSelectionRange: function() {
+            if (!this.singleCellSelection()) {
+                this._selectionRangeIndex = this._selection.previousRangeIndex(this._selectionRangeIndex);
+            }
+            return this.currentSelectionRange();
+        },
+
         originalSelect: function() {
             return this._originalSelection;
         },

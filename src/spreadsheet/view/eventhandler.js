@@ -21,7 +21,8 @@
     };
 
     var ENTRY_ACTIONS = {
-        "tab": "next"
+        "tab": "next",
+        "shift+tab": "previous"
     };
 
 
