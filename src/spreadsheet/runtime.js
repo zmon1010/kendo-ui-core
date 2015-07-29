@@ -698,6 +698,9 @@
                 code += "} while (i < args.length); ";
                 resolve += "} ";
                 arrayArgs += "} ";
+            } else if (name == "?") {
+                // standalone assertion without a new argument
+                code += "if (!(" + cond(x[1]) + ")) return new CalcError(err); ";
             } else {
                 var type = x[1];
                 if (Array.isArray(type) && /^#?collect/.test(type[0])) {

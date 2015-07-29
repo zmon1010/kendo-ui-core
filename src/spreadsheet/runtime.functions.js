@@ -991,6 +991,39 @@
 
     defineAlias("percentrank", "percentrank.inc");
 
+    function _covariance(x, y, divisor) {
+        var sum = 0;
+        var ax = _avg(x);
+        var ay = _avg(y);
+        var n = x.length;
+        for (var i = 0; i < n; ++i) {
+            sum += (x[i] - ax) * (y[i] - ay);
+        }
+        return sum / divisor;
+    }
+
+    defineFunction("covariance.p", function(x, y){
+        return _covariance(x, y, x.length);
+    }).args([
+        [ "array1", [ "collect", "number", 1 ] ],
+        [ "array2", [ "collect", "number", 1 ] ],
+        [ "?", [ "and",
+                 [ "assert", "$array1.length == $array2.length", "N/A" ],
+                 [ "assert", "$array1.length > 0", "DIV/0" ] ] ]
+    ]);
+
+    defineFunction("covariance.s", function(x, y){
+        return _covariance(x, y, x.length - 1);
+    }).args([
+        [ "array1", [ "collect", "number", 1 ] ],
+        [ "array2", [ "collect", "number", 1 ] ],
+        [ "?", [ "and",
+                 [ "assert", "$array1.length == $array2.length", "N/A" ],
+                 [ "assert", "$array1.length > 1", "DIV/0" ] ] ]
+    ]);
+
+    defineAlias("covar", "covariance.p");
+
     /* -----[ Factorials ]----- */
 
     var _fact = util.memoize(function(n){

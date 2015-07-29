@@ -189,10 +189,25 @@
         expectEqual: function(hash) {
             var self = this;
             Object.keys(hash).forEach(function(cell){
-                equal(self.$(cell), hash[cell]);
+                var val = self.$(cell);
+                var expected = hash[cell];
+                if (expected instanceof APPROX) {
+                    val = val.toFixed(expected.dec);
+                    expected = expected.val;
+                }
+                equal(val, expected);
             });
         }
     });
+
+    function APPROX(val) {
+        val += "";
+        if (!(this instanceof APPROX)) {
+            return new APPROX(val);
+        }
+        this.val = val;
+        this.dec = val.length - val.indexOf(".") - 1;
+    }
 
     function DATE(str) {
         return runtime.dateToSerial(new Date(str)) | 0;
@@ -601,7 +616,9 @@
             A5: '=avedev(A1:C4)',
         });
         ss.recalculate(function(){
-            equal(ss.$("A5").toFixed(6), "2.222222");
+            ss.expectEqual({
+                A5: APPROX(2.222222)
+            });
         });
     });
 
@@ -623,10 +640,12 @@
             F14: '=var.p(F1:F10)',
         });
         ss.recalculate(function(){
-            equal(ss.$("F11").toFixed(6), "27.463916");
-            equal(ss.$("F12").toFixed(6), "26.054558");
-            equal(ss.$("F13").toFixed(2), "754.27");
-            equal(ss.$("F14").toFixed(2), "678.84");
+            ss.expectEqual({
+                F11: APPROX(27.463916),
+                F12: APPROX(26.054558),
+                F13: APPROX(754.27),
+                F14: APPROX(678.84),
+            });
         });
     });
 
@@ -757,14 +776,16 @@
             A11 : '=binom.inv(100, 50%, 90%)',
         });
         ss.recalculate(function(){
-            equal(ss.$("A1").toFixed(6), 0.588099);
-            equal(ss.$("A2").toFixed(6), 0.176197);
-            equal(ss.$("A3").toFixed(6), 0.736776);
-            equal(ss.$("A4").toFixed(6), 0.401878);
-            equal(ss.$("A5").toFixed(6), 0.083975);
-            equal(ss.$("A6").toFixed(6), 0.523630);
-            equal(ss.$("A7").toFixed(6), 0.055049);
-            equal(ss.$("A8").toFixed(6), 0.313514);
+            ss.expectEqual({
+                A1: APPROX(0.588099),
+                A2: APPROX(0.176197),
+                A3: APPROX(0.736776),
+                A4: APPROX(0.401878),
+                A5: APPROX(0.083975),
+                A6: APPROX(0.523630),
+                A7: APPROX(0.055049),
+                A8: APPROX(0.313514),
+            });
 
             equal(ss.$("A9"), 46);
             equal(ss.$("A10"), 50);
@@ -1439,9 +1460,11 @@
             A5: "=YEARFRAC(A1,A2,3)",
         });
         ss.recalculate(function(){
-            equal(ss.$("A3").toFixed(8), 0.58055556);
-            equal(ss.$("A4").toFixed(8), 0.57650273);
-            equal(ss.$("A5").toFixed(8), 0.57808219);
+            ss.expectEqual({
+                A3: APPROX(0.58055556),
+                A4: APPROX(0.57650273),
+                A5: APPROX(0.57808219),
+            });
         });
     });
 
@@ -1544,8 +1567,10 @@
             A2: '=kurt({ 4, 5, 4, 4, 4, 4, 4, 2, 3, 5, 5, 3 })'
         });
         ss.recalculate(function(){
-            equal(ss.$("A1").toFixed(6), -0.1518);
-            equal(ss.$("A2").toFixed(6), 0.532658);
+            ss.expectEqual({
+                A1: APPROX(-0.1518),
+                A2: APPROX(0.532658)
+            });
         });
     });
 
@@ -1591,6 +1616,30 @@
                 D10: 0.7,
                 D11: 0.381,
                 D12: 0.3
+            });
+        });
+    });
+
+    test("COVARIANCE", function(){
+        var ss = new Spreadsheet();
+        ss.fill(
+            "A1:A8", [ 2, 7, 8, 3, 4, 1, 6, 5 ],
+            "B1:B8", [ 22.90, 33.49, 34.50, 27.61, 19.5, 10.11, 37.90, 31.80 ],
+            "C1:C5", [ 3, 2, 4, 5, 6 ],
+            "D1:D5", [ 9, 7, 12, 15, 17 ],
+            {
+                E1: "=COVARIANCE.P(A1:A8, B1:B8)",
+                E2: "=COVARIANCE.P(C1:C5, D1:D5)",
+                E3: "=COVARIANCE.S(A1:A8, B1:B8)",
+                E4: "=COVARIANCE.S({ 2, 4, 8 }, { 5, 11, 12 })",
+            }
+        );
+        ss.recalculate(function(){
+            ss.expectEqual({
+                E1: 16.678125,
+                E2: 5.2,
+                E3: APPROX(19.06071),
+                E4: APPROX(9.666666667)
             });
         });
     });
