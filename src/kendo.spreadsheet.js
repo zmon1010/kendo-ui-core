@@ -171,9 +171,9 @@
                             "data-command": "FormatCellsCommand"
                         } },
                         { type: "buttonGroup", buttons: [
-                            toggleable({ text: "Bold", property: "bold", value: "bold" }),
-                            toggleable({ text: "Italic", property: "italic", value: "italic" }),
-                            toggleable({ text: "Underline", property: "underline", value: "underline" })
+                            toggleable({ text: "Bold", property: "bold", value: true }),
+                            toggleable({ text: "Italic", property: "italic", value: true }),
+                            toggleable({ text: "Underline", property: "underline", value: true })
                         ] },
                         { type: "buttonGroup", buttons: [
                             toggleable({ text: "Justify-left", property: "textAlign", value: "left" }),
