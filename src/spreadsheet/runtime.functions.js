@@ -942,6 +942,55 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
+    function _percentrank(numbers, x, exc) {
+        var nlt = 0, ngt = 0, left = null, right = null, found = false;
+        numbers.forEach(function(num){
+            if (num < x) {
+                nlt++;
+                left = left == null ? num : Math.max(left, num);
+            } else if (num > x) {
+                ngt++;
+                right = right == null ? num : Math.min(right, num);
+            } else {
+                found = true;
+            }
+        });
+        if (!nlt && !ngt) {
+            return new CalcError("N/A");
+        }
+        if (found) {
+            if (exc) {
+                return (nlt + 1) / (numbers.length + 1);
+            }
+            return nlt / (nlt + ngt);
+        }
+        return ((right - x) * _percentrank(numbers, left, exc) +
+                (x - left) * _percentrank(numbers, right, exc)) / (right - left);
+    }
+
+    var ARGS_PERCENTRANK = [
+        [ "array", [ "collect", "number", 1 ] ],
+        [ "x", [ "and", "number",
+                 [ "assert", "$array.length > 0", "NUM" ] ] ],
+        [ "significance", [ "or", [ "null", 3 ],
+                            [ "and", "integer",
+                              [ "assert", "$significance >= 1", "NUM" ] ] ] ]
+    ];
+
+    defineFunction("percentrank.inc", function(numbers, x, significance) {
+        var p = _percentrank(numbers, x, 0);
+        p = p.toFixed(significance + 1);
+        return parseFloat(p.substr(0, p.length - 1));
+    }).args(ARGS_PERCENTRANK);
+
+    defineFunction("percentrank.exc", function(numbers, x, significance) {
+        var p = _percentrank(numbers, x, 1);
+        p = p.toFixed(significance + 1);
+        return parseFloat(p.substr(0, p.length - 1));
+    }).args(ARGS_PERCENTRANK);
+
+    defineAlias("percentrank", "percentrank.inc");
+
     /* -----[ Factorials ]----- */
 
     var _fact = util.memoize(function(n){

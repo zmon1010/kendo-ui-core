@@ -137,10 +137,31 @@
         },
         fill: function(data) {
             var self = this;
-            Object.keys(data).forEach(function(key){
-                var ref = self.makeRef(key);
-                self.set(ref.row, ref.col, data[key]);
-            });
+            if (typeof data == "string") {
+                // alternate syntax.
+                var ref = this.makeRef(data).toRangeRef();
+                data = arguments[1], i = 0;
+                for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
+                    for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
+                        if (data instanceof runtime.Matrix) {
+                            self.set(row, col, data.get(row, col));
+                        } else {
+                            self.set(row, col, data[i++]);
+                        }
+                    }
+                }
+                if (arguments.length > 2) {
+                    this.fill.apply(this, Array.prototype.slice.call(arguments, 2));
+                }
+            } else {
+                Object.keys(data).forEach(function(key){
+                    var ref = self.makeRef(key);
+                    self.set(ref.row, ref.col, data[key]);
+                });
+                if (arguments.length > 1) {
+                    this.fill.apply(this, Array.prototype.slice.call(arguments, 1));
+                }
+            }
         },
         recalculate: function(callback) {
             var self = this;
@@ -1525,6 +1546,52 @@
         ss.recalculate(function(){
             equal(ss.$("A1").toFixed(6), -0.1518);
             equal(ss.$("A2").toFixed(6), 0.532658);
+        });
+    });
+
+    test("PERCENTRANK", function(){
+        var ss = new Spreadsheet();
+        ss.fill("A2:A11", [ 13, 12, 11, 8, 4, 3, 2, 1, 1, 1 ], {
+            A13: '=PERCENTRANK(A2:A11, 2)',
+            A14: '=PERCENTRANK(A2:A11, 4)',
+            A15: '=PERCENTRANK(A2:A11, 8)',
+            A16: '=PERCENTRANK(A2:A11, 5)',
+        });
+        ss.fill("B1:B9", [ 1, 2, 4, 6.5, 8, 9, 10, 12, 14 ], {
+            C1: '=PERCENTRANK(B1:B9, 6.5)',
+            C2: '=PERCENTRANK(B1:B9, 7, 5)',
+            C3: '=PERCENTRANK(B1:B9, 8)',
+            C4: '=PERCENTRANK(B1:B9, 14)',
+            C5: '=PERCENTRANK.EXC(B1:B9, 6.5)',
+            C6: '=PERCENTRANK.EXC(B1:B9, 7, 5)',
+            C7: '=PERCENTRANK.EXC(B1:B9, 8)',
+            C8: '=PERCENTRANK.EXC(B1:B9, 14)',
+        });
+        ss.fill("D1:D9", [ 1, 2, 3, 6, 6, 6, 7, 8, 9 ], {
+            D10: '=PERCENTRANK.EXC(D1:D9, 7)',
+            D11: '=PERCENTRANK.EXC(D1:D9, 5.43)',
+            D12: '=PERCENTRANK.EXC(D1:D9, 5.43, 1)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A13: 0.333,
+                A14: 0.555,
+                A15: 0.666,
+                A16: 0.583,
+
+                C1: 0.375,
+                C2: 0.41666,
+                C3: 0.5,
+                C4: 1,
+                C5: 0.4,
+                C6: 0.43333,
+                C7: 0.5,
+                C8: 0.9,
+
+                D10: 0.7,
+                D11: 0.381,
+                D12: 0.3
+            });
         });
     });
 
