@@ -7718,7 +7718,7 @@ var __meta__ = {
            isHeader = currentTarget.is("th"),
            table = this.table.add(this.lockedTable),
            headerTable = this.thead.parent().add($(">table", this.lockedHeader)),
-           isInput = $(e.target).is(":button,a,:input,a>.k-icon,textarea,span.k-icon,span.k-link,.k-input,.k-multiselect-wrap,.k-tool-icon"),
+           isInput = $(e.target).is(":button,a,:input,a>.k-icon,textarea,span.k-select,span.k-icon,span.k-link,.k-input,.k-multiselect-wrap,.k-tool-icon"),
            currentTable = currentTarget.closest("table")[0];
 
        if (kendo.support.touch) {
