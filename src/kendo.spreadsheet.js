@@ -143,7 +143,7 @@
             function toggleable(options) {
                 var className = options.text[0].toLowerCase() + options.text.substr(1);
                 return {
-                    spriteCssClass: "k-tool-icon k-" + className,
+                    spriteCssClass: "k-icon k-i-" + className,
                     attributes: {
                         "data-command": "PropertyChangeCommand",
                         "data-property": options.property,
@@ -176,14 +176,14 @@
                             toggleable({ text: "Underline", property: "underline", value: "underline" })
                         ] },
                         { type: "buttonGroup", buttons: [
-                            toggleable({ text: "JustifyLeft", property: "textAlign", value: "left" }),
-                            toggleable({ text: "JustifyCenter", property: "textAlign", value: "center" }),
-                            toggleable({ text: "JustifyRight", property: "textAlign", value: "right" })
+                            toggleable({ text: "Justify-left", property: "textAlign", value: "left" }),
+                            toggleable({ text: "Justify-center", property: "textAlign", value: "center" }),
+                            toggleable({ text: "Justify-right", property: "textAlign", value: "right" })
                         ] },
                         { type: "buttonGroup", buttons: [
-                            toggleable({ text: "JustifyTop", property: "verticalAlign", value: "top" }),
-                            toggleable({ text: "JustifyMiddle", property: "verticalAlign", value: "middle" }),
-                            toggleable({ text: "JustifyBottom", property: "verticalAlign", value: "bottom" })
+                            toggleable({ text: "Align-top", property: "verticalAlign", value: "top" }),
+                            toggleable({ text: "Align-middle", property: "verticalAlign", value: "middle" }),
+                            toggleable({ text: "Align-bottom", property: "verticalAlign", value: "bottom" })
                         ] },
                         { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
                         { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
