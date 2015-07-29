@@ -125,6 +125,11 @@ namespace Kendo.Mvc.UI
                 options.Add("initial", Initial);
             }
 
+            if (UseNativeScrolling)
+            {
+                options.Add("useNativeScrolling", UseNativeScrolling);
+            }
+
             if (PushState)
             {
                 options.Add("pushState", PushState);
