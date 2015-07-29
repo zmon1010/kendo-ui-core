@@ -920,4 +920,48 @@
         equal(filter.matches(""), false);
         equal(filter.matches(1), false);
     });
+
+    test("quarter1", function() {
+        filter = new DynamicFilter({ type: "quarter1" });
+
+        equal(filter.matches(new Date("1/1/1990")), true);
+        equal(filter.matches(new Date("5/1/1990")), false);
+
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("quarter2", function() {
+        filter = new DynamicFilter({ type: "quarter2" });
+
+        equal(filter.matches(new Date("4/1/1990")), true);
+        equal(filter.matches(new Date("7/1/1990")), false);
+
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("quarter3", function() {
+        filter = new DynamicFilter({ type: "quarter3" });
+
+        equal(filter.matches(new Date("7/1/1990")), true);
+        equal(filter.matches(new Date("10/1/1990")), false);
+
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("quarter4", function() {
+        filter = new DynamicFilter({ type: "quarter4" });
+
+        equal(filter.matches(new Date("10/1/1990")), true);
+        equal(filter.matches(new Date("1/1/1990")), false);
+
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
 })();

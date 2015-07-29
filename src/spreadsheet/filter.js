@@ -336,7 +336,29 @@
             }
 
             return false;
+        },
+        quarter1: function(value) {
+            return sameQuarter(value, 1);
+        },
+        quarter2: function(value) {
+            return sameQuarter(value, 2);
+        },
+        quarter3: function(value) {
+            return sameQuarter(value, 3);
+        },
+        quarter4: function(value) {
+            return sameQuarter(value, 4);
         }
+    });
+
+    [1, 2, 3, 4].forEach(function(target) {
+        kendo.spreadsheet.DynamicFilter.prototype["quarter" + target] = function(value) {
+           if (value instanceof Date) {
+              return quarter(value) === target;
+           }
+
+           return false;
+        };
     });
 
     function quarter(value) {
