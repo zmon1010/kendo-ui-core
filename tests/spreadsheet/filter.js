@@ -846,4 +846,78 @@
         equal(filter.matches(""), false);
         equal(filter.matches(1), false);
     });
+
+    test("nextYear", function() {
+        filter = new DynamicFilter({ type: "nextYear" });
+
+        var today = kendo.date.today();
+
+        today.setFullYear(today.getFullYear() + 1);
+
+        equal(filter.matches(today), true);
+        today.setDate(10);
+        equal(filter.matches(today), true);
+        equal(filter.matches(new Date()), false);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("thisYear", function() {
+        filter = new DynamicFilter({ type: "thisYear" });
+
+        var today = kendo.date.today();
+
+        today.setFullYear(today.getFullYear() + 1);
+
+        equal(filter.matches(today), false);
+
+        today = kendo.date.today();
+        equal(filter.matches(today), true);
+        today.setDate(10);
+        equal(filter.matches(today), true);
+        equal(filter.matches(new Date()), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("lastYear", function() {
+        filter = new DynamicFilter({ type: "lastYear" });
+
+        var today = kendo.date.today();
+
+        today.setFullYear(today.getFullYear() - 1);
+
+        equal(filter.matches(today), true);
+
+        today.setDate(10);
+        equal(filter.matches(today), true);
+
+        equal(filter.matches(new Date()), false);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("yearToDate", function() {
+        filter = new DynamicFilter({ type: "yearToDate" });
+
+        var today = kendo.date.today();
+
+        equal(filter.matches(today), true);
+
+        today.setDate(today.getDate() - 1);
+
+        equal(filter.matches(today), true);
+
+        today.setFullYear(today.getFullYear() - 1);
+
+        equal(filter.matches(today), false);
+
+        equal(filter.matches(new Date()), false);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
 })();

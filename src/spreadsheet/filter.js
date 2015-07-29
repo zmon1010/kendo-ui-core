@@ -276,25 +276,13 @@
             return sameWeek(kendo.date.addDays(kendo.date.today(), -7), value);
         },
         nextMonth: function(value) {
-            var today = kendo.date.today();
-
-            var nextMonth = kendo.date.firstDayOfMonth(today);
-
-            nextMonth.setMonth(nextMonth.getMonth() + 1, 1);
-
-            return sameMonth(nextMonth, value);
+            return sameMonth(value, 1);
         },
         thisMonth: function(value) {
-            return sameMonth(kendo.date.firstDayOfMonth(kendo.date.today()), value);
+            return sameMonth(value, 0);
         },
         lastMonth: function(value) {
-            var today = kendo.date.today();
-
-            var lastMonth = kendo.date.firstDayOfMonth(today);
-
-            lastMonth.setMonth(lastMonth.getMonth() - 1, 1);
-
-            return sameMonth(lastMonth, value);
+            return sameMonth(value, -1);
         },
         nextQuarter: function(value) {
             if (value instanceof Date) {
@@ -331,6 +319,24 @@
 
             return false;
         },
+        nextYear: function(value) {
+            return sameYear(value, 1);
+        },
+        thisYear: function(value) {
+            return sameYear(value, 0);
+        },
+        lastYear: function(value) {
+            return sameYear(value, -1);
+        },
+        yearToDate: function(value) {
+            if (value instanceof Date) {
+                var today = kendo.date.today();
+
+                return value.getFullYear() === today.getFullYear() && value <= today;
+            }
+
+            return false;
+        }
     });
 
     function quarter(value) {
@@ -347,9 +353,25 @@
         }
     }
 
-    function sameMonth(a, b) {
-        if (b instanceof Date) {
-            return a.getTime() === kendo.date.firstDayOfMonth(b).getTime();
+    function sameYear(value, offset) {
+        if (value instanceof Date) {
+            var today = kendo.date.today();
+
+            today.setFullYear(today.getFullYear() + offset);
+
+            return today.getFullYear() === value.getFullYear();
+        }
+
+        return false;
+    }
+
+    function sameMonth(value, offset) {
+        if (value instanceof Date) {
+            var today = kendo.date.firstDayOfMonth(kendo.date.today());
+
+            today.setMonth(today.getMonth() + offset, 1);
+
+            return today.getTime() === kendo.date.firstDayOfMonth(value).getTime();
         }
 
         return false;
