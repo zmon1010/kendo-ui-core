@@ -1,16 +1,10 @@
-services = [
-    { name: 'dojo', port: 3300 },
-    { name: 'dojo-runner', port: 3301 }
-]
+bash "install pm2 command-line utility" do
+    code "npm install -g pm2"
+    action :run
+    not_if "which pm2"
+end
 
-services.each do |app|
-    template "/etc/init/#{app[:name]}.conf" do
-        variables( :app => app )
-        source "dojo.conf"
-    end
-
-    service app[:name] do
-        provider Chef::Provider::Service::Upstart
-        action [:enable,:restart]
-    end
+bash "setup PM2 resurrection on startup" do
+    code "env PATH=$PATH:/usr/bin pm2 startup ubuntu -u jenkins"
+    action :run
 end
