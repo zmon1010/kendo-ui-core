@@ -36,13 +36,15 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 
 ### sheets.filter.columns.criteria `String`
 
+### sheets.filter.columns.filter `String`
+
 ### sheets.filter.columns.index `Number`
 
 ### sheets.filter.columns.logic `String`
 
 ### sheets.filter.columns.type `String`
 
-### sheets.filter.columns.value `Object`
+### sheets.filter.columns.value `Number|String|Boolean|Date`
 
 ### sheets.filter.columns.values `Array`
 
