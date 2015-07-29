@@ -1,4 +1,7 @@
-﻿namespace Kendo.Spreadsheet
+﻿using System;
+using System.Collections.Generic;
+
+namespace Kendo.Spreadsheet
 {
     /// <summary>
     /// Defines common MIME types supported file types
@@ -6,8 +9,14 @@
     public static class MimeTypes
     {
         /// <summary>
-        /// Specifies the MIME type for Office Open XML Workbook (.xlsx) files
+        /// List of all supported MIME types by extension
         /// </summary>
-        public const string XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        public static readonly IDictionary<String, String> ByExtension =
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {                
+                { ".csv", "text/csv" },
+                { ".json", "application/json" },
+                { ".txt", "text/tab-separated-values" },
+                { ".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
+            };
     }
 }
