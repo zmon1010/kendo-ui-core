@@ -14,7 +14,7 @@ namespace Kendo.Controllers
         public ActionResult Upload(HttpPostedFileBase file)
         {            
             var workbook = Workbook.Load(file.InputStream, Path.GetExtension(file.FileName));
-            return Content(workbook.ToJson(), "application/json");
+            return Content(workbook.ToJson(), Kendo.Spreadsheet.MimeTypes.JSON);
         }
 
         [HttpPost]

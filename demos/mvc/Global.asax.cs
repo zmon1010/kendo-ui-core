@@ -28,14 +28,14 @@ namespace Kendo
             routes.MapRoute(
                 "AsyncUpload",
                 "upload/{action}",
-                new { controller = "Upload" },
+                new { controller = "Public/Upload" },
                 new { action = "(save|remove|submit)" }
             );
 
             routes.MapRoute(
                 "Spreadsheet",
                 "spreadsheet/{action}",
-                new { controller = "Spreadsheet" },
+                new { controller = "Public/Spreadsheet" },
                 new { action = "(upload|download)" }
             );
 
