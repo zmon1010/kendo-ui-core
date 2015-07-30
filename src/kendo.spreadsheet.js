@@ -242,6 +242,8 @@
         fromJSON: function(json) {
             if (json.sheets) {
                 this._sheet.fromJSON(json.sheets[0]);
+            } else {
+                this.refresh();
             }
         },
 
