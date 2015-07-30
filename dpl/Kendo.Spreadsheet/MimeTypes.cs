@@ -9,14 +9,34 @@ namespace Kendo.Spreadsheet
     public static class MimeTypes
     {
         /// <summary>
+        /// MIME type for CSV files
+        /// </summary>
+        public const string CSV = "text/csv";
+
+        /// <summary>
+        /// MIME type for JSON files
+        /// </summary>
+        public const string JSON = "application/json";
+
+        /// <summary>
+        /// MIME type for Tab-delimited text file
+        /// </summary>
+        public const string TXT = "text/tab-separated-values";
+
+        /// <summary>
+        /// MIME type for Office Open XML Workbook
+        /// </summary>
+        public const string XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+        /// <summary>
         /// List of all supported MIME types by extension
         /// </summary>
         public static readonly IDictionary<String, String> ByExtension =
             new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {                
-                { ".csv", "text/csv" },
-                { ".json", "application/json" },
-                { ".txt", "text/tab-separated-values" },
-                { ".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
+                { ".csv", MimeTypes.CSV },
+                { ".json", MimeTypes.JSON },
+                { ".txt", MimeTypes.TXT },
+                { ".xlsx", MimeTypes.XLSX }
             };
     }
 }
