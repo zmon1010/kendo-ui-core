@@ -40,7 +40,6 @@ namespace Kendo.Controllers
             ViewBag.NavProduct = CurrentNavProduct();
             ViewBag.Section = section;
             ViewBag.Example = example;
-            ViewBag.ExampleFiles = SourceCode(product, section, example);
 
 #if DEBUG
             ViewBag.Debug = true;
@@ -54,20 +53,27 @@ namespace Kendo.Controllers
 
             FindCurrentExample(product);
 
-            if (ViewBag.CurrentWidget == null)
+            NavigationExample currentExample = ViewBag.CurrentExample;
+            NavigationWidget currentWidget = ViewBag.CurrentWidget;
+            if (currentWidget == null)
             {
                 return HttpNotFound();
             }
 
+            var exampleFiles = new List<ExampleFile>();
+            exampleFiles.AddRange(SourceCode(product, section, example));
+            exampleFiles.AddRange(AdditionalSources(currentWidget.Sources, product));
+            exampleFiles.AddRange(AdditionalSources(currentExample.Sources, product));
+            ViewBag.ExampleFiles = exampleFiles.Where(file => file.Exists(Server));
+
             if (ViewBag.Mobile) {
-                if (ViewBag.CurrentExample.Url.StartsWith("adaptive") && IsMobileDevice())
+                if (currentExample.Url.StartsWith("adaptive") && IsMobileDevice())
                 {
                     return Redirect(Url.RouteUrl("MobileDeviceIndex"));
                 }
             }
 
-            var api = ViewBag.CurrentExample.Api ?? ViewBag.CurrentWidget.Api;
-
+            var api = currentExample.Api ?? ViewBag.CurrentWidget.Api;
             if (!string.IsNullOrEmpty(api))
             {
                 if (product == "kendo-ui")
@@ -87,8 +93,6 @@ namespace Kendo.Controllers
                     ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/aspnet-mvc/kendo.mvc.ui.fluent" + Regex.Replace(api, "(web|dataviz)", "").Replace("mobile/", "/mobile") + "builder";
                 }
             }
-
-            NavigationWidget currentWidget = ViewBag.CurrentWidget;
 
             if (currentWidget.Documentation != null && currentWidget.Documentation.ContainsKey(product))
             {
@@ -121,8 +125,19 @@ namespace Kendo.Controllers
         private IEnumerable<ExampleFile> SourceCode(string product, string section, string example)
         {
             IFrameworkDescription framework = frameworkDescriptions[product];
+            return framework.GetFiles(Server, example, section);
+        }
 
-            return framework.GetFiles(Server, example, section).Where(file => file.Exists(Server));
+        private IEnumerable<ExampleFile> AdditionalSources(IDictionary<string, IEnumerable<ExampleFile>> sources, string product)
+        {
+            var files = new List<ExampleFile>();
+
+            if (sources != null && sources.ContainsKey(product))
+            {
+                files.AddRange(sources[product]);
+            }
+
+            return files;
         }
 
         protected void FindCurrentExample(string product)

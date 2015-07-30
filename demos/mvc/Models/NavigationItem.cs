@@ -8,8 +8,9 @@ namespace Kendo.Models
     {
         public string Name { get; set; }
         public string Text { get; set; }
-        public IDictionary<string,string> Title { get; set; }
+        public IDictionary<string, string> Title { get; set; }
         public IDictionary<string, string> Meta { get; set; }
+        public IDictionary<string, IEnumerable<ExampleFile>> Sources { get; set; }
         public string[] Packages { get; set; }
 
         public bool ShouldInclude(string package)
