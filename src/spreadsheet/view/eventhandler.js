@@ -29,7 +29,8 @@
 
     var CONTAINER_EVENTS = {
         "wheel": "onWheel",
-        "mousedown": "onMouseDown"
+        "mousedown": "onMouseDown",
+        "mousedrag": "onMouseDrag"
     };
 
     var CLIPBOARD_EVENTS = {
@@ -156,23 +157,38 @@
             event.preventDefault();
         },
 
+        objectAt: function(event) {
+            var offset = this.container.offset();
+            var coordinates = {
+                left: event.pageX - offset.left,
+                top: event.pageY - offset.top
+            };
+
+            return this.view.objectAt(coordinates.left, coordinates.top);
+        },
+
         onMouseDown: function(event, action) {
             var clipboard = this.clipboard;
-            var offset = this.container.offset();
-            var left = event.pageX - offset.left;
-            var top = event.pageY - offset.top;
-
-            var object = this.view.objectAt(left, top);
+            var object = this.objectAt(event);
 
             if (object.type === "cell") {
                 this.view._sheet.select(object.ref);
             }
 
-            clipboard.css({ left: left - 4, top: top - 4 });
+            clipboard.css({ left: object.x - 4, top: object.y - 4 });
 
             setTimeout(function() {
                 clipboard.select().focus();
             });
+        },
+
+        onMouseDrag: function(event, action) {
+            var sheet = this.view._sheet;
+            var object = this.objectAt(event);
+            var activeCell = sheet.originalActiveCell().toRangeRef();
+
+            var selection = new kendo.spreadsheet.RangeRef(activeCell.topLeft, object.ref);
+            sheet.select(selection, false);
         },
 
         onMouseUp: function(event, action) {
