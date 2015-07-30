@@ -8,6 +8,10 @@
     background-image: none;
 }
 
+.k-spreadsheet-top-corner:after {
+    border-color: transparent @cell-border-color @cell-border-color transparent;
+}
+
 .k-spreadsheet-pane {
     border-color: @pane-border-color;
 
@@ -94,5 +98,18 @@
 }
 
 .k-action-window .k-action-buttons {
+    border-color: @widget-border-color;
+}
+
+.k-simple-tabs {
+    background-color: transparent;
+    background-image: none;
+
+    &:focus {
+        box-shadow: none !important;
+    }
+}
+
+.k-spreadsheet-window .k-list {
     border-color: @widget-border-color;
 }

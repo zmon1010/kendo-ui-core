@@ -122,6 +122,19 @@
     top: 0;
     left: 0;
     z-index: 10000;
+
+    &:after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        border-width: 6px;
+        border-style: solid;
+    }
 }
 
 .k-spreadsheet-scroller {
@@ -160,5 +173,44 @@
 .k-spreadsheet-column-header,
 .k-spreadsheet-row-header {
     text-align: center;
+}
+
+.k-simple-tabs {
+    border-width: 0;
+    clear: both;
+    margin-bottom: -1px;
+
+    .k-tabstrip-items {
+        padding: 0;
+
+        .k-item {
+            text-align: center;
+            box-sizing: border-box;
+            border-radius: 0;
+            border-width: 1px;
+        }
+
+        .k-loading {
+            display: none;
+        }
+    }
+}
+
+.k-spreadsheet-window {
+    .k-list {
+        border-width: 1px;
+        border-style: solid;
+
+        .k-item {
+            border-radius: 0;
+            padding: .5em .6em .4em .6em;
+            cursor: pointer;
+        }
+    }
+}
+
+.k-spreadsheet-format-cells .k-button {
+    float: right;
+    margin-left: .5em;
 }
 

@@ -20,9 +20,9 @@
     }
 
     function command(commandType, options) {
-        var command =  new commandType(options);
-        command.range(sheet.range("A1"));
-        return command;
+        var c = new commandType(options);
+        c.range(sheet.range("A1"));
+        return c;
     }
 
     module("SpreadSheet EditCommand", moduleOptions);
@@ -105,16 +105,6 @@
         equal(preview.text(), "bar");
     });
 
-    test("clicking cancel closes window", function() {
-        var command = formatCellsCommand();
-
-        command.exec();
-
-        command.popup().element.find(".k-button:not(.k-primary)").click();
-
-        equal($(".k-spreadsheet-window").length, 0);
-    });
-
     test("clicking apply closes window", function() {
         var command = formatCellsCommand();
 
@@ -166,6 +156,7 @@
 
         command.exec();
 
+        command.categoryFilter("b");
         command.set("format", "mm-yy");
 
         var preview = command.popup().element.find(".k-spreadsheet-preview");
@@ -189,5 +180,41 @@
         command.exec();
 
         deepEqual(command.categories(), [ "a", "b" ]);
+    });
+
+    test("executed with specific format applies it immediately", function() {
+        sheet.range("A1").value("1");
+
+        var c = command(kendo.spreadsheet.FormatCellsCommand, { format: "baz" });
+
+        c.exec();
+
+        equal(sheet.range("A1").format(), "baz");
+        equal($(".k-spreadsheet-window").length, 0);
+    });
+
+    test("command can be undone", function() {
+        sheet.range("A1").value("11/11/2011").format("mm-yy");
+
+        var c = command(kendo.spreadsheet.FormatCellsCommand, { format: "baz" });
+
+        c.exec();
+        c.undo();
+
+        equal(sheet.range("A1").format(), "mm-yy");
+    });
+
+    test("redo does not open popup window", function() {
+        var command = formatCellsCommand();
+
+        command.exec();
+
+        command.set("format", "foo");
+
+        command.apply();
+
+        command.redo();
+
+        equal($(".k-spreadsheet-window").length, 0);
     });
 })();

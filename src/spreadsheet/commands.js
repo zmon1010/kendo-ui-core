@@ -48,6 +48,7 @@
     var PopupCommand = kendo.spreadsheet.PopupCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this);
+            this._className = options && options.className;
             this._dialogOptions = options && options.dialogOptions;
         },
         popup: function() {
@@ -56,6 +57,7 @@
         template: "",
         exec: function() {
             this._popup = $("<div class='k-spreadsheet-window k-action-window' />")
+                .addClass(this._className || "")
                 .append(this.template)
                 .appendTo(document.body)
                 .kendoWindow($.extend({
@@ -80,16 +82,20 @@
 
     var FormatCellsCommand = kendo.spreadsheet.FormatCellsCommand = PopupCommand.extend({
         init: function(options) {
+            options = options || {};
+            options.className = "k-spreadsheet-format-cells";
+
             PopupCommand.fn.init.call(this, options);
 
-            this._allFormats = (options && options.formats || this.options.formats);
-            this.formats = new kendo.data.ObservableArray(this._allFormats.slice(0));
+            this._immediate = "format" in options;
+            this._allFormats = (options.formats || this.options.formats).slice(0);
+            this._useCategory(this.categoryFilter());
+            this.format = options.format || this.formats[0].value;
         },
         options: {
             formats: [
-                { category: "Number", value: null, name: "General" },
                 { category: "Number", value: "?.00%", name: "100.00%" },
-                { category: "Date", value: null, name: "General" },
+                { category: "Currency", value: "$?", name: "U.S. Dollar" },
                 { category: "Date", value: "m/d", name: "3/14" },
                 { category: "Date", value: "m/d/yy", name: "3/14/01" },
                 { category: "Date", value: "mm/dd/yy", name: "03/14/01" },
@@ -107,66 +113,106 @@
                 { category: "Date", value: "d-mmm-yyyy", name: "14-Mar-2001" }
             ]
         },
-        format: null,
-        categoryFilter: function(category) {
-            if (category !== undefined) {
-                this._category = category;
-                var formats = this._allFormats.filter(function(x) { return x.category == category; });
-                this.set("format", formats[0].value);
-                this.set("formats", new kendo.data.ObservableArray(formats));
+        _useCategory: function(category) {
+            var formats = this._allFormats.filter(function(x) { return x.category == category; });
+            this.set("formats", formats);
+            this._category = category;
+        },
+        categoryFor: function(format) {
+            var formats = this._allFormats;
+            var category = formats[0].category;
+
+            for (var i = 0; i < formats.length; i++) {
+                if (formats[i].format == format) {
+                    category = formats[i].category;
+                    break;
+                }
             }
 
-            return this._category || "Number";
+            return category;
+        },
+        categoryFilter: function(category) {
+            if (category !== undefined) {
+                this._useCategory(category);
+            }
+
+            return this._category || this.categoryFor(this.format);
         },
         categories: function() {
             var category = function (x) { return x.category; };
             var unique = function (x, index, self) { return self.indexOf(x) === index; };
 
-            return this.formats.map(category).filter(unique);
+            return this._allFormats.map(category).filter(unique);
         },
         preview: function() {
             var format = this.get("format");
             var value = this.range().value() || 0;
 
-            if (format) {
+            if (format && format.length) {
+                // get formatted text from virtual dom node
                 value = kendo.spreadsheet.formatting.format(value, format);
-                return value.children[0].nodeValue; // :(
+                return value.children[0].nodeValue;
             } else {
                 return value;
             }
         },
+        _apply: function() {
+            var range = this.range();
+            this._state = range.format();
+            range.format(this.format);
+        },
         exec: function() {
-            this.format = this.range().format();
+            if (this._immediate) {
+                this._apply();
+            } else {
+                var range = this.range();
+                this.format = range.format();
 
-            PopupCommand.fn.exec.call(this);
+                if (range.value() instanceof Date) {
+                    this.categoryFilter("Date");
+                }
+
+                PopupCommand.fn.exec.call(this);
+            }
+        },
+        undo: function() {
+            this.range().format(this._state);
+        },
+        redo: function() {
+            this.range().format(this.format);
         },
         apply: function() {
-            this.range().format(this.format);
+            this._apply();
             this.close();
         },
         close: function() {
             this.popup().close();
         },
+        clear: function() {
+            this.range().format(null);
+            this.close();
+        },
         title: "Format Cells",
-        template: "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
+        template: "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
 
-                  "<div data-role='tabstrip' data-bind='source: categories, value: categoryFilter' />" +
+                  "<button class='k-button' data-bind='click: clear'>Use automatic format</button>" +
+                  "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
+
+                  "<div class='k-simple-tabs' " +
+                      "data-role='tabstrip' " +
+                      "data-bind='source: categories, value: categoryFilter' " +
+                      "data-animation='false' />" +
 
                   "<script type='text/x-kendo-template' id='format-item-template'>" +
                       "#: data.name #" +
                   "</script>" +
 
-                  "<ul data-role='staticlist' " +
+                  "<ul data-role='staticlist' tabindex='0' " +
                       "class='k-list k-reset' " +
                       "data-template='format-item-template' " +
                       "data-value-primitive='true' " +
                       "data-value-field='value' " +
-                      "data-bind='source: formats, value: format' />" +
-
-                  "<div class='k-action-buttons'>" +
-                      "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
-                      "<button class='k-button' data-bind='click: close'>Cancel</button>" +
-                  "</div>"
+                      "data-bind='source: formats, value: format' />"
     });
 
 })(kendo);
