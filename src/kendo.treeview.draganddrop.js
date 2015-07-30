@@ -20,6 +20,7 @@ var __meta__ = {
     var DROP = "drop";
     var VISIBILITY = "visibility";
     var KSTATEHOVER = "k-state-hover";
+    var INPUTSELECTOR = "input,a,textarea,.k-multiselect-wrap,select,button,a.k-button>.k-icon,button.k-button>.k-icon,span.k-icon.k-i-expand,span.k-icon.k-i-collapse";
 
     var HierarchicalDragAndDrop = ui.HierarchicalDragAndDrop = kendo.Class.extend({
         init: function (element, options) {
@@ -30,6 +31,7 @@ var __meta__ = {
             }, options);
 
             this._draggable = new ui.Draggable(element, {
+                ignore: INPUTSELECTOR,
                 filter: options.filter,
                 autoScrolL: options.autoScroll,
                 cursorOffset: {
