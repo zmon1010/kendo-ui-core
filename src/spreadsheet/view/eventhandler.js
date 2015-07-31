@@ -158,23 +158,13 @@
             event.preventDefault();
         },
 
-        objectAt: function(event) {
-            var offset = this.container.offset();
-            var coordinates = {
-                left: event.pageX - offset.left,
-                top: event.pageY - offset.top
-            };
-
-            return this.view.objectAt(coordinates.left, coordinates.top);
-        },
-
         onMouseDown: function(event, action) {
             var clipboard = this.clipboard;
             var object = this.objectAt(event);
 
             if (object.type === "cell") {
                 this.view._sheet.select(object.ref);
-                this.activePane = object.pane;
+                this.originFrame = object.pane;
             }
 
             clipboard.css({ left: object.x - 4, top: object.y - 4 });
@@ -182,12 +172,6 @@
             setTimeout(function() {
                 clipboard.select().focus();
             });
-        },
-
-        extendSelection: function(ref) {
-            var activeCell = this.view._sheet.originalActiveCell().toRangeRef();
-            var selection = new kendo.spreadsheet.RangeRef(activeCell.topLeft, ref);
-            this.view._sheet.select(selection, false);
         },
 
         onMouseDrag: function(event, action) {
@@ -198,93 +182,30 @@
             var location = { pageX: event.pageX, pageY: event.pageY };
 
             var object = this.objectAt(location);
-            var currentPane = object.pane;
-            var activePane = this.activePane;
 
-            if (activePane === currentPane) {
-                this.stopScrolling();
-
-                if (object.type === "cell") {
-                    this.extendSelection(object.ref);
-                    this.lastSuccessfulLocation = location;
-                }
+            if (this.originFrame === object.pane) {
+                this.selectToLocation(location);
             } else {
-                this.finalLocation = null;
+                if (object.pane) {
+                    var frame = this.originFrame._grid;
 
-                if (currentPane) {
-                    var frame = activePane._grid;
-
-                    var atLeft = object.x < frame.left;
-                    var atRight = object.x > frame.right;
-                    var atTop = object.y < frame.top;
-                    var atBottom = object.y > frame.bottom;
-
-                    if (atRight) {
+                    if (object.x > frame.right) {
                         scroller.scrollLeft = 0;
                     }
-                    if (atBottom) {
+
+                    if (object.y > frame.bottom) {
                         scroller.scrollTop = 0;
                     }
 
-                    if (atTop || atLeft) {
-                        this.finalLocation = location;
-                        this.startScrolling(object);
+                    if (object.y < frame.top || object.x < frame.left) {
+                        this.startAutoScroll(object, location);
                     } else {
-                        this.extendSelection(this.objectAt(location).ref);
-                        this.lastSuccessfulLocation = location;
-                        this.stopScrolling();
+                        this.selectToLocation(location);
                     }
                 } else {
-                    this.startScrolling(object);
+                    this.startAutoScroll(object);
                 }
             }
-        },
-
-        startScrolling: function(mouseLocation) {
-            if (!this._scrollInterval) {
-                this._scrollInterval = setInterval(function() {
-                    var x = this._mouseLocation.x;
-                    var y = this._mouseLocation.y;
-                    var boundaries = this.activePane._grid;
-                    var scroller = this.view.scroller;
-                    var scrollStep = 8;
-                    var object;
-
-                    var scrollLeft = scroller.scrollLeft;
-                    var scrollTop = scroller.scrollTop;
-
-                    if (x < boundaries.left) {
-                        scroller.scrollLeft -= scrollStep;
-                    }
-                    if (x > boundaries.right) {
-                        scroller.scrollLeft += scrollStep;
-                    }
-                    if (y < boundaries.top) {
-                        scroller.scrollTop -= scrollStep;
-                    }
-                    if (y > boundaries.bottom) {
-                        scroller.scrollTop += scrollStep;
-                    }
-
-                    // end reached
-                    if (scrollTop === scroller.scrollTop && scrollLeft === scroller.scrollLeft) {
-                        object = this.objectAt(this.finalLocation);
-                        this.extendSelection(object.ref);
-                        this.lastSuccessfulLocation = this.finalLocation;
-                        this.stopScrolling();
-                    } else {
-                        object = this.objectAt(this.lastSuccessfulLocation);
-                        this.extendSelection(object.ref);
-                    }
-                }.bind(this), 50);
-            }
-
-            this._mouseLocation = mouseLocation;
-        },
-
-        stopScrolling: function() {
-            clearInterval(this._scrollInterval);
-            this._scrollInterval = null;
         },
 
         onMouseUp: function(event, action) {
@@ -295,7 +216,7 @@
                 });
             }.bind(this));
 
-            this.stopScrolling();
+            this.stopAutoScroll();
         },
 
         onCut: function(event, action) {
@@ -310,6 +231,80 @@
             setTimeout(function() {
                 selection.value(clipboard.val());
             });
+        },
+
+////////////////////////////////////////////////////////////////////
+
+        objectAt: function(location) {
+            var offset = this.container.offset();
+            var coordinates = {
+                left: location.pageX - offset.left,
+                top: location.pageY - offset.top
+            };
+
+            return this.view.objectAt(coordinates.left, coordinates.top);
+        },
+
+        extendSelection: function(ref) {
+            var activeCell = this.view._sheet.originalActiveCell().toRangeRef();
+            var selection = new kendo.spreadsheet.RangeRef(activeCell.topLeft, ref);
+            this.view._sheet.select(selection, false);
+        },
+
+        selectToLocation: function(cellLocation) {
+            var object = this.objectAt(cellLocation);
+            if (object.type === "cell") {
+                this.extendSelection(object.ref);
+                this.lastKnownCellLocation = cellLocation;
+                this.originFrame = object.pane;
+            }
+            this.stopAutoScroll();
+        },
+
+        autoScroll: function() {
+            var x = this._autoScrollTarget.x;
+            var y = this._autoScrollTarget.y;
+            var boundaries = this.originFrame._grid;
+            var scroller = this.view.scroller;
+            var scrollStep = 8;
+            var object;
+
+            var scrollLeft = scroller.scrollLeft;
+            var scrollTop = scroller.scrollTop;
+
+            if (x < boundaries.left) {
+                scroller.scrollLeft -= scrollStep;
+            }
+            if (x > boundaries.right) {
+                scroller.scrollLeft += scrollStep;
+            }
+            if (y < boundaries.top) {
+                scroller.scrollTop -= scrollStep;
+            }
+            if (y > boundaries.bottom) {
+                scroller.scrollTop += scrollStep;
+            }
+
+            if (scrollTop === scroller.scrollTop && scrollLeft === scroller.scrollLeft) {
+                this.selectToLocation(this.finalLocation);
+            } else {
+                this.extendSelection(this.objectAt(this.lastKnownCellLocation).ref);
+            }
+        },
+
+        startAutoScroll: function(viewObject, location) {
+            if (!this._scrollInterval) {
+                this._scrollInterval = setInterval(this.autoScroll.bind(this), 50);
+            }
+
+            this.finalLocation = location || this.lastKnownCellLocation;
+
+            this._autoScrollTarget = viewObject;
+        },
+
+        stopAutoScroll: function() {
+            clearInterval(this._scrollInterval);
+            this._scrollInterval = null;
         }
     });
 
