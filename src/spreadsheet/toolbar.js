@@ -120,6 +120,7 @@
     var colorPicker = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             var colorPicker = $("<input />").kendoColorPicker({
+                palette: "basic",
                 toolIcon: options.toolIcon,
                 change: function(e) {
                     toolbar.trigger("execute", {
