@@ -171,6 +171,7 @@
                     execute: function(e) {
                         this.execute(new kendo.spreadsheet[e.commandType](e));
                     }.bind(this),
+                    resizable: false,
                     items: [
                         { type: "button", text: "Format cells", attributes: {
                             "data-command": "FormatCellsCommand"
