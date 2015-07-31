@@ -27,9 +27,11 @@
 
             this.keyDownProxy = this.keyDown.bind(this);
             this.mouseProxy = this.mouse.bind(this);
+            this._mousePressed = false;
 
             target.on("keydown", this.keyDownProxy);
             target.on("mousedown mousemove mouseup cut copy paste scroll wheel", this.mouseProxy);
+            $(document.documentElement).on("mousemove mouseup", this.mouseProxy);
 
             if (handlers) {
                 for (var key in handlers) {
@@ -48,9 +50,11 @@
             if (type === "mousedown") {
                 this._mousePressed = true;
             }
+
             if (type === "mouseup") {
                 this._mousePressed = false;
             }
+
             if (type === "mousemove" && this._mousePressed) {
                 type = "mousedrag";
             }
