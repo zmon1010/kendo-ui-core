@@ -325,16 +325,21 @@
 
         _colorChange: function(e) {
             this.color = e.value;
+            if (this.type) {
+                this._execute();
+            }
         },
 
         _click: function(e) {
-            var border = $(e.currentTarget).data("borderType");
-            var style = { size: "1px", color: this.color };
+            this.type = $(e.currentTarget).data("borderType");
+            this._execute();
+        },
 
+        _execute: function() {
             this.toolbar.trigger("execute", {
                 commandType: "BorderChangeCommand",
-                border: border,
-                style: style
+                border: this.type,
+                style: { size: "1px", color: this.color }
             });
         }
     });
