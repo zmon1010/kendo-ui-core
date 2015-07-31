@@ -140,7 +140,7 @@
         _toolbar: function() {
             var element;
 
-            function toggleable(options) {
+            function apply(options) {
                 var className = options.text[0].toLowerCase() + options.text.substr(1);
                 return {
                     spriteCssClass: "k-icon k-i-" + className,
@@ -150,9 +150,14 @@
                         "data-value": options.value
                     },
                     text: options.text,
-                    togglable: true,
                     showText: "overflow"
                 };
+            }
+
+            function toggle(options) {
+                var button = apply(options);
+                button.toggleable = true;
+                return button;
             }
 
             if (this.toolbar) {
@@ -171,19 +176,23 @@
                             "data-command": "FormatCellsCommand"
                         } },
                         { type: "buttonGroup", buttons: [
-                            toggleable({ text: "Bold", property: "bold", value: true }),
-                            toggleable({ text: "Italic", property: "italic", value: true }),
-                            toggleable({ text: "Underline", property: "underline", value: true })
+                            toggle({ text: "Bold", property: "bold", value: true }),
+                            toggle({ text: "Italic", property: "italic", value: true }),
+                            toggle({ text: "Underline", property: "underline", value: true })
                         ] },
                         { type: "buttonGroup", buttons: [
-                            toggleable({ text: "Justify-left", property: "textAlign", value: "left" }),
-                            toggleable({ text: "Justify-center", property: "textAlign", value: "center" }),
-                            toggleable({ text: "Justify-right", property: "textAlign", value: "right" })
+                            toggle({ text: "Justify-left", property: "textAlign", value: "left" }),
+                            toggle({ text: "Justify-center", property: "textAlign", value: "center" }),
+                            toggle({ text: "Justify-right", property: "textAlign", value: "right" })
                         ] },
                         { type: "buttonGroup", buttons: [
-                            toggleable({ text: "Align-top", property: "verticalAlign", value: "top" }),
-                            toggleable({ text: "Align-middle", property: "verticalAlign", value: "middle" }),
-                            toggleable({ text: "Align-bottom", property: "verticalAlign", value: "bottom" })
+                            toggle({ text: "Align-top", property: "verticalAlign", value: "top" }),
+                            toggle({ text: "Align-middle", property: "verticalAlign", value: "middle" }),
+                            toggle({ text: "Align-bottom", property: "verticalAlign", value: "bottom" })
+                        ] },
+                        { type: "buttonGroup", buttons: [
+                            apply({ text: "Currency", property: "format", value: "$?" }),
+                            apply({ text: "Percentage", property: "format", value: "?.00%" })
                         ] },
                         { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
                         { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },

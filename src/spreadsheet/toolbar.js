@@ -8,22 +8,25 @@
     var SpreadsheetToolBar = ToolBar.extend({
         init: function(element, options) {
             ToolBar.fn.init.call(this, element, options);
+            var handleClick = this._click.bind(this);
 
             this.bind({
-                click: function(e) {
-                    this.trigger("execute", {
-                        commandType: e.target.attr("data-command")
-                    });
-                }.bind(this),
-                toggle: function(e) {
-                    var target = e.target;
+                click: handleClick,
+                toggle: handleClick
+            });
+        },
+        _click: function(e) {
+            var target = e.target;
+            var value = null;
 
-                    this.trigger("execute", {
-                        commandType: target.attr("data-command"),
-                        property: target.attr("data-property"),
-                        value: e.checked ? target.attr("data-value") : null
-                    });
-                }.bind(this)
+            if (e.checked !== false) {
+                value = target.attr("data-value");
+            }
+
+            this.trigger("execute", {
+                commandType: target.attr("data-command"),
+                property: target.attr("data-property"),
+                value: value
             });
         },
         events: ToolBar.fn.events.concat([ "execute" ]),
@@ -42,52 +45,49 @@
             var range = this.range();
             var tools = this._tools();
 
+            function setValue(tool, value) {
+                if (tool.toolbar) {
+                    tool.toolbar.value(value);
+                }
+
+                if (tool.overflow) {
+                    tool.overflow.value(value);
+                }
+            }
+
+            function setToggle(tool, toggle) {
+                var toolbarTool = tool.toolbar;
+                var overflowTool = tool.overflow;
+
+                if (!toolbarTool.toggleable || !overflowTool.toggleable) {
+                    toggle = false;
+                }
+
+                if (toolbarTool) {
+                    toolbarTool.toggle(toggle);
+                }
+
+                if (overflowTool) {
+                    overflowTool.toggle(toggle);
+                }
+            }
+
             for (var name in tools) {
                 var tool = tools[name];
                 var value = range[name]();
 
                 if (tool instanceof Array) { //text alignment tool groups
                     for (var i = 0; i < tool.length; i++) {
-                        if (tool[i].toolbar) {
-                            tool[i].toolbar.toggle(tool[i].toolbar.element.attr("data-value") === value);
-                        }
-
-                        if (tool[i].overflow) {
-                            tool[i].overflow.toggle(tool[i].overflow.element.attr("data-value") === value);
-                        }
+                        setToggle(tool[i], tool[i].toolbar.element.attr("data-value") === value);
                     }
                 } else if (tool.type === "button") {
-                    if (tool.toolbar) {
-                        tool.toolbar.toggle(!!value);
-                    }
-
-                    if (tool.overflow) {
-                        tool.overflow.toggle(!!value);
-                    }
+                    setToggle(tool, !!value);
                 } else if (tool.type === "colorPicker") {
-                    if (tool.toolbar) {
-                        tool.toolbar.value(value);
-                    }
-
-                    if (tool.overflow) {
-                        tool.overflow.value(value);
-                    }
+                    setValue(tool, value);
                 } else if (tool.type === "fontSize") {
-                    if (tool.toolbar) {
-                        tool.toolbar.value(kendo.parseInt(value) || DEFAULT_FONT_SIZE);
-                    }
-
-                    if (tool.overflow) {
-                        tool.overflow.value(kendo.parseInt(value) || DEFAULT_FONT_SIZE);
-                    }
+                    setValue(tool, kendo.parseInt(value) || DEFAULT_FONT_SIZE);
                 } else if (tool.type === "fontFamily") {
-                    if (tool.toolbar) {
-                        tool.toolbar.value(value || DEFAULT_FONT_FAMILY);
-                    }
-
-                    if (tool.overflow) {
-                        tool.overflow.value(value || DEFAULT_FONT_FAMILY);
-                    }
+                    setValue(tool, value || DEFAULT_FONT_FAMILY);
                 }
             }
         },
