@@ -10,6 +10,7 @@
 @popups-shadow: 0 0px 6px 1px rgba(0, 0, 0, 0.2);
 @tabs-normal-gradient: "#303553 0%, #072138 100%";
 @tabs-hover-gradient: "#202333 0%, #081421 100%";
+@secondary-widget-background-color: darken(@widget-background-color, 2%);
 
 @theme-name: ~"nova";
 
@@ -89,12 +90,11 @@
 .k-calendar th,
 .k-dropzone-hovered,
 .k-widget.k-popup {
-    background-color: @base;
+    background-color: @widget-background-color;
 }
 
 .k-header,
 .k-grid-header,
-.k-toolbar,
 .k-grouping-header,
 .k-pager-wrap,
 .k-draghandle,
@@ -361,6 +361,7 @@ textarea.k-textbox:hover,
 }    
 
 .k-multiselect.k-header {
+    background-color: @widget-background-color;
     border-color: darken(@normal-background, 12%);
 }
 
@@ -466,6 +467,10 @@ input.k-textbox:active {
         border-color: @accent-hover-background;
     }
 } 
+
+.k-list-optionlabel {
+    border-color: transparent;
+}
 
 /* Calendar */
 .k-calendar {
@@ -585,11 +590,11 @@ input.k-textbox:active {
 }
 
 .k-window {
-    .k-header {
+    > .k-header {
         color: @inversed-text-color;
     }
 
-    .k-header .k-state-hover {
+    > .k-header .k-state-hover {
         background-color: @accent-hover-background;
     }
 }
@@ -711,4 +716,403 @@ input.k-textbox:active {
     }
 }
 
-/* Slider */
+/* Grid */
+.k-grid-header,
+.k-grid-header .k-header,
+.k-pager-wrap,
+.k-pager-numbers .k-state-selected,
+.k-grid-footer,
+.k-grid-footer td,
+.k-scheduler-header,
+.km-pane-wrapper .k-grid-header .k-header {
+    background-color: @secondary-widget-background-color;
+    border-color: @widget-border-color;
+}
+
+.k-grid-header .k-header .k-link,
+.k-grid-header .k-header,
+.k-grid-header .k-link,
+.k-grid-header .k-link:link,
+.k-pager-info,
+.k-scheduler-header,
+.k-scheduler-agendaview .k-scheduler-datecolumn {
+    color: lighten(@hover-text-color, 8%);
+}
+
+.k-grid .k-alt {
+    background-color: @widget-background-color;
+}
+
+.k-grid-content tr:hover {
+    background-color: @hover-background;
+}
+
+.k-grid-content .k-button {
+    border-color: @widget-border-color;
+}
+
+.k-grid-content .k-button:active {
+    border-color: @selected-background;
+}
+
+.k-header.k-grid-toolbar {
+    border-color: @accent-hover-background;
+}
+
+.k-grid .k-grouping-header {
+    color: rgba(256, 256, 256, 0.5);
+}
+
+.k-grouping-header .k-group-indicator,
+.k-grid-toolbar .k-button,
+.k-pivot-toolbar .k-button {
+    color: @inversed-text-color;
+    background-color: @accent-hover-background;
+    border-color: @accent-hover-background;
+}
+
+.k-group-indicator .k-link {
+    color: @inversed-text-color;
+}
+
+.k-grouping-row {
+    background-color: @secondary-widget-background-color;
+    font-weight: bold;
+}
+
+.k-group-cell {
+    background-color: @secondary-widget-background-color;
+}
+
+.k-filter-menu .k-button,
+.k-edit-form-container .k-button {
+    color: @normal-text-color;
+    background: transparent;
+    border-color: transparent;
+}
+
+.k-filter-menu .k-button:active {
+    color: @normal-text-color;
+}
+
+.k-filter-menu .k-primary,
+.k-edit-form-container .k-primary {
+    color: @accent;
+} 
+
+.k-filter-menu .k-primary {
+    border-left-color: @widget-border-color;
+}
+
+.k-filter-menu>div>div:last-child {
+    border-color: @widget-border-color;
+}
+
+//.k-scheduler-layout .k-state-selected,
+//.k-scheduler .k-today.k-state-selected,
+.k-grid tr.k-state-selected,
+.k-grid td.k-state-selected,
+.k-grid td.k-state-selected.k-state-focused,
+//.k-gantt .k-treelist .k-state-selected,
+//.k-gantt .k-treelist .k-state-selected td,
+//.k-gantt .k-treelist .k-alt.k-state-selected,
+//.k-gantt .k-treelist .k-alt.k-state-selected>td,
+//.k-listview>.k-state-selected,
+//.k-state-selected.k-line 
+{
+    background-color: lighten(@info, 22%);
+}
+
+.k-marquee-color {
+    background-color: desaturate(@info, 8%);
+}
+
+/* PivotGrid */
+.k-alt,
+.k-grid.k-alt,
+.k-fieldselector .k-item.k-header {
+    background-color: @secondary-widget-background-color;
+    border-color: @widget-border-color;
+    //background-color: pink;
+}
+
+.k-fieldselector .k-item.k-header.k-state-hover {
+    color: @normal-text-color;
+    //border-color: @secondary-widget-background-color;
+    //border-color: pink;
+}
+
+.k-grid-footer td,
+.k-pivot-rowheaders .k-grid-footer {
+    font-weight: bold;
+}
+
+/* Pager */
+.k-pager-wrap,
+.k-pager-numbers .k-link,
+.k-pager-numbers .k-link:link {
+    color: @normal-text-color;
+}
+
+.k-pager-wrap .k-link {
+    border-color: @secondary-widget-background-color;
+}
+
+.k-pager-wrap .k-link:hover {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.k-pager-numbers .k-state-selected {
+    color: @selected-background;
+    border-color: @selected-background transparent transparent;
+    border-radius: 0;
+}
+
+/* Scheduler */
+.k-scheduler th,
+.k-scheduler tr,
+.k-scheduler td {
+    border-color: @widget-border-color;
+}
+
+.k-scheduler-toolbar {
+    border-color: @secondary-widget-background-color;
+}
+
+.k-scheduler .k-header .k-button,
+.k-scheduler .k-header li,
+.k-scheduler .k-header .k-link {
+    color: @inversed-text-color;
+}
+
+.k-scheduler .k-header li,
+.k-scheduler .k-header .k-link,
+.k-gantt>.k-header li {
+    border-color: @accent;
+}
+
+.k-scheduler .k-scheduler-toolbar ul li.k-state-hover,
+.k-scheduler .k-scheduler-toolbar .k-state-selected {
+    background-color: @selected-background;
+    border-color: @selected-background;
+}
+
+.k-scheduler .k-header .k-button:hover,
+.k-scheduler .k-scheduler-toolbar .k-scheduler-views li.k-state-hover,
+.k-scheduler .k-scheduler-toolbar .k-scheduler-views li.k-state-hover .k-link {
+    background-color: @accent-hover-background;
+    border-color: @accent-hover-background;
+}
+
+.k-scheduler .k-scheduler-toolbar .k-scheduler-views li.k-state-selected.k-state-hover,
+.k-scheduler-toolbar>.k-scheduler-views>li.k-state-selected {
+    border-bottom-color: @widget-background-color;
+}
+
+.k-event,
+.k-task-complete {
+    color: @inversed-text-color;    
+}
+
+/* Gantt */
+.k-gantt .k-treelist,
+.k-gantt .k-treelist .k-alt,
+.k-gantt .k-header.k-nonwork-hour,
+.k-gantt .k-treelist .k-alt,
+.k-gantt .k-header.k-nonwork-hour {
+    background-color: @secondary-widget-background-color;
+}
+
+.k-gantt .k-treelist .k-state-selected,
+.k-gantt .k-treelist .k-state-selected td,
+.k-gantt .k-treelist .k-alt.k-state-selected,
+.k-gantt .k-treelist .k-alt.k-state-selected > td {
+    background-color: lighten(@info, 22%);
+}
+
+.k-gantt-toolbar {
+    border-color: @secondary-widget-background-color;
+}
+
+.k-gantt-toolbar .k-button {
+    background-color: @accent;
+    border-color: @accent;
+}
+
+.k-gantt>.k-header li,
+.k-gantt>.k-header .k-link,
+.k-gantt-toolbar .k-button,
+.km-pane-wrapper .k-header .k-button {
+    color: @inversed-text-color;
+}
+
+.k-gantt .k-gantt-toolbar .k-gantt-views li.k-state-hover,
+.k-gantt .k-gantt-toolbar .k-gantt-views li.k-state-hover .k-link,
+.k-gantt .k-gantt-toolbar .k-button:hover,
+.km-pane-wrapper .k-header .k-button:hover {
+    background-color: @accent-hover-background;
+    border-color: @accent-hover-background;
+}
+
+.k-gantt-toolbar>.k-gantt-views>li.k-state-selected,
+.k-gantt .k-gantt-toolbar .k-gantt-views li.k-state-selected.k-state-hover {
+    border-bottom-color: @widget-background-color;  
+}
+
+.k-gantt-toolbar li:first-child,
+.k-gantt-toolbar li:first-child>.k-link,
+.k-gantt-toolbar li:last-child,
+.k-gantt-toolbar li:last-child>.k-link {
+    border-radius: 0;
+}
+
+.k-task-complete {
+    background: darken(@info, 21%);
+}
+
+.k-gantt .k-task-draghandle {
+    border-color: darken(@info, 21%);
+}
+
+.k-task-dot:after {
+    background-color: lighten(@hover-text-color, 8%);
+    border-color: lighten(@hover-text-color, 8%);
+}
+
+.k-task-dot:hover:after {
+    background-color: @normal-text-color;
+    border-color: @normal-text-color;
+}
+
+.k-task-summary {
+    background: darken(@normal-background, 12%);
+}
+
+.k-task-milestone {
+    background-color: darken(@success, 25%);
+}
+
+.k-task-summary-complete {
+    background: @normal-text-color;
+}
+
+.k-state-selected.k-task-summary
+{
+    border-color: orange;
+    background: darkGreen;
+}
+
+.k-state-selected.k-task-milestone,
+.k-state-selected .k-task-summary-complete {    
+    background-color: lighten(@info, 22%);
+    border-color: lighten(@info, 22%);
+}
+
+.k-task-single {
+    color: @inversed-text-color;
+    background-color: lighten(@info, 4%);
+    border-color: lighten(@info, 4%);    
+}
+
+.k-state-selected.k-task-single
+{
+    border-color: brown;
+}
+
+.k-line {
+    background-color: @normal-text-color;
+    color: @normal-text-color;
+}
+
+.k-state-selected.k-line
+{
+    background-color: red;
+    color: yellow;
+}
+
+.k-resource
+{
+    background-color: green;
+}
+
+/* Editor */
+.k-editor.k-header,
+.editorToolbarWindow.k-header,
+.k-filebrowser .k-header {
+    background-color: @widget-background-color;
+    border-color: @widget-border-color;
+}
+
+.k-editor .k-tool.k-state-selected,
+.k-window .k-editor-toolbar .k-tool.k-state-selected {
+    background-color: lighten(@hover-text-color, 8%);
+    border-color: lighten(@hover-text-color, 8%);
+}
+
+.k-window .k-editor-toolbar .k-state-hover {
+    background-color: @hover-background;
+}
+
+/* Toolbar */
+.k-toolbar .k-button-group .k-button {
+    border-color: @widget-background-color;
+}
+
+.k-toolbar .k-button-group .k-button:active,
+.k-toolbar .k-button-group .k-button.k-state-active,
+.k-toolbar .k-overflow-anchor.k-state-active {
+    background-color: lighten(@hover-text-color, 8%);
+}
+
+.k-toolbar .k-overflow-anchor.k-state-active {
+    border-color: lighten(@hover-text-color, 8%);
+}
+
+.k-toolbar .k-overflow-anchor.k-state-border-down,
+.k-toolbar .k-overflow-anchor.k-state-border-up {
+    background-color: @selected-background;
+    border-color: @selected-background;
+}
+
+.k-overflow-container .k-overflow-button,
+.k-split-container .k-button {
+    color: @link-text-color;
+}
+
+.k-overflow-container .k-overflow-button.k-state-active,
+.k-split-container .k-button.k-state-active {
+    color: @selected-text-color;
+}
+
+/* Upload */
+.k-file,
+.k-upload {
+    background-color: @widget-background-color;
+    border-color: @widget-border-color;
+}
+
+.k-file-progress
+{
+    color: red;
+}
+
+.k-file-progress .k-progress {
+    background-color: @accent;
+}
+
+.k-file-success {
+    color: @normal-text-color;
+}
+
+.k-file-success .k-progress {
+    background-color: lighten(@info, 22%);
+}
+
+.k-file-error {
+    color: @inversed-text-color;
+}
+
+.k-file-error .k-progress {
+    background-color: @accent;
+}
