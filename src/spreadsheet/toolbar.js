@@ -56,19 +56,21 @@
             }
 
             function setToggle(tool, toggle) {
-                var toolbarTool = tool.toolbar;
-                var overflowTool = tool.overflow;
+                var toolbar = tool.toolbar;
+                var overflow = tool.overflow;
+                var toggleable = (toolbar && toolbar.options.toggleable) ||
+                                 (overflow && overflow.options.toggleable);
 
-                if (!toolbarTool.toggleable || !overflowTool.toggleable) {
+                if (!toggleable) {
                     toggle = false;
                 }
 
-                if (toolbarTool) {
-                    toolbarTool.toggle(toggle);
+                if (toolbar) {
+                    toolbar.toggle(toggle);
                 }
 
-                if (overflowTool) {
-                    overflowTool.toggle(toggle);
+                if (overflow) {
+                    overflow.toggle(toggle);
                 }
             }
 
