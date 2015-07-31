@@ -194,6 +194,7 @@
                             apply({ text: "Currency", property: "format", value: "$?" }),
                             apply({ text: "Percentage", property: "format", value: "?.00%" })
                         ] },
+                        { type: "borders", overflow: "never" },
                         { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
                         { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
                         { type: "colorPicker", property: "background", toolIcon: "k-backColor", overflow: "never" },

@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.toolbar", "../kendo.colorpicker", "../kendo.combobox", "../kendo.dropdownlist" ], f);
+    define([ "../kendo.toolbar", "../kendo.colorpicker", "../kendo.combobox", "../kendo.dropdownlist", "../kendo.popup" ], f);
 })(function(){
 
 (function(kendo) {
@@ -244,6 +244,101 @@
     });
 
     kendo.toolbar.registerComponent("fontFamily", fontFamily);
+
+    var borders = kendo.toolbar.Item.extend({
+        init: function(options, toolbar) {
+            this.element = $("<a href='#' class='k-button k-button-icon'>" + 
+                                "<span class='k-sprite k-icon k-i-all-borders'>" +
+                                "</span><span class='k-icon k-i-arrow-s'></span>" +
+                            "</a>");
+
+            this.element.on("click", $.proxy(this.open, this));
+
+            this.options = options;
+            this.toolbar = toolbar;
+
+            this._popupElement();
+            this._popup();
+            this._colorPicker();
+
+            this.popupElement.on("click", ".k-spreadsheet-border-type-palette .k-button", $.proxy(this._click, this));
+
+            this.element.data({
+                type: "borders",
+                borders: this
+            });
+        },
+
+        open: function() {
+            this.popup.toggle();
+        },
+
+        _popupElement: function() {
+            var types = [
+                "allBorders",
+                "insideBorders",
+                "insideHorizontalBorders",
+                "insideVerticalBorders",
+                "outsideBorders",
+                "leftBorder",
+                "topBorder",
+                "rightBorder",
+                "bottomBorder",
+                "noBorders"
+            ];
+
+            var buttons = "";
+
+            for (var i = 0; i < types.length; i++) {
+                buttons += '<a href="#" data-border-type="' + types[i] + '" class="k-button k-button-icon">' +
+                                '<span class="k-sprite k-icon k-i-' + kendo.toHyphens(types[i]) + '">' + types[i].replace(/([A-Z])/g, ' $1').toLowerCase() + '</span>' +
+                           '</a>';
+            }
+
+            var popupElement = $("<div>", {
+                "class": "k-spreadsheet-popup k-spreadsheet-border-palette",
+                "html": "<div class='k-spreadsheet-border-type-palette'>" + buttons + "</div><div class='k-spreadsheet-border-style-palette'></div>"
+            });
+
+            this.popupElement = popupElement;
+        },
+
+        _popup: function() {
+            var element = this.element;
+
+            this.popup = this.popupElement.kendoPopup({
+                anchor: element
+            }).data("kendoPopup");
+        },
+
+        _colorPicker: function() {
+            this.color = "#000";
+            this.colorPicker = $("<input />").kendoColorPicker({
+                palette: "basic",
+                value: this.color,
+                change: $.proxy(this._colorChange, this)
+            }).data("kendoColorPicker");
+
+            this.popupElement.find(".k-spreadsheet-border-style-palette").append(this.colorPicker.wrapper);
+        },
+
+        _colorChange: function(e) {
+            this.color = e.value;
+        },
+
+        _click: function(e) {
+            var border = $(e.currentTarget).data("borderType");
+            var style = { size: "1px", color: this.color };
+
+            this.toolbar.trigger("execute", {
+                commandType: "BorderChangeCommand",
+                border: border,
+                style: style
+            });
+        }
+    });
+
+    kendo.toolbar.registerComponent("borders", borders);
 
 })(kendo);
 
