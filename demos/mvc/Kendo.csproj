@@ -90,7 +90,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MobileAppsController.cs" />
     <Compile Include="Controllers\ResponsiveController.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Controllers\Public\UploadController.cs" />
     <Compile Include="Controllers\MobileDeviceController.cs" />
     <Compile Include="Controllers\IntegrationController.cs" />
     <Compile Include="Controllers\SpaController.cs" />

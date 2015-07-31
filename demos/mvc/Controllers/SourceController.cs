@@ -21,7 +21,7 @@ namespace Kendo.Controllers
 
         public ActionResult Index(string path)
         {
-            if (String.IsNullOrEmpty(path) || (!path.StartsWith("~/Views") && !path.StartsWith("~/src")))
+            if (String.IsNullOrEmpty(path) || (!path.StartsWith("~/Views") && !path.StartsWith("~/src") && !path.StartsWith("~/Controllers/Public")))
             {
                 return HttpNotFound();
             }
