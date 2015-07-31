@@ -357,9 +357,9 @@
                     if (ref.isCell()) {
                         this.activeCell(ref);
                     } else {
-                        this.activeCell(this._selection.first());
+                        this.activeCell(this._selection.lastRange().first());
                     }
-                    this._selectionRangeIndex = 0;
+                    this._selectionRangeIndex = this._selection.size() - 1;
                 } else {
                     this.triggerChange({ selection: true });
                 }

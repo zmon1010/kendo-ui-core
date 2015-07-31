@@ -175,11 +175,14 @@
             }
 
             if (reason.selection) {
+                // TODO: uncomment this, it breaks the union
+                /*
                 var text = sheet.selection().values().map(function(row) {
                     return row.join("\t");
                 }).join("\r\n");
 
                 this.clipboard.val(text).select().focus();
+                */
             }
 
             if (reason.activeCell) {

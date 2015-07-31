@@ -77,7 +77,7 @@
             });
         },
 
-        select: function(ref, mode) {
+        select: function(ref, mode, addToExisting) {
             var sheet = this._sheet;
             var grid = sheet._grid;
 
@@ -94,6 +94,10 @@
                 case "sheet":
                     ref = sheet._sheetRef;
                     break;
+            }
+
+            if (addToExisting) {
+                ref = sheet.select().concat(ref);
             }
 
             sheet.select(ref);

@@ -79,14 +79,20 @@
         map: function(callback) {
             return callback(this);
         },
-        first: function() {
-            return this;
-        },
         isCell: function() {
             return false;
         },
 
         // UnionRef overrides these, to access its subranges.
+        first: function() {
+            return this;
+        },
+        lastRange: function() {
+            return this;
+        },
+        size: function() {
+            return 1;
+        },
         rangeAt: function() {
             return this;
         },
@@ -133,6 +139,10 @@
 
                 return true;
             }
+        },
+
+        concat: function(ref) {
+            return new UnionRef([this, ref]);
         }
     });
 
@@ -552,6 +562,12 @@
         first: function() {
             return this.refs[0].first();
         },
+        lastRange: function() {
+            return this.refs[this.length - 1];
+        },
+        size: function() {
+            return this.length;
+        },
         single: function() {
             return this.length == 1;
         },
@@ -574,6 +590,9 @@
             } else {
                 return index - 1;
             }
+        },
+        concat: function(ref) {
+            return new UnionRef(this.refs.concat([ref]));
         }
     });
 

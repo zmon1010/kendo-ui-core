@@ -19,6 +19,8 @@
         34: 'pagedown'
     };
 
+    var Mac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+
     var EventListener = kendo.Class.extend({
         init: function(target, observer, handlers) {
             this._handlers = {};
@@ -82,6 +84,8 @@
             }
 
             var handler = this._handlers[eventKey];
+
+            e.mod = Mac ? e.metaKey : e.ctrlKey;
 
             if (handler) {
                 handler.call(this._observer, e, eventKey);

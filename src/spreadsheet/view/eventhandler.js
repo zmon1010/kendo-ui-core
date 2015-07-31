@@ -141,7 +141,8 @@
             }
 
             this._selectionMode = SELECTION_MODES[object.type];
-            this.navigator.select(object.ref, this._selectionMode);
+            this.appendSelection = event.mod;
+            this.navigator.select(object.ref, this._selectionMode, this.appendSelection);
             clipboard.css({ left: object.x - 4, top: object.y - 4 });
 
             setTimeout(function() {
