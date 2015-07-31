@@ -7,10 +7,6 @@
 
     cursor: default;
 
-    .k-icon {
-        .use-font-icon();
-    }
-
     table {
         table-layout: fixed;
         border-collapse: collapse;
@@ -115,6 +111,11 @@
     > .k-spreadsheet-view {
         position: relative;
     }
+}
+
+.k-spreadsheet .k-icon,
+.k-spreadsheet-popup .k-icon {
+    .use-font-icon();
 }
 
 .k-spreadsheet-top-corner {
