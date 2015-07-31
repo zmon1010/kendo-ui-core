@@ -215,6 +215,62 @@
                       "data-bind='source: formats, value: format' />"
     });
 
+    var BorderChangeCommand = kendo.spreadsheet.BorderChangeCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this);
+            this._type = options.border;
+            this._style = options.style;
+        },
+        exec: function() {
+            this[this._type](this._style);
+        },
+        undo: function() {
+            //TODO
+        },
+        noBorders: function() {
+            this.range().borderLeft(null).borderTop(null).borderRight(null).borderBottom(null);
+        },
+        allBorders: function(style) {
+            this.range().borderLeft(style).borderTop(style).borderRight(style).borderBottom(style);
+        },
+        leftBorder: function(style) {
+            this.range().leftColumn().borderLeft(style);
+        },
+        rightBorder: function(style) {
+            this.range().rightColumn().borderRight(style);
+        },
+        topBorder: function(style) {
+            this.range().topRow().borderTop(style);
+        },
+        bottomBorder: function(style) {
+            this.range().bottomRow().borderBottom(style);
+        },
+        outsideBorders: function(style) {
+            var range = this.range();
+
+            range.leftColumn().borderLeft(style);
+            range.topRow().borderTop(style);
+            range.rightColumn().borderRight(style);
+            range.bottomRow().borderBottom(style);
+        },
+        insideBorders: function(style) {
+            this.allBorders(style);
+            this.outsideBorders(null);
+        },
+        insideHorizontalBorders: function(style) {
+            var range = this.range();
+
+            range.borderBottom(style);
+            range.bottomRow().borderBottom(null);
+        },
+        insideVerticalBorders: function(style) {
+            var range = this.range();
+
+            range.borderRight(style);
+            range.rightColumn().borderRight(null);
+        }
+    });
+
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
