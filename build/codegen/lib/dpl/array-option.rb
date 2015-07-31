@@ -1,0 +1,56 @@
+require 'codegen/lib/dpl/options'
+require 'codegen/lib/dpl/composite-option'
+
+module CodeGen::DPL::Options
+
+    class ArrayItem < CompositeOption
+        def csharp_class
+            owner.csharp_item_class
+        end
+
+        def csharp_builder_class
+            owner.csharp_item_builder_class
+        end
+
+        def full_name
+            @owner.full_name
+        end
+    end
+
+    class ArrayOption < CompositeOption
+        include CodeGen::Array
+
+        DECLARATION = ERB.new(File.read("build/codegen/lib/dpl/templates/array-option-declaration.erb"), 0, '%<>')
+
+        def item_class
+            ArrayItem
+        end
+
+        def csharp_class
+            "List<#{csharp_item_class_name}>"
+        end
+
+        def csharp_item_class
+            item_class = "#{owner.csharp_class}#{csharp_name}"
+
+            case item_class
+                when /s$/       then item_class.chop
+                else                 item_class
+            end
+        end
+
+        def csharp_item_class_name
+            "#{csharp_item_class}"
+        end
+
+        def csharp_class_name
+            "#{csharp_class}"
+        end
+
+        def to_declaration
+            DECLARATION.result(binding)
+        end
+
+    end
+
+end

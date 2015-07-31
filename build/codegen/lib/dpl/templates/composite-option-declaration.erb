@@ -1,0 +1,15 @@
+        private <%= csharp_class_name %> <%= csharp_name.camelize %> = new <%= csharp_class_name %>();
+
+        [DataMember(Name = "<%= csharp_name.camelize %>")]
+        public <%= csharp_class_name %> <%= csharp_name %>
+        {
+            set
+            {
+                <%= csharp_name.camelize %> = value;
+            }
+            get
+            {
+                return <%= csharp_name.camelize %>;
+            }
+        }
+

@@ -1,0 +1,3 @@
+        [DataMember(Name = "<%= csharp_name.camelize %>")]
+        public <%= struct? ? csharp_type + '?' : csharp_type%> <%= csharp_name %> { get; set; }
+
