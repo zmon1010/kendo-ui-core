@@ -69,7 +69,39 @@
             return this._sheet._ref(row, leftCol, 1, rightCol - leftCol);
         },
 
-        modifySelection: function(direction) {
+        setSelectionValue: function(value) {
+            var selection = this._sheet.selection();
+
+            setTimeout(function() {
+                selection.value(value());
+            });
+        },
+
+        select: function(ref, mode) {
+            var sheet = this._sheet;
+            var grid = sheet._grid;
+
+            switch(mode) {
+                case "range":
+                    ref = grid.normalize(ref);
+                    break;
+                case "row":
+                    ref = grid.rowRef(ref.row);
+                    break;
+                case "column":
+                    ref = grid.colRef(ref.col);
+                    break;
+                case "sheet":
+                    ref = sheet._sheetRef;
+                    break;
+            }
+
+            sheet.select(ref);
+        },
+
+        modifySelection: function(action) {
+            var direction = this.determineDirection(action);
+
             var sheet = this._sheet;
             var viewPortHeight = this._viewPortHeight;
             var rows = sheet._grid._rows;
@@ -244,18 +276,6 @@
             sheet.select(new CellRef(row, column));
         },
 
-        shouldSkip: function(row, col) {
-            var ref = new CellRef(row, col);
-            var isMerged = false;
-            this._sheet.forEachMergedCell(function(merged) {
-                if (merged.intersects(ref) && !merged.collapse().eq(ref)) {
-                    isMerged = true;
-                }
-            });
-
-            return isMerged;
-        },
-
         navigateInSelection: function(direction) {
             var sheet = this._sheet;
             var activeCell = sheet.activeCell();
@@ -353,6 +373,72 @@
             } else {
                 sheet.activeCell(new CellRef(row, column));
             }
+        },
+
+        extendSelection: function(ref, mode) {
+            var sheet = this._sheet;
+            var grid = sheet._grid;
+
+            if (mode === "range") {
+                ref = grid.normalize(ref);
+            }
+            if (mode === "row") {
+                ref = grid.rowRef(ref.row).bottomRight;
+            } else if (mode === "column") {
+                ref = grid.colRef(ref.col).bottomRight;
+            }
+
+            var activeCell = sheet.originalActiveCell().toRangeRef();
+            var selection = new kendo.spreadsheet.RangeRef(activeCell.topLeft, ref);
+            sheet.select(selection, false);
+        },
+
+        shouldSkip: function(row, col) {
+            var ref = new CellRef(row, col);
+            var isMerged = false;
+            this._sheet.forEachMergedCell(function(merged) {
+                if (merged.intersects(ref) && !merged.collapse().eq(ref)) {
+                    isMerged = true;
+                }
+            });
+
+            return isMerged;
+        },
+
+        determineDirection: function(action) {
+            var selection = this._sheet.select();
+            var activeCell = this._sheet.activeCell();
+
+            // There may be a third, indeterminate state, caused by a merged cell.
+            // In this state, all key movements are treated as shrinks.
+            // The navigator will reverse them if it detects this it will cause the selection to exclude the active cell.
+            var leftMode = activeCell.topLeft.col == selection.topLeft.col;
+            var rightMode = activeCell.bottomRight.col == selection.bottomRight.col;
+            var topMode = activeCell.topLeft.row == selection.topLeft.row;
+            var bottomMode = activeCell.bottomRight.row == selection.bottomRight.row;
+
+            switch(action) {
+                case "left":
+                    action = rightMode ? "expand-left" : "shrink-left";
+                    break;
+                case "right":
+                    action = leftMode ? "expand-right" : "shrink-right";
+                    break;
+                case "up":
+                    action = bottomMode ? "expand-up" : "shrink-up";
+                    break;
+                case "down":
+                    action = topMode ? "expand-down" : "shrink-down";
+                    break;
+                case "prev-page":
+                    action = bottomMode ? "expand-page-up" : "shrink-page-up";
+                    break;
+                case "next-page":
+                    action = topMode ? "expand-page-down" : "shrink-page-down";
+                    break;
+            }
+
+            return action;
         }
     });
 

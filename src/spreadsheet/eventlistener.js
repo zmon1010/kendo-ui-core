@@ -30,7 +30,8 @@
             this._mousePressed = false;
 
             target.on("keydown", this.keyDownProxy);
-            target.on("mousedown mousemove mouseup cut copy paste scroll wheel", this.mouseProxy);
+            target.on("mousedown cut copy paste scroll wheel", this.mouseProxy);
+
             $(document.documentElement).on("mousemove mouseup", this.mouseProxy);
 
             if (handlers) {
@@ -106,6 +107,7 @@
         destroy: function() {
             this.target.off("keydown", this.keyDownProxy);
             this.target.off("keydown", this.mouseProxy);
+            $(document.documentElement).off("mousemove mouseup", this.mouseProxy);
         }
     });
 

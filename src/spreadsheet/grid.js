@@ -73,6 +73,14 @@
             return new CellRef(index % this.rowCount, (index / this.rowCount) >> 0);
         },
 
+        rowRef: function(row) {
+            return new RangeRef(new CellRef(row, 0), new CellRef(row, this.columnCount - 1));
+        },
+
+        colRef: function(col) {
+            return new RangeRef(new CellRef(0, col), new CellRef(this.rowCount - 1, col));
+        },
+
         cellRefIndex: function(ref) {
             return this.index(ref.row, ref.col);
         },

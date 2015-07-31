@@ -42,6 +42,13 @@
         "paste": "onPaste"
     };
 
+    var SELECTION_MODES = {
+       cell: "range",
+       rowheader: "row",
+       columnheader: "column",
+       topcorner: "sheet"
+    };
+
     var ACTION_KEYS = [];
     var SHIFT_ACTION_KEYS = [];
     var ENTRY_ACTION_KEYS = [];
@@ -58,6 +65,10 @@
     CLIPBOARD_EVENTS[ACTION_KEYS] = "onAction";
     CLIPBOARD_EVENTS[SHIFT_ACTION_KEYS] = "onShiftAction";
     CLIPBOARD_EVENTS[ENTRY_ACTION_KEYS] = "onEntryAction";
+
+    function empty() {
+        return "";
+    }
 
     var ViewEventHandler = kendo.Class.extend({
         init: function(view) {
@@ -93,8 +104,7 @@
                 deltaY *= 10;
             }
 
-            this.scroller.scrollLeft += deltaX;
-            this.scroller.scrollTop += deltaY;
+            this.scrollWith(deltaX, deltaY);
 
             event.preventDefault();
         },
@@ -105,7 +115,11 @@
         },
 
         onPageUp: function() {
-            this.scroller.scrollTop -= this._viewPortHeight;
+            this.scrollDown(-this._viewPortHeight);
+        },
+
+        onPageDown: function() {
+            this.scrollDown(this._viewPortHeight);
         },
 
         onEntryAction: function(event, action) {
@@ -113,48 +127,8 @@
             event.preventDefault();
         },
 
-        onPageDown: function() {
-            this.scroller.scrollTop += this._viewPortHeight;
-        },
-
         onShiftAction: function(event, action) {
-            action = ACTIONS[action.replace("shift+", "")];
-
-            var activeCell = this.view._sheet.activeCell();
-            var selectionTopLeft = this.view._sheet.select().topLeft;
-            var selectionBottomRight = this.view._sheet.select().bottomRight;
-
-            // There may be a third, indeterminate state, caused by a merged cell.
-            // In this state, all key movements are treated as shrinks.
-            // The navigator will reverse them if it detects this it will cause the selection to exclude the active cell.
-            var leftMode = activeCell.topLeft.col == selectionTopLeft.col;
-            var rightMode = activeCell.bottomRight.col == selectionBottomRight.col;
-            var topMode = activeCell.topLeft.row == selectionTopLeft.row;
-            var bottomMode = activeCell.bottomRight.row == selectionBottomRight.row;
-
-            switch(action) {
-                case "left":
-                    action = rightMode ? "expand-left" : "shrink-left";
-                    break;
-                case "right":
-                    action = leftMode ? "expand-right" : "shrink-right";
-                    break;
-                case "up":
-                    action = bottomMode ? "expand-up" : "shrink-up";
-                    break;
-                case "down":
-                    action = topMode ? "expand-down" : "shrink-down";
-                    break;
-                case "prev-page":
-                    action = bottomMode ? "expand-page-up" : "shrink-page-up";
-                    break;
-                case "next-page":
-                    action = topMode ? "expand-page-down" : "shrink-page-down";
-                    break;
-            }
-
-            this.navigator.modifySelection(action);
-
+            this.navigator.modifySelection(ACTIONS[action.replace("shift+", "")]);
             event.preventDefault();
         },
 
@@ -162,11 +136,12 @@
             var clipboard = this.clipboard;
             var object = this.objectAt(event);
 
-            if (object.type === "cell") {
-                this.view._sheet.select(object.ref);
+            if (object.pane) {
                 this.originFrame = object.pane;
             }
 
+            this._selectionMode = SELECTION_MODES[object.type];
+            this.navigator.select(object.ref, this._selectionMode);
             clipboard.css({ left: object.x - 4, top: object.y - 4 });
 
             setTimeout(function() {
@@ -175,35 +150,35 @@
         },
 
         onMouseDrag: function(event, action) {
-            var view = this.view;
-            var scroller = view.scroller;
-            var sheet = this.view._sheet;
+            if (this._selectionMode === "sheet") {
+                return;
+            }
 
             var location = { pageX: event.pageX, pageY: event.pageY };
-
             var object = this.objectAt(location);
+
+            if (object.type === "outside") {
+                this.startAutoScroll(object);
+                return;
+            }
 
             if (this.originFrame === object.pane) {
                 this.selectToLocation(location);
-            } else {
-                if (object.pane) {
-                    var frame = this.originFrame._grid;
+            } else { // cross frame selection
+                var frame = this.originFrame._grid;
 
-                    if (object.x > frame.right) {
-                        scroller.scrollLeft = 0;
-                    }
+                if (object.x > frame.right) {
+                    this.scrollLeft();
+                }
 
-                    if (object.y > frame.bottom) {
-                        scroller.scrollTop = 0;
-                    }
+                if (object.y > frame.bottom) {
+                    this.scrollTop();
+                }
 
-                    if (object.y < frame.top || object.x < frame.left) {
-                        this.startAutoScroll(object, location);
-                    } else {
-                        this.selectToLocation(location);
-                    }
+                if (object.y < frame.top || object.x < frame.left) {
+                    this.startAutoScroll(object, location);
                 } else {
-                    this.startAutoScroll(object);
+                    this.selectToLocation(location);
                 }
             }
         },
@@ -220,20 +195,39 @@
         },
 
         onCut: function(event, action) {
-            var selection = this.view._sheet.selection();
-            setTimeout(function() { selection.value(""); });
+            this.navigator.setSelectionValue(empty);
+        },
+
+        clipBoardValue: function() {
+            return this.clipboard.val();
         },
 
         onPaste: function(event, action) {
-            var selection = this.view._sheet.selection();
-            var clipboard = this.clipboard;
-
-            setTimeout(function() {
-                selection.value(clipboard.val());
-            });
+            this.navigator.setSelectionValue(this.clipBoardValue.bind(this));
         },
 
 ////////////////////////////////////////////////////////////////////
+
+        scrollTop: function() {
+            this.scroller.scrollTop = 0;
+        },
+
+        scrollLeft: function() {
+            this.scroller.scrollLeft = 0;
+        },
+
+        scrollDown: function(value) {
+            this.scroller.scrollTop += value;
+        },
+
+        scrollRight: function(value) {
+            this.scroller.scrollLeft += value;
+        },
+
+        scrollWith: function(right, down) {
+            this.scroller.scrollTop += down;
+            this.scroller.scrollLeft += right;
+        },
 
         objectAt: function(location) {
             var offset = this.container.offset();
@@ -245,20 +239,20 @@
             return this.view.objectAt(coordinates.left, coordinates.top);
         },
 
-        extendSelection: function(ref) {
-            var activeCell = this.view._sheet.originalActiveCell().toRangeRef();
-            var selection = new kendo.spreadsheet.RangeRef(activeCell.topLeft, ref);
-            this.view._sheet.select(selection, false);
-        },
-
         selectToLocation: function(cellLocation) {
             var object = this.objectAt(cellLocation);
-            if (object.type === "cell") {
-                this.extendSelection(object.ref);
+
+            if (object.pane) { // cell, rowheader or columnheader
+                this.extendSelection(object);
                 this.lastKnownCellLocation = cellLocation;
                 this.originFrame = object.pane;
             }
+
             this.stopAutoScroll();
+        },
+
+        extendSelection: function(object) {
+            this.navigator.extendSelection(object.ref, this._selectionMode);
         },
 
         autoScroll: function() {
@@ -273,22 +267,22 @@
             var scrollTop = scroller.scrollTop;
 
             if (x < boundaries.left) {
-                scroller.scrollLeft -= scrollStep;
+                this.scrollRight(-scrollStep);
             }
             if (x > boundaries.right) {
-                scroller.scrollLeft += scrollStep;
+                this.scrollRight(scrollStep);
             }
             if (y < boundaries.top) {
-                scroller.scrollTop -= scrollStep;
+                this.scrollDown(-scrollStep);
             }
             if (y > boundaries.bottom) {
-                scroller.scrollTop += scrollStep;
+                this.scrollDown(scrollStep);
             }
 
             if (scrollTop === scroller.scrollTop && scrollLeft === scroller.scrollLeft) {
                 this.selectToLocation(this.finalLocation);
             } else {
-                this.extendSelection(this.objectAt(this.lastKnownCellLocation).ref);
+                this.extendSelection(this.objectAt(this.lastKnownCellLocation));
             }
         },
 

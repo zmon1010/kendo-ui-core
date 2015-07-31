@@ -124,9 +124,9 @@
                 var column = pane._grid.columns.index(x, this.scroller.scrollLeft);
 
                 if (x < grid._headerWidth) {
-                    object = { type: "rowheader", row: row };
+                    object = { type: "rowheader", ref: new CellRef(row, -Infinity) };
                 } else if (y < grid._headerHeight) {
-                    object = { type: "columnheader", column: column };
+                    object = { type: "columnheader", ref: new CellRef(-Infinity, column) };
                 } else {
                     object = { type: "cell", ref: new CellRef(row, column) };
                 }
