@@ -405,6 +405,11 @@
 
         _border: function(value) {
             var json = JSON.parse(value);
+
+            if (json === null) {
+                return undefined;
+            }
+
             return [
                 "solid",
                 json && json.size || "1px",
