@@ -111,23 +111,31 @@
         objectAt: function(x, y) {
             var grid = this._sheet._grid;
 
-            if (x < grid._headerWidth && y < grid._headerHeight) {
-                return { type: "topcorner" };
+            var object, pane;
+
+            if (x < 0 || y < 0 || x > this.scroller.clientWidth || y > this.scroller.clientHeight) {
+                object = { type: "outside" };
+            } else if (x < grid._headerWidth && y < grid._headerHeight) {
+                object = { type: "topcorner" };
+            } else {
+                pane = this.paneAt(x, y);
+
+                var row = pane._grid.rows.index(y, this.scroller.scrollTop);
+                var column = pane._grid.columns.index(x, this.scroller.scrollLeft);
+
+                if (x < grid._headerWidth) {
+                    object = { type: "rowheader", row: row };
+                } else if (y < grid._headerHeight) {
+                    object = { type: "columnheader", column: column };
+                } else {
+                    object = { type: "cell", ref: new CellRef(row, column) };
+                }
             }
 
-            var pane = this.paneAt(x, y);
-            var row = pane._grid.rows.index(y, this.scroller.scrollTop);
-            var column = pane._grid.columns.index(x, this.scroller.scrollLeft);
-
-            if (x < grid._headerWidth) {
-                return { type: "rowheader", row: row };
-            }
-
-            if (y < grid._headerHeight) {
-                return { type: "columnheader", column: column };
-            }
-
-            return { type: "cell", ref: new CellRef(row, column) };
+            object.pane = pane;
+            object.x = x;
+            object.y = y;
+            return object;
         },
 
         paneAt: function(x, y) {

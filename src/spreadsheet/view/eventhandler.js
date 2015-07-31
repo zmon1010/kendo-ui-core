@@ -30,7 +30,8 @@
     var CONTAINER_EVENTS = {
         "wheel": "onWheel",
         "mousedown": "onMouseDown",
-        "mousedrag": "onMouseDrag"
+        "mousedrag": "onMouseDrag",
+        "mouseup": "onMouseUp"
     };
 
     var CLIPBOARD_EVENTS = {
@@ -173,6 +174,7 @@
 
             if (object.type === "cell") {
                 this.view._sheet.select(object.ref);
+                this.activePane = object.pane;
             }
 
             clipboard.css({ left: object.x - 4, top: object.y - 4 });
@@ -182,13 +184,107 @@
             });
         },
 
-        onMouseDrag: function(event, action) {
-            var sheet = this.view._sheet;
-            var object = this.objectAt(event);
-            var activeCell = sheet.originalActiveCell().toRangeRef();
+        extendSelection: function(ref) {
+            var activeCell = this.view._sheet.originalActiveCell().toRangeRef();
+            var selection = new kendo.spreadsheet.RangeRef(activeCell.topLeft, ref);
+            this.view._sheet.select(selection, false);
+        },
 
-            var selection = new kendo.spreadsheet.RangeRef(activeCell.topLeft, object.ref);
-            sheet.select(selection, false);
+        onMouseDrag: function(event, action) {
+            var view = this.view;
+            var scroller = view.scroller;
+            var sheet = this.view._sheet;
+
+            var location = { pageX: event.pageX, pageY: event.pageY };
+
+            var object = this.objectAt(location);
+            var currentPane = object.pane;
+            var activePane = this.activePane;
+
+            if (activePane === currentPane) {
+                this.stopScrolling();
+
+                if (object.type === "cell") {
+                    this.extendSelection(object.ref);
+                    this.lastSuccessfulLocation = location;
+                }
+            } else {
+                this.finalLocation = null;
+
+                if (currentPane) {
+                    var frame = activePane._grid;
+
+                    var atLeft = object.x < frame.left;
+                    var atRight = object.x > frame.right;
+                    var atTop = object.y < frame.top;
+                    var atBottom = object.y > frame.bottom;
+
+                    if (atRight) {
+                        scroller.scrollLeft = 0;
+                    }
+                    if (atBottom) {
+                        scroller.scrollTop = 0;
+                    }
+
+                    if (atTop || atLeft) {
+                        this.finalLocation = location;
+                        this.startScrolling(object);
+                    } else {
+                        this.extendSelection(this.objectAt(location).ref);
+                        this.lastSuccessfulLocation = location;
+                        this.stopScrolling();
+                    }
+                } else {
+                    this.startScrolling(object);
+                }
+            }
+        },
+
+        startScrolling: function(mouseLocation) {
+            if (!this._scrollInterval) {
+                this._scrollInterval = setInterval(function() {
+                    var x = this._mouseLocation.x;
+                    var y = this._mouseLocation.y;
+                    var boundaries = this.activePane._grid;
+                    var scroller = this.view.scroller;
+                    var scrollStep = 8;
+                    var object;
+
+                    var scrollLeft = scroller.scrollLeft;
+                    var scrollTop = scroller.scrollTop;
+
+                    if (x < boundaries.left) {
+                        scroller.scrollLeft -= scrollStep;
+                    }
+                    if (x > boundaries.right) {
+                        scroller.scrollLeft += scrollStep;
+                    }
+                    if (y < boundaries.top) {
+                        scroller.scrollTop -= scrollStep;
+                    }
+                    if (y > boundaries.bottom) {
+                        scroller.scrollTop += scrollStep;
+                    }
+
+                    // end reached
+                    if (scrollTop === scroller.scrollTop && scrollLeft === scroller.scrollLeft) {
+                        object = this.objectAt(this.finalLocation);
+                        this.extendSelection(object.ref);
+                        this.lastSuccessfulLocation = this.finalLocation;
+                        this.stopScrolling();
+                    } else {
+                        object = this.objectAt(this.lastSuccessfulLocation);
+                        this.extendSelection(object.ref);
+                    }
+                }.bind(this), 50);
+            }
+
+            this._mouseLocation = mouseLocation;
+        },
+
+        stopScrolling: function() {
+            clearInterval(this._scrollInterval);
+            this._scrollInterval = null;
         },
 
         onMouseUp: function(event, action) {
@@ -198,6 +294,8 @@
                     top: -10000
                 });
             }.bind(this));
+
+            this.stopScrolling();
         },
 
         onCut: function(event, action) {
