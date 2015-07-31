@@ -307,6 +307,22 @@
 
         clearFilter: function(spec) {
             this._sheet._clearFilter(spec instanceof Array ? spec : [spec]);
+        },
+
+        leftColumn: function() {
+            return new Range(this._ref.leftColumn(), this._sheet);
+        },
+
+        rightColumn: function() {
+            return new Range(this._ref.rightColumn(), this._sheet);
+        },
+
+        topRow: function() {
+            return new Range(this._ref.topRow(), this._sheet);
+        },
+
+        bottomRow: function() {
+            return new Range(this._ref.bottomRow(), this._sheet);
         }
     });
 

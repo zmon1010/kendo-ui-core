@@ -416,8 +416,14 @@
         leftColumn: function() {
             return new RangeRef(this.topLeft, new CellRef(this.bottomRight.row, this.topLeft.col));
         },
+        rightColumn: function() {
+            return new RangeRef(new CellRef(this.topLeft.row, this.bottomRight.col), this.bottomRight);
+        },
         topRow: function() {
             return new RangeRef(this.topLeft, new CellRef(this.topLeft.row, this.bottomRight.col));
+        },
+        bottomRow: function() {
+            return new RangeRef(new CellRef(this.bottomRight.row, this.topLeft.col), this.bottomRight);
         },
         toRangeRef: function() {
             return this;
