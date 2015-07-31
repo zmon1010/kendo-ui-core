@@ -1,7 +1,7 @@
 (function() {
     var element;
     var formulaBar;
-    var input;
+    var formulaInput;
 
     module("Spreadsheet FormulaBar", {
         setup: function() {
@@ -15,23 +15,24 @@
     function createFormulaBar(options) {
         options = options || {};
         formulaBar = new kendo.spreadsheet.FormulaBar(element, options);
-        input = formulaBar.element.find("input");
+        formulaInput = formulaBar.element.find("div.k-spreadsheet-formula-input").data("kendoFormulaInput");
     }
 
-    test("renders value input", function() {
+    test("renders formula input", function() {
         createFormulaBar();
 
-        ok(input.length, 1);
+        ok(formulaInput instanceof kendo.spreadsheet.FormulaInput);
     });
 
-    test("triggers change event on input change", 1, function() {
+    test("triggers change event on formula input change", 1, function() {
         createFormulaBar({
             change: function(e) {
                 equal(e.value, "foo");
             }
         });
 
-        input.val("foo").trigger("change");
+        formulaInput.value("foo");
+        formulaInput.element.trigger("blur");
     });
 
     test("value sets input value", function() {
@@ -39,7 +40,7 @@
 
         formulaBar.value("bar");
 
-        equal(input.val(), "bar");
+        equal(formulaInput.value(), "bar");
     });
 
 })();

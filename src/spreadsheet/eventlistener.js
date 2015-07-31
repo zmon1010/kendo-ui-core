@@ -21,7 +21,7 @@
 
     var Mac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 
-    var isChar = function(keyCode) {
+    var isAlphaNum = function(keyCode) {
         if ((keyCode > 47 && keyCode < 58)   || // number keys
             (keyCode > 64 && keyCode < 91)   || // letter keys
             (keyCode > 95 && keyCode < 112)  || // numpad keys
@@ -36,8 +36,8 @@
     var keyName = function(keyCode) {
         var name = KEY_NAMES[keyCode];
 
-        if (!name && isChar(keyCode)) {
-            name = "char";
+        if (!name && isAlphaNum(keyCode)) {
+            name = ":alphanum";
         }
 
         return name;

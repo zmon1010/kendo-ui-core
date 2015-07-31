@@ -26,6 +26,8 @@
         "enter": "lower",
         "shift+enter": "upper"
         "*+char": "edit"
+        "shift+:alphanum": "edit",
+        ":alphanum": "edit"
     };
 
     var CONTAINER_EVENTS = {
@@ -76,13 +78,12 @@
             this.view = view;
             this.container = $(view.container);
             this.clipboard = $(view.clipboard);
-            this.editor = $(view.editor);
+            this.formulaInput = view.formulaInput;
             this.scroller = view.scroller;
 
             $(view.scroller).on("scroll", this.onScroll.bind(this));
             this.listener = new kendo.spreadsheet.EventListener(this.container, this, CONTAINER_EVENTS);
             this.keyListener = new kendo.spreadsheet.EventListener(this.clipboard, this, CLIPBOARD_EVENTS);
-            this.editListener = new kendo.spreadsheet.EventListener(this.editor, this, EDITOR_EVENTS);
         },
 
         sheet: function(sheet) {
@@ -126,12 +127,19 @@
         },
 
         onEntryAction: function(event, action) {
-            if (action === "char") {
-                alert("char");
-                return;
+            if (action === ":alphanum") {
+                var ref = this.view._sheet.activeCell();
+                var rectangle = this.view._sheet._grid.rectangle(ref);
+                var value = new kendo.spreadsheet.Range(ref, this.view._sheet)._editableValue();
+
+                this.formulaInput.setup({
+                    value: value,
+                    rectangle: rectangle
+                });
+            } else {
+                this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
             }
 
-            this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
             event.preventDefault();
         },
 

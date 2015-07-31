@@ -3,6 +3,7 @@
         "./util/undoredostack",
         "./spreadsheet/commands",
         "./spreadsheet/formulabar",
+        "./spreadsheet/formulainput",
         "./spreadsheet/eventlistener",
         "./spreadsheet/rangelist",
         "./spreadsheet/propertybag",

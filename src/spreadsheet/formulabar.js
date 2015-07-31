@@ -11,23 +11,28 @@
 
             element.addClass("k-spreadsheet-formula-bar");
 
-            this._valueInput = $("<input class='k-spreadsheet-formula-input'>").appendTo(element);
-
-            this._valueInput.on("change", $.proxy(this._onChange, this));
+            this._formulaInput = new kendo.spreadsheet.FormulaInput($("<div/>").appendTo(element), {
+                change: this._onChange.bind(this)
+            });
         },
         events: [
             "change"
         ],
         _onChange: function(e) {
-            this.trigger("change", {
-                value: this._valueInput.val()
-            });
+            this.trigger("change", e);
         },
         value: function(value) {
-            this._valueInput.val(value);
+            if (value === undefined) {
+                return this._formulaInput.value();
+            }
+
+            this._formulaInput.value(value);
         },
         destroy: function() {
-            this._valueInput = null;
+            if (this._formulaInput) {
+                this._formulaInput.destroy();
+            }
+            this._formulaInput = null;
         }
     });
 

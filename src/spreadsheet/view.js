@@ -77,7 +77,7 @@
         }
     });
 
-    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><textarea tabindex="0" class="k-spreadsheet-clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea><div class="k-spreadsheet-editor" contenteditable="true"></div>';
+    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><textarea tabindex="0" class="k-spreadsheet-clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea><div class="k-spreadsheet-formula-input"></div>';
 
     function within(value, min, max) {
         return value >= min && value <= max;
@@ -100,6 +100,7 @@
             this.editor = viewElement.find(".k-spreadsheet-editor");
 
             this.viewSize = $(this.scroller.firstChild);
+            this._formulaInput(element);
 
             this.tree = new kendo.dom.Tree(this.container);
             this.eventHandler = new kendo.spreadsheet.ViewEventHandler(this);
@@ -383,6 +384,12 @@
             merged.push(topCorner);
 
             this.tree.render(merged);
+        },
+
+        _formulaInput: function(element) {
+            var editor = element.find(".k-spreadsheet-formula-input");
+
+            this.formulaInput = new kendo.spreadsheet.FormulaInput(editor);
         },
 
         _pane: function(row, column, rowCount, columnCount) {
