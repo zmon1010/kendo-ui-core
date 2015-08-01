@@ -593,6 +593,9 @@
         },
         concat: function(ref) {
             return new UnionRef(this.refs.concat([ref]));
+        },
+        print: function() {
+            return this.refs.map(function(ref) { return ref.print(); }).join(",");
         }
     });
 

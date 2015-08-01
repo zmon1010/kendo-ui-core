@@ -1,5 +1,6 @@
 (function() {
     var sheet, navigator;
+    var CellRef = kendo.spreadsheet.CellRef;
     var defaults = kendo.ui.Spreadsheet.prototype.options;
     var success = $.proxy(ok, null, true);
     var failure = $.proxy(ok, null, false);
@@ -106,14 +107,15 @@
 
     test("next moves to the next range", function() {
         sheet.range("B2:C3,D4:E5").select();
-        next(4);
         activeCellEqual("D4");
+        next(4);
+        activeCellEqual("B2");
     });
 
     test("next eventually comes back to the first range", function() {
         sheet.range("B2:C3,D4:E5").select();
         next(8);
-        activeCellEqual("B2");
+        activeCellEqual("D4");
     });
 
     module("previous navigation", {
@@ -183,14 +185,15 @@
 
     test("previous moves to the previous range", function() {
         sheet.range("B2:C3,D4:E5").select();
+        activeCellEqual("D4");
         previous(2);
-        activeCellEqual("D5");
+        activeCellEqual("B3");
     });
 
     test("previous eventually comes back to the first range", function() {
         sheet.range("B2:C3,D4:E5").select();
         previous(8);
-        activeCellEqual("B2");
+        activeCellEqual("D4");
     });
 
     module("lower navigation", {
@@ -260,14 +263,15 @@
 
     test("moves to the lower range", function() {
         sheet.range("B2:C3,D4:E5").select();
-        lower(4);
         activeCellEqual("D4");
+        lower(4);
+        activeCellEqual("B2");
     });
 
     test("eventually comes back to the first range", function() {
         sheet.range("B2:C3,D4:E5").select();
         lower(8);
-        activeCellEqual("B2");
+        activeCellEqual("D4");
     });
 
     module("upper navigation", {
@@ -325,14 +329,15 @@
 
     test("moves to the upper range", function() {
         sheet.range("B2:C3,D4:E5").select();
-        upper(4);
         activeCellEqual("D4");
+        upper(4);
+        activeCellEqual("B2");
     });
 
     test("eventually comes back to the first range", function() {
         sheet.range("B2:C3,D4:E5").select();
         upper(8);
-        activeCellEqual("B2");
+        activeCellEqual("D4");
     });
 
     module("Sheet Navigator edges", {
@@ -486,5 +491,20 @@
         navigator.modifySelection('shrink-right');
         navigator.modifySelection('shrink-right');
         selectionEqual('B3:F4');
+    });
+
+    module('composite navigation', {
+        setup: function() {
+            sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
+            defaults.rowHeight, defaults.columnWidth);
+            navigator = new kendo.spreadsheet.SheetNavigator(sheet, 1000);
+        }
+    });
+
+    test("navigator selection adds up stuff", function() {
+        navigator.select(new CellRef(1, 1), 'cell');
+        navigator.select(new CellRef(2, 2), 'cell', true);
+        navigator.select(new CellRef(3, 3), 'cell', true);
+        selectionEqual('B2:B2,C3:C3,D4:D4');
     });
 })();
