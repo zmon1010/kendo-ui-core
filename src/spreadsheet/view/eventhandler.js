@@ -128,7 +128,7 @@
         },
 
         onShiftAction: function(event, action) {
-            this.navigator.modifySelection(ACTIONS[action.replace("shift+", "")]);
+            this.navigator.modifySelection(ACTIONS[action.replace("shift+", "")], this.appendSelection);
             event.preventDefault();
         },
 
@@ -143,7 +143,7 @@
             this._selectionMode = SELECTION_MODES[object.type];
             this.appendSelection = event.mod;
             this.navigator.select(object.ref, this._selectionMode, this.appendSelection);
-            clipboard.css({ left: object.x - 4, top: object.y - 4 });
+            // clipboard.css({ left: object.x - 4, top: object.y - 4 });
 
             setTimeout(function() {
                 clipboard.select().focus();
@@ -253,7 +253,7 @@
         },
 
         extendSelection: function(object) {
-            this.navigator.extendSelection(object.ref, this._selectionMode);
+            this.navigator.extendSelection(object.ref, this._selectionMode, this.appendSelection);
         },
 
         autoScroll: function() {

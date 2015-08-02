@@ -507,4 +507,25 @@
         navigator.select(new CellRef(3, 3), 'cell', true);
         selectionEqual('B2:B2,C3:C3,D4:D4');
     });
+
+    test("navigator modifies selection from the active cell sub range (mouse)", function() {
+        navigator.select(new CellRef(1, 1), 'cell');
+        navigator.select(new CellRef(2, 2), 'cell', true);
+        navigator.select(new CellRef(3, 3), 'cell', true);
+        selectionEqual('B2:B2,C3:C3,D4:D4');
+        navigator.extendSelection(new CellRef(4,4), 'range');
+        selectionEqual('B2:B2,C3:C3,D4:E5');
+    });
+
+    test("navigator modifies selection from the active cell sub range (keyboard)", function() {
+        navigator.select(new CellRef(1, 1), 'cell');
+        navigator.select(new CellRef(2, 2), 'cell', true);
+        navigator.select(new CellRef(3, 3), 'cell', true);
+        selectionEqual('B2:B2,C3:C3,D4:D4');
+        activeCellEqual("D4");
+        navigator.navigateInSelection("previous");
+        activeCellEqual("C3");
+        navigator.modifySelection("expand-right", true);
+        selectionEqual('B2:B2,C3:D3,D4:D4');
+    });
 })();

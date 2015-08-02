@@ -350,7 +350,7 @@
             if (ref) {
                 ref = this._ref(ref);
 
-                this._originalSelection = ref.toRangeRef();
+                this._originalSelection = ref;
                 this._selection = this.unionWithMerged(ref);
 
                 if (changeActiveCell !== false) {
@@ -368,12 +368,20 @@
             return this._selection;
         },
 
+        originalSelect: function() {
+            return this._originalSelection;
+        },
+
         currentSelectionRange: function() {
             if (this.singleCellSelection()) {
                 return this._sheetRef;
             } else {
                 return this._selection.rangeAt(this._selectionRangeIndex).toRangeRef();
             }
+        },
+
+        currentOriginalSelectionRange: function() {
+            return this._originalSelection.rangeAt(this._selectionRangeIndex).toRangeRef();
         },
 
         nextSelectionRange: function() {
@@ -383,15 +391,15 @@
             return this.currentSelectionRange();
         },
 
+        selectionRangeIndex: function() {
+            return this._selectionRangeIndex;
+        },
+
         previousSelectionRange: function() {
             if (!this.singleCellSelection()) {
                 this._selectionRangeIndex = this._selection.previousRangeIndex(this._selectionRangeIndex);
             }
             return this.currentSelectionRange();
-        },
-
-        originalSelect: function() {
-            return this._originalSelection;
         },
 
         unionWithMerged: function(ref) {

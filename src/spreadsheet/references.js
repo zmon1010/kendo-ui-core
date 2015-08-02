@@ -102,7 +102,6 @@
         previousRangeIndex: function() {
             return 0;
         },
-
         eq: function(reference) {
             var r1 = this;
             var r2 = reference;
@@ -143,6 +142,10 @@
 
         concat: function(ref) {
             return new UnionRef([this, ref]);
+        },
+
+        replaceAt: function(index, ref) {
+            return ref;
         }
     });
 
@@ -596,6 +599,12 @@
         },
         print: function() {
             return this.refs.map(function(ref) { return ref.print(); }).join(",");
+        },
+
+        replaceAt: function(index, ref) {
+            var newRefs = this.refs.slice();
+            newRefs.splice(index, 1, ref);
+            return new UnionRef(newRefs);
         }
     });
 

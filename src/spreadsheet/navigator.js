@@ -111,8 +111,8 @@
             var rows = sheet._grid._rows;
             var columns = sheet._grid._columns;
 
-            var originalSelection = sheet.originalSelect();
-            var selection = sheet.select();
+            var originalSelection = sheet.currentOriginalSelectionRange();
+            var selection = sheet.currentSelectionRange();
             var activeCell = sheet.activeCell();
 
             var topLeft = originalSelection.topLeft.clone();
@@ -219,7 +219,7 @@
                 sheet.focus(scrollInto);
             }
 
-            sheet.select(newSelection, false);
+            this.updateCurrentSelectionRange(newSelection);
         },
 
         moveActiveCell: function(direction) {
@@ -393,8 +393,8 @@
             }
 
             var activeCell = sheet.originalActiveCell().toRangeRef();
-            var selection = new kendo.spreadsheet.RangeRef(activeCell.topLeft, ref);
-            sheet.select(selection, false);
+
+            this.updateCurrentSelectionRange(new RangeRef(activeCell.topLeft, ref));
         },
 
         shouldSkip: function(row, col) {
@@ -410,7 +410,7 @@
         },
 
         determineDirection: function(action) {
-            var selection = this._sheet.select();
+            var selection = this._sheet.currentSelectionRange();
             var activeCell = this._sheet.activeCell();
 
             // There may be a third, indeterminate state, caused by a merged cell.
@@ -443,6 +443,11 @@
             }
 
             return action;
+        },
+
+        updateCurrentSelectionRange: function(ref) {
+            var sheet = this._sheet;
+            sheet.select(sheet.originalSelect().replaceAt(sheet.selectionRangeIndex(), ref), false);
         }
     });
 
