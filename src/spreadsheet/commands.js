@@ -188,14 +188,9 @@
         close: function() {
             this.popup().close();
         },
-        clear: function() {
-            this.range().format(null);
-            this.close();
-        },
         title: "Format Cells",
         template: "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
 
-                  "<button class='k-button' data-bind='click: clear'>Use automatic format</button>" +
                   "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
 
                   "<div class='k-simple-tabs' " +

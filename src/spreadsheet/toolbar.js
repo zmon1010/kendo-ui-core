@@ -62,7 +62,7 @@
                                  (overflow && overflow.options.toggleable);
 
                 if (!toggleable) {
-                    toggle = false;
+                    return;
                 }
 
                 if (toolbar) {
@@ -78,7 +78,7 @@
                 var tool = tools[name];
                 var value = range[name]();
 
-                if (tool instanceof Array) { //text alignment tool groups
+                if (tool instanceof Array) { // text alignment tool groups
                     for (var i = 0; i < tool.length; i++) {
                         setToggle(tool[i], tool[i].toolbar.element.attr("data-value") === value);
                     }
@@ -212,36 +212,51 @@
     var FONT_FAMILIES = ["Arial", "Courier New", "Georgia", "Times New Roman", "Trebuchet MS", "Verdana"];
     var DEFAULT_FONT_FAMILY = "Arial";
 
-    var fontFamily = kendo.toolbar.Item.extend({
+    var DropDownTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
-            var dropDownList = $("<select />").kendoDropDownList({
-                change: function(e) {
-                    toolbar.trigger("execute", {
-                        commandType: "PropertyChangeCommand",
-                        property: options.property,
-                        value: this.value()
-                    });
-                },
-                dataSource: options.fontFamilies || FONT_FAMILIES,
-                value: DEFAULT_FONT_FAMILY
-            }).data("kendoDropDownList");
+            var dropDownList = $("<select />").kendoDropDownList().data("kendoDropDownList");
 
             this.dropDownList = dropDownList;
             this.element = dropDownList.wrapper;
             this.options = options;
             this.toolbar = toolbar;
 
+            dropDownList.bind("open", this._open.bind(this));
+
             this.element.width(options.width).attr({
                 "data-command": "PropertyChangeCommand",
                 "data-property": options.property
             });
+        },
+        _open: function() {
+            var ddl = this.dropDownList;
+            var list = ddl.list;
+            var listWidth;
 
-            this.element.data({
-                type: "fontFamily",
-                fontFamily: this
+            list.css({
+                whiteSpace: "nowrap",
+                width: "auto"
+            });
+
+            listWidth = list.width();
+
+            if (listWidth) {
+                listWidth += 20;
+            } else {
+                listWidth = ddl._listWidth;
+            }
+
+            list.css("width", listWidth + kendo.support.scrollbar());
+
+            ddl._listWidth = listWidth;
+        },
+        _change: function(e) {
+            this.toolbar.trigger("execute", {
+                commandType: "PropertyChangeCommand",
+                property: this.options.property,
+                value: e.sender.value()
             });
         },
-
         value: function(value) {
             if (value !== undefined) {
                 this.dropDownList.value(value);
@@ -251,7 +266,57 @@
         }
     });
 
-    kendo.toolbar.registerComponent("fontFamily", fontFamily);
+    kendo.toolbar.registerComponent("fontFamily", DropDownTool.extend({
+        init: function(options, toolbar) {
+            DropDownTool.fn.init.call(this, options, toolbar);
+
+            var ddl = this.dropDownList;
+            ddl.bind("change", this._change.bind(this));
+            ddl.setDataSource(options.fontFamilies || FONT_FAMILIES);
+            ddl.value(DEFAULT_FONT_FAMILY);
+
+            this.element.data({
+                type: "fontFamily",
+                fontFamily: this
+            });
+        }
+    }));
+
+    kendo.toolbar.registerComponent("format", DropDownTool.extend({
+        init: function(options, toolbar) {
+            DropDownTool.fn.init.call(this, options, toolbar);
+
+            var ddl = this.dropDownList;
+            ddl.bind("change", this._change.bind(this));
+            ddl.setOptions({
+                dataValueField: "format",
+                dataValuePrimitive: true,
+                template:
+                    "#: data.name #" +
+                    "# if (data.sample) { #" +
+                        "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
+                    "# } #",
+            });
+            ddl.setDataSource([
+                { format: null, name: "Automatic" },
+                { format: "?", name: "Number", sample: "1,499.99" },
+                { format: "?", name: "Percent", sample: "14.50%" },
+                { format: "?", name: "Scientific", sample: "1.4E+05" },
+                { format: "?", name: "Financial", sample: "(1,000.12)" },
+                { format: "$?", name: "Currency", sample: "$1,499.99" },
+                { format: "?", name: "Date", sample: "4/21/2012" },
+                { format: "?", name: "Time", sample: "5:49:00 PM" },
+                { format: "?", name: "Date time", sample: "4/21/2012 5:49:00" },
+                { format: "?", name: "Duration", sample: "168:04:00" }
+            ]);
+            ddl.text("Format");
+
+            this.element.data({
+                type: "format",
+                format: this
+            });
+        }
+    }));
 
     var borders = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
