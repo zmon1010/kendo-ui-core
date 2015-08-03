@@ -496,7 +496,9 @@
             var bottom = this.bottomRight.row + num(options.bottom);
             var right = this.bottomRight.col + num(options.right);
 
-            if (top <= bottom && left <= right) {
+            if (left < 0 && right < 0 || top < 0 && bottom < 0) {
+                return NULL;
+            } else if (top <= bottom && left <= right) {
                 return new RangeRef(new CellRef(limit(top), limit(left)),
                                     new CellRef(limit(bottom), limit(right)));
             } else {

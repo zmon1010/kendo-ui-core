@@ -135,9 +135,9 @@
     });
 
     test("borderLeft symmetry", function() {
-        range.borderLeft({ color: "#f00" });
+        sheet.range("B1").borderLeft({ color: "#f00" });
 
-        equal(range.borderLeft().color, "#f00");
+        equal(sheet.range("B1").borderLeft().color, "#f00");
     });
 
     test("borderRight symmetry", function() {
@@ -147,9 +147,9 @@
     });
 
     test("borderTop symmetry", function() {
-        range.borderTop({ color: "#f00" });
+        sheet.range("A2").borderTop({ color: "#f00" });
 
-        equal(range.borderTop().color, "#f00");
+        equal(sheet.range("A2").borderTop().color, "#f00");
     });
 
     test("borderBottom symmetry", function() {
@@ -512,6 +512,12 @@
         sheet.range("A1")._editableValue("bar");
 
         equal(handler.calls, 1);
+    });
+
+    test("borderLeft on leftmost cell does not set right border", function() {
+        range.borderLeft({ color: "#f00" });
+
+        ok(!range.borderRight());
     });
 
 })();

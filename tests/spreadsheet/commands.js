@@ -238,10 +238,10 @@
         command.range(sheet.range("A1:B2"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "left,top,right,bottom");
-        equal(getBorders(sheet.range("A2:A2")), "left,top,right,bottom");
-        equal(getBorders(sheet.range("B1:B1")), "left,top,right,bottom");
-        equal(getBorders(sheet.range("B2:B2")), "left,top,right,bottom");
+        equal(getBorders(sheet.range("A1")), "right,bottom");
+        equal(getBorders(sheet.range("A2")), "top,right,bottom");
+        equal(getBorders(sheet.range("B1")), "left,right,bottom");
+        equal(getBorders(sheet.range("B2")), "left,top,right,bottom");
     });
 
     test("noBorders command clears all borders", function() {
@@ -250,103 +250,97 @@
         command.range(sheet.range("A1:B2"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "");
-        equal(getBorders(sheet.range("A2:A2")), "");
-        equal(getBorders(sheet.range("B1:B1")), "");
-        equal(getBorders(sheet.range("B2:B2")), "");
+        equal(getBorders(sheet.range("A1")), "");
+        equal(getBorders(sheet.range("A2")), "");
+        equal(getBorders(sheet.range("B1")), "");
+        equal(getBorders(sheet.range("B2")), "");
     });
 
-/* commented due to bug in borders API
     test("borderLeft commands sets border only on the leftColumn", function() {
         var command = new BorderChangeCommand({ border: "leftBorder", style: { size: "1px", color: "#F00" } });
-        command.range(sheet.range("A1:B2"));
+        command.range(sheet.range("B1:C2"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "left");
-        equal(getBorders(sheet.range("A2:A2")), "left");
-        equal(getBorders(sheet.range("B1:B1")), "");
-        equal(getBorders(sheet.range("B2:B2")), "");
+        equal(getBorders(sheet.range("B1")), "left");
+        equal(getBorders(sheet.range("B2")), "left");
+        equal(getBorders(sheet.range("C1")), "");
+        equal(getBorders(sheet.range("C2")), "");
     });
-*/
 
     test("borderRight commands sets border only on the rightColumn", function() {
         var command = new BorderChangeCommand({ border: "rightBorder", style: { size: "1px", color: "#F00" } });
         command.range(sheet.range("A1:B2"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "");
-        equal(getBorders(sheet.range("A2:A2")), "");
-        equal(getBorders(sheet.range("B1:B1")), "right");
-        equal(getBorders(sheet.range("B2:B2")), "right");
+        equal(getBorders(sheet.range("A1")), "");
+        equal(getBorders(sheet.range("A2")), "");
+        equal(getBorders(sheet.range("B1")), "right");
+        equal(getBorders(sheet.range("B2")), "right");
     });
 
-/* commented due to bug in borders API
     test("borderTop commands sets border only on the topRow", function() {
         var command = new BorderChangeCommand({ border: "topBorder", style: { size: "1px", color: "#F00" } });
-        command.range(sheet.range("A1:B2"));
+        command.range(sheet.range("A2:B3"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "top");
-        equal(getBorders(sheet.range("A2:A2")), "");
-        equal(getBorders(sheet.range("B1:B1")), "top");
-        equal(getBorders(sheet.range("B2:B2")), "");
+        equal(getBorders(sheet.range("A2")), "top");
+        equal(getBorders(sheet.range("A3")), "");
+        equal(getBorders(sheet.range("B2")), "top");
+        equal(getBorders(sheet.range("B3")), "");
     });
-*/
 
     test("borderBottom commands sets border only on the bottomRow", function() {
         var command = new BorderChangeCommand({ border: "bottomBorder", style: { size: "1px", color: "#F00" } });
         command.range(sheet.range("A1:B2"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "");
-        equal(getBorders(sheet.range("A2:A2")), "bottom");
-        equal(getBorders(sheet.range("B1:B1")), "");
-        equal(getBorders(sheet.range("B2:B2")), "bottom");
+        equal(getBorders(sheet.range("A1")), "");
+        equal(getBorders(sheet.range("A2")), "bottom");
+        equal(getBorders(sheet.range("B1")), "");
+        equal(getBorders(sheet.range("B2")), "bottom");
     });
 
-/* commented due to bug in borders API
     test("outsideBorders commands sets borders around the selection", function() {
         var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: "1px", color: "#F00" } });
-        command.range(sheet.range("A1:B2"));
+        command.range(sheet.range("B2:C3"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "left,top");
-        equal(getBorders(sheet.range("A2:A2")), "left,bottom");
-        equal(getBorders(sheet.range("B1:B1")), "top,right");
-        equal(getBorders(sheet.range("B2:B2")), "right,bottom");
+        equal(getBorders(sheet.range("B2")), "left,top");
+        equal(getBorders(sheet.range("B3")), "left,bottom");
+        equal(getBorders(sheet.range("C2")), "top,right");
+        equal(getBorders(sheet.range("C3")), "right,bottom");
     });
 
     test("insideBorders commands sets borders inside the selection", function() {
         var command = new BorderChangeCommand({ border: "insideBorders", style: { size: "1px", color: "#F00" } });
-        command.range(sheet.range("A1:B2"));
+        command.range(sheet.range("B2:C3"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "right,bottom");
-        equal(getBorders(sheet.range("A2:A2")), "top,right");
-        equal(getBorders(sheet.range("B1:B1")), "left,bottom");
-        equal(getBorders(sheet.range("B2:B2")), "left,top");
+        equal(getBorders(sheet.range("B2")), "right,bottom");
+        equal(getBorders(sheet.range("B3")), "top,right");
+        equal(getBorders(sheet.range("C2")), "left,bottom");
+        equal(getBorders(sheet.range("C3")), "left,top");
     });
 
     test("insideHorizontalBorders commands sets bottomBorder to each row of the selection except the last one", function() {
         var command = new BorderChangeCommand({ border: "insideHorizontalBorders", style: { size: "1px", color: "#F00" } });
-        command.range(sheet.range("A1:B2"));
+        command.range(sheet.range("B2:C3"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "bottom");
-        equal(getBorders(sheet.range("A2:A2")), "top");
-        equal(getBorders(sheet.range("B1:B1")), "bottom");
-        equal(getBorders(sheet.range("B2:B2")), "top");
+        equal(getBorders(sheet.range("B2")), "bottom");
+        equal(getBorders(sheet.range("B3")), "top");
+        equal(getBorders(sheet.range("C2")), "bottom");
+        equal(getBorders(sheet.range("C3")), "top");
     });
 
     test("insideVerticalBorders commands sets bottomRight to each column of the selection except the last one", function() {
         var command = new BorderChangeCommand({ border: "insideVerticalBorders", style: { size: "1px", color: "#F00" } });
-        command.range(sheet.range("A1:B2"));
+        command.range(sheet.range("B2:C3"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1:A1")), "left");
-        equal(getBorders(sheet.range("A2:A2")), "left");
-        equal(getBorders(sheet.range("B1:B1")), "right");
-        equal(getBorders(sheet.range("B2:B2")), "right");
+        equal(getBorders(sheet.range("B2")), "right");
+        equal(getBorders(sheet.range("B3")), "right");
+        equal(getBorders(sheet.range("C2")), "left");
+        equal(getBorders(sheet.range("C3")), "left");
     });
-*/
 })();

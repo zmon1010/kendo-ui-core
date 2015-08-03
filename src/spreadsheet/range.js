@@ -89,14 +89,20 @@
         },
 
         borderLeft: function(value) {
-            var ref = this._ref.resize({ left: -1, right: -1 });
-            var result = new Range(ref, this._sheet).borderRight(value);
+            var result;
+            var ref = this._ref.toRangeRef().resize({ left: -1, right: -1 });
+            if (ref !== kendo.spreadsheet.NULLREF) {
+                result = new Range(ref, this._sheet).borderRight(value);
+            }
             return value === undefined ? result : this;
         },
 
         borderTop: function(value) {
-            var ref = this._ref.resize({ top: -1, bottom: -1 });
-            var result = new Range(ref, this._sheet).borderBottom(value);
+            var result;
+            var ref = this._ref.toRangeRef().resize({ top: -1, bottom: -1 });
+            if (ref !== kendo.spreadsheet.NULLREF) {
+                result = new Range(ref, this._sheet).borderBottom(value);
+            }
             return value === undefined ? result : this;
         },
 
