@@ -96,8 +96,6 @@ var __meta__ = {
             var insertOnTop, insertOnBottom, addChild;
             var itemData, position, status;
 
-            console.log(container[0], target[0]);
-
             if (!container.length) {
                 // dragging outside of allowed elements
                 status = "k-denied";
