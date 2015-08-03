@@ -67,6 +67,9 @@
 
         handleEvent: function(e, name) {
             var eventKey = "";
+
+            e.mod = Mac ? e.metaKey : e.ctrlKey;
+
             if (e.shiftKey) {
                eventKey += "shift+";
             }
@@ -84,8 +87,6 @@
             }
 
             var handler = this._handlers[eventKey];
-
-            e.mod = Mac ? e.metaKey : e.ctrlKey;
 
             if (handler) {
                 handler.call(this._observer, e, eventKey);

@@ -29,9 +29,9 @@
 
     var CONTAINER_EVENTS = {
         "wheel": "onWheel",
-        "mousedown": "onMouseDown",
-        "mousedrag": "onMouseDrag",
-        "mouseup": "onMouseUp"
+        "*+mousedown": "onMouseDown",
+        "*+mousedrag": "onMouseDrag",
+        "*+mouseup": "onMouseUp"
     };
 
     var CLIPBOARD_EVENTS = {
