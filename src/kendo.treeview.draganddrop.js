@@ -96,11 +96,13 @@ var __meta__ = {
             var insertOnTop, insertOnBottom, addChild;
             var itemData, position, status;
 
+            console.log(container[0], target[0]);
+
             if (!container.length) {
                 // dragging outside of allowed elements
                 status = "k-denied";
                 this._removeTouchHover();
-            } else if (options.contains(source[0], target[0])) {
+            } else if (source[0] == target[0] || options.contains(source[0], target[0])) {
                 // dragging item within itself
                 status = "k-denied";
             } else {
