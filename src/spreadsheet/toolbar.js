@@ -301,13 +301,11 @@
                 "noBorders"
             ];
 
-            var buttons = "";
-
-            for (var i = 0; i < types.length; i++) {
-                buttons += '<a href="#" data-border-type="' + types[i] + '" class="k-button k-button-icon">' +
-                                '<span class="k-sprite k-icon k-i-' + kendo.toHyphens(types[i]) + '">' + types[i].replace(/([A-Z])/g, ' $1').toLowerCase() + '</span>' +
-                           '</a>';
-            }
+            var buttons = types.map(function(type) {
+                return '<a href="#" data-border-type="' + type + '" class="k-button k-button-icon">' +
+                            '<span class="k-sprite k-icon k-i-' + kendo.toHyphens(type) + '">' + type.replace(/([A-Z])/g, ' $1').toLowerCase() + '</span>' +
+                       '</a>';
+            }).join("");
 
             var popupElement = $("<div>", {
                 "class": "k-spreadsheet-popup k-spreadsheet-border-palette",
