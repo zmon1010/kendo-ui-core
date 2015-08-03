@@ -23,7 +23,8 @@
         "./spreadsheet/calc",
         "./spreadsheet/numformat",
         "./spreadsheet/runtime.functions.js",
-        "./spreadsheet/toolbar"
+        "./spreadsheet/toolbar",
+        "./spreadsheet/sheetbinder"
     ], f);
 })(function(){
     var __meta__ = {
