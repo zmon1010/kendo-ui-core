@@ -112,6 +112,13 @@
 
                 return tools;
             }.bind(this), {});
+        },
+        destroy: function() {
+            var bordersTool = this.element.find("[data-command=BorderChangeCommand]").data("borders");
+            if (bordersTool) {
+                bordersTool.destroy();
+            }
+            ToolBar.fn.destroy.call(this);
         }
     });
 
@@ -248,7 +255,7 @@
 
     var borders = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
-            this.element = $("<a href='#' class='k-button k-button-icon'>" + 
+            this.element = $("<a href='#' data-command='BorderChangeCommand' class='k-button k-button-icon'>" + 
                                 "<span class='k-sprite k-icon k-i-all-borders'>" +
                                 "</span><span class='k-icon k-i-arrow-s'></span>" +
                             "</a>");
@@ -272,6 +279,12 @@
 
         open: function() {
             this.popup.toggle();
+        },
+
+        destroy: function() {
+            this.popupElement.off("click");
+            this.popup.destroy();
+            this.popupElement.remove();
         },
 
         _popupElement: function() {
