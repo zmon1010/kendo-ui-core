@@ -146,7 +146,7 @@ class ProjectFileTask < Rake::FileTask
     def execute(args=nil)
         content = File.read(name)
 
-        content.gsub!(/"version": ".*"/, '"version": "' + VERSION + '"')
+        content.gsub!(/"Kendo.Mvc": ".*"/, '"Kendo.Mvc": "' + VERSION + '"')
 
         puts "Updating project version to #{VERSION}"
 
