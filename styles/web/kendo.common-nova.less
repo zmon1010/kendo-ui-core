@@ -676,17 +676,23 @@ div.editorToolbarWindow.k-window-content {
 }
 
 .k-slider-horizontal .k-draghandle {
-  top: -6px;
-  width: 13px;
-  height: 13px;
+  top: -7px;
+  width: 14px;
+  height: 14px;
   border-width: 1px;
 }
 
 .k-slider-vertical .k-draghandle
 {
-    width: 13px;
+    width: 14px;
     left: -7px;
     border-width: 1px;
+}
+
+.k-widget.k-slider .k-slider-buttons .k-button
+{
+    border-width: 0;
+    background: transparent;
 }
 
 .k-colorpicker
@@ -1109,6 +1115,11 @@ div.editorToolbarWindow.k-window-content {
 
 .k-notification .k-i-note {
     background-position: -176px -240px;
+}
+
+.k-radio-label:before {
+    width: 16px;
+    height: 16px;
 }
 
 .k-radio:checked + .k-radio-label:after {
