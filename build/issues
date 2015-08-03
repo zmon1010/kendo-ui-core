@@ -88,7 +88,7 @@ class ReportLine
     attr_accessor :blocking, :critical, :high, :medium, :low, :open, :closed
 
     def to_s
-        "Blocking: #{@blocking || 0} Critical: #{@critical || 0} High: #{@high} Medium: #{@medium} Low: #{@low} Closed: #{@closed} Open: #{@open}"
+        "#{@blocking || 0}\t#{@critical || 0}\t#{@high}\t#{@medium}\t#{@low}\t#{@closed}\t#{@open}"
     end
 end
 
@@ -110,9 +110,9 @@ class MasterReport
     end
 
     def to_s
-        string = ""
+        string = "\tBlock.\tCrit.\tHigh\tMedium\tLow\tClosed\tOpen\n"
         for name in [:kendo, :mvc, :java, :php]
-            string << name.to_s + " " + self.send(name).to_s
+            string << name.to_s + "\t" + self.send(name).to_s
             string << "\n"
         end
         string
