@@ -253,6 +253,7 @@
         </div>
 
         <div id="codeStrip">
+            <div class="buttons-wrap">
             @if (!string.IsNullOrEmpty(ViewBag.Api))
             {
                 <a class="documentation-link k-link" href="@ViewBag.Api">API Reference</a>
@@ -266,6 +267,7 @@
             @{
                 IEnumerable<ExampleFile> examples = ViewBag.ExampleFiles;
             }
+            </div>
 
             @if (examples.Any())
             {
@@ -296,25 +298,32 @@
                     <!--<![endif]-->
                 </div>
                <script>
-               $("#source-code").kendoTabStrip({
-                    animation: {
-                        open: {
-                            effects: "fadeIn"
-                        }
-                    },
-                    contentUrls: [
-                        @Html.Raw(String.Join(",", examples.Select(file => "\"" + Url.Action("Index", "Source", new { path = file.Url } ) + "\"").ToArray()))
-                    ],
-                    contentLoad: function (e) {
-                        var content = $(e.contentElement);
-                        if (content.is("#source-code-1")) {
-                            var html = content.find('.prettyprint').text();
-                            content.data("html", content.find('.prettyprint').text());
-                        }
+                   (function () {
+                       var ts = $("#source-code").kendoTabStrip({
+                           animation: {
+                               open: {
+                                   effects: "fadeIn"
+                               }
+                           },
+                           contentUrls: [
+                                @Html.Raw(String.Join(",", examples.Select(file => "\"" + Url.Action("Index", "Source", new { path = file.Url } ) + "\"").ToArray()))
+                           ],
+                           contentLoad: function (e) {
+                               var content = $(e.contentElement);
+                               if (content.is("#source-code-1")) {
+                                   var html = content.find('.prettyprint').text();
+                                   content.data("html", content.find('.prettyprint').text());
+                               }
 
-                        prettyPrint();
-                    }
-               }).data("kendoTabStrip").select(0);
+                               prettyPrint();
+                           }
+                       }).data("kendoTabStrip");
+
+                       ts.select(0);
+                       $(window).resize(function () {
+                           ts.resize();
+                       });
+                   })();
 
                dojo.configuration = {
                    url: "@Html.DojoRoot()",

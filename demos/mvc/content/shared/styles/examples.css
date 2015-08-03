@@ -1147,9 +1147,10 @@ pre.prettyprint
 #inspector-header {
     border-bottom: 1px solid #ebecee;
     background: #fdfdfd;
-    padding: 14px 20px;
+    padding: 14px 340px 14px 20px;
     font-size: 14px;
     font-weight: bold;
+    min-width: 13em;
 }
 
 #inspector-header label {
@@ -1206,12 +1207,21 @@ pre.prettyprint
     border-right: 0;
 }
 
-
 #codeStrip
 {
     border:0;
     margin-bottom: 84px;
     font-size: 12px;
+}
+
+#codeStrip .buttons-wrap
+{
+    height: 0;
+    text-align: right;
+    position: relative;
+    z-index: 2;
+    top: 5em;
+    padding-right: 1.2em;
 }
 
 #codeStrip .k-tabstrip-items
@@ -1221,7 +1231,6 @@ pre.prettyprint
     position: relative;
     z-index:1;
     background: #f5f7f8; /* Old browsers */
-    overflow: visible;
 }
 
 #codeStrip .k-item .k-loading
@@ -1229,20 +1238,21 @@ pre.prettyprint
     display: none;
 }
 
-#main .demos-button,
 #codeStrip a.documentation-link,
 #codeStrip .try-kendo
 {
-    display: block;
-    float: right;
-    position: relative;
-    z-index: 2;
+    display: inline-block;
 }
 
 #codeStrip .try-kendo::-moz-focus-inner
 {
     padding: 0;
     border: 0;
+}
+
+#codeStrip .k-tabstrip > .k-button
+{
+    top: 1.2em;
 }
 
 #codeStrip .k-content,
@@ -1269,7 +1279,6 @@ pre.prettyprint
     font-size:1.1em;
     line-height: 1.1em;
     padding:0.769em 1.462em;
-    margin-right: 30px;
     border-left: 1px solid #e2e4e7;
 }
 
@@ -2093,12 +2102,11 @@ a.footer-links:hover,
     -webkit-appearance: none;
     text-align: center;
     border: none;
-    margin: 0.769em 0.769em 0;
+    margin: .78em 0.5em 0;
     font: 700 13px Arial, Helvetica, sans-serif;
 }
 
 .try-kendo{
-    margin-right: 0;
     padding: 10px 22px 10px;
 }
 
