@@ -140,10 +140,24 @@
         equal(sheet.range("B1").borderLeft().color, "#f00");
     });
 
+    test("borderLeft symmetry (union range)", function() {
+        sheet.range("B1, C2:C3").borderLeft({ color: "#f00" });
+
+        equal(sheet.range("B1").borderLeft().color, "#f00");
+        equal(sheet.range("C2:C3").borderLeft().color, "#f00");
+    });
+
     test("borderRight symmetry", function() {
         range.borderRight({ color: "#f00" });
 
         equal(range.borderRight().color, "#f00");
+    });
+
+    test("borderRight symmetry (union range)", function() {
+        sheet.range("A1, B2:B3").borderRight({ color: "#f00" });
+
+        equal(sheet.range("A1").borderRight().color, "#f00");
+        equal(sheet.range("B2:B3").borderRight().color, "#f00");
     });
 
     test("borderTop symmetry", function() {
@@ -152,10 +166,24 @@
         equal(sheet.range("A2").borderTop().color, "#f00");
     });
 
+    test("borderTop symmetry (union range)", function() {
+        sheet.range("A2, C2").borderTop({ color: "#f00" });
+
+        equal(sheet.range("A2").borderTop().color, "#f00");
+        equal(sheet.range("C2").borderTop().color, "#f00");
+    });
+
     test("borderBottom symmetry", function() {
         range.borderBottom({ color: "#f00" });
 
         equal(range.borderBottom().color, "#f00");
+    });
+
+    test("borderBottom symmetry (union range)", function() {
+        sheet.range("A1, B2").borderBottom({ color: "#f00" });
+
+        equal(sheet.range("A1").borderBottom().color, "#f00");
+        equal(sheet.range("B2").borderBottom().color, "#f00");
     });
 
     test("borderTop triggers one change", 1, function() {
@@ -164,10 +192,22 @@
         sheet.range(2, 2).borderTop({ color: "#f00" });
     });
 
+    test("borderTop triggers one change (union range)", 1, function() {
+        sheet.bind("change", ok.bind(this, true));
+
+        sheet.range("A2, B2").borderTop({ color: "#f00" });
+    });
+
     test("borderLeft triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true));
 
         sheet.range(2, 2).borderLeft({ color: "#f00" });
+    });
+
+    test("borderLeft triggers one change (union range)", 1, function() {
+        sheet.bind("change", ok.bind(this, true));
+
+        sheet.range("B2, C2").borderLeft({ color: "#f00" });
     });
 
     test("borderLeft returns correct range", function() {

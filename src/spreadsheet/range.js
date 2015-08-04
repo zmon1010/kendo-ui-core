@@ -89,21 +89,39 @@
         },
 
         borderLeft: function(value) {
-            var result;
-            var ref = this._ref.toRangeRef().resize({ left: -1, right: -1 });
-            if (ref !== kendo.spreadsheet.NULLREF) {
-                result = new Range(ref, this._sheet).borderRight(value);
-            }
-            return value === undefined ? result : this;
+            var sheet = this._sheet;
+            var result = [];
+            var ref = this._ref.map(function(ref) {
+                return ref.toRangeRef().resize({ left: -1, right: -1 });
+            });
+
+            sheet.batch(function() {
+                ref.forEach(function(ref) {
+                    if (ref !== kendo.spreadsheet.NULLREF) {
+                        result.push(new Range(ref, sheet).borderRight(value));
+                    }
+                });
+            }.bind(this), {});
+
+            return value === undefined ? result[0] : this;
         },
 
         borderTop: function(value) {
-            var result;
-            var ref = this._ref.toRangeRef().resize({ top: -1, bottom: -1 });
-            if (ref !== kendo.spreadsheet.NULLREF) {
-                result = new Range(ref, this._sheet).borderBottom(value);
-            }
-            return value === undefined ? result : this;
+            var sheet = this._sheet;
+            var result = [];
+            var ref = this._ref.map(function(ref) {
+                return ref.toRangeRef().resize({ top: -1, bottom: -1 });
+            });
+
+            sheet.batch(function() {
+                ref.forEach(function(ref) {
+                    if (ref !== kendo.spreadsheet.NULLREF) {
+                        result.push(new Range(ref, sheet).borderBottom(value));
+                    }
+                });
+            }.bind(this), {});
+
+            return value === undefined ? result[0] : this;
         },
 
         format: function(value) {
