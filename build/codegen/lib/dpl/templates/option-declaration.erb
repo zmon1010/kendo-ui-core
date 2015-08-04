@@ -1,3 +1,6 @@
-        [DataMember(Name = "<%= csharp_name.camelize %>")]
-        public <%= struct? ? csharp_type + '?' : csharp_type%> <%= csharp_name %> { get; set; }
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        [DataMember(Name = "<%= key.camelize %>")]
+        public <%= struct? ? csharp_type + '?' : csharp_type%> <%= key %> { get; set; }
 

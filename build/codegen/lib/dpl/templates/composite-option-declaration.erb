@@ -1,15 +1,18 @@
-        private <%= csharp_class_name %> <%= csharp_name.camelize %> = new <%= csharp_class_name %>();
+        private <%= csharp_class_name %> <%= key.camelize %> = new <%= csharp_class_name %>();
 
-        [DataMember(Name = "<%= csharp_name.camelize %>")]
-        public <%= csharp_class_name %> <%= csharp_name %>
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        [DataMember(Name = "<%= key.camelize %>")]
+        public <%= csharp_class_name %> <%= key %>
         {
             set
             {
-                <%= csharp_name.camelize %> = value;
+                <%= key.camelize %> = value;
             }
             get
             {
-                return <%= csharp_name.camelize %>;
+                return <%= key.camelize %>;
             }
         }
 

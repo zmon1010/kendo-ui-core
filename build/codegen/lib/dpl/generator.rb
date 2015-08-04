@@ -16,7 +16,7 @@ module CodeGen
         end
 
         def write_component(component)
-            filename = "#{@path}/#{component.path}/#{component.csharp_class}.cs"
+            filename = "#{@path}/#{component.csharp_class}.cs"
 
             unless File.exists?(filename)
                 write_file(filename, component.to_settings())
@@ -24,7 +24,7 @@ module CodeGen
         end
 
         def write_component_settings(component)
-            filename = "#{@path}/#{component.path}/#{component.csharp_class}.Generated.cs"
+            filename = "#{@path}/#{component.csharp_class}.Generated.cs"
 
             write_file(filename, component.to_settings_generated())
         end
@@ -44,13 +44,13 @@ module CodeGen
             end
 
             # write *Settings.cs file
-            filename = "#{@path}/#{component.path}/Settings/#{option.csharp_class}.cs"
+            filename = "#{@path}/#{option.csharp_class}.cs"
             unless File.exists?(filename)
                 write_file(filename, option.to_settings)
             end
 
             # write *Settings.Generated.cs file
-            filename = "#{@path}/#{component.path}/Settings/#{option.csharp_class}.Generated.cs"
+            filename = "#{@path}/#{option.csharp_class}.Generated.cs"
             write_file(filename, option.to_settings_generated)
 
             option.composite_options.each do |o|

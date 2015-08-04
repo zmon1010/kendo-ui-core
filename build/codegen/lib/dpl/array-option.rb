@@ -8,10 +8,6 @@ module CodeGen::DPL::Options
             owner.csharp_item_class
         end
 
-        def csharp_builder_class
-            owner.csharp_item_builder_class
-        end
-
         def full_name
             @owner.full_name
         end
@@ -31,7 +27,7 @@ module CodeGen::DPL::Options
         end
 
         def csharp_item_class
-            item_class = "#{owner.csharp_class}#{csharp_name}"
+            item_class = "#{csharp_name}"
 
             case item_class
                 when /s$/       then item_class.chop

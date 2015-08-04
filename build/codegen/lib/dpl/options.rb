@@ -2,6 +2,8 @@ module CodeGen::DPL::Options
 
     IGNORED = YAML.load(File.read("build/codegen/lib/dpl/config/ignored.yml")).map(&:downcase)
 
+    NAME_MAP = YAML.load(File.read("build/codegen/lib/dpl/config/name_map.yml"))
+
     SETTINGS = ERB.new(File.read("build/codegen/lib/dpl/templates/component.erb"), 0, '%<>')
 
     SETTINGS_GENERATED = ERB.new(File.read("build/codegen/lib/dpl/templates/component-settings.erb"), 0, '%<>')
@@ -65,7 +67,7 @@ module CodeGen::DPL::Options
     end
 
     def csharp_name
-        name.to_csharp_name
+        name.to_csharp_name(NAME_MAP)
     end
 
     def builtin_names
@@ -121,6 +123,16 @@ module CodeGen::DPL::Options
         end
 
         return_type
+    end
+
+    def key
+        result = NAME_MAP[name]
+
+        return csharp_name if !result
+
+        result = result["key"]
+
+        result.slice(0,1).capitalize + result.slice(1..-1)
     end
 
     def to_settings

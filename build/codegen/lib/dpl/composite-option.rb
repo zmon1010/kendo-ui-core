@@ -8,11 +8,7 @@ module CodeGen::DPL::Options
         DECLARATION = ERB.new(File.read("build/codegen/lib/dpl/templates/composite-option-declaration.erb"), 0, '%<>')
 
         def csharp_class
-            prefix = owner.csharp_class.sub('Settings','')
-                                        .sub('List<', '')
-                                        .sub('>', '')
-
-            "#{prefix}#{csharp_name}Settings"
+            "#{csharp_name}"
         end
 
         def csharp_class_name

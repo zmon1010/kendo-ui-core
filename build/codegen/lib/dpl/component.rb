@@ -8,12 +8,9 @@ module CodeGen::DPL
     class Component < CodeGen::Component
         include Options
 
-        def path
-            name
-        end
-
         def csharp_class
-            name
+            # Spredsheet should be created as Workbook
+            "Workbook"
         end
 
         def enum_options
