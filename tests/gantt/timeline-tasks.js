@@ -1476,4 +1476,67 @@
         equal(parseFloat(taskWrapper.css("left"), 10), taskSlot.offsetLeft);
     });
 
+    function setupTemplatedGantt(options) {
+        gantt = new Gantt(element, options);
+        timeline = gantt.timeline;
+        timeline._render([new GanttTask({
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/16"),
+            title: "Foo"
+        })]);
+    }
+
+    module("Single Task Template Rendering", {
+        setup: function() {
+            element = $("<div />").appendTo(QUnit.fixture);
+        },
+        teardown: function() {
+            kendo.destroy(element);
+            element.remove();
+        }
+    });
+
+    test("task template is rendered in div content element", function() {
+        setupTemplatedGantt({ taskTemplate: "<strong>#: title #</strong>" });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap");
+
+        ok(taskWrapper.find("strong").parent().is(".k-task-template"));
+    });
+
+    test("task template renders content", function() {
+        setupTemplatedGantt({ taskTemplate: "<strong>#: title #</strong>" });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap");
+
+        equal(taskWrapper.find("strong").text(), "Foo");
+    });
+
+    test("task template honors template settings", function() {
+        setupTemplatedGantt({
+            taskTemplate: "<strong>#: foo.title #</strong>",
+            templateSettings: { useWithBlock: false, paramName: "foo" }
+        });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap");
+
+        equal(taskWrapper.find("strong").text(), "Foo");
+    });
+
+    test("task template does not render progress indicator", function() {
+        setupTemplatedGantt({ taskTemplate: "<strong>#: title #</strong>" });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap");
+
+        equal(taskWrapper.find(".k-task-complete").length, 0);
+    });
+
+    test("task template does not render progress drag handler", function () {
+        setupTemplatedGantt({ taskTemplate: "<strong>#: title #</strong>" });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap");
+
+        equal(taskWrapper.find(".k-task-draghandle").length, 0);
+    });
+
 }());

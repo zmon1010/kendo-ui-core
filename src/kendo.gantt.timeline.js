@@ -183,8 +183,9 @@ var __meta__ = {
 
             this._taskTree = options.taskTree;
 
-            this._taskTemplate = this.options.taskTemplate ? kendo.template(this.options.taskTemplate, extend({}, kendo.Template, this.options.templateSettings)) :
-                this.options.taskTemplate;
+            this._taskTemplate = options.taskTemplate ?
+                kendo.template(options.taskTemplate, extend({}, kendo.Template, options.templateSettings)) :
+                null;
 
             this._dependencyTree = options.dependencyTree;
 
