@@ -35,7 +35,7 @@
     test("does not render null border", function() {
         sheet.fromJSON(singleCell({ borderBottom: null }));
 
-        equal(element.find(".k-spreadsheet-data td").css("borderBottomStyle"), "none");
+        equal(element.find(".k-spreadsheet-data td")[0].style.borderBottomStyle, "");
     });
 
 })();
