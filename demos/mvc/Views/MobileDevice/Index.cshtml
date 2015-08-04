@@ -8,12 +8,12 @@
     <title>@ViewBag.Title</title>
     <meta name="msapplication-tap-highlight" content="no" />
 
-    <link href="@Url.Content("~/content/shared/styles/console.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/content/mobile/examples.css")" rel="stylesheet" />
-
     @foreach (string styleName in Kendo.Models.StyleGroups.Mobile) {
         <link href="@Url.Style(styleName).Replace("CURRENT_THEME", ViewBag.Theme).Replace("CURRENT_COMMON", ViewBag.CommonFile)" rel="@(styleName.ToLowerInvariant().EndsWith("less") ? "stylesheet/less" : "stylesheet")" />
     }
+
+    <link href="@Url.Content("~/content/shared/styles/console.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/content/mobile/examples.css")" rel="stylesheet" />
 
     @if (ViewBag.Debug) {
         <script>
@@ -43,50 +43,11 @@
 
         window.kendoCommonFile = "@ViewBag.CommonFile";
     </script>
-
-    <style type="text/css" media="screen">
-        .navbar-hidden {
-            display: none;
-        }
-
-        #source-code-container {
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
-            touch-action: initial;
-            -webkit-user-select: initial;
-            padding: 1em;
-        }
-
-        .km-source-code:before,
-        .km-source-code:after {
-            content: '\e014';
-        }
-
-        pre {
-            margin: 0;
-        }
-
-        .km-close:before,
-        .km-close:after {
-            content: '\e038';
-        }
-
-        pre .nocode { background-color: transparent; color: #000; }
-        pre .str,                    /* string */
-        pre .atv { color: #2db245; } /* attribute value */
-        pre .kwd { color: #ff3399; } /* keyword */
-        pre .com { color: #9933cc; } /* comment */
-        pre .typ { color: #000; } /* type */
-        pre .lit { color: #0099ff; } /* literal */
-        pre .pun { color: #333; }    /* punctuation */
-        pre .pln { color: #3e526b; }    /* plaintext */
-        pre .tag { color: #3e526b; } /* html/xml tag */
-        pre .atn { color: #3e526b; } /* attribute name */
-        pre .dec { color: #3e526b; } /* decimal */
-    </style>
 </head>
 
 <body id="examples">
+    @Html.Partial("GoogleTagManager")
+
     <div data-role="view" data-title="Kendo UI" id="index" data-layout="" data-show="nullCurrentExample" data-init="initSearch" data-use-native-scrolling="true">
         <header data-role="header">
             <div data-role="navbar" id="normal" class="km-accent">
@@ -120,7 +81,7 @@
             <div data-role="navbar" class="km-accent">
                 <a data-align="left" data-icon="arrow-w" href="#/" data-role="backbutton" data-transition="slide reverse"></a>
                 <span data-role="view-title"></span>
-                <a data-align="right" data-icon="source-code" data-click="goToSourceCode" data-role="button" title="Show this demo source code"></a>
+                <a data-align="right" id="source-code-button" data-icon="source-code" data-click="goToSourceCode" data-role="button" title="Show this demo source code">Source Code</a>
             </div>
         </header>
     </div>

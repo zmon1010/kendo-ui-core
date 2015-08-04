@@ -215,3 +215,37 @@ pre .tag { color: #3e526b; } /* html/xml tag */
 pre .atn { color: #3e526b; } /* attribute name */
 pre .dec { color: #3e526b; } /* decimal */
 
+.navbar-hidden {
+    display: none;
+}
+
+#source-code-button .km-text {
+    font-size: 0.9em;
+}
+
+.km-phone .km-on-ios #source-code-button .km-text,
+.km-phone .km-on-android #source-code-button .km-text {
+    display: none;
+}
+
+#source-code-container {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: initial;
+    -webkit-user-select: initial;
+    padding: 1em;
+}
+
+.km-source-code:before,
+.km-source-code:after {
+    content: '\e014';
+}
+
+pre {
+    margin: 0;
+}
+
+.km-close:before,
+.km-close:after {
+    content: '\e038';
+}
