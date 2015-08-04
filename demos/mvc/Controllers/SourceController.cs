@@ -12,8 +12,8 @@ namespace Kendo.Controllers
 {
     public class SourceController : BaseController
     {
-        private static readonly IDictionary<Regex, string> Filters = new Dictionary<Regex, string> 
-        { 
+        private static readonly IDictionary<Regex, string> Filters = new Dictionary<Regex, string>
+        {
             { new Regex(@"(<php\?)?.*require_once.*?(header|footer).*\r?\n?\r?\n?"), "" },
             { new Regex(@"<%@taglib prefix=""demo""[^>]*>\r?\n?"), "" },
             { new Regex(@"<demo:[^>]*>\r?\n?"), "" }
@@ -21,7 +21,11 @@ namespace Kendo.Controllers
 
         public ActionResult Index(string path)
         {
-            if (String.IsNullOrEmpty(path) || (!path.StartsWith("~/Views") && !path.StartsWith("~/src") && !path.StartsWith("~/Controllers/Public")))
+            if (String.IsNullOrEmpty(path) || (
+                    !path.StartsWith("~/Views") &&
+                    !path.StartsWith("~/src") &&
+                    !path.StartsWith("~/content") &&
+                    !path.StartsWith("~/Controllers/Public")))
             {
                 return HttpNotFound();
             }
@@ -33,8 +37,12 @@ namespace Kendo.Controllers
                 return HttpNotFound();
             }
 
-            var source = String.Empty;
+            if (path.StartsWith("~/content"))
+            {
+                return Content(IOFile.ReadAllText(mappedPath), "text/html");
+            }
 
+            var source = String.Empty;
             if (path.StartsWith("~/Views"))
             {
                 source = RenderView(path);
@@ -88,7 +96,7 @@ namespace Kendo.Controllers
             {
                 return null;
             }
-            
+
             ViewBag.Mobile = currentWidget.Mobile || currentExample.Mobile;
             ViewBag.MobileAngular = currentWidget.Mobile && currentExample.Url.IndexOf("angular") > 0;
             ViewBag.DisableInMobile = currentExample.DisableInMobile;

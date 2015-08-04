@@ -15,6 +15,12 @@
        "jsp-ui": "jsp/autocomplete",
        "php-ui": "php/autocomplete"
     },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
+    },
     "codelibrary": {
        "kendo-ui": "kendo-ui/autocomplete",
        "aspnet-mvc": "aspnet-mvc/autocomplete",
@@ -651,6 +657,12 @@
        "jsp-ui": "jsp/combobox",
        "php-ui": "php/combobox"
     },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
+    },
     "codelibrary": {
        "kendo-ui": "kendo-ui/combobox",
        "aspnet-mvc": "aspnet-mvc/combobox",
@@ -1138,6 +1150,12 @@
        "jsp-ui": "jsp/dropdownlist",
        "php-ui": "php/dropdownlist"
     },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
+    },
     "codelibrary": {
        "kendo-ui": "kendo-ui/dropdownlist",
        "aspnet-mvc": "aspnet-mvc/dropdownlist",
@@ -1398,12 +1416,16 @@
           "jsp",
           "php"
         ],
-		"sources": {
-			"aspnet-mvc": [{
-				"name": "FileBrowserController.cs",
-				"url": "~/src/aspnetmvc/Controllers/Editor/FileBrowserController.cs"
-			}]
-		}
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }],
+            "aspnet-mvc": [{
+                "name": "FileBrowserController.cs",
+                "url": "~/src/aspnetmvc/Controllers/Editor/FileBrowserController.cs"
+            }]
+        }
       },
       {
         "text": "All tools",
@@ -1572,6 +1594,12 @@
        "aspnet-mvc": "aspnet-mvc/grid",
        "jsp-ui": "jsp/grid",
        "php-ui": "php/grid"
+    },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
     },
     "codelibrary": {
        "kendo-ui": "kendo-ui/grid",
@@ -2248,6 +2276,12 @@
        "jsp-ui": "jsp/listview",
        "php-ui": "php/listview"
     },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
+    },
     "codelibrary": {
        "kendo-ui": "kendo-ui/listview",
        "aspnet-mvc": "aspnet-mvc/listview",
@@ -2419,6 +2453,12 @@
         "url": "pivotgrid/remote-flat-data-binding",
         "title": {
             "kendo-ui": "Binding Pivot Grid to flat remote data"
+        },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
         },
         "meta": {
             "kendo-ui": "This demo for Kendo UI jQuery-based PivotGrid component shows how you can poplate the widget with remote flat data."
@@ -2836,6 +2876,12 @@
        "aspnet-mvc": "aspnet-mvc/multi-select",
        "jsp-ui": "jsp/multi-select",
        "php-ui": "php/multi-select"
+    },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
     },
     "codelibrary": {
        "kendo-ui": "kendo-ui/multiselect",
@@ -3775,6 +3821,12 @@
        "jsp-ui": "jsp/gantt",
        "php-ui": "php/gantt"
     },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
+    },
     "codelibrary": {
        "kendo-ui": "kendo-ui/gantt",
        "aspnet-mvc": "aspnet-mvc/gantt",
@@ -3964,6 +4016,12 @@
        "aspnet-mvc": "aspnet-mvc/scheduler",
        "jsp-ui": "jsp/scheduler",
        "php-ui": "php/scheduler"
+    },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
     },
     "codelibrary": {
        "kendo-ui": "kendo-ui/scheduler",
@@ -5208,6 +5266,12 @@
        "jsp-ui": "jsp/treelist",
        "php-ui": "php/treelist"
     },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
+    },
     "codelibrary": {
        "kendo-ui": "kendo-ui/treelist",
        "aspnet-mvc": "aspnet-mvc/treelist",
@@ -5560,6 +5624,12 @@
             "kendo-ui": "Binding Kendo UI tree component to remote data",
             "aspnet-mvc": "Binding ASP.NET MVC tree component to remote data"
         },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
+        },
         "meta": {
             "kendo-ui": "This example illustrates how the hierarchical tree can be bound to remote data and thus the items in the tree are populated from the external source.",
             "aspnet-mvc": "This example illustrates how the ASP.NET MVC hierarchical tree can be bound to remote data and the items in the tree populated from an external source."
@@ -5573,6 +5643,12 @@
         "url": "treeview/odata-binding",
         "title": {
             "kendo-ui": "Example of binding Kendo UI TreeView to OData service"
+        },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
         },
         "meta": {
             "kendo-ui": "This sample shows how Kendo UI TreeView widget can be bound to oData service."
@@ -6010,6 +6086,12 @@
         "title": {
             "kendo-ui": "Kendo UI DataSource binding to a remote data service"
         },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
+        },
         "meta": {
             "kendo-ui": "This sample illustrates how Kendo UI DataSource component can be bound to a remote data service."
         }
@@ -6031,6 +6113,12 @@
         "title": {
             "kendo-ui": "Remote data operations | Kendo UI DataSource Demo"
         },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
+        },
         "meta": {
             "kendo-ui": "This sample demonstrates how to configure remote data operations such as paging and sorting of Kendo UI jQuery Data Source."
         }
@@ -6050,6 +6138,12 @@
         "url": "datasource/shared-datasource",
         "title": {
             "kendo-ui": " Shared DataSource Demo | Kendo UI Web demos"
+        },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
         },
         "meta": {
             "kendo-ui": "This example demonstrates a shared DataSource which can be created to enable multiple UI widgets to bind to the same data collection."
@@ -6164,6 +6258,12 @@
         "url": "integration/index",
         "title": {
             "kendo-ui": "Integrating Handlebars templates with Kendo UI Web examples"
+        },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
         },
         "meta": {
             "kendo-ui": "This demo illustrates how Handlebars templates can be integrated with the robust Kendo UI framework for web app development."
@@ -6295,6 +6395,12 @@
         "url": "mvvm/remote-binding",
         "title": {
             "kendo-ui": "Remote binding in Kendo UI MVVM framework"
+        },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
         },
         "meta": {
             "kendo-ui": "This example shows how remote data is bound  in Kendo UI MVVM framework."
@@ -8186,6 +8292,12 @@
        "jsp-ui": "jsp/diagram",
        "php-ui": "php/diagram"
     },
+    "sources": {
+        "kendo-ui": [{
+            "name": "Sample service",
+            "url": "~/content/service.html"
+        }]
+    },
     "codelibrary": {
        "kendo-ui": "kendo-ui/diagram",
        "aspnet-mvc": "aspnet-mvc/diagram",
@@ -9310,6 +9422,12 @@
         "title": {
             "kendo-ui": "Virtualization in Kendo UI Stock Chart",
             "aspnet-mvc": "Virtualization in ASP.NET MVC Stock Chart"
+        },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
         },
         "meta": {
             "kendo-ui": "In this example we show you how the virtualization works in Kendo UI Stock Chart for rich data visualization.",
