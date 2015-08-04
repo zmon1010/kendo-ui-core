@@ -4,9 +4,9 @@ module CodeGen::DPL::Options
 
     NAME_MAP = YAML.load(File.read("build/codegen/lib/dpl/config/name_map.yml"))
 
-    SETTINGS = ERB.new(File.read("build/codegen/lib/dpl/templates/component.erb"), 0, '%<>')
+    SETTINGS = ERB.new(File.read("build/codegen/lib/dpl/templates/settings.erb"), 0, '%<>')
 
-    SETTINGS_GENERATED = ERB.new(File.read("build/codegen/lib/dpl/templates/component-settings.erb"), 0, '%<>')
+    SETTINGS_GENERATED = ERB.new(File.read("build/codegen/lib/dpl/templates/settings-generated.erb"), 0, '%<>')
 
     CSHARP_TYPES = {
         'Number' => 'double',
