@@ -141,4 +141,80 @@
 
         equal(spreadsheet._sheets[sheetName].name(),sheetName);
     });
+
+    test("renameSheet method renames sheet correctly", function() {
+        var newName = "0-89-09";
+        var oldName = spreadsheet.activeSheet().name();
+
+        var renamedSheet = spreadsheet.renameSheet(spreadsheet.activeSheet(), newName);
+
+        //old name is removed
+        ok(!spreadsheet._sheets[oldName]);
+        ok(spreadsheet._sheetsByIndex.indexOf(oldName) === -1);
+
+        //new name is applied correctly
+        equal(spreadsheet._sheets[newName].name(), newName);
+        equal(spreadsheet.activeSheet().name(), newName);
+        ok(spreadsheet._sheetsByIndex.indexOf(newName) > -1);
+        ok(renamedSheet.name() === newName);
+    });
+
+    test("getSheetByName method works correctly", function() {
+        var name = spreadsheet._sheets[spreadsheet._sheetsByIndex[0]].name();
+
+        equal(spreadsheet.getSheetByName(name).name(), name);
+    });
+
+    test("removeSheet method works correctly", function() {
+        spreadsheet.insertSheet();
+
+        var sheet = spreadsheet._sheets[spreadsheet._sheetsByIndex[0]];
+        var name = spreadsheet._sheets[spreadsheet._sheetsByIndex[1]].name();
+
+        spreadsheet.removeSheet(sheet);
+
+        ok(jQuery.isEmptyObject(sheet._events));
+        equal(spreadsheet._sheetsByIndex.length, 1);
+        equal(spreadsheet._sheets[spreadsheet._sheetsByIndex[0]].name(), name);
+    });
+
+    test("removeSheet method does not remove sheet when current sheet is the last one", function() {
+        var sheet = spreadsheet._sheets[spreadsheet._sheetsByIndex[0]];
+
+        spreadsheet.removeSheet(sheet);
+
+        equal(spreadsheet._sheetsByIndex.length, 1);
+    });
+
+    test("removeSheet method changes sheet if current sheet is activeSheet and index is 0", function() {
+        spreadsheet.insertSheet();
+
+        var sheet = spreadsheet._sheets[spreadsheet._sheetsByIndex[0]];
+        var name = spreadsheet._sheetsByIndex[1];
+
+        spreadsheet.removeSheet(sheet);
+
+        equal(spreadsheet.activeSheet().name(), name);
+    });
+
+    test("removeSheet method changes sheet if current sheet is activeSheet and index is 1", function() {
+        spreadsheet.insertSheet();
+
+        var sheet = spreadsheet._sheets[spreadsheet._sheetsByIndex[1]];
+        var name = spreadsheet._sheetsByIndex[0];
+
+        spreadsheet.removeSheet(sheet);
+
+        equal(spreadsheet.activeSheet().name(), name);
+    });
+
+    test("activeSheet sets active sheet", function() {
+        spreadsheet.insertSheet();
+
+        var sheet = spreadsheet._sheets[spreadsheet._sheetsByIndex[1]];
+
+        spreadsheet.activeSheet(sheet);
+
+        equal(spreadsheet.activeSheet().name(), sheet.name());
+    });
 })();

@@ -127,7 +127,64 @@
             return sheet;
         },
 
+        getSheetByName: function (sheetName) {
+            return this._sheets[sheetName];
+        },
 
+        renameSheet: function(sheet, newSheetName) {
+            var that = this;
+            var sheets = that._sheets;
+            var sheetsByIndex = that._sheetsByIndex;
+            var oldSheetName = sheet.name();
+
+            if (!newSheetName ||
+                oldSheetName === newSheetName) {
+                return;
+            }
+
+            var sheet = this.getSheetByName(oldSheetName);
+
+            if (!sheet) {
+                return;
+            }
+
+            sheet.name(newSheetName);
+
+            if (sheets.hasOwnProperty(oldSheetName)) {
+                sheets[newSheetName] = sheets[oldSheetName];
+                delete sheets[oldSheetName];
+            }
+
+            sheetsByIndex[sheetsByIndex.indexOf(oldSheetName)] = newSheetName;
+
+            return sheet;
+        },
+
+        removeSheet: function(sheet) {
+            //refresh others?????
+            var that = this;
+            var sheets = that._sheets;
+            var sheetByIndex = that._sheetsByIndex;
+            var name = sheet.name();
+            var index = sheetByIndex.indexOf(name);
+
+            if (sheetByIndex.length === 1) {
+                return;
+            }
+
+            sheet.unbind();
+
+            if (index > -1 && sheets.hasOwnProperty(name)) {
+
+                if (that.activeSheet().name() === name) {
+                    var newSheet = sheets[sheetByIndex[index === 0 ? 1 : index-1]];
+                    that.activeSheet(newSheet);
+                }
+
+                sheetByIndex.splice(index, 1);
+                delete sheets[name];
+            }
+        },
 
         _viewElement: function() {
             var view = this.element.children(".k-spreadsheet-view");
@@ -283,8 +340,19 @@
             return this._autoRefresh;
         },
 
-        activeSheet: function() {
-            return this._sheet;
+        activeSheet: function(sheet) {
+            if (sheet === undefined) {
+                return this._sheet;
+            }
+
+            if (!this.getSheetByName(sheet.name())) {
+                return;
+            }
+
+            this._sheet = sheet;
+            this._view.sheet(sheet);
+            sheet.triggerChange(ALL_REASONS);
+            return;
         },
 
         toJSON: function() {
