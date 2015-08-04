@@ -94,10 +94,18 @@ function initSearch(e) {
     });
 }
 
+var desktop = !kendo.support.mobileOS;
+
 function showSearch() {
     $("#normal").addClass("navbar-hidden");
     $("#search").removeClass("navbar-hidden");
-    $("#demos-search").focus();
+    if (desktop) {
+       setTimeout(function() {
+            $("#demos-search").focus();
+       });
+    } else {
+        $("#demos-search").focus();
+    }
 }
 
 function hideSearch() {
