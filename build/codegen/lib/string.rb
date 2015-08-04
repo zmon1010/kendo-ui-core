@@ -28,5 +28,22 @@ class String
         self.gsub(/\r?\n/, new_line)
 
     end
+
+    def to_attribute
+        self.gsub(/[A-Z]/, '-\0').downcase
+    end
+
+    def to_csharp_name(map = nil)
+        map ||= CSHARP_NAME_MAP
+
+        result = map[self]
+
+        if result
+            return result["name"] if result.key?("name")
+            return result
+        end
+
+        self.slice(0,1).capitalize + self.slice(1..-1)
+    end
 end
 
