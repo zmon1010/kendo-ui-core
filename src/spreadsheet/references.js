@@ -607,6 +607,27 @@
             var newRefs = this.refs.slice();
             newRefs.splice(index, 1, ref);
             return new UnionRef(newRefs);
+        },
+
+        leftColumn: function() {
+            return this.map(function(ref) {
+                return ref.leftColumn();
+            });
+        },
+        rightColumn: function() {
+            return this.map(function(ref) {
+                return ref.rightColumn();
+            });
+        },
+        topRow: function() {
+            return this.map(function(ref) {
+                return ref.topRow();
+            });
+        },
+        bottomRow: function() {
+            return this.map(function(ref) {
+                return ref.bottomRow();
+            });
         }
     });
 
