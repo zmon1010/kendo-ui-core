@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI
             tag.AddCssClass("k-widget k-splitter");          
             tag.AddCssClass(Orientation == SplitterOrientation.Horizontal ? "k-splitter-horizontal" : "k-splitter-vertical");
 
-            Panes.Each(p => p.WriteHtml(writer, Generator));
+            Panes.Each(p => p.WriteHtml(writer, Generator, HtmlEncoder));
 
             writer.Write(tag.ToString(TagRenderMode.EndTag));
 

@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewComponents;
 using Microsoft.AspNet.Routing;
+using Microsoft.Framework.WebEncoders;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -138,6 +139,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public IHtmlEncoder HtmlEncoder
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Renders the component.
         /// </summary>
@@ -241,6 +248,7 @@ namespace Kendo.Mvc.UI
         {            
             Generator = GetService<IKendoHtmlGenerator>();
             HtmlHelper = GetService<IHtmlHelper>();
+            HtmlEncoder = GetService<IHtmlEncoder>();
             ModelMetadataProvider = GetService<IModelMetadataProvider>();
             UrlGenerator = GetService<IUrlGenerator>();
 

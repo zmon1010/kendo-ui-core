@@ -5,6 +5,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
+using Microsoft.Framework.WebEncoders;
 
 namespace Kendo.Mvc.UI
 {
@@ -58,7 +59,7 @@ namespace Kendo.Mvc.UI
             return settings;
         }
 
-        public void WriteHtml(TextWriter writer, IKendoHtmlGenerator generator)
+        public void WriteHtml(TextWriter writer, IKendoHtmlGenerator generator, IHtmlEncoder encoder)
         {
             var tag = generator.GenerateTag("div", HtmlAttributes);
 
@@ -77,7 +78,7 @@ namespace Kendo.Mvc.UI
             }
             else if (Template != null)
             {
-                writer.WriteContent(Template);
+                writer.WriteContent(Template, encoder);
             }
             else if (TemplateAction != null)
             {

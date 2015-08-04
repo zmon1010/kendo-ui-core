@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Razor;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.Framework.WebEncoders;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -147,7 +148,7 @@ namespace Kendo.Mvc.UI.Fluent
             return ToComponent().ToHtmlString();
         }
 
-        public override void WriteTo(TextWriter writer)
+        public override void WriteTo(TextWriter writer, IHtmlEncoder encoder)
         {
             writer.Write(ToHtmlString());
         }

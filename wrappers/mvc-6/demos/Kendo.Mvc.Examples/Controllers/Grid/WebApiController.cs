@@ -3,7 +3,7 @@ using Kendo.Mvc.Examples.Models;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNet.Mvc;
-using Microsoft.Data.Entity.Update;
+using Microsoft.Data.Entity;
 
 namespace Kendo.Mvc.Examples.Controllers
 {

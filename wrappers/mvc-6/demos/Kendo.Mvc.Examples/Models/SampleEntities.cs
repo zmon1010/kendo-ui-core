@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.SqlServer.Extensions;
 
 namespace Kendo.Mvc.Examples.Models
 {
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.Examples.Models
         public virtual DbSet<UrbanArea> UrbanAreas { get; set; }
         public virtual DbSet<Weather> Weather { get; set; }
 
-        protected override void OnConfiguring(EntityOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Sample.mdf;Integrated Security=True;");
         }
@@ -43,11 +43,11 @@ namespace Kendo.Mvc.Examples.Models
         {
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.ForSqlServer().Table("Categories");
+                entity.ToSqlServerTable("Categories");
                 entity.Key(e => e.CategoryID);
                 
                 entity.Property(e => e.CategoryID)
-                    .ForSqlServer().UseIdentity();
+                      .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<CustomerCustomerDemo>(entity =>
@@ -57,13 +57,13 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<CustomerDemographic>(entity =>
             {
-                entity.ForSqlServer().Table("CustomerDemographics");
+                entity.ToSqlServerTable("CustomerDemographics");
                 entity.Key(e => e.CustomerTypeID);
             });
             
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.ForSqlServer().Table("Customers");
+                entity.ToSqlServerTable("Customers");
                 entity.Key(e => e.CustomerID);
             });
             
@@ -72,17 +72,17 @@ namespace Kendo.Mvc.Examples.Models
                 entity.Key(e => e.EmployeeID);
                 
                 entity.Property(e => e.EmployeeID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.ForSqlServer().Table("Employees");
+                entity.ToSqlServerTable("Employees");
 
                 entity.Key(e => e.EmployeeID);
                 
                 entity.Property(e => e.EmployeeID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<EmployeeTerritories>(entity =>
@@ -92,81 +92,81 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<GanttDependency>(entity =>
             {
-                entity.ForSqlServer().Table("GanttDependencies");
+                entity.ToSqlServerTable("GanttDependencies");
 
                 entity.Property(e => e.ID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<GanttResourceAssignment>(entity =>
             {
-                entity.ForSqlServer().Table("GanttResourceAssignments");
+                entity.ToSqlServerTable("GanttResourceAssignments");
 
                 entity.Property(e => e.ID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
                 
                 entity.Property(e => e.Units)
-                    .ColumnType("decimal(5, 2)");
+                      .HasColumnType("decimal(5, 2)");
             });
             
             modelBuilder.Entity<GanttResource>(entity =>
             {
-                entity.ForSqlServer().Table("GanttResources");
+                entity.ToSqlServerTable("GanttResources");
 
                 entity.Property(e => e.ID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<GanttTask>(entity =>
             {
-                entity.ForSqlServer().Table("GanttTasks");
+                entity.ToSqlServerTable("GanttTasks");
 
                 entity.Property(e => e.ID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
                 
                 entity.Property(e => e.PercentComplete)
-                    .ColumnType("decimal(5, 2)");
+                    .HasColumnType("decimal(5, 2)");
             });
             
             modelBuilder.Entity<Intraday>(entity =>
             {
                 entity.Property(e => e.ID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
                 
                 entity.Property(e => e.Close)
-                    .ColumnType("decimal(9, 3)");
+                    .HasColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.High)
-                    .ColumnType("decimal(9, 3)");
+                    .HasColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.Low)
-                    .ColumnType("decimal(9, 3)");
+                    .HasColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.Open)
-                    .ColumnType("decimal(9, 3)");
+                    .HasColumnType("decimal(9, 3)");
             });
             
             modelBuilder.Entity<MeetingAttendee>(entity =>
             {
-                entity.ForSqlServer().Table("MeetingAttendees");
+                entity.ToSqlServerTable("MeetingAttendees");
                 entity.Key(e => new { e.MeetingID, e.AttendeeID });
             });
             
             modelBuilder.Entity<Meeting>(entity =>
             {
-                entity.ForSqlServer().Table("Meetings");
+                entity.ToSqlServerTable("Meetings");
 
                 entity.Key(e => e.MeetingID);
                 
                 entity.Property(e => e.MeetingID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<Order_Detail>(entity =>
             {
                 entity.Key(e => new { e.OrderID, e.ProductID });
                 
-                entity.Table("Order Details");
+                entity.ToSqlServerTable("Order Details");
                 
                 entity.Property(e => e.Discount)
                     .DefaultValue(0D);
@@ -175,7 +175,7 @@ namespace Kendo.Mvc.Examples.Models
                     .DefaultValue(1);
                 
                 entity.Property(e => e.UnitPrice)
-                    .ColumnType("decimal(5, 2)");
+                    .HasColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.UnitPrice)
                     .DefaultValue(0m);
@@ -183,14 +183,14 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.ForSqlServer().Table("Orders");
+                entity.ToSqlServerTable("Orders");
                 entity.Key(e => e.OrderID);
                 
                 entity.Property(e => e.OrderID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
                 
                 entity.Property(e => e.Freight)
-                    .ColumnType("decimal(6, 2)");
+                    .HasColumnType("decimal(6, 2)");
                 
                 entity.Property(e => e.Freight)
                     .DefaultValue(0m);
@@ -198,28 +198,28 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<OrgChartConnection>(entity =>
             {
-                entity.ForSqlServer().Table("OrgChartConnections");
+                entity.ToSqlServerTable("OrgChartConnections");
 
                 entity.Property(e => e.Id)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<OrgChartShape>(entity =>
             {
-                entity.ForSqlServer().Table("OrgChartShapes");
+                entity.ToSqlServerTable("OrgChartShapes");
 
                 entity.Property(e => e.Id)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.ForSqlServer().Table("Products");
+                entity.ToSqlServerTable("Products");
 
                 entity.Key(e => e.ProductID);
                 
                 entity.Property(e => e.ProductID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
                 
                 entity.Property(e => e.Discontinued)
                     .DefaultValue(false);
@@ -228,7 +228,7 @@ namespace Kendo.Mvc.Examples.Models
                     .DefaultValue(0);
                 
                 entity.Property(e => e.UnitPrice)
-                    .ColumnType("decimal(5, 2)");
+                    .HasColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.UnitPrice)
                     .DefaultValue(0m);
@@ -246,93 +246,93 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Shipper>(entity =>
             {
-                entity.ForSqlServer().Table("Shippers");
+                entity.ToSqlServerTable("Shippers");
                 entity.Key(e => e.ShipperID);
                 
                 entity.Property(e => e.ShipperID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<Stock>(entity =>
             {
                 entity.Property(e => e.ID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
                 
                 entity.Property(e => e.Close)
-                    .ColumnType("decimal(9, 3)");
+                    .HasColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.High)
-                    .ColumnType("decimal(9, 3)");
+                    .HasColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.Low)
-                    .ColumnType("decimal(9, 3)");
+                    .HasColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.Open)
-                    .ColumnType("decimal(9, 3)");
+                    .HasColumnType("decimal(9, 3)");
             });
             
             modelBuilder.Entity<Supplier>(entity =>
             {
-                entity.ForSqlServer().Table("Suppliers");
+                entity.ToSqlServerTable("Suppliers");
                 entity.Key(e => e.SupplierID);
                 
                 entity.Property(e => e.SupplierID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<Task>(entity =>
             {
-                entity.ForSqlServer().Table("Tasks");
+                entity.ToSqlServerTable("Tasks");
 
                 entity.Key(e => e.TaskID);
                 
                 entity.Property(e => e.TaskID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
             });
             
             modelBuilder.Entity<Territory>(entity =>
             {
-                entity.ForSqlServer().Table("Territories");
+                entity.ToSqlServerTable("Territories");
 
                 entity.Key(e => e.TerritoryID);
             });
             
             modelBuilder.Entity<UrbanArea>(entity =>
             {
-                entity.ForSqlServer().Table("UrbanAreas");
+                entity.ToSqlServerTable("UrbanAreas");
 
                 entity.Property(e => e.ID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
                 
                 entity.Property(e => e.Latitude)
-                    .ColumnType("decimal(9, 6)");
+                    .HasColumnType("decimal(9, 6)");
                 
                 entity.Property(e => e.Longitude)
-                    .ColumnType("decimal(9, 6)");
+                    .HasColumnType("decimal(9, 6)");
             });
             
             modelBuilder.Entity<Weather>(entity =>
             {
                 entity.Property(e => e.ID)
-                    .ForSqlServer().UseIdentity();
+                    .UseSqlServerIdentityColumn();
                 
                 entity.Property(e => e.Gust)
-                    .ColumnType("decimal(5, 2)");
+                    .HasColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.Rain)
-                    .ColumnType("decimal(5, 2)");
+                    .HasColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.Snow)
-                    .ColumnType("decimal(5, 2)");
+                    .HasColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.TMax)
-                    .ColumnType("decimal(5, 2)");
+                    .HasColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.TMin)
-                    .ColumnType("decimal(5, 2)");
+                    .HasColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.Wind)
-                    .ColumnType("decimal(5, 2)");
+                    .HasColumnType("decimal(5, 2)");
             });
             
             modelBuilder.Entity<CustomerCustomerDemo>(entity =>

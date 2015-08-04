@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using Microsoft.AspNet.Mvc.Razor;
+using Microsoft.Framework.WebEncoders;
 
 namespace Kendo.Mvc.Extensions
 {
     public static class TextWriterExtensions
     {
-        public static void WriteContent<T>(this TextWriter writer, Func<T, object> action, T dataItem = null) where T : class
+        public static void WriteContent<T>(this TextWriter writer, Func<T, object> action, IHtmlEncoder htmlEncoder, T dataItem = null) where T : class
 		{
 			var result = action(dataItem);
 
@@ -14,7 +15,7 @@ namespace Kendo.Mvc.Extensions
 
 			if (helperResult != null)
 			{
-				helperResult.WriteTo(writer);
+				helperResult.WriteTo(writer, htmlEncoder);
 				return;
 			}
 

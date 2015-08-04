@@ -15,7 +15,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <DevelopmentServerPort>2222</DevelopmentServerPort>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

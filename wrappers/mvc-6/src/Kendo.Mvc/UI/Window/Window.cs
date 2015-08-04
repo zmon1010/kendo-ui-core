@@ -92,7 +92,7 @@ namespace Kendo.Mvc.UI
 			}
 			else if (Content != null)
 			{
-				writer.WriteContent(Content);
+				writer.WriteContent(Content, HtmlEncoder);
 			}
 			else if (ContentAction != null)
 			{

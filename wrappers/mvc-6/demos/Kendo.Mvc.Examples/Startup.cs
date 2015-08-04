@@ -1,91 +1,87 @@
-﻿using Kendo.Mvc.Examples.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Routing;
+using Microsoft.Data.Entity;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
+using Microsoft.Framework.Logging.Console;
 using Microsoft.Framework.Runtime;
-using System;
-using System.IO;
+using Kendo.Mvc.Examples.Models;
 
 namespace Kendo.Mvc.Examples
 {
     public class Startup
     {
-        public IConfigurationBuilder Configuration { get; set; }
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+        {
+            // Setup configuration sources.
 
-        // This method gets called by the runtime.
+            var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
+                .AddJsonFile("config.json")
+                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
+            
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
+
+        public IConfiguration Configuration { get; set; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Fully-qualify configuration path to avoid issues in functional tests. Just "config.json" would be fine
-            // but Configuration uses CallContextServiceLocator.Locator.ServiceProvider to get IApplicationEnvironment.
-            // Functional tests update that service but not in the static provider.
-            var applicationEnvironment = services.BuildServiceProvider().GetRequiredService<IApplicationEnvironment>();
-            var configurationPath = Path.Combine(applicationEnvironment.ApplicationBasePath, "config.json");
-
-            // Setup configuration sources.
-            Configuration = new ConfigurationBuilder()
-                .AddJsonFile(configurationPath)
-                .AddEnvironmentVariables();
-
-            // Add EF services to the services container.
+            // Add Entity Framework services to the services container.
             services.AddEntityFramework()
                 .AddSqlServer()
-				.AddDbContext<SampleEntitiesDataContext>();
+                .AddDbContext<SampleEntitiesDataContext>();
 
             // Add MVC services to the services container.
             services.AddMvc();
 
-			// Add Kendo UI services to the services container
-			services.AddKendo();
-
-            // Uncomment the following line to add Web API servcies which makes it easier to port Web API 2 controllers.
-            // You need to add Microsoft.AspNet.Mvc.WebApiCompatShim package to project.json
-            // services.AddWebApiConventions();
-
+            // Add Kendo UI services to the services container
+            services.AddKendo();
         }
 
         // Configure is called after ConfigureServices is called.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerfactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.MinimumLevel = LogLevel.Information;
+            loggerFactory.AddConsole();
+
             // Configure the HTTP request pipeline.
-            // Add the console logger.
-            loggerfactory.AddConsole();
 
             // Add the following to the request pipeline only in development environment.
-            if (string.Equals(env.EnvironmentName, "Development", StringComparison.OrdinalIgnoreCase))
+            if (env.IsDevelopment())
             {
-                app.UseErrorPage(ErrorPageOptions.ShowAll);
+                app.UseErrorPage();
                 app.UseDatabaseErrorPage(DatabaseErrorPageOptions.ShowAll);
             }
             else
             {
                 // Add Error handling middleware which catches all application specific errors and
-                // send the request to the following path or controller action.
+                // sends the request to the following path or controller action.
                 app.UseErrorHandler("/Home/Error");
             }
 
             // Add static files to the request pipeline.
             app.UseStaticFiles();
 
-            // Add cookie-based authentication to the request pipeline.
-            app.UseIdentity();			
-
-			// Add MVC to the request pipeline.
-			app.UseMvc(routes =>
+            // Add MVC to the request pipeline.
+            app.UseMvc(routes =>
             {
-				routes.AddHyphenatedRoute();
-				
-				routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action}/{id?}",
-                    defaults: new { controller = "Home", action = "Index" });				
+                routes.AddHyphenatedRoute();
 
-				// Uncomment the following line to add a route for porting Web API 2 controllers.
-				// routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
-			});
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
