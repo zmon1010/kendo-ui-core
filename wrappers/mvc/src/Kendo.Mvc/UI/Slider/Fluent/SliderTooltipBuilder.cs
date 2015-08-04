@@ -13,6 +13,7 @@ namespace Kendo.Mvc.UI.Fluent
         {
 
             this.settings = settings;
+
         }
 
         /// <summary>Gets or sets the format for displaying the value in the tooltip.</summary>
@@ -63,6 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         public SliderTooltipBuilder Template(string template)
         {
             settings.Template = template;
+            settings.Enabled = true;
 
             return this;
         }
