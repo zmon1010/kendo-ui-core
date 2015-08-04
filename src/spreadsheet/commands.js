@@ -223,10 +223,16 @@
             //TODO
         },
         noBorders: function() {
-            this.range().borderLeft(null).borderTop(null).borderRight(null).borderBottom(null);
+            var range = this.range();
+            range.sheet().batch(function() {
+                range.borderLeft(null).borderTop(null).borderRight(null).borderBottom(null);
+            }.bind(this), {});
         },
         allBorders: function(style) {
-            this.range().borderLeft(style).borderTop(style).borderRight(style).borderBottom(style);
+            var range = this.range();
+            range.sheet().batch(function() {
+                range.borderLeft(style).borderTop(style).borderRight(style).borderBottom(style);
+            }.bind(this), {});
         },
         leftBorder: function(style) {
             this.range().leftColumn().borderLeft(style);
@@ -242,27 +248,34 @@
         },
         outsideBorders: function(style) {
             var range = this.range();
-
-            range.leftColumn().borderLeft(style);
-            range.topRow().borderTop(style);
-            range.rightColumn().borderRight(style);
-            range.bottomRow().borderBottom(style);
+            range.sheet().batch(function() {
+                range.leftColumn().borderLeft(style);
+                range.topRow().borderTop(style);
+                range.rightColumn().borderRight(style);
+                range.bottomRow().borderBottom(style);
+            }.bind(this), {});
         },
         insideBorders: function(style) {
-            this.allBorders(style);
-            this.outsideBorders(null);
+            this.range().sheet().batch(function() {
+                this.allBorders(style);
+                this.outsideBorders(null);
+            }.bind(this), {});
         },
         insideHorizontalBorders: function(style) {
             var range = this.range();
 
-            range.borderBottom(style);
-            range.bottomRow().borderBottom(null);
+            range.sheet().batch(function() {
+                range.borderBottom(style);
+                range.bottomRow().borderBottom(null);
+            }.bind(this), {});
         },
         insideVerticalBorders: function(style) {
             var range = this.range();
 
-            range.borderRight(style);
-            range.rightColumn().borderRight(null);
+            range.sheet().batch(function() {
+                range.borderRight(style);
+                range.rightColumn().borderRight(null);
+            }.bind(this), {});
         }
     });
 
