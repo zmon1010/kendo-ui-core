@@ -454,4 +454,17 @@
         ok(!trs.first().children().first().hasClass("k-first"));
         ok(!trs.find("th.k-first").length);
     });
+
+    test("create from table with locked columns and first non-locked hidden column", function() {
+        $(table).append($('<thead><tr><th class="k-header" data-field="CustomerID" data-index="2" rowspan="2" style="display:none">Customer ID</th><th class="k-header" data-field="CompanyName" data-index="0" rowspan="2">Company Name</th><th class="k-header" data-field="Address" data-index="1" rowspan="2">Address</th><th class="k-header" data-field="PostalCode" data-index="3" rowspan="2">Postal Code</th><th class="k-header" colspan="1" data-colspan="1">Contact Info</th></tr><tr><th class="k-header" data-field="Phone" data-index="4">Phone</th></tr></thead>'));
+
+        var grid = new Grid(table, {
+            "columns":[{"title":"Customer ID","hidden":true,"width":"120px","field":"CustomerID","encoded":true},{"title":"Company Name","width":"120px","locked":true,"field":"CompanyName","encoded":true},{"title":"Address","width":"120px","locked":true,"field":"Address","encoded":true},{"title":"Postal Code","width":"100px","field":"PostalCode","encoded":true},{"title":"Contact Info","columns":[{"title":"Phone","width":"200px","field":"Phone","encoded":true}]}]
+        });
+
+        var trs = grid.lockedHeader.find("tr");
+
+        equal(trs.first().children().first().text(), "Company Name");
+    });
+
 })();
