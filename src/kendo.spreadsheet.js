@@ -309,6 +309,7 @@
                             apply({ text: "Currency", property: "format", value: "$?" }),
                             apply({ text: "Percentage", property: "format", value: "?.00%" })
                         ] },
+                        { type: "format", property: "format", width: 100, overflow: "never" },
                         { type: "borders", overflow: "never" },
                         { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
                         { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },

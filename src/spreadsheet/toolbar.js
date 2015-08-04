@@ -214,7 +214,9 @@
 
     var DropDownTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
-            var dropDownList = $("<select />").kendoDropDownList().data("kendoDropDownList");
+            var dropDownList = $("<select />").kendoDropDownList({
+                height: "auto"
+            }).data("kendoDropDownList");
 
             this.dropDownList = dropDownList;
             this.element = dropDownList.wrapper;
@@ -222,6 +224,7 @@
             this.toolbar = toolbar;
 
             dropDownList.bind("open", this._open.bind(this));
+            dropDownList.bind("change", this._change.bind(this));
 
             this.element.width(options.width).attr({
                 "data-command": "PropertyChangeCommand",
@@ -251,10 +254,11 @@
             ddl._listWidth = listWidth;
         },
         _change: function(e) {
+            var value = e.sender.value();
             this.toolbar.trigger("execute", {
                 commandType: "PropertyChangeCommand",
                 property: this.options.property,
-                value: e.sender.value()
+                value: value == "null" ? null : value
             });
         },
         value: function(value) {
@@ -271,7 +275,6 @@
             DropDownTool.fn.init.call(this, options, toolbar);
 
             var ddl = this.dropDownList;
-            ddl.bind("change", this._change.bind(this));
             ddl.setDataSource(options.fontFamilies || FONT_FAMILIES);
             ddl.value(DEFAULT_FONT_FAMILY);
 
@@ -283,19 +286,25 @@
     }));
 
     kendo.toolbar.registerComponent("format", DropDownTool.extend({
+        _revertTitle: function(e) {
+            e.sender.value("");
+            e.sender.wrapper.width("auto");
+        },
         init: function(options, toolbar) {
             DropDownTool.fn.init.call(this, options, toolbar);
 
             var ddl = this.dropDownList;
-            ddl.bind("change", this._change.bind(this));
+            ddl.bind("change", this._revertTitle.bind(this));
+            ddl.bind("dataBound", this._revertTitle.bind(this));
             ddl.setOptions({
                 dataValueField: "format",
                 dataValuePrimitive: true,
+                valueTemplate: "123",
                 template:
                     "#: data.name #" +
                     "# if (data.sample) { #" +
                         "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
-                    "# } #",
+                    "# } #"
             });
             ddl.setDataSource([
                 { format: null, name: "Automatic" },
@@ -309,7 +318,6 @@
                 { format: "?", name: "Date time", sample: "4/21/2012 5:49:00" },
                 { format: "?", name: "Duration", sample: "168:04:00" }
             ]);
-            ddl.text("Format");
 
             this.element.data({
                 type: "format",
