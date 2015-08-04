@@ -14,6 +14,36 @@ config.Routes.MapHttpRoute(
 
 @(Html.Kendo().Scheduler<<#= Namespace #>.<#= WidgetViewModelName #>>()
     .Name("scheduler")
+    .Editable(editable => editable
+        .EditRecurringMode(SchedulerEditRecurringMode.Dialog)
+<#
+    if(!EditableCreate) {
+#>
+        .Create(false)
+<#
+    }
+    if(!EditableUpdate) {
+#>
+        .Update(false)
+<#
+    }
+    if(!EditableDestroy) {
+#>
+        .Destroy(false)
+<#
+    }
+    if(!EditableMove) {
+#>
+        .Move(false)
+<#
+    }
+    if(!EditableResize) {
+#>
+        .Resize(false)
+<#
+    }
+#>
+    )
     .Selectable(<#= Selectable.ToString().ToLower() #>)
 <#
     if(SchedulerViewTypes.Count > 0){
