@@ -653,4 +653,16 @@
         equal(sheet.range("B2").value(), 2);
     });
 
+    test("value triggers change passing the ref and the value", 3, function() {
+        var ref = sheet.range(2, 2);
+
+        sheet.bind("change", function(e) {
+            equal(e.value, "foo");
+            strictEqual(e.ref.topLeft, ref._ref.topLeft);
+            strictEqual(e.ref.bottomRight, ref._ref.bottomRight);
+        });
+
+        ref.value("foo");
+    });
+
 })();

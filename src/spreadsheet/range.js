@@ -40,7 +40,7 @@
                 }
                 sheet._set(ref, name, value, parseStrings);
             });
-            sheet.triggerChange({ recalc: name == "formula" || name == "value" });
+            sheet.triggerChange({ recalc: name == "formula" || name == "value", value: value, ref: this._ref });
             return this;
         },
 
@@ -136,7 +136,7 @@
                     this._sheet.batch(function() {
                         this.formula(null);
                         this.value(value);
-                    }.bind(this), { recalc: true });
+                    }.bind(this), { recalc: true, value: value, ref: this._ref });
                 }
 
                 return this;
