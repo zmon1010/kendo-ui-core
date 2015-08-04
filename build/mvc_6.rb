@@ -57,11 +57,21 @@ def update_nuget_reference name
     content = File.read(name)
     content.gsub!(/"Kendo.Mvc": ".*"/, '"Kendo.Mvc": "' + VERSION + '"')
 
-    puts "Updating examples NuGet reference to #{VERSION} - #{name}"
+    puts "Updating examples NuGet reference to #{VERSION}"
 
     File.open(name, 'w') do |file|
         file.write content
     end
+end
+
+def update_demo_deps bundle
+    root = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/VS2015/"
+
+    mkdir_p root
+    cp 'wrappers/mvc-6/NuGet.config', root
+
+    puts "Updating demo depenencies for #{bundle}"
+    update_nuget_reference "#{root}Kendo.Mvc.Examples/project.json"
 end
 
 namespace :mvc_6 do
@@ -136,15 +146,13 @@ namespace :mvc_6 do
     desc('Copy the minified CSS and JavaScript to wwwroot/lib/kendo folder')
     task :assets => ['mvc_6:assets_js', 'mvc_6:assets_css', 'mvc_6:assets_shared']
 
-    desc('Copy NuGet packages to offline demos')
-    task :update_demo_deps do
-        [ 'aspnetmvc.trial', 'aspnetmvc.commercial' ].each do |bundle|
-            root = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/VS2015/"
+    desc('Copy NuGet packages to trial demos')
+    task :update_demo_deps_trial do
+        update_demo_deps 'aspnetmvc.trial'
+    end
 
-            mkdir_p root
-            cp 'wrappers/mvc-6/NuGet.config', root
-
-            update_nuget_reference "#{root}Kendo.Mvc.Examples/project.json"
-        end
+    desc('Copy NuGet packages to commercial demos')
+    task :update_demo_deps_commercial do
+        update_demo_deps 'aspnetmvc.commercial'
     end
 end

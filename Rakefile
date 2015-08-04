@@ -516,7 +516,7 @@ bundle :name => 'aspnetmvc.trial',
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
        .merge(MVC_CONTENT),
-       :post_build => ['mvc:copy_trials', 'mvc_6:update_demo_deps'],
+       :post_build => ['mvc:copy_trials', 'mvc_6:update_demo_deps_trial'],
        :prerequisites => [
            'mvc:assets',
            'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
@@ -643,7 +643,7 @@ bundle :name => 'aspnetmvc.commercial',
                 .exclude('**/*.csproj'),
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }.merge(MVC_CONTENT),
-       :post_build => 'mvc_6:update_demo_deps',
+       :post_build => 'mvc_6:update_demo_deps_commercial',
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
