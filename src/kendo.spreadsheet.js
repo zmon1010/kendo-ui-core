@@ -55,26 +55,21 @@
 
             this._view = new kendo.spreadsheet.View(this._viewElement());
 
-            this._sheet = new kendo.spreadsheet.Sheet(
-                this.options.rows,
-                this.options.columns,
-                this.options.rowHeight,
-                this.options.columnWidth,
-                this.options.headerHeight,
-                this.options.headerWidth
-            );
-
             this._autoRefresh = true;
 
-            this._sheet.bind("change", this._sheetChange.bind(this));
+            this._sheets = {};
+            this._sheetsByIndex = [];
 
-            var context = {};
+            this._sheet = this.insertSheet({
+                rows: this.options.rows,
+                columns: this.options.columns,
+                rowHeight: this.options.rowHeight,
+                columnWidth: this.options.columnWidth,
+                headerHeight: this.options.headerHeight,
+                headerWidth: this.options.headerWidth
+            });
 
-            this._sheet.name("Sheet1");
-
-            context[this._sheet.name()] = this._sheet;
-
-            this._context = new kendo.spreadsheet.FormulaContext(context);
+            this._context = new kendo.spreadsheet.FormulaContext(this._sheets);
 
             this._resize();
 
@@ -82,6 +77,57 @@
 
             this.fromJSON(this.options);
         },
+
+        _insertedSheetsCounter: 0,
+
+        insertSheet: function(options) {
+            options = options || {};
+            var spreadsheet = this;
+            var insertIndex = typeof options.index === "number" ? options.index : spreadsheet._sheetsByIndex.length;
+            var sheetName;
+            var options;
+            var sheets = spreadsheet._sheets;
+            var sheetsByIndex = spreadsheet._sheetsByIndex;
+            var getUniqueSheetName = function() {
+                var name = "Sheet" + (spreadsheet._insertedSheetsCounter+1);
+
+                if (!sheets[name]) {
+                    return name;
+                }
+
+                spreadsheet._insertedSheetsCounter++;
+                return getUniqueSheetName();
+            };
+
+            if (options.name && sheets[options.name]) {
+                return;
+            }
+
+            sheetName = options.name || getUniqueSheetName();
+
+            var sheet = new kendo.spreadsheet.Sheet(
+                options.rows || this.options.rows,
+                options.columns || this.options.columns,
+                options.rowHeight || this.options.rowHeight,
+                options.columnWidth || this.options.columnWidth,
+                options.headerHeight || this.options.headerHeight,
+                options.headerWidth || this.options.headerWidth
+            );
+
+            sheet.name(sheetName);
+
+            sheet.bind("change", spreadsheet._sheetChange.bind(spreadsheet));
+
+            sheets[sheetName] = sheet;
+
+            sheetsByIndex.splice(insertIndex, 0, sheetName);
+
+            spreadsheet._insertedSheetsCounter++;
+
+            return sheet;
+        },
+
+
 
         _viewElement: function() {
             var view = this.element.children(".k-spreadsheet-view");
