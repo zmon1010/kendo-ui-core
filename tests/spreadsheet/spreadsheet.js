@@ -217,4 +217,12 @@
 
         equal(spreadsheet.activeSheet().name(), sheet.name());
     });
+
+    test("getSheets method returns correctly all sheets", function() {
+        equal(spreadsheet.getSheets().length, 1);
+
+        spreadsheet.insertSheet();
+
+        equal(spreadsheet.getSheets().length, 2);
+    });
 })();

@@ -127,6 +127,17 @@
             return sheet;
         },
 
+        getSheets: function() {
+            var idx;
+            var sheets = [];
+
+            for (idx = 0; idx < this._sheetsByIndex.length; idx++) {
+                sheets.push(this.getSheetByName(this._sheetsByIndex[idx]));
+            }
+
+            return sheets;
+        },
+
         getSheetByName: function (sheetName) {
             return this._sheets[sheetName];
         },
