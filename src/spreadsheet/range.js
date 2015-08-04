@@ -347,6 +347,10 @@
 
         bottomRow: function() {
             return new Range(this._ref.bottomRow(), this._sheet);
+        },
+
+        sheet: function() {
+            return this._sheet;
         }
     });
 
