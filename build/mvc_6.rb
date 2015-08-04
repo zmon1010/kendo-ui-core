@@ -57,7 +57,7 @@ def update_nuget_reference name
     content = File.read(name)
     content.gsub!(/"Kendo.Mvc": ".*"/, '"Kendo.Mvc": "' + VERSION + '"')
 
-    puts "Updating examples NuGet reference to #{VERSION}"
+    puts "Updating examples NuGet reference to #{VERSION} - #{name}"
 
     File.open(name, 'w') do |file|
         file.write content
@@ -144,7 +144,7 @@ namespace :mvc_6 do
             mkdir_p root
             cp 'wrappers/mvc-6/NuGet.config', root
 
-            update_nuget_reference "#{root}/Kendo.Mvc.Examples/project.json"
+            update_nuget_reference "#{root}Kendo.Mvc.Examples/project.json"
         end
     end
 end
