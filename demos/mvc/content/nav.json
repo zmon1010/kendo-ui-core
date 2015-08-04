@@ -1423,7 +1423,7 @@
             }],
             "aspnet-mvc": [{
                 "name": "FileBrowserController.cs",
-                "url": "~/src/aspnetmvc/Controllers/Editor/FileBrowserController.cs"
+                "url": "~/src/aspnetmvc/controllers/Editor/FileBrowserController.cs"
             }]
         }
       },
