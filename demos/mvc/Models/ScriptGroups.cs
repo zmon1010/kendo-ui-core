@@ -15,12 +15,12 @@ namespace Kendo.Models
         }
 
         private static readonly string jQueryPath = string.Format(
-            "https://code.jquery.com/jquery-{0}.min.js",
+            "//code.jquery.com/jquery-{0}.min.js",
             ConfigurationManager.AppSettings["JQUERY_VERSION"]
         );
 
         private static readonly string AngularPath = string.Format(
-            "https://ajax.googleapis.com/ajax/libs/angularjs/{0}/angular.js",
+            "//ajax.googleapis.com/ajax/libs/angularjs/{0}/angular.js",
             ConfigurationManager.AppSettings["ANGULAR_VERSION"]
         );
 
