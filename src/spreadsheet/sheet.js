@@ -76,6 +76,18 @@
             return this;
         },
 
+        setDataSource: function(dataSource, columns) {
+            if (this.dataSourceBinder) {
+                this.dataSourceBinder.destroy();
+            }
+
+            this.dataSourceBinder = new kendo.spreadsheet.SheetDataSourceBinder({
+                dataSource: dataSource,
+                sheet: this,
+                columns: columns
+            });
+        },
+
         hideColumn: function(columnIndex) {
             return this._property(this._columns.hide.bind(this._columns), columnIndex, { layout: true });
         },

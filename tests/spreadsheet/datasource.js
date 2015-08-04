@@ -113,5 +113,25 @@
         equal(sheet.range("B3").value(), null);
     });
 
+    test("sheet setDataSource creates binder instance", function() {
+        var dataSource = new kendo.data.DataSource({});
+
+        sheet.setDataSource(dataSource);
+
+        ok(sheet.dataSourceBinder instanceof SheetDataSourceBinder);
+        strictEqual(sheet.dataSourceBinder.dataSource, dataSource);
+        strictEqual(sheet.dataSourceBinder.sheet, sheet);
+    });
+
+    test("sheet setDataSource destroyes the previous binder", function() {
+        sheet.setDataSource({});
+
+        var binder = spy(sheet.dataSourceBinder, "destroy");
+
+        sheet.setDataSource({});
+
+        equal(binder.calls("destroy"), 1);
+    });
+
 
 })();

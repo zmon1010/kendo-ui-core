@@ -21,7 +21,7 @@
         _columns: function(columns) {
             return columns.map(function(column) {
                 return {
-                    field: column.field
+                    field: column.field || column
                 };
             });
         },
@@ -46,7 +46,7 @@
             var data = this.dataSource.view();
             var columns = this.columns;
 
-            if (!columns.length) {
+            if (!columns.length && data.length) {
                 columns = Object.keys(data[0].toJSON());
             }
 
