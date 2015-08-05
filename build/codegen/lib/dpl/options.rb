@@ -102,7 +102,7 @@ module CodeGen::DPL::Options
     def csharp_type
         return_type = ''
 
-        if enum_type
+       if enum_type
             # Manually specified enum type in YML
             return_type = enum_type
         elsif values

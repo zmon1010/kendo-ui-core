@@ -9,6 +9,8 @@ module CodeGen
                                    :type => 'Object',
                                    :content => @content,
                                    :recursive => @recursive,
+                                   :primitive => @primitive,
+                                   :item_type => @item_type,
                                    :owner => self,
                                    :description => @description)
 

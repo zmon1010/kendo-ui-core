@@ -59,7 +59,7 @@ module CodeGen
         end
 
         def write_array(component, option)
-            write_composite(component, option.item)
+            write_composite(component, option.item) unless option.item.primitive
         end
 
         def write_file(filename, content)

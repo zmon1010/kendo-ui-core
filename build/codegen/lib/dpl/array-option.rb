@@ -23,7 +23,13 @@ module CodeGen::DPL::Options
         end
 
         def csharp_class
-            "List<#{csharp_item_class_name}>"
+            result_class = "List<#{csharp_item_class_name}>"
+
+            if item.primitive
+                result_class = "List<#{item.item_type}>"
+            end
+
+            result_class
         end
 
         def csharp_item_class

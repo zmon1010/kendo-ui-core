@@ -3,7 +3,7 @@ module CodeGen
 class CompositeOption
     include Options
 
-    attr_reader :name, :description, :type, :options, :owner, :recursive, :default, :toggleable, :default
+    attr_reader :name, :description, :type, :options, :owner, :recursive, :default, :toggleable, :default, :primitive, :item_type
 
     def initialize(settings)
         @name = settings[:name]
@@ -15,6 +15,8 @@ class CompositeOption
         @content = settings[:content]
         @toggleable = settings[:toggleable]
         @default = settings[:default]
+        @primitive = settings[:primitive]
+        @item_type = settings[:item_type]
     end
 
     def content?
