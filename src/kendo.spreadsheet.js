@@ -78,8 +78,6 @@
             this.fromJSON(this.options);
         },
 
-        _insertedSheetsCounter: 0,
-
         insertSheet: function(options) {
             options = options || {};
             var spreadsheet = this;
@@ -88,15 +86,16 @@
             var options;
             var sheets = spreadsheet._sheets;
             var sheetsByIndex = spreadsheet._sheetsByIndex;
-            var getUniqueSheetName = function() {
-                var name = "Sheet" + (spreadsheet._insertedSheetsCounter+1);
+            var getUniqueSheetName = function(sheetNameSuffix) {
+                sheetNameSuffix = sheetNameSuffix ? sheetNameSuffix : 1;
+
+                var name = "Sheet" + sheetNameSuffix;
 
                 if (!sheets[name]) {
                     return name;
                 }
 
-                spreadsheet._insertedSheetsCounter++;
-                return getUniqueSheetName();
+                return getUniqueSheetName(sheetNameSuffix + 1);
             };
 
             if (options.name && sheets[options.name]) {
@@ -121,8 +120,6 @@
             sheets[sheetName] = sheet;
 
             sheetsByIndex.splice(insertIndex, 0, sheetName);
-
-            spreadsheet._insertedSheetsCounter++;
 
             return sheet;
         },
