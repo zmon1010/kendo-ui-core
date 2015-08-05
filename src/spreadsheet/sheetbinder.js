@@ -9,16 +9,47 @@
 
             this.options = $.extend({}, this.options, options);
 
-            this.sheet = options.sheet;
+            this.columns = this._normalizeColumns(this.options.columns);
 
-            this.columns = this._columns(this.options.columns);
-
+            this._sheet();
             this._dataSource();
 
             this.dataSource.fetch();
         },
 
-        _columns: function(columns) {
+        _sheet: function() {
+            this.sheet = this.options.sheet;
+
+            this._sheetChangeHandler = this._sheetChange.bind(this);
+
+            this.sheet.bind("change", this._sheetChangeHandler);
+        },
+
+        _sheetChange: function(e) {
+            if (e.recalc && e.ref) {
+                var data = this.dataSource.view();
+                var columns = this.columns;
+
+                if (!columns.length && data.length) {
+                    columns = Object.keys(data[0].toJSON());
+                }
+
+                this._skipRebind = true;
+
+                e.ref.forEach(function(ref) {
+                    ref = ref.toRangeRef();
+                    for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row && ri < data.length; ri++) {
+                        for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col && ci < columns.length; ci++) {
+                            data[ri].set(columns[ci].field, e.value);
+                        }
+                    }
+                });
+
+                this._skipRebind = false;
+            }
+        },
+
+        _normalizeColumns: function(columns) {
             return columns.map(function(column) {
                 return {
                     field: column.field || column
@@ -43,15 +74,19 @@
         },
 
         _change: function(e) {
+            if (this._skipRebind) {
+                return;
+            }
+
             var data = this.dataSource.view();
             var columns = this.columns;
 
             if (!columns.length && data.length) {
-                columns = Object.keys(data[0].toJSON());
+                this.columns = columns = this._normalizeColumns(Object.keys(data[0].toJSON()));
             }
 
             var getters = columns.map(function(column) {
-                return kendo.getter(column.field || column);
+                return kendo.getter(column.field);
             });
 
             this.sheet.batch(function() {
@@ -65,6 +100,7 @@
 
         destroy: function() {
             this.dataSource.unbind("change", this._changeHandler);
+            this.sheet.unbind("change", this._sheetChangeHandler);
         },
 
         options: {

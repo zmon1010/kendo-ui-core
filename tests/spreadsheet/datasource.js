@@ -113,6 +113,90 @@
         equal(sheet.range("B3").value(), null);
     });
 
+    test("changing sheet value updates the DataSource", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.range("A1").value("baz");
+
+        equal(binder.dataSource.at(0).foo, "baz");
+    });
+
+    test("changing sheet value of non bound column does not modify the data record", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.range("C1").value("baz");
+
+        var dataItem = binder.dataSource.at(0);
+        equal(dataItem.foo, "foo1");
+        equal(dataItem.bar, "bar1");
+        equal(Object.keys(dataItem.toJSON()).length, 2);
+    });
+
+    test("changing sheet value of non bound row does not modify the data", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.range("A4").value("baz");
+
+        var data = binder.dataSource.data();
+        equal(data.length, 3);
+    });
+
+    test("changing sheet value does not trigger second update the sheet", 1, function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.bind("change", ok.bind(this));
+        sheet.range("A1").value("baz");
+    });
+
+
     test("sheet setDataSource creates binder instance", function() {
         var dataSource = new kendo.data.DataSource({});
 
