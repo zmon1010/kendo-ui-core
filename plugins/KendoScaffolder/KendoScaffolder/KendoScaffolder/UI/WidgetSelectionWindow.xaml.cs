@@ -63,6 +63,13 @@ namespace KendoScaffolder.UI
                     WidgetDescription.Text = rm.GetString("ChartDescription");
                     return;
 
+                case "WidgetsListViewWebChartItem":
+                    SelectedWidget = KendoWidget.Chart;
+                    SelectedViewType = ViewType.Web;
+                    WidgetName.Text = "Kendo UI Chart";
+                    WidgetDescription.Text = rm.GetString("ChartDescription");
+                    return;
+
                 case "WidgetsListViewSchedulerItem":
                     SelectedWidget = KendoWidget.Scheduler;
                     WidgetName.Text = "Kendo UI Scheduler";

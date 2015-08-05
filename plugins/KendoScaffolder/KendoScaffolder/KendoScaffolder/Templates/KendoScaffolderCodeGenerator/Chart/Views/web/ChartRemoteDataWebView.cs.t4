@@ -1,0 +1,85 @@
+﻿﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="..\ImportsChartView.include.t4" #>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+#>
+<div id="chart"></div>
+<script>
+    $("#chart").kendoChart({
+        title: "<#= ChartTitle #>",
+<#
+if(LegendVisible) {
+#>
+        legend: {
+            position: "<#= LegendPosition #>"
+        },
+<#
+}
+if(TooltipVisible) {
+#>
+        tooltip: {
+            visible: true
+        },
+<#
+}
+#>
+        dataSource: {
+            transport: {
+                read: {
+                    url: "<#= entitySetName #>_Read"
+                }
+            }
+        },
+        seriesDefaults: {
+            type: "<#= Char.ToLowerInvariant(SeriesType[0]) + SeriesType.Substring(1) #>"
+        },
+        series : <#RenderSeries(SeriesType, SeriesConfigs, SeriesNames, SeriesColors);#><#if(CategoryAxis != null && CategoryAxis != string.Empty){#>,
+        categoryAxis: {
+            field : "<#= CategoryAxis #>"
+        }
+<#
+}
+#>
+})
+</script>
+
+<#+
+    private string Tabs(int count)
+    {
+        return String.Concat(Enumerable.Repeat("\t", count));
+    }
+
+    private void RenderSeries(string seriesType, List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
+    {
+        List<string> commonCharts = new List<string> {"Area", "Bar", "Column", "Donut", "Funnel", "HorizontalWaterfall", "Line", 
+                                                     "Pie", "RadarArea", "RadarColumn", "RadarLine", "VerticalArea", "VerticalLine", "Waterfall"};
+        if (commonCharts.Contains(seriesType)) 
+        {   
+            RenderCommonCharts(SeriesConfigs, SeriesNames, SeriesColors);
+        }
+    }
+
+    private void RenderCommonCharts(List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
+    {
+        var newLine = Environment.NewLine;
+        string result = "[";
+        for (int i = 0; i < SeriesNames.Count; i++) 
+        {
+            for (int j = 0; j < SeriesConfigs[i].Count; j++) 
+            {
+                var isLast = SeriesConfigs[i].Equals(SeriesConfigs[i].Last());
+
+                result += newLine + Tabs(3) + "{" + newLine + Tabs(4) + "field: \""+ SeriesConfigs[i][j] +" \"";
+                result += SeriesNames[i] != string.Empty ? ", " + newLine + Tabs(4) +"name: \"" + SeriesNames[i] +"\"" : "";
+                result += SeriesColors[i] != string.Empty ? ", " + newLine + Tabs(4) +"color: \"" + SeriesColors[i] +"\"" : "";
+                result += newLine + Tabs(3) + "}," + newLine;
+            }
+        }
+        result += Tabs(2) + "]";
+
+#>
+<#=result#>
+<#+
+    }
+#>

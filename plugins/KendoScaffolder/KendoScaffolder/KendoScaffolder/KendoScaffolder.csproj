@@ -140,6 +140,9 @@
     <None Include="Templates\KendoScaffolderCodeGenerator\Chart\Views\ImportsChartView.include.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\Chart\Views\web\ChartRemoteDataWebView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Controllers\GridAjaxBatchController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

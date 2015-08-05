@@ -322,6 +322,10 @@ namespace KendoScaffolder.Scaffolders
 
         public string GetViewTemplate()
         {
+            if (ViewModel.DataBindingType == "Remote" && ViewModel.ViewType == ViewType.Web)
+            {
+                return "ChartRemoteDataWebView";
+            }
             if (ViewModel.DataBindingType == "Local")
             {
                 return "ChartLocalDataView";
