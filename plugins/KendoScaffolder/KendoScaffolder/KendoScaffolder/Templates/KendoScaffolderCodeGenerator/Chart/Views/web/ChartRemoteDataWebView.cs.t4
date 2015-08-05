@@ -57,8 +57,15 @@ if(TooltipVisible) {
         if (commonCharts.Contains(seriesType)) 
         {   
             RenderCommonCharts(SeriesConfigs, SeriesNames, SeriesColors);
+        } 
+
+        if (seriesType == "RangeBar" || seriesType == "RangeColumn" )
+        {
+            RenderRangeCharts(SeriesConfigs, SeriesNames, SeriesColors);
         }
     }
+#>
+<#+
 
     private void RenderCommonCharts(List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
     {
@@ -70,7 +77,33 @@ if(TooltipVisible) {
             {
                 var isLast = SeriesConfigs[i].Equals(SeriesConfigs[i].Last());
 
-                result += newLine + Tabs(3) + "{" + newLine + Tabs(4) + "field: \""+ SeriesConfigs[i][j] +" \"";
+                result += newLine + Tabs(3) + "{" + newLine + Tabs(4) + "field: \""+ SeriesConfigs[i][j] +"\"";
+                result += SeriesNames[i] != string.Empty ? ", " + newLine + Tabs(4) +"name: \"" + SeriesNames[i] +"\"" : "";
+                result += SeriesColors[i] != string.Empty ? ", " + newLine + Tabs(4) +"color: \"" + SeriesColors[i] +"\"" : "";
+                result += newLine + Tabs(3) + "}," + newLine;
+            }
+        }
+        result += Tabs(2) + "]";
+
+#>
+<#=result#>
+<#+
+    }
+#>
+
+<#+
+    private void RenderRangeCharts(List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
+    {
+        var newLine = Environment.NewLine;
+        string result = "[";
+        for (int i = 0; i < SeriesNames.Count; i++) 
+        {
+            for (int j = 0; j < SeriesConfigs[i].Count; j+=2) 
+            {
+                var isLast = SeriesConfigs[i].Equals(SeriesConfigs[i].Last());
+
+                result += newLine + Tabs(3) + "{" + newLine + Tabs(4) + "fromField: \""+ SeriesConfigs[i][j] +"\",";
+                result += newLine + Tabs(4) + "toField: \""+ SeriesConfigs[i][j+1] +"\"";
                 result += SeriesNames[i] != string.Empty ? ", " + newLine + Tabs(4) +"name: \"" + SeriesNames[i] +"\"" : "";
                 result += SeriesColors[i] != string.Empty ? ", " + newLine + Tabs(4) +"color: \"" + SeriesColors[i] +"\"" : "";
                 result += newLine + Tabs(3) + "}," + newLine;
