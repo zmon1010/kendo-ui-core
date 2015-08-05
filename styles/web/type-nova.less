@@ -135,13 +135,6 @@
 .k-menu .k-menu-group,
 .k-grid .k-filter-options,
 .k-time-popup,
-.k-datepicker-calendar,
-.k-autocomplete.k-state-border-down,
-.k-autocomplete.k-state-border-up,
-.k-dropdown-wrap.k-state-active,
-.k-picker-wrap.k-state-active,
-.k-multiselect.k-state-focused,
-.k-filebrowser .k-image,
 .k-tooltip {
     .box-shadow(@popups-shadow);
 }
@@ -240,8 +233,6 @@ textarea.k-textbox:hover,
 .k-state-disabled,
 .k-state-disabled .k-link,
 .k-state-disabled .k-button,
-.k-other-month,
-.k-other-month .k-link,
 .k-dropzone em,
 .k-dropzone .k-upload-status,
 .k-tile-empty strong,
@@ -251,8 +242,6 @@ textarea.k-textbox:hover,
 
 /* Border radius */
 .k-block,
-.k-button,
-.k-textbox,
 .k-drag-clue,
 .k-touch-scrollbar,
 .k-window,
@@ -261,7 +250,23 @@ textarea.k-textbox:hover,
 .k-inline-block,
 .k-grid .k-filter-options,
 .k-grouping-header .k-group-indicator,
+.k-notification,
+.k-list-container,
+//.k-calendar-container,
+//.k-calendar td,
+//.k-calendar .k-link,
+.k-treeview .k-in,
+.k-editor-inline,
+.k-tile,
+.k-slider-track,
+.k-slider-selection {
+    border-radius: @border-radius;
+}
+
+.k-button,
+.k-textbox,
 .k-autocomplete,
+.k-autocomplete .k-input,
 .k-multiselect,
 .k-combobox,
 .k-dropdown,
@@ -270,24 +275,40 @@ textarea.k-textbox:hover,
 .k-timepicker,
 .k-colorpicker,
 .k-datetimepicker,
-.k-notification,
 .k-numerictextbox,
 .k-picker-wrap,
 .k-numeric-wrap,
 .k-colorpicker,
-.k-list-container,
-.k-calendar-container,
-.k-calendar td,
-.k-calendar .k-link,
-.k-treeview .k-in,
-.k-editor-inline,
 .k-tooltip,
-.k-tile,
-.k-slider-track,
-.k-slider-selection,
-.k-upload
-{
-    border-radius: @border-radius;
+.k-upload {    
+    border-radius: @inputs-border-radius;
+}
+
+.k-dropdown-wrap .k-input,
+.k-picker-wrap .k-input,
+.k-numeric-wrap .k-input {
+    border-radius: @inputs-border-radius 0 0 @inputs-border-radius;
+}
+
+.k-rtl .k-dropdown-wrap .k-input,
+.k-rtl .k-picker-wrap .k-input,
+.k-rtl .k-numeric-wrap .k-input {
+    border-radius: 0 @inputs-border-radius @inputs-border-radius 0;
+}
+
+
+/* Default icons opacity */
+.k-icon {
+    opacity: .4;
+}
+
+.k-state-active .k-icon,
+.k-numerictextbox .k-state-selected .k-icon {
+    opacity: 1;
+}
+
+.k-state-disabled .k-icon {
+    opacity: .2;
 }
 
 /* Button */
@@ -365,6 +386,14 @@ textarea.k-textbox:hover,
     background-color: @normal-background;
 }
 
+.k-dropdown,
+.k-combobox,
+.k-datepicker,
+.k-datetimepicker,
+.k-colorpicker {
+    background-color: @widget-background-color;
+}
+
 .k-autocomplete.k-state-default,
 .k-picker-wrap.k-state-default,
 .k-numeric-wrap.k-state-default,
@@ -405,8 +434,28 @@ textarea.k-textbox:hover,
     border-color: @selected-background;
 }
 
+.k-textbox.k-state-disabled,
+.k-state-disabled .k-picker-wrap,
+.k-autocomplete.k-state-disabled,
+.k-dropdown-wrap.k-state-disabled,
+.k-picker-wrap.k-state-disabled,
+.k-multiselect.k-state-disabled,
+.k-numeric-wrap.k-state-disabled {
+    background-color: @widget-background-color;
+    border-color: @disabled-border-color;
+}
+
+.k-numerictextbox .k-select,
+.k-combobox .k-select,
+.k-picker-wrap .k-select {
+    border-color: @widget-background-color;
+}
+
 .k-autocomplete.k-state-default.k-state-border-up,
-.k-autocomplete.k-state-default.k-state-border-down {
+.k-autocomplete.k-state-default.k-state-border-down,
+.k-picker-wrap.k-state-active .k-select,
+.k-numeric-wrap.k-state-active .k-select,
+.k-dropdown-wrap.k-state-active .k-select {
     border-color: @selected-background;
 }
 
@@ -503,6 +552,11 @@ input.k-textbox:active {
 
     .k-header .k-state-hover {
         background-color: @accent-hover-background;
+    }
+
+    .k-other-month,
+    .k-other-month .k-link {
+        color: lighten(@hover-text-color, 23%);
     }
 
     .k-state-selected,
@@ -1108,7 +1162,7 @@ input.k-textbox:active {
 
 .k-file-progress
 {
-    color: red;
+    color: pink;
 }
 
 .k-file-progress .k-progress {
@@ -1157,6 +1211,23 @@ input.k-textbox:active {
 
 .k-draghandle:hover {
     background-color: @hover-background;
+}
+
+/* ColorPicker */ 
+.k-flatcolorpicker .k-hue-slider .k-draghandle {
+    background-color: @widget-background-color;
+    border-color: @widget-background-color;
+    .box-shadow(@popups-shadow);
+    border-radius: 50%;
+}
+
+.k-flatcolorpicker .k-hue-slider .k-draghandle:hover,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle:hover,
+.k-flatcolorpicker .k-hue-slider .k-draghandle:focus,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle:focus {
+    background-color: @hover-background;
+    border-color: @hover-background;
+    .box-shadow(@popups-shadow);
 }
 
 /* Checkboxes */
@@ -1260,4 +1331,10 @@ input.k-textbox:active {
 .k-checkbox:focus + .k-checkbox-label:after,
 .k-radio:focus + .k-radio-label:before {
     border-color: @accent;
+}
+
+
+
+.demo-section.k-header {
+    background-color: #fff;
 }
