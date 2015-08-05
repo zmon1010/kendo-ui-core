@@ -3,3 +3,16 @@
       :primitive: true
       :item_type: string
       :type: Array
+
+    - :name: sheets.filter.columns.values
+      :primitive: true
+      :item_type: object
+      :type: Array
+
+    - :name: sheets.rows.cells.borderBottom
+      :merge: true
+      :type: BorderStyle
+
+    - :name: sheets.rows.cells.borderRight
+      :merge: true
+      :type: BorderStyle
