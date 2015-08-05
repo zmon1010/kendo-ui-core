@@ -283,9 +283,7 @@
                     }.bind(this),
                     resizable: false,
                     items: [
-                        { type: "button", text: "Format cells", attributes: {
-                            "data-command": "FormatCellsCommand"
-                        } },
+                        { type: "formatPopup", text: "Format..." },
                         { type: "buttonGroup", buttons: [
                             toggle({ text: "Bold", property: "bold", value: true }),
                             toggle({ text: "Italic", property: "italic", value: true }),
