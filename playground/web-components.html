@@ -11,16 +11,21 @@
         <script src="web-components.js"></script>
     </head>
     <body>
-        <kendo-datepicker value="03/27/2015" onchange="console.log(event.type)"></kendo-datepicker>
+        <input />
+        <kendo-datepicker value="03/27/2015" on-change="someHandler"></kendo-datepicker>
         <kendo-numerictextbox value="42"></kendo-numerictextbox>
         <kendo-dropdownlist value="1" dataTextField="text" dataValueField="value" dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-dropdownlist>
         <kendo-grid dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-grid>
 
         <script>
+            function someHandler(e){
+                console.log("someHandler called by", this, e);
+            }
+
             document.addEventListener("DOMContentLoaded", function() {
                 var datepicker = document.querySelector("kendo-datepicker");
                 datepicker.addEventListener("open", function(e) {
-                    console.log(e.type, e.detail);
+                     console.log(e.type, e.detail);
                 });
 
                 var numeric = document.querySelector("kendo-numerictextbox");

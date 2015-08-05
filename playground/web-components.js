@@ -21,6 +21,7 @@ var TAGNAMES = {
     contextmenu    : "ul",
     actionsheet    : "ul"
 };
+var EVENT_PREFIX = "on-";
 
 Object.keys(kendo.ui.roles).forEach(function(name) {
     registerElement(name, kendo.ui.roles[name]);
@@ -104,13 +105,19 @@ function registerElement(name, widget) {
                 if(typeof(obj[key]) === "function"){
                     this[key] = obj[key].bind(this.widget);
                 }else{
-                    this[key] = obj[key];
+                    this[key] = this[key] || obj[key];
                 }
             }.bind(this));
         } while (obj = Object.getPrototypeOf(obj));
 
         widget.prototype.events.forEach(function(eventName) {
             this.widget.bind(eventName, eventHandler.bind(this, eventName));
+
+            if (this.hasAttribute(EVENT_PREFIX + eventName)) {
+                this.bind(eventName, function(e) {
+                    window[this.getAttribute(EVENT_PREFIX + eventName)].call(this, e);
+                }.bind(this));
+            }
         }.bind(this));
     };
 
