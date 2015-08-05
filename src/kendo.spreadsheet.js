@@ -83,7 +83,6 @@
             var spreadsheet = this;
             var insertIndex = typeof options.index === "number" ? options.index : spreadsheet._sheetsByIndex.length;
             var sheetName;
-            var options;
             var sheets = spreadsheet._sheets;
             var sheetsByIndex = spreadsheet._sheetsByIndex;
             var getUniqueSheetName = function(sheetNameSuffix) {
@@ -150,7 +149,7 @@
                 return;
             }
 
-            var sheet = this.getSheetByName(oldSheetName);
+            sheet = this.getSheetByName(oldSheetName);
 
             if (!sheet) {
                 return;
