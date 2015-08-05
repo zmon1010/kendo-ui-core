@@ -25,6 +25,38 @@
         return c;
     }
 
+    module("SpreadSheet PropertyChange", moduleOptions);
+
+    test("command can be undone", function() {
+        sheet.range("B1:C1").background("#0F0");
+
+        var c = new kendo.spreadsheet.PropertyChangeCommand({ property: "background", value: "#F00" });
+        c.range(sheet.range("A1:C1"));
+
+        c.exec();
+        c.undo();
+
+        equal(sheet.range("A1").background(), null);
+        equal(sheet.range("B1").background(), "#0F0");
+        equal(sheet.range("C1").background(), "#0F0");
+    });
+
+    test("command can be undone (union range)", function() {
+        sheet.range("A1,B2:C2").background("#0F0");
+
+        var c = new kendo.spreadsheet.PropertyChangeCommand({ property: "background", value: "#F00" });
+        c.range(sheet.range("A1:B2"));
+
+        c.exec();
+        c.undo();
+
+        equal(sheet.range("A1").background(), "#0F0");
+        equal(sheet.range("A2").background(), null);
+        equal(sheet.range("B1").background(), null);
+        equal(sheet.range("B2").background(), "#0F0");
+        equal(sheet.range("C2").background(), "#0F0");
+    });
+
     module("SpreadSheet EditCommand", moduleOptions);
 
     var editCommand = $.proxy(command, this, kendo.spreadsheet.EditCommand);
@@ -57,6 +89,20 @@
         command.redo();
 
         equal(sheet.range("A1").value(), "foo");
+    });
+
+    test("command can be undone", function() {
+        sheet.range("B1:C1").value("11/11/2011").format("mm-yy");
+
+        var c = new kendo.spreadsheet.PropertyChangeCommand({ property: "format", value: "d-mmm" });
+        c.range(sheet.range("A1:C1"));
+
+        c.exec();
+        c.undo();
+
+        equal(sheet.range("A1").format(), null);
+        equal(sheet.range("B1").format(), "mm-yy");
+        equal(sheet.range("C1").format(), "mm-yy");
     });
 
     var BorderChangeCommand = kendo.spreadsheet.BorderChangeCommand;

@@ -10,6 +10,10 @@
 
 (function(kendo) {
     var Command = kendo.spreadsheet.Command = kendo.Class.extend({
+        init: function(options) {
+            this._property = options.property;
+            this._state = {};
+        },
         range: function(range) {
             if (range !== undefined) {
                 this._range = range;
@@ -19,21 +23,46 @@
         },
         redo: function() {
             this.exec();
+        },
+        undo: function() {
+            this.range().sheet().batch(function() {
+                this._forEachCell(function(row, col, cell) {
+                    var property = this._property === "_editableValue" ? "value" : this._property;
+                    var sheet = this._range.sheet();
+                    var value = this._state[row + "," + col];
+
+                    sheet.range(row, col)[property](value);
+                });
+            }.bind(this), {});
+        },
+        getState: function() {
+            var range = this.range();
+            var ref = range._ref;
+
+            this._forEachCell(function(row, col, cell) {
+                var property = this._property === "_editableValue" ? "value" : this._property;
+                this._state[row + "," + col] = cell[property] || null;
+            });
+        },
+        _forEachCell: function(callback) {
+            var range = this.range();
+            var ref = range._ref;
+
+            ref.forEach(function(ref) {
+                range.sheet().forEach(ref.toRangeRef(), callback.bind(this));
+            }.bind(this));
         }
     });
 
     var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand = Command.extend({
         init: function(options) {
-            this._property = options.property;
+            Command.fn.init.call(this, options);
             this._value = options.value;
         },
         exec: function() {
             var range = this.range();
-            this._state = range[this._property]();
+            this.getState();
             range[this._property](this._value);
-        },
-        undo: function() {
-            this.range()[this._property](this._state);
         }
     });
 
@@ -46,14 +75,13 @@
 
     var BorderChangeCommand = kendo.spreadsheet.BorderChangeCommand = Command.extend({
         init: function(options) {
+            Command.fn.init.call(this, options);
             this._type = options.border;
             this._style = options.style;
         },
         exec: function() {
+            this.getState();
             this[this._type](this._style);
-        },
-        undo: function() {
-            //TODO
         },
         noBorders: function() {
             var range = this.range();
