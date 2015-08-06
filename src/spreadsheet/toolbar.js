@@ -523,7 +523,7 @@
                                 "</span><span class='k-icon k-i-arrow-s'></span>" +
                             "</a>");
 
-            this.element.on("click", $.proxy(this.open, this));
+            this.element.on("click", this.open.bind(this));
 
             this.options = options;
             this.toolbar = toolbar;
@@ -532,7 +532,7 @@
             this._popup();
             this._colorPicker();
 
-            this.popupElement.on("click", ".k-spreadsheet-border-type-palette .k-button", $.proxy(this._click, this));
+            this.popupElement.on("click", ".k-spreadsheet-border-type-palette .k-button", this._click.bind(this));
 
             this.element.data({
                 type: "borders",
@@ -591,7 +591,7 @@
             this.colorPicker = $("<input />").kendoColorPicker({
                 palette: "basic",
                 value: this.color,
-                change: $.proxy(this._colorChange, this)
+                change: this._colorChange.bind(this)
             }).data("kendoColorPicker");
 
             this.popupElement.find(".k-spreadsheet-border-style-palette").append(this.colorPicker.wrapper);
