@@ -86,13 +86,27 @@
         equal(element.css("position"), "static");
     });
 
+    test("resize method sets width and height of the element", function() {
+        createFormulaInput({
+            position: "absolute"
+        });
+
+        formulaInput.resize({
+            width: 50,
+            height: 30
+        });
+
+        equal(element.width(), 50);
+        equal(element.height(), 30);
+    });
+
     test("activate method positions the element", function() {
         createFormulaInput({
             position: "absolute"
         });
 
         formulaInput.activate({
-            offset: {
+            rectangle: {
                 top: 10,
                 left: 20
             }
@@ -101,6 +115,22 @@
         equal(element.css("position"), "absolute");
         equal(element.css("left"), "20px");
         equal(element.css("top"), "10px");
+    });
+
+    test("activate method sizes the element", function() {
+        createFormulaInput({
+            position: "absolute"
+        });
+
+        formulaInput.activate({
+            rectangle: {
+                width: 100,
+                height: 40
+            }
+        });
+
+        equal(element.width(), 100);
+        equal(element.height(), 40);
     });
 
     test("activate method sets widget value", function() {

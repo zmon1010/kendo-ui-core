@@ -51,7 +51,10 @@
 
         activate: function(options) {
             options = options || {};
-            this.position(options.offset);
+
+            this.position(options.rectangle);
+            this.resize(options.rectangle);
+
             this.value(options.value);
 
             this.element.show().focus();
@@ -79,17 +82,28 @@
             return this._isActive;
         },
 
-        position: function(offset) {
-            if (!offset) {
+        position: function(rectangle) {
+            if (!rectangle) {
                 return;
             }
 
             this.element
                 .css({
                     "position": this.options.position,
-                    "top": offset.top + "px",
-                    "left": offset.left + "px"
+                    "top": rectangle.top + "px",
+                    "left": rectangle.left + "px"
                 });
+        },
+
+        resize: function(rectangle) {
+            if (!rectangle) {
+                return;
+            }
+
+            this.element.css({
+                width: rectangle.width,
+                height: rectangle.height
+            });
         },
 
         value: function(value) {
