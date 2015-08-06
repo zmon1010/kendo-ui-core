@@ -4,10 +4,6 @@ package com.kendoui.taglib.grid;
 import com.kendoui.taglib.BaseTag;
 
 import com.kendoui.taglib.GridTag;
-
-
-
-
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
@@ -94,14 +90,6 @@ public class PageableTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("pageSize", value);
     }
 
-    public java.lang.Object getPageSizes() {
-        return (java.lang.Object)getProperty("pageSizes");
-    }
-
-    public void setPageSizes(java.lang.Object value) {
-        setProperty("pageSizes", value);
-    }
-
     public boolean getPreviousNext() {
         return (boolean)getProperty("previousNext");
     }
@@ -119,5 +107,19 @@ public class PageableTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
 //<< Attributes
+    
+    public java.lang.Object getPageSizes() {
+        return (java.lang.Object)getProperty("pageSizes");
+    }
 
+    public void setPageSizes(java.lang.Object value) {        
+        if (value instanceof java.lang.Object[])
+        {
+            setProperty("pageSizes", value);
+        } 
+        else 
+        {
+            setProperty("pageSizes", Boolean.parseBoolean((String) value));
+        }
+    }    
 }
