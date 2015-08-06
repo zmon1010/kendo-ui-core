@@ -9,10 +9,7 @@ module CodeGen::DPL
         include Options
 
         def csharp_class
-            # Spredsheet should be created as Workbook
-            return 'Workbook' if name.eql?('Spreadsheet')
-
-            name
+            csharp_name
         end
 
         def enum_options

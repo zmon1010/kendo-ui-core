@@ -67,7 +67,21 @@ module CodeGen::DPL::Options
     end
 
     def csharp_name
-        name.to_csharp_name(NAME_MAP)
+        result_name = NAME_MAP[full_name]
+
+        return result_name["name"] unless result_name.nil?
+
+        name.to_csharp_name
+    end
+
+    def key
+        result = NAME_MAP[full_name]
+
+        return csharp_name if result.nil?
+
+        result = result["key"]
+
+        result.slice(0,1).capitalize + result.slice(1..-1)
     end
 
     def builtin_names
@@ -123,16 +137,6 @@ module CodeGen::DPL::Options
         end
 
         return_type
-    end
-
-    def key
-        result = NAME_MAP[name]
-
-        return csharp_name if !result
-
-        result = result["key"]
-
-        result.slice(0,1).capitalize + result.slice(1..-1)
     end
 
     def to_settings
