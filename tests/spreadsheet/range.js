@@ -35,6 +35,24 @@
        sheet.range("A1:A2").unmerge();
     });
 
+    test("merge removes format of all but top-left cells", function() {
+        sheet.range("A1").format("foo");
+        sheet.range("A2").format("bar");
+
+        sheet.range("A1:A2").merge();
+
+        equal(sheet.range("A2").format(), null);
+    });
+
+    test("merge keeps format of top-left cell", function() {
+        sheet.range("A1").format("foo");
+        sheet.range("A2").format("bar");
+
+        sheet.range("A1:A2").merge();
+
+        equal(sheet.range("A1").format(), "foo");
+    });
+
     test("setting range property triggers the change event of the sheet", 2, function() {
        sheet.bind("change", function() {
            ok(true);

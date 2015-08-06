@@ -158,19 +158,23 @@
 
                     var range = new Range(currentRef, sheet);
                     var value = range.value();
+                    var format = range.format();
                     var background = range.background();
 
                     range.value(null);
+                    range.format(null);
                     range.background(null);
 
                     var topLeft = new Range(currentRef.collapse(), sheet);
 
                     topLeft.value(value);
+                    topLeft.format(format);
                     topLeft.background(background);
 
                     mergedCells.push(currentRef);
                     return currentRef;
                 });
+
             }.bind(this), {});
 
             return this;
