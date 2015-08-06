@@ -99,6 +99,7 @@ var __meta__ = {
 
     var ganttStyles = {
         wrapper: "k-widget k-gantt",
+        rowHeight: "k-gantt-rowheight",
         listWrapper: "k-gantt-layout k-gantt-treelist",
         list: "k-gantt-treelist",
         timelineWrapper: "k-gantt-layout k-gantt-timeline",
@@ -1509,7 +1510,7 @@ var __meta__ = {
             snap: true,
             height: 600,
             listWidth: "30%",
-            rowHeight: "2.3em"
+            rowHeight: null
         },
 
         select: function(value) {
@@ -1603,6 +1604,10 @@ var __meta__ = {
 
             if (width) {
                 this.wrapper.width(width);
+            }
+
+            if (options.rowHeight) {
+                this.wrapper.addClass(ganttStyles.rowHeight);
             }
         },
 

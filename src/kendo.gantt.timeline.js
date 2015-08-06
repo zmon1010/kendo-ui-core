@@ -60,6 +60,13 @@ var __meta__ = {
                                         '<li>#=messages.end#: #=kendo.toString(task.end, "h:mm tt ddd, MMM d")#</li>' +
                                     '</ul>' +
                                 '</div>');
+    var SIZE_CALCULATION_TEMPLATE = "<table style='visibility: hidden;'>" +
+        "<tbody>" +
+            "<tr style='height:{0}'>" +
+                "<td>&nbsp;</td>" +
+            "</tr>" +
+        "</tbody>" + 
+    "</table>";
 
     var defaultViews = {
         day: {
@@ -276,19 +283,26 @@ var __meta__ = {
         render: function(tasks) {
             var taskCount = tasks.length;
             var styles = GanttView.styles;
-
             var contentTable;
             var rowsTable = this._rowsTable(taskCount);
             var columnsTable = this._columnsTable(taskCount);
             var tasksTable = this._tasksTable(tasks);
             var currentTimeMarker = this.options.currentTimeMarker;
+            var calculatedSize = this.options.calculatedSize;
+            var totalHeight;
 
             this._taskTree.render([rowsTable, columnsTable, tasksTable]);
 
             contentTable = this.content.find(DOT + styles.rowsTable);
 
+            if (calculatedSize) {
+                totalHeight = calculatedSize.row * tasks.length;
+                this.content.find(DOT + styles.tasksTable).height(totalHeight);
+                contentTable.height(totalHeight);
+            }
+
             this._contentHeight = contentTable.height();
-            this._rowHeight = this._contentHeight / contentTable.find("tr").length;
+            this._rowHeight = calculatedSize ? calculatedSize.row : this._contentHeight / contentTable.find("tr").length;
 
             this.content.find(DOT + styles.columnsTable).height(this._contentHeight);
 
@@ -301,16 +315,10 @@ var __meta__ = {
             var rows = [];
             var row;
             var styles = GanttView.styles;
-            var options = this.options;
-            var rowHeight = typeof options.rowHeight === STRING ? options.rowHeight :
-                options.rowHeight + "px";
-            var attributes = [null, {
-                className: styles.alt
-            }];
-
+            var attributes = [null, { className: styles.alt }];
 
             for (var i = 0; i < rowCount; i++) {
-                row = kendoDomElement("tr", extend(attributes[i % 2], { style: { height: rowHeight } }), [
+                row = kendoDomElement("tr", attributes[i % 2], [
                     kendoDomElement("td", null, [
                         kendoTextElement("\u00a0")
                     ])
@@ -376,9 +384,6 @@ var __meta__ = {
             var resourcesMargin = this._calculateResourcesMargin();
             var taskBorderWidth = this._calculateTaskBorderWidth();
             var resourceStyle;
-            var options = this.options;
-            var rowHeight = typeof options.rowHeight === STRING ? options.rowHeight :
-               options.rowHeight + "px";
 
             var addCoordinates = function(rowIndex) {
                 var taskLeft;
@@ -405,7 +410,7 @@ var __meta__ = {
                 position = this._taskPosition(task);
                 position.borderWidth = taskBorderWidth;
 
-                row = kendoDomElement("tr", { style: { height: rowHeight } });
+                row = kendoDomElement("tr", null);
 
                 cell = kendoDomElement("td", null, [this._renderTask(tasks[i], position)]);
 
@@ -543,7 +548,16 @@ var __meta__ = {
             var taskLeft = position.left;
             var styles = GanttView.styles;
             var wrapClassName = styles.taskWrap;
+            var calculatedSize = this.options.calculatedSize;
             var dragHandleStyle = {};
+            var taskWrapAttr = {
+                className: wrapClassName,
+                style: { left: taskLeft + "px" }
+            };
+
+            if (calculatedSize) {
+                taskWrapAttr.style.height = calculatedSize.cell + "px";
+            }
 
             if (task.summary) {
                 taskElement = this._renderSummary(task, position);
@@ -554,7 +568,7 @@ var __meta__ = {
                 taskElement = this._renderSingleTask(task, position);
             }
 
-            taskWrapper = kendoDomElement("div", { className: wrapClassName, style: { left: taskLeft + "px" } }, [
+            taskWrapper = kendoDomElement("div", taskWrapAttr, [
                 taskElement
             ]);
 
@@ -1849,11 +1863,37 @@ var __meta__ = {
 
         _wrapper: function() {
             var styles = GanttTimeline.styles;
+            var that = this;
+            var options = this.options;
+            var calculateSize = function () {
+                var rowHeight = typeof options.rowHeight === STRING ? options.rowHeight :
+                    options.rowHeight + "px";
+                var table = $(kendo.format(SIZE_CALCULATION_TEMPLATE, rowHeight));
+                var calculatedRowHeight;
+                var calculatedCellHeight;
+                var content = that.wrapper.find(DOT + styles.tasksWrapper);
+
+                content.append(table);
+
+                calculatedRowHeight = table.find("tr").outerHeight();
+                calculatedCellHeight = table.find("td").height();
+
+                table.remove();
+
+                return {
+                    "row": calculatedRowHeight,
+                    "cell": calculatedCellHeight
+                };
+            };
 
             this.wrapper = this.element
                 .addClass(styles.wrapper)
                 .append("<div class='" + styles.gridHeader + "'><div class='" + styles.gridHeaderWrap + "'></div></div>")
                 .append("<div class='" + styles.gridContentWrap + "'><div class='" + styles.tasksWrapper + "'></div><div class='" + styles.dependenciesWrapper + "'></div></div>");
+
+            if (options.rowHeight) {
+                this._calculatedSize = calculateSize();
+            }
         },
 
         _domTrees: function() {
@@ -1963,7 +2003,8 @@ var __meta__ = {
                     view = new type(this.wrapper, trimOptions(extend(true, {
                         headerTree: this._headerTree,
                         taskTree: this._taskTree,
-                        dependencyTree: this._dependencyTree
+                        dependencyTree: this._dependencyTree,
+                        calculatedSize: this._calculatedSize
                     }, view, this.options)));
                 } else {
                     throw new Error("There is no such view");
