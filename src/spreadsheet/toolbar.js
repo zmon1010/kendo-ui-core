@@ -119,15 +119,18 @@
             }.bind(this), {});
         },
         destroy: function() {
-            var bordersTool = this.element.find("[data-command=BorderChangeCommand]").data("borders");
-            if (bordersTool) {
-                bordersTool.destroy();
-            }
+            // TODO: move to ToolBar.destroy to take care of these
+            this.element.find("[data-command],.k-button").each(function() {
+                var element = $(this);
+                var instance = element.data("instance");
+                if (instance && instance.destroy) {
+                    instance.destroy();
+                }
+            });
+
             ToolBar.fn.destroy.call(this);
         }
     });
-
-    kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 
     var colorPicker = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
@@ -336,6 +339,8 @@
             options.click = this.open.bind(this);
 
             kendo.toolbar.ToolBarButton.fn.init.call(this, options, toolbar);
+
+            this.element.data("instance", this);
         },
         popup: function() {
             if (!this._popup) {
@@ -362,6 +367,11 @@
             }
 
             return this._popup;
+        },
+        destroy: function() {
+            if (this._popup) {
+                this._popup.destroy();
+            }
         },
         open: function() {
             this.popup().open();
@@ -524,7 +534,7 @@
 
             this.element.data({
                 type: "borders",
-                borders: this
+                instance: this
             });
         },
 
@@ -607,6 +617,13 @@
     });
 
     kendo.toolbar.registerComponent("borders", BorderChangeTool);
+
+    kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
+
+    kendo.spreadsheet.toolbar = {
+        PopupTool: PopupTool,
+        FormatCellsViewModel: FormatCellsViewModel
+    };
 
 })(kendo);
 
