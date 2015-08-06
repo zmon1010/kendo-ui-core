@@ -95,4 +95,12 @@
         element.triggerMouseMove();
         element.triggerMouseUp();
     });
+
+    test("recognizes dblclick", 1, function() {
+        listener.on("dblclick", function() {
+            ok(true);
+        });
+
+        element.trigger({ type: "dblclick" });
+    });
 })();

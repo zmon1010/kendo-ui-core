@@ -16,7 +16,8 @@
         36: 'home',
         32: 'spacebar',
         33: 'pageup',
-        34: 'pagedown'
+        34: 'pagedown',
+        113: ':edit'
     };
 
     var Mac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
@@ -54,7 +55,7 @@
             this._mousePressed = false;
 
             target.on("keydown", this.keyDownProxy);
-            target.on("mousedown cut copy paste scroll wheel", this.mouseProxy);
+            target.on("mousedown cut copy paste scroll wheel click dblclick", this.mouseProxy);
 
             $(document.documentElement).on("mousemove mouseup", this.mouseProxy);
 
