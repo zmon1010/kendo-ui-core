@@ -267,6 +267,25 @@
             })[0];
         },
 
+        containingPane: function(cell) {
+            return this.panes.filter(function(pane) {
+                if (pane._grid.contains(cell)) {
+                    return true;
+                }
+                return false;
+            })[0];
+        },
+
+        cellRectangle: function(cell) {
+            var theGrid = this.containingPane(cell)._grid;
+            var rectangle = this._sheet._grid.rectangle(cell);
+
+            return rectangle.offset(
+                theGrid.headerWidth - this.scroller.scrollLeft,
+                theGrid.headerHeight - this.scroller.scrollTop
+            );
+        },
+
         refresh: function(reason) {
             var sheet = this._sheet;
             this.eventHandler.refresh();
@@ -313,15 +332,8 @@
         },
 
         scrollIntoView: function(cell) {
-            var theGrid;
             var willScroll = false;
-
-            this.panes.forEach(function(pane) {
-                var grid = pane._grid;
-                if (!theGrid && grid.contains(cell)) {
-                    theGrid = grid;
-                }
-            });
+            var theGrid = this.containingPane(cell)._grid;
 
             var boundaries = theGrid.scrollBoundaries(cell);
 
@@ -386,10 +398,17 @@
             this.tree.render(merged);
         },
 
+        //TODO: Refactor this
         _formulaInput: function(element) {
             var editor = element.find(".k-spreadsheet-formula-input");
 
-            this.formulaInput = new kendo.spreadsheet.FormulaInput(editor);
+            this.formulaInput = new kendo.spreadsheet.FormulaInput(editor, {
+                position: "absolute",
+                change: (function(options) {
+                    var range = this._sheet.range(this._sheet.activeCell());
+                    range._editableValue(options.value);
+                }).bind(this)
+            });
         },
 
         _pane: function(row, column, rowCount, columnCount) {
