@@ -80,7 +80,7 @@
     var splitViewCategories = new kendo.data.DataSource({
         type: "odata",
         transport: {
-            read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+            read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
         }
     });
 
@@ -90,7 +90,7 @@
 
         transport: {
             read: {
-                url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+                url: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
             }
         }
     });
@@ -101,7 +101,7 @@
         serverFiltering: true,
         transport: {
             read: {
-                url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Order_Details?$expand=Order"
+                url: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Order_Details?$expand=Order"
             }
         },
 

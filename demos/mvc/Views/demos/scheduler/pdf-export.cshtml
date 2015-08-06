@@ -28,10 +28,10 @@
         // NOTE: Only required if the Kendo UI stylesheets are loaded
         // from a different origin, e.g. cdn.kendostatic.com
         kendo.pdf.defineFont({
-            "DejaVu Sans"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
-            "DejaVu Sans|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
-            "DejaVu Sans|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
-            "DejaVu Sans|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+            "DejaVu Sans"             : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
+            "DejaVu Sans|Bold"        : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+            "DejaVu Sans|Bold|Italic" : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "DejaVu Sans|Italic"      : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
         });
     </script>
 
@@ -44,7 +44,7 @@
             toolbar: [ "pdf" ],
             pdf: {
                 fileName: "Kendo UI Scheduler Export.pdf",
-                proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+                proxyURL: "//demos.telerik.com/kendo-ui/service/export"
             },
             date: new Date("2013/6/13"),
             startTime: new Date("2013/6/13 07:00 AM"),
@@ -62,19 +62,19 @@
                 batch: true,
                 transport: {
                     read: {
-                        url: "http://demos.telerik.com/kendo-ui/service/tasks",
+                        url: "//demos.telerik.com/kendo-ui/service/tasks",
                         dataType: "jsonp"
                     },
                     update: {
-                        url: "http://demos.telerik.com/kendo-ui/service/tasks/update",
+                        url: "//demos.telerik.com/kendo-ui/service/tasks/update",
                         dataType: "jsonp"
                     },
                     create: {
-                        url: "http://demos.telerik.com/kendo-ui/service/tasks/create",
+                        url: "//demos.telerik.com/kendo-ui/service/tasks/create",
                         dataType: "jsonp"
                     },
                     destroy: {
-                        url: "http://demos.telerik.com/kendo-ui/service/tasks/destroy",
+                        url: "//demos.telerik.com/kendo-ui/service/tasks/destroy",
                         dataType: "jsonp"
                     },
                     parameterMap: function(options, operation) {

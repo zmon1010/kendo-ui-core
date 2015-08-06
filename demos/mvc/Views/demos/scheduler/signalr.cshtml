@@ -6,7 +6,7 @@
         var hub,
             hubStart;
         $(function () {
-            var hubUrl = "http://demos.telerik.com/kendo-ui/service/signalr/hubs";
+            var hubUrl = "//demos.telerik.com/kendo-ui/service/signalr/hubs";
             var connection = $.hubConnection(hubUrl, { useDefaultPath: false });
             hub = connection.createHubProxy("meetingHub");
             hubStart = connection.start({ jsonp: true });

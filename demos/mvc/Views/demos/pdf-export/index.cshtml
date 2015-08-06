@@ -44,10 +44,10 @@
     // NOTE: Only required if the Kendo UI stylesheets are loaded
     // from a different origin, e.g. cdn.kendostatic.com
     kendo.pdf.defineFont({
-        "DejaVu Sans"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
-        "DejaVu Sans|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
-        "DejaVu Sans|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
-        "DejaVu Sans|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+        "DejaVu Sans"             : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
+        "DejaVu Sans|Bold"        : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+        "DejaVu Sans|Bold|Italic" : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+        "DejaVu Sans|Italic"      : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
     });
 </script>
 
@@ -72,7 +72,7 @@ $(document).ready(function() {
             kendo.saveAs({
                 dataURI: data,
                 fileName: "HR-Dashboard.pdf",
-                proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+                proxyURL: "//demos.telerik.com/kendo-ui/service/export"
             });
         });
     });
@@ -89,7 +89,7 @@ $(document).ready(function() {
             kendo.saveAs({
                 dataURI: data,
                 fileName: "HR-Dashboard.png",
-                proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+                proxyURL: "//demos.telerik.com/kendo-ui/service/export"
             });
         });
     });
@@ -106,7 +106,7 @@ $(document).ready(function() {
             kendo.saveAs({
                 dataURI: data,
                 fileName: "HR-Dashboard.svg",
-                proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+                proxyURL: "//demos.telerik.com/kendo-ui/service/export"
             });
         });
     });
@@ -224,7 +224,7 @@ $(document).ready(function() {
       dataSource: {
         type: "odata",
         transport: {
-          read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+          read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
         },
         pageSize: 15,
         group: { field: "ContactTitle" }

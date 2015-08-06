@@ -12,7 +12,7 @@
                         transport: {
                             read: {
                                 url: function(options) {
-                                    return kendo.format("http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products({0})/Order_Details", options.ProductID);
+                                    return kendo.format("//demos.telerik.com/kendo-ui/service/Northwind.svc/Products({0})/Order_Details", options.ProductID);
                                 }
                             }
                         },
@@ -37,7 +37,7 @@
                         transport: {
                             read: {
                                 url: function(options) {
-                                    return kendo.format("http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories({0})/Products", options.CategoryID);
+                                    return kendo.format("//demos.telerik.com/kendo-ui/service/Northwind.svc/Categories({0})/Products", options.CategoryID);
                                 }
                             }
                         }
@@ -47,7 +47,7 @@
                         type: "odata",
                         transport: {
                             read: {
-                                url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                                url: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
                             }
                         },
                         schema: {

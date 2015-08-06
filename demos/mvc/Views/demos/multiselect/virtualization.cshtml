@@ -16,7 +16,7 @@
                     itemHeight: 26,
                     valueMapper: function(options) {
                         $.ajax({
-                            url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
+                            url: "//demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
                             type: "GET",
                             dataType: "jsonp",
                             data: convertValues(options.value),
@@ -29,7 +29,7 @@
                 dataSource: {
                     type: "odata",
                     transport: {
-                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                        read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
                     },
                     schema: {
                         model: {
