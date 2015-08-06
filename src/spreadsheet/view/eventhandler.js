@@ -165,7 +165,7 @@
         },
 
         onMouseDown: function(event, action) {
-            var clipboard = this.clipboard;
+            var view = this.view;
             var object = this.objectAt(event);
 
             this.formulaInput.deactivate();
@@ -177,11 +177,6 @@
             this._selectionMode = SELECTION_MODES[object.type];
             this.appendSelection = event.mod;
             this.navigator.select(object.ref, this._selectionMode, this.appendSelection);
-            // clipboard.css({ left: object.x - 4, top: object.y - 4 });
-
-            setTimeout(function() {
-                clipboard.select().focus();
-            });
         },
 
         onMouseDrag: function(event, action) {
@@ -219,14 +214,8 @@
         },
 
         onMouseUp: function(event, action) {
-            setTimeout(function() {
-                this.clipboard.css({
-                    left: -10000,
-                    top: -10000
-                });
-            }.bind(this));
-
             this.stopAutoScroll();
+            this.view.selectClipBoardContents();
         },
 
         onDblClick: function(event, action) {
@@ -244,7 +233,7 @@
         },
 
         clipBoardValue: function() {
-            return this.clipboard.val();
+            return this.clipboard.html();
         },
 
         onPaste: function(event, action) {

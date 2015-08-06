@@ -55,9 +55,8 @@ $("#redo").click(function() {
 });
 
 $("#copy").on("click", function(e) {
-    var range = sheet.range("K11:M16");
-
-    range.select();
+    spreadsheet._view.selectClipBoardContents();
+    document.execCommand("copy");
 });
 
 $("#select-first").on("click", function(e) {

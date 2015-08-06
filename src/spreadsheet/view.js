@@ -10,6 +10,14 @@
            return !e || e.changed == name;
     }
 
+    function selectElementContents(el) {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+
     var HtmlTable = kendo.Class.extend({
         init: function(rowHeight, columnWidth) {
             this.rowHeight = rowHeight;
@@ -77,7 +85,7 @@
         }
     });
 
-    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><textarea tabindex="0" class="k-spreadsheet-clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea><div class="k-spreadsheet-cell-editor"></div>';
+    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><div tabindex="0" class="k-spreadsheet-clipboard" contenteditable=true></div><div class="k-spreadsheet-cell-editor"></div>';
 
     function within(value, min, max) {
         return value >= min && value <= max;
@@ -317,18 +325,24 @@
 
             if (reason.selection) {
                 // TODO: uncomment this, it breaks the union
-                /*
                 var text = sheet.selection().values().map(function(row) {
                     return row.join("\t");
                 }).join("\r\n");
 
-                this.clipboard.val(text).select().focus();
-                */
+
+                this.clipboard.html(text);
+                var that = this;
+                this.selectClipBoardContents();
             }
 
             if (reason.activeCell) {
                 this._focus = sheet.activeCell().toRangeRef();
             }
+        },
+
+        selectClipBoardContents: function() {
+            selectElementContents(this.clipboard[0]);
+            this.clipboard.focus();
         },
 
         scrollIntoView: function(cell) {

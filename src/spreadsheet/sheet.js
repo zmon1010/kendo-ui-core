@@ -350,6 +350,10 @@
             if (ref) {
                 ref = this._ref(ref);
 
+                if (ref.eq(this._originalSelection)) {
+                    return;
+                }
+
                 this._originalSelection = ref;
                 this._selection = this.unionWithMerged(ref);
 
