@@ -43,7 +43,6 @@
         },
         range: function() {
             var sheet = this.spreadsheet.activeSheet();
-
             return sheet.range(sheet.activeCell());
         },
         refresh: function() {
