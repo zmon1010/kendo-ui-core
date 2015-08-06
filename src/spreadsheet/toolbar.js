@@ -42,7 +42,7 @@
             this.spreadsheet = spreadsheet;
         },
         range: function() {
-            var sheet = this.spreadsheet._sheet;
+            var sheet = this.spreadsheet.activeSheet();
 
             return sheet.range(sheet.activeCell());
         },
@@ -316,15 +316,14 @@
             });
             ddl.setDataSource([
                 { format: null, name: "Automatic" },
-                { format: "?", name: "Number", sample: "1,499.99" },
-                { format: "?", name: "Percent", sample: "14.50%" },
-                { format: "?", name: "Scientific", sample: "1.4E+05" },
-                { format: "?", name: "Financial", sample: "(1,000.12)" },
+                { format: "?.00", name: "Number", sample: "1,499.99" },
+                { format: "?.00%", name: "Percent", sample: "14.50%" },
+                { format: '_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)', name: "Financial", sample: "(1,000.12)" },
                 { format: "$?", name: "Currency", sample: "$1,499.99" },
-                { format: "?", name: "Date", sample: "4/21/2012" },
-                { format: "?", name: "Time", sample: "5:49:00 PM" },
-                { format: "?", name: "Date time", sample: "4/21/2012 5:49:00" },
-                { format: "?", name: "Duration", sample: "168:04:00" }
+                { format: "m/d/yyyy", name: "Date", sample: "4/21/2012" },
+                { format: "h:mm:ss AM/PM", name: "Time", sample: "5:49:00 PM" },
+                { format: "m/d/yyyy h:mm", name: "Date time", sample: "4/21/2012 5:49:00" },
+                { format: "[h]:mm:ss", name: "Duration", sample: "168:05:00" }
             ]);
 
             this.element.data({
@@ -360,8 +359,9 @@
                             this.center();
                         },
                         deactivate: function() {
-                            this.destroy();
-                        }
+                            this._popup.destroy();
+                            this._popup = null;
+                        }.bind(this)
                     })
                     .data("kendoWindow");
             }
@@ -371,6 +371,7 @@
         destroy: function() {
             if (this._popup) {
                 this._popup.destroy();
+                this._popup = null;
             }
         },
         open: function() {
@@ -435,7 +436,7 @@
         }
     });
 
-    kendo.toolbar.registerComponent("formatPopup", PopupTool.extend({
+    var FormatPopupTool = PopupTool.extend({
         init: function(options, toolbar) {
             options = options || {};
 
@@ -512,7 +513,9 @@
                 value: format
             });
         }
-    }));
+    });
+
+    kendo.toolbar.registerComponent("formatPopup", FormatPopupTool);
 
     var BorderChangeTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
@@ -622,6 +625,7 @@
 
     kendo.spreadsheet.toolbar = {
         PopupTool: PopupTool,
+        FormatPopupTool: FormatPopupTool,
         FormatCellsViewModel: FormatCellsViewModel
     };
 
