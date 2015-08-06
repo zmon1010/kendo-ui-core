@@ -274,6 +274,18 @@
         },
         simplify: function() {
             return this;
+        },
+        leftColumn: function() {
+            return this;
+        },
+        rightColumn: function() {
+            return this;
+        },
+        topRow: function() {
+            return this;
+        },
+        bottomRow: function() {
+            return this;
         }
     });
 

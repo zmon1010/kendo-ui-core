@@ -75,6 +75,7 @@
 
     var BorderChangeCommand = kendo.spreadsheet.BorderChangeCommand = Command.extend({
         init: function(options) {
+            options.property = "border";
             Command.fn.init.call(this, options);
             this._type = options.border;
             this._style = options.style;
@@ -82,6 +83,27 @@
         exec: function() {
             this.getState();
             this[this._type](this._style);
+        },
+        undo: function() {
+            this.range().sheet().batch(function() {
+                this._forEachCell(function(row, col, cell) {
+                    var sheet = this._range.sheet();
+                    var value = this._state[row + "," + col];
+
+                    sheet.range(row, col).borderRight(value.borderRight).borderBottom(value.borderBottom);
+                });
+            }.bind(this), {});
+        },
+        getState: function() {
+            var range = this.range();
+            var ref = range._ref;
+
+            this._forEachCell(function(row, col, cell) {
+                this._state[row + "," + col] = {
+                    borderRight: cell.borderRight || null,
+                    borderBottom: cell.borderBottom || null
+                };
+            });
         },
         noBorders: function() {
             var range = this.range();
