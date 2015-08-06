@@ -805,6 +805,23 @@ div.editorToolbarWindow.k-window-content {
 }
 
 // Icons
+.k-button:active {
+    .k-i-funnel-clear,
+    &:not(.k-state-disabled):hover .k-i-funnel-clear {
+        background-position: -48px -96px;
+    }
+
+    .k-i-funnel,
+    &:not(.k-state-disabled):hover .k-i-funnel {
+        background-position: -48px -80px;
+    }
+
+    .k-i-refresh,
+    &:not(.k-state-disabled):hover .k-i-refresh {
+        background-position: -48px -112px;
+    }
+}    
+
 .k-state-border-up .k-select .k-i-arrow-s,
 .k-state-border-down .k-select .k-i-arrow-s { 
     background-position: -16px 0; 
@@ -834,6 +851,53 @@ div.editorToolbarWindow.k-window-content {
 
 .k-numerictextbox .k-link.k-state-selected span.k-i-arrow-s {
     background-position: -16px -35px;
+}
+
+.k-menu .k-state-active .k-i-arrow-s,
+.k-menu .k-link:not(.k-state-disabled):hover > .k-i-arrow-s {
+    background-position: -16px -32px;
+}
+
+.k-menu .k-state-active .k-i-arrow-e,
+.k-menu .k-link:not(.k-state-disabled):hover > .k-i-arrow-e {
+    background-position: -16px -16px;
+}
+
+.k-tabstrip-scrollable.k-header .k-i-arrow-e,
+.k-tabstrip-scrollable .k-button:not(.k-state-disabled):hover .k-i-arrow-e {
+    background-position: -16px -16px;
+}
+
+.k-tabstrip-scrollable.k-header .k-i-arrow-w,
+.k-tabstrip-scrollable .k-button:not(.k-state-disabled):hover .k-i-arrow-w {
+    background-position: -16px -48px;
+}
+
+.k-drag-clue .k-add {
+    background-position: -48px -64px;
+}
+
+.k-window-titlebar .k-i-unpin,
+.k-window-titlebar .k-link:not(.k-state-disabled):hover > .k-i-unpin {
+    background-position: -178px -272px;
+}
+
+.k-multiselect-wrap .k-i-close,
+.k-multiselect-wrap .k-state-hover .k-i-close,
+.k-multiselect-wrap .k-button:not(.k-state-disabled):hover .k-i-close {
+    background-position: -48px -16px;
+}
+
+.k-multiselect-wrap .k-i-arrow-s,
+.k-multiselect-wrap .k-button:not(.k-state-disabled):hover .k-i-arrow-s {
+    background-position: -16px -32px;
+}
+
+.k-multiselect.k-state-border-down .k-select .k-i-arrow-s,
+.k-multiselect.k-state-border-up .k-select .k-i-arrow-s,
+.k-multiselect.k-state-border-down .k-button:not(.k-state-disabled):hover .k-i-arrow-s,
+.k-multiselect.k-state-border-up .k-button:not(.k-state-disabled):hover .k-i-arrow-s {
+    background-position: -16px 0;
 }
 
 .k-i-close,
@@ -890,15 +954,15 @@ div.editorToolbarWindow.k-window-content {
 }
 
 .k-calendar .k-icon.k-i-arrow-w,
-.k-calendar .k-state-hover .k-icon.k-i-arrow-w {
+.k-calendar .k-state-hover .k-icon.k-i-arrow-w,
+.k-calendar .k-link:not(.k-state-disabled):hover > .k-i-arrow-w {
      background-position: -16px -48px;
-     opacity: 1;
 }
 
 .k-calendar .k-icon.k-i-arrow-e,
-.k-calendar .k-state-hover .k-icon.k-i-arrow-e {
+.k-calendar .k-state-hover .k-icon.k-i-arrow-e,
+.k-calendar .k-link:not(.k-state-disabled):hover > .k-i-arrow-e {
      background-position: -16px -16px;
-     opacity: 1;
 }
 
 .k-treeview {

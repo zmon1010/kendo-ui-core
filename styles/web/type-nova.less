@@ -303,12 +303,22 @@ textarea.k-textbox:hover,
 }
 
 .k-state-active .k-icon,
-.k-numerictextbox .k-state-selected .k-icon {
+.k-button:active .k-icon,
+.k-numerictextbox .k-state-selected .k-icon,
+.k-multiselect-wrap .k-icon,
+.k-calendar .k-header .k-icon,
+.k-tabstrip-scrollable.k-header .k-icon,
+.k-window-titlebar .k-icon,
+.k-drag-clue .k-icon {
     opacity: 1;
 }
 
 .k-state-disabled .k-icon {
     opacity: .2;
+}
+
+.k-panelbar .k-state-active .k-icon {
+    opacity: .4;
 }
 
 /* Button */
@@ -1333,6 +1343,10 @@ input.k-textbox:active {
     border-color: @accent;
 }
 
+/* Drag & Drop */
+.k-drag-clue {
+    color: @inversed-text-color;
+}
 
 
 .demo-section.k-header {
