@@ -60,14 +60,14 @@ if(TooltipVisible) {
 
     private void RenderSeries(string seriesType, List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
     {
-        List<string> commonCharts = new List<string> {"Area", "Bar", "Column", "Donut", "Funnel", "HorizontalWaterfall", "Line", 
+        List<string> areLikeCharts = new List<string> {"Area", "Bar", "Column", "Donut", "Funnel", "HorizontalWaterfall", "Line", 
                                                      "Pie", "RadarArea", "RadarColumn", "RadarLine", "VerticalArea", "VerticalLine", "Waterfall"};
 
         List<string> polarScatterCharts= new List<string> {"PolarArea", "PolarLine", "PolarScatter", "Scatter", "ScatterLine"};
 
-        if (commonCharts.Contains(seriesType)) 
+        if (areLikeCharts.Contains(seriesType)) 
         {   
-            RenderCommonCharts(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
+            RenderAreaLikeCharts(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
         } 
         else if (seriesType == "RangeBar" || seriesType == "RangeColumn" )
         {
@@ -81,11 +81,15 @@ if(TooltipVisible) {
         {
             RenderBoxPlotChart(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
         }
+        else if (seriesType == "Bullet" || seriesType == "VerticalBullet")
+        {
+            RenderBulletCharts(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
+        }
     }
 #>
 <#+
 
-    private void RenderCommonCharts(string type, List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
+    private void RenderAreaLikeCharts(string type, List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
     {
         var newLine = Environment.NewLine;
         var seriesType = Char.ToLowerInvariant(type[0]) + type.Substring(1);
@@ -101,7 +105,7 @@ if(TooltipVisible) {
 
                 result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "field: \""+ SeriesConfigs[i][j] +"\"";
                 result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
-                result +=  isLast ? newLine + Tabs(5) + "}" + newLine : newLine + Tabs(5) + "},";
+                result +=  isLast ? "}" + newLine : "},";
             }
         }
         result += Tabs(2) + "],";
@@ -130,7 +134,7 @@ if(TooltipVisible) {
                 result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "fromField: \""+ SeriesConfigs[i][j] +"\",";
                 result += newLine + Tabs(6) + "toField: \""+ SeriesConfigs[i][j+1] +"\"";
                 result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
-                result +=  isLast ? newLine + Tabs(5) + "}" + newLine : newLine + Tabs(5) + "},";
+                result +=  isLast ? "}" + newLine : "},";
             }
         }
         result += Tabs(2) + "]";
@@ -159,7 +163,7 @@ if(TooltipVisible) {
                 result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "xField: \""+ SeriesConfigs[i][j] +"\",";
                 result += newLine + Tabs(6) + "yField: \""+ SeriesConfigs[i][j+1] +"\"";
                 result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
-                result +=  isLast ? newLine + Tabs(5) + "}" + newLine : newLine + Tabs(5) + "},";
+                result +=  isLast ? "}" + newLine : "},";
             }
         }
         result += Tabs(2) + "]";
@@ -194,7 +198,36 @@ if(TooltipVisible) {
                 result += newLine + Tabs(6) + "meanField: \"" + SeriesConfigs[i][j+6] + "\"";
 
                 result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
-                result +=  isLast ? newLine + Tabs(5) + "}" + newLine : newLine + Tabs(5) + "},";
+                result +=  isLast ? "}" + newLine : "},";
+            }
+        }
+        result += Tabs(2) + "]";
+
+#>
+<#=result#>
+<#+
+    }
+#>
+
+<#+
+    private void RenderBulletCharts(string type, List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
+    {
+        var newLine = Environment.NewLine;
+        var seriesType = Char.ToLowerInvariant(type[0]) + type.Substring(1);
+        var align = newLine + Tabs(2);
+
+        string result = "seriesDefaults: {" + newLine + Tabs(3) + "type: \"" + seriesType + "\"" + align + "}," + align + "series: [";
+
+        for (int i = 0; i < SeriesNames.Count; i++) 
+        {
+            for (int j = 0; j < SeriesConfigs[i].Count; j+=2) 
+            {
+                bool isLast = SeriesConfigs[i].Equals(SeriesConfigs[SeriesConfigs.Count - 1]);
+
+                result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "currentField: \""+ SeriesConfigs[i][j] +"\",";
+                result += newLine + Tabs(6) + "targetField: \""+ SeriesConfigs[i][j+1] +"\"";
+                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
+                result +=  isLast ? "}" + newLine : "},";
             }
         }
         result += Tabs(2) + "]";
