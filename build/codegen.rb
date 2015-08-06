@@ -193,13 +193,25 @@ namespace :generate do
     task :dpl do
         filename = 'docs/api/javascript/ui/spreadsheet.md'
 
-        component = CodeGen::MarkdownParser.read(filename, CodeGen::DPL::Component)
+        spreadsheet_component = CodeGen::MarkdownParser.read(filename, CodeGen::DPL::Component)
 
-        generator = CodeGen::DPLGenerator.new('build/codegen/lib/dpl/dumps')
+        additional_components = [
+            'BorderStyle'
+        ]
 
-        import_metadata(component, "lib/dpl/config/")
+        components = additional_components.map { |name| CodeGen::DPL::Component.new({ :name => name }) }
 
-        generator.component(component)
+        components.push spreadsheet_component
+
+        components.each do |component|
+
+            generator = CodeGen::DPLGenerator.new('build/codegen/lib/dpl/dumps')
+
+            import_metadata(component, "lib/dpl/config/")
+
+            generator.component(component)
+        end
+
     end
 
     namespace :mvc_6 do

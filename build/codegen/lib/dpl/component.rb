@@ -10,7 +10,9 @@ module CodeGen::DPL
 
         def csharp_class
             # Spredsheet should be created as Workbook
-            "Workbook"
+            return 'Workbook' if name.eql?('Spreadsheet')
+
+            name
         end
 
         def enum_options
