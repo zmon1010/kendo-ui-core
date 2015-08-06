@@ -53,7 +53,7 @@ if(TooltipVisible) {
         string newLine= Environment.NewLine;
 
         result += SeriesNames != string.Empty ? ", " + newLine + Tabs(tabs) +"name: \"" + SeriesNames +"\"" : "";
-        result +=SeriesColors != string.Empty ? ", " + newLine + Tabs(tabs) +"color: \"" + SeriesColors +"\"" + newLine + Tabs(tabs-1) + "}" : "";
+        result +=SeriesColors != string.Empty ? ", " + newLine + Tabs(tabs) +"color: \"" + SeriesColors +"\"" + newLine + Tabs(tabs-1) : "";
 
         return result;
     }
@@ -99,9 +99,9 @@ if(TooltipVisible) {
             {
                 bool isLast = SeriesConfigs[i].Equals(SeriesConfigs[SeriesConfigs.Count - 1]);
 
-                result += newLine + Tabs(3) + "{" + newLine + Tabs(4) + "field: \""+ SeriesConfigs[i][j] +"\"";
-                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 4);
-                result +=  isLast ? newLine : ",";
+                result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "field: \""+ SeriesConfigs[i][j] +"\"";
+                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
+                result +=  isLast ? newLine + Tabs(5) + "}" + newLine : newLine + Tabs(5) + "},";
             }
         }
         result += Tabs(2) + "],";
@@ -127,10 +127,10 @@ if(TooltipVisible) {
             {
                 bool isLast = SeriesConfigs[i].Equals(SeriesConfigs[SeriesConfigs.Count - 1]);
 
-                result += newLine + Tabs(3) + "{" + newLine + Tabs(4) + "fromField: \""+ SeriesConfigs[i][j] +"\",";
-                result += newLine + Tabs(4) + "toField: \""+ SeriesConfigs[i][j+1] +"\"";
-                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 4);
-                result +=  isLast ? newLine : ",";
+                result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "fromField: \""+ SeriesConfigs[i][j] +"\",";
+                result += newLine + Tabs(6) + "toField: \""+ SeriesConfigs[i][j+1] +"\"";
+                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
+                result +=  isLast ? newLine + Tabs(5) + "}" + newLine : newLine + Tabs(5) + "},";
             }
         }
         result += Tabs(2) + "]";
@@ -159,7 +159,7 @@ if(TooltipVisible) {
                 result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "xField: \""+ SeriesConfigs[i][j] +"\",";
                 result += newLine + Tabs(6) + "yField: \""+ SeriesConfigs[i][j+1] +"\"";
                 result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
-                result +=  isLast ? newLine : ",";
+                result +=  isLast ? newLine + Tabs(5) + "}" + newLine : newLine + Tabs(5) + "},";
             }
         }
         result += Tabs(2) + "]";
@@ -194,7 +194,7 @@ if(TooltipVisible) {
                 result += newLine + Tabs(6) + "meanField: \"" + SeriesConfigs[i][j+6] + "\"";
 
                 result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
-                result +=  isLast ? newLine : ",";
+                result +=  isLast ? newLine + Tabs(5) + "}" + newLine : newLine + Tabs(5) + "},";
             }
         }
         result += Tabs(2) + "]";
