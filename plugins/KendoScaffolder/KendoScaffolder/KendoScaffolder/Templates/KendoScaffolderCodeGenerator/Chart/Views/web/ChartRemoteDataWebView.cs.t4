@@ -47,13 +47,13 @@ if(TooltipVisible) {
         return String.Concat(Enumerable.Repeat("\t", count));
     }
 
-    private string NormalizeColorAndNames(string SeriesNames, string SeriesColors)
+    private string NormalizeColorAndNames(string SeriesNames, string SeriesColors, int tabs)
     {
         string result = "";
         string newLine= Environment.NewLine;
 
-        result += SeriesNames != string.Empty ? ", " + newLine + Tabs(4) +"name: \"" + SeriesNames +"\"" : "";
-        result +=SeriesColors != string.Empty ? ", " + newLine + Tabs(4) +"color: \"" + SeriesColors +"\"" + newLine + Tabs(3) + "}" : "";
+        result += SeriesNames != string.Empty ? ", " + newLine + Tabs(tabs) +"name: \"" + SeriesNames +"\"" : "";
+        result +=SeriesColors != string.Empty ? ", " + newLine + Tabs(tabs) +"color: \"" + SeriesColors +"\"" + newLine + Tabs(tabs-1) + "}" : "";
 
         return result;
     }
@@ -62,6 +62,9 @@ if(TooltipVisible) {
     {
         List<string> commonCharts = new List<string> {"Area", "Bar", "Column", "Donut", "Funnel", "HorizontalWaterfall", "Line", 
                                                      "Pie", "RadarArea", "RadarColumn", "RadarLine", "VerticalArea", "VerticalLine", "Waterfall"};
+
+        List<string> polarScatterCharts= new List<string> {"PolarArea", "PolarLine", "PolarScatter", "Scatter", "ScatterLine"};
+
         if (commonCharts.Contains(seriesType)) 
         {   
             RenderCommonCharts(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
@@ -70,9 +73,13 @@ if(TooltipVisible) {
         {
             RenderRangeCharts(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
         } 
-        else if (seriesType == "PolarArea" || seriesType == "PolarLine" || seriesType == "PolarScatter")
+        else if (polarScatterCharts.Contains(seriesType))
         {
             RenderPolarCharts(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
+        } 
+        else if (seriesType == "BoxPlot")
+        {
+            RenderBoxPlotChart(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
         }
     }
 #>
@@ -93,7 +100,7 @@ if(TooltipVisible) {
                 bool isLast = SeriesConfigs[i].Equals(SeriesConfigs[SeriesConfigs.Count - 1]);
 
                 result += newLine + Tabs(3) + "{" + newLine + Tabs(4) + "field: \""+ SeriesConfigs[i][j] +"\"";
-                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i]);
+                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 4);
                 result +=  isLast ? newLine : ",";
             }
         }
@@ -122,7 +129,7 @@ if(TooltipVisible) {
 
                 result += newLine + Tabs(3) + "{" + newLine + Tabs(4) + "fromField: \""+ SeriesConfigs[i][j] +"\",";
                 result += newLine + Tabs(4) + "toField: \""+ SeriesConfigs[i][j+1] +"\"";
-                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i]);
+                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 4);
                 result +=  isLast ? newLine : ",";
             }
         }
@@ -149,9 +156,9 @@ if(TooltipVisible) {
             {
                 bool isLast = SeriesConfigs[i].Equals(SeriesConfigs[SeriesConfigs.Count - 1]);
                 
-                result += newLine + Tabs(3) + "{" + newLine + Tabs(4) + "xField: \""+ SeriesConfigs[i][j] +"\",";
-                result += newLine + Tabs(4) + "yField: \""+ SeriesConfigs[i][j+1] +"\"";
-                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i]);
+                result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "xField: \""+ SeriesConfigs[i][j] +"\",";
+                result += newLine + Tabs(6) + "yField: \""+ SeriesConfigs[i][j+1] +"\"";
+                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
                 result +=  isLast ? newLine : ",";
             }
         }
@@ -162,3 +169,39 @@ if(TooltipVisible) {
 <#+
     }
 #>
+
+<#+
+    private void RenderBoxPlotChart(string type, List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
+    {
+        var newLine = Environment.NewLine;
+        var seriesType = Char.ToLowerInvariant(type[0]) + type.Substring(1);
+        var align = newLine + Tabs(2);
+
+        string result = "seriesDefaults: {" + newLine + Tabs(3) + "type: \"" + seriesType + "\"" + align + "}," + align + "series: [";
+
+        for (int i = 0; i < SeriesNames.Count; i++) 
+        {
+            for (int j = 0; j < SeriesConfigs[i].Count; j+=7) 
+            {
+                bool isLast = SeriesConfigs[i].Equals(SeriesConfigs[SeriesConfigs.Count - 1]);
+
+                result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "lowerField: \""+ SeriesConfigs[i][j] +"\",";
+                result += newLine + Tabs(6) + "q1Field: \"" + SeriesConfigs[i][j+1] + "\",";
+                result += newLine + Tabs(6) + "medianField: \"" + SeriesConfigs[i][j+2] + "\",";
+                result += newLine + Tabs(6) + "q3Field: \"" + SeriesConfigs[i][j+3] + "\",";
+                result += newLine + Tabs(6) + "upperField: \"" + SeriesConfigs[i][j+4] + "\",";
+                result += newLine + Tabs(6) + "outliersField: \"" + SeriesConfigs[i][j+5] + "\",";
+                result += newLine + Tabs(6) + "meanField: \"" + SeriesConfigs[i][j+6] + "\"";
+
+                result += NormalizeColorAndNames(SeriesNames[i], SeriesColors[i], 6);
+                result +=  isLast ? newLine : ",";
+            }
+        }
+        result += Tabs(2) + "]";
+
+#>
+<#=result#>
+<#+
+    }
+#>
+
