@@ -15,6 +15,7 @@
         <kendo-datepicker value="03/27/2015" on-change="someHandler"></kendo-datepicker>
         <kendo-numerictextbox value="42"></kendo-numerictextbox>
         <kendo-dropdownlist value="1" dataTextField="text" dataValueField="value" dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-dropdownlist>
+        <kendo-dropdownlist value="3" dataTextField="ProductName" dataValueField="ProductID" dataSource="{ type: 'odata', serverFiltering: true, transport: { read: { url: '//demos.telerik.com/kendo-ui/service/Northwind.svc/Products' } } }"></kendo-dropdownlist>
         <kendo-grid dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-grid>
 
         <script>
