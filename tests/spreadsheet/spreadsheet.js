@@ -208,6 +208,26 @@
         equal(spreadsheet.activeSheet().name(), name);
     });
 
+    test("removeSheet method triggers render event when removed sheet is not the active one", function () {
+        spreadsheet.insertSheet();
+
+        spreadsheet.bind("render", function() {
+            ok(true);
+        });
+
+        spreadsheet.removeSheet(spreadsheet.getSheets()[1]);
+    });
+
+    test("removeSheet method triggers render event when removed sheet the active one", function () {
+        spreadsheet.insertSheet();
+
+        spreadsheet.bind("render", function() {
+            ok(true);
+        });
+
+        spreadsheet.removeSheet(spreadsheet.getSheets()[0]);
+    });
+
     test("activeSheet sets active sheet", function() {
         spreadsheet.insertSheet();
 

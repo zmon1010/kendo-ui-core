@@ -168,7 +168,6 @@
         },
 
         removeSheet: function(sheet) {
-            //refresh others?????
             var that = this;
             var sheets = that._sheets;
             var sheetByIndex = that._sheetsByIndex;
@@ -179,17 +178,18 @@
                 return;
             }
 
-            sheet.unbind();
-
             if (index > -1 && sheets.hasOwnProperty(name)) {
-
-                if (that.activeSheet().name() === name) {
-                    var newSheet = sheets[sheetByIndex[index === 0 ? 1 : index-1]];
-                    that.activeSheet(newSheet);
-                }
+                sheet.unbind();
 
                 sheetByIndex.splice(index, 1);
                 delete sheets[name];
+
+                if (that.activeSheet().name() === name) {
+                    var newSheet = sheets[sheetByIndex[index === sheetByIndex.length ? index-1 : index]];
+                    that.activeSheet(newSheet);
+                } else {
+                    this.refresh({recalc: true});
+                }
             }
         },
 
