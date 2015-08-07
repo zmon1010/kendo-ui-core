@@ -353,6 +353,18 @@
             return new Range(this._ref.bottomRow(), this._sheet);
         },
 
+        forEachRow: function(callback) {
+            this._ref.forEachRow(function(ref) {
+                callback(new Range(ref, this._sheet));
+            }.bind(this));
+        },
+
+        forEachColumn: function(callback) {
+            this._ref.forEachColumn(function(ref) {
+                callback(new Range(ref, this._sheet));
+            }.bind(this));
+        },
+
         sheet: function() {
             return this._sheet;
         }
