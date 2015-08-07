@@ -2,5 +2,5 @@
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>
         [DataMember(Name = "<%= key.camelize %>")]
-        public <%= struct? ? csharp_type + '?' : csharp_type%> <%= key %> { get; set; }
+        public <%=csharp_type%> <%= key %> { get; set; }
 
