@@ -168,7 +168,6 @@
             var clipboard = this.clipboard;
             var object = this.objectAt(event);
 
-            //TODO: Test
             this.formulaInput.deactivate();
 
             if (object.pane) {

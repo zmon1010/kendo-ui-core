@@ -47,11 +47,11 @@ for (var i = 3, len = 50; i < len; i++) {
 spreadsheet.autoRefresh(true);
 
 $("#undo").click(function() {
-    spreadsheet.undoRedoStack.undo();
+    spreadsheet._workbook.undoRedoStack.undo();
 });
 
 $("#redo").click(function() {
-    spreadsheet.undoRedoStack.redo();
+    spreadsheet._workbook.undoRedoStack.redo();
 });
 
 $("#copy").on("click", function(e) {

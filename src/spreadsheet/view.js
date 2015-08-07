@@ -77,7 +77,7 @@
         }
     });
 
-    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><textarea tabindex="0" class="k-spreadsheet-clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea><div class="k-spreadsheet-formula-input"></div>';
+    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><textarea tabindex="0" class="k-spreadsheet-clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea><div class="k-spreadsheet-cell-editor"></div>';
 
     function within(value, min, max) {
         return value >= min && value <= max;
@@ -398,15 +398,15 @@
             this.tree.render(merged);
         },
 
-        //TODO: Refactor this
         _formulaInput: function(element) {
-            var editor = element.find(".k-spreadsheet-formula-input");
+            var editor = element.find(".k-spreadsheet-cell-editor");
 
             this.formulaInput = new kendo.spreadsheet.FormulaInput(editor, {
                 position: "absolute",
-                change: (function(options) {
-                    var range = this._sheet.range(this._sheet.activeCell());
-                    range._editableValue(options.value);
+                change: (function(e) {
+                    this._workbook.execute(new kendo.spreadsheet.EditCommand({
+                        value: e.value
+                    }));
                 }).bind(this)
             });
         },

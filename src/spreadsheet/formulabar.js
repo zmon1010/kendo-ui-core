@@ -14,6 +14,13 @@
             this._formulaInput = new kendo.spreadsheet.FormulaInput($("<div/>").appendTo(element), {
                 change: this._onChange.bind(this)
             });
+
+            //TODO: should be removed
+            this._formulaInput.element.on("blur", (function() {
+                this.trigger("change", {
+                    value: this._formulaInput.value()
+                })
+            }).bind(this))
         },
         events: [
             "change"
