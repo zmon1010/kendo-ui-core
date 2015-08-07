@@ -84,11 +84,19 @@
     }
 
     var View = kendo.Class.extend({
-        init: function(element) {
-            element.append(VIEW_CONTENTS);
-            this.container = element.find(".k-spreadsheet-fixed-container")[0];
-            this.scroller = element.find(".k-spreadsheet-scroller")[0];
-            this.clipboard = element.find(".k-spreadsheet-clipboard");
+        init: function(element, options) {
+            this.element = element;
+            this.options = options;
+
+            var viewElement = this._viewElement();
+
+            this._chrome();
+
+            viewElement.append(VIEW_CONTENTS);
+
+            this.container = viewElement.find(".k-spreadsheet-fixed-container")[0];
+            this.scroller = viewElement.find(".k-spreadsheet-scroller")[0];
+            this.clipboard = viewElement.find(".k-spreadsheet-clipboard");
             this.viewSize = $(this.scroller.firstChild);
 
             this.tree = new kendo.dom.Tree(this.container);
@@ -97,9 +105,120 @@
             var scrollbar = kendo.support.scrollbar();
 
             $(this.container).css({
-                width: element[0].clientWidth - scrollbar,
-                height: element[0].clientHeight - scrollbar
+                width: viewElement[0].clientWidth - scrollbar,
+                height: viewElement[0].clientHeight - scrollbar
             });
+        },
+
+        _resize: function() {
+            var toolbarHeight = this.toolbar ? this.toolbar.element.outerHeight() : 0;
+            var formulaBarHeight = this.formulaBar ? this.formulaBar.element.outerHeight() : 0;
+
+            this._viewElement().height(this.element.height() - toolbarHeight - formulaBarHeight);
+        },
+
+        _viewElement: function() {
+            var view = this.element.children(".k-spreadsheet-view");
+
+            if (!view.length) {
+                view = $("<div class='k-spreadsheet-view' />").appendTo(this.element);
+            }
+
+            return view;
+        },
+
+        _chrome: function() {
+            var formulaBar = $("<div />").prependTo(this.element);
+            this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar, {
+                change: function(e) {
+                    this._workbook.execute(new kendo.spreadsheet.EditCommand({
+                        value: e.value
+                    }));
+                }.bind(this)
+            });
+
+            this._toolbar();
+        },
+
+        _toolbar: function() {
+            var element;
+
+            function apply(options) {
+                var className = options.text[0].toLowerCase() + options.text.substr(1);
+                return {
+                    spriteCssClass: "k-icon k-i-" + className,
+                    attributes: {
+                        "data-command": "PropertyChangeCommand",
+                        "data-property": options.property,
+                        "data-value": options.value
+                    },
+                    text: options.text,
+                    showText: "overflow"
+                };
+            }
+
+            function toggle(options) {
+                var button = apply(options);
+                button.toggleable = true;
+                return button;
+            }
+
+            if (this.toolbar) {
+                this.toolbar.destroy();
+                this.element.children(".k-toolbar").remove();
+            }
+
+            if (this.options.toolbar) {
+                element = $("<div />").prependTo(this.element);
+                this.toolbar = new kendo.spreadsheet.ToolBar(element, {
+                    execute: function(e) {
+                        this._workbook.execute(new kendo.spreadsheet[e.commandType](e));
+                    }.bind(this),
+                    resizable: false,
+                    items: [
+                        { type: "formatPopup", text: "Format..." },
+                        { type: "buttonGroup", buttons: [
+                            toggle({ text: "Bold", property: "bold", value: true }),
+                            toggle({ text: "Italic", property: "italic", value: true }),
+                            toggle({ text: "Underline", property: "underline", value: true })
+                        ] },
+                        { type: "buttonGroup", buttons: [
+                            toggle({ text: "Justify-left", property: "textAlign", value: "left" }),
+                            toggle({ text: "Justify-center", property: "textAlign", value: "center" }),
+                            toggle({ text: "Justify-right", property: "textAlign", value: "right" })
+                        ] },
+                        { type: "buttonGroup", buttons: [
+                            toggle({ text: "Align-top", property: "verticalAlign", value: "top" }),
+                            toggle({ text: "Align-middle", property: "verticalAlign", value: "middle" }),
+                            toggle({ text: "Align-bottom", property: "verticalAlign", value: "bottom" })
+                        ] },
+                        { type: "buttonGroup", buttons: [
+                            apply({ text: "Currency", property: "format", value: "$?" }),
+                            apply({ text: "Percentage", property: "format", value: "?.00%" })
+                        ] },
+                        { type: "format", property: "format", width: 100, overflow: "never" },
+                        { type: "borders", overflow: "never" },
+                        { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
+                        { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
+                        { type: "colorPicker", property: "background", toolIcon: "k-backColor", overflow: "never" },
+                        { type: "colorPicker", property: "color", toolIcon: "k-foreColor", overflow: "never" }
+                    ]
+                });
+
+                this.toolbar.bindTo(this);
+            }
+        },
+
+        workbook: function(workbook) {
+            this._workbook = workbook;
+
+            this.sheet(workbook.activeSheet());
+
+            workbook.bind("change", (function(e) {
+                this.formulaBar.value(this._workbook._editableValueForRef(e.sender.activeSheet().activeCell()));
+
+                this.toolbar.refresh();
+            }).bind(this));
         },
 
         sheet: function(sheet) {

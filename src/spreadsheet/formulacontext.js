@@ -12,12 +12,12 @@
     var UnionRef = kendo.spreadsheet.UnionRef;
 
     var FormulaContext = kendo.Class.extend({
-        init: function (sheets) {
-            this.sheets = sheets;
+        init: function (workbbok) {
+            this.workbbok = workbbok;
         },
 
         getRefCells: function(ref, hiddenInfo) {
-            var sheet = this.sheets[ref.sheet], formula, value;
+            var sheet = this.workbbok.getSheetByName(ref.sheet), formula, value;
             if (ref instanceof CellRef) {
                 formula = sheet.compiledFormula(ref);
                 value = sheet.range(ref.row, ref.col).value();
@@ -84,7 +84,7 @@
         },
 
         onFormula: function(sheet, row, col, value) {
-            sheet = this.sheets[sheet];
+            sheet = this.workbbok.getSheetByName(sheet);
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
                 value.each(function(value, row, col) {

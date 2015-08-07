@@ -20,20 +20,20 @@
     });
 
     test("stack is available", function() {
-        ok(spreadsheet.undoRedoStack instanceof kendo.util.UndoRedoStack);
+        ok(spreadsheet._workbook.undoRedoStack instanceof kendo.util.UndoRedoStack);
     });
 
     test("changing formulaBar pushes command to undoRedo stack", function() {
-        spreadsheet.formulaBar.trigger("change", { value: "foo" });
+        spreadsheet._view.formulaBar.trigger("change", { value: "foo" });
 
-        ok(spreadsheet.undoRedoStack.canUndo());
+        ok(spreadsheet._workbook.undoRedoStack.canUndo());
     });
 
     test("execute pushes command to undo/redo stack", function() {
         var command = new kendo.spreadsheet.EditCommand({ value: "bar" });
 
-        spreadsheet.execute(command);
+        spreadsheet._workbook.execute(command);
 
-        ok(spreadsheet.undoRedoStack.canUndo());
+        ok(spreadsheet._workbook.undoRedoStack.canUndo());
     });
 })();

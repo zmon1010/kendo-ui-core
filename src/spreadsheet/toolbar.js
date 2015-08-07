@@ -38,11 +38,11 @@
         options: {
             name: "SpreadsheetToolBar"
         },
-        bindTo: function(spreadsheet) {
-            this.spreadsheet = spreadsheet;
+        bindTo: function(view) {
+            this.view = view;
         },
         range: function() {
-            var sheet = this.spreadsheet.activeSheet();
+            var sheet = this.view._workbook.activeSheet();
             return sheet.range(sheet.activeCell());
         },
         refresh: function() {

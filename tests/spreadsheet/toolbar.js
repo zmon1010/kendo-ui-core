@@ -37,7 +37,7 @@
     test("sets toolbar field", function() {
         createSpreadsheet();
 
-        ok(spreadsheet.toolbar instanceof kendo.ui.ToolBar);
+        ok(spreadsheet._view.toolbar instanceof kendo.ui.ToolBar);
     });
 
     var tool, toolbar;

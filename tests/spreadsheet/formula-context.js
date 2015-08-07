@@ -3,21 +3,27 @@
     var spreadsheet = kendo.spreadsheet;
     var CellRef = spreadsheet.CellRef;
     var RangeRef = spreadsheet.RangeRef;
+    var Workbook = spreadsheet.Workbook;
     var FormulaContext = spreadsheet.FormulaContext;
 
     module("Formula Context", {
         setup: function() {
-            sheet = new kendo.spreadsheet.Sheet(10, 10, 10, 10);
+            var workbook = new Workbook({
+                rows: 10,
+                columns: 10,
+                rowHeight: 20,
+                columnWidth: 50,
+                headerHeight: 30,
+                headerWidth: 30
+            });
+
+            sheet = workbook.activeSheet();
             sheet.name("Sheet1");
             sheet.range(0, 0).value(1000);
             sheet.range(0, 1).value(2000);
             sheet.range(1, 1).value(3000);
 
-            var sheets = {
-                "Sheet1": sheet
-            };
-
-            context = new FormulaContext(sheets);
+            context = new FormulaContext(workbook);
         }
     });
 
