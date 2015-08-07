@@ -80,10 +80,18 @@ ROOT_MAP = {
     'typescript' => 'resources/typescript'
 }
 
-CORE_CHANGELOG_EXCLUDE = %w(
-    grid scheduler upload editor treeview
-    chart sparkline diagram map stockchart barcode qrcode lineargauge radialgauge
+DATAVIZ_WIDGETS = %w(
+    chart sparkline diagram map stockchart barcode qrcode lineargauge radialgauge treemap
 )
+WEB_WIDGETS = %w(
+    autocomplete calendar colorpicker combobox datepicker datetimepicker dropdownlist
+    editor gantt grid listview maskedtextbox menu multiselect notification numerictextbox
+    pager panelbar pivotgrid progressbar responsive scheduler slider splitter tabstrip
+    timepicker toolbar tooltip treelist treeview upload window
+)
+PRO_WIDGETS = %w(
+    grid scheduler spreadsheet upload editor treeview treelist
+).concat(DATAVIZ_WIDGETS)
 
 def api_doc(wildcard)
     FileList[File.join("docs/api/javascript", wildcard)]
@@ -759,7 +767,8 @@ bundle :name => 'appbuilder.professional',
        :skip_grunt_build => true,
        :license => 'src-license-appbuilder',
        :type_script => %w(dataviz.mobile),
-       :changelog => %w(dataviz mobile framework),
+       :changelog => %w(components),
+       :changelog_exclude => WEB_WIDGETS,
        :skip_changelog_in_zip => true,
        :product => 'Kendo UI Professional',
        :contents => {
@@ -774,7 +783,8 @@ bundle :name => 'appbuilder.core',
        :skip_grunt_build => true,
        :license => 'src-license-appbuilder-core',
        :type_script => %w(mobile),
-       :changelog => %w(mobile framework),
+       :changelog => %w(components),
+       :changelog_exclude => WEB_WIDGETS.concat(DATAVIZ_WIDGETS),
        :skip_changelog_in_zip => true,
        :product => 'Kendo UI Core',
        :contents => {
@@ -958,7 +968,7 @@ bundle :name => 'core',
        :license => 'src-license-core',
        :product => 'Kendo UI Core',
        :changelog => %w(components),
-       :changelog_exclude => CORE_CHANGELOG_EXCLUDE,
+       :changelog_exclude => PRO_WIDGETS,
        :readme => 'README.KendoUI.Core',
        :release_build => {
           :file_metadata => {
@@ -1189,7 +1199,7 @@ namespace :build do
 
         write_changelog(components_changelog_path, %w(components), [])
         write_changelog(nuget_mvc_components_changelog_path, %w(components aspnetmvc), [])
-        write_changelog(core_components_changelog_path, %w(components aspnetmvc), CORE_CHANGELOG_EXCLUDE)
+        write_changelog(core_components_changelog_path, %w(components aspnetmvc), PRO_WIDGETS)
 
         desc 'Upload NuGet packages to private repository'
         task :private_nuget => [ components_changelog_path, core_components_changelog_path, nuget_mvc_components_changelog_path] do
