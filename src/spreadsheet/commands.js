@@ -162,6 +162,57 @@
         }
     });
 
+    var MergeCellCommand = kendo.spreadsheet.MergeCellCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._type = options.value;
+        },
+        exec: function() {
+            this[this._type]();
+        },
+        activate: function(ref) {
+            this.range().sheet().activeCell(ref);
+        },
+        getState: function() {
+            //TODO
+        },
+        undo: function() {
+            //TODO
+        },
+        all: function() {
+            var range = this.range();
+            var ref = range._ref;
+
+            range.merge();
+            this.activate(ref);
+        },
+        horizontally: function() {
+            var ref = this.range().topRow()._ref;
+
+            this.range().forEachRow(function(range) {
+                range.merge();
+            });
+
+            this.activate(ref);
+        },
+        vertically: function() {
+            var ref = this.range().leftColumn()._ref;
+
+            this.range().forEachColumn(function(range) {
+                range.merge();
+            });
+
+            this.activate(ref);
+        },
+        unmerge: function() {
+            var range = this.range();
+            var ref = range._ref.topLeft;
+
+            range.unmerge();
+            this.activate(ref);
+        }
+    });
+
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

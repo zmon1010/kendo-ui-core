@@ -465,4 +465,103 @@
     });
 */
 
+    var MergeCellCommand = kendo.spreadsheet.MergeCellCommand;
+
+    function mergeCommand(value, range) {
+        var command = new MergeCellCommand({ value: value });
+        command.range(sheet.range(range));
+        return command;
+    }
+
+    module("SpreadSheet MergeCell", moduleOptions);
+
+    test("command 'mergeAll' merges all cells", function() {
+        var command = mergeCommand("all", "A1:B2");
+        command.exec();
+
+        var merged = sheet._mergedCells;
+        equal(merged.length, 1);
+        equal(merged[0].toString(), "A1:B2");
+    });
+
+    test("command 'mergeAll' makes merged cell an activeCell", function() {
+        var command = mergeCommand("all", "A1:B2");
+        command.exec();
+
+        equal(sheet.activeCell().toString(), "A1:B2");
+    });
+
+    test("command 'mergeHorizontally' merges all rows", function() {
+        var command = mergeCommand("horizontally", "A1:B2");
+        command.exec();
+
+        var merged = sheet._mergedCells;
+        equal(merged.length, 2);
+        equal(merged[0].toString(), "A1:B1");
+        equal(merged[1].toString(), "A2:B2");
+    });
+
+    test("command 'mergeHorizontally' merges all rows (union range)", function() {
+        var command = mergeCommand("horizontally", "A1:A2,B2:C3");
+        command.exec();
+
+        var merged = sheet._mergedCells;
+        equal(merged.length, 4);
+        equal(merged[0].toString(), "A1:A1");
+        equal(merged[1].toString(), "A2:A2");
+        equal(merged[2].toString(), "B2:C2");
+        equal(merged[3].toString(), "B3:C3");
+    });
+
+    test("command 'mergeHorizontally' makes first merged row an activeCell", function() {
+        var command = mergeCommand("horizontally", "A1:B2");
+        command.exec();
+
+        equal(sheet.activeCell().toString(), "A1:B1");
+    });
+
+    test("command 'mergeVertically' merges all columns", function() {
+        var command = mergeCommand("vertically", "A1:B2");
+        command.exec();
+
+        var merged = sheet._mergedCells;
+        equal(merged.length, 2);
+        equal(merged[0].toString(), "A1:A2");
+        equal(merged[1].toString(), "B1:B2");
+    });
+
+    test("command 'mergeVertically' merges all columns (union range)", function() {
+        var command = mergeCommand("vertically", "A1:A2,B2:C3");
+        command.exec();
+
+        var merged = sheet._mergedCells;
+        equal(merged.length, 3);
+        equal(merged[0].toString(), "A1:A2");
+        equal(merged[1].toString(), "B2:B3");
+        equal(merged[2].toString(), "C2:C3");
+    });
+
+    test("command 'mergeVertically' makes first merged column an activeCell", function() {
+        var command = mergeCommand("vertically", "A1:B2");
+        command.exec();
+
+        equal(sheet.activeCell().toString(), "A1:A2");
+    });
+
+    test("command 'unmerge' unmerges", function() {
+        sheet.range("B2:C2").merge();
+        var command = mergeCommand("unmerge", "A1:B2");
+        command.exec();
+
+        equal(sheet._mergedCells.length, 0);
+    });
+
+    test("command 'unmerge' makes topLeft cell an activeCell", function() {
+        sheet.range("B2:C2").merge();
+        var command = mergeCommand("unmerge", "A1:B2");
+        command.exec();
+
+        equal(sheet.activeCell().toString(), "A1:A1");
+    });
+
 })();
