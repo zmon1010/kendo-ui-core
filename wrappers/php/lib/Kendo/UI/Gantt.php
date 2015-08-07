@@ -218,6 +218,28 @@ instance.If the dependencies option is set to a JavaScript object or array the w
     }
 
     /**
+    * Sets the taskTemplate option of the Gantt.
+    * The template used to render the gantt tasks.The fields which can be used in the template are the task fields
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\Gantt
+    */
+    public function taskTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('taskTemplate', $value);
+    }
+
+    /**
+    * Sets the taskTemplate option of the Gantt.
+    * The template used to render the gantt tasks.The fields which can be used in the template are the task fields
+    * @param string $value The template content.
+    * @return \Kendo\UI\Gantt
+    */
+    public function taskTemplate($value) {
+        return $this->setProperty('taskTemplate', $value);
+    }
+
+    /**
     * Adds GanttToolbarItem to the Gantt.
     * @param \Kendo\UI\GanttToolbarItem|array,... $value one or more GanttToolbarItem to add.
     * @return \Kendo\UI\Gantt
@@ -252,6 +274,15 @@ with a gantt task.
     */
     public function resources($value) {
         return $this->setProperty('resources', $value);
+    }
+
+    /**
+    * The height of the table rows. Numeric values are treated as pixels.
+    * @param float|string $value
+    * @return \Kendo\UI\Gantt
+    */
+    public function rowHeight($value) {
+        return $this->setProperty('rowHeight', $value);
     }
 
     /**

@@ -245,6 +245,14 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
         setProperty("resizable", value);
     }
 
+    public java.lang.Object getRowHeight() {
+        return (java.lang.Object)getProperty("rowHeight");
+    }
+
+    public void setRowHeight(java.lang.Object value) {
+        setProperty("rowHeight", value);
+    }
+
     public boolean getSelectable() {
         return (boolean)getProperty("selectable");
     }
@@ -275,6 +283,14 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
 
     public void setSnap(boolean value) {
         setProperty("snap", value);
+    }
+
+    public java.lang.String getTaskTemplate() {
+        return (java.lang.String)getProperty("taskTemplate");
+    }
+
+    public void setTaskTemplate(java.lang.String value) {
+        setProperty("taskTemplate", value);
     }
 
     public java.lang.String getToolbar() {

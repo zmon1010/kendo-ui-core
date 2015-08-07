@@ -329,7 +329,29 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
+        /// <summary>
+        /// The template used to render the gantt tasks.The fields which can be used in the template are the task fields
+        /// </summary>
+        /// <param name="value">The value that configures the tasktemplate.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> TaskTemplate(string value)
+        {
+            container.TaskTemplate = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The template used to render the gantt tasks.The fields which can be used in the template are the task fields
+        /// </summary>
+        /// <param name="value">The value that configures the tasktemplate.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> TaskTemplateId(string value)
+        {
+            container.TaskTemplateId = value;
+
+            return this;
+        }
+
         /// <summary>
         /// If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole Gantt Toolbar,
 		/// and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Gantt Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the Gantt Toolbar. Commands can be custom or built-in ("append", "pdf").The "append" command adds a new task to the gantt.The "pdf" command exports the gantt in PDF format.
@@ -372,7 +394,18 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new GanttResourcesSettingsBuilder(container.Resources, this.Component.ViewContext, this.Component.UrlGenerator));
             return this;
         }
-        
+
+        /// <summary>
+        /// The height of the table rows. Numeric values are treated as pixels.
+        /// </summary>
+        /// <param name="value">The value that configures the rowheight.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> RowHeight(double value)
+        {
+            container.RowHeight = value;
+
+            return this;
+        }
+
         //<< Fields
 
 

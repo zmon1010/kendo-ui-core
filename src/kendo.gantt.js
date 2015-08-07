@@ -99,6 +99,7 @@ var __meta__ = {
 
     var ganttStyles = {
         wrapper: "k-widget k-gantt",
+        rowHeight: "k-gantt-rowheight",
         listWrapper: "k-gantt-layout k-gantt-treelist",
         list: "k-gantt-treelist",
         timelineWrapper: "k-gantt-layout k-gantt-timeline",
@@ -1461,6 +1462,7 @@ var __meta__ = {
             dependencies: {},
             resources: {},
             assignments: {},
+            taskTemplate: null,
             messages: {
                 save: "Save",
                 cancel: "Cancel",
@@ -1507,7 +1509,8 @@ var __meta__ = {
             hourSpan: 1,
             snap: true,
             height: 600,
-            listWidth: "30%"
+            listWidth: "30%",
+            rowHeight: null
         },
 
         select: function(value) {
@@ -1601,6 +1604,10 @@ var __meta__ = {
 
             if (width) {
                 this.wrapper.width(width);
+            }
+
+            if (options.rowHeight) {
+                this.wrapper.addClass(ganttStyles.rowHeight);
             }
         },
 
@@ -1844,7 +1851,8 @@ var __meta__ = {
                 resizable: this.options.resizable,
                 columnResizeHandleWidth: this.options.columnResizeHandleWidth,
                 listWidth: listWrapper.outerWidth(),
-                resourcesField: this.resources.field
+                resourcesField: this.resources.field,
+                rowHeight: this.options.rowHeight
             };
             var columns = options.columns;
             var column;

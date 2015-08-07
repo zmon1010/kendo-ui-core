@@ -11,7 +11,7 @@
 
     module("Gantt List", {
         setup: function() {
-            element = $("div");
+            element = $("<div/>");
             dataSource = new GanttDataSource();
         },
         teardown: function() {
@@ -90,7 +90,7 @@
 
     module("Gantt List header renders", {
         setup: function() {
-            element = $("div");
+            element = $("<div/>");
 
             columns = [
                 { field: "title", title: "Title", sortable: false },
@@ -445,4 +445,81 @@
 
         ok(span.hasClass("k-i-expand"));
     });
+
+    function setupGantt(options) {
+        columns = [
+            { field: "title", title: "Title", sortable: false }
+        ];
+
+        dataSource = new GanttDataSource({
+            data: [
+                { title: "Task1", parentId: null, id: 1 },
+                { title: "Task2", parentId: null, id: 7 },
+                { title: "Task3", parentId: null, id: 11 },
+            ],
+            schema: {
+                model: {
+                    id: "id"
+                }
+            }
+        });
+
+        dataSource.fetch();
+        taskTree = dataSource.taskTree();
+
+        ganttList = new GanttList(element, $.extend({
+            columns: columns,
+            dataSource: dataSource,
+            listWidth: 500,
+            rowHeight: 100
+        }, options));
+        ganttList._render(taskTree);
+    }
+
+    module("Gantt List rowHeight content", {
+        setup: function () {
+            element = $("<div/>").appendTo(QUnit.fixture);
+        },
+        teardown: function() {
+            ganttList.destroy();
+            element.remove();
+        }
+    });
+
+    test("renders inline height to table element", function() {
+        setupGantt();
+
+        ok(ganttList.content.find("table").attr("style").match("height"));
+    });
+
+    test("renders correct height when rowHeight set in pixels", function() {
+        setupGantt({ rowHeight: "100px" });
+
+        var height = ganttList.content.find("tr").outerHeight();
+        var count = dataSource.total();
+        var totalHeight = height * count;
+
+        equal(ganttList.content.find("table").height(), totalHeight);
+    });
+
+    test("renders correct height when rowHeight set in ems", function() {
+        setupGantt({ rowHeight: "5em" });
+
+        var height = ganttList.content.find("tr").outerHeight();
+        var count = dataSource.total();
+        var totalHeight = height * count;
+
+        equal(ganttList.content.find("table").height(), totalHeight);
+    });
+
+    test("renders correct height when rowHeight set in pt", function() {
+        setupGantt({ rowHeight: "70pt" });
+
+        var height = ganttList.content.find("tr").outerHeight();
+        var count = dataSource.total();
+        var totalHeight = height * count;
+
+        equal(ganttList.content.find("table").height(), totalHeight);
+    });
+
 })();

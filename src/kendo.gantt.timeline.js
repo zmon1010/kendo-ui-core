@@ -16,6 +16,7 @@ var __meta__ = {
     var Widget = kendo.ui.Widget;
     var kendoDomElement = kendo.dom.element;
     var kendoTextElement = kendo.dom.text;
+    var kendoHtmlElement = kendo.dom.html;
     var isPlainObject = $.isPlainObject;
     var extend = $.extend;
     var proxy = $.proxy;
@@ -24,6 +25,7 @@ var __meta__ = {
     var isRtl = false;
     var keys = kendo.keys;
     var Query = kendo.data.Query;
+    var STRING = "string";
     var NS = ".kendoGanttTimeline";
     var CLICK = "click";
     var DBLCLICK = "dblclick";
@@ -58,6 +60,13 @@ var __meta__ = {
                                         '<li>#=messages.end#: #=kendo.toString(task.end, "h:mm tt ddd, MMM d")#</li>' +
                                     '</ul>' +
                                 '</div>');
+    var SIZE_CALCULATION_TEMPLATE = "<table style='visibility: hidden;'>" +
+        "<tbody>" +
+            "<tr style='height:{0}'>" +
+                "<td>&nbsp;</td>" +
+            "</tr>" +
+        "</tbody>" + 
+    "</table>";
 
     var defaultViews = {
         day: {
@@ -181,6 +190,10 @@ var __meta__ = {
 
             this._taskTree = options.taskTree;
 
+            this._taskTemplate = options.taskTemplate ?
+                kendo.template(options.taskTemplate, extend({}, kendo.Template, options.templateSettings)) :
+                null;
+
             this._dependencyTree = options.dependencyTree;
 
             this._taskCoordinates = {};
@@ -270,19 +283,26 @@ var __meta__ = {
         render: function(tasks) {
             var taskCount = tasks.length;
             var styles = GanttView.styles;
-
             var contentTable;
             var rowsTable = this._rowsTable(taskCount);
             var columnsTable = this._columnsTable(taskCount);
             var tasksTable = this._tasksTable(tasks);
             var currentTimeMarker = this.options.currentTimeMarker;
+            var calculatedSize = this.options.calculatedSize;
+            var totalHeight;
 
             this._taskTree.render([rowsTable, columnsTable, tasksTable]);
 
             contentTable = this.content.find(DOT + styles.rowsTable);
 
+            if (calculatedSize) {
+                totalHeight = calculatedSize.row * tasks.length;
+                this.content.find(DOT + styles.tasksTable).height(totalHeight);
+                contentTable.height(totalHeight);
+            }
+
             this._contentHeight = contentTable.height();
-            this._rowHeight = this._contentHeight / contentTable.find("tr").length;
+            this._rowHeight = calculatedSize ? calculatedSize.row : this._contentHeight / contentTable.find("tr").length;
 
             this.content.find(DOT + styles.columnsTable).height(this._contentHeight);
 
@@ -528,7 +548,16 @@ var __meta__ = {
             var taskLeft = position.left;
             var styles = GanttView.styles;
             var wrapClassName = styles.taskWrap;
+            var calculatedSize = this.options.calculatedSize;
             var dragHandleStyle = {};
+            var taskWrapAttr = {
+                className: wrapClassName,
+                style: { left: taskLeft + "px" }
+            };
+
+            if (calculatedSize) {
+                taskWrapAttr.style.height = calculatedSize.cell + "px";
+            }
 
             if (task.summary) {
                 taskElement = this._renderSummary(task, position);
@@ -539,7 +568,7 @@ var __meta__ = {
                 taskElement = this._renderSingleTask(task, position);
             }
 
-            taskWrapper = kendoDomElement("div", { className: wrapClassName, style: { left: taskLeft + "px" } }, [
+            taskWrapper = kendoDomElement("div", taskWrapAttr, [
                 taskElement
             ]);
 
@@ -548,7 +577,7 @@ var __meta__ = {
                 taskWrapper.children.push(kendoDomElement("div", { className: styles.taskDot + " " + styles.taskDotEnd }));
             }
 
-            if (!task.summary && !task.isMilestone() && editable) {
+            if (!task.summary && !task.isMilestone() && editable && this._taskTemplate === null) {
                 progressHandleOffset = Math.round(position.width * task.percentComplete);
 
                 dragHandleStyle[isRtl ? "right" : "left"] = progressHandleOffset + "px";
@@ -561,12 +590,23 @@ var __meta__ = {
         _renderSingleTask: function(task, position) {
             var styles = GanttView.styles;
             var progressWidth = Math.round(position.width * task.percentComplete);
+            var taskChildren = [];
+            var taskContent;
+
+            if (this._taskTemplate !== null) {
+                taskContent = kendoHtmlElement(this._taskTemplate(task));
+            } else {
+                taskContent = kendoTextElement(task.title);
+                taskChildren.push(kendoDomElement("div", { className: styles.taskComplete, style: { width: progressWidth + "px" } }));
+            }
 
             var content = kendoDomElement("div", { className: styles.taskContent }, [
                 kendoDomElement("div", { className: styles.taskTemplate }, [
-                    kendoTextElement(task.title)
+                    taskContent
                 ])
             ]);
+
+            taskChildren.push(content);
 
             if (this.options.editable) {
                 content.children.push(kendoDomElement("span", { className: styles.taskActions }, [
@@ -580,10 +620,10 @@ var __meta__ = {
                 content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleEast }));
             }
 
-            var element = kendoDomElement("div", { className: styles.task + " " + styles.taskSingle, "data-uid": task.uid, style: { width: Math.max((position.width - position.borderWidth * 2), 0) + "px" } }, [
-                kendoDomElement("div", { className: styles.taskComplete, style: { width: progressWidth + "px" } }),
-                content
-            ]);
+            var element = kendoDomElement("div", {
+                className: styles.task + " " + styles.taskSingle, "data-uid": task.uid, style:
+                    { width: Math.max((position.width - position.borderWidth * 2), 0) + "px" }
+            }, taskChildren);
 
             return element;
         },
@@ -1823,11 +1863,37 @@ var __meta__ = {
 
         _wrapper: function() {
             var styles = GanttTimeline.styles;
+            var that = this;
+            var options = this.options;
+            var calculateSize = function () {
+                var rowHeight = typeof options.rowHeight === STRING ? options.rowHeight :
+                    options.rowHeight + "px";
+                var table = $(kendo.format(SIZE_CALCULATION_TEMPLATE, rowHeight));
+                var calculatedRowHeight;
+                var calculatedCellHeight;
+                var content = that.wrapper.find(DOT + styles.tasksWrapper);
+
+                content.append(table);
+
+                calculatedRowHeight = table.find("tr").outerHeight();
+                calculatedCellHeight = table.find("td").height();
+
+                table.remove();
+
+                return {
+                    "row": calculatedRowHeight,
+                    "cell": calculatedCellHeight
+                };
+            };
 
             this.wrapper = this.element
                 .addClass(styles.wrapper)
                 .append("<div class='" + styles.gridHeader + "'><div class='" + styles.gridHeaderWrap + "'></div></div>")
                 .append("<div class='" + styles.gridContentWrap + "'><div class='" + styles.tasksWrapper + "'></div><div class='" + styles.dependenciesWrapper + "'></div></div>");
+
+            if (options.rowHeight) {
+                this._calculatedSize = calculateSize();
+            }
         },
 
         _domTrees: function() {
@@ -1937,7 +2003,8 @@ var __meta__ = {
                     view = new type(this.wrapper, trimOptions(extend(true, {
                         headerTree: this._headerTree,
                         taskTree: this._taskTree,
-                        dependencyTree: this._dependencyTree
+                        dependencyTree: this._dependencyTree,
+                        calculatedSize: this._calculatedSize
                     }, view, this.options)));
                 } else {
                     throw new Error("There is no such view");

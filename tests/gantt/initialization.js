@@ -415,6 +415,12 @@
         equal(gantt._resizeDraggable.options.handle, ".k-splitbar");
     });
 
+    test("adds css class when rowHeight option is set", function() {
+        var gantt = element.kendoGantt({ rowHeight: 100 }).data("kendoGantt");
+
+        ok(gantt.wrapper.hasClass("k-gantt-rowheight"));
+    });
+
     module("TaskDropDown", {
         setup: function() {
             element = $("<div/>");

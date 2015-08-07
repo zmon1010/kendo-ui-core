@@ -38,6 +38,13 @@ var __meta__ = {
     var NS = ".kendoGanttList";
     var CLICK = "click";
     var DOT = ".";
+    var SIZE_CALCULATION_TEMPLATE = "<table style='visibility: hidden;'>" +
+        "<tbody>" +
+            "<tr style='height:{0}'>" +
+                "<td>&nbsp;</td>" +
+            "</tr>" +
+        "</tbody>" + 
+    "</table>";
 
     var listStyles = {
         wrapper: "k-treelist k-grid k-widget",
@@ -212,7 +219,7 @@ var __meta__ = {
             };
 
             this.columns = map(columns, function(column) {
-                column = typeof column === "string" ? {
+                column = typeof column === STRING ? {
                     field: column, title: titleFromField[column]
                 } : column;
 
@@ -221,8 +228,22 @@ var __meta__ = {
         },
 
         _layout: function () {
+            var that = this;
+            var options = this.options;
             var element = this.element;
             var listStyles = GanttList.styles;
+            var calculateRowHeight = function() {
+                var rowHeight = typeof options.rowHeight === STRING ? options.rowHeight :
+                    options.rowHeight + "px";
+                var table = $(kendo.format(SIZE_CALCULATION_TEMPLATE, rowHeight));
+                var height;
+
+                that.content.append(table);
+                height = table.find("tr").outerHeight();
+                table.remove();
+
+                return height;
+            };
 
             element
                 .addClass(listStyles.wrapper)
@@ -231,6 +252,10 @@ var __meta__ = {
 
             this.header = element.find(DOT + listStyles.gridHeaderWrap);
             this.content = element.find(DOT + listStyles.gridContent);
+
+            if (options.rowHeight) {
+                this._rowHeight = calculateRowHeight();
+            }
         },
 
         _header: function() {
@@ -253,16 +278,21 @@ var __meta__ = {
             var colgroup;
             var tbody;
             var table;
+            var tableAttr = {
+                "style": { "minWidth": this.options.listWidth + "px" },
+                "tabIndex": 0,
+                "role": "treegrid"
+            };
+
+            if (this._rowHeight) {
+                tableAttr.style.height = (tasks.length * this._rowHeight) + "px";
+            }
 
             this.levels = [{ field: null, value: 0 }];
 
             colgroup = kendoDomElement("colgroup", null, this._cols());
             tbody = kendoDomElement("tbody", { "role": "rowgroup" }, this._trs(tasks));
-            table = kendoDomElement("table", {
-                "style": { "minWidth": this.options.listWidth + "px" },
-                "tabIndex": 0,
-                "role": "treegrid"
-            }, [colgroup, tbody]);
+            table = kendoDomElement("table", tableAttr, [colgroup, tbody]);
 
             this.contentTree.render([table]);
             this.trigger("render");

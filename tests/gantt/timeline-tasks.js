@@ -1476,4 +1476,148 @@
         equal(parseFloat(taskWrapper.css("left"), 10), taskSlot.offsetLeft);
     });
 
+    function setupGantt(options) {
+        gantt = new Gantt(element, options);
+        timeline = gantt.timeline;
+        tasks = [new GanttTask({
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/16"),
+            title: "Foo"
+        }), new GanttTask({
+            start: new Date("2014/04/16"),
+            end: new Date("2014/04/17"),
+            title: "Bar"
+        })];
+        timeline._render(tasks);
+    }
+
+    module("Single Task Template Rendering", {
+        setup: function() {
+            element = $("<div />").appendTo(QUnit.fixture);
+        },
+        teardown: function() {
+            kendo.destroy(element);
+            element.remove();
+        }
+    });
+
+    test("task template is rendered in div content element", function() {
+        setupGantt({ taskTemplate: "<strong>#: title #</strong>" });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap:first");
+
+        ok(taskWrapper.find("strong").parent().is(".k-task-template"));
+    });
+
+    test("task template renders content", function() {
+        setupGantt({ taskTemplate: "<strong>#: title #</strong>" });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap:first");
+
+        equal(taskWrapper.find("strong").text(), "Foo");
+    });
+
+    test("task template honors template settings", function() {
+        setupGantt({
+            taskTemplate: "<strong>#: foo.title #</strong>",
+            templateSettings: { useWithBlock: false, paramName: "foo" }
+        });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap:first");
+
+        equal(taskWrapper.find("strong").text(), "Foo");
+    });
+
+    test("task template does not render progress indicator", function() {
+        setupGantt({ taskTemplate: "<strong>#: title #</strong>" });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap");
+
+        equal(taskWrapper.find(".k-task-complete").length, 0);
+    });
+
+    test("task template does not render progress drag handler", function () {
+        setupGantt({ taskTemplate: "<strong>#: title #</strong>" });
+
+        var taskWrapper = timeline.wrapper.find(".k-task-wrap");
+
+        equal(taskWrapper.find(".k-task-draghandle").length, 0);
+    });
+
+    module("Rendering with rowHeight options", {
+        setup: function() {
+            element = $("<div />").appendTo(QUnit.fixture);
+        },
+        teardown: function() {
+            kendo.destroy(element);
+            element.remove();
+        }
+    });
+
+    test("renders inline height to 'rows' table element", function() {
+        setupGantt({ rowHeight: 100 });
+
+        ok(timeline.wrapper.find(".k-gantt-rows").attr("style").match("height"));
+    });
+
+    test("renders inline height to 'tasks' table element", function() {
+        setupGantt({ rowHeight: 100 });
+
+        ok(timeline.wrapper.find(".k-gantt-tasks").attr("style").match("height"));
+    });
+
+    test("renders inline height to 'task-wrap' elements", function() {
+        setupGantt({ rowHeight: 100 });
+
+        ok(timeline.wrapper.find(".k-task-wrap").attr("style").match("height"));
+    });
+
+    test("renders correct height to 'task-wrap' elements", function() {
+        setupGantt({ rowHeight: 100 });
+
+        var tasksTable = timeline.wrapper.find(".k-gantt-tasks");
+        var innerHeight = parseInt(tasksTable.find("td:first").height(), 10);
+
+        equal(timeline.wrapper.find(".k-task-wrap").height(), innerHeight);
+    });
+
+    test("renders correct height when rowHeight set in pixels", function() {
+        setupGantt({ rowHeight: "100px" });
+
+        var tasksTable = timeline.wrapper.find(".k-gantt-tasks");
+        var rowsTable = timeline.wrapper.find(".k-gantt-rows");
+        var count = tasks.length;
+        var rowHeight = tasksTable.find("tr:first").outerHeight();
+        var totalHeight = rowHeight * count;
+
+        equal(tasksTable.height(), totalHeight);
+        equal(rowsTable.height(), totalHeight);
+    });
+
+    test("renders correct height when rowHeight set in ems", function() {
+        setupGantt({ rowHeight: "5em" });
+
+        var tasksTable = timeline.wrapper.find(".k-gantt-tasks");
+        var rowsTable = timeline.wrapper.find(".k-gantt-rows");
+        var count = tasks.length;
+        var rowHeight = tasksTable.find("tr:first").outerHeight();
+        var totalHeight = rowHeight * count;
+
+        equal(tasksTable.height(), totalHeight);
+        equal(rowsTable.height(), totalHeight);
+    });
+
+    test("renders correct height when rowHeight set in pt", function() {
+        setupGantt({ rowHeight: "70pt" });
+
+        var tasksTable = timeline.wrapper.find(".k-gantt-tasks");
+        var rowsTable = timeline.wrapper.find(".k-gantt-rows");
+        var count = tasks.length;
+        var rowHeight = tasksTable.find("tr:first").outerHeight();
+        var totalHeight = rowHeight * count;
+
+        equal(tasksTable.height(), totalHeight);
+        equal(rowsTable.height(), totalHeight);
+    });
+
 }());
