@@ -286,6 +286,12 @@
         },
         bottomRow: function() {
             return this;
+        },
+        forEachRow: function(callback) {
+            callback(this.toRangeRef());
+        },
+        forEachColumn: function(callback) {
+            callback(this.toRangeRef());
         }
     });
 
@@ -458,6 +464,32 @@
                new CellRef(this.topLeft.row, this.topLeft.col + col),
                new CellRef(this.bottomRight.row, this.topLeft.col + col)
             );
+        },
+        forEachRow: function(callback) {
+            var startRow = this.topLeft.row;
+            var endRow = this.bottomRight.row;
+            var startCol = this.topLeft.col;
+            var endCol = this.bottomRight.col;
+
+            for (var i = startRow; i <= endRow; i++) {
+                callback(new RangeRef(
+                    new CellRef(i, startCol),
+                    new CellRef(i, endCol)
+                ));
+            }
+        },
+        forEachColumn: function(callback) {
+            var startRow = this.topLeft.row;
+            var endRow = this.bottomRight.row;
+            var startCol = this.topLeft.col;
+            var endCol = this.bottomRight.col;
+
+            for (var i = startCol; i <= endCol; i++) {
+                callback(new RangeRef(
+                    new CellRef(startRow, i),
+                    new CellRef(endRow, i)
+                ));
+            }
         },
         intersecting: function(refs) {
             return refs.filter(function(ref) {
@@ -639,6 +671,16 @@
         bottomRow: function() {
             return this.map(function(ref) {
                 return ref.bottomRow();
+            });
+        },
+        forEachRow: function(callback) {
+            this.forEach(function(ref) {
+                ref.forEachRow(callback);
+            });
+        },
+        forEachColumn: function(callback) {
+            this.forEach(function(ref) {
+                ref.forEachColumn(callback);
             });
         }
     });

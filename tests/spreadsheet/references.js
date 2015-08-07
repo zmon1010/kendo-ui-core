@@ -80,4 +80,26 @@
         var ref3 = new UnionRef([new RangeRef(loc(1, 0), loc(1, 1))]);
         ok(!ref2.eq(ref3));
     });
+
+    test("forEachRow provides correct row references to the callback", function() {
+        ref = new RangeRef(loc(0,0), loc(2, 2));
+        var rows = [];
+
+        ref.forEachRow(function(ref) {
+            rows.push(ref.print());
+        });
+
+        equal(rows.toString(), "R1C1:R1C3,R2C1:R2C3,R3C1:R3C3");
+    });
+
+    test("forEachColumn provides correct row references to the callback", function() {
+        ref = new RangeRef(loc(0,0), loc(2, 2));
+        var rows = [];
+
+        ref.forEachColumn(function(ref) {
+            rows.push(ref.print());
+        });
+
+        equal(rows.toString(), "R1C1:R3C1,R1C2:R3C2,R1C3:R3C3");
+    });
 })();
