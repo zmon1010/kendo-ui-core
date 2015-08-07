@@ -139,6 +139,10 @@ namespace Kendo.Mvc.UI
         
         public bool? ShowWorkHours { get; set; }
         
+        public string TaskTemplate { get; set; }
+
+        public string TaskTemplateId { get; set; }
+        
         public List<GanttToolbar> Toolbar
         {
             get;
@@ -162,6 +166,8 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+        
+        public double? RowHeight { get; set; }
         
         //<< Fields
 
@@ -288,6 +294,20 @@ namespace Kendo.Mvc.UI
                 json["showWorkHours"] = ShowWorkHours;
             }
                 
+            if (!string.IsNullOrEmpty(TaskTemplateId))
+            {
+                json["taskTemplate"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('#{0}').html()",
+                        TaskTemplateId
+                    )
+                };
+            }
+            else if (!string.IsNullOrEmpty(TaskTemplate))
+            {
+                json["taskTemplate"] = TaskTemplate;
+            }
+                
             var toolbar = Toolbar.ToJson();
             if (toolbar.Any())
             {
@@ -308,6 +328,11 @@ namespace Kendo.Mvc.UI
             {
                 json["resources"] = resources;
             }
+            if (RowHeight.HasValue)
+            {
+                json["rowHeight"] = RowHeight;
+            }
+                
         //<< Serialization
 
             ProcessDataSource(DataSource);
