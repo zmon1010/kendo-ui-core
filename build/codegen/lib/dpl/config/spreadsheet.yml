@@ -4,10 +4,30 @@
       :item_type: string
       :type: Array
 
+    - :name: sheets.frozenColumns
+      :merge: true
+      :type: int
+
+    - :name: sheets.frozenRows
+      :merge: true
+      :type: int
+
     - :name: sheets.filter.columns.values
       :primitive: true
       :item_type: object
       :type: Array
+
+    - :name: sheets.rows.index
+      :merge: true
+      :type: int
+
+    - :name: sheets.rows.cells.index
+      :merge: true
+      :type: int
+
+    - :name: sheets.rows.cells.value
+      :merge: true
+      :type: object
 
     - :name: sheets.rows.cells.borderBottom
       :merge: true
