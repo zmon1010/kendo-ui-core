@@ -303,6 +303,12 @@
                             apply({ text: "Currency", property: "format", value: "$?" }),
                             apply({ text: "Percentage", property: "format", value: "?.00%" })
                         ] },
+                        { type: "splitButton", spriteCssClass: "k-icon k-i-merge-cells", text: "Merge All", attributes: { "data-command": "MergeCellCommand", "data-value": "all", style: "width: 117px" }, menuButtons: [
+                            { spriteCssClass: "k-icon k-i-merge-cells", attributes: { "data-command": "MergeCellCommand", "data-value": "all" }, text: "Merge All" },
+                            { spriteCssClass: "k-icon k-i-merge-cells", attributes: { "data-command": "MergeCellCommand", "data-value": "horizontally" }, text: "Merge Horizontally" },
+                            { spriteCssClass: "k-icon k-i-merge-cells", attributes: { "data-command": "MergeCellCommand", "data-value": "vertically" }, text: "Merge Vertically" },
+                            { spriteCssClass: "k-icon k-i-merge-cells", attributes: { "data-command": "MergeCellCommand", "data-value": "unmerge" }, text: "Unmerge cells" }
+                        ] },
                         { type: "format", property: "format", width: 100, overflow: "never" },
                         { type: "borders", overflow: "never" },
                         { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
