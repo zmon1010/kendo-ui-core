@@ -165,6 +165,7 @@
         },
 
         onMouseDown: function(event, action) {
+            this.PRESSED = true;
             var view = this.view;
             var object = this.objectAt(event);
 
@@ -211,9 +212,12 @@
                     this.selectToLocation(location);
                 }
             }
+
+            event.preventDefault();
         },
 
         onMouseUp: function(event, action) {
+            this.PRESSED = false;
             this.stopAutoScroll();
             this.view.selectClipBoardContents();
         },

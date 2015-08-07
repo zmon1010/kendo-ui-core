@@ -11,11 +11,118 @@
     }
 
     function selectElementContents(el) {
-        var range = document.createRange();
-        range.selectNodeContents(el);
         var sel = window.getSelection();
         sel.removeAllRanges();
-        sel.addRange(range);
+
+        var range = document.createRange();
+        range.selectNodeContents(el);
+
+        setTimeout(function () {
+            sel.addRange(range);
+        });
+    }
+
+    function cellBorder(value) {
+        var json = JSON.parse(value);
+
+        if (json === null) {
+            return undefined;
+        }
+
+        return [
+            "solid",
+            json && json.size || "1px",
+            json && json.color || "#000"
+        ].join(" ");
+    }
+
+    function addCell(table, row, cell) {
+        var style = {};
+
+        if (cell.background) {
+            style.backgroundColor = cell.background;
+        }
+
+        if (cell.color) {
+            style.color = cell.color;
+        }
+
+        if (cell.fontFamily) {
+            style.fontFamily = cell.fontFamily;
+        }
+
+        if (cell.underline) {
+            style.textDecoration = "underline";
+        }
+
+        if (cell.italic) {
+            style.fontStyle = "italic";
+        }
+
+        if (cell.textAlign) {
+            style.textAlign = cell.textAlign;
+        }
+
+        if (cell.verticalAlign) {
+            style.verticalAlign = cell.verticalAlign;
+        }
+
+        if (cell.bold) {
+            style.fontWeight = "bold";
+        }
+
+        if (cell.fontSize) {
+            style.fontSize = cell.fontSize;
+        }
+
+        if (cell.wrap === false) {
+            style.whiteSpace = "nowrap";
+        }
+
+        if (cell.borderRight) {
+            style.borderRight = this._border(cell.borderRight);
+        }
+
+        if (cell.borderBottom) {
+            style.borderBottom = this._border(cell.borderBottom);
+        }
+
+        if (!style.textAlign) {
+            switch (cell.type) {
+               case "number":
+               case "date":
+                   style.textAlign = "right";
+               break;
+               case "boolean":
+                   style.textAlign = "center";
+               break;
+            }
+        }
+
+        var td = table.addCell(row, cell.value, style);
+
+        var border, sibling;
+
+        if (cell.borderLeft) {
+            sibling = this._cellBefore(table, row);
+            border = this._border(cell.borderLeft);
+            if (sibling && border) {
+                sibling.attr.style.borderRight = border;
+            }
+        }
+
+        if (cell.borderTop) {
+            sibling = this._cellAbove(table, row);
+            border = this._border(cell.borderTop);
+            if (sibling && border) {
+                sibling.attr.style.borderBottom = border;
+            }
+        }
+
+        if (cell.format && cell.value !== null) {
+            var formatter = kendo.spreadsheet.formatting.compile(cell.format);
+            td.children[0] = formatter(cell.value);
+        }
     }
 
     var HtmlTable = kendo.Class.extend({
@@ -111,6 +218,7 @@
             this._formulaInput(element);
 
             this.tree = new kendo.dom.Tree(this.container);
+            this.clipboardContents = new kendo.dom.Tree(this.clipboard[0]);
             this.eventHandler = new kendo.spreadsheet.ViewEventHandler(this);
 
             var scrollbar = kendo.support.scrollbar();
@@ -323,17 +431,6 @@
                 }
             }
 
-            if (reason.selection) {
-                // TODO: uncomment this, it breaks the union
-                var text = sheet.selection().values().map(function(row) {
-                    return row.join("\t");
-                }).join("\r\n");
-
-
-                this.clipboard.html(text);
-                var that = this;
-                this.selectClipBoardContents();
-            }
 
             if (reason.activeCell) {
                 this._focus = sheet.activeCell().toRangeRef();
@@ -341,8 +438,10 @@
         },
 
         selectClipBoardContents: function() {
-            selectElementContents(this.clipboard[0]);
-            this.clipboard.focus();
+            if (!this.eventHandler.PRESSED) {
+                this.clipboard.focus();
+                selectElementContents(this.clipboard[0]);
+            }
         },
 
         scrollIntoView: function(cell) {
@@ -379,6 +478,8 @@
         },
 
         render: function() {
+            console.log("render");
+
             var sheet = this._sheet;
             var focus = sheet.focus();
 
@@ -407,9 +508,60 @@
             merged = Array.prototype.concat.apply(merged, result);
 
             var topCorner = kendo.dom.element("div", { style: { width: grid._headerWidth + "px", height: grid._headerHeight + "px" }, className: "k-spreadsheet-top-corner" });
+
             merged.push(topCorner);
 
+            var table = new HtmlTable(10, 10);
+
+            var selection = sheet.select();
+
+            if (selection !== kendo.spreadsheet.NULLREF) {
+                var selectionRows = grid._rows.values.iterator(selection.topLeft.row, selection.bottomRight.row);
+                var selectionColumns = grid._columns.values.iterator(selection.topLeft.col, selection.bottomRight.col);
+
+                selectionRows.forEach(function(height) {
+                    table.addRow(height);
+                });
+
+                selectionColumns.forEach(function(width) {
+                    table.addColumn(width);
+                });
+
+                var selectedMergedCells = this._sheet._mergedCells.filter(function(merged) {
+                    return merged.intersects(selection);
+                });
+
+                this._sheet.forEach(selection, function(row, col, cell) {
+                    var currentRef = new CellRef(row, col);
+                    var mergedCellStart = false;
+                    var shouldSkip = false;
+                    var rowSpan, colSpan;
+
+                    selectedMergedCells.forEach(function(ref) {
+                        if (ref.topLeft.eq(currentRef)) {
+                            mergedCellStart = true;
+                            rowSpan = ref.height();
+                            colSpan = ref.width();
+                        } else {
+                            shouldSkip = ref.intersects(currentRef);
+                        }
+                    });
+
+                    if (!shouldSkip) {
+                        var td = addCell(table, row - selection.topLeft.row, cell);
+
+                        if (mergedCellStart) {
+                           td.attr.colspan = colSpan;
+                           td.attr.rowspan = rowSpan;
+                        }
+                    }
+                });
+            }
+
             this.tree.render(merged);
+            this.clipboardContents.render([ table.toDomTree(0, 0, "") ]);
+
+            this.selectClipBoardContents();
         },
 
         _formulaInput: function(element) {
@@ -561,113 +713,10 @@
             });
 
             this._sheet.forEach(view.ref, function(row, col, cell) {
-                this.addCell(table, row - view.ref.topLeft.row, cell);
-            }.bind(this));
+                addCell(table, row - view.ref.topLeft.row, cell);
+            });
 
             return table.toDomTree(view.columnOffset, view.rowOffset, "k-spreadsheet-data");
-        },
-
-        _border: function(value) {
-            var json = JSON.parse(value);
-
-            if (json === null) {
-                return undefined;
-            }
-
-            return [
-                "solid",
-                json && json.size || "1px",
-                json && json.color || "#000"
-            ].join(" ");
-        },
-
-        addCell: function(table, row, cell) {
-            var style = {};
-
-            if (cell.background) {
-                style.backgroundColor = cell.background;
-            }
-
-            if (cell.color) {
-                style.color = cell.color;
-            }
-
-            if (cell.fontFamily) {
-                style.fontFamily = cell.fontFamily;
-            }
-
-            if (cell.underline) {
-                style.textDecoration = "underline";
-            }
-
-            if (cell.italic) {
-                style.fontStyle = "italic";
-            }
-
-            if (cell.textAlign) {
-                style.textAlign = cell.textAlign;
-            }
-
-            if (cell.verticalAlign) {
-                style.verticalAlign = cell.verticalAlign;
-            }
-
-            if (cell.bold) {
-                style.fontWeight = "bold";
-            }
-
-            if (cell.fontSize) {
-                style.fontSize = cell.fontSize;
-            }
-
-            if (cell.wrap === false) {
-                style.whiteSpace = "nowrap";
-            }
-
-            if (cell.borderRight) {
-                style.borderRight = this._border(cell.borderRight);
-            }
-
-            if (cell.borderBottom) {
-                style.borderBottom = this._border(cell.borderBottom);
-            }
-
-            if (!style.textAlign) {
-                switch (cell.type) {
-                   case "number":
-                   case "date":
-                       style.textAlign = "right";
-                   break;
-                   case "boolean":
-                       style.textAlign = "center";
-                   break;
-                }
-            }
-
-            var td = table.addCell(row, cell.value, style);
-
-            var border, sibling;
-
-            if (cell.borderLeft) {
-                sibling = this._cellBefore(table, row);
-                border = this._border(cell.borderLeft);
-                if (sibling && border) {
-                    sibling.attr.style.borderRight = border;
-                }
-            }
-
-            if (cell.borderTop) {
-                sibling = this._cellAbove(table, row);
-                border = this._border(cell.borderTop);
-                if (sibling && border) {
-                    sibling.attr.style.borderBottom = border;
-                }
-            }
-
-            if (cell.format && cell.value !== null) {
-                var formatter = kendo.spreadsheet.formatting.compile(cell.format);
-                td.children[0] = formatter(cell.value);
-            }
         },
 
         _cellBefore: function(table, row) {
@@ -747,7 +796,7 @@
                     var table = new HtmlTable(this.rowHeight, this.columnWidth);
                     table.addColumn(rectangle.width);
                     table.addRow(rectangle.height);
-                    this.addCell(table, 0, cell);
+                    addCell(table, 0, cell);
 
                     collection.push(table.toDomTree(rectangle.left, rectangle.top, className));
                 }.bind(this));
