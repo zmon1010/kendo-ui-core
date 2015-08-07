@@ -64,15 +64,17 @@
             setTimeout(this.selectProxy);
         },
 
-        deactivate: function() {
+        deactivate: function(skip) {
             if (!this._isActive) {
                 return;
             }
 
-            //TODO: pass a range here or a primitive value
-            this.trigger("change", {
-                value: this.element.html()
-            });
+            //TODO: refactor
+            if (!skip) {
+                this.trigger("change", {
+                    value: this.element.html()
+                });
+            }
 
             this.element.hide();
             this._isActive = false;

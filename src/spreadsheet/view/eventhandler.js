@@ -24,17 +24,18 @@
         "tab": "next",
         "shift+tab": "previous",
         "enter": "lower",
-        "shift+enter": "upper"
-        "*+char": "edit"
+        "shift+enter": "upper",
         "shift+:alphanum": "edit",
-        ":alphanum": "edit"
+        ":alphanum": "edit",
+        ":edit": "edit"
     };
 
     var CONTAINER_EVENTS = {
         "wheel": "onWheel",
         "*+mousedown": "onMouseDown",
         "*+mousedrag": "onMouseDrag",
-        "*+mouseup": "onMouseUp"
+        "*+mouseup": "onMouseUp",
+        "*+dblclick": "onDblClick"
     };
 
     var CLIPBOARD_EVENTS = {
@@ -43,6 +44,14 @@
         "mouseup": "onMouseUp",
         "cut": "onCut",
         "paste": "onPaste"
+    };
+
+    var FORMULAINPUT_EVENTS = {
+        "esc": "onEsc",
+        "enter": "onEnter",
+        "shift+enter": "onEnter",
+        "tab": "onTab",
+        "shift+tab": "onTab"
     };
 
     var SELECTION_MODES = {
@@ -78,12 +87,13 @@
             this.view = view;
             this.container = $(view.container);
             this.clipboard = $(view.clipboard);
-            this.formulaInput = view.formulaInput;
             this.scroller = view.scroller;
+            this.formulaInput = view.formulaInput;
 
             $(view.scroller).on("scroll", this.onScroll.bind(this));
             this.listener = new kendo.spreadsheet.EventListener(this.container, this, CONTAINER_EVENTS);
             this.keyListener = new kendo.spreadsheet.EventListener(this.clipboard, this, CLIPBOARD_EVENTS);
+            this.inputKeyListener = new kendo.spreadsheet.EventListener(this.formulaInput.element, this, FORMULAINPUT_EVENTS);
         },
 
         sheet: function(sheet) {
@@ -127,20 +137,26 @@
         },
 
         onEntryAction: function(event, action) {
-            if (action === ":alphanum") {
+            if (action === ":alphanum" || action === ":edit") {
                 var ref = this.view._sheet.activeCell();
-                var rectangle = this.view._sheet._grid.rectangle(ref);
-                var value = new kendo.spreadsheet.Range(ref, this.view._sheet)._editableValue();
+                var value = "";
 
-                this.formulaInput.setup({
-                    value: value,
-                    rectangle: rectangle
+                if (action === ":edit") {
+                    value = new kendo.spreadsheet.Range(ref, this.view._sheet)._editableValue();
+                }
+
+                this.formulaInput.activate({
+                    rectangle: this.view.cellRectangle(ref),
+                    value: value
                 });
+
+                $(this.view.scroller).on("scroll", kendo.throttle((function() {
+                    this.formulaInput.position(this.view.cellRectangle(ref));
+                }).bind(this), 50));
             } else {
                 this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
+                event.preventDefault();
             }
-
-            event.preventDefault();
         },
 
         onShiftAction: function(event, action) {
@@ -151,6 +167,9 @@
         onMouseDown: function(event, action) {
             var clipboard = this.clipboard;
             var object = this.objectAt(event);
+
+            //TODO: Test
+            this.formulaInput.deactivate();
 
             if (object.pane) {
                 this.originFrame = object.pane;
@@ -209,6 +228,16 @@
             }.bind(this));
 
             this.stopAutoScroll();
+        },
+
+        onDblClick: function(event, action) {
+            var ref = this.view._sheet.activeCell();
+            var value = new kendo.spreadsheet.Range(ref, this.view._sheet)._editableValue();
+
+            this.formulaInput.activate({
+                rectangle: this.view.cellRectangle(ref),
+                value: value
+            });
         },
 
         onCut: function(event, action) {
@@ -316,6 +345,23 @@
         stopAutoScroll: function() {
             clearInterval(this._scrollInterval);
             this._scrollInterval = null;
+        },
+
+////////////////////////////////////////////////////////////////////
+
+        onEsc: function() {
+            this.formulaInput.deactivate(true);
+            this.clipboard.focus();
+        },
+
+        onEnter: function() {
+            this.formulaInput.deactivate();
+            this.clipboard.focus();
+        },
+
+        onTab: function() {
+            this.formulaInput.deactivate();
+            this.clipboard.focus();
         }
     });
 
