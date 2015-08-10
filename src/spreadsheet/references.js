@@ -106,6 +106,10 @@
             var r1 = this;
             var r2 = reference;
 
+            if (r1 === NULL || r2 == NULL) {
+                return r1 === r2;
+            }
+
             // make positions consistent
             if ((r2 instanceof CellRef) || (r2 instanceof RangeRef && !(r1 instanceof CellRef))) {
                r1 = reference;
