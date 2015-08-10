@@ -52,12 +52,14 @@ var __meta__ = {
     var DOT = ".";
     var TASK_DELETE_CONFIRM = "Are you sure you want to delete this task?";
     var DEPENDENCY_DELETE_CONFIRM = "Are you sure you want to delete this dependency?";
+    var TOGGLE_BUTTON_TEMPLATE = kendo.template('<button class="#=styles.buttonToggle#"><span class="#=styles.iconToggle#">&nbps;</span></button>');
     var BUTTON_TEMPLATE = '<button class="#=styles.button# #=className#" '+
             '#if (action) {#' +
                 'data-action="#=action#"' +
             '#}#' +
-        '><span class="#=iconClass#"></span>#=text#</button>';
+        '><span class="#=iconClass#"></span><span>#=text#</span></button>';
     var COMMAND_BUTTON_TEMPLATE = '<a class="#=className#" #=attr# href="\\#">#=text#</a>';
+    var VIEWBUTTONTEMPLATE = kendo.template('<li class="#=styles.currentView# #=styles.viewButtonDefault#"><a href="\\#" class="#=styles.link#">&nbps;</a></li>');
     var HEADER_VIEWS_TEMPLATE = kendo.template('<ul class="#=styles.viewsWrapper#">' +
             '#for(var view in views){#' +
                 '<li class="#=styles.viewButtonDefault# #=styles.viewButton#-#= view.toLowerCase() #" data-#=ns#name="#=view#"><a href="\\#" class="#=styles.link#">#=views[view].title#</a></li>' +
@@ -139,14 +141,18 @@ var __meta__ = {
             headerWrapper: "k-floatwrap k-header k-gantt-toolbar",
             footerWrapper: "k-floatwrap k-header k-gantt-toolbar",
             toolbar: "k-gantt-toolbar",
+            expanded: "k-state-expanded", 
             views: "k-gantt-views",
             viewsWrapper: "k-reset k-header k-gantt-views",
             actions: "k-gantt-actions",
             button: "k-button k-button-icontext",
+            buttonToggle: "k-button k-button-icon k-gantt-toggle",
             iconPlus: "k-icon k-i-plus",
             iconPdf: "k-icon k-i-pdf",
+            iconToggle: "k-icon k-i-custom",
             viewButtonDefault: "k-state-default",
             viewButton: "k-view",
+            currentView: "k-current-view",
             link: "k-link",
             pdfButton: "k-gantt-pdf",
             appendButton: "k-gantt-create"
@@ -1621,11 +1627,14 @@ var __meta__ = {
             var actionsWrap = $("<div class='" + ganttStyles.toolbar.actions + "'>");
             var toolbar;
             var views;
+            var toggleButton;
 
             if (!isFunction(actions)) {
                 actions = (typeof actions === STRING ? actions : this._actions(actions));
                 actions = proxy(kendo.template(actions), this);
             }
+
+            toggleButton = $(TOGGLE_BUTTON_TEMPLATE({ styles: ganttStyles.toolbar }));
 
             views = $(HEADER_VIEWS_TEMPLATE({
                 ns: kendo.ns,
@@ -1636,8 +1645,13 @@ var __meta__ = {
             actionsWrap.append(actions({}));
 
             toolbar = $("<div class='" + ganttStyles.toolbar.headerWrapper + "'>")
-                .append(actionsWrap)
-                .append(views);
+                .append(toggleButton)
+                .append(views)
+                .append(actionsWrap);
+
+            if (views.find("li").length > 1) {
+                views.prepend(VIEWBUTTONTEMPLATE({ styles: ganttStyles.toolbar }));
+            }
 
             this.wrapper.prepend(toolbar);
             this.toolbar = toolbar;
@@ -1648,6 +1662,11 @@ var __meta__ = {
 
                     var list = that.list;
                     var name = $(this).attr(kendo.attr("name"));
+                    var currentView = views.find(DOT + ganttStyles.toolbar.currentView);
+
+                    if (currentView.is(":visible")) {
+                        currentView.parent().toggleClass(ganttStyles.toolbar.expanded);
+                    }
 
                     if (list.editable && list.editable.trigger("validate")) {
                         return;
@@ -1920,19 +1939,27 @@ var __meta__ = {
             var ganttStyles = Gantt.styles;
             var options = trimOptions(extend(true, { resourcesField: this.resources.field }, this.options));
             var element = this.wrapper.find(DOT + ganttStyles.timeline + " > div");
+            var currentViewSelector = DOT + ganttStyles.toolbar.currentView + " > " + DOT + ganttStyles.toolbar.link;
 
             this.timeline = new kendo.ui.GanttTimeline(element, options);
 
             this.timeline
                 .bind("navigate", function(e) {
                     var treelist = that.list;
+                    var viewName = e.view.replace(/\./g, "\\.").toLowerCase();
 
-                    that.toolbar
+                    var text = that.toolbar
                         .find(DOT + ganttStyles.toolbar.views +" > li")
                         .removeClass(ganttStyles.selected)
                         .end()
-                        .find(DOT + ganttStyles.toolbar.viewButton + "-" + e.view.replace(/\./g, "\\.").toLowerCase())
-                        .addClass(ganttStyles.selected);
+                        .find(DOT + ganttStyles.toolbar.viewButton + "-" + viewName)
+                        .addClass(ganttStyles.selected)
+                        .find(DOT + ganttStyles.toolbar.link)
+                        .text();
+
+                    that.toolbar
+                        .find(currentViewSelector)
+                        .text(text);
 
                     that.refresh();
                 })
