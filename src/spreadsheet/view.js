@@ -126,9 +126,7 @@
     }
 
     var HtmlTable = kendo.Class.extend({
-        init: function(rowHeight, columnWidth) {
-            this.rowHeight = rowHeight;
-            this.columnWidth = columnWidth;
+        init: function() {
             this.cols = [];
             this.trs = [];
             this._height = 0;
@@ -637,7 +635,7 @@
             var selectedHeaders = sheet.selectedHeaders();
 
             if (grid.hasRowHeader) {
-                var rowHeader = new HtmlTable(this.rowHeight, grid.headerWidth);
+                var rowHeader = new HtmlTable();
                 rowHeader.addColumn(grid.headerWidth);
 
                 view.rows.values.forEach(function(height) {
@@ -653,7 +651,7 @@
             }
 
             if (grid.hasColumnHeader) {
-                var columnHeader = new HtmlTable(grid.headerHeight, this.columnWidth);
+                var columnHeader = new HtmlTable();
 
                 view.columns.values.forEach(function(width) {
                     columnHeader.addColumn(width);
@@ -699,7 +697,7 @@
         },
 
         renderData: function() {
-            var table = new HtmlTable(this.rowHeight, this.columnWidth);
+            var table = new HtmlTable();
             var view = this._currentView;
 
             view.rows.values.forEach(function(height) {
@@ -791,7 +789,7 @@
                 sheet.forEach(ref.collapse(), function(row, col, cell) {
                     var rectangle = this._rectangle(ref);
 
-                    var table = new HtmlTable(this.rowHeight, this.columnWidth);
+                    var table = new HtmlTable();
                     table.addColumn(rectangle.width);
                     table.addRow(rectangle.height);
                     addCell(table, 0, cell);
