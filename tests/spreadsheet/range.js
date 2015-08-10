@@ -240,34 +240,50 @@
         equal(range.borderTop({ color: "#f00" }), range);
     });
 
-    test("borderBottom gets borderTop of cell below", function() {
-        sheet.range(1, 0).borderTop({ color: "#f00" });
-
-        equal(sheet.range(0, 0).borderBottom().color, "#f00");
-    });
-
-    test("borderTop gets borderBottom of cell above", function() {
-        sheet.range(0, 0).borderBottom({ color: "#f00" });
-
-        equal(sheet.range(1, 0).borderTop().color, "#f00");
-    });
-
-    test("borderRight gets borderLeft of cell on the right", function() {
-        sheet.range(0, 1).borderLeft({ color: "#f00" });
-
-        equal(sheet.range(0, 0).borderRight().color, "#f00");
-    });
-
-    test("borderLeft gets borderRight of cell on the left", function() {
-        sheet.range(0, 0).borderRight({ color: "#f00" });
-
-        equal(sheet.range(0, 1).borderLeft().color, "#f00");
-    });
-
-    test("borderTop persists background style", function() {
+    test("borderTop does not affect background", function() {
         var range = sheet.range("A2:A3").background("#afa").borderTop({ color: "#f00" });
 
         equal(sheet.range("A2").background(), "#afa");
+    });
+
+    test("borderTop resets borderBottom of cell above", function() {
+        sheet.range("A1").borderBottom({ color: "#f00" });
+
+        sheet.range("A2").borderTop({ color: "#00f" });
+
+        equal(sheet.range("A1").borderBottom(), null);
+    });
+
+    test("borderTop wihtout arguments does not reset borderBottom", function() {
+        sheet.range("A1").borderBottom({ color: "#f00" });
+
+        sheet.range("A2").borderTop();
+
+        equal(sheet.range("A1").borderBottom().color, "#f00");
+    });
+
+    test("borderBottom resets borderTop of cell below", function() {
+        sheet.range("A2").borderTop({ color: "#f00" });
+
+        sheet.range("A1").borderBottom({ color: "#00f" });
+
+        equal(sheet.range("A2").borderTop(), null);
+    });
+
+    test("borderLeft resets borderRight of previous cell", function() {
+        sheet.range("A1").borderRight({ color: "#f00" });
+
+        sheet.range("B1").borderLeft({ color: "#00f" });
+
+        equal(sheet.range("A1").borderRight(), null);
+    });
+
+    test("borderRight resets borderLeft of next cell", function() {
+        sheet.range("B1").borderLeft({ color: "#f00" });
+
+        sheet.range("A1").borderRight({ color: "#00f" });
+
+        equal(sheet.range("B1").borderLeft(), null);
     });
 
     test("wrap returns the wrap of a range", function() {

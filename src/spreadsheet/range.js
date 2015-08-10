@@ -8,11 +8,17 @@
     var CellRef = kendo.spreadsheet.CellRef;
 
     var styles = [
-        "borderBottom", "borderRight", "color",
-        "fontFamily", "underline", "fontSize",
+        "color", "fontFamily", "underline", "fontSize",
         "italic", "bold", "textAlign",
         "verticalAlign", "background", "wrap"
     ];
+
+    var borders = {
+        borderTop: { complement: "borderBottom", direction: { top: -1, bottom: -1 } },
+        borderLeft: { complement: "borderRight", direction: { left: -1, right: -1 } },
+        borderRight: { complement: "borderLeft", direction: { left: 1, right: 1 }  },
+        borderBottom: { complement: "borderTop", direction: { top: 1, bottom: 1 }  },
+    };
 
     var Range = kendo.Class.extend({
         init: function(ref, sheet) {
@@ -54,6 +60,74 @@
             return this._property("value", value, parseStrings, true);
         },
 
+        _resizedRef: function(direction) {
+            return this._ref.map(function(ref) {
+                return ref.toRangeRef().resize(direction);
+            });
+        },
+
+        _border: function(property, value) {
+            var result;
+            var complement = borders[property].complement;
+            var direction = borders[property].direction;
+            var sheet = this._sheet;
+
+            sheet.batch(function() {
+                result = this._property(property, value);
+
+                if (value !== undefined) {
+                    this._resizedRef(direction).forEach(function(ref) {
+                        if (ref !== kendo.spreadsheet.NULLREF) {
+                            new Range(ref, sheet)._property(complement, null);
+                        }
+                    });
+                }
+            }.bind(this), {});
+
+            return result;
+        },
+
+        _collapsedBorder: function(property) {
+            var result = this._property(property);
+            var complement = borders[property].complement;
+            var direction = borders[property].direction;
+
+            this._resizedRef(direction).forEach(function(ref) {
+                if (!result && ref !== kendo.spreadsheet.NULLREF) {
+                    var range = new Range(ref, this._sheet);
+                    result = range._property(complement);
+                }
+            }.bind(this));
+
+            return result;
+        },
+
+        borderTop: function(value) {
+            return this._border("borderTop", value);
+        },
+        borderRight: function(value) {
+            return this._border("borderRight", value);
+        },
+        borderBottom: function(value) {
+            return this._border("borderBottom", value);
+        },
+        borderLeft: function(value) {
+            return this._border("borderLeft", value);
+        },
+
+        collapsedBorderTop: function() {
+            return this._collapsedBorder("borderTop");
+        },
+        collapsedBorderRight: function() {
+            return this._collapsedBorder("borderRight");
+        },
+        collapsedBorderBottom: function() {
+            return this._collapsedBorder("borderBottom");
+        },
+        collapsedBorderLeft: function() {
+            return this._collapsedBorder("borderLeft");
+        },
+
         _editableValue: function(value) {
             if (value !== undefined) {
                 if ((/^=/).test(value)) {
@@ -86,42 +160,6 @@
 
                 return value;
             }
-        },
-
-        borderLeft: function(value) {
-            var sheet = this._sheet;
-            var result = [];
-            var ref = this._ref.map(function(ref) {
-                return ref.toRangeRef().resize({ left: -1, right: -1 });
-            });
-
-            sheet.batch(function() {
-                ref.forEach(function(ref) {
-                    if (ref !== kendo.spreadsheet.NULLREF) {
-                        result.push(new Range(ref, sheet).borderRight(value));
-                    }
-                });
-            }.bind(this), {});
-
-            return value === undefined ? result[0] : this;
-        },
-
-        borderTop: function(value) {
-            var sheet = this._sheet;
-            var result = [];
-            var ref = this._ref.map(function(ref) {
-                return ref.toRangeRef().resize({ top: -1, bottom: -1 });
-            });
-
-            sheet.batch(function() {
-                ref.forEach(function(ref) {
-                    if (ref !== kendo.spreadsheet.NULLREF) {
-                        result.push(new Range(ref, sheet).borderBottom(value));
-                    }
-                });
-            }.bind(this), {});
-
-            return value === undefined ? result[0] : this;
         },
 
         format: function(value) {
@@ -370,11 +408,13 @@
         }
     });
 
-    styles.forEach(function(x) {
-        Range.prototype[x] = function(value) {
-            return this._property(x, value);
+    // use $.each instead of forEach to work in oldIE
+    $.each(styles, function(i, property) {
+        Range.prototype[property] = function(value) {
+            return this._property(property, value);
         };
     });
+
 
     function toExcelFormat(format) {
         return format.replace(/M/g, "m").replace(/'/g, '"').replace(/tt/, "am/pm");

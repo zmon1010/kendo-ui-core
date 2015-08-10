@@ -3,13 +3,10 @@
     var defaults = kendo.ui.Spreadsheet.prototype.options;
     var moduleOptions = {
         setup: function() {
-            kendo.effects.disable();
-            sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
+            sheet = new kendo.spreadsheet.Sheet(4, 4, defaults.rowHeight, defaults.columnWidth);
         },
         teardown: function() {
             sheet.unbind();
-            $(".k-spreadsheet-window").kendoWindow("destroy");
-            kendo.effects.enable();
         }
     };
 
@@ -112,10 +109,10 @@
     function getBorders(range) {
         var borders = [];
 
-        if (range.borderLeft()) { borders.push("left"); }
-        if (range.borderTop()) { borders.push("top"); }
-        if (range.borderRight()) { borders.push("right"); }
-        if (range.borderBottom()) { borders.push("bottom"); }
+        if (range.collapsedBorderLeft()) { borders.push("left"); }
+        if (range.collapsedBorderTop()) { borders.push("top"); }
+        if (range.collapsedBorderRight()) { borders.push("right"); }
+        if (range.collapsedBorderBottom()) { borders.push("bottom"); }
 
         return borders.toString();
     }
@@ -125,9 +122,9 @@
         command.range(sheet.range("A1:B2"));
 
         command.exec();
-        equal(getBorders(sheet.range("A1")), "right,bottom");
-        equal(getBorders(sheet.range("A2")), "top,right,bottom");
-        equal(getBorders(sheet.range("B1")), "left,right,bottom");
+        equal(getBorders(sheet.range("A1")), "left,top,right,bottom");
+        equal(getBorders(sheet.range("A2")), "left,top,right,bottom");
+        equal(getBorders(sheet.range("B1")), "left,top,right,bottom");
         equal(getBorders(sheet.range("B2")), "left,top,right,bottom");
     });
 

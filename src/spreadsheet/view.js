@@ -632,6 +632,24 @@
 
             var td = table.addCell(row, cell.value, style);
 
+            if (cell.borderLeft) {
+                var cells = table.trs[row].children;
+                var prevCell = cells[cells.length - 2];
+                var border = this._border(cell.borderLeft);
+                if (prevCell && border) {
+                    prevCell.attr.style.borderRight = border;
+                }
+            }
+
+            if (cell.borderTop) {
+                var prevRow = table.trs[row-1];
+                var index = table.trs[row].children.length-1;
+                var border = this._border(cell.borderTop);
+                if (prevRow && index >= 0 && border) {
+                    prevRow.children[index].attr.style.borderBottom = border;
+                }
+            }
+
             if (cell.format && cell.value !== null) {
                 var formatter = kendo.spreadsheet.formatting.compile(cell.format);
                 td.children[0] = formatter(cell.value);
