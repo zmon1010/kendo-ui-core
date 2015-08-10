@@ -141,6 +141,25 @@
                     callback(new CellRef(ri, ci));
                 }
             }
+        },
+
+        trim: function(ref, property) {
+            var topLeft = ref.topLeft;
+            var bottomRight = ref.bottomRight;
+            var bottomRightRow = topLeft.row;
+            var bottomRightCol = topLeft.col;
+
+            for (var ci = topLeft.col; ci <= bottomRight.col; ci ++) {
+                var start = this.index(topLeft.row, ci);
+                var end = this.index(bottomRight.row, ci);
+                var values = property.tree.intersecting(start, end);
+                if(values.length) {
+                    var cell = this.cellRef(values[values.length - 1].end);
+                    bottomRightRow = Math.max(bottomRightRow, cell.row);
+                    bottomRightCol = ci;
+                }
+            }
+            return new RangeRef(ref.topLeft, new CellRef(bottomRightRow, bottomRightCol));
         }
     });
 
