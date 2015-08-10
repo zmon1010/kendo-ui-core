@@ -254,14 +254,14 @@
 
         <div id="codeStrip">
             <div class="buttons-wrap">
-            @if (!string.IsNullOrEmpty(ViewBag.Api))
-            {
-                <a class="documentation-link k-link" href="@ViewBag.Api">API Reference</a>
-            }
-
             @if (ViewBag.Product == "kendo-ui")
             {
                 <button type="button" class="try-kendo"><span class="k-icon"></span>Edit this example</button>
+            }
+
+            @if (!string.IsNullOrEmpty(ViewBag.Api))
+            {
+                <a class="documentation-link k-link" href="@ViewBag.Api">API Reference</a>
             }
 
             @{
