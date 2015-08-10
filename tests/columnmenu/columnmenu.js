@@ -862,7 +862,8 @@
 
         var menu = new ColumnMenu($(), {
             owner: owner,
-            columns: {}
+            columns: {},
+            dataSource: new kendo.data.DataSource()
         });
 
         menu.destroy();
@@ -888,7 +889,8 @@
 
         var menu = new ColumnMenu($(), {
             owner: owner,
-            columns: {}
+            columns: {},
+            dataSource: new kendo.data.DataSource()
         });
 
         menu.destroy();
