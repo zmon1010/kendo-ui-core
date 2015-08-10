@@ -488,6 +488,17 @@
         equal(sheet.activeCell().toString(), "A1:B2");
     });
 
+    test("command 'mergeAll' can be undone", function() {
+        sheet.range("A1:B2").background("#f00").values([ [1, 2], [3, 4] ]);
+
+        var command = mergeCommand("all", "A1:B2");
+        command.exec();
+        command.undo();
+
+        equal(sheet.activeCell().toString(), "A1:A1", "Top left cell of the range is active");
+        equal(sheet.range("A1:B2").values().toString(), "1,2,3,4");
+    });
+
     test("command 'mergeHorizontally' merges all rows", function() {
         var command = mergeCommand("horizontally", "A1:B2");
         command.exec();
@@ -517,6 +528,17 @@
         equal(sheet.activeCell().toString(), "A1:B1");
     });
 
+    test("command 'mergeHorizontally' can be undone", function() {
+        sheet.range("A1:B2").background("#f00").values([ [1, 2], [3, 4] ]);
+
+        var command = mergeCommand("horizontally", "A1:B2");
+        command.exec();
+        command.undo();
+
+        equal(sheet.activeCell().toString(), "A1:A1", "Top left cell of the range is active");
+        equal(sheet.range("A1:B2").values().toString(), "1,2,3,4");
+    });
+
     test("command 'mergeVertically' merges all columns", function() {
         var command = mergeCommand("vertically", "A1:B2");
         command.exec();
@@ -543,6 +565,17 @@
         command.exec();
 
         equal(sheet.activeCell().toString(), "A1:A2");
+    });
+
+    test("command 'mergeVertically' can be undone", function() {
+        sheet.range("A1:B2").background("#f00").values([ [1, 2], [3, 4] ]);
+
+        var command = mergeCommand("vertically", "A1:B2");
+        command.exec();
+        command.undo();
+
+        equal(sheet.activeCell().toString(), "A1:A1", "Top left cell of the range is active");
+        equal(sheet.range("A1:B2").values().toString(), "1,2,3,4");
     });
 
     test("command 'unmerge' unmerges", function() {

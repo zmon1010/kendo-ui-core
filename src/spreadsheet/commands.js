@@ -168,16 +168,34 @@
             this._type = options.value;
         },
         exec: function() {
+            this.getState();
             this[this._type]();
         },
         activate: function(ref) {
             this.range().sheet().activeCell(ref);
         },
         getState: function() {
-            //TODO
+            this._forEachCell(function(row, col, cell) {
+                var property = this._property === "_editableValue" ? "value" : this._property;
+                this._state[row + "," + col] = cell;
+            });
         },
         undo: function() {
-            //TODO
+            if (this._type !== "unmerge") {
+                this.range().unmerge();
+                this.activate(this.range().topLeft());
+            }
+
+            this.range().sheet().batch(function() {
+                this._forEachCell(function(row, col, cell) {
+                    var sheet = this._range.sheet();
+                    var properties = this._state[row + "," + col];
+
+                    for (var property in properties) {
+                        sheet.range(row, col)[property](properties[property]);
+                    }
+                });
+            }.bind(this), {});
         },
         all: function() {
             var range = this.range();
