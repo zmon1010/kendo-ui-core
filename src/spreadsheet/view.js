@@ -507,54 +507,65 @@
 
             merged.push(topCorner);
 
-            var table = new HtmlTable(10, 10);
+            this.tree.render(merged);
+
+            if (!sheet.selectionInProgress()) {
+                this.renderClipboardContents();
+            }
+        },
+
+        renderClipboardContents: function() {
+            var sheet = this._sheet;
+            var grid = sheet._grid;
 
             var selection = sheet.select();
 
-            if (selection !== kendo.spreadsheet.NULLREF) {
-                var selectionRows = grid._rows.values.iterator(selection.topLeft.row, selection.bottomRight.row);
-                var selectionColumns = grid._columns.values.iterator(selection.topLeft.col, selection.bottomRight.col);
-
-                selectionRows.forEach(function(height) {
-                    table.addRow(height);
-                });
-
-                selectionColumns.forEach(function(width) {
-                    table.addColumn(width);
-                });
-
-                var selectedMergedCells = this._sheet._mergedCells.filter(function(merged) {
-                    return merged.intersects(selection);
-                });
-
-                this._sheet.forEach(selection, function(row, col, cell) {
-                    var currentRef = new CellRef(row, col);
-                    var mergedCellStart = false;
-                    var shouldSkip = false;
-                    var rowSpan, colSpan;
-
-                    selectedMergedCells.forEach(function(ref) {
-                        if (ref.topLeft.eq(currentRef)) {
-                            mergedCellStart = true;
-                            rowSpan = ref.height();
-                            colSpan = ref.width();
-                        } else {
-                            shouldSkip = ref.intersects(currentRef);
-                        }
-                    });
-
-                    if (!shouldSkip) {
-                        var td = addCell(table, row - selection.topLeft.row, cell);
-
-                        if (mergedCellStart) {
-                           td.attr.colspan = colSpan;
-                           td.attr.rowspan = rowSpan;
-                        }
-                    }
-                });
+            if (selection === kendo.spreadsheet.NULLREF) {
+                return;
             }
 
-            this.tree.render(merged);
+            var table = new HtmlTable();
+
+            var selectionView = grid.rangeDimensions(selection);
+
+            selectionView.rows.forEach(function(height) {
+                table.addRow(height);
+            });
+
+            selectionView.columns.forEach(function(width) {
+                table.addColumn(width);
+            });
+
+            var primaryMergedCells = {};
+            var secondaryMergedCells = {};
+
+            sheet.forEachMergedCell(selection, function(ref) {
+                var topLeft = ref.topLeft;
+
+                grid.forEach(ref, function(cellRef) {
+                    if (topLeft.eq(cellRef)) {
+                        primaryMergedCells[cellRef.print()] = ref;
+                    } else {
+                        secondaryMergedCells[cellRef.print()] = true;
+                    }
+                });
+            });
+
+            this._sheet.forEach(selection, function(row, col, cell) {
+                var location = new CellRef(row, col).print();
+
+                if (!secondaryMergedCells[location]) {
+                    var td = addCell(table, row - selection.topLeft.row, cell);
+
+                    var mergedCell = primaryMergedCells[location];
+
+                    if (mergedCell) {
+                       td.attr.colspan = mergedCell.width();
+                       td.attr.rowspan = mergedCell.height();
+                    }
+                }
+            });
+
             this.clipboardContents.render([ table.toDomTree(0, 0, "") ]);
 
             this.selectClipBoardContents();

@@ -165,7 +165,6 @@
         },
 
         onMouseDown: function(event, action) {
-            this.PRESSED = true;
             var view = this.view;
             var object = this.objectAt(event);
 
@@ -177,7 +176,7 @@
 
             this._selectionMode = SELECTION_MODES[object.type];
             this.appendSelection = event.mod;
-            this.navigator.select(object.ref, this._selectionMode, this.appendSelection);
+            this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
         },
 
         onMouseDrag: function(event, action) {
@@ -217,7 +216,7 @@
         },
 
         onMouseUp: function(event, action) {
-            this.PRESSED = false;
+            this.navigator.completeSelection();
             this.stopAutoScroll();
             this.view.selectClipBoardContents();
         },

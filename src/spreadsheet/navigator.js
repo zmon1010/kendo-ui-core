@@ -103,6 +103,15 @@
             sheet.select(ref);
         },
 
+        startSelection: function(ref, mode, addToExisting) {
+            this._sheet.startSelection();
+            this.select(ref, mode, addToExisting);
+        },
+
+        completeSelection: function() {
+            this._sheet.completeSelection();
+        },
+
         modifySelection: function(action) {
             var direction = this.determineDirection(action);
 

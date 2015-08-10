@@ -123,6 +123,24 @@
                 new kendo.spreadsheet.PaneAxis(this._columns, options.column, options.columnCount, this._headerWidth),
                 this
             );
+        },
+
+        rangeDimensions: function(rangeRef) {
+            return {
+                rows: this._rows.values.iterator(rangeRef.topLeft.row, rangeRef.bottomRight.row),
+                columns: this._columns.values.iterator(rangeRef.topLeft.col, rangeRef.bottomRight.col)
+            };
+        },
+
+        forEach: function(ref, callback) {
+            var topLeft = this.normalize(ref.topLeft);
+            var bottomRight = this.normalize(ref.bottomRight);
+
+            for (var ci = topLeft.col; ci <= bottomRight.col; ci ++) {
+                for (var ri = topLeft.row; ri <= bottomRight.row; ri ++) {
+                    callback(new CellRef(ri, ci));
+                }
+            }
         }
     });
 

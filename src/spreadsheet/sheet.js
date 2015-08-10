@@ -326,8 +326,19 @@
             return new Range(this._ref(row, column, numRows, numColumns), this);
         },
 
-        forEachMergedCell: function(callback) {
-            this._mergedCells.forEach(callback);
+        forEachMergedCell: function(ref, callback) {
+            var selectAll = false;
+
+            if (typeof callback === "undefined") {
+                callback = ref;
+                selectAll = true;
+            }
+
+            this._mergedCells.forEach(function(merged) {
+                if (selectAll || merged.intersects(ref)) {
+                    callback(merged);
+                }
+            });
         },
 
         forEach: function(ref, callback) {
@@ -345,6 +356,19 @@
                     callback(ri++, ci, value);
                 });
             }
+        },
+
+        startSelection: function() {
+            this._selectionInProgress = true;
+        },
+
+        completeSelection: function() {
+            this._selectionInProgress = false;
+            this.trigger("change", { selection: true });
+        },
+
+        selectionInProgress: function() {
+            return this._selectionInProgress;
         },
 
         select: function(ref, changeActiveCell) {
