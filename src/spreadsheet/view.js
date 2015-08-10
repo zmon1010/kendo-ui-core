@@ -806,5 +806,6 @@
 
     kendo.spreadsheet.View = View;
     kendo.spreadsheet.Pane = Pane;
+    kendo.spreadsheet.addCell = addCell;
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

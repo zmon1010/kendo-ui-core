@@ -4,6 +4,8 @@
     var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
 
+    var addCell = kendo.spreadsheet.addCell;
+
     module("pane", {
         setup: function() {
             sheet = new Sheet(1000, 100, 10, 10, 10, 10);
@@ -47,7 +49,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { background: "red" });
+        addCell(table, {}, { background: "red" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].backgroundColor, "red");
@@ -58,7 +60,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { color: "red" });
+        addCell(table, {}, { color: "red" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].color, "red");
@@ -69,7 +71,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { fontFamily: "foo" });
+        addCell(table, {}, { fontFamily: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].fontFamily, "foo");
@@ -80,7 +82,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { underline: true });
+        addCell(table, {}, { underline: true });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].textDecoration, "underline");
@@ -91,7 +93,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { fontSize: 12 });
+        addCell(table, {}, { fontSize: 12 });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].fontSize, 12);
@@ -102,7 +104,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { italic: true });
+        addCell(table, {}, { italic: true });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].fontStyle, "italic");
@@ -113,7 +115,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { bold: true });
+        addCell(table, {}, { bold: true });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].fontWeight, "bold");
@@ -124,7 +126,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { textAlign: "foo" });
+        addCell(table, {}, { textAlign: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].textAlign, "foo");
@@ -135,7 +137,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { verticalAlign: "foo" });
+        addCell(table, {}, { verticalAlign: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].verticalAlign, "foo");
@@ -146,7 +148,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { wrap: false });
+        addCell(table, {}, { wrap: false });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].whiteSpace, "nowrap");
