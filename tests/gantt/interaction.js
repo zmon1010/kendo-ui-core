@@ -745,10 +745,11 @@
 
     module("Views toolbar", {
         setup: function() {
-            element = $("<div/>");
+            element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
             kendo.destroy(element);
+            element.remove();
         }
     });
 
@@ -789,6 +790,36 @@
         gantt.toolbar.find(".k-view-week").click();
 
         equal(gantt.timeline.view().name, "day");
+    });
+
+    test("clicking on view toggle expanded css class when current view visible", 2, function() {
+        var gantt = new Gantt(element);
+        var currentView = gantt.toolbar.find(".k-current-view");
+
+        currentView.show().trigger("click");
+
+        ok(currentView.parent().hasClass("k-state-expanded"));
+
+        currentView.show().trigger("click");
+
+        ok(!currentView.parent().hasClass("k-state-expanded"));
+    });
+
+    test("clicking on view does not add expanded css class when current view invisible", function() {
+        var gantt = new Gantt(element);
+        var view = gantt.toolbar.find(".k-view-week");
+
+        view.trigger("click");
+
+        ok(!view.parent().hasClass("k-state-expanded"));
+    });
+
+    test("clicking on the view changes current view text", function() {
+        var gantt = new Gantt(element);
+
+        gantt.toolbar.find(".k-view-week").click();
+
+        equal(gantt.toolbar.find(".k-current-view > .k-link").text(), "Week");
     });
 
     module("Resizable", {

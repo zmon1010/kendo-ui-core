@@ -113,6 +113,12 @@
         ok(gantt.footer.hasClass("k-floatwrap k-header"));
     });
 
+    test("toggle button added to the toolbar", function() {
+        var gantt = new Gantt(element);
+
+        ok(gantt.toolbar.find(".k-button.k-button-icon.k-gantt-toggle").length);
+    });
+
     test("view buttons are added to the toolbar", 2, function() {
         var gantt = new Gantt(element, {
             views: ["day"]
@@ -120,6 +126,20 @@
 
         ok(gantt.toolbar.find(".k-view-day").length);
         equal(gantt.toolbar.find(".k-gantt-views .k-link").text(), "Day");
+    });
+
+    test("current view button is added to the toolbar", function() {
+        var gantt = new Gantt(element);
+
+        ok(gantt.toolbar.find(".k-current-view").length);
+    });
+
+    test("current view button is not added to the toolbar when only one view", function() {
+        var gantt = new Gantt(element, {
+            views: ["day"]
+        });
+
+        equal(gantt.toolbar.find(".k-current-view").length, 0);
     });
 
     test("toolbar action button is added", function () {
