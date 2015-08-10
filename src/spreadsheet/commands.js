@@ -36,9 +36,6 @@
             }.bind(this), {});
         },
         getState: function() {
-            var range = this.range();
-            var ref = range._ref;
-
             this._forEachCell(function(row, col, cell) {
                 var property = this._property === "_editableValue" ? "value" : this._property;
                 this._state[row + "," + col] = cell[property] || null;
