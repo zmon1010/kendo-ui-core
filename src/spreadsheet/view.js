@@ -478,8 +478,6 @@
         },
 
         render: function() {
-            console.log("render");
-
             var sheet = this._sheet;
             var focus = sheet.focus();
 
