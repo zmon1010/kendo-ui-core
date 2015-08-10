@@ -3688,6 +3688,7 @@
                 if (this.options.layout) {
                     this.layout(this.options.layout);
                 }
+                this._redrawConnections();
             },
 
             refreshConnections: function() {
@@ -3695,6 +3696,13 @@
                 if (!this._loadingShapes) {
                     this.trigger("dataBound");
                     this._rebindShapesAndConnections();
+                }
+            },
+
+            _redrawConnections: function() {
+                var connections = this.connections;
+                for (var idx = 0; idx < connections.length; idx++) {
+                    connections[idx].refresh();
                 }
             },
 
