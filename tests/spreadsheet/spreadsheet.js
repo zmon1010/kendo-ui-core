@@ -61,4 +61,78 @@
 
         equal(spreadsheet.activeSheet().range("A1").background(), "red");
     });
+
+    test("insertSheet method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.insertSheet = function(options) {
+            equal(options.index, 1);
+            ok(true);
+        };
+
+        spreadsheet.insertSheet({index: 1});
+    });
+
+    test("removeSheet method triggers render event when removed sheet is not the active one", function () {
+        spreadsheet.insertSheet();
+
+        spreadsheet.bind("render", function() {
+            ok(true);
+        });
+
+        spreadsheet.removeSheet(spreadsheet.getSheets()[1]);
+    });
+
+    test("removeSheet method triggers render event when removed sheet the active one", function () {
+        spreadsheet.insertSheet();
+
+        spreadsheet.bind("render", function() {
+            ok(true);
+        });
+
+        spreadsheet.removeSheet(spreadsheet.getSheets()[0]);
+    });
+
+    test("getSheets method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.getSheets = function() {
+            ok(true);
+        };
+
+        spreadsheet.getSheets();
+    });
+
+    test("getSheetByName method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.getSheetByName = function(sheetName) {
+            ok(sheetName);
+            ok(true);
+        };
+
+        spreadsheet.getSheetByName("SheetName");
+    });
+
+    test("getSheetIndex method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.getSheetIndex = function(sheet) {
+            ok(sheet);
+            ok(true);
+        };
+
+        spreadsheet.getSheetIndex({});
+    });
+
+    test("getSheetByIndex method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.getSheetByIndex = function(index) {
+            equal(index, 1);
+            ok(true);
+        };
+
+        spreadsheet.getSheetByIndex(1);
+    });
+
+    test("renameSheet method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.renameSheet = function(sheet, newSheetName) {
+            equal(sheet, "sheet");
+            equal(newSheetName, "newSheetName");
+            ok(true);
+        };
+
+        spreadsheet.renameSheet("sheet", "newSheetName");
+    });
 })();

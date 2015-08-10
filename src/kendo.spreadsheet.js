@@ -77,8 +77,53 @@
             }
         },
 
-        activeSheet: function() {
-            return this._workbook.activeSheet();
+        activeSheet: function(sheet) {
+            var view = this._view;
+
+            var sheetChangeCallback = function(sheet) {
+                view.sheet(sheet);
+            };
+
+            return this._workbook.activeSheet(sheet, sheetChangeCallback);
+        },
+
+        insertSheet: function(options) {
+            return this._workbook.insertSheet(options);
+        },
+
+        getSheets: function() {
+            return this._workbook.getSheets();
+        },
+
+        removeSheet: function(sheet) {
+            var that = this;
+            var view = that._view;
+
+            var sheetChangeCallback = function(sheet) {
+                view.sheet(sheet);
+            };
+
+            var sheetRefreshCallback = function() {
+                that.refresh({recalc: true});
+            };
+
+            return this._workbook.removeSheet(sheet, sheetChangeCallback, sheetRefreshCallback);
+        },
+
+        getSheetByName: function(sheetName) {
+            return this._workbook.getSheetByName(sheetName);
+        },
+
+        getSheetIndex: function(sheet) {
+            return this._workbook.getSheetIndex(sheet);
+        },
+
+        getSheetByIndex: function(index) {
+            return this._workbook.getSheetByIndex(index);
+        },
+
+        renameSheet: function(sheet, newSheetName) {
+            return this._workbook.renameSheet(sheet, newSheetName);
         },
 
         refresh: function(reason) {
@@ -111,6 +156,7 @@
 
         toJSON: function() {
             return {
+                //TODO: SUPPORT MULTIPLE SHEETS HERE
                 sheets: [this.activeSheet()].map(function(sheet) {
                     sheet.recalc(this._workbook._context);
                     return sheet.toJSON();
@@ -119,6 +165,7 @@
         },
 
         fromJSON: function(json) {
+            //TODO: SUPPORT MULTIPLE SHEETS HERE
             if (json.sheets) {
                 this.activeSheet().fromJSON(json.sheets[0]);
             } else {

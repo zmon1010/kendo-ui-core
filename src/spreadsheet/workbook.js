@@ -5,6 +5,7 @@
 (function(kendo) {
     var Sheet = kendo.spreadsheet.Sheet;
     var Range = kendo.spreadsheet.Range;
+    var ALL_REASONS = kendo.spreadsheet.ALL_REASONS;
 
     var Workbook = kendo.Observable.extend({
         init: function(options) {
@@ -13,8 +14,7 @@
 
             this.options = options;
 
-            this._sheets = {};
-            this._sheetsByIndex = [];
+            this._sheets = [];
 
             this._sheet = this.insertSheet({
                 rows: this.options.rows,
@@ -59,7 +59,7 @@
             }
         },
 
-        activeSheet: function(sheet) {
+        activeSheet: function(sheet, sheetChangeCallback) {
             if (sheet === undefined) {
                 return this._sheet;
             }
@@ -69,31 +69,34 @@
             }
 
             this._sheet = sheet;
-            this._view.sheet(sheet);
+
+            if (sheetChangeCallback) {
+                sheetChangeCallback(sheet);
+            }
+
             sheet.triggerChange(ALL_REASONS);
-            return;
         },
 
         insertSheet: function(options) {
             options = options || {};
-            var spreadsheet = this;
-            var insertIndex = typeof options.index === "number" ? options.index : spreadsheet._sheetsByIndex.length;
+            var that = this;
+            var insertIndex = typeof options.index === "number" ? options.index : that._sheets.length;
             var sheetName;
-            var sheets = spreadsheet._sheets;
-            var sheetsByIndex = spreadsheet._sheetsByIndex;
+            var sheets = that._sheets;
+
             var getUniqueSheetName = function(sheetNameSuffix) {
                 sheetNameSuffix = sheetNameSuffix ? sheetNameSuffix : 1;
 
                 var name = "Sheet" + sheetNameSuffix;
 
-                if (!sheets[name]) {
+                if (!that.getSheetByName(name)) {
                     return name;
                 }
 
                 return getUniqueSheetName(sheetNameSuffix + 1);
             };
 
-            if (options.name && sheets[options.name]) {
+            if (options.name && that.getSheetByName(options.name)) {
                 return;
             }
 
@@ -112,32 +115,49 @@
 
             sheet.bind("change", this._sheetChange.bind(this));
 
-            sheets[sheetName] = sheet;
-
-            sheetsByIndex.splice(insertIndex, 0, sheetName);
+            sheets.splice(insertIndex, 0, sheet);
 
             return sheet;
         },
 
         getSheets: function() {
-            var idx;
-            var sheets = [];
-
-            for (idx = 0; idx < this._sheetsByIndex.length; idx++) {
-                sheets.push(this.getSheetByName(this._sheetsByIndex[idx]));
-            }
-
-            return sheets;
+            return this._sheets.slice();
         },
 
+        //TODO: Implement cached search
         getSheetByName: function (sheetName) {
-            return this._sheets[sheetName];
+            var sheets = this._sheets;
+            var idx;
+
+            for (idx = 0; idx < sheets.length; idx++) {
+                var sheet = sheets[idx];
+                if (sheet.name() === sheetName) {
+                    return sheet;
+                }
+            }
+        },
+
+        getSheetByIndex: function(index) {
+           return this._sheets[index];
+        },
+
+        getSheetIndex: function(sheet) {
+            var idx;
+            var sheets = this._sheets;
+            var sheetName = sheet.name();
+
+            //TODO: Implement cached search
+            for(idx = 0; idx < sheets.length; idx++) {
+                if (sheets[idx].name() === sheetName) {
+                    return idx;
+                }
+            }
+
+            return -1;
         },
 
         renameSheet: function(sheet, newSheetName) {
             var that = this;
-            var sheets = that._sheets;
-            var sheetsByIndex = that._sheetsByIndex;
             var oldSheetName = sheet.name();
 
             if (!newSheetName ||
@@ -153,41 +173,32 @@
 
             sheet.name(newSheetName);
 
-            if (sheets.hasOwnProperty(oldSheetName)) {
-                sheets[newSheetName] = sheets[oldSheetName];
-                delete sheets[oldSheetName];
-            }
-
-            sheetsByIndex[sheetsByIndex.indexOf(oldSheetName)] = newSheetName;
-
             return sheet;
         },
 
-        removeSheet: function(sheet) {
+        removeSheet: function(sheet, sheetChangeCallback, sheetRefreshCallback) {
             var that = this;
             var sheets = that._sheets;
-            var sheetByIndex = that._sheetsByIndex;
             var name = sheet.name();
-            var index = sheetByIndex.indexOf(name);
+            var index = that.getSheetIndex(sheet);
 
-            if (sheetByIndex.length === 1) {
+            if (sheets.length === 1) {
                 return;
             }
 
-            if (index > -1 && sheets.hasOwnProperty(name)) {
+            if (index > -1) {
                 sheet.unbind();
 
-                sheetByIndex.splice(index, 1);
-                delete sheets[name];
+                sheets.splice(index, 1);
 
                 if (that.activeSheet().name() === name) {
-                    var newSheet = sheets[sheetByIndex[index === sheetByIndex.length ? index-1 : index]];
-                    that.activeSheet(newSheet);
-                } else {
-                    this.refresh({recalc: true});
+                    var newSheet = sheets[index === sheets.length ? index-1 : index];
+                    that.activeSheet(newSheet, sheetChangeCallback);
+                } else if (sheetRefreshCallback) {
+                    sheetRefreshCallback();
                 }
             }
-        },
+        }
     });
 
     kendo.spreadsheet.Workbook = Workbook;
