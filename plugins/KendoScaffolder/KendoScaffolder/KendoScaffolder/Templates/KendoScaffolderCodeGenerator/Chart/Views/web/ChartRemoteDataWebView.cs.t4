@@ -53,7 +53,7 @@ if(TooltipVisible) {
         string newLine= Environment.NewLine;
 
         result += SeriesNames != string.Empty ? ", " + newLine + Tabs(tabs) +"name: \"" + SeriesNames +"\"" : "";
-        result +=SeriesColors != string.Empty ? ", " + newLine + Tabs(tabs) +"color: \"" + SeriesColors +"\"" + newLine + Tabs(tabs-1) : "";
+        result += SeriesColors != string.Empty ? ", " + newLine + Tabs(tabs) +"color: \"" + SeriesColors +"\"" + newLine + Tabs(tabs-1) : "";
 
         return result;
     }
@@ -84,6 +84,10 @@ if(TooltipVisible) {
         else if (seriesType == "Bullet" || seriesType == "VerticalBullet")
         {
             RenderBulletCharts(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
+        }
+        else if (seriesType == "Bubble")    
+        {
+            RenderBubbleChart(seriesType, SeriesConfigs, SeriesNames, SeriesColors);
         }
     }
 #>
@@ -237,4 +241,39 @@ if(TooltipVisible) {
 <#+
     }
 #>
+
+
+<#+
+    private void RenderBubbleChart(string type, List<List<string>> SeriesConfigs, List<string> SeriesNames, List<string> SeriesColors) 
+    {
+        var newLine = Environment.NewLine;
+        var seriesType = Char.ToLowerInvariant(type[0]) + type.Substring(1);
+        var align = newLine + Tabs(2);
+
+        string result = "seriesDefaults: {" + newLine + Tabs(3) + "type: \"" + seriesType + "\"" + align + "}," + align + "series: [";
+
+        for (int i = 0; i < SeriesNames.Count; i++) 
+        {
+            for (int j = 0; j < SeriesConfigs[i].Count; j+=3) 
+            {
+                bool isLast = SeriesConfigs[i].Equals(SeriesConfigs[SeriesConfigs.Count - 1]);
+
+                result += newLine + Tabs(5) + "{" + newLine + Tabs(6) + "xField: \""+ SeriesConfigs[i][j] +"\",";
+                result += newLine + Tabs(6) + "yField: \""+ SeriesConfigs[i][j+1] +"\",";
+                result += newLine + Tabs(6) + "sizeField: \""+ SeriesConfigs[i][j+2] +"\"";
+                
+                result += SeriesNames[i] != string.Empty ? ", " + newLine + Tabs(6) +"name: \"" + SeriesNames[i] +"\"" : "";
+                result += SeriesColors[i] != string.Empty ? "," + newLine + Tabs(6) +"color: \"" + SeriesColors[i] +"\"" + newLine + Tabs(5) : newLine + Tabs(5);
+
+                result +=  isLast ? "}" + newLine : "},";
+            }
+        }
+        result += Tabs(2) + "]";
+
+#>
+<#=result#>
+<#+
+    }
+#>
+
 
