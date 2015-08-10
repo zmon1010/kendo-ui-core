@@ -405,6 +405,10 @@
 
         sheet: function() {
             return this._sheet;
+        },
+
+        topLeft: function() {
+            return this._ref.toRangeRef().topLeft;
         }
     });
 
