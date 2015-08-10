@@ -84,6 +84,10 @@ var __meta__ = {
                 .on("click" + NS, proxy(that._click, that));
 
             that.wrapper = $('<div class="k-column-menu"/>');
+
+            that._refreshHandler = proxy(that.refresh, that);
+
+            that.dataSource.bind(CHANGE, that._refreshHandler);
         },
 
         _init: function() {
@@ -101,10 +105,6 @@ var __meta__ = {
             }
 
             that._angularItems("compile");
-
-            that._refreshHandler = proxy(that.refresh, that);
-
-            that.dataSource.bind(CHANGE, that._refreshHandler);
 
             that._sort();
 

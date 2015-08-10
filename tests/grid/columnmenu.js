@@ -315,5 +315,37 @@
         ok(rows.eq(1).find("th").eq(0).data("kendoColumnMenu") instanceof kendo.ui.ColumnMenu);
     });
 
+    test("filtering highlights the column menu icon", function() {
+        var grid = setup({
+            columns: [
+                {
+                    field: "foo"
+                }
+            ],
+            filterable: true
+        });
+
+        var link = grid.thead.find("th>a");
+        link.click();
+        grid.dataSource.filter({ field: "foo", operator: "eq", value: "foo" });
+
+        ok(link.hasClass("k-state-active"), "the header cell is not marked as active");
+    });
+
+    test("filtering highlights the column menu icon when menu is not initialized", function() {
+        var grid = setup({
+            columns: [
+                {
+                    field: "foo"
+                }
+            ],
+            filterable: true
+        });
+
+        var link = grid.thead.find("th>a");
+        grid.dataSource.filter({ field: "foo", operator: "eq", value: "foo" });
+
+        ok(link.hasClass("k-state-active"), "the header cell is not marked as active");
+    });
 
 })();
