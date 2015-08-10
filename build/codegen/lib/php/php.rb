@@ -168,11 +168,11 @@ FUNCTION_SETTER = ERB.new(%{
                 return (@owner.name == 'TreeView' ? HIERARCHY_DATA_SOURCE_SETTER : DATA_SOURCE_SETTER).result(binding);
             end
 
+            return FUNCTION_SETTER.result(binding) if @type[0] == 'Function' && @type.size == 1
+
             if @name =~ /template$/i
                 return TEMPLATE_SETTER.result(binding);
             end
-
-            return FUNCTION_SETTER.result(binding) if @type[0] == 'Function' && @type.size == 1
 
             OPTION_SETTER.result(binding)
         end
