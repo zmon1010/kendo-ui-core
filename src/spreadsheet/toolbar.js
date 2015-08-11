@@ -308,10 +308,10 @@
                 dataValuePrimitive: true,
                 valueTemplate: "123",
                 template:
-                    "#: data.name #" +
                     "# if (data.sample) { #" +
                         "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
-                    "# } #"
+                    "# } #" +
+                    "#: data.name #"
             });
             ddl.setDataSource([
                 { format: null, name: "Automatic" },
