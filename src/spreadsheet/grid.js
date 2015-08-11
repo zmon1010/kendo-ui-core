@@ -159,7 +159,7 @@
                     bottomRightCol = ci;
                 }
             }
-            return new RangeRef(ref.topLeft, new CellRef(bottomRightRow, bottomRightCol));
+            return new RangeRef(ref.topLeft, new CellRef(Math.min(bottomRightRow, ref.bottomRight.row), bottomRightCol));
         }
     });
 

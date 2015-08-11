@@ -479,6 +479,8 @@
                 return;
             }
 
+            selection = sheet.trim(selection);
+
             var table = new HtmlTable();
 
             var selectionView = grid.rangeDimensions(selection);

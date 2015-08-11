@@ -172,6 +172,12 @@
 
                 callback(values);
             }
+        },
+
+        forEachProperty: function(callback) {
+            for (var name in this.properties) {
+                callback(this.properties[name]);
+            }
         }
     });
 

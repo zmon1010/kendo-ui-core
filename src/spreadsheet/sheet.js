@@ -439,6 +439,15 @@
             });
         },
 
+        trim: function(ref) {
+            var trims = [];
+            var grid = this._grid;
+            this._properties.forEachProperty(function(property) {
+                trims.push(grid.trim(ref, property.list));
+            });
+            return this.unionWithMerged(ref.topLeft.toRangeRef().union(trims));
+        },
+
         activeCell: function(ref) {
             if (ref) {
                 this._originalActiveCell = ref;

@@ -235,9 +235,19 @@
         values.value(grid.index(4,4), grid.index(8,4), "foo");
         var range = new RangeRef(new CellRef(2,2), new CellRef(9,9));
         var trimmed = grid.trim(range, values);
-        console.log(trimmed.bottomRight.print())
         ok(trimmed.topLeft.eq(range.topLeft));
         ok(trimmed.bottomRight.eq(new CellRef(8,4)));
+    });
+
+    test("does not expand the RangeRef", function() {
+        var grid = new Grid(null, null, 100, 100);
+        var values =  new kendo.spreadsheet.SparseRangeList(0, 10000, "");
+        values.value(grid.index(4,4), grid.index(12,12), "foo");
+        var range = new RangeRef(new CellRef(2,2), new CellRef(9,9));
+        var trimmed = grid.trim(range, values);
+        console.log(trimmed.bottomRight.print());
+        ok(trimmed.topLeft.eq(range.topLeft));
+        ok(trimmed.bottomRight.eq(new CellRef(9,9)));
     });
 
 })();

@@ -1,5 +1,7 @@
 (function() {
     var sheet;
+    var RangeRef = kendo.spreadsheet.RangeRef;
+    var CellRef = kendo.spreadsheet.CellRef;
     var defaults = kendo.ui.Spreadsheet.prototype.options;
     var success = $.proxy(ok, null, true);
     var failure = $.proxy(ok, null, false);
@@ -239,4 +241,29 @@
         equal(sheet.range("C:C").value(), 2);
     });
 
+    module("Sheet trimming", {
+        setup: function() {
+            sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
+            defaults.rowHeight, defaults.columnWidth);
+        }
+    });
+
+    test("sheet trims range from empty cells", function() {
+        sheet.range("A2:B3").value(1);
+        sheet.range("C1:C2").background("foo");
+
+        var range = new RangeRef(new CellRef(0,0), new CellRef(3,3));
+
+        ok(sheet.trim(range).eq(new RangeRef(new CellRef(0,0), new CellRef(2,2))));
+    });
+
+    test("sheet trimming preserves merged cells", function() {
+        sheet.range("C3:D4").merge();
+        sheet.range("A2:B3").value(1);
+        sheet.range("C1:C2").background("foo");
+
+        var range = new RangeRef(new CellRef(0,0), new CellRef(3,3));
+
+        ok(sheet.trim(range).eq(new RangeRef(new CellRef(0,0), new CellRef(3,3))));
+    });
 })();
