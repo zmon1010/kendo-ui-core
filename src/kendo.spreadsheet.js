@@ -13,7 +13,7 @@
         "./spreadsheet/sheet",
         "./spreadsheet/workbook",
         "./spreadsheet/formulacontext",
-        "./spreadsheet/view/eventhandler",
+        "./spreadsheet/controller",
         "./spreadsheet/view",
         "./spreadsheet/grid",
         "./spreadsheet/axis",
@@ -54,6 +54,8 @@
                 toolbar: this.options.toolbar
             });
 
+            this._controller = new kendo.spreadsheet.Controller(this._view);
+
             this._autoRefresh = true;
 
             this._workbook = new kendo.spreadsheet.Workbook(this.options);
@@ -63,6 +65,8 @@
             this._resize();
 
             this._view.workbook(this._workbook);
+
+            this._activeSheet(this._workbook.activeSheet());
 
             this.fromJSON(this.options);
         },
@@ -77,14 +81,13 @@
             }
         },
 
+        _activeSheet: function(sheet) {
+            this._controller.sheet(sheet);
+            this._view.sheet(sheet);
+        },
+
         activeSheet: function(sheet) {
-            var view = this._view;
-
-            var sheetChangeCallback = function(sheet) {
-                view.sheet(sheet);
-            };
-
-            return this._workbook.activeSheet(sheet, sheetChangeCallback);
+            return this._workbook.activeSheet(sheet, this._activeSheet.bind(this));
         },
 
         insertSheet: function(options) {
@@ -97,17 +100,12 @@
 
         removeSheet: function(sheet) {
             var that = this;
-            var view = that._view;
-
-            var sheetChangeCallback = function(sheet) {
-                view.sheet(sheet);
-            };
 
             var sheetRefreshCallback = function() {
                 that.refresh({recalc: true});
             };
 
-            return this._workbook.removeSheet(sheet, sheetChangeCallback, sheetRefreshCallback);
+            return this._workbook.removeSheet(sheet, this._activeSheet.bind(this), sheetRefreshCallback);
         },
 
         getSheetByName: function(sheetName) {
@@ -134,6 +132,7 @@
             this._workbook.refresh(reason);
 
             this._view.refresh(reason);
+            this._controller.refresh();
             this._view.render();
 
             this.trigger("render");

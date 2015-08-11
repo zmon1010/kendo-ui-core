@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../../kendo.core" ], f);
+    define([ "../kendo.core" ], f);
 })(function(){
 
 (function(kendo) {
@@ -82,7 +82,7 @@
         return "";
     }
 
-    var ViewEventHandler = kendo.Class.extend({
+    var Controller = kendo.Class.extend({
         init: function(view) {
             this.view = view;
             this.container = $(view.container);
@@ -355,6 +355,6 @@
         }
     });
 
-    kendo.spreadsheet.ViewEventHandler = ViewEventHandler;
+    kendo.spreadsheet.Controller = Controller;
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

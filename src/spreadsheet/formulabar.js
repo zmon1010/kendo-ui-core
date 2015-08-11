@@ -19,8 +19,8 @@
             this._formulaInput.element.on("blur", (function() {
                 this.trigger("change", {
                     value: this._formulaInput.value()
-                })
-            }).bind(this))
+                });
+            }).bind(this));
         },
         events: [
             "change"

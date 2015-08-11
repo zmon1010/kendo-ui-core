@@ -232,7 +232,6 @@
 
             this.tree = new kendo.dom.Tree(this.container);
             this.clipboardContents = new kendo.dom.Tree(this.clipboard[0]);
-            this.eventHandler = new kendo.spreadsheet.ViewEventHandler(this);
 
             var scrollbar = kendo.support.scrollbar();
 
@@ -283,19 +282,10 @@
 
         workbook: function(workbook) {
             this._workbook = workbook;
-
-            this.sheet(workbook.activeSheet());
-
-            workbook.bind("change", (function(e) {
-                this.formulaBar.value(this._workbook._editableValueForRef(e.sender.activeSheet().activeCell()));
-
-                this.toolbar.refresh();
-            }).bind(this));
         },
 
         sheet: function(sheet) {
             this._sheet = sheet;
-            this.eventHandler.sheet(sheet);
             this.refresh(kendo.spreadsheet.ALL_REASONS);
         },
 
@@ -357,7 +347,11 @@
 
         refresh: function(reason) {
             var sheet = this._sheet;
-            this.eventHandler.refresh();
+            this.formulaBar.value(this._workbook._editableValueForRef(sheet.activeCell()));
+            if(this.toolbar){
+                this.toolbar.refresh();
+            }
+                
             this.viewSize[0].style.height = sheet._grid.totalHeight() + "px";
             this.viewSize[0].style.width = sheet._grid.totalWidth() + "px";
 
@@ -391,10 +385,8 @@
         },
 
         selectClipBoardContents: function() {
-            if (!this.eventHandler.PRESSED) {
                 this.clipboard.focus();
                 selectElementContents(this.clipboard[0]);
-            }
         },
 
         scrollIntoView: function(cell) {

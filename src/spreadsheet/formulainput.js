@@ -117,7 +117,7 @@
         },
 
         scroll: function() {
-            console.log("scroll");
+            // console.log("scroll");
         },
 
         destroy: function() {
