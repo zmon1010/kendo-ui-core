@@ -632,27 +632,41 @@
 
             var td = table.addCell(row, cell.value, style);
 
+            var border, sibling;
+
             if (cell.borderLeft) {
-                var cells = table.trs[row].children;
-                var prevCell = cells[cells.length - 2];
-                var border = this._border(cell.borderLeft);
-                if (prevCell && border) {
-                    prevCell.attr.style.borderRight = border;
+                sibling = this._cellBefore(table, row);
+                border = this._border(cell.borderLeft);
+                if (sibling && border) {
+                    sibling.attr.style.borderRight = border;
                 }
             }
 
             if (cell.borderTop) {
-                var prevRow = table.trs[row-1];
-                var index = table.trs[row].children.length-1;
-                var border = this._border(cell.borderTop);
-                if (prevRow && index >= 0 && border) {
-                    prevRow.children[index].attr.style.borderBottom = border;
+                sibling = this._cellAbove(table, row);
+                border = this._border(cell.borderTop);
+                if (sibling && border) {
+                    sibling.attr.style.borderBottom = border;
                 }
             }
 
             if (cell.format && cell.value !== null) {
                 var formatter = kendo.spreadsheet.formatting.compile(cell.format);
                 td.children[0] = formatter(cell.value);
+            }
+        },
+
+        _cellBefore: function(table, row) {
+            var cells = table.trs[row].children;
+            return cells[cells.length - 2];
+        },
+
+        _cellAbove: function(table, row) {
+            var prevRow = table.trs[row-1];
+            var index = table.trs[row].children.length-1;
+
+            if (prevRow && index >= 0) {
+                return prevRow.children[index];
             }
         },
 

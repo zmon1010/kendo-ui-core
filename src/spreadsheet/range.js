@@ -17,7 +17,7 @@
         borderTop: { complement: "borderBottom", direction: { top: -1, bottom: -1 } },
         borderLeft: { complement: "borderRight", direction: { left: -1, right: -1 } },
         borderRight: { complement: "borderLeft", direction: { left: 1, right: 1 }  },
-        borderBottom: { complement: "borderTop", direction: { top: 1, bottom: 1 }  },
+        borderBottom: { complement: "borderTop", direction: { top: 1, bottom: 1 }  }
     };
 
     var Range = kendo.Class.extend({
