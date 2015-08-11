@@ -218,7 +218,6 @@
         onMouseUp: function(event, action) {
             this.navigator.completeSelection();
             this.stopAutoScroll();
-            this.view.selectClipBoardContents();
         },
 
         onDblClick: function(event, action) {

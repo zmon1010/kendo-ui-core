@@ -245,7 +245,6 @@
         values.value(grid.index(4,4), grid.index(12,12), "foo");
         var range = new RangeRef(new CellRef(2,2), new CellRef(9,9));
         var trimmed = grid.trim(range, values);
-        console.log(trimmed.bottomRight.print());
         ok(trimmed.topLeft.eq(range.topLeft));
         ok(trimmed.bottomRight.eq(new CellRef(9,9)));
     });

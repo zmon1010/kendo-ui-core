@@ -478,6 +478,10 @@
             if (selection === kendo.spreadsheet.NULLREF) {
                 return;
             }
+            if (selection instanceof kendo.spreadsheet.UnionRef) {
+                this.clipboardContents.render([]);
+                return;
+            }
 
             selection = sheet.trim(selection);
 
@@ -508,7 +512,7 @@
                 });
             });
 
-            this._sheet.forEach(selection, function(row, col, cell) {
+            sheet.forEach(selection, function(row, col, cell) {
                 var location = new CellRef(row, col).print();
 
                 if (!secondaryMergedCells[location]) {
