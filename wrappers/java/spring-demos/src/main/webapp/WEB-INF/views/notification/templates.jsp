@@ -2,19 +2,31 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<c:url value="/resources/web/notification/envelope.png" var="envelopeImg"/>
-<c:url value="/resources/web/notification/error-icon.png" var="errorImg"/>
-<c:url value="/resources/web/notification/success-icon.png" var="successImg"/>
 
 <demo:header />
 
+<%
+	String emailTemplate = "<div class=\"new-mail\">" +
+	        "<img src=\"../resources/web/notification/envelope.png\" />" +
+	        "<h3>#= title #</h3>" +
+	        "<p>#= message #</p>" +
+	    "</div>";
+	String errorTemplate = "<div class=\"wrong-pass\">" +
+	        "<img src=\"../resources/web/notification/error-icon.png\" />" +
+	        "<h3>#= title #</h3>" +
+	        "<p>#= message #</p>" +
+	    "</div>";
+	String successTemplate = "<div class=\"upload-success\">" +
+	        "<img src=\"../resources/web/notification/success-icon.png\" />" +
+	        "<h3>#= message #</h3>" +
+	    "</div>";
+%>
+
 <kendo:notification name="notification" autoHideAfter="0" stacking="down">
 	<kendo:notification-templates>
-		<kendo:notification-template type="info" template="emailTemplate"/>
-		<kendo:notification-template type="error" template="errorTemplate"/>
-		<kendo:notification-template type="upload-success" template="successTemplate"/>
+		<kendo:notification-template type="info" template="<%=emailTemplate%>"/>
+		<kendo:notification-template type="error" template="<%=errorTemplate%>"/>
+		<kendo:notification-template type="upload-success" template="<%=successTemplate%>"/>
 	</kendo:notification-templates>
 	<kendo:notification-position pinned="true" top="30" right="30" />
 </kendo:notification>
@@ -33,29 +45,6 @@
     </p>
 
 </div>
-
-<script id="emailTemplate" type="text/x-kendo-template">        
-                <div class="new-mail">
-                    <img src="${envelopeImg}" />
-                    <h3>#= title #</h3>
-                    <p>#= message #</p>
-                </div>
-            </script>
-
-<script id="errorTemplate" type="text/x-kendo-template">        
-                <div class="wrong-pass">
-                    <img src="${errorImg}" />
-                    <h3>#= title #</h3>
-                    <p>#= message #</p>
-                </div>
-            </script>
-
-<script id="successTemplate" type="text/x-kendo-template">        
-                <div class="upload-success">
-                    <img src="${successImg}" />
-                    <h3>#= message #</h3>
-                </div>
-            </script>
 
 <script>
     $(document).ready(function() {
