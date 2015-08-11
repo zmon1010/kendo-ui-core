@@ -13,6 +13,7 @@ var __meta__ = {
 (function($, undefined) {
 
     var kendo = window.kendo;
+    var supportsMedia = "matchMedia" in window;
     var browser = kendo.support.browser;
     var mobileOS = kendo.support.mobileOS;
     var Observable = kendo.Observable;
@@ -52,12 +53,14 @@ var __meta__ = {
     var DOT = ".";
     var TASK_DELETE_CONFIRM = "Are you sure you want to delete this task?";
     var DEPENDENCY_DELETE_CONFIRM = "Are you sure you want to delete this dependency?";
+    var TOGGLE_BUTTON_TEMPLATE = kendo.template('<button class="#=styles.buttonToggle#"><span class="#=styles.iconToggle#">&nbps;</span></button>');
     var BUTTON_TEMPLATE = '<button class="#=styles.button# #=className#" '+
             '#if (action) {#' +
                 'data-action="#=action#"' +
             '#}#' +
-        '><span class="#=iconClass#"></span>#=text#</button>';
+        '><span class="#=iconClass#"></span><span>#=text#</span></button>';
     var COMMAND_BUTTON_TEMPLATE = '<a class="#=className#" #=attr# href="\\#">#=text#</a>';
+    var VIEWBUTTONTEMPLATE = kendo.template('<li class="#=styles.currentView# #=styles.viewButtonDefault#"><a href="\\#" class="#=styles.link#">&nbps;</a></li>');
     var HEADER_VIEWS_TEMPLATE = kendo.template('<ul class="#=styles.viewsWrapper#">' +
             '#for(var view in views){#' +
                 '<li class="#=styles.viewButtonDefault# #=styles.viewButton#-#= view.toLowerCase() #" data-#=ns#name="#=view#"><a href="\\#" class="#=styles.link#">#=views[view].title#</a></li>' +
@@ -116,6 +119,7 @@ var __meta__ = {
         buttonDelete: "k-gantt-delete",
         buttonCancel: "k-gantt-cancel",
         buttonSave: "k-gantt-update",
+        buttonToggle: "k-gantt-toggle",
         primary: "k-primary",
         hovered: "k-state-hover",
         selected: "k-state-selected",
@@ -139,14 +143,18 @@ var __meta__ = {
             headerWrapper: "k-floatwrap k-header k-gantt-toolbar",
             footerWrapper: "k-floatwrap k-header k-gantt-toolbar",
             toolbar: "k-gantt-toolbar",
+            expanded: "k-state-expanded", 
             views: "k-gantt-views",
             viewsWrapper: "k-reset k-header k-gantt-views",
             actions: "k-gantt-actions",
             button: "k-button k-button-icontext",
+            buttonToggle: "k-button k-button-icon k-gantt-toggle",
             iconPlus: "k-icon k-i-plus",
             iconPdf: "k-icon k-i-pdf",
+            iconToggle: "k-icon k-i-custom",
             viewButtonDefault: "k-state-default",
             viewButton: "k-view",
+            currentView: "k-current-view",
             link: "k-link",
             pdfButton: "k-gantt-pdf",
             appendButton: "k-gantt-create"
@@ -1571,6 +1579,11 @@ var __meta__ = {
 
             this.toolbar.off(NS);
 
+            if (supportsMedia) {
+                this._mediaQuery.removeListener(this._mediaQueryHandler);
+                this._mediaQuery = null;
+            }
+
             $(window).off("resize" + NS, this._resizeHandler);
             $(this.wrapper).off(NS);
 
@@ -1616,16 +1629,40 @@ var __meta__ = {
             var ganttStyles = Gantt.styles;
             var viewsSelector = DOT + ganttStyles.toolbar.views + " > li";
             var pdfSelector = DOT + ganttStyles.toolbar.pdfButton;
+            var toggleSelector = DOT + ganttStyles.buttonToggle;
+            var treelist = $(DOT + ganttStyles.list);
+            var timeline = $(DOT + ganttStyles.timeline);
             var hoveredClassName = ganttStyles.hovered;
             var actions = this.options.toolbar;
             var actionsWrap = $("<div class='" + ganttStyles.toolbar.actions + "'>");
             var toolbar;
             var views;
+            var toggleButton;
+            var handler = function(e) {
+                if (e.matches) {
+                    treelist.css({
+                        "display": "none",
+                        "max-width": 0
+                    });
+                } else {
+                    treelist.css({
+                        "display": "inline-block",
+                        "width": "30%",
+                        "max-width": "none"
+                    });
+
+                    timeline.css("display", "inline-block");
+                }
+
+                that._resize();
+            };
 
             if (!isFunction(actions)) {
                 actions = (typeof actions === STRING ? actions : this._actions(actions));
                 actions = proxy(kendo.template(actions), this);
             }
+
+            toggleButton = $(TOGGLE_BUTTON_TEMPLATE({ styles: ganttStyles.toolbar }));
 
             views = $(HEADER_VIEWS_TEMPLATE({
                 ns: kendo.ns,
@@ -1636,11 +1673,22 @@ var __meta__ = {
             actionsWrap.append(actions({}));
 
             toolbar = $("<div class='" + ganttStyles.toolbar.headerWrapper + "'>")
-                .append(actionsWrap)
-                .append(views);
+                .append(toggleButton)
+                .append(views)
+                .append(actionsWrap);
+
+            if (views.find("li").length > 1) {
+                views.prepend(VIEWBUTTONTEMPLATE({ styles: ganttStyles.toolbar }));
+            }
 
             this.wrapper.prepend(toolbar);
             this.toolbar = toolbar;
+
+            if (supportsMedia) {
+                this._mediaQueryHandler = proxy(handler, this);
+                this._mediaQuery = window.matchMedia("(max-width: 480px)");
+                this._mediaQuery.addListener(this._mediaQueryHandler);
+            }
 
             toolbar
                 .on(CLICK + NS, viewsSelector, function(e) {
@@ -1648,6 +1696,11 @@ var __meta__ = {
 
                     var list = that.list;
                     var name = $(this).attr(kendo.attr("name"));
+                    var currentView = views.find(DOT + ganttStyles.toolbar.currentView);
+
+                    if (currentView.is(":visible")) {
+                        currentView.parent().toggleClass(ganttStyles.toolbar.expanded);
+                    }
 
                     if (list.editable && list.editable.trigger("validate")) {
                         return;
@@ -1659,6 +1712,30 @@ var __meta__ = {
                 })
                 .on(CLICK + NS, pdfSelector, function(e) {
                     that.saveAsPDF();
+                })
+                .on(CLICK + NS, toggleSelector, function(e) {
+                    if (treelist.is(":visible")) {
+                        treelist.css({
+                            "display": "none",
+                            "width": "0"
+                        });
+                        timeline.css({
+                            "display": "inline-block",
+                            "width": "100%"
+                        });
+                    } else {
+                        timeline.css({
+                            "display": "none",
+                            "width": 0
+                        });
+                        treelist.css({
+                            "display": "inline-block",
+                            "width": "100%",
+                            "max-width": "none"
+                        });
+                    }
+
+                    that._resize();
                 });
 
             this.wrapper
@@ -1754,6 +1831,10 @@ var __meta__ = {
                 .end()
                 .children(timelineSelector)
                 .width(totalWidth - (splitBarWidth + treeListWidth));
+
+            if (totalWidth < (treeListWidth + splitBarWidth)) {
+                element.find(listSelector).width(totalWidth - splitBarWidth);
+            }
         },
 
         _scrollTo: function(value) {
@@ -1920,19 +2001,27 @@ var __meta__ = {
             var ganttStyles = Gantt.styles;
             var options = trimOptions(extend(true, { resourcesField: this.resources.field }, this.options));
             var element = this.wrapper.find(DOT + ganttStyles.timeline + " > div");
+            var currentViewSelector = DOT + ganttStyles.toolbar.currentView + " > " + DOT + ganttStyles.toolbar.link;
 
             this.timeline = new kendo.ui.GanttTimeline(element, options);
 
             this.timeline
                 .bind("navigate", function(e) {
                     var treelist = that.list;
+                    var viewName = e.view.replace(/\./g, "\\.").toLowerCase();
 
-                    that.toolbar
+                    var text = that.toolbar
                         .find(DOT + ganttStyles.toolbar.views +" > li")
                         .removeClass(ganttStyles.selected)
                         .end()
-                        .find(DOT + ganttStyles.toolbar.viewButton + "-" + e.view.replace(/\./g, "\\.").toLowerCase())
-                        .addClass(ganttStyles.selected);
+                        .find(DOT + ganttStyles.toolbar.viewButton + "-" + viewName)
+                        .addClass(ganttStyles.selected)
+                        .find(DOT + ganttStyles.toolbar.link)
+                        .text();
+
+                    that.toolbar
+                        .find(currentViewSelector)
+                        .text(text);
 
                     that.refresh();
                 })

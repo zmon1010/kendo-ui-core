@@ -9,10 +9,11 @@
 
     module("Gantt initialization", {
         setup: function() {
-            element = $("<div/>");
+            element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
             kendo.destroy(element);
+            element.remove();
         }
     });
 
@@ -113,6 +114,12 @@
         ok(gantt.footer.hasClass("k-floatwrap k-header"));
     });
 
+    test("toggle button added to the toolbar", function() {
+        var gantt = new Gantt(element);
+
+        ok(gantt.toolbar.find(".k-button.k-button-icon.k-gantt-toggle").length);
+    });
+
     test("view buttons are added to the toolbar", 2, function() {
         var gantt = new Gantt(element, {
             views: ["day"]
@@ -120,6 +127,20 @@
 
         ok(gantt.toolbar.find(".k-view-day").length);
         equal(gantt.toolbar.find(".k-gantt-views .k-link").text(), "Day");
+    });
+
+    test("current view button is added to the toolbar", function() {
+        var gantt = new Gantt(element);
+
+        ok(gantt.toolbar.find(".k-current-view").length);
+    });
+
+    test("current view button is not added to the toolbar when only one view", function() {
+        var gantt = new Gantt(element, {
+            views: ["day"]
+        });
+
+        equal(gantt.toolbar.find(".k-current-view").length, 0);
     });
 
     test("toolbar action button is added", function () {
@@ -349,10 +370,10 @@
         ok(listWrapper.hasClass("k-gantt-layout"));
     });
 
-    test("list's wrapper is created with default width", function () {
+    test("list's wrapper is created with default width", function() {
         var gantt = new Gantt(element);
 
-        equal(gantt.wrapper.find(".k-gantt-treelist").css("width"), gantt.options.listWidth);
+        equal(gantt.wrapper.find(".k-gantt-treelist").get(0).style.width, gantt.options.listWidth);
     });
 
     test("list's wrapper is created with width from options", function () {
