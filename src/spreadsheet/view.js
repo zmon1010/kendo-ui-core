@@ -262,19 +262,23 @@
 
         _toolbar: function() {
             var element;
+            var toolbarOptions = this.options.toolbar;
 
             if (this.toolbar) {
                 this.toolbar.destroy();
                 this.element.children(".k-toolbar").remove();
             }
 
-            if (this.options.toolbar) {
+            if (toolbarOptions) {
                 element = $("<div />").prependTo(this.element);
-                this.toolbar = new kendo.spreadsheet.ToolBar(element, {
+
+                toolbarOptions = $.extend(true, toolbarOptions, {
                     execute: function(e) {
                         this._workbook.execute(new kendo.spreadsheet[e.commandType](e));
                     }.bind(this)
                 });
+
+                this.toolbar = new kendo.spreadsheet.ToolBar(element, toolbarOptions);
 
                 this.toolbar.bindTo(this);
             }

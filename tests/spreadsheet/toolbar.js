@@ -40,6 +40,30 @@
         ok(spreadsheet._view.toolbar instanceof kendo.ui.ToolBar);
     });
 
+    function createWithTools(tools) {
+        return createSpreadsheet({
+            toolbar: {
+                tools: tools
+            }
+        });
+    }
+
+    test("expands tools to items", function() {
+        createWithTools([ "bold", "italic", "underline" ]);
+
+        equal(element.find(".k-toolbar .k-button").length, 3);
+    });
+
+    test("creates multiple button groups", function() {
+        createWithTools([
+            "bold", "italic", "underline",
+            "justifyLeft", "justifyCenter", "justifyRight"
+        ]);
+
+        equal(element.find(".k-toolbar .k-button").length, 6);
+        equal(element.find(".k-toolbar .k-button-group").length, 2);
+    });
+
     var tool, toolbar;
 
     module("SpreadSheet PopupTool", moduleOptions);

@@ -8,6 +8,7 @@
     function apply(options) {
         var className = options.text[0].toLowerCase() + options.text.substr(1);
         return {
+            name: options.name,
             spriteCssClass: "k-icon k-i-" + className,
             attributes: {
                 "data-command": "PropertyChangeCommand",
@@ -25,42 +26,43 @@
         return button;
     }
 
+
+    var defaultItems = [
+        { type: "formatPopup", text: "Format..." },
+        { type: "buttonGroup", buttons: [
+            toggle({ text: "Bold", property: "bold", value: true }),
+            toggle({ text: "Italic", property: "italic", value: true }),
+            toggle({ text: "Underline", property: "underline", value: true })
+        ] },
+        { type: "buttonGroup", buttons: [
+            toggle({ text: "Justify-left", property: "textAlign", value: "left" }),
+            toggle({ text: "Justify-center", property: "textAlign", value: "center" }),
+            toggle({ text: "Justify-right", property: "textAlign", value: "right" })
+        ] },
+        { type: "buttonGroup", buttons: [
+            toggle({ text: "Align-top", property: "verticalAlign", value: "top" }),
+            toggle({ text: "Align-middle", property: "verticalAlign", value: "middle" }),
+            toggle({ text: "Align-bottom", property: "verticalAlign", value: "bottom" })
+        ] },
+        { type: "buttonGroup", buttons: [
+            apply({ text: "Currency", property: "format", value: "$?" }),
+            apply({ text: "Percentage", property: "format", value: "?.00%" })
+        ] },
+        { type: "format", property: "format", width: 100, overflow: "never" },
+        { type: "borders", overflow: "never" },
+        { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
+        { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
+        { type: "colorPicker", property: "background", toolIcon: "k-backColor", overflow: "never" },
+        { type: "colorPicker", property: "color", toolIcon: "k-foreColor", overflow: "never" }
+    ];
+
     var SpreadsheetToolBar = ToolBar.extend({
         init: function(element, options) {
-            options.items = [
-                { type: "formatPopup", text: "Format..." },
-                { type: "buttonGroup", buttons: [
-                    toggle({ text: "Bold", property: "bold", value: true }),
-                    toggle({ text: "Italic", property: "italic", value: true }),
-                    toggle({ text: "Underline", property: "underline", value: true })
-                ] },
-                { type: "buttonGroup", buttons: [
-                    toggle({ text: "Justify-left", property: "textAlign", value: "left" }),
-                    toggle({ text: "Justify-center", property: "textAlign", value: "center" }),
-                    toggle({ text: "Justify-right", property: "textAlign", value: "right" })
-                ] },
-                { type: "buttonGroup", buttons: [
-                    toggle({ text: "Align-top", property: "verticalAlign", value: "top" }),
-                    toggle({ text: "Align-middle", property: "verticalAlign", value: "middle" }),
-                    toggle({ text: "Align-bottom", property: "verticalAlign", value: "bottom" })
-                ] },
-                { type: "buttonGroup", buttons: [
-                    apply({ text: "Currency", property: "format", value: "$?" }),
-                    apply({ text: "Percentage", property: "format", value: "?.00%" })
-                ] },
-                { type: "splitButton", spriteCssClass: "k-icon k-i-merge-cells", text: "Merge All", attributes: { "data-command": "MergeCellCommand", "data-value": "all", style: "width: 117px" }, menuButtons: [
-                    { spriteCssClass: "k-icon k-i-merge-cells", attributes: { "data-command": "MergeCellCommand", "data-value": "all" }, text: "Merge All" },
-                    { spriteCssClass: "k-icon k-i-merge-cells", attributes: { "data-command": "MergeCellCommand", "data-value": "horizontally" }, text: "Merge Horizontally" },
-                    { spriteCssClass: "k-icon k-i-merge-cells", attributes: { "data-command": "MergeCellCommand", "data-value": "vertically" }, text: "Merge Vertically" },
-                    { spriteCssClass: "k-icon k-i-merge-cells", attributes: { "data-command": "MergeCellCommand", "data-value": "unmerge" }, text: "Unmerge cells" }
-                ] },
-                { type: "format", property: "format", width: 100, overflow: "never" },
-                { type: "borders", overflow: "never" },
-                { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
-                { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
-                { type: "colorPicker", property: "background", toolIcon: "k-backColor", overflow: "never" },
-                { type: "colorPicker", property: "color", toolIcon: "k-foreColor", overflow: "never" }
-            ];
+            if (options.tools) {
+                options.items = this._expandTools(options.tools);
+            } else {
+                options.items = defaultItems;
+            }
 
             ToolBar.fn.init.call(this, element, options);
             var handleClick = this._click.bind(this);
@@ -69,6 +71,57 @@
                 click: handleClick,
                 toggle: handleClick
             });
+        },
+        _expandTools: function(tools) {
+            var groups = {
+                "formatting": [ "bold", "italic", "underline" ],
+                "justify": [ "justifyLeft", "justifyCenter", "justifyRight" ]
+            };
+
+            var messages = {
+                bold: "Bold",
+                italic: "Italic",
+                underline: "Underline",
+                justifyLeft: "Justify left",
+                justifyCenter: "Justify center",
+                justifyRight: "Justify right"
+            };
+
+            function expandTool(tool) {
+                return toggle({
+                    name: tool,
+                    text: messages[tool],
+                    property: tool,
+                    value: true
+                });
+            }
+
+            function groupFor(name) {
+                for (var groupName in groups) {
+                    if (groups.hasOwnProperty(groupName)) {
+                        if (groups[groupName].indexOf(name) >= 0) {
+                            return groupName;
+                        }
+                    }
+                }
+
+                return "";
+            }
+
+            return tools.map(expandTool).reduce(function(state, tool) {
+                var tools = state.tools;
+                var group = groupFor(tool.name);
+                var lastTool = tools[tools.length-1];
+
+                if (group != state.lastGroup) {
+                    state.lastGroup = group;
+                    tools.push({ type: "buttonGroup", buttons: [ tool ] });
+                } else if (lastTool && lastTool.buttons) {
+                    lastTool.buttons.push(tool);
+                }
+
+                return state;
+            }, { lastGroup: "", tools: [] }).tools;
         },
         _click: function(e) {
             var target = e.target;
