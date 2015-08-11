@@ -3814,7 +3814,7 @@ var __meta__ = {
         var AXIS = "#dfe0e1";
         var AXIS_MINOR = "#dfe0e1";
         var SERIES = ["#ff4350", "#ff9ea5", "#00acc1", "#80deea", "#ffbf46", "#ffd78c"];
-        var SERIES_LIGHT = ["#cbe8f5", "#eaf5cb", "#fceacc", "#fbdcdf", "#f2d7dc", "#eeeeee"];
+        var SERIES_LIGHT = ["#ffd9dc", "#ffeced", "#cceef3", "#e6f8fb", "#fff2da", "#fff7e8"];
         var PRIMARY = SERIES[0];
         var DIAGRAM_HOVER = WHITE;
 

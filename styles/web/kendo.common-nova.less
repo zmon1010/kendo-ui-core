@@ -820,10 +820,80 @@ div.editorToolbarWindow.k-window-content {
     &:not(.k-state-disabled):hover .k-i-refresh {
         background-position: -48px -112px;
     }
+
+    .k-edit,
+    &:not(.k-state-disabled):hover .k-edit {
+        background-position: -48px 0px;
+    }
+
+    .k-delete,
+    &:not(.k-state-disabled):hover .k-delete {
+        background-position: -48px -16px;
+    }
+
+    .k-cancel,
+    &:not(.k-state-disabled):hover .k-cancel {
+        background-position: -48px -48px;
+    }
+
+    .k-i-pdf,
+    &:not(.k-state-disabled):hover .k-i-pdf {
+        background-position: -80px -80px;
+    }
+
+    .k-i-excel,
+    &:not(.k-state-disabled):hover .k-i-excel {
+        background-position: -80px -96px;
+    }
 }    
 
-.k-state-border-up .k-select .k-i-arrow-s,
-.k-state-border-down .k-select .k-i-arrow-s { 
+.k-toolbar {
+    .k-state-active .k-justifyLeft,
+    .k-button:active .k-justifyLeft {
+        background-position: -265px -144px;
+    }
+
+    .k-state-active .k-justifyCenter,
+    .k-button:active .k-justifyCenter {
+        background-position: -265px -168px;    
+    }
+
+    .k-state-active .k-justifyRight,
+    .k-button:active .k-justifyRight {
+        background-position: -265px -192px;
+    }
+
+    .k-state-active .k-bold,
+    .k-button:active .k-bold {
+        background-position: -265px 0;
+    }
+
+    .k-state-active .k-italic,
+    .k-button:active .k-italic {
+        background-position: -265px -24px;    
+    }
+
+    .k-state-active .k-underline,
+    .k-button:active .k-underline {
+        background-position: -265px -48px;
+    }
+
+    .k-state-active .k-i-more,
+    .k-button:active .k-i-more,
+    .k-state-border-down .k-i-more,
+    .k-state-border-up .k-i-more,
+    .k-state-border-down:not(.k-state-disabled):hover .k-i-more,
+    .k-state-border-up:not(.k-state-disabled):hover .k-i-more {
+        background-position: -80px -32px;
+    }
+
+    .k-split-button-arrow.k-state-active .k-i-arrow-s {
+        background-position: -16px -32px;   
+    }
+}
+
+.k-dropdown.k-state-border-up .k-i-arrow-s,
+.k-dropdown.k-state-border-down .k-i-arrow-s { 
     background-position: -16px 0; 
 }
 
@@ -835,12 +905,28 @@ div.editorToolbarWindow.k-window-content {
     background-position: -48px -192px;
 }
 
+.k-state-active > .k-i-insert-n,
+.k-state-active.k-button:not(.k-state-disabled):hover .k-i-insert-n {
+    background-position: -176px -32px;
+}
+
+.k-state-active > .k-i-insert-m,
+.k-state-active.k-button:not(.k-state-disabled):hover .k-i-insert-m {
+    background-position: -176px -48px;
+}
+
+.k-state-active > .k-i-insert-s,
+.k-state-active.k-button:not(.k-state-disabled):hover .k-i-insert-s {
+    background-position: -176px -64px;    
+}
+
 .k-numerictextbox .k-state-hover .k-link span.k-i-arrow-n,
 .k-grid-header .k-numerictextbox .k-select .k-link span.k-i-arrow-n {
      background-position: 0 -3px;
 }
 
-.k-numerictextbox .k-link.k-state-selected span.k-i-arrow-n {
+.k-numerictextbox .k-link.k-state-selected span.k-i-arrow-n,
+.k-grid-header .k-numerictextbox .k-select .k-link.k-state-selected span.k-i-arrow-n {
     background-position: -16px -3px;
 }
 
@@ -849,7 +935,8 @@ div.editorToolbarWindow.k-window-content {
      background-position: 0 -35px;
 }
 
-.k-numerictextbox .k-link.k-state-selected span.k-i-arrow-s {
+.k-numerictextbox .k-link.k-state-selected span.k-i-arrow-s,
+.k-grid-header .k-numerictextbox .k-link.k-state-selected span.k-i-arrow-s {
     background-position: -16px -35px;
 }
 
@@ -980,13 +1067,15 @@ div.editorToolbarWindow.k-window-content {
 		background-position: -165px -6px;
 	}
 
-	.k-collapse-next {
-		background-position: -5px -142px;
-	}
+    .k-expand-next,
+    .k-collapse-prev {
+        background-position: -6px -174px;
+    }    
 
-	.k-collapse-prev {
-		background-position: -6px -174px;
-	}
+    .k-expand-prev,
+    .k-collapse-next {
+        background-position: -5px -142px;
+    }
 }
 
 .k-splitbar-vertical-hover {
@@ -994,13 +1083,15 @@ div.editorToolbarWindow.k-window-content {
 		background-position: -38px -309px;
 	}
 
-	.k-collapse-next {
-		background-position: 2px -165px;
-	}
+    .k-expand-prev,
+    .k-collapse-next {
+        background-position: 2px -165px;
+    }
 
-	.k-collapse-prev {
-		background-position: 2px -134px;
-	}
+    .k-expand-next,
+    .k-collapse-prev {
+        background-position: 2px -134px;
+    }
 }
 
 .k-splitbar-horizontal.k-state-focused {
@@ -1008,13 +1099,15 @@ div.editorToolbarWindow.k-window-content {
 		background-position: -181px -6px;
 	}
 
-	.k-collapse-next {
-		background-position: -21px -142px;
-	}
+    .k-expand-next,
+    .k-collapse-prev {
+        background-position: -22px -174px;
+    }
 
-	.k-collapse-prev {
-		background-position: -22px -174px;
-	}
+    .k-expand-prev,
+    .k-collapse-next {
+        background-position: -21px -142px;
+    }
 }
 
 .k-splitbar-vertical.k-state-focused {
@@ -1022,17 +1115,15 @@ div.editorToolbarWindow.k-window-content {
 		background-position: -70px -309px;
 	}
 
-	.k-collapse-next {
-		background-position: -14px -165px;
-	}
+    .k-expand-prev,
+    .k-collapse-next {
+        background-position: -14px -165px;
+    }
 
-	.k-collapse-prev {
-		background-position: -14px -134px;
-	}
-}
-
-.k-grid .k-delete {
-    background-position: -32px -16px;
+    .k-expand-next,
+    .k-collapse-prev {
+        background-position: -14px -134px;
+    }
 }
 
 .k-grid-header .k-i-arrow-n,
@@ -1054,6 +1145,15 @@ div.editorToolbarWindow.k-window-content {
 .k-grid-header .k-header-column-menu .k-i-arrowhead-s {
     background-position: -64px -32px;
 }
+
+.k-primary {
+    .k-i-tick,
+    .k-insert,
+    .k-update,
+    &:not(.k-state-disabled):hover .k-update {
+        background-position: -48px -32px;
+    }
+}    
 
 .k-header {
     .k-i-pdf,
@@ -1102,6 +1202,14 @@ div.editorToolbarWindow.k-window-content {
     }
 }
 
+.k-filtercell {
+    .k-state-active {
+        .k-filter {
+            background-position: -48px -80px;
+        }
+    }
+}
+
 .k-scheduler {
     .k-state-default .k-link .k-icon.k-i-calendar,
     .k-state-default.k-state-hover .k-link .k-i-calendar {
@@ -1110,12 +1218,12 @@ div.editorToolbarWindow.k-window-content {
     
     .k-i-arrow-e,
     .k-state-hover .k-link .k-i-arrow-e {
-        background-position: -16px -16px;
+        background-position: -16px -208px;
     }
     
     .k-i-arrow-w,
     .k-state-hover .k-link .k-i-arrow-w {
-        background-position: -16px -48px;
+        background-position: -16px -240px;
     }
 
     .k-i-clock,
@@ -1129,7 +1237,8 @@ div.editorToolbarWindow.k-window-content {
         background-position: -176px -80px;
     }
 
-    .k-i-refresh {
+    .k-i-refresh,
+    .k-link:not(.k-state-disabled):hover .k-i-refresh {
         background-position: -48px -112px;
     }
 }
@@ -1146,7 +1255,7 @@ div.editorToolbarWindow.k-window-content {
     }
 
     .k-i-expand {
-        background-position: 0 0;
+        background-position: 0 -16px;
     }
 
     .k-si-close {
@@ -1154,7 +1263,8 @@ div.editorToolbarWindow.k-window-content {
     }
 }
 
-.k-i-arrowhead-s {
+.k-i-arrowhead-s,
+.k-pivot-setting .k-item.k-state-hover .k-i-arrowhead-s {
     background-position: 0 -288px;
 }
 
@@ -1214,6 +1324,18 @@ div.editorToolbarWindow.k-window-content {
 .k-notification .k-i-note {
     background-position: -176px -240px;
 }
+
+.k-column-menu {
+    .k-state-active .k-i-columns,
+    .k-link:not(.k-state-disabled):hover > .k-i-columns {
+        background-position: -128px -304px;
+    }
+        
+    .k-state-active .k-filter,
+    .k-link:not(.k-state-disabled):hover > .k-filter {
+        background-position: -48px -80px;
+    }
+}    
 
 .k-radio-label:before {
     width: 16px;
