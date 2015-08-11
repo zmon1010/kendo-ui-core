@@ -376,10 +376,10 @@
         equal(gantt.wrapper.find(".k-gantt-treelist").get(0).style.width, gantt.options.listWidth);
     });
 
-    test("list's wrapper is created with width from options", function () {
-        var gantt = new Gantt(element, { listWidth: 800 });
+    test("list's wrapper is created with width from options", function() {
+        var gantt = new Gantt(element, { listWidth: 200 });
 
-        equal(gantt.wrapper.find(".k-gantt-treelist").width(), 800);
+        equal(gantt.wrapper.find(".k-gantt-treelist").width(), gantt.options.listWidth);
     });
 
     test("list's wrapper height is total height without the toolbar & footer", function () {
