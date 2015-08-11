@@ -218,6 +218,19 @@
             return this;
         },
 
+        intersectingMerged: function() {
+            var sheet = this._sheet;
+            var mergedCells = [];
+
+            sheet._mergedCells.forEach(function(ref) {
+                if (ref.intersects(this._ref)) {
+                    mergedCells.push(ref.toString());
+                }
+            }.bind(this));
+
+            return mergedCells;
+        },
+
         unmerge: function() {
             var mergedCells = this._sheet._mergedCells;
 

@@ -594,4 +594,14 @@
         equal(sheet.activeCell().toString(), "A1:A1");
     });
 
+    test("previously merged cells are restored when command 'unmerge' is undone", function() {
+        sheet.range("A2:B2").merge();
+
+        var command = mergeCommand("unmerge", "A1:B2");
+        command.exec();
+        command.undo();
+
+        equal(sheet._mergedCells.length, 1);
+    });
+
 })();
