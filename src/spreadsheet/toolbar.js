@@ -5,8 +5,57 @@
 (function(kendo) {
     var ToolBar = kendo.ui.ToolBar;
 
+    function apply(options) {
+        var className = options.text[0].toLowerCase() + options.text.substr(1);
+        return {
+            spriteCssClass: "k-icon k-i-" + className,
+            attributes: {
+                "data-command": "PropertyChangeCommand",
+                "data-property": options.property,
+                "data-value": options.value
+            },
+            text: options.text,
+            showText: "overflow"
+        };
+    }
+
+    function toggle(options) {
+        var button = apply(options);
+        button.toggleable = true;
+        return button;
+    }
+
     var SpreadsheetToolBar = ToolBar.extend({
         init: function(element, options) {
+            options.items = [
+                { type: "formatPopup", text: "Format..." },
+                { type: "buttonGroup", buttons: [
+                    toggle({ text: "Bold", property: "bold", value: true }),
+                    toggle({ text: "Italic", property: "italic", value: true }),
+                    toggle({ text: "Underline", property: "underline", value: true })
+                ] },
+                { type: "buttonGroup", buttons: [
+                    toggle({ text: "Justify-left", property: "textAlign", value: "left" }),
+                    toggle({ text: "Justify-center", property: "textAlign", value: "center" }),
+                    toggle({ text: "Justify-right", property: "textAlign", value: "right" })
+                ] },
+                { type: "buttonGroup", buttons: [
+                    toggle({ text: "Align-top", property: "verticalAlign", value: "top" }),
+                    toggle({ text: "Align-middle", property: "verticalAlign", value: "middle" }),
+                    toggle({ text: "Align-bottom", property: "verticalAlign", value: "bottom" })
+                ] },
+                { type: "buttonGroup", buttons: [
+                    apply({ text: "Currency", property: "format", value: "$?" }),
+                    apply({ text: "Percentage", property: "format", value: "?.00%" })
+                ] },
+                { type: "format", property: "format", width: 100, overflow: "never" },
+                { type: "borders", overflow: "never" },
+                { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
+                { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
+                { type: "colorPicker", property: "background", toolIcon: "k-backColor", overflow: "never" },
+                { type: "colorPicker", property: "color", toolIcon: "k-foreColor", overflow: "never" }
+            ];
+
             ToolBar.fn.init.call(this, element, options);
             var handleClick = this._click.bind(this);
 
@@ -36,7 +85,8 @@
         },
         events: ToolBar.fn.events.concat([ "execute" ]),
         options: {
-            name: "SpreadsheetToolBar"
+            name: "SpreadsheetToolBar",
+            resizable: false
         },
         bindTo: function(view) {
             this.view = view;
