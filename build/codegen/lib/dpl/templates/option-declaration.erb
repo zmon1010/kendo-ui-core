@@ -1,6 +1,6 @@
         /// <summary>
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>
-        [DataMember(Name = "<%= key.camelize %>")]
+        [DataMember(Name = "<%= key.camelize %>", EmitDefaultValue = false)]
         public <%=csharp_type%> <%= key %> { get; set; }
 
