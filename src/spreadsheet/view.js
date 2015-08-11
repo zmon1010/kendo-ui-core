@@ -22,6 +22,20 @@
         });
     }
 
+    function cellBefore(table, row) {
+        var cells = table.trs[row].children;
+        return cells[cells.length - 2];
+    }
+
+    function cellAbove(table, row) {
+        var prevRow = table.trs[row-1];
+        var index = table.trs[row].children.length-1;
+
+        if (prevRow && index >= 0) {
+            return prevRow.children[index];
+        }
+    }
+
     function cellBorder(value) {
         var json = JSON.parse(value);
 
@@ -80,11 +94,11 @@
         }
 
         if (cell.borderRight) {
-            style.borderRight = this._border(cell.borderRight);
+            style.borderRight = cellBorder(cell.borderRight);
         }
 
         if (cell.borderBottom) {
-            style.borderBottom = this._border(cell.borderBottom);
+            style.borderBottom = cellBorder(cell.borderBottom);
         }
 
         if (!style.textAlign) {
@@ -104,16 +118,16 @@
         var border, sibling;
 
         if (cell.borderLeft) {
-            sibling = this._cellBefore(table, row);
-            border = this._border(cell.borderLeft);
+            sibling = cellBefore(table, row);
+            border = cellBorder(cell.borderLeft);
             if (sibling && border) {
                 sibling.attr.style.borderRight = border;
             }
         }
 
         if (cell.borderTop) {
-            sibling = this._cellAbove(table, row);
-            border = this._border(cell.borderTop);
+            sibling = cellAbove(table, row);
+            border = cellBorder(cell.borderTop);
             if (sibling && border) {
                 sibling.attr.style.borderBottom = border;
             }
@@ -123,6 +137,8 @@
             var formatter = kendo.spreadsheet.formatting.compile(cell.format);
             td.children[0] = formatter(cell.value);
         }
+
+        return td;
     }
 
     var HtmlTable = kendo.Class.extend({
@@ -190,7 +206,7 @@
         }
     });
 
-    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><div tabindex="0" class="k-spreadsheet-clipboard" contenteditable=true></div><div class="k-spreadsheet-cell-editor"></div>';
+    var VIEW_CONTENTS = '<div class=k-spreadsheet-view><div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><div tabindex="0" class="k-spreadsheet-clipboard" contenteditable=true></div><div class="k-spreadsheet-cell-editor"></div></div>';
 
     function within(value, min, max) {
         return value >= min && value <= max;
@@ -201,16 +217,15 @@
             this.element = element;
             this.options = options;
 
-            var viewElement = this._viewElement();
-
             this._chrome();
 
-            viewElement.append(VIEW_CONTENTS);
+            element.append(VIEW_CONTENTS);
 
-            this.container = viewElement.find(".k-spreadsheet-fixed-container")[0];
-            this.scroller = viewElement.find(".k-spreadsheet-scroller")[0];
-            this.clipboard = viewElement.find(".k-spreadsheet-clipboard");
-            this.editor = viewElement.find(".k-spreadsheet-editor");
+            this.wrapper =      element.find(".k-spreadsheet-view");
+            this.container =    element.find(".k-spreadsheet-fixed-container")[0];
+            this.scroller =     element.find(".k-spreadsheet-scroller")[0];
+            this.clipboard =    element.find(".k-spreadsheet-clipboard");
+            this.editor =       element.find(".k-spreadsheet-editor");
 
             this.viewSize = $(this.scroller.firstChild);
             this._formulaInput(element);
@@ -222,26 +237,15 @@
             var scrollbar = kendo.support.scrollbar();
 
             $(this.container).css({
-                width: viewElement[0].clientWidth - scrollbar,
-                height: viewElement[0].clientHeight - scrollbar
+                width: this.wrapper[0].clientWidth - scrollbar,
+                height: this.wrapper[0].clientHeight - scrollbar
             });
         },
 
         _resize: function() {
             var toolbarHeight = this.toolbar ? this.toolbar.element.outerHeight() : 0;
             var formulaBarHeight = this.formulaBar ? this.formulaBar.element.outerHeight() : 0;
-
-            this._viewElement().height(this.element.height() - toolbarHeight - formulaBarHeight);
-        },
-
-        _viewElement: function() {
-            var view = this.element.children(".k-spreadsheet-view");
-
-            if (!view.length) {
-                view = $("<div class='k-spreadsheet-view' />").appendTo(this.element);
-            }
-
-            return view;
+            this.wrapper.height(this.element.height() - toolbarHeight - formulaBarHeight);
         },
 
         _chrome: function() {
@@ -724,20 +728,6 @@
             });
 
             return table.toDomTree(view.columnOffset, view.rowOffset, "k-spreadsheet-data");
-        },
-
-        _cellBefore: function(table, row) {
-            var cells = table.trs[row].children;
-            return cells[cells.length - 2];
-        },
-
-        _cellAbove: function(table, row) {
-            var prevRow = table.trs[row-1];
-            var index = table.trs[row].children.length-1;
-
-            if (prevRow && index >= 0) {
-                return prevRow.children[index];
-            }
         },
 
         renderMergedCells: function() {
