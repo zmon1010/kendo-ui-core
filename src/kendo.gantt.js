@@ -13,6 +13,7 @@ var __meta__ = {
 (function($, undefined) {
 
     var kendo = window.kendo;
+    var supportsMedia = "matchMedia" in window;
     var browser = kendo.support.browser;
     var mobileOS = kendo.support.mobileOS;
     var Observable = kendo.Observable;
@@ -118,6 +119,7 @@ var __meta__ = {
         buttonDelete: "k-gantt-delete",
         buttonCancel: "k-gantt-cancel",
         buttonSave: "k-gantt-update",
+        buttonToggle: "k-gantt-toggle",
         primary: "k-primary",
         hovered: "k-state-hover",
         selected: "k-state-selected",
@@ -1577,6 +1579,11 @@ var __meta__ = {
 
             this.toolbar.off(NS);
 
+            if (supportsMedia) {
+                this._mediaQuery.removeListener(this._mediaQueryHandler);
+                this._mediaQuery = null;
+            }
+
             $(window).off("resize" + NS, this._resizeHandler);
             $(this.wrapper).off(NS);
 
@@ -1622,12 +1629,33 @@ var __meta__ = {
             var ganttStyles = Gantt.styles;
             var viewsSelector = DOT + ganttStyles.toolbar.views + " > li";
             var pdfSelector = DOT + ganttStyles.toolbar.pdfButton;
+            var toggleSelector = DOT + ganttStyles.buttonToggle;
+            var treelist = $(DOT + ganttStyles.list);
+            var timeline = $(DOT + ganttStyles.timeline);
             var hoveredClassName = ganttStyles.hovered;
             var actions = this.options.toolbar;
             var actionsWrap = $("<div class='" + ganttStyles.toolbar.actions + "'>");
             var toolbar;
             var views;
             var toggleButton;
+            var handler = function(e) {
+                if (e.matches) {
+                    treelist.css({
+                        "display": "none",
+                        "max-width": 0
+                    });
+                } else {
+                    treelist.css({
+                        "display": "inline-block",
+                        "width": "30%",
+                        "max-width": "none"
+                    });
+
+                    timeline.css("display", "inline-block");
+                }
+
+                that._resize();
+            };
 
             if (!isFunction(actions)) {
                 actions = (typeof actions === STRING ? actions : this._actions(actions));
@@ -1656,6 +1684,12 @@ var __meta__ = {
             this.wrapper.prepend(toolbar);
             this.toolbar = toolbar;
 
+            if (supportsMedia) {
+                this._mediaQueryHandler = proxy(handler, this);
+                this._mediaQuery = window.matchMedia("(max-width: 480px)");
+                this._mediaQuery.addListener(this._mediaQueryHandler);
+            }
+
             toolbar
                 .on(CLICK + NS, viewsSelector, function(e) {
                     e.preventDefault();
@@ -1678,6 +1712,30 @@ var __meta__ = {
                 })
                 .on(CLICK + NS, pdfSelector, function(e) {
                     that.saveAsPDF();
+                })
+                .on(CLICK + NS, toggleSelector, function(e) {
+                    if (treelist.is(":visible")) {
+                        treelist.css({
+                            "display": "none",
+                            "width": "0"
+                        });
+                        timeline.css({
+                            "display": "inline-block",
+                            "width": "100%"
+                        });
+                    } else {
+                        timeline.css({
+                            "display": "none",
+                            "width": 0
+                        });
+                        treelist.css({
+                            "display": "inline-block",
+                            "width": "100%",
+                            "max-width": "none"
+                        });
+                    }
+
+                    that._resize();
                 });
 
             this.wrapper
@@ -1773,6 +1831,10 @@ var __meta__ = {
                 .end()
                 .children(timelineSelector)
                 .width(totalWidth - (splitBarWidth + treeListWidth));
+
+            if (totalWidth < (treeListWidth + splitBarWidth)) {
+                element.find(listSelector).width(totalWidth - splitBarWidth);
+            }
         },
 
         _scrollTo: function(value) {

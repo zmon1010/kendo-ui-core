@@ -809,6 +809,7 @@
         var gantt = new Gantt(element);
         var view = gantt.toolbar.find(".k-view-week");
 
+        gantt.toolbar.find(".k-current-view").hide();
         view.trigger("click");
 
         ok(!view.parent().hasClass("k-state-expanded"));

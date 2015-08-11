@@ -9,10 +9,11 @@
 
     module("Gantt initialization", {
         setup: function() {
-            element = $("<div/>");
+            element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
             kendo.destroy(element);
+            element.remove();
         }
     });
 
@@ -369,10 +370,10 @@
         ok(listWrapper.hasClass("k-gantt-layout"));
     });
 
-    test("list's wrapper is created with default width", function () {
+    test("list's wrapper is created with default width", function() {
         var gantt = new Gantt(element);
 
-        equal(gantt.wrapper.find(".k-gantt-treelist").css("width"), gantt.options.listWidth);
+        equal(gantt.wrapper.find(".k-gantt-treelist").get(0).style.width, gantt.options.listWidth);
     });
 
     test("list's wrapper is created with width from options", function () {
