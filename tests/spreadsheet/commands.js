@@ -595,4 +595,36 @@
         equal(sheet._mergedCells.length, 1);
     });
 
+    module("SpreadSheet AdjustDecimals", moduleOptions);
+
+    var adjustDecimalsCommand = $.proxy(command, this, kendo.spreadsheet.AdjustDecimalsCommand);
+
+    test("adds decimal points", function() {
+        sheet.range("A1").format("#.00");
+
+        var command = adjustDecimalsCommand({ decimals: -1 });
+        command.exec();
+
+        equal(sheet.range("A1").format(), "#.0;@");
+    });
+
+    test("removes decimal points", function() {
+        sheet.range("A1").format("#.0");
+
+        var command = adjustDecimalsCommand({ decimals: +1 });
+        command.exec();
+
+        equal(sheet.range("A1").format(), "#.00;@");
+    });
+
+    test("can be undone", function() {
+        sheet.range("A1").format("#.00");
+
+        var command = adjustDecimalsCommand({ decimals: -1 });
+        command.exec();
+        command.undo();
+
+        equal(sheet.range("A1").format(), "#.00");
+    });
+
 })();

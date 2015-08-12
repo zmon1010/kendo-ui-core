@@ -11,7 +11,7 @@
             name: options.name,
             spriteCssClass: "k-icon k-i-" + className,
             attributes: {
-                "data-command": "PropertyChangeCommand",
+                "data-command": options.command || "PropertyChangeCommand",
                 "data-property": options.property,
                 "data-value": options.value
             },
@@ -56,7 +56,9 @@
         ] },
         { type: "buttonGroup", buttons: [
             apply({ text: "Currency", property: "format", value: "$?" }),
-            apply({ text: "Percentage", property: "format", value: "?.00%" })
+            apply({ text: "Percentage", property: "format", value: "?.00%" }),
+            apply({ text: "Decrease-decimal", command: "AdjustDecimalsCommand", value: +1 }),
+            apply({ text: "Increase-decimal", command: "AdjustDecimalsCommand", value: -1 })
         ] },
         { type: "splitButton", spriteCssClass: "k-icon k-i-merge-cells", text: "Merge All", attributes: { "data-command": "MergeCellCommand", "data-value": "all", style: "width: 117px" }, menuButtons: [
             mergeCellButton("k-i-merge-cells", "all", "Merge All"),
@@ -142,21 +144,26 @@
         _click: function(e) {
             var target = e.target;
             var commandType = target.attr("data-command");
-            var value = null;
+            var args = {
+                commandType: commandType
+            };
 
             if (!commandType) {
                 return;
             }
 
-            if (e.checked !== false) {
-                value = target.attr("data-value");
+            if (commandType == "PropertyChangeCommand") {
+                args.value = null;
+                args.property = target.attr("data-property");
+
+                if (e.checked !== false) {
+                    args.value = target.attr("data-value");
+                }
+            } else if (commandType == "AdjustDecimalsCommand") {
+                args.decimals = parseInt(target.attr("data-value"));
             }
 
-            this.trigger("execute", {
-                commandType: commandType,
-                property: target.attr("data-property"),
-                value: value
-            });
+            this.trigger("execute", args);
         },
         events: ToolBar.fn.events.concat([ "execute" ]),
         options: {

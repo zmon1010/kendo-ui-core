@@ -70,6 +70,27 @@
         }
     });
 
+    var AdjustDecimalsCommand = kendo.spreadsheet.AdjustDecimalsCommand = Command.extend({
+        init: function(options) {
+            this._decimals = options.decimals;
+            options.property = "format";
+            Command.fn.init.call(this, options);
+        },
+        exec: function() {
+            var sheet = this.range().sheet();
+            var decimals = this._decimals;
+
+            this.getState();
+
+            sheet.batch(function() {
+                this._forEachCell(function(row, col, cell) {
+                    var format = kendo.spreadsheet.formatting.adjustDecimals(cell.format, decimals);
+                    sheet.range(row, col).format(format);
+                });
+            }.bind(this));
+        }
+    });
+
     var BorderChangeCommand = kendo.spreadsheet.BorderChangeCommand = Command.extend({
         init: function(options) {
             options.property = "border";
