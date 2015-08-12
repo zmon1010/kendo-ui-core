@@ -182,4 +182,56 @@
 
         equal(workbook.getSheets().length, 2);
     });
+
+    test("getSheetByName save sheets indexes to cache", function() {
+        workbook.insertSheet();
+
+        workbook.getSheetByName(workbook.getSheets()[1].name());
+
+        equal(workbook._sheetsSearchCache[workbook.getSheets()[1].name()], 1);
+    });
+
+     test("getSheetIndex save found sheets to cache", function() {
+        workbook.insertSheet();
+
+        workbook.getSheetIndex(workbook.getSheets()[1]);
+
+        equal(workbook._sheetsSearchCache[workbook.getSheets()[1].name()], 1);
+    });
+
+    test("removeSheet restart found sheets cache", function() {
+        workbook.insertSheet();
+
+        workbook.getSheetIndex(workbook.getSheets()[1]);
+
+        workbook.removeSheet(workbook.getSheets()[1]);
+
+        equal(workbook._sheetsSearchCache[workbook.getSheets()[0].name()], undefined);
+    });
+
+    test("renameSheet restart found sheets cache", function() {
+        workbook.insertSheet();
+
+        workbook.getSheetIndex(workbook.getSheets()[1]);
+
+        workbook.renameSheet(workbook.getSheets()[1], "newName");
+
+        equal(workbook._sheetsSearchCache[workbook.getSheets()[0].name()], undefined);
+    });
+
+   test("insertSheet restart found sheets cache", function() {
+        workbook.insertSheet();
+
+        workbook.renameSheet(workbook.getSheets()[1], "newName");
+
+        equal(workbook._sheetsSearchCache[workbook.getSheets()[0].name()], undefined);
+    });
+
+   test("insertSheet restart found sheets cache", function() {
+        workbook.insertSheet();
+
+        workbook.renameSheet(workbook.getSheets()[1], "newName");
+
+        equal(workbook._sheetsSearchCache[workbook.getSheets()[0].name()], undefined);
+    });
 })();

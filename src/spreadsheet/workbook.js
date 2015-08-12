@@ -16,6 +16,8 @@
 
             this._sheets = [];
 
+            this._sheetsSearchCache = {};
+
             this._sheet = this.insertSheet({
                 rows: this.options.rows,
                 columns: this.options.columns,
@@ -100,6 +102,8 @@
                 return;
             }
 
+            this._sheetsSearchCache = {};
+
             sheetName = options.name || getUniqueSheetName();
 
             var sheet = new kendo.spreadsheet.Sheet(
@@ -124,14 +128,20 @@
             return this._sheets.slice();
         },
 
-        //TODO: Implement cached search
         getSheetByName: function (sheetName) {
             var sheets = this._sheets;
-            var idx;
+            var idx = this._sheetsSearchCache[sheetName];
+
+            if (idx >= 0) {
+                return sheets[idx];
+            }
 
             for (idx = 0; idx < sheets.length; idx++) {
                 var sheet = sheets[idx];
-                if (sheet.name() === sheetName) {
+                var name = sheet.name();
+                this._sheetsSearchCache[name] = idx;
+
+                if (name === sheetName) {
                     return sheet;
                 }
             }
@@ -142,13 +152,19 @@
         },
 
         getSheetIndex: function(sheet) {
-            var idx;
             var sheets = this._sheets;
             var sheetName = sheet.name();
+            var idx = this._sheetsSearchCache[sheetName];
 
-            //TODO: Implement cached search
+            if (idx >= 0) {
+                return idx;
+            }
+
             for(idx = 0; idx < sheets.length; idx++) {
-                if (sheets[idx].name() === sheetName) {
+                var name = sheets[idx].name();
+                this._sheetsSearchCache[name] = idx;
+
+                if (name === sheetName) {
                     return idx;
                 }
             }
@@ -171,6 +187,8 @@
                 return;
             }
 
+            this._sheetsSearchCache = {};
+
             sheet.name(newSheetName);
 
             return sheet;
@@ -185,6 +203,8 @@
             if (sheets.length === 1) {
                 return;
             }
+
+            this._sheetsSearchCache = {};
 
             if (index > -1) {
                 sheet.unbind();
