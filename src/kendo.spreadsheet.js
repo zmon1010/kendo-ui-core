@@ -36,6 +36,9 @@
     };
 
     var Widget = kendo.ui.Widget;
+    var Workbook = kendo.spreadsheet.Workbook;
+    var Controller = kendo.spreadsheet.Controller;
+    var View = kendo.spreadsheet.View;
 
     var ALL_REASONS = {
         recalc: true,
@@ -51,15 +54,15 @@
 
             this.element.addClass("k-widget k-spreadsheet");
 
-            this._view = new kendo.spreadsheet.View(this.element, {
+            this._view = new View(this.element, {
                 toolbar: this.options.toolbar
             });
 
-            this._controller = new kendo.spreadsheet.Controller(this._view);
+            this._controller = new Controller(this._view);
 
             this._autoRefresh = true;
 
-            this._workbook = new kendo.spreadsheet.Workbook(this.options);
+            this._workbook = new Workbook(this.options);
 
             this._workbook.bind("change", this._workbookChange.bind(this));
 
@@ -69,7 +72,7 @@
 
             this._activeSheet(this._workbook.activeSheet());
 
-            this.fromJSON(this.options);
+            this.refresh();
         },
 
         _resize: function() {
@@ -159,16 +162,16 @@
         },
 
         fromJSON: function(json) {
-            //TODO: SUPPORT MULTIPLE SHEETS HERE
-
-            //1: destroy workbook.
-            //2: init new workbook and load json
-            //3: set active sheet ? or set first as active
-
-            //move this to workbook
             if (json.sheets) {
-                //for each sheet create new one and load the JSON?
-                this.activeSheet().fromJSON(json.sheets[0]);
+                this._workbook.unbind();
+
+                this._workbook = new Workbook($.extend({}, this.options, { sheets: json.sheets }));
+
+                this._workbook.bind("change", this._workbookChange.bind(this));
+
+                this._view.workbook(this._workbook);
+
+                this.activeSheet(this.activeSheet());
             } else {
                 this.refresh();
             }

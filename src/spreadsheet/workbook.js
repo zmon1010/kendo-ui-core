@@ -31,6 +31,10 @@
             this.undoRedoStack.bind(["undo", "redo"], this._onUndoRedo.bind(this));
 
             this._context = new kendo.spreadsheet.FormulaContext(this);
+  
+            if (this.options.sheets) {
+                this.fromJSON(this.options.sheets);
+            }
         },
 
         events: [
@@ -91,7 +95,7 @@
 
             sheets.splice(toIndex, 0, sheets.splice(fromIndex, 1)[0]);
 
-            this.trigger("change", {sheetSelection: true});
+            this.trigger("change", { sheetSelection: true });
         },
 
         insertSheet: function(options) {
@@ -136,7 +140,7 @@
 
             sheets.splice(insertIndex, 0, sheet);
 
-            this.trigger("change", {sheetSelection: true});
+            this.trigger("change", { sheetSelection: true });
 
             return sheet;
         },
@@ -208,7 +212,7 @@
 
             sheet.name(newSheetName);
 
-            this.trigger("change", {sheetSelection: true});
+            this.trigger("change", { sheetSelection: true });
 
             return sheet;
         },
@@ -237,7 +241,21 @@
                     sheetRefreshCallback();
                 }
 
-                this.trigger("change", {sheetSelection: true});
+                this.trigger("change", { sheetSelection: true });
+            }
+        },
+
+        fromJSON: function(sheets) {
+            var idx;
+
+            for (idx = 0; idx < sheets.length; idx++) {
+                var sheet = this.getSheetByIndex(idx);
+
+                if (!sheet) {
+                    sheet = this.insertSheet();
+                }
+
+                sheet.fromJSON(sheets[idx]);
             }
         },
 

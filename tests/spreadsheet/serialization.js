@@ -418,11 +418,39 @@
     test("fromJSON loads spreadsheet sheets", function() {
         spreadsheet.fromJSON({
             sheets: [
-                singleCell({ background: "red" })
+                singleCell({ background: "red" }),
+                singleCell({ background: "yellow" })
             ]
         });
 
-        equal(sheet.range("A1").background(), "red");
+        equal(spreadsheet.getSheets()[1].range("A1").background(), "yellow");
+    });
+
+    test("fromJSON refresh the view", function() {
+        spreadsheet.fromJSON({
+            sheets: [
+                singleCell({ background: "red" }),
+                singleCell({ background: "yellow" })
+            ]
+        });
+
+        var firstCell = spreadsheet._view.element.find(".k-spreadsheet-data td")[0];
+
+        equal(firstCell.style.backgroundColor, "red");
+    });
+
+    test("fromJSON remove old spreadsheet sheets", function() {
+        spreadsheet.insertSheet();
+
+        spreadsheet.fromJSON({
+            sheets: [
+                singleCell({ background: "yellow" })
+            ]
+        });
+
+        equal(spreadsheet.getSheets().length, 1);
+        equal(spreadsheet.getSheets()[0].range("A1").background(), "yellow");
+        equal(spreadsheet.activeSheet().range("A1").background(), "yellow");
     });
 
     test("fromJSON loads frozenColumns and frozenRows", function() {
