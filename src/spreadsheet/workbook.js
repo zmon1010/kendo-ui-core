@@ -79,6 +79,21 @@
             sheet.triggerChange(ALL_REASONS);
         },
 
+        moveSheetToIndex: function(sheet, toIndex) {
+            var fromIndex = this.getSheetIndex(sheet);
+            var sheets = this._sheets;
+
+            if (fromIndex === -1) {
+                return;
+            }
+
+            this._sheetsSearchCache = {};
+
+            sheets.splice(toIndex, 0, sheets.splice(fromIndex, 1)[0]);
+
+            this.trigger("change", {sheetSelection: true});
+        },
+
         insertSheet: function(options) {
             options = options || {};
             var that = this;
@@ -120,6 +135,8 @@
             sheet.bind("change", this._sheetChange.bind(this));
 
             sheets.splice(insertIndex, 0, sheet);
+
+            this.trigger("change", {sheetSelection: true});
 
             return sheet;
         },
@@ -191,6 +208,8 @@
 
             sheet.name(newSheetName);
 
+            this.trigger("change", {sheetSelection: true});
+
             return sheet;
         },
 
@@ -217,6 +236,8 @@
                 } else if (sheetRefreshCallback) {
                     sheetRefreshCallback();
                 }
+
+                this.trigger("change", {sheetSelection: true});
             }
         }
     });

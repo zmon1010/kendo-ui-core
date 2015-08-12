@@ -1,6 +1,6 @@
 (function() {
-    var workbook;
     var element;
+    var workbook;
 
     var defaults = kendo.ui.Spreadsheet.prototype.options;
 
@@ -191,7 +191,7 @@
         equal(workbook._sheetsSearchCache[workbook.getSheets()[1].name()], 1);
     });
 
-     test("getSheetIndex save found sheets to cache", function() {
+    test("getSheetIndex save found sheets to cache", function() {
         workbook.insertSheet();
 
         workbook.getSheetIndex(workbook.getSheets()[1]);
@@ -219,19 +219,59 @@
         equal(workbook._sheetsSearchCache[workbook.getSheets()[0].name()], undefined);
     });
 
-   test("insertSheet restart found sheets cache", function() {
+    test("moveSheetToIndex moves the sheet correctly", function() {
         workbook.insertSheet();
 
-        workbook.renameSheet(workbook.getSheets()[1], "newName");
+        var sheet = workbook.getSheets()[1];
+        var name = workbook.getSheets()[1].name();
 
-        equal(workbook._sheetsSearchCache[workbook.getSheets()[0].name()], undefined);
+        workbook.moveSheetToIndex(sheet, 0);
+
+        equal(workbook.getSheets()[0].name(), name);
     });
 
-   test("insertSheet restart found sheets cache", function() {
+    test("moveSheetToIndex trigger workbook change with correct reason", function() {
         workbook.insertSheet();
 
-        workbook.renameSheet(workbook.getSheets()[1], "newName");
+        var sheet = workbook.getSheets()[1];
+        var name = workbook.getSheets()[1].name();
 
-        equal(workbook._sheetsSearchCache[workbook.getSheets()[0].name()], undefined);
+        workbook.bind("change", function (reason) {
+            ok(reason.sheetSelection === true);
+        });
+
+        workbook.moveSheetToIndex(sheet, 0);
+    });
+
+    test("insertSheet trigger workbook change with correct reason", function() {
+        workbook.bind("change", function (reason) {
+            ok(reason.sheetSelection === true);
+        });
+
+        workbook.insertSheet();
+    });
+
+    test("renameSheet trigger workbook change with correct reason", function() {
+        workbook.insertSheet();
+
+        workbook.getSheetIndex(workbook.getSheets()[1]);
+
+        workbook.bind("change", function (reason) {
+            ok(reason.sheetSelection === true);
+        });
+
+        workbook.renameSheet(workbook.getSheets()[1], "newName");
+    });
+
+    test("removeSheet trigger workbook change with correct reason", function() {
+        workbook.insertSheet();
+
+        workbook.getSheetIndex(workbook.getSheets()[1]);
+
+         workbook.bind("change", function (reason) {
+            ok(reason.sheetSelection === true);
+        });
+
+        workbook.removeSheet(workbook.getSheets()[1]);
     });
 })();

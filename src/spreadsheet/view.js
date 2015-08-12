@@ -349,7 +349,9 @@
             if(this.toolbar){
                 this.toolbar.refresh();
             }
-                
+
+            //TODO: refresh sheets list on sheetSelection
+
             this.viewSize[0].style.height = sheet._grid.totalHeight() + "px";
             this.viewSize[0].style.width = sheet._grid.totalWidth() + "px";
 

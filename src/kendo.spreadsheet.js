@@ -41,7 +41,8 @@
         recalc: true,
         selection: true,
         activeCell: true,
-        layout: true
+        layout: true,
+        sheetSelection: true
     };
 
     var Spreadsheet = kendo.ui.Widget.extend({
