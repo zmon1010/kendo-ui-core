@@ -221,4 +221,33 @@
         equal(F.type("foo", format), "text");
     });
 
+    test("adjust decimals", function(){
+        var format = F.compile(F.adjustDecimals('#', +2));
+        htmlEqual(format(1), "1.00");
+
+        var format = F.compile(F.adjustDecimals('#', -2));
+        htmlEqual(format(1), "1");
+
+        var format = F.compile(F.adjustDecimals('#,###.00', +2));
+        htmlEqual(format(12345.67891), "12,345.6789");
+
+        var format = F.compile(F.adjustDecimals('#,###.00', -1));
+        htmlEqual(format(12345.67891), "12,345.7");
+
+        var format = F.compile(F.adjustDecimals('#,###.00', -2));
+        htmlEqual(format(12345.67891), "12,346");
+
+        var format = F.compile(F.adjustDecimals('#,###.00 0000', -2));
+        htmlEqual(format(12345.777777777), "12,345.77 78");
+
+        var format = F.compile(F.adjustDecimals('#,###.00 0000', -4));
+        htmlEqual(format(12345.777777777), "12,345.78 ");
+
+        var format = F.compile(F.adjustDecimals('#,###.00 0000', -5));
+        htmlEqual(format(12345.777777777), "12,345.8 ");
+
+        var format = F.compile(F.adjustDecimals('#,###.00 0000', -8));
+        htmlEqual(format(12345.777777777), "12,346 ");
+    });
+
 })();

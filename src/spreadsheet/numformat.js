@@ -21,7 +21,7 @@
 
     function parse(input) {
         input = calc.InputStream(input);
-        var sections = [], haveTimePart = false, haveConditional = false;
+        var sections = [], haveTimePart = false, haveConditional = false, decimalPart;
 
         while (!input.eof()) {
             var sec = readSection();
@@ -119,10 +119,10 @@
             if ((m = input.skip(/^([#0?]+),([#0?]+)/))) {
                 // thousands separator.  seems convenient to treat
                 // this as a single token.
-                return { type: "digit", sep: true, format: m[1] + m[2] };
+                return { type: "digit", sep: true, format: m[1] + m[2], decimal: decimalPart };
             }
             if ((m = input.skip(/^[#0?]+/))) {
-                return { type: "digit", sep: false, format: m[0] };
+                return { type: "digit", sep: false, format: m[0], decimal: decimalPart };
             }
             // XXX: handle this one!
             if ((m = input.skip(/^(e)([+-])/i))) {
@@ -174,6 +174,7 @@
                 // fills cell width with the following character
                 return { type: "fill", value: input.next() };
               case ".":
+                decimalPart = true;
                 return { type: "dec" };
               case "%":
                 return { type: "percent" };
@@ -186,12 +187,126 @@
         }
 
         function readSection() {
+            decimalPart = false;
             return {
                 color : maybeColor(),
                 cond  : maybeCondition(),
                 body  : readFormat()
             };
         }
+    }
+
+    function print(sections) {
+        return sections.map(printSection).join(";");
+
+        function printSection(sec) {
+            var out = "";
+            if (sec.color) {
+                out += "[" + sec.color + "]";
+            }
+            if (sec.cond) {
+                if (!(sec.cond == "text" || sec.cond == "num")) {
+                    out += "[" + sec.cond.op + sec.cond.value + "]";
+                }
+            }
+            out += sec.body.map(printToken).join("");
+            return out;
+        }
+
+        function printToken(tok) {
+            if (tok.type == "digit") {
+                if (tok.sep) {
+                    return tok.format.charAt(0) + "," + tok.format.substr(1);
+                } else {
+                    return tok.format;
+                }
+            }
+            else if (tok.type == "exp") {
+                return tok.ch + tok.sign;
+            }
+            else if (tok.type == "date" || tok.type == "time") {
+                return padLeft("", tok.format, tok.part);
+            }
+            else if (tok.type == "ampm") {
+                return tok.am + "/" + tok.pm;
+            }
+            else if (tok.type == "str") {
+                return JSON.stringify(tok.value);
+            }
+            else if (tok.type == "text") {
+                return "@";
+            }
+            else if (tok.type == "space") {
+                return "_" + tok.value;
+            }
+            else if (tok.type == "fill") {
+                return "*" + tok.value;
+            }
+            else if (tok.type == "dec") {
+                return ".";
+            }
+            else if (tok.type == "percent") {
+                return "%";
+            }
+            else if (tok.type == "comma") {
+                return ",";
+            }
+        }
+    }
+
+    function adjustDecimals(sections, x) {
+        sections.forEach(function(sec) {
+            var diff = x;
+            if (sec.cond == "text") {
+                return;
+            }
+            var body = sec.body, adjusted = false, i = body.length;
+            while (diff !== 0 && --i >= 0) {
+                var tok = body[i];
+                if (tok.type == "digit") {
+                    if (tok.decimal) {
+                        adjusted = true;
+                        if (diff > 0) {
+                            tok.format += padLeft("", diff, "0");
+                        } else if (diff < 0) {
+                            var tmp = tok.format.length;
+                            tok.format = tok.format.substr(0, tmp + diff);
+                            diff += tmp - tok.format.length;
+                        }
+                        if (tok.format.length == 0) {
+                            body.splice(i, 1);
+                            while (--i >= 0) {
+                                tok = body[i];
+                                if (tok.type == "digit" && tok.decimal) {
+                                    ++i;
+                                    break;
+                                }
+                                if (tok.type == "dec") {
+                                    body.splice(i, 1);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (diff > 0) {
+                        break;
+                    }
+                }
+            }
+            if (!adjusted && diff > 0) {
+                // no decimal part was found, insert one after the last digit token.
+                body.splice(
+                    i + 1, 0, {
+                        type    : "dec"
+                    }, {
+                        type    : "digit",
+                        sep     : false,
+                        decimal : true,
+                        format  : padLeft("", diff, "0")
+                    }
+                );
+            }
+        });
     }
 
     function TokenStream(parts) {
@@ -220,7 +335,6 @@
 
     function compileFormatPart(format) {
         var input = TokenStream(format.body);
-        var hasDecimals = false;
         var hasDate = false;
         var hasTime = false;
         var hasAmpm = false;
@@ -260,23 +374,18 @@
         while (!input.eof()) {
             input.ahead(2, checkComma);
             var tok = input.next();
-            if (tok.type == "dec") {
-                hasDecimals = true;
-            }
-            else if (tok.type == "percent") {
+            if (tok.type == "percent") {
                 percentCount++;
             }
             else if (tok.type == "digit") {
-                if (hasDecimals) {
+                if (tok.decimal) {
                     declen += tok.format.length;
                     decFormat.push(tok.format);
-                    tok.decimal = true;
                 } else {
                     intFormat.push(tok.format);
                     if (tok.sep) {
                         separeThousands = true;
                     }
-                    tok.decimal = false;
                 }
             }
             else if (tok.type == "time") {
@@ -591,6 +700,11 @@
         },
         type: function(value, format) {
             return compile(format)(value).__dataType;
+        },
+        adjustDecimals: function(format, diff) {
+            var ast = parse(format);
+            adjustDecimals(ast, diff);
+            return print(ast);
         }
     };
 
