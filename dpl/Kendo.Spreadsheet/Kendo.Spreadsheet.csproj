@@ -144,21 +144,33 @@
     <Compile Include="Provider\JsonExportSettings.cs" />
     <Compile Include="Provider\JsonFormatProvider.cs" />
     <Compile Include="MimeTypes.cs" />
-    <Compile Include="Models\Cell.cs" />
-    <Compile Include="Models\Column.cs" />
     <Compile Include="Models\Workbook.FromDocument.cs" />
     <Compile Include="Models\Workbook.ToDocument.cs" />
     <Compile Include="Models\Workbook.FileFormats.cs" />
-    <Compile Include="Models\Workbook.cs" />
-    <Compile Include="Models\Worksheet.cs" />
-    <Compile Include="Models\Row.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup Label="GeneratedModels">
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
+<Compile Include="Models\BorderStyle.cs" />
+<Compile Include="Models\BorderStyle.Generated.cs" />
+<Compile Include="Models\Workbook.cs" />
+<Compile Include="Models\Workbook.Generated.cs" />
+<Compile Include="Models\Worksheet.cs" />
+<Compile Include="Models\Worksheet.Generated.cs" />
+<Compile Include="Models\Column.cs" />
+<Compile Include="Models\Column.Generated.cs" />
+<Compile Include="Models\Filter.cs" />
+<Compile Include="Models\Filter.Generated.cs" />
+<Compile Include="Models\FilterColumn.cs" />
+<Compile Include="Models\FilterColumn.Generated.cs" />
+<Compile Include="Models\Row.cs" />
+<Compile Include="Models\Row.Generated.cs" />
+<Compile Include="Models\Cell.cs" />
+<Compile Include="Models\Cell.Generated.cs" />
+<Compile Include="Models\Sort.cs" />
+<Compile Include="Models\Sort.Generated.cs" />
+<Compile Include="Models\SortColumn.cs" />
+<Compile Include="Models\SortColumn.Generated.cs" />
+</ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

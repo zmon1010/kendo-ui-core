@@ -4,9 +4,9 @@ using System.Runtime.Serialization;
 namespace Kendo.Spreadsheet
 {
     /// <summary>
-    /// Represents a Column
+    /// Represents a Filter
     /// </summary>
-    public partial class Column
+    public partial class Filter
     {
     }
 }
