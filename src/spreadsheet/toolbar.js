@@ -26,6 +26,16 @@
         return button;
     }
 
+    function mergeCellButton(cssClass, value, text) {
+        return {
+            spriteCssClass: "k-icon " + cssClass,
+            attributes: {
+                "data-command": "MergeCellCommand",
+                "data-value": value
+            },
+            text: text
+        };
+    }
 
     var defaultItems = [
         { type: "formatPopup", text: "Format..." },
@@ -47,6 +57,12 @@
         { type: "buttonGroup", buttons: [
             apply({ text: "Currency", property: "format", value: "$?" }),
             apply({ text: "Percentage", property: "format", value: "?.00%" })
+        ] },
+        { type: "splitButton", spriteCssClass: "k-icon k-i-merge-cells", text: "Merge All", attributes: { "data-command": "MergeCellCommand", "data-value": "all", style: "width: 117px" }, menuButtons: [
+            mergeCellButton("k-i-merge-cells", "all", "Merge All"),
+            mergeCellButton("k-i-merge-cells", "horizontally", "Merge Horizontally"),
+            mergeCellButton("k-i-merge-cells", "vertically", "Merge Vertically"),
+            mergeCellButton("k-i-merge-cells", "unmerge", "Unmerge cells")
         ] },
         { type: "format", property: "format", width: 100, overflow: "never" },
         { type: "borders", overflow: "never" },
