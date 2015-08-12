@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="loader.js"></script>
+        <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+        <link rel="stylesheet/less" href="../styles/web/kendo.common.less">
+        <link rel="stylesheet/less" href="../styles/web/kendo.silver.less">
+        <script>less = { logLevel: 1, env: "development" };</script>
+        <script src="../demos/mvc/content/shared/js/less.js"></script>
+
+        <script>
+          requireSync([
+            "../src/jquery.js",
+            "../src/kendo.dom.js",
+            "../src/kendo.spreadsheet.js",
+            "../src/kendo.pdf.js"
+          ]);
+        </script>
+        <style>
+            body {
+                font: 12px/1.5 Arial,sans-serif;
+            }
+
+            .k-spreadsheet-cell-editor
+            {
+                z-index: 2000;
+            }
+        </style>
+    </head>
+    <body>
+        <button class="k-button" id="delete">Delete</button>
+        <button class="k-button" id="insert">Insert</button>
+        <div id="spreadsheet"></div>
+        <script type="text/javascript" src="spread-datasource.js"></script>
+    </body>
+</html>
