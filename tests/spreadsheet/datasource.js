@@ -156,7 +156,7 @@
         equal(Object.keys(dataItem.toJSON()).length, 2);
     });
 
-    test("changing sheet value of non bound row does not modify the data", function() {
+    test("changing sheet value of non bound row adds new record to the DataSource and set the value", function() {
         var binder = new SheetDataSourceBinder({
             columns: [
                 { field: "foo" }
@@ -174,7 +174,32 @@
         sheet.range("A4").value("baz");
 
         var data = binder.dataSource.data();
-        equal(data.length, 3);
+        equal(data.length, 4);
+        equal(data[3].foo, "baz");
+    });
+
+    test("changing value of multiple non bound rows adds new records to the DataSource and set the value", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.range("A4:A6").value("baz");
+
+        var data = binder.dataSource.data();
+        equal(data.length, 6);
+        equal(data[3].foo, "baz");
+        equal(data[4].foo, "baz");
+        equal(data[5].foo, "baz");
     });
 
     test("changing sheet value does not trigger second update the sheet", 1, function() {
@@ -194,6 +219,103 @@
 
         sheet.bind("change", ok.bind(this));
         sheet.range("A1").value("baz");
+    });
+
+    test("deleting row removes it from the DataSource", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.deleteRow(1);
+
+        var view = binder.dataSource.view();
+        equal(view.length, 2);
+        equal(view[0].foo, "foo1");
+        equal(view[1].foo, "foo3");
+    });
+
+    test("deleting row not present in the DataSource does not change the DataSource", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.deleteRow(4);
+
+        var view = binder.dataSource.view();
+        equal(view.length, 3);
+        equal(view[0].foo, "foo1");
+        equal(view[1].foo, "foo2");
+        equal(view[2].foo, "foo3");
+    });
+
+    test("inserting row adds it to the DataSource", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.insertRow(4);
+
+        var view = binder.dataSource.view();
+        equal(view.length, 4);
+        equal(view[0].foo, "foo1");
+        equal(view[1].foo, "foo2");
+        equal(view[2].foo, "foo3");
+        equal(view[3].foo, null);
+    });
+
+    test("inserting row in between existing rows adds it to the DataSource", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.insertRow(1);
+
+        var view = binder.dataSource.view();
+        equal(view.length, 4);
+        equal(view[0].foo, "foo1");
+        equal(view[1].foo, null);
+        equal(view[2].foo, "foo2");
+        equal(view[3].foo, "foo3");
     });
 
 

@@ -21,13 +21,35 @@
             this.sheet = this.options.sheet;
 
             this._sheetChangeHandler = this._sheetChange.bind(this);
+            this._sheetDeleteRowHandler = this._sheetDeleteRow.bind(this);
+            this._sheetInsertRowHandler = this._sheetInsertRow.bind(this);
 
-            this.sheet.bind("change", this._sheetChangeHandler);
+            this.sheet.bind("change", this._sheetChangeHandler)
+                .bind("deleteRow", this._sheetDeleteRowHandler)
+                .bind("insertRow", this._sheetInsertRowHandler);
+        },
+
+        _sheetInsertRow: function(e) {
+            if (e.index !== undefined) {
+                this.dataSource.insert(e.index, {});
+            }
+        },
+
+        _sheetDeleteRow: function(e) {
+            if (e.index !== undefined) {
+                var dataSource = this.dataSource;
+                var model = dataSource.view()[e.index];
+
+                if (model) {
+                    dataSource.remove(model);
+                }
+            }
         },
 
         _sheetChange: function(e) {
             if (e.recalc && e.ref) {
-                var data = this.dataSource.view();
+                var dataSource = this.dataSource;
+                var data = dataSource.view();
                 var columns = this.columns;
 
                 if (!columns.length && data.length) {
@@ -38,9 +60,16 @@
 
                 e.ref.forEach(function(ref) {
                     ref = ref.toRangeRef();
-                    for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row && ri < data.length; ri++) {
+                    for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row; ri++) {
+                        var record = data[ri];
+
+                        if (!record) {
+                            record = dataSource.insert(ri, {});
+                            data = dataSource.view();
+                        }
+
                         for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col && ci < columns.length; ci++) {
-                            data[ri].set(columns[ci].field, e.value);
+                            record.set(columns[ci].field, e.value);
                         }
                     }
                 });
@@ -100,7 +129,10 @@
 
         destroy: function() {
             this.dataSource.unbind("change", this._changeHandler);
-            this.sheet.unbind("change", this._sheetChangeHandler);
+
+            this.sheet.unbind("change", this._sheetChangeHandler)
+                .unbind("deleteRow", this._sheetDeleteRowHandler)
+                .unbind("insertRow", this._sheetInsertRowHandler);
         },
 
         options: {
