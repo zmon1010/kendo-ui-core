@@ -49,15 +49,17 @@
     }
 
     test("expands tools to items", function() {
-        createWithTools([ "bold", "italic", "underline" ]);
+        createWithTools([
+            [ "bold", "italic", "underline" ]
+        ]);
 
         equal(element.find(".k-toolbar .k-button").length, 3);
     });
 
     test("creates multiple button groups", function() {
         createWithTools([
-            "bold", "italic", "underline",
-            "justifyLeft", "justifyCenter", "justifyRight"
+            [ "bold", "italic", "underline" ],
+            [ "justifyLeft", "justifyCenter", "justifyRight" ]
         ]);
 
         equal(element.find(".k-toolbar .k-button").length, 6);

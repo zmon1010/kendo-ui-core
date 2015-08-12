@@ -90,11 +90,6 @@
             });
         },
         _expandTools: function(tools) {
-            var groups = {
-                "formatting": [ "bold", "italic", "underline" ],
-                "justify": [ "justifyLeft", "justifyCenter", "justifyRight" ]
-            };
-
             var messages = {
                 bold: "Bold",
                 italic: "Italic",
@@ -105,40 +100,29 @@
             };
 
             function expandTool(tool) {
+                var properties = {
+                    justifyLeft: "textAlign",
+                    justifyRight: "textAlign",
+                    justifyCenter: "textAlign"
+                };
+
                 return toggle({
                     name: tool,
                     text: messages[tool],
-                    property: tool,
+                    property: properties[tool] || tool,
                     value: true
                 });
             }
 
-            function groupFor(name) {
-                for (var groupName in groups) {
-                    if (groups.hasOwnProperty(groupName)) {
-                        if (groups[groupName].indexOf(name) >= 0) {
-                            return groupName;
-                        }
-                    }
+            return tools.reduce(function(tools, tool) {
+                if ($.isArray(tool)) {
+                    tools.push({ type: "buttonGroup", buttons: tool.map(expandTool) });
+                } else {
+                    tools.push(expandTool(tool));
                 }
 
-                return "";
-            }
-
-            return tools.map(expandTool).reduce(function(state, tool) {
-                var tools = state.tools;
-                var group = groupFor(tool.name);
-                var lastTool = tools[tools.length-1];
-
-                if (group != state.lastGroup) {
-                    state.lastGroup = group;
-                    tools.push({ type: "buttonGroup", buttons: [ tool ] });
-                } else if (lastTool && lastTool.buttons) {
-                    lastTool.buttons.push(tool);
-                }
-
-                return state;
-            }, { lastGroup: "", tools: [] }).tools;
+                return tools;
+            }, []);
         },
         _click: function(e) {
             var target = e.target;

@@ -165,7 +165,6 @@
         },
 
         onMouseDown: function(event, action) {
-            var view = this.view;
             var object = this.objectAt(event);
 
             this.formulaInput.deactivate();
