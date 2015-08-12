@@ -38,7 +38,6 @@
     }
 
     var defaultItems = [
-        { type: "formatPopup", text: "Format..." },
         { type: "buttonGroup", buttons: [
             toggle({ text: "Bold", property: "bold", value: true }),
             toggle({ text: "Italic", property: "italic", value: true }),
@@ -70,8 +69,8 @@
         { type: "borders", overflow: "never" },
         { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
         { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
-        { type: "colorPicker", property: "background", toolIcon: "k-backColor", overflow: "never" },
-        { type: "colorPicker", property: "color", toolIcon: "k-foreColor", overflow: "never" }
+        { type: "colorPicker", property: "background", toolIcon: "k-icon k-i-background", overflow: "never" },
+        { type: "colorPicker", property: "color", toolIcon: "k-icon k-i-text", overflow: "never" }
     ];
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -160,7 +159,7 @@
                     args.value = target.attr("data-value");
                 }
             } else if (commandType == "AdjustDecimalsCommand") {
-                args.decimals = parseInt(target.attr("data-value"));
+                args.decimals = parseInt(target.attr("data-value"), 10);
             }
 
             this.trigger("execute", args);
