@@ -145,7 +145,6 @@
         command.exec();
     });
 
-/*
     test("allBorders command can be undone", function() {
         var oldState = { size: "1px", color: "#0F0" };
         sheet.range("B2:C2").borderTop(oldState);
@@ -159,10 +158,11 @@
         equal(getBorders(sheet.range("A2")), "");
         equal(getBorders(sheet.range("B2")), "top");
         equal(getBorders(sheet.range("C2")), "top");
+
         equal(sheet.range("B2").borderTop().color, oldState.color);
         equal(sheet.range("C2").borderTop().color, oldState.color);
     });
-*/
+
     test("noBorders command clears all borders", function() {
         var command = new BorderChangeCommand({ border: "allBorders", style: { size: "1px", color: "#F00" } });
         var command = new BorderChangeCommand({ border: "noBorders", style: {} });

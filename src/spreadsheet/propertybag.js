@@ -9,7 +9,7 @@
         },
 
         get: function(index) {
-            return this.list.value(index, index);
+            return this.parse(this.list.value(index, index));
         },
 
         set: function(start, end, value) {
@@ -19,6 +19,10 @@
             }
 
             this.list.value(start, end, value);
+        },
+
+        parse: function(value) {
+            return value;
         },
 
         copy: function(start, end, dst) {
@@ -31,12 +35,12 @@
     });
 
     var JsonProperty = Property.extend({
-        get: function(index) {
-            return JSON.parse(this.list.value(index, index));
-        },
-
         set: function(start, end, value) {
             this.list.value(start, end, JSON.stringify(value));
+        },
+
+        parse: function(value) {
+            return JSON.parse(value);
         }
     });
 
@@ -150,7 +154,9 @@
                 return {
                     name: spec.name,
                     value: spec.value,
-                    at: iterator.at.bind(iterator)
+                    at: function (index) {
+                        return spec.property.fn.parse(iterator.at(index));
+                    }
                 };
             }, this);
         },

@@ -87,7 +87,11 @@
                     var sheet = this._range.sheet();
                     var value = this._state[row + "," + col];
 
-                    sheet.range(row, col).borderRight(value.borderRight).borderBottom(value.borderBottom);
+                    sheet.range(row, col)
+                        .borderTop(value.borderTop)
+                        .borderLeft(value.borderLeft)
+                        .borderRight(value.borderRight)
+                        .borderBottom(value.borderBottom);
                 });
             }.bind(this), {});
         },
@@ -97,6 +101,8 @@
 
             this._forEachCell(function(row, col, cell) {
                 this._state[row + "," + col] = {
+                    borderTop: cell.borderTop || null,
+                    borderLeft: cell.borderLeft || null,
                     borderRight: cell.borderRight || null,
                     borderBottom: cell.borderBottom || null
                 };

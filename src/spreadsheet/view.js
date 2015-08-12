@@ -37,16 +37,10 @@
     }
 
     function cellBorder(value) {
-        var json = JSON.parse(value);
-
-        if (json === null) {
-            return undefined;
-        }
-
         return [
             "solid",
-            json && json.size || "1px",
-            json && json.color || "#000"
+            value.size || "1px",
+            value.color || "#000"
         ].join(" ");
     }
 
