@@ -1,7 +1,17 @@
+require "erb"
+
 module CodeGen
+
+    ITEM_GROUP = ERB.new(%{<ItemGroup Label="GeneratedModels">
+    % @@files.each { |filename|
+        <Compile Include="<%=filename%>" Exclude="@(Compile)" />
+    % }
+  </ItemGroup>})
 
     class DPLGenerator
         include Rake::DSL
+
+        @@files = []
 
         def initialize(path)
             @path = path
@@ -18,6 +28,8 @@ module CodeGen
         def write_component(component)
             filename = "#{@path}/#{component.csharp_class}.cs"
 
+            @@files.push(filename)
+
             unless File.exists?(filename)
                 write_file(filename, component.to_settings())
             end
@@ -25,6 +37,8 @@ module CodeGen
 
         def write_component_settings(component)
             filename = "#{@path}/#{component.csharp_class}.Generated.cs"
+
+            @@files.push(filename)
 
             write_file(filename, component.to_settings_generated())
         end
@@ -45,12 +59,18 @@ module CodeGen
 
             # write *Settings.cs file
             filename = "#{@path}/#{option.csharp_class}.cs"
+
+            @@files.push(filename)
+
             unless File.exists?(filename)
                 write_file(filename, option.to_settings)
             end
 
             # write *Settings.Generated.cs file
             filename = "#{@path}/#{option.csharp_class}.Generated.cs"
+
+            @@files.push(filename)
+
             write_file(filename, option.to_settings_generated)
 
             option.composite_options.each do |o|
@@ -66,6 +86,30 @@ module CodeGen
             $stderr.puts("Updating #{filename}") if VERBOSE
 
             ensure_path(filename)
+
+            File.write(filename, content.dos)
+        end
+
+        def self.register_files(filename)
+            return unless File.exists?(filename)
+
+            content = File.read(filename)
+
+            compile = ''
+
+            @@files.each do |filename|
+                filename = filename.split('/').last
+
+                item = "<Compile Include=\"Models\\#{filename}\" />\n"
+
+                p item
+
+                compile << item unless content =~ %r{#{Regexp.escape(item)}}
+            end
+
+            return if compile.empty?
+
+            content = content.sub(/<ItemGroup Label="GeneratedModels">(.|\n)*<\/ItemGroup>/, "<ItemGroup Label=\"GeneratedModels\">\n#{compile}</ItemGroup>")
 
             File.write(filename, content.dos)
         end

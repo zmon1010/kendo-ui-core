@@ -205,13 +205,15 @@ namespace :generate do
 
         components.each do |component|
 
-            generator = CodeGen::DPLGenerator.new('build/codegen/lib/dpl/dumps')
+            generator = CodeGen::DPLGenerator.new('dpl/Kendo.Spreadsheet/Models')
 
             import_metadata(component, "lib/dpl/config/")
 
             generator.component(component)
+
         end
 
+        CodeGen::DPLGenerator::register_files('dpl/Kendo.Spreadsheet/Kendo.Spreadsheet.csproj')
     end
 
     namespace :mvc_6 do
