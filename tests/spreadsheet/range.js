@@ -594,4 +594,63 @@
         ok(!range.borderRight());
     });
 
+    test("get state returns an object that may be restored", function() {
+        range.borderLeft({ color: "#f00" });
+
+        var state = range.getState("border");
+
+        range.borderLeft({ color: "#0f0" });
+        range.setState(state);
+
+        equal(range.borderLeft().color, "#f00");
+    });
+
+    test("get state returns an object that may be restored", function() {
+        range.background("#f00");
+
+        var state = range.getState("background");
+
+        range.background("#0f0");
+        range.setState(state);
+
+        equal(range.background(), "#f00");
+    });
+
+    test("get state returns an object that may be restored", function() {
+        range.background("#f00").value(2);
+
+        var state = range.getState();
+
+        range.background("#0f0").value(6);
+        range.setState(state);
+
+        equal(range.background(), "#f00");
+        equal(range.value(), 2);
+    });
+
+    test("get state preserves mergedCells", function() {
+        sheet.range("A2:C2").merge();
+        range = sheet.range("A1:C3");
+
+        var state = range.getState();
+
+        sheet.range("A2:C2").unmerge();
+        range.setState(state);
+
+        equal(sheet._mergedCells.length, 1);
+    });
+
+    test("get state clears mergedCells", function() {
+        range = sheet.range("A1:C3");
+        sheet.range("B2").value(2);
+
+        var state = range.getState();
+        sheet.range("A2:C2").merge();
+
+        range.setState(state);
+
+        equal(sheet._mergedCells.length, 0);
+        equal(sheet.range("B2").value(), 2);
+    });
+
 })();

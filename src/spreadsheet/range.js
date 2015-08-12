@@ -218,19 +218,6 @@
             return this;
         },
 
-        intersectingMerged: function() {
-            var sheet = this._sheet;
-            var mergedCells = [];
-
-            sheet._mergedCells.forEach(function(ref) {
-                if (ref.intersects(this._ref)) {
-                    mergedCells.push(ref.toString());
-                }
-            }.bind(this));
-
-            return mergedCells;
-        },
-
         unmerge: function() {
             var mergedCells = this._sheet._mergedCells;
 
@@ -422,6 +409,85 @@
 
         topLeft: function() {
             return this._ref.toRangeRef().topLeft;
+        },
+
+        intersectingMerged: function() {
+            var sheet = this._sheet;
+            var mergedCells = [];
+
+            sheet._mergedCells.forEach(function(ref) {
+                if (ref.intersects(this._ref)) {
+                    mergedCells.push(ref.toString());
+                }
+            }.bind(this));
+
+            return mergedCells;
+        },
+
+        getState: function(propertyName) {
+            var state = {};
+            var properties = [propertyName];
+
+            if (!propertyName) {
+                properties = kendo.spreadsheet.ALL_PROPERTIES;
+                state.mergedCells = this.intersectingMerged();
+            }
+
+            if (propertyName === "border") {
+                properties = ["borderLeft", "borderTop", "borderRight", "borderBottom"];
+            }
+
+            this._forEachCell(function(row, col, cell) {
+                var cellState = state[row + "," + col] = {};
+
+                properties.forEach(function(property) {
+                    if (property === "_editableValue") {
+                        property = "value";
+                    }
+                    if (cell.formula) {
+                        if (property === "value") {
+                            return;
+                        }
+                    } else {
+                        if (property === "formula") {
+                            return;
+                        }
+                    }
+
+                    cellState[property] = cell[property] || null;
+                });
+            });
+
+            return state;
+        },
+
+        setState: function(state) {
+            this._sheet.batch(function() {
+                if (state.mergedCells) {
+                    this.unmerge();
+                }
+
+                this._forEachCell(function(row, col, cell) {
+                    var cellState = state[row + "," + col];
+                    var range = this._sheet.range(row, col);
+
+                    for (var property in cellState) {
+                        range[property](cellState[property]);
+                    }
+                });
+
+                if (state.mergedCells) {
+                    state.mergedCells.forEach(function(merged) {
+                        this._sheet.range(merged).merge();
+                    }, this);
+                }
+            }.bind(this), {});
+        },
+
+        _forEachCell: function(callback) {
+            this._ref.forEach(function(ref) {
+                this._sheet.forEach(ref.toRangeRef(), callback.bind(this));
+            }.bind(this));
         }
     });
 

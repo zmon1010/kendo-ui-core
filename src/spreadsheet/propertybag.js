@@ -187,6 +187,13 @@
         }
     });
 
+    kendo.spreadsheet.ALL_PROPERTIES = [];
+    kendo.spreadsheet.PropertyBag.prototype.specs.forEach(function(spec) {
+        if (spec.name !== "compiledFormula") {
+            kendo.spreadsheet.ALL_PROPERTIES.push(spec.name);
+        }
+    });
+
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
