@@ -79,13 +79,18 @@
         exec: function() {
             var sheet = this.range().sheet();
             var decimals = this._decimals;
+            var formatting = kendo.spreadsheet.formatting;
 
             this.getState();
 
             sheet.batch(function() {
                 this._forEachCell(function(row, col, cell) {
-                    var format = kendo.spreadsheet.formatting.adjustDecimals(cell.format, decimals);
-                    sheet.range(row, col).format(format);
+                    var format = cell.format;
+
+                    if (format || decimals > 0) {
+                        format = formatting.adjustDecimals(format || "#", decimals);
+                        sheet.range(row, col).format(format);
+                    }
                 });
             }.bind(this));
         }

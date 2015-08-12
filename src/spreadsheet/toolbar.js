@@ -57,8 +57,8 @@
         { type: "buttonGroup", buttons: [
             apply({ text: "Currency", property: "format", value: "$?" }),
             apply({ text: "Percentage", property: "format", value: "?.00%" }),
-            apply({ text: "Decrease-decimal", command: "AdjustDecimalsCommand", value: +1 }),
-            apply({ text: "Increase-decimal", command: "AdjustDecimalsCommand", value: -1 })
+            apply({ text: "Decrease-decimal", command: "AdjustDecimalsCommand", value: -1 }),
+            apply({ text: "Increase-decimal", command: "AdjustDecimalsCommand", value: +1 })
         ] },
         { type: "splitButton", spriteCssClass: "k-icon k-i-merge-cells", text: "Merge All", attributes: { "data-command": "MergeCellCommand", "data-value": "all", style: "width: 117px" }, menuButtons: [
             mergeCellButton("k-i-merge-cells", "all", "Merge All"),
