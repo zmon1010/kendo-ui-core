@@ -137,6 +137,13 @@
         } else {
             @RenderBody()
         }
+
+        @if (ViewBag.Description != null) {
+            <div class="box wide">
+                <h4>Description</h4>
+                @Html.Raw(ViewBag.Description)
+            </div>
+        }
         <script>
             $(function(){ $("#exampleWrap").css("visibility", ""); });
         </script>
