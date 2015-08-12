@@ -29,7 +29,6 @@ namespace Kendo.Controllers
             ViewBag.Mobile = true;
             ViewBag.MobileAngular = false;
             ViewBag.DisableInMobile = false;
-            ViewBag.ShowDescription = false;
 
             var source = ViewResult(path);
 

@@ -1619,6 +1619,10 @@
         "meta": {
             "kendo-ui": "This demo for Kendo UI jQuery-based Grid component shows how you can make your static HTML tables and raw data much more interactive to match your modern web app.",
             "aspnet-mvc": "In this demo for Kendo UI jQuery-powered Grid in ASP.NET MVC you will see all basic functionalities of the extension."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI grid is a powerful widget which allows you to visualize and edit data via its table representation. It provides a variety of options about how to present and perform operations over the underlying data, such as paging, sorting, filtering, grouping, editing, etc. To feed the grid with data, you can supply either local or remote data via the Kendo UI DataSource component, used as a mediator.</p><br/><p>There are two possible ways to instantiate a Kendo UI grid:</p><ol><li>From an empty div element. In this case all the Grid settings are provided in the initialization script statement.</li><li>From an existing HTML table element. In this case some of the Grid settings can be inferred from the table structure and elements HTML attributes.</li></ol><br/><p>In both cases the grid is registered as a jQuery plugin</p><br/><p>In this demo you can see how you can easily configure the grid to display data and perform sorting, paging and grouping operations via its built-in settings. </p><br/><p>Additional information about how to use the Kendo UI grid widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/web/grid/introduction\" target=\"_blank\">this section</a> of the product documentation.</p>\n",
+            "aspnet-mvc": "<p>The UI for ASP.NET MVC grid is a powerful widget which allows you to visualize and edit data via its table representation. It provides a variety of options about how to present and perform operations over the underlying data, such as paging, sorting, filtering, grouping, editing, etc. To feed the grid with data, you can supply either local or remote data</p><br/><p>Additional information about how to use the UI for ASP.NET MVC grid widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/grid/overview\" target=\"_blank\">this section</a> of the product documentation.</p>\n"
         }
       },
       {
@@ -1646,6 +1650,9 @@
         "meta": {
             "kendo-ui": "This sample demonstrates how we can bind Kendo UI Grid widget to local JSON Data by using Kendo UI DataSource component.",
             "aspnet-mvc": "This sample demonstrates how we can bind the Telerik ASP.NET MVC Grid control to local JSON Data by using Kendo UI DataSource component."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI grid suppports data binding and you can command the widget to display data either from local or remote data storage. For local data binding you simply need to supply an array of JavaScript objects/JSON via the dataSource data property of the grid, or utilize the Kendo UI DataSource as a mediator between the grid and the underlying data. </p> <br /> <p>In this example the grid fetches its data from a JavaScript file named products, registered via a script tag in the head section of the page. Note that in addition to the visualization, the grid provides built-in support for operations over data such as sorting, filtering and paging. </p> <br /> <p> There are two possible ways to instantiate a Kendo UI grid: </p> <ol> <li>From an empty div element. In this case all the Grid settings are provided in the initialization script statement.</li> <li>From an existing HTML table element. Thus some of the Grid settings can be inferred from the table structure and elements HTML attributes.</li> </ol> <br /> <p>In both cases the grid is registered as a standard jQuery plugin.</p> <br /><p>Additional information about how to utilize the data binding feature of the Kendo UI grid can be found in <a href=\"http://docs.telerik.com/kendo-ui/web/grid/walkthrough#data-binding---local\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -1658,6 +1665,9 @@
         "meta": {
             "kendo-ui": "This example and demo source code illustrate how KendoGrid component can be bound to remote data by using the DataSource component.",
             "aspnet-mvc": "This example and demo source code illustrate how the Telerik ASP.NET MVC Grid component can be bound to remote data using the DataSource component."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI grid suppports data binding and you can command the widget to display data either from local or remote data storage. For remote data binding you need to specify a remote endpoint or web service returning data in JSON/JSONP, OData or XML format, and utilize the Kendo UI DataSource as a mediator between the grid and the underlying data. To make the connection to the remove endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <br/> <p>In this example the grid fetches its data from a remote endpoint using a web service (Northwind.svc) assigned via the dataSource -> transport -> read attribute. It also defines the schema model of the response from the web service, as well as the type of the service (odata) via the dataSource type property. Note that in addition to the visualization, the grid provides built-in support for operations over data such as sorting, filtering and paging. </p> <br/> <p> There are two possible ways to instantiate a Kendo UI grid: </p> <ol> <li>From an empty div element. In this case all the Grid settings are provided in the initialization script statement.</li> <li>From an existing HTML table element. Thus some of the Grid settings can be inferred from the table structure and elements HTML attributes.</li> </ol> <br/> <p>In both cases the grid is registered as a standard jQuery plugin.</p> <br/> <p>Additional information about how to utilize the data binding feature of the Kendo UI grid can be found in <a href=\"http://docs.telerik.com/kendo-ui/web/grid/walkthrough#data-binding--remote\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -6664,6 +6674,9 @@
         "meta": {
             "kendo-ui": "This demo illustrates how Kendo UI Area Charts component can be added to your web page in order to visualize quantitive data. Learn how to define your area chart.",
             "aspnet-mvc": "This example shows how to use Telerik ASP.NET MVC Area Charts extension to visualize filled areas on a diagram. "
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -6786,6 +6799,9 @@
         "meta": {
             "kendo-ui": "This sample demonstrates that Kendo UI HTML5 chart can use existing objects as data points.",
             "aspnet-mvc": "This sample demonstrates how ASP.NET MVC Area Chart can use existing objects as data points."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -6871,6 +6887,9 @@
         "meta": {
             "kendo-ui": "This example illustrates the basic usage of Kendo UI Bar Chart which enables the user to show customized bar charts.",
             "aspnet-mvc": "In this demo you will see in action the ASP.NET MVC Bar Chart HTMLHelper extension for Kendo UI Bar Charts widget."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -7054,6 +7073,9 @@
         "meta": {
             "kendo-ui": "This demo shows how the local data-binding is supported in Kendo UI Bar Charts. Use the demo source code to try the feature of the widget.",
             "aspnet-mvc": "This demo shows how the local data-binding is supported in ASP.NET MVC Bar Charts. Use the demo source code to try the feature of the component."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -7225,6 +7247,9 @@
         "meta": {
             "kendo-ui": "In this demo you will see in action the HTML5 Box Plot Chart control for Kendo UI.",
             "aspnet-mvc": "In this demo you will see in action the ASP.NET MVC Box Plot Chart HTMLHelper extension for Kendo UI Box Plot Charts component."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
 
@@ -7251,6 +7276,9 @@
         "meta": {
             "kendo-ui": "This demo shows how the local data-binding is supported in Kendo UI HTML5 Box Plot Charts. Use the demo source code to try the feature of the control.",
             "aspnet-mvc": "This demo shows how the local data-binding is supported in ASP.NET MVC Box Plot Charts. Use the demo source code to try the feature of the control."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -7324,6 +7352,9 @@
         "meta": {
             "kendo-ui": "This example demonstrates the basic usage and core features of Kendo UI jQuery & HTML5 Bubble Charts widget.",
             "aspnet-mvc": "This example demonstrates the basic usage and core features of the ASP.NET MVC Bubble Chart control."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -7349,6 +7380,9 @@
         "meta": {
             "kendo-ui": "This demo illustrates the powerful Binding to local data feature, supported in Kendo UI Bubble Chart widget.",
             "aspnet-mvc": "This demo illustrates the powerful Binding to local data feature, supported in ASP.NET MVC Bubble Chart component."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -7435,6 +7469,9 @@
         "meta": {
             "kendo-ui": "Kendo UI jQuery-based Bullet Charts provide a rich data visualization. In this basic usage demo we will create a horizontal Kendo UI Bullet Chart.",
             "aspnet-mvc": "This sample demonstrates how to use the ASP.NET MVC helper for Kendo UI bullet graph, powered by HTML5 and jQuery."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -7447,6 +7484,9 @@
         "meta": {
             "kendo-ui": "In this example we will bind local data to the Kendo UI Bullet Chart in order to show the behavior of the component.",
             "aspnet-mvc": "In this example we will bind local data to the ASP.NET MVC Bullet Chart in order to show the behavior of the component."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -7625,6 +7665,9 @@
         "meta": {
             "kendo-ui": "This demo shows the core functionality of Kendo UI jQuery Donut Charts which visualize the breakdown of data into its elements.",
             "aspnet-mvc": "In this demo we show how Telerik jQuery-powered Donut charts can be implemented in ASP.NET MVC."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -7662,6 +7705,9 @@
         "meta": {
             "kendo-ui": "This demo illustrates how Kendo UI Donut Charts widget can be bound to local data to deliver high-performance business application.",
             "aspnet-mvc": "This example demonstrates the binding to local data feature in Telerik ASP.NET MVC Donut charts."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -7736,6 +7782,9 @@
             "kendo-ui": "This demo shows the core functionality of Kendo UI jQuery Funnel Charts which visualize the breakdown of data into its elements.",
             "aspnet-mvc": "This demo shows the core functionality of ASP.NET MVC Funnel Charts which visualize the breakdown of data into its elements."
         },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
+        },
         "packages": [
           "!offline"
         ]
@@ -7778,6 +7827,9 @@
         "meta": {
             "kendo-ui": "This demo illustrates how Kendo UI funnel Charts widget can be bound to local data to deliver high-performance business application.",
             "aspnet-mvc": "This demo illustrates how ASP.NET MVC funnel Chart control can be bound to local data to deliver a high-performance business application."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -8078,6 +8130,9 @@
         "meta": {
             "kendo-ui": "This example illustrates the features and core functionality of Kendo UI Line Charts component. HTML5 line graphs show trends over a specific time period.",
             "aspnet-mvc": "This demo illustrates how you can use Telerik ASP.NET MVC Line Charts helper to show trends for several series on the same diagram & visualize them as lines."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -8224,6 +8279,9 @@
         "meta": {
             "kendo-ui": "This example illustrates how Kendo UI Line Charts use existing objects as data points.",
             "aspnet-mvc": "This example illustrates how ASP.NET MVC Line Charts use existing objects as data points."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -8596,6 +8654,9 @@
         "meta": {
             "kendo-ui": "This demo shows how Kendo UI Pie Charts is easily applied to web apps. The control draws data series in slices in order to create rich HTML5 visualizations.",
             "aspnet-mvc": "This example illustrates core functionality of Telerik pie charts extension for ASP.NET MVC."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -8633,6 +8694,9 @@
         "meta": {
             "kendo-ui": "This demo shows how Kendo UI Pie Charts use existing objects as data points. The example illustrates binding to local data feature of the widget.",
             "aspnet-mvc": "This demo shows how ASP.NET MVC Pie Charts use existing objects as data points. The example illustrates binding to local data feature of the control."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -8706,6 +8770,9 @@
         "meta": {
             "kendo-ui": "This demo illustrates how Kendo UI Polar Charts component can be added to your web page in order to visualize quantitive data. Learn how to define your polar chart.",
             "aspnet-mvc": "This demo illustrates how ASP.NET MVC Polar Charts control can be added to your web page in order to visualize quantitive data. Learn how to define your polar chart."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -8767,6 +8834,9 @@
         "meta": {
             "kendo-ui": "This sample demonstrates that Kendo UI HTML5 chart can use existing objects as data points.",
             "aspnet-mvc": "This sample demonstrates how ASP.NET MVC Polar Chart can use existing objects as data points."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -8925,6 +8995,9 @@
         "meta": {
             "kendo-ui": "This demo illustrates how Kendo UI Radar Charts component can be added to your web page in order to visualize quantitive data. Learn how to define your radar chart.",
             "aspnet-mvc": "This demo illustrates how ASP.NET MVC Radar Charts control can be added to your web page in order to visualize quantitive data. Learn how to define your radar chart."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -8987,6 +9060,9 @@
         "meta": {
             "kendo-ui": "This sample demonstrates that Kendo UI HTML5 chart can use existing objects as data points.",
             "aspnet-mvc": "This sample demonstrates how ASP.NET MVC Radar chart can use existing objects as data points."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -9069,7 +9145,10 @@
             },
             "meta": {
                 "kendo-ui": "This example illustrates the basic usage of Kendo UI Range Bar Chart which enables the user to show customized range bar charts."
-            }
+            },
+            "description": {
+                "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
+        }
         },
         {
             "text": "Binding to local data",
@@ -9079,7 +9158,10 @@
             },
             "meta": {
                 "kendo-ui": "This demo shows how the local data-binding is supported in Kendo UI Range Bar Charts. Use the demo source code to try the feature of the widget."
-            }
+            },
+            "description": {
+                "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
+        }
         },
         {
             "text": "Binding to remote data",
@@ -9132,6 +9214,9 @@
         "meta": {
             "kendo-ui": "This example shows the most important features and functionality of Kendo UI Scatter Charts.",
             "aspnet-mvc": "This example shows the most important features and functionality of ASP.NET MVC Scatter Charts."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -9206,6 +9291,9 @@
         "meta": {
             "kendo-ui": "This demo shows how Kendo UI Scatter Charts can use local objects as data points in the HTML5 visualization.",
             "aspnet-mvc": "This demo shows how ASP.NET MVC Scatter Charts can use local objects as data points in the HTML5 visualization."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
         }
       },
       {
@@ -9569,7 +9657,10 @@
             },
             "meta": {
                 "kendo-ui": "This example illustrates the basic usage of Kendo UI Waterfall Chart."
-            }
+            },
+            "description": {
+                "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>"
+        }
         },
         {
             "text": "Horizontal Waterfall",
@@ -9589,7 +9680,10 @@
             },
             "meta": {
                 "kendo-ui": "This demo shows how the local data-binding is supported in Kendo UI Waterfall Charts. Use the demo source code to try the feature of the widget."
-            }
+            },
+            "description": {
+                "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
+        }
         },
         {
             "text": "Binding to remote data",

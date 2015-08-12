@@ -13,7 +13,7 @@
 }
 
 /*Roboto Font used in Material Theme preview*/
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300,300italic);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300,300italic);
 
 [class^="k-uni"],
 .tc-activator:after,
@@ -140,7 +140,7 @@ a:hover
 }
 
 .kendo-nav,
-#example,
+#exampleWrap,
 #exampleTitle
 {
     font-family: Arial, Helvetica, sans-serif;
@@ -811,8 +811,12 @@ div.submenu-box ol {
 #example
 {
     position:relative;
-    font-size: 14px;
     padding-top: 1px;
+}
+
+#exampleWrap
+{
+    font-size: 14px;
 }
 
 *+html #example
@@ -2698,7 +2702,7 @@ h5 {
 }
 
 .demo-section:not(.wide):not(.k-content),
-#example .box:not(.wide) {
+#exampleWrap .box:not(.wide) {
     max-width: 400px;
 }
 
@@ -2710,9 +2714,10 @@ h5 {
     height: 0;
 }
 
-#example .box {
+#exampleWrap .box {
     margin: 4.5em auto;
 }
+
 
 .box.k-header,
 .demo-section.k-header {
@@ -3121,7 +3126,7 @@ html.k-materialblack .demo-section.k-content {
     border-width: 1px 0 0;
   }
   
-  #example .box {
+  #exampleWrap .box {
     margin: 1.667rem auto;
     padding: 1.667rem;
   }
@@ -3317,7 +3322,7 @@ html.k-materialblack .demo-section.k-content {
   
 /* Single Demo Page */
 
-  #exampleWrap #example .box.description {
+  #exampleWrap .box.description {
     margin-left: -1.667rem;
     margin-right: -1.667rem;
     border-width: 1px 0;

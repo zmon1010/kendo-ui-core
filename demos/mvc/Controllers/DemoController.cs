@@ -35,7 +35,6 @@ namespace Kendo.Controllers
             }
 
             ViewBag.ShowCodeStrip = true;
-            ViewBag.ShowDescription = product == "kendo-ui";
             ViewBag.Product = product;
             ViewBag.NavProduct = CurrentNavProduct();
             ViewBag.Section = section;
@@ -59,6 +58,8 @@ namespace Kendo.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Description = Description(product, currentExample, currentWidget);
 
             var exampleFiles = new List<ExampleFile>();
             exampleFiles.AddRange(SourceCode(product, section, example));
@@ -138,6 +139,20 @@ namespace Kendo.Controllers
             }
 
             return files;
+        }
+
+        protected string Description(string product, NavigationExample example, NavigationWidget widget)
+        {
+            if (example.Description != null && example.Description.ContainsKey(product))
+            {
+                return example.Description[product];
+            }
+            else if (widget.Description != null && widget.Description.ContainsKey(product))
+            {
+                return widget.Description[product];
+            }
+
+            return null;
         }
 
         protected void FindCurrentExample(string product)
