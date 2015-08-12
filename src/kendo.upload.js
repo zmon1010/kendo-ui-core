@@ -495,6 +495,10 @@ var __meta__ = {
         _onFileProgress: function(e, percentComplete) {
             var progressPct;
 
+            if (percentComplete > 100) {
+                percentComplete = 100;
+            }
+
             if (!this.options.template) {
                 progressPct = $(".k-upload-pct", e.target);
                 if (progressPct.length === 0) {
