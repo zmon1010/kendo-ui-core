@@ -257,12 +257,20 @@
         equal(json.frozenRows, 1);
     });
 
-
     test("toJSON serializes the sheets of the spreadsheet", function() {
         var json = spreadsheet.toJSON();
 
         equal(json.sheets.length, 1);
         equal(json.sheets[0].rows.length, 0);
+    });
+
+    test("toJSON serializes multiple sheets", function() {
+        spreadsheet.insertSheet();
+
+        var json = spreadsheet.toJSON();
+
+        equal(json.sheets.length, 2);
+        equal(json.sheets[1].rows.length, 0);
     });
 
     test("fromJSON loads column widths", function() {

@@ -239,6 +239,15 @@
 
                 this.trigger("change", {sheetSelection: true});
             }
+        },
+
+        toJSON: function() {
+            return {
+                sheets: this._sheets.map(function(sheet) {
+                    sheet.recalc(this._context);
+                    return sheet.toJSON();
+                }, this)
+            };
         }
     });
 

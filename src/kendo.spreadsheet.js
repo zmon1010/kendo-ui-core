@@ -155,18 +155,19 @@
         },
 
         toJSON: function() {
-            return {
-                //TODO: SUPPORT MULTIPLE SHEETS HERE
-                sheets: [this.activeSheet()].map(function(sheet) {
-                    sheet.recalc(this._workbook._context);
-                    return sheet.toJSON();
-                }, this)
-            };
+            return this._workbook.toJSON();
         },
 
         fromJSON: function(json) {
             //TODO: SUPPORT MULTIPLE SHEETS HERE
+
+            //1: destroy workbook.
+            //2: init new workbook and load json
+            //3: set active sheet ? or set first as active
+
+            //move this to workbook
             if (json.sheets) {
+                //for each sheet create new one and load the JSON?
                 this.activeSheet().fromJSON(json.sheets[0]);
             } else {
                 this.refresh();
