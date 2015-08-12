@@ -167,6 +167,8 @@
                 this._adjustFormulas("row", rowIndex, 1);
             }, { recalc: true, layout: true });
 
+            this.trigger("insertRow", { index: rowIndex });
+
             return this;
         },
 
@@ -203,6 +205,8 @@
 
                 this._adjustFormulas("row", rowIndex, -1);
             }, { recalc: true, layout: true });
+
+            this.trigger("deleteRow", { index: rowIndex });
 
             return this;
         },
