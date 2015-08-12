@@ -273,7 +273,7 @@
                             tok.format = tok.format.substr(0, tmp + diff);
                             diff += tmp - tok.format.length;
                         }
-                        if (tok.format.length == 0) {
+                        if (tok.format.length === 0) {
                             body.splice(i, 1);
                             while (--i >= 0) {
                                 tok = body[i];
