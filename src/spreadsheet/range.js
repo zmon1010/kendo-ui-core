@@ -437,7 +437,7 @@
                 properties = ["borderLeft", "borderTop", "borderRight", "borderBottom"];
             }
 
-            this._forEachCell(function(row, col, cell) {
+            this.forEachCell(function(row, col, cell) {
                 var cellState = state[row + "," + col] = {};
 
                 properties.forEach(function(property) {
@@ -467,7 +467,7 @@
                     this.unmerge();
                 }
 
-                this._forEachCell(function(row, col, cell) {
+                this.forEachCell(function(row, col, cell) {
                     var cellState = state[row + "," + col];
                     var range = this._sheet.range(row, col);
 
@@ -484,7 +484,7 @@
             }.bind(this), {});
         },
 
-        _forEachCell: function(callback) {
+        forEachCell: function(callback) {
             this._ref.forEach(function(ref) {
                 this._sheet.forEach(ref.toRangeRef(), callback.bind(this));
             }.bind(this));

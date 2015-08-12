@@ -25,21 +25,10 @@
             this.exec();
         },
         undo: function() {
-            this.range().sheet().batch(function() {
-                this._forEachCell(function(row, col, cell) {
-                    var property = this._property === "_editableValue" ? "value" : this._property;
-                    var sheet = this._range.sheet();
-                    var value = this._state[row + "," + col];
-
-                    sheet.range(row, col)[property](value);
-                });
-            }.bind(this), {});
+            this.range().setState(this._state);
         },
         getState: function() {
-            this._forEachCell(function(row, col, cell) {
-                var property = this._property === "_editableValue" ? "value" : this._property;
-                this._state[row + "," + col] = cell[property] || null;
-            });
+            this._state = this.range().getState(this._property);
         },
         _forEachCell: function(callback) {
             var range = this.range();
@@ -84,7 +73,7 @@
             this.getState();
 
             sheet.batch(function() {
-                this._forEachCell(function(row, col, cell) {
+                this.range().forEachCell(function(row, col, cell) {
                     var format = cell.format;
 
                     if (format || decimals > 0) {
@@ -106,33 +95,6 @@
         exec: function() {
             this.getState();
             this[this._type](this._style);
-        },
-        undo: function() {
-            this.range().sheet().batch(function() {
-                this._forEachCell(function(row, col, cell) {
-                    var sheet = this._range.sheet();
-                    var value = this._state[row + "," + col];
-
-                    sheet.range(row, col)
-                        .borderTop(value.borderTop)
-                        .borderLeft(value.borderLeft)
-                        .borderRight(value.borderRight)
-                        .borderBottom(value.borderBottom);
-                });
-            }.bind(this), {});
-        },
-        getState: function() {
-            var range = this.range();
-            var ref = range._ref;
-
-            this._forEachCell(function(row, col, cell) {
-                this._state[row + "," + col] = {
-                    borderTop: cell.borderTop || null,
-                    borderLeft: cell.borderLeft || null,
-                    borderRight: cell.borderRight || null,
-                    borderBottom: cell.borderBottom || null
-                };
-            });
         },
         noBorders: function() {
             var range = this.range();
