@@ -242,6 +242,43 @@
         });
     });
 
+    test("data is not fetched from the server when values are provided", 0, function() {
+        setup({
+            values: [
+                { text: "foo", value: "bar"},
+                { text: "baz", value: "trqs"},
+            ],
+            dataSource: dataSource({
+                serverPaging: true,
+                requestStart: function() {
+                    ok(false);
+                }
+            }),
+            field: "foo"
+        });
+    });
+
+    test("uses custom dataSource if both custom dataSource and values are provided",  function() {
+        setup({
+            values: [
+                { text: "foo", value: "bar"},
+                { text: "baz", value: "trqs"},
+            ],
+            dataSource: dataSource(),
+            forceUnique: false,
+            checkSource: [{foo: "foo"}, {foo: "baz"}],
+            field: "foo",
+            refresh: function () {
+                var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
+                equal(chkbxs.length, 2);
+                equal(chkbxs.eq(0).val(), "foo");
+                equal(chkbxs.eq(0).closest("label").text(), "foo");
+                equal(chkbxs.eq(1).val(), "baz");
+                equal(chkbxs.eq(1).closest("label").text(), "baz");
+            }
+        });
+    });
+
     test("checkboxes are updated when using local operations and parent ds is changed", function() {
         var ds = new kendo.data.DataSource({
             serverPaging: false,
