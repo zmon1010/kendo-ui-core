@@ -183,7 +183,6 @@
         command.exec();
     });
 
-/*
     test("noBorders command can be undone", function() {
         var oldState = { size: "1px", color: "#0F0" };
         sheet.range("B2:C2").borderTop(oldState);
@@ -200,7 +199,6 @@
         equal(sheet.range("B2").borderTop().color, oldState.color);
         equal(sheet.range("C2").borderTop().color, oldState.color);
     });
-*/
 
     test("borderLeft commands sets border only on the leftColumn", function() {
         var command = new BorderChangeCommand({ border: "leftBorder", style: { size: "1px", color: "#F00" } });
@@ -234,7 +232,6 @@
         command.exec();
     });
 
-/*
     test("borderLeft command can be undone", function() {
         var oldState = { size: "1px", color: "#0F0" };
         sheet.range("B2:C2").borderTop(oldState);
@@ -250,7 +247,6 @@
         equal(sheet.range("B2").borderTop().color, oldState.color);
         equal(sheet.range("C2").borderTop().color, oldState.color);
     });
-*/
 
     test("borderRight commands sets border only on the rightColumn", function() {
         var command = new BorderChangeCommand({ border: "rightBorder", style: { size: "1px", color: "#F00" } });
@@ -367,7 +363,6 @@
         command.exec();
     });
 
-/*
     test("outsideBorders command can be undone", function() {
         var oldState = { size: "1px", color: "#0F0" };
         sheet.range("B2:C2").borderTop(oldState);
@@ -384,7 +379,6 @@
         equal(sheet.range("B2").borderTop().color, oldState.color);
         equal(sheet.range("C2").borderTop().color, oldState.color);
     });
-*/
 
     test("insideBorders commands sets borders inside the selection", function() {
         var command = new BorderChangeCommand({ border: "insideBorders", style: { size: "1px", color: "#F00" } });
@@ -443,10 +437,9 @@
         command.exec();
     });
 
-/*
     test("insideVerticalBorders command can be undone", function() {
         var oldState = { size: "1px", color: "#0F0" };
-        sheet.range("B2:C2").borderLeft(oldState);
+        sheet.range("B2").borderTop(oldState);
 
         var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: "1px", color: "#F00" } });
         command.range(sheet.range("A2,C2"));
@@ -454,13 +447,11 @@
         command.exec();
         command.undo();
 
-        equal(getBorders(sheet.range("A2")), "right");
-        equal(getBorders(sheet.range("B2")), "left,right");
-        equal(getBorders(sheet.range("C2")), "left");
+        equal(getBorders(sheet.range("A2")), "");
+        equal(getBorders(sheet.range("B2")), "top");
+        equal(getBorders(sheet.range("C2")), "");
         equal(sheet.range("B2").borderTop().color, oldState.color);
-        equal(sheet.range("C2").borderTop().color, oldState.color);
     });
-*/
 
     var MergeCellCommand = kendo.spreadsheet.MergeCellCommand;
 
