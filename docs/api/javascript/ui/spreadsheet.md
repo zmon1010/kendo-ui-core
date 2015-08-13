@@ -110,6 +110,100 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 
 ## Methods
 
+### activeSheet
+
+#### Parameters
+
+##### sheet `kendo.spreadsheet.Sheet` *optional*
+
+#### Returns
+
+`kendo.spreadsheet.Sheet` the active sheet.
+
+### getSheets
+
+#### Returns
+
+`Array` the available sheets.
+
+### getSheetByName
+
+#### Parameters
+
+##### name `String`
+
+#### Returns
+
+`kendo.spreadsheet.Sheet` the sheet that match the name.
+
+### getSheetIndex
+
+#### Parameters
+
+##### sheet `kendo.spreadsheet.Sheet`
+
+#### Returns
+
+`Number` the sheet index.
+
+### getSheetByIndex
+
+#### Parameters
+
+##### index `Number`
+
+#### Returns
+
+`kendo.spreadsheet.Sheet` the sheet that match the index.
+
+### insertSheet
+
+#### Parameters
+
+##### options `Object`
+
+#### Returns
+
+`kendo.spreadsheet.Sheet` the inserted sheet.
+
+### moveSheetToIndex
+
+#### Parameters
+
+##### sheet `kendo.spreadsheet.Sheet`
+
+##### index `Number`
+
+### removeSheet
+
+#### Parameters
+
+##### sheet `kendo.spreadsheet.Sheet`
+
+### renameSheet
+
+#### Parameters
+
+##### sheet `kendo.spreadsheet.Sheet`
+
+##### newSheetName `String`
+
+#### Returns
+
+`kendo.spreadsheet.Sheet` the renamed sheet.
+
+### toJSON
+
+#### Returns
+
+`Object` the serialized sheets.
+
+### fromJSON
+
+#### Parameters
+
+##### options `Object`
+
 ## Events
 
 ### render
