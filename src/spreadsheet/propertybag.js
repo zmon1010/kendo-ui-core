@@ -187,10 +187,9 @@
         }
     });
 
-    kendo.spreadsheet.ALL_PROPERTIES = [];
-    kendo.spreadsheet.PropertyBag.prototype.specs.forEach(function(spec) {
+    kendo.spreadsheet.ALL_PROPERTIES = $.map(kendo.spreadsheet.PropertyBag.prototype.specs, function(spec) {
         if (spec.name !== "compiledFormula") {
-            kendo.spreadsheet.ALL_PROPERTIES.push(spec.name);
+            return spec.name;
         }
     });
 
