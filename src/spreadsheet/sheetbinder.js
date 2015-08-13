@@ -14,6 +14,8 @@
             this._sheet();
             this._dataSource();
 
+            this._header();
+
             this.dataSource.fetch();
         },
 
@@ -31,19 +33,27 @@
 
         _sheetInsertRow: function(e) {
             if (e.index !== undefined) {
-                this.dataSource.insert(e.index, {});
+                this.dataSource.insert(e.index - 1, {});
             }
         },
 
         _sheetDeleteRow: function(e) {
             if (e.index !== undefined) {
                 var dataSource = this.dataSource;
-                var model = dataSource.view()[e.index];
+                var model = dataSource.view()[e.index - 1];
 
                 if (model) {
                     dataSource.remove(model);
                 }
             }
+        },
+
+        _header: function() {
+            this.sheet.batch(function() {
+                this.columns.forEach(function(column, index) {
+                    this.sheet.range(0,index).value(column.field);
+                }.bind(this));
+            }.bind(this));
         },
 
         _sheetChange: function(e) {
@@ -61,10 +71,10 @@
                 e.ref.forEach(function(ref) {
                     ref = ref.toRangeRef();
                     for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row; ri++) {
-                        var record = data[ri];
+                        var record = data[ri - 1]; // skip header row
 
                         if (!record) {
-                            record = dataSource.insert(ri, {});
+                            record = dataSource.insert(ri - 1, {});
                             data = dataSource.view();
                         }
 
@@ -112,6 +122,7 @@
 
             if (!columns.length && data.length) {
                 this.columns = columns = this._normalizeColumns(Object.keys(data[0].toJSON()));
+                this._header();
             }
 
             var getters = columns.map(function(column) {
@@ -121,7 +132,8 @@
             this.sheet.batch(function() {
                 for (var idx = 0, length = data.length; idx < length; idx++) {
                     for (var getterIdx = 0; getterIdx < getters.length; getterIdx++) {
-                        this.sheet.range(idx,getterIdx).value(getters[getterIdx](data[idx]));
+                        //skip header row
+                        this.sheet.range(idx + 1,getterIdx).value(getters[getterIdx](data[idx]));
                     }
                 }
             }.bind(this));
