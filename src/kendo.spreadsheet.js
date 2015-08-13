@@ -49,11 +49,15 @@
         sheetSelection: true
     };
 
+    var classNames = {
+        wrapper: "k-widget k-spreadsheet"
+    };
+
     var Spreadsheet = kendo.ui.Widget.extend({
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
 
-            this.element.addClass("k-widget k-spreadsheet");
+            this.element.addClass(Spreadsheet.classNames.wrapper);
 
             this._view = new View(this.element, {
                 toolbar: this.options.toolbar
@@ -200,4 +204,5 @@
 
     kendo.spreadsheet.ALL_REASONS = ALL_REASONS;
     kendo.ui.plugin(Spreadsheet);
+    $.extend(true, Spreadsheet, { classNames: classNames });
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

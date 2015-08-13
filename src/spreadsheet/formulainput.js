@@ -3,11 +3,15 @@
 })(function(){
 
 (function(kendo, window) {
+    var classNames = {
+        wrapper: "k-spreadsheet-formula-input"
+    };
+
     var FormulaInput = kendo.ui.Widget.extend({
         init: function(element, options) {
             kendo.ui.Widget.call(this, element, options);
 
-            this.element.addClass("k-spreadsheet-formula-input")
+            this.element.addClass(FormulaInput.classNames.wrapper)
                         .attr("contenteditable", true);
 
             this.element.on("blur", this._blur.bind(this));
@@ -125,5 +129,6 @@
     });
 
     kendo.spreadsheet.FormulaInput = FormulaInput;
+    $.extend(true, FormulaInput, { classNames: classNames });
 })(kendo, window);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

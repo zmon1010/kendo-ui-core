@@ -5,6 +5,17 @@
 (function(kendo) {
     var CellRef = kendo.spreadsheet.CellRef;
     var RangeRef = kendo.spreadsheet.RangeRef;
+    var DOT = ".";
+    var viewClassNames = {
+        view: "k-spreadsheet-view",
+        fixedContainer: "k-spreadsheet-fixed-container",
+        scroller: "k-spreadsheet-scroller",
+        viewSize: "k-spreadsheet-view-size",
+        clipboard: "k-spreadsheet-clipboard",
+        cellEditor: "k-spreadsheet-cell-editor",
+        editor: "k-spreadsheet-editor",
+        topCorner: "k-spreadsheet-top-corner"
+    };
 
     function hasChanged(e, name) {
            return !e || e.changed == name;
@@ -200,7 +211,7 @@
         }
     });
 
-    var VIEW_CONTENTS = '<div class=k-spreadsheet-view><div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><div tabindex="0" class="k-spreadsheet-clipboard" contenteditable=true></div><div class="k-spreadsheet-cell-editor"></div></div>';
+    var VIEW_CONTENTS = kendo.template('<div class="#=classNames.view#"><div class="#=classNames.fixedContainer#"></div><div class="#=classNames.scroller#"><div class="#=classNames.viewSize#"></div></div><div tabindex="0" class="#=classNames.clipboard#" contenteditable=true></div><div class="#=classNames.cellEditor#"></div></div>');
 
     function within(value, min, max) {
         return value >= min && value <= max;
@@ -208,18 +219,20 @@
 
     var View = kendo.Class.extend({
         init: function(element, options) {
+            var classNames = View.classNames;
+
             this.element = element;
             this.options = options;
 
             this._chrome();
 
-            element.append(VIEW_CONTENTS);
+            element.append(VIEW_CONTENTS({ classNames: classNames }));
 
-            this.wrapper =      element.find(".k-spreadsheet-view");
-            this.container =    element.find(".k-spreadsheet-fixed-container")[0];
-            this.scroller =     element.find(".k-spreadsheet-scroller")[0];
-            this.clipboard =    element.find(".k-spreadsheet-clipboard");
-            this.editor =       element.find(".k-spreadsheet-editor");
+            this.wrapper =      element.find(DOT + classNames.view);
+            this.container =    element.find(DOT + classNames.fixedContainer)[0];
+            this.scroller =     element.find(DOT + classNames.scroller)[0];
+            this.clipboard =    element.find(DOT + classNames.clipboard);
+            this.editor =       element.find(DOT + classNames.editor);
 
             this.viewSize = $(this.scroller.firstChild);
             this._formulaInput(element);
@@ -452,7 +465,10 @@
             var merged = [];
             merged = Array.prototype.concat.apply(merged, result);
 
-            var topCorner = kendo.dom.element("div", { style: { width: grid._headerWidth + "px", height: grid._headerHeight + "px" }, className: "k-spreadsheet-top-corner" });
+            var topCorner = kendo.dom.element("div", {
+                style: { width: grid._headerWidth + "px", height: grid._headerHeight + "px" },
+                className: View.classNames.topCorner
+            });
 
             merged.push(topCorner);
 
@@ -527,7 +543,7 @@
         },
 
         _formulaInput: function(element) {
-            var editor = element.find(".k-spreadsheet-cell-editor");
+            var editor = element.find(DOT + View.classNames.cellEditor);
 
             this.formulaInput = new kendo.spreadsheet.FormulaInput(editor, {
                 position: "absolute",
@@ -546,27 +562,44 @@
         }
     });
 
-    function orientedClass(defaultClass, left, top, right, bottom) {
+    function orientedClass(classNames, defaultClass, left, top, right, bottom) {
         var classes = [defaultClass];
 
         if (top) {
-            classes.push("k-top");
+            classes.push(classNames.top);
         }
 
         if (right) {
-            classes.push("k-right");
+            classes.push(classNames.right);
         }
 
         if (bottom) {
-            classes.push("k-bottom");
+            classes.push(classNames.bottom);
         }
 
         if (left) {
-            classes.push("k-left");
+            classes.push(classNames.left);
         }
 
         return classes.join(" ");
     }
+
+    var paneClassNames = {
+        rowHeader: "k-spreadsheet-row-header",
+        columnHeader: "k-spreadsheet-column-header",
+        pane: "k-spreadsheet-pane",
+        data: "k-spreadsheet-data",
+        mergedCell: "k-spreadsheet-merged-cell",
+        mergedCellsWrapper: "k-merged-cells-wrapper",
+        activeCell: "k-spreadsheet-active-cell",
+        selection: "k-spreadsheet-selection",
+        selectionWrapper: "k-selection-wrapper",
+        single: "k-single",
+        top: "k-top",
+        right: "k-right",
+        bottom: "k-bottom",
+        left: "k-left"
+    };
 
     var Pane = kendo.Class.extend({
         init: function(sheet, grid) {
@@ -583,6 +616,7 @@
         },
 
         render: function(scrollLeft, scrollTop) {
+            var classNames = Pane.classNames;
             var sheet = this._sheet;
             var grid = this._grid;
 
@@ -613,7 +647,7 @@
                     rowHeader.addCell(row - view.ref.topLeft.row, text, {}, this.headerClassName(row, "row"));
                 }.bind(this));
 
-                children.push(rowHeader.toDomTree(0, view.rowOffset, "k-spreadsheet-row-header"));
+                children.push(rowHeader.toDomTree(0, view.rowOffset, classNames.rowHeader));
             }
 
             if (grid.hasColumnHeader) {
@@ -630,12 +664,12 @@
                     columnHeader.addCell(0, text, {}, this.headerClassName(col, "col"));
                 }.bind(this));
 
-                children.push(columnHeader.toDomTree(view.columnOffset, 0, "k-spreadsheet-column-header"));
+                children.push(columnHeader.toDomTree(view.columnOffset, 0, classNames.columnHeader));
             }
 
             return kendo.dom.element("div", {
                 style: grid.style,
-                className: orientedClass("k-spreadsheet-pane", grid.hasRowHeader, grid.hasColumnHeader)
+                className: orientedClass(classNames, classNames.pane, grid.hasRowHeader, grid.hasColumnHeader)
             }, children);
         },
 
@@ -678,29 +712,32 @@
                 addCell(table, row - view.ref.topLeft.row, cell);
             });
 
-            return table.toDomTree(view.columnOffset, view.rowOffset, "k-spreadsheet-data");
+            return table.toDomTree(view.columnOffset, view.rowOffset, Pane.classNames.data);
         },
 
         renderMergedCells: function() {
+            var classNames = Pane.classNames;
             var mergedCells = [];
             var sheet = this._sheet;
             var view = this._currentView;
 
             sheet.forEachMergedCell(function(ref) {
-                this._addTable(mergedCells, ref, "k-spreadsheet-merged-cell");
+                this._addTable(mergedCells, ref, classNames.mergedCell);
             }.bind(this));
 
-            return kendo.dom.element("div", { className: "k-merged-cells-wrapper" }, mergedCells);
+            return kendo.dom.element("div", { className: classNames.mergedCellsWrapper }, mergedCells);
         },
 
         renderSelection: function() {
+            var classNames = Pane.classNames;
             var selections = [];
             var grid = this._grid;
             var sheet = this._sheet;
             var view = this._currentView;
             var activeCell = sheet.activeCell().toRangeRef();
             var className = orientedClass(
-                 "k-spreadsheet-active-cell",
+                classNames,
+                classNames.activeCell,
                 !activeCell.move(0, -1).intersects(view.ref),
                 !activeCell.move(-1, 0).intersects(view.ref),
                 !activeCell.move(0, 1).intersects(view.ref),
@@ -708,7 +745,7 @@
             );
 
             if (sheet.select().eq(activeCell)) {
-                className += " k-single";
+                className += " " + classNames.single;
             }
 
             sheet.select().forEach(function(ref) {
@@ -716,12 +753,12 @@
                     return;
                 }
 
-                this._addDiv(selections, ref, "k-spreadsheet-selection");
+                this._addDiv(selections, ref, classNames.selection);
             }.bind(this));
 
             this._addTable(selections, activeCell, className);
 
-            return kendo.dom.element("div", { className: "k-selection-wrapper" }, selections);
+            return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);
         },
 
         _addDiv: function(collection, ref, className) {
@@ -759,5 +796,8 @@
     kendo.spreadsheet.View = View;
     kendo.spreadsheet.Pane = Pane;
     kendo.spreadsheet.addCell = addCell;
+
+    $.extend(true, View, { classNames: viewClassNames });
+    $.extend(true, Pane, { classNames: paneClassNames });
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

@@ -3,13 +3,17 @@
 })(function(){
 
 (function(kendo) {
+    var classNames = {
+        wrapper: "k-spreadsheet-formula-bar"
+    };
+
     var FormulaBar = kendo.ui.Widget.extend({
         init: function(element, options) {
             kendo.ui.Widget.call(this, element, options);
 
             element = this.element;
 
-            element.addClass("k-spreadsheet-formula-bar");
+            element.addClass(FormulaBar.classNames.wrapper);
 
             this._formulaInput = new kendo.spreadsheet.FormulaInput($("<div/>").appendTo(element), {
                 change: this._onChange.bind(this)
@@ -44,5 +48,6 @@
     });
 
     kendo.spreadsheet.FormulaBar = FormulaBar;
+    $.extend(true, FormulaBar, { classNames: classNames });
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
