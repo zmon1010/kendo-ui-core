@@ -461,6 +461,21 @@
         equal(spreadsheet.activeSheet().range("A1").background(), "yellow");
     });
 
+    test("fromJSON insert sheets with specified names", function() {
+        spreadsheet.insertSheet();
+
+        var name = "Sheet2";
+
+        spreadsheet.fromJSON({
+            sheets: [
+                $.extend(singleCell({ background: "yellow"}), { name:  name })
+            ]
+        });
+
+        equal(spreadsheet.getSheets().length, 1);
+        equal(spreadsheet.activeSheet().name(), name);
+    });
+
     test("fromJSON loads frozenColumns and frozenRows", function() {
         sheet.fromJSON({
             frozenColumns: 1,

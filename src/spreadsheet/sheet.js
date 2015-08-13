@@ -623,6 +623,10 @@
 
         fromJSON: function(json) {
             this.batch(function() {
+                if (json.name !== undefined) {
+                    this._name = json.name;
+                }
+
                 if (json.frozenColumns !== undefined) {
                     this.frozenColumns(json.frozenColumns);
                 }
