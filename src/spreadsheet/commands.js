@@ -166,36 +166,14 @@
             this.range().sheet().activeCell(ref);
         },
         getState: function() {
-            this._state.cells = {};
-            this._state.mergedCells = this.range().intersectingMerged();
-
-            this._forEachCell(function(row, col, cell) {
-                var property = this._property === "_editableValue" ? "value" : this._property;
-                this._state.cells[row + "," + col] = cell;
-            });
+            this._state = this.range().getState();
         },
         undo: function() {
             if (this._type !== "unmerge") {
                 this.range().unmerge();
                 this.activate(this.range().topLeft());
             }
-
-            this.range().sheet().batch(function() {
-                var sheet = this._range.sheet();
-                var mergedCells = this._state.mergedCells;
-
-                this._forEachCell(function(row, col, cell) {
-                    var properties = this._state.cells[row + "," + col];
-
-                    for (var property in properties) {
-                        sheet.range(row, col)[property](properties[property]);
-                    }
-                });
-
-                for (var i = 0; i < mergedCells.length; i++) {
-                    sheet.range(mergedCells[i]).merge();
-                }
-            }.bind(this), {});
+            this.range().setState(this._state);
         },
         all: function() {
             var range = this.range();
