@@ -78,6 +78,18 @@
         tap($(".k-i-bold"));
     });
 
+    test("bold toggle off triggers execute with value null", function() {
+        createWithTools([ [ "bold" ] ]);
+
+        tap($(".k-i-bold"));
+
+        spreadsheet._view.toolbar.bind("execute", function(e) {
+            equal(e.value, null);
+        });
+
+        tap($(".k-i-bold"));
+    });
+
     test("custom tool", function() {
         createWithTools([
             [ { type: "button", icon: "refresh", text: "Button" } ]

@@ -74,7 +74,7 @@
                         showText: "overflow"
                     },
                     toggle: {
-                        toggleable: true,
+                        togglable: true,
                         showText: "overflow"
                     },
                     colorPicker: {
