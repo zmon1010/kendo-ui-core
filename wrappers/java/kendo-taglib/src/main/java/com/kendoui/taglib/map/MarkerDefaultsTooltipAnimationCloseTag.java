@@ -52,7 +52,7 @@ public class MarkerDefaultsTooltipAnimationCloseTag extends  BaseTag  /* interfa
     }
 
     public float getDuration() {
-        return (float)getProperty("duration");
+        return (Float)getProperty("duration");
     }
 
     public void setDuration(float value) {

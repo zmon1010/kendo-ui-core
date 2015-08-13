@@ -166,7 +166,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getAllDaySlot() {
-        return (boolean)getProperty("allDaySlot");
+        return (Boolean)getProperty("allDaySlot");
     }
 
     public void setAllDaySlot(boolean value) {
@@ -174,7 +174,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -182,7 +182,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getCurrentTimeMarker() {
-        return (boolean)getProperty("currentTimeMarker");
+        return (Boolean)getProperty("currentTimeMarker");
     }
 
     public void setCurrentTimeMarker(boolean value) {
@@ -210,7 +210,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {
@@ -234,7 +234,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getFooter() {
-        return (boolean)getProperty("footer");
+        return (Boolean)getProperty("footer");
     }
 
     public void setFooter(boolean value) {
@@ -258,7 +258,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public float getMajorTick() {
-        return (float)getProperty("majorTick");
+        return (Float)getProperty("majorTick");
     }
 
     public void setMajorTick(float value) {
@@ -290,7 +290,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public float getMinorTickCount() {
-        return (float)getProperty("minorTickCount");
+        return (Float)getProperty("minorTickCount");
     }
 
     public void setMinorTickCount(float value) {
@@ -314,7 +314,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getSelectable() {
-        return (boolean)getProperty("selectable");
+        return (Boolean)getProperty("selectable");
     }
 
     public void setSelectable(boolean value) {
@@ -322,7 +322,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getShowWorkHours() {
-        return (boolean)getProperty("showWorkHours");
+        return (Boolean)getProperty("showWorkHours");
     }
 
     public void setShowWorkHours(boolean value) {
@@ -330,7 +330,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getSnap() {
-        return (boolean)getProperty("snap");
+        return (Boolean)getProperty("snap");
     }
 
     public void setSnap(boolean value) {
@@ -378,7 +378,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public float getWorkWeekEnd() {
-        return (float)getProperty("workWeekEnd");
+        return (Float)getProperty("workWeekEnd");
     }
 
     public void setWorkWeekEnd(float value) {
@@ -386,7 +386,7 @@ public class SchedulerTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public float getWorkWeekStart() {
-        return (float)getProperty("workWeekStart");
+        return (Float)getProperty("workWeekStart");
     }
 
     public void setWorkWeekStart(float value) {

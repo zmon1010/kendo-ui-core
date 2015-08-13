@@ -62,7 +62,7 @@ public class BorderTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

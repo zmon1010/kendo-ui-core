@@ -68,7 +68,7 @@ public class NavigatorPaneBorderTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

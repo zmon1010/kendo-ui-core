@@ -85,7 +85,7 @@ public class ItemTag extends  BaseTag  /* interfaces */implements Items/* interf
     }
 
     public boolean getEnabled() {
-        return (boolean)getProperty("enabled");
+        return (Boolean)getProperty("enabled");
     }
 
     public void setEnabled(boolean value) {
@@ -101,7 +101,7 @@ public class ItemTag extends  BaseTag  /* interfaces */implements Items/* interf
     }
 
     public boolean getSelected() {
-        return (boolean)getProperty("selected");
+        return (Boolean)getProperty("selected");
     }
 
     public void setSelected(boolean value) {

@@ -73,7 +73,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getMajorUnit() {
-        return (float)getProperty("majorUnit");
+        return (Float)getProperty("majorUnit");
     }
 
     public void setMajorUnit(float value) {
@@ -81,7 +81,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getMax() {
-        return (float)getProperty("max");
+        return (Float)getProperty("max");
     }
 
     public void setMax(float value) {
@@ -89,7 +89,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getMin() {
-        return (float)getProperty("min");
+        return (Float)getProperty("min");
     }
 
     public void setMin(float value) {
@@ -97,7 +97,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getMinorUnit() {
-        return (float)getProperty("minorUnit");
+        return (Float)getProperty("minorUnit");
     }
 
     public void setMinorUnit(float value) {
@@ -105,7 +105,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getMirror() {
-        return (boolean)getProperty("mirror");
+        return (Boolean)getProperty("mirror");
     }
 
     public void setMirror(boolean value) {
@@ -121,7 +121,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getRangeSize() {
-        return (float)getProperty("rangeSize");
+        return (Float)getProperty("rangeSize");
     }
 
     public void setRangeSize(float value) {
@@ -129,7 +129,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getReverse() {
-        return (boolean)getProperty("reverse");
+        return (Boolean)getProperty("reverse");
     }
 
     public void setReverse(boolean value) {
@@ -137,7 +137,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getVertical() {
-        return (boolean)getProperty("vertical");
+        return (Boolean)getProperty("vertical");
     }
 
     public void setVertical(boolean value) {

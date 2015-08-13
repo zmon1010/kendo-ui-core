@@ -78,7 +78,7 @@ public class ToolBarTag extends WidgetWithItemsTag /* interfaces */implements It
     }
 
     public boolean getResizable() {
-        return (boolean)getProperty("resizable");
+        return (Boolean)getProperty("resizable");
     }
 
     public void setResizable(boolean value) {

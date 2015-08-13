@@ -88,7 +88,7 @@ public class PivotGridTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -104,7 +104,7 @@ public class PivotGridTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public float getColumnWidth() {
-        return (float)getProperty("columnWidth");
+        return (Float)getProperty("columnWidth");
     }
 
     public void setColumnWidth(float value) {
@@ -124,7 +124,7 @@ public class PivotGridTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getFilterable() {
-        return (boolean)getProperty("filterable");
+        return (Boolean)getProperty("filterable");
     }
 
     public void setFilterable(boolean value) {
@@ -156,7 +156,7 @@ public class PivotGridTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getReorderable() {
-        return (boolean)getProperty("reorderable");
+        return (Boolean)getProperty("reorderable");
     }
 
     public void setReorderable(boolean value) {
@@ -172,7 +172,7 @@ public class PivotGridTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getSortable() {
-        return (boolean)getProperty("sortable");
+        return (Boolean)getProperty("sortable");
     }
 
     public void setSortable(boolean value) {

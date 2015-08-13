@@ -88,7 +88,7 @@ public class MenuTag extends WidgetWithItemsTag /* interfaces */implements DataB
     }
 
     public boolean getCloseOnClick() {
-        return (boolean)getProperty("closeOnClick");
+        return (Boolean)getProperty("closeOnClick");
     }
 
     public void setCloseOnClick(boolean value) {
@@ -108,7 +108,7 @@ public class MenuTag extends WidgetWithItemsTag /* interfaces */implements DataB
     }
 
     public float getHoverDelay() {
-        return (float)getProperty("hoverDelay");
+        return (Float)getProperty("hoverDelay");
     }
 
     public void setHoverDelay(float value) {
@@ -116,7 +116,7 @@ public class MenuTag extends WidgetWithItemsTag /* interfaces */implements DataB
     }
 
     public boolean getOpenOnClick() {
-        return (boolean)getProperty("openOnClick");
+        return (Boolean)getProperty("openOnClick");
     }
 
     public void setOpenOnClick(boolean value) {

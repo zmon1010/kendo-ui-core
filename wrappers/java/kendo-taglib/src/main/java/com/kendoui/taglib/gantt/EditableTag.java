@@ -58,7 +58,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getConfirmation() {
-        return (boolean)getProperty("confirmation");
+        return (Boolean)getProperty("confirmation");
     }
 
     public void setConfirmation(boolean value) {

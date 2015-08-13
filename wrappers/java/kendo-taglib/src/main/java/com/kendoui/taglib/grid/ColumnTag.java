@@ -119,7 +119,7 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getEncoded() {
-        return (boolean)getProperty("encoded");
+        return (Boolean)getProperty("encoded");
     }
 
     public void setEncoded(boolean value) {
@@ -135,7 +135,7 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getFilterable() {
-        return (boolean)getProperty("filterable");
+        return (Boolean)getProperty("filterable");
     }
 
     public void setFilterable(boolean value) {
@@ -175,7 +175,7 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getGroupable() {
-        return (boolean)getProperty("groupable");
+        return (Boolean)getProperty("groupable");
     }
 
     public void setGroupable(boolean value) {
@@ -199,7 +199,7 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getHidden() {
-        return (boolean)getProperty("hidden");
+        return (Boolean)getProperty("hidden");
     }
 
     public void setHidden(boolean value) {
@@ -207,7 +207,7 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getLockable() {
-        return (boolean)getProperty("lockable");
+        return (Boolean)getProperty("lockable");
     }
 
     public void setLockable(boolean value) {
@@ -215,7 +215,7 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getLocked() {
-        return (boolean)getProperty("locked");
+        return (Boolean)getProperty("locked");
     }
 
     public void setLocked(boolean value) {
@@ -223,7 +223,7 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getMenu() {
-        return (boolean)getProperty("menu");
+        return (Boolean)getProperty("menu");
     }
 
     public void setMenu(boolean value) {
@@ -231,7 +231,7 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getMinScreenWidth() {
-        return (float)getProperty("minScreenWidth");
+        return (Float)getProperty("minScreenWidth");
     }
 
     public void setMinScreenWidth(float value) {
@@ -239,7 +239,7 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getSortable() {
-        return (boolean)getProperty("sortable");
+        return (Boolean)getProperty("sortable");
     }
 
     public void setSortable(boolean value) {

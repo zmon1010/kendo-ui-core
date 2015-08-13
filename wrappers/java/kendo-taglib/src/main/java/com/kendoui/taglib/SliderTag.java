@@ -82,7 +82,7 @@ public class SliderTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getLargeStep() {
-        return (float)getProperty("largeStep");
+        return (Float)getProperty("largeStep");
     }
 
     public void setLargeStep(float value) {
@@ -90,7 +90,7 @@ public class SliderTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMax() {
-        return (float)getProperty("max");
+        return (Float)getProperty("max");
     }
 
     public void setMax(float value) {
@@ -98,7 +98,7 @@ public class SliderTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMin() {
-        return (float)getProperty("min");
+        return (Float)getProperty("min");
     }
 
     public void setMin(float value) {
@@ -114,7 +114,7 @@ public class SliderTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getShowButtons() {
-        return (boolean)getProperty("showButtons");
+        return (Boolean)getProperty("showButtons");
     }
 
     public void setShowButtons(boolean value) {
@@ -122,7 +122,7 @@ public class SliderTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getSmallStep() {
-        return (float)getProperty("smallStep");
+        return (Float)getProperty("smallStep");
     }
 
     public void setSmallStep(float value) {
@@ -138,7 +138,7 @@ public class SliderTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getValue() {
-        return (float)getProperty("value");
+        return (Float)getProperty("value");
     }
 
     public void setValue(float value) {

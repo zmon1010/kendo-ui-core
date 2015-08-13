@@ -79,7 +79,7 @@ public class PaneTag extends  BaseTag implements DynamicAttributes /* interfaces
     }
 
     public boolean getCollapsed() {
-        return (boolean)getProperty("collapsed");
+        return (Boolean)getProperty("collapsed");
     }
 
     public void setCollapsed(boolean value) {
@@ -95,7 +95,7 @@ public class PaneTag extends  BaseTag implements DynamicAttributes /* interfaces
     }
 
     public boolean getCollapsible() {
-        return (boolean)getProperty("collapsible");
+        return (Boolean)getProperty("collapsible");
     }
 
     public void setCollapsible(boolean value) {
@@ -127,7 +127,7 @@ public class PaneTag extends  BaseTag implements DynamicAttributes /* interfaces
     }
 
     public boolean getResizable() {
-        return (boolean)getProperty("resizable");
+        return (Boolean)getProperty("resizable");
     }
 
     public void setResizable(boolean value) {
@@ -135,7 +135,7 @@ public class PaneTag extends  BaseTag implements DynamicAttributes /* interfaces
     }
 
     public boolean getScrollable() {
-        return (boolean)getProperty("scrollable");
+        return (Boolean)getProperty("scrollable");
     }
 
     public void setScrollable(boolean value) {

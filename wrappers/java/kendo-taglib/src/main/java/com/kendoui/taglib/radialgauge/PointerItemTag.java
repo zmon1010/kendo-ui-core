@@ -62,7 +62,7 @@ public class PointerItemTag extends  BaseTag  /* interfaces */ /* interfaces */ 
     }
 
     public float getValue() {
-        return (float)getProperty("value");
+        return (Float)getProperty("value");
     }
 
     public void setValue(float value) {

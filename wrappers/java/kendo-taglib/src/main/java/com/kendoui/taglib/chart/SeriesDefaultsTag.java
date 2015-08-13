@@ -131,7 +131,7 @@ public class SeriesDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces 
     }
 
     public float getGap() {
-        return (float)getProperty("gap");
+        return (Float)getProperty("gap");
     }
 
     public void setGap(float value) {
@@ -179,7 +179,7 @@ public class SeriesDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces 
     }
 
     public float getSpacing() {
-        return (float)getProperty("spacing");
+        return (Float)getProperty("spacing");
     }
 
     public void setSpacing(float value) {
@@ -187,7 +187,7 @@ public class SeriesDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces 
     }
 
     public boolean getStack() {
-        return (boolean)getProperty("stack");
+        return (Boolean)getProperty("stack");
     }
 
     public void setStack(boolean value) {

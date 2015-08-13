@@ -182,7 +182,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getGap() {
-        return (float)getProperty("gap");
+        return (Float)getProperty("gap");
     }
 
     public void setGap(float value) {
@@ -222,7 +222,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -230,7 +230,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {
@@ -238,7 +238,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getSize() {
-        return (float)getProperty("size");
+        return (Float)getProperty("size");
     }
 
     public void setSize(float value) {
@@ -246,7 +246,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getSpacing() {
-        return (float)getProperty("spacing");
+        return (Float)getProperty("spacing");
     }
 
     public void setSpacing(float value) {
@@ -262,7 +262,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getStartAngle() {
-        return (float)getProperty("startAngle");
+        return (Float)getProperty("startAngle");
     }
 
     public void setStartAngle(float value) {
@@ -294,7 +294,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {
@@ -302,7 +302,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getZindex() {
-        return (float)getProperty("zIndex");
+        return (Float)getProperty("zIndex");
     }
 
     public void setZindex(float value) {

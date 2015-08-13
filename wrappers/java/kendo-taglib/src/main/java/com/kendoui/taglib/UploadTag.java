@@ -101,7 +101,7 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getEnabled() {
-        return (boolean)getProperty("enabled");
+        return (Boolean)getProperty("enabled");
     }
 
     public void setEnabled(boolean value) {
@@ -109,7 +109,7 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getMultiple() {
-        return (boolean)getProperty("multiple");
+        return (Boolean)getProperty("multiple");
     }
 
     public void setMultiple(boolean value) {
@@ -117,7 +117,7 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getShowFileList() {
-        return (boolean)getProperty("showFileList");
+        return (Boolean)getProperty("showFileList");
     }
 
     public void setShowFileList(boolean value) {

@@ -64,7 +64,7 @@ public class SeriesItemHighlightTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -72,7 +72,7 @@ public class SeriesItemHighlightTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

@@ -71,7 +71,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
         if (checkboxes == null) {
             return false;
         } else if (checkboxes.getClass() == boolean.class) {
-            return (boolean)checkboxes;
+            return (Boolean)checkboxes;
         } else {
             return true;
         }
@@ -101,7 +101,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     }
 
     public boolean getChecked() {
-        return (boolean)getProperty("checked");
+        return (Boolean)getProperty("checked");
     }
 
     public void setChecked(boolean value) {
@@ -109,7 +109,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     }
 
     public boolean getEnabled() {
-        return (boolean)getProperty("enabled");
+        return (Boolean)getProperty("enabled");
     }
 
     public void setEnabled(boolean value) {
@@ -117,7 +117,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     }
 
     public boolean getExpanded() {
-        return (boolean)getProperty("expanded");
+        return (Boolean)getProperty("expanded");
     }
 
     public void setExpanded(boolean value) {
@@ -133,7 +133,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     }
 
     public boolean getSelected() {
-        return (boolean)getProperty("selected");
+        return (Boolean)getProperty("selected");
     }
 
     public void setSelected(boolean value) {

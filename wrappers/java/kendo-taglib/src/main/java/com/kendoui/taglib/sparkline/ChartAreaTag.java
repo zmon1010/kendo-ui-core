@@ -66,7 +66,7 @@ public class ChartAreaTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {
@@ -82,7 +82,7 @@ public class ChartAreaTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -90,7 +90,7 @@ public class ChartAreaTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

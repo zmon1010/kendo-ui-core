@@ -110,7 +110,7 @@ public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements I
     }
 
     public boolean getAnimation() {
-        return (boolean)getProperty("animation");
+        return (Boolean)getProperty("animation");
     }
 
     public void setAnimation(boolean value) {
@@ -118,7 +118,7 @@ public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements I
     }
 
     public boolean getCollapsible() {
-        return (boolean)getProperty("collapsible");
+        return (Boolean)getProperty("collapsible");
     }
 
     public void setCollapsible(boolean value) {
@@ -182,7 +182,7 @@ public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements I
     }
 
     public boolean getNavigatable() {
-        return (boolean)getProperty("navigatable");
+        return (Boolean)getProperty("navigatable");
     }
 
     public void setNavigatable(boolean value) {
@@ -190,7 +190,7 @@ public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements I
     }
 
     public boolean getScrollable() {
-        return (boolean)getProperty("scrollable");
+        return (Boolean)getProperty("scrollable");
     }
 
     public void setScrollable(boolean value) {

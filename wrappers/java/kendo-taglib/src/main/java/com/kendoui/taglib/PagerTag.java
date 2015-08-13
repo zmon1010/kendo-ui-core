@@ -57,7 +57,7 @@ public class PagerTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -65,7 +65,7 @@ public class PagerTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public float getButtonCount() {
-        return (float)getProperty("buttonCount");
+        return (Float)getProperty("buttonCount");
     }
 
     public void setButtonCount(float value) {
@@ -77,7 +77,7 @@ public class PagerTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getInfo() {
-        return (boolean)getProperty("info");
+        return (Boolean)getProperty("info");
     }
 
     public void setInfo(boolean value) {
@@ -85,7 +85,7 @@ public class PagerTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getInput() {
-        return (boolean)getProperty("input");
+        return (Boolean)getProperty("input");
     }
 
     public void setInput(boolean value) {
@@ -101,7 +101,7 @@ public class PagerTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getNumeric() {
-        return (boolean)getProperty("numeric");
+        return (Boolean)getProperty("numeric");
     }
 
     public void setNumeric(boolean value) {
@@ -117,7 +117,7 @@ public class PagerTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getPreviousNext() {
-        return (boolean)getProperty("previousNext");
+        return (Boolean)getProperty("previousNext");
     }
 
     public void setPreviousNext(boolean value) {
@@ -125,7 +125,7 @@ public class PagerTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getRefresh() {
-        return (boolean)getProperty("refresh");
+        return (Boolean)getProperty("refresh");
     }
 
     public void setRefresh(boolean value) {

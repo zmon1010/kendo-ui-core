@@ -58,7 +58,7 @@ public class ColumnMenuTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getColumns() {
-        return (boolean)getProperty("columns");
+        return (Boolean)getProperty("columns");
     }
 
     public void setColumns(boolean value) {
@@ -66,7 +66,7 @@ public class ColumnMenuTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getFilterable() {
-        return (boolean)getProperty("filterable");
+        return (Boolean)getProperty("filterable");
     }
 
     public void setFilterable(boolean value) {
@@ -74,7 +74,7 @@ public class ColumnMenuTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getSortable() {
-        return (boolean)getProperty("sortable");
+        return (Boolean)getProperty("sortable");
     }
 
     public void setSortable(boolean value) {

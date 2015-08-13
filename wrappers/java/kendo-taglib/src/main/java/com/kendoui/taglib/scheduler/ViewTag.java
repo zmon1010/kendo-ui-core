@@ -102,7 +102,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getAllDaySlot() {
-        return (boolean)getProperty("allDaySlot");
+        return (Boolean)getProperty("allDaySlot");
     }
 
     public void setAllDaySlot(boolean value) {
@@ -118,7 +118,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getColumnWidth() {
-        return (float)getProperty("columnWidth");
+        return (Float)getProperty("columnWidth");
     }
 
     public void setColumnWidth(float value) {
@@ -142,7 +142,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {
@@ -158,7 +158,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getEventHeight() {
-        return (float)getProperty("eventHeight");
+        return (Float)getProperty("eventHeight");
     }
 
     public void setEventHeight(float value) {
@@ -182,7 +182,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getMajorTick() {
-        return (float)getProperty("majorTick");
+        return (Float)getProperty("majorTick");
     }
 
     public void setMajorTick(float value) {
@@ -198,7 +198,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getMinorTickCount() {
-        return (float)getProperty("minorTickCount");
+        return (Float)getProperty("minorTickCount");
     }
 
     public void setMinorTickCount(float value) {
@@ -214,7 +214,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getSelected() {
-        return (boolean)getProperty("selected");
+        return (Boolean)getProperty("selected");
     }
 
     public void setSelected(boolean value) {
@@ -230,7 +230,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getShowWorkHours() {
-        return (boolean)getProperty("showWorkHours");
+        return (Boolean)getProperty("showWorkHours");
     }
 
     public void setShowWorkHours(boolean value) {
@@ -270,7 +270,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getWorkWeekEnd() {
-        return (float)getProperty("workWeekEnd");
+        return (Float)getProperty("workWeekEnd");
     }
 
     public void setWorkWeekEnd(float value) {
@@ -278,7 +278,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getWorkWeekStart() {
-        return (float)getProperty("workWeekStart");
+        return (Float)getProperty("workWeekStart");
     }
 
     public void setWorkWeekStart(float value) {

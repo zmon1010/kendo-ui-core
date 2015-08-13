@@ -100,7 +100,7 @@ public class YAxisItemNotesLabelTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public float getRotation() {
-        return (float)getProperty("rotation");
+        return (Float)getProperty("rotation");
     }
 
     public void setRotation(float value) {
@@ -116,7 +116,7 @@ public class YAxisItemNotesLabelTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

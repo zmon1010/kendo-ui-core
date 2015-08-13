@@ -16,7 +16,7 @@ public class ValidationTag extends BaseTag {
     }
     
     public boolean getRequired() {
-        return (boolean)getProperty("required");
+        return (Boolean)getProperty("required");
     }
     
     public void setRequired(boolean value) {
@@ -32,7 +32,7 @@ public class ValidationTag extends BaseTag {
     }
 
     public double getMin() {
-        return (double)getProperty("min");
+        return (Double)getProperty("min");
     }
     
     public void setMin(double value) {
@@ -40,7 +40,7 @@ public class ValidationTag extends BaseTag {
     }
 
     public double getMax() {
-        return (double)getProperty("max");
+        return (Double)getProperty("max");
     }
     
     public void setMax(double value) {

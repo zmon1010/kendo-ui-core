@@ -66,7 +66,7 @@ public class BarcodeTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getChecksum() {
-        return (boolean)getProperty("checksum");
+        return (Boolean)getProperty("checksum");
     }
 
     public void setChecksum(boolean value) {
@@ -82,7 +82,7 @@ public class BarcodeTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {
@@ -114,7 +114,7 @@ public class BarcodeTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

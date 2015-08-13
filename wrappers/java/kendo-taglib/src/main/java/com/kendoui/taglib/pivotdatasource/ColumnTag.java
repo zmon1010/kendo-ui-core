@@ -50,7 +50,7 @@ public class ColumnTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getExpand() {
-        return (boolean)getProperty("expand");
+        return (Boolean)getProperty("expand");
     }
 
     public void setExpand(boolean value) {

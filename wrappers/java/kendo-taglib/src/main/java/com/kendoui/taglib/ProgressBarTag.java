@@ -60,7 +60,7 @@ public class ProgressBarTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getChunkCount() {
-        return (float)getProperty("chunkCount");
+        return (Float)getProperty("chunkCount");
     }
 
     public void setChunkCount(float value) {
@@ -68,7 +68,7 @@ public class ProgressBarTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getEnable() {
-        return (boolean)getProperty("enable");
+        return (Boolean)getProperty("enable");
     }
 
     public void setEnable(boolean value) {
@@ -76,7 +76,7 @@ public class ProgressBarTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMax() {
-        return (float)getProperty("max");
+        return (Float)getProperty("max");
     }
 
     public void setMax(float value) {
@@ -84,7 +84,7 @@ public class ProgressBarTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMin() {
-        return (float)getProperty("min");
+        return (Float)getProperty("min");
     }
 
     public void setMin(float value) {
@@ -100,7 +100,7 @@ public class ProgressBarTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getReverse() {
-        return (boolean)getProperty("reverse");
+        return (Boolean)getProperty("reverse");
     }
 
     public void setReverse(boolean value) {
@@ -108,7 +108,7 @@ public class ProgressBarTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getShowStatus() {
-        return (boolean)getProperty("showStatus");
+        return (Boolean)getProperty("showStatus");
     }
 
     public void setShowStatus(boolean value) {
@@ -124,7 +124,7 @@ public class ProgressBarTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getValue() {
-        return (float)getProperty("value");
+        return (Float)getProperty("value");
     }
 
     public void setValue(float value) {

@@ -198,7 +198,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getGap() {
-        return (float)getProperty("gap");
+        return (Float)getProperty("gap");
     }
 
     public void setGap(float value) {
@@ -254,7 +254,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -270,7 +270,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getSpacing() {
-        return (float)getProperty("spacing");
+        return (Float)getProperty("spacing");
     }
 
     public void setSpacing(float value) {
@@ -310,7 +310,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getVisibleInLegend() {
-        return (boolean)getProperty("visibleInLegend");
+        return (Boolean)getProperty("visibleInLegend");
     }
 
     public void setVisibleInLegend(boolean value) {
@@ -318,7 +318,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {
@@ -326,7 +326,7 @@ public class SeriesItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getZindex() {
-        return (float)getProperty("zIndex");
+        return (Float)getProperty("zIndex");
     }
 
     public void setZindex(float value) {

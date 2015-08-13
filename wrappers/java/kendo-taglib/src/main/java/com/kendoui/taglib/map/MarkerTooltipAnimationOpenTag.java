@@ -52,7 +52,7 @@ public class MarkerTooltipAnimationOpenTag extends  BaseTag  /* interfaces */ /*
     }
 
     public float getDuration() {
-        return (float)getProperty("duration");
+        return (Float)getProperty("duration");
     }
 
     public void setDuration(float value) {

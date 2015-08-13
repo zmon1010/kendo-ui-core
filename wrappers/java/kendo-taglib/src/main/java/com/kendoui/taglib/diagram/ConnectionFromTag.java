@@ -52,7 +52,7 @@ public class ConnectionFromTag extends  BaseTag  /* interfaces */ /* interfaces 
     }
 
     public float getX() {
-        return (float)getProperty("x");
+        return (Float)getProperty("x");
     }
 
     public void setX(float value) {
@@ -60,7 +60,7 @@ public class ConnectionFromTag extends  BaseTag  /* interfaces */ /* interfaces 
     }
 
     public float getY() {
-        return (float)getProperty("y");
+        return (Float)getProperty("y");
     }
 
     public void setY(float value) {

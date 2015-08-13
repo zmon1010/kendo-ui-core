@@ -55,7 +55,7 @@ public class GroupableTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getEnabled() {
-        return (boolean)getProperty("enabled");
+        return (Boolean)getProperty("enabled");
     }
 
     public void setEnabled(boolean value) {
@@ -63,7 +63,7 @@ public class GroupableTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getShowFooter() {
-        return (boolean)getProperty("showFooter");
+        return (Boolean)getProperty("showFooter");
     }
 
     public void setShowFooter(boolean value) {

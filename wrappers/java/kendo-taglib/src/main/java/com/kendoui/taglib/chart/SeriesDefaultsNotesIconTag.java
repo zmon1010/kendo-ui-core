@@ -64,7 +64,7 @@ public class SeriesDefaultsNotesIconTag extends  BaseTag  /* interfaces */ /* in
     }
 
     public float getSize() {
-        return (float)getProperty("size");
+        return (Float)getProperty("size");
     }
 
     public void setSize(float value) {
@@ -80,7 +80,7 @@ public class SeriesDefaultsNotesIconTag extends  BaseTag  /* interfaces */ /* in
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

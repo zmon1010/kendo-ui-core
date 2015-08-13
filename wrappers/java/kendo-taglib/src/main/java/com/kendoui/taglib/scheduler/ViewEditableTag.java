@@ -52,7 +52,7 @@ public class ViewEditableTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public boolean getCreate() {
-        return (boolean)getProperty("create");
+        return (Boolean)getProperty("create");
     }
 
     public void setCreate(boolean value) {
@@ -60,7 +60,7 @@ public class ViewEditableTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public boolean getDestroy() {
-        return (boolean)getProperty("destroy");
+        return (Boolean)getProperty("destroy");
     }
 
     public void setDestroy(boolean value) {
@@ -68,7 +68,7 @@ public class ViewEditableTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public boolean getUpdate() {
-        return (boolean)getProperty("update");
+        return (Boolean)getProperty("update");
     }
 
     public void setUpdate(boolean value) {

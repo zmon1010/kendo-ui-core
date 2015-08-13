@@ -108,7 +108,7 @@ public class SeriesItemLabelsTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public float getDistance() {
-        return (float)getProperty("distance");
+        return (Float)getProperty("distance");
     }
 
     public void setDistance(float value) {
@@ -164,7 +164,7 @@ public class SeriesItemLabelsTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

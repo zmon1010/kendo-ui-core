@@ -66,7 +66,7 @@ public class ControlsTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getAttribution() {
-        return (boolean)getProperty("attribution");
+        return (Boolean)getProperty("attribution");
     }
 
     public void setAttribution(boolean value) {
@@ -74,7 +74,7 @@ public class ControlsTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getNavigator() {
-        return (boolean)getProperty("navigator");
+        return (Boolean)getProperty("navigator");
     }
 
     public void setNavigator(boolean value) {
@@ -82,7 +82,7 @@ public class ControlsTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getZoom() {
-        return (boolean)getProperty("zoom");
+        return (Boolean)getProperty("zoom");
     }
 
     public void setZoom(boolean value) {

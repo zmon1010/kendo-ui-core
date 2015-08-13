@@ -129,7 +129,7 @@ public class SeriesItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces
     }
 
     public float getDistance() {
-        return (float)getProperty("distance");
+        return (Float)getProperty("distance");
     }
 
     public void setDistance(float value) {
@@ -153,7 +153,7 @@ public class SeriesItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces
     }
 
     public float getMargin() {
-        return (float)getProperty("margin");
+        return (Float)getProperty("margin");
     }
 
     public void setMargin(float value) {
@@ -161,7 +161,7 @@ public class SeriesItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {
@@ -185,7 +185,7 @@ public class SeriesItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

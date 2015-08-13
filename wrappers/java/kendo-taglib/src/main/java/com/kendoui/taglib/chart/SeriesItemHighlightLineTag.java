@@ -60,7 +60,7 @@ public class SeriesItemHighlightLineTag extends  BaseTag  /* interfaces *//* int
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -68,7 +68,7 @@ public class SeriesItemHighlightLineTag extends  BaseTag  /* interfaces *//* int
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

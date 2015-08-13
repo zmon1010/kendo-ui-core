@@ -100,7 +100,7 @@ public class SeriesDefaultsLabelsToTag extends  BaseTag  /* interfaces */ /* int
     }
 
     public float getMargin() {
-        return (float)getProperty("margin");
+        return (Float)getProperty("margin");
     }
 
     public void setMargin(float value) {
@@ -108,7 +108,7 @@ public class SeriesDefaultsLabelsToTag extends  BaseTag  /* interfaces */ /* int
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {
@@ -124,7 +124,7 @@ public class SeriesDefaultsLabelsToTag extends  BaseTag  /* interfaces */ /* int
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

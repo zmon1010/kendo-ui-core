@@ -68,7 +68,7 @@ public class ValueAxisItemCrosshairTooltipBorderTag extends  BaseTag  /* interfa
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

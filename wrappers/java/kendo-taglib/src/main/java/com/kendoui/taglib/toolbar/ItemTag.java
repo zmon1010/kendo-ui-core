@@ -99,7 +99,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getEnable() {
-        return (boolean)getProperty("enable");
+        return (Boolean)getProperty("enable");
     }
 
     public void setEnable(boolean value) {
@@ -112,6 +112,14 @@ public class ItemTag extends  BaseItemTag  /* interfaces */ /* interfaces */ {
 
     public void setGroup(java.lang.String value) {
         setProperty("group", value);
+    }
+
+    public boolean getHidden() {
+        return (Boolean)getProperty("hidden");
+    }
+
+    public void setHidden(boolean value) {
+        setProperty("hidden", value);
     }
 
     public java.lang.String getIcon() {
@@ -155,7 +163,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getPrimary() {
-        return (boolean)getProperty("primary");
+        return (Boolean)getProperty("primary");
     }
 
     public void setPrimary(boolean value) {
@@ -163,7 +171,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getSelected() {
-        return (boolean)getProperty("selected");
+        return (Boolean)getProperty("selected");
     }
 
     public void setSelected(boolean value) {
@@ -211,7 +219,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getTogglable() {
-        return (boolean)getProperty("togglable");
+        return (Boolean)getProperty("togglable");
     }
 
     public void setTogglable(boolean value) {
@@ -249,7 +257,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */ /* interfaces */ {
 //<< Attributes
 
     public boolean getEnabled() {
-        return (boolean)getProperty("enabled");
+        return (Boolean)getProperty("enabled");
     }
     
     public void setEnabled(boolean value) {

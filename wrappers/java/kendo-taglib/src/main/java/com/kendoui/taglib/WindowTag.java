@@ -119,7 +119,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getAutoFocus() {
-        return (boolean)getProperty("autoFocus");
+        return (Boolean)getProperty("autoFocus");
     }
 
     public void setAutoFocus(boolean value) {
@@ -135,7 +135,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getDraggable() {
-        return (boolean)getProperty("draggable");
+        return (Boolean)getProperty("draggable");
     }
 
     public void setDraggable(boolean value) {
@@ -151,7 +151,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getIframe() {
-        return (boolean)getProperty("iframe");
+        return (Boolean)getProperty("iframe");
     }
 
     public void setIframe(boolean value) {
@@ -159,7 +159,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMaxHeight() {
-        return (float)getProperty("maxHeight");
+        return (Float)getProperty("maxHeight");
     }
 
     public void setMaxHeight(float value) {
@@ -167,7 +167,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMaxWidth() {
-        return (float)getProperty("maxWidth");
+        return (Float)getProperty("maxWidth");
     }
 
     public void setMaxWidth(float value) {
@@ -175,7 +175,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMinHeight() {
-        return (float)getProperty("minHeight");
+        return (Float)getProperty("minHeight");
     }
 
     public void setMinHeight(float value) {
@@ -183,7 +183,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMinWidth() {
-        return (float)getProperty("minWidth");
+        return (Float)getProperty("minWidth");
     }
 
     public void setMinWidth(float value) {
@@ -191,7 +191,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getModal() {
-        return (boolean)getProperty("modal");
+        return (Boolean)getProperty("modal");
     }
 
     public void setModal(boolean value) {
@@ -199,7 +199,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getPinned() {
-        return (boolean)getProperty("pinned");
+        return (Boolean)getProperty("pinned");
     }
 
     public void setPinned(boolean value) {
@@ -207,7 +207,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getResizable() {
-        return (boolean)getProperty("resizable");
+        return (Boolean)getProperty("resizable");
     }
 
     public void setResizable(boolean value) {
@@ -223,7 +223,7 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

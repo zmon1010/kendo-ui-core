@@ -81,7 +81,7 @@ public class SeriesItemErrorBarsTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public boolean getEndCaps() {
-        return (boolean)getProperty("endCaps");
+        return (Boolean)getProperty("endCaps");
     }
 
     public void setEndCaps(boolean value) {

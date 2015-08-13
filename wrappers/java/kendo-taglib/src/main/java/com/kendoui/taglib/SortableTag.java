@@ -180,7 +180,7 @@ public class SortableTag extends WidgetTag /* interfaces *//* interfaces */{
     }
 
     public boolean getHoldToDrag() {
-        return (boolean) getProperty("holdToDrag");
+        return (Boolean) getProperty("holdToDrag");
     }
 
     public void setHoldToDrag(boolean value) {

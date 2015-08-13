@@ -133,7 +133,7 @@ public class SparklineTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -161,7 +161,7 @@ public class SparklineTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public float getPointWidth() {
-        return (float)getProperty("pointWidth");
+        return (Float)getProperty("pointWidth");
     }
 
     public void setPointWidth(float value) {
@@ -193,7 +193,7 @@ public class SparklineTag extends WidgetTag /* interfaces */implements DataBound
     }
 
     public boolean getTransitions() {
-        return (boolean)getProperty("transitions");
+        return (Boolean)getProperty("transitions");
     }
 
     public void setTransitions(boolean value) {

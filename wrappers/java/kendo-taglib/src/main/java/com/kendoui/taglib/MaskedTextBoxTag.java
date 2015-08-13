@@ -55,7 +55,7 @@ public class MaskedTextBoxTag extends WidgetTag /* interfaces *//* interfaces */
     }
 
     public boolean getClearPromptChar() {
-        return (boolean)getProperty("clearPromptChar");
+        return (Boolean)getProperty("clearPromptChar");
     }
 
     public void setClearPromptChar(boolean value) {
@@ -95,7 +95,7 @@ public class MaskedTextBoxTag extends WidgetTag /* interfaces *//* interfaces */
     }
 
     public boolean getUnmaskOnPost() {
-        return (boolean)getProperty("unmaskOnPost");
+        return (Boolean)getProperty("unmaskOnPost");
     }
 
     public void setUnmaskOnPost(boolean value) {

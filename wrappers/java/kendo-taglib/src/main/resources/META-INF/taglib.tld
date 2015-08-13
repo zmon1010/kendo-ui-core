@@ -19524,6 +19524,12 @@ instance.If the dependencies option is set to a JavaScript object or array the w
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>The height of the table rows. Numeric values are treated as pixels.</description>
+            <name>rowHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>If set to false the user won't be able to select tasks in the Gantt. By default selection is enabled and triggers the change event.</description>
             <name>selectable</name>
             <rtexprvalue>true</rtexprvalue>
@@ -19546,6 +19552,12 @@ instance.If the dependencies option is set to a JavaScript object or array the w
             <name>snap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the gantt tasks.The fields which can be used in the template are the task fields</description>
+            <name>taskTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole Gantt Toolbar,
@@ -21814,13 +21826,13 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the pager will display an input element which allows the user to type a specific page number. By default the page input is not displayed.</description>
+            <description>If set to true the pager will display an input element which allows the user to type a specific page number. By default the page input is not displayed.Using pageable.input and pageable.numeric at the same time is not recommended.</description>
             <name>input</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the pager will display buttons for navigating to specific pages. By default those buttons are displayed.</description>
+            <description>If set to true the pager will display buttons for navigating to specific pages. By default those buttons are displayed.Using pageable.numeric and pageable.input at the same time is not recommended.</description>
             <name>numeric</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -21830,14 +21842,6 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <name>pageSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
-        </attribute>
-        <attribute>
-            <description>If set to true the pager will display a drop-down which allows the user to pick a page size.
-By default the page size drop-down is not displayed.Can be set to an array of predefined page sizes to override the default list.
-A special all value is supported. It sets the page size to the total number of records.If a pageSize setting is provided for the data source then this value will be selected initially.</description>
-            <name>pageSizes</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>If set to true the pager will display buttons for going to the first, previous, next and last pages. By default those buttons are displayed.</description>
@@ -23065,12 +23069,6 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <name>pageSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
-        </attribute>
-        <attribute>
-            <description>Displayes a list with predefined page sizes. An array of values to be displayed can be provided.</description>
-            <name>pageSizes</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>Defines if buttons for navigating to the first, last, previous and next pages will be shown.</description>
@@ -29204,7 +29202,7 @@ If the developer wants to control the day and month order then one needs to defi
         </attribute>
         <attribute>
             <description>The delta with which the value will change when the user presses the Page Up or Page Down key (the drag
-handle must be focused). Note: The allied largeStep will also set large tick for every large step.</description>
+handle must be focused). Note: largeStep will also set a large tick for every large step.Must be a positive number, larger than smallStep.</description>
             <name>largeStep</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -29235,9 +29233,7 @@ increase and decrease buttons of a Slider.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The small step value of the Slider. The underlying value will be changed when the end user
-(1) clicks on the increase or decrease buttons of the Slider, (2) presses the arrow keys
-(the drag handle must be focused), or (3) drags the drag handle.</description>
+            <description>The small step value of the Slider. Must be a positive number, otherwise an Javascript exception will be thrown.The small step value determines the amount of Slider value change when the end user</description>
             <name>smallStep</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -40877,7 +40873,7 @@ user interactions. Setting this option to false will disable all animations.</de
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If enabled, the TabStrip will display buttons that will scroll the tabs horizontally, when they cannot fit the TabStrip width. By default scrolling is enabled.The feature requires "top" or "bottom" tabPosition.Unless disabled, scrollable must be set to a JavaScript object, which represents the scrolling configuration.</description>
+            <description>If enabled, the TabStrip will display buttons that will scroll the tabs horizontally, when they cannot fit the TabStrip width. By default scrolling is enabled.The feature requires "top" or "bottom" tabPosition.Unless disabled, scrollable must be set to a JavaScript object, which represents the scrolling configuration.See Scrollable Tabs for more information.</description>
             <name>scrollable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -41035,7 +41031,7 @@ is closed. By default not specified - uses the opening animation with reverse.</
 
 
     <tag>
-        <description>If enabled, the TabStrip will display buttons that will scroll the tabs horizontally, when they cannot fit the TabStrip width. By default scrolling is enabled.The feature requires "top" or "bottom" tabPosition.Unless disabled, scrollable must be set to a JavaScript object, which represents the scrolling configuration.</description>
+        <description>If enabled, the TabStrip will display buttons that will scroll the tabs horizontally, when they cannot fit the TabStrip width. By default scrolling is enabled.The feature requires "top" or "bottom" tabPosition.Unless disabled, scrollable must be set to a JavaScript object, which represents the scrolling configuration.See Scrollable Tabs for more information.</description>
         <name>tabStrip-scrollable</name>
         <tag-class>com.kendoui.taglib.tabstrip.ScrollableTag</tag-class>
         <body-content>empty</body-content>
@@ -41321,6 +41317,12 @@ is closed. By default not specified - uses the opening animation with reverse.</
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Determines if a button is visible or hidden. By default buttons are visible.</description>
+            <name>hidden</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.</description>
             <name>icon</name>
             <rtexprvalue>true</rtexprvalue>
@@ -41456,6 +41458,12 @@ is closed. By default not specified - uses the opening animation with reverse.</
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Determines if the button is visible or hidden. By default the buttons are visible.</description>
+            <name>hidden</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.</description>
             <name>icon</name>
             <rtexprvalue>true</rtexprvalue>
@@ -41558,6 +41566,12 @@ is closed. By default not specified - uses the opening animation with reverse.</
         <attribute>
             <description>Specifies whether the menu button is initially enabled or disabled.</description>
             <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Determines if a button is visible or hidden. By default buttons are visible.</description>
+            <name>hidden</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -42006,6 +42020,11 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>columnResize</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the column menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>columnMenuInit</name>
             <rtexprvalue>true</rtexprvalue>
@@ -42356,6 +42375,12 @@ Each table row consists of table cells (&lt;td&gt;) which represent the treelist
             <name>mode</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Enables drag&amp;drop UI of rows between parents.</description>
+            <name>move</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>The template which renders the popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know
@@ -42864,6 +42889,12 @@ This class can be used to get a reference to the button (after TreeList initiali
         <description>Fired when the user changes the order of a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>treeList-columnReorder</name>
         <tag-class>com.kendoui.taglib.treelist.ColumnReorderFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-columnResize</name>
+        <tag-class>com.kendoui.taglib.treelist.ColumnResizeFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

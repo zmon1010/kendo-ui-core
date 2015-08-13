@@ -74,7 +74,7 @@ public class PlotAreaTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {

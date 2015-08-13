@@ -60,7 +60,7 @@ public class LayerStyleStrokeTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public float getDashType() {
-        return (float)getProperty("dashType");
+        return (Float)getProperty("dashType");
     }
 
     public void setDashType(float value) {
@@ -68,7 +68,7 @@ public class LayerStyleStrokeTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -76,7 +76,7 @@ public class LayerStyleStrokeTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

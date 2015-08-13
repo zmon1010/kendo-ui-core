@@ -94,7 +94,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {
@@ -102,7 +102,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getMargin() {
-        return (float)getProperty("margin");
+        return (Float)getProperty("margin");
     }
 
     public void setMargin(float value) {
@@ -110,7 +110,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getOffsetX() {
-        return (float)getProperty("offsetX");
+        return (Float)getProperty("offsetX");
     }
 
     public void setOffsetX(float value) {
@@ -118,7 +118,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getOffsetY() {
-        return (float)getProperty("offsetY");
+        return (Float)getProperty("offsetY");
     }
 
     public void setOffsetY(float value) {
@@ -134,7 +134,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {
@@ -150,7 +150,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getReverse() {
-        return (boolean)getProperty("reverse");
+        return (Boolean)getProperty("reverse");
     }
 
     public void setReverse(boolean value) {
@@ -158,7 +158,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {
@@ -166,7 +166,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

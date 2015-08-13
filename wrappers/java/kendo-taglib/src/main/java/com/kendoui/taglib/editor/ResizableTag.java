@@ -54,7 +54,7 @@ public class ResizableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getContent() {
-        return (boolean)getProperty("content");
+        return (Boolean)getProperty("content");
     }
 
     public void setContent(boolean value) {
@@ -62,7 +62,7 @@ public class ResizableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getMax() {
-        return (float)getProperty("max");
+        return (Float)getProperty("max");
     }
 
     public void setMax(float value) {
@@ -70,7 +70,7 @@ public class ResizableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getMin() {
-        return (float)getProperty("min");
+        return (Float)getProperty("min");
     }
 
     public void setMin(float value) {
@@ -78,7 +78,7 @@ public class ResizableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getToolbar() {
-        return (boolean)getProperty("toolbar");
+        return (Boolean)getProperty("toolbar");
     }
 
     public void setToolbar(boolean value) {

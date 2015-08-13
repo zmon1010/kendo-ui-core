@@ -54,7 +54,7 @@ public class CurrentTimeMarkerTag extends  BaseTag  /* interfaces */ /* interfac
     }
 
     public float getUpdateInterval() {
-        return (float)getProperty("updateInterval");
+        return (Float)getProperty("updateInterval");
     }
 
     public void setUpdateInterval(float value) {

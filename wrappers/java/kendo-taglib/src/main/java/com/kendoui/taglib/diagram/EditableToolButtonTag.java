@@ -79,7 +79,7 @@ public class EditableToolButtonTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public boolean getEnable() {
-        return (boolean)getProperty("enable");
+        return (Boolean)getProperty("enable");
     }
 
     public void setEnable(boolean value) {
@@ -119,7 +119,7 @@ public class EditableToolButtonTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public boolean getSelected() {
-        return (boolean)getProperty("selected");
+        return (Boolean)getProperty("selected");
     }
 
     public void setSelected(boolean value) {
@@ -159,7 +159,7 @@ public class EditableToolButtonTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public boolean getTogglable() {
-        return (boolean)getProperty("togglable");
+        return (Boolean)getProperty("togglable");
     }
 
     public void setTogglable(boolean value) {

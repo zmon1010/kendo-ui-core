@@ -64,7 +64,7 @@ public class LayerDefaultsBubbleTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public float getMaxSize() {
-        return (float)getProperty("maxSize");
+        return (Float)getProperty("maxSize");
     }
 
     public void setMaxSize(float value) {
@@ -72,7 +72,7 @@ public class LayerDefaultsBubbleTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public float getMinSize() {
-        return (float)getProperty("minSize");
+        return (Float)getProperty("minSize");
     }
 
     public void setMinSize(float value) {
@@ -80,7 +80,7 @@ public class LayerDefaultsBubbleTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {

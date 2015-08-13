@@ -52,7 +52,7 @@ public class LayoutGridTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getComponentSpacingX() {
-        return (float)getProperty("componentSpacingX");
+        return (Float)getProperty("componentSpacingX");
     }
 
     public void setComponentSpacingX(float value) {
@@ -60,7 +60,7 @@ public class LayoutGridTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getComponentSpacingY() {
-        return (float)getProperty("componentSpacingY");
+        return (Float)getProperty("componentSpacingY");
     }
 
     public void setComponentSpacingY(float value) {
@@ -68,7 +68,7 @@ public class LayoutGridTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getOffsetX() {
-        return (float)getProperty("offsetX");
+        return (Float)getProperty("offsetX");
     }
 
     public void setOffsetX(float value) {
@@ -76,7 +76,7 @@ public class LayoutGridTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getOffsetY() {
-        return (float)getProperty("offsetY");
+        return (Float)getProperty("offsetY");
     }
 
     public void setOffsetY(float value) {
@@ -84,7 +84,7 @@ public class LayoutGridTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

@@ -64,7 +64,7 @@ public class CategoryAxisItemCrosshairTag extends  BaseTag  /* interfaces */ /* 
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -72,7 +72,7 @@ public class CategoryAxisItemCrosshairTag extends  BaseTag  /* interfaces */ /* 
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {
@@ -80,7 +80,7 @@ public class CategoryAxisItemCrosshairTag extends  BaseTag  /* interfaces */ /* 
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

@@ -55,7 +55,7 @@ public class FlatColorPickerTag extends WidgetTag /* interfaces *//* interfaces 
     }
 
     public boolean getAutoupdate() {
-        return (boolean)getProperty("autoupdate");
+        return (Boolean)getProperty("autoupdate");
     }
 
     public void setAutoupdate(boolean value) {
@@ -63,7 +63,7 @@ public class FlatColorPickerTag extends WidgetTag /* interfaces *//* interfaces 
     }
 
     public boolean getButtons() {
-        return (boolean)getProperty("buttons");
+        return (Boolean)getProperty("buttons");
     }
 
     public void setButtons(boolean value) {
@@ -71,7 +71,7 @@ public class FlatColorPickerTag extends WidgetTag /* interfaces *//* interfaces 
     }
 
     public boolean getOpacity() {
-        return (boolean)getProperty("opacity");
+        return (Boolean)getProperty("opacity");
     }
 
     public void setOpacity(boolean value) {
@@ -79,7 +79,7 @@ public class FlatColorPickerTag extends WidgetTag /* interfaces *//* interfaces 
     }
 
     public boolean getPreview() {
-        return (boolean)getProperty("preview");
+        return (Boolean)getProperty("preview");
     }
 
     public void setPreview(boolean value) {

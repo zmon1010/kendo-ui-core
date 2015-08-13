@@ -59,7 +59,7 @@ public class AnimationTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getCollapse() {
-        return (boolean)getProperty("collapse");
+        return (Boolean)getProperty("collapse");
     }
 
     public void setCollapse(boolean value) {
@@ -67,7 +67,7 @@ public class AnimationTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getExpand() {
-        return (boolean)getProperty("expand");
+        return (Boolean)getProperty("expand");
     }
 
     public void setExpand(boolean value) {

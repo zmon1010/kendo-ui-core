@@ -58,7 +58,7 @@ public class PdfTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getAllPages() {
-        return (boolean)getProperty("allPages");
+        return (Boolean)getProperty("allPages");
     }
 
     public void setAllPages(boolean value) {
@@ -98,7 +98,7 @@ public class PdfTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getForceProxy() {
-        return (boolean)getProperty("forceProxy");
+        return (Boolean)getProperty("forceProxy");
     }
 
     public void setForceProxy(boolean value) {
@@ -114,7 +114,7 @@ public class PdfTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getLandscape() {
-        return (boolean)getProperty("landscape");
+        return (Boolean)getProperty("landscape");
     }
 
     public void setLandscape(boolean value) {

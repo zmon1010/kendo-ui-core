@@ -160,7 +160,7 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -180,7 +180,7 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {
@@ -188,7 +188,7 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
     }
 
     public boolean getPannable() {
-        return (boolean)getProperty("pannable");
+        return (Boolean)getProperty("pannable");
     }
 
     public void setPannable(boolean value) {
@@ -196,7 +196,7 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
     }
 
     public boolean getSelectable() {
-        return (boolean)getProperty("selectable");
+        return (Boolean)getProperty("selectable");
     }
 
     public void setSelectable(boolean value) {
@@ -212,7 +212,7 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
     }
 
     public float getZoom() {
-        return (float)getProperty("zoom");
+        return (Float)getProperty("zoom");
     }
 
     public void setZoom(float value) {
@@ -220,7 +220,7 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
     }
 
     public float getZoomMax() {
-        return (float)getProperty("zoomMax");
+        return (Float)getProperty("zoomMax");
     }
 
     public void setZoomMax(float value) {
@@ -228,7 +228,7 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
     }
 
     public float getZoomMin() {
-        return (float)getProperty("zoomMin");
+        return (Float)getProperty("zoomMin");
     }
 
     public void setZoomMin(float value) {
@@ -236,7 +236,7 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
     }
 
     public float getZoomRate() {
-        return (float)getProperty("zoomRate");
+        return (Float)getProperty("zoomRate");
     }
 
     public void setZoomRate(float value) {

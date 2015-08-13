@@ -88,7 +88,7 @@ public class ResourceTag extends  BaseTag implements DataBoundWidget /* interfac
     }
 
     public boolean getMultiple() {
-        return (boolean)getProperty("multiple");
+        return (Boolean)getProperty("multiple");
     }
 
     public void setMultiple(boolean value) {
@@ -112,7 +112,7 @@ public class ResourceTag extends  BaseTag implements DataBoundWidget /* interfac
     }
 
     public boolean getValuePrimitive() {
-        return (boolean)getProperty("valuePrimitive");
+        return (Boolean)getProperty("valuePrimitive");
     }
 
     public void setValuePrimitive(boolean value) {

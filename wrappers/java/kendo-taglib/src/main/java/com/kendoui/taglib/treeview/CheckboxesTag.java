@@ -55,7 +55,7 @@ public class CheckboxesTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getCheckChildren() {
-        return (boolean)getProperty("checkChildren");
+        return (Boolean)getProperty("checkChildren");
     }
 
     public void setCheckChildren(boolean value) {

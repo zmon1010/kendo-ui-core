@@ -57,7 +57,7 @@ public class TreeMapTag extends WidgetTag /* interfaces */implements DataBoundWi
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {

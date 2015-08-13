@@ -68,7 +68,7 @@ public class ValueAxisItemNotesDataItemLabelBorderTag extends  BaseTag  /* inter
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

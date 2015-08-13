@@ -75,7 +75,7 @@ public class ButtonTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getEnable() {
-        return (boolean)getProperty("enable");
+        return (Boolean)getProperty("enable");
     }
 
     public void setEnable(boolean value) {

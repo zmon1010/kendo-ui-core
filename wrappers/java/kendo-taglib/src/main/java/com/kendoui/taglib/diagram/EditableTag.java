@@ -88,7 +88,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getDrag() {
-        return (boolean)getProperty("drag");
+        return (Boolean)getProperty("drag");
     }
 
     public void setDrag(boolean value) {
@@ -96,7 +96,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getRemove() {
-        return (boolean)getProperty("remove");
+        return (Boolean)getProperty("remove");
     }
 
     public void setRemove(boolean value) {
@@ -104,7 +104,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getResize() {
-        return (boolean)getProperty("resize");
+        return (Boolean)getProperty("resize");
     }
 
     public void setResize(boolean value) {
@@ -112,7 +112,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getRotate() {
-        return (boolean)getProperty("rotate");
+        return (Boolean)getProperty("rotate");
     }
 
     public void setRotate(boolean value) {

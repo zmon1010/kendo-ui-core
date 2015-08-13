@@ -174,7 +174,7 @@ public class NavigatorSeriesItemTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getGap() {
-        return (float)getProperty("gap");
+        return (Float)getProperty("gap");
     }
 
     public void setGap(float value) {
@@ -222,7 +222,7 @@ public class NavigatorSeriesItemTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -238,7 +238,7 @@ public class NavigatorSeriesItemTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getSpacing() {
-        return (float)getProperty("spacing");
+        return (Float)getProperty("spacing");
     }
 
     public void setSpacing(float value) {
@@ -270,7 +270,7 @@ public class NavigatorSeriesItemTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

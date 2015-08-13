@@ -96,7 +96,7 @@ public class CategoryAxisItemTitleTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public float getRotation() {
-        return (float)getProperty("rotation");
+        return (Float)getProperty("rotation");
     }
 
     public void setRotation(float value) {
@@ -112,7 +112,7 @@ public class CategoryAxisItemTitleTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

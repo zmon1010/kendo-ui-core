@@ -108,7 +108,7 @@ public class ValueAxisItemTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getMajorUnit() {
-        return (float)getProperty("majorUnit");
+        return (Float)getProperty("majorUnit");
     }
 
     public void setMajorUnit(float value) {
@@ -116,7 +116,7 @@ public class ValueAxisItemTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getMax() {
-        return (float)getProperty("max");
+        return (Float)getProperty("max");
     }
 
     public void setMax(float value) {
@@ -124,7 +124,7 @@ public class ValueAxisItemTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getMin() {
-        return (float)getProperty("min");
+        return (Float)getProperty("min");
     }
 
     public void setMin(float value) {
@@ -132,7 +132,7 @@ public class ValueAxisItemTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getMinorUnit() {
-        return (float)getProperty("minorUnit");
+        return (Float)getProperty("minorUnit");
     }
 
     public void setMinorUnit(float value) {
@@ -148,7 +148,7 @@ public class ValueAxisItemTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getNarrowRange() {
-        return (boolean)getProperty("narrowRange");
+        return (Boolean)getProperty("narrowRange");
     }
 
     public void setNarrowRange(boolean value) {
@@ -156,7 +156,7 @@ public class ValueAxisItemTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getReverse() {
-        return (boolean)getProperty("reverse");
+        return (Boolean)getProperty("reverse");
     }
 
     public void setReverse(boolean value) {
@@ -164,7 +164,7 @@ public class ValueAxisItemTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

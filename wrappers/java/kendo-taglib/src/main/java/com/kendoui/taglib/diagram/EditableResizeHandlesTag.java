@@ -72,7 +72,7 @@ public class EditableResizeHandlesTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {
@@ -80,7 +80,7 @@ public class EditableResizeHandlesTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

@@ -90,7 +90,7 @@ public class ShapeDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {
@@ -106,7 +106,7 @@ public class ShapeDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {
@@ -114,7 +114,7 @@ public class ShapeDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getMinHeight() {
-        return (float)getProperty("minHeight");
+        return (Float)getProperty("minHeight");
     }
 
     public void setMinHeight(float value) {
@@ -122,7 +122,7 @@ public class ShapeDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getMinWidth() {
-        return (float)getProperty("minWidth");
+        return (Float)getProperty("minWidth");
     }
 
     public void setMinWidth(float value) {
@@ -138,7 +138,7 @@ public class ShapeDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getSelectable() {
-        return (boolean)getProperty("selectable");
+        return (Boolean)getProperty("selectable");
     }
 
     public void setSelectable(boolean value) {
@@ -174,7 +174,7 @@ public class ShapeDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {
@@ -182,7 +182,7 @@ public class ShapeDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getX() {
-        return (float)getProperty("x");
+        return (Float)getProperty("x");
     }
 
     public void setX(float value) {
@@ -190,7 +190,7 @@ public class ShapeDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getY() {
-        return (float)getProperty("y");
+        return (Float)getProperty("y");
     }
 
     public void setY(float value) {

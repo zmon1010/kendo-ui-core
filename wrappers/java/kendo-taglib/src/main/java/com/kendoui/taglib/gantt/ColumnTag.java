@@ -50,7 +50,7 @@ public class ColumnTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {
@@ -74,7 +74,7 @@ public class ColumnTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getSortable() {
-        return (boolean)getProperty("sortable");
+        return (Boolean)getProperty("sortable");
     }
 
     public void setSortable(boolean value) {

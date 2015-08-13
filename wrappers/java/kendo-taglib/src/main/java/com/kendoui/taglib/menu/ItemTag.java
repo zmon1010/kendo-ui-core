@@ -78,7 +78,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     }
 
     public boolean getEnabled() {
-        return (boolean)getProperty("enabled");
+        return (Boolean)getProperty("enabled");
     }
 
     public void setEnabled(boolean value) {
@@ -94,7 +94,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     }
 
     public boolean getSelected() {
-        return (boolean)getProperty("selected");
+        return (Boolean)getProperty("selected");
     }
 
     public void setSelected(boolean value) {
@@ -128,7 +128,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
 //<< Attributes
 
     public boolean getSeparator() {
-        return (boolean)getProperty("separator");
+        return (Boolean)getProperty("separator");
     }
 
     public void setSeparator(boolean value) {

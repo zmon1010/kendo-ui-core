@@ -209,7 +209,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getAllowCopy() {
-        return (boolean)getProperty("allowCopy");
+        return (Boolean)getProperty("allowCopy");
     }
 
     public void setAllowCopy(boolean value) {
@@ -225,7 +225,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -233,7 +233,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getColumnMenu() {
-        return (boolean)getProperty("columnMenu");
+        return (Boolean)getProperty("columnMenu");
     }
 
     public void setColumnMenu(boolean value) {
@@ -241,7 +241,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public float getColumnResizeHandleWidth() {
-        return (float)getProperty("columnResizeHandleWidth");
+        return (Float)getProperty("columnResizeHandleWidth");
     }
 
     public void setColumnResizeHandleWidth(float value) {
@@ -261,7 +261,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {
@@ -269,7 +269,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getFilterable() {
-        return (boolean)getProperty("filterable");
+        return (Boolean)getProperty("filterable");
     }
 
     public void setFilterable(boolean value) {
@@ -277,7 +277,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getGroupable() {
-        return (boolean)getProperty("groupable");
+        return (Boolean)getProperty("groupable");
     }
 
     public void setGroupable(boolean value) {
@@ -301,7 +301,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getNavigatable() {
-        return (boolean)getProperty("navigatable");
+        return (Boolean)getProperty("navigatable");
     }
 
     public void setNavigatable(boolean value) {
@@ -309,7 +309,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getNoRecords() {
-        return (boolean)getProperty("noRecords");
+        return (Boolean)getProperty("noRecords");
     }
 
     public void setNoRecords(boolean value) {
@@ -317,7 +317,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getPageable() {
-        return (boolean)getProperty("pageable");
+        return (Boolean)getProperty("pageable");
     }
 
     public void setPageable(boolean value) {
@@ -325,7 +325,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getReorderable() {
-        return (boolean)getProperty("reorderable");
+        return (Boolean)getProperty("reorderable");
     }
 
     public void setReorderable(boolean value) {
@@ -333,7 +333,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getResizable() {
-        return (boolean)getProperty("resizable");
+        return (Boolean)getProperty("resizable");
     }
 
     public void setResizable(boolean value) {
@@ -349,7 +349,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getScrollable() {
-        return (boolean)getProperty("scrollable");
+        return (Boolean)getProperty("scrollable");
     }
 
     public void setScrollable(boolean value) {
@@ -365,7 +365,7 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
     }
 
     public boolean getSortable() {
-        return (boolean)getProperty("sortable");
+        return (Boolean)getProperty("sortable");
     }
 
     public void setSortable(boolean value) {

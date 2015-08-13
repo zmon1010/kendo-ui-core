@@ -60,7 +60,7 @@ public class SeriesItemNegativeValuesTag extends  BaseTag  /* interfaces *//* in
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

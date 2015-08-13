@@ -52,7 +52,7 @@ public class FieldTag extends BaseTag {
     }
     
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean) getProperty("editable");
     }
     
     public void setEditable(boolean value) {
@@ -60,7 +60,7 @@ public class FieldTag extends BaseTag {
     }
     
     public boolean getNullable() {
-        return (boolean)getProperty("nullable");
+        return (Boolean) getProperty("nullable");
     }
     
     public void setNullable(boolean value) {

@@ -58,7 +58,7 @@ public class ShapeDefaultsFillGradientStopTag extends  BaseTag  /* interfaces */
     }
 
     public float getOffset() {
-        return (float)getProperty("offset");
+        return (Float)getProperty("offset");
     }
 
     public void setOffset(float value) {
@@ -66,7 +66,7 @@ public class ShapeDefaultsFillGradientStopTag extends  BaseTag  /* interfaces */
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {

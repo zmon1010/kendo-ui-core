@@ -93,7 +93,7 @@ public class XAxisItemTitleTag extends  BaseTag  /* interfaces *//* interfaces *
     }
 
     public float getMargin() {
-        return (float)getProperty("margin");
+        return (Float)getProperty("margin");
     }
 
     public void setMargin(float value) {
@@ -101,7 +101,7 @@ public class XAxisItemTitleTag extends  BaseTag  /* interfaces *//* interfaces *
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {
@@ -117,7 +117,7 @@ public class XAxisItemTitleTag extends  BaseTag  /* interfaces *//* interfaces *
     }
 
     public float getRotation() {
-        return (float)getProperty("rotation");
+        return (Float)getProperty("rotation");
     }
 
     public void setRotation(float value) {
@@ -133,7 +133,7 @@ public class XAxisItemTitleTag extends  BaseTag  /* interfaces *//* interfaces *
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

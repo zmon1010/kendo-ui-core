@@ -60,7 +60,7 @@ public class SeriesItemNotesLineTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public float getLength() {
-        return (float)getProperty("length");
+        return (Float)getProperty("length");
     }
 
     public void setLength(float value) {
@@ -68,7 +68,7 @@ public class SeriesItemNotesLineTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

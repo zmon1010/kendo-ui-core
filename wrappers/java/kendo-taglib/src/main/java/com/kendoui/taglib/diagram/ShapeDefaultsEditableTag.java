@@ -58,7 +58,7 @@ public class ShapeDefaultsEditableTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public boolean getConnect() {
-        return (boolean)getProperty("connect");
+        return (Boolean)getProperty("connect");
     }
 
     public void setConnect(boolean value) {
@@ -66,7 +66,7 @@ public class ShapeDefaultsEditableTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public boolean getDrag() {
-        return (boolean)getProperty("drag");
+        return (Boolean)getProperty("drag");
     }
 
     public void setDrag(boolean value) {
@@ -74,7 +74,7 @@ public class ShapeDefaultsEditableTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public boolean getRemove() {
-        return (boolean)getProperty("remove");
+        return (Boolean)getProperty("remove");
     }
 
     public void setRemove(boolean value) {

@@ -96,7 +96,7 @@ public class SeriesDefaultsTooltipTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {
@@ -112,7 +112,7 @@ public class SeriesDefaultsTooltipTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

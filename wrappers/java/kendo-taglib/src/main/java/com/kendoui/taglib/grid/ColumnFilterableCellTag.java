@@ -71,7 +71,7 @@ public class ColumnFilterableCellTag extends  BaseTag implements DataBoundWidget
     }
 
     public float getDelay() {
-        return (float)getProperty("delay");
+        return (Float)getProperty("delay");
     }
 
     public void setDelay(float value) {
@@ -79,7 +79,7 @@ public class ColumnFilterableCellTag extends  BaseTag implements DataBoundWidget
     }
 
     public boolean getEnabled() {
-        return (boolean)getProperty("enabled");
+        return (Boolean)getProperty("enabled");
     }
 
     public void setEnabled(boolean value) {
@@ -87,7 +87,7 @@ public class ColumnFilterableCellTag extends  BaseTag implements DataBoundWidget
     }
 
     public float getInputWidth() {
-        return (float)getProperty("inputWidth");
+        return (Float)getProperty("inputWidth");
     }
 
     public void setInputWidth(float value) {
@@ -95,7 +95,7 @@ public class ColumnFilterableCellTag extends  BaseTag implements DataBoundWidget
     }
 
     public float getMinLength() {
-        return (float)getProperty("minLength");
+        return (Float)getProperty("minLength");
     }
 
     public void setMinLength(float value) {
@@ -111,7 +111,7 @@ public class ColumnFilterableCellTag extends  BaseTag implements DataBoundWidget
     }
 
     public boolean getShowOperators() {
-        return (boolean)getProperty("showOperators");
+        return (Boolean)getProperty("showOperators");
     }
 
     public void setShowOperators(boolean value) {

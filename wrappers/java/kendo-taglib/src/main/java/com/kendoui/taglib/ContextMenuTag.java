@@ -88,7 +88,7 @@ public class ContextMenuTag extends WidgetWithItemsTag /* interfaces */implement
     }
 
     public boolean getAlignToAnchor() {
-        return (boolean)getProperty("alignToAnchor");
+        return (Boolean)getProperty("alignToAnchor");
     }
 
     public void setAlignToAnchor(boolean value) {
@@ -96,7 +96,7 @@ public class ContextMenuTag extends WidgetWithItemsTag /* interfaces */implement
     }
 
     public boolean getCloseOnClick() {
-        return (boolean)getProperty("closeOnClick");
+        return (Boolean)getProperty("closeOnClick");
     }
 
     public void setCloseOnClick(boolean value) {
@@ -124,7 +124,7 @@ public class ContextMenuTag extends WidgetWithItemsTag /* interfaces */implement
     }
 
     public float getHoverDelay() {
-        return (float)getProperty("hoverDelay");
+        return (Float)getProperty("hoverDelay");
     }
 
     public void setHoverDelay(float value) {

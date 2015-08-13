@@ -86,7 +86,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getOffsetX() {
-        return (float)getProperty("offsetX");
+        return (Float)getProperty("offsetX");
     }
 
     public void setOffsetX(float value) {
@@ -94,7 +94,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getOffsetY() {
-        return (float)getProperty("offsetY");
+        return (Float)getProperty("offsetY");
     }
 
     public void setOffsetY(float value) {
@@ -118,7 +118,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getReverse() {
-        return (boolean)getProperty("reverse");
+        return (Boolean)getProperty("reverse");
     }
 
     public void setReverse(boolean value) {
@@ -126,7 +126,7 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

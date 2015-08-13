@@ -64,7 +64,7 @@ public class XAxisItemNotesIconTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public float getSize() {
-        return (float)getProperty("size");
+        return (Float)getProperty("size");
     }
 
     public void setSize(float value) {
@@ -80,7 +80,7 @@ public class XAxisItemNotesIconTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

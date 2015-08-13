@@ -82,7 +82,7 @@ public class QRCodeTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {

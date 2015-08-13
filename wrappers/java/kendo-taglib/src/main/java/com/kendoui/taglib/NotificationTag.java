@@ -66,7 +66,7 @@ public class NotificationTag extends WidgetTag /* interfaces *//* interfaces */ 
     }
 
     public float getAllowHideAfter() {
-        return (float)getProperty("allowHideAfter");
+        return (Float)getProperty("allowHideAfter");
     }
 
     public void setAllowHideAfter(float value) {
@@ -90,7 +90,7 @@ public class NotificationTag extends WidgetTag /* interfaces *//* interfaces */ 
     }
 
     public float getAutoHideAfter() {
-        return (float)getProperty("autoHideAfter");
+        return (Float)getProperty("autoHideAfter");
     }
 
     public void setAutoHideAfter(float value) {
@@ -98,7 +98,7 @@ public class NotificationTag extends WidgetTag /* interfaces *//* interfaces */ 
     }
 
     public boolean getButton() {
-        return (boolean)getProperty("button");
+        return (Boolean)getProperty("button");
     }
 
     public void setButton(boolean value) {
@@ -114,7 +114,7 @@ public class NotificationTag extends WidgetTag /* interfaces *//* interfaces */ 
     }
 
     public boolean getHideOnClick() {
-        return (boolean)getProperty("hideOnClick");
+        return (Boolean)getProperty("hideOnClick");
     }
 
     public void setHideOnClick(boolean value) {

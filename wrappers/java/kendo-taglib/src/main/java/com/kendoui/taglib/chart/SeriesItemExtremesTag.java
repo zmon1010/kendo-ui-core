@@ -92,7 +92,7 @@ public class SeriesItemExtremesTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public float getRotation() {
-        return (float)getProperty("rotation");
+        return (Float)getProperty("rotation");
     }
 
     public void setRotation(float value) {
@@ -100,7 +100,7 @@ public class SeriesItemExtremesTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public float getSize() {
-        return (float)getProperty("size");
+        return (Float)getProperty("size");
     }
 
     public void setSize(float value) {

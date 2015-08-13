@@ -58,7 +58,7 @@ public class ValueAxisItemPlotBandTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public float getFrom() {
-        return (float)getProperty("from");
+        return (Float)getProperty("from");
     }
 
     public void setFrom(float value) {
@@ -66,7 +66,7 @@ public class ValueAxisItemPlotBandTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -74,7 +74,7 @@ public class ValueAxisItemPlotBandTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public float getTo() {
-        return (float)getProperty("to");
+        return (Float)getProperty("to");
     }
 
     public void setTo(float value) {

@@ -108,7 +108,7 @@ public class SeriesDefaultsTooltipTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

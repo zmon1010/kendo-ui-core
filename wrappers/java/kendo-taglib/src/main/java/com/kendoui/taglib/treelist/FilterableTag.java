@@ -58,7 +58,7 @@ public class FilterableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getExtra() {
-        return (boolean)getProperty("extra");
+        return (Boolean)getProperty("extra");
     }
 
     public void setExtra(boolean value) {

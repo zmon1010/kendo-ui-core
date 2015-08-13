@@ -113,7 +113,7 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getAutoSync() {
-        return (boolean)getProperty("autoSync");
+        return (Boolean)getProperty("autoSync");
     }
 
     public void setAutoSync(boolean value) {
@@ -121,7 +121,7 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getBatch() {
-        return (boolean)getProperty("batch");
+        return (Boolean)getProperty("batch");
     }
 
     public void setBatch(boolean value) {
@@ -145,7 +145,7 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getPage() {
-        return (float)getProperty("page");
+        return (Float)getProperty("page");
     }
 
     public void setPage(float value) {
@@ -153,7 +153,7 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getPageSize() {
-        return (float)getProperty("pageSize");
+        return (Float)getProperty("pageSize");
     }
 
     public void setPageSize(float value) {
@@ -161,7 +161,7 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getServerAggregates() {
-        return (boolean)getProperty("serverAggregates");
+        return (Boolean)getProperty("serverAggregates");
     }
 
     public void setServerAggregates(boolean value) {
@@ -169,7 +169,7 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getServerFiltering() {
-        return (boolean)getProperty("serverFiltering");
+        return (Boolean)getProperty("serverFiltering");
     }
 
     public void setServerFiltering(boolean value) {
@@ -177,7 +177,7 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getServerGrouping() {
-        return (boolean)getProperty("serverGrouping");
+        return (Boolean)getProperty("serverGrouping");
     }
 
     public void setServerGrouping(boolean value) {
@@ -185,7 +185,7 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getServerPaging() {
-        return (boolean)getProperty("serverPaging");
+        return (Boolean)getProperty("serverPaging");
     }
 
     public void setServerPaging(boolean value) {
@@ -193,7 +193,7 @@ public class DataSourceTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getServerSorting() {
-        return (boolean)getProperty("serverSorting");
+        return (Boolean)getProperty("serverSorting");
     }
 
     public void setServerSorting(boolean value) {

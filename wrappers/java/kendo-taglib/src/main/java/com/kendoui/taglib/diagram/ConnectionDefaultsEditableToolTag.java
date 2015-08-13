@@ -99,7 +99,7 @@ public class ConnectionDefaultsEditableToolTag extends  BaseTag  /* interfaces *
     }
 
     public boolean getEnable() {
-        return (boolean)getProperty("enable");
+        return (Boolean)getProperty("enable");
     }
 
     public void setEnable(boolean value) {
@@ -163,7 +163,7 @@ public class ConnectionDefaultsEditableToolTag extends  BaseTag  /* interfaces *
     }
 
     public boolean getPrimary() {
-        return (boolean)getProperty("primary");
+        return (Boolean)getProperty("primary");
     }
 
     public void setPrimary(boolean value) {
@@ -171,7 +171,7 @@ public class ConnectionDefaultsEditableToolTag extends  BaseTag  /* interfaces *
     }
 
     public boolean getSelected() {
-        return (boolean)getProperty("selected");
+        return (Boolean)getProperty("selected");
     }
 
     public void setSelected(boolean value) {
@@ -219,7 +219,7 @@ public class ConnectionDefaultsEditableToolTag extends  BaseTag  /* interfaces *
     }
 
     public boolean getTogglable() {
-        return (boolean)getProperty("togglable");
+        return (Boolean)getProperty("togglable");
     }
 
     public void setTogglable(boolean value) {

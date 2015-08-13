@@ -84,7 +84,7 @@ public class NavigatorPaneTitleTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public float getMargin() {
-        return (float)getProperty("margin");
+        return (Float)getProperty("margin");
     }
 
     public void setMargin(float value) {
@@ -108,7 +108,7 @@ public class NavigatorPaneTitleTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

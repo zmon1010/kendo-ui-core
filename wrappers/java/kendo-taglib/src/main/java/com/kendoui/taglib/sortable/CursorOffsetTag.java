@@ -54,7 +54,7 @@ public class CursorOffsetTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public float getLeft() {
-        return (float)getProperty("left");
+        return (Float)getProperty("left");
     }
 
     public void setLeft(float value) {
@@ -62,7 +62,7 @@ public class CursorOffsetTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public float getTop() {
-        return (float)getProperty("top");
+        return (Float)getProperty("top");
     }
 
     public void setTop(float value) {

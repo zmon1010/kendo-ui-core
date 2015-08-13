@@ -72,7 +72,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getCreate() {
-        return (boolean)getProperty("create");
+        return (Boolean)getProperty("create");
     }
 
     public void setCreate(boolean value) {
@@ -80,7 +80,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getDestroy() {
-        return (boolean)getProperty("destroy");
+        return (Boolean)getProperty("destroy");
     }
 
     public void setDestroy(boolean value) {
@@ -96,7 +96,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getMove() {
-        return (boolean)getProperty("move");
+        return (Boolean)getProperty("move");
     }
 
     public void setMove(boolean value) {
@@ -104,7 +104,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getResize() {
-        return (boolean)getProperty("resize");
+        return (Boolean)getProperty("resize");
     }
 
     public void setResize(boolean value) {
@@ -120,7 +120,7 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getUpdate() {
-        return (boolean)getProperty("update");
+        return (Boolean)getProperty("update");
     }
 
     public void setUpdate(boolean value) {

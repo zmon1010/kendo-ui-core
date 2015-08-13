@@ -54,7 +54,7 @@ public class PaddingTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getBottom() {
-        return (float)getProperty("bottom");
+        return (Float)getProperty("bottom");
     }
 
     public void setBottom(float value) {
@@ -62,7 +62,7 @@ public class PaddingTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getLeft() {
-        return (float)getProperty("left");
+        return (Float)getProperty("left");
     }
 
     public void setLeft(float value) {
@@ -70,7 +70,7 @@ public class PaddingTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getRight() {
-        return (float)getProperty("right");
+        return (Float)getProperty("right");
     }
 
     public void setRight(float value) {
@@ -78,7 +78,7 @@ public class PaddingTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getTop() {
-        return (float)getProperty("top");
+        return (Float)getProperty("top");
     }
 
     public void setTop(float value) {

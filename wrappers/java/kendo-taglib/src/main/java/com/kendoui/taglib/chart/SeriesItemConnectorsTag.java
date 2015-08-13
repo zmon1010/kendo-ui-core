@@ -60,7 +60,7 @@ public class SeriesItemConnectorsTag extends  BaseTag  /* interfaces *//* interf
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {
@@ -68,7 +68,7 @@ public class SeriesItemConnectorsTag extends  BaseTag  /* interfaces *//* interf
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {
