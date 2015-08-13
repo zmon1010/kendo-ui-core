@@ -5,81 +5,52 @@
 (function(kendo) {
     var ToolBar = kendo.ui.ToolBar;
 
-    function apply(options) {
-        var className = options.text[0].toLowerCase() + options.text.substr(1);
-        return {
-            name: options.name,
-            spriteCssClass: "k-icon k-i-" + className,
-            attributes: {
-                "data-command": options.command || "PropertyChangeCommand",
-                "data-property": options.property,
-                "data-value": options.value
-            },
-            text: options.text,
-            showText: "overflow"
-        };
-    }
-
-    function toggle(options) {
-        var button = apply(options);
-        button.toggleable = true;
-        return button;
-    }
-
-    function mergeCellButton(cssClass, value, text) {
-        return {
-            spriteCssClass: "k-icon " + cssClass,
-            attributes: {
-                "data-command": "MergeCellCommand",
-                "data-value": value
-            },
-            text: text
-        };
-    }
-
     var defaultItems = [
-        { type: "buttonGroup", buttons: [
-            toggle({ text: "Bold", property: "bold", value: true }),
-            toggle({ text: "Italic", property: "italic", value: true }),
-            toggle({ text: "Underline", property: "underline", value: true })
-        ] },
-        { type: "buttonGroup", buttons: [
-            toggle({ text: "Justify-left", property: "textAlign", value: "left" }),
-            toggle({ text: "Justify-center", property: "textAlign", value: "center" }),
-            toggle({ text: "Justify-right", property: "textAlign", value: "right" })
-        ] },
-        { type: "buttonGroup", buttons: [
-            toggle({ text: "Align-top", property: "verticalAlign", value: "top" }),
-            toggle({ text: "Align-middle", property: "verticalAlign", value: "middle" }),
-            toggle({ text: "Align-bottom", property: "verticalAlign", value: "bottom" })
-        ] },
-        { type: "buttonGroup", buttons: [
-            apply({ text: "Currency", property: "format", value: "$?" }),
-            apply({ text: "Percentage", property: "format", value: "?.00%" }),
-            apply({ text: "Decrease-decimal", command: "AdjustDecimalsCommand", value: -1 }),
-            apply({ text: "Increase-decimal", command: "AdjustDecimalsCommand", value: +1 })
-        ] },
-        { type: "splitButton", spriteCssClass: "k-icon k-i-merge-cells", text: "Merge All", attributes: { "data-command": "MergeCellCommand", "data-value": "all", style: "width: 117px" }, menuButtons: [
-            mergeCellButton("k-i-merge-cells", "all", "Merge All"),
-            mergeCellButton("k-i-merge-cells", "horizontally", "Merge Horizontally"),
-            mergeCellButton("k-i-merge-cells", "vertically", "Merge Vertically"),
-            mergeCellButton("k-i-merge-cells", "unmerge", "Unmerge cells")
-        ] },
-        { type: "format", property: "format", width: 100, overflow: "never" },
-        { type: "borders", overflow: "never" },
-        { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
-        { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
-        { type: "colorPicker", property: "background", toolIcon: "k-icon k-i-background", overflow: "never" },
-        { type: "colorPicker", property: "color", toolIcon: "k-icon k-i-text", overflow: "never" }
     ];
+
+    var defaultTools = [
+        [ "bold", "italic", "underline" ],
+        [ "alignLeft", "alignCenter", "alignRight" ],
+        [ "alignTop", "alignMiddle", "alignBottom" ],
+        [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ],
+        "format", "mergeCells", "borders",
+        "fontFamily", "fontSize",
+        "backgroundColor", "textColor"
+    ];
+
+    var toolDefaults = {
+        bold:                  { type: "toggle", property: "bold", value: true },
+        italic:                { type: "toggle", property: "italic", value: true },
+        underline:             { type: "toggle", property: "underline", value: true },
+        alignLeft:             { type: "toggle", property: "textAlign", value: "left", iconClass: "justify-left" },
+        alignCenter:           { type: "toggle", property: "textAlign", value: "center", iconClass: "justify-center" },
+        alignRight:            { type: "toggle", property: "textAlign", value: "right", iconClass: "justify-right" },
+        alignTop:              { type: "toggle", property: "verticalAlign", value: "top", iconClass: "align-top" },
+        alignMiddle:           { type: "toggle", property: "verticalAlign", value: "middle", iconClass: "align-middle" },
+        alignBottom:           { type: "toggle", property: "verticalAlign", value: "bottom", iconClass: "align-bottom" },
+        formatCurrency:        { property: "format", value: "$?" },
+        formatPercentage:      { property: "format", value: "?.00%" },
+        formatDecreaseDecimal: { command: "AdjustDecimalsCommand", value: -1, iconClass: "decrease-decimal" },
+        formatIncreaseDecimal: { command: "AdjustDecimalsCommand", value: +1, iconClass: "increase-decimal" },
+        format:                { type: "format", property: "format", width: 100, overflow: "never" },
+        backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
+        textColor:             { type: "colorPicker", property: "color", iconClass: "text" },
+        mergeCells:            { type: "splitButton", command: "MergeCellCommand", value: "all", iconClass: "merge-cells",
+                                 menuButtons: [
+                                     "mergeAll", "mergeHorizontally", "mergeVertically", "unmerge"
+                                 ] },
+        borders:               { type: "borders", overflow: "never" },
+        fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
+        fontSize:              { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
+        mergeAll:              { iconClass: "merge-cells", command: "MergeCellCommand", value: "all" },
+        mergeHorizontally:     { iconClass: "merge-cells", command: "MergeCellCommand", value: "horizontally" },
+        mergeVertically:       { iconClass: "merge-cells", command: "MergeCellCommand", value: "vertically" },
+        unmerge:               { iconClass: "merge-cells", command: "MergeCellCommand", value: "unmerge" }
+    };
 
     var SpreadsheetToolBar = ToolBar.extend({
         init: function(element, options) {
-            if (options.tools) {
-                options.items = this._expandTools(options.tools);
-            } else {
-                options.items = defaultItems;
-            }
+            options.items = this._expandTools(options.tools || defaultTools);
 
             ToolBar.fn.init.call(this, element, options);
             var handleClick = this._click.bind(this);
@@ -90,28 +61,51 @@
             });
         },
         _expandTools: function(tools) {
-            var messages = {
-                bold: "Bold",
-                italic: "Italic",
-                underline: "Underline",
-                justifyLeft: "Justify left",
-                justifyCenter: "Justify center",
-                justifyRight: "Justify right"
-            };
+            var messages = this.options.messages;
 
-            function expandTool(tool) {
-                var properties = {
-                    justifyLeft: "textAlign",
-                    justifyRight: "textAlign",
-                    justifyCenter: "textAlign"
+            function expandTool(toolName) {
+                // expand string to object, add missing tool properties
+                var options = $.isPlainObject(toolName) ? toolName : toolDefaults[toolName] || {};
+                var iconClass = "k-icon k-i-" + (options.iconClass || toolName);
+                var type = options.type;
+                var typeDefaults = {
+                    splitButton: { spriteCssClass: iconClass },
+                    button: {
+                        showText: "overflow"
+                    },
+                    toggle: {
+                        toggleable: true,
+                        showText: "overflow"
+                    },
+                    colorPicker: {
+                        toolIcon: iconClass,
+                        overflow: "never"
+                    }
                 };
 
-                return toggle({
-                    name: tool,
-                    text: messages[tool],
-                    property: properties[tool] || tool,
-                    value: true
-                });
+                var tool = $.extend({
+                    name: toolName,
+                    text: messages[toolName],
+                    spriteCssClass: iconClass,
+                    attributes: {}
+                }, typeDefaults[type], options);
+
+                if (type == "splitButton") {
+                    tool.menuButtons = tool.menuButtons.map(expandTool);
+                }
+
+                if (options.command) {
+                    tool.attributes["data-command"] = options.command;
+                } else if (options.property) {
+                    tool.attributes["data-command"] = "PropertyChangeCommand";
+                    tool.attributes["data-property"] = options.property;
+                }
+
+                if (options.value) {
+                    tool.attributes["data-value"] = options.value;
+                }
+
+                return tool;
             }
 
             return tools.reduce(function(tools, tool) {
@@ -140,7 +134,7 @@
                 args.property = target.attr("data-property");
 
                 if (e.checked !== false) {
-                    args.value = target.attr("data-value");
+                    args.value = !!target.attr("data-value");
                 }
             } else if (commandType == "AdjustDecimalsCommand") {
                 args.decimals = parseInt(target.attr("data-value"), 10);
@@ -151,7 +145,23 @@
         events: ToolBar.fn.events.concat([ "execute" ]),
         options: {
             name: "SpreadsheetToolBar",
-            resizable: false
+            resizable: false,
+            messages: {
+                bold: "Bold",
+                italic: "Italic",
+                underline: "Underline",
+                alignLeft: "Align left",
+                alignCenter: "Align center",
+                alignRight: "Align right",
+                alignTop: "Align top",
+                alignMiddle: "Align middle",
+                alignBottom: "Align bottom",
+                mergeCells: "Merge cells",
+                mergeAll: "Merge all",
+                mergeHorizontally: "Merge horizontally",
+                mergeVertically: "Merge vertically",
+                unmerge: "Unmerge"
+            }
         },
         range: function() {
             return this.options.range();

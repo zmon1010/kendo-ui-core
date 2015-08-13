@@ -59,11 +59,31 @@
     test("creates multiple button groups", function() {
         createWithTools([
             [ "bold", "italic", "underline" ],
-            [ "justifyLeft", "justifyCenter", "justifyRight" ]
+            [ "alignLeft", "alignCenter", "alignRight" ]
         ]);
 
         equal(element.find(".k-toolbar .k-button").length, 6);
         equal(element.find(".k-toolbar .k-button-group").length, 2);
+    });
+
+    test("bold executes correct command", function() {
+        createWithTools([ [ "bold" ] ]);
+
+        spreadsheet._view.toolbar.bind("execute", function(e) {
+            equal(e.commandType, "PropertyChangeCommand");
+            equal(e.property, "bold");
+            equal(e.value, true);
+        });
+
+        tap($(".k-i-bold"));
+    });
+
+    test("custom tool", function() {
+        createWithTools([
+            [ { type: "button", icon: "refresh", text: "Button" } ]
+        ]);
+
+        equal($(".k-i-refresh").length, 1);
     });
 
     var tool, toolbar;
