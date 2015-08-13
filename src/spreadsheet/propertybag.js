@@ -188,9 +188,7 @@
     });
 
     kendo.spreadsheet.ALL_PROPERTIES = $.map(kendo.spreadsheet.PropertyBag.prototype.specs, function(spec) {
-        if (spec.name !== "compiledFormula") {
-            return spec.name;
-        }
+        return spec.name;
     });
 
 })(kendo);

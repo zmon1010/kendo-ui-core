@@ -678,7 +678,6 @@
     test("state translates to another range (value)", function() {
         sheet.range("B2").value("foo");
         var state = sheet.range("A1:C3").getState();
-
         sheet.range("C1:E3").setState(state);
 
         equal(sheet.range("D2").value(), "foo");
@@ -691,6 +690,21 @@
         sheet.range("C1:E3").setState(state);
 
         equal(sheet._mergedCells[1].toString(), "D2:D3");
+    });
+
+    test("state translates to another range (formulas)", function() {
+        var workbook = new kendo.spreadsheet.Workbook(defaults);
+        var sheet = workbook.activeSheet();
+        sheet.range("A1").value(1);
+        sheet.range("B1").value(2);
+
+        var range = sheet.range("A2").formula("=SUM(A1:A1)");
+        workbook.refresh({recalc: true});
+        var state = range.getState();
+
+        sheet.range("B2").setState(state);
+        workbook.refresh({recalc: true});
+        equal(sheet.range("B2").value(), 2);
     });
 
 })();

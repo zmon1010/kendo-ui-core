@@ -222,7 +222,7 @@
             var mergedCells = this._sheet._mergedCells;
 
             this._ref.forEach(function(ref) {
-                ref.intersecting(mergedCells).forEach(function(mergedRef) {
+                ref.toRangeRef().intersecting(mergedCells).forEach(function(mergedRef) {
                     mergedCells.splice(mergedCells.indexOf(mergedRef), 1);
                 });
             });
@@ -425,9 +425,9 @@
         },
 
         getState: function(propertyName) {
+            var sheet = this._sheet;
             var state = {ref: this._ref.first()};
             var properties = [propertyName];
-
             if (!propertyName) {
                 properties = kendo.spreadsheet.ALL_PROPERTIES;
                 state.mergedCells = this.intersectingMerged();
@@ -445,6 +445,11 @@
                         property = "value";
                     }
                     if (cell.formula) {
+                        if(property == "compiledFormula"){
+                            var index = sheet._grid.index(row,col);
+                            cellState.compiledFormula = sheet.compiledFormula(new CellRef(row, col));
+                            return;
+                        }
                         if (property === "value") {
                             return;
                         }
@@ -476,7 +481,13 @@
                     var range = this._sheet.range(row, col);
 
                     for (var property in cellState) {
-                        range[property](cellState[property]);
+                        if(property == "compiledFormula"){
+                            if(cellState.compiledFormula){
+                                range.formula("=" + cellState.compiledFormula.print());
+                            }
+                        }else{
+                            range[property](cellState[property]);
+                        }
                     }
                 });
 
