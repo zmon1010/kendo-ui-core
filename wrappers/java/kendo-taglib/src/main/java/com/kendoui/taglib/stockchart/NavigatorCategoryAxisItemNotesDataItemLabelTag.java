@@ -100,7 +100,7 @@ public class NavigatorCategoryAxisItemNotesDataItemLabelTag extends  BaseTag  /*
     }
 
     public float getRotation() {
-        return (float)getProperty("rotation");
+        return (Float)getProperty("rotation");
     }
 
     public void setRotation(float value) {
@@ -124,7 +124,7 @@ public class NavigatorCategoryAxisItemNotesDataItemLabelTag extends  BaseTag  /*
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

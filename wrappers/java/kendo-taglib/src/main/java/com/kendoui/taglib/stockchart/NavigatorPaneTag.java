@@ -76,7 +76,7 @@ public class NavigatorPaneTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {
@@ -84,7 +84,7 @@ public class NavigatorPaneTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getMargin() {
-        return (float)getProperty("margin");
+        return (Float)getProperty("margin");
     }
 
     public void setMargin(float value) {
@@ -100,7 +100,7 @@ public class NavigatorPaneTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {

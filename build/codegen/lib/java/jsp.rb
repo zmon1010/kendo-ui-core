@@ -198,7 +198,7 @@ COMPOSITE_OPTION_SETTER = ERB.new(%{
 
 OPTION_GETTER_AND_SETTER = ERB.new(%{
     public <%= java_type %> get<%= name.sub(/^[a-z]{1}[A-Z]{1}[a-zA-Z]*/){|c| c.downcase}.pascalize %>() {
-        return (<%= java_type %>)getProperty("<%= name %>");
+        return (<%= if java_type.include?('.') then java_type else java_type.pascalize end %>)getProperty("<%= name %>");
     }
 
     public void set<%= name.sub(/^[a-z]{1}[A-Z]{1}[a-zA-Z]*/){|c| c.downcase}.pascalize %>(<%= java_type %> value) {

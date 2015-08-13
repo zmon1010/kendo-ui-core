@@ -58,7 +58,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getEndRadialAngle() {
-        return (float)getProperty("endRadialAngle");
+        return (Float)getProperty("endRadialAngle");
     }
 
     public void setEndRadialAngle(float value) {
@@ -66,7 +66,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getHorizontalSeparation() {
-        return (float)getProperty("horizontalSeparation");
+        return (Float)getProperty("horizontalSeparation");
     }
 
     public void setHorizontalSeparation(float value) {
@@ -74,7 +74,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getIterations() {
-        return (float)getProperty("iterations");
+        return (Float)getProperty("iterations");
     }
 
     public void setIterations(float value) {
@@ -82,7 +82,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getLayerSeparation() {
-        return (float)getProperty("layerSeparation");
+        return (Float)getProperty("layerSeparation");
     }
 
     public void setLayerSeparation(float value) {
@@ -90,7 +90,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getNodeDistance() {
-        return (float)getProperty("nodeDistance");
+        return (Float)getProperty("nodeDistance");
     }
 
     public void setNodeDistance(float value) {
@@ -98,7 +98,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getRadialFirstLevelSeparation() {
-        return (float)getProperty("radialFirstLevelSeparation");
+        return (Float)getProperty("radialFirstLevelSeparation");
     }
 
     public void setRadialFirstLevelSeparation(float value) {
@@ -106,7 +106,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getRadialSeparation() {
-        return (float)getProperty("radialSeparation");
+        return (Float)getProperty("radialSeparation");
     }
 
     public void setRadialSeparation(float value) {
@@ -114,7 +114,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getStartRadialAngle() {
-        return (float)getProperty("startRadialAngle");
+        return (Float)getProperty("startRadialAngle");
     }
 
     public void setStartRadialAngle(float value) {
@@ -138,7 +138,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getUnderneathHorizontalOffset() {
-        return (float)getProperty("underneathHorizontalOffset");
+        return (Float)getProperty("underneathHorizontalOffset");
     }
 
     public void setUnderneathHorizontalOffset(float value) {
@@ -146,7 +146,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getUnderneathVerticalSeparation() {
-        return (float)getProperty("underneathVerticalSeparation");
+        return (Float)getProperty("underneathVerticalSeparation");
     }
 
     public void setUnderneathVerticalSeparation(float value) {
@@ -154,7 +154,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getUnderneathVerticalTopOffset() {
-        return (float)getProperty("underneathVerticalTopOffset");
+        return (Float)getProperty("underneathVerticalTopOffset");
     }
 
     public void setUnderneathVerticalTopOffset(float value) {
@@ -162,7 +162,7 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getVerticalSeparation() {
-        return (float)getProperty("verticalSeparation");
+        return (Float)getProperty("verticalSeparation");
     }
 
     public void setVerticalSeparation(float value) {

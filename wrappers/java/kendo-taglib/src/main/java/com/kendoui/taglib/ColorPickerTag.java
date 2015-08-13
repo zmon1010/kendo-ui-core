@@ -79,7 +79,7 @@ public class ColorPickerTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getButtons() {
-        return (boolean)getProperty("buttons");
+        return (Boolean)getProperty("buttons");
     }
 
     public void setButtons(boolean value) {
@@ -87,7 +87,7 @@ public class ColorPickerTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getColumns() {
-        return (float)getProperty("columns");
+        return (Float)getProperty("columns");
     }
 
     public void setColumns(float value) {
@@ -95,7 +95,7 @@ public class ColorPickerTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getOpacity() {
-        return (boolean)getProperty("opacity");
+        return (Boolean)getProperty("opacity");
     }
 
     public void setOpacity(boolean value) {
@@ -111,7 +111,7 @@ public class ColorPickerTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getPreview() {
-        return (boolean)getProperty("preview");
+        return (Boolean)getProperty("preview");
     }
 
     public void setPreview(boolean value) {
@@ -119,7 +119,7 @@ public class ColorPickerTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getTileSize() {
-        return (float)getProperty("tileSize");
+        return (Float)getProperty("tileSize");
     }
 
     public void setTileSize(float value) {

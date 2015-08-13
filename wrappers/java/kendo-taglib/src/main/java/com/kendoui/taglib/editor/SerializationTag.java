@@ -54,7 +54,7 @@ public class SerializationTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getEntities() {
-        return (boolean)getProperty("entities");
+        return (Boolean)getProperty("entities");
     }
 
     public void setEntities(boolean value) {
@@ -62,7 +62,7 @@ public class SerializationTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getScripts() {
-        return (boolean)getProperty("scripts");
+        return (Boolean)getProperty("scripts");
     }
 
     public void setScripts(boolean value) {
@@ -70,7 +70,7 @@ public class SerializationTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getSemantic() {
-        return (boolean)getProperty("semantic");
+        return (Boolean)getProperty("semantic");
     }
 
     public void setSemantic(boolean value) {

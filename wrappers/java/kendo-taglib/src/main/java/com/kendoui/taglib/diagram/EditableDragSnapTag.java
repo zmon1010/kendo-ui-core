@@ -52,7 +52,7 @@ public class EditableDragSnapTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public float getSize() {
-        return (float)getProperty("size");
+        return (Float)getProperty("size");
     }
 
     public void setSize(float value) {

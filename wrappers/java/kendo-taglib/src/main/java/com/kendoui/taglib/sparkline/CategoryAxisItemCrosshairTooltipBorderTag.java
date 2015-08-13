@@ -60,7 +60,7 @@ public class CategoryAxisItemCrosshairTooltipBorderTag extends  BaseTag  /* inte
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

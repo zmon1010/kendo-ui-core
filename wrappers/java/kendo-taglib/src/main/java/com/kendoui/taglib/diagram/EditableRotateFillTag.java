@@ -60,7 +60,7 @@ public class EditableRotateFillTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {

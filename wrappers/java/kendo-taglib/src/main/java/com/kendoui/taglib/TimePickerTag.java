@@ -95,7 +95,7 @@ public class TimePickerTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getInterval() {
-        return (float)getProperty("interval");
+        return (Float)getProperty("interval");
     }
 
     public void setInterval(float value) {

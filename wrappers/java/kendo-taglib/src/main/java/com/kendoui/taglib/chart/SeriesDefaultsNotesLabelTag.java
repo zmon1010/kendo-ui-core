@@ -100,7 +100,7 @@ public class SeriesDefaultsNotesLabelTag extends  BaseTag  /* interfaces */ /* i
     }
 
     public float getRotation() {
-        return (float)getProperty("rotation");
+        return (Float)getProperty("rotation");
     }
 
     public void setRotation(float value) {
@@ -116,7 +116,7 @@ public class SeriesDefaultsNotesLabelTag extends  BaseTag  /* interfaces */ /* i
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

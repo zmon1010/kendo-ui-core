@@ -124,7 +124,7 @@ public class NavigatorSeriesItemLabelsTag extends  BaseTag  /* interfaces *//* i
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

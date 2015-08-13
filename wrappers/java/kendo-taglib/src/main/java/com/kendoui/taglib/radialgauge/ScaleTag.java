@@ -69,7 +69,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getEndAngle() {
-        return (float)getProperty("endAngle");
+        return (Float)getProperty("endAngle");
     }
 
     public void setEndAngle(float value) {
@@ -77,7 +77,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getMajorUnit() {
-        return (float)getProperty("majorUnit");
+        return (Float)getProperty("majorUnit");
     }
 
     public void setMajorUnit(float value) {
@@ -85,7 +85,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getMax() {
-        return (float)getProperty("max");
+        return (Float)getProperty("max");
     }
 
     public void setMax(float value) {
@@ -93,7 +93,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getMin() {
-        return (float)getProperty("min");
+        return (Float)getProperty("min");
     }
 
     public void setMin(float value) {
@@ -101,7 +101,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getMinorUnit() {
-        return (float)getProperty("minorUnit");
+        return (Float)getProperty("minorUnit");
     }
 
     public void setMinorUnit(float value) {
@@ -109,7 +109,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getRangeDistance() {
-        return (float)getProperty("rangeDistance");
+        return (Float)getProperty("rangeDistance");
     }
 
     public void setRangeDistance(float value) {
@@ -125,7 +125,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getRangeSize() {
-        return (float)getProperty("rangeSize");
+        return (Float)getProperty("rangeSize");
     }
 
     public void setRangeSize(float value) {
@@ -133,7 +133,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getReverse() {
-        return (boolean)getProperty("reverse");
+        return (Boolean)getProperty("reverse");
     }
 
     public void setReverse(boolean value) {
@@ -141,7 +141,7 @@ public class ScaleTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public float getStartAngle() {
-        return (float)getProperty("startAngle");
+        return (Float)getProperty("startAngle");
     }
 
     public void setStartAngle(float value) {

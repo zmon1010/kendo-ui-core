@@ -62,7 +62,7 @@ public class ExcelTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getFilterable() {
-        return (boolean)getProperty("filterable");
+        return (Boolean)getProperty("filterable");
     }
 
     public void setFilterable(boolean value) {
@@ -70,7 +70,7 @@ public class ExcelTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getForceProxy() {
-        return (boolean)getProperty("forceProxy");
+        return (Boolean)getProperty("forceProxy");
     }
 
     public void setForceProxy(boolean value) {

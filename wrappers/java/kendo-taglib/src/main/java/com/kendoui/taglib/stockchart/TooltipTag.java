@@ -102,7 +102,7 @@ public class TooltipTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getShared() {
-        return (boolean)getProperty("shared");
+        return (Boolean)getProperty("shared");
     }
 
     public void setShared(boolean value) {
@@ -126,7 +126,7 @@ public class TooltipTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

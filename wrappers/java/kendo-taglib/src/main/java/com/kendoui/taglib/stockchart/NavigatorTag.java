@@ -77,7 +77,7 @@ public class NavigatorTag extends  BaseTag  /* interfaces */implements DataBound
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -97,7 +97,7 @@ public class NavigatorTag extends  BaseTag  /* interfaces */implements DataBound
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

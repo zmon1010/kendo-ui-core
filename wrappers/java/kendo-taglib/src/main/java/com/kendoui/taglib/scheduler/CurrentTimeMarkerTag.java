@@ -54,7 +54,7 @@ public class CurrentTimeMarkerTag extends  BaseTag  /* interfaces */ /* interfac
     }
 
     public float getUpdateInterval() {
-        return (float)getProperty("updateInterval");
+        return (Float)getProperty("updateInterval");
     }
 
     public void setUpdateInterval(float value) {
@@ -62,7 +62,7 @@ public class CurrentTimeMarkerTag extends  BaseTag  /* interfaces */ /* interfac
     }
 
     public boolean getUseLocalTimezone() {
-        return (boolean)getProperty("useLocalTimezone");
+        return (Boolean)getProperty("useLocalTimezone");
     }
 
     public void setUseLocalTimezone(boolean value) {

@@ -56,7 +56,7 @@ public class EditableDragTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public boolean getSnap() {
-        return (boolean)getProperty("snap");
+        return (Boolean)getProperty("snap");
     }
 
     public void setSnap(boolean value) {

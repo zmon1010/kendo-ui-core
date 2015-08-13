@@ -91,7 +91,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -135,7 +135,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public float getDelay() {
-        return (float)getProperty("delay");
+        return (Float)getProperty("delay");
     }
 
     public void setDelay(float value) {
@@ -143,7 +143,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getEnable() {
-        return (boolean)getProperty("enable");
+        return (Boolean)getProperty("enable");
     }
 
     public void setEnable(boolean value) {
@@ -183,7 +183,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {
@@ -191,7 +191,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getHighlightFirst() {
-        return (boolean)getProperty("highlightFirst");
+        return (Boolean)getProperty("highlightFirst");
     }
 
     public void setHighlightFirst(boolean value) {
@@ -207,7 +207,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public float getIndex() {
-        return (float)getProperty("index");
+        return (Float)getProperty("index");
     }
 
     public void setIndex(float value) {
@@ -215,7 +215,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public float getMinLength() {
-        return (float)getProperty("minLength");
+        return (Float)getProperty("minLength");
     }
 
     public void setMinLength(float value) {
@@ -239,7 +239,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getSuggest() {
-        return (boolean)getProperty("suggest");
+        return (Boolean)getProperty("suggest");
     }
 
     public void setSuggest(boolean value) {
@@ -271,7 +271,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getValuePrimitive() {
-        return (boolean)getProperty("valuePrimitive");
+        return (Boolean)getProperty("valuePrimitive");
     }
 
     public void setValuePrimitive(boolean value) {
@@ -279,7 +279,7 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getVirtual() {
-        return (boolean)getProperty("virtual");
+        return (Boolean)getProperty("virtual");
     }
 
     public void setVirtual(boolean value) {

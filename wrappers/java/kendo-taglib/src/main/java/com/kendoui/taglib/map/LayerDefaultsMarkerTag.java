@@ -56,7 +56,7 @@ public class LayerDefaultsMarkerTag extends  BaseTag  /* interfaces */ /* interf
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {

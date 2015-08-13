@@ -51,7 +51,7 @@ public class AsyncTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getAutoUpload() {
-        return (boolean)getProperty("autoUpload");
+        return (Boolean)getProperty("autoUpload");
     }
 
     public void setAutoUpload(boolean value) {
@@ -59,7 +59,7 @@ public class AsyncTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getBatch() {
-        return (boolean)getProperty("batch");
+        return (Boolean)getProperty("batch");
     }
 
     public void setBatch(boolean value) {
@@ -107,7 +107,7 @@ public class AsyncTag extends BaseTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getWithCredentials() {
-        return (boolean)getProperty("withCredentials");
+        return (Boolean)getProperty("withCredentials");
     }
 
     public void setWithCredentials(boolean value) {

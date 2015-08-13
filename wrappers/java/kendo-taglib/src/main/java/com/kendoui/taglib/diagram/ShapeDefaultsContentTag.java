@@ -80,7 +80,7 @@ public class ShapeDefaultsContentTag extends  BaseTag  /* interfaces */ /* inter
     }
 
     public float getFontSize() {
-        return (float)getProperty("fontSize");
+        return (Float)getProperty("fontSize");
     }
 
     public void setFontSize(float value) {

@@ -65,6 +65,14 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("mode", value);
     }
 
+    public boolean getMove() {
+        return (Boolean)getProperty("move");
+    }
+
+    public void setMove(boolean value) {
+        setProperty("move", value);
+    }
+
     public java.lang.String getTemplate() {
         return (java.lang.String)getProperty("template");
     }

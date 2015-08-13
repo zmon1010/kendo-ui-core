@@ -189,7 +189,7 @@ public class ChartTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -233,7 +233,7 @@ public class ChartTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getTransitions() {
-        return (boolean)getProperty("transitions");
+        return (Boolean)getProperty("transitions");
     }
 
     public void setTransitions(boolean value) {

@@ -66,7 +66,7 @@ public class LinearGaugeTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getTransitions() {
-        return (boolean)getProperty("transitions");
+        return (Boolean)getProperty("transitions");
     }
 
     public void setTransitions(boolean value) {

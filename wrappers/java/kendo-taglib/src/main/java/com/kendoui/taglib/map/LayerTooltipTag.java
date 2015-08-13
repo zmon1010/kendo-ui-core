@@ -58,7 +58,7 @@ public class LayerTooltipTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public boolean getAutoHide() {
-        return (boolean)getProperty("autoHide");
+        return (Boolean)getProperty("autoHide");
     }
 
     public void setAutoHide(boolean value) {
@@ -66,7 +66,7 @@ public class LayerTooltipTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public boolean getCallout() {
-        return (boolean)getProperty("callout");
+        return (Boolean)getProperty("callout");
     }
 
     public void setCallout(boolean value) {
@@ -74,7 +74,7 @@ public class LayerTooltipTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {
@@ -82,7 +82,7 @@ public class LayerTooltipTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public boolean getIframe() {
-        return (boolean)getProperty("iframe");
+        return (Boolean)getProperty("iframe");
     }
 
     public void setIframe(boolean value) {
@@ -98,7 +98,7 @@ public class LayerTooltipTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public float getShowAfter() {
-        return (float)getProperty("showAfter");
+        return (Float)getProperty("showAfter");
     }
 
     public void setShowAfter(float value) {
@@ -122,7 +122,7 @@ public class LayerTooltipTag extends  BaseTag  /* interfaces */ /* interfaces */
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

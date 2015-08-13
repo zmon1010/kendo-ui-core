@@ -60,7 +60,7 @@ public class PointerItemCapTag extends  BaseTag  /* interfaces */ /* interfaces 
     }
 
     public float getSize() {
-        return (float)getProperty("size");
+        return (Float)getProperty("size");
     }
 
     public void setSize(float value) {

@@ -60,7 +60,7 @@ public class YAxisItemNotesIconBorderTag extends  BaseTag  /* interfaces */ /* i
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

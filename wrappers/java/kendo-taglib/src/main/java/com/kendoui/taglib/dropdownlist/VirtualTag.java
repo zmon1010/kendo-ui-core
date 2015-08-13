@@ -55,7 +55,7 @@ public class VirtualTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getItemHeight() {
-        return (float)getProperty("itemHeight");
+        return (Float)getProperty("itemHeight");
     }
 
     public void setItemHeight(float value) {

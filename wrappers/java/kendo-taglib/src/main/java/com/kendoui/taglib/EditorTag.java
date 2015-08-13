@@ -131,7 +131,7 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getEncoded() {
-        return (boolean)getProperty("encoded");
+        return (Boolean)getProperty("encoded");
     }
 
     public void setEncoded(boolean value) {
@@ -139,7 +139,7 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getResizable() {
-        return (boolean)getProperty("resizable");
+        return (Boolean)getProperty("resizable");
     }
 
     public void setResizable(boolean value) {

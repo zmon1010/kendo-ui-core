@@ -68,7 +68,7 @@ public class YAxisItemLabelsBorderTag extends  BaseTag  /* interfaces *//* inter
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

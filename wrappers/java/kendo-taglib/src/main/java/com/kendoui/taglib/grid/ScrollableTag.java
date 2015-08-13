@@ -54,7 +54,7 @@ public class ScrollableTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getVirtual() {
-        return (boolean)getProperty("virtual");
+        return (Boolean)getProperty("virtual");
     }
 
     public void setVirtual(boolean value) {

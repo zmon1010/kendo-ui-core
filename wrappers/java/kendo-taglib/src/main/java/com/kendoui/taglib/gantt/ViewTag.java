@@ -94,7 +94,7 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getSelected() {
-        return (boolean)getProperty("selected");
+        return (Boolean)getProperty("selected");
     }
 
     public void setSelected(boolean value) {

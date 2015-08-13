@@ -92,7 +92,7 @@ public class PanelBarTag extends WidgetWithItemsTag /* interfaces */implements D
     }
 
     public boolean getAnimation() {
-        return (boolean)getProperty("animation");
+        return (Boolean)getProperty("animation");
     }
 
     public void setAnimation(boolean value) {

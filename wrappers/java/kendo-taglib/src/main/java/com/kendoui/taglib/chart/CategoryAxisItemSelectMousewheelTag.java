@@ -52,7 +52,7 @@ public class CategoryAxisItemSelectMousewheelTag extends  BaseTag  /* interfaces
     }
 
     public boolean getReverse() {
-        return (boolean)getProperty("reverse");
+        return (Boolean)getProperty("reverse");
     }
 
     public void setReverse(boolean value) {

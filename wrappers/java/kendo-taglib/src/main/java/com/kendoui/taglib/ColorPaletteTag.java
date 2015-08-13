@@ -55,7 +55,7 @@ public class ColorPaletteTag extends WidgetTag /* interfaces *//* interfaces */ 
     }
 
     public float getColumns() {
-        return (float)getProperty("columns");
+        return (Float)getProperty("columns");
     }
 
     public void setColumns(float value) {
@@ -71,7 +71,7 @@ public class ColorPaletteTag extends WidgetTag /* interfaces *//* interfaces */ 
     }
 
     public float getTileSize() {
-        return (float)getProperty("tileSize");
+        return (Float)getProperty("tileSize");
     }
 
     public void setTileSize(float value) {

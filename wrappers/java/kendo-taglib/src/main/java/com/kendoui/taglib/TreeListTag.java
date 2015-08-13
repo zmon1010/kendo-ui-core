@@ -115,6 +115,10 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
         setEvent("columnReorder", value.getBody());
     }
 
+    public void setColumnResize(ColumnResizeFunctionTag value) {
+        setEvent("columnResize", value.getBody());
+    }
+
     public void setColumnShow(ColumnShowFunctionTag value) {
         setEvent("columnShow", value.getBody());
     }
@@ -160,7 +164,7 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -168,7 +172,7 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getColumnMenu() {
-        return (boolean)getProperty("columnMenu");
+        return (Boolean)getProperty("columnMenu");
     }
 
     public void setColumnMenu(boolean value) {
@@ -180,7 +184,7 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {
@@ -188,7 +192,7 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getFilterable() {
-        return (boolean)getProperty("filterable");
+        return (Boolean)getProperty("filterable");
     }
 
     public void setFilterable(boolean value) {
@@ -204,7 +208,7 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getReorderable() {
-        return (boolean)getProperty("reorderable");
+        return (Boolean)getProperty("reorderable");
     }
 
     public void setReorderable(boolean value) {
@@ -212,7 +216,7 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getResizable() {
-        return (boolean)getProperty("resizable");
+        return (Boolean)getProperty("resizable");
     }
 
     public void setResizable(boolean value) {
@@ -236,7 +240,7 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getSortable() {
-        return (boolean)getProperty("sortable");
+        return (Boolean)getProperty("sortable");
     }
 
     public void setSortable(boolean value) {
@@ -333,6 +337,18 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setColumnReorder(String value) {
         setProperty("columnReorder", new Function(value));
+    }
+
+    public String getColumnResize() {
+        Function property = ((Function)getProperty("columnResize"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setColumnResize(String value) {
+        setProperty("columnResize", new Function(value));
     }
 
     public String getColumnShow() {

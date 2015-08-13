@@ -74,7 +74,7 @@ public class ShapeFillGradientTag extends  BaseTag  /* interfaces */ /* interfac
     }
 
     public float getRadius() {
-        return (float)getProperty("radius");
+        return (Float)getProperty("radius");
     }
 
     public void setRadius(float value) {

@@ -72,7 +72,7 @@ public class NavigatorHintTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

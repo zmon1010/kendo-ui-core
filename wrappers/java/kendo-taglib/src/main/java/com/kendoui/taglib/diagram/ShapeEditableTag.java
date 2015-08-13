@@ -58,7 +58,7 @@ public class ShapeEditableTag extends  BaseTag  /* interfaces */ /* interfaces *
     }
 
     public boolean getConnect() {
-        return (boolean)getProperty("connect");
+        return (Boolean)getProperty("connect");
     }
 
     public void setConnect(boolean value) {

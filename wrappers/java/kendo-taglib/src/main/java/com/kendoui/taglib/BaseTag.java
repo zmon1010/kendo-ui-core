@@ -105,9 +105,15 @@ public abstract class BaseTag extends BodyTagSupport implements Serializable {
             return "<kendo:" + (String) tagName.invoke(null, (Object[]) null)
                     + ">";
 
-        } catch (NoSuchMethodException | SecurityException
-                | IllegalAccessException | IllegalArgumentException
-                | InvocationTargetException e) {
+        } catch (NoSuchMethodException e) {
+            return "";
+        } catch (SecurityException e) {
+            return "";
+        } catch (IllegalAccessException e) {
+            return "";
+        } catch (IllegalArgumentException e) {
+            return "";
+        } catch (InvocationTargetException e) {
             return "";
         }
     }

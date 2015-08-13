@@ -58,7 +58,7 @@ public class EditableToolMenuButtonTag extends  BaseTag  /* interfaces */ /* int
     }
 
     public boolean getEnable() {
-        return (boolean)getProperty("enable");
+        return (Boolean)getProperty("enable");
     }
 
     public void setEnable(boolean value) {

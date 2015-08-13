@@ -68,7 +68,7 @@ public class ResponsivePanelTag extends WidgetTag /* interfaces *//* interfaces 
     }
 
     public boolean getAutoClose() {
-        return (boolean)getProperty("autoClose");
+        return (Boolean)getProperty("autoClose");
     }
 
     public void setAutoClose(boolean value) {
@@ -76,7 +76,7 @@ public class ResponsivePanelTag extends WidgetTag /* interfaces *//* interfaces 
     }
 
     public float getBreakpoint() {
-        return (float)getProperty("breakpoint");
+        return (Float)getProperty("breakpoint");
     }
 
     public void setBreakpoint(float value) {

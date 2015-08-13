@@ -162,7 +162,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -170,7 +170,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public float getColumnResizeHandleWidth() {
-        return (float)getProperty("columnResizeHandleWidth");
+        return (Float)getProperty("columnResizeHandleWidth");
     }
 
     public void setColumnResizeHandleWidth(float value) {
@@ -178,7 +178,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getCurrentTimeMarker() {
-        return (boolean)getProperty("currentTimeMarker");
+        return (Boolean)getProperty("currentTimeMarker");
     }
 
     public void setCurrentTimeMarker(boolean value) {
@@ -198,7 +198,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {
@@ -214,7 +214,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public float getHourSpan() {
-        return (float)getProperty("hourSpan");
+        return (Float)getProperty("hourSpan");
     }
 
     public void setHourSpan(float value) {
@@ -230,7 +230,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getNavigatable() {
-        return (boolean)getProperty("navigatable");
+        return (Boolean)getProperty("navigatable");
     }
 
     public void setNavigatable(boolean value) {
@@ -238,7 +238,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getResizable() {
-        return (boolean)getProperty("resizable");
+        return (Boolean)getProperty("resizable");
     }
 
     public void setResizable(boolean value) {
@@ -254,7 +254,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getSelectable() {
-        return (boolean)getProperty("selectable");
+        return (Boolean)getProperty("selectable");
     }
 
     public void setSelectable(boolean value) {
@@ -262,7 +262,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getShowWorkDays() {
-        return (boolean)getProperty("showWorkDays");
+        return (Boolean)getProperty("showWorkDays");
     }
 
     public void setShowWorkDays(boolean value) {
@@ -270,7 +270,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getShowWorkHours() {
-        return (boolean)getProperty("showWorkHours");
+        return (Boolean)getProperty("showWorkHours");
     }
 
     public void setShowWorkHours(boolean value) {
@@ -278,7 +278,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public boolean getSnap() {
-        return (boolean)getProperty("snap");
+        return (Boolean)getProperty("snap");
     }
 
     public void setSnap(boolean value) {
@@ -318,7 +318,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public float getWorkWeekEnd() {
-        return (float)getProperty("workWeekEnd");
+        return (Float)getProperty("workWeekEnd");
     }
 
     public void setWorkWeekEnd(float value) {
@@ -326,7 +326,7 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     }
 
     public float getWorkWeekStart() {
-        return (float)getProperty("workWeekStart");
+        return (Float)getProperty("workWeekStart");
     }
 
     public void setWorkWeekStart(float value) {

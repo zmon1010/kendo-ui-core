@@ -68,7 +68,7 @@ public class ValueAxisItemTitleBorderTag extends  BaseTag  /* interfaces *//* in
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

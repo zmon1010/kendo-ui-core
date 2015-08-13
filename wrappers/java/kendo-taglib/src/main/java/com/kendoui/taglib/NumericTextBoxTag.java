@@ -68,7 +68,7 @@ public class NumericTextBoxTag extends WidgetTag /* interfaces *//* interfaces *
     }
 
     public float getDecimals() {
-        return (float)getProperty("decimals");
+        return (Float)getProperty("decimals");
     }
 
     public void setDecimals(float value) {
@@ -92,7 +92,7 @@ public class NumericTextBoxTag extends WidgetTag /* interfaces *//* interfaces *
     }
 
     public float getMax() {
-        return (float)getProperty("max");
+        return (Float)getProperty("max");
     }
 
     public void setMax(float value) {
@@ -100,7 +100,7 @@ public class NumericTextBoxTag extends WidgetTag /* interfaces *//* interfaces *
     }
 
     public float getMin() {
-        return (float)getProperty("min");
+        return (Float)getProperty("min");
     }
 
     public void setMin(float value) {
@@ -116,7 +116,7 @@ public class NumericTextBoxTag extends WidgetTag /* interfaces *//* interfaces *
     }
 
     public boolean getSpinners() {
-        return (boolean)getProperty("spinners");
+        return (Boolean)getProperty("spinners");
     }
 
     public void setSpinners(boolean value) {
@@ -124,7 +124,7 @@ public class NumericTextBoxTag extends WidgetTag /* interfaces *//* interfaces *
     }
 
     public float getStep() {
-        return (float)getProperty("step");
+        return (Float)getProperty("step");
     }
 
     public void setStep(float value) {
@@ -140,7 +140,7 @@ public class NumericTextBoxTag extends WidgetTag /* interfaces *//* interfaces *
     }
 
     public float getValue() {
-        return (float)getProperty("value");
+        return (Float)getProperty("value");
     }
 
     public void setValue(float value) {

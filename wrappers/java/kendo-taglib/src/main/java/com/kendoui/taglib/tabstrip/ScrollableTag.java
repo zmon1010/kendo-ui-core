@@ -54,7 +54,7 @@ public class ScrollableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public float getDistance() {
-        return (float)getProperty("distance");
+        return (Float)getProperty("distance");
     }
 
     public void setDistance(float value) {

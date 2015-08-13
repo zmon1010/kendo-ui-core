@@ -158,7 +158,7 @@ public class ListViewTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -178,7 +178,7 @@ public class ListViewTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getNavigatable() {
-        return (boolean)getProperty("navigatable");
+        return (Boolean)getProperty("navigatable");
     }
 
     public void setNavigatable(boolean value) {
@@ -186,7 +186,7 @@ public class ListViewTag extends WidgetTag /* interfaces */implements DataBoundW
     }
 
     public boolean getPageable() {
-        return (boolean)getProperty("pageable");
+        return (Boolean)getProperty("pageable");
     }
 
     public void setPageable(boolean value) {

@@ -96,7 +96,7 @@ public class NavigatorCategoryAxisItemCrosshairTooltipTag extends  BaseTag  /* i
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {
@@ -112,7 +112,7 @@ public class NavigatorCategoryAxisItemCrosshairTooltipTag extends  BaseTag  /* i
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

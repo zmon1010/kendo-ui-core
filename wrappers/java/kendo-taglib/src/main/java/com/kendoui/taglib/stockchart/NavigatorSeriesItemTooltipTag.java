@@ -108,7 +108,7 @@ public class NavigatorSeriesItemTooltipTag extends  BaseTag  /* interfaces *//* 
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

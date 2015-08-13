@@ -74,7 +74,7 @@ public class PointerItemTag extends  BaseTag  /* interfaces */ /* interfaces */ 
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -90,7 +90,7 @@ public class PointerItemTag extends  BaseTag  /* interfaces */ /* interfaces */ 
     }
 
     public float getSize() {
-        return (float)getProperty("size");
+        return (Float)getProperty("size");
     }
 
     public void setSize(float value) {
@@ -98,7 +98,7 @@ public class PointerItemTag extends  BaseTag  /* interfaces */ /* interfaces */ 
     }
 
     public float getValue() {
-        return (float)getProperty("value");
+        return (Float)getProperty("value");
     }
 
     public void setValue(float value) {

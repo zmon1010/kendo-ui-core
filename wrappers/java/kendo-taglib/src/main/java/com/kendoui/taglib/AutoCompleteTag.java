@@ -99,7 +99,7 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
     }
 
     public float getDelay() {
-        return (float)getProperty("delay");
+        return (Float)getProperty("delay");
     }
 
     public void setDelay(float value) {
@@ -107,7 +107,7 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
     }
 
     public boolean getEnable() {
-        return (boolean)getProperty("enable");
+        return (Boolean)getProperty("enable");
     }
 
     public void setEnable(boolean value) {
@@ -147,7 +147,7 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {
@@ -155,7 +155,7 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
     }
 
     public boolean getHighlightFirst() {
-        return (boolean)getProperty("highlightFirst");
+        return (Boolean)getProperty("highlightFirst");
     }
 
     public void setHighlightFirst(boolean value) {
@@ -163,7 +163,7 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
     }
 
     public boolean getIgnoreCase() {
-        return (boolean)getProperty("ignoreCase");
+        return (Boolean)getProperty("ignoreCase");
     }
 
     public void setIgnoreCase(boolean value) {
@@ -171,7 +171,7 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
     }
 
     public float getMinLength() {
-        return (float)getProperty("minLength");
+        return (Float)getProperty("minLength");
     }
 
     public void setMinLength(float value) {
@@ -203,7 +203,7 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
     }
 
     public boolean getSuggest() {
-        return (boolean)getProperty("suggest");
+        return (Boolean)getProperty("suggest");
     }
 
     public void setSuggest(boolean value) {
@@ -219,7 +219,7 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
     }
 
     public boolean getValuePrimitive() {
-        return (boolean)getProperty("valuePrimitive");
+        return (Boolean)getProperty("valuePrimitive");
     }
 
     public void setValuePrimitive(boolean value) {
@@ -227,7 +227,7 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
     }
 
     public boolean getVirtual() {
-        return (boolean)getProperty("virtual");
+        return (Boolean)getProperty("virtual");
     }
 
     public void setVirtual(boolean value) {

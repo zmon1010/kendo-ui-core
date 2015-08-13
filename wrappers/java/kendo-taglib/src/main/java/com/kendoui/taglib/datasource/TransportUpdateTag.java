@@ -60,7 +60,7 @@ public class TransportUpdateTag extends  BaseTag  /* interfaces *//* interfaces 
     }
 
     public boolean getCache() {
-        return (boolean)getProperty("cache");
+        return (Boolean)getProperty("cache");
     }
 
     public void setCache(boolean value) {

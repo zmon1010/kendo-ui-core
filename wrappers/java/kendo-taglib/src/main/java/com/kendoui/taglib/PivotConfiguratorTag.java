@@ -58,7 +58,7 @@ public class PivotConfiguratorTag extends WidgetTag /* interfaces */implements D
     }
 
     public boolean getFilterable() {
-        return (boolean)getProperty("filterable");
+        return (Boolean)getProperty("filterable");
     }
 
     public void setFilterable(boolean value) {
@@ -74,7 +74,7 @@ public class PivotConfiguratorTag extends WidgetTag /* interfaces */implements D
     }
 
     public boolean getSortable() {
-        return (boolean)getProperty("sortable");
+        return (Boolean)getProperty("sortable");
     }
 
     public void setSortable(boolean value) {

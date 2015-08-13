@@ -64,7 +64,7 @@ public class ValueAxisItemCrosshairTag extends  BaseTag  /* interfaces */ /* int
     }
 
     public float getDashType() {
-        return (float)getProperty("dashType");
+        return (Float)getProperty("dashType");
     }
 
     public void setDashType(float value) {
@@ -72,7 +72,7 @@ public class ValueAxisItemCrosshairTag extends  BaseTag  /* interfaces */ /* int
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -80,7 +80,7 @@ public class ValueAxisItemCrosshairTag extends  BaseTag  /* interfaces */ /* int
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {
@@ -88,7 +88,7 @@ public class ValueAxisItemCrosshairTag extends  BaseTag  /* interfaces */ /* int
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

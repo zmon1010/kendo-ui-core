@@ -64,7 +64,7 @@ public class PointerItemTrackTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -72,7 +72,7 @@ public class PointerItemTrackTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public float getSize() {
-        return (float)getProperty("size");
+        return (Float)getProperty("size");
     }
 
     public void setSize(float value) {
@@ -80,7 +80,7 @@ public class PointerItemTrackTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

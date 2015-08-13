@@ -109,7 +109,7 @@ public class ValueAxisItemLabelsTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getMargin() {
-        return (float)getProperty("margin");
+        return (Float)getProperty("margin");
     }
 
     public void setMargin(float value) {
@@ -117,7 +117,7 @@ public class ValueAxisItemLabelsTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public boolean getMirror() {
-        return (boolean)getProperty("mirror");
+        return (Boolean)getProperty("mirror");
     }
 
     public void setMirror(boolean value) {
@@ -125,7 +125,7 @@ public class ValueAxisItemLabelsTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getPadding() {
-        return (float)getProperty("padding");
+        return (Float)getProperty("padding");
     }
 
     public void setPadding(float value) {
@@ -141,7 +141,7 @@ public class ValueAxisItemLabelsTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getSkip() {
-        return (float)getProperty("skip");
+        return (Float)getProperty("skip");
     }
 
     public void setSkip(float value) {
@@ -149,7 +149,7 @@ public class ValueAxisItemLabelsTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getStep() {
-        return (float)getProperty("step");
+        return (Float)getProperty("step");
     }
 
     public void setStep(float value) {
@@ -165,7 +165,7 @@ public class ValueAxisItemLabelsTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

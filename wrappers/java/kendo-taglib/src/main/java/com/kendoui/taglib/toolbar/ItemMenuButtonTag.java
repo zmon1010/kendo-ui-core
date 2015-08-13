@@ -58,11 +58,19 @@ public class ItemMenuButtonTag extends  BaseTag  /* interfaces */ /* interfaces 
     }
 
     public boolean getEnable() {
-        return (boolean)getProperty("enable");
+        return (Boolean)getProperty("enable");
     }
 
     public void setEnable(boolean value) {
         setProperty("enable", value);
+    }
+
+    public boolean getHidden() {
+        return (Boolean)getProperty("hidden");
+    }
+
+    public void setHidden(boolean value) {
+        setProperty("hidden", value);
     }
 
     public java.lang.String getIcon() {

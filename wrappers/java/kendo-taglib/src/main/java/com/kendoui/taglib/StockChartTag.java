@@ -176,7 +176,7 @@ public class StockChartTag extends WidgetTag /* interfaces */implements DataBoun
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -220,7 +220,7 @@ public class StockChartTag extends WidgetTag /* interfaces */implements DataBoun
     }
 
     public boolean getTransitions() {
-        return (boolean)getProperty("transitions");
+        return (Boolean)getProperty("transitions");
     }
 
     public void setTransitions(boolean value) {

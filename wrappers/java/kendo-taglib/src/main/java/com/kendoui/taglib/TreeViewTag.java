@@ -126,7 +126,7 @@ public class TreeViewTag extends WidgetWithItemsTag /* interfaces */implements D
     }
 
     public boolean getAnimation() {
-        return (boolean)getProperty("animation");
+        return (Boolean)getProperty("animation");
     }
 
     public void setAnimation(boolean value) {
@@ -134,7 +134,7 @@ public class TreeViewTag extends WidgetWithItemsTag /* interfaces */implements D
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -142,7 +142,7 @@ public class TreeViewTag extends WidgetWithItemsTag /* interfaces */implements D
     }
 
     public boolean getAutoScroll() {
-        return (boolean)getProperty("autoScroll");
+        return (Boolean)getProperty("autoScroll");
     }
 
     public void setAutoScroll(boolean value) {
@@ -150,7 +150,7 @@ public class TreeViewTag extends WidgetWithItemsTag /* interfaces */implements D
     }
 
     public boolean getCheckboxes() {
-        return (boolean)getProperty("checkboxes");
+        return (Boolean)getProperty("checkboxes");
     }
 
     public void setCheckboxes(boolean value) {
@@ -194,7 +194,7 @@ public class TreeViewTag extends WidgetWithItemsTag /* interfaces */implements D
     }
 
     public boolean getDragAndDrop() {
-        return (boolean)getProperty("dragAndDrop");
+        return (Boolean)getProperty("dragAndDrop");
     }
 
     public void setDragAndDrop(boolean value) {
@@ -202,7 +202,7 @@ public class TreeViewTag extends WidgetWithItemsTag /* interfaces */implements D
     }
 
     public boolean getLoadOnDemand() {
-        return (boolean)getProperty("loadOnDemand");
+        return (Boolean)getProperty("loadOnDemand");
     }
 
     public void setLoadOnDemand(boolean value) {

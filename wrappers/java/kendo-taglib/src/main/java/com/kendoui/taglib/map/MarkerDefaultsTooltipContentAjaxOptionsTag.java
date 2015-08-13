@@ -59,7 +59,7 @@ public class MarkerDefaultsTooltipContentAjaxOptionsTag extends  BaseTag  /* int
     }
 
     public boolean getCache() {
-        return (boolean)getProperty("cache");
+        return (Boolean)getProperty("cache");
     }
 
     public void setCache(boolean value) {

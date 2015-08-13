@@ -54,7 +54,7 @@ public class SortableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getAllowUnsort() {
-        return (boolean)getProperty("allowUnsort");
+        return (Boolean)getProperty("allowUnsort");
     }
 
     public void setAllowUnsort(boolean value) {

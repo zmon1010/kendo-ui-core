@@ -92,7 +92,7 @@ public class ConnectionTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {

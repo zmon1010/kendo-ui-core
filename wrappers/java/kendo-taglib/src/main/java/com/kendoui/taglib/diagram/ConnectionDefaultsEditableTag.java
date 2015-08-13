@@ -58,7 +58,7 @@ public class ConnectionDefaultsEditableTag extends  BaseTag  /* interfaces */ /*
     }
 
     public boolean getDrag() {
-        return (boolean)getProperty("drag");
+        return (Boolean)getProperty("drag");
     }
 
     public void setDrag(boolean value) {
@@ -66,7 +66,7 @@ public class ConnectionDefaultsEditableTag extends  BaseTag  /* interfaces */ /*
     }
 
     public boolean getRemove() {
-        return (boolean)getProperty("remove");
+        return (Boolean)getProperty("remove");
     }
 
     public void setRemove(boolean value) {

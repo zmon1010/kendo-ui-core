@@ -67,7 +67,7 @@ public class ColumnFilterableTag extends  BaseTag implements DataBoundWidget /* 
     }
 
     public boolean getCheckAll() {
-        return (boolean)getProperty("checkAll");
+        return (Boolean)getProperty("checkAll");
     }
 
     public void setCheckAll(boolean value) {
@@ -91,7 +91,7 @@ public class ColumnFilterableTag extends  BaseTag implements DataBoundWidget /* 
     }
 
     public boolean getMulti() {
-        return (boolean)getProperty("multi");
+        return (Boolean)getProperty("multi");
     }
 
     public void setMulti(boolean value) {

@@ -60,7 +60,7 @@ public class XAxisItemMajorTicksTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getSize() {
-        return (float)getProperty("size");
+        return (Float)getProperty("size");
     }
 
     public void setSize(float value) {
@@ -68,7 +68,7 @@ public class XAxisItemMajorTicksTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getSkip() {
-        return (float)getProperty("skip");
+        return (Float)getProperty("skip");
     }
 
     public void setSkip(float value) {
@@ -76,7 +76,7 @@ public class XAxisItemMajorTicksTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getStep() {
-        return (float)getProperty("step");
+        return (Float)getProperty("step");
     }
 
     public void setStep(float value) {
@@ -84,7 +84,7 @@ public class XAxisItemMajorTicksTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {
@@ -92,7 +92,7 @@ public class XAxisItemMajorTicksTag extends  BaseTag  /* interfaces *//* interfa
     }
 
     public float getWidth() {
-        return (float)getProperty("width");
+        return (Float)getProperty("width");
     }
 
     public void setWidth(float value) {

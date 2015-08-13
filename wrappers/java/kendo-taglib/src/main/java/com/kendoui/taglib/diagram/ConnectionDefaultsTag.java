@@ -82,7 +82,7 @@ public class ConnectionDefaultsTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public boolean getEditable() {
-        return (boolean)getProperty("editable");
+        return (Boolean)getProperty("editable");
     }
 
     public void setEditable(boolean value) {
@@ -98,7 +98,7 @@ public class ConnectionDefaultsTag extends  BaseTag  /* interfaces */ /* interfa
     }
 
     public boolean getSelectable() {
-        return (boolean)getProperty("selectable");
+        return (Boolean)getProperty("selectable");
     }
 
     public void setSelectable(boolean value) {

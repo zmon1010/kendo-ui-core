@@ -124,7 +124,7 @@ public class XAxisItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getMajorUnit() {
-        return (float)getProperty("majorUnit");
+        return (Float)getProperty("majorUnit");
     }
 
     public void setMajorUnit(float value) {
@@ -148,7 +148,7 @@ public class XAxisItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getMinorUnit() {
-        return (float)getProperty("minorUnit");
+        return (Float)getProperty("minorUnit");
     }
 
     public void setMinorUnit(float value) {
@@ -164,7 +164,7 @@ public class XAxisItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getNarrowRange() {
-        return (boolean)getProperty("narrowRange");
+        return (Boolean)getProperty("narrowRange");
     }
 
     public void setNarrowRange(boolean value) {
@@ -180,7 +180,7 @@ public class XAxisItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getReverse() {
-        return (boolean)getProperty("reverse");
+        return (Boolean)getProperty("reverse");
     }
 
     public void setReverse(boolean value) {
@@ -188,7 +188,7 @@ public class XAxisItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getStartAngle() {
-        return (float)getProperty("startAngle");
+        return (Float)getProperty("startAngle");
     }
 
     public void setStartAngle(float value) {
@@ -204,7 +204,7 @@ public class XAxisItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {

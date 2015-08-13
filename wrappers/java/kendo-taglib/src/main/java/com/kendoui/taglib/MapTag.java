@@ -134,7 +134,7 @@ public class MapTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMaxZoom() {
-        return (float)getProperty("maxZoom");
+        return (Float)getProperty("maxZoom");
     }
 
     public void setMaxZoom(float value) {
@@ -142,7 +142,7 @@ public class MapTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMinSize() {
-        return (float)getProperty("minSize");
+        return (Float)getProperty("minSize");
     }
 
     public void setMinSize(float value) {
@@ -150,7 +150,7 @@ public class MapTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getMinZoom() {
-        return (float)getProperty("minZoom");
+        return (Float)getProperty("minZoom");
     }
 
     public void setMinZoom(float value) {
@@ -158,7 +158,7 @@ public class MapTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getPannable() {
-        return (boolean)getProperty("pannable");
+        return (Boolean)getProperty("pannable");
     }
 
     public void setPannable(boolean value) {
@@ -166,7 +166,7 @@ public class MapTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getWraparound() {
-        return (boolean)getProperty("wraparound");
+        return (Boolean)getProperty("wraparound");
     }
 
     public void setWraparound(boolean value) {
@@ -174,7 +174,7 @@ public class MapTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public float getZoom() {
-        return (float)getProperty("zoom");
+        return (Float)getProperty("zoom");
     }
 
     public void setZoom(float value) {
@@ -182,7 +182,7 @@ public class MapTag extends WidgetTag /* interfaces *//* interfaces */ {
     }
 
     public boolean getZoomable() {
-        return (boolean)getProperty("zoomable");
+        return (Boolean)getProperty("zoomable");
     }
 
     public void setZoomable(boolean value) {

@@ -60,7 +60,7 @@ public class LayerDefaultsTileTag extends  BaseTag  /* interfaces */ /* interfac
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {

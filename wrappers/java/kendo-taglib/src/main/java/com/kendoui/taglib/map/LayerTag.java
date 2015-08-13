@@ -64,7 +64,7 @@ public class LayerTag extends BaseTag implements DataBoundWidget {
     }
 
     public boolean getAutoBind() {
-        return (boolean)getProperty("autoBind");
+        return (Boolean)getProperty("autoBind");
     }
 
     public void setAutoBind(boolean value) {
@@ -108,7 +108,7 @@ public class LayerTag extends BaseTag implements DataBoundWidget {
     }
 
     public float getMaxSize() {
-        return (float)getProperty("maxSize");
+        return (Float)getProperty("maxSize");
     }
 
     public void setMaxSize(float value) {
@@ -116,7 +116,7 @@ public class LayerTag extends BaseTag implements DataBoundWidget {
     }
 
     public float getMinSize() {
-        return (float)getProperty("minSize");
+        return (Float)getProperty("minSize");
     }
 
     public void setMinSize(float value) {
@@ -124,7 +124,7 @@ public class LayerTag extends BaseTag implements DataBoundWidget {
     }
 
     public float getOpacity() {
-        return (float)getProperty("opacity");
+        return (Float)getProperty("opacity");
     }
 
     public void setOpacity(float value) {
@@ -188,7 +188,7 @@ public class LayerTag extends BaseTag implements DataBoundWidget {
     }
 
     public float getZindex() {
-        return (float)getProperty("zIndex");
+        return (Float)getProperty("zIndex");
     }
 
     public void setZindex(float value) {

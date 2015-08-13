@@ -148,7 +148,7 @@ public class CategoryAxisItemTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public boolean getJustified() {
-        return (boolean)getProperty("justified");
+        return (Boolean)getProperty("justified");
     }
 
     public void setJustified(boolean value) {
@@ -164,7 +164,7 @@ public class CategoryAxisItemTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public float getMaxDateGroups() {
-        return (float)getProperty("maxDateGroups");
+        return (Float)getProperty("maxDateGroups");
     }
 
     public void setMaxDateGroups(float value) {
@@ -188,7 +188,7 @@ public class CategoryAxisItemTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public boolean getReverse() {
-        return (boolean)getProperty("reverse");
+        return (Boolean)getProperty("reverse");
     }
 
     public void setReverse(boolean value) {
@@ -196,7 +196,7 @@ public class CategoryAxisItemTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public boolean getRoundToBaseUnit() {
-        return (boolean)getProperty("roundToBaseUnit");
+        return (Boolean)getProperty("roundToBaseUnit");
     }
 
     public void setRoundToBaseUnit(boolean value) {
@@ -212,7 +212,7 @@ public class CategoryAxisItemTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public boolean getVisible() {
-        return (boolean)getProperty("visible");
+        return (Boolean)getProperty("visible");
     }
 
     public void setVisible(boolean value) {
@@ -220,7 +220,7 @@ public class CategoryAxisItemTag extends  BaseTag  /* interfaces */ /* interface
     }
 
     public float getWeekStartDay() {
-        return (float)getProperty("weekStartDay");
+        return (Float)getProperty("weekStartDay");
     }
 
     public void setWeekStartDay(float value) {

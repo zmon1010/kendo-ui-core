@@ -104,7 +104,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     }
 
     public boolean getEnabled() {
-        return (boolean)getProperty("enabled");
+        return (Boolean)getProperty("enabled");
     }
 
     public void setEnabled(boolean value) {
@@ -112,7 +112,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     }
 
     public boolean getExpanded() {
-        return (boolean)getProperty("expanded");
+        return (Boolean)getProperty("expanded");
     }
 
     public void setExpanded(boolean value) {
@@ -128,7 +128,7 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     }
 
     public boolean getSelected() {
-        return (boolean)getProperty("selected");
+        return (Boolean)getProperty("selected");
     }
 
     public void setSelected(boolean value) {

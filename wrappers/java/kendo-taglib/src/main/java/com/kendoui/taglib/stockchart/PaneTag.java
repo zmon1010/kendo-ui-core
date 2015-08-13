@@ -66,7 +66,7 @@ public class PaneTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public boolean getClip() {
-        return (boolean)getProperty("clip");
+        return (Boolean)getProperty("clip");
     }
 
     public void setClip(boolean value) {
@@ -74,7 +74,7 @@ public class PaneTag extends  BaseTag  /* interfaces *//* interfaces */ {
     }
 
     public float getHeight() {
-        return (float)getProperty("height");
+        return (Float)getProperty("height");
     }
 
     public void setHeight(float value) {

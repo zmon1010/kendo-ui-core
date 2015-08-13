@@ -40,7 +40,7 @@ public class PageableTag extends BaseTag {
     }
 
     public float getPageSize() {
-        return (float)getProperty("pageSize");
+        return (Float)getProperty("pageSize");
     }
 
     public void setPageSize(float value) {
@@ -48,7 +48,7 @@ public class PageableTag extends BaseTag {
     }
 
     public boolean getPreviousNext() {
-        return (boolean)getProperty("previousNext");
+        return (Boolean)getProperty("previousNext");
     }
 
     public void setPreviousNext(boolean value) {
@@ -56,7 +56,7 @@ public class PageableTag extends BaseTag {
     }
 
     public boolean getNumeric() {
-        return (boolean)getProperty("numeric");
+        return (Boolean)getProperty("numeric");
     }
 
     public void setNumeric(boolean value) {
@@ -64,7 +64,7 @@ public class PageableTag extends BaseTag {
     }
 
     public float getButtonCount() {
-        return (float)getProperty("buttonCount");
+        return (Float)getProperty("buttonCount");
     }
 
     public void setButtonCount(float value) {
@@ -72,7 +72,7 @@ public class PageableTag extends BaseTag {
     }
 
     public boolean getInput() {
-        return (boolean)getProperty("input");
+        return (Boolean)getProperty("input");
     }
 
     public void setInput(boolean value) {
@@ -80,7 +80,7 @@ public class PageableTag extends BaseTag {
     }
 
     public boolean getPageSizes() {
-        return (boolean)getProperty("pageSizes");
+        return (Boolean)getProperty("pageSizes");
     }
 
     public void setPageSizes(boolean value) {
@@ -88,7 +88,7 @@ public class PageableTag extends BaseTag {
     }
 
     public boolean getRefresh() {
-        return (boolean)getProperty("refresh");
+        return (Boolean)getProperty("refresh");
     }
 
     public void setRefresh(boolean value) {
@@ -96,7 +96,7 @@ public class PageableTag extends BaseTag {
     }
 
     public boolean getInfo() {
-        return (boolean)getProperty("info");
+        return (Boolean)getProperty("info");
     }
 
     public void setInfo(boolean value) {

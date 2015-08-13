@@ -52,7 +52,7 @@ public class ShapeDefaultsRotationTag extends  BaseTag  /* interfaces */ /* inte
     }
 
     public float getAngle() {
-        return (float)getProperty("angle");
+        return (Float)getProperty("angle");
     }
 
     public void setAngle(float value) {
