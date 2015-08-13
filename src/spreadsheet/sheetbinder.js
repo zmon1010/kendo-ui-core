@@ -33,7 +33,7 @@
 
         _sheetInsertRow: function(e) {
             if (e.index !== undefined) {
-                this.dataSource.insert(e.index - 1, {});
+                this.dataSource.insert(Math.max(e.index - 1, 0), {});
             }
         },
 

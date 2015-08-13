@@ -268,6 +268,31 @@
         equal(view[2].foo, "foo3");
     });
 
+    test("inserting row on the first position", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.insertRow(0);
+
+        var view = binder.dataSource.view();
+        equal(view.length, 4);
+        equal(view[0].foo, null);
+        equal(view[1].foo, "foo1");
+        equal(view[2].foo, "foo2");
+        equal(view[3].foo, "foo3");
+    });
+
     test("inserting row adds it to the DataSource", function() {
         var binder = new SheetDataSourceBinder({
             columns: [
