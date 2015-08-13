@@ -21844,6 +21844,14 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>float</type>
         </attribute>
         <attribute>
+            <description>If set to true the pager will display a drop-down which allows the user to pick a page size.
+By default the page size drop-down is not displayed.Can be set to an array of predefined page sizes to override the default list.
+A special all value is supported. It sets the page size to the total number of records.If a pageSize setting is provided for the data source then this value will be selected initially.</description>
+            <name>pageSizes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>If set to true the pager will display buttons for going to the first, previous, next and last pages. By default those buttons are displayed.</description>
             <name>previousNext</name>
             <rtexprvalue>true</rtexprvalue>
@@ -23069,6 +23077,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <name>pageSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Displayes a list with predefined page sizes. An array of values to be displayed can be provided.</description>
+            <name>pageSizes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>Defines if buttons for navigating to the first, last, previous and next pages will be shown.</description>

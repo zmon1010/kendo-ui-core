@@ -87,6 +87,7 @@ module CodeGen::Java::JSP
 
         def to_getter_and_setter
             return DATA_SOURCE_SETTER if @name == 'dataSource'
+            return '' if @name == 'pageSizes' && @owner.name == 'pageable'
 
             return EVENT_GETTER_AND_SETTER.result(binding) if @type[0] == 'Function' && @type.size == 1
 
