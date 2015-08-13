@@ -615,11 +615,11 @@ var __meta__ = {
 
             this._dataSource();
 
-            this.dataSource.fetch();
-
             if (options.checkboxes && options.checkboxes.checkChildren) {
-                this.updateIndeterminate();
+                this.dataSource.one("change", $.proxy(this.updateIndeterminate, this, null));
             }
+
+            this.dataSource.fetch();
         },
 
         _bindDataSource: function() {

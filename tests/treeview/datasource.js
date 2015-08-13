@@ -565,6 +565,34 @@
         equal(treeview.find(".k-item").text(), "bar");
     });
 
+    test("setDataSource updates indeterminate state when new data arrives", function() {
+        createTreeView({
+            dataSource: [
+                { text: "foo" }
+            ],
+            checkboxes: {
+                checkChildren: true
+            }
+        });
+
+        var treeSpy = spy(treeviewObject, "updateIndeterminate");
+
+        var deferred = $.Deferred();
+        treeviewObject.setDataSource({
+            transport: {
+                read: function(options) {
+                    deferred.then(options.success, options.error);
+                }
+            }
+        });
+
+        ok(!treeSpy.calls("updateIndeterminate"));
+
+        deferred.resolve([ { text: "bar" } ]);
+
+        ok(treeSpy.calls("updateIndeterminate"));
+    });
+
     var Node = kendo.data.Node;
 
     test("binding to derived nodes", function() {

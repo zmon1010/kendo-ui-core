@@ -358,7 +358,7 @@
             ok(dom.data("kendoTreeView").options.checkboxes);
         });
 
-        test("indeterminate states are updated observableHierarchy", function() {
+        test("indeterminate states are updated in observableHierarchy", function() {
             var dom = $('<div data-role="treeview" data-load-on-demand="false" data-checkboxes="{ checkChildren: true }" data-bind="source: items"></div>').appendTo(QUnit.fixture);
 
             var viewModel = kendo.observable({
