@@ -892,6 +892,16 @@ div.editorToolbarWindow.k-window-content {
     }
 }
 
+.k-menu .k-state-active .k-i-arrow-s,
+.k-menu .k-link:not(.k-state-disabled):hover > .k-i-arrow-s {
+    background-position: -16px -32px;
+}
+
+.k-menu .k-state-active .k-i-arrow-e,
+.k-menu .k-link:not(.k-state-disabled):hover > .k-i-arrow-e {
+    background-position: -16px -16px;
+}
+
 .k-editor-toolbar {
     .k-state-selected {
         .k-justifyLeft {
@@ -936,8 +946,8 @@ div.editorToolbarWindow.k-window-content {
     }    
 }
 
-.k-dropdown.k-state-border-up .k-i-arrow-s,
-.k-dropdown.k-state-border-down .k-i-arrow-s { 
+.k-dropdown-wrap.k-state-border-up .k-i-arrow-s,
+.k-dropdown-wrap.k-state-border-down .k-i-arrow-s { 
     background-position: -16px 0; 
 }
 
@@ -984,24 +994,14 @@ div.editorToolbarWindow.k-window-content {
     background-position: -16px -35px;
 }
 
-.k-menu .k-state-active .k-i-arrow-s,
-.k-menu .k-link:not(.k-state-disabled):hover > .k-i-arrow-s {
-    background-position: -16px -32px;
-}
-
-.k-menu .k-state-active .k-i-arrow-e,
-.k-menu .k-link:not(.k-state-disabled):hover > .k-i-arrow-e {
-    background-position: -16px -16px;
-}
-
 .k-tabstrip-scrollable.k-header .k-i-arrow-e,
 .k-tabstrip-scrollable .k-button:not(.k-state-disabled):hover .k-i-arrow-e {
-    background-position: -16px -16px;
+    //background-position: -16px -16px;
 }
 
 .k-tabstrip-scrollable.k-header .k-i-arrow-w,
 .k-tabstrip-scrollable .k-button:not(.k-state-disabled):hover .k-i-arrow-w {
-    background-position: -16px -48px;
+    //background-position: -16px -48px;
 }
 
 .k-drag-clue .k-add {
@@ -1212,18 +1212,15 @@ div.editorToolbarWindow.k-window-content {
 }
 
 .k-grid-toolbar {
-    .k-add,
-    .k-button:hover .k-add { 
+    .k-button:active .k-add { 
         background-position: -48px -64px;
     }
 
-    .k-update,
-    .k-button:hover .k-update {
+    .k-button:active .k-update {
         background-position: -48px -32px;
     }
 
-    .k-cancel,
-    .k-button:hover .k-cancel
+    .k-button:active .k-cancel
      {
         background-position: -48px -48px;
     }
@@ -1323,6 +1320,11 @@ div.editorToolbarWindow.k-window-content {
     background-position: -176px -80px;
 }
 
+.k-button:active .k-i-ungroup,
+.k-button:not(.k-state-disabled):active:hover .k-i-ungroup {
+    background-position: -128px -288px;   
+}
+
 .k-panelbar,
 .k-pivot {
     .k-i-arrow-n,
@@ -1380,6 +1382,24 @@ div.editorToolbarWindow.k-window-content {
         background-position: -48px -80px;
     }
 }    
+
+.k-map {
+    .k-button:active .k-i-arrow-n {
+        background-position: -16px 0;
+    }
+
+    .k-button:active .k-i-arrow-e {
+        background-position: -16px -16px;
+    }
+
+    .k-button:active .k-i-arrow-s {
+        background-position: -16px -32px;
+    }
+
+    .k-button:active .k-i-arrow-w {
+        background-position: -16px -48px;
+    }
+}
 
 .k-radio-label:before {
     width: 16px;
