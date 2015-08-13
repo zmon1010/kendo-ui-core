@@ -273,6 +273,14 @@
         equal(json.sheets[1].rows.length, 0);
     });
 
+    test("toJSON serializes sheet names", function() {
+        spreadsheet.insertSheet();
+
+        var json = spreadsheet.toJSON();
+
+        equal(json.sheets[1].name, spreadsheet.getSheets()[1].name());
+    });
+
     test("fromJSON loads column widths", function() {
         sheet.fromJSON({
             columns: [

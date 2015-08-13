@@ -585,6 +585,7 @@
             });
 
             var json = {
+                name: this._name,
                 rows: rows,
                 columns: columns,
                 frozenRows: this.frozenRows(),
