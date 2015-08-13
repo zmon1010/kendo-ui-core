@@ -51,7 +51,7 @@
         _header: function() {
             this.sheet.batch(function() {
                 this.columns.forEach(function(column, index) {
-                    this.sheet.range(0,index).value(column.field);
+                    this.sheet.range(0,index).value(column.title);
                 }.bind(this));
             }.bind(this));
         },
@@ -90,8 +90,10 @@
 
         _normalizeColumns: function(columns) {
             return columns.map(function(column) {
+                var field = column.field || column;
                 return {
-                    field: column.field || column
+                    field: field,
+                    title: column.title || field
                 };
             });
         },

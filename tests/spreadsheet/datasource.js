@@ -318,6 +318,23 @@
         equal(view[3].foo, "foo3");
     });
 
+    test("show title of the columns in the header", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [{ field: "foo", title: "title1" }, { field: "bar", title: "title2" } ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        equal(sheet.range("A1").value(), "title1");
+        equal(sheet.range("B1").value(), "title2");
+    });
+
     test("add fields of bound columns on the sheet's first row", function() {
         var binder = new SheetDataSourceBinder({
             columns: [ "foo", "bar"],
