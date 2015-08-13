@@ -267,14 +267,16 @@
                 element = $("<div />").prependTo(this.element);
 
                 toolbarOptions = $.extend(true, toolbarOptions, {
+                    range: function() {
+                        var sheet = this._workbook.activeSheet();
+                        return sheet.range(sheet.activeCell());
+                    }.bind(this),
                     execute: function(e) {
                         this._workbook.execute(new kendo.spreadsheet[e.commandType](e));
                     }.bind(this)
                 });
 
                 this.toolbar = new kendo.spreadsheet.ToolBar(element, toolbarOptions);
-
-                this.toolbar.bindTo(this);
             }
         },
 

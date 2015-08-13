@@ -153,12 +153,8 @@
             name: "SpreadsheetToolBar",
             resizable: false
         },
-        bindTo: function(view) {
-            this.view = view;
-        },
         range: function() {
-            var sheet = this.view._workbook.activeSheet();
-            return sheet.range(sheet.activeCell());
+            return this.options.range();
         },
         refresh: function() {
             var range = this.range();

@@ -71,9 +71,14 @@
     module("SpreadSheet PopupTool", moduleOptions);
 
     function createToolBar(options) {
-        var toolbar = new kendo.spreadsheet.ToolBar(toolbarElement, options || {});
-        toolbar.bindTo(createSpreadsheet({ toolbar: false }));
-        return toolbar;
+        options = options || {};
+
+        options.range = function() {
+            var sheet = spreadsheet.activeSheet();
+            return sheet.range(sheet.activeCell());
+        };
+
+        return new kendo.spreadsheet.ToolBar(toolbarElement, options);
     }
 
     function popupTool() {
