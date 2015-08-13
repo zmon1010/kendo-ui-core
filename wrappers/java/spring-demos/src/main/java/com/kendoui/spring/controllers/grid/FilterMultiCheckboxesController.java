@@ -20,22 +20,22 @@ import com.kendoui.spring.models.EmployeeDao;
 @Controller("filter-multi-checkboxes-controller")
 @RequestMapping(value="/grid/")
 public class FilterMultiCheckboxesController {
-    @Autowired 
+    @Autowired
     private EmployeeDao employee;
 
     @RequestMapping(value = "/filter-multi-checkboxes", method = RequestMethod.GET)
     public String index() {
         return "grid/filter-multi-checkboxes";
     }
-    
+
     @RequestMapping(value = "/filter-multi-checkboxes/unique", method = RequestMethod.POST)
     public @ResponseBody List<Employee> unique(@RequestBody Map<String, Object> model) {
         String field = (String)model.get("field");
         List<Employee> allItems = employee.getList();
-        
+
         List<Employee> result = new ArrayList<Employee>();
-        HashSet<String> seen = new HashSet<>();        
-        
+        HashSet<String> seen = new HashSet<String>();
+
         Class<?> cls = allItems.get(0).getClass();
         Field f;
         try {
@@ -44,19 +44,19 @@ public class FilterMultiCheckboxesController {
         } catch (NoSuchFieldException e) {
             return allItems;
         }
-        
+
         for (Employee employee : allItems) {
             Object value;
             try {
                 value = f.get(employee);
-            } catch (IllegalAccessException e) {                    
+            } catch (IllegalAccessException e) {
                 continue;
             }
             if(!seen.contains(value.toString())){
                 seen.add(value.toString());
                 result.add(employee);
             }
-        }            
-        return result;            
+        }
+        return result;
     }
 }
