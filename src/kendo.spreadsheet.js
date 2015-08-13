@@ -95,6 +95,10 @@
             return this._workbook.activeSheet(sheet, this._activeSheet.bind(this));
         },
 
+        moveSheetToIndex: function (sheet, index) {
+            return this._workbook.moveSheetToIndex(sheet, index);
+        },
+
         insertSheet: function(options) {
             return this._workbook.insertSheet(options);
         },

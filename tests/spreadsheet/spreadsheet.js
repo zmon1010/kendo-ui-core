@@ -135,4 +135,25 @@
 
         spreadsheet.renameSheet("sheet", "newSheetName");
     });
+
+    test("moveSheetToIndex method triggers change event", function () {
+        spreadsheet.insertSheet();
+
+        spreadsheet.bind("render", function() {
+            ok(true);
+        });
+
+        spreadsheet.moveSheetToIndex(spreadsheet.getSheets()[1], 0);
+    });
+
+    test("moveSheetToIndex method calls corresponding method in workbook", function () {
+        spreadsheet.insertSheet();
+
+        spreadsheet._workbook.moveSheetToIndex = function(sheet, index) {
+            equal(sheet._name, "Sheet2");
+            equal(index, 0);
+        };
+
+        spreadsheet.moveSheetToIndex(spreadsheet.getSheets()[1], 0);
+    });
 })();
