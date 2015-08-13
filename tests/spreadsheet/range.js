@@ -665,4 +665,32 @@
         ref.value("foo");
     });
 
+    module("State translation", {
+        setup: function() {
+            sheet = new kendo.spreadsheet.Sheet(10, 10, defaults.rowHeight, defaults.columnWidth);
+            range = sheet.range(0, 0);
+        },
+        teardown: function() {
+            sheet.unbind();
+        }
+    });
+
+    test("state translates to another range (value)", function() {
+        sheet.range("B2").value("foo");
+        var state = sheet.range("A1:C3").getState();
+
+        sheet.range("C1:E3").setState(state);
+
+        equal(sheet.range("D2").value(), "foo");
+    });
+
+    test("state translates to another range (merged cells)", function() {
+        sheet.range("B2:B3").merge();
+        var state = sheet.range("A1:C3").getState();
+
+        sheet.range("C1:E3").setState(state);
+
+        equal(sheet._mergedCells[1].toString(), "D2:D3");
+    });
+
 })();

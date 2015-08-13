@@ -425,7 +425,7 @@
         },
 
         getState: function(propertyName) {
-            var state = {};
+            var state = {ref: this._ref.first()};
             var properties = [propertyName];
 
             if (!propertyName) {
@@ -462,13 +462,17 @@
         },
 
         setState: function(state) {
+            var origin = this._ref.first();
+            var rowDelta = state.ref.row - origin.row;
+            var colDelta = state.ref.col - origin.col;
+
             this._sheet.batch(function() {
                 if (state.mergedCells) {
                     this.unmerge();
                 }
 
                 this.forEachCell(function(row, col, cell) {
-                    var cellState = state[row + "," + col];
+                    var cellState = state[(row + rowDelta)  + "," + (col + colDelta)];
                     var range = this._sheet.range(row, col);
 
                     for (var property in cellState) {
@@ -478,6 +482,7 @@
 
                 if (state.mergedCells) {
                     state.mergedCells.forEach(function(merged) {
+                        merged = this._sheet._ref(merged).relative(rowDelta, colDelta, 3);
                         this._sheet.range(merged).merge();
                     }, this);
                 }
