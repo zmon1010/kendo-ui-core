@@ -78,7 +78,7 @@
             ok(true);
         });
 
-        spreadsheet.removeSheet(spreadsheet.getSheets()[1]);
+        spreadsheet.removeSheet(spreadsheet.sheets()[1]);
     });
 
     test("removeSheet method triggers render event when removed sheet the active one", function () {
@@ -88,42 +88,42 @@
             ok(true);
         });
 
-        spreadsheet.removeSheet(spreadsheet.getSheets()[0]);
+        spreadsheet.removeSheet(spreadsheet.sheets()[0]);
     });
 
-    test("getSheets method calls corresponding method in workbook", function () {
-        spreadsheet._workbook.getSheets = function() {
+    test("sheets method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.sheets = function() {
             ok(true);
         };
 
-        spreadsheet.getSheets();
+        spreadsheet.sheets();
     });
 
-    test("getSheetByName method calls corresponding method in workbook", function () {
-        spreadsheet._workbook.getSheetByName = function(sheetName) {
+    test("sheetByName method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.sheetByName = function(sheetName) {
             ok(sheetName);
             ok(true);
         };
 
-        spreadsheet.getSheetByName("SheetName");
+        spreadsheet.sheetByName("SheetName");
     });
 
-    test("getSheetIndex method calls corresponding method in workbook", function () {
-        spreadsheet._workbook.getSheetIndex = function(sheet) {
+    test("sheetIndex method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.sheetIndex = function(sheet) {
             ok(sheet);
             ok(true);
         };
 
-        spreadsheet.getSheetIndex({});
+        spreadsheet.sheetIndex({});
     });
 
-    test("getSheetByIndex method calls corresponding method in workbook", function () {
-        spreadsheet._workbook.getSheetByIndex = function(index) {
+    test("sheetByIndex method calls corresponding method in workbook", function () {
+        spreadsheet._workbook.sheetByIndex = function(index) {
             equal(index, 1);
             ok(true);
         };
 
-        spreadsheet.getSheetByIndex(1);
+        spreadsheet.sheetByIndex(1);
     });
 
     test("renameSheet method calls corresponding method in workbook", function () {
@@ -143,7 +143,7 @@
             ok(true);
         });
 
-        spreadsheet.moveSheetToIndex(spreadsheet.getSheets()[1], 0);
+        spreadsheet.moveSheetToIndex(spreadsheet.sheets()[1], 0);
     });
 
     test("moveSheetToIndex method calls corresponding method in workbook", function () {
@@ -154,6 +154,6 @@
             equal(index, 0);
         };
 
-        spreadsheet.moveSheetToIndex(spreadsheet.getSheets()[1], 0);
+        spreadsheet.moveSheetToIndex(spreadsheet.sheets()[1], 0);
     });
 })();

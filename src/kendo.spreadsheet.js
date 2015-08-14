@@ -110,8 +110,8 @@
                 return this._workbook.insertSheet(options);
             },
 
-            getSheets: function() {
-                return this._workbook.getSheets();
+            sheets: function() {
+                return this._workbook.sheets();
             },
 
             removeSheet: function(sheet) {
@@ -124,16 +124,16 @@
                 return this._workbook.removeSheet(sheet, this._activeSheet.bind(this), sheetRefreshCallback);
             },
 
-            getSheetByName: function(sheetName) {
-                return this._workbook.getSheetByName(sheetName);
+            sheetByName: function(sheetName) {
+                return this._workbook.sheetByName(sheetName);
             },
 
-            getSheetIndex: function(sheet) {
-                return this._workbook.getSheetIndex(sheet);
+            sheetIndex: function(sheet) {
+                return this._workbook.sheetIndex(sheet);
             },
 
-            getSheetByIndex: function(index) {
-                return this._workbook.getSheetByIndex(index);
+            sheetByIndex: function(index) {
+                return this._workbook.sheetByIndex(index);
             },
 
             renameSheet: function(sheet, newSheetName) {

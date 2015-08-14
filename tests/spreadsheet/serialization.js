@@ -278,7 +278,7 @@
 
         var json = spreadsheet.toJSON();
 
-        equal(json.sheets[1].name, spreadsheet.getSheets()[1].name());
+        equal(json.sheets[1].name, spreadsheet.sheets()[1].name());
     });
 
     test("fromJSON loads column widths", function() {
@@ -431,7 +431,7 @@
             ]
         });
 
-        equal(spreadsheet.getSheets()[1].range("A1").background(), "yellow");
+        equal(spreadsheet.sheets()[1].range("A1").background(), "yellow");
     });
 
     test("fromJSON refresh the view", function() {
@@ -456,8 +456,8 @@
             ]
         });
 
-        equal(spreadsheet.getSheets().length, 1);
-        equal(spreadsheet.getSheets()[0].range("A1").background(), "yellow");
+        equal(spreadsheet.sheets().length, 1);
+        equal(spreadsheet.sheets()[0].range("A1").background(), "yellow");
         equal(spreadsheet.activeSheet().range("A1").background(), "yellow");
     });
 
@@ -472,7 +472,7 @@
             ]
         });
 
-        equal(spreadsheet.getSheets().length, 1);
+        equal(spreadsheet.sheets().length, 1);
         equal(spreadsheet.activeSheet().name(), name);
     });
 

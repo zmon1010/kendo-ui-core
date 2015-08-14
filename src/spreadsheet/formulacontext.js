@@ -17,7 +17,7 @@
         },
 
         getRefCells: function(ref, hiddenInfo) {
-            var sheet = this.workbook.getSheetByName(ref.sheet), formula, value;
+            var sheet = this.workbook.sheetByName(ref.sheet), formula, value;
             if (ref instanceof CellRef) {
                 formula = sheet.compiledFormula(ref);
                 value = sheet.range(ref.row, ref.col).value();
@@ -84,7 +84,7 @@
         },
 
         onFormula: function(sheet, row, col, value) {
-            sheet = this.workbook.getSheetByName(sheet);
+            sheet = this.workbook.sheetByName(sheet);
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
                 value.each(function(value, row, col) {

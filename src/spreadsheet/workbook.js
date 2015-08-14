@@ -70,7 +70,7 @@
                 return this._sheet;
             }
 
-            if (!this.getSheetByName(sheet.name())) {
+            if (!this.sheetByName(sheet.name())) {
                 return;
             }
 
@@ -84,7 +84,7 @@
         },
 
         moveSheetToIndex: function(sheet, toIndex) {
-            var fromIndex = this.getSheetIndex(sheet);
+            var fromIndex = this.sheetIndex(sheet);
             var sheets = this._sheets;
 
             if (fromIndex === -1) {
@@ -110,14 +110,14 @@
 
                 var name = "Sheet" + sheetNameSuffix;
 
-                if (!that.getSheetByName(name)) {
+                if (!that.sheetByName(name)) {
                     return name;
                 }
 
                 return getUniqueSheetName(sheetNameSuffix + 1);
             };
 
-            if (options.name && that.getSheetByName(options.name)) {
+            if (options.name && that.sheetByName(options.name)) {
                 return;
             }
 
@@ -145,11 +145,11 @@
             return sheet;
         },
 
-        getSheets: function() {
+        sheets: function() {
             return this._sheets.slice();
         },
 
-        getSheetByName: function (sheetName) {
+        sheetByName: function (sheetName) {
             var sheets = this._sheets;
             var idx = this._sheetsSearchCache[sheetName];
 
@@ -168,11 +168,11 @@
             }
         },
 
-        getSheetByIndex: function(index) {
+        sheetByIndex: function(index) {
            return this._sheets[index];
         },
 
-        getSheetIndex: function(sheet) {
+        sheetIndex: function(sheet) {
             var sheets = this._sheets;
             var sheetName = sheet.name();
             var idx = this._sheetsSearchCache[sheetName];
@@ -202,7 +202,7 @@
                 return;
             }
 
-            sheet = this.getSheetByName(oldSheetName);
+            sheet = this.sheetByName(oldSheetName);
 
             if (!sheet) {
                 return;
@@ -221,7 +221,7 @@
             var that = this;
             var sheets = that._sheets;
             var name = sheet.name();
-            var index = that.getSheetIndex(sheet);
+            var index = that.sheetIndex(sheet);
 
             if (sheets.length === 1) {
                 return;
@@ -249,7 +249,7 @@
             var idx;
 
             for (idx = 0; idx < sheets.length; idx++) {
-                var sheet = this.getSheetByIndex(idx);
+                var sheet = this.sheetByIndex(idx);
 
                 if (!sheet) {
                     sheet = this.insertSheet();
