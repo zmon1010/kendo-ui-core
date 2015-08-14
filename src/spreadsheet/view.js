@@ -179,7 +179,7 @@
         },
 
         addCell: function(rowIndex, text, style, className) {
-            if (!text) {
+            if (text === null || text === undefined) {
                 text = "";
             }
 
