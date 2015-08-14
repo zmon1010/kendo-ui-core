@@ -120,13 +120,13 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 
 `kendo.spreadsheet.Sheet` the active sheet.
 
-### getSheets
+### sheets
 
 #### Returns
 
 `Array` the available sheets.
 
-### getSheetByName
+### sheetByName
 
 #### Parameters
 
@@ -136,7 +136,7 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 
 `kendo.spreadsheet.Sheet` the sheet that match the name.
 
-### getSheetIndex
+### sheetIndex
 
 #### Parameters
 
@@ -146,7 +146,7 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 
 `Number` the sheet index.
 
-### getSheetByIndex
+### sheetByIndex
 
 #### Parameters
 
