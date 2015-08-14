@@ -470,6 +470,16 @@
         equal(sheet.range("A2").value(), null);
     });
 
+    test("formula `=A1` works", function() {
+        var workbook = new kendo.spreadsheet.Workbook(defaults);
+        var sheet = workbook.activeSheet();
+        sheet.range("A1").value(1);
+
+        var range = sheet.range("A2").formula("=A1");
+        workbook.refresh({recalc: true});
+        equal(sheet.range("A2").value(), 1);
+    });
+
     test("clearFormat clears only the range style", function() {
         sheet.range("A1:A3")
             .value("foo")
@@ -653,6 +663,7 @@
         equal(sheet.range("B2").value(), 2);
     });
 
+    /* global strictEqual */
     test("value triggers change passing the ref and the value", 3, function() {
         var ref = sheet.range(2, 2);
 
@@ -698,8 +709,9 @@
         sheet.range("A1").value(1);
         sheet.range("B1").value(2);
 
-        var range = sheet.range("A2").formula("=SUM(A1:A1)");
+        var range = sheet.range("A2").formula("=SUM(A1)");
         workbook.refresh({recalc: true});
+        equal(sheet.range("A2").value(), 1);
         var state = range.getState();
 
         sheet.range("B2").setState(state);

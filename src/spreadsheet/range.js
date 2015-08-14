@@ -470,6 +470,7 @@
             var origin = this._ref.first();
             var rowDelta = state.ref.row - origin.row;
             var colDelta = state.ref.col - origin.col;
+            var sheetName = this._sheet.name();
 
             this._sheet.batch(function() {
                 if (state.mergedCells) {
@@ -483,7 +484,10 @@
                     for (var property in cellState) {
                         if(property == "compiledFormula"){
                             if(cellState.compiledFormula){
-                                range.formula("=" + cellState.compiledFormula.print(row, col));
+                                var clone = cellState.compiledFormula.clone(sheetName, row, col);
+                                range.formula("=" + clone.print(row, col));
+                                range._set("compiledFormula", clone, null);
+
                             }
                         }else{
                             range[property](cellState[property]);
