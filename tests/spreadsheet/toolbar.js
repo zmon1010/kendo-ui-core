@@ -1,20 +1,15 @@
 (function() {
     var spreadsheet;
     var element;
-    var moduleOptions = {
+
+    module("Spreadsheet toolbar", {
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
-            toolbarElement = $("<div>").appendTo(QUnit.fixture);
-            kendo.effects.disable();
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
-            tool && tool.destroy();
-            kendo.effects.enable();
         }
-    };
-
-    module("Spreadsheet toolbar", moduleOptions);
+    });
 
     function createSpreadsheet(options) {
         options = options || { toolbar: true };
@@ -98,50 +93,11 @@
         equal($(".k-i-refresh").length, 1);
     });
 
-    var tool, toolbar;
-
-    module("SpreadSheet PopupTool", moduleOptions);
-
-    function createToolBar(options) {
-        options = options || {};
-
-        options.range = function() {
-            var sheet = spreadsheet.activeSheet();
-            return sheet.range(sheet.activeCell());
-        };
-
-        return new kendo.spreadsheet.ToolBar(toolbarElement, options);
-    }
-
-    function popupTool() {
-        var toolbar = createToolBar();
-        return new kendo.spreadsheet.toolbar.PopupTool({}, toolbar);
-    }
-
-    test("popup opens window", function() {
-        tool = popupTool();
-
-        tool.open();
-
-        equal($(".k-window").length, 1);
-        equal($(".k-spreadsheet-window").length, 1);
-    });
-
-    test("closing window destroys it", function() {
-        tool = popupTool();
-
-        tool.open();
-
-        tool.close();
-
-        equal($(".k-spreadsheet-window").length, 0);
-    });
-
     var viewModel;
 
     module("SpreadSheet FormatCellsViewModel", {
         setup: function() {
-            viewModel = new kendo.spreadsheet.toolbar.FormatCellsViewModel({
+            viewModel = new kendo.spreadsheet.FormatCellsViewModel({
                 value: 100,
                 allFormats: [
                     { category: "a", name: "Null", value: null },
@@ -174,23 +130,6 @@
 
     test("lists categories", function() {
         deepEqual(viewModel.categories(), [ "a", "b" ]);
-    });
-
-    module("SpreadSheet FormatPopup", moduleOptions);
-
-    function formatPopup() {
-        var toolbar = createToolBar();
-        return new kendo.spreadsheet.toolbar.FormatPopupTool({}, toolbar);
-    }
-
-    test("can be opened twice", function() {
-        tool = formatPopup();
-
-        tool.open();
-        tool.close();
-        tool.open();
-
-        ok(true);
     });
 
 })();

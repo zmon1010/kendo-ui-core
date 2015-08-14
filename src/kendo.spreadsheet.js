@@ -24,6 +24,7 @@
         "./spreadsheet/numformat",
         "./spreadsheet/runtime.functions.js",
         "./spreadsheet/toolbar",
+        "./spreadsheet/dialogs",
         "./spreadsheet/sheetbinder"
     ], f);
 })(function(){
@@ -152,6 +153,12 @@
                 this._view.render();
 
                 this.trigger("render");
+                return this;
+            },
+
+            openDialog: function(name) {
+                this._controller.openDialog(name);
+
                 return this;
             },
 

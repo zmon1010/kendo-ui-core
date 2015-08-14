@@ -340,6 +340,15 @@
 
 ////////////////////////////////////////////////////////////////////
 
+        openDialog: function(name) {
+            var ref = this.view._sheet.activeCell();
+            var range = new kendo.spreadsheet.Range(ref, this.view._sheet);
+
+            kendo.spreadsheet.dialogs.open(name, range);
+        },
+
+////////////////////////////////////////////////////////////////////
+
         onEsc: function() {
             this.formulaInput.deactivate(true);
             this.clipboard.focus();

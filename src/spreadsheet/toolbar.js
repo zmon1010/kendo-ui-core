@@ -7,9 +7,6 @@
 
     var ToolBar = kendo.ui.ToolBar;
 
-    var defaultItems = [
-    ];
-
     var defaultTools = [
         [ "bold", "italic", "underline" ],
         [ "alignLeft", "alignCenter", "alignRight" ],
@@ -455,189 +452,19 @@
         }
     }));
 
-    var PopupTool = kendo.toolbar.ToolBarButton.extend({
+    kendo.toolbar.registerComponent("dialog", kendo.toolbar.ToolBarButton.extend({
         init: function(options, toolbar) {
-            options.click = this.open.bind(this);
-
             kendo.toolbar.ToolBarButton.fn.init.call(this, options, toolbar);
 
-            this.element.data("instance", this);
-        },
-        popup: function() {
-            if (!this._popup) {
-                this._popup = $("<div class='k-spreadsheet-window k-action-window' />")
-                    .addClass(this.options.className || "")
-                    .append(this.template)
-                    .appendTo(document.body)
-                    .kendoWindow({
-                        scrollable: false,
-                        resizable: false,
-                        maximizable: false,
-                        modal: true,
-                        visible: false,
-                        width: 400,
-                        title: this.title,
-                        open: function() {
-                            this.center();
-                        },
-                        deactivate: function() {
-                            this._popup.destroy();
-                            this._popup = null;
-                        }.bind(this)
-                    })
-                    .data("kendoWindow");
-            }
+            this._dialogName = options.dialogName;
 
-            return this._popup;
-        },
-        destroy: function() {
-            if (this._popup) {
-                this._popup.destroy();
-                this._popup = null;
-            }
+            this.element.bind("click", this.open.bind(this))
+                        .data("instance", this);
         },
         open: function() {
-            this.popup().open();
-        },
-        apply: function() {
-            this.close();
-        },
-        close: function() {
-            this.popup().close();
+            kendo.spreadsheet.dialogs.open(this._dialogName, this.toolbar.range());
         }
-    });
-
-    var FormatCellsViewModel = kendo.data.ObservableObject.extend({
-        init: function(options) {
-            kendo.data.ObservableObject.fn.init.call(this, options);
-
-            this.useCategory(this.category);
-        },
-        useCategory: function(category) {
-            var formats = this.allFormats.filter(function(x) { return x.category == category; });
-            this.set("formats", formats);
-            this.category = category;
-        },
-        categoryFor: function(format) {
-            var formats = this.allFormats;
-            var category = formats[0].category;
-
-            for (var i = 0; i < formats.length; i++) {
-                if (formats[i].format == format) {
-                    category = formats[i].category;
-                    break;
-                }
-            }
-
-            return category;
-        },
-        categoryFilter: function(category) {
-            if (category !== undefined) {
-                this.useCategory(category);
-            }
-
-            return this.category || this.categoryFor(this.format);
-        },
-        categories: function() {
-            var category = function (x) { return x.category; };
-            var unique = function (x, index, self) { return self.indexOf(x) === index; };
-
-            return this.allFormats.map(category).filter(unique);
-        },
-        preview: function() {
-            var format = this.get("format");
-            var value = this.value || 0;
-
-            if (format && format.length) {
-                // get formatted text from virtual dom node
-                value = kendo.spreadsheet.formatting.format(value, format);
-                return value.children[0].nodeValue;
-            } else {
-                return value;
-            }
-        }
-    });
-
-    var FormatPopupTool = PopupTool.extend({
-        init: function(options, toolbar) {
-            options = options || {};
-
-            options.className = "k-spreadsheet-format-cells";
-            options.formats = options.formats || this.options.formats;
-
-            PopupTool.fn.init.call(this, options, toolbar);
-        },
-        options: {
-            formats: [
-                { category: "Number", value: "?.00%", name: "100.00%" },
-                { category: "Currency", value: "$?", name: "U.S. Dollar" },
-                { category: "Date", value: "m/d", name: "3/14" },
-                { category: "Date", value: "m/d/yy", name: "3/14/01" },
-                { category: "Date", value: "mm/dd/yy", name: "03/14/01" },
-                { category: "Date", value: "d-mmm", name: "14-Mar" },
-                { category: "Date", value: "d-mmm-yy", name: "14-Mar-01" },
-                { category: "Date", value: "dd-mmm-yy", name: "14-Mar-01" },
-                { category: "Date", value: "mmm-yy", name: "Mar-01" },
-                { category: "Date", value: "mmmm-yy", name: "March-01" },
-                { category: "Date", value: "mmmm dd, yyyy", name: "March 14, 2001" },
-                { category: "Date", value: "m/d/yy hh:mm AM/PM", name: "3/14/01 1:30 PM" },
-                { category: "Date", value: "m/d/yy h:mm", name: "3/14/01 13:30" },
-                { category: "Date", value: "mmmmm", name: "M" },
-                { category: "Date", value: "mmmmm-yy", name: "M-01" },
-                { category: "Date", value: "m/d/yyyy", name: "3/14/2001" },
-                { category: "Date", value: "d-mmm-yyyy", name: "14-Mar-2001" }
-            ]
-        },
-        template: "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
-
-                  "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
-
-                  "<div class='k-simple-tabs' " +
-                      "data-role='tabstrip' " +
-                      "data-bind='source: categories, value: categoryFilter' " +
-                      "data-animation='false' />" +
-
-                  "<script type='text/x-kendo-template' id='format-item-template'>" +
-                      "#: data.name #" +
-                  "</script>" +
-
-                  "<ul data-role='staticlist' tabindex='0' " +
-                      "class='k-list k-reset' " +
-                      "data-template='format-item-template' " +
-                      "data-value-primitive='true' " +
-                      "data-value-field='value' " +
-                      "data-bind='source: formats, value: format' />",
-        open: function(e) {
-            var formats = this.options.formats.slice(0);
-            var range = this.toolbar.range();
-            var value = range.value();
-
-            this.viewModel = new FormatCellsViewModel({
-                allFormats: formats,
-                format: range.format(),
-                category: value instanceof Date ? "Date" : null,
-                apply: this.apply.bind(this),
-                value: value
-            });
-
-            PopupTool.fn.open.call(this);
-
-            kendo.bind(this.popup().element, this.viewModel);
-        },
-        apply: function() {
-            var format = this.viewModel.format;
-
-            PopupTool.fn.apply.call(this);
-
-            this.toolbar.trigger("execute", {
-                commandType: "PropertyChangeCommand",
-                property: "format",
-                value: format
-            });
-        }
-    });
-
-    kendo.toolbar.registerComponent("formatPopup", FormatPopupTool);
+    }));
 
     var BorderChangeTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
@@ -744,12 +571,6 @@
     kendo.toolbar.registerComponent("borders", BorderChangeTool);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
-
-    kendo.spreadsheet.toolbar = {
-        PopupTool: PopupTool,
-        FormatPopupTool: FormatPopupTool,
-        FormatCellsViewModel: FormatCellsViewModel
-    };
 
 })(window.kendo);
 
