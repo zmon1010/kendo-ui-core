@@ -483,7 +483,7 @@
                     for (var property in cellState) {
                         if(property == "compiledFormula"){
                             if(cellState.compiledFormula){
-                                range.formula("=" + cellState.compiledFormula.print());
+                                range.formula("=" + cellState.compiledFormula.print(row, col));
                             }
                         }else{
                             range[property](cellState[property]);
