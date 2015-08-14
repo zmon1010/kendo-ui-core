@@ -328,7 +328,7 @@
                             column = columns.nextVisible(topLeftCol, true);
                             if (column > selBottomRight.col) {
                                 column = selTopLeft.col;
-                                row ++;
+                                row = rows.nextVisible(row, true);
                             }
                         }
                         break;
@@ -341,7 +341,7 @@
                             column = columns.prevVisible(topLeftCol, true);
                             if (column < selTopLeft.col) {
                                 column = selBottomRight.col;
-                                row --;
+                                row = rows.prevVisible(row, true);
                             }
                         }
                         break;
@@ -354,7 +354,7 @@
                             row = rows.nextVisible(topLeftRow, true);
                             if (row > selBottomRight.row) {
                                 row = selTopLeft.row;
-                                column ++;
+                                column = columns.nextVisible(column, true);
                             }
                         }
                         break;
@@ -367,7 +367,7 @@
                             row = rows.prevVisible(topLeftRow, true);
                             if (row < selTopLeft.row) {
                                 row = selBottomRight.row;
-                                column --;
+                                column = columns.prevVisible(column, true);
                             }
                         }
                         break;
