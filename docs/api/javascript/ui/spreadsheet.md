@@ -64,6 +64,10 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 
 ### sheets.rows.cells.borderBottom `Object`
 
+### sheets.rows.cells.borderLeft `Object`
+
+### sheets.rows.cells.borderTop `Object`
+
 ### sheets.rows.cells.borderRight `Object`
 
 ### sheets.rows.cells.color `String`
