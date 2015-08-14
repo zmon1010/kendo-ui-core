@@ -483,14 +483,13 @@
                     var range = sheet.range(row, col);
 
                     for (var property in cellState) {
-                        if(property == "compiledFormula"){
-                            if(cellState.compiledFormula){
+                        if (property == "compiledFormula") {
+                            if (cellState.compiledFormula) {
                                 var clone = cellState.compiledFormula.clone(sheetName, row, col);
                                 range.formula("=" + clone.print(row, col));
                                 range._set("compiledFormula", clone, null);
-
                             }
-                        }else{
+                        } else {
                             range[property](cellState[property]);
                         }
                     }

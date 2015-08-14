@@ -1258,17 +1258,20 @@
     test("OFFSET", function(){
         var ss = new Spreadsheet();
         ss.fill({
-            a1: '=offset(D5, 2, 3, 4, 5)',
-            a2: '=offset(d5:f7, -2, -3)',
-            a3: '=offset(d5:f7, -2, -4)',
-            a4: '=offset(D5, 1, -2)'
+            G7: 'This is G7',
+            A3: 'This is A3',
+            B6: 'This is B6',
+            b1: '=offset(D5, 2, 3, 4, 5)',
+            b2: '=offset(d5:f7, -2, -3)',
+            b3: '=offset(d5:f7, -2, -4)',
+            b4: '=offset(D5, 1, -2)',
         });
         ss.recalculate(function(){
             ss.expectEqual({
-                a1: 'G7:K10',
-                a2: 'A3:C5',
-                a3: '#VALUE!',
-                a4: 'B6'
+                b1: 'This is G7', // G7:K10 range, only first cell is returned
+                b2: 'This is A3', // A3:C5 range
+                b3: '#VALUE!',
+                b4: 'This is B6',
             });
         });
     });

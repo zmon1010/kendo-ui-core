@@ -451,7 +451,6 @@
               case "postfix" : return cpsUnary(node, k);
               case "binary"  : return cpsBinary(node, k);
               case "func"    : return cpsFunc(node, k);
-              case "try"     : return cpsTry(node, k);
               case "lambda"  : return cpsLambda(node, k);
               case "matrix"  : return cpsMatrix(node.value, k, true);
             }
@@ -575,23 +574,6 @@
                 return k(TRUE);
               case "false":
                 return k(FALSE);
-
-              case "isblank":
-              case "iserr":
-              case "iserror":
-              case "islogical":
-              case "isna":
-              case "isnontext":
-              case "isnumber":
-              case "isref":
-              case "istext":
-                // XXX: ugly special cases.  Currently in case of an error the runtime simply
-                // invokes the toplevel callback, which conveniently aborts any calculation in
-                // progress; however, this makes errors impossible to catch, so an expression like
-                // ISERROR(FOO()) will just display #NAME! instead of TRUE.  The cpsCatch below will
-                // wrap the expression in a lambda and the runtime will supply a nested context able
-                // to catch the errors.
-                return cpsCatch(node, k);
             }
             // actual function
             return (function loop(args, i){
@@ -608,36 +590,6 @@
                     });
                 }
             })([ makeContinuation(k) ], 0);
-        }
-
-        function cpsTry(node, k) {
-            return k({
-                type: "lambda",
-                vars: [],
-                body: cps(node.body, function(body){
-                    return {
-                        type: "return",
-                        value: body
-                    };
-                })
-            });
-        }
-
-        function cpsCatch(node, k) {
-            return cps({
-                type: "func",
-                func: "-catch",
-                args: [
-                    {
-                        type: "str",
-                        value: node.func
-                    }, {
-                        type: "try",
-                        vars: [],
-                        body: node.args[0]
-                    }
-                ]
-            }, k);
         }
 
         function cpsLambda(node, k) {

@@ -48,19 +48,27 @@
         },
 
         resolve: function(val) {
+            var self = this;
+            if (val instanceof Ref) {
+                self.resolveCells([ val ], function(){
+                    val = self.ss.getData(val);
+                    if (Array.isArray(val)) {
+                        // got a Range, we should return a single value
+                        val = val[0];
+                    }
+                    self._resolve(val);
+                });
+            } else {
+                self._resolve(val);
+            }
+        },
+
+        _resolve: function(val) {
             this.formula.value = val;
             this.ss.onFormula(this.sheet, this.row, this.col, val);
             if (this.callback) {
                 this.callback(val);
             }
-        },
-
-        error: function(val) {
-            this.ss.onFormula(this.sheet, this.row, this.col, val);
-            if (this.callback) {
-                this.callback(val);
-            }
-            return val;
         },
 
         resolveCells: function(a, f) {
@@ -71,7 +79,7 @@
                     var x = a[i];
                     if (x instanceof Ref) {
                         if (!add(context.ss.getRefCells(x))) {
-                            context.error(new CalcError("CIRCULAR"));
+                            context.resolve(new CalcError("CIRCULAR"));
                             return true;
                         }
                     }
@@ -148,7 +156,7 @@
             if (Object.prototype.hasOwnProperty.call(FUNCS, fname)) {
                 return FUNCS[fname].call(this, callback, args);
             }
-            this.error(new CalcError("NAME"));
+            callback(new CalcError("NAME"));
         },
 
         bool: function(val) {
@@ -578,9 +586,6 @@
     // spreadsheet functions --------
 
     var FUNCS = {
-
-        /* -----[ conditional ]----- */
-
         "if": function(callback, args) {
             var self = this;
             var co = args[0], th = args[1], el = args[2];
@@ -612,45 +617,7 @@
                     }
                 }
             });
-        },
-
-        /* -----[ error catching ]----- */
-
-        "-catch": function(callback, args){
-            var fname = args[0].toLowerCase();
-            var prevCallback = this.callback;
-            this.callback = function(ret) {
-                this.callback = prevCallback;
-                var val = this.cellValues([ ret ])[0];
-                switch (fname) {
-                  case "isblank":
-                    if (ret instanceof CellRef) {
-                        return callback(val == null || val === "");
-                    }
-                    return callback(false);
-                  case "iserror":
-                    return callback(val instanceof CalcError);
-                  case "iserr":
-                    return callback(val instanceof CalcError && val.code != "N/A");
-                  case "islogical":
-                    return callback(typeof val == "boolean");
-                  case "isna":
-                    return callback(val instanceof CalcError && val.code == "N/A");
-                  case "isnontext":
-                    return callback(typeof val != "string" || val === "");
-                  case "isref":
-                    // apparently should return true only for cell and range
-                    return callback(ret instanceof CellRef || ret instanceof RangeRef);
-                  case "istext":
-                    return callback(typeof val == "string" && val !== "");
-                  case "isnumber":
-                    return callback(typeof val == "number");
-                }
-                this.error("CATCH");
-            };
-            args[1]();
         }
-
     };
 
     // Lasciate ogni speranza, voi ch'entrate.
@@ -727,8 +694,13 @@
                 } else if (type == "rest") {
                     code += "xargs.push(args.slice(i)); i = args.length; ";
                 } else {
-                    code += "var $" + name + " = args[i++]; if ($"+name+" instanceof CalcError) return $"+name+"; "
-                        + typeCheck(type) + "xargs.push($"+name+"); ";
+                    code += "var $" + name + " = args[i++]; ";
+                    if (/!$/.test(type)) {
+                        type = type.substr(0, type.length - 1);
+                    } else {
+                        code += "if ($"+name+" instanceof CalcError) return $"+name+"; ";
+                    }
+                    code += typeCheck(type) + "xargs.push($"+name+"); ";
                 }
             }
             code += "} ";
@@ -862,6 +834,9 @@
             }
             if (type == "anyvalue") {
                 return "(" + force() + " != null && i <= args.length)";
+            }
+            if (type == "forced") {
+                return "(" + force() + ", i <= args.length)";
             }
             if (type == "anything") {
                 return "(i <= args.length)";
@@ -1337,6 +1312,67 @@
         return !this.bool(a);
     }).args([
         [ "a", "*anyvalue" ]
+    ]);
+
+    /* -----[ the IS* functions ]----- */
+
+    defineFunction("isblank", function(val){
+        if (val instanceof CellRef) {
+            val = this.ss.getData(val);
+            return val == null || val === "";
+        }
+        return false;
+    }).args([
+        [ "value", "*anything!" ]
+    ]);
+
+    defineFunction("iserror", function(val){
+        return val instanceof CalcError;
+    }).args([
+        [ "value", "*forced!" ]
+    ]);
+
+    defineFunction("iserr", function(val){
+        return val instanceof CalcError && val.code != "N/A";
+    }).args([
+        [ "value", "*forced!" ]
+    ]);
+
+    defineFunction("isna", function(val){
+        return val instanceof CalcError && val.code == "N/A";
+    }).args([
+        [ "value", "*forced!" ]
+    ]);
+
+    defineFunction("islogical", function(val){
+        return typeof val == "boolean";
+    }).args([
+        [ "value", "*forced!" ]
+    ]);
+
+    defineFunction("isnontext", function(val){
+        return typeof val != "string" || val === "";
+    }).args([
+        [ "value", "*forced!" ]
+    ]);
+
+    defineFunction("istext", function(val){
+        return typeof val == "string" && val !== "";
+    }).args([
+        [ "value", "*forced!" ]
+    ]);
+
+    defineFunction("isnumber", function(val){
+        return typeof val == "number";
+    }).args([
+        [ "value", "*forced!" ]
+    ]);
+
+    defineFunction("isref", function(val){
+        // apparently should return true only for cell and range
+        return val instanceof CellRef || val instanceof RangeRef;
+    }).args([
+        [ "value", "*anything!" ]
     ]);
 
     /// utils

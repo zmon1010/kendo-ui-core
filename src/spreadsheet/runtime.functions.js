@@ -512,12 +512,6 @@
         [ "+", [ "args", [ "or", "matrix", "anyvalue" ] ] ]
     ]);
 
-    defineFunction("isnumber", function(val){
-        return typeof val == "number";
-    }).args([
-        [ "value", "*anyvalue" ]
-    ]);
-
     defineFunction("iseven", function(num){
         return num % 2 === 0;
     }).args([
