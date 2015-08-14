@@ -467,19 +467,20 @@
         },
 
         setState: function(state) {
+            var sheet = this._sheet;
             var origin = this._ref.first();
             var rowDelta = state.ref.row - origin.row;
             var colDelta = state.ref.col - origin.col;
-            var sheetName = this._sheet.name();
+            var sheetName = sheet.name();
 
-            this._sheet.batch(function() {
+            sheet.batch(function() {
                 if (state.mergedCells) {
                     this.unmerge();
                 }
 
                 this.forEachCell(function(row, col, cell) {
                     var cellState = state[(row + rowDelta)  + "," + (col + colDelta)];
-                    var range = this._sheet.range(row, col);
+                    var range = sheet.range(row, col);
 
                     for (var property in cellState) {
                         if(property == "compiledFormula"){
@@ -497,8 +498,8 @@
 
                 if (state.mergedCells) {
                     state.mergedCells.forEach(function(merged) {
-                        merged = this._sheet._ref(merged).relative(rowDelta, colDelta, 3);
-                        this._sheet.range(merged).merge();
+                        merged = sheet._ref(merged).relative(rowDelta, colDelta, 3);
+                        sheet.range(merged).merge();
                     }, this);
                 }
             }.bind(this), {});
