@@ -95,7 +95,10 @@
             style.fontSize = cell.fontSize;
         }
 
-        if (cell.wrap === false) {
+        if (cell.wrap === true) {
+            style.whiteSpace = "normal";
+            style.wordBreak = "break-all";
+        } else {
             style.whiteSpace = "nowrap";
         }
 

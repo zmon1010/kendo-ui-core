@@ -292,6 +292,41 @@
         equal(range.wrap(), true);
     });
 
+    test("wrap adjusts the row height", function() {
+        kendo.spreadsheet.util.getTextHeight = function() {
+            return 50;
+        };
+
+        var height = sheet.rowHeight(0);
+        sheet.range("A1").wrap(true);
+        ok(sheet.rowHeight(0) > height);
+    });
+
+    test("wrap adjusts each row height", function() {
+        kendo.spreadsheet.util.getTextHeight = function() {
+            return 50;
+        };
+
+        var height0 = sheet.rowHeight(0);
+        var height1 = sheet.rowHeight(1);
+
+        sheet.range("A1:B2").wrap(true);
+        ok(sheet.rowHeight(0) > height0);
+        ok(sheet.rowHeight(1) > height1);
+    });
+
+    test("wrap sets row height equal to the heigh of the highest cell", function() {
+        mockCellHeight = [40, 50];
+        kendo.spreadsheet.util.getTextHeight = function() {
+            return mockCellHeight.shift();
+        };
+
+        var height = sheet.rowHeight(0);
+
+        sheet.range("A1:B1").wrap(true);
+        equal(sheet.rowHeight(0), 50);
+    });
+
     test("setting style property to null removes it from the style object", function() {
         range.background("red");
         range.color("red");

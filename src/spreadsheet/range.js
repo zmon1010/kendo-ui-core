@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core" ], f);
+    define([ "../kendo.core", "../drawing/text-metrics" ], f);
 })(function(){
 
 (function(kendo) {
@@ -12,7 +12,7 @@
     var styles = [
         "color", "fontFamily", "underline", "fontSize",
         "italic", "bold", "textAlign",
-        "verticalAlign", "background", "wrap"
+        "verticalAlign", "background"
     ];
 
     var borders = {
@@ -510,6 +510,27 @@
             this._ref.forEach(function(ref) {
                 this._sheet.forEach(ref.toRangeRef(), callback.bind(this));
             }.bind(this));
+        },
+
+        wrap: function(flag) {
+            if (flag === undefined) {
+                return !!this._property("wrap");
+            }
+
+            this.forEachRow(function(range) {
+                var maxHeight = 0;
+
+                range.forEachCell(function(row, col, cell) {
+                    var width = this._sheet.columnWidth(col);
+                    maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width));
+                });
+
+                range.sheet().rowHeight(range.topLeft().row, maxHeight);
+            }.bind(this));
+
+            this._property("wrap", flag);
+
+            return this;
         }
     });
 
@@ -525,6 +546,17 @@
         return format.replace(/M/g, "m").replace(/'/g, '"').replace(/tt/, "am/pm");
     }
 
+    var measureBox = $('<div style="position: absolute !important; top: -4000px !important; height: auto !important;' +
+                        'padding: 1px !important; margin: 0 !important; border: 1px solid black !important;' +
+                        'line-height: normal !important; visibility: hidden !important;' +
+                        'white-space: normal !important; word-break: break-all !important;" />'
+                     )[0];
+
+    function getTextHeight(text, width) {
+        return kendo.drawing.util.measureText(text, { baselineMarkerSize: 0, width: width + "px" }, measureBox).height;
+    }
+
+    kendo.spreadsheet.util = { getTextHeight: getTextHeight };
     kendo.spreadsheet.Range = Range;
 })(window.kendo);
 
