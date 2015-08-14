@@ -3,6 +3,8 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
+
     var RangeRef = kendo.spreadsheet.RangeRef;
     var UnionRef = kendo.spreadsheet.UnionRef;
     var CellRef = kendo.spreadsheet.CellRef;
@@ -524,6 +526,6 @@
     }
 
     kendo.spreadsheet.Range = Range;
-})(kendo);
+})(window.kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

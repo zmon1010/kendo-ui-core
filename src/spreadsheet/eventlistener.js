@@ -3,6 +3,7 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
 
     var KEY_NAMES = {
         9: 'tab',
@@ -140,5 +141,5 @@
     });
 
     kendo.spreadsheet.EventListener = EventListener;
-})(kendo);
+})(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

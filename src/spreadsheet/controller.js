@@ -3,6 +3,8 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
+
     var ACTIONS = {
        "up": "up",
        "down": "down",
@@ -355,5 +357,6 @@
     });
 
     kendo.spreadsheet.Controller = Controller;
-})(kendo);
+})(window.kendo);
+
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

@@ -3,6 +3,8 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
+
     var classNames = {
         wrapper: "k-spreadsheet-formula-bar"
     };
@@ -49,5 +51,5 @@
 
     kendo.spreadsheet.FormulaBar = FormulaBar;
     $.extend(true, FormulaBar, { classNames: classNames });
-})(kendo);
+})(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

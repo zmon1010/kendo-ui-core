@@ -168,7 +168,7 @@
         eq: function(ref) {
             return ref === this;
         },
-        forEach: $.noop
+        forEach: function() {}
     }))();
 
     /* -----[ Name reference ]----- */

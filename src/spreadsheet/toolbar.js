@@ -3,6 +3,8 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
+
     var ToolBar = kendo.ui.ToolBar;
 
     var defaultItems = [
@@ -749,6 +751,6 @@
         FormatCellsViewModel: FormatCellsViewModel
     };
 
-})(kendo);
+})(window.kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

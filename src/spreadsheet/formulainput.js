@@ -3,6 +3,7 @@
 })(function(){
 
 (function(kendo, window) {
+    var $ = kendo.jQuery;
     var classNames = {
         wrapper: "k-spreadsheet-formula-input"
     };

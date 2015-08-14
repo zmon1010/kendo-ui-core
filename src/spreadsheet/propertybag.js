@@ -3,6 +3,8 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
+
     var Property = kendo.Class.extend({
         init: function(list) {
             this.list = list;
@@ -191,6 +193,6 @@
         return spec.name;
     });
 
-})(kendo);
+})(window.kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

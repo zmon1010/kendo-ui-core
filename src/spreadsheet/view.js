@@ -3,6 +3,7 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
     var CellRef = kendo.spreadsheet.CellRef;
     var RangeRef = kendo.spreadsheet.RangeRef;
     var DOT = ".";
@@ -799,5 +800,6 @@
 
     $.extend(true, View, { classNames: viewClassNames });
     $.extend(true, Pane, { classNames: paneClassNames });
-})(kendo);
+
+})(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
