@@ -169,7 +169,7 @@
             var options = this.options;
 
             if (defined(level)) {
-                level = limit(level, options.minZoom, options.maxZoom);
+                level = math.round(limit(level, options.minZoom, options.maxZoom));
                 if (options.zoom !== level) {
                     options.zoom = level;
                     this._reset();

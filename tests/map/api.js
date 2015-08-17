@@ -95,6 +95,11 @@
         deepEqual(map.options.zoom, 10);
     });
 
+    test("rounds value", function() {
+        map.zoom(10.6);
+        deepEqual(map.options.zoom, 11);
+    });
+
     test("setting zoom resets origin", function() {
         var origin = map.extent().nw;
         map.zoom(10);
