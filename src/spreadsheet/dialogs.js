@@ -6,26 +6,21 @@
     var $ = kendo.jQuery;
     var ObservableObject = kendo.data.ObservableObject;
 
-    var DialogRegistry = kendo.Class.extend({
-        init: function() {
-            this._registry = {};
+    var registry = {};
+    kendo.spreadsheet.dialogs = {
+        register: function(name, dialogClass) {
+            registry[name] = dialogClass;
         },
-        register: function(name, dialog) {
-            this._registry[name] = dialog;
-        },
-        open: function(name, range) {
-            var dialogClass = this._registry[name];
+        create: function(name) {
+            var dialogClass = registry[name];
 
             if (dialogClass) {
-                var dialog = new dialogClass();
-                dialog.open(range);
+                return new dialogClass();
             }
         }
-    });
+    };
 
-    kendo.spreadsheet.dialogs = new DialogRegistry();
-
-    var SpreadsheetDialog = kendo.Class.extend({
+    var SpreadsheetDialog = kendo.spreadsheet.SpreadsheetDialog = kendo.Class.extend({
         init: function(options) {
             this.dialog();
 

@@ -157,7 +157,7 @@
             },
 
             openDialog: function(name) {
-                this._controller.openDialog(name);
+                this._view.openDialog(name);
 
                 return this;
             },
@@ -194,6 +194,12 @@
                 } else {
                     this.refresh();
                 }
+            },
+
+            destroy: function() {
+                kendo.ui.Widget.fn.destroy.call(this);
+
+                this._view.destroy();
             },
 
             options: {

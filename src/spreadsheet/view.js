@@ -230,6 +230,8 @@
 
             this._chrome();
 
+            this._dialogs = [];
+
             element.append(VIEW_CONTENTS({ classNames: classNames }));
 
             this.wrapper =      element.find(DOT + classNames.view);
@@ -439,6 +441,24 @@
             }
 
             return willScroll;
+        },
+
+        openDialog: function(name) {
+            var sheet = this._sheet;
+            var ref = sheet.activeCell();
+            var range = new kendo.spreadsheet.Range(ref, sheet);
+            var dialog = kendo.spreadsheet.dialogs.create(name);
+
+            if (dialog) {
+                this._dialogs.push(dialog);
+                dialog.open(range);
+            }
+        },
+
+        destroy: function() {
+            this._dialogs.forEach(function(dialog) {
+                dialog.destroy();
+            });
         },
 
         render: function() {

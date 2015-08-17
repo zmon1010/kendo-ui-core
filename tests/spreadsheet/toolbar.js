@@ -93,43 +93,4 @@
         equal($(".k-i-refresh").length, 1);
     });
 
-    var viewModel;
-
-    module("SpreadSheet FormatCellsViewModel", {
-        setup: function() {
-            viewModel = new kendo.spreadsheet.FormatCellsViewModel({
-                value: 100,
-                allFormats: [
-                    { category: "a", name: "Null", value: null },
-                    { category: "a", name: "Foo", value: "foo" },
-                    { category: "a", name: "Bar", value: "bar" },
-                    { category: "b", name: "Date", value: "mm-yy" }
-                ]
-            });
-        }
-    });
-
-    test("preview of value", function() {
-        viewModel.set("value", "bar");
-
-        equal(viewModel.preview(), "bar");
-    });
-
-    test("setting format previews it with sample", function() {
-        viewModel.set("format", "foo");
-
-        equal(viewModel.preview(), "foo");
-    });
-
-    test("changing date format", function() {
-        viewModel.set("value", 0);
-        viewModel.set("format", "mm-yy");
-
-        equal(viewModel.preview(), "12-99");
-    });
-
-    test("lists categories", function() {
-        deepEqual(viewModel.categories(), [ "a", "b" ]);
-    });
-
 })();
