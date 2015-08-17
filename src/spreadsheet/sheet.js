@@ -143,6 +143,10 @@
         },
 
         insertRow: function(rowIndex) {
+            if (this.range(this._grid.rowCount, 0, 0, this._grid.columnCount).hasValue()) {
+                throw new Error("Shifting nonblank cells off the worksheet is not supported!");
+            }
+
             this.batch(function() {
 
                 var grid = this._grid;

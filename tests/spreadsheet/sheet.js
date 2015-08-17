@@ -176,8 +176,6 @@
     });
 
     test("insertRow at the last position", function() {
-        sheet.range(defaults.rows + ":" + defaults.rows).value("foo");
-
         sheet.insertRow(defaults.rows - 1);
 
         equal(sheet.range(defaults.rows + ":" + defaults.rows).value(), null);
@@ -191,6 +189,12 @@
        sheet.bind("insertRow", function(e) {
            equal(e.index, 0);
        }).insertRow(0);
+    });
+
+    test("insertRow pushing record outside of the sheet throws error", function() {
+        sheet.range("A" + defaults.rows).values("some value");
+
+        throws(function() { sheet.insertRow(0); });
     });
 
     test("deleteColumn triggers the change event", 1, function() {
