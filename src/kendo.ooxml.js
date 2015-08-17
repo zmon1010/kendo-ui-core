@@ -133,12 +133,13 @@ var WORKSHEET = kendo.template(
    '<cols>' +
    '# for (var ci = 0; ci < columns.length; ci++) { #' +
        '# var column = columns[ci]; #' +
-       '# if (column.width) { #' +
+       '# var columnWidth = column.width || columnWidth; #' +
+       '# if (columnWidth) { #' +
        '<col min="${ci+1}" max="${ci+1}" customWidth="1"' +
        '# if (column.autoWidth) { #' +
-       ' width="${((column.width*7+5)/7*256)/256}" bestFit="1"' +
+       ' width="${((columnWidth*7+5)/7*256)/256}" bestFit="1"' +
        '# } else { #' +
-       ' width="${(((column.width)/7)*100+0.5)/100}" ' +
+       ' width="${(((columnWidth)/7)*100+0.5)/100}" ' +
        '# } #' +
        '/>' +
        '# } #' +
@@ -342,6 +343,7 @@ var Worksheet = kendo.Class.extend({
         return WORKSHEET({
             freezePane: this.options.freezePane,
             columns: this.options.columns,
+            columnWidth: this.options.columnWidth,
             data: data,
             index: index,
             mergeCells: this._mergeCells,
@@ -588,6 +590,8 @@ var Workbook = kendo.Class.extend({
         this._styles = [];
 
         this._sheets = $.map(this.options.sheets || [], $.proxy(function(options) {
+            options.columnWidth = this.options.columnWidth;
+
             return new Worksheet(options, this._strings, this._styles);
         }, this));
     },
