@@ -754,4 +754,41 @@
         equal(sheet.range("B2").value(), 2);
     });
 
+    test("hasValue returns true if any value is set", function() {
+        sheet.range("B2").value("foo");
+
+        ok(sheet.range("2:2").hasValue());
+    });
+
+    test("hasValue returns false if no value is set", function() {
+        ok(!sheet.range("2:2").hasValue());
+    });
+
+    test("hasValue returns false if value is set to default", function() {
+        sheet.range("B2").value("foo");
+
+        sheet.range("B2").value(null);
+
+        ok(!sheet.range("2:2").hasValue());
+    });
+
+    test("hasValue returns false if value cleared", function() {
+        sheet.range("B2").value("foo");
+
+        sheet.range("B2").clear();
+
+        ok(!sheet.range("2:2").hasValue());
+    });
+
+    test("hasValue returns true if any value in non sequential range is set", function() {
+        sheet.range("B2").value("foo");
+
+        ok(sheet.range("A1:C3").hasValue());
+    });
+
+    test("hasValue returns true if any background is set", function() {
+        sheet.range("B2").background("red");
+
+        ok(sheet.range("2:2").hasValue());
+    });
 })();

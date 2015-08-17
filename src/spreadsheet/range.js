@@ -512,6 +512,18 @@
             }.bind(this));
         },
 
+        hasValue: function() {
+            var result = false;
+
+            this.forEachCell(function(row, col, cell) {
+                if (Object.keys(cell).length !== 0) {
+                    result = true;
+                }
+            });
+
+            return result;
+        },
+
         wrap: function(flag) {
             if (flag === undefined) {
                 return !!this._property("wrap");
