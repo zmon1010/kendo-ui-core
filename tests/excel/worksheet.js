@@ -442,6 +442,18 @@ test("toXML sets the 'defaultColWidth' attribute of the 'sheetFormatPr' element 
     equal(Math.round(dom.find("sheetFormatPr").attr("defaultColWidth")), 71);
 });
 
+test("toXML sets the 'defaultRowHeight' attribute of the 'sheetFormatPr' element to the default row height", function() {
+    var worksheet = Worksheet({
+        columns: [{}],
+        defaults: {
+            rowHeight: 100
+        }
+    });
+
+    var dom = $($.parseXML(worksheet.toXML()));
+    equal(Math.round(dom.find("sheetFormatPr").attr("defaultRowHeight")), 75);
+});
+
 test("toXML calculates the 'width' attribute based on string length", function() {
 // see: http://msdn.microsoft.com/en-us/library/documentformat.openxml.spreadsheet.column(v=office.14).aspx
 // for some reason though subtracting 5 px padding didn't work and we don't do it

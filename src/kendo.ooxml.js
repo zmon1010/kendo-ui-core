@@ -128,7 +128,7 @@ var WORKSHEET = kendo.template(
        '# } #' +
        '</sheetView>' +
    '</sheetViews>' +
-   '<sheetFormatPr x14ac:dyDescent="0.25" defaultRowHeight="15" ' +
+   '<sheetFormatPr x14ac:dyDescent="0.25" defaultRowHeight="#= defaults.rowHeight ? defaults.rowHeight * 0.75 : 15 #" ' +
        '# if (defaults.columnWidth) { # defaultColWidth="#= kendo.ooxml.toWidth(defaults.columnWidth) #" # } #' +
    ' />' +
    '# if (columns) { #' +
