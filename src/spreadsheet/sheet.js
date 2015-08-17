@@ -29,6 +29,13 @@
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, this._properties.sortable());
         },
 
+        navigator: function() {
+            if(!this._navigator) {
+                 this._navigator = new kendo.spreadsheet.SheetNavigator(this);
+            }
+            return this._navigator;
+        },
+
         name: function(value) {
             if (!value) {
                 return this._name;

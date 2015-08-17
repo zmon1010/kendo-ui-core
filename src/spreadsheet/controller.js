@@ -99,7 +99,8 @@
         },
 
         sheet: function(sheet) {
-            this.navigator = new kendo.spreadsheet.SheetNavigator(sheet, this.view.scroller.clientHeight);
+            this.navigator = sheet.navigator();
+            this.refresh();
         },
 
         refresh: function() {
