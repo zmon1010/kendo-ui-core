@@ -389,6 +389,7 @@
 
 .k-popup.k-calendar-container {
  	padding: 0;
+    border: none;
 }
 
 .k-multiselect-wrap .k-input {
@@ -1220,8 +1221,7 @@ div.editorToolbarWindow.k-window-content {
         background-position: -48px -32px;
     }
 
-    .k-button:active .k-cancel
-     {
+    .k-button:active .k-cancel {
         background-position: -48px -48px;
     }
 }
@@ -1401,6 +1401,18 @@ div.editorToolbarWindow.k-window-content {
     }
 }
 
+.km-pane-wrapper .k-mobile-list .k-state-selected .k-i-sort-asc {
+    background-position: -128px -240px;
+}
+
+.km-pane-wrapper .k-mobile-list .k-state-selected .k-i-sort-desc {
+    background-position: -128px -256px;
+}
+
+.k-mobile-list .k-link:not(.k-state-disabled):hover > .k-filter {
+    background-position: -32px -80px;   
+}
+
 .k-radio-label:before {
     width: 16px;
     height: 16px;
@@ -1467,6 +1479,13 @@ div.editorToolbarWindow.k-window-content {
     min-width: 2.429em;
 }
 
+.km-pane-wrapper .k-scheduler-toolbar>ul>li {
+    border-width: 1px 1px 1px 0;
+}
+
+.km-pane-wrapper .k-scheduler-toolbar>ul>li:first-child {
+    border-left-width: 1px;
+}
 
 .k-ie7 input.k-textbox { 
     line-height: 2.694em;
