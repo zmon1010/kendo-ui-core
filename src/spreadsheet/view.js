@@ -508,11 +508,7 @@
             var grid = sheet._grid;
 
             var selection = sheet.select();
-
-            if (selection === kendo.spreadsheet.NULLREF) {
-                return;
-            }
-            if (selection instanceof kendo.spreadsheet.UnionRef) {
+            if(!this._workbook.clipboard().canCopy()) {
                 this.clipboardContents.render([]);
                 return;
             }

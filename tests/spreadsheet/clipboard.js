@@ -34,4 +34,39 @@
 
         equal(sheet.range("J1").value(), "test");
     });
+
+    test("can copy returns false for union ranges", function() {
+        sheet.range("A1:C1,B2").select();
+        clipboard.copy();
+
+        ok(!clipboard.canCopy())
+    });
+
+    test("canPaste returns false if merged cells are partially overlapped", function() {
+        sheet.range("A1:C1").select();
+        clipboard.copy();
+
+        sheet.range("D1:F1").merge();
+        sheet.range("C1").select();
+
+        ok(!clipboard.canPaste())
+    });
+
+    test("canPaste returns true if no merged cells are affected", function() {
+        sheet.range("A1:C1").select();
+        clipboard.copy();
+
+        sheet.range("C1").select();
+
+        ok(clipboard.canPaste());
+    });
+
+    test("canPaste returns false if pasting into larger merged cell", function() {
+        sheet.range("A1:C1").select();
+        clipboard.copy();
+
+        sheet.range("D1:G1").merge().select();
+
+        ok(!clipboard.canPaste());
+    });
 })();
