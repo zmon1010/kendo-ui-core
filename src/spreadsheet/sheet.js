@@ -379,8 +379,10 @@
         },
 
         completeSelection: function() {
-            this._selectionInProgress = false;
-            this.trigger("change", { selection: true });
+            if (this._selectionInProgress) {
+                this._selectionInProgress = false;
+                this.trigger("change", { selection: true });
+            }
         },
 
         selectionInProgress: function() {
