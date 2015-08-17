@@ -22,9 +22,7 @@
 
     var SpreadsheetDialog = kendo.spreadsheet.SpreadsheetDialog = kendo.Class.extend({
         init: function(options) {
-            this.dialog();
-
-            this.options = options;
+            this.options = $.extend(true, {}, this.options, options);
         },
         dialog: function() {
             if (!this._dialog) {
@@ -38,8 +36,8 @@
                         maximizable: false,
                         modal: true,
                         visible: false,
-                        width: 400,
-                        title: this.title,
+                        width: 320,
+                        title: this.options.title,
                         open: function() {
                             this.center();
                         },
@@ -77,35 +75,33 @@
             this.useCategory(this.category);
         },
         useCategory: function(category) {
-            var formats = this.allFormats.filter(function(x) { return x.category == category; });
-            this.set("formats", formats);
+            var type = category && category.type || "number";
             this.category = category;
-        },
-        categoryFor: function(format) {
-            var formats = this.allFormats;
-            var category = formats[0].category;
+            this.set("formatCurrency", type == "currency");
 
-            for (var i = 0; i < formats.length; i++) {
-                if (formats[i].format == format) {
-                    category = formats[i].category;
-                    break;
-                }
+            if (!this.formatCurrency) {
+                this.set("formats", this.allFormats[type + "Formats"]);
+            } else {
+                var currencyFormats = this.allFormats.currencyFormats;
+                var info = this.currencyFilter(currencyFormats[0]);
+                this.set("formats", currencyFormats.map(function() {
+                    return { value: info.id + "?", name: info.id + "1,000" };
+                }));
+            }
+        },
+        currencyFilter: function(currency) {
+            if (currency !== undefined) {
+                this.currency = currency;
             }
 
-            return category;
+            return this.currency;
         },
         categoryFilter: function(category) {
             if (category !== undefined) {
                 this.useCategory(category);
             }
 
-            return this.category || this.categoryFor(this.format);
-        },
-        categories: function() {
-            var category = function (x) { return x.category; };
-            var unique = function (x, index, self) { return self.indexOf(x) === index; };
-
-            return this.allFormats.map(category).filter(unique);
+            return this.category;
         },
         preview: function() {
             var format = this.get("format");
@@ -122,67 +118,96 @@
     });
 
     var FormatCellsDialog = SpreadsheetDialog.extend({
-        init: function(options, toolbar) {
-            options = options || {};
-
-            options.className = "k-spreadsheet-format-cells";
-            options.formats = options.formats || this.options.formats;
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
         },
         options: {
-            formats: [
-                { category: "Number", value: "?.00%", name: "100.00%" },
-                { category: "Currency", value: "$?", name: "U.S. Dollar" },
-                { category: "Date", value: "m/d", name: "3/14" },
-                { category: "Date", value: "m/d/yy", name: "3/14/01" },
-                { category: "Date", value: "mm/dd/yy", name: "03/14/01" },
-                { category: "Date", value: "d-mmm", name: "14-Mar" },
-                { category: "Date", value: "d-mmm-yy", name: "14-Mar-01" },
-                { category: "Date", value: "dd-mmm-yy", name: "14-Mar-01" },
-                { category: "Date", value: "mmm-yy", name: "Mar-01" },
-                { category: "Date", value: "mmmm-yy", name: "March-01" },
-                { category: "Date", value: "mmmm dd, yyyy", name: "March 14, 2001" },
-                { category: "Date", value: "m/d/yy hh:mm AM/PM", name: "3/14/01 1:30 PM" },
-                { category: "Date", value: "m/d/yy h:mm", name: "3/14/01 13:30" },
-                { category: "Date", value: "mmmmm", name: "M" },
-                { category: "Date", value: "mmmmm-yy", name: "M-01" },
-                { category: "Date", value: "m/d/yyyy", name: "3/14/2001" },
-                { category: "Date", value: "d-mmm-yyyy", name: "14-Mar-2001" }
+            title: "Format number",
+            className: "k-spreadsheet-format-cells",
+            categories: [
+                { type: "number", name: "Number" },
+                { type: "currency", name: "Currency" },
+                { type: "date", name: "Date" }
+            ],
+            numberFormats: [
+                { value: "?.00%", name: "100.00%" }
+            ],
+            currencyFormats: [
+                { name: "US Dollar (USD, $)", id: "USD", sign: "$", verbose: "US$" },
+                { name: "British Pound Sterling (GBP, \u00a3)", id: "GBP", sign: "\u00a3", verbose: "GB\u00a3" },
+                { name: "Euro (EUR, \u20ac)", id: "EUR", sign: "\u20ac" }
+            ],
+            dateFormats: [
+                { value: "m/d", name: "3/14" },
+                { value: "m/d/yy", name: "3/14/01" },
+                { value: "mm/dd/yy", name: "03/14/01" },
+                { value: "d-mmm", name: "14-Mar" },
+                { value: "d-mmm-yy", name: "14-Mar-01" },
+                { value: "dd-mmm-yy", name: "14-Mar-01" },
+                { value: "mmm-yy", name: "Mar-01" },
+                { value: "mmmm-yy", name: "March-01" },
+                { value: "mmmm dd, yyyy", name: "March 14, 2001" },
+                { value: "m/d/yy hh:mm AM/PM", name: "3/14/01 1:30 PM" },
+                { value: "m/d/yy h:mm", name: "3/14/01 13:30" },
+                { value: "mmmmm", name: "M" },
+                { value: "mmmmm-yy", name: "M-01" },
+                { value: "m/d/yyyy", name: "3/14/2001" },
+                { value: "d-mmm-yyyy", name: "14-Mar-2001" }
             ]
         },
-        template: "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
+        template: "<div class='k-root-tabs' data-role='tabstrip' " +
+                       "data-text-field='name' " +
+                       "data-bind='source: categories, value: categoryFilter' " +
+                       "data-animation='false' />" +
 
                   "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
-
-                  "<div class='k-simple-tabs' " +
-                      "data-role='tabstrip' " +
-                      "data-bind='source: categories, value: categoryFilter' " +
-                      "data-animation='false' />" +
 
                   "<script type='text/x-kendo-template' id='format-item-template'>" +
                       "#: data.name #" +
                   "</script>" +
+
+                  "<select data-role='dropdownlist' class='k-format-filter' " +
+                      "data-text-field='name' " +
+                      "data-bind='visible: formatCurrency, value: currencyFilter, source: allFormats.currencyFormats' />" +
 
                   "<ul data-role='staticlist' tabindex='0' " +
                       "class='k-list k-reset' " +
                       "data-template='format-item-template' " +
                       "data-value-primitive='true' " +
                       "data-value-field='value' " +
-                      "data-bind='source: formats, value: format' />",
+                      "data-bind='source: formats, value: format' />" +
+
+                  "<div class='k-action-buttons'>" +
+                      "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
+                      "<button class='k-button' data-bind='click: close'>Cancel</button>" +
+                  "</div>",
         open: function(range) {
-            var formats = this.options.formats.slice(0);
+            var options = this.options;
             var value = range.value();
+            var categories = options.categories.slice(0);
+            var element;
 
             this.viewModel = new FormatCellsViewModel({
-                allFormats: formats,
+                allFormats: {
+                    numberFormats: options.numberFormats.slice(0),
+                    currencyFormats: options.currencyFormats.slice(0),
+                    dateFormats: options.dateFormats.slice(0)
+                },
+                categories: categories,
                 format: range.format(),
-                category: value instanceof Date ? "Date" : null,
+                category: value instanceof Date ? categories[2] : categories[0],
                 apply: this.apply.bind(this),
+                close: this.close.bind(this),
                 value: value
             });
 
             SpreadsheetDialog.fn.open.call(this);
 
-            kendo.bind(this.dialog().element, this.viewModel);
+            element = this.dialog().element;
+
+            kendo.bind(element, this.viewModel);
+
+            element.find(kendo.roleSelector("staticlist")).parent().addClass("k-list-wrapper");
         },
         apply: function() {
             var format = this.viewModel.format;

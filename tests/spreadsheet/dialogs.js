@@ -57,8 +57,25 @@
         equal(viewModel.preview(), "12-99");
     });
 
-    test("lists categories", function() {
-        deepEqual(viewModel.categories(), [ "a", "b" ]);
+    test("formatCurrency is set when category is currency", function() {
+        viewModel = new kendo.spreadsheet.FormatCellsViewModel({
+            value: 100,
+            category: { type: "currency", name: "Currency" },
+            categories: [
+                { type: "currency", name: "Currency" },
+                { type: "date", name: "Date" }
+            ],
+            allFormats: {
+                dateFormats: [
+                    { name: "Date", value: "mmmm yyyy" }
+                ],
+                currencyFormats: [
+                    { name: "Foo", id: "FOO", sign: "foo" },
+                ]
+            }
+        });
+
+        ok(viewModel.formatCurrency);
     });
 
 })();
