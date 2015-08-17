@@ -14,7 +14,7 @@
         [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ],
         "format", "mergeCells", "borders",
         "fontFamily", "fontSize",
-        "backgroundColor", "textColor"
+        "backgroundColor", "textColor", "textWrap"
     ];
 
     var toolDefaults = {
@@ -44,7 +44,8 @@
         mergeAll:              { iconClass: "merge-cells", command: "MergeCellCommand", value: "all" },
         mergeHorizontally:     { iconClass: "merge-cells", command: "MergeCellCommand", value: "horizontally" },
         mergeVertically:       { iconClass: "merge-cells", command: "MergeCellCommand", value: "vertically" },
-        unmerge:               { iconClass: "merge-cells", command: "MergeCellCommand", value: "unmerge" }
+        unmerge:               { iconClass: "merge-cells", command: "MergeCellCommand", value: "unmerge" },
+        textWrap:              { type: "button", togglable: true, command : "TextWrapCommand", value: true, iconClass: "text-wrap" }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
