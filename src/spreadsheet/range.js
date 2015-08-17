@@ -518,7 +518,7 @@
             }
 
             this.forEachRow(function(range) {
-                var maxHeight = 0;
+                var maxHeight = range.sheet().rowHeight(range.topLeft().row);
 
                 range.forEachCell(function(row, col, cell) {
                     var width = this._sheet.columnWidth(col);
