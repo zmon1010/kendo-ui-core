@@ -292,6 +292,48 @@ test("toXML sets the 'r' attribute to index plus one", function() {
     equal(dom.find("row").attr("r"), "1");
 });
 
+test("toXML sets the 'ht' attribute to the row height", function() {
+    var worksheet = Worksheet({
+        rows: [{
+            height: 100,
+            cells: []
+        }]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("ht"), "75");
+});
+
+test("toXML does not set the 'ht' attribute if the row has no height set", function() {
+    var worksheet = Worksheet();
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("ht"), null);
+});
+
+test("toXML sets the 'customHeight' attribute if row height is set", function() {
+    var worksheet = Worksheet({
+        rows: [{
+            height: 100,
+            cells: []
+        }]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("customHeight"), "1");
+});
+
+test("toXML does not set the 'customHeight' attribute if row height is not set", function() {
+    var worksheet = Worksheet();
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("customHeight"), null);
+});
+
 test("toXML renders cells as children elements", function() {
     var worksheet = Worksheet([
         { cells: [ { value: "foo" }, { value: "bar" } ] }
