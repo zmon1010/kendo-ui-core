@@ -45,7 +45,8 @@
         "*+pagedown": "onPageDown",
         "mouseup": "onMouseUp",
         "cut": "onCut",
-        "paste": "onPaste"
+        "paste": "onPaste",
+        "copy": "onCopy"
     };
 
     var FORMULAINPUT_EVENTS = {
@@ -85,22 +86,27 @@
     }
 
     var Controller = kendo.Class.extend({
-        init: function(view) {
+        init: function(view, workbook) {
             this.view = view;
+            this.workbook(workbook);
             this.container = $(view.container);
-            this.clipboard = $(view.clipboard);
+            this.clipboardElement = $(view.clipboard);
             this.scroller = view.scroller;
             this.formulaInput = view.formulaInput;
 
             $(view.scroller).on("scroll", this.onScroll.bind(this));
             this.listener = new kendo.spreadsheet.EventListener(this.container, this, CONTAINER_EVENTS);
-            this.keyListener = new kendo.spreadsheet.EventListener(this.clipboard, this, CLIPBOARD_EVENTS);
+            this.keyListener = new kendo.spreadsheet.EventListener(this.clipboardElement, this, CLIPBOARD_EVENTS);
             this.inputKeyListener = new kendo.spreadsheet.EventListener(this.formulaInput.element, this, FORMULAINPUT_EVENTS);
         },
 
         sheet: function(sheet) {
             this.navigator = sheet.navigator();
             this.refresh();
+        },
+
+        workbook: function(workbook) {
+            this.clipboard = workbook.clipboard();
         },
 
         refresh: function() {
@@ -237,11 +243,15 @@
         },
 
         clipBoardValue: function() {
-            return this.clipboard.html();
+            return this.clipboardElement.html();
         },
 
         onPaste: function(event, action) {
-            this.navigator.setSelectionValue(this.clipBoardValue.bind(this));
+            this.clipboard.paste();
+        },
+
+        onCopy: function(event, action) {
+            this.clipboard.copy();
         },
 
 ////////////////////////////////////////////////////////////////////
@@ -343,17 +353,17 @@
 
         onEsc: function() {
             this.formulaInput.deactivate(true);
-            this.clipboard.focus();
+            this.clipboardElement.focus();
         },
 
         onEnter: function() {
             this.formulaInput.deactivate();
-            this.clipboard.focus();
+            this.clipboardElement.focus();
         },
 
         onTab: function() {
             this.formulaInput.deactivate();
-            this.clipboard.focus();
+            this.clipboardElement.focus();
         }
     });
 

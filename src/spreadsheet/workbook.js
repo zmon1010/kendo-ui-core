@@ -37,6 +37,13 @@
             }
         },
 
+        clipboard: function() {
+            if(!this._clipboard) {
+                 this._clipboard = new kendo.spreadsheet.Clipboard(this);
+            }
+            return this._clipboard;
+        },
+
         events: [
             "change"
         ],

@@ -9,6 +9,7 @@
         "./spreadsheet/propertybag",
         "./spreadsheet/references",
         "./spreadsheet/navigator",
+        "./spreadsheet/clipboard",
         "./spreadsheet/range",
         "./spreadsheet/sheet",
         "./spreadsheet/workbook",
@@ -67,11 +68,11 @@
                     toolbar: this.options.toolbar
                 });
 
-                this._controller = new Controller(this._view);
+                this._workbook = new Workbook(this.options);
+                
+                this._controller = new Controller(this._view, this._workbook);
 
                 this._autoRefresh = true;
-
-                this._workbook = new Workbook(this.options);
 
                 this._workbook.bind("change", this._workbookChange.bind(this));
 
@@ -189,6 +190,7 @@
                     this._workbook.bind("change", this._workbookChange.bind(this));
 
                     this._view.workbook(this._workbook);
+                    this._controller.workbook(this._workbook);
 
                     this.activeSheet(this.activeSheet());
                 } else {
