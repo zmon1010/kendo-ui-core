@@ -645,4 +645,31 @@
         equal(sheet.range("A1").format(), "#.0;@");
     });
 
+    module("SpreadSheet TextWrapCommand", moduleOptions);
+
+    var TextWrapCommand = $.proxy(command, this, kendo.spreadsheet.TextWrapCommand);
+
+    test("Expands the row height", function() {
+        kendo.spreadsheet.util.getTextHeight = function() {
+            return 50;
+        };
+
+        var command = TextWrapCommand({ value: true });
+        command.exec();
+
+        equal(sheet.rowHeight(0), 50);
+    });
+
+    test("Undo collapses the row height", function() {
+        kendo.spreadsheet.util.getTextHeight = function() {
+            return 50;
+        };
+
+        var command = TextWrapCommand({ value: true });
+        command.exec();
+        command.undo();
+
+        equal(sheet.rowHeight(0), 20);
+    });
+
 })();

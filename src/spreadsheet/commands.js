@@ -59,6 +59,36 @@
         }
     });
 
+    var TextWrapCommand = kendo.spreadsheet.TextWrapCommand = PropertyChangeCommand.extend({
+        init: function(options) {
+            options.property = "wrap";
+            PropertyChangeCommand.fn.init.call(this, options);
+
+            this._value = options.value;
+        },
+        getState: function() {
+            var rowHeight = {};
+            this.range().forEachRow(function(range) {
+                var index = range.topLeft().row;
+
+                rowHeight[index] = range.sheet().rowHeight(index);
+            });
+
+            this._state = this.range().getState(this._property);
+            this._rowHeight = rowHeight;
+        },
+        undo: function() {
+            var sheet = this.range().sheet();
+            var rowHeight = this._rowHeight;
+
+            this.range().setState(this._state);
+
+            for (var row in rowHeight) {
+                sheet.rowHeight(row, rowHeight[row]);
+            }
+        }
+    });
+
     var AdjustDecimalsCommand = kendo.spreadsheet.AdjustDecimalsCommand = Command.extend({
         init: function(options) {
             this._decimals = options.decimals;

@@ -45,7 +45,7 @@
         mergeHorizontally:     { iconClass: "merge-cells", command: "MergeCellCommand", value: "horizontally" },
         mergeVertically:       { iconClass: "merge-cells", command: "MergeCellCommand", value: "vertically" },
         unmerge:               { iconClass: "merge-cells", command: "MergeCellCommand", value: "unmerge" },
-        textWrap:              { type: "button", togglable: true, command : "TextWrapCommand", value: true, iconClass: "text-wrap" }
+        textWrap:              { type: "button", togglable: true, command: "TextWrapCommand", value: true, iconClass: "text-wrap" }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -129,7 +129,7 @@
                 return;
             }
 
-            if (commandType == "PropertyChangeCommand") {
+            if (commandType == "PropertyChangeCommand" || commandType == "TextWrapCommand") {
                 args.value = null;
                 args.property = target.attr("data-property");
 
