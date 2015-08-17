@@ -46,6 +46,10 @@ module CodeGen::TypeScript
         },
         'Workbook' => {
             'sheets' => 'WorkbookSheet[]'
+        },
+        'Diagram' => {
+            'shapes' => 'DiagramShape[]',
+            'connections' => 'DiagramConnection[]'
         }
     }
 
