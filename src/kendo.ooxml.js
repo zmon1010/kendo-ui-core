@@ -128,18 +128,19 @@ var WORKSHEET = kendo.template(
        '# } #' +
        '</sheetView>' +
    '</sheetViews>' +
-   '<sheetFormatPr defaultRowHeight="15" x14ac:dyDescent="0.25" />' +
+   '<sheetFormatPr x14ac:dyDescent="0.25" defaultRowHeight="15" ' +
+       '# if (defaults.columnWidth) { # defaultColWidth="#= kendo.ooxml.toWidth(defaults.columnWidth) #" # } #' +
+   ' />' +
    '# if (columns) { #' +
    '<cols>' +
    '# for (var ci = 0; ci < columns.length; ci++) { #' +
        '# var column = columns[ci]; #' +
-       '# var columnWidth = column.width || columnWidth; #' +
-       '# if (columnWidth) { #' +
+       '# if (column.width) { #' +
        '<col min="${ci+1}" max="${ci+1}" customWidth="1"' +
        '# if (column.autoWidth) { #' +
-       ' width="${((columnWidth*7+5)/7*256)/256}" bestFit="1"' +
+       ' width="${((column.width*7+5)/7*256)/256}" bestFit="1"' +
        '# } else { #' +
-       ' width="${(((columnWidth)/7)*100+0.5)/100}" ' +
+       ' width="#= kendo.ooxml.toWidth(column.width) #" ' +
        '# } #' +
        '/>' +
        '# } #' +
@@ -343,7 +344,7 @@ var Worksheet = kendo.Class.extend({
         return WORKSHEET({
             freezePane: this.options.freezePane,
             columns: this.options.columns,
-            columnWidth: this.options.columnWidth,
+            defaults: this.options.defaults || {},
             data: data,
             index: index,
             mergeCells: this._mergeCells,
@@ -590,7 +591,7 @@ var Workbook = kendo.Class.extend({
         this._styles = [];
 
         this._sheets = $.map(this.options.sheets || [], $.proxy(function(options) {
-            options.columnWidth = this.options.columnWidth;
+            options.defaults = this.options;
 
             return new Worksheet(options, this._strings, this._styles);
         }, this));
@@ -713,9 +714,14 @@ var Workbook = kendo.Class.extend({
     }
 });
 
+function toWidth(px) {
+    return ((px / 7) * 100 + 0.5) / 100;
+}
+
 kendo.ooxml = {
     Workbook: Workbook,
-    Worksheet: Worksheet
+    Worksheet: Worksheet,
+    toWidth: toWidth
 };
 
 })(kendo.jQuery, kendo);

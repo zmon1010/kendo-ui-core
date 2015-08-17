@@ -27,13 +27,13 @@ module("Workbook", {
     }
 });
 
-test("passes default columnWidth to sheets", function() {
+test("passes global columnWidth to sheets", function() {
     var workbook = new kendo.ooxml.Workbook({
         columnWidth: 51,
         sheets: [ {}, {} ]
     });
 
-    equal(workbook._sheets[0].options.columnWidth, 51);
+    equal(workbook._sheets[0].options.defaults.columnWidth, 51);
 });
 
 test("toDataURL creates [Content_Types].xml", function() {

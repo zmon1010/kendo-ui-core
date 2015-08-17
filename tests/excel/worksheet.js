@@ -430,14 +430,16 @@ test("toXML sets the 'width' attribute of the 'col' element according to formula
     equal(Math.round(dom.find("col").attr("width")), 71);
 });
 
-test("toXML sets the 'width' attribute of the 'col' element to the default columnWidth", function() {
+test("toXML sets the 'defaultColWidth' attribute of the 'sheetFormatPr' element to the default column width", function() {
     var worksheet = Worksheet({
         columns: [{}],
-        columnWidth: 500
+        defaults: {
+            columnWidth: 500
+        }
     });
 
     var dom = $($.parseXML(worksheet.toXML()));
-    equal(Math.round(dom.find("col").attr("width")), 71);
+    equal(Math.round(dom.find("sheetFormatPr").attr("defaultColWidth")), 71);
 });
 
 test("toXML calculates the 'width' attribute based on string length", function() {
