@@ -886,4 +886,25 @@
 
         equal(dom.find("i.bar").length, 1);
     });
+
+    asyncTest("dataSource can be searched within dataBound handler", 1, function() {
+        createTreeView({
+            dataSource: {
+                transport: {
+                    read: function(options) {
+                        setTimeout(function() {
+                            options.success([ { id: 1, expanded: true, hasChildren: true } ]);
+                        }, 100);
+                    }
+                }
+            },
+            dataBound: function() {
+                this.dataSource.get(2);
+
+                ok(true);
+
+                start();
+            }
+        });
+    });
 })();
