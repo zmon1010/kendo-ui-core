@@ -1722,6 +1722,15 @@
           "meta": {
               "kendo-ui": "Export Kendo UI grid as Microsoft Excel file"
           },
+          "group": {
+           "kendo-ui": "Exporting",
+           "aspnet-mvc": "Exporting",
+           "jsp-ui": "Exporting",
+           "php-ui": "Exporting" 
+          },
+          "description": {
+             "kendo-ui": "<p>When using grid, it is often useful and important to export your data to MS Excel in order to make it accessible offline, share it with your colleagues, etc. </p><p>The Kendo UI grid provides client Excel export functionality (server-agnostic) which can be directly utilized to serve the purpose to share data in the aforementioned ways. To enable it, include the corresponding command to the grid toolbar and configure the export settings accordingly. Alternatively, you can trigger Excel export by invoking the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsExcel\">saveAsExcel</a> method from the client API of the grid. <br /><br />Additionally, you have the option to customize the rows/columns and cells of the exported file by intercepting the excelExport event. More information on this topic can be found in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/excel-export\">following documentation article</a>.</p>"
+           },
           "packages": [
               "!offline"
           ]
@@ -1735,6 +1744,15 @@
           "meta": {
               "kendo-ui": "Export Kendo UI grid as PDF file"
           },
+          "group": {
+           "kendo-ui": "Exporting",
+           "aspnet-mvc": "Exporting",
+           "jsp-ui": "Exporting",
+           "php-ui": "Exporting" 
+          },
+          "description": {
+             "kendo-ui": "<p>When using grids, you may need to export your data to PDF in order to make it accessible on-the-go, share it with your boss or peers, etc. </p><p>The Kendo UI grid provides client Pdf export functionality (server-agnostic) which is powered by the underlying Drawing API engine of the Kendo UI framework. To enable it, include the corresponding command to the grid toolbar and configure the pdf export settings in par with your preferences. For instance, you can specify to export all pages, margins, paper size, font, etc. To initiate export programmatically, you can call the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsPDF\">saveAsPdf</a> method from the client API. <br /><br />Furthermore, you have the ability to customize the look and feel of the exported grid table by wiring the pdfExport event of the grid. More information on the Pdf export feature of the widget is available in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/print-export#exporting\">following help topic</a>.</p>"
+           },
           "packages": [
               "!offline"
           ]
