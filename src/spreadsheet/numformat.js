@@ -62,9 +62,7 @@
         }
 
         if (haveConditional) {
-            // if (sections[sections.length - 1].cond == null) {
-            //     sections[sections.length - 1].cond = "text";
-            // }
+            addPlainText();
         }
         else if (sections.length == 1) {
             sections[0].cond = "num";
@@ -344,17 +342,19 @@
         var separeThousands = false;
         var declen = 0;
         var intFormat = [], decFormat = [];
+        var condition = format.cond;
+        var preamble = "";
 
-        if (format.cond == "text") {
-            code += "if (typeof value == 'string') { ";
+        if (condition == "text") {
+            preamble = "if (typeof value == 'string') { ";
         }
-        else if (format.cond == "num") {
-            code += "if (typeof value == 'number') { ";
+        else if (condition == "num") {
+            preamble = "if (typeof value == 'number') { ";
         }
-        else if (format.cond) {
-            var op = format.cond.op == "=" ? "==" : format.cond.op;
-            code += "if (typeof value == 'number' && value "
-                + op + " " + format.cond.value + ") { ";
+        else if (condition) {
+            var op = condition.op == "=" ? "==" : condition.op;
+            preamble = "if (typeof value == 'number' && value "
+                + op + " " + condition.value + ") { ";
             code += "value = Math.abs(value); ";
         }
 
@@ -424,6 +424,12 @@
             code += "type = 'date'; ";
         }
 
+        if (percentCount > 0 || scaleCount > 0 || intFormat.length || decFormat.length || hasDate || hasTime) {
+            if (!preamble) {
+                preamble = "if (typeof value == 'number') { ";
+            }
+        }
+
         input.restart();
         while (!input.eof()) {
             var tok = input.next();
@@ -477,8 +483,8 @@
         code += "element.__dataType = type; ";
         code += "return element; ";
 
-        if (format.cond) {
-            code += "}";
+        if (preamble) {
+            code = preamble + code + "}";
         }
 
         return code;

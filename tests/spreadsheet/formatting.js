@@ -250,4 +250,9 @@
         htmlEqual(format(12345.777777777), "12,346 ");
     });
 
+    test("does not error out when given string in number format", function(){
+        var format = F.compile("[Red][<50]#;[Green][>50]#;[Blue]0.00");
+        htmlEqual(format("abc"), "abc");
+    });
+
 })();
