@@ -239,6 +239,23 @@
         }
     });
 
+    var PasteCommand = kendo.spreadsheet.PasteCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._workbook = options.sender.workbook();
+            this._clipboard = this._workbook.clipboard();
+        },
+        getState: function() {
+            this._range = this._workbook.activeSheet().range(this._clipboard.pasteRef());
+            this._state = this._range.getState();
+        },
+        exec: function() {
+            this.getState();
+            if(this._clipboard.canPaste()) {
+                this._clipboard.paste();
+            }
+        }
+    });
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

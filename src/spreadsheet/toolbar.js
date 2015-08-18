@@ -14,7 +14,8 @@
         [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ],
         "format", "mergeCells", "borders",
         "fontFamily", "fontSize",
-        "backgroundColor", "textColor", "textWrap"
+        "backgroundColor", "textColor", "textWrap",
+        ["paste"]
     ];
 
     var toolDefaults = {
@@ -45,7 +46,8 @@
         mergeHorizontally:     { iconClass: "merge-cells", command: "MergeCellCommand", value: "horizontally" },
         mergeVertically:       { iconClass: "merge-cells", command: "MergeCellCommand", value: "vertically" },
         unmerge:               { iconClass: "merge-cells", command: "MergeCellCommand", value: "unmerge" },
-        textWrap:              { type: "button", togglable: true, command: "TextWrapCommand", value: true, iconClass: "text-wrap" }
+        textWrap:              { type: "button", togglable: true, command: "TextWrapCommand", value: true, iconClass: "text-wrap" },
+        paste:                 { command: "PasteCommand" },
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -165,6 +167,9 @@
         },
         range: function() {
             return this.options.range();
+        },
+        workbook: function() {
+            return this.options.workbook();
         },
         refresh: function() {
             var range = this.range();
