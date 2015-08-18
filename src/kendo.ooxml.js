@@ -135,8 +135,9 @@ var WORKSHEET = kendo.template(
    '<cols>' +
    '# for (var ci = 0; ci < columns.length; ci++) { #' +
        '# var column = columns[ci]; #' +
+       '# var columnIndex = typeof column.index === "number" ? column.index + 1 : (ci + 1); #' +
        '# if (column.width) { #' +
-       '<col min="${ci+1}" max="${ci+1}" customWidth="1"' +
+       '<col min="${columnIndex}" max="${columnIndex}" customWidth="1"' +
        '# if (column.autoWidth) { #' +
        ' width="${((column.width*7+5)/7*256)/256}" bestFit="1"' +
        '# } else { #' +
@@ -319,6 +320,14 @@ function $ref(rowIndex, colIndex) {
 
 function filterRowIndex(options) {
     return ((options.freezePane || {}).rowSplit || 1) - 1;
+}
+
+function toWidth(px) {
+    return ((px / 7) * 100 + 0.5) / 100;
+}
+
+function toHeight(px) {
+    return px * 0.75;
 }
 
 var DATE_EPOCH = kendo.timezone.remove(new Date(1900, 0, 0), "Etc/UTC");
@@ -716,14 +725,6 @@ var Workbook = kendo.Class.extend({
         return "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + zip.generate({ compression: "DEFLATE" });
     }
 });
-
-function toWidth(px) {
-    return ((px / 7) * 100 + 0.5) / 100;
-}
-
-function toHeight(px) {
-    return px * 0.75;
-}
 
 kendo.ooxml = {
     Workbook: Workbook,

@@ -446,6 +446,16 @@ test("toXML sets the 'min' and 'max' attribute of the 'col' element to the colum
     equal(dom.find("col").attr("max"), 1);
 });
 
+test("toXML sets the 'min' and 'max' attribute of the 'col' element to explicit column index plus one", function() {
+    var worksheet = Worksheet({
+        columns: [{ width: 10, index: 4 }]
+    });
+
+    var dom = $($.parseXML(worksheet.toXML()));
+    equal(dom.find("col").attr("min"), 5);
+    equal(dom.find("col").attr("max"), 5);
+});
+
 test("toXML sets the 'customWidth' attribute of the 'col' element when width is set", function() {
     var worksheet = Worksheet({
         columns: [{
