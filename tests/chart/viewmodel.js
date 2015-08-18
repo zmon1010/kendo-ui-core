@@ -3617,6 +3617,21 @@
                 ok(!legendItem.visual);
             });
 
+            test("does not append default visual if createVisual is called", 0, function() {
+                createLegendItem({
+                    visual: function(e) {
+                        e.createVisual();
+                    }
+                });
+                legendItem.reflow(box);
+                legendItem.parent = {
+                    appendVisual: function(visual) {
+                        ok(false);
+                    }
+                };
+                legendItem.renderVisual();
+            });
+
             test("passes active as parameter", function() {
                 renderLegendItem({
                     visual: function(e) {

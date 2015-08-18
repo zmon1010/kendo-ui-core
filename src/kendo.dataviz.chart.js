@@ -1933,7 +1933,9 @@ var __meta__ = {
                         labels: options.labels
                     },
                     createVisual: function() {
-                        ChartElement.fn.renderVisual.call(that);
+                        that.createVisual();
+                        that.renderChildren();
+                        that.renderComplete();
                         var defaultVisual = that.visual;
                         delete that.visual;
                         return defaultVisual;
