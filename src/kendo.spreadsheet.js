@@ -157,10 +157,8 @@
                 return this;
             },
 
-            openDialog: function(name) {
-                this._view.openDialog(name);
-
-                return this;
+            openDialog: function(name, options) {
+                return this._view.openDialog(name, options);
             },
 
             autoRefresh: function(value) {

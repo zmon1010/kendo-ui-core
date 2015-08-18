@@ -16,6 +16,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Български лев",
+                abbr: "BGN",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": " ",

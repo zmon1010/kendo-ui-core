@@ -443,15 +443,16 @@
             return willScroll;
         },
 
-        openDialog: function(name) {
+        openDialog: function(name, options) {
             var sheet = this._sheet;
             var ref = sheet.activeCell();
             var range = new kendo.spreadsheet.Range(ref, sheet);
-            var dialog = kendo.spreadsheet.dialogs.create(name);
+            var dialog = kendo.spreadsheet.dialogs.create(name, options);
 
             if (dialog) {
                 this._dialogs.push(dialog);
                 dialog.open(range);
+                return dialog;
             }
         },
 
