@@ -4966,7 +4966,7 @@ var __meta__ = {
         _renderNoRecordsContent: function() {
             var that = this;
 
-            if (that.options.noRecords && that.wrapper.is(":visible")) {
+            if (that.options.noRecords) {
                 var noRecordsElement = that.table.parent().children('.' + NORECORDSCLASS);
 
                 if (noRecordsElement.length) {
