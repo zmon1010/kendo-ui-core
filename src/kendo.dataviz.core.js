@@ -2229,12 +2229,12 @@ var __meta__ = {
                 for (idx = 0; idx < labels.length; idx++) {
                     width = tickPositions[idx + 1] - tickPositions[idx];
                     labelBox = labels[idx].box;
-                    if (labelBox.height() > width) {
-                        angle = -90;
-                        break;
-                    }
 
                     if (labelBox.width() > width) {
+                        if (labelBox.height() > width) {
+                            angle = -90;
+                            break;
+                        }
                         angle = -45;
                     }
                 }

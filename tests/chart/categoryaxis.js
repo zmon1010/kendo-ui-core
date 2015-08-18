@@ -2010,6 +2010,16 @@
             equal(axis.labels[1].options.rotation, -90);
         });
 
+        test("does not rotate labels with -90 degrees if there is a label with height bigger than the slot width but its width is smaller", function() {
+            axis.labels[1].box.x2 = 20;
+            axis.labels[1].box.y2 = 30;
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            ok(!axis.labels[0].options.rotation);
+            ok(!axis.labels[1].options.rotation);
+        });
+
         test("reflows rotated labels", 2, function() {
             axis.reflow(axisBox);
             axis.labels[0].reflow = axis.labels[1].reflow = function() {
