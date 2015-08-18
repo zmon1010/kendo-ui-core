@@ -247,7 +247,9 @@
         },
 
         onPaste: function(event, action) {
-            this.clipboard.paste();
+            if(this.clipboard.canPaste()) {
+                this.clipboard.paste();
+            }
         },
 
         onCopy: function(event, action) {

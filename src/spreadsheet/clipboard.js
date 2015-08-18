@@ -9,6 +9,7 @@
     var Clipboard = kendo.Class.extend({
         init: function(workbook) {
             this.workbook = workbook;
+            this.origin = kendo.spreadsheet.NULLREF;
         },
 
         canCopy: function() {
@@ -25,6 +26,9 @@
         canPaste: function() {
             var sheet = this.workbook.activeSheet();
             var ref = this.pasteRef();
+            if(ref === kendo.spreadsheet.NULLREF) {
+                return false;
+            }
             return ref.eq(sheet.unionWithMerged(ref));
         },
 
