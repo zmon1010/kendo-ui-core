@@ -32,12 +32,93 @@ test("toXML creates a 'c' element for cells", function() {
     equal(dom.find("c").length, 1);
 });
 
-test("toXML sets the r attribute to the alphanumeric and cell number (index plus one)", function() {
+test("toXML sets the 'r' attribute to the A1 reference of a cell with implicit index", function() {
     var worksheet = Worksheet();
 
     var dom = $(worksheet.toXML());
 
     equal(dom.find("c").attr("r"), "A1");
+});
+
+test("toXML sets the 'r' attribute to the A1 reference of a cell with explicit index", function() {
+    var worksheet = Worksheet([{
+        cells: [{ index: 4 }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("c").attr("r"), "E1");
+});
+
+test("toXML exports only cells with data (mixed indicies)", function() {
+    var worksheet = Worksheet([{
+        cells: [{ }, { index: 4 }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("c").length, 2);
+});
+
+test("toXML exports only cells with data (explicit indicies)", function() {
+    var worksheet = Worksheet([{
+        cells: [{ index: 1 }, { index: 4 }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("c").length, 2);
+});
+
+test("toXML exports only cells with data (reversed explicit indicies)", function() {
+    var worksheet = Worksheet([{
+        cells: [{ index: 4 }, { index: 1 }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("c").length, 2);
+});
+
+test("toXML exports only cells with data (explicit indicies on multiple rows3)", function() {
+    var worksheet = Worksheet([{
+        cells: [{ index: 1 }, { index: 4 }]
+    }, {
+        cells: [{ index: 4 }, { index: 1 }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("c").length, 4);
+});
+
+test("toXML exports cells in order (explicit indicies)", function() {
+    var worksheet = Worksheet([{
+        cells: [{
+            index: 4,
+            value: 4
+        }, {
+            index: 1,
+            value: 1
+        }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("c[r=B1] v").text(), "1");
+    equal(dom.find("c[r=E1] v").text(), "4");
+});
+
+test("toXML continues implicit order", function() {
+    var worksheet = Worksheet([{
+        cells: [{
+            index: 4,
+            value: "Bar"
+        }, {
+            value: "Foo"
+        }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    var cells = dom.find("c");
+    equal(cells.length, 2);
+    equal(cells.eq(0).attr("r"), "B1");
+    equal(cells.eq(1).attr("r"), "E1");
 });
 
 test("toXML sets the tabSelected attribute to 1 if the sheet is first", function() {
@@ -607,7 +688,14 @@ test("toXML adds missing cells after cell with rowSpan", function() {
 
     var dom = $(worksheet.toXML());
 
-    equal(dom.find("c").length, 6);
+    var cells = dom.find("c");
+    equal(cells.length, 6);
+
+    var refs = [];
+    cells.each(function() {
+        refs.push($(this).attr("r"));
+    });
+    deepEqual(refs, ["A1", "B1", "A2", "B2", "A3", "B3"]);
 });
 
 test("toXML creates empty extra cells after cell with colSpan", function() {
@@ -715,7 +803,9 @@ test("toXML offsets cells if first has merged rows", function() {
         } ]
     });
 
-    var dom = $(worksheet.toXML());
+    var xml = worksheet.toXML();
+    console.log(xml);
+    var dom = $(xml);
     var cell1 = dom.find("row:eq(1) > c:eq(0)");
     var cell2 = dom.find("row:eq(1) > c:eq(1)");
     var cell3 = dom.find("row:eq(1) > c:eq(2)");
@@ -774,6 +864,7 @@ test("toXML offsets cells if second cell is merged in 3 rows", function() {
 
     equal(mergeCell.eq(0).attr("ref"), "B1:B3");
 });
+
 
 test("toXML renders third level cells after second cell is merged in 2 rows", function() {
     var worksheet = Worksheet({
@@ -1036,6 +1127,50 @@ test("toXML outputs empty data cells for continues cells with rowSpan", function
 
     equal(cells.eq(4).attr("r"), "E4")
     equal(cells.eq(4).find("v").length, 1);
+});
+
+test("toXML has no side effects", function() {
+    var worksheet = Worksheet({
+        rows: [
+            {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"","colSpan":4,"rowSpan":1},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 0","colSpan":1,"rowSpan":1}
+                ],
+                "type":"header"
+            }, {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 0","colSpan":1,"rowSpan":1},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 0_1","colSpan":1,"rowSpan":1},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1","colSpan":2,"rowSpan":1},
+                    {"background":"#dfdfdf","color":"#333","value":"2","colSpan":1,"rowSpan":1}
+                ],
+                "type":"data"
+            }, {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 0","colSpan":2,"rowSpan":3},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1","colSpan":1,"rowSpan":2},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1_1","colSpan":1,"rowSpan":1},
+                    {"background":"#dfdfdf","color":"#333","value":"3","colSpan":1,"rowSpan":1}
+                ],
+                "type": "data"
+            }, {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1_2","colSpan":1,"rowSpan":1},
+                    {"background":"#dfdfdf","color":"#333","value":"4","colSpan":1,"rowSpan":1}
+                ],
+                "type": "data"
+            }, {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1","colSpan":2,"rowSpan":1},
+                    {"background":"#dfdfdf","color":"#333","value":"1","colSpan":1,"rowSpan":1}
+                ],
+                "type":"data"
+            }
+        ]
+    });
+
+    equal(worksheet.toXML(), worksheet.toXML());
 });
 
 }());
