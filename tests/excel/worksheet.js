@@ -292,6 +292,20 @@ test("toXML sets the 'r' attribute to index plus one", function() {
     equal(dom.find("row").attr("r"), "1");
 });
 
+test("toXML sets the 'r' attribute to explicit index plus one", function() {
+    var worksheet = Worksheet({
+        rows: [{
+            height: 100,
+            cells: [],
+            index: 1
+        }]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("r"), "2");
+});
+
 test("toXML sets the 'ht' attribute to the row height", function() {
     var worksheet = Worksheet({
         rows: [{

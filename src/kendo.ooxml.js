@@ -151,7 +151,8 @@ var WORKSHEET = kendo.template(
    '<sheetData>' +
    '# for (var ri = 0; ri < data.length; ri++) { #' +
        '# var row = data[ri]; #' +
-       '<row r="#=ri + 1#" x14ac:dyDescent="0.25" ' +
+       '# var rowIndex = typeof row.index === "number" ? row.index + 1 : (ri + 1); #' +
+       '<row r="${rowIndex}" x14ac:dyDescent="0.25" ' +
            '# if (row.height) { # ht="#= kendo.ooxml.toHeight(row.height) #" customHeight="1" # } #' +
        ' >' +
        '# for (var ci = 0; ci < row.data.length; ci++) { #' +
@@ -395,7 +396,8 @@ var Worksheet = kendo.Class.extend({
 
         return {
             data: data,
-            height: row.height
+            height: row.height,
+            index: row.index
         };
     },
     _lookupString: function(value) {
