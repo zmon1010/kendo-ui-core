@@ -255,7 +255,14 @@
     var colorPicker = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             var colorPicker = $("<input />").kendoColorPicker({
-                palette: "basic",
+                palette: [ //metro palette
+                    "#ffffff", "#000000", "#d6ecff", "#4e5b6f", "#7fd13b", "#ea157a", "#feb80a", "#00addc", "#738ac8", "#1ab39f",
+                    "#f2f2f2", "#7f7f7f", "#a7d6ff", "#d9dde4", "#e5f5d7", "#fad0e4", "#fef0cd", "#c5f2ff", "#e2e7f4", "#c9f7f1",
+                    "#d8d8d8", "#595959", "#60b5ff", "#b3bcca", "#cbecb0", "#f6a1c9", "#fee29c", "#8be6ff", "#c7d0e9", "#94efe3",
+                    "#bfbfbf", "#3f3f3f", "#007dea", "#8d9baf", "#b2e389", "#f272af", "#fed46b", "#51d9ff", "#aab8de", "#5fe7d5",
+                    "#a5a5a5", "#262626", "#003e75", "#3a4453", "#5ea226", "#af0f5b", "#c58c00", "#0081a5", "#425ea9", "#138677",
+                    "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
+                ],
                 toolIcon: options.toolIcon,
                 change: function(e) {
                     toolbar.trigger("execute", {
@@ -539,13 +546,20 @@
 
         _colorPicker: function() {
             this.color = "#000";
-            this.colorPicker = $("<input />").kendoColorPicker({
-                palette: "basic",
+            this.colorPalette = $("<div />").kendoColorPalette({
+                palette: [ //metro palette
+                    "#ffffff", "#000000", "#d6ecff", "#4e5b6f", "#7fd13b", "#ea157a", "#feb80a", "#00addc", "#738ac8", "#1ab39f",
+                    "#f2f2f2", "#7f7f7f", "#a7d6ff", "#d9dde4", "#e5f5d7", "#fad0e4", "#fef0cd", "#c5f2ff", "#e2e7f4", "#c9f7f1",
+                    "#d8d8d8", "#595959", "#60b5ff", "#b3bcca", "#cbecb0", "#f6a1c9", "#fee29c", "#8be6ff", "#c7d0e9", "#94efe3",
+                    "#bfbfbf", "#3f3f3f", "#007dea", "#8d9baf", "#b2e389", "#f272af", "#fed46b", "#51d9ff", "#aab8de", "#5fe7d5",
+                    "#a5a5a5", "#262626", "#003e75", "#3a4453", "#5ea226", "#af0f5b", "#c58c00", "#0081a5", "#425ea9", "#138677",
+                    "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
+                ],
                 value: this.color,
                 change: this._colorChange.bind(this)
-            }).data("kendoColorPicker");
+            }).data("kendoColorPalette");
 
-            this.popupElement.find(".k-spreadsheet-border-style-palette").append(this.colorPicker.wrapper);
+            this.popupElement.find(".k-spreadsheet-border-style-palette").append(this.colorPalette.wrapper);
         },
 
         _colorChange: function(e) {
