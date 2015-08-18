@@ -68,10 +68,37 @@
         }
     });
 
-    function cultureToFormat(format, currencyInfo) {
-        return format
-                .replace(/\$/g, currencyInfo.symbol)
-                .replace(/n/g, "?");
+    function formatFor(options) {
+        // convert culture info to spreadsheet format
+        var info = options.currency;
+        var format = info.pattern[1];
+
+        if (options.decimals) {
+            format = format.replace(/n/g, "n" + info["."] + times(info.decimals, "0"));
+        }
+
+        if (options.iso) {
+            format = '"' + info.abbr + '" ' + format.replace(/\s*\$\s*/g, "");
+        } else {
+            format = format.replace(/\$/g, info.symbol);
+        }
+
+        format = format.replace(/n/g, "?");
+
+        return format;
+    }
+
+    function formattedValue(value, format) {
+        var dom = kendo.spreadsheet.formatting.format(value, format);
+        return dom.children[0].nodeValue;
+    }
+
+    function toFormatItem(format) {
+        return { value: format, name: formattedValue(1000, format) };
+    }
+
+    function times(n, token) {
+        return new Array(n+1).join(token);
     }
 
     var FormatCellsViewModel = kendo.spreadsheet.FormatCellsViewModel = ObservableObject.extend({
@@ -82,10 +109,13 @@
         },
         useCategory: function(category) {
             var type = category && category.type || "number";
-            this.category = category;
-            this.set("formatCurrency", type == "currency");
+            var formatCurrency = type == "currency";
 
-            if (!this.formatCurrency) {
+            this.category = category;
+
+            this.set("showCurrencyFilter", formatCurrency && this.currencies.length > 1);
+
+            if (!formatCurrency) {
                 this.set("formats", this.allFormats[type + "Formats"]);
             } else {
                 this.currency(this.currencies[0]);
@@ -95,20 +125,13 @@
             if (currency !== undefined) {
                 this._currency = currency;
 
-                var currencyInfo = currency.value;
-
-                // TODO: convert culture info to spreadsheet formats
-                var positive = currencyInfo.pattern[1];
-                var format = cultureToFormat(positive, currencyInfo);
+                var info = currency.value;
 
                 this.set("formats", [
-                    // generate:
-                    // $1,000.00    / 1 000,00 лв.  / £1,000.00
-                    // USD 1,000.00 / BGN 1 000,00  / GBP 1,000.00
-                    // $1,000       / 1 000 лв.     / £1,000
-                    // { value: format, name: apply(format, 1000) }
-                    { value: format, name: format }
-                ]);
+                    formatFor({ currency: info, decimals: true }),
+                    formatFor({ currency: info, decimals: true, iso: true }),
+                    formatFor({ currency: info, decimals: false })
+                ].map(toFormatItem));
                 this.set("format", this.formats[0].value);
             }
 
@@ -127,8 +150,7 @@
 
             if (format && format.length) {
                 // get formatted text from virtual dom node
-                value = kendo.spreadsheet.formatting.format(value, format);
-                return value.children[0].nodeValue;
+                return formattedValue(value, format);
             } else {
                 return value;
             }
@@ -196,8 +218,8 @@
 
                 "<select data-role='dropdownlist' class='k-format-filter' " +
                     "data-text-field='description' " +
-                    "data-value-field='value' " +
-                    "data-bind='visible: formatCurrency, value: currency, source: currencies' />" +
+                    "data-value-field='value.name' " +
+                    "data-bind='visible: showCurrencyFilter, value: currency, source: currencies' />" +
 
                 "<ul data-role='staticlist' tabindex='0' " +
                     "class='k-list k-reset' " +
@@ -266,18 +288,19 @@
             title: "",
             text: "",
             template:
-                "<div class='k-spreadsheet-message-content' />" +
+                "<div class='k-spreadsheet-message-content' data-bind='text: text' />" +
                 "<div class='k-action-buttons'>" +
-                    "<button class='k-button k-primary' data-bind='click: close'>OK</button>" +
+                    "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
                 "</div>"
         },
         open: function() {
-            var element = this.dialog().element;
-            var content = element.find(".k-spreadsheet-message-content");
-
-            content.text(this.options.text);
-
             SpreadsheetDialog.fn.open.call(this);
+
+            kendo.bind(this.dialog().element, {
+                text: this.options.text,
+                okText: "OK",
+                close: this.close.bind(this)
+            });
         }
     });
 

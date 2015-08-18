@@ -35,11 +35,14 @@
     });
 
     var viewModel;
+    var usCurrencyInfo = kendo.cultures["en-US"].numberFormat.currency;
+    var bgCurrencyInfo = kendo.cultures["bg-BG"].numberFormat.currency;
 
     module("SpreadSheet FormatCellsViewModel", {
         setup: function() {
             viewModel = new kendo.spreadsheet.FormatCellsViewModel({
                 value: 100,
+                currencies: [],
                 allFormats: {
                     numberFormats: [],
                     dateFormats: []
@@ -65,6 +68,31 @@
         viewModel.set("format", "mm-yy");
 
         equal(viewModel.preview(), "12-99");
+    });
+
+    test("showCurrencyFilter is false for single currency", function() {
+        viewModel = new kendo.spreadsheet.FormatCellsViewModel({
+            value: 100,
+            category: { type: "currency" },
+            currencies: [
+                { name: "Foo", value: usCurrencyInfo }
+            ]
+        });
+
+        ok(!viewModel.showCurrencyFilter);
+    });
+
+    test("showCurrencyFilter is true for multiple currencies", function() {
+        viewModel = new kendo.spreadsheet.FormatCellsViewModel({
+            value: 100,
+            category: { type: "currency" },
+            currencies: [
+                { name: "Foo", value: usCurrencyInfo },
+                { name: "Bar", value: bgCurrencyInfo }
+            ]
+        });
+
+        ok(viewModel.showCurrencyFilter);
     });
 
 })();
