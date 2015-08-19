@@ -1,6 +1,5 @@
 @pane-border-color: darken(@base, 20%);
-@header-border-color: darken(@base, 10%);
-@cell-border-color: darken(@base, 6%);
+@cell-border-color: darken(@base, 10%);
 
 .k-spreadsheet-top-corner,
 .k-spreadsheet-row-header td,
@@ -10,7 +9,7 @@
 }
 
 .k-spreadsheet-top-corner:after {
-    border-color: transparent @header-border-color @header-border-color transparent;
+    border-color: transparent @cell-border-color @cell-border-color transparent;
 }
 
 .k-spreadsheet-pane {
@@ -23,11 +22,6 @@
     .k-spreadsheet-merged-cell {
         background-color: @background;
     }
-}
-
-.k-spreadsheet-column-header td,
-.k-spreadsheet-row-header td {
-    border-color: @header-border-color;
 }
 
 .k-selection-full {
@@ -86,10 +80,10 @@
 .k-spreadsheet {
     > .k-spreadsheet-formula-bar  {
         background-color: @background;
-        border-color: @base @base @header-border-color;
+        border-color: @base @base @cell-border-color;
 
         &:before {
-            border-color: @header-border-color;
+            border-color: @cell-border-color;
         }
 
         &:after {
