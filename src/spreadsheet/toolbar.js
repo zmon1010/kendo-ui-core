@@ -141,6 +141,8 @@
                 args.decimals = parseInt(target.attr("data-value"), 10);
             } else if (commandType == "CopyCommand" || commandType == "PasteCommand") {
                 args.workbook = e.sender.workbook();
+            } else if (commandType == "MergeCellCommand") {
+                args.value = target.attr("data-value");
             }
 
             this.trigger("execute", args);

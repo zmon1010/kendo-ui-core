@@ -91,6 +91,17 @@
         tap($(".k-i-bold"));
     });
 
+    test("mergeCell click triggers execute with correct value", 1, function() {
+        createWithTools([ "mergeCells" ]);
+
+        toolbar.one("execute", function(e) {
+            equal(e.value, "cells");
+        });
+
+        sheet.select("A1:B2");
+        tap(toolbar.element.find("[data-command=MergeCellCommand]"));
+    });
+
     test("custom tool", function() {
         createWithTools([
             [ { type: "button", icon: "refresh", text: "Button" } ]
