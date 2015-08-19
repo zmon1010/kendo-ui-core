@@ -15,7 +15,10 @@
         clipboard: "k-spreadsheet-clipboard",
         cellEditor: "k-spreadsheet-cell-editor",
         editor: "k-spreadsheet-editor",
-        topCorner: "k-spreadsheet-top-corner"
+        topCorner: "k-spreadsheet-top-corner",
+        sheetsBar: "k-spreadsheet-sheets-bar",
+        sheetsBarActive: "k-spreadsheet-sheets-bar-active",
+        sheetsBarInactive: "k-spreadsheet-sheets-bar-inactive"
     };
 
     function hasChanged(e, name) {
@@ -215,7 +218,7 @@
         }
     });
 
-    var VIEW_CONTENTS = kendo.template('<div class="#=classNames.view#"><div class="#=classNames.fixedContainer#"></div><div class="#=classNames.scroller#"><div class="#=classNames.viewSize#"></div></div><div tabindex="0" class="#=classNames.clipboard#" contenteditable=true></div><div class="#=classNames.cellEditor#"></div></div>');
+    var VIEW_CONTENTS = kendo.template('<div class="#=classNames.view#"><div class="#=classNames.fixedContainer#"></div><div class="#=classNames.scroller#"><div class="#=classNames.viewSize#"></div></div><div tabindex="0" class="#=classNames.clipboard#" contenteditable=true></div><div class="#=classNames.cellEditor#"></div></div><div class="#=classNames.sheetsBar#"></div>');
 
     function within(value, min, max) {
         return value >= min && value <= max;
@@ -245,6 +248,8 @@
 
             this.tree = new kendo.dom.Tree(this.container);
             this.clipboardContents = new kendo.dom.Tree(this.clipboard[0]);
+
+            this.sheetsbar = new kendo.spreadsheet.SheetsBar(element.find(DOT + classNames.sheetsBar), $.extend(true, this.options.sheetsbar));
 
             var scrollbar = kendo.support.scrollbar();
 
@@ -307,7 +312,6 @@
 
         sheet: function(sheet) {
             this._sheet = sheet;
-            this.refresh(kendo.spreadsheet.ALL_REASONS);
         },
 
         objectAt: function(x, y) {
@@ -372,6 +376,11 @@
 
             if (this.toolbar) {
                 this.toolbar.refresh();
+            }
+
+
+            if (reason.sheetSelection) {
+                this.sheetsbar.renderSheets(this._workbook.sheets(), this._workbook.sheetIndex(this._sheet));
             }
 
             //TODO: refresh sheets list on sheetSelection

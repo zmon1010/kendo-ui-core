@@ -98,14 +98,21 @@
             this.listener = new kendo.spreadsheet.EventListener(this.container, this, CONTAINER_EVENTS);
             this.keyListener = new kendo.spreadsheet.EventListener(this.clipboardElement, this, CLIPBOARD_EVENTS);
             this.inputKeyListener = new kendo.spreadsheet.EventListener(this.formulaInput.element, this, FORMULAINPUT_EVENTS);
+
+            view.sheetsbar.bind("select", this.onSheetSelect.bind(this));
+        },
+
+        onSheetSelect: function(e) {
+            var sheet = this._workbook.sheetByName(e.name);
+            this._workbook.activeSheet(sheet);
         },
 
         sheet: function(sheet) {
             this.navigator = sheet.navigator();
-            this.refresh();
         },
 
         workbook: function(workbook) {
+            this._workbook = workbook;
             this.clipboard = workbook.clipboard();
         },
 

@@ -4,8 +4,6 @@
 
 (function(kendo) {
     var Sheet = kendo.spreadsheet.Sheet;
-    var Range = kendo.spreadsheet.Range;
-    var ALL_REASONS = kendo.spreadsheet.ALL_REASONS;
 
     var Workbook = kendo.Observable.extend({
         init: function(options) {
@@ -72,7 +70,7 @@
             }
         },
 
-        activeSheet: function(sheet, sheetChangeCallback) {
+        activeSheet: function(sheet) {
             if (sheet === undefined) {
                 return this._sheet;
             }
@@ -83,11 +81,8 @@
 
             this._sheet = sheet;
 
-            if (sheetChangeCallback) {
-                sheetChangeCallback(sheet);
-            }
-
-            sheet.triggerChange(ALL_REASONS);
+            //TODO: better way to get all reasons?
+            sheet.triggerChange(kendo.spreadsheet.ALL_REASONS);
         },
 
         moveSheetToIndex: function(sheet, toIndex) {
@@ -224,7 +219,7 @@
             return sheet;
         },
 
-        removeSheet: function(sheet, sheetChangeCallback, sheetRefreshCallback) {
+        removeSheet: function(sheet) {
             var that = this;
             var sheets = that._sheets;
             var name = sheet.name();
@@ -243,12 +238,10 @@
 
                 if (that.activeSheet().name() === name) {
                     var newSheet = sheets[index === sheets.length ? index-1 : index];
-                    that.activeSheet(newSheet, sheetChangeCallback);
-                } else if (sheetRefreshCallback) {
-                    sheetRefreshCallback();
+                    that.activeSheet(newSheet);
+                } else {
+                    this.trigger("change", { recalc: true,  sheetSelection: true });
                 }
-
-                this.trigger("change", { sheetSelection: true });
             }
         },
 
