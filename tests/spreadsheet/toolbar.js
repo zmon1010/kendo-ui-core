@@ -54,7 +54,7 @@
             [ "bold", "italic", "underline" ]
         ]);
 
-        equal(element.find(".k-toolbar .k-button").length, 3);
+        equal(element.find(".k-toolbar .k-button").length, 3 + 1); //+1 because of the overflow hamburger
     });
 
     test("creates multiple button groups", function() {
@@ -63,7 +63,7 @@
             [ "alignLeft", "alignCenter", "alignRight" ]
         ]);
 
-        equal(element.find(".k-toolbar .k-button").length, 6);
+        equal(element.find(".k-toolbar .k-button").length, 6 + 1); //+1 because of the overflow hamburger
         equal(element.find(".k-toolbar .k-button-group").length, 2);
     });
 
@@ -96,7 +96,7 @@
             [ { type: "button", icon: "refresh", text: "Button" } ]
         ]);
 
-        equal($(".k-i-refresh").length, 1);
+        equal($(".k-i-refresh").length, 1 + 1); //+1 because of the overflow hamburger
     });
 
     test("refreshes toggle button state", function() {
