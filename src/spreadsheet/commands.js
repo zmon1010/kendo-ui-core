@@ -256,6 +256,18 @@
             }
         }
     });
+
+    var CopyCommand = kendo.spreadsheet.CopyCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._clipboard = options.sender.workbook().clipboard();
+        },
+        exec: function() {
+            if(this._clipboard.canCopy()) {
+                this._clipboard.copy();
+            }
+        }
+    });
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
