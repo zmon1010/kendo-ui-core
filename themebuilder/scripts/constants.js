@@ -100,6 +100,7 @@
                     { text: "High Contrast", value: "type-highcontrast.less" },
                     { text: "Material", value: "type-material.less" },
                     { text: "Metro", value: "type-metro.less" },
+                    { text: "Nova", value: "type-nova.less" },
                     { text: "Office 365", value: "type-office365.less" }
                 ],
                 infer: function() {

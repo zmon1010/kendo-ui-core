@@ -102,7 +102,9 @@
                 commonFile = "common-fiori";
             } else if (/office365/i.test(themeName) && !/office365/i.test(commonFile)) {
                 commonFile = "common-office365";
-            } else if (!/material|bootstrap|fiori/i.test(themeName)) {
+            } else if (/nova/i.test(themeName) && !/nova/i.test(commonFile)) {
+                commonFile = "common-nova";
+            } else if (!/material|bootstrap|fiori|nova/i.test(themeName)) {
                 commonFile = "common";
             }
 
@@ -142,12 +144,14 @@
             { value: "material", name: "Material", colors: [ "#3f51b5", "#283593", "#fff" ]  },
             { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
             { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] },
-            { value: "office365", name: "Office 365", colors: ["#0072c6", "#cde6f7", "#fff"] }
+            { value: "office365", name: "Office 365", colors: ["#0072c6", "#cde6f7", "#fff"] },
+            { value: "nova", name: "Nova", colors: ["#32364c", "#ff4350", "#dfe0e1"] }
         ],
         sizes: [
             { name: "Standard", value: "common" },
             { name: "Bootstrap", value: "common-bootstrap", relativity: "larger" },
             { name: "Material", value: "common-material", relativity: "bold" },
+            { name: "Nova", value: "common-nova", relativity: "bold" },
             { name: "Fiori", value: "common-fiori", relativity: "larger" },
             { name: "Office365", value: "common-office365", relativity: "bold" }
         ],
