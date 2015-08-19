@@ -68,7 +68,7 @@
             function expandTool(toolName) {
                 // expand string to object, add missing tool properties
                 var options = $.isPlainObject(toolName) ? toolName : toolDefaults[toolName] || {};
-                var spriteCssClass = "k-icon k-i-" + options.iconClass;
+                var spriteCssClass = "k-icon k-font-icon k-i-" + options.iconClass;
                 var type = options.type;
                 var typeDefaults = {
                     splitButton: { spriteCssClass: spriteCssClass },
@@ -480,8 +480,8 @@
     var BorderChangeTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             this.element = $("<a href='#' data-command='BorderChangeCommand' class='k-button k-button-icon'>" +
-                                "<span class='k-sprite k-icon k-i-all-borders'>" +
-                                "</span><span class='k-icon k-i-arrow-s'></span>" +
+                                "<span class='k-sprite k-font-icon k-icon k-i-all-borders'>" +
+                                "</span><span class='k-font-icon k-icon k-i-arrow-s'></span>" +
                             "</a>");
 
             this.element.on("click", this.open.bind(this));
@@ -527,7 +527,7 @@
 
             var buttons = types.map(function(type) {
                 return '<a href="#" data-border-type="' + type + '" class="k-button k-button-icon">' +
-                            '<span class="k-sprite k-icon k-i-' + kendo.toHyphens(type) + '">' + type.replace(/([A-Z])/g, ' $1').toLowerCase() + '</span>' +
+                            '<span class="k-sprite k-font-icon k-icon k-i-' + kendo.toHyphens(type) + '">' + type.replace(/([A-Z])/g, ' $1').toLowerCase() + '</span>' +
                        '</a>';
             }).join("");
 

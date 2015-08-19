@@ -116,9 +116,10 @@
     }
 }
 
-.k-spreadsheet .k-icon,
-.k-spreadsheet-popup .k-icon {
+.k-font-icon,
+.k-font-icon.k-tool-icon {
     .use-font-icon();
+    background-image: none !important;
 }
 
 .k-spreadsheet .k-colorpicker .k-tool-icon {
@@ -262,6 +263,10 @@
 
 .k-spreadsheet-border-palette {
     width: 153px;
+
+    .k-colorpalette {
+        vertical-align: bottom;
+    }
 }
 
 .k-spreadsheet-border-type-palette .k-button.k-button-icon {
