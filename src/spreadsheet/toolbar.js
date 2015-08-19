@@ -146,7 +146,7 @@
         events: ToolBar.fn.events.concat([ "execute" ]),
         options: {
             name: "SpreadsheetToolBar",
-            resizable: false,
+            resizable: true,
             tools: defaultTools,
             messages: {
                 bold: "Bold",
