@@ -37,10 +37,11 @@
     var viewModel;
     var usCurrencyInfo = kendo.cultures["en-US"].numberFormat.currency;
     var bgCurrencyInfo = kendo.cultures["bg-BG"].numberFormat.currency;
+    var FormatCellsViewModel = kendo.spreadsheet.FormatCellsViewModel;
 
     module("SpreadSheet FormatCellsViewModel", {
         setup: function() {
-            viewModel = new kendo.spreadsheet.FormatCellsViewModel({
+            viewModel = new FormatCellsViewModel({
                 value: 100,
                 currencies: [],
                 allFormats: {
@@ -71,7 +72,7 @@
     });
 
     test("showCurrencyFilter is false for single currency", function() {
-        viewModel = new kendo.spreadsheet.FormatCellsViewModel({
+        viewModel = new FormatCellsViewModel({
             value: 100,
             category: { type: "currency" },
             currencies: [
@@ -83,7 +84,7 @@
     });
 
     test("showCurrencyFilter is true for multiple currencies", function() {
-        viewModel = new kendo.spreadsheet.FormatCellsViewModel({
+        viewModel = new FormatCellsViewModel({
             value: 100,
             category: { type: "currency" },
             currencies: [
@@ -93,6 +94,34 @@
         });
 
         ok(viewModel.showCurrencyFilter);
+    });
+
+    test("convertFormat", function() {
+        var convert = FormatCellsViewModel.convertFormat;
+
+        var prefixFoo = {
+            abbr: "FOO",
+            pattern: ["($n)", "$n"],
+            decimals: 2,
+            ",": ";",
+            ".": "_",
+            groupSize: [3],
+            symbol: "f"
+        };
+
+        equal(convert({ currency: prefixFoo, decimals: true, iso: true  }), '"FOO" ?_00');
+        equal(convert({ currency: prefixFoo, iso: true  }), '"FOO" ?');
+        equal(convert({ currency: prefixFoo, decimals: true }), 'f?_00');
+        equal(convert({ currency: prefixFoo, decimals: false }), 'f?');
+
+
+        var suffixFoo = kendo.deepExtend({}, prefixFoo);
+        suffixFoo.pattern[1] = "n$";
+
+        equal(convert({ currency: suffixFoo, decimals: true, iso: true  }), '"FOO" ?_00');
+        equal(convert({ currency: suffixFoo, iso: true  }), '"FOO" ?');
+        equal(convert({ currency: prefixFoo, decimals: true }), '?_00f');
+        equal(convert({ currency: prefixFoo, decimals: false }), '?f');
     });
 
 })();

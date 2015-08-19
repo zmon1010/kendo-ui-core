@@ -68,37 +68,9 @@
         }
     });
 
-    function formatFor(options) {
-        // convert culture info to spreadsheet format
-        var info = options.currency;
-        var format = info.pattern[1];
-
-        if (options.decimals) {
-            format = format.replace(/n/g, "n" + info["."] + times(info.decimals, "0"));
-        }
-
-        if (options.iso) {
-            format = '"' + info.abbr + '" ' + format.replace(/\s*\$\s*/g, "");
-        } else {
-            format = format.replace(/\$/g, info.symbol);
-        }
-
-        format = format.replace(/n/g, "?");
-
-        return format;
-    }
-
     function formattedValue(value, format) {
         var dom = kendo.spreadsheet.formatting.format(value, format);
         return dom.children[0].nodeValue;
-    }
-
-    function toFormatItem(format) {
-        return { value: format, name: formattedValue(1000, format) };
-    }
-
-    function times(n, token) {
-        return new Array(n+1).join(token);
     }
 
     var FormatCellsViewModel = kendo.spreadsheet.FormatCellsViewModel = ObservableObject.extend({
@@ -120,19 +92,34 @@
             } else {
                 this.currency(this.currencies[0]);
             }
+
+            this.useFirstFormat();
+        },
+        useFirstFormat: function() {
+            if (this.formats.length) {
+                this.set("format", this.formats[0].value);
+            }
         },
         currency: function(currency) {
             if (currency !== undefined) {
                 this._currency = currency;
 
                 var info = currency.value;
+                var formats = [
+                    { currency: info, decimals: true },
+                    { currency: info, decimals: true, iso: true },
+                    { currency: info, decimals: false }
+                ];
 
-                this.set("formats", [
-                    formatFor({ currency: info, decimals: true }),
-                    formatFor({ currency: info, decimals: true, iso: true }),
-                    formatFor({ currency: info, decimals: false })
-                ].map(toFormatItem));
-                this.set("format", this.formats[0].value);
+                formats = formats.map(function(format) {
+                    format = FormatCellsViewModel.convertFormat(format);
+
+                    return { value: format, name: formattedValue(1000, format) };
+                });
+
+                this.set("formats", formats);
+
+                this.useFirstFormat();
             }
 
             return this._currency || this.currencies[0];
@@ -156,6 +143,30 @@
             }
         }
     });
+
+    FormatCellsViewModel.convertFormat = function(options) {
+        function repeat(token, n) {
+            return new Array(n+1).join(token);
+        }
+
+        // convert culture info to spreadsheet format
+        var info = options.currency;
+        var format = info.pattern[1];
+
+        if (options.decimals) {
+            format = format.replace(/n/g, "n" + info["."] + repeat("0", info.decimals));
+        }
+
+        if (options.iso) {
+            format = '"' + info.abbr + '" ' + format.replace(/\s*\$\s*/g, "");
+        } else {
+            format = format.replace(/\$/g, info.symbol);
+        }
+
+        format = format.replace(/n/g, "?");
+
+        return format;
+    };
 
     var FormatCellsDialog = SpreadsheetDialog.extend({
         init: function(options) {
