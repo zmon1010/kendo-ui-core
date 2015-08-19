@@ -1706,7 +1706,7 @@
            "php-ui": "Data Binding" 
          },
         "description":{
-            "kendo-ui": "<h4>What are the Telerik Backend Services?</h4><p>Telerik Backend Services are a set of cloud-basedservices that enable developers to build and manage mobile apps insignificantly faster, easier and more scalable way. Telerik BackendServices can significantly speed-up development by providing your appwith data storage, user management and server-code execution. Unlikeother products, Telerik Backend Services are the integratedcloud-storage provider for all Telerik products.</p><p style=\"padding-top: 1em;\">&raquo; <a class=\"hyperlink\" href=\"http://docs.telerik.com/platform/backend-services/what-are-telerik-backend-services\" title=\"Getting started with Telerik Backend Services\">What are Telerik Backend Services</a></p><p>&raquo; <a class=\"hyperlink\" href=\"http://docs.telerik.com/platform/backend-services/development/javascript-sdk/introduction\">Telerik Backend Services JavaScript SDK</a></p><p>&raquo; <a class=\"hyperlink\" href=\"http://docs.telerik.com/platform/backend-services/development/javascript-sdk/kendoui/kendo-uiintegration\" title=\"Introduction to Kendo UI and Telerik Backend Services JavaScript integration\">Integration with Kendo UI</a></p><p class=\"demo-hint\" style=\"padding-top: 1em;\">Note: The Telerik Backend Services datasource is not supported on IE8 and below yet, because it relies on <a class=\"hyperlink\" href=\"http://en.wikipedia.org/wiki/Cross-origin_resource_sharing\">cross-origin resource sharing</a>.</p>"  
+            "kendo-ui": "<h4>What are the Telerik Backend Services?</h4><p>Telerik Backend Services are a set of cloud-based services that enable developers to build and manage mobile apps insignificantly faster, easier and more scalable way. Telerik Backend Services can significantly speed-up development by providing your app with data storage, user management and server-code execution. Unlike other products, Telerik Backend Services are the integrated cloud-storage provider for all Telerik products.</p><p style=\"padding-top: 1em;\">&raquo; <a class=\"hyperlink\" href=\"http://docs.telerik.com/platform/backend-services/what-are-telerik-backend-services\" title=\"Getting started with Telerik Backend Services\">What are Telerik Backend Services</a></p><p>&raquo; <a class=\"hyperlink\" href=\"http://docs.telerik.com/platform/backend-services/development/javascript-sdk/introduction\">Telerik Backend Services JavaScript SDK</a></p><p>&raquo; <a class=\"hyperlink\" href=\"http://docs.telerik.com/platform/backend-services/development/javascript-sdk/kendoui/kendo-uiintegration\" title=\"Introduction to Kendo UI and Telerik Backend Services JavaScript integration\">Integration with Kendo UI</a></p><p class=\"demo-hint\" style=\"padding-top: 1em;\">Note: The Telerik Backend Services data source is not supported on IE8 and below yet, because it relies on <a class=\"hyperlink\" href=\"http://en.wikipedia.org/wiki/Cross-origin_resource_sharing\">cross-origin resource sharing</a>.</p>"  
           },
         "packages": [
           "!jsp",
@@ -1772,6 +1772,9 @@
            "jsp-ui": "Data Binding",
            "php-ui": "Data Binding" 
          },
+         "description": {
+             "kendo-ui": "<p>In various scenarios users would like to keep interacting with their web app, modify data and store changes even when there's no internet connection available. Further, they would want to sync their changes with the server once the connection is restored and they are back online.</p> <p>With the power of the Kendo UI DataSource, this offline data storage and sync capability comes as built-in functionality for people making use of its features. This demo illustrates how you can edit, create or delete records in the grid while being offline, persist these changes while disconnected and the sync them when you are online again. This is done by the DataSource component which is the mediator between the grid and the underlying data. </p> <p>&nbsp;Important configuration settings for the DataSource when working with offline data is setting its <strong>offlineStorage </strong>option (by default <strong>localStorage </strong>is used) and utilizing its <strong>online </strong>and <strong>offlineData </strong>methods. Custom offline storage is also supported.</p> <p>More information on the offline data support of the data source is available in <a href=\" http://docs.telerik.com/kendo-ui/framework/datasource/offline\" target=\"=_blank\">this help article.</a></p>"
+          },
         "packages": [
           "!mvc",
           "!jsp",
@@ -1795,6 +1798,9 @@
            "jsp-ui": "Data Binding",
            "php-ui": "Data Binding" 
          },
+         "description": {
+             "kendo-ui": "<p>There are situations when you would like to perform real-time updates for all users which start a session with your web app. <br /> <br /> This is when you can utilize SignalR and the Kendo UI DataSource. The latter support signalr dialect by setting its <strong>type </strong>attribute and<strong> transport-&gt;signalr </strong>configuration.&nbsp; In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time on every page refresh, also known under the term long polling.</p> <p>This is especially useful for web applications which require high-frequency updates, for instance chat apps, real-time gaming, etc. More on the SignalR support of the Kendo UI DataSource can be found <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.signalr\" target=\"_blank\">in this section of the docs.</a></p>"
+         },
         "packages": [
           "!jsp",
           "!php"
@@ -1814,6 +1820,9 @@
            "aspnet-mvc": "Data Binding",
            "jsp-ui": "Data Binding",
            "php-ui": "Data Binding" 
+         },
+         "description": {
+             "kendo-ui": "<p>There are situations when you would like to perform real-time updates for all users which start a session with your web app. <br /> <br /> This is when you can utilize WebSockets and the Kendo UI DataSource. The latter support WebSockets by setting <strong>transport-&gt;push/read/update/destroy/create</strong> methods configuration for handling data requests in this way.&nbsp; In this way you tell the data source to use web sockets for transmitting and operating with data in real time on every page refresh, also known under the term long polling.</p> <p>This is especially useful for web applications which require high-frequency updates, for instance chat apps, real-time gaming, etc. More on the WebSockets support of the Kendo UI Data Source can be found <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.push\" target=\"_blank\">in this section of the docs.</a></p>"
          },
         "packages": [
           "!mvc",
