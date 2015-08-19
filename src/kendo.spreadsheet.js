@@ -69,7 +69,7 @@
                 });
 
                 this._workbook = new Workbook(this.options);
-                
+
                 this._controller = new Controller(this._view, this._workbook);
 
                 this._autoRefresh = true;

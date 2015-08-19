@@ -1,5 +1,6 @@
 (function() {
     var spreadsheet;
+    var sheet;
     var element;
 
     module("Spreadsheet toolbar", {
@@ -14,6 +15,7 @@
     function createSpreadsheet(options) {
         options = options || { toolbar: true };
         spreadsheet = new kendo.ui.Spreadsheet(element, options);
+        sheet = spreadsheet.activeSheet();
         return spreadsheet;
     }
 
@@ -35,12 +37,16 @@
         ok(spreadsheet._view.toolbar instanceof kendo.ui.ToolBar);
     });
 
+    var toolbar;
+
     function createWithTools(tools) {
-        return createSpreadsheet({
+        createSpreadsheet({
             toolbar: {
                 tools: tools
             }
         });
+
+        toolbar = spreadsheet._view.toolbar;
     }
 
     test("expands tools to items", function() {
@@ -61,10 +67,10 @@
         equal(element.find(".k-toolbar .k-button-group").length, 2);
     });
 
-    test("bold executes correct command", function() {
-        createWithTools([ [ "bold" ] ]);
+    test("bold executes correct command", 3, function() {
+        createWithTools([ "bold" ]);
 
-        spreadsheet._view.toolbar.bind("execute", function(e) {
+        toolbar.one("execute", function(e) {
             equal(e.commandType, "PropertyChangeCommand");
             equal(e.property, "bold");
             equal(e.value, true);
@@ -73,12 +79,12 @@
         tap($(".k-i-bold"));
     });
 
-    test("bold toggle off triggers execute with value null", function() {
-        createWithTools([ [ "bold" ] ]);
+    test("bold toggle off triggers execute with value null", 1, function() {
+        createWithTools([ "bold" ]);
 
-        tap($(".k-i-bold"));
+        sheet.range("A1").bold(true);
 
-        spreadsheet._view.toolbar.bind("execute", function(e) {
+        toolbar.one("execute", function(e) {
             equal(e.value, null);
         });
 
@@ -91,6 +97,64 @@
         ]);
 
         equal($(".k-i-refresh").length, 1);
+    });
+
+    test("refreshes toggle button state", function() {
+        createWithTools([ "bold" ]);
+
+        sheet.range("A1").bold(true);
+
+        ok(toolbar.element.find("[data-property=bold]").hasClass("k-state-active"));
+    });
+
+    test("refreshes color picker state", function() {
+        createWithTools([ "backgroundColor" ]);
+
+        var color = "#ff0000";
+
+        sheet.range("A1").background(color);
+
+        var colorpicker = toolbar.element.find("[data-role=colorpicker]").data("kendoColorPicker");
+
+        equal(colorpicker.value(), color);
+    });
+
+    test("refreshes font size state", function() {
+        createWithTools([ "fontSize" ]);
+
+        sheet.range("A1").fontSize("15px");
+
+        var combobox = toolbar.element.find("[data-role=combobox]").data("kendoComboBox");
+
+        equal(combobox.value(), 15);
+    });
+
+    test("refreshes font size state", function() {
+        createWithTools([ "fontSize" ]);
+
+        sheet.range("A1").fontSize("15px");
+
+        var combobox = toolbar.element.find("[data-role=combobox]").data("kendoComboBox");
+
+        equal(combobox.value(), 15);
+    });
+
+    test("refreshes font family state", function() {
+        createWithTools([ "fontFamily" ]);
+
+        sheet.range("A1").fontFamily("Arial");
+
+        var ddl = toolbar.element.find("[data-role=dropdownlist]").data("kendoDropDownList");
+
+        equal(ddl.value(), "Arial");
+    });
+
+    test("refreshes text wrap state", function() {
+        createWithTools([ "textWrap" ]);
+
+        sheet.range("A1").wrap(true);
+
+        ok(toolbar.element.find("[data-command=TextWrapCommand]").hasClass("k-state-active"));
     });
 
 })();

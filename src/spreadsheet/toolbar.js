@@ -35,18 +35,17 @@
         format:                { type: "format", property: "format", width: 100, overflow: "never" },
         backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
         textColor:             { type: "colorPicker", property: "color", iconClass: "text" },
-        mergeCells:            { type: "splitButton", command: "MergeCellCommand", value: "all", iconClass: "merge-cells",
+        mergeCells:            { type: "splitButton", command: "MergeCellCommand", value: "cells", showText: "overflow", iconClass: "merge-cells",
                                  menuButtons: [
-                                     "mergeAll", "mergeHorizontally", "mergeVertically", "unmerge"
+                                    { iconClass: "merge-cells", command: "MergeCellCommand", name: "mergeCells", value: "cells" },
+                                    { iconClass: "merge-cells", command: "MergeCellCommand", name: "mergeHorizontally", value: "horizontally" },
+                                    { iconClass: "merge-cells", command: "MergeCellCommand", name: "mergeVertically", value: "vertically" },
+                                    { iconClass: "merge-cells", command: "MergeCellCommand", name: "unmerge", value: "unmerge" }
                                  ] },
         borders:               { type: "borders", overflow: "never" },
         fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
         fontSize:              { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
-        mergeAll:              { iconClass: "merge-cells", command: "MergeCellCommand", value: "all" },
-        mergeHorizontally:     { iconClass: "merge-cells", command: "MergeCellCommand", value: "horizontally" },
-        mergeVertically:       { iconClass: "merge-cells", command: "MergeCellCommand", value: "vertically" },
-        unmerge:               { iconClass: "merge-cells", command: "MergeCellCommand", value: "unmerge" },
-        textWrap:              { type: "button", togglable: true, command: "TextWrapCommand", value: true, iconClass: "text-wrap" },
+        textWrap:              { type: "button", togglable: true, property: "wrap", command: "TextWrapCommand", value: true, iconClass: "text-wrap" },
         paste:                 { command: "PasteCommand", iconClass: "paste" },
     };
 
@@ -82,8 +81,8 @@
                 };
 
                 var tool = $.extend({
-                    name: toolName,
-                    text: messages[toolName],
+                    name: options.name || toolName,
+                    text: messages[options.name || toolName],
                     spriteCssClass: spriteCssClass,
                     attributes: {}
                 }, typeDefaults[type], options);
@@ -92,11 +91,11 @@
                     tool.menuButtons = tool.menuButtons.map(expandTool);
                 }
 
-                if (options.command) {
-                    tool.attributes["data-command"] = options.command;
-                } else if (options.property) {
-                    tool.attributes["data-command"] = "PropertyChangeCommand";
+                if (options.property) {
+                    tool.attributes["data-command"] = options.command || "PropertyChangeCommand";
                     tool.attributes["data-property"] = options.property;
+                } else if (options.command) {
+                    tool.attributes["data-command"] = options.command;
                 }
 
                 if (options.value) {
@@ -156,7 +155,6 @@
                 alignMiddle: "Align middle",
                 alignBottom: "Align bottom",
                 mergeCells: "Merge cells",
-                mergeAll: "Merge all",
                 mergeHorizontally: "Merge horizontally",
                 mergeVertically: "Merge vertically",
                 unmerge: "Unmerge"
@@ -173,23 +171,13 @@
             var range = this.range();
             var tools = this._tools();
 
-            function setValue(tool, value) {
-                if (tool.toolbar) {
-                    tool.toolbar.value(value);
-                }
-
-                if (tool.overflow) {
-                    tool.overflow.value(value);
-                }
-            }
-
             function setToggle(tool, toggle) {
                 var toolbar = tool.toolbar;
                 var overflow = tool.overflow;
-                var toggleable = (toolbar && toolbar.options.toggleable) ||
-                                 (overflow && overflow.options.toggleable);
+                var togglable = (toolbar && toolbar.options.togglable) ||
+                                 (overflow && overflow.options.togglable);
 
-                if (!toggleable) {
+                if (!togglable) {
                     return;
                 }
 
@@ -202,44 +190,43 @@
                 }
             }
 
-            for (var name in tools) {
-                var tool = tools[name];
-                var value = range[name]();
+            function update(tool, value) {
+                var toolbar = tool.toolbar;
+                var overflow = tool.overflow;
 
-                if (tool instanceof Array) { // text alignment tool groups
-                    for (var i = 0; i < tool.length; i++) {
-                        setToggle(tool[i], tool[i].toolbar.element.attr("data-value") === value);
-                    }
-                } else if (tool.type === "button") {
+                if (toolbar && toolbar.update) {
+                    toolbar.update(value);
+                }
+
+                if (overflow && overflow.update) {
+                    overflow.update(value);
+                }
+            }
+
+            for (var i = 0; i < tools.length; i++) {
+                var property = tools[i].property;
+                var tool = tools[i].tool;
+                var value = range[property]();
+
+                if (tool.type === "button") {
                     setToggle(tool, !!value);
-                } else if (tool.type === "colorPicker") {
-                    setValue(tool, value);
-                } else if (tool.type === "fontSize") {
-                    setValue(tool, kendo.parseInt(value) || DEFAULT_FONT_SIZE);
-                } else if (tool.type === "fontFamily") {
-                    setValue(tool, value || DEFAULT_FONT_FAMILY);
+                } else {
+                    update(tool, value);
                 }
             }
         },
         _tools: function() {
-            return this.element.find("[data-command]").toArray().reduce(function(tools, element) {
+            return this.element.find("[data-property]").toArray().reduce(function(tools, element) {
                 element = $(element);
                 var property = element.attr("data-property");
-                var toolGroup;
 
-                if (property) {
-                    if (tools[property]) {
-                        if (!(tools[property] instanceof Array)) {
-                            tools[property] = new Array(tools[property]);
-                        }
-                        tools[property].push(this._getItem(element));
-                    } else {
-                        tools[property] = this._getItem(element);
-                    }
-                }
+                tools.push({
+                    property: property,
+                    tool: this._getItem(element)
+                });
 
                 return tools;
-            }.bind(this), {});
+            }.bind(this), []);
         },
         destroy: function() {
             // TODO: move to ToolBar.destroy to take care of these
@@ -292,6 +279,10 @@
             });
         },
 
+        update: function(value) {
+            this.value(value);
+        },
+
         value: function(value) {
             if (value !== undefined) {
                 this.colorPicker.value(value);
@@ -336,6 +327,10 @@
             });
         },
 
+        update: function(value) {
+            this.value(kendo.parseInt(value) || DEFAULT_FONT_SIZE);
+        },
+
         value: function(value) {
             if (value !== undefined) {
                 this.comboBox.value(value);
@@ -346,9 +341,6 @@
     });
 
     kendo.toolbar.registerComponent("fontSize", fontSize);
-
-    var FONT_FAMILIES = ["Arial", "Courier New", "Georgia", "Times New Roman", "Trebuchet MS", "Verdana"];
-    var DEFAULT_FONT_FAMILY = "Arial";
 
     var DropDownTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
@@ -408,6 +400,9 @@
         }
     });
 
+    var FONT_FAMILIES = ["Arial", "Courier New", "Georgia", "Times New Roman", "Trebuchet MS", "Verdana"];
+    var DEFAULT_FONT_FAMILY = "Arial";
+
     kendo.toolbar.registerComponent("fontFamily", DropDownTool.extend({
         init: function(options, toolbar) {
             DropDownTool.fn.init.call(this, options, toolbar);
@@ -420,6 +415,9 @@
                 type: "fontFamily",
                 fontFamily: this
             });
+        },
+        update: function(value) {
+            this.value(value || DEFAULT_FONT_FAMILY);
         }
     }));
 

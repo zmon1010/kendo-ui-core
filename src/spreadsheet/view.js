@@ -366,7 +366,8 @@
         refresh: function(reason) {
             var sheet = this._sheet;
             this.formulaBar.value(this._workbook._editableValueForRef(sheet.activeCell()));
-            if(this.toolbar){
+
+            if (this.toolbar) {
                 this.toolbar.refresh();
             }
 

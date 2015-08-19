@@ -205,7 +205,7 @@
             }
             this.range().setState(this._state);
         },
-        all: function() {
+        cells: function() {
             var range = this.range();
             var ref = range._ref;
 

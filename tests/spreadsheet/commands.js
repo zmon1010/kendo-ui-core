@@ -463,8 +463,8 @@
 
     module("SpreadSheet MergeCell", moduleOptions);
 
-    test("command 'mergeAll' merges all cells", function() {
-        var command = mergeCommand("all", "A1:B2");
+    test("command 'mergeCells' merges all cells", function() {
+        var command = mergeCommand("cells", "A1:B2");
         command.exec();
 
         var merged = sheet._mergedCells;
@@ -472,17 +472,17 @@
         equal(merged[0].toString(), "A1:B2");
     });
 
-    test("command 'mergeAll' makes merged cell an activeCell", function() {
-        var command = mergeCommand("all", "A1:B2");
+    test("command 'mergeCells' makes merged cell an activeCell", function() {
+        var command = mergeCommand("cells", "A1:B2");
         command.exec();
 
         equal(sheet.activeCell().toString(), "A1:B2");
     });
 
-    test("command 'mergeAll' can be undone", function() {
+    test("command 'mergeCells' can be undone", function() {
         sheet.range("A1:B2").background("#f00").values([ [1, 2], [3, 4] ]);
 
-        var command = mergeCommand("all", "A1:B2");
+        var command = mergeCommand("cells", "A1:B2");
         command.exec();
         command.undo();
 
