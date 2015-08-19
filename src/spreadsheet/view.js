@@ -286,10 +286,6 @@
                 element = $("<div />").prependTo(this.element);
 
                 toolbarOptions = $.extend(true, toolbarOptions, {
-                    range: function() {
-                        var sheet = this._workbook.activeSheet();
-                        return sheet.range(sheet.activeCell());
-                    }.bind(this),
                     workbook: function() {
                         return this._workbook;
                     }.bind(this),

@@ -163,7 +163,8 @@
             }
         },
         range: function() {
-            return this.options.range();
+            var sheet = this.workbook().activeSheet();
+            return sheet.range(sheet.activeCell());
         },
         workbook: function() {
             return this.options.workbook();
