@@ -8,14 +8,17 @@
     var ToolBar = kendo.ui.ToolBar;
 
     var defaultTools = [
+        [ "copy", "paste" ],
         [ "bold", "italic", "underline" ],
+        "backgroundColor", "textColor",
+        "borders",
+        "fontSize", "fontFamily",
         [ "alignLeft", "alignCenter", "alignRight" ],
         [ "alignTop", "alignMiddle", "alignBottom" ],
+        "textWrap",
         [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ],
-        "format", "mergeCells", "borders",
-        "fontFamily", "fontSize",
-        "backgroundColor", "textColor", "textWrap",
-        [ "paste" ]
+        "format",
+        "mergeCells"
     ];
 
     var toolDefaults = {
@@ -46,6 +49,7 @@
         fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
         fontSize:              { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
         textWrap:              { type: "button", togglable: true, property: "wrap", command: "TextWrapCommand", value: true, iconClass: "text-wrap" },
+        copy:                  { command: "CopyCommand", iconClass: "copy" },
         paste:                 { command: "PasteCommand", iconClass: "paste" }
     };
 
