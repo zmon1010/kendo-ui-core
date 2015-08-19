@@ -139,6 +139,8 @@
                 }
             } else if (commandType == "AdjustDecimalsCommand") {
                 args.decimals = parseInt(target.attr("data-value"), 10);
+            } else if (commandType == "CopyCommand" || commandType == "PasteCommand") {
+                args.workbook = e.sender.workbook();
             }
 
             this.trigger("execute", args);

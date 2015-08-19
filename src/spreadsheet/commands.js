@@ -242,7 +242,7 @@
     var PasteCommand = kendo.spreadsheet.PasteCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
-            this._workbook = options.sender.workbook();
+            this._workbook = options.workbook;
             this._clipboard = this._workbook.clipboard();
         },
         getState: function() {
@@ -260,7 +260,7 @@
     var CopyCommand = kendo.spreadsheet.CopyCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
-            this._clipboard = options.sender.workbook().clipboard();
+            this._clipboard = options.workbook.clipboard();
         },
         exec: function() {
             if(this._clipboard.canCopy()) {

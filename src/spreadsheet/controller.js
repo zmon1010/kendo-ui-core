@@ -247,13 +247,13 @@
         },
 
         onPaste: function(event, action) {
-            if(this.clipboard.canPaste()) {
-                this.clipboard.paste();
-            }
+            var command = new kendo.spreadsheet.PasteCommand({ workbook: this.view._workbook });
+            this.view._workbook.execute(command);
         },
 
         onCopy: function(event, action) {
-            this.clipboard.copy();
+            var command = new kendo.spreadsheet.CopyCommand({ workbook: this.view._workbook });
+            this.view._workbook.execute(command);
         },
 
 ////////////////////////////////////////////////////////////////////
