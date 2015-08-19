@@ -19,6 +19,10 @@ spreadsheet.autoRefresh(false);
 
 var sheet = spreadsheet.activeSheet();
 
+spreadsheet.insertSheet();
+spreadsheet.insertSheet();
+spreadsheet.insertSheet();
+
 sheet.range("E11:AX200").formula("=RANDBETWEEN(1, 100)").format("[Red][<50]#;[Green][>50]#;[Blue]0.00");
 
 //sheet.hideColumn(1);
