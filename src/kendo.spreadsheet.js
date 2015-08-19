@@ -12,6 +12,7 @@
         "./spreadsheet/clipboard",
         "./spreadsheet/range",
         "./spreadsheet/sheet",
+        "./spreadsheet/sheetsbar",
         "./spreadsheet/workbook",
         "./spreadsheet/formulacontext",
         "./spreadsheet/controller",
@@ -80,8 +81,6 @@
 
                 this._view.workbook(this._workbook);
 
-                this._activeSheet(this._workbook.activeSheet());
-
                 this.refresh();
             },
 
@@ -95,13 +94,8 @@
                 }
             },
 
-            _activeSheet: function(sheet) {
-                this._controller.sheet(sheet);
-                this._view.sheet(sheet);
-            },
-
             activeSheet: function(sheet) {
-                return this._workbook.activeSheet(sheet, this._activeSheet.bind(this));
+                return this._workbook.activeSheet(sheet);
             },
 
             moveSheetToIndex: function (sheet, index) {
@@ -117,13 +111,7 @@
             },
 
             removeSheet: function(sheet) {
-                var that = this;
-
-                var sheetRefreshCallback = function() {
-                    that.refresh({recalc: true});
-                };
-
-                return this._workbook.removeSheet(sheet, this._activeSheet.bind(this), sheetRefreshCallback);
+                return this._workbook.removeSheet(sheet);
             },
 
             sheetByName: function(sheetName) {
@@ -147,8 +135,10 @@
                     reason = ALL_REASONS;
                 }
 
-                this._workbook.refresh(reason);
+                this._view.sheet(this._workbook.activeSheet());
+                this._controller.sheet(this._workbook.activeSheet());
 
+                this._workbook.refresh(reason);
                 this._view.refresh(reason);
                 this._controller.refresh();
                 this._view.render();
@@ -205,6 +195,7 @@
             options: {
                 name: "Spreadsheet",
                 toolbar: true,
+                sheetsbar: true,
                 rows: 200,
                 columns: 50,
                 rowHeight: 20,
