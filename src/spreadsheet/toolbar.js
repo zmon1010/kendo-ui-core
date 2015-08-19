@@ -145,7 +145,7 @@
 
             this.trigger("execute", args);
         },
-        events: ToolBar.fn.events.concat([ "execute" ]),
+        events: ToolBar.fn.events.concat([ "execute", "openDialog" ]),
         options: {
             name: "SpreadsheetToolBar",
             resizable: true,
@@ -394,12 +394,19 @@
             ddl._listWidth = listWidth;
         },
         _change: function(e) {
-            var value = e.sender.value();
-            this.toolbar.trigger("execute", {
-                commandType: "PropertyChangeCommand",
-                property: this.options.property,
-                value: value == "null" ? null : value
-            });
+            var instance = e.sender;
+            var value = instance.value();
+            var popup = instance.dataItem().popup;
+
+            if (popup) {
+                this.toolbar.trigger("openDialog", { name: popup });
+            } else {
+                this.toolbar.trigger("execute", {
+                    commandType: "PropertyChangeCommand",
+                    property: this.options.property,
+                    value: value == "null" ? null : value
+                });
+            }
         },
         value: function(value) {
             if (value !== undefined) {
@@ -461,7 +468,8 @@
                 { format: "m/d/yyyy", name: "Date", sample: "4/21/2012" },
                 { format: "h:mm:ss AM/PM", name: "Time", sample: "5:49:00 PM" },
                 { format: "m/d/yyyy h:mm", name: "Date time", sample: "4/21/2012 5:49:00" },
-                { format: "[h]:mm:ss", name: "Duration", sample: "168:05:00" }
+                { format: "[h]:mm:ss", name: "Duration", sample: "168:05:00" },
+                { popup: "formatCells", name: "More formats..." }
             ]);
 
             this.element.data({
