@@ -38,9 +38,9 @@
         mergeCells:            { type: "splitButton", command: "MergeCellCommand", value: "cells", showText: "overflow", iconClass: "merge-cells",
                                  menuButtons: [
                                     { iconClass: "merge-cells", command: "MergeCellCommand", name: "mergeCells", value: "cells" },
-                                    { iconClass: "merge-cells", command: "MergeCellCommand", name: "mergeHorizontally", value: "horizontally" },
-                                    { iconClass: "merge-cells", command: "MergeCellCommand", name: "mergeVertically", value: "vertically" },
-                                    { iconClass: "merge-cells", command: "MergeCellCommand", name: "unmerge", value: "unmerge" }
+                                    { iconClass: "merge-horizontally", command: "MergeCellCommand", name: "mergeHorizontally", value: "horizontally" },
+                                    { iconClass: "merge-vertically", command: "MergeCellCommand", name: "mergeVertically", value: "vertically" },
+                                    { iconClass: "normal-layout", command: "MergeCellCommand", name: "unmerge", value: "unmerge" }
                                  ] },
         borders:               { type: "borders", overflow: "never" },
         fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
