@@ -31,8 +31,8 @@
         alignTop:              { type: "button", togglable: true, property: "verticalAlign", value: "top", iconClass: "align-top" },
         alignMiddle:           { type: "button", togglable: true, property: "verticalAlign", value: "middle", iconClass: "align-middle" },
         alignBottom:           { type: "button", togglable: true, property: "verticalAlign", value: "bottom", iconClass: "align-bottom" },
-        formatCurrency:        { property: "format", value: "$?" },
-        formatPercentage:      { property: "format", value: "?.00%" },
+        formatCurrency:        { property: "format", value: "$?", iconClass: "dollar" },
+        formatPercentage:      { property: "format", value: "?.00%", iconClass: "percent" },
         formatDecreaseDecimal: { command: "AdjustDecimalsCommand", value: -1, iconClass: "decrease-decimal" },
         formatIncreaseDecimal: { command: "AdjustDecimalsCommand", value: +1, iconClass: "increase-decimal" },
         format:                { type: "format", property: "format", width: 100, overflow: "never" },
@@ -161,7 +161,11 @@
                 mergeCells: "Merge cells",
                 mergeHorizontally: "Merge horizontally",
                 mergeVertically: "Merge vertically",
-                unmerge: "Unmerge"
+                unmerge: "Unmerge",
+                formatCurrency: "Currency",
+                formatPercentage: "Percentage",
+                formatDecreaseDecimal: "Decrease decimal",
+                formatIncreaseDecimal: "Increase decimal"
             }
         },
         range: function() {
