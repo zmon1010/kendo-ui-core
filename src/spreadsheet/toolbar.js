@@ -15,19 +15,19 @@
         "format", "mergeCells", "borders",
         "fontFamily", "fontSize",
         "backgroundColor", "textColor", "textWrap",
-        ["paste"]
+        [ "paste" ]
     ];
 
     var toolDefaults = {
-        bold:                  { type: "toggle", property: "bold", value: true },
-        italic:                { type: "toggle", property: "italic", value: true },
-        underline:             { type: "toggle", property: "underline", value: true },
-        alignLeft:             { type: "toggle", property: "textAlign", value: "left", iconClass: "justify-left" },
-        alignCenter:           { type: "toggle", property: "textAlign", value: "center", iconClass: "justify-center" },
-        alignRight:            { type: "toggle", property: "textAlign", value: "right", iconClass: "justify-right" },
-        alignTop:              { type: "toggle", property: "verticalAlign", value: "top", iconClass: "align-top" },
-        alignMiddle:           { type: "toggle", property: "verticalAlign", value: "middle", iconClass: "align-middle" },
-        alignBottom:           { type: "toggle", property: "verticalAlign", value: "bottom", iconClass: "align-bottom" },
+        bold:                  { type: "button", togglable: true, property: "bold", value: true, iconClass: "bold" },
+        italic:                { type: "button", togglable: true, property: "italic", value: true, iconClass: "italic" },
+        underline:             { type: "button", togglable: true, property: "underline", value: true, iconClass: "underline" },
+        alignLeft:             { type: "button", togglable: true, property: "textAlign", value: "left", iconClass: "justify-left" },
+        alignCenter:           { type: "button", togglable: true, property: "textAlign", value: "center", iconClass: "justify-center" },
+        alignRight:            { type: "button", togglable: true, property: "textAlign", value: "right", iconClass: "justify-right" },
+        alignTop:              { type: "button", togglable: true, property: "verticalAlign", value: "top", iconClass: "align-top" },
+        alignMiddle:           { type: "button", togglable: true, property: "verticalAlign", value: "middle", iconClass: "align-middle" },
+        alignBottom:           { type: "button", togglable: true, property: "verticalAlign", value: "bottom", iconClass: "align-bottom" },
         formatCurrency:        { property: "format", value: "$?" },
         formatPercentage:      { property: "format", value: "?.00%" },
         formatDecreaseDecimal: { command: "AdjustDecimalsCommand", value: -1, iconClass: "decrease-decimal" },
@@ -47,12 +47,12 @@
         mergeVertically:       { iconClass: "merge-cells", command: "MergeCellCommand", value: "vertically" },
         unmerge:               { iconClass: "merge-cells", command: "MergeCellCommand", value: "unmerge" },
         textWrap:              { type: "button", togglable: true, command: "TextWrapCommand", value: true, iconClass: "text-wrap" },
-        paste:                 { command: "PasteCommand" },
+        paste:                 { command: "PasteCommand", iconClass: "paste" },
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
         init: function(element, options) {
-            options.items = this._expandTools(options.tools || defaultTools);
+            options.items = this._expandTools(options.tools || SpreadsheetToolBar.prototype.options.tools);
 
             ToolBar.fn.init.call(this, element, options);
             var handleClick = this._click.bind(this);
@@ -68,19 +68,15 @@
             function expandTool(toolName) {
                 // expand string to object, add missing tool properties
                 var options = $.isPlainObject(toolName) ? toolName : toolDefaults[toolName] || {};
-                var iconClass = "k-icon k-i-" + (options.iconClass || toolName);
+                var spriteCssClass = "k-icon k-i-" + options.iconClass;
                 var type = options.type;
                 var typeDefaults = {
-                    splitButton: { spriteCssClass: iconClass },
+                    splitButton: { spriteCssClass: spriteCssClass },
                     button: {
                         showText: "overflow"
                     },
-                    toggle: {
-                        togglable: true,
-                        showText: "overflow"
-                    },
                     colorPicker: {
-                        toolIcon: iconClass,
+                        toolIcon: spriteCssClass,
                         overflow: "never"
                     }
                 };
@@ -88,7 +84,7 @@
                 var tool = $.extend({
                     name: toolName,
                     text: messages[toolName],
-                    spriteCssClass: iconClass,
+                    spriteCssClass: spriteCssClass,
                     attributes: {}
                 }, typeDefaults[type], options);
 
@@ -114,7 +110,7 @@
                 if ($.isArray(tool)) {
                     tools.push({ type: "buttonGroup", buttons: tool.map(expandTool) });
                 } else {
-                    tools.push(expandTool(tool));
+                    tools.push(expandTool.call(this, tool));
                 }
 
                 return tools;
@@ -148,6 +144,7 @@
         options: {
             name: "SpreadsheetToolBar",
             resizable: false,
+            tools: defaultTools,
             messages: {
                 bold: "Bold",
                 italic: "Italic",

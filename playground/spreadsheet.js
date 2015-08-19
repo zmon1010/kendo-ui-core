@@ -1,4 +1,18 @@
-$("#spreadsheet").kendoSpreadsheet();
+$("#spreadsheet").kendoSpreadsheet({
+    toolbar: {
+        tools: kendo.spreadsheet.ToolBar.fn.options.tools.concat([
+            "bold",
+            {
+                type: "button",
+                text: "Foo",
+                spriteCssClass: "k-icon k-i-cog",
+                click: function(e) {
+                    alert("custom tool");
+                }
+            }
+        ])
+    }
+});
 
 var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
 

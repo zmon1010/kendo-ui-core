@@ -1264,7 +1264,7 @@ var __meta__ = { // jshint ignore:line
                     that.trigger(TOGGLE, eventData);
                 } else {
                     handler = isFunction(item.clickHandler) ? item.clickHandler : null;
-                    eventData = { target: target, id: item.options.id };
+                    eventData = { sender: that, target: target, id: item.options.id };
 
                     if (handler) { handler.call(that, eventData); }
                     that.trigger(CLICK, eventData);
