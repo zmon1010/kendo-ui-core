@@ -46,7 +46,7 @@
         fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
         fontSize:              { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
         textWrap:              { type: "button", togglable: true, property: "wrap", command: "TextWrapCommand", value: true, iconClass: "text-wrap" },
-        paste:                 { command: "PasteCommand", iconClass: "paste" },
+        paste:                 { command: "PasteCommand", iconClass: "paste" }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
