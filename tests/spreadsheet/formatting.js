@@ -255,4 +255,9 @@
         htmlEqual(format("abc"), "abc");
     });
 
+    test("dot is output literally when not followed by digit part", function(){
+        var format = F.compile('d.m.yyyy "г." h:mm | "as number: "#,#.00');
+        htmlEqual(format(12345, kendo.getCulture("bg-BG")), "18.10.1933 г. 0:00 | as number: 12 345,00");
+    });
+
 })();

@@ -172,8 +172,11 @@
                 // fills cell width with the following character
                 return { type: "fill", value: input.next() };
               case ".":
-                decimalPart = true;
-                return { type: "dec" };
+                if (input.lookingAt(/^\s*[#0?]/)) {
+                    decimalPart = true;
+                    return { type: "dec" };
+                }
+                return { type: "str", value: "." };
               case "%":
                 return { type: "percent" };
               case ",":
