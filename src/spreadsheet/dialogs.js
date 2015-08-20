@@ -112,7 +112,7 @@
                 ];
 
                 formats = formats.map(function(format) {
-                    format = FormatCellsViewModel.convertFormat(format);
+                    format = FormatCellsViewModel.convert.currency(format);
 
                     return { value: format, name: formattedValue(1000, format) };
                 });
@@ -144,29 +144,54 @@
         }
     });
 
-    FormatCellsViewModel.convertFormat = function(options) {
-        function repeat(token, n) {
-            return new Array(n+1).join(token);
+    FormatCellsViewModel.convert = {
+        currency: function(options) {
+            function repeat(token, n) {
+                return new Array(n+1).join(token);
+            }
+
+            // convert culture info to spreadsheet format
+            var info = options.currency;
+            var format = info.pattern[1];
+
+            if (options.decimals) {
+                format = format.replace(/n/g, "n" + info["."] + repeat("0", info.decimals));
+            }
+
+            if (options.iso) {
+                format = '"' + info.abbr + '" ' + format.replace(/\s*\$\s*/g, "");
+            } else {
+                format = format.replace(/\$/g, info.symbol);
+            }
+
+            format = format.replace(/n/g, "?");
+
+            return format;
+        },
+        date: function(format) {
+            if ((/T|Z/).test(format)) {
+                return "";
+            }
+
+            return format.toLowerCase().replace(/tt/g, "AM/PM").replace(/'/g, '"');
         }
-
-        // convert culture info to spreadsheet format
-        var info = options.currency;
-        var format = info.pattern[1];
-
-        if (options.decimals) {
-            format = format.replace(/n/g, "n" + info["."] + repeat("0", info.decimals));
-        }
-
-        if (options.iso) {
-            format = '"' + info.abbr + '" ' + format.replace(/\s*\$\s*/g, "");
-        } else {
-            format = format.replace(/\$/g, info.symbol);
-        }
-
-        format = format.replace(/n/g, "?");
-
-        return format;
     };
+
+    function uniqueBy(field, array) {
+        var result = [];
+        var values = [];
+
+        for (var i = 0; i < array.length; i++) {
+            if ($.inArray(array[i][field], values) == -1) {
+                result.push(array[i]);
+                values.push(array[i][field]);
+            }
+        }
+
+        return result;
+    }
+
+    var calendarPatterns = kendo.cultures.current.calendars.standard.patterns
 
     var FormatCellsDialog = SpreadsheetDialog.extend({
         init: function(options) {
@@ -201,24 +226,15 @@
                 { value: "#.00", name: "1024.00" },
                 { value: "#,###.00", name: "1,024.00" }
             ],
-            // TODO: generate from current culture
-            dateFormats: [
-                { value: "m/d", name: "3/14" },
-                { value: "m/d/yy", name: "3/14/01" },
-                { value: "mm/dd/yy", name: "03/14/01" },
-                { value: "d-mmm", name: "14-Mar" },
-                { value: "d-mmm-yy", name: "14-Mar-01" },
-                { value: "dd-mmm-yy", name: "14-Mar-01" },
-                { value: "mmm-yy", name: "Mar-01" },
-                { value: "mmmm-yy", name: "March-01" },
-                { value: "mmmm dd, yyyy", name: "March 14, 2001" },
-                { value: "m/d/yy hh:mm AM/PM", name: "3/14/01 1:30 PM" },
-                { value: "m/d/yy h:mm", name: "3/14/01 13:30" },
-                { value: "mmmmm", name: "M" },
-                { value: "mmmmm-yy", name: "M-01" },
-                { value: "m/d/yyyy", name: "3/14/2001" },
-                { value: "d-mmm-yyyy", name: "14-Mar-2001" }
-            ],
+            dateFormats: uniqueBy("value", $.map(calendarPatterns, function(format) {
+                format = FormatCellsViewModel.convert.date(format);
+
+                if (!format) {
+                    return;
+                }
+
+                return { value: format, name: formattedValue(34567.2678, format) };
+            })),
             template:
                 "<div class='k-root-tabs' data-role='tabstrip' " +
                      "data-text-field='name' " +

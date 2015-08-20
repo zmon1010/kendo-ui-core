@@ -96,8 +96,8 @@
         ok(viewModel.showCurrencyFilter);
     });
 
-    test("convertFormat", function() {
-        var convert = FormatCellsViewModel.convertFormat;
+    test("convert currency format", function() {
+        var convert = FormatCellsViewModel.convert.currency;
 
         var prefixFoo = {
             abbr: "FOO",
@@ -122,6 +122,16 @@
         equal(convert({ currency: suffixFoo, iso: true  }), '"FOO" ?');
         equal(convert({ currency: prefixFoo, decimals: true }), '?_00f');
         equal(convert({ currency: prefixFoo, decimals: false }), '?f');
+    });
+
+    test("convert date format", function() {
+        var convert = FormatCellsViewModel.convert.date;
+
+        equal(convert("MMMM dd, yyyy"), "mmmm dd, yyyy");
+        equal(convert("h:mm tt"), "h:mm AM/PM");
+        equal(convert("h:mm tt Z"), "");
+        equal(convert("ddTHH"), "");
+        equal(convert("'-'hh"), '"-"hh');
     });
 
 })();
