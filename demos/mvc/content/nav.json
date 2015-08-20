@@ -2246,6 +2246,9 @@
            "aspnet-mvc": "Functionality",
            "jsp-ui": "Functionality",
            "php-ui": "Functionality" 
+         },
+         "description": {
+           "kendo-ui": "<p>Having used to the copy-paste functionality available in MS Excel, many users would want to copy grid cell content from web apps and paste in Excel, or some other place for further review, or just to duplicate it.</p> <p>With the Kendo UI grid this is built-in functionality which is supported by setting two properties: <strong>selectable-&gt;multi cell</strong> and <strong>allowCopy-&gt;true</strong>. As simple as that, your users will be able to utilize copy and paste between across their apps, using the browser clipboard for this purpose \"behind the scenes\". </p>"
          }
       },
       {
@@ -2482,6 +2485,9 @@
            "aspnet-mvc": "Functionality",
            "jsp-ui": "Functionality",
            "php-ui": "Functionality" 
+         },
+         "description": {
+           "kendo-ui": "<p>A common requirement for web apps is to save the user customization and settings when interacting with your app, and then restore them once he/she logs back at some point in the future. </p> <p>The Kendo UI grid exposes the capability to save and restore settings that were previously applied to its structure using the <strong>getOptions </strong>and <strong>setOptions </strong>methods from its API. These methods allow you to serialize the grid current state, when needed, and then recover it at certain point in time. In this particular example we use localStorage key/value pair to save and load grid settings. </p> <p>Further info on the setOptions and getOptions methods is available in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#methods-setOptions\">this API section</a>. </p>"
          }
       },
       {
