@@ -18,9 +18,9 @@
         [ "alignLeft", "alignCenter", "alignRight" ],
         [ "alignTop", "alignMiddle", "alignBottom" ],
         "textWrap",
-        "formatCells",
         [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ],
         "format",
+        "separator",
         "mergeCells"
     ];
 
@@ -34,11 +34,11 @@
         alignTop:              { type: "button", togglable: true, property: "verticalAlign", value: "top", iconClass: "align-top" },
         alignMiddle:           { type: "button", togglable: true, property: "verticalAlign", value: "middle", iconClass: "align-middle" },
         alignBottom:           { type: "button", togglable: true, property: "verticalAlign", value: "bottom", iconClass: "align-bottom" },
-        formatCurrency:        { property: "format", value: "$?", iconClass: "dollar" },
-        formatPercentage:      { property: "format", value: "?.00%", iconClass: "percent" },
-        formatDecreaseDecimal: { command: "AdjustDecimalsCommand", value: -1, iconClass: "decrease-decimal" },
-        formatIncreaseDecimal: { command: "AdjustDecimalsCommand", value: +1, iconClass: "increase-decimal" },
-        format:                { type: "format", property: "format", width: 100, overflow: "never" },
+        formatCurrency:        { type: "button", property: "format", value: "$?", iconClass: "dollar" },
+        formatPercentage:      { type: "button", property: "format", value: "?.00%", iconClass: "percent" },
+        formatDecreaseDecimal: { type: "button", command: "AdjustDecimalsCommand", value: -1, iconClass: "decrease-decimal" },
+        formatIncreaseDecimal: { type: "button", command: "AdjustDecimalsCommand", value: +1, iconClass: "increase-decimal" },
+        format:                { type: "format", property: "format", width: 100 },
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
         backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
         textColor:             { type: "colorPicker", property: "color", iconClass: "text" },
@@ -54,7 +54,8 @@
         fontSize:              { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
         textWrap:              { type: "button", togglable: true, property: "wrap", command: "TextWrapCommand", value: true, iconClass: "text-wrap" },
         copy:                  { command: "CopyCommand", iconClass: "copy" },
-        paste:                 { command: "PasteCommand", iconClass: "paste" }
+        paste:                 { command: "PasteCommand", iconClass: "paste" },
+        separator:             { type: "separator" }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -171,6 +172,7 @@
                 mergeHorizontally: "Merge horizontally",
                 mergeVertically: "Merge vertically",
                 unmerge: "Unmerge",
+                format: "Custom format...",
                 formatCurrency: "Currency",
                 formatPercentage: "Percentage",
                 formatDecreaseDecimal: "Decrease decimal",
