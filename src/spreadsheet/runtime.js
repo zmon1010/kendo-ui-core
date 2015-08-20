@@ -470,26 +470,42 @@
             this.sheet = sheet;
             this.row = row;
             this.col = col;
+            this.onReady = [];
+            this.pending = false;
         },
         clone: function(sheet, row, col) {
             return new Formula(this.refs, this.handler, this.print, sheet, row, col);
         },
         exec: function(ss, callback) {
-            if ("value" in this) {
+            var self = this;
+            if ("value" in self) {
                 if (callback) {
-                    callback(this.value);
+                    callback(self.value);
                 }
             } else {
-                if (!this.absrefs) {
-                    this.absrefs = this.refs.map(function(ref){
-                        return ref.absolute(this.row, this.col);
-                    }, this);
+                if (callback) {
+                    self.onReady.push(callback);
                 }
-                var ctx = new Context(callback, this, ss);
-                this.handler.call(ctx);
+                if (self.pending) {
+                    return;
+                }
+                self.pending = true;
+                if (!self.absrefs) {
+                    self.absrefs = self.refs.map(function(ref){
+                        return ref.absolute(this.row, this.col);
+                    }, self);
+                }
+                var ctx = new Context(function(val){
+                    self.pending = false;
+                    self.onReady.forEach(function(callback){
+                        callback(val);
+                    });
+                }, self, ss);
+                self.handler.call(ctx);
             }
         },
         reset: function() {
+            this.onReady = [];
             delete this.value;
         },
         adjust: function(operation, start, delta) {
