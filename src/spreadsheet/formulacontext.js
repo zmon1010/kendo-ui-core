@@ -87,8 +87,8 @@
             sheet = this.workbook.sheetByName(sheet);
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
-                value.each(function(value, row, col) {
-                    sheet._value(row, col, value, false);
+                value.each(function(value, r, c) {
+                    sheet._value(row + r, col + c, value, false);
                 });
             } else {
                 sheet._value(row, col, value, false);
