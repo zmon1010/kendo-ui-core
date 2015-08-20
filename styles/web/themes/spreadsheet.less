@@ -101,6 +101,17 @@
     border-color: @widget-border-color;
 }
 
+.k-spreadsheet-filter {
+    border-radius: @border-radius;
+    border-color: @cell-border-color;
+
+    &:hover {
+        color: @hover-text-color;
+        background: @hover-background;
+        border-color: darken(@hover-background, 8%);
+    }
+}
+
 .k-action-window .k-action-buttons {
     border-color: @widget-border-color;
 }

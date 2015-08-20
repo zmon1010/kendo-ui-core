@@ -16,13 +16,16 @@
         cellEditor: "k-spreadsheet-cell-editor",
         editor: "k-spreadsheet-editor",
         topCorner: "k-spreadsheet-top-corner",
+        filterButton: "k-spreadsheet-filter",
+        icon: "k-icon k-font-icon",
+        iconFilterDefault: "k-i-arrow-s",
         sheetsBar: "k-spreadsheet-sheets-bar",
         sheetsBarActive: "k-spreadsheet-sheets-bar-active",
         sheetsBarInactive: "k-spreadsheet-sheets-bar-inactive"
     };
 
     function hasChanged(e, name) {
-           return !e || e.changed == name;
+       return !e || e.changed == name;
     }
 
     function selectElementContents(el) {
@@ -57,6 +60,20 @@
             value.size || "1px",
             value.color || "#000"
         ].join(" ");
+    }
+
+    function filterButton() {
+        function icon(className) {
+            return kendo.dom.element("span", { className: viewClassNames.icon + " " + className });
+        }
+
+        var button = kendo.dom.element(
+            "a",
+            { href: "#", className: "k-link " + viewClassNames.filterButton },
+            [ icon(viewClassNames.iconFilterDefault) ]
+        );
+
+        return button;
     }
 
     function addCell(table, row, cell) {
@@ -148,6 +165,11 @@
         if (cell.format && cell.value !== null) {
             var formatter = kendo.spreadsheet.formatting.compile(cell.format);
             td.children[0] = formatter(cell.value);
+        }
+
+        // check if cell is filter controller
+        if (cell.filterController) {
+            td.children.push(filterButton());
         }
 
         return td;
