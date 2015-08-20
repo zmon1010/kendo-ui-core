@@ -380,6 +380,10 @@
             this.options = options;
             this.toolbar = toolbar;
 
+            this.attributes();
+            this.addUidAttr();
+            this.addOverflowAttr();
+
             dropDownList.bind("open", this._open.bind(this));
             dropDownList.bind("change", this._change.bind(this));
 
@@ -454,46 +458,60 @@
         }
     }));
 
-    kendo.toolbar.registerComponent("format", DropDownTool.extend({
-        _revertTitle: function(e) {
-            e.sender.value("");
-            e.sender.wrapper.width("auto");
-        },
-        init: function(options, toolbar) {
-            DropDownTool.fn.init.call(this, options, toolbar);
+    kendo.toolbar.registerComponent(
+        "format", 
+        DropDownTool.extend({
+            _revertTitle: function(e) {
+                e.sender.value("");
+                e.sender.wrapper.width("auto");
+            },
+            init: function(options, toolbar) {
+                DropDownTool.fn.init.call(this, options, toolbar);
 
-            var ddl = this.dropDownList;
-            ddl.bind("change", this._revertTitle.bind(this));
-            ddl.bind("dataBound", this._revertTitle.bind(this));
-            ddl.setOptions({
-                dataValueField: "format",
-                dataValuePrimitive: true,
-                valueTemplate: "123",
-                template:
-                    "# if (data.sample) { #" +
-                        "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
-                    "# } #" +
-                    "#: data.name #"
-            });
-            ddl.setDataSource([
-                { format: null, name: "Automatic" },
-                { format: "?.00", name: "Number", sample: "1,499.99" },
-                { format: "?.00%", name: "Percent", sample: "14.50%" },
-                { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: "Financial", sample: "(1,000.12)" },
-                { format: "$?", name: "Currency", sample: "$1,499.99" },
-                { format: "m/d/yyyy", name: "Date", sample: "4/21/2012" },
-                { format: "h:mm:ss AM/PM", name: "Time", sample: "5:49:00 PM" },
-                { format: "m/d/yyyy h:mm", name: "Date time", sample: "4/21/2012 5:49:00" },
-                { format: "[h]:mm:ss", name: "Duration", sample: "168:05:00" },
-                { popup: "formatCells", name: "More formats..." }
-            ]);
+                var ddl = this.dropDownList;
+                ddl.bind("change", this._revertTitle.bind(this));
+                ddl.bind("dataBound", this._revertTitle.bind(this));
+                ddl.setOptions({
+                    dataValueField: "format",
+                    dataValuePrimitive: true,
+                    valueTemplate: "123",
+                    template:
+                        "# if (data.sample) { #" +
+                            "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
+                        "# } #" +
+                        "#: data.name #"
+                });
+                ddl.setDataSource([
+                    { format: null, name: "Automatic" },
+                    { format: "?.00", name: "Number", sample: "1,499.99" },
+                    { format: "?.00%", name: "Percent", sample: "14.50%" },
+                    { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: "Financial", sample: "(1,000.12)" },
+                    { format: "$?", name: "Currency", sample: "$1,499.99" },
+                    { format: "m/d/yyyy", name: "Date", sample: "4/21/2012" },
+                    { format: "h:mm:ss AM/PM", name: "Time", sample: "5:49:00 PM" },
+                    { format: "m/d/yyyy h:mm", name: "Date time", sample: "4/21/2012 5:49:00" },
+                    { format: "[h]:mm:ss", name: "Duration", sample: "168:05:00" },
+                    { popup: "formatCells", name: "More formats..." }
+                ]);
 
-            this.element.data({
-                type: "format",
-                format: this
-            });
-        }
-    }));
+                this.element.data({
+                    type: "format",
+                    format: this
+                });
+            }
+        }),
+        kendo.toolbar.OverflowButton.extend({
+            init: function(options, toolbar) {
+                options.spriteCssClass = "k-icon k-font-icon k-i-percent";
+                kendo.toolbar.OverflowButton.fn.init.call(this, options, toolbar);
+
+                this.element.on("click", this._click.bind(this));
+            },
+            _click: function(e) {
+                this.toolbar.openDialog("formatCells");
+            }
+        })
+    );
 
     kendo.toolbar.registerComponent("dialog", kendo.toolbar.ToolBarButton.extend({
         init: function(options, toolbar) {
