@@ -297,13 +297,15 @@
                     openDialog: function(e) {
                         this.openDialog(e.name, e.options);
                     }.bind(this),
-                    execute: function(e) {
-                        this._workbook.execute(e.command);
-                    }.bind(this)
+                    execute: this._executeCommand.bind(this)
                 });
 
                 this.toolbar = new kendo.spreadsheet.ToolBar(element, toolbarOptions);
             }
+        },
+
+        _executeCommand: function(e) {
+            this._workbook.execute(e.command);
         },
 
         workbook: function(workbook) {
@@ -462,6 +464,7 @@
             var dialog = kendo.spreadsheet.dialogs.create(name, options);
 
             if (dialog) {
+                dialog.bind("execute", this._executeCommand.bind(this));
                 this._dialogs.push(dialog);
                 dialog.open(range);
                 return dialog;

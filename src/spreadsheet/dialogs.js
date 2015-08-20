@@ -20,8 +20,10 @@
         }
     };
 
-    var SpreadsheetDialog = kendo.spreadsheet.SpreadsheetDialog = kendo.Class.extend({
+    var SpreadsheetDialog = kendo.spreadsheet.SpreadsheetDialog = kendo.Observable.extend({
         init: function(options) {
+            kendo.Observable.fn.init.call(this, options);
+
             this.options = $.extend(true, {}, this.options, options);
         },
         dialog: function() {
@@ -136,7 +138,6 @@
             var value = this.value || 0;
 
             if (format && format.length) {
-                // get formatted text from virtual dom node
                 return formattedValue(value, format);
             } else {
                 return value;
@@ -191,11 +192,11 @@
         return result;
     }
 
-    var calendarPatterns = kendo.cultures.current.calendars.standard.patterns
-
     var FormatCellsDialog = SpreadsheetDialog.extend({
         init: function(options) {
             SpreadsheetDialog.fn.init.call(this, options);
+
+            this._generateFormats();
         },
         options: {
             title: "Format number",
@@ -205,36 +206,6 @@
                 { type: "currency", name: "Currency" },
                 { type: "date", name: "Date" }
             ],
-            currencies: $.map(kendo.cultures, function(culture, name) {
-                if (name != culture.name) {
-                    return;
-                }
-
-                var currency = culture.numberFormat.currency;
-                var description = kendo.format(
-                    "{0} ({1}, {2})",
-                    currency.name,
-                    currency.abbr,
-                    currency.symbol
-                );
-
-                return { description: description, value: currency };
-            }),
-            numberFormats: [
-                { value: "#.00%", name: "100.00%" },
-                { value: "#%", name: "100%" },
-                { value: "#.00", name: "1024.00" },
-                { value: "#,###.00", name: "1,024.00" }
-            ],
-            dateFormats: uniqueBy("value", $.map(calendarPatterns, function(format) {
-                format = FormatCellsViewModel.convert.date(format);
-
-                if (!format) {
-                    return;
-                }
-
-                return { value: format, name: formattedValue(34567.2678, format) };
-            })),
             template:
                 "<div class='k-root-tabs' data-role='tabstrip' " +
                      "data-text-field='name' " +
@@ -263,6 +234,50 @@
                     "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
                     "<button class='k-button' data-bind='click: close'>Cancel</button>" +
                 "</div>"
+        },
+        _generateFormats: function() {
+            var options = this.options;
+
+            if (!options.currencies) {
+                options.currencies = $.map(kendo.cultures, function(culture, name) {
+                    if (name != culture.name) {
+                        return;
+                    }
+
+                    var currency = culture.numberFormat.currency;
+                    var description = kendo.format(
+                        "{0} ({1}, {2})",
+                        currency.name,
+                        currency.abbr,
+                        currency.symbol
+                    );
+
+                    return { description: description, value: currency };
+                });
+            }
+
+            if (!options.numberFormats) {
+                options.numberFormats = [
+                    { value: "#.00%", name: "100.00%" },
+                    { value: "#%", name: "100%" },
+                    { value: "#.00", name: "1024.00" },
+                    { value: "#,###.00", name: "1,024.00" }
+                ];
+            }
+
+            if (!options.dateFormats) {
+                var calendarPatterns = kendo.cultures.current.calendars.standard.patterns;
+
+                options.dateFormats = uniqueBy("value", $.map(calendarPatterns, function(format) {
+                    format = FormatCellsViewModel.convert.date(format);
+
+                    if (!format) {
+                        return;
+                    }
+
+                    return { value: format, name: formattedValue(34567.7678, format) };
+                }));
+            }
         },
         open: function(range) {
             var options = this.options;
@@ -303,11 +318,12 @@
 
             SpreadsheetDialog.fn.apply.call(this);
 
-            this.toolbar.trigger("execute", {
-                commandType: "PropertyChangeCommand",
+            var command = new kendo.spreadsheet.PropertyChangeCommand({
                 property: "format",
                 value: format
             });
+
+            this.trigger("execute", { command: command });
         }
     });
 

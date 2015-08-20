@@ -2,8 +2,7 @@
     var element;
     var sheet;
     var spreadsheet;
-
-    module("spreadsheet dialogs", {
+    var moduleOptions = {
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
 
@@ -14,7 +13,9 @@
         teardown: function() {
             kendo.destroy(QUnit.fixture);
         }
-    });
+    };
+
+    module("spreadsheet dialogs", moduleOptions);
 
     test("opens formatCells dialog", function() {
         spreadsheet.openDialog("formatCells");
@@ -133,5 +134,38 @@
         equal(convert("ddTHH"), "");
         equal(convert("'-'hh"), '"-"hh');
     });
+
+    module("FormatCellsDialog", {
+        setup: function() {
+            moduleOptions.setup();
+
+            dialog = spreadsheet.openDialog("formatCells");
+        },
+        teardown: moduleOptions.teardown
+    });
+
+    test("apply executes PropertyChangeCommand", 3, function() {
+        var formats = dialog.viewModel.formats;
+        var format = formats[formats.length-1].value;
+
+        dialog.one("execute", function(e) {
+            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
+            equal(e.command.options.property, "format");
+            equal(e.command.options.value, format);
+        });
+
+        dialog.viewModel.set("format", format);
+
+        dialog.apply();
+    });
+
+    test("close does not execute command", 0, function() {
+        dialog.one("execute", function(e) {
+            ok(false);
+        });
+
+        dialog.close();
+    });
+
 
 })();
