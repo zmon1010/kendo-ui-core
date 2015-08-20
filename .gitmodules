@@ -1,6 +1,3 @@
-[submodule "build/less-js"]
-    path = build/less-js
-    url = git@github.com:telerik/less.js.git
 [submodule "build/timezone-js"]
     path = build/timezone-js
     url = git@github.com:mde/timezone-js.git
