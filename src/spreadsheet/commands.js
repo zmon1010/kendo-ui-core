@@ -11,6 +11,7 @@
 (function(kendo) {
     var Command = kendo.spreadsheet.Command = kendo.Class.extend({
         init: function(options) {
+            this.options = options;
             this._property = options.property;
             this._state = {};
         },

@@ -7,6 +7,8 @@
 
     var ToolBar = kendo.ui.ToolBar;
 
+    var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand;
+
     var defaultTools = [
         [ "copy", "paste" ],
         [ "bold", "italic", "underline" ],
@@ -124,9 +126,8 @@
         _click: function(e) {
             var target = e.target;
             var commandType = target.attr("data-command");
-            var args = {
-                commandType: commandType
-            };
+            var command;
+            var args = {};
 
             if (!commandType) {
                 return;
@@ -147,7 +148,9 @@
                 args.value = target.attr("data-value");
             }
 
-            this.trigger("execute", args);
+            command = new kendo.spreadsheet[commandType](args);
+
+            this.execute(command);
         },
         events: ToolBar.fn.events.concat([ "execute", "openDialog" ]),
         options: {
@@ -173,6 +176,12 @@
                 formatDecreaseDecimal: "Decrease decimal",
                 formatIncreaseDecimal: "Increase decimal"
             }
+        },
+        openDialog: function(popupName) {
+            this.trigger("openDialog", { name: popupName });
+        },
+        execute: function(command) {
+            this.trigger("execute", { command: command });
         },
         range: function() {
             var sheet = this.workbook().activeSheet();
@@ -268,13 +277,7 @@
                     "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
                 ],
                 toolIcon: options.toolIcon,
-                change: function(e) {
-                    toolbar.trigger("execute", {
-                        commandType: "PropertyChangeCommand",
-                        property: options.property,
-                        value: this.value()
-                    });
-                }
+                change: this._colorChange.bind(this)
             }).data("kendoColorPicker");
 
             this.colorPicker = colorPicker;
@@ -291,6 +294,13 @@
                 type: "colorPicker",
                 colorPicker: this
             });
+        },
+
+        _colorChange: function(e) {
+            this.toolbar.execute(new PropertyChangeCommand({
+                property: this.options.property,
+                value: e.sender.value()
+            }));
         },
 
         update: function(value) {
@@ -314,13 +324,7 @@
     var fontSize = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             var comboBox = $("<input />").kendoComboBox({
-                change: function(e) {
-                    toolbar.trigger("execute", {
-                        commandType: "PropertyChangeCommand",
-                        property: options.property,
-                        value: kendo.parseInt(this.value()) + "px"
-                    });
-                },
+                change: this._valueChange.bind(this),
                 dataSource: options.fontSizes || FONT_SIZES,
                 value: DEFAULT_FONT_SIZE
             }).data("kendoComboBox");
@@ -339,6 +343,13 @@
                 type: "fontSize",
                 fontSize: this
             });
+        },
+
+        _valueChange: function(e) {
+            this.toolbar.execute(new PropertyChangeCommand({
+                property: this.options.property,
+                value: kendo.parseInt(e.sender.value()) + "px"
+            }));
         },
 
         update: function(value) {
@@ -400,16 +411,15 @@
         _change: function(e) {
             var instance = e.sender;
             var value = instance.value();
-            var popup = instance.dataItem().popup;
+            var popupName = instance.dataItem().popup;
 
-            if (popup) {
-                this.toolbar.trigger("openDialog", { name: popup });
+            if (popupName) {
+                this.toolbar.openDialog(popupName);
             } else {
-                this.toolbar.trigger("execute", {
-                    commandType: "PropertyChangeCommand",
+                this.toolbar.execute(new PropertyChangeCommand({
                     property: this.options.property,
                     value: value == "null" ? null : value
-                });
+                }));
             }
         },
         value: function(value) {
@@ -493,7 +503,7 @@
                         .data("instance", this);
         },
         open: function() {
-            this.toolbar.trigger("openDialog", { name: this._dialogName });
+            this.toolbar.openDialog(this._dialogName);
         }
     }));
 
@@ -598,11 +608,10 @@
         },
 
         _execute: function() {
-            this.toolbar.trigger("execute", {
-                commandType: "BorderChangeCommand",
+            this.toolbar.execute(new kendo.spreadsheet.BorderChangeCommand({
                 border: this.type,
                 style: { size: "1px", color: this.color }
-            });
+            }));
         }
     });
 

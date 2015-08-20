@@ -71,9 +71,10 @@
         createWithTools([ "bold" ]);
 
         toolbar.one("execute", function(e) {
-            equal(e.commandType, "PropertyChangeCommand");
-            equal(e.property, "bold");
-            equal(e.value, true);
+            var command = e.command;
+            ok(command instanceof kendo.spreadsheet.PropertyChangeCommand);
+            equal(command.options.property, "bold");
+            equal(command.options.value, true);
         });
 
         tap($(".k-i-bold"));
@@ -85,7 +86,7 @@
         sheet.range("A1").bold(true);
 
         toolbar.one("execute", function(e) {
-            equal(e.value, null);
+            equal(e.command.options.value, null);
         });
 
         tap($(".k-i-bold"));
@@ -95,7 +96,7 @@
         createWithTools([ "mergeCells" ]);
 
         toolbar.one("execute", function(e) {
-            equal(e.value, "cells");
+            equal(e.command.options.value, "cells");
         });
 
         sheet.select("A1:B2");

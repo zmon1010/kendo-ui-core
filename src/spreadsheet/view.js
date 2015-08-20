@@ -298,7 +298,7 @@
                         this.openDialog(e.name, e.options);
                     }.bind(this),
                     execute: function(e) {
-                        this._workbook.execute(new kendo.spreadsheet[e.commandType](e));
+                        this._workbook.execute(e.command);
                     }.bind(this)
                 });
 
