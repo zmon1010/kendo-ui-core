@@ -2177,6 +2177,9 @@
            "aspnet-mvc": "Functionality",
            "jsp-ui": "Functionality",
            "php-ui": "Functionality" 
+         },
+         "description": {
+            "kendo-ui": "<p>Oftentimes when displaying numbers in the grid, users would like to be able to see the results from aggregate calculations at the bottom of the grid groups or columns. </p><p>This is a no-brainer with the Kendo UI grid since it has support for the mostly used aggregate functions. All you need to do is specify the pertinent aggregate function name via the<strong> columns-&gt;aggregates </strong>attributes of the grid, and the <strong>group </strong>and <strong>aggregate </strong>fields of its data source instance. Review the code snippets in the demo for further details.</p>"
          }
       },
       {
