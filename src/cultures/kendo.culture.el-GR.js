@@ -16,7 +16,7 @@
                 symbol: "%"
             },
             currency: {
-                name: "Ευρώ",
+                name: "Euro",
                 abbr: "EUR",
                 pattern: ["-n $","n $"],
                 decimals: 2,
