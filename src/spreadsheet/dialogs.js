@@ -180,9 +180,6 @@
                 { type: "currency", name: "Currency" },
                 { type: "date", name: "Date" }
             ],
-            numberFormats: [
-                { value: "?.00%", name: "100.00%" }
-            ],
             currencies: $.map(kendo.cultures, function(culture, name) {
                 if (name != culture.name) {
                     return;
@@ -198,6 +195,13 @@
 
                 return { description: description, value: currency };
             }),
+            numberFormats: [
+                { value: "#.00%", name: "100.00%" },
+                { value: "#%", name: "100%" },
+                { value: "#.00", name: "1024.00" },
+                { value: "#,###.00", name: "1,024.00" }
+            ],
+            // TODO: generate from current culture
             dateFormats: [
                 { value: "m/d", name: "3/14" },
                 { value: "m/d/yy", name: "3/14/01" },
@@ -270,10 +274,10 @@
 
             kendo.bind(element, this.viewModel);
 
+            var currencyFilter = element.find("select.k-format-filter").data("kendoDropDownList");
+
             if (options.currencies.length > 10) {
-                element.find(".k-format-filter").data("kendoDropDownList").setOptions({
-                    filter: "contains"
-                });
+                currencyFilter.setOptions({ filter: "contains" });
             }
 
             element.find(kendo.roleSelector("staticlist")).parent().addClass("k-list-wrapper");
