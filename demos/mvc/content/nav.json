@@ -2075,7 +2075,13 @@
         "meta": {
             "kendo-ui": "This demo illustrates the hierarchical data grid feature of Kendo UI Grid widget. Try the demo source code to play with the grid in your web app.",
             "aspnet-mvc": "This demo illustrates the hierarchical data grid feature of the Telerik ASP.NET MVC Grid component. Try the demo source code to play with the grid in your web app."
-        }
+        },
+        "group": {
+           "kendo-ui": "Functionality",
+           "aspnet-mvc": "Functionality",
+           "jsp-ui": "Functionality",
+           "php-ui": "Functionality" 
+         }
       },
       {
         "text": "Server hierarchy",
@@ -2094,7 +2100,13 @@
         "meta": {
             "kendo-ui": "This example shows how records in the data grid widget can be presented with a detailed template.",
             "aspnet-mvc": "This example shows how records in the Telerik ASP.NET MVC Grid component can be presented with a detailed template."
-        }
+        },
+        "group": {
+           "kendo-ui": "Templates",
+           "aspnet-mvc": "Templates",
+           "jsp-ui": "Templates",
+           "php-ui": "Templates" 
+          }
       },
       {
         "text": "Server detail template",
@@ -2113,7 +2125,13 @@
         "meta": {
             "kendo-ui": "This Kendo UI Grid example shows how you can add custom toolbars to the grid and create toolbar templates.",
             "aspnet-mvc": "This Telerik ASP.NET MVC Grid example shows how you can add custom toolbars to the grid and create toolbar templates."
-        }
+        },
+        "group": {
+           "kendo-ui": "Templates",
+           "aspnet-mvc": "Templates",
+           "jsp-ui": "Templates",
+           "php-ui": "Templates" 
+          }
       },
       {
         "text": "Column header template",
@@ -2132,7 +2150,13 @@
         "meta": {
             "kendo-ui": "This demo demonstrates the functionality to apply custom commands to KendoGrid. Look at the source code to find how to set the text attribute and command name for the grid component.",
             "aspnet-mvc": "This example illustrates the custom command of Telerik ASP.NET MVC Grid extension."
-        }
+        },
+        "group": {
+           "kendo-ui": "Columns",
+           "aspnet-mvc": "Columns",
+           "jsp-ui": "Columns",
+           "php-ui": "Columns" 
+         }
       },
       {
         "text": "Aggregates",
@@ -2144,7 +2168,13 @@
         "meta": {
             "kendo-ui": "This example demonstrates the aggregate option for KendoGrid. Use demo source code to enable the grid to calculate aggregated values.",
             "aspnet-mvc": "This example demonstrates the aggregate option for Telerik ASP.NET MVC Grid. Use demo source code to enable the grid to calculate aggregated values."
-        }
+        },
+        "group": {
+           "kendo-ui": "Functionality",
+           "aspnet-mvc": "Functionality",
+           "jsp-ui": "Functionality",
+           "php-ui": "Functionality" 
+         }
       },
       {
         "text": "Filter menu customization",
@@ -2156,7 +2186,13 @@
         "meta": {
             "kendo-ui": "In this example we will learn how to customize the filter menu of Kendo UI Grid component.",
             "aspnet-mvc": "In this example you will learn how to customize the filter menu of Telerik ASP.NET MVC Grid component."
-        }
+        },
+        "group": {
+           "kendo-ui": "Functionality",
+           "aspnet-mvc": "Functionality",
+           "jsp-ui": "Functionality",
+           "php-ui": "Functionality" 
+         }
       },
     {
         "text": "Filter row",
@@ -2166,7 +2202,13 @@
         },
         "meta": {
             "kendo-ui": "In this example we will learn how to enable the filter row of Kendo UI Grid component."
-        }
+        },
+        "group": {
+           "kendo-ui": "Functionality",
+           "aspnet-mvc": "Functionality",
+           "jsp-ui": "Functionality",
+           "php-ui": "Functionality" 
+         }
       },
       {
         "text": "Filter Multi Checkboxes",
@@ -2176,7 +2218,13 @@
         },
         "meta": {
             "kendo-ui": "In this example we will learn how to enable the filter multi-check of Kendo UI Grid component."
-        }
+        },
+        "group": {
+           "kendo-ui": "Functionality",
+           "aspnet-mvc": "Functionality",
+           "jsp-ui": "Functionality",
+           "php-ui": "Functionality" 
+         }
       },
       {
         "text": "Copy to Excel",
@@ -2186,8 +2234,15 @@
         },
         "meta": {
             "kendo-ui": "In this example we will learn how to enable the allowCopy option of Kendo UI Grid component to allow copying data to Excel."
-        }
-      },{
+        },
+        "group": {
+           "kendo-ui": "Functionality",
+           "aspnet-mvc": "Functionality",
+           "jsp-ui": "Functionality",
+           "php-ui": "Functionality" 
+         }
+      },
+      {
         "text": "Server aggregates",
         "url": "grid/serveraggregates",
         "packages": [
@@ -2204,7 +2259,13 @@
         "meta": {
             "kendo-ui": "This example demonstrates how to sort the data in KendoGrid. Use the demo source code to look into the logic of the grid sorting and implement it easily in your app.",
             "aspnet-mvc": "This demo shows how to sort data in Telerik ASP.NET MVC Grid. Use the demo source code to look into the logic of grid sorting and easily implement it in your app."
-        }
+        },
+        "group": {
+           "kendo-ui": "Functionality",
+           "aspnet-mvc": "Functionality",
+           "jsp-ui": "Functionality",
+           "php-ui": "Functionality" 
+         }
       },
       {
         "text": "Selection",
@@ -2216,7 +2277,13 @@
         "meta": {
             "kendo-ui": "This example demonstrates different selection modes, supported by KendoGrid. Review the available selection options and apply the functionality to KendoGrid in your app.",
             "aspnet-mvc": "This demo illustrates how you can use Telerik ASP.NET MVC grid with multiple row or cell selection enabled."
-        }
+        },
+        "group": {
+           "kendo-ui": "Functionality",
+           "aspnet-mvc": "Functionality",
+           "jsp-ui": "Functionality",
+           "php-ui": "Functionality" 
+         }
       },
       {
         "text": "ForeignKey column",
@@ -2228,7 +2295,13 @@
         "meta": {
             "kendo-ui": "This example shows the foreign key column functionality to cross-reference tables in KendoGrid component.",
             "aspnet-mvc": "This example shows the foreign key column functionality to cross-reference tables in the Telerik ASP.NET MVC Grid component."
-        }
+        },
+        "group": {
+           "kendo-ui": "Columns",
+           "aspnet-mvc": "Columns",
+           "jsp-ui": "Columns",
+           "php-ui": "Columns" 
+         }
       },
       {
         "text": "Multi-column headers",
@@ -2238,7 +2311,13 @@
         },
         "meta": {
             "kendo-ui": "This demo shows multiple column headers feature of KendoGrid control."
-        }
+        },
+        "group": {
+           "kendo-ui": "Columns",
+           "aspnet-mvc": "Columns",
+           "jsp-ui": "Columns",
+           "php-ui": "Columns" 
+         }
       },
       {
         "text": "Column reordering",
@@ -2250,7 +2329,13 @@
         "meta": {
             "kendo-ui": "This demo shows column moving and reordering feature of KendoGrid control.",
             "aspnet-mvc": "In this demo you can see how simple it is to reorder columns in Telerik ASP.NET MVC Grid."
-        }
+        },
+        "group": {
+           "kendo-ui": "Columns",
+           "aspnet-mvc": "Columns",
+           "jsp-ui": "Columns",
+           "php-ui": "Columns" 
+         }
       },
       {
         "text": "Column resizing",
@@ -2262,7 +2347,13 @@
         "meta": {
             "kendo-ui": "This example demonstrates how resizing of columns in KendoGrid is enabled in the widget. Use the demo source code to change width/height of the column.",
             "aspnet-mvc": "This demo demonstrates how you can resize columns in Telerik ASP.NET MVC Grid."
-        }
+        },
+        "group": {
+           "kendo-ui": "Columns",
+           "aspnet-mvc": "Columns",
+           "jsp-ui": "Columns",
+           "php-ui": "Columns" 
+         }
       },
       {
         "text": "Column menu",
@@ -2274,7 +2365,13 @@
         "meta": {
             "kendo-ui": "This demo shows column menu functionality of KendoGrid widget.",
             "aspnet-mvc": "This Telerik example shows column menu functionality in the Grid extension for ASP.NET MVC."
-        }
+        },
+        "group": {
+           "kendo-ui": "Columns",
+           "aspnet-mvc": "Columns",
+           "jsp-ui": "Columns",
+           "php-ui": "Columns" 
+         }
       },
       {
         "text": "Frozen columns",
@@ -2314,6 +2411,12 @@
         "meta": {
             "kendo-ui": "This sample shows how to change the style and concert of row cells with KendoGrid Row templates.",
             "aspnet-mvc": "This sample shows how to change the style and concert of row cells with Telrik ASP.NET MVC Grid Row templates."
+        },
+        "group": {
+           "kendo-ui": "Templates",
+           "aspnet-mvc": "Templates",
+           "jsp-ui": "Templates",
+           "php-ui": "Templates" 
         }
       },
       {
@@ -2333,7 +2436,13 @@
         "meta": {
             "kendo-ui": "This example demonstrates different events which are available in KendoGrid widget and the code explains how you can use them for  your project.",
             "aspnet-mvc": "This example demonstrates the different events which are available in Telerik ASP.NET MVC Grid component. The code explains how you can use them for your project."
-        }
+        },
+        "group": {
+           "kendo-ui": "API",
+           "aspnet-mvc": "API",
+           "jsp-ui": "API",
+           "php-ui": "API" 
+         }
       },
       {
         "text": "API",
@@ -2345,7 +2454,13 @@
         "meta": {
             "kendo-ui": "This demo shows how API Functions can manipulate the contents and behavior of Kendo UI Grid widget.",
             "aspnet-mvc": "See how the powerful and comprehensive API Functions allow you to manipulate the contents and behavior of the Telerik ASP.NET MVC Grid."
-        }
+        },
+        "group": {
+           "kendo-ui": "API",
+           "aspnet-mvc": "API",
+           "jsp-ui": "API",
+           "php-ui": "API" 
+         }
       },
        {
         "text": "Persist state",
@@ -2355,7 +2470,13 @@
         },
         "meta": {
             "kendo-ui": "This demo shows how setOptions and getOptions methods can manipulate the state of Kendo UI Grid widget."
-        }
+        },
+        "group": {
+           "kendo-ui": "Functionality",
+           "aspnet-mvc": "Functionality",
+           "jsp-ui": "Functionality",
+           "php-ui": "Functionality" 
+         }
       },
       {
         "text": "Globalization",
@@ -2373,6 +2494,12 @@
         "meta": {
             "kendo-ui": "This demo shows how Kendo UI Grid widget can be localized."
         },
+        "group": {
+           "kendo-ui": "Accessibility and Internationalization",
+           "aspnet-mvc": "Accessibility and Internationalization",
+           "jsp-ui": "Accessibility and Internationalization",
+           "php-ui": "Accessibility and Internationalization" 
+        },
         "packages": [
           "!mvc",
           "!php",
@@ -2389,7 +2516,13 @@
         "meta": {
             "kendo-ui": "In this example we will see how the Kendo UI Grid widget supports right-to-left spreadsheet grid for better user experience.",
             "aspnet-mvc": "In this demo you will be able to learn more about the right to left support in Telerik ASP.NET MVC Grid extension."
-        }
+        },
+        "group": {
+           "kendo-ui": "Accessibility and Internationalization",
+           "aspnet-mvc": "Accessibility and Internationalization",
+           "jsp-ui": "Accessibility and Internationalization",
+           "php-ui": "Accessibility and Internationalization" 
+          }
       },
       {
         "text": "Keyboard navigation",
@@ -2401,7 +2534,13 @@
         "meta": {
             "kendo-ui": "Look at this Kendo UI Grid demo to learn how different keyboard combinations could be used to navigate in the component.",
             "aspnet-mvc": "Look at this Telerik ASP.NET MVC Grid demo to learn how different keyboard combinations could be used to navigate in the component."
-        }
+        },
+        "group": {
+           "kendo-ui": "Accessibility and Internationalization",
+           "aspnet-mvc": "Accessibility and Internationalization",
+           "jsp-ui": "Accessibility and Internationalization",
+           "php-ui": "Accessibility and Internationalization" 
+          }
       },
       {
         "text": "MVVM",
