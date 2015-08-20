@@ -275,7 +275,7 @@
         workbook.removeSheet(workbook.sheets()[1]);
     });
 
-    test("insertSheet set sheet datasource if passed in the options", function() {
+    test("insertSheet set sheet datasource is passed in the options", function() {
         var dataSource = new kendo.data.DataSource({});
 
         var sheet = workbook.insertSheet({ dataSource: dataSource });
