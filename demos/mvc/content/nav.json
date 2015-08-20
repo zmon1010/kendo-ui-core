@@ -1906,6 +1906,9 @@
            "aspnet-mvc": "Data Editing",
            "jsp-ui": "Data Editing",
            "php-ui": "Data Editing" 
+         },
+         "description": {
+            "kendo-ui": "<p>In numerous scenarios there's a requirement not only to visualize data in a table structure, but to have the ability to manipulate this data and save changes. </p> <p>The Kendo UI grid widget supports data editing operations (create, update, destroy) via a simple configuration of its data source. All you have to do to enable data editing capabilities for the widget is to:</p> <ul> <li>set the grid's <strong>editable </strong>configuration option</li> <li>declare field definitions through the <strong>DataSource schema</strong></li> <li>configure the DataSource for performing CRUD data operations defining its <strong>transport-&gt;create/update/destroy</strong> attributes</li> </ul> <p>If you want to enable new records insertion, you can do that by enabling the relevant option in the grid toolbar. For deleting items you need to include a delete command column.</p> <p>The focus of this demo is to present how to enable batch editing operations by specifying the <strong>batch-&gt;true</strong> option via the grid's data source settings. </p> <p>More details about the grid editing capabilities can be found in the documentation <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/editing\">here</a>.</p>"          
          }
       },
       {
@@ -1924,7 +1927,11 @@
            "aspnet-mvc": "Data Editing",
            "jsp-ui": "Data Editing",
            "php-ui": "Data Editing" 
+         },
+         "description": {
+            "kendo-ui": "<p>In numerous scenarios there's a requirement not only to visualize data in a table structure, but to have the ability to manipulate this data and save changes. </p> <p>The Kendo UI grid widget supports data editing operations (create, update, destroy) via a simple configuration of its data source. All you have to do to enable data editing capabilities for the widget is to:</p> <ul> <li>set the grid's <strong>editable </strong>configuration option</li> <li>declare field definitions through the <strong>DataSource schema</strong></li> <li>configure the DataSource for performing CRUD data operations defining its <strong>transport-&gt;create/update/destroy</strong> attributes</li> </ul> <p>If you want to enable new records insertion, you can do that by enabling the relevant option in the grid toolbar. For deleting items you need to include a delete command column.</p> <p>This example aims to illustrate how to perform inline editing by setting the <strong>editable-&gt;inline</strong> option of the grid. </p> <p>More details about the grid editing capabilities can be found in the documentation <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/editing\">here</a>.</p>"          
          }
+
       },
       {
         "text": "Popup editing",
@@ -1942,6 +1949,9 @@
            "aspnet-mvc": "Data Editing",
            "jsp-ui": "Data Editing",
            "php-ui": "Data Editing" 
+         },
+         "description": {
+            "kendo-ui": "<p>In numerous scenarios there's a requirement not only to visualize data in a table structure, but to have the ability to manipulate this data and save changes. </p> <p>The Kendo UI grid widget supports data editing operations (create, update, destroy) via a simple configuration of its data source. All you have to do to enable data editing capabilities for the widget is to:</p> <ul> <li>set the grid's <strong>editable </strong>configuration option</li> <li>declare field definitions through the <strong>DataSource schema</strong></li> <li>configure the DataSource for performing CRUD data operations defining its <strong>transport-&gt;create/update/destroy</strong> attributes</li> </ul> <p>If you want to enable new records insertion, you can do that by enabling the relevant option in the grid toolbar. For deleting items you need to include a delete command column.</p> <p>In this demo you can edit or insert new items via a popup form by setting the <strong>editable-&gt;popup</strong> option of the grid. </p> <p>More details about the grid editing capabilities can be found in the documentation <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/editing\">here</a>.</p>"          
          }
       },
       {
@@ -1969,6 +1979,9 @@
            "aspnet-mvc": "Data Editing",
            "jsp-ui": "Data Editing",
            "php-ui": "Data Editing" 
+         },
+         "description": {
+            "kendo-ui": "<p>In numerous scenarios there's a requirement not only to visualize data in a table structure, but to have the ability to manipulate this data and save changes. </p> <p>The Kendo UI grid widget supports data editing operations (create, update, destroy) via a simple configuration of its data source. All you have to do to enable data editing capabilities for the widget is to:</p> <ul> <li>set the grid's <strong>editable </strong>configuration option</li> <li>declare field definitions through the <strong>DataSource schema</strong></li> <li>configure the DataSource for performing CRUD data operations defining its <strong>transport-&gt;create/update/destroy</strong> attributes</li> </ul> <p>If you want to enable new records insertion, you can do that by enabling the relevant option in the grid toolbar. For deleting items you need to include a delete command column.</p> <p>This sample demonstrates how to set a custom editor (Kendo UI dropdown list in this case) as grid column editor by specifying the <strong>Category</strong> column's <strong>editor</strong> field. The value of this field points to a javascript fucntion which instantiates the column editor for the corresponding column cells.</p> <p>More details about the grid editing capabilities can be found in the documentation <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/editing\">here</a>.</p>"          
          }
       },
       {
@@ -1997,6 +2010,9 @@
            "aspnet-mvc": "Data Editing",
            "jsp-ui": "Data Editing",
            "php-ui": "Data Editing" 
+         },
+         "description": {
+            "kendo-ui": "<p>In numerous scenarios there's a requirement not only to visualize data in a table structure, but to have the ability to manipulate this data and save changes. </p> <p>The Kendo UI grid widget supports data editing operations (create, update, destroy) via a simple configuration of its data source. All you have to do to enable data editing capabilities for the widget is to:</p> <ul> <li>set the grid's <strong>editable </strong>configuration option</li> <li>declare field definitions through the <strong>DataSource schema</strong></li> <li>configure the DataSource for performing CRUD data operations defining its <strong>transport-&gt;create/update/destroy</strong> attributes</li> </ul> <p>If you want to enable new records insertion, you can do that by enabling the relevant option in the grid toolbar. For deleting items you need to include a delete command column.</p> <p>Here you can see how defining a validation rule via the <strong>schema-&gt;model-&gt;fields-&gt;validation</strong> option of the grid data source forces a check for first capital letter for the Product Name column, when you edit the value in it. </p> <p>More details about the grid editing capabilities can be found in the documentation <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/editing\">here</a>.</p>"          
          }
       },
       {
