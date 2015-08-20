@@ -100,7 +100,55 @@
         });
 
         sheet.select("A1:B2");
-        tap(toolbar.element.find("[data-command=MergeCellCommand]"));
+        tap(toolbar.element.find("[data-tool=mergeCells]"));
+    });
+
+    test("textAlign button click triggers execute with correct value", 2, function() {
+        createWithTools([ [ "alignLeft", "alignCenter", "alignRight" ] ]);
+
+        toolbar.one("execute", function(e) {
+            equal(e.command.options.property, "textAlign");
+            equal(e.command.options.value, "right");
+        });
+
+        sheet.select("A1:B2");
+        tap(toolbar.element.find("[data-tool=alignRight]"));
+    });
+
+    test("verticalAlign button click triggers execute with correct value", 2, function() {
+        createWithTools([ [ "alignTop", "alignMiddle", "alignBottom" ] ]);
+
+        toolbar.one("execute", function(e) {
+            equal(e.command.options.property, "verticalAlign");
+            equal(e.command.options.value, "middle");
+        });
+
+        sheet.select("A1:B2");
+        tap(toolbar.element.find("[data-tool=alignMiddle]"));
+    });
+
+    test("formatCurrency button click triggers execute with correct value", 2, function() {
+        createWithTools([ [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ] ]);
+
+        toolbar.one("execute", function(e) {
+            equal(e.command.options.property, "format");
+            equal(e.command.options.value, "$?");
+        });
+
+        sheet.select("A1:B2");
+        tap(toolbar.element.find("[data-tool=formatCurrency]"));
+    });
+
+    test("formatPercentage button click triggers execute with correct value", 2, function() {
+        createWithTools([ [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ] ]);
+
+        toolbar.one("execute", function(e) {
+            equal(e.command.options.property, "format");
+            equal(e.command.options.value, "?.00%");
+        });
+
+        sheet.select("A1:B2");
+        tap(toolbar.element.find("[data-tool=formatPercentage]"));
     });
 
     test("custom tool", function() {
@@ -166,7 +214,7 @@
 
         sheet.range("A1").wrap(true);
 
-        ok(toolbar.element.find("[data-command=TextWrapCommand]").hasClass("k-state-active"));
+        ok(toolbar.element.find("[data-tool=textWrap]").hasClass("k-state-active"));
     });
 
 })();

@@ -25,34 +25,34 @@
     ];
 
     var toolDefaults = {
-        bold:                  { type: "button", togglable: true, property: "bold", value: true, iconClass: "bold" },
-        italic:                { type: "button", togglable: true, property: "italic", value: true, iconClass: "italic" },
-        underline:             { type: "button", togglable: true, property: "underline", value: true, iconClass: "underline" },
-        alignLeft:             { type: "button", togglable: true, property: "textAlign", value: "left", iconClass: "justify-left" },
-        alignCenter:           { type: "button", togglable: true, property: "textAlign", value: "center", iconClass: "justify-center" },
-        alignRight:            { type: "button", togglable: true, property: "textAlign", value: "right", iconClass: "justify-right" },
-        alignTop:              { type: "button", togglable: true, property: "verticalAlign", value: "top", iconClass: "align-top" },
-        alignMiddle:           { type: "button", togglable: true, property: "verticalAlign", value: "middle", iconClass: "align-middle" },
-        alignBottom:           { type: "button", togglable: true, property: "verticalAlign", value: "bottom", iconClass: "align-bottom" },
-        formatCurrency:        { type: "button", property: "format", value: "$?", iconClass: "dollar" },
-        formatPercentage:      { type: "button", property: "format", value: "?.00%", iconClass: "percent" },
-        formatDecreaseDecimal: { type: "button", command: "AdjustDecimalsCommand", value: -1, iconClass: "decrease-decimal" },
-        formatIncreaseDecimal: { type: "button", command: "AdjustDecimalsCommand", value: +1, iconClass: "increase-decimal" },
-        format:                { type: "format", property: "format", width: 100 },
+        bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
+        italic:                { type: "button", command: "PropertyChangeCommand", property: "italic",        value: true,     iconClass: "italic", togglable: true },
+        underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
+        alignLeft:             { type: "button", command: "PropertyChangeCommand", property: "textAlign",     value: "left",   iconClass: "justify-left", togglable: true },
+        alignCenter:           { type: "button", command: "PropertyChangeCommand", property: "textAlign",     value: "center", iconClass: "justify-center", togglable: true },
+        alignRight:            { type: "button", command: "PropertyChangeCommand", property: "textAlign",     value: "right",  iconClass: "justify-right", togglable: true },
+        alignTop:              { type: "button", command: "PropertyChangeCommand", property: "verticalAlign", value: "top",    iconClass: "align-top", togglable: true },
+        alignMiddle:           { type: "button", command: "PropertyChangeCommand", property: "verticalAlign", value: "middle", iconClass: "align-middle", togglable: true },
+        alignBottom:           { type: "button", command: "PropertyChangeCommand", property: "verticalAlign", value: "bottom", iconClass: "align-bottom", togglable: true },
+        formatCurrency:        { type: "button", command: "PropertyChangeCommand", property: "format",        value: "$?",     iconClass: "dollar" },
+        formatPercentage:      { type: "button", command: "PropertyChangeCommand", property: "format",        value: "?.00%",  iconClass: "percent" },
+        formatDecreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: -1,       iconClass: "decrease-decimal" },
+        formatIncreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: +1,       iconClass: "increase-decimal" },
+        format:                { type: "format",                                   property: "format",                         width: 100 },
+        textWrap:              { type: "button", command: "TextWrapCommand",       property: "wrap",          value: true,     iconClass: "text-wrap", togglable: true },
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
         backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
         textColor:             { type: "colorPicker", property: "color", iconClass: "text" },
         mergeCells:            { type: "splitButton", command: "MergeCellCommand", value: "cells", showText: "overflow", iconClass: "merge-cells",
                                  menuButtons: [
-                                    { iconClass: "merge-cells", command: "MergeCellCommand", name: "mergeCells", value: "cells" },
-                                    { iconClass: "merge-horizontally", command: "MergeCellCommand", name: "mergeHorizontally", value: "horizontally" },
-                                    { iconClass: "merge-vertically", command: "MergeCellCommand", name: "mergeVertically", value: "vertically" },
-                                    { iconClass: "normal-layout", command: "MergeCellCommand", name: "unmerge", value: "unmerge" }
+                                    { command: "MergeCellCommand", value: "cells",        name: "mergeCells", iconclass: "merge-cells" },
+                                    { command: "MergeCellCommand", value: "horizontally", name: "mergeHorizontally", iconClass: "merge-horizontally" },
+                                    { command: "MergeCellCommand", value: "vertically",   name: "mergeVertically", iconClass: "merge-vertically" },
+                                    { command: "MergeCellCommand", value: "unmerge",      name: "unmerge", iconClass: "normal-layout" }
                                  ] },
         borders:               { type: "borders", overflow: "never" },
         fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
         fontSize:              { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
-        textWrap:              { type: "button", togglable: true, property: "wrap", command: "TextWrapCommand", value: true, iconClass: "text-wrap" },
         copy:                  { command: "CopyCommand", iconClass: "copy" },
         paste:                 { command: "PasteCommand", iconClass: "paste" },
         separator:             { type: "separator" }
@@ -100,15 +100,10 @@
                     tool.menuButtons = tool.menuButtons.map(expandTool);
                 }
 
-                if (options.property) {
-                    tool.attributes["data-command"] = options.command || "PropertyChangeCommand";
-                    tool.attributes["data-property"] = options.property;
-                } else if (options.command) {
-                    tool.attributes["data-command"] = options.command;
-                }
+                tool.attributes["data-tool"] = toolName;
 
-                if (options.value) {
-                    tool.attributes["data-value"] = options.value;
+                if (options.property) {
+                    tool.attributes["data-property"] = options.property;
                 }
 
                 return tool;
@@ -125,33 +120,25 @@
             }, []);
         },
         _click: function(e) {
-            var target = e.target;
-            var commandType = target.attr("data-command");
-            var command;
-            var args = {};
+            var toolName = e.target.attr("data-tool");
+            var tool = toolDefaults[toolName];
+            var commandType = tool.command;
 
             if (!commandType) {
                 return;
             }
 
-            if (commandType == "PropertyChangeCommand" || commandType == "TextWrapCommand") {
-                args.value = null;
-                args.property = target.attr("data-property");
+            var args = {
+                property: tool.property || null,
+                value: tool.value || null,
+                workbook: e.sender.workbook
+            };
 
-                if (e.checked !== false) {
-                    args.value = !!target.attr("data-value");
-                }
-            } else if (commandType == "AdjustDecimalsCommand") {
-                args.decimals = parseInt(target.attr("data-value"), 10);
-            } else if (commandType == "CopyCommand" || commandType == "PasteCommand") {
-                args.workbook = e.sender.workbook();
-            } else if (commandType == "MergeCellCommand") {
-                args.value = target.attr("data-value");
+            if (typeof args.value === "boolean") {
+                args.value = e.checked ? true : null;
             }
 
-            command = new kendo.spreadsheet[commandType](args);
-
-            this.execute(command);
+            this.execute(new kendo.spreadsheet[commandType](args));
         },
         events: ToolBar.fn.events.concat([ "execute", "openDialog" ]),
         options: {
@@ -176,7 +163,8 @@
                 formatCurrency: "Currency",
                 formatPercentage: "Percentage",
                 formatDecreaseDecimal: "Decrease decimal",
-                formatIncreaseDecimal: "Increase decimal"
+                formatIncreaseDecimal: "Increase decimal",
+                textWrap: "Wrap text"
             }
         },
         openDialog: function(popupName) {
