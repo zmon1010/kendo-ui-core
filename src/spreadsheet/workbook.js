@@ -22,14 +22,15 @@
                 rowHeight: this.options.rowHeight,
                 columnWidth: this.options.columnWidth,
                 headerHeight: this.options.headerHeight,
-                headerWidth: this.options.headerWidth
+                headerWidth: this.options.headerWidth,
+                dataSource: this.options.dataSource
             });
 
             this.undoRedoStack = new kendo.util.UndoRedoStack();
             this.undoRedoStack.bind(["undo", "redo"], this._onUndoRedo.bind(this));
 
             this._context = new kendo.spreadsheet.FormulaContext(this);
-  
+
             if (this.options.sheets) {
                 this.fromJSON(this.options.sheets);
             }
@@ -141,6 +142,10 @@
             sheet.bind("change", this._sheetChange.bind(this));
 
             sheets.splice(insertIndex, 0, sheet);
+
+            if (options.dataSource) {
+                sheet.setDataSource(options.dataSource);
+            }
 
             this.trigger("change", { sheetSelection: true });
 

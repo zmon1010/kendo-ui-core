@@ -1,9 +1,3 @@
-$("#spreadsheet").kendoSpreadsheet();
-
-var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
-
-var sheet = spreadsheet.activeSheet();
-
 var crudServiceBaseUrl = "//demos.telerik.com/kendo-ui/service";
 
 var dataSource = new kendo.data.DataSource({
@@ -30,7 +24,7 @@ var dataSource = new kendo.data.DataSource({
             }
         }
     },
-/*    schema: {
+    schema: {
         model: {
             id: "ProductID",
             fields: {
@@ -41,10 +35,16 @@ var dataSource = new kendo.data.DataSource({
                 UnitsInStock: { type: "number", validation: { min: 0, required: true } }
             }
         }
-    }*/
+    }
 });
 
-sheet.setDataSource(dataSource);
+$("#spreadsheet").kendoSpreadsheet({
+    dataSource: dataSource
+});
+
+var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+
+var sheet = spreadsheet.activeSheet();
 
 $("#delete").click(function() {
     var cell = sheet.activeCell();
