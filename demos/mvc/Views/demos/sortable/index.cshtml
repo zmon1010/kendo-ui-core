@@ -28,7 +28,6 @@
                         placeholder:function(element) {
                             return element.clone().addClass("placeholder").text("drop here");
                         },
-                        cursor: "url('../content/web/sortable/grabbing.cur'), default",
                         cursorOffset: {
                             top: -10,
                             left: -230
@@ -75,7 +74,7 @@
                     margin: 0;
                     color: #666;
                     font-size: 1.2em;
-                    cursor: url('../content/web/sortable/grab.cur'), default;
+                    cursor: move;
                 }
 
                 li.sortable:last-child {

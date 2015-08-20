@@ -24,7 +24,6 @@
                 $(document).ready(function() {
                     $("#sortable-left").kendoSortable({
                         connectWith: "#sortable-right",
-                        cursor: "url('../content/web/sortable/grabbing.cur'), default",
                         hint: function(element) {
                             return element.clone().addClass("hint");
                         },
@@ -40,7 +39,6 @@
 
                     $("#sortable-right").kendoSortable({
                         connectWith: "#sortable-left",
-                        cursor: "url('../content/web/sortable/grabbing.cur'), default",
                         hint: function(element) {
                             return element.clone().addClass("hint");
                         },
@@ -121,7 +119,7 @@
                     color: #ffffff;
                     border: 1px solid transparent;
                     border-radius: 4px;
-                    cursor: url('../content/web/sortable/grab.cur'), default;
+                    cursor: move;
                 }
 
                 .list-left {
