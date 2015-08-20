@@ -2031,6 +2031,15 @@
         "meta": {
             "kendo-ui": "This demo shows how built-in UI virtualization for highly optimized binding to large data sets is enabled in KendoGrid widget. Demo source code helps you reproduce and utilize the functionality."
         },
+        "group": {
+           "kendo-ui": "Scrolling",
+           "aspnet-mvc": "Scrolling",
+           "jsp-ui": "Scrolling",
+           "php-ui": "Scrolling" 
+          },
+        "description": {
+          "kendo-ui": "<p>There are cases when you may need to operate with large amount of data in the grid, and fetching and processing this data at once would impose a performance penalty due to limited browser resources. </p> <p>Luckily, the Kendo UI grid has a solution called data virtualization that alleviates any slowdowns when operating with huge volumes of data. When enabled via the <strong>scrollable-&gt;virtual</strong> configuration option, it displays a vertical scrollbar for the grid content and renders only the number of items set via the<strong> pageSize</strong> property of the grid data source. After you drag the scrollbar and the pageSize is exceeded, it makes automatic requests to retrieve and render the next set of grid rows. </p> <p>Both local and remote data are supported with the grid virtualization feature, whereas in this demo the records are obtained locally.</p> <p>&nbsp;</p>" 
+        },
         "packages": [
           "!mvc"
         ]
@@ -2045,6 +2054,15 @@
         "meta": {
             "kendo-ui": "This sample shows how KendoGrid UI virtualization is enabled to remote data.",
             "aspnet-mvc": "This demo illustrates the virtualization of remote data in ASP.NET MVC Grid."
+        },
+        "group": {
+           "kendo-ui": "Scrolling",
+           "aspnet-mvc": "Scrolling",
+           "jsp-ui": "Scrolling",
+           "php-ui": "Scrolling" 
+          },
+        "description": {
+          "kendo-ui": "<p>There are cases when you may need to operate with large amount of data in the grid, and fetching and processing this data at once would impose a performance penalty due to limited browser resources. </p> <p>Luckily, the Kendo UI grid has a solution called data virtualization that alleviates any slowdowns when operating with huge volumes of data. When enabled via the <strong>scrollable-&gt;virtual</strong> configuration option, it displays a vertical scrollbar for the grid content and renders only the number of items set via the<strong> pageSize</strong> property of the grid data source. After you drag the scrollbar and the pageSize is exceeded, it makes automatic requests to retrieve and render the next set of grid rows. </p> <p>Both local and remote data are supported with the grid virtualization feature, whereas in this demo the records are obtained from a remote endpoint.</p> <p>&nbsp;</p>" 
         }
       },
       {
@@ -2268,6 +2286,15 @@
         "meta": {
             "kendo-ui": "This demo shows locked columns feature of KendoGrid control.",
             "aspnet-mvc": "Play with the demo for frozen columns functionality of Telerik ASP.NET MVC Grid."
+        },
+        "group": {
+           "kendo-ui": "Scrolling",
+           "aspnet-mvc": "Scrolling",
+           "jsp-ui": "Scrolling",
+           "php-ui": "Scrolling" 
+        },
+        "description": {
+          "kendo-ui": "<p>There are apps which require to display grids with large number of columns on limited screen estates, and making a small subset of them static when scrolling the rest horizontally to bring them in the viewable area. The concept of pinned columns is mostly known from MS Excel, and many users would like to utilize it in web context as well.</p> <p>The Kendo UI grid widget supports static/frozen columns by a single configuration setting. Simply set the <strong>locked</strong> attribute of the corresponding column to true, and this will bring the column in the locked columns group positioned on the left in the grid. Here locked columns are OrderID and ShipName, while the rest of the columns can be scrolled horizontally. </p>" 
         }
       },
       {
