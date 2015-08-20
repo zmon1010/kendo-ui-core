@@ -1799,7 +1799,7 @@
            "php-ui": "Data Binding" 
          },
          "description": {
-             "kendo-ui": "<p>There are situations when you would like to perform real-time updates for all users which start a session with your web app. <br /> <br /> This is when you can utilize SignalR and the Kendo UI DataSource. The latter supports signalr dialect by setting its <strong>type </strong>attribute and<strong> transport-&gt;signalr </strong>configuration.&nbsp; In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time (auto-refresh), also known under the term long polling.</p> <p>This is especially useful for web applications which require high-frequency updates, for instance chat apps, real-time gaming, etc. More on the SignalR support of the Kendo UI DataSource can be found <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.signalr\" target=\"_blank\">in this section of the docs.</a></p>"
+             "kendo-ui": "<p>There are situations when you would like to perform real-time updates for all users which start a session with your web app. <br /> <br /> This is when you can utilize SignalR and the Kendo UI DataSource. The latter supports signalr dialect by setting its <strong>type </strong>attribute and<strong> transport-&gt;signalr </strong>configuration.&nbsp; In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time on every page refresh, also known under the term long polling.</p> <p>This is especially useful for web applications which require high-frequency updates, for instance chat apps, real-time gaming, etc. More on the SignalR support of the Kendo UI DataSource can be found <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.signalr\" target=\"_blank\">in this section of the docs.</a></p>"
          },
         "packages": [
           "!jsp",
@@ -1822,7 +1822,7 @@
            "php-ui": "Data Binding" 
          },
          "description": {
-             "kendo-ui": "<p>There are situations when you would like to perform real-time updates for all users which start a session with your web app. <br /> <br /> This is when you can utilize WebSockets and the Kendo UI DataSource. The latter supports WebSockets by setting <strong>transport-&gt;push/read/update/destroy/create</strong> methods configuration for handling data requests in this way.&nbsp; In this way you tell the data source to use web sockets for transmitting and operating with data in real time (auto-refresh), also known under the term long polling.</p> <p>This is especially useful for web applications which require high-frequency updates, for instance chat apps, real-time gaming, etc. More on the WebSockets support of the Kendo UI Data Source can be found <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.push\" target=\"_blank\">in this section of the docs.</a></p>"
+             "kendo-ui": "<p>There are situations when you would like to perform real-time updates for all users which start a session with your web app. <br /> <br /> This is when you can utilize WebSockets and the Kendo UI DataSource. The latter supports WebSockets by setting <strong>transport-&gt;push/read/update/destroy/create</strong> methods configuration for handling data requests in this way.&nbsp; In this way you tell the data source to use web sockets for transmitting and operating with data in real time on every page refresh, also known under the term long polling.</p> <p>This is especially useful for web applications which require high-frequency updates, for instance chat apps, real-time gaming, etc. More on the WebSockets support of the Kendo UI Data Source can be found <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.push\" target=\"_blank\">in this section of the docs.</a></p>"
          },
         "packages": [
           "!mvc",
@@ -2081,7 +2081,10 @@
            "aspnet-mvc": "Functionality",
            "jsp-ui": "Functionality",
            "php-ui": "Functionality" 
-         }
+         },
+         "description": {
+          "kendo-ui": "<p>There are projects which require to display table data in hierarchical-like fashion, in order to visualize relations between parent and child records. <br /> <br /> This is where the Kendo UI grid hierarchy feature comes into play. To implement hierarchy with the grid widget, you need to wire its <strong>detailInit </strong>event and filter the records in the child table based on the parent key field value. Note that the <strong>e.data.[keyFieldValue]</strong> argument holds the actual key value from the parent record.</p> <p>Additional info about the detailInit event args is available in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#events-detailInit\">API docs</a>. </p>" 
+        }
       },
       {
         "text": "Server hierarchy",
@@ -4161,30 +4164,17 @@
         }
       },
       {
-        "text": "Column resizing",
-        "url": "gantt/column-resizing",
-        "new": "true",
-        "title": {
-            "kendo-ui": "Columns resizing in Kendo UI Gantt control | Kendo UI Web demo",
-            "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC Gantt"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the column resizing feature of the KendoGantt control.",
-            "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC Gantt."
-        }
-      },
-      {
-        "text": "Export to PDF",
-        "url": "gantt/pdf-export",
-        "title": {
-            "kendo-ui": "Exporting to PDF"
-        },
-        "meta": {
-            "kendo-ui": "Export Kendo UI gantt as PDF file"
-        },
-        "packages": [
-            "!offline"
-        ]
+          "text": "Export to PDF",
+          "url": "gantt/pdf-export",
+          "title": {
+              "kendo-ui": "Exporting to PDF"
+          },
+          "meta": {
+              "kendo-ui": "Export Kendo UI gantt as PDF file"
+          },
+          "packages": [
+              "!offline"
+          ]
       },
       {
         "text": "Resources",
@@ -5401,19 +5391,6 @@
         },
         "meta": {
             "kendo-ui": "Play with this Kendo UI ToolBar demo to learn how to include Kendo UI Editor widgets in the ToolBar."
-        }
-      },
-      {
-        "text": "Keyboard navigation",
-        "url": "toolbar/keyboard-navigation",
-        "new": "true",
-        "title": {
-            "kendo-ui": "Kendo UI ToolBar control | Keyboard support demo",
-            "aspnet-mvc": "ASP.NET MVC ToolBar control | Keyboard support demo"
-        },
-        "meta": {
-            "kendo-ui": "Look at the source code and play with the demo to find out more about the keyboard support feature in Kendo UI ToolBar.",
-            "aspnet-mvc": "Look at the source code and play with the demo to find out more about the keyboard support feature in ASP.NET MVC ToolBar."
         }
       },
       {
