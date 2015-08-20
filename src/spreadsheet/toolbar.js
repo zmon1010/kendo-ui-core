@@ -16,6 +16,7 @@
         [ "alignLeft", "alignCenter", "alignRight" ],
         [ "alignTop", "alignMiddle", "alignBottom" ],
         "textWrap",
+        "formatCells",
         [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ],
         "format",
         "mergeCells"
@@ -36,6 +37,7 @@
         formatDecreaseDecimal: { command: "AdjustDecimalsCommand", value: -1, iconClass: "decrease-decimal" },
         formatIncreaseDecimal: { command: "AdjustDecimalsCommand", value: +1, iconClass: "increase-decimal" },
         format:                { type: "format", property: "format", width: 100, overflow: "never" },
+        formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
         backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
         textColor:             { type: "colorPicker", property: "color", iconClass: "text" },
         mergeCells:            { type: "splitButton", command: "MergeCellCommand", value: "cells", showText: "overflow", iconClass: "merge-cells",
@@ -491,7 +493,7 @@
                         .data("instance", this);
         },
         open: function() {
-            kendo.spreadsheet.dialogs.open(this._dialogName, this.toolbar.range());
+            this.toolbar.trigger("openDialog", { name: this._dialogName });
         }
     }));
 
