@@ -24,8 +24,7 @@
         },
 
         options: {
-            name: "FormulaInput",
-            position: "relative"
+            name: "FormulaInput"
         },
 
         events: [
@@ -96,7 +95,6 @@
 
             this.element
                 .css({
-                    "position": this.options.position,
                     "top": rectangle.top + "px",
                     "left": rectangle.left + "px"
                 });
