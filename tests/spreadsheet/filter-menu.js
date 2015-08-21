@@ -73,4 +73,26 @@
 
         equal(filterHeaders.length, 0);
     });
+
+    /*
+
+    test("adds k-state-active to headers with applied filtering", function() {
+        var pane = createPane(0, 0);
+
+        var valueFilter = new kendo.spreadsheet.ValueFilter({ values: [3] });
+
+        sheet.range("A1:B5").filter([
+            { column: 0, filter: valueFilter },
+            { column: 1, filter: valueFilter }
+        ]);
+
+        pane._currentView = DUMMY_VIEW;
+
+        var filterHeaders = pane.renderFilterHeaders().children;
+
+        ok(filterHeaders[0].attr.className.indexOf("k-state-active") >= 0);
+        ok(filterHeaders[1].attr.className.indexOf("k-state-active") >= 0);
+    });
+
+    */
 })();
