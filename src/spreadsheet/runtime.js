@@ -38,13 +38,14 @@
     /* -----[ Context ]----- */
 
     var Context = Class.extend({
-        init: function Context(callback, formula, ss) {
+        init: function Context(callback, formula, ss, parent) {
             this.callback = callback;
             this.formula = formula;
             this.ss = ss;
             this.sheet = formula.sheet;
             this.row = formula.row;
             this.col = formula.col;
+            this.parent = parent;
         },
 
         resolve: function(val) {
@@ -74,26 +75,18 @@
         resolveCells: function(a, f) {
             var context = this, formulas = [];
 
-            if ((function loop(a){
+            (function loop(a){
                 for (var i = 0; i < a.length; ++i) {
                     var x = a[i];
                     if (x instanceof Ref) {
-                        if (!add(context.ss.getRefCells(x))) {
-                            context.resolve(new CalcError("CIRCULAR"));
-                            return true;
-                        }
+                        add(context.ss.getRefCells(x));
                     }
                     if (Array.isArray(x)) {
                         // make sure we resolve cells in literal matrices
-                        if (loop(x)) {
-                            return true;
-                        }
+                        loop(x);
                     }
                 }
-            })(a)) {
-                // some circular dep was detected, stop here.
-                return;
-            }
+            })(a);
 
             if (!formulas.length) {
                 return f.call(context);
@@ -107,15 +100,12 @@
                     if (!--pending) {
                         f.call(context);
                     }
-                });
+                }, context);
             }
             function add(a) {
                 for (var i = 0; i < a.length; ++i) {
                     var cell = a[i];
                     if (cell.formula) {
-                        if (cell.formula === context.formula) {
-                            return false;
-                        }
                         formulas.push(cell);
                     }
                 }
@@ -476,8 +466,9 @@
         clone: function(sheet, row, col) {
             return new Formula(this.refs, this.handler, this.print, sheet, row, col);
         },
-        exec: function(ss, callback) {
+        exec: function(ss, callback, parentContext) {
             var self = this;
+
             if ("value" in self) {
                 if (callback) {
                     callback(self.value);
@@ -486,26 +477,44 @@
                 if (callback) {
                     self.onReady.push(callback);
                 }
-                if (self.pending) {
-                    return;
-                }
-                self.pending = true;
-                if (!self.absrefs) {
-                    self.absrefs = self.refs.map(function(ref){
-                        return ref.absolute(this.row, this.col);
-                    }, self);
-                }
+
                 var ctx = new Context(function(val){
                     self.pending = false;
                     self.onReady.forEach(function(callback){
                         callback(val);
                     });
-                }, self, ss);
+                }, self, ss, parentContext);
+
+                // if the call chain leads back to this same formula, we have a circular dependency.
+                while (parentContext) {
+                    if (parentContext.formula === self) {
+                        self.pending = false;
+                        ctx.resolve(new CalcError("CIRCULAR"));
+                        return;
+                    }
+                    parentContext = parentContext.parent;
+                }
+
+                // pending is still useful for ASYNC formulas
+                if (self.pending) {
+                    return;
+                }
+                self.pending = true;
+
+                // compute and cache the absolute references
+                if (!self.absrefs) {
+                    self.absrefs = self.refs.map(function(ref){
+                        return ref.absolute(this.row, this.col);
+                    }, self);
+                }
+
+                // finally invoke the handler given to us by the compiler in calc.js
                 self.handler.call(ctx);
             }
         },
         reset: function() {
             this.onReady = [];
+            this.pending = false;
             delete this.value;
         },
         adjust: function(operation, start, delta) {
@@ -596,6 +605,9 @@
                     }
                 }
             }
+        },
+        toString: function() {
+            return this.print(this.row, this.col);
         }
     });
 

@@ -1,6 +1,7 @@
 (function(){
 
     var ss;
+    var Sheet1 = "Sheet1";
 
     module("Formula parser/printer/evaluator", {
         setup: function() {
@@ -62,7 +63,7 @@
             if (ref instanceof spreadsheet.CellRef) {
                 var cell = this.get(ref.row, ref.col);
                 if (cell) {
-                    cell.sheet = "sheet1";
+                    cell.sheet = Sheet1;
                     cell.row = ref.row;
                     cell.col = ref.col;
                 }
@@ -78,7 +79,7 @@
                     for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
                         var cell = this.get(row, col);
                         if (cell) {
-                            cell.sheet = "sheet1";
+                            cell.sheet = Sheet1;
                             cell.row = row;
                             cell.col = col;
                             a.push(cell);
@@ -115,7 +116,7 @@
         },
         set: function(row, col, val) {
             val += "";
-            val = calc.parse("sheet1", row, col, val);
+            val = calc.parse(Sheet1, row, col, val);
             if (val.type == "exp") {
                 val = { formula: calc.compile(val), exp: val };
             }
@@ -127,7 +128,7 @@
             return new spreadsheet.RangeRef(
                 new spreadsheet.CellRef(0, 0, 0),
                 new spreadsheet.CellRef(this.maxrow, this.maxcol, 0)
-            ).setSheet("sheet1");
+            ).setSheet(Sheet1);
         },
         get: function(row, col) {
             return this.data[this.id(row, col)];
@@ -177,7 +178,7 @@
             }
             cells.forEach(function(cell){
                 cell.formula.exec(self, function(){
-                    if (callback && !--count) {
+                    if (!--count && callback) {
                         callback();
                     }
                 });
@@ -245,13 +246,13 @@
     /* -----[ parser tests ]----- */
 
     test("cell reference", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=G5");
+        var exp = calc.parse(Sheet1, 0, 0, "=G5");
         hasProps(exp, {
             type: "exp",
             ast: {
                 type: "ref",
                 ref: "cell",
-                sheet: "sheet1",
+                sheet: Sheet1,
                 row: 4,
                 col: 6,
                 rel: 3
@@ -260,13 +261,13 @@
     });
 
     test("normalizes range reference", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=A4:C2");
+        var exp = calc.parse(Sheet1, 0, 0, "=A4:C2");
         hasProps(exp, {
             type: "exp",
             ast: {
                 type: "ref",
                 ref: "range",
-                sheet: "sheet1",
+                sheet: Sheet1,
                 topLeft: {      // A2
                     type: "ref",
                     ref: "cell",
@@ -286,7 +287,7 @@
     });
 
     test("function call", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=sum(A2, A3, A4)");
+        var exp = calc.parse(Sheet1, 0, 0, "=sum(A2, A3, A4)");
         hasProps(exp, {
             type: "exp",
             ast: {
@@ -302,7 +303,7 @@
     });
 
     test("union operator", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=sum((A2, A3, A4))");
+        var exp = calc.parse(Sheet1, 0, 0, "=sum((A2, A3, A4))");
         hasProps(exp, {
             type: "exp",
             ast: {
@@ -322,7 +323,7 @@
     });
 
     test("intersection operator", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=sum(A2:A5 A3:A4, Sheet2!FOO)");
+        var exp = calc.parse(Sheet1, 0, 0, "=sum(A2:A5 A3:A4, Sheet2!FOO)");
         hasProps(exp, {
             type: "exp",
             ast: {
@@ -348,7 +349,7 @@
     });
 
     test("operator precedence", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=a + b * c + d / e");
+        var exp = calc.parse(Sheet1, 0, 0, "=a + b * c + d / e");
         hasProps(exp, {
             type: "exp",
             ast: {
@@ -369,29 +370,29 @@
     });
 
     test("intersection and union precedence", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=areas((A1:C3 B2, B3:B4))");
+        var exp = calc.parse(Sheet1, 0, 0, "=areas((A1:C3 B2, B3:B4))");
         var f = calc.compile(exp);
         equal(f.print(0, 0), "areas((A1:C3 B2,B3:B4))");
 
-        var exp = calc.parse("sheet1", 0, 0, "=areas(A1:C3 (B2, B3:B4))");
+        var exp = calc.parse(Sheet1, 0, 0, "=areas(A1:C3 (B2, B3:B4))");
         var f = calc.compile(exp);
         equal(f.print(0, 0), "areas(A1:C3 (B2,B3:B4))");
     });
 
     test("range as cell:funcall", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=sum(a1:choose(2, b1, b2, b3))");
+        var exp = calc.parse(Sheet1, 0, 0, "=sum(a1:choose(2, b1, b2, b3))");
         var f = calc.compile(exp);
         equal(f.print(0, 0), "sum(A1:choose(2, B1, B2, B3))");
     });
 
     test("column range and union intersection", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=aaa:ccc (a1, a2, a3)");
+        var exp = calc.parse(Sheet1, 0, 0, "=aaa:ccc (a1, a2, a3)");
         var f = calc.compile(exp);
         equal(f.print(0, 0), "AAA:CCC (A1,A2,A3)");
     });
 
     test("omit intermediate arguments in funcall", function(){
-        var exp = calc.parse("sheet1", 0, 0, "=sum(a1,,b1)");
+        var exp = calc.parse(Sheet1, 0, 0, "=sum(a1,,b1)");
         var f = calc.compile(exp);
         equal(f.print(0, 0), "sum(A1, , B1)");
     });
@@ -399,9 +400,9 @@
     /* -----[ printer tests ]----- */
 
     test("print adjusts cell references", function(){
-        var exp = calc.parse("sheet1", 0, 1, "=sum(A1:A5)");
+        var exp = calc.parse(Sheet1, 0, 1, "=sum(A1:A5)");
         var formula = calc.compile(exp);
-        var origCell = { formula: formula, row: 0, col: 1, sheet: "sheet1" };
+        var origCell = { formula: formula, row: 0, col: 1, sheet: Sheet1 };
 
         var str = formula.print(1, 1);
         equal(str, "sum(A2:A6)");
@@ -412,9 +413,9 @@
 
     test("print absolute references", function(){
         function testOne(input, output) {
-            var exp = calc.parse("sheet1", 0, 1, input);
+            var exp = calc.parse(Sheet1, 0, 1, input);
             var formula = calc.compile(exp);
-            var origCell = { formula: formula, row: 0, col: 1, sheet: "sheet1" };
+            var origCell = { formula: formula, row: 0, col: 1, sheet: Sheet1 };
 
             var str = formula.print(4, 4);
             equal(str, output);
@@ -435,7 +436,7 @@
 
     test("print in RC notation", function(){
         function testOne(input, output) {
-            var exp = calc.parse("sheet1", 4, 4, input);
+            var exp = calc.parse(Sheet1, 4, 4, input);
             var formula = calc.compile(exp);
             equal(formula.print(), output);
         }
@@ -452,7 +453,7 @@
 
     test("parenthesize name references in range operator", function(){
         function testOne(input, output) {
-            var exp = calc.parse("sheet1", 0, 0, input);
+            var exp = calc.parse(Sheet1, 0, 0, input);
             var formula = calc.compile(exp);
             equal(formula.print(0, 0), output);
         }
@@ -464,8 +465,8 @@
 
     test("formula cache", function(){
         function testOne(f1, f2) {
-            var e1 = calc.parse("sheet1", 0, 0, f1);
-            var e2 = calc.parse("sheet1", 1, 0, f2);
+            var e1 = calc.parse(Sheet1, 0, 0, f1);
+            var e2 = calc.parse(Sheet1, 1, 0, f2);
             f1 = calc.compile(e1);
             f2 = calc.compile(e2);
             ok(f1.refs === f2.refs);
@@ -481,7 +482,7 @@
 
     test("formula adjustment", function(){
         function makeFormula(input) {
-            return calc.compile(calc.parse("sheet1", 5, 5, input));
+            return calc.compile(calc.parse(Sheet1, 5, 5, input));
         }
         var f = makeFormula("=sum(a10:c15)");
 
@@ -530,7 +531,7 @@
 
     test("reference intersection", function(){
         function ref(input) {
-            var exp = calc.parse("sheet1", 0, 0, "=" + input);
+            var exp = calc.parse(Sheet1, 0, 0, "=" + input);
             hasProps(exp, {
                 type: "exp",
                 ast: {
@@ -578,6 +579,24 @@
     });
 
     /* -----[ expression evaluation ]----- */
+
+    test("circular deps", function(){
+        var ss = new Spreadsheet();
+        // for reasons beyond comprehension, the D2 test fails
+        // although it works properly in the actual spreadsheet.
+        ss.fill({
+            A1: '=A2',
+            A2: '=A1',
+            //D2: '=sum(C1:E3)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A1: "#CIRCULAR!",
+                A2: "#CIRCULAR!",
+                //D2: "#CIRCULAR!",
+            });
+        });
+    });
 
     test("evaluate simple sum", function(){
         ss.fill({

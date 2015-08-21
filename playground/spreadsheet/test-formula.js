@@ -2,6 +2,20 @@ var spreadsheet = kendo.spreadsheet;
 var calc = spreadsheet.calc;
 var runtime = calc.runtime;
 
+runtime.defineFunction("asum", function(callback, timeout, numbers) {
+    var self = this;
+    setTimeout(function(){
+        var sum = 0;
+        numbers.forEach(function(num){
+            sum += num;
+        });
+        callback(sum);
+    }, timeout);
+}).argsAsync([
+    [ "timeout", "number" ],
+    [ "numbers", [ "collect", "number" ] ]
+]);
+
 function HOP(obj, key) {
     return Object.prototype.hasOwnProperty.call(obj, key);
 }
@@ -253,6 +267,11 @@ Spreadsheet.prototype = {
         return cellData;
     },
 
+    $: function(key) {
+        var ref = calc.parseReference(key);
+        return this._getCell("sheet1", ref.row, ref.col);
+    },
+
     _makeCell: function(row, col) {
         return new Spreadsheet.Cell();
     },
@@ -327,7 +346,7 @@ function increaseProps(object, start, n) {
 
 Spreadsheet.Cell = function(){};
 
-var SPREADSHEET = new Spreadsheet();
+var SS = new Spreadsheet();
 
 function makeElements(container) {
     var formulaDiv = $("<div class='formula'>&nbsp</div>").appendTo(container);
@@ -371,7 +390,7 @@ function withInput(input, f) {
 function _onFocus(ev) {
     withInput(this, function(input, sheet, sheetName, row, col){
         var formula = $(".formula", sheet);
-        var text = SPREADSHEET.getInputData(sheetName, row, col);
+        var text = SS.getInputData(sheetName, row, col);
         if (!text || !/\S/.test(text)) {
             text = "";
         }
@@ -382,18 +401,18 @@ function _onFocus(ev) {
 
 function _saveInput(input) {
     withInput(input, function(input, sheet, sheetName, row, col){
-        var x = SPREADSHEET.setInputData(sheetName, row, col, input.val());
-        SPREADSHEET.updateDisplay(sheetName, row, col);
-        SPREADSHEET.recalculate();
+        var x = SS.setInputData(sheetName, row, col, input.val());
+        SS.updateDisplay(sheetName, row, col);
+        SS.recalculate();
     });
 }
 
 function _onBlur(ev) {
-    _saveInput(this);
+    // _saveInput(this);
 }
 
 function _onChange(ev) {
-    // _saveInput(this);
+    _saveInput(this);
 }
 
 function _onKeyDown(ev) {
@@ -409,7 +428,7 @@ function _onKeyDown(ev) {
         } else if (ev.keyCode == 27) {
             // ESCAPE
             input
-                .val(SPREADSHEET.getInputData(sheetName, row, col))
+                .val(SS.getInputData(sheetName, row, col))
                 .select();
             ev.preventDefault();
         } else if (ev.keyCode == 37) {
@@ -440,7 +459,7 @@ function _onKeyDown(ev) {
             ev.preventDefault();
         } else if (ev.keyCode == 67 && ev.shiftKey && ev.ctrlKey) {
             // C-S-c
-            var cell = SPREADSHEET._getCell(sheetName, row, col);
+            var cell = SS._getCell(sheetName, row, col);
             if (!cell || !cell.exp) {
                 alert("No expression here");
             } else {
@@ -472,9 +491,9 @@ function _adjustCol(ev) {
     var sheet = $(td).closest(".sheet");
     var sheetName = sheet[0].id;
     if (ev.shiftKey) {
-        SPREADSHEET.deleteCols(sheetName, col, 1);
+        SS.deleteCols(sheetName, col, 1);
     } else {
-        SPREADSHEET.insertCols(sheetName, col, 1);
+        SS.insertCols(sheetName, col, 1);
     }
 }
 
@@ -486,10 +505,10 @@ function _adjustRow(ev) {
     var sheetName = sheet[0].id;
     if (ev.shiftKey) {
         $(tr).remove();
-        SPREADSHEET.deleteRows(sheetName, row, 1);
+        SS.deleteRows(sheetName, row, 1);
     } else {
         $(tr).clone().insertBefore(tr).find("input").val("").removeClass();
-        SPREADSHEET.insertRows(sheetName, row, 1);
+        SS.insertRows(sheetName, row, 1);
     }
 }
 
@@ -499,12 +518,12 @@ function fillElements(data) {
         $.each(data, function(key, val){
             var x = calc.parseReference(key);
             var input = _getInput(cont, x.row, x.col);
-            var x = SPREADSHEET.setInputData(sheet, x.row, x.col, val);
+            var x = SS.setInputData(sheet, x.row, x.col, val);
             input.val(x.display);
             input[0].className = "type-" + x.type;
         });
     });
-    SPREADSHEET.recalculate();
+    SS.recalculate();
 }
 
 // init
@@ -520,7 +539,34 @@ makeElements(".sheet");
 //     }
 // });
 
+false&&fillElements({
+    sheet1: {
+        A1: '=A2',
+        A2: '=A1',
+        D2: '=sum(C1:E3)',
+    }
+});
+
 fillElements({
+    sheet1: {
+        A1: '=ASUM(1000, C:E)',
+        A2: '=A1 * 2',
+        B1: '=B2',
+        B2: '=B1',
+
+        B3: '=B4',
+        B4: '=B5',
+        B5: '=B6',
+        B6: '=B7',
+        B7: '=B3',
+
+        C1: 1, C2: 2, C3: 3,
+        D1: 4, D2: 5, D3: 6,
+        E1: 7, E2: 8, E3: 9,
+    }
+});
+
+false&&fillElements({
     sheet1: {
         A1: 1,
         A2: 2,
@@ -733,6 +779,11 @@ fillElements({
         F9: 1303,
         F10: 1299,
         F11: '=stdev.s(F1:F10)',
+
+        G1: '=H1',
+        H1: '=G1',
+        G2: '=ASUM(500, 2, 3, 4)',
+        H2: '=G2*2',
     }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'
