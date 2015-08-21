@@ -2563,6 +2563,9 @@
         "meta": {
             "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI Grid"
         },
+        "description": {
+           "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI grid to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel instance </strong>(with <strong>kendo.observable</strong> call) which wraps the grid data source, and instantiate the grid, its attributes and binding definition using<strong> data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the grid, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter of the documentation</a>. </p>" 
+        },
         "packages": [
           "!mvc",
           "!jsp",
@@ -2577,6 +2580,9 @@
         },
         "meta": {
             "kendo-ui": "AngularJS directive support for Kendo UI Grid"
+        },
+        "description": {
+           "kendo-ui": "<p>The Kendo UI grid features inherent integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p>&nbsp;angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our grid for apps which could benefit from such integrations. Further, you can specify the grid options as a field in the $scope and then associate them via the options attribute of the grid Angular definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use the Kendo UI grid with AngularJS you can gather from <a href=\"http://docs.telerik.com/kendo-ui/AngularJS/the-grid-widget\" target=\"_blank\">this help resource</a>.</p>" 
         },
         "packages": [
           "!mvc",
