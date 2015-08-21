@@ -1,6 +1,6 @@
 #!/bin/sh
 
-git clean -dfx src styles dist demos wrappers
+git clean -dfx src styles dist demos wrappers node_modules
 
 npm install
 bundle --without development --path ~/gems
