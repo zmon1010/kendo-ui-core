@@ -176,6 +176,17 @@
         equal(selectedHeaders.allCols, true);
     });
 
+    function find(classTestRe, children) {
+        for (var i = 0; i < children.length; i++) {
+            if (classTestRe.test(children[i].attr.className)) {
+                return children[i];
+            }
+        }
+    }
+
+    var rowHeader = $.proxy(find, null, /k-spreadsheet-row-header/);
+    var columnHeader = $.proxy(find, null, /k-spreadsheet-column-header/);
+
     test("visually selects the FULL headers for range and cell", function() {
         var pane = createPane(0, 0, 100, 100);
 
@@ -183,8 +194,8 @@
 
         var tables = pane.render(1000, 1000).children;
 
-        var rowHeaderCells = tables[3].children[1].children;
-        var colHeaderCells = tables[4].children[1].children[0].children;
+        var rowHeaderCells = rowHeader(tables).children[1].children;
+        var colHeaderCells = columnHeader(tables).children[1].children[0].children;
 
         equal(rowHeaderCells[0].children[0].attr.className, PARTIAL);
         equal(rowHeaderCells[1].children[0].attr.className, PARTIAL);
@@ -202,8 +213,8 @@
 
         var tables = pane.render(1000, 1000).children;
 
-        var rowHeaderCells = tables[3].children[1].children;
-        var colHeaderCells = tables[4].children[1].children[0].children;
+        var rowHeaderCells = rowHeader(tables).children[1].children;
+        var colHeaderCells = columnHeader(tables).children[1].children[0].children;
 
         equal(rowHeaderCells[2].children[0].attr.className, PARTIAL);
         equal(rowHeaderCells[3].children[0].attr.className, PARTIAL);
@@ -226,8 +237,8 @@
 
         var tables = pane.render(1000, 1000).children;
 
-        var rowHeaderCells = tables[3].children[1].children;
-        var colHeaderCells = tables[4].children[1].children[0].children;
+        var rowHeaderCells = rowHeader(tables).children[1].children;
+        var colHeaderCells = columnHeader(tables).children[1].children[0].children;
 
         equal(rowHeaderCells[2].children[0].attr.className, PARTIAL);
         equal(rowHeaderCells[3].children[0].attr.className, FULL);
@@ -248,8 +259,8 @@
 
         var tables = pane.render(1000, 1000).children;
 
-        var rowHeaderCells = tables[3].children[1].children;
-        var colHeaderCells = tables[4].children[1].children[0].children;
+        var rowHeaderCells = rowHeader(tables).children[1].children;
+        var colHeaderCells = columnHeader(tables).children[1].children[0].children;
 
         //col C is FULL => all rowHeaders should be PARTIAL
         for (var i = 0; i < colHeaderCells.length; i++) {

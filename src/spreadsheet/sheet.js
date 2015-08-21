@@ -368,6 +368,23 @@
             });
         },
 
+        forEachFilterHeader: function(ref, callback) {
+            var selectAll = false;
+
+            if (typeof callback === "undefined") {
+                callback = ref;
+                selectAll = true;
+            }
+
+            if (this._filter) {
+                this._filter.ref.forEachColumn(function(columnRef) {
+                    if (selectAll || columnRef.intersects(ref)) {
+                        callback(columnRef.topLeft);
+                    }
+                });
+            }
+        },
+
         forEach: function(ref, callback) {
             var topLeft = this._grid.normalize(ref.topLeft);
             var bottomRight = this._grid.normalize(ref.bottomRight);
@@ -786,9 +803,14 @@
                 }
 
                 columns.forEach(function(column) {
-                    var columnRef = ref.toColumn(column.index);
+                    // do not filter header row
+                    var columnRef = ref.toColumn(column.index).resize({ top: 1 });
 
                     var cells = [];
+
+                    if (columnRef === kendo.spreadsheet.NULLREF) {
+                        return;
+                    }
 
                     this.forEach(columnRef, function(row, col, cell) {
                         cell.row = row;
@@ -812,6 +834,9 @@
                     columns: columns
                 };
             }, { layout: true });
+        },
+        filter: function() {
+            return this._filter;
         },
         clearFilter: function(spec) {
             this._clearFilter(spec instanceof Array ? spec : [spec]);

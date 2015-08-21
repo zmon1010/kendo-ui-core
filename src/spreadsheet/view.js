@@ -16,6 +16,7 @@
         cellEditor: "k-spreadsheet-cell-editor",
         editor: "k-spreadsheet-editor",
         topCorner: "k-spreadsheet-top-corner",
+        filterHeadersWrapper: "k-filter-headers",
         filterButton: "k-spreadsheet-filter",
         icon: "k-icon k-font-icon",
         iconFilterDefault: "k-i-arrow-s",
@@ -60,20 +61,6 @@
             value.size || "1px",
             value.color || "#000"
         ].join(" ");
-    }
-
-    function filterButton() {
-        function icon(className) {
-            return kendo.dom.element("span", { className: viewClassNames.icon + " " + className });
-        }
-
-        var button = kendo.dom.element(
-            "a",
-            { href: "#", className: "k-link " + viewClassNames.filterButton },
-            [ icon(viewClassNames.iconFilterDefault) ]
-        );
-
-        return button;
     }
 
     function addCell(table, row, cell) {
@@ -165,11 +152,6 @@
         if (cell.format && cell.value !== null) {
             var formatter = kendo.spreadsheet.formatting.compile(cell.format);
             td.children[0] = formatter(cell.value);
-        }
-
-        // check if cell is filter controller
-        if (cell.filterController) {
-            td.children.push(filterButton());
         }
 
         return td;
@@ -690,6 +672,8 @@
 
             children.push(this.renderSelection());
 
+            children.push(this.renderFilterHeaders());
+
             var selectedHeaders = sheet.selectedHeaders();
 
             if (grid.hasRowHeader) {
@@ -786,10 +770,47 @@
             return kendo.dom.element("div", { className: classNames.mergedCellsWrapper }, mergedCells);
         },
 
+        renderFilterHeaders: function() {
+            var sheet = this._sheet;
+            var filterIcons = [];
+            var classNames = View.classNames;
+
+            function icon(className) {
+                return kendo.dom.element("span", {
+                    className: classNames.icon + " " + className
+                });
+            }
+
+            function filterButton(classNames, rect) {
+                var BUTTON_SIZE = 16;
+                var style = {
+                    left: rect.left + rect.width - BUTTON_SIZE - 3 + "px",
+                    top: rect.top + (rect.height - BUTTON_SIZE) / 2 + "px"
+                };
+
+                var button = kendo.dom.element(
+                    "a",
+                    { href: "#", className: "k-link " + classNames.filterButton, style: style },
+                    [ icon(classNames.iconFilterDefault) ]
+                );
+
+                return button;
+            }
+
+            sheet.forEachFilterHeader(this._currentView.ref, function(ref) {
+                var rect = this._rectangle(ref);
+                var button = filterButton(classNames, rect);
+
+                filterIcons.push(button);
+            }.bind(this));
+
+            return kendo.dom.element("div", { className: classNames.filterHeadersWrapper }, filterIcons);
+
+        },
+
         renderSelection: function() {
             var classNames = Pane.classNames;
             var selections = [];
-            var grid = this._grid;
             var sheet = this._sheet;
             var view = this._currentView;
             var activeCell = sheet.activeCell().toRangeRef();
