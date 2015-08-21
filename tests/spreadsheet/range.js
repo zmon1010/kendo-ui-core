@@ -2,6 +2,7 @@
     var sheet;
     var defaults = kendo.ui.Spreadsheet.prototype.options;
     var range;
+    var oldTextHeight = kendo.spreadsheet.util.getTextHeight;
 
     module("Sheet API", {
         setup: function() {
@@ -10,6 +11,8 @@
         },
         teardown: function() {
             sheet.unbind();
+
+            kendo.spreadsheet.util.getTextHeight = oldTextHeight;
         }
     });
 

@@ -1,12 +1,15 @@
 (function() {
     var sheet;
     var defaults = kendo.ui.Spreadsheet.prototype.options;
+    var oldTextHeight = kendo.spreadsheet.util.getTextHeight;
     var moduleOptions = {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(4, 4, defaults.rowHeight, defaults.columnWidth);
         },
         teardown: function() {
             sheet.unbind();
+
+            kendo.spreadsheet.util.getTextHeight = oldTextHeight;
         }
     };
 
@@ -650,9 +653,7 @@
     var TextWrapCommand = $.proxy(command, this, kendo.spreadsheet.TextWrapCommand);
 
     test("Expands the row height", function() {
-        kendo.spreadsheet.util.getTextHeight = function() {
-            return 50;
-        };
+        kendo.spreadsheet.util.getTextHeight = function() { return 50; };
 
         var command = TextWrapCommand({ value: true });
         command.exec();
@@ -661,9 +662,7 @@
     });
 
     test("Undo collapses the row height", function() {
-        kendo.spreadsheet.util.getTextHeight = function() {
-            return 50;
-        };
+        kendo.spreadsheet.util.getTextHeight = function() { return 50; };
 
         var command = TextWrapCommand({ value: true });
         command.exec();
