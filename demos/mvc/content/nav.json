@@ -2274,6 +2274,9 @@
            "aspnet-mvc": "Functionality",
            "jsp-ui": "Functionality",
            "php-ui": "Functionality" 
+         },
+         "description": {
+           "kendo-ui": "<p>This example demonstrates how to enable sorting for the Kendo UI grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>sortable </strong>grid attribute. Supported sorting modes are single and multiple.</p> <p>Check the relevant <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-sortable\" target=\"_blank\">sorting API section</a> for more details.</p>"
          }
       },
       {
@@ -2292,6 +2295,9 @@
            "aspnet-mvc": "Functionality",
            "jsp-ui": "Functionality",
            "php-ui": "Functionality" 
+         },
+         "description": {
+           "kendo-ui": "<p>There are situations when you would like to enable the end user to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The Kendo UI grid supports selection by specifying its configuration via its selectable attribute. Accepted values are:</p> <ul> <li>true (enables row selection)</li> <li>row</li> <li>cell</li> <li>multiple, row</li> <li>multiple, cell</li> </ul> <p>Further details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-selectable\" target=\"_blank\">selectable API section</a> of the docs.</p>"
          }
       },
       {
