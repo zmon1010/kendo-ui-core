@@ -50,9 +50,9 @@
                                     { command: "MergeCellCommand", value: "vertically",   name: "mergeVertically", iconClass: "merge-vertically" },
                                     { command: "MergeCellCommand", value: "unmerge",      name: "unmerge", iconClass: "normal-layout" }
                                  ] },
-        borders:               { type: "borders", overflow: "never" },
-        fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
-        fontSize:              { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
+        borders:               { type: "borders", iconClass: "all-borders" },
+        fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, iconClass: "text" },
+        fontSize:              { type: "fontSize", property: "fontSize", width: 60, iconClass: "font-size" },
         copy:                  { command: "CopyCommand", iconClass: "copy" },
         paste:                 { command: "PasteCommand", iconClass: "paste" },
         separator:             { type: "separator" }
@@ -84,8 +84,7 @@
                         showText: "overflow"
                     },
                     colorPicker: {
-                        toolIcon: spriteCssClass,
-                        overflow: "never"
+                        toolIcon: spriteCssClass
                     }
                 };
 
@@ -164,7 +163,12 @@
                 formatPercentage: "Percentage",
                 formatDecreaseDecimal: "Decrease decimal",
                 formatIncreaseDecimal: "Increase decimal",
-                textWrap: "Wrap text"
+                textWrap: "Wrap text",
+                fontFamily: "Font",
+                fontSize: "Font size",
+                borders: "Borders",
+                textColor: "Text Color",
+                backgroundColor: "Background"
             }
         },
         openDialog: function(popupName) {
@@ -255,108 +259,6 @@
         }
     });
 
-    var colorPicker = kendo.toolbar.Item.extend({
-        init: function(options, toolbar) {
-            var colorPicker = $("<input />").kendoColorPicker({
-                palette: [ //metro palette
-                    "#ffffff", "#000000", "#d6ecff", "#4e5b6f", "#7fd13b", "#ea157a", "#feb80a", "#00addc", "#738ac8", "#1ab39f",
-                    "#f2f2f2", "#7f7f7f", "#a7d6ff", "#d9dde4", "#e5f5d7", "#fad0e4", "#fef0cd", "#c5f2ff", "#e2e7f4", "#c9f7f1",
-                    "#d8d8d8", "#595959", "#60b5ff", "#b3bcca", "#cbecb0", "#f6a1c9", "#fee29c", "#8be6ff", "#c7d0e9", "#94efe3",
-                    "#bfbfbf", "#3f3f3f", "#007dea", "#8d9baf", "#b2e389", "#f272af", "#fed46b", "#51d9ff", "#aab8de", "#5fe7d5",
-                    "#a5a5a5", "#262626", "#003e75", "#3a4453", "#5ea226", "#af0f5b", "#c58c00", "#0081a5", "#425ea9", "#138677",
-                    "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
-                ],
-                toolIcon: options.toolIcon,
-                change: this._colorChange.bind(this)
-            }).data("kendoColorPicker");
-
-            this.colorPicker = colorPicker;
-            this.element = colorPicker.wrapper;
-            this.options = options;
-            this.toolbar = toolbar;
-
-            this.element.attr({
-                "data-command": "PropertyChangeCommand",
-                "data-property": options.property
-            });
-
-            this.element.data({
-                type: "colorPicker",
-                colorPicker: this
-            });
-        },
-
-        _colorChange: function(e) {
-            this.toolbar.execute(new PropertyChangeCommand({
-                property: this.options.property,
-                value: e.sender.value()
-            }));
-        },
-
-        update: function(value) {
-            this.value(value);
-        },
-
-        value: function(value) {
-            if (value !== undefined) {
-                this.colorPicker.value(value);
-            } else {
-                return this.colorPicker.value();
-            }
-        }
-    });
-
-    kendo.toolbar.registerComponent("colorPicker", colorPicker);
-
-    var FONT_SIZES = [8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
-    var DEFAULT_FONT_SIZE = 12;
-
-    var fontSize = kendo.toolbar.Item.extend({
-        init: function(options, toolbar) {
-            var comboBox = $("<input />").kendoComboBox({
-                change: this._valueChange.bind(this),
-                dataSource: options.fontSizes || FONT_SIZES,
-                value: DEFAULT_FONT_SIZE
-            }).data("kendoComboBox");
-
-            this.comboBox = comboBox;
-            this.element = comboBox.wrapper;
-            this.options = options;
-            this.toolbar = toolbar;
-
-            this.element.width(options.width).attr({
-                "data-command": "PropertyChangeCommand",
-                "data-property": options.property
-            });
-
-            this.element.data({
-                type: "fontSize",
-                fontSize: this
-            });
-        },
-
-        _valueChange: function(e) {
-            this.toolbar.execute(new PropertyChangeCommand({
-                property: this.options.property,
-                value: kendo.parseInt(e.sender.value()) + "px"
-            }));
-        },
-
-        update: function(value) {
-            this.value(kendo.parseInt(value) || DEFAULT_FONT_SIZE);
-        },
-
-        value: function(value) {
-            if (value !== undefined) {
-                this.comboBox.value(value);
-            } else {
-                return this.comboBox.value();
-            }
-        }
-    });
-
-    kendo.toolbar.registerComponent("fontSize", fontSize);
-
     var DropDownTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             var dropDownList = $("<select />").kendoDropDownList({
@@ -425,10 +327,162 @@
         }
     });
 
+    kendo.toolbar.registerComponent("dialog", kendo.toolbar.ToolBarButton.extend({
+        init: function(options, toolbar) {
+            kendo.toolbar.ToolBarButton.fn.init.call(this, options, toolbar);
+
+            this._dialogName = options.dialogName;
+
+            this.element.bind("click", this.open.bind(this))
+                        .data("instance", this);
+        },
+        open: function() {
+            this.toolbar.openDialog(this._dialogName);
+        }
+    }));
+
+    var OverflowDialogButton = kendo.toolbar.OverflowButton.extend({
+        init: function(options, toolbar) {
+            kendo.toolbar.OverflowButton.fn.init.call(this, options, toolbar);
+
+            this.element.children("a").append('<span class="k-sprite k-icon k-font-icon k-i-arrow-e"></span>');
+            this.element.on("click", this._click.bind(this));
+        },
+        _click: $.noop
+    });
+
+    var ColorPicker = kendo.toolbar.Item.extend({
+        init: function(options, toolbar) {
+            var colorPicker = $("<input />").kendoColorPicker({
+                palette: [ //metro palette
+                    "#ffffff", "#000000", "#d6ecff", "#4e5b6f", "#7fd13b", "#ea157a", "#feb80a", "#00addc", "#738ac8", "#1ab39f",
+                    "#f2f2f2", "#7f7f7f", "#a7d6ff", "#d9dde4", "#e5f5d7", "#fad0e4", "#fef0cd", "#c5f2ff", "#e2e7f4", "#c9f7f1",
+                    "#d8d8d8", "#595959", "#60b5ff", "#b3bcca", "#cbecb0", "#f6a1c9", "#fee29c", "#8be6ff", "#c7d0e9", "#94efe3",
+                    "#bfbfbf", "#3f3f3f", "#007dea", "#8d9baf", "#b2e389", "#f272af", "#fed46b", "#51d9ff", "#aab8de", "#5fe7d5",
+                    "#a5a5a5", "#262626", "#003e75", "#3a4453", "#5ea226", "#af0f5b", "#c58c00", "#0081a5", "#425ea9", "#138677",
+                    "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
+                ],
+                toolIcon: options.toolIcon,
+                change: this._colorChange.bind(this)
+            }).data("kendoColorPicker");
+
+            this.colorPicker = colorPicker;
+            this.element = colorPicker.wrapper;
+            this.options = options;
+            this.toolbar = toolbar;
+
+            this.attributes();
+            this.addUidAttr();
+            this.addOverflowAttr();
+
+            this.element.attr({
+                "data-command": "PropertyChangeCommand",
+                "data-property": options.property
+            });
+
+            this.element.data({
+                type: "colorPicker",
+                colorPicker: this
+            });
+        },
+
+        _colorChange: function(e) {
+            this.toolbar.execute(new PropertyChangeCommand({
+                property: this.options.property,
+                value: e.sender.value()
+            }));
+        },
+
+        update: function(value) {
+            this.value(value);
+        },
+
+        value: function(value) {
+            if (value !== undefined) {
+                this.colorPicker.value(value);
+            } else {
+                return this.colorPicker.value();
+            }
+        }
+    });
+
+    var ColorPickerButton = OverflowDialogButton.extend({
+        init: function(options, toolbar) {
+            options.iconName = "text";
+            OverflowDialogButton.fn.init.call(this, options, toolbar);
+        },
+        _click: function(e) {
+            //TODO colorPicker dialog
+            //this.toolbar.openDialog("formatCells");
+        }
+    });
+
+    kendo.toolbar.registerComponent("colorPicker", ColorPicker, ColorPickerButton);
+
+    var FONT_SIZES = [8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
+    var DEFAULT_FONT_SIZE = 12;
+
+    var FontSize = kendo.toolbar.Item.extend({
+        init: function(options, toolbar) {
+            var comboBox = $("<input />").kendoComboBox({
+                change: this._valueChange.bind(this),
+                dataSource: options.fontSizes || FONT_SIZES,
+                value: DEFAULT_FONT_SIZE
+            }).data("kendoComboBox");
+
+            this.comboBox = comboBox;
+            this.element = comboBox.wrapper;
+            this.options = options;
+            this.toolbar = toolbar;
+
+            this.attributes();
+            this.addUidAttr();
+            this.addOverflowAttr();
+
+            this.element.width(options.width).attr({
+                "data-command": "PropertyChangeCommand",
+                "data-property": options.property
+            });
+
+            this.element.data({
+                type: "fontSize",
+                fontSize: this
+            });
+        },
+
+        _valueChange: function(e) {
+            this.toolbar.execute(new PropertyChangeCommand({
+                property: this.options.property,
+                value: kendo.parseInt(e.sender.value()) + "px"
+            }));
+        },
+
+        update: function(value) {
+            this.value(kendo.parseInt(value) || DEFAULT_FONT_SIZE);
+        },
+
+        value: function(value) {
+            if (value !== undefined) {
+                this.comboBox.value(value);
+            } else {
+                return this.comboBox.value();
+            }
+        }
+    });
+
+    var FontSizeButton = OverflowDialogButton.extend({
+        _click: function(e) {
+            //TODO fontSize dialog
+            //this.toolbar.openDialog("formatCells");
+        }
+    });
+
+    kendo.toolbar.registerComponent("fontSize", FontSize, FontSizeButton);
+
     var FONT_FAMILIES = ["Arial", "Courier New", "Georgia", "Times New Roman", "Trebuchet MS", "Verdana"];
     var DEFAULT_FONT_FAMILY = "Arial";
 
-    kendo.toolbar.registerComponent("fontFamily", DropDownTool.extend({
+    var FontFamily = DropDownTool.extend({
         init: function(options, toolbar) {
             DropDownTool.fn.init.call(this, options, toolbar);
 
@@ -444,76 +498,65 @@
         update: function(value) {
             this.value(value || DEFAULT_FONT_FAMILY);
         }
-    }));
+    });
 
-    kendo.toolbar.registerComponent(
-        "format", 
-        DropDownTool.extend({
-            _revertTitle: function(e) {
-                e.sender.value("");
-                e.sender.wrapper.width("auto");
-            },
-            init: function(options, toolbar) {
-                DropDownTool.fn.init.call(this, options, toolbar);
-
-                var ddl = this.dropDownList;
-                ddl.bind("change", this._revertTitle.bind(this));
-                ddl.bind("dataBound", this._revertTitle.bind(this));
-                ddl.setOptions({
-                    dataValueField: "format",
-                    dataValuePrimitive: true,
-                    valueTemplate: "123",
-                    template:
-                        "# if (data.sample) { #" +
-                            "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
-                        "# } #" +
-                        "#: data.name #"
-                });
-                ddl.setDataSource([
-                    { format: null, name: "Automatic" },
-                    { format: "?.00", name: "Number", sample: "1,499.99" },
-                    { format: "?.00%", name: "Percent", sample: "14.50%" },
-                    { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: "Financial", sample: "(1,000.12)" },
-                    { format: "$?", name: "Currency", sample: "$1,499.99" },
-                    { format: "m/d/yyyy", name: "Date", sample: "4/21/2012" },
-                    { format: "h:mm:ss AM/PM", name: "Time", sample: "5:49:00 PM" },
-                    { format: "m/d/yyyy h:mm", name: "Date time", sample: "4/21/2012 5:49:00" },
-                    { format: "[h]:mm:ss", name: "Duration", sample: "168:05:00" },
-                    { popup: "formatCells", name: "More formats..." }
-                ]);
-
-                this.element.data({
-                    type: "format",
-                    format: this
-                });
-            }
-        }),
-        kendo.toolbar.OverflowButton.extend({
-            init: function(options, toolbar) {
-                options.spriteCssClass = "k-icon k-font-icon k-i-percent";
-                kendo.toolbar.OverflowButton.fn.init.call(this, options, toolbar);
-
-                this.element.on("click", this._click.bind(this));
-            },
-            _click: function(e) {
-                this.toolbar.openDialog("formatCells");
-            }
-        })
-    );
-
-    kendo.toolbar.registerComponent("dialog", kendo.toolbar.ToolBarButton.extend({
-        init: function(options, toolbar) {
-            kendo.toolbar.ToolBarButton.fn.init.call(this, options, toolbar);
-
-            this._dialogName = options.dialogName;
-
-            this.element.bind("click", this.open.bind(this))
-                        .data("instance", this);
-        },
-        open: function() {
-            this.toolbar.openDialog(this._dialogName);
+    var FontFamilyButton = OverflowDialogButton.extend({
+        _click: function(e) {
+            //TODO fontSize dialog
+            //this.toolbar.openDialog("formatCells");
         }
-    }));
+    });
+
+    kendo.toolbar.registerComponent("fontFamily", FontFamily, FontFamilyButton);
+
+    var Format = DropDownTool.extend({
+        _revertTitle: function(e) {
+            e.sender.value("");
+            e.sender.wrapper.width("auto");
+        },
+        init: function(options, toolbar) {
+            DropDownTool.fn.init.call(this, options, toolbar);
+
+            var ddl = this.dropDownList;
+            ddl.bind("change", this._revertTitle.bind(this));
+            ddl.bind("dataBound", this._revertTitle.bind(this));
+            ddl.setOptions({
+                dataValueField: "format",
+                dataValuePrimitive: true,
+                valueTemplate: "123",
+                template:
+                    "# if (data.sample) { #" +
+                        "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
+                    "# } #" +
+                    "#: data.name #"
+            });
+            ddl.setDataSource([
+                { format: null, name: "Automatic" },
+                { format: "?.00", name: "Number", sample: "1,499.99" },
+                { format: "?.00%", name: "Percent", sample: "14.50%" },
+                { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: "Financial", sample: "(1,000.12)" },
+                { format: "$?", name: "Currency", sample: "$1,499.99" },
+                { format: "m/d/yyyy", name: "Date", sample: "4/21/2012" },
+                { format: "h:mm:ss AM/PM", name: "Time", sample: "5:49:00 PM" },
+                { format: "m/d/yyyy h:mm", name: "Date time", sample: "4/21/2012 5:49:00" },
+                { format: "[h]:mm:ss", name: "Duration", sample: "168:05:00" },
+                { popup: "formatCells", name: "More formats..." }
+            ]);
+
+            this.element.data({
+                type: "format",
+                format: this
+            });
+        }
+    });
+
+    var FormatButton = OverflowDialogButton.extend({
+        _click: function(e) {
+            this.toolbar.openDialog("formatCells");
+        }
+    });
+
+    kendo.toolbar.registerComponent("format", Format, FormatButton);
 
     var BorderChangeTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
@@ -526,6 +569,10 @@
 
             this.options = options;
             this.toolbar = toolbar;
+
+            this.attributes();
+            this.addUidAttr();
+            this.addOverflowAttr();
 
             this._popupElement();
             this._popup();
@@ -623,7 +670,14 @@
         }
     });
 
-    kendo.toolbar.registerComponent("borders", BorderChangeTool);
+    var BorderChangeButton = OverflowDialogButton.extend({
+        _click: function(e) {
+            //TODO fontSize dialog
+            //this.toolbar.openDialog("formatCells");
+        }
+    });
+
+    kendo.toolbar.registerComponent("borders", BorderChangeTool, BorderChangeButton);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 
