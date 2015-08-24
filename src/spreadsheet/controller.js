@@ -35,6 +35,8 @@
     var CONTAINER_EVENTS = {
         "wheel": "onWheel",
         "*+mousedown": "onMouseDown",
+        "*+rightmousedown": "onContextMenu",
+        "contextmenu": "prevent",
         "*+mousedrag": "onMouseDrag",
         "*+mouseup": "onMouseUp",
         "*+dblclick": "onDblClick"
@@ -91,6 +93,7 @@
             this.workbook(workbook);
             this.container = $(view.container);
             this.clipboardElement = $(view.clipboard);
+            this.cellContextMenu = view.cellContextMenu;
             this.scroller = view.scroller;
             this.formulaInput = view.formulaInput;
 
@@ -100,6 +103,21 @@
             this.inputKeyListener = new kendo.spreadsheet.EventListener(this.formulaInput.element, this, FORMULAINPUT_EVENTS);
 
             view.sheetsbar.bind("select", this.onSheetSelect.bind(this));
+
+            this.cellContextMenu.bind("select", function(e) {
+                var action = $(e.item).data("action");
+                switch(action) {
+                    case "cut":
+                        this.onCut();
+                        break;
+                    case "copy":
+                        this.onCopy();
+                        break;
+                    case "paste":
+                        this.onPaste();
+                        break;
+                }
+            }.bind(this));
         },
 
         onSheetSelect: function(e) {
@@ -192,6 +210,37 @@
             this._selectionMode = SELECTION_MODES[object.type];
             this.appendSelection = event.mod;
             this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
+        },
+
+        onContextMenu: function(event, action) {
+            var that = this;
+
+            event.preventDefault();
+
+            this.cellContextMenu.close();
+
+            var menu = this.cellContextMenu;
+
+            var location = { pageX: event.pageX, pageY: event.pageY };
+
+            var object = this.objectAt(location);
+
+            if (object.type === "cell") {
+                var sheet = this._workbook.activeSheet();
+
+                if (!sheet.select().intersects(object.ref)) {
+                    sheet.select(object.ref);
+                }
+            }
+
+            // avoid the immediate close
+            setTimeout(function() {
+                menu.open(event.pageX, event.pageY);
+            });
+        },
+
+        prevent: function(event) {
+            event.preventDefault();
         },
 
         onMouseDrag: function(event, action) {

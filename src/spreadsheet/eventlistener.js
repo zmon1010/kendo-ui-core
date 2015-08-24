@@ -56,7 +56,7 @@
             this._mousePressed = false;
 
             target.on("keydown", this.keyDownProxy);
-            target.on("mousedown cut copy paste scroll wheel click dblclick", this.mouseProxy);
+            target.on("contextmenu mousedown cut copy paste scroll wheel click dblclick", this.mouseProxy);
 
             $(document.documentElement).on("mousemove mouseup", this.mouseProxy);
 
@@ -72,14 +72,29 @@
         },
 
         mouse: function(e) {
+
+            var rightClick;
+
+            if (e.which) {
+                rightClick = (e.which == 3);
+            } else if (e.button) {
+                rightClick = (e.button == 2);
+            }
+
             var type = e.type;
 
             if (type === "mousedown") {
-                this._mousePressed = true;
+                if (rightClick) {
+                   type = "rightmousedown";
+                } else {
+                    this._mousePressed = true;
+                }
             }
 
             if (type === "mouseup") {
-                this._mousePressed = false;
+                if (!rightClick) {
+                    this._mousePressed = false;
+                }
             }
 
             if (type === "mousemove" && this._mousePressed) {

@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core" ], f);
+    define([ "../kendo.core", "../kendo.menu" ], f);
 })(function(){
 
 (function(kendo) {
@@ -22,7 +22,10 @@
         iconFilterDefault: "k-i-arrow-s",
         sheetsBar: "k-spreadsheet-sheets-bar",
         sheetsBarActive: "k-spreadsheet-sheets-bar-active",
-        sheetsBarInactive: "k-spreadsheet-sheets-bar-inactive"
+        sheetsBarInactive: "k-spreadsheet-sheets-bar-inactive",
+        cellContextMenu: "k-spreadsheet-cell-context-menu",
+        rowHeaderContextMenu: "k-spreadsheet-row-header-context-menu",
+        colHeaderContextMenu: "k-spreadsheet-col-header-context-menu"
     };
 
     function hasChanged(e, name) {
@@ -222,7 +225,19 @@
         }
     });
 
-    var VIEW_CONTENTS = kendo.template('<div class="#=classNames.view#"><div class="#=classNames.fixedContainer#"></div><div class="#=classNames.scroller#"><div class="#=classNames.viewSize#"></div></div><div tabindex="0" class="#=classNames.clipboard#" contenteditable=true></div><div class="#=classNames.cellEditor#"></div></div><div class="#=classNames.sheetsBar#"></div>');
+    var CELL_CONTEXT_MENU = '<ul class="#=classNames.cellContextMenu#">' +
+        '<li data-action=cut>Cut</li>' +
+        '<li data-action=copy>Copy</li>' +
+        '<li data-action=paste>Paste</li>' +
+    '</ul>';
+
+    var ROW_HEADER_CONTEXT_MENU = '<ul class="#=classNames.rowHeaderContextMenu#"><li>Row Item 1</li></ul>';
+    var COL_HEADER_CONTEXT_MENU = '<ul class="#=classNames.colHeaderContextMenu#"><li>Col Item 1</li></ul>';
+
+    var VIEW_CONTENTS = kendo.template('<div class="#=classNames.view#"><div class="#=classNames.fixedContainer#"></div><div class="#=classNames.scroller#"><div class="#=classNames.viewSize#"></div></div>' +
+        '<div tabindex="0" class="#=classNames.clipboard#" contenteditable=true></div><div class="#=classNames.cellEditor#"></div></div><div class="#=classNames.sheetsBar#"></div>' +
+        CELL_CONTEXT_MENU + ROW_HEADER_CONTEXT_MENU + COL_HEADER_CONTEXT_MENU
+    );
 
     function within(value, min, max) {
         return value >= min && value <= max;
@@ -254,6 +269,12 @@
             this.clipboardContents = new kendo.dom.Tree(this.clipboard[0]);
 
             this.sheetsbar = new kendo.spreadsheet.SheetsBar(element.find(DOT + classNames.sheetsBar), $.extend(true, this.options.sheetsbar));
+
+            this.cellContextMenu = new kendo.ui.ContextMenu(element.find(DOT + classNames.cellContextMenu), {
+                target: element,
+                animation: false,
+                showOn: "never" // this is just an invalid event name to prevent the show
+            });
 
             var scrollbar = kendo.support.scrollbar();
 
