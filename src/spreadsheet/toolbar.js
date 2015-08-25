@@ -345,7 +345,6 @@
         init: function(options, toolbar) {
             kendo.toolbar.OverflowButton.fn.init.call(this, options, toolbar);
 
-            this.element.children("a").append('<span class="k-sprite k-icon k-font-icon k-i-arrow-e"></span>');
             this.element.on("click", this._click.bind(this));
         },
         _click: $.noop
