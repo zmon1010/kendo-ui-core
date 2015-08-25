@@ -302,12 +302,26 @@
             return this.clipboardElement.html();
         },
 
-        onPaste: function(event, action) {
+        onPaste: function(e, action) {
+            //work in progress, move to clipboard
+            e.preventDefault();
+            var html, text;
+            if (e && e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
+                if (/text\/html/.test(e.originalEvent.clipboardData.types)) {
+                    html = e.originalEvent.clipboardData.getData('text/html');
+                }
+                if (/text\/plain/.test(e.originalEvent.clipboardData.types)) {
+                    text = e.originalEvent.clipboardData.getData('text/plain');
+                }
+            }
+            // debugger
+            this.clipboard.external(html || text);
             var command = new kendo.spreadsheet.PasteCommand({ workbook: this.view._workbook });
             this.view._workbook.execute(command);
         },
 
         onCopy: function(event, action) {
+            this.clipboard.internal(this.clipBoardValue()); //this should go to the clipboard class, ref to the clipboard element is needed
             var command = new kendo.spreadsheet.CopyCommand({ workbook: this.view._workbook });
             this.view._workbook.execute(command);
         },
