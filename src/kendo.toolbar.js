@@ -319,7 +319,7 @@ var __meta__ = { // jshint ignore:line
                     if (options.mobile) {
                         element.html('<span class="km-text">' + options.text + "</span>");
                     } else {
-                        element.html(options.text);
+                        element.html('<span class="k-text">' + options.text + "</span>");
                     }
                 }
 
