@@ -346,6 +346,11 @@
             kendo.toolbar.OverflowButton.fn.init.call(this, options, toolbar);
 
             this.element.on("click", this._click.bind(this));
+
+            this.message = this.options.text;
+
+            var instance = this.element.data("button");
+            this.element.data(this.options.type, instance);
         },
         _click: $.noop
     });
@@ -501,8 +506,11 @@
 
     var FontFamilyButton = OverflowDialogButton.extend({
         _click: function(e) {
-            //TODO fontSize dialog
-            //this.toolbar.openDialog("formatCells");
+            this.toolbar.openDialog("fontFamily", { fonts: FONT_FAMILIES, defaultFont: DEFAULT_FONT_FAMILY });
+        },
+        update: function(value) {
+            this._value = value || DEFAULT_FONT_FAMILY;
+            this.element.find(".k-text").text(this.message + " (" + this._value + ") ...");
         }
     });
 

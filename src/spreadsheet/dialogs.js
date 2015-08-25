@@ -353,5 +353,43 @@
 
     kendo.spreadsheet.dialogs.register("message", MessageDialog);
 
+    var FontFamilyDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+
+            this._list();
+        },
+        options: {
+            title: "Font",
+            template: "<ul class='k-list k-reset'></ul>"
+        },
+        _list: function() {
+            var ul = this.dialog().element.find("ul");
+            var fonts = this.options.fonts;
+            var defaultFont = this.options.defaultFont;
+
+            this.list = new kendo.ui.StaticList(ul, {
+                dataSource: new kendo.data.DataSource({ data: fonts }),
+                template: "#:data#",
+                value: defaultFont,
+                change: this.apply.bind(this)
+            });
+
+            this.list.dataSource.fetch();
+        },
+        apply: function(e) {
+            SpreadsheetDialog.fn.apply.call(this);
+
+            var command = new kendo.spreadsheet.PropertyChangeCommand({
+                property: "fontFamily",
+                value: e.sender.value()[0]
+            });
+
+            this.trigger("execute", { command: command });
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("fontFamily", FontFamilyDialog);
+
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

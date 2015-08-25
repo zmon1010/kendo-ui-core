@@ -217,4 +217,13 @@
         ok(toolbar.element.find("[data-tool=textWrap]").hasClass("k-state-active"));
     });
 
+    test("refreshes fontFamilty overflow button state", function() {
+        createWithTools([ "fontFamily" ]);
+
+        sheet.range("A1").fontFamily("Georgia");
+
+        var text = toolbar.popup.element.find("[data-tool=fontFamily] .k-text").text();
+        equal(text, "Font (Georgia) ...");
+    });
+
 })();

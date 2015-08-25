@@ -12,6 +12,7 @@
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
+            QUnit.fixture.empty();
         }
     };
 
@@ -167,5 +168,44 @@
         dialog.close();
     });
 
+    var wrapper;
+
+    module("FontFamiltyDialog", {
+        setup: function() {
+            moduleOptions.setup();
+
+            dialog = spreadsheet.openDialog("fontFamily", { fonts: ["foo", "bar"], defaultFont: "foo" });
+            list = dialog.dialog().wrapper.find("[data-role=staticlist]").data("kendoStaticList");
+        },
+        teardown: moduleOptions.teardown
+    });
+
+    test("initializes list with fonts", function() {
+        ok(list.dataSource.data().length);
+        ok(list.items().length);
+    });
+
+    test("has default value", function() {
+        ok(list.value().length);
+    });
+
+    test("list change event triggers PropertyChangeCommand", 3, function() {
+        dialog.one("execute", function(e) {
+            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
+            equal(e.command.options.property, "fontFamily");
+            equal(e.command.options.value, "bar");
+        });
+
+        list.value(["bar"]);
+        list.trigger("change");
+    });
+
+    test("close does not execute command", 0, function() {
+        dialog.one("execute", function(e) {
+            ok(false);
+        });
+
+        dialog.close();
+    });
 
 })();
