@@ -171,8 +171,8 @@
                 backgroundColor: "Background"
             }
         },
-        openDialog: function(popupName) {
-            this.trigger("openDialog", { name: popupName });
+        openDialog: function(popupName, options) {
+            this.trigger("openDialog", { name: popupName, options: options });
         },
         execute: function(command) {
             this.trigger("execute", { command: command });
