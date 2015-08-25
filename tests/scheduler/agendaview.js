@@ -155,7 +155,7 @@
         ]);
 
         var table = agenda.element.find(".k-scheduler-table");
-        equal(table.find("tr:has(td)").length, 7);
+        equal(table.find("tr:has(td)").length, 8);
     });
 
    test("agenda groups events having the same date", function() {
@@ -752,6 +752,21 @@
         var eventHeaderCell = timeHeaderCell.next();
 
         equal(eventHeaderCell.text(), "Event");
+    });
+
+    test("agenda renders a table rows for event which starts after the start and ends pass the end", function() {
+        var agenda = agendaView({ date: new Date("2015/8/21") });
+
+        agenda.render([
+            new Event({
+                start: new Date("2015/8/26 08:00 AM"),
+                end: new Date("2015/8/29 12:00 AM"),
+                title: "event title"
+            })
+        ]);
+
+        var table = agenda.element.find(".k-scheduler-table");
+        equal(table.find("tr:has(td)").length, 3);
     });
 
 })();

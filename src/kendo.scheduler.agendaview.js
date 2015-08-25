@@ -160,7 +160,7 @@ var __meta__ = {
                             task.middle = true;
                         }
 
-                        if (task.end <= this.endDate() && task.start >= this.startDate()) {
+                        if ((kendo.date.getDate(task.end) <= this.endDate() && task.start >= this.startDate()) || kendo.date.getDate(task.start).getTime() == this.endDate().getTime()) {
                             tasks.push(task);
                         }
                     }
