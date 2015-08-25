@@ -27,7 +27,7 @@
             var sheet = this.workbook.activeSheet();
             var ref = this.pasteRef();
             if(ref === kendo.spreadsheet.NULLREF) {
-                return this._external != undefined;
+                return this._external !== undefined;
             }
             return ref.eq(sheet.unionWithMerged(ref));
         },
@@ -57,7 +57,7 @@
                 var rows = [];
                 var cols = [];
                 content = JSON.parse(this._external);
-                for(key in content){
+                for (var key in content) {
                     var address = key.split(",");
                     rows.push(address[0]);
                     cols.push(address[1]);
