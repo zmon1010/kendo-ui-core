@@ -174,7 +174,8 @@ MVC_CONTENT = {
 
 {
     'VS2012' => { :bin => 'Release', :dll => MVC4_DLL, :demos => MVC_DEMOS },
-    'VS2013' => { :bin => 'Release-MVC5', :dll => MVC5_DLL, :demos => FileList[MVC_DEMOS].exclude('**/Web.config') }
+    'VS2013' => { :bin => 'Release-MVC5', :dll => MVC5_DLL, :demos => FileList[MVC_DEMOS].exclude('**/Web.config') },
+    'VS2015' => { :bin => 'Release-MVC5', :dll => MVC5_DLL, :demos => FileList[MVC_DEMOS].exclude('**/Web.config') }
 }.each do |key, value|
 
     ROOT_MAP.merge!( {
@@ -193,13 +194,13 @@ MVC_CONTENT = {
 end
 
 ROOT_MAP.merge!( {
-    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
-    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
+    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
+    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
 } )
 
 MVC_CONTENT.merge!( {
-    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => MVC_6_DEMOS,
-    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
+    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples" => MVC_6_DEMOS,
+    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
 } )
 
 JSP_CONTENT = {
@@ -438,7 +439,8 @@ bundle :name => 'aspnetmvc.trial',
        :demos => {
            :dir => [
                'wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/html',
-               'wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/html'
+               'wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/html',
+               'wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/html'
            ],
            :template_dir => 'mvc'
        },
@@ -535,7 +537,13 @@ bundle :name => 'aspnetmvc.trial',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Views/Web.config',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
-           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples.sln'
+           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples.sln',
+           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
+           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Web.config',
+           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Views/Web.config',
+           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
+           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
+           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples.sln'
        ]
 
 bundle :name => 'aspnetmvc.hotfix.trial',
@@ -586,7 +594,8 @@ bundle :name => 'aspnetmvc.commercial',
        :demos => {
            :dir => [
                'wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/html',
-               'wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/html'
+               'wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/html',
+               'wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/html'
            ],
            :template_dir => 'mvc'
        },
@@ -667,7 +676,13 @@ bundle :name => 'aspnetmvc.commercial',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Views/Web.config',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples.sln'
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples.sln',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Views/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples.sln'
        ]
 
 bundle :name => 'aspnetmvc.internal.commercial',

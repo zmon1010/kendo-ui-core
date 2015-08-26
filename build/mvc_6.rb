@@ -65,7 +65,7 @@ def update_nuget_reference name
 end
 
 def update_demo_deps bundle
-    root = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/VS2015/"
+    root = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/MVC6/"
 
     mkdir_p root
     cp 'wrappers/mvc-6/NuGet.config', root

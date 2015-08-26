@@ -277,13 +277,15 @@ namespace :mvc do
         end
 
         {
-            'Release-Trial' => 'VS2012',
-            'Release-MVC5-Trial' => 'VS2013'
+            'Release-Trial' => ['VS2012'],
+            'Release-MVC5-Trial' => ['VS2013', 'VS2015']
         }.each do |dir, vs|
             src = MVC_BIN_ROOT + dir + '/Kendo.*.dll'
-            dest = "dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/#{vs}/Kendo.Mvc.Examples/bin/"
-            mkdir_p dest
-            Dir.glob(src).each { |f| cp f, dest }
+            vs.each do |version|
+                dest = "dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/#{version}/Kendo.Mvc.Examples/bin/"
+                mkdir_p dest
+                Dir.glob(src).each { |f| cp f, dest }
+            end
         end
     end
 end
@@ -422,7 +424,7 @@ def patch_examples_csproj(t, vs)
     # fix the path to the nuget packages
     csproj.gsub!('..\\..\\packages', '..\\packages')
 
-    csproj = upgrade_project_to_vs2013(csproj) if vs == 'VS2013'
+    csproj = upgrade_project_to_vs2013(csproj) if vs == 'VS2013' || vs == 'VS2015'
 
     File.write(t.name, csproj)
 end
@@ -474,12 +476,17 @@ def patch_examples_solution(t, vs)
     sln.gsub!(/^$\n/, '')
 
     sln = upgrade_solution_to_vs2013(sln) if vs == 'VS2013'
+    sln = upgrade_solution_to_vs2015(sln) if vs == 'VS2015'
 
     File.write(t.name, sln)
 end
 
 def upgrade_solution_to_vs2013(sln)
     sln.sub('# Visual Studio 2012', "# Visual Studio 2013\nVisualStudioVersion = 12.0.21005.1\nMinimumVisualStudioVersion = 10.0.40219.1")
+end
+
+def upgrade_solution_to_vs2015(sln)
+    sln.sub('# Visual Studio 2012', "# Visual Studio 14\nVisualStudioVersion = 14.0.23107.0\nMinimumVisualStudioVersion = 10.0.40219.1")
 end
 
 def patch_solution t
@@ -503,7 +510,7 @@ end
 
 ['commercial', 'trial'].each do |license|
 
-    ['VS2012', 'VS2013'].each do |vs|
+    ['VS2012', 'VS2013', 'VS2015'].each do |vs|
 
         # Copy Kendo.Mvc.sln as Kendo.Mvc.Examples.sln
         file_copy :to => "dist/bundles/aspnetmvc.#{license}/wrappers/aspnetmvc/Examples/#{vs}/Kendo.Mvc.Examples.sln",
@@ -523,7 +530,7 @@ end
             patch_examples_csproj(t, vs)
         end
 
-        if vs == 'VS2013'
+        if vs == 'VS2013' || vs == 'VS2015'
 
             ['Web.config', 'Views/Web.config', 'Areas/aspx/Views/Web.config', 'Areas/razor/Views/Web.config'].each do |config|
 
