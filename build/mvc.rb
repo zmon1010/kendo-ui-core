@@ -351,7 +351,7 @@ else
              MVC3_DLL + MVC4_DLL + MVC5_DLL +
              MVC3_TRIAL_DLL + MVC4_TRIAL_DLL + MVC5_TRIAL_DLL +
              FileList['wrappers/mvc/**/*.dll']
-         ],
+         ].include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll'),
          :root => 'wrappers/mvc/'
 
     # MVC6 package
