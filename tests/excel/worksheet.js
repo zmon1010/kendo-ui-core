@@ -32,7 +32,7 @@ test("toXML creates a 'c' element for cells", function() {
     equal(dom.find("c").length, 1);
 });
 
-test("toXML sets the 'r' attribute to the A1 reference of a cell with implicit index", function() {
+test("toXML sets the 'r' attribute to the A1 reference of a cell", function() {
     var worksheet = Worksheet();
 
     var dom = $(worksheet.toXML());
@@ -40,7 +40,7 @@ test("toXML sets the 'r' attribute to the A1 reference of a cell with implicit i
     equal(dom.find("c").attr("r"), "A1");
 });
 
-test("toXML sets the 'r' attribute to the A1 reference of a cell with explicit index", function() {
+test("toXML sets the 'r' attribute to the A1 reference of a cell with index", function() {
     var worksheet = Worksheet([{
         cells: [{ index: 4 }]
     }]);
@@ -50,7 +50,7 @@ test("toXML sets the 'r' attribute to the A1 reference of a cell with explicit i
     equal(dom.find("c").attr("r"), "E1");
 });
 
-test("toXML exports only cells with data (mixed indicies)", function() {
+test("toXML exports only cells with data (mixed)", function() {
     var worksheet = Worksheet([{
         cells: [{ }, { index: 4 }]
     }]);
@@ -59,7 +59,7 @@ test("toXML exports only cells with data (mixed indicies)", function() {
     equal(dom.find("c").length, 2);
 });
 
-test("toXML exports only cells with data (explicit indicies)", function() {
+test("toXML exports only cells with data (indexed)", function() {
     var worksheet = Worksheet([{
         cells: [{ index: 1 }, { index: 4 }]
     }]);
@@ -68,46 +68,38 @@ test("toXML exports only cells with data (explicit indicies)", function() {
     equal(dom.find("c").length, 2);
 });
 
-test("toXML exports only cells with data (reversed explicit indicies)", function() {
+test("toXML exports only cells with data (indexed on multiple rows)", function() {
     var worksheet = Worksheet([{
-        cells: [{ index: 4 }, { index: 1 }]
-    }]);
-
-    var dom = $(worksheet.toXML());
-    equal(dom.find("c").length, 2);
-});
-
-test("toXML exports only cells with data (explicit indicies on multiple rows3)", function() {
-    var worksheet = Worksheet([{
-        cells: [{ index: 1 }, { index: 4 }]
+        cells: [{ index: 1 }, { index: 2 }]
     }, {
-        cells: [{ index: 4 }, { index: 1 }]
+        cells: [{ index: 1 }, { index: 2 }]
     }]);
 
     var dom = $(worksheet.toXML());
     equal(dom.find("c").length, 4);
 });
 
-test("toXML exports cells in order (explicit indicies)", function() {
+test("toXML exports cells in order (indexed)", function() {
     var worksheet = Worksheet([{
         cells: [{
+            index: 2,
+            value: 2
+        }, {
             index: 4,
             value: 4
-        }, {
-            index: 1,
-            value: 1
         }]
     }]);
 
     var dom = $(worksheet.toXML());
-    equal(dom.find("c[r=B1] v").text(), "1");
-    equal(dom.find("c[r=E1] v").text(), "4");
+    var cells = dom.find("c");
+    equal(cells.eq(0).attr("r"), "C1");
+    equal(cells.eq(1).attr("r"), "E1");
 });
 
-test("toXML continues implicit order", function() {
+test("toXML restarts index", function() {
     var worksheet = Worksheet([{
         cells: [{
-            index: 4,
+            index: 2,
             value: "Bar"
         }, {
             value: "Foo"
@@ -117,8 +109,8 @@ test("toXML continues implicit order", function() {
     var dom = $(worksheet.toXML());
     var cells = dom.find("c");
     equal(cells.length, 2);
-    equal(cells.eq(0).attr("r"), "B1");
-    equal(cells.eq(1).attr("r"), "E1");
+    equal(cells.eq(0).attr("r"), "C1");
+    equal(cells.eq(1).attr("r"), "D1");
 });
 
 test("toXML sets the tabSelected attribute to 1 if the sheet is first", function() {
@@ -365,7 +357,7 @@ test("toXML creates a 'row' element", function() {
     equal(dom.find("> sheetData > row").length, 1);
 });
 
-test("toXML sets the 'r' attribute to index plus one", function() {
+test("toXML sets the 'r' attribute", function() {
     var worksheet = Worksheet();
 
     var dom = $(worksheet.toXML());
@@ -373,7 +365,7 @@ test("toXML sets the 'r' attribute to index plus one", function() {
     equal(dom.find("row").attr("r"), "1");
 });
 
-test("toXML sets the 'r' attribute to explicit index plus one", function() {
+test("toXML sets the 'r' attribute to index plus one", function() {
     var worksheet = Worksheet({
         rows: [{
             height: 100,
@@ -750,6 +742,16 @@ test("toXML creates one mergeCell for a cell with both colSpan and rowSpan set",
     equal(dom.find("mergeCell").attr("ref"), "A1:B2");
 });
 
+test("toXML adjusts the index of cells after colspan", function() {
+    var worksheet = Worksheet([
+        { cells: [{ colSpan: 3 }, { index: 2 }] }
+    ]);
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("c:last").attr("r"), "E1");
+});
+
 test("toXML creates 'autoFilter' element when the filter option is set", function() {
     var worksheet = Worksheet({
         columns: [ {}, {}, {} ],
@@ -804,7 +806,6 @@ test("toXML offsets cells if first has merged rows", function() {
     });
 
     var xml = worksheet.toXML();
-    console.log(xml);
     var dom = $(xml);
     var cell1 = dom.find("row:eq(1) > c:eq(0)");
     var cell2 = dom.find("row:eq(1) > c:eq(1)");
@@ -1131,43 +1132,10 @@ test("toXML outputs empty data cells for continues cells with rowSpan", function
 
 test("toXML has no side effects", function() {
     var worksheet = Worksheet({
-        rows: [
-            {
-                "cells": [
-                    {"background":"#7a7a7a","color":"#fff","value":"","colSpan":4,"rowSpan":1},
-                    {"background":"#7a7a7a","color":"#fff","value":"dim 0","colSpan":1,"rowSpan":1}
-                ],
-                "type":"header"
-            }, {
-                "cells": [
-                    {"background":"#7a7a7a","color":"#fff","value":"dim 0","colSpan":1,"rowSpan":1},
-                    {"background":"#7a7a7a","color":"#fff","value":"dim 0_1","colSpan":1,"rowSpan":1},
-                    {"background":"#7a7a7a","color":"#fff","value":"dim 1","colSpan":2,"rowSpan":1},
-                    {"background":"#dfdfdf","color":"#333","value":"2","colSpan":1,"rowSpan":1}
-                ],
-                "type":"data"
-            }, {
-                "cells": [
-                    {"background":"#7a7a7a","color":"#fff","value":"dim 0","colSpan":2,"rowSpan":3},
-                    {"background":"#7a7a7a","color":"#fff","value":"dim 1","colSpan":1,"rowSpan":2},
-                    {"background":"#7a7a7a","color":"#fff","value":"dim 1_1","colSpan":1,"rowSpan":1},
-                    {"background":"#dfdfdf","color":"#333","value":"3","colSpan":1,"rowSpan":1}
-                ],
-                "type": "data"
-            }, {
-                "cells": [
-                    {"background":"#7a7a7a","color":"#fff","value":"dim 1_2","colSpan":1,"rowSpan":1},
-                    {"background":"#dfdfdf","color":"#333","value":"4","colSpan":1,"rowSpan":1}
-                ],
-                "type": "data"
-            }, {
-                "cells": [
-                    {"background":"#7a7a7a","color":"#fff","value":"dim 1","colSpan":2,"rowSpan":1},
-                    {"background":"#dfdfdf","color":"#333","value":"1","colSpan":1,"rowSpan":1}
-                ],
-                "type":"data"
-            }
-        ]
+        rows: [{
+            cells: [{ colSpan: 4, rowSpan: 2 },
+                    { colSpan: 1, rowSpan: 1 }]
+        }]
     });
 
     equal(worksheet.toXML(), worksheet.toXML());

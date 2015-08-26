@@ -338,39 +338,33 @@ var Worksheet = kendo.Class.extend({
         this.options = options;
         this._strings = sharedStrings;
         this._styles = styles;
-        this._mergeCells = [];
     },
     toXML: function(index) {
+        this._mergeCells = [];
+        this._rowsByIndex = [];
+
         var rows = this.options.rows || [];
-        var filter = this.options.filter;
-        var spans = {};
-
-        this._maxCellIndex = 0;
-
-        var data = [];
-
-        var sortedRows = this._rowsByIndex = [];
         for (var i = 0; i < rows.length; i++) {
-            //data.push(this._row(rows, spans, rows[i], i));
             var ri = rows[i].index;
             if (typeof ri !== "number") {
                 ri = i;
             }
 
             rows[i].index = ri;
-            sortedRows[ri] = rows[i];
+            this._rowsByIndex[ri] = rows[i];
         }
 
-        rows = rows.sort(function(a, b) {
-            if (a === b) {
-                throw new Exception("Duplicate row index " + a);
-            }
+        var data = [];
+        for (i = 0; i < rows.length; i++) {
+            data.push(this._row(rows[i], i));
+        }
 
-            return a.index - b.index;
-        });
-
-        for (var i = 0; i < rows.length; i++) {
-            data.push(this._row(spans, rows[i], i));
+        var filter = this.options.filter;
+        if (filter) {
+            filter = {
+                from: ref(filterRowIndex(this.options), filter.from),
+                to: ref(filterRowIndex(this.options), filter.to)
+            };
         }
 
         return WORKSHEET({
@@ -380,50 +374,37 @@ var Worksheet = kendo.Class.extend({
             data: data,
             index: index,
             mergeCells: this._mergeCells,
-            filter: filter ? { from: ref(filterRowIndex(this.options), filter.from), to: ref(filterRowIndex(this.options), filter.to) } : null
+            filter: filter
         });
     },
-    _row: function(spans, row) {
-        var cell;
+    _row: function(row) {
         var data = [];
-        var cells = row.cells;
-
+        var indexOffset = 0;
         var spanOffset = 0;
-        for (var j = 0; j < cells.length; j++) {
-            if (!cells[j]) {
-                continue;
+        var sheet = this;
+
+        var cellIndex;
+        $.each(row.cells, function(i, cell) {
+            if (!cell) {
+                return;
             }
 
-            var ci = cells[j].index;
-            if (typeof ci !== "number") {
-                ci = j;
+            if (typeof cell.index === "number") {
+                cellIndex = cell.index + spanOffset;
+                indexOffset = cellIndex - i;
+            } else {
+                cellIndex = i + spanOffset + indexOffset;
             }
 
-            ci += spanOffset;
-            if (cells[j].colSpan) {
-                spanOffset += cells[j].colSpan - 1;
+            if (cell.colSpan) {
+                spanOffset += cell.colSpan - 1;
             }
 
-            cells[j].index = ci;
-        }
-
-        row.cells = row.cells.sort(function(a, b) {
-            if (a === b) {
-                throw new Exception("Duplicate cell index " + a);
+            var cellData = sheet._cell(cell, row.index, cellIndex);
+            if (cellData) {
+                data.push.apply(data, cellData);
             }
-
-            return a.index - b.index;
         });
-
-        for (var idx = 0, length = cells.length; idx < length; idx ++) {
-            cell = this._cell(cells[idx], row.index);
-
-            if (cell) {
-                data.push.apply(data, cell);
-            }
-        }
-
-        var columnInfo;
 
         return {
             data: data,
@@ -462,12 +443,11 @@ var Worksheet = kendo.Class.extend({
         // There is one default style
         return index + 1;
     },
-    _cell: function(data, rowIndex) {
+    _cell: function(data, rowIndex, cellIndex) {
         if (!data) {
             return;
         }
 
-        var cellIndex = data.index;
         var value = data.value;
 
         var style = {
@@ -528,6 +508,7 @@ var Worksheet = kendo.Class.extend({
 
         var colSpan = data.colSpan || 1;
         var rowSpan = data.rowSpan || 1;
+        var ci;
 
         if (colSpan > 1 || rowSpan > 1) {
             this._mergeCells.push(cellRef + ":" + ref(rowIndex + rowSpan - 1, cellIndex + colSpan - 1));
@@ -537,14 +518,12 @@ var Worksheet = kendo.Class.extend({
                     this._rowsByIndex[ri] = { index: ri, cells: [] };
                 }
 
-                for (var ci = cellIndex; ci < cellIndex + colSpan; ci++) {
-                    this._rowsByIndex[ri].cells.splice(ci, 0, {
-                        index: ci
-                    });
+                for (ci = cellIndex; ci < cellIndex + colSpan; ci++) {
+                    this._rowsByIndex[ri].cells.splice(ci, 0, {});
                 }
             }
 
-            for (var ci = cellIndex + 1; ci < cellIndex + colSpan; ci++) {
+            for (ci = cellIndex + 1; ci < cellIndex + colSpan; ci++) {
                 cells.push({
                     ref: ref(rowIndex, ci)
                 });
