@@ -56,6 +56,12 @@ namespace Kendo.Mvc.UI.Html
             set;
         }
 
+        public IEnumerable<IGridColumn> LeafColumns
+        {
+            get;
+            set;
+        }
+
         public IEnumerable<string> GroupMembers
         {
             get;

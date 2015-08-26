@@ -1157,6 +1157,7 @@ namespace Kendo.Mvc.UI
 
         private GridRenderingData CreateRenderingData()
         {
+            var leafColumns = VisibleColumns.LeafColumns();
             var renderingData = new GridRenderingData
             {
                 TableHtmlAttributes = TableHtmlAttributes,
@@ -1165,20 +1166,21 @@ namespace Kendo.Mvc.UI
                 UrlBuilder = UrlBuilder,
                 DataSource = DataSource.Data,
                 Columns = VisibleColumns.Cast<IGridColumn>(),
+                LeafColumns = leafColumns,
                 GroupMembers = DataSource.Groups.Select(g => g.Member),
                 Mode = CurrentItemMode,
                 EditMode = Editable.Mode,
-                HasDetailTemplate = HasDetailTemplate,                
-                Colspan = Colspan - Columns.LeafColumns().Count(column => column.Hidden),
+                HasDetailTemplate = HasDetailTemplate,
+                Colspan = Colspan - leafColumns.Count(column => column.Hidden),
                 DetailTemplate = MapDetailTemplate(HasDetailTemplate ? DetailTemplate : null),
                 NoRecordsTemplate = FormatNoRecordsTemplate(),
                 ScrollingHeight = Scrollable.Height,
                 //EditFormHtmlAttributes = Editing.FormHtmlAttributes,
-                ShowFooter = VisibleColumns.Any(c => c.FooterTemplate.HasValue() || c.ClientFooterTemplate.HasValue()),
+                ShowFooter = leafColumns.Any(c => c.FooterTemplate.HasValue() || c.ClientFooterTemplate.HasValue()),
                 AggregateResults = DataSource.AggregateResults ?? new List<AggregateResult>(),
                 Aggregates = Aggregates.SelectMany(aggregate => aggregate.Aggregates),
                 GroupsCount = DataSource.Groups.Count,
-                ShowGroupFooter = Aggregates.Any() && VisibleColumns.OfType<IGridBoundColumn>().Any(c => c.GroupFooterTemplate.HasValue()),
+                ShowGroupFooter = Aggregates.Any() && leafColumns.OfType<IGridBoundColumn>().Any(c => c.GroupFooterTemplate.HasValue()),
                 PopUpContainer = new HtmlFragment(),
                 CreateNewDataItem = () => Editable.DefaultDataItem(),
                 InsertRowPosition = Editable.CreateAt,
