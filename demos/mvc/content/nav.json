@@ -3351,13 +3351,32 @@
         }
       },
       {
-          "text": "DPL Integration",
+          "text": "DPL - Import/Export",
           "url": "spreadsheet/document-processing",
           "title": {
               "kendo-ui": "Kendo Spreadsheet integration with the Telerik Document Processing Library"
           },
           "meta": {
-              "kendo-ui": "Export to and import from Microsoft Excel (.xlsx) files"
+              "kendo-ui": "Export to and import from Microsoft Excel (.xlsx), CSV, Text and JSON files"
+          },
+		  "sources": {
+			  "kendo-ui": [{
+				"name": "Sample service",
+				"url": "~/Controllers/Public/SpreadsheetController.cs"
+			  }]
+		  },
+          "packages": [
+              "!offline"
+          ]
+      },
+      {
+          "text": "DPL - Export to PDF",
+          "url": "spreadsheet/document-processing-pdf",
+          "title": {
+              "kendo-ui": "Kendo Spreadsheet PDF Export with the Telerik Document Processing Library"
+          },
+          "meta": {
+              "kendo-ui": "Export to print-ready PDF files"
           },
 		  "sources": {
 			  "kendo-ui": [{

@@ -1195,6 +1195,7 @@
     </Content>
     <Content Include="Views\demos\spreadsheet\index.cshtml" />
     <Content Include="Views\demos\spreadsheet\document-processing.cshtml" />
+    <Content Include="Views\demos\spreadsheet\document-processing-pdf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
