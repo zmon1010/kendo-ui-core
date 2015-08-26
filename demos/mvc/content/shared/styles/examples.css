@@ -2729,6 +2729,11 @@ html.k-flat .demo-section.k-header {
   color: #4c5356;
 }
 
+html.k-nova .demo-section.k-header {
+  background-color: #fff;
+  color: #32364c;
+}
+
 html.k-material .demo-section.k-header,
 html.k-material .demo-section.k-content {
      background-color: #fefefe;
