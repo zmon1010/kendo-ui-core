@@ -56,6 +56,7 @@ wrappers/java/target
 wrappers/php/content
 wrappers/mvc/**/*.*/bin
 plugins/KendoBootstrapper/KendoBootstrapper/bin
+plugins/KendoScaffolder/KendoScaffolder/KendoScaffolderExtension/source.extension.vsixmanifest
 *-test-results.xml
 .listen_test
 .tern-port
