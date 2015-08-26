@@ -38,7 +38,7 @@
                         maximizable: false,
                         modal: true,
                         visible: false,
-                        width: 320,
+                        width: this.options.width || 320,
                         title: this.options.title,
                         open: function() {
                             this.center();
@@ -398,7 +398,7 @@
             this._list();
         },
         options: {
-            title: "Font",
+            title: "Font Size",
             template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
@@ -428,6 +428,58 @@
     });
 
     kendo.spreadsheet.dialogs.register("fontSize", FontSizeDialog);
+
+    var BordersDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+
+            this.element = this.dialog().element;
+            this._borderPalette();
+
+            var viewModel = this.viewModel = kendo.observable({
+                apply: this.apply.bind(this),
+                close: this.close.bind(this)
+            });
+
+            kendo.bind(this.element.find(".k-action-buttons"), this.viewModel);
+        },
+        options: {
+            title: "Borders",
+            width: 177,
+            template:   "<div></div>" +
+                        "<div class='k-action-buttons'>" +
+                            "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
+                            "<button class='k-button' data-bind='click: close'>Cancel</button>" +
+                        "</div>"
+        },
+        apply: function(e) {
+            SpreadsheetDialog.fn.apply.call(this);
+
+            var state = this._state;
+            var command = new kendo.spreadsheet.BorderChangeCommand({
+                border: state.type,
+                style: { size: "1px", color: state.color }
+            });
+
+            this.trigger("execute", { command: command });
+        },
+        _borderPalette: function() {
+            var element = this.dialog().element.find("div:first");
+
+            this.borderPalette = new kendo.spreadsheet.BorderPalette(element, {
+                change: this._state.bind(this)
+            });
+        },
+        _state: function(state) {
+            if (state === undefined) {
+                return this._state;
+            } else {
+                this._state = state;
+            }
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("borders", BordersDialog);
 
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

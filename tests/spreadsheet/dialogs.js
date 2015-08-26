@@ -248,4 +248,18 @@
         dialog.close();
     });
 
+    module("BordersDialog", {
+        setup: function() {
+            moduleOptions.setup();
+
+            dialog = spreadsheet.openDialog("borders");
+        },
+        teardown: moduleOptions.teardown
+    });
+
+    test("initializes borderPalette", function() {
+        var element = dialog.dialog().element;
+        ok(element.find("[data-role=borderpalette]").length);
+    });
+
 })();

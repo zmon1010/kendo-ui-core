@@ -628,8 +628,7 @@
 
     var BorderChangeButton = OverflowDialogButton.extend({
         _click: function(e) {
-            //TODO fontSize dialog
-            //this.toolbar.openDialog("formatCells");
+            this.toolbar.openDialog("borders");
         }
     });
 
