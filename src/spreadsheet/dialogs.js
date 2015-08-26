@@ -391,5 +391,43 @@
 
     kendo.spreadsheet.dialogs.register("fontFamily", FontFamilyDialog);
 
+    var FontSizeDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+
+            this._list();
+        },
+        options: {
+            title: "Font",
+            template: "<ul class='k-list k-reset'></ul>"
+        },
+        _list: function() {
+            var ul = this.dialog().element.find("ul");
+            var sizes = this.options.sizes;
+            var defaultSize = this.options.defaultSize;
+
+            this.list = new kendo.ui.StaticList(ul, {
+                dataSource: new kendo.data.DataSource({ data: sizes }),
+                template: "#:data#",
+                value: defaultSize,
+                change: this.apply.bind(this)
+            });
+
+            this.list.dataSource.fetch();
+        },
+        apply: function(e) {
+            SpreadsheetDialog.fn.apply.call(this);
+
+            var command = new kendo.spreadsheet.PropertyChangeCommand({
+                property: "fontSize",
+                value: kendo.parseInt(e.sender.value()[0]) + "px"
+            });
+
+            this.trigger("execute", { command: command });
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("fontSize", FontSizeDialog);
+
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

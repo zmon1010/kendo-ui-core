@@ -476,8 +476,11 @@
 
     var FontSizeButton = OverflowDialogButton.extend({
         _click: function(e) {
-            //TODO fontSize dialog
-            //this.toolbar.openDialog("formatCells");
+            this.toolbar.openDialog("fontSize", { sizes: FONT_SIZES, defaultSize: DEFAULT_FONT_SIZE });
+        },
+        update: function(value) {
+            this._value = value || DEFAULT_FONT_SIZE + "px";
+            this.element.find(".k-text").text(this.message + " (" + this._value + ") ...");
         }
     });
 

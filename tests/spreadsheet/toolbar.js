@@ -226,4 +226,13 @@
         equal(text, "Font (Georgia) ...");
     });
 
+    test("refreshes fontSize overflow button state", function() {
+        createWithTools([ "fontSize" ]);
+
+        sheet.range("A1").fontSize("9px");
+
+        var text = toolbar.popup.element.find("[data-tool=fontSize] .k-text").text();
+        equal(text, "Font size (9px) ...");
+    });
+
 })();

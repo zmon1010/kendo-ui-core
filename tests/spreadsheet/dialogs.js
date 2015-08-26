@@ -168,7 +168,7 @@
         dialog.close();
     });
 
-    var wrapper;
+    var list;
 
     module("FontFamiltyDialog", {
         setup: function() {
@@ -197,6 +197,46 @@
         });
 
         list.value(["bar"]);
+        list.trigger("change");
+    });
+
+    test("close does not execute command", 0, function() {
+        dialog.one("execute", function(e) {
+            ok(false);
+        });
+
+        dialog.close();
+    });
+
+    var list;
+
+    module("FontSizeDialog", {
+        setup: function() {
+            moduleOptions.setup();
+
+            dialog = spreadsheet.openDialog("fontSize", { sizes: [11, 12, 13], defaultFont: 12 });
+            list = dialog.dialog().wrapper.find("[data-role=staticlist]").data("kendoStaticList");
+        },
+        teardown: moduleOptions.teardown
+    });
+
+    test("initializes list with sizes", function() {
+        equal(list.dataSource.data().length, 3);
+        equal(list.items().length, 3);
+    });
+
+    test("has default value", function() {
+        ok(list.value().length);
+    });
+
+    test("list change event triggers PropertyChangeCommand", 3, function() {
+        dialog.one("execute", function(e) {
+            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
+            equal(e.command.options.property, "fontSize");
+            equal(e.command.options.value, "11px");
+        });
+
+        list.value([11]);
         list.trigger("change");
     });
 
