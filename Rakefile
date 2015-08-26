@@ -26,9 +26,9 @@ if PLATFORM =~ /linux|darwin/
     RELEASE_ROOT = "/kendo-dist"
     WEB_INSTALLER_ROOT = "/installers-dist"
 else
-    distributions = "\\\\telerik.com\\resources\\Controls\\DISTRIBUTIONS"
+    distributions = "\\\\telerik.com\\distributions\\DailyBuilds"
     RELEASE_ROOT = File.join(distributions, "KendoUI")
-    WEB_INSTALLER_ROOT = File.join(distributions, "Guidance", "CurrentWebInstaller")
+    WEB_INSTALLER_ROOT = File.join(distributions, "Guidance", "WebInstallers", "Current", "Release")
 end
 
 ARCHIVE_ROOT = File.join(RELEASE_ROOT, "Builds")

@@ -13,11 +13,11 @@ mount "/mnt/Resources" do
 end
 
 link "/kendo-dist" do
-    to "/mnt/Resources/Controls/DISTRIBUTIONS/KendoUI"
+    to "/mnt/Distributions/DailyBuilds/KendoUI"
 end
 
 link "/installers-dist" do
-    to "/mnt/Resources/Controls/DISTRIBUTIONS/Guidance/CurrentWebInstaller"
+    to "/mnt/Distributions/DailyBuilds/Guidance/WebInstallers/Current/Release"
 end
 
 directory "/mnt/kendo-iis"
