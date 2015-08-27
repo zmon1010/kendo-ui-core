@@ -2431,7 +2431,7 @@ var __meta__ = {
                 handle: ".k-resize-handle",
                 start: function(e) {
                     var th = $(e.currentTarget).data("th");
-                    var colSelector = "col:eq(" + th.index() + ")";
+                    var colSelector = "col:eq(" + $.inArray(th[0], th.parent().children().filter(":visible")) + ")";
                     var header, contentTable;
 
                     treelist.wrapper.addClass("k-grid-column-resizing");
