@@ -41,6 +41,7 @@ var __meta__ = {
             $(element).empty();
 
             Widget.fn.init.call(this, element, options);
+            this.wrapper = this.element;
 
             this._initTheme(this.options);
 
