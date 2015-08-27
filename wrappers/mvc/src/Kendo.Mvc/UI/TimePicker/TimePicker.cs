@@ -18,7 +18,7 @@ namespace Kendo.Mvc.UI
 
             Interval = 30;
         }
-        
+
         public int Interval
         {
             get;
@@ -72,7 +72,7 @@ namespace Kendo.Mvc.UI
                 Format = CultureInfo.DateTimeFormat.ShortTimePattern;
             }
 
-            DatePickerHtmlBuilderBase renderer = new DatePickerHtmlBuilderBase(this, "time");
+            DatePickerHtmlBuilderBase renderer = new DatePickerHtmlBuilderBase(this, "text");
 
             renderer.Build().WriteTo(writer);
 

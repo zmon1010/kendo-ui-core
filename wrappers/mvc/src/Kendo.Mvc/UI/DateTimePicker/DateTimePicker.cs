@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
-        
+
         public int Interval
         {
             get;
@@ -161,7 +161,7 @@ namespace Kendo.Mvc.UI
             }
 
             options["interval"] = Interval;
-            
+
             if (Dates.Any())
             {
                 options["dates"] = Dates;
@@ -180,7 +180,7 @@ namespace Kendo.Mvc.UI
                 Format = dateTimeFormats.ShortDatePattern + " " + dateTimeFormats.ShortTimePattern;
             }
 
-            DatePickerHtmlBuilderBase renderer = new DatePickerHtmlBuilderBase(this, "datetime");
+            DatePickerHtmlBuilderBase renderer = new DatePickerHtmlBuilderBase(this, "text");
 
             renderer.Build().WriteTo(writer);
             base.WriteHtml(writer);

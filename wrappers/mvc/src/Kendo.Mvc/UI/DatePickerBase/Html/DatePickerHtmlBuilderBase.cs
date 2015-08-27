@@ -12,7 +12,7 @@ namespace Kendo.Mvc.UI.Html
         {
             Component = picker;
 
-            InputType = inputType ?? "date";
+            InputType = inputType ?? "text";
         }
 
         public IPicker Component
@@ -21,17 +21,17 @@ namespace Kendo.Mvc.UI.Html
             private set;
         }
 
-        public string InputType 
-        { 
-            get; 
-            private set; 
+        public string InputType
+        {
+            get;
+            private set;
         }
-        
+
         public IHtmlNode Build()
         {
-            Func<object, DateTime?> converter = val => 
+            Func<object, DateTime?> converter = val =>
             {
-                DateTime parsedDate;            
+                DateTime parsedDate;
 
                 if (DateTime.TryParse(val.ToString(), Component.CultureInfo.DateTimeFormat, System.Globalization.DateTimeStyles.None, out parsedDate))
                 {

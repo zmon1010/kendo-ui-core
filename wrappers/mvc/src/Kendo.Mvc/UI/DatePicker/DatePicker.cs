@@ -66,7 +66,7 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
-       
+
         public override void WriteInitializationScript(TextWriter writer)
         {
             var options = new Dictionary<string, object>(Events);
@@ -156,7 +156,7 @@ namespace Kendo.Mvc.UI
                 Format = CultureInfo.DateTimeFormat.ShortDatePattern;
             }
 
-            DatePickerHtmlBuilderBase renderer = new DatePickerHtmlBuilderBase(this, "date");
+            DatePickerHtmlBuilderBase renderer = new DatePickerHtmlBuilderBase(this, "text");
 
             renderer.Build().WriteTo(writer);
             base.WriteHtml(writer);
