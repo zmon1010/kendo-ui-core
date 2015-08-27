@@ -27,7 +27,7 @@
                 x: 1, y: 10, size: 100, category: "a",
                 color: "red"
             }, {
-                x: 2, y: 2, size: 0, category: "b"
+                x: 2, y: 2, size: 1, category: "b"
             }, {
                 x: 3, y: 3, size: 20, category: "b"
             }],
@@ -72,6 +72,16 @@
             equal(bubbleChart.points.length, 0);
         });
 
+        test("Bubbles with zero size are hidden", function() {
+            setupBubbleChart(plotArea, { series: [{
+                    data: [{x: 1, y: 1, size: 0}],
+                    type: "bubble"
+                }]
+            });
+
+            equal(bubbleChart.points.length, 0);
+        });
+
         test("Maximum bubble diameter is set to maxSize", function() {
             close(firstPoint.options.markers.size, 110, TOLERANCE);
         });
@@ -80,14 +90,36 @@
             close(bubbleChart.points[1].options.markers.size, 10, TOLERANCE);
         });
 
+        test("Bubble diameter is equal to the max size if there is a single bubble", function() {
+            setupBubbleChart(plotArea, { series: [{
+                    data: [{x: 1, y: 1, size: 10}],
+                    type: "bubble",
+                    maxSize: 100
+                }]
+            });
+
+            close(bubbleChart.points[0].options.markers.size, 100, TOLERANCE);
+        });
+
+        test("Bubble diameters are equal to the max size if all bubbles have the same size", function() {
+            setupBubbleChart(plotArea, { series: [{
+                    data: [{x: 1, y: 1, size: 10}, {x: 1, y: 1, size: 10}],
+                    type: "bubble",
+                    maxSize: 100
+                }]
+            });
+
+            close(bubbleChart.points[1].options.markers.size, 100, TOLERANCE);
+        });
+
         test("Default maximum bubble diameter is proportional to box size", function() {
             setupBubbleChart(plotArea, { series: [{
-                    data: [{x: 1, y: 1, size: 100}],
+                    data: [{x: 1, y: 1, size: 10}, {x: 1, y: 1, size: 100}],
                     type: "bubble"
                 }]
             });
 
-            close(firstPoint.options.markers.size, 120, TOLERANCE);
+            close(bubbleChart.points[1].options.markers.size, 120, TOLERANCE);
         });
 
         test("Default minimum bubble diameter is proportional to box size", function() {
@@ -97,7 +129,7 @@
                 }]
             });
 
-            close(firstPoint.options.markers.size, 40, TOLERANCE);
+            close(firstPoint.options.markers.size, 12, TOLERANCE);
         });
 
         test("Default minimum bubble diameter is floored to 10", function() {
