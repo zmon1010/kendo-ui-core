@@ -50,13 +50,13 @@
                             <TextBlock Margin="10, 0, 0, 0">UI for MVC Scheduler</TextBlock>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Name="WidgetsListViewWebGridItem">
+                    <ListViewItem Name="WidgetsListViewWebGridItem" Visibility="Collapsed">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/KendoScaffolder;component/Resources/Images/grid-js.png" Stretch="None" VerticalAlignment="Center"></Image>
                             <TextBlock Margin="10, 0, 0, 0">Kendo UI Grid</TextBlock>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Name="WidgetsListViewWebChartItem">
+                    <ListViewItem Name="WidgetsListViewWebChartItem" Visibility="Collapsed">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/KendoScaffolder;component/Resources/Images/chart-js.png" Stretch="None" VerticalAlignment="Center"></Image>
                             <TextBlock Margin="10, 0, 0, 0">Kendo UI Chart</TextBlock>
