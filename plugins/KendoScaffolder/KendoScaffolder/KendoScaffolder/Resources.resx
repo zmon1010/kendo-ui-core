@@ -128,6 +128,6 @@
     <value>resources\scaffoldericon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SchedulerDescription" xml:space="preserve">
-    <value>The Kendo UI Scheduler widget displays a set of events (a.k.a. appointments or tasks). It can display the scheduler events in different views - a single day, a whole week or month and as a list of tasks which need to be accomplished.</value>
+    <value>The Scheduler widget displays a set of events (a.k.a. appointments or tasks). It can display the Scheduler events in different views - a single day, a whole week or month and as a list of tasks which need to be accomplished.</value>
   </data>
 </root>
