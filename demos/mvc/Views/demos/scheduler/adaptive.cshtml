@@ -1,13 +1,13 @@
-<div data-role="view" data-init="initScheduler">
-    <header data-role="header"></header>
+<div data-role="view" data-init="initScheduler" data-stretch="true" data-title="Scheduler">
     <div id="scheduler"></div>
 </div>
+
 <script>
     function initScheduler() {
         $("#scheduler").kendoScheduler({
             date: new Date("2013/6/26"),
             startTime: new Date("2013/6/26 07:00 AM"),
-            height: kendo.support.mobileOS.wp ? "28em" : 600,
+            height: 'auto',
             views: [
                 { type: "day", selected: true },
                 { type: "week", selectedDateFormat: "{0:ddd,MMM dd,yyyy} - {1:ddd,MMM dd,yyyy}" },

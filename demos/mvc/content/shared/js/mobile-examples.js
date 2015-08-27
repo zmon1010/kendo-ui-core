@@ -7,6 +7,8 @@ var currentExample,
 
 var TITLES = {
     "actionsheet": "ActionSheet",
+    "grid": "Grid",
+    "scheduler": "Scheduler",
     "application": "Application",
     "buttongroup": "ButtonGroup",
     "collapsible": "Collapsilble",

@@ -3158,7 +3158,7 @@ var __meta__ = {
             } else {
                 html += "</div></div>";
                 that.editView = that.pane.append(
-                    '<div data-' + kendo.ns + 'role="view" data-' + kendo.ns + 'init-widgets="false" class="k-grid-edit-form">'+
+                    '<div data-' + kendo.ns + 'role="view" data-' + kendo.ns + 'use-native-scrolling="true" data-' + kendo.ns + 'init-widgets="false" class="k-grid-edit-form">'+
                         '<div data-' + kendo.ns + 'role="header" class="k-header">'+
                             that._createButton({ name: "update", text: updateText, attr: attr }) +
                             (options.title || "Edit") +
@@ -4826,7 +4826,7 @@ var __meta__ = {
 
             if (this._isMobile) {
                 var html = this.wrapper.addClass("k-grid-mobile").wrap(
-                        '<div data-' + kendo.ns + 'role="view" ' +
+                        '<div data-' + kendo.ns + 'stretch="true" data-' + kendo.ns + 'role="view" ' +
                         'data-' + kendo.ns + 'init-widgets="false"></div>'
                     )
                     .parent();

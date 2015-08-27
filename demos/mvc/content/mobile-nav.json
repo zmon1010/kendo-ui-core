@@ -1,5 +1,25 @@
 [
       {
+        "text": "Adaptive Usage",
+        "url": "grid/adaptive",
+        "title": {
+            "kendo-ui": "Kendo UI Grid Adaptive Demo"
+        },
+        "meta": {
+            "kendo-ui": ""
+        }
+      },
+      {
+        "text": "Adaptive Usage",
+        "url": "scheduler/adaptive",
+        "title": {
+            "kendo-ui": "Kendo UI Scheduler Adaptive Demo"
+        },
+        "meta": {
+            "kendo-ui": ""
+        }
+      },
+      {
         "text": "Basic usage",
         "url": "actionsheet/index",
         "title": {
