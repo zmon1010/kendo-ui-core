@@ -102,7 +102,7 @@
             this.keyListener = new kendo.spreadsheet.EventListener(this.clipboardElement, this, CLIPBOARD_EVENTS);
             this.inputKeyListener = new kendo.spreadsheet.EventListener(this.formulaInput.element, this, FORMULAINPUT_EVENTS);
 
-            view.sheetsbar.bind("select", this.onSheetSelect.bind(this));
+            view.sheetsbar.bind("select", this.onSheetBarSelect.bind(this));
 
             this.cellContextMenu.bind("select", function(e) {
                 var action = $(e.item).data("action");
@@ -120,8 +120,15 @@
             }.bind(this));
         },
 
-        onSheetSelect: function(e) {
-            var sheet = this._workbook.sheetByName(e.name);
+        onSheetBarSelect: function(e) {
+            var sheet;
+
+            if (e.isAddButton) {
+                sheet = this._workbook.insertSheet();
+            } else {
+                sheet = this._workbook.sheetByName(e.name);
+            }
+
             this._workbook.activeSheet(sheet);
         },
 

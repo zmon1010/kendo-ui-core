@@ -75,8 +75,8 @@
         sheetsBar.renderSheets(sheets, 1);
 
         var bar = element.data("kendoSheetsBar");
-        equal(bar.element.find("li:first").text(), name);
-        ok(bar.element.find("li:first").hasClass("k-spreadsheet-sheets-bar-active"));
+        equal(bar.element.find("li:last").text(), name);
+        ok(bar.element.find("li:last").hasClass("k-spreadsheet-sheets-bar-active"));
     });
 
     test("clicks on elements trigger select event", function() {
@@ -97,5 +97,34 @@
         var bar = element.data("kendoSheetsBar");
 
         bar.element.find("li:first").trigger("click");
+    });
+
+    test("render add sheet button", function() {
+        var name = "Sheet1";
+
+        var sheets = [
+            {name: function() {return name}}
+        ];
+
+        createSheetsBar();
+
+        var bar = element.data("kendoSheetsBar");
+
+        equal(bar.element.find("a").length, 1);
+        ok(bar.element.find("a").hasClass("k-spreadsheet-sheets-bar-add"));
+    });
+
+
+    test("clicks on add button trigger select event", function() {
+        createSheetsBar();
+
+        sheetsBar.bind("select", function(e) {
+            debugger;
+            ok(e.isAddButton);
+        });
+
+        var bar = element.data("kendoSheetsBar");
+
+        bar.element.find("a").trigger("click");
     });
 })();

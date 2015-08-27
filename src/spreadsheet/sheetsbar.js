@@ -4,9 +4,11 @@
 
     (function(kendo) {
         var $ = kendo.jQuery;
+        var DOT = ".";
         var sheetsBarClassNames = {
             sheetsBarActive: "k-spreadsheet-sheets-bar-active",
-            sheetsBarInactive: "k-spreadsheet-sheets-bar-inactive"
+            sheetsBarInactive: "k-spreadsheet-sheets-bar-inactive",
+            sheetsBarAdd: "k-spreadsheet-sheets-bar-add"
         };
 
         var SheetsBar = kendo.ui.Widget.extend({
@@ -17,7 +19,11 @@
 
                 this.tree = new kendo.dom.Tree(element[0]);
 
-                element.on("click", this._onSelect.bind(this));
+                this.tree.render([this._addButton()]);
+
+                element.on("click", "li", this._onSheetSelect.bind(this));
+
+                element.on("click", DOT + sheetsBarClassNames.sheetsBarAdd, this._onAddSelect.bind(this));
             },
 
             options: {
@@ -27,6 +33,13 @@
             events: [
                 "select"
             ],
+
+            //TODO:
+            //1) add sheet -- ready
+            //2) remove sheet from sheet tab
+            //3) reorder sheets
+            //4) rename sheet with double click
+            //5) scroll when more sheets are rendered
 
             renderSheets: function(sheets, selectedIndex) {
                 var dom = kendo.dom;
@@ -48,11 +61,20 @@
                     sheetElements.push(dom.element("li", arguments, [elementContent]));
                 }
 
-                this.tree.render([dom.element("ul", {}, sheetElements)]);
+                this.tree.render([this._addButton(), dom.element("ul", {}, sheetElements)]);
             },
 
-            _onSelect: function(e) {
-                this.trigger("select", {name: $(e.target).text()});
+            _onSheetSelect: function(e) {
+                this.trigger("select", {name: $(e.target).text(), isAddButton: false});
+            },
+
+            _onAddSelect: function(e) {
+                this.trigger("select", {isAddButton: true});
+            },
+
+            _addButton: function() {
+                var dom = kendo.dom;
+                return dom.element("a", {class: sheetsBarClassNames.sheetsBarAdd}, [dom.element("span", {class: "k-sprite k-icon k-font-icon k-i-plus"}, [])]);
             }
         });
 
