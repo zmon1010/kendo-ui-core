@@ -379,31 +379,36 @@ var Worksheet = kendo.Class.extend({
     },
     _row: function(row) {
         var data = [];
-        var indexOffset = 0;
-        var spanOffset = 0;
+        var offset = 0;
         var sheet = this;
 
-        var cellIndex;
+        var cellRefs = {};
         $.each(row.cells, function(i, cell) {
             if (!cell) {
                 return;
             }
 
+            var cellIndex;
             if (typeof cell.index === "number") {
-                cellIndex = cell.index + spanOffset;
-                indexOffset = cellIndex - i;
+                cellIndex = cell.index;
+                offset = cellIndex - i;
             } else {
-                cellIndex = i + spanOffset + indexOffset;
+                cellIndex = i + offset;
             }
 
             if (cell.colSpan) {
-                spanOffset += cell.colSpan - 1;
+                offset += cell.colSpan - 1;
             }
 
-            var cellData = sheet._cell(cell, row.index, cellIndex);
-            if (cellData) {
-                data.push.apply(data, cellData);
-            }
+            var items = sheet._cell(cell, row.index, cellIndex);
+            $.each(items, function(i, cellData) {
+                if (cellRefs[cellData.ref]) {
+                    return;
+                }
+
+                cellRefs[cellData.ref] = true;
+                data.push(cellData);
+            });
         });
 
         return {
@@ -445,7 +450,7 @@ var Worksheet = kendo.Class.extend({
     },
     _cell: function(data, rowIndex, cellIndex) {
         if (!data) {
-            return;
+            return [];
         }
 
         var value = data.value;

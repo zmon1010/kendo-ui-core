@@ -742,14 +742,27 @@ test("toXML creates one mergeCell for a cell with both colSpan and rowSpan set",
     equal(dom.find("mergeCell").attr("ref"), "A1:B2");
 });
 
-test("toXML adjusts the index of cells after colspan", function() {
+test("toXML drops cells overlapping with a colspan", function() {
     var worksheet = Worksheet([
-        { cells: [{ colSpan: 3 }, { index: 2 }] }
+        { cells: [{ colSpan: 3, value: 1 }, { index: 2, value: 2 }] }
     ]);
 
     var dom = $(worksheet.toXML());
 
-    equal(dom.find("c:last").attr("r"), "E1");
+    var cells = dom.find("c");
+    equal(cells.length, 3);
+    equal(cells.find("v").length, 1);
+});
+
+test("toXML drops cells overlapping with a rowspan", function() {
+    var worksheet = Worksheet([
+        { cells: [{ rowSpan: 3 }] },
+        { cells: [{ }]}
+    ]);
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("c").length, 3);
 });
 
 test("toXML creates 'autoFilter' element when the filter option is set", function() {
