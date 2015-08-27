@@ -500,6 +500,7 @@
             this._dialogs.forEach(function(dialog) {
                 dialog.destroy();
             });
+            this.cellContextMenu.destroy();
         },
 
         render: function() {
