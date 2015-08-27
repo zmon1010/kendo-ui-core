@@ -2457,6 +2457,9 @@
            "aspnet-mvc": "API",
            "jsp-ui": "API",
            "php-ui": "API" 
+         },
+         "description": {
+           "kendo-ui": "<p>The Kendo UI grid exposes rich API and events which provide easy configuration or extension points for custom functionality on top of the built-in features. </p> <p>This particular example shows how you can intercept the change, dataBinding and dataBound events of the grid to output messages in the console when these events are raised. They can also be hooked for customizations or to execute custom logic, if necessary.</p> <p>Find more info about the supported grid events by clicking the API Reference above.</p>"
          }
       },
       {
@@ -2475,6 +2478,9 @@
            "aspnet-mvc": "API",
            "jsp-ui": "API",
            "php-ui": "API" 
+         },
+         "description": {
+           "kendo-ui": "<p>The Kendo UI grid exposes rich API and events which provide easy configuration or extension points for custom functionality on top of the built-in features. </p> <p>In this sample we demonstrate how you can collect numeric value entered by the user and use this value to select or expand/collapse grid rows using the select, expandGroup and collapseGroup methods of the widget. </p> <p>Find more info about the supported grid events by clicking the API Reference above.</p>"
          }
       },
        {
