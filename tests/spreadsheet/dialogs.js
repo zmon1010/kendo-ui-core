@@ -248,7 +248,7 @@
         dialog.close();
     });
 
-    module("BordersDialog", {
+    module("BorderPalette dialog", {
         setup: function() {
             moduleOptions.setup();
 
@@ -270,7 +270,7 @@
 
         spreadsheet.activeSheet().select("A1:B2");
 
-        dialog._state({ type: "allBorders", style: { size: "1px", color: "#ff0000" } });
+        dialog.value({ type: "allBorders", style: { size: "1px", color: "#ff0000" } });
         dialog.apply();
     });
 
@@ -280,6 +280,44 @@
         });
 
         dialog.close();
+    });
+
+    module("ColorPicker dialog", {
+        setup: function() {
+            moduleOptions.setup();
+
+            dialog = spreadsheet.openDialog("colorPicker", { title: "background", property: "background" });
+            colorPalette = dialog.colorPalette;
+        },
+        teardown: moduleOptions.teardown
+    });
+
+    test("initializes colorPalette", function() {
+        ok(colorPalette instanceof kendo.ui.ColorPalette);
+    });
+
+    test("triggers PropertyChangeCommand when apply is clicked", 3, function() {
+        dialog.one("execute", function(e) {
+            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
+            equal(e.command.options.property, "background");
+            equal(e.command.options.value, "#ff0000");
+        });
+
+        colorPalette.value("#ff0000");
+        colorPalette.trigger("change", { value: "#ff0000" });
+        dialog.apply();
+    });
+
+    test("close does not execute command", 0, function() {
+        dialog.one("execute", function(e) {
+            ok(false);
+        });
+
+        dialog.close();
+    });
+
+    test("sets correct window title", function() {
+        equal(dialog.dialog().options.title, "background");
     });
 
 })();

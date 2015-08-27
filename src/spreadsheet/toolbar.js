@@ -416,8 +416,7 @@
             OverflowDialogButton.fn.init.call(this, options, toolbar);
         },
         _click: function(e) {
-            //TODO colorPicker dialog
-            //this.toolbar.openDialog("formatCells");
+            this.toolbar.openDialog("colorPicker", { title: this.options.property, property: this.options.property });
         }
     });
 

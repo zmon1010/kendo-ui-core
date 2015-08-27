@@ -455,7 +455,7 @@
         apply: function(e) {
             SpreadsheetDialog.fn.apply.call(this);
 
-            var state = this._state;
+            var state = this.value();
             var command = new kendo.spreadsheet.BorderChangeCommand({
                 border: state.type,
                 style: { size: "1px", color: state.color }
@@ -467,10 +467,10 @@
             var element = this.dialog().element.find("div:first");
 
             this.borderPalette = new kendo.spreadsheet.BorderPalette(element, {
-                change: this._state.bind(this)
+                change: this.value.bind(this)
             });
         },
-        _state: function(state) {
+        value: function(state) {
             if (state === undefined) {
                 return this._state;
             } else {
@@ -480,6 +480,65 @@
     });
 
     kendo.spreadsheet.dialogs.register("borders", BordersDialog);
+
+    var ColorPickerDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+
+            this.element = this.dialog().element;
+            this._colorPalette(options);
+            this.property = options.property;
+            this.options.title = options.title;
+
+            var viewModel = this.viewModel = kendo.observable({
+                apply: this.apply.bind(this),
+                close: this.close.bind(this)
+            });
+
+            kendo.bind(this.element.find(".k-action-buttons"), this.viewModel);
+        },
+        options: {
+            width: 177,
+            template:   "<div></div>" +
+                        "<div class='k-action-buttons'>" +
+                            "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
+                            "<button class='k-button' data-bind='click: close'>Cancel</button>" +
+                        "</div>"
+        },
+        apply: function(e) {
+            SpreadsheetDialog.fn.apply.call(this);
+
+            var command = new kendo.spreadsheet.PropertyChangeCommand({
+                property: this.property,
+                value: this.value()
+            });
+
+            this.trigger("execute", { command: command });
+        },
+        _colorPalette: function(options) {
+            var element = this.dialog().element.find("div:first");
+            this.colorPalette = element.kendoColorPalette({
+                palette: [ //metro palette
+                    "#ffffff", "#000000", "#d6ecff", "#4e5b6f", "#7fd13b", "#ea157a", "#feb80a", "#00addc", "#738ac8", "#1ab39f",
+                    "#f2f2f2", "#7f7f7f", "#a7d6ff", "#d9dde4", "#e5f5d7", "#fad0e4", "#fef0cd", "#c5f2ff", "#e2e7f4", "#c9f7f1",
+                    "#d8d8d8", "#595959", "#60b5ff", "#b3bcca", "#cbecb0", "#f6a1c9", "#fee29c", "#8be6ff", "#c7d0e9", "#94efe3",
+                    "#bfbfbf", "#3f3f3f", "#007dea", "#8d9baf", "#b2e389", "#f272af", "#fed46b", "#51d9ff", "#aab8de", "#5fe7d5",
+                    "#a5a5a5", "#262626", "#003e75", "#3a4453", "#5ea226", "#af0f5b", "#c58c00", "#0081a5", "#425ea9", "#138677",
+                    "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
+                ],
+                change: this.value.bind(this)
+            }).data("kendoColorPalette");
+        },
+        value: function(e) {
+            if (e === undefined) {
+                return this._value;
+            } else {
+                this._value = e.value;
+            }
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("colorPicker", ColorPickerDialog);
 
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
