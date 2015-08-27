@@ -214,7 +214,7 @@
         setup: function() {
             moduleOptions.setup();
 
-            dialog = spreadsheet.openDialog("fontSize", { sizes: [11, 12, 13], defaultFont: 12 });
+            dialog = spreadsheet.openDialog("fontSize", { sizes: [11, 12, 13], defaultSize: 12 });
             list = dialog.dialog().wrapper.find("[data-role=staticlist]").data("kendoStaticList");
         },
         teardown: moduleOptions.teardown
@@ -260,6 +260,26 @@
     test("initializes borderPalette", function() {
         var element = dialog.dialog().element;
         ok(element.find("[data-role=borderpalette]").length);
+    });
+
+    test("triggers BorderChangeCommand when apply is clicked", function() {
+        dialog.one("execute", function(e) {
+            ok(e.command instanceof kendo.spreadsheet.BorderChangeCommand);
+            equal(e.command.options.border, "allBorders");
+        });
+
+        spreadsheet.activeSheet().select("A1:B2");
+
+        dialog._state({ type: "allBorders", style: { size: "1px", color: "#ff0000" } });
+        dialog.apply();
+    });
+
+    test("close does not execute command", 0, function() {
+        dialog.one("execute", function(e) {
+            ok(false);
+        });
+
+        dialog.close();
     });
 
 })();
