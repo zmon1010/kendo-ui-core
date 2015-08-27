@@ -598,7 +598,6 @@
                     }
                 }
             });
-
             this.clipboardContents.render([ table.toDomTree(0, 0, "") ]);
 
             this.selectClipBoardContents();

@@ -10,6 +10,8 @@
         init: function(workbook) {
             this.workbook = workbook;
             this.origin = kendo.spreadsheet.NULLREF;
+            this.iframe = document.createElement("iframe");
+            document.body.appendChild(this.iframe);
         },
 
         canCopy: function() {
@@ -91,7 +93,11 @@
         },
 
         parse: function(html) {
-            var table = $("<div/>").html(html).find("table:first");
+            var doc = this.iframe.contentWindow.document;
+            doc.open();
+            doc.write(html);
+            doc.close();
+            var table = $(doc).find("table:first");
             if(table.length){
                 var tbody = table.find("tbody:first");
                 var colgroup = table.find("colgroup:first");
@@ -99,24 +105,25 @@
                 tbody.find("tr").each(function(rowIndex, tr) {
                     $(tr).find("td").each(function(colIndex, td) {
                         var key = rowIndex + "," + colIndex;
+                        var styles = window.getComputedStyle(td);
                         contents[key] = {
-                            "value" : $(td).text(),
+                            "value" : $(td).text() === "" ? null : $(td).text(),
                             "format" : null,
                             "compiledFormula" : null,
-                            "background" : null,
-                            "borderBottom" : null,
-                            "borderRight" : null,
-                            "borderLeft" : null,
-                            "borderTop" : null,
-                            "color" : null,
-                            "fontFamily" : null,
-                            "underline" : null,
-                            "fontSize" : null,
-                            "italic" : null,
-                            "bold" : null,
-                            "textAlign" : null,
-                            "verticalAlign" : null,
-                            "wrap" : null
+                            "background" : styles["background-color"],
+                            "borderBottom" : styles["border-bottom"],
+                            "borderRight" : styles["border-right"],
+                            "borderLeft" : styles["border-left"],
+                            "borderTop" : styles["border-top"],
+                            "color" : styles["color"],
+                            "fontFamily" : styles["font-family"],
+                            "underline" : window.getComputedStyle(td)["text-decoration"] == "underline" ? true : false,
+                            "fontSize" : styles["font-size"],
+                            "italic" : window.getComputedStyle(td)["font-style"] == "italic" ? true : false,
+                            "bold" : window.getComputedStyle(td)["font-weight"] == "bold" ? true : false,
+                            "textAlign" : styles["text-align"],
+                            "verticalAlign" : styles["vertical-align"],
+                            "wrap" : styles["word-wrap"]
                         };
                     });
                 });

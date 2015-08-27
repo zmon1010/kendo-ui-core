@@ -314,7 +314,6 @@
                     text = e.originalEvent.clipboardData.getData('text/plain');
                 }
             }
-            // debugger
             this.clipboard.external(html || text);
             var command = new kendo.spreadsheet.PasteCommand({ workbook: this.view._workbook });
             this.view._workbook.execute(command);
