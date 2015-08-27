@@ -2519,10 +2519,10 @@
             "kendo-ui": "This demo shows how Kendo UI Grid widget can be localized."
         },
         "group": {
-           "kendo-ui": "Accessibility and Internationalization",
-           "aspnet-mvc": "Accessibility and Internationalization",
-           "jsp-ui": "Accessibility and Internationalization",
-           "php-ui": "Accessibility and Internationalization" 
+           "kendo-ui": "Accessibility and Internationalization"
+        },
+        "description": {
+           "kendo-ui": "<p>The Kendo UI grid supports localization for the texts in its UI elements. You can either define the texts for these elements using the respective messages configuration via the API, or employ culture files for this purpose (which are shipped with the product distribution).</p> <p>Further information on how to our grid widget supports localization can be found in these articles: <br /> <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/localization\">Localization via messages</a><br /> <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/globalization/overview\">Localization with culture files</a> </p>" 
         },
         "packages": [
           "!mvc",
@@ -2546,6 +2546,9 @@
            "aspnet-mvc": "Accessibility and Internationalization",
            "jsp-ui": "Accessibility and Internationalization",
            "php-ui": "Accessibility and Internationalization" 
+          },
+          "description": {
+            "kendo-ui": "<p>The Kendo UI grid supports right-to-left languages and rendering via built-in configuration. All you have to do is to register the <strong>kendo.rtl.[min].css</strong> file and wrap the grid in a container element with <strong>k-rtl </strong>class set for it, as demonstrated in this example.</p> <p>More information on the right-to-left support of the Kendo UI widgets can be extracted from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/accessibility/supporting-rtl-languages\">this topic</a>.</p>"
           }
       },
       {
@@ -2564,7 +2567,10 @@
            "aspnet-mvc": "Accessibility and Internationalization",
            "jsp-ui": "Accessibility and Internationalization",
            "php-ui": "Accessibility and Internationalization" 
-          }
+         },
+         "description": {
+           "kendo-ui": "<p>This demo illustrates the keyboard support of the Kendo UI grid widget, which provides quick access to available grid features without the need to interact with mouse. Furthermore, applications which must cover accessibility standards for people with disabilities can directly benefit from it. </p> <p>You can focus the grid using the <strong>ALT + W</strong> key combination, and then use the keyboard key shortcuts visualized above to interact with the widget. </p> <p>Further details about the keyboard support of the Kendo UI grid widgets can be found in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/accessibility/keyboard-support\">Accessibility section</a> of the documentation.</p>"
+         }
       },
       {
         "text": "MVVM",
