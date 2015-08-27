@@ -1450,7 +1450,7 @@ var __meta__ = {
             }
 
             if (chart._hasDataSource) {
-                chart.refresh();
+                chart._onDataChanged();
             }  else {
                 chart._bindCategories();
                 chart.redraw();

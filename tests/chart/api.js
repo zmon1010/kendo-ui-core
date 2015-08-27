@@ -566,6 +566,30 @@
             equal(chart.options.series.length, 1);
         });
 
+        test("setOptions keeps grouped series", function() {
+            setupChart({
+                dataSource: {
+                    data: [{
+                        value: 1,
+                        group: "A"
+                    }, {
+                        value: 1,
+                        group: "B"
+                    }],
+                    group: {
+                        field: "group"
+                    }
+                },
+                series: [{
+                    field: "value"
+                }]
+            });
+
+            chart.setOptions({ });
+
+            equal(chart.options.series.length, 2);
+        });
+
         test("extends axis options", function() {
             setupChart({
                 valueAxis: { name: "foo" }
@@ -625,13 +649,13 @@
             });
         });
 
-        test("calls refresh implicitly when bound to a data source", function() {
+        test("calls _onDataChanged implicitly when bound to a data source", function() {
             setupChart({
                 series: [{ field: "foo" }],
                 dataSource: { data: [{ "foo": 1 }] }
             });
 
-            stubMethod(Chart.fn, "refresh", function() {
+            stubMethod(Chart.fn, "_onDataChanged", function() {
                 ok(true);
             }, function() {
                 chart.setOptions({
