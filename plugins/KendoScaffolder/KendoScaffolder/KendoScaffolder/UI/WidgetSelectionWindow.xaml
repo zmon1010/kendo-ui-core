@@ -29,6 +29,7 @@
                         <Style TargetType="ListViewItem">
                             <Setter Property="Height" Value="36" />
                             <Setter Property="Padding" Value="20, 0, 0, 0" />
+                            <EventSetter Event="MouseDoubleClick" Handler="WidgetsListView_MouseDoubleClick" />
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListViewItem Name="WidgetsListViewGridItem">
@@ -37,28 +38,28 @@
                             <TextBlock Margin="10, 0, 0, 0">UI for MVC Grid</TextBlock>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Name="WidgetsListViewWebGridItem">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/KendoScaffolder;component/Resources/Images/grid-icon.png" Stretch="None" VerticalAlignment="Center"></Image>
-                            <TextBlock Margin="10, 0, 0, 0">Kendo UI Grid</TextBlock>
-                        </StackPanel>
-                    </ListViewItem>
                     <ListViewItem Name="WidgetsListViewChartItem">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/KendoScaffolder;component/Resources/Images/chart-icon.png" Stretch="None" VerticalAlignment="Center"></Image>
                             <TextBlock Margin="10, 0, 0, 0">UI for MVC Chart</TextBlock>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Name="WidgetsListViewWebChartItem">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/KendoScaffolder;component/Resources/Images/chart-icon.png" Stretch="None" VerticalAlignment="Center"></Image>
-                            <TextBlock Margin="10, 0, 0, 0">Kendo UI Chart</TextBlock>
-                        </StackPanel>
-                    </ListViewItem>
                     <ListViewItem Name="WidgetsListViewSchedulerItem">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/KendoScaffolder;component/Resources/Images/scheduler-icon.png" Stretch="None" VerticalAlignment="Center"></Image>
                             <TextBlock Margin="10, 0, 0, 0">UI for MVC Scheduler</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Name="WidgetsListViewWebGridItem">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/KendoScaffolder;component/Resources/Images/grid-icon.png" Stretch="None" VerticalAlignment="Center"></Image>
+                            <TextBlock Margin="10, 0, 0, 0">Kendo UI Grid</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Name="WidgetsListViewWebChartItem">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/KendoScaffolder;component/Resources/Images/chart-icon.png" Stretch="None" VerticalAlignment="Center"></Image>
+                            <TextBlock Margin="10, 0, 0, 0">Kendo UI Chart</TextBlock>
                         </StackPanel>
                     </ListViewItem>
                 </ListView>

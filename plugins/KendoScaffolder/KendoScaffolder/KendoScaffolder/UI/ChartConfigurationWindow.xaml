@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Height="765" Width="800" ResizeMode="NoResize" Title="Telerik ASP.NET MVC Chart">
+             mc:Ignorable="d" Height="765" Width="800" ResizeMode="NoResize">
     <Grid Background="#F0F0F0">
         <Grid.RowDefinitions>
             <RowDefinition Height="62" />
@@ -12,7 +12,7 @@
         </Grid.RowDefinitions>
         <DockPanel Height="62" Background="#fff">
             <Image Source="/KendoScaffolder;component/Resources/Images/chart-icon.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20, 0, 10, 0" />
-            <TextBlock Text="Telerik ASP.NET MVC Chart" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" />
+            <TextBlock Name="WidgetTitle" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" />
             <Image Source="/KendoScaffolder;component/Resources/Images/telerik-logo.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20, 0" />
         </DockPanel>
         <TabControl Grid.Row="1" Background="#F0F0F0" BorderBrush="#E0E0E0" SelectedIndex="0" TabStripPlacement="Left" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Padding="4">
@@ -105,7 +105,7 @@
                         <ComboBox Name="BindingType" VerticalAlignment="Center" Width="105" ItemsSource="{Binding DataBindingTypes}" SelectedItem="{Binding DataBindingType, Mode=TwoWay}" Margin="10, 0, 0, 0" />
                     </WrapPanel>
                     <Label Grid.Row="1" Content="Title:" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                    <TextBox Grid.Row="2" Name="Title" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Text="{Binding Title}" />
+                    <TextBox Grid.Row="2" Name="ChartTitle" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Text="{Binding Title}" />
                     <CheckBox Grid.Row="3" Content="Show Tooltip" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding TooltipVisible, Mode=OneWayToSource}" />
                     <WrapPanel Grid.Row="4">
                         <CheckBox Name="ShowLegend" Content="Show Legend" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding LegendVisible, Mode=OneWayToSource}" Click="ShowLegend_Clicked" />

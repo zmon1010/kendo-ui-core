@@ -18,6 +18,8 @@ namespace KendoScaffolder.UI
 {
     public partial class WidgetSelectionWindow : Window
     {
+        private const string WidgetNamePlaceHolder = "$WIDGET";
+
         private readonly ResourceManager rm;
 
         public KendoWidget SelectedWidget { get; set; }
@@ -39,43 +41,54 @@ namespace KendoScaffolder.UI
         private void WidgetsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBoxItem item = ((sender as ListBox).SelectedItem as ListBoxItem);
+            string widgetDescription = String.Empty;
 
             switch (item.Name) 
             {
                 case "WidgetsListViewGridItem":
                     SelectedWidget = KendoWidget.Grid;
                     SelectedViewType = ViewType.MVC;
-                    WidgetName.Text = "Kendo UI Grid";
-                    WidgetDescription.Text = rm.GetString("GridDescription");
+                    WidgetName.Text = "UI for MVC Grid";
+                    widgetDescription = rm.GetString("GridDescription");
+                    WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
                     return;
 
                 case "WidgetsListViewWebGridItem":
                     SelectedWidget = KendoWidget.Grid;
                     SelectedViewType = ViewType.Web;
                     WidgetName.Text = "Kendo UI Grid";
-                    WidgetDescription.Text = rm.GetString("GridDescription");
+                    widgetDescription = rm.GetString("GridDescription");
+                    WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
                     return;
 
                 case "WidgetsListViewChartItem":
                     SelectedWidget = KendoWidget.Chart;
                     SelectedViewType = ViewType.MVC;
-                    WidgetName.Text = "Kendo UI Chart";
-                    WidgetDescription.Text = rm.GetString("ChartDescription");
+                    WidgetName.Text = "UI for MVC Chart";
+                    widgetDescription = rm.GetString("ChartDescription");
+                    WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
                     return;
 
                 case "WidgetsListViewWebChartItem":
                     SelectedWidget = KendoWidget.Chart;
                     SelectedViewType = ViewType.Web;
                     WidgetName.Text = "Kendo UI Chart";
-                    WidgetDescription.Text = rm.GetString("ChartDescription");
+                    widgetDescription = rm.GetString("ChartDescription");
+                    WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
                     return;
 
                 case "WidgetsListViewSchedulerItem":
                     SelectedWidget = KendoWidget.Scheduler;
-                    WidgetName.Text = "Kendo UI Scheduler";
-                    WidgetDescription.Text = rm.GetString("SchedulerDescription");
+                    WidgetName.Text = "UI for MVC Scheduler";
+                    widgetDescription = rm.GetString("SchedulerDescription");
+                    WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
                     return;
             }
+        }
+
+        private void WidgetsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            this.DialogResult = true;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

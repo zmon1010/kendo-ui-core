@@ -28,11 +28,25 @@ namespace KendoScaffolder.UI
         private readonly Dictionary<ChartSeriesType, List<ChartConfiguration>> requiredChartConfigurations;
         private readonly Dictionary<ChartSeriesType, List<ChartConfiguration>> optionalChartConfigurations;
 
+        public const string WebGridTitle = "Kendo UI Chart";
+        public const string MvcGridTitle = "Telerik ASP.NET MVC Chart";
+
         public ChartConfigurationWindow(ChartConfigurationViewModel viewModel)
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             InitializeComponent();
+
+            if (viewModel.ViewType == ViewType.MVC)
+            {
+                WidgetTitle.Text = MvcGridTitle;
+                this.Title = MvcGridTitle;
+            }
+            else
+            {
+                WidgetTitle.Text = WebGridTitle;
+                this.Title = WebGridTitle;
+            }
 
             DataContext = viewModel;
 
