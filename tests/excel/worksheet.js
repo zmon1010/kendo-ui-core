@@ -720,7 +720,7 @@ test("toXML adjusts the ref of cells after colspan", function() {
     equal(dom.find("c:last").attr("r"), "D1");
 });
 
-test("toXML sets the 'count' attribute of the 'mergeCells' element", function() {
+test("toXML sets the 'count' attribute of the 'mergeCells' element for colSpans", function() {
     var worksheet = Worksheet([
         { cells: [{ colSpan: 3 }, { }] }
     ]);
@@ -728,6 +728,40 @@ test("toXML sets the 'count' attribute of the 'mergeCells' element", function() 
     var dom = $(worksheet.toXML());
 
     equal(dom.find("mergeCells").attr("count"), 1);
+});
+
+test("toXML sets the 'count' attribute of the 'mergeCells' element for merged sheet cells", function() {
+    var worksheet = Worksheet({
+        mergedCells: ["C3:E5"]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("mergeCells").attr("count"), 1);
+});
+
+test("toXML creates 'mergeCell' elements for merged sheet cells", function() {
+    var worksheet = Worksheet({
+        mergedCells: ["C3:E5"]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("mergeCell").length, 1);
+    equal(dom.find("mergeCell").attr("ref"), "C3:E5");
+});
+
+test("toXML sets the 'count' attribute of the 'mergeCells' element for spans and mergedCells", function() {
+    var worksheet = Worksheet({
+        mergedCells: ["C3:E5"],
+        rows: [{
+            cells: [{ colSpan: 3 }, { }]
+        }],
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("mergeCells").attr("count"), 2);
 });
 
 test("toXML creates 'mergeCell' elements for multiple cells with colSpan attribute", function() {

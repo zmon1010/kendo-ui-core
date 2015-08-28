@@ -343,7 +343,7 @@ var Worksheet = kendo.Class.extend({
         this._styles = styles;
     },
     toXML: function(index) {
-        this._mergeCells = [];
+        this._mergeCells = this.options.mergedCells || [];
         this._rowsByIndex = [];
 
         var rows = this.options.rows || [];
