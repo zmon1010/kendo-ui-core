@@ -54,9 +54,9 @@
 @tooltip-text-color: @normal-text-color;
 @tooltip-background-color: @background;
 @tooltip-border-color: darken(@background, 25%);
-@validation-text-color: @normal-text-color;
+@validation-text-color: contrast(@validation-background-color, lighten(@warning, 80%), darken(@warning, 60%), 0.5);
 @validation-background-color: @warning;
-@validation-border-color: darken(@error, 15%);
+@validation-border-color: @warning;
 @splitbar-background-color: darken(@background, 5%);
 @draghandle-border-radius: @border-radius;
 @draghandle-border-color: lighten(@normal-text-color, 24%);
