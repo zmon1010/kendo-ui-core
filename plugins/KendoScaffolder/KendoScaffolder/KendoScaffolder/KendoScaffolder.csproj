@@ -233,8 +233,6 @@
     <Folder Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Views\aspx\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\grid-icon-white.png" />
-    <Resource Include="Resources\Images\grid-icon.png" />
     <Resource Include="Resources\Images\telerik-logo-transparent.png" />
     <Resource Include="Resources\Images\telerik-logo.png" />
   </ItemGroup>
@@ -242,8 +240,12 @@
     <EmbeddedResource Include="Resources\ScaffolderIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\chart-icon.png" />
-    <Resource Include="Resources\Images\scheduler-icon.png" />
+    <Resource Include="Resources\Images\chart-cs.png" />
+    <Resource Include="Resources\Images\chart-js.png" />
+    <Resource Include="Resources\Images\grid-cs.png" />
+    <Resource Include="Resources\Images\grid-js.png" />
+    <Resource Include="Resources\Images\scheduler-cs.png" />
+    <Resource Include="Resources\Images\scheduler-js.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
