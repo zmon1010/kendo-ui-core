@@ -29,7 +29,9 @@ namespace Kendo.Mvc.UI
 
             button.CssClass += " k-grid-excel";
             button.SpriteCssClass = "k-i-excel";
+
             button.Text = Text;
+            HtmlAttributes.Add(new KeyValuePair<string,object>("type", "button"));
             button.HtmlAttributes = HtmlAttributes;
 
             return new[] { button };
