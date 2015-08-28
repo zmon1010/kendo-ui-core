@@ -41,7 +41,8 @@
         "contextmenu": "onContextMenu",
         "*+mousedrag": "onMouseDrag",
         "*+mouseup": "onMouseUp",
-        "*+dblclick": "onDblClick"
+        "*+dblclick": "onDblClick",
+        "*+mousemove": "onMouseMove"
     };
 
     var CLIPBOARD_EVENTS = {
@@ -298,8 +299,29 @@
             event.preventDefault();
         },
 
+        onMouseMove: function(event, action) {
+            var sheet = this._workbook.activeSheet();
+
+            if (sheet.resizingInProgress()) {
+                return;
+            }
+
+            var object = this.objectAt(event);
+            if (object.type === "columnresizehandle" || object.type === "rowresizehandle") {
+                sheet.positionResizeHandle(object.ref);
+            } else {
+                sheet.removeResizeHandle();
+            }
+        },
+
         onMouseDown: function(event, action) {
             var object = this.objectAt(event);
+            var sheet = this._workbook.activeSheet();
+
+            if (object.type === "columnresizehandle" || object.type === "rowresizehandle") {
+                sheet.startResizing();
+                return;
+            }
 
             this.editor.deactivate();
 
@@ -357,7 +379,9 @@
         },
 
         onMouseDrag: function(event, action) {
-            if (this._selectionMode === "sheet") {
+            var sheet = this._workbook.activeSheet();
+
+            if (this._selectionMode === "sheet" || sheet.resizingInProgress()) {
                 return;
             }
 
@@ -393,6 +417,9 @@
         },
 
         onMouseUp: function(event, action) {
+            var sheet = this._workbook.activeSheet();
+            sheet.completeResizing();
+
             this.navigator.completeSelection();
             this.stopAutoScroll();
         },

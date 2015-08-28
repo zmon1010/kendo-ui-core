@@ -37,9 +37,30 @@
 
     test("left side returns row header", function() {
         view.refresh(kendo.spreadsheet.ALL_REASONS);
-        var result = view.objectAt(3, 45);
+        var result = view.objectAt(3, 50);
         equal(result.type, "rowheader");
         equal(result.ref.row, 1); // second row, minus the header size
+    });
+
+    test("bottom border of row header column returns rowresizehandle", function() {
+        view.refresh(kendo.spreadsheet.ALL_REASONS);
+        var result = view.objectAt(3, 20 + 20 + 20); // columnheader + two rows
+        equal(result.type, "rowresizehandle");
+        equal(result.ref.row, 1);
+    });
+
+    test("top side returns column header", function() {
+        view.refresh(kendo.spreadsheet.ALL_REASONS);
+        var result = view.objectAt(32+64+32, 3);// rowheader + first column + half of 2nd
+        equal(result.type, "columnheader");
+        equal(result.ref.col, 1); // second column
+    });
+
+    test("right border of the header column returns columnresizehandle", function() {
+        view.refresh(kendo.spreadsheet.ALL_REASONS);
+        var result = view.objectAt(32+64+64, 3);// rowheader + two columns
+        equal(result.type, "columnresizehandle");
+        equal(result.ref.col, 1); // second column
     });
 
     test("containingPane returns first pane based on the containing cell", function() {

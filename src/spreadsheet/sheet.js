@@ -459,6 +459,37 @@
             }
         },
 
+        startResizing: function() {
+            this._resizeInProgress = true;
+        },
+
+        resizingInProgress: function() {
+            return this._resizeInProgress;
+        },
+
+        completeResizing: function() {
+            if (this._resizeInProgress) {
+                this._resizeInProgress = false;
+                this.trigger("change", { selection: true });
+            }
+        },
+
+        resizeHandlePosition: function() {
+            return this._resizeHandlePosition;
+        },
+
+        removeResizeHandle: function() {
+            if (this._resizeHandlePosition) {
+                this._resizeHandlePosition = undefined;
+                this.trigger("change", { selection: true });
+            }
+        },
+
+        positionResizeHandle: function(ref) {
+            this._resizeHandlePosition = ref;
+            this.trigger("change", { selection: true });
+        },
+
         startSelection: function() {
             this._selectionInProgress = true;
         },

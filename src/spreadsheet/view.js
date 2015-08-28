@@ -7,6 +7,7 @@
     var CellRef = kendo.spreadsheet.CellRef;
     var RangeRef = kendo.spreadsheet.RangeRef;
     var DOT = ".";
+    var RESIZE_HANDLE_WIDTH = 14;
     var viewClassNames = {
         view: "k-spreadsheet-view",
         fixedContainer: "k-spreadsheet-fixed-container",
@@ -417,6 +418,24 @@
             return this.cellRectangle(this._sheet.activeCell());
         },
 
+        isColumnResizer: function(index, x) {
+            var grid = this._sheet._grid;
+            var rightBorder = grid.width(0, index) + this._sheet.columnWidth(index) - this.scroller.scrollLeft;
+            var handleWidth = RESIZE_HANDLE_WIDTH/2;
+
+            x += grid._headerWidth;
+
+            return rightBorder - handleWidth <= x && x <= rightBorder + handleWidth;
+        },
+
+        isRowResizer: function(index, y) {
+            var grid = this._sheet._grid;
+            var border = grid.height(0, index) + this._sheet.rowHeight(index) - this.scroller.scrollTop;
+            var handleWidth = RESIZE_HANDLE_WIDTH/2;
+
+            return border - handleWidth <= y && y <= border + handleWidth;
+        },
+
         objectAt: function(x, y) {
             var grid = this._sheet._grid;
 
@@ -431,13 +450,18 @@
 
                 var row = pane._grid.rows.index(y, this.scroller.scrollTop);
                 var column = pane._grid.columns.index(x, this.scroller.scrollLeft);
+                var type = "cell";
 
                 if (x < grid._headerWidth) {
-                    object = { type: "rowheader", ref: new CellRef(row, -Infinity) };
+                    type = this.isRowResizer(row, y) ? "rowresizehandle" : "rowheader";
+
+                    object = { type: type, ref: new CellRef(row, -Infinity) };
                 } else if (y < grid._headerHeight) {
-                    object = { type: "columnheader", ref: new CellRef(-Infinity, column) };
+                    type = this.isColumnResizer(column, x) ? "columnresizehandle" : "columnheader";
+
+                    object = { type: type, ref: new CellRef(-Infinity, column) };
                 } else {
-                    object = { type: "cell", ref: new CellRef(row, column) };
+                    object = { type: type, ref: new CellRef(row, column) };
                 }
             }
 
@@ -831,6 +855,14 @@
                 children.push(columnHeader.toDomTree(view.columnOffset, 0, classNames.columnHeader));
             }
 
+            if (sheet.resizeHandlePosition() && (grid.hasColumnHeader || grid.hasRowHeader)) {
+                var ref = sheet._grid.normalize(sheet.resizeHandlePosition());
+
+                if (view.ref.intersects(ref)) {
+                    children.push(this.renderResizeHandler());
+                }
+            }
+
             return kendo.dom.element("div", {
                 style: grid.style,
                 className: orientedClass(classNames, classNames.pane, grid.hasRowHeader, grid.hasColumnHeader)
@@ -890,6 +922,31 @@
             }.bind(this));
 
             return kendo.dom.element("div", { className: classNames.mergedCellsWrapper }, mergedCells);
+        },
+
+        renderResizeHandler: function() {
+            var sheet = this._sheet;
+            var ref = sheet.resizeHandlePosition();
+            var rectangle = this._rectangle(ref);
+
+            var style;
+            if (ref.col !== -Infinity) {
+                style = {
+                    height: this._grid.headerHeight + "px",
+                    width: RESIZE_HANDLE_WIDTH + "px",
+                    left: rectangle.left + rectangle.width - RESIZE_HANDLE_WIDTH/2  + "px"
+                };
+            } else {
+                style = {
+                    height: RESIZE_HANDLE_WIDTH + "px",
+                    width:  this._grid.headerWidth + "px",
+                    top: rectangle.top + rectangle.height - RESIZE_HANDLE_WIDTH/2  + "px"
+                };
+            }
+            return kendo.dom.element("div", {
+                className: "k-resize-handle",
+                style: style
+            });
         },
 
         renderFilterHeaders: function() {
