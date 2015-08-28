@@ -328,6 +328,16 @@ test("toXML creates a 'v' element for the value", function() {
     equal(dom.find("c").children("v").length, 1);
 });
 
+test("toXML creates a 'f' element for the formula", function() {
+    var worksheet = Worksheet([
+        { cells: [{ value: 0, formula: "SUM(A1:A10)" }] }
+    ]);
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("c").children("f").text(), "SUM(A1:A10)");
+});
+
 test("toXML uses the shared string index as the toXML value", function() {
     var worksheet = Worksheet();
 

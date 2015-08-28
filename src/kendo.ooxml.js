@@ -161,6 +161,9 @@ var WORKSHEET = kendo.template(
            '# if (cell.value != null) { #' +
                '<v>${cell.value}</v>' +
            '# } #' +
+           '# if (cell.formula != null) { #' +
+               '<f>${cell.formula}</f>' +
+           '# } #' +
            '</c>' +
        '# } #' +
        '</row>' +
@@ -506,6 +509,7 @@ var Worksheet = kendo.Class.extend({
         cellRef = ref(rowIndex, cellIndex);
         cells.push({
             value: value,
+            formula: data.formula,
             type: type,
             style: style,
             ref: cellRef
