@@ -55,7 +55,7 @@
         var grid = dom.kendoGrid({
             toolbar: [ { name: "pdf" }],
             pdfExport: function() {
-              ok(true);
+                ok(true);
             }
         }).data("kendoGrid");
 
@@ -105,31 +105,31 @@
         }
     });
 
-    test("passes reference to page content", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("passes reference to page content", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            grid.saveAsPDF()
-            .progress(function(e) {
-                ok(e.page instanceof kendo.drawing.Group);
-            });
+            return grid.saveAsPDF()
+                .progress(function(e) {
+                    ok(e.page instanceof kendo.drawing.Group);
+                });
         });
     });
 
-    test("triggers progress event for single page", function() {
+    asyncTest("triggers progress event for single page", 1, function() {
         createGrid();
 
-        stubMethod(draw, "exportPDF", function(group) {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            grid.saveAsPDF().progress(function(e) {
+            return grid.saveAsPDF().progress(function(e) {
                 equal(e.progress, 1);
             });
         });
     });
 
-    test("promise is available in event args", function() {
-        var promise = "foo";
+    asyncTest("promise is available in event args", 1, function() {
+        var promise = "foo", result;
 
         createGrid({
             pdfExport: function(e) {
@@ -137,77 +137,78 @@
             }
         });
 
-        stubMethod(draw, "exportPDF", function(group) {
-            return exportNoop();
-        }, function() {
-            var result = grid.saveAsPDF();
+        pdfStubMethod(draw, "exportPDF", function(group) {
             equal(result, promise);
-        });
-    });
-
-    test("promise is resolved", function() {
-        stubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            grid.saveAsPDF().done(function(e) {
+            return result = grid.saveAsPDF();
+        });
+    });
+
+    asyncTest("promise is resolved", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
+            return exportNoop();
+        }, function() {
+            return grid.saveAsPDF().done(function(e) {
                 ok(true);
             });
         });
     });
 
-    test("promise is rejected on error", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("promise is rejected on error", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return $.Deferred().reject();
         }, function() {
-            grid.saveAsPDF()
-            .fail(function(e) {
-                ok(true);
-            });
+            return grid.saveAsPDF()
+                .fail(function(e) {
+                    ok(true);
+                });
         });
     });
 
-    test("promise is rejected on drawing error", function() {
-        stubMethod(draw, "drawDOM", function(group) {
+    asyncTest("promise is rejected on drawing error", 1, function() {
+        pdfStubMethod(draw, "drawDOM", function(group) {
             return $.Deferred().reject();
         }, function() {
-            grid.saveAsPDF()
-            .fail(function(e) {
-                ok(true);
-            });
+            return grid.saveAsPDF()
+                .fail(function(e) {
+                    ok(true);
+                });
         });
     });
 
-    test("adds loading mask", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("adds loading mask", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             equal($(".k-loading-pdf-mask", grid.wrapper).length, 1);
             return exportNoop();
         }, function() {
-            grid.saveAsPDF();
+            return grid.saveAsPDF();
         });
     });
 
-    test("removes loading mask", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("removes loading mask", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            grid.saveAsPDF()
-            .done(function() {
-                equal($(".k-loading-pdf-mask", grid.wrapper).length, 0);
-            });
+            return grid.saveAsPDF()
+                .done(function() {
+                    equal($(".k-loading-pdf-mask", grid.wrapper).length, 0);
+                });
         });
     });
 
-    test("does not cycle pages for single-page export", 0, function() {
+    asyncTest("does not cycle pages for single-page export", 1, function() {
         createGrid();
 
         grid.dataSource.bind("change", function(e) {
             ok(false);
         });
 
-        stubMethod(draw, "exportPDF", function(group) {
+        pdfStubMethod(draw, "exportPDF", function(group) {
+            ok(true);
             return exportNoop();
         }, function() {
-            grid.saveAsPDF();
+            return grid.saveAsPDF();
         });
     });
 
@@ -230,29 +231,29 @@
         }
     });
 
-    test("exports all pages", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("exports all pages", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             equal(group.children.length, 4);
             return exportNoop();
         }, function() {
-            grid.saveAsPDF();
+            return grid.saveAsPDF();
         });
     });
 
-    test("cycles through all pages", function() {
+    asyncTest("cycles through all pages", 5, function() {
         var pages = [1, 2, 3, 4, 1];
         grid.dataSource.bind("change", function(e) {
             equal(grid.dataSource.page(), pages.shift());
         });
 
-        stubMethod(draw, "exportPDF", function(group) {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            grid.saveAsPDF();
+            return grid.saveAsPDF();
         });
     });
 
-    test("gets back to original page", function() {
+    asyncTest("gets back to original page", 5, function() {
         createGrid({
             pdf: {
                 allPages: true
@@ -267,35 +268,35 @@
             equal(grid.dataSource.page(), pages.shift());
         });
 
-        stubMethod(draw, "exportPDF", function(group) {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            grid.saveAsPDF();
+            return grid.saveAsPDF();
         });
     });
 
-    test("reports progress", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("reports progress", 4, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            grid.saveAsPDF()
-            .progress(function(e) {
-                ok(e.progress > 0);
-            });
+            return grid.saveAsPDF()
+                .progress(function(e) {
+                    ok(e.progress > 0);
+                });
         });
     });
 
-    test("promise is resolved", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("promise is resolved", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            grid.saveAsPDF().done(function(e) {
+            return grid.saveAsPDF().done(function(e) {
                 ok(true);
             });
         });
     });
 
-    test("promise is resolved for non-pageable grid", function() {
+    asyncTest("promise is resolved for non-pageable grid", 1, function() {
         createGrid({
             dataSource: [],
             pageable: false,
@@ -304,10 +305,10 @@
             }
         });
 
-        stubMethod(draw, "exportPDF", function(group) {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            grid.saveAsPDF().done(function(e) {
+            return grid.saveAsPDF().done(function(e) {
                 ok(true);
             });
         });

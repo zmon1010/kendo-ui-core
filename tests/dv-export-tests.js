@@ -162,6 +162,24 @@ function legacyExportTests(name, createWidget) {
     });
 }
 
+function pdfStubMethod(obj, name, impl, func, sync) {
+    var prev = obj[name];
+    obj[name] = function() {
+        if (!sync) {
+            start();
+        }
+        return impl.apply(this, arguments);
+    };
+    var p = func();
+    if (p) {
+        return p.always(function(){
+            obj[name] = prev;
+        });
+    } else {
+        obj[name] = prev;
+    }
+}
+
 // ------------------------------------------------------------
 function saveAsPDFTests(name, createWidget) {
     var draw = kendo.drawing;
@@ -186,56 +204,56 @@ function saveAsPDFTests(name, createWidget) {
         }
     });
 
-    test("saveAsPDF calls kendo.drawing.exportPDF", function() {
-        stubMethod(draw, "exportPDF", function() {
+    asyncTest("saveAsPDF calls kendo.drawing.exportPDF", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function() {
             ok(true);
             return exportNoop();
         }, function() {
-            widget.saveAsPDF();
+            return widget.saveAsPDF();
         });
     });
 
-    test("saveAsPDF passes through pdf options", function() {
-        stubMethod(draw, "exportPDF", function(group, options) {
+    asyncTest("saveAsPDF passes through pdf options", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group, options) {
             ok(options.foo);
             return exportNoop();
         }, function() {
             widget.options.pdf.foo = true;
-            widget.saveAsPDF();
+            return widget.saveAsPDF();
         });
     });
 
-    test("saveAsPDF triggers pdfExport event", function() {
-        stubMethod(draw, "exportPDF", exportNoop,
+    asyncTest("saveAsPDF triggers pdfExport event", 1, function() {
+        pdfStubMethod(draw, "exportPDF", exportNoop,
         function() {
             widget.bind("pdfExport", function() {
                 ok(true);
             });
-            widget.saveAsPDF();
+            return widget.saveAsPDF();
         });
     });
 
     test("cancelling pdfExport stops export", 0, function() {
-        stubMethod(draw, "exportPDF", function() {
+        pdfStubMethod(draw, "exportPDF", function() {
             ok(false);
         }, function() {
             widget.bind("pdfExport", function(e) {
                 e.preventDefault();
             });
-            widget.saveAsPDF();
-        });
+            return widget.saveAsPDF();
+        }, true);
     });
 
-    test("saveAsPDF passes through forceProxy option", function() {
-        stubMethod(draw, "exportPDF", function() {
+    asyncTest("saveAsPDF passes through forceProxy option", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function() {
             return new draw.Group();
         }, function() {
-            stubMethod(kendo, "saveAs", function(options) {
+            return pdfStubMethod(kendo, "saveAs", function(options) {
                 ok(options.forceProxy);
             }, function() {
                 widget.options.pdf.forceProxy = true;
-                widget.saveAsPDF();
+                return widget.saveAsPDF();
             });
-        });
+        }, true);
     });
 };

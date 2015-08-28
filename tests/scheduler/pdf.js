@@ -98,31 +98,31 @@
         }
     });
 
-    test("passes reference to page content", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("passes reference to page content", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            scheduler.saveAsPDF()
-            .progress(function(e) {
-                ok(e.page instanceof kendo.drawing.Group);
-            });
+            return scheduler.saveAsPDF()
+                .progress(function(e) {
+                    ok(e.page instanceof kendo.drawing.Group);
+                });
         });
     });
 
-    test("triggers progress event", function() {
+    asyncTest("triggers progress event", 1, function() {
         createScheduler();
 
-        stubMethod(draw, "exportPDF", function(group) {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            scheduler.saveAsPDF().progress(function(e) {
+            return scheduler.saveAsPDF().progress(function(e) {
                 equal(e.progress, 1);
             });
         });
     });
 
-    test("promise is available in event args", function() {
-        var promise = "foo";
+    asyncTest("promise is available in event args", 1, function() {
+        var promise = "foo", result;
 
         createScheduler({
             pdfExport: function(e) {
@@ -130,43 +130,43 @@
             }
         });
 
-        stubMethod(draw, "exportPDF", function(group) {
-            return exportNoop();
-        }, function() {
-            var result = scheduler.saveAsPDF();
+        pdfStubMethod(draw, "exportPDF", function(group) {
             equal(result, promise);
-        });
-    });
-
-    test("promise is resolved", function() {
-        stubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
         }, function() {
-            scheduler.saveAsPDF().done(function(e) {
+            return result = scheduler.saveAsPDF();
+        });
+    });
+
+    asyncTest("promise is resolved", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
+            return exportNoop();
+        }, function() {
+            return scheduler.saveAsPDF().done(function(e) {
                 ok(true);
             });
         });
     });
 
-    test("promise is rejected on error", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("promise is rejected on error", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
             return $.Deferred().reject();
         }, function() {
-            scheduler.saveAsPDF()
-            .fail(function(e) {
-                ok(true);
-            });
+            return scheduler.saveAsPDF()
+                .fail(function(e) {
+                    ok(true);
+                });
         });
     });
 
-    test("promise is rejected on drawing error", function() {
-        stubMethod(draw, "drawDOM", function(group) {
+    asyncTest("promise is rejected on drawing error", 1, function() {
+        pdfStubMethod(draw, "drawDOM", function(group) {
             return $.Deferred().reject();
         }, function() {
-            scheduler.saveAsPDF()
-            .fail(function(e) {
-                ok(true);
-            });
+            return scheduler.saveAsPDF()
+                .fail(function(e) {
+                    ok(true);
+                });
         });
     });
 
