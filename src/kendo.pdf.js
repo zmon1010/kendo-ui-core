@@ -123,12 +123,29 @@ kendo.PDFMixin = {
         wrapper.before(shadow);
         shadow.append(settings.content || wrapper.clone(true, true));
 
-        var promise = kendo.drawing.drawDOM(shadow);
-        promise.always(function() {
-            shadow.remove();
-        });
+        var defer = $.Deferred();
 
-        return promise;
+        /* https://github.com/telerik/kendo/issues/4790 -- We need to
+         * allow a small timeout so that the browser finalizes the
+         * layout of any images here.  Another option would be to pass
+         * forcePageBreak: "-" to drawDOM, but that would make it
+         * clone the content as well and look for page breaks;
+         * needless work, so better do it here.
+         */
+        setTimeout(function(){
+            var promise = kendo.drawing.drawDOM(shadow);
+            promise.always(function() {
+                shadow.remove();
+            }).then(function(){
+                defer.resolve.apply(defer, arguments);
+            }).fail(function(){
+                defer.reject.apply(defer, arguments);
+            }).progress(function(){
+                defer.progress.apply(defer, arguments);
+            });
+        }, 15);
+
+        return defer.promise();
     }
 };
 
