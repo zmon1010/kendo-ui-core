@@ -45,7 +45,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>npm install &amp;&amp; xvfb-run -a node_modules/.bin/grunt deploy:local:staging</command>
+      <command>cd editor/ &amp;&amp; npm i &amp;&amp; cd .. &amp;&amp; cd runner &amp;&amp; npm i &amp;&amp; cd .. &amp;&amp; xvfb-run -a node_modules/.bin/grunt deploy:local:staging</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

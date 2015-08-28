@@ -209,11 +209,15 @@
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[5]/jobNames/comparator"/>
         <string>documentation-upload</string>
         <string>internal-build-upload</string>
+        <string>internal-upload-vsx</string>
         <string>production-bundles</string>
         <string>production-cdn</string>
+        <string>production-installer</string>
+        <string>production-upload-bower</string>
         <string>production-upload-download-builder</string>
         <string>production-upload-release</string>
         <string>production-upload-release-notes</string>
+        <string>production-upload-vsx</string>
         <string>stable-bundles</string>
         <string>stable-cdn</string>
         <string>stable-themebuilder-upload</string>
