@@ -85,8 +85,26 @@ kendo.PDFMixin = {
         return promise;
     },
 
-    _drawPDF: function() {
-        return kendo.drawing.drawDOM(this.wrapper);
+    _drawPDF: function(progress) {
+        var promise = new $.Deferred();
+
+        kendo.drawing.drawDOM(this.wrapper)
+        .done(function(group) {
+            var args = {
+                page: group,
+                pageNumber: 1,
+                progress: 1,
+                totalPages: 1
+            };
+
+            progress.notify(args);
+            promise.resolve(args.page);
+        })
+        .fail(function(err) {
+            promise.reject(err);
+        });
+
+        return promise;
     },
 
     _drawPDFShadow: function(settings) {
