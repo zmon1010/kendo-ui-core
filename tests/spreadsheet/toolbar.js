@@ -167,6 +167,18 @@
         ok(toolbar.element.find("[data-property=bold]").hasClass("k-state-active"));
     });
 
+    test("refreshes textAlign buttons", function() {
+        createWithTools([
+            [ "alignLeft", "alignCenter", "alignRight" ],
+        ]);
+
+        sheet.range("A1").textAlign("center");
+
+        ok(!toolbar.element.find("a[data-tool=alignLeft]").hasClass("k-state-active"));
+        ok(toolbar.element.find("a[data-tool=alignCenter]").hasClass("k-state-active"));
+        ok(!toolbar.element.find("a[data-tool=alignRight]").hasClass("k-state-active"));
+    });
+
     test("refreshes color picker state", function() {
         createWithTools([ "backgroundColor" ]);
 

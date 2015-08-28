@@ -188,7 +188,7 @@
             var range = this.range();
             var tools = this._tools();
 
-            function setToggle(tool, toggle) {
+            function setToggle(tool, value) {
                 var toolbar = tool.toolbar;
                 var overflow = tool.overflow;
                 var togglable = (toolbar && toolbar.options.togglable) ||
@@ -198,9 +198,15 @@
                     return;
                 }
 
-                if (toolbar) {
-                    toolbar.toggle(toggle);
+                var toggle = false;
+
+                if (typeof value === "boolean") {
+                    toggle = value;
+                } else if (typeof value === "string") {
+                    toggle = toolbar.options.value === value;
                 }
+
+                toolbar.toggle(toggle);
 
                 if (overflow) {
                     overflow.toggle(toggle);
@@ -226,7 +232,7 @@
                 var value = range[property]();
 
                 if (tool.type === "button") {
-                    setToggle(tool, !!value);
+                    setToggle(tool, value);
                 } else {
                     update(tool, value);
                 }
