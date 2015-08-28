@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="loader.js"></script>
+        <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+        <link rel="stylesheet/less" href="../styles/web/kendo.common.less">
+        <link rel="stylesheet/less" href="../styles/web/kendo.silver.less">
+        <script>less = { logLevel: 1, env: "development" };</script>
+        <script src="../demos/mvc/content/shared/js/less.js"></script>
+
+        <script>
+          requireSync([
+            "../src/jquery.js",
+            "../src/kendo.dom.js",
+            "../src/cultures/kendo.culture.bg-BG.js",
+            "../src/cultures/kendo.culture.de-DE.js",
+            "../src/cultures/kendo.culture.el-GR.js",
+            "../src/cultures/kendo.culture.en-GB.js",
+            "../src/kendo.spreadsheet.js",
+            "../src/kendo.pdf.js"
+          ]);
+        </script>
+        <style>
+            body {
+                font: 12px/1.5 Arial,sans-serif;
+            }
+
+            .k-spreadsheet-filter-menu {
+                border: 1px solid red;
+                width: 300px;
+            }
+
+            .k-spreadsheet-filter-menu .k-action-buttons {
+                margin: 0;
+                border-top: 1px solid #ceced2;
+            }
+        </style>
+    </head>
+    <body>
+        <button class="k-button" id="open">Open</button>
+        <button class="k-button" id="close">Close</button>
+        <div id="spreadsheet"></div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="filtermenu"></div>
+    </body>
+    <script>
+        var spreadsheet = $("#spreadsheet").kendoSpreadsheet().data("kendoSpreadsheet");
+        var sheet = spreadsheet.activeSheet();
+        var filterMenu = new kendo.spreadsheet.FilterMenu($("#filtermenu"), {
+
+        });
+    </script>
+</html>

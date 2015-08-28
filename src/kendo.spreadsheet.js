@@ -27,7 +27,8 @@
         "./spreadsheet/runtime.functions.js",
         "./spreadsheet/toolbar",
         "./spreadsheet/dialogs",
-        "./spreadsheet/sheetbinder"
+        "./spreadsheet/sheetbinder",
+        "./spreadsheet/filtermenu"
     ], f);
 })(function(){
     var __meta__ = {
