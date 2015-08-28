@@ -328,6 +328,30 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Define the default item of the widget, when the autoBind is set to false.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .Text(new
+        ///              {
+        ///                  Text = "Chai",
+        ///                  Foo = "Bar"
+        ///              })
+        ///              .ValueTemplate("#=Foo# #=Text#")
+        ///              .AutoBind(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public DropDownListBuilder Text(object text)
+        {
+            Component.Text = text;
+
+            return this;
+        }
+
+        /// <summary>
         /// OptionLabelTemplate to be used to render the option label content.
         /// </summary>
         /// <example>

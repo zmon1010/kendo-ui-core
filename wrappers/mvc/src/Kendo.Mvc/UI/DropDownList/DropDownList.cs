@@ -64,7 +64,7 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        public string Text
+        public object Text
         {
             get;
             set;
@@ -148,7 +148,7 @@ namespace Kendo.Mvc.UI
                 options["cascadeFromField"] = CascadeFromField;
             }
 
-            if (!string.IsNullOrEmpty(Text))
+            if (Text != null)
             {
                 options["text"] = Text;
             }
