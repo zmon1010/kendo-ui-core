@@ -918,6 +918,24 @@
         ok(view.element.find(".k-event").length);
     });
 
+    test("event is rendered with correct time title", 1, function() {
+        var selectedDate = new Date(2013, 1, 26, 0, 0, 0),
+            view = setup({
+                date: selectedDate,
+                eventTemplate: "#=start##=end#"
+            });
+
+        var recur = new SchedulerEvent({uid:"uid", start: new Date(2013, 1, 24, 10, 0, 0), end: new Date(2013, 1, 24, 11, 0, 0), title: "my event", recurrenceRule: "FREQ=DAILY" });
+
+        var events = recur.expand(selectedDate, new Date(2013, 1, 27));
+
+        view.render(events);
+
+        var eventTitle = view.content.find("div.k-event").text();
+
+        equal(eventTitle.indexOf("1970"), -1);
+    });
+
     test("two day all day event is rendered correctly when starts in previous day", function() {
         var view = setup({
             date: new Date(2013, 1, 2),

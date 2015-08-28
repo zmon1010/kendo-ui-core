@@ -1323,12 +1323,12 @@ var __meta__ = {
 
             var resources = this.eventResources(event);
 
-            if (event._startTime) {
+           if (event._startTime && eventStartTime !== kendo.date.getMilliseconds(event.start)) {
                 eventStartDate = new Date(eventStartTime);
                 eventStartDate = kendo.timezone.apply(eventStartDate, "Etc/UTC");
             }
 
-            if (event.endTime) {
+           if (event._endTime && eventEndTime !== kendo.date.getMilliseconds(event.end)) {
                 eventEndDate = new Date(eventEndTime);
                 eventEndDate = kendo.timezone.apply(eventEndDate, "Etc/UTC");
             }
