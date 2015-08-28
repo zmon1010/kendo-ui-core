@@ -61,7 +61,7 @@
             }
         });
 
-        test("Bubbles with negative size are hidden", function() {
+        test("Points are not created for bubbles with negative size ", function() {
             setupBubbleChart(plotArea, { series: [{
                     data: [{x: 1, y: 1, size: -100}],
                     negativeValues: { visible: false },
@@ -69,17 +69,19 @@
                 }]
             });
 
-            equal(bubbleChart.points.length, 0);
+            equal(bubbleChart.points.length, 1);
+            equal(bubbleChart.points[0], null);
         });
 
-        test("Bubbles with zero size are hidden", function() {
+        test("Points are not created for bubbles with zero size", function() {
             setupBubbleChart(plotArea, { series: [{
                     data: [{x: 1, y: 1, size: 0}],
                     type: "bubble"
                 }]
             });
 
-            equal(bubbleChart.points.length, 0);
+            equal(bubbleChart.points.length, 1);
+            equal(bubbleChart.points[0], null);
         });
 
         test("Maximum bubble diameter is set to maxSize", function() {
@@ -506,7 +508,7 @@
             equal(points[0].color, "red");
         });
 
-        test("negative values are hidden by default", function() {
+        test("Points for negative size values are not created by default", function() {
             createBubbleChart({
                 series: [{
                     type: "bubble",
@@ -515,7 +517,8 @@
                 }]
             });
 
-            equal(points.length, 0);
+            equal(points.length, 1);
+            equal(points[0], null);
         });
 
         test("color function should be with bigger priority negative values color", function() {
@@ -535,7 +538,7 @@
             equal(points[0].color, "red");
         });
 
-        test("point with size null should be hidden", function() {
+        test("Points for null size values are not created", function() {
             createBubbleChart({
                 series: [{
                     type: "bubble",
@@ -544,7 +547,8 @@
                 }]
             });
 
-            equal(points.length, 0);
+            equal(points.length, 1);
+            equal(points[0], null);
         });
 
     })();

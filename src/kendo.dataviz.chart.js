@@ -6428,6 +6428,9 @@ var __meta__ = {
                 this._maxSize = math.max(this._maxSize, math.abs(value.size));
                 this._minSize = math.min(this._minSize, math.abs(value.size));
                 ScatterChart.fn.addValue.call(this, value, fields);
+            } else {
+                this.points.push(null);
+                this.seriesPoints[fields.seriesIx].push(null);
             }
         },
 
@@ -6520,22 +6523,24 @@ var __meta__ = {
                 }
 
                 for (pointIx = 0; pointIx < seriesPoints.length; pointIx++) {
-                    var point = seriesPoints[pointIx],
-                        area = (math.abs(point.value.size) - chart._minSize) * areaRatio,
-                        r = math.sqrt((minArea + area) / math.PI),
-                        baseZIndex = valueOrDefault(point.options.zIndex, 0),
-                        zIndex = baseZIndex + (1 - r / maxR);
+                    var point = seriesPoints[pointIx];
+                    if (point) {
+                        var area = (math.abs(point.value.size) - chart._minSize) * areaRatio,
+                            r = math.sqrt((minArea + area) / math.PI),
+                            baseZIndex = valueOrDefault(point.options.zIndex, 0),
+                            zIndex = baseZIndex + (1 - r / maxR);
 
-                    deepExtend(point.options, {
-                        zIndex: zIndex,
-                        markers: {
-                            size: r * 2,
-                            zIndex: zIndex
-                        },
-                        labels: {
-                            zIndex: zIndex + 1
-                        }
-                    });
+                        deepExtend(point.options, {
+                            zIndex: zIndex,
+                            markers: {
+                                size: r * 2,
+                                zIndex: zIndex
+                            },
+                            labels: {
+                                zIndex: zIndex + 1
+                            }
+                        });
+                    }
                 }
             }
         },
