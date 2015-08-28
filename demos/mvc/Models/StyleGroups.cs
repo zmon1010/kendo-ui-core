@@ -48,11 +48,11 @@ namespace Kendo.Models
         public static readonly IList<string> Mobile = new string[]
         {
 #if DEBUG
-            "web/kendo.common.less",
+            "web/kendo.common-nova.less",
             "web/kendo.nova.less",
             "mobile/kendo.mobile.nova.less"
 #else
-            "kendo.common.min.css",
+            "kendo.common-nova.min.css",
             "kendo.nova.min.css",
             "kendo.mobile.nova.min.css"
 #endif
