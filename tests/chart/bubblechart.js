@@ -88,8 +88,14 @@
             close(firstPoint.options.markers.size, 110, TOLERANCE);
         });
 
-        test("Minimum bubble diameter is set to minSize", function() {
-            close(bubbleChart.points[1].options.markers.size, 10, TOLERANCE);
+        test("Bubble diameter of bubbles with size close to zero are close to the minSize", function() {
+            setupBubbleChart(plotArea, { series: [{
+                    data: [{x: 1, y: 1, size: 0.1}, {x: 1, y: 1, size: 100}],
+                    type: "bubble",
+                    minSize: 10
+                }]
+            });
+            close(bubbleChart.points[0].options.markers.size, 10, TOLERANCE);
         });
 
         test("Bubble diameter is equal to the max size if there is a single bubble", function() {
@@ -131,7 +137,7 @@
                 }]
             });
 
-            close(firstPoint.options.markers.size, 12, TOLERANCE);
+            close(firstPoint.options.markers.size, 40, TOLERANCE);
         });
 
         test("Default minimum bubble diameter is floored to 10", function() {

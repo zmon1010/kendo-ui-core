@@ -6410,7 +6410,6 @@ var __meta__ = {
     var BubbleChart = ScatterChart.extend({
         init: function(plotArea, options) {
             this._maxSize = MIN_VALUE;
-            this._minSize = MAX_VALUE;
             ScatterChart.fn.init.call(this, plotArea, options);
         },
 
@@ -6426,7 +6425,6 @@ var __meta__ = {
         addValue: function(value, fields) {
             if (value.size !== null && (value.size > 0 || (value.size < 0 && fields.series.negativeValues.visible))) {
                 this._maxSize = math.max(this._maxSize, math.abs(value.size));
-                this._minSize = math.min(this._minSize, math.abs(value.size));
                 ScatterChart.fn.addValue.call(this, value, fields);
             } else {
                 this.points.push(null);
@@ -6514,18 +6512,12 @@ var __meta__ = {
                     minArea = math.PI * minR * minR,
                     maxArea = math.PI * maxR * maxR,
                     areaRange = maxArea - minArea,
-                    sizeRange = chart._maxSize - chart._minSize,
-                    areaRatio = areaRange / sizeRange;
-
-                if (sizeRange === 0) {
-                    areaRatio = 0;
-                    minArea = maxArea;
-                }
+                    areaRatio = areaRange / chart._maxSize;
 
                 for (pointIx = 0; pointIx < seriesPoints.length; pointIx++) {
                     var point = seriesPoints[pointIx];
                     if (point) {
-                        var area = (math.abs(point.value.size) - chart._minSize) * areaRatio,
+                        var area = math.abs(point.value.size) * areaRatio,
                             r = math.sqrt((minArea + area) / math.PI),
                             baseZIndex = valueOrDefault(point.options.zIndex, 0),
                             zIndex = baseZIndex + (1 - r / maxR);
