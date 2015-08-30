@@ -445,23 +445,17 @@
     ]);
 
     defineFunction("min", function(numbers){
-        if (numbers.length) {
-            return Math.min.apply(Math, numbers);
-        } else {
-            return new CalcError("N/A");
-        }
+        return Math.min.apply(Math, numbers);
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length > 0", "N/A" ] ]
     ]);
 
     defineFunction("max", function(numbers){
-        if (numbers.length) {
-            return Math.max.apply(Math, numbers);
-        } else {
-            return new CalcError("N/A");
-        }
+        return Math.max.apply(Math, numbers);
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length > 0", "N/A" ] ]
     ]);
 
     defineFunction("counta", function(values){
@@ -710,9 +704,6 @@
 
     function _var_sp(numbers, divisor, avg) {
         var n = numbers.length;
-        if (n < 2) {
-            return new CalcError("NUM");
-        }
         if (avg == null) {
             avg = _avg(numbers);
         }
@@ -722,51 +713,49 @@
     }
 
     function _stdev_sp(numbers, divisor) {
-        var v = _var_sp(numbers, divisor);
-        if (v instanceof CalcError) {
-            return v;
-        }
-        return Math.sqrt(v);
+        return Math.sqrt(_var_sp(numbers, divisor));
     }
 
     // https://support.office.com/en-sg/article/STDEV-S-function-7d69cf97-0c1f-4acf-be27-f3e83904cc23
     defineFunction("stdev.s", function(numbers){
         return _stdev_sp(numbers, numbers.length - 1);
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length >= 2", "NUM" ] ]
     ]);
 
     // https://support.office.com/en-sg/article/STDEV-P-function-6e917c05-31a0-496f-ade7-4f4e7462f285
     defineFunction("stdev.p", function(numbers){
         return _stdev_sp(numbers, numbers.length);
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length >= 2", "NUM" ] ]
     ]);
 
     defineFunction("var.s", function(numbers){
         return _var_sp(numbers, numbers.length - 1);
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length >= 2", "NUM" ] ]
     ]);
 
     defineFunction("var.p", function(numbers){
         return _var_sp(numbers, numbers.length);
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length >= 2", "NUM" ] ]
     ]);
 
     defineFunction("median", function(numbers){
         var n = numbers.length;
-        if (n < 1) {
-            return new CalcError("N/A");
-        }
         numbers.sort(ascending);
         if (n % 2) {
             return numbers[n >> 1];
         }
         return (numbers[n >> 1] + numbers[n >> 1 + 1]) / 2;
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length > 0", "N/A" ] ]
     ]);
 
     defineFunction("mode.sngl", function(numbers){
@@ -813,9 +802,6 @@
 
     defineFunction("geomean", function(numbers){
         var n = numbers.length;
-        if (!n) {
-            return new CalcError("VALUE");
-        }
         var p = numbers.reduce(function(p, num){
             if (num < 0) {
                 throw new CalcError("NUM");
@@ -824,14 +810,12 @@
         }, 1);
         return Math.pow(p, 1/n);
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length > 0", "NUM" ] ]
     ]);
 
     defineFunction("harmean", function(numbers){
         var n = numbers.length;
-        if (!n) {
-            return new CalcError("VALUE");
-        }
         var s = numbers.reduce(function(s, num){
             if (!num) {
                 throw new CalcError("DIV/0");
@@ -840,14 +824,12 @@
         }, 0);
         return n / s;
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length > 0", "NUM" ] ]
     ]);
 
     defineFunction("trimmean", function(numbers, p){
         var n = numbers.length;
-        if (!n) {
-            return new CalcError("VALUE");
-        }
         numbers.sort(ascending);
         var discard = Math.floor(n * p);
         if (discard % 2) {
@@ -860,9 +842,10 @@
         }
         return sum / (n - discard * 2);
     }).args([
-        [ "array", [ "collect", "number", 1 ] ],
+        [ "numbers", [ "collect", "number", 1 ] ],
         [ "percent", [ "and", "number",
-                       [ "assert", "$percent >= 0 && $percent < 1", "NUM" ] ] ]
+                       [ "assert", "$percent >= 0 && $percent < 1", "NUM" ] ] ],
+        [ "?", [ "assert", "$numbers.length > 0", "NUM" ] ]
     ]);
 
     defineFunction("frequency", function(data, bins){
@@ -921,9 +904,6 @@
     // formula available at https://support.office.microsoft.com/en-us/article/KURT-function-cbbc2312-dfa6-4cc4-b5c0-1b3c59cc9377
     defineFunction("kurt", function(numbers){
         var n = numbers.length;
-        if (n < 4) {
-            return new CalcError("DIV/0");
-        }
         var avg = _avg(numbers);
         var variance = _var_sp(numbers, n-1, avg);
         var stddev = Math.sqrt(variance);
@@ -933,7 +913,8 @@
         return n*(n+1)/((n-1)*(n-2)*(n-3)) * sum
             - 3*Math.pow(n-1, 2)/((n-2)*(n-3));
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length >= 4", "NUM" ] ]
     ]);
 
     function _percentrank(numbers, x, exc) {
@@ -964,11 +945,11 @@
 
     var ARGS_PERCENTRANK = [
         [ "array", [ "collect", "number", 1 ] ],
-        [ "x", [ "and", "number",
-                 [ "assert", "$array.length > 0", "NUM" ] ] ],
+        [ "x", "number" ],
         [ "significance", [ "or", [ "null", 3 ],
                             [ "and", "integer",
-                              [ "assert", "$significance >= 1", "NUM" ] ] ] ]
+                              [ "assert", "$significance >= 1", "NUM" ] ] ] ],
+        [ "?", [ "assert", "$array.length > 0", "NUM" ] ]
     ];
 
     defineFunction("percentrank.inc", function(numbers, x, significance) {
@@ -1079,9 +1060,6 @@
     /* -----[ Statistical functions ]----- */
 
     defineFunction("average", function(numbers){
-        if (!numbers.length) {
-            return new CalcError("DIV/0");
-        }
         var sum = numbers.reduce(function(sum, num){
             return sum + num;
         }, 0);
@@ -1090,7 +1068,8 @@
         // most numeric functions must treat booleans as numbers (1 for TRUE
         // and 0 for FALSE), but AVERAGE shouldn't.
         [ "numbers", [ "collect", [ "and", "number",
-                                    [ "not", "boolean" ] ] ] ]
+                                    [ "not", "boolean" ] ] ] ],
+        [ "?", [ "assert", "$numbers.length > 0", "DIV/0" ] ]
     ]);
 
     defineFunction("averagea", function(values){
@@ -1244,9 +1223,6 @@
 
     // https://support.office.com/en-sg/article/AVEDEV-function-ec78fa01-4755-466c-9a2b-0c4f9eacaf6d
     defineFunction("avedev", function(numbers){
-        if (numbers.length < 2) {
-            return new CalcError("NUM");
-        }
         var avg = numbers.reduce(function(sum, num){
             return sum + num;
         }, 0) / numbers.length;
@@ -1254,7 +1230,8 @@
             return sum + Math.abs(num - avg);
         }, 0) / numbers.length;
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "collect", "number" ] ],
+        [ "?", [ "assert", "$numbers.length >= 2", "NUM" ] ]
     ]);
 
     function _binom_dist(x, n, p, cumulative) {
