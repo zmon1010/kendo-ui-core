@@ -418,22 +418,25 @@
             return this.cellRectangle(this._sheet.activeCell());
         },
 
-        isColumnResizer: function(index, x) {
-            var grid = this._sheet._grid;
-            var rightBorder = grid.width(0, index) + this._sheet.columnWidth(index) - this.scroller.scrollLeft;
-            var handleWidth = RESIZE_HANDLE_WIDTH/2;
-
-            x += grid._headerWidth;
-
-            return rightBorder - handleWidth <= x && x <= rightBorder + handleWidth;
+        _rectangle: function(pane, ref) {
+            var view = pane._grid.view(this.scroller.scrollLeft, this.scroller.scrollTop);
+            return pane._grid.boundingRectangle(ref.toRangeRef()).offset(-view.mergedCellLeft, -view.mergedCellTop);
         },
 
-        isRowResizer: function(index, y) {
-            var grid = this._sheet._grid;
-            var border = grid.height(0, index) + this._sheet.rowHeight(index) - this.scroller.scrollTop;
+        isColumnResizer: function(x, pane, ref) {
+            var rectangle = this._rectangle(pane, ref);
+
             var handleWidth = RESIZE_HANDLE_WIDTH/2;
 
-            return border - handleWidth <= y && y <= border + handleWidth;
+            return rectangle.right - handleWidth <= x && x <= rectangle.right + handleWidth;
+        },
+
+        isRowResizer: function(y, pane, ref) {
+            var rectangle = this._rectangle(pane, ref);
+
+            var handleWidth = RESIZE_HANDLE_WIDTH/2;
+
+            return rectangle.bottom - handleWidth <= y && y <= rectangle.bottom + handleWidth;
         },
 
         objectAt: function(x, y) {
@@ -450,19 +453,19 @@
 
                 var row = pane._grid.rows.index(y, this.scroller.scrollTop);
                 var column = pane._grid.columns.index(x, this.scroller.scrollLeft);
+
                 var type = "cell";
+                var ref = new CellRef(row, column);
 
                 if (x < grid._headerWidth) {
-                    type = this.isRowResizer(row, y) ? "rowresizehandle" : "rowheader";
-
-                    object = { type: type, ref: new CellRef(row, -Infinity) };
+                    ref = new CellRef(row, -Infinity);
+                    type = this.isRowResizer(y, pane, ref) ? "rowresizehandle" : "rowheader";
                 } else if (y < grid._headerHeight) {
-                    type = this.isColumnResizer(column, x) ? "columnresizehandle" : "columnheader";
-
-                    object = { type: type, ref: new CellRef(-Infinity, column) };
-                } else {
-                    object = { type: type, ref: new CellRef(row, column) };
+                    ref = new CellRef(-Infinity, column);
+                    type = this.isColumnResizer(x, pane, ref) ? "columnresizehandle" : "columnheader";
                 }
+
+                object = { type: type, ref: ref };
             }
 
             object.pane = pane;

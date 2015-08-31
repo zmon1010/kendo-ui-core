@@ -43,7 +43,7 @@
     test("renders the resize handler for row", function() {
         var pane = createPane(0, 0);
 
-        sheet.positionResizeHandle(new CellRef(0, -Infinity)); // first column
+        sheet.positionResizeHandle(new CellRef(0, -Infinity)); // row column
 
         pane._currentView = DUMMY_VIEW;
 
