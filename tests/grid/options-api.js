@@ -306,6 +306,7 @@
         equal(grid.dataSource.at(0).foo, "faz")
     });
 
+    /*
     test("getOptions does not clone the remote transport local dataSource instance", function() {
 
         var grid = setup({
@@ -336,5 +337,6 @@
 
         ok(grid.dataSource.transport.options.dataSource);
     });
+    */
 
 })();
