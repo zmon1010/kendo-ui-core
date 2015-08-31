@@ -247,4 +247,24 @@
         equal(text, "Font size (9px) ...");
     });
 
+    test("refreshes filter button state", function() {
+        createWithTools([ "filter" ]);
+
+        sheet.range("A1:B2").values([
+            [1, 2],
+            [2, 3]
+        ]).filter({
+            column: 0,
+            filter: new kendo.spreadsheet.ValueFilter( {
+                values: [2]
+            })
+        });
+
+        ok(toolbar.element.find("[data-property=filter]").hasClass("k-state-active"));
+
+        sheet.clearFilter(0);
+
+        ok(!toolbar.element.find("[data-property=filter]").hasClass("k-state-active"));
+    });
+
 })();
