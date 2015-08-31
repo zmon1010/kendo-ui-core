@@ -2456,10 +2456,10 @@ var __meta__ = {
                         contentBox = wrapperBox.alignTo(targetBox, position).translate(-length, targetBox.center().y - wrapperBox.center().y);
 
                         if (options.line.visible) {
-                            lineStart = [math.floor(targetBox.x1), center.y];
+                            lineStart = [targetBox.x1, center.y];
                             note.linePoints = [
                                 lineStart,
-                                [math.floor(contentBox.x2), center.y]
+                                [contentBox.x2, center.y]
                             ];
                             box = contentBox.clone().wrapPoint(lineStart);
                         }
@@ -2467,10 +2467,10 @@ var __meta__ = {
                         contentBox = wrapperBox.alignTo(targetBox, position).translate(length, targetBox.center().y - wrapperBox.center().y);
 
                         if (options.line.visible) {
-                            lineStart = [math.floor(targetBox.x2), center.y];
+                            lineStart = [targetBox.x2, center.y];
                             note.linePoints = [
                                 lineStart,
-                                [math.floor(contentBox.x1), center.y]
+                                [contentBox.x1, center.y]
                             ];
                             box = contentBox.clone().wrapPoint(lineStart);
                         }
@@ -2480,10 +2480,10 @@ var __meta__ = {
                         contentBox = wrapperBox.alignTo(targetBox, position).translate(targetBox.center().x - wrapperBox.center().x, length);
 
                         if (options.line.visible) {
-                            lineStart = [math.floor(center.x), math.floor(targetBox.y2)];
+                            lineStart = [center.x, targetBox.y2];
                             note.linePoints = [
                                 lineStart,
-                                [math.floor(center.x), math.floor(contentBox.y1)]
+                                [center.x, contentBox.y1]
                             ];
                             box = contentBox.clone().wrapPoint(lineStart);
                         }
@@ -2491,10 +2491,10 @@ var __meta__ = {
                         contentBox = wrapperBox.alignTo(targetBox, position).translate(targetBox.center().x - wrapperBox.center().x, -length);
 
                         if (options.line.visible) {
-                            lineStart = [math.floor(center.x), math.floor(targetBox.y1)];
+                            lineStart = [center.x, targetBox.y1];
                             note.linePoints = [
                                 lineStart,
-                                [math.floor(center.x), math.floor(contentBox.y2)]
+                                [center.x, contentBox.y2]
                             ];
                             box = contentBox.clone().wrapPoint(lineStart);
                         }
