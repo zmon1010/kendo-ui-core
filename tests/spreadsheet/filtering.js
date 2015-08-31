@@ -110,4 +110,25 @@
         });
     });
 
+    test("returns curently applied filters", 2, function() {
+        var filter = sheet.range("A1:B2").values([
+            [1, 2],
+            [2, 3]
+        ]).filter();
+
+        ok(!filter);
+
+        filter = sheet.range("A1:B2").values([
+            [1, 2],
+            [2, 3]
+        ]).filter({
+            column: 0,
+            filter: new kendo.spreadsheet.ValueFilter( {
+                values: [2]
+            })
+        });
+
+        ok(filter);
+    });
+
 })();

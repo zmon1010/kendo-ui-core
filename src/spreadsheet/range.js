@@ -357,6 +357,10 @@
         },
 
         filter: function(spec) {
+            if (spec === undefined) {
+                return this._sheet.filter();
+            }
+
             if (this._ref instanceof UnionRef) {
                 throw new Error("Unsupported for multiple ranges.");
             }
