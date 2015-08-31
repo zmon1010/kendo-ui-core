@@ -113,7 +113,9 @@
                 size.baseline = baselineMarker.offsetTop + BASELINE_MARKER_SIZE;
             }
 
-            this._cache.put(cacheKey, size);
+            if (size.width > 0 && size.height > 0) {
+                this._cache.put(cacheKey, size);
+            }
 
             measureBox.parentNode.removeChild(measureBox);
 
