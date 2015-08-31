@@ -54,7 +54,8 @@
                         .Attributes(Component.GetUnobtrusiveValidationAttributes())
                         .ToggleAttribute("disabled", "disabled", !Component.Enabled)
                         .Attributes(Component.HtmlAttributes)
-                        .ToggleClass("input-validation-error", !Component.IsValid());
+                        .ToggleClass("input-validation-error", !Component.IsValid())
+                        .PrependClass("k-checkbox");
         }
 
         public IHtmlNode Label()
