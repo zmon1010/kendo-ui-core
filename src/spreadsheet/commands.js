@@ -269,6 +269,18 @@
             }
         }
     });
+
+    var CutCommand = kendo.spreadsheet.CutCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._clipboard = options.workbook.clipboard();
+        },
+        exec: function() {
+            if(this._clipboard.canCopy()) {
+                this._clipboard.cut();
+            }
+        }
+    });
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

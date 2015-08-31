@@ -40,6 +40,12 @@
             this.contents = sheet.selection().getState();
         },
 
+        cut: function() {
+            var sheet = this.workbook.activeSheet();
+            this.copy();
+            sheet.range(sheet.select()).clear();
+        },
+
         pasteRef: function() {
             var sheet = this.workbook.activeSheet();
             var destination = sheet.activeCell().first();
@@ -53,7 +59,7 @@
         paste: function() {
             var content = {};
             var sheet = this.workbook.activeSheet();
-            if(this._internal == this._external){
+            if(this._internal !== undefined || (this._internal == this._external)){
                 content = this.contents;
             }else{
                 var rows = [];

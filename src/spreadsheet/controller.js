@@ -343,7 +343,8 @@
         },
 
         onCut: function(event, action) {
-            this.navigator.setSelectionValue(empty);
+            var command = new kendo.spreadsheet.CutCommand({ workbook: this.view._workbook });
+            this.view._workbook.execute(command);
         },
 
         clipBoardValue: function() {
