@@ -281,6 +281,19 @@
             }
         }
     });
+
+    var FilterCommand = kendo.spreadsheet.FilterCommand = Command.extend({
+        exec: function() {
+            var range = this.range();
+
+            if (range.hasFilter()) {
+                range.filter(false);
+            } else {
+                range.filter(true);
+            }
+        }
+    });
+
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

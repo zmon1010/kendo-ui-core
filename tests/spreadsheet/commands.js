@@ -671,4 +671,27 @@
         equal(sheet.rowHeight(0), 20);
     });
 
+    module("SpreadSheet FilterCommand", moduleOptions);
+
+    var FilterCommand = $.proxy(command, this, kendo.spreadsheet.FilterCommand);
+
+    test("Enables filtering", function() {
+        var command = FilterCommand({});
+        var range = sheet.range("A1:B2");
+
+        command.exec();
+
+        ok(range.hasFilter());
+    });
+
+    test("Disables filtering if sheet already has filter", function() {
+        var command = FilterCommand({});
+        var range = sheet.range("A1:B2");
+
+        range.filter(true);
+        command.exec();
+
+        ok(!range.hasFilter());
+    });
+
 })();
