@@ -150,6 +150,29 @@
 
         replaceAt: function(index, ref) {
             return ref;
+        },
+
+        forEachColumnIndex: function(callback) {
+            this.forEachAxisIndex('col', callback);
+        },
+
+        forEachRowIndex: function(callback) {
+            this.forEachAxisIndex('row', callback);
+        },
+
+        forEachAxisIndex: function(axis, callback) {
+            var sorted = [];
+
+            var method = axis === 'row' ? 'forEachRow' : 'forEachColumn';
+
+            this[method](function(ref) {
+                var index = ref.first()[axis];
+                if (sorted.indexOf(index) === -1) {
+                    sorted.push(index);
+                }
+            });
+
+            sorted.sort().forEach(callback);
         }
     });
 

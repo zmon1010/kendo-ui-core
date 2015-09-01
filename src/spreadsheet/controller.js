@@ -129,10 +129,13 @@
                         this.onCopy();
                         break;
                     case "paste":
-                        this.onPaste();
+                        this.onPaste(e);
                         break;
-                    case "hide":
-                        this.onHide();
+                    case "hide-row":
+                        this.axisManager.hideSelectedRows();
+                        break;
+                    case "hide-column":
+                        this.axisManager.hideSelectedColumns();
                         break;
                     case "delete-row":
                         this.axisManager.deleteSelectedRows();

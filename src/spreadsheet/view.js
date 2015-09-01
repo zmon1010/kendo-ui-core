@@ -237,6 +237,7 @@
         '<li data-action=paste>Paste</li>' +
         '<li class="k-separator"></li>' +
         '<li data-action="delete-row">Delete</li>'+
+        '<li data-action="hide-row">Hide</li>'+
     '</ul>';
 
     var COL_HEADER_CONTEXT_MENU = '<ul class="#=classNames.colHeaderContextMenu#">' +
@@ -248,7 +249,7 @@
         '<li data-action="insert-right">Insert 1 Right</li>'+
         '<li class="k-separator"></li>' +
         '<li data-action="delete-column">Delete</li>'+
-        '<li data-action="hide">Hide</li>'+
+        '<li data-action="hide-column">Hide</li>'+
         '<li data-action="unhide">Unhide</li>'+
     '</ul>';
 

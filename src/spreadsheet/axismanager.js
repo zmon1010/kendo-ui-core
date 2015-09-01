@@ -12,41 +12,43 @@
             this._sheet = sheet;
         },
 
-        sortedAxis: function(ref, axis) {
-            var sorted = [];
-
-            var method = axis === 'row' ? 'forEachRow' : 'forEachColumn';
-
-            ref[method](function(segment) {
-                var index = segment.first()[axis];
-                if (sorted.indexOf(index) === -1) {
-                    sorted.push(index);
-                }
-            });
-
-            sorted.sort();
-            return sorted;
-        },
-
         deleteColumn: function(ref) {
             var sheet = this._sheet;
-            var sortedColumns = this.sortedAxis(ref, 'col');
 
             sheet.batch(function() {
-                for (var i = 0, len = sortedColumns.length; i < len; i++) {
-                    sheet.deleteColumn(sortedColumns[i] - i);
-                }
+                ref.forEachColumnIndex(function(index, i) {
+                    sheet.deleteColumn(index - i);
+                });
             }, true);
         },
 
         deleteRow: function(ref) {
             var sheet = this._sheet;
-            var sortedRows = this.sortedAxis(ref, 'row');
 
             sheet.batch(function() {
-                for (var i = 0, len = sortedRows.length; i < len; i++) {
-                    sheet.deleteRow(sortedRows[i] - i);
-                }
+                ref.forEachRowIndex(function(index, i) {
+                    sheet.deleteRow(index - i);
+                });
+            }, true);
+        },
+
+        hideColumn: function(ref) {
+            var sheet = this._sheet;
+
+            sheet.batch(function() {
+                ref.forEachColumnIndex(function(index, i) {
+                    sheet.hideColumn(index - i);
+                });
+            }, true);
+        },
+
+        hideRow: function(ref) {
+            var sheet = this._sheet;
+
+            sheet.batch(function() {
+                ref.forEachRowIndex(function(index, i) {
+                    sheet.hideRow(index - i);
+                });
             }, true);
         },
 
@@ -56,6 +58,14 @@
 
         deleteSelectedRows: function() {
             this.deleteRow(this._sheet.select());
+        },
+
+        hideSelectedColumns: function() {
+            this.hideColumn(this._sheet.select());
+        },
+
+        hideSelectedRows: function() {
+            this.hideRow(this._sheet.select());
         }
     });
 
