@@ -459,7 +459,8 @@
             }
         },
 
-        startResizing: function() {
+        startResizing: function(initialPosition) {
+            this._initialPosition = initialPosition;
             this._resizeInProgress = true;
         },
 
@@ -470,7 +471,16 @@
         completeResizing: function() {
             if (this._resizeInProgress) {
                 this._resizeInProgress = false;
-                this.trigger("change", { selection: true });
+                if (this._initialPosition) {
+                    var handlePosition = this.resizeHandlePosition();
+                    if (handlePosition.col !== -Infinity) {
+                        this.columnWidth(handlePosition.col, this.columnWidth(handlePosition.col) - (this._initialPosition.x - this.resizeHintPosition().x));
+                    } else {
+                        this.rowHeight(handlePosition.row, this.rowHeight(handlePosition.row) - (this._initialPosition.y - this.resizeHintPosition().y));
+                    }
+                } else {
+                    this.trigger("change", { resize: true });
+                }
             }
         },
 
@@ -478,16 +488,26 @@
             return this._resizeHandlePosition;
         },
 
+        resizeHintPosition: function(location) {
+            if (location !== undefined) {
+                this._resizeHintPosition = location;
+                this.trigger("change", { resize: true });
+            }
+            return this._resizeHintPosition;
+        },
+
         removeResizeHandle: function() {
             if (this._resizeHandlePosition) {
+                this._resizeHintPosition = undefined;
                 this._resizeHandlePosition = undefined;
-                this.trigger("change", { selection: true });
+                this._initialPosition = undefined;
+                this.trigger("change", { resize: true });
             }
         },
 
         positionResizeHandle: function(ref) {
             this._resizeHandlePosition = ref;
-            this.trigger("change", { selection: true });
+            this.trigger("change", { resize: true });
         },
 
         startSelection: function() {
@@ -497,6 +517,7 @@
         completeSelection: function() {
             if (this._selectionInProgress) {
                 this._selectionInProgress = false;
+                this._resizeHintPosition = undefined;
                 this.trigger("change", { selection: true });
             }
         },

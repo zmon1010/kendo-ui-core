@@ -316,17 +316,17 @@
 
         onMouseDown: function(event, action) {
             var object = this.objectAt(event);
-            var sheet = this._workbook.activeSheet();
-
-            if (object.type === "columnresizehandle" || object.type === "rowresizehandle") {
-                sheet.startResizing();
-                return;
-            }
 
             this.editor.deactivate();
 
             if (object.pane) {
                 this.originFrame = object.pane;
+            }
+
+            var sheet = this._workbook.activeSheet();
+            if (object.type === "columnresizehandle" || object.type === "rowresizehandle") {
+                sheet.startResizing({ x: object.x, y: object.y });
+                return;
             }
 
             this._selectionMode = SELECTION_MODES[object.type];
@@ -379,14 +379,18 @@
         },
 
         onMouseDrag: function(event, action) {
-            var sheet = this._workbook.activeSheet();
-
-            if (this._selectionMode === "sheet" || sheet.resizingInProgress()) {
+            if (this._selectionMode === "sheet") {
                 return;
             }
 
             var location = { pageX: event.pageX, pageY: event.pageY };
             var object = this.objectAt(location);
+
+            var sheet = this._workbook.activeSheet();
+            if (sheet.resizingInProgress()) {
+                sheet.resizeHintPosition({ x: object.x, y: object.y });
+                return;
+            }
 
             if (object.type === "outside") {
                 this.startAutoScroll(object);

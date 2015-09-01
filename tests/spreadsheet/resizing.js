@@ -43,7 +43,7 @@
     test("renders the resize handler for row", function() {
         var pane = createPane(0, 0);
 
-        sheet.positionResizeHandle(new CellRef(0, -Infinity)); // row column
+        sheet.positionResizeHandle(new CellRef(0, -Infinity)); // first row
 
         pane._currentView = DUMMY_VIEW;
 
@@ -53,6 +53,64 @@
         equal(handle.attr.style.width, "10px");
         equal(handle.attr.className, "k-resize-handle");
         equal(handle.attr.style.top, "13px");
+    });
+
+    test("renders the resize hint for column", function() {
+        var pane = createPane(0, 0);
+
+        sheet.positionResizeHandle(new CellRef(-Infinity, 0));
+        sheet.startResizing({ x: 10 + 10, y: 10 });
+        sheet.resizeHintPosition({ x: 10 + 20, y: 10 }); // move the hint with 20px
+
+        pane._currentView = DUMMY_VIEW;
+
+        var handle = pane.renderResizeHint();
+
+        equal(handle.attr.style.width, "14px");
+        equal(handle.attr.className, "k-resize-hint");
+        equal(handle.attr.style.left, "30px");
+    });
+
+    test("renders the resize hint for row", function() {
+        var pane = createPane(0, 0);
+
+        sheet.positionResizeHandle(new CellRef(0, -Infinity));
+        sheet.startResizing({ x: 10, y: 10 });
+        sheet.resizeHintPosition({ x: 10, y: 10 + 20 }); // move the hint with 20px
+
+        pane._currentView = DUMMY_VIEW;
+
+        var handle = pane.renderResizeHint();
+
+        equal(handle.attr.style.height, "14px");
+        equal(handle.attr.className, "k-resize-hint");
+        equal(handle.attr.style.top, "30px");
+    });
+
+    test("set the column width", function() {
+        var pane = createPane(0, 0);
+
+        var initialWidth = sheet.columnWidth(0);
+
+        sheet.positionResizeHandle(new CellRef(-Infinity, 0));
+        sheet.startResizing({ x: 10 + 20, y: 10 });
+        sheet.resizeHintPosition({ x: 10+20+20, y: 10 }); // move the hint with 20px
+        sheet.completeResizing();
+
+        equal(sheet.columnWidth(0), initialWidth + 20);
+    });
+
+    test("set the row height", function() {
+        var pane = createPane(0, 0);
+
+        var initialHeight = sheet.rowHeight(0);
+
+        sheet.positionResizeHandle(new CellRef(0, -Infinity));
+        sheet.startResizing({ x: 10, y: 10 });
+        sheet.resizeHintPosition({ x: 10, y: 10 + 20 }); // move the hint with 20px
+        sheet.completeResizing();
+
+        equal(sheet.rowHeight(0), initialHeight + 20);
     });
 
 })();

@@ -56,7 +56,8 @@
             selection: true,
             activeCell: true,
             layout: true,
-            sheetSelection: true
+            sheetSelection: true,
+            resize: true
         };
 
         var classNames = {

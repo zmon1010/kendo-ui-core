@@ -58,7 +58,6 @@
 
     test("right border of the header column returns columnresizehandle", function() {
         view.refresh(kendo.spreadsheet.ALL_REASONS);
-        debugger;
         var result = view.objectAt(32+64+64, 3);// rowheader + two columns
         equal(result.type, "columnresizehandle");
         equal(result.ref.col, 1); // second column
@@ -67,7 +66,6 @@
     test("right border of the header column returns columnresizehandle after column resize", function() {
         view.refresh(kendo.spreadsheet.ALL_REASONS);
 
-        debugger;
         view._sheet.columnWidth(1, 200);
 
         var result = view.objectAt(32+64+200, 3);// rowheader + two columns
