@@ -194,6 +194,7 @@
             destroy: function() {
                 kendo.ui.Widget.fn.destroy.call(this);
 
+                this._controller.destroy();
                 this._view.destroy();
             },
 

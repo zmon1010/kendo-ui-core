@@ -42,7 +42,7 @@
         "*+mousedrag": "onMouseDrag",
         "*+mouseup": "onMouseUp",
         "*+dblclick": "onDblClick",
-        "*+mousemove": "onMouseMove"
+        "mousemove": "onMouseMove"
     };
 
     var CLIPBOARD_EVENTS = {
@@ -181,6 +181,12 @@
             this._workbook.removeSheet(sheet);
         },
 
+        destroy: function() {
+            this.listener.destroy();
+            this.keyListener.destroy();
+            this.inputKeyListener.destroy();
+        },
+
         onSheetBarSelect: function(e) {
             var sheet;
             var workbook = this._workbook;
@@ -302,7 +308,7 @@
         onMouseMove: function(event, action) {
             var sheet = this._workbook.activeSheet();
 
-            if (sheet.resizingInProgress()) {
+            if (sheet.resizingInProgress() || sheet.selectionInProgress()) {
                 return;
             }
 
