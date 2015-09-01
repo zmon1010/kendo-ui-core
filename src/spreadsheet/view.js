@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.menu" ], f);
+    define([ "../kendo.core", "../kendo.menu", "./sheetsbar" ], f);
 })(function(){
 
 (function(kendo) {

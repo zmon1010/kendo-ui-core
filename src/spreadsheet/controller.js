@@ -112,6 +112,7 @@
             this.inputKeyListener = new kendo.spreadsheet.EventListener(this.formulaInput.element, this, FORMULAINPUT_EVENTS);
 
             view.sheetsbar.bind("select", this.onSheetBarSelect.bind(this));
+            view.sheetsbar.bind("reorder", this.onSheetBarReorder.bind(this));
 
             this.cellContextMenu.bind("select", this.onContextMenuSelect.bind(this));
             this.rowHeaderContextMenu.bind("select", this.onContextMenuSelect.bind(this));
@@ -150,6 +151,14 @@
             } else {
                 sheet = this._workbook.sheetByName(e.name);
             }
+
+            this._workbook.activeSheet(sheet);
+        },
+
+        onSheetBarReorder: function(e) {
+            var sheet = this._workbook.sheetByIndex(e.oldIndex);
+
+            this._workbook.moveSheetToIndex(sheet, e.newIndex);
 
             this._workbook.activeSheet(sheet);
         },

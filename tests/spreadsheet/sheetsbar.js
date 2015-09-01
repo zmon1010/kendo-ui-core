@@ -127,4 +127,26 @@
 
         bar.element.find("a").trigger("click");
     });
+
+    test("sortable is initialized", function() {
+        createSheetsBar();
+
+        ok(!!element.data("kendoSortable"));
+    });
+
+    test("reorder event is triggered correctly", function() {
+        createSheetsBar();
+
+        sheetsBar.bind("reorder", function(e) {
+            ok(true);
+        });
+
+        element.data("kendoSortable").trigger("end");
+    });
+
+    test("div element is wrapping the ul element to allow sortable to work with virtual dom", function() {
+        createSheetsBar();
+
+        equal(element.find("div.k-spreadsheet-sheets-items").length, 1);
+    });
 })();

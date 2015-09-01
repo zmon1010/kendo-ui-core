@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core" ], f);
+    define([ "../kendo.core", "../kendo.sortable" ], f);
 })(function(){
 
     (function(kendo) {
@@ -8,7 +8,8 @@
         var sheetsBarClassNames = {
             sheetsBarActive: "k-spreadsheet-sheets-bar-active",
             sheetsBarInactive: "k-spreadsheet-sheets-bar-inactive",
-            sheetsBarAdd: "k-spreadsheet-sheets-bar-add"
+            sheetsBarAdd: "k-spreadsheet-sheets-bar-add",
+            sheetsBarItems: "k-spreadsheet-sheets-items"
         };
 
         var SheetsBar = kendo.ui.Widget.extend({
@@ -17,9 +18,13 @@
 
                 element = this.element;
 
-                this.tree = new kendo.dom.Tree(element[0]);
+                this._tree = new kendo.dom.Tree(element[0]);
 
-                this.tree.render([this._addButton()]);
+                this._tree.render([this._addButton(), this._sheetsWrapper([])]);
+
+                this._createSortable();
+
+                this._sortable.bind("end", this._onSheetReorder.bind(this));
 
                 element.on("click", "li", this._onSheetSelect.bind(this));
 
@@ -31,18 +36,20 @@
             },
 
             events: [
-                "select"
+                "select",
+                "reorder"
             ],
 
             //TODO:
             //1) add sheet -- ready
             //2) remove sheet from sheet tab
-            //3) reorder sheets
+            //3) reorder sheets --ready
             //4) rename sheet with double click
             //5) scroll when more sheets are rendered
 
             renderSheets: function(sheets, selectedIndex) {
                 var dom = kendo.dom;
+                var element = dom.element;
                 var idx;
                 var sheetElements = [];
 
@@ -57,11 +64,29 @@
                     var sheet = this._sheets[idx];
                     var args = idx === selectedIndex ? { className: sheetsBarClassNames.sheetsBarActive } : { className: sheetsBarClassNames.sheetsBarInactive };
 
-                    var elementContent = dom.element("span", {}, [dom.text(sheet.name())]);
-                    sheetElements.push(dom.element("li", args, [elementContent]));
+                    var elementContent = element("span", {}, [dom.text(sheet.name())]);
+                    sheetElements.push(element("li", args, [elementContent]));
                 }
 
-                this.tree.render([this._addButton(), dom.element("ul", {}, sheetElements)]);
+                this._tree.render([this._addButton(),  this._sheetsWrapper(sheetElements)]);
+            },
+
+            _sheetsWrapper: function(sheetElements) {
+                return kendo.dom.element("div", { className: sheetsBarClassNames.sheetsBarItems }, [kendo.dom.element("ul", {}, sheetElements)]);
+            },
+
+            _createSortable: function() {
+                this._sortable = new kendo.ui.Sortable(this.element, {
+                    filter: kendo.format("ul li.{0},ul li.{1}", sheetsBarClassNames.sheetsBarActive, sheetsBarClassNames.sheetsBarInactive),
+                    container: DOT + sheetsBarClassNames.sheetsBarItems,
+                    axis: "x",
+                    animation: false
+                });
+            },
+
+            _onSheetReorder: function(e) {
+                e.preventDefault();
+                this.trigger("reorder", {oldIndex: e.oldIndex, newIndex: e.newIndex});
             },
 
             _onSheetSelect: function(e) {
@@ -73,8 +98,12 @@
             },
 
             _addButton: function() {
-                var dom = kendo.dom;
-                return dom.element("a", {className: sheetsBarClassNames.sheetsBarAdd}, [dom.element("span", {className: "k-sprite k-icon k-font-icon k-i-plus"}, [])]);
+                var element = kendo.dom.element;
+                return element("a", {className: sheetsBarClassNames.sheetsBarAdd}, [element("span", {className: "k-sprite k-icon k-font-icon k-i-plus"}, [])]);
+            },
+
+            destroy: function() {
+                this._sortable.destroy();
             }
         });
 
