@@ -361,25 +361,45 @@
                 throw new Error("Unsupported for multiple ranges.");
             }
 
-            spec = spec instanceof Array ? spec : [spec];
+            if (spec === false) {
+                this.clearFilters();
+            } else {
+                spec = spec === true ? [] : spec instanceof Array ? spec : [spec];
 
-            this._sheet._filterBy(this._ref.toRangeRef(), spec.map(function(spec, index) {
-               return {
-                   index: spec.column === undefined ? index : spec.column,
-                   filter: spec.filter
-               };
-            }));
+                this._sheet._filterBy(this._ref.toRangeRef(), spec.map(function(spec, index) {
+                   return {
+                       index: spec.column === undefined ? index : spec.column,
+                       filter: spec.filter
+                   };
+                }));
+            }
 
             return this;
         },
 
         clearFilter: function(spec) {
-            this._sheet._clearFilter(spec instanceof Array ? spec : [spec]);
+            this._sheet.clearFilter(spec);
+        },
+
+        clearFilters: function() {
+            var filter = this._sheet.filter();
+            var spec = [];
+
+            if (filter) {
+                for (var i = 0; i < filter.columns.length; i++) {
+                    spec.push(i);
+                }
+
+                this._sheet.batch(function() {
+                    this.clearFilter(spec);
+                    this._filter = null;
+                }, { layout: true });
+            }
         },
 
         hasFilter: function() {
             var filter = this._sheet.filter();
-            return filter && !!filter.columns.length;
+            return !!filter;
         },
 
         leftColumn: function() {

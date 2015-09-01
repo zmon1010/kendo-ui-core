@@ -131,4 +131,43 @@
         ok(hasFilter);
     });
 
+    test("filter(true) enables filtering", 2, function() {
+        var range = sheet.range("A1:B2");
+
+        range.values([ [1, 2], [2, 3] ]);
+        range.filter(true);
+
+        ok(range.hasFilter());
+        equal(sheet.filter().columns.length, 0);
+    });
+
+    test("filter(false) disables filtering", 2, function() {
+        var range = sheet.range("A1:B2");
+
+        range.values([ [1, 2], [2, 3] ]);
+        range.filter(true);
+        range.filter(false);
+
+        ok(!range.hasFilter());
+        equal(sheet.filter(), null);
+    });
+
+    test("filter(false) removes all filters", 2, function() {
+        var range = sheet.range("A1:B2");
+
+        range.values([ [1, 2], [2, 3] ]);
+
+        range.filter({
+            column: 0,
+            filter: new kendo.spreadsheet.ValueFilter( {
+                values: [2]
+            })
+        });
+
+        range.filter(false);
+
+        ok(!range.hasFilter());
+        equal(sheet.filter(), null);
+    });
+
 })();

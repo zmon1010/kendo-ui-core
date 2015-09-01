@@ -19,6 +19,7 @@
             this._frozenRows = 0;
             this._frozenColumns = 0;
             this._suspendChanges = false;
+            this._filter = null;
             this._selection = kendo.spreadsheet.NULLREF;
             this._originalSelection = kendo.spreadsheet.NULLREF;
             this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
