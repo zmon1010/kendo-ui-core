@@ -3,6 +3,8 @@
 })(function(){
 
 (function(kendo) {
+    'use strict';
+
     var $ = kendo.jQuery;
 
     var ACTIONS = {
@@ -94,6 +96,8 @@
             this.container = $(view.container);
             this.clipboardElement = $(view.clipboard);
             this.cellContextMenu = view.cellContextMenu;
+            this.rowHeaderContextMenu = view.rowHeaderContextMenu;
+            this.colHeaderContextMenu = view.colHeaderContextMenu;
             this.scroller = view.scroller;
             this.formulaInput = view.formulaInput;
 
@@ -118,6 +122,13 @@
                         break;
                 }
             }.bind(this));
+
+            this.rowHeaderContextMenu.bind("select", function(e) {
+            }.bind(this));
+
+            this.colHeaderContextMenu.bind("select", function(e) {
+                this.axisManager.deleteSelectedColumns();
+            }.bind(this));
         },
 
         onSheetBarSelect: function(e) {
@@ -134,6 +145,7 @@
 
         sheet: function(sheet) {
             this.navigator = sheet.navigator();
+            this.axisManager = sheet.axisManager();
         },
 
         workbook: function(workbook) {
@@ -225,19 +237,24 @@
             event.preventDefault();
 
             this.cellContextMenu.close();
+            this.colHeaderContextMenu.close();
+            this.rowHeaderContextMenu.close();
 
-            var menu = this.cellContextMenu;
+            var menu;
+            var ref;
 
             var location = { pageX: event.pageX, pageY: event.pageY };
 
             var object = this.objectAt(location);
 
-            if (object.type === "cell") {
-                var sheet = this._workbook.activeSheet();
+            this.navigator.selectForContextMenu(object.ref, SELECTION_MODES[object.type]);
 
-                if (!sheet.select().intersects(object.ref)) {
-                    sheet.select(object.ref);
-                }
+            if (object.type === "cell") {
+                menu = this.cellContextMenu;
+            } else if (object.type == "columnheader") {
+                menu = this.colHeaderContextMenu;
+            } else if (object.type == "rowheader") {
+                menu = this.rowHeaderContextMenu;
             }
 
             // avoid the immediate close

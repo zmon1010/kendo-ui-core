@@ -9,6 +9,7 @@
         "./spreadsheet/propertybag",
         "./spreadsheet/references",
         "./spreadsheet/navigator",
+        "./spreadsheet/axismanager",
         "./spreadsheet/clipboard",
         "./spreadsheet/range",
         "./spreadsheet/sheet",

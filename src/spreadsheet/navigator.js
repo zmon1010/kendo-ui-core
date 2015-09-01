@@ -78,8 +78,17 @@
         },
 
         select: function(ref, mode, addToExisting) {
-            var sheet = this._sheet;
-            var grid = sheet._grid;
+            ref = this.refForMode(ref, mode);
+
+            if (addToExisting) {
+                ref = this._sheet.select().concat(ref);
+            }
+
+            this._sheet.select(ref);
+        },
+
+        refForMode: function(ref, mode) {
+            var grid = this._sheet._grid;
 
             switch(mode) {
                 case "range":
@@ -92,15 +101,11 @@
                     ref = grid.colRef(ref.col);
                     break;
                 case "sheet":
-                    ref = sheet._sheetRef;
+                    ref = this._sheet._sheetRef;
                     break;
             }
 
-            if (addToExisting) {
-                ref = sheet.select().concat(ref);
-            }
-
-            sheet.select(ref);
+            return ref;
         },
 
         startSelection: function(ref, mode, addToExisting) {
@@ -110,6 +115,14 @@
 
         completeSelection: function() {
             this._sheet.completeSelection();
+        },
+
+        selectForContextMenu: function(ref, mode) {
+            var sheet = this._sheet;
+
+            if (!sheet.select().contains(this.refForMode(ref, mode))) {
+                this.select(ref, mode);
+            }
         },
 
         modifySelection: function(action) {

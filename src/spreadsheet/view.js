@@ -231,7 +231,9 @@
         '<li data-action=paste>Paste</li>' +
     '</ul>';
 
-    var ROW_HEADER_CONTEXT_MENU = '<ul class="#=classNames.rowHeaderContextMenu#"><li>Row Item 1</li></ul>';
+    var ROW_HEADER_CONTEXT_MENU = '<ul class="#=classNames.rowHeaderContextMenu#">' +
+    '<li data-action="delete">Delete</li>'+
+    '</ul>';
     var COL_HEADER_CONTEXT_MENU = '<ul class="#=classNames.colHeaderContextMenu#"><li>Col Item 1</li></ul>';
 
     var VIEW_CONTENTS = kendo.template('<div class="#=classNames.view#"><div class="#=classNames.fixedContainer#"></div><div class="#=classNames.scroller#"><div class="#=classNames.viewSize#"></div></div>' +
@@ -270,11 +272,18 @@
 
             this.sheetsbar = new kendo.spreadsheet.SheetsBar(element.find(DOT + classNames.sheetsBar), $.extend(true, this.options.sheetsbar));
 
-            this.cellContextMenu = new kendo.ui.ContextMenu(element.find(DOT + classNames.cellContextMenu), {
+
+            var contextMenuConfig = {
                 target: element,
                 animation: false,
                 showOn: "never" // this is just an invalid event name to prevent the show
-            });
+            };
+
+            this.cellContextMenu = new kendo.ui.ContextMenu(element.find(DOT + classNames.cellContextMenu), contextMenuConfig);
+
+            this.colHeaderContextMenu = new kendo.ui.ContextMenu(element.find(DOT + classNames.colHeaderContextMenu), contextMenuConfig);
+
+            this.rowHeaderContextMenu = new kendo.ui.ContextMenu(element.find(DOT + classNames.rowHeaderContextMenu), contextMenuConfig);
 
             var scrollbar = kendo.support.scrollbar();
 

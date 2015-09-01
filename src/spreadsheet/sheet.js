@@ -36,6 +36,14 @@
             return this._navigator;
         },
 
+        axisManager: function() {
+            if(!this._axisManager) {
+                 this._axisManager = new kendo.spreadsheet.AxisManager(this);
+            }
+
+            return this._axisManager;
+        },
+
         name: function(value) {
             if (!value) {
                 return this._name;
