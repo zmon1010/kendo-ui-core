@@ -370,7 +370,6 @@
         },
 
         onCopy: function(event, action) {
-            this.clipboard.internal(this.clipBoardValue()); //this should go to the clipboard class, ref to the clipboard element is needed
             var command = new kendo.spreadsheet.CopyCommand({ workbook: this.view._workbook });
             this.view._workbook.execute(command);
         },

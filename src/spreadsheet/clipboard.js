@@ -59,12 +59,12 @@
         paste: function() {
             var content = {};
             var sheet = this.workbook.activeSheet();
-            if(this._internal !== undefined || (this._internal == this._external)){
+            if($("<div/>").html(this._external).find("table.kendo-clipboard").length) {
                 content = this.contents;
             }else{
                 var rows = [];
                 var cols = [];
-                content = JSON.parse(this._external);
+                content = this.parse(this._external);
                 for (var key in content) {
                     var address = key.split(",");
                     rows.push(address[0]);
@@ -82,17 +82,9 @@
 
         },
 
-        internal: function(html) {
-            if(html){
-                this._internal = JSON.stringify(this.parse(html));
-            }else{
-                return this._internal;
-            }
-        },
-
         external: function(html) {
             if(html){
-                this._external = JSON.stringify(this.parse(html));
+                this._external = html;
             }else{
                 return this._external;
             }

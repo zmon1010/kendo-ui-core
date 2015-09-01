@@ -624,7 +624,7 @@
                     }
                 }
             });
-            this.clipboardContents.render([ table.toDomTree(0, 0, "") ]);
+            this.clipboardContents.render([ table.toDomTree(0, 0, "kendo-clipboard") ]);
 
             this.selectClipBoardContents();
         },
