@@ -77,7 +77,7 @@
                 this._external = undefined;
             }
             var pasteRef = this.pasteRef();
-            sheet.range(pasteRef).setState(content);
+            sheet.range(pasteRef).clear().setState(content);
             sheet.triggerChange({recalc: true});
 
         },
