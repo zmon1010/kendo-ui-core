@@ -32,6 +32,7 @@ namespace Kendo.Mvc.UI
         public string Cursor { get; set; }
         public SortableCursorOffset CursorOffset { get; set; }
         public bool HoldToDrag { get; set; }
+        public bool AutoScroll { get; set; }
         public string Hint { get; set; }
         public ClientHandlerDescriptor HintHandler { get; set; }
         public string Placeholder { get; set; }
@@ -106,6 +107,11 @@ namespace Kendo.Mvc.UI
             if (HoldToDrag)
             {
                 options["holdToDrag"] = true;
+            }
+
+            if (AutoScroll)
+            {
+                options["autoScroll"] = true;
             }
 
             if (Axis != SortableAxis.None)

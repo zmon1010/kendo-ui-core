@@ -123,6 +123,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the widget will auto-scroll the container when the mouse/finger is close to the top/bottom of it.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public virtual SortableBuilder AutoScroll(bool value)
+        {
+            Component.AutoScroll = value;
+            return this;
+        }
+
+        /// <summary>
         /// Constrains the hint movement to either the horizontal (x) or vertical (y) axis.
         /// </summary>
         /// <param name="axis">The axis</param>
