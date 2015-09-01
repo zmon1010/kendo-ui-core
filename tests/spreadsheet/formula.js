@@ -193,8 +193,11 @@
                 var val = self.$(cell);
                 var expected = hash[cell];
                 if (expected instanceof APPROX) {
-                    val = val.toFixed(expected.dec);
-                    expected = expected.val;
+                    if (typeof val == "number") {
+                        val = val.toFixed(expected.dec);
+                        val = parseFloat(val);
+                    }
+                    expected = parseFloat(expected.val);
                 }
                 equal(val, expected);
             });
@@ -202,16 +205,36 @@
     });
 
     function APPROX(val) {
-        val += "";
         if (!(this instanceof APPROX)) {
             return new APPROX(val);
         }
+        val += "";
         this.val = val;
         this.dec = val.length - val.indexOf(".") - 1;
     }
 
     function DATE(str) {
         return runtime.dateToSerial(new Date(str)) | 0;
+    }
+
+    function calcTest(hash) {
+        var ss = new Spreadsheet();
+        var data = {}, expect = {}, row = 1;
+        for (var i in hash) {
+            if (Object.prototype.hasOwnProperty.call(hash, i)) {
+                var cell = "A" + (row++);
+                data[cell] = i;
+                var val = hash[i];
+                if (typeof val == "number") {
+                    val = APPROX(val);
+                }
+                expect[cell] = val;
+            }
+        }
+        ss.fill(data);
+        ss.recalculate(function(){
+            ss.expectEqual(expect);
+        });
     }
 
     // test async function
@@ -772,7 +795,7 @@
                 A4: 0,
                 A5: -9,
                 A6: 40,
-                A7: "#VALUE!",
+                A7: "#N/A!",
             });
         });
     });
@@ -835,7 +858,7 @@
                 A4: 10,
                 A5: 5,
                 A6: 1,
-                A7: "#VALUE!",
+                A7: "#N/A!",
                 A8: 5,
 
                 B1: 20,
@@ -1663,6 +1686,97 @@
                 E3: APPROX(19.06071),
                 E4: APPROX(9.666666667)
             });
+        });
+    });
+
+    // statistical & probabilities functions
+
+    test("ERF", function(){
+        calcTest({
+            "=ERF(0.745)"             : 0.70792892,
+            "=ERF(1)"                 : 0.84270079,
+            "=ERF(0.476936276204470)" : 0.5,
+            "=ERF(-1.25)"             : -0.92290012825646,
+            "=ERFC(-1.25)"            : 1.92290012825646,
+            "=ERF(-3)"                : -0.999977909503,
+            "=ERFC(-3)"               : 1.999977909503,
+            "=ERF(5.5)"               : 1,
+            "=ERF(0.25, 0.75)"        : 0.434829,
+        });
+    });
+
+    test("GAMMA*", function(){
+        calcTest({
+            "=GAMMALN(4)"                           : 1.7917595,
+            "=GAMMALN(56.38)"                       : 169.854974,
+            "=GAMMALN(1.567)"                       : -0.1162796456949,
+            "=GAMMA(3)"                             : 2,
+            "=GAMMA(4)"                             : 6,
+            "=GAMMA(-0.36)"                         : -3.900356033708,
+            "=GAMMA(-3.75)"                         : 0.26786612886142,
+            "=GAMMA(0.5)"                           : 1.7724538509056,
+            "=GAMMA.DIST(10.00001131, 9, 2, true)"  : 0.068094,
+            "=GAMMA.DIST(10.00001131, 9, 2, false)" : 0.032639,
+            "=GAMMA.INV(0.068094, 9, 2)"            : 10.0000112,
+        });
+    });
+
+    test("NORM.S.*", function(){
+        calcTest({
+            "=NORM.S.DIST(1.333333, true)"  : 0.908788726,
+            "=NORM.S.DIST(1.333333, false)" : 0.164010148,
+            "=NORM.S.DIST(-3, false)"       : 0.00443184841194,
+            "=NORM.S.DIST(-3, true)"        : 0.00134989803163,
+            "=NORM.S.INV(0.65)"             : 0.385320466,
+            "=NORM.S.INV(0.908788726)"      : 1.333333,
+            "=NORM.S.INV(0.001)"            : -3.090232,
+            "=NORM.S.INV(0.0000002)"        : -5.068958,
+            "=NORM.S.INV(0.02425)"          : -1.972961,
+            "=NORM.S.INV(0.001)"            : -3.0902323,
+            "=NORM.S.INV(0.000001)"         : -4.7534243,
+        });
+    });
+
+    test("NORM.DIST, NORM.INV", function(){
+        calcTest({
+            "=NORM.DIST(42, 40, 1.5, false)": 0.10934,
+            "=NORM.DIST(-3, 0, 1, true)": 0.00134989803163,
+            "=NORM.DIST(42, 40, 1.5, true)": 0.9087888,
+            "=NORM.INV(0.9087888, 40, 1.5)": 42,
+        });
+    });
+
+    test("BETA.DIST", function(){
+        calcTest({
+            "=BETADIST(0.12, 2, 3)": 0.07319808,
+            "=BETA.DIST(0.12, 2, 3, false, 0, 4)": 0.084681,
+            "=BETA.DIST(0.12, 2, 3, false, 0, 2)": 0.318096,
+            "=BETADIST(0.60709662860678, 1.6, 1)": 0.44999999999999196,
+            "=BETADIST(0.0065, 300, 39700)": 0.0079787,
+            "=BETA.DIST(3, 7.5, 9, true, 1, 4)": 0.960370938,
+            "=BETA.DIST(3, 7.5, 9, false, 1, 4)": 0.250512509,
+            "=BETA.DIST(7.5, 8, 9, true, 5, 10)": 0.598190308,
+            "=BETA.DIST(7.5, 8, 9, false, 5, 10)": 0.628417969,
+            "=BETA.INV(0.008, 300, 39700)": 0.0065,
+            "=BETA.INV(0.45, 1.6, 1)": 0.6070966286068,
+        });
+    });
+
+    test("CHISQ.*", function(){
+        calcTest({
+            "=CHISQ.DIST(0.5, 1, true)": 0.52049988,
+            "=CHISQ.DIST(2, 3, false)": 0.20755375,
+            "=CHISQ.INV(0.5, 1)": 0.454936423,
+            "=CHISQ.INV(0.1, 2)": 0.210721031,
+            "=CHISQ.INV(0.25, 3)": 1.212532903,
+            "=CHISQ.DIST.RT(3, 4)": 0.557825,
+            "=CHISQ.INV.RT(0.050001, 10)": 18.306973,
+        });
+    });
+
+    test("CHISQ.TEST", function(){
+        calcTest({
+            "=CHISQ.TEST({58, 35; 11, 25; 10, 23}, {45.35, 47.65; 17.56, 18.44; 16.09, 16.91})": 0.000308192
         });
     });
 

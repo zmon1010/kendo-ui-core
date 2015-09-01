@@ -790,10 +790,8 @@
                     return "(" + force() + " > " + type[1] + " && " + "$"+name+" < " + type[2] + ")";
                 }
                 if (type[0] == "assert") {
-                    if (type[2]) {
-                        return "((" + type[1] + ") ? true : (err = " + JSON.stringify(type[2]) + ", false))";
-                    }
-                    return "(" + type[1] + ")";
+                    var err = type[2] || "N/A";
+                    return "((" + type[1] + ") ? true : (err = " + JSON.stringify(err) + ", false))";
                 }
                 if (type[0] == "not") {
                     return "!(" + cond(type[1]) + ")";

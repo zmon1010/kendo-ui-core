@@ -25,6 +25,7 @@
         "./spreadsheet/calc",
         "./spreadsheet/numformat",
         "./spreadsheet/runtime.functions.js",
+        "./spreadsheet/runtime.functions.2.js",
         "./spreadsheet/toolbar",
         "./spreadsheet/dialogs",
         "./spreadsheet/sheetbinder",
