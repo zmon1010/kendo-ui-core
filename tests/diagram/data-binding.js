@@ -822,6 +822,56 @@
             shapesConnection.updateModel();
         });
 
+        test("does not reset from field if not defined", 0, function() {
+            pointsConnection.options.fromX = 2;
+            pointsConnection.options.fromY = 3;
+
+            pointsItem.bind("change", function(e) {
+                if (e.field === "from") {
+                    ok(false);
+                }
+            });
+
+            pointsConnection.updateModel();
+        });
+
+        test("does not reset to field if not defined", 0, function() {
+            pointsConnection.options.toX = 2;
+            pointsConnection.options.toY = 3;
+
+            pointsItem.bind("change", function(e) {
+                if (e.field === "to") {
+                    ok(false);
+                }
+            });
+
+            pointsConnection.updateModel();
+        });
+
+        test("does not reset fromX and fromY fields if not defined", 0, function() {
+            shapesConnection.options.from = 3;
+
+            shapesItem.bind("change", function(e) {
+                if (e.field === "fromX" || e.field === "fromY") {
+                    ok(false);
+                }
+            });
+
+            shapesConnection.updateModel();
+        });
+
+        test("does not reset toX and toY fields if not defined", 0, function() {
+            shapesConnection.options.to = 3;
+
+            shapesItem.bind("change", function(e) {
+                if (e.field === "toX" || e.field === "toY") {
+                    ok(false);
+                }
+            });
+
+            shapesConnection.updateModel();
+        });
+
     })();
 
     // ------------------------------------------------------------
