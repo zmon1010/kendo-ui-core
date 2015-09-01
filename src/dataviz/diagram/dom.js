@@ -958,7 +958,9 @@
                 startCap: NONE,
                 endCap: NONE,
                 points: [],
-                selectable: true
+                selectable: true,
+                fromConnector: AUTO,
+                toConenctor: AUTO
             },
 
             _setOptionsFromModel: function(model) {
@@ -972,13 +974,21 @@
 
                     if (model) {
                         if (defined(options.from)) {
-                            this.source(dataMap[options.from]);
+                            var from = dataMap[options.from];
+                            if (from && defined(options.fromConnector)) {
+                               from = from.getConnector(options.fromConnector);
+                            }
+                            this.source(from);
                         } else if (defined(options.fromX) && defined(options.fromY)) {
                             this.source(new Point(options.fromX, options.fromY));
                         }
 
                         if (defined(options.to)) {
-                            this.target(dataMap[options.to]);
+                            var to = dataMap[options.to];
+                            if (to && defined(options.toConnector)) {
+                                to = to.getConnector(options.toConnector);
+                            }
+                            this.target(to);
                         } else if (defined(options.toX) && defined(options.toY)) {
                             this.target(new Point(options.toX, options.toY));
                         }
@@ -1001,25 +1011,35 @@
             updateModel: function(syncChanges) {
                 if (this.diagram && this.diagram._isEditable) {
                     if (this.diagram.connectionsDataSource) {
+                        var dataMap = this.diagram._dataMap;
                         var model = this.diagram.connectionsDataSource.getByUid(this.dataItem.uid);
+                        var shape;
                         if (model) {
                             this.diagram._suspendModelRefresh();
                             if (defined(this.options.fromX) && this.options.fromX !== null) {
                                 clearField("from", model);
+                                clearField("fromConnector", model);
                                 model.set("fromX", this.options.fromX);
                                 model.set("fromY", this.options.fromY);
                             } else  {
                                 model.set("from", this.options.from);
+                                if (defined(model.fromConnector)) {
+                                    model.set("fromConnector", this.sourceConnector ? this.sourceConnector.options.name : null);
+                                }
                                 clearField("fromX", model);
                                 clearField("fromY", model);
                             }
 
                             if (defined(this.options.toX) && this.options.toX !== null) {
                                 clearField("to", model);
+                                clearField("toConnector", model);
                                 model.set("toX", this.options.toX);
                                 model.set("toY", this.options.toY);
                             } else {
                                 model.set("to", this.options.to);
+                                if (defined(model.toConnector)) {
+                                    model.set("toConnector", this.targetConnector ? this.targetConnector.options.name : null);
+                                }
                                 clearField("toX", model);
                                 clearField("toY", model);
                             }
@@ -1057,8 +1077,8 @@
                 var dataItem;
                 if (isDefined(source)) {
                     var shapeSource = source instanceof Shape;
-
-                    if (shapeSource && !source.getConnector(AUTO)) {
+                    var defaultConnector = this.options.fromConnector || AUTO;
+                    if (shapeSource && !source.getConnector(defaultConnector)) {
                         return;
                     }
 
@@ -1097,7 +1117,7 @@
                             this._setFromOptions(dataItem.id);
                         }
 
-                        this.sourceConnector = source.getConnector(AUTO);// source.getConnector(this.targetPoint());
+                        this.sourceConnector = source.getConnector(defaultConnector);
                         this.sourceConnector.connections.push(this);
                     }
 
@@ -1156,8 +1176,9 @@
                 var dataItem;
                 if (isDefined(target)) {
                     var shapeTarget = target instanceof Shape;
+                    var defaultConnector = this.options.toConnector || AUTO;
 
-                    if (shapeTarget && !target.getConnector(AUTO)) {
+                    if (shapeTarget && !target.getConnector(defaultConnector)) {
                         return;
                     }
 
@@ -1195,10 +1216,9 @@
                         if (dataItem) {
                             this._setToOptions(dataItem.id);
                         }
-                        this.targetConnector = target.getConnector(AUTO);
+                        this.targetConnector = target.getConnector(defaultConnector);
                         this.targetConnector.connections.push(this);
                     }
-
 
                     this.refresh();
                 }
@@ -3769,16 +3789,6 @@
 
                     var connection = this._connectionsDataMap[dataItem.uid];
                     connection.updateOptionsFromModel(dataItem);
-
-                    var from = this._validateConnector(dataItem.from);
-                    if (from) {
-                        connection.source(from);
-                    }
-
-                    var to = this._validateConnector(dataItem.to);
-                    if (to) {
-                        connection.target(to);
-                    }
                 }
             },
 
@@ -4021,6 +4031,10 @@
                 result.from = dataItem.from;
             }
 
+            if (defined(dataItem.fromConnector) && dataItem.fromConnector !== null) {
+                result.fromConnector = dataItem.fromConnector;
+            }
+
             if (defined(dataItem.fromX) && dataItem.fromX !== null) {
                 result.fromX = dataItem.fromX;
             }
@@ -4031,6 +4045,10 @@
 
             if (defined(dataItem.to) && dataItem.to !== null) {
                 result.to = dataItem.to;
+            }
+
+            if (defined(dataItem.toConnector) && dataItem.toConnector !== null) {
+                result.toConnector = dataItem.toConnector;
             }
 
             if (defined(dataItem.toX) && dataItem.toX !== null) {

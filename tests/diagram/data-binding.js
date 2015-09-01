@@ -687,7 +687,9 @@
                             id: 1,
                             from: 1,
                             to: 2,
-                            type: "polyline"
+                            type: "polyline",
+                            fromConnector: "Top",
+                            toConnector: "Bottom"
                         },{
                             id: 2,
                             from: 2,
@@ -722,6 +724,14 @@
             equal(diagram.connections[1].type(), "cascading");
         });
 
+        test("should set connection source based on the dataItem fromConnector field", function() {
+            equal(diagram.connections[0].source().options.name, "Top");
+        });
+
+        test("should set connection target based on the dataItem toConnector field", function() {
+            equal(diagram.connections[0].target().options.name, "Bottom");
+        });
+
         test("remove should remove connection", function() {
             var item = diagram.connectionsDataSource.at(0);
             var uid = item.uid;
@@ -754,6 +764,24 @@
             equal(diagram.connections[0].type(), "cascading");
         });
 
+        test("changing the dataItem type field updates the connection type", function() {
+            var item = diagram.connectionsDataSource.at(0);
+            item.set("type", "cascading");
+            equal(diagram.connections[0].type(), "cascading");
+        });
+
+        test("changing the dataItem fromConnector field updates the connection source", function() {
+            var item = diagram.connectionsDataSource.at(0);
+            item.set("fromConnector", "Left");
+            equal(diagram.connections[0].source().options.name, "Left");
+        });
+
+        test("changing the dataItem toConnector field updates the connection target", function() {
+            var item = diagram.connectionsDataSource.at(0);
+            item.set("toConnector", "Right");
+            equal(diagram.connections[0].target().options.name, "Right");
+        });
+
     })();
 
     (function() {
@@ -782,6 +810,32 @@
                     equal(this.from, 2);
                 } else if (e.field == "to") {
                     equal(this.to, 3);
+                }
+            });
+            shapesConnection.updateModel();
+        });
+
+        test("updates fromConnector and toConnector values in model if defined", 2, function() {
+            shapesConnection.source(diagram.shapes[2].getConnector("Top"));
+            shapesConnection.target(diagram.shapes[1].getConnector("Left"));
+            shapesItem.fromConnector = null;
+            shapesItem.toConnector = null;
+            shapesItem.bind("change", function(e) {
+                if (e.field == "fromConnector") {
+                    equal(this.fromConnector, "Top");
+                } else if (e.field == "toConnector") {
+                    equal(this.toConnector, "Left");
+                }
+            });
+            shapesConnection.updateModel();
+        });
+
+        test("does not set fromConnector value in model if it is not defined", 0, function() {
+            shapesConnection.source(diagram.shapes[2].getConnector("Top"));
+            shapesConnection.target(diagram.shapes[1].getConnector("Left"));
+            shapesItem.bind("change", function(e) {
+                if (e.field == "fromConnector" || e.field == "toConnector") {
+                   ok(false);
                 }
             });
             shapesConnection.updateModel();
@@ -822,12 +876,12 @@
             shapesConnection.updateModel();
         });
 
-        test("does not reset from field if not defined", 0, function() {
+        test("does not reset from and fromConnector fields if not defined", 0, function() {
             pointsConnection.options.fromX = 2;
             pointsConnection.options.fromY = 3;
 
             pointsItem.bind("change", function(e) {
-                if (e.field === "from") {
+                if (e.field === "from" || e.field == "fromConnector") {
                     ok(false);
                 }
             });
@@ -835,12 +889,12 @@
             pointsConnection.updateModel();
         });
 
-        test("does not reset to field if not defined", 0, function() {
+        test("does not reset to and toConnector fields if not defined", 0, function() {
             pointsConnection.options.toX = 2;
             pointsConnection.options.toY = 3;
 
             pointsItem.bind("change", function(e) {
-                if (e.field === "to") {
+                if (e.field === "to" || e.field == "toConnector") {
                     ok(false);
                 }
             });

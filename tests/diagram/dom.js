@@ -2270,6 +2270,15 @@
             ok(connection.source() === initialSource);
         });
 
+        test("source method sets sourceConnector based on the fromConnector option", function() {
+            connection = new Connection(new Point(),new Point(), {
+                fromConnector: "Top"
+            });
+            shape = new Shape();
+            connection.source(shape);
+            ok(connection.source().options.name === "Top");
+        });
+
         test("does not add duplicate connection to connector connections", function() {
             connection = new Connection();
             shape = new Shape({
@@ -2309,6 +2318,15 @@
             });
             connection.target(shape);
             ok(connection.target() === initialTarget);
+        });
+
+        test("target method sets targetConnector based on the toConnector option", function() {
+            connection = new Connection(new Point(),new Point(), {
+                toConnector: "Top"
+            });
+            shape = new Shape();
+            connection.target(shape);
+            ok(connection.target().options.name === "Top");
         });
 
         test("does not add duplicate connection to connector connections", function() {
