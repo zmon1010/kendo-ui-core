@@ -316,10 +316,11 @@ test("snippets tool is not shown if it has no items", function() {
     equal(dom.find("li").length, 0);
 });
 
-test("unlink tool applies custom title", function() {
+test("unlink tool applies custom title", 2, function() {
     bindToMock([ "unlink" ], { messages: { unlink: "foo" } });
 
     equal(getTool("unlink").attr("title"), "foo");
+    equal(getTool("unlink").children(".k-tool-text").html(), "foo");
 });
 
 test("clicking disabled links should not navigate", function() {

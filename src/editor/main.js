@@ -936,6 +936,7 @@
 
         initialize: function(ui, options) {
             ui.attr({ unselectable: "on", title: options.title });
+            ui.children(".k-tool-text").html(options.title);
         },
 
         command: function (commandArguments) {
