@@ -57,7 +57,7 @@
         copy:                  { command: "CopyCommand", iconClass: "copy" },
         paste:                 { command: "PasteCommand", iconClass: "paste" },
         separator:             { type: "separator" },
-        filter:                { type: "filter", command: "FilterCommand",         property: "filter", iconClass: "filter", togglable: true }
+        filter:                { type: "button", command: "FilterCommand",         property: "hasFilter", iconClass: "filter", togglable: true }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -641,34 +641,6 @@
     });
 
     kendo.toolbar.registerComponent("borders", BorderChangeTool, BorderChangeButton);
-
-    var FilterTool = kendo.toolbar.ToolBarButton.extend({
-        init: function(options, toolbar) {
-            kendo.toolbar.ToolBarButton.fn.init.call(this, options, toolbar);
-
-            this.element.data("type", "filter");
-            this.element.data("filter", this);
-        },
-        update: function(value) {
-            var hasFilter = value && value.columns.length;
-            this.toggle(hasFilter, false);
-        }
-    });
-
-    var FilterButton = kendo.toolbar.OverflowButton.extend({
-        init: function(options, toolbar) {
-            kendo.toolbar.OverflowButton.fn.init.call(this, options, toolbar);
-
-            this.element.data("type", "filter");
-            this.element.data("filter", this);
-        },
-        update: function(value) {
-            var hasFilter = value && value.columns.length;
-            this.toggle(hasFilter, false);
-        }
-    });
-
-    kendo.toolbar.registerComponent("filter", FilterTool, FilterButton);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 

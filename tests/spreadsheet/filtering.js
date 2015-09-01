@@ -111,14 +111,14 @@
     });
 
     test("returns curently applied filters", 2, function() {
-        var filter = sheet.range("A1:B2").values([
+        var hasFilter = sheet.range("A1:B2").values([
             [1, 2],
             [2, 3]
-        ]).filter();
+        ]).hasFilter();
 
-        ok(!filter);
+        ok(!hasFilter);
 
-        filter = sheet.range("A1:B2").values([
+        hasFilter = sheet.range("A1:B2").values([
             [1, 2],
             [2, 3]
         ]).filter({
@@ -126,9 +126,9 @@
             filter: new kendo.spreadsheet.ValueFilter( {
                 values: [2]
             })
-        });
+        }).hasFilter();
 
-        ok(filter);
+        ok(hasFilter);
     });
 
 })();

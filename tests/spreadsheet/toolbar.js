@@ -260,11 +260,11 @@
             })
         });
 
-        ok(toolbar.element.find("[data-property=filter]").hasClass("k-state-active"));
+        ok(toolbar.element.find("[data-property=hasFilter]").hasClass("k-state-active"));
 
         sheet.clearFilter(0);
 
-        ok(!toolbar.element.find("[data-property=filter]").hasClass("k-state-active"));
+        ok(!toolbar.element.find("[data-property=hasFilter]").hasClass("k-state-active"));
     });
 
 })();

@@ -357,10 +357,6 @@
         },
 
         filter: function(spec) {
-            if (spec === undefined) {
-                return this._sheet.filter();
-            }
-
             if (this._ref instanceof UnionRef) {
                 throw new Error("Unsupported for multiple ranges.");
             }
@@ -379,6 +375,11 @@
 
         clearFilter: function(spec) {
             this._sheet._clearFilter(spec instanceof Array ? spec : [spec]);
+        },
+
+        hasFilter: function() {
+            var filter = this._sheet.filter();
+            return filter && !!filter.columns.length;
         },
 
         leftColumn: function() {
