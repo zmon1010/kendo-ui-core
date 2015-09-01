@@ -82,6 +82,20 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public ListViewEventBuilder DataBinding(Func<object, object> handler)
+        {
+            Handler("dataBinding", handler);
+
+            return this;
+        }
+
+        public ListViewEventBuilder DataBinding(string handler)
+        {
+            Handler("dataBinding", handler);
+
+            return this;
+        }
+
         public ListViewEventBuilder Save(Func<object, object> handler)
         {
             Handler("save", handler);
