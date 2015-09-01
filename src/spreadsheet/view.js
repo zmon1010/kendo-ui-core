@@ -232,9 +232,26 @@
     '</ul>';
 
     var ROW_HEADER_CONTEXT_MENU = '<ul class="#=classNames.rowHeaderContextMenu#">' +
-    '<li data-action="delete">Delete</li>'+
+        '<li data-action=cut>Cut</li>' +
+        '<li data-action=copy>Copy</li>' +
+        '<li data-action=paste>Paste</li>' +
+        '<li class="k-separator"></li>' +
+        '<li data-action="delete-row">Delete</li>'+
     '</ul>';
-    var COL_HEADER_CONTEXT_MENU = '<ul class="#=classNames.colHeaderContextMenu#"><li>Col Item 1</li></ul>';
+
+    var COL_HEADER_CONTEXT_MENU = '<ul class="#=classNames.colHeaderContextMenu#">' +
+        '<li data-action=cut>Cut</li>' +
+        '<li data-action=copy>Copy</li>' +
+        '<li data-action=paste>Paste</li>' +
+        '<li class="k-separator"></li>' +
+        '<li data-action="insert-left">Insert 1 Left</li>'+
+        '<li data-action="insert-right">Insert 1 Right</li>'+
+        '<li class="k-separator"></li>' +
+        '<li data-action="delete-column">Delete</li>'+
+        '<li data-action="hide">Hide</li>'+
+        '<li data-action="unhide">Unhide</li>'+
+    '</ul>';
+
 
     var VIEW_CONTENTS = kendo.template('<div class="#=classNames.view#"><div class="#=classNames.fixedContainer#"></div><div class="#=classNames.scroller#"><div class="#=classNames.viewSize#"></div></div>' +
         '<div tabindex="0" class="#=classNames.clipboard#" contenteditable=true></div><div class="#=classNames.cellEditor#"></div></div><div class="#=classNames.sheetsBar#"></div>' +

@@ -609,6 +609,9 @@
         toRangeRef: function() {
             return this.refs[0].toRangeRef();
         },
+        contains: function(theRef) {
+            return this.refs.some(function(ref) { return ref.contains(theRef); });
+        },
         map: function(callback) {
             return new UnionRef(this.refs.map(callback));
         },

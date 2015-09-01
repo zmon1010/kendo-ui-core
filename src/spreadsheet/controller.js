@@ -68,6 +68,11 @@
        topcorner: "sheet"
     };
 
+    var COMPOSITE_UNAVAILABLE_ACTION_SELECTORS = [ 'cut', 'copy', 'paste', 'insert-left', 'insert-right', 'insert-above', 'insert-below' ].map(function(action) {
+        return '[data-action="' + action + '"]';
+    }).join(",");
+
+
     var ACTION_KEYS = [];
     var SHIFT_ACTION_KEYS = [];
     var ENTRY_ACTION_KEYS = [];
@@ -108,7 +113,12 @@
 
             view.sheetsbar.bind("select", this.onSheetBarSelect.bind(this));
 
-            this.cellContextMenu.bind("select", function(e) {
+            this.cellContextMenu.bind("select", this.onContextMenuSelect.bind(this));
+            this.rowHeaderContextMenu.bind("select", this.onContextMenuSelect.bind(this));
+            this.colHeaderContextMenu.bind("select", this.onContextMenuSelect.bind(this));
+        },
+
+        onContextMenuSelect: function(e) {
                 var action = $(e.item).data("action");
                 switch(action) {
                     case "cut":
@@ -120,15 +130,16 @@
                     case "paste":
                         this.onPaste();
                         break;
+                    case "hide":
+                        this.onHide();
+                        break;
+                    case "delete-row":
+                        this.axisManager.deleteSelectedRows();
+                        break;
+                    case "delete-column":
+                        this.axisManager.deleteSelectedColumns();
+                        break;
                 }
-            }.bind(this));
-
-            this.rowHeaderContextMenu.bind("select", function(e) {
-            }.bind(this));
-
-            this.colHeaderContextMenu.bind("select", function(e) {
-                this.axisManager.deleteSelectedColumns();
-            }.bind(this));
         },
 
         onSheetBarSelect: function(e) {
@@ -249,6 +260,8 @@
 
             this.navigator.selectForContextMenu(object.ref, SELECTION_MODES[object.type]);
 
+            var isComposite = this.navigator._sheet.select() instanceof kendo.spreadsheet.UnionRef;
+
             if (object.type === "cell") {
                 menu = this.cellContextMenu;
             } else if (object.type == "columnheader") {
@@ -256,6 +269,8 @@
             } else if (object.type == "rowheader") {
                 menu = this.rowHeaderContextMenu;
             }
+
+            menu.element.find(COMPOSITE_UNAVAILABLE_ACTION_SELECTORS).toggle(!isComposite);
 
             // avoid the immediate close
             setTimeout(function() {
@@ -325,6 +340,7 @@
         clipBoardValue: function() {
             return this.clipboardElement.html();
         },
+
 
         onPaste: function(e, action) {
             //work in progress, move to clipboard
