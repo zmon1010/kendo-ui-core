@@ -55,10 +55,10 @@
 
                 for (idx = 0; idx < this._sheets.length; idx++) {
                     var sheet = this._sheets[idx];
-                    var arguments = idx === selectedIndex ? { class: sheetsBarClassNames.sheetsBarActive } : { class: sheetsBarClassNames.sheetsBarInactive };
+                    var args = idx === selectedIndex ? { className: sheetsBarClassNames.sheetsBarActive } : { className: sheetsBarClassNames.sheetsBarInactive };
 
                     var elementContent = dom.element("span", {}, [dom.text(sheet.name())]);
-                    sheetElements.push(dom.element("li", arguments, [elementContent]));
+                    sheetElements.push(dom.element("li", args, [elementContent]));
                 }
 
                 this.tree.render([this._addButton(), dom.element("ul", {}, sheetElements)]);
@@ -74,7 +74,7 @@
 
             _addButton: function() {
                 var dom = kendo.dom;
-                return dom.element("a", {class: sheetsBarClassNames.sheetsBarAdd}, [dom.element("span", {class: "k-sprite k-icon k-font-icon k-i-plus"}, [])]);
+                return dom.element("a", {className: sheetsBarClassNames.sheetsBarAdd}, [dom.element("span", {className: "k-sprite k-icon k-font-icon k-i-plus"}, [])]);
             }
         });
 
