@@ -303,6 +303,8 @@
 
             this.rowHeaderContextMenu = new kendo.ui.ContextMenu(element.find(DOT + classNames.rowHeaderContextMenu), contextMenuConfig);
 
+            this.filterMenus = [];
+
             var scrollbar = kendo.support.scrollbar();
 
             $(this.container).css({
@@ -465,6 +467,19 @@
                 }
             }
 
+            if (reason.filter) {
+                this.destroyFilterMenus();
+
+                if (sheet.filter()) {
+                    sheet.filter().ref.forEachColumn(function(ref) {
+                        var filterMenu = new kendo.spreadsheet.FilterMenu({
+                            range: new kendo.spreadsheet.Range(ref, sheet)
+                        });
+
+                        this.filterMenus.push(filterMenu);
+                    }.bind(this));
+                }
+            }
 
             if (reason.activeCell) {
                 this._focus = sheet.activeCell().toRangeRef();

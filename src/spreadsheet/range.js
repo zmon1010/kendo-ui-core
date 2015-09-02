@@ -393,7 +393,7 @@
                 this._sheet.batch(function() {
                     this.clearFilter(spec);
                     this._filter = null;
-                }, { layout: true });
+                }, { layout: true, filter: true });
             }
         },
 

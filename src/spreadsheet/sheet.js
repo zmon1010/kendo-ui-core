@@ -876,7 +876,7 @@
                     ref: ref,
                     columns: columns
                 };
-            }, { layout: true });
+            }, { layout: true, filter: true });
         },
         filter: function() {
             return this._filter;
