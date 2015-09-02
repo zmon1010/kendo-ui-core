@@ -4,43 +4,39 @@
 
 (function(kendo, window) {
     var $ = kendo.jQuery;
+    var Widget = kendo.ui.Widget;
+    var ns = ".kendoFormulaInput";
     var classNames = {
         wrapper: "k-spreadsheet-formula-input"
     };
 
-    var FormulaInput = kendo.ui.Widget.extend({
+    var FormulaInput = Widget.extend({
         init: function(element, options) {
-            kendo.ui.Widget.call(this, element, options);
+            Widget.call(this, element, options);
 
             this.element.addClass(FormulaInput.classNames.wrapper)
                         .attr("contenteditable", true);
-
-            this.element.on("blur", this._blur.bind(this));
-
-            this.scroller = this.options.scroller;
-            this.scrollProxy = this.scroll.bind(this);
-
-            this.selectProxy  = this._select.bind(this);
         },
 
         options: {
             name: "FormulaInput"
         },
 
-        events: [
-            "change"
-        ],
-
-        _blur: function(e) {
-            this.deactivate();
+        _sync: function() {
+            if (this._editorToSync && this.isActive()) {
+                this._editorToSync.value(this.value());
+            }
         },
 
-        //TODO: test
-        _select: function() {
+        isActive: function() {
+            return this.element.is(":focus");
+        },
+
+        caretToEnd: function() {
             var nodes = this.element[0].childNodes;
             var length = nodes.length;
 
-            if (!length) {
+            if (!length || !this.isActive()) {
                 return;
             }
 
@@ -53,39 +49,19 @@
             selection.addRange(range);
         },
 
-        activate: function(options) {
-            options = options || {};
+        editorToSync: function(formulaInput) {
+            var eventName = "input" + ns;
 
-            this.position(options.rectangle);
-            this.resize(options.rectangle);
-
-            this.value(options.value);
-
-            this.element.show().focus();
-
-            this._isActive = true;
-
-            setTimeout(this.selectProxy);
+            this._editorToSync = formulaInput;
+            this.element.off(eventName).on(eventName, this._sync.bind(this));
         },
 
-        deactivate: function(skip) {
-            if (!this._isActive) {
-                return;
-            }
-
-            //TODO: refactor
-            if (!skip) {
-                this.trigger("change", {
-                    value: this.element.html()
-                });
-            }
-
+        hide: function() {
             this.element.hide();
-            this._isActive = false;
         },
 
-        isActive: function() {
-            return this._isActive;
+        show: function() {
+            this.element.show();
         },
 
         position: function(rectangle) {
@@ -94,6 +70,7 @@
             }
 
             this.element
+                .show()
                 .css({
                     "top": rectangle.top + "px",
                     "left": rectangle.left + "px"
@@ -119,11 +96,12 @@
             this.element.html(value);
         },
 
-        scroll: function() {
-            // console.log("scroll");
-        },
-
         destroy: function() {
+            this._editorToSync = null;
+
+            this.element.off(ns);
+
+            Widget.fn.destroy.call(this);
         }
     });
 

@@ -23,17 +23,6 @@
         ok(element.hasClass("k-spreadsheet-formula-input"));
     });
 
-    test("triggers change event on input change", 1, function() {
-        createFormulaInput({
-            change: function(e) {
-                equal(e.value, "foo");
-            }
-        });
-
-        formulaInput.activate();
-        element.html("foo").blur();
-    });
-
     test("value sets input value", function() {
         createFormulaInput();
 
@@ -62,93 +51,87 @@
         equal(element.height(), 30);
     });
 
-    test("activate method positions the element", function() {
+    test("hide method shows the element", function() {
         createFormulaInput();
 
-        formulaInput.activate({
-            rectangle: {
-                top: 10,
-                left: 20
-            }
-        });
-
-        equal(element.css("left"), "20px");
-        equal(element.css("top"), "10px");
-    });
-
-    test("activate method sizes the element", function() {
-        createFormulaInput();
-
-        formulaInput.activate({
-            rectangle: {
-                width: 100,
-                height: 40
-            }
-        });
-
-        equal(element.width(), 100);
-        equal(element.height(), 40);
-    });
-
-    test("activate method sets widget value", function() {
-        createFormulaInput();
-
-        formulaInput.activate({
-            value: "test"
-        });
-
-        equal(element.html(), "test");
-    });
-
-    test("activate method shows the element", function() {
-        createFormulaInput();
-
-        element.hide();
-
-        formulaInput.activate();
-
-        ok(element.is(":visible"));
-    });
-
-    test("activate method sets active state", function() {
-        createFormulaInput();
-
-        formulaInput.activate();
-
-        ok(formulaInput.isActive());
-    });
-
-    test("deactivate method triggers change event", function() {
-        var value = "test";
-
-        createFormulaInput();
-
-        formulaInput.activate({
-            value: value
-        });
-
-        formulaInput.bind("change", function(e) {
-            equal(e.value, value);
-        });
-
-        formulaInput.deactivate();
-    });
-
-    test("deactivate method hides the element", function() {
-        createFormulaInput();
-
-        formulaInput.activate();
-        formulaInput.deactivate();
+        formulaInput.hide();
 
         ok(!element.is(":visible"));
     });
 
-    test("deactivate method disables active state", function() {
+    test("show method shows the element", function() {
         createFormulaInput();
 
-        formulaInput.activate();
-        formulaInput.deactivate();
+        element.hide();
+
+        formulaInput.show();
+
+        ok(element.is(":visible"));
+    });
+
+    test("editorToSync method updates passed editor on value change", function() {
+        createFormulaInput();
+
+        var value = "test";
+        var editor = new kendo.spreadsheet.FormulaInput($("<div/>"));
+
+        formulaInput.editorToSync(editor);
+
+        formulaInput.element.focus();
+        formulaInput.element.html(value).trigger("input");
+
+        equal(editor.value(), value);
+    });
+
+    test("isActive method returns true if element is focused", function() {
+        createFormulaInput();
+
+        formulaInput.element.focus();
+
+        ok(formulaInput.isActive());
+    });
+
+    test("isActive method returns false if element is focused", function() {
+        createFormulaInput();
 
         ok(!formulaInput.isActive());
+    });
+
+    test("selectAll method does nothing if element is not focused", function() {
+        createFormulaInput();
+
+        formulaInput.value("test");
+        formulaInput.caretToEnd();
+
+        var selection = window.getSelection();
+
+        ok(!formulaInput.isActive());
+        equal(selection.focusOffset, 0);
+    });
+
+    test("selectAll method does nothing if element is empty", function() {
+        createFormulaInput();
+
+        formulaInput.caretToEnd();
+
+        var selection = window.getSelection();
+
+        ok(!formulaInput.isActive());
+        equal(selection.focusOffset, 0);
+    });
+
+    test("selectAll method does nothing if element is empty", function() {
+        createFormulaInput();
+
+        formulaInput.value("test");
+        formulaInput.element.focus();
+
+        formulaInput.caretToEnd();
+
+        var selection = window.getSelection();
+
+        ok(formulaInput.isActive());
+        equal(selection.focusOffset, 4);
+        equal(selection.type, "Caret");
     });
 })();
