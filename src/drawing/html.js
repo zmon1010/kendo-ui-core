@@ -363,12 +363,16 @@
                 if (el.nodeType == 1 && el !== copy && firstInParent(el)) {
                     return breakAtElement(el.parentNode);
                 }
+                var colgroup = $(el).closest("table").find("colgroup");
                 var page = makePage();
                 var range = doc.createRange();
                 range.setStartBefore(copy);
                 range.setEndBefore(el);
                 page.appendChild(range.extractContents());
                 copy.parentNode.insertBefore(page, copy);
+                if (colgroup[0]) {
+                    colgroup.clone().prependTo($(el).closest("table"));
+                }
             }
 
             function makePage() {

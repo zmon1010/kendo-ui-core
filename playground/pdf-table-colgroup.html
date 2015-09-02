@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script src="pako.min.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <style>
+      body {
+        font-size: 12px;
+        font-family: "DejaVu Serif";
+      }
+      table {
+        margin: 0 auto;
+      }
+      table td {
+        border: 1px solid #888;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="doit('#table')">PDF</button>
+    <div id="table"></div>
+    <script>
+      var html = "<table>";
+      html += "<colgroup><col style='background: #fea; width: 150px'/><col style='background: #aef; width: 200px'/></colgroup>";
+      for (var i = 0; i < 200; ++i) {
+        html += "<tr><td>" + (Math.random()+"").substr(0, Math.random() * 10) + "</td><td>" + (Math.random()+"").substr(0, Math.random() * 10) + "</td></tr>";
+      }
+      html += "</table>";
+      $("#table").html(html);
+
+      function doit(el) {
+        pdfPages(el, {
+          paperSize: "A4",
+          margin: "2cm",
+          forcePageBreak: ".page-break"
+        });
+      }
+    </script>
+  </body>
+</html>
