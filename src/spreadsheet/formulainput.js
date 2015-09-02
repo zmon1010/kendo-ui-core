@@ -22,12 +22,6 @@
             name: "FormulaInput"
         },
 
-        _sync: function() {
-            if (this._editorToSync && this.isActive()) {
-                this._editorToSync.value(this.value());
-            }
-        },
-
         isActive: function() {
             return this.element.is(":focus");
         },
@@ -47,13 +41,6 @@
 
             selection.removeAllRanges();
             selection.addRange(range);
-        },
-
-        editorToSync: function(formulaInput) {
-            var eventName = "input" + ns;
-
-            this._editorToSync = formulaInput;
-            this.element.off(eventName).on(eventName, this._sync.bind(this));
         },
 
         hide: function() {
@@ -86,6 +73,19 @@
                 width: rectangle.width,
                 height: rectangle.height
             });
+        },
+
+        syncWith: function(formulaInput) {
+            var eventName = "input" + ns;
+
+            this._editorToSync = formulaInput;
+            this.element.off(eventName).on(eventName, this._sync.bind(this));
+        },
+
+        _sync: function() {
+            if (this._editorToSync && this.isActive()) {
+                this._editorToSync.value(this.value());
+            }
         },
 
         value: function(value) {

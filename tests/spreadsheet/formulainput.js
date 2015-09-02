@@ -69,13 +69,13 @@
         ok(element.is(":visible"));
     });
 
-    test("editorToSync method updates passed editor on value change", function() {
+    test("syncWith method updates passed editor on value change", function() {
         createFormulaInput();
 
         var value = "test";
         var editor = new kendo.spreadsheet.FormulaInput($("<div/>"));
 
-        formulaInput.editorToSync(editor);
+        formulaInput.syncWith(editor);
 
         formulaInput.element.focus();
         formulaInput.element.html(value).trigger("input");
