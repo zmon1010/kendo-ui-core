@@ -36,8 +36,10 @@
                 this.popup.destroy();
             },
 
-            _popup: function() {
-                element.kendoPopup({
+            openFor: function(anchor) {
+                this.popup.setOptions({ anchor: anchor });
+                this.popup.open();
+            },
 
             _popup: function() {
                 this.popup = this.element.kendoPopup({

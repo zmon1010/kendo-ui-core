@@ -119,6 +119,8 @@
 
             // this is necessary for Windows to catch prevent context menu correctly
             this.cellContextMenu.element.add(this.rowHeaderContextMenu.element).add(this.colHeaderContextMenu.element).on("contextmenu", false);
+
+            $(this.view.container).on("click", ".k-link.k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
         },
 
         onContextMenuSelect: function(e) {
@@ -489,6 +491,12 @@
         onTab: function() {
             this.formulaInput.deactivate();
             this.clipboardElement.focus();
+        },
+
+        onFilterHeaderClick: function(e) {
+            var target = $(e.currentTarget);
+
+            this.view.filterMenus[target.data("index")].openFor(target);
         }
     });
 

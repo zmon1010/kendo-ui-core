@@ -843,6 +843,7 @@
             var sheet = this._sheet;
             var filterIcons = [];
             var classNames = View.classNames;
+            var index = 0;
 
             function icon(className) {
                 return kendo.dom.element("span", {
@@ -850,7 +851,7 @@
                 });
             }
 
-            function filterButton(classNames, rect) {
+            function filterButton(classNames, rect, index) {
                 var BUTTON_SIZE = 16;
                 var style = {
                     left: rect.left + rect.width - BUTTON_SIZE - 3 + "px",
@@ -859,7 +860,7 @@
 
                 var button = kendo.dom.element(
                     "a",
-                    { href: "#", className: "k-link " + classNames.filterButton, style: style },
+                    { href: "#", className: "k-link " + classNames.filterButton, style: style, "data-index": index },
                     [ icon(classNames.iconFilterDefault) ]
                 );
 
@@ -868,7 +869,8 @@
 
             sheet.forEachFilterHeader(this._currentView.ref, function(ref) {
                 var rect = this._rectangle(ref);
-                var button = filterButton(classNames, rect);
+                var button = filterButton(classNames, rect, index);
+                index++;
 
                 filterIcons.push(button);
             }.bind(this));
