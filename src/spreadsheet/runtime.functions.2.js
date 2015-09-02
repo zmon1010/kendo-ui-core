@@ -145,6 +145,96 @@
                  [ "assert", "$actual_range.height == $expected_range.height" ] ] ]
     ]);
 
+    defineFunction("EXPON.DIST", expon).args([
+        [ "x", "number+" ],
+        [ "lambda", "number++" ],
+        [ "cumulative", "logical" ]
+    ]);
+
+    defineFunction("POISSON.DIST", poisson).args([
+        [ "x", "integer+" ],
+        [ "mean", "number+" ],
+        [ "cumulative", "logical" ]
+    ]);
+
+    defineFunction("F.DIST", Fdist).args([
+        [ "x", "number+" ],
+        [ "deg_freedom1", "integer++" ],
+        [ "deg_freedom2", "integer++" ],
+        [ "cumulative", "logical" ]
+    ]);
+
+    defineFunction("F.DIST.RT", Fdist_right).args([
+        [ "x", "number+" ],
+        [ "deg_freedom1", "integer++" ],
+        [ "deg_freedom2", "integer++" ]
+    ]);
+
+    defineFunction("F.INV", Finv).args([
+        [ "p", [ "and", "number", [ "[between]", 0, 1 ] ] ],
+        [ "deg_freedom1", "integer++" ],
+        [ "deg_freedom2", "integer++" ]
+    ]);
+
+    defineFunction("F.INV.RT", Finv_right).args([
+        [ "p", [ "and", "number", [ "[between]", 0, 1 ] ] ],
+        [ "deg_freedom1", "integer++" ],
+        [ "deg_freedom2", "integer++" ]
+    ]);
+
+    defineFunction("F.TEST", Ftest).args([
+        [ "array1", [ "collect", "number", 1 ] ],
+        [ "array2", [ "collect", "number", 1 ] ],
+        [ "?", [ "and",
+                 [ "assert", "$array1.length >= 2", "DIV/0" ],
+                 [ "assert", "$array2.length >= 2", "DIV/0" ] ] ]
+    ]);
+
+    defineFunction("FISHER", fisher).args([
+        [ "x", [ "and", "number", [ "(between)", -1, 1 ] ] ]
+    ]);
+
+    defineFunction("FISHERINV", fisherinv).args([
+        [ "y", "number" ]
+    ]);
+
+    defineFunction("T.DIST", Tdist).args([
+        [ "x", "number" ],
+        [ "deg_freedom", "integer++" ],
+        [ "cumulative", "logical" ]
+    ]);
+
+    defineFunction("T.DIST.RT", Tdist_right).args([
+        [ "x", "number" ],
+        [ "deg_freedom", "integer++" ]
+    ]);
+
+    defineFunction("T.DIST.2T", Tdist_2tail).args([
+        [ "x", "number+" ],
+        [ "deg_freedom", "integer++" ]
+    ]);
+
+    defineFunction("T.INV", Tdist_inv).args([
+        [ "p", [ "and", "number", [ "(between]", 0, 1 ] ] ],
+        [ "deg_freedom", "integer++" ]
+    ]);
+
+    defineFunction("T.INV.2T", Tdist_2tail_inv).args([
+        [ "p", [ "and", "number", [ "(between]", 0, 1 ] ] ],
+        [ "deg_freedom", "integer++" ]
+    ]);
+
+    defineFunction("T.TEST", Tdist_test).args([
+        [ "array1", [ "collect", "number", 1 ] ],
+        [ "array2", [ "collect", "number", 1 ] ],
+        [ "tails", [ "and", "integer", [ "values", 1, 2 ] ] ],
+        [ "type", [ "and", "integer", [ "values", 1, 2, 3 ] ] ],
+        [ "?", [ "and",
+                 [ "assert", "$type != 1 || $array1.length == $array2.length", "N/A" ],
+                 [ "assert", "$array1.length >= 2", "DIV/0" ],
+                 [ "assert", "$array2.length >= 2", "DIV/0" ] ] ]
+    ]);
+
     /* -----[ definitions ]----- */
 
     var MAX_IT = 300,     // Maximum allowed number of iterations
@@ -460,6 +550,142 @@
         }
         var n = (rows - 1)*(cols - 1);
         return chisq_right(x, n);
+    }
+
+    function expon(x, r, cdf) { // EXPON.DIST(x, lambda, cumulative)
+        if (cdf) {
+            return 1 - Math.exp(-r*x);
+        }
+        return r * Math.exp(-r*x);
+    }
+
+    function poisson(k, m, cdf) { // POISSON.DIST(x, mean, cumulative)
+        if (cdf) {
+            return 1 - chisq_left(2*m, 2*(k+1), true);
+        }
+        //return chisq_left(2*m, 2*k, true) - chisq_left(2*m, 2*(k+1), true);
+        var lnf = 0;
+        for (var i = 2; i <= k; i++) {
+            lnf += Math.log(i); // compute log(k!)
+        }
+        return Math.exp(k*Math.log(m) - m - lnf);
+    }
+
+    function Fdist(x, n, d, cdf) { //F.DIST(x,deg_freedom1,deg_freedom2,cumulative)
+        if (cdf) {
+            return betastd_cdf(n*x/(d+n*x), n/2, d/2);
+        }
+        var u = n/d;
+        n /= 2; d /= 2;
+        return u/BETA(n, d) * Math.pow(u*x, n-1) / Math.pow(1+u*x, n+d);
+    }
+
+    function Fdist_right(x, n, d) { // F.DIST.RT(x,deg_freedom1,deg_freedom2)
+        return 1 - Fdist(x, n, d, true);
+    }
+
+    function Finv_right(p, n, d) { // F.INV.RT(probability,deg_freedom1,deg_freedom2
+        return d/n*(1/BETA_INV(p, d/2, n/2, 0, 1) - 1);
+    }
+
+    function Finv(p, n, d) { // F.INV(probability,deg_freedom1,deg_freedom2
+        return d/n*(1/BETA_INV(1-p, d/2, n/2, 0, 1) - 1);
+    }
+
+    function _mean(arr) {
+        var me = 0, n = arr.length;
+        for (var i = 0; i < n; i++) {
+            me += arr[i];
+        }
+        return me / n;
+    }
+
+    function _var_sq(arr, m) { // returns the (n-1)-part of the sum of the squares of deviations from m (= VAR)
+        var v = 0, n = arr.length;
+        for (var i = 0; i < n; i++) {
+            var delta = arr[i] - m;
+            v += delta*delta;
+        }
+        return v / (n-1);
+    }
+
+    function Ftest(arr1, arr2) { // F.TEST(array1,array2)
+        var n1 = arr1.length - 1, n2 = arr2.length - 1;
+        var va1 = _var_sq(arr1, _mean(arr1)),
+            va2 = _var_sq(arr2, _mean(arr2));
+        if (!va1 || !va2) {
+            return new CalcError("DIV/0");
+        }
+        return 2*Fdist(va1 / va2, n1, n2, true);
+    }
+
+    function fisher(x) { // FISHER(x)
+        return 0.5*Math.log((1+x)/(1-x));
+    }
+
+    function fisherinv(x) { // FISHERINV(x)
+        var e2 = Math.exp(2*x);
+        return (e2 - 1)/(e2 + 1);
+    }
+
+    function Tdist(x, n, cdf) { // T.DIST(x,deg_freedom, cumulative)
+        if (cdf) {
+            return 1 - 0.5*betastd_cdf(n/(x*x+n), n/2, 0.5);
+        }
+        return 1/(Math.sqrt(n)*BETA(0.5, n/2)) * Math.pow(1 + x*x/n, -(n+1)/2);
+    }
+
+    function Tdist_right(x, n) { // T.DIST.RT(x,deg_freedom)
+        return 1 - Tdist(x, n, true);
+    }
+
+    function Tdist_2tail(x, n) { // T.DIST.2T(x,deg_freedom)
+        if (x < 0) {
+            x = -x;
+        }
+        return 2*Tdist_right(x, n);
+    }
+
+    function Tdist_inv(p, n) { // T.INV(probability,deg_freedom)
+        var x = betastd_inv(2*Math.min(p, 1-p), n/2, 0.5); // ibetainv();
+        x = Math.sqrt(n * (1 - x) / x);
+        return (p > 0.5) ? x : -x;
+    }
+
+    function Tdist_2tail_inv(p, n) { // T.INV.2T(probability,deg_freedom)
+        // T2 = 2T_r = p => T_r(x,n) = p/2 => 1 - T(x,n,true) = p/2 => x = T^-1(1-p/2, n)
+        return Tdist_inv(1-p/2, n);
+    }
+
+    function Tdist_test(gr1, gr2, tail, type) { // T.TEST(array1,array2,tails,type)
+        var n1 = gr1.length, n2 = gr2.length;
+        var t_st, df; // the t-statistic and the "degree of freedom"
+        if (type == 1) { // paired (dependent) samples
+            var d = 0, d2 = 0;
+            for (var i = 0; i < n1; i++) {
+                var delta = gr1[i] - gr2[i];
+                d += delta;
+                d2 += delta*delta;
+            }
+            var md = d/n1, md2 = d2 / n1;
+            t_st = md / Math.sqrt((d2 - d*md)/(n1*(n1-1))); // has a "Student T" distribution
+            return tail == 1 ? Tdist_right(t_st, n1-1) : Tdist_2tail(t_st, n1-1);
+        }
+        // unpaired (independent) samples
+        var m1 = _mean(gr1), m2 = _mean(gr2),
+            v1 = _var_sq(gr1, m1), v2 = _var_sq(gr2, m2);
+        if (type == 3) { // unpaired, unequal variances
+            var u1 = v1/n1, u2 = v2/n2, u = u1 + u2;
+            var q1 = u1/u, q2 = u2/u; // u==0 must be invalidated
+            df = 1/(q1*q1/(n1-1) + q2*q2/(n2-1));
+            t_st =  f_abs(m1-m2)/Math.sqrt(u);
+            return tail == 1 ? Tdist_right(t_st, df) : Tdist_2tail(t_st, df);
+        }
+        else { // (type == 2) unpaired, equal variances ("equal" in the sense that there is no significant difference in variance in both groups - a prealable F-test could revealed that)
+            df = n1 + n2 - 2;
+            t_st = f_abs(m1-m2)*Math.sqrt(df*n1*n2/((n1+n2)*((n1-1)*v1+(n2-1)*v2)));
+            return tail == 1 ? Tdist_right(t_st, df) : Tdist_2tail(t_st, df);
+        }
     }
 
     /*

@@ -193,24 +193,30 @@
                 var val = self.$(cell);
                 var expected = hash[cell];
                 if (expected instanceof APPROX) {
-                    if (typeof val == "number") {
-                        val = val.toFixed(expected.dec);
+                    if (typeof val != "number") {
                         val = parseFloat(val);
                     }
-                    expected = parseFloat(expected.val);
+                    ok(Math.abs(val - expected.val) < expected.eps);
+                    if (!(Math.abs(val - expected.val) < expected.eps)) {
+                        console.log(val, expected.val);
+                    }
+                } else {
+                    equal(val, expected);
                 }
-                equal(val, expected);
             });
         }
     });
 
-    function APPROX(val) {
+    function APPROX(val, eps) {
         if (!(this instanceof APPROX)) {
             return new APPROX(val);
         }
-        val += "";
+        if (!eps) {
+            var tmp = (val+"").replace(/^.*\./, "");
+            eps = Math.pow(10, -tmp.length);
+        }
         this.val = val;
-        this.dec = val.length - val.indexOf(".") - 1;
+        this.eps = eps;
     }
 
     function DATE(str) {
@@ -685,7 +691,7 @@
             ss.expectEqual({
                 F11: APPROX(27.463916),
                 F12: APPROX(26.054558),
-                F13: APPROX(754.27),
+                F13: APPROX(754.2666666666665),
                 F14: APPROX(678.84),
             });
         });
@@ -1777,6 +1783,55 @@
     test("CHISQ.TEST", function(){
         calcTest({
             "=CHISQ.TEST({58, 35; 11, 25; 10, 23}, {45.35, 47.65; 17.56, 18.44; 16.09, 16.91})": 0.000308192
+        });
+    });
+
+    test("EXPON.DIST", function(){
+        calcTest({
+            "=EXPON.DIST(0.2, 10, true)": 0.86466472,
+            "=EXPON.DIST(0.2, 10, false)": 1.35335283,
+        });
+    });
+
+    test("POISSON.DIST", function(){
+        calcTest({
+            "=poisson.dist(2, 5, true)": 0.124652,
+            "=poisson.dist(2, 5, false)": 0.084224,
+        });
+    });
+
+    test("F/DIST", function(){
+        calcTest({
+            "=F.DIST(15.2069, 6, 4, false)": 0.0012238,
+            "=F.DIST(15.2069, 6, 4, true)": 0.990000,
+            "=F.DIST(0.21119, 5, 10, true)": 0.05000,
+            "=F.DIST.RT(15.2068649, 6, 4)": 0.010000,
+            "=F.INV.RT(0.01, 6, 4)": 15.20686,
+            "=F.INV(0.01, 6, 4)": 0.10930991,
+            "=F.TEST({6,7,9,15,21}, {20,28,31,38,40})": 0.64831785,
+        });
+    });
+
+    test("FISHER", function(){
+        calcTest({
+            "=FISHER(0.75)": 0.9729551,
+            "=FISHERINV(0.972955)": 0.75,
+        });
+    });
+
+    test("T/DIST", function(){
+        calcTest({
+            "=T.DIST(60, 1, true)": 0.99469533,
+            "=T.DIST(8, 3, false)": 0.00073691,
+            "=T.DIST(2.093025, 19, false)": 0.049448058,
+            "=T.DIST.2T(1.959999998, 60)": 0.054645,
+            "=T.DIST(1.3, 19, true)": 0.8954242498513758,
+            "=T.INV(0.8954242498513758, 19)": 1.3,
+            "=T.INV(0.75, 2)": 0.8164966,
+            "=T.INV.2T(0.546449, 60)": 0.606533,
+            "=T.TEST({3,4,5,8,9,1,2,4,5}, {6,19,3,2,14,4,5,17,1}, 2, 1)": 0.196016,
+            "=T.TEST({500,480,520,470,510}, {280,230,290,250,240}, 1, 2)": 1.14133E-7,
+            "=T.TEST({11.4, 17.3, 21.3, 25.9, 40.1}, {23.2, 25.8, 29.9, 33.5, 42.7}, 1, 2)": 0.11180432234967963,
         });
     });
 

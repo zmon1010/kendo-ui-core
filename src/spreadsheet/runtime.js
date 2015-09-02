@@ -789,6 +789,12 @@
                 if (type[0] == "(between)") {
                     return "(" + force() + " > " + type[1] + " && " + "$"+name+" < " + type[2] + ")";
                 }
+                if (type[0] == "(between]") {
+                    return "(" + force() + " > " + type[1] + " && " + "$"+name+" <= " + type[2] + ")";
+                }
+                if (type[0] == "[between)") {
+                    return "(" + force() + " >= " + type[1] + " && " + "$"+name+" < " + type[2] + ")";
+                }
                 if (type[0] == "assert") {
                     var err = type[2] || "N/A";
                     return "((" + type[1] + ") ? true : (err = " + JSON.stringify(err) + ", false))";
