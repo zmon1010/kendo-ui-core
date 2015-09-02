@@ -24,23 +24,4 @@
         ok(formulaInput instanceof kendo.spreadsheet.FormulaInput);
     });
 
-    test("triggers change event on formula input change", 1, function() {
-        createFormulaBar({
-            change: function(e) {
-                equal(e.value, "foo");
-            }
-        });
-
-        formulaInput.value("foo");
-        formulaInput.element.trigger("blur");
-    });
-
-    test("value sets input value", function() {
-        createFormulaBar();
-
-        formulaBar.value("bar");
-
-        equal(formulaInput.value(), "bar");
-    });
-
 })();

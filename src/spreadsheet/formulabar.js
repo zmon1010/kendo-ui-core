@@ -13,39 +13,16 @@
         init: function(element, options) {
             kendo.ui.Widget.call(this, element, options);
 
-            element = this.element;
+            element = this.element.addClass(FormulaBar.classNames.wrapper);
 
-            element.addClass(FormulaBar.classNames.wrapper);
-
-            this._formulaInput = new kendo.spreadsheet.FormulaInput($("<div/>").appendTo(element), {
-                change: this._onChange.bind(this)
-            });
-
-            //TODO: should be removed
-            this._formulaInput.element.on("blur", (function() {
-                this.trigger("change", {
-                    value: this._formulaInput.value()
-                });
-            }).bind(this));
+            this.formulaInput = new kendo.spreadsheet.FormulaInput($("<div/>").appendTo(element));
         },
-        events: [
-            "change"
-        ],
-        _onChange: function(e) {
-            this.trigger("change", e);
-        },
-        value: function(value) {
-            if (value === undefined) {
-                return this._formulaInput.value();
-            }
 
-            this._formulaInput.value(value);
-        },
         destroy: function() {
-            if (this._formulaInput) {
-                this._formulaInput.destroy();
+            if (this.formulaInput) {
+                this.formulaInput.destroy();
             }
-            this._formulaInput = null;
+            this.formulaInput = null;
         }
     });
 
