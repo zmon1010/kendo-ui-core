@@ -97,7 +97,7 @@
         ok(!formulaInput.isActive());
     });
 
-    test("selectAll method does nothing if element is not focused", function() {
+    test("caretToEnd method does nothing if element is not focused", function() {
         createFormulaInput();
 
         formulaInput.value("test");
@@ -109,7 +109,7 @@
         equal(selection.focusOffset, 0);
     });
 
-    test("selectAll method does nothing if element is empty", function() {
+    test("caretToEnd method does nothing if element is empty", function() {
         createFormulaInput();
 
         formulaInput.caretToEnd();
@@ -120,7 +120,7 @@
         equal(selection.focusOffset, 0);
     });
 
-    test("selectAll method does nothing if element is empty", function() {
+    test("caretToEnd method does nothing if element is empty", function() {
         createFormulaInput();
 
         formulaInput.value("test");
