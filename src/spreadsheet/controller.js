@@ -37,8 +37,7 @@
     var CONTAINER_EVENTS = {
         "wheel": "onWheel",
         "*+mousedown": "onMouseDown",
-        "*+rightmousedown": "onContextMenu",
-        "contextmenu": "prevent",
+        "contextmenu": "onContextMenu",
         "*+mousedrag": "onMouseDrag",
         "*+mouseup": "onMouseUp",
         "*+dblclick": "onDblClick"
