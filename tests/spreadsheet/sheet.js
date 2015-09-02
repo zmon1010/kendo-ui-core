@@ -258,6 +258,39 @@
        sheet.bind("change", success).deleteColumn(0);
     });
 
+    test("deleteColumn trimming the merged cells range when deleting column from the range", function() {
+        sheet.range("A1:C3").merge();
+
+        sheet.deleteColumn(0);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "A1:B3");
+    });
+
+    test("deleteColumn reposition the merged cells range when deleting column before the range", function() {
+        sheet.range("B1:C3").merge();
+
+        sheet.deleteColumn(0);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "A1:B3");
+    });
+
+    test("deleteColumn does not change the merged cells range if removing column after the range", function() {
+        sheet.range("B1:C3").merge();
+
+        sheet.deleteColumn(3);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "B1:C3");
+    });
+
     test("deleteColumn moves the next column values to the deleted one", function() {
         sheet.range("B:B").value("foo");
 
