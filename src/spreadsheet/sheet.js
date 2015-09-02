@@ -203,6 +203,21 @@
                     this.frozenRows(frozenRows - 1);
                 }
 
+                var mergedCells = this._mergedCells.slice(0);
+
+                var firstRow = new RangeRef(new CellRef(rowIndex, 0), new CellRef(rowIndex, columnCount));
+
+                firstRow.intersecting(mergedCells).forEach(function(ref) {
+                    ref.bottomRight.row = ref.bottomRight.row - 1;
+                });
+
+                mergedCells.forEach(function(ref) {
+                    if (ref.topLeft.row > firstRow.bottomRight.row) {
+                        ref.topLeft.row = ref.topLeft.row - 1;
+                        ref.bottomRight.row = ref.bottomRight.row - 1;
+                    }
+                });
+
                 for (var ci = 0; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
 
@@ -222,6 +237,8 @@
 
                     new Range(new RangeRef(nextRefBottomRight, nextRefBottomRight), this).clear();
                 }
+
+                this._mergedCells = mergedCells;
 
                 this._adjustFormulas("row", rowIndex, -1);
             }, { recalc: true, layout: true });

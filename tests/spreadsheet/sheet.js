@@ -109,6 +109,63 @@
         equal(sheet.range("2:2").value(), null);
     });
 
+    test("deleteRow persist merged cells when deleting row is at the start of the merged group", function() {
+        sheet.range("A2:B3").merge();
+
+        sheet.deleteRow(1);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "A2:B2");
+    });
+
+    test("deleteRow moves the merged cells when deleting the row prior to the range", function() {
+        sheet.range("A2:B3").merge();
+
+        sheet.deleteRow(0);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "A1:B2");
+    });
+
+    test("deleteRow persist styling of the merged cell", function() {
+        sheet.range("A2:B3").merge().background("red");
+
+        sheet.deleteRow(1);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(sheet.range("A2:B2").background(), "red");
+    });
+
+    test("deleteRow persist merged cells two overlapping ranges", function() {
+        sheet.range("A1:B3").merge();
+
+        sheet.range("C2:F5").merge();
+
+        sheet.deleteRow(2);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 2);
+        equal(mergedCells[0].toString(), "A1:B2");
+        equal(mergedCells[1].toString(), "C2:F4");
+    });
+
+    test("deleteRow does not change merged cells when deleted row is not included", function() {
+        sheet.range("A1:B3").merge();
+
+        sheet.deleteRow(5);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "A1:B3");
+    });
+
     test("deleteRow move the bottom row background to the deleted one", function() {
         sheet.range("2:2").background("foo");
 
