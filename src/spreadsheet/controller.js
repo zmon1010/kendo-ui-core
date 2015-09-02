@@ -117,6 +117,9 @@
             this.cellContextMenu.bind("select", this.onContextMenuSelect.bind(this));
             this.rowHeaderContextMenu.bind("select", this.onContextMenuSelect.bind(this));
             this.colHeaderContextMenu.bind("select", this.onContextMenuSelect.bind(this));
+
+            // this is necessary for Windows to catch prevent context menu correctly
+            this.cellContextMenu.element.add(this.rowHeaderContextMenu.element).add(this.colHeaderContextMenu.element).on("contextmenu", false);
         },
 
         onContextMenuSelect: function(e) {
