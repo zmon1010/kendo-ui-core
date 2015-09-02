@@ -10,10 +10,14 @@
 
         var FilterMenu = kendo.ui.Widget.extend({
             init: function(element, options) {
+                this.anchor = element;
+
+                element = $("<div />").appendTo(document.body);
                 kendo.ui.Widget.call(this, element, options);
 
                 this.element.addClass(FilterMenu.classNames.wrapper);
 
+                this._popup();
                 this._sort();
                 this._filterByCondition();
                 this._filterByValue();
@@ -29,12 +33,16 @@
             ],
 
             destroy: function() {
+                this.popup.destroy();
             },
 
             _popup: function() {
                 element.kendoPopup({
 
-                });
+            _popup: function() {
+                this.popup = this.element.kendoPopup({
+                    anchor: this.anchor
+                }).data("kendoPopup");
             },
 
             _sort: function() {

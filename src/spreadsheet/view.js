@@ -543,6 +543,12 @@
                 dialog.destroy();
             });
             this.cellContextMenu.destroy();
+            this.destroyFilterMenus();
+        },
+
+        destroyFilterMenus: function() {
+            this.filterMenus.forEach(function(instance) { instance.destroy(); });
+            this.filterMenus = [];
         },
 
         render: function() {
