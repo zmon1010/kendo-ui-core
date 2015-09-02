@@ -21,8 +21,16 @@
 
     test("deletes columns for the given range", function() {
         sheet.range("D:D").value("foo");
-        manager.deleteColumn(getRef("C:C,A:B,C:C"));
+        sheet.range("C:C,A:B,C:C").select();
+        manager.deleteSelectedColumns();
         equal(sheet.range("A:A").value(), "foo");
+    });
+
+    test("knows about hidden columns", function() {
+        ok(!manager.includesHiddenColumns(getRef("A:D")));
+        sheet.range("C:C").select();
+        manager.hideSelectedColumns();
+        ok(manager.includesHiddenColumns(getRef("A:D")));
     });
 
 })();

@@ -238,6 +238,7 @@
         '<li class="k-separator"></li>' +
         '<li data-action="delete-row">Delete</li>'+
         '<li data-action="hide-row">Hide</li>'+
+        '<li data-action="unhide-row">Unhide</li>'+
     '</ul>';
 
     var COL_HEADER_CONTEXT_MENU = '<ul class="#=classNames.colHeaderContextMenu#">' +
@@ -250,7 +251,7 @@
         '<li class="k-separator"></li>' +
         '<li data-action="delete-column">Delete</li>'+
         '<li data-action="hide-column">Hide</li>'+
-        '<li data-action="unhide">Unhide</li>'+
+        '<li data-action="unhide-column">Unhide</li>'+
     '</ul>';
 
 

@@ -12,60 +12,76 @@
             this._sheet = sheet;
         },
 
-        deleteColumn: function(ref) {
+        forEachSelectedColumn: function(callback) {
             var sheet = this._sheet;
 
             sheet.batch(function() {
-                ref.forEachColumnIndex(function(index, i) {
-                    sheet.deleteColumn(index - i);
+                sheet._select().forEachColumnIndex(function(index, i) {
+                    callback(sheet, index, i);
                 });
             }, true);
         },
 
-        deleteRow: function(ref) {
+        forEachSelectedRow: function(callback) {
             var sheet = this._sheet;
 
             sheet.batch(function() {
-                ref.forEachRowIndex(function(index, i) {
-                    sheet.deleteRow(index - i);
+                sheet._select().forEachRowIndex(function(index, i) {
+                    callback(sheet, index, i);
                 });
             }, true);
         },
 
-        hideColumn: function(ref) {
-            var sheet = this._sheet;
-
-            sheet.batch(function() {
-                ref.forEachColumnIndex(function(index, i) {
-                    sheet.hideColumn(index - i);
-                });
-            }, true);
+        includesHiddenColumns: function(ref) {
+            return this._sheet._grid._columns.includesHidden(ref.topLeft.col, ref.bottomRight.col);
         },
 
-        hideRow: function(ref) {
-            var sheet = this._sheet;
+        includesHiddenRows: function(ref) {
+            return this._sheet._grid._rows.includesHidden(ref.topLeft.row, ref.bottomRight.row);
+        },
 
-            sheet.batch(function() {
-                ref.forEachRowIndex(function(index, i) {
-                    sheet.hideRow(index - i);
-                });
-            }, true);
+        selectionIncludesHiddenColumns: function() {
+            return this.includesHiddenColumns(this._sheet.select());
+        },
+
+        selectionIncludesHiddenRows: function() {
+            return this.includesHiddenRows(this._sheet.select());
         },
 
         deleteSelectedColumns: function() {
-            this.deleteColumn(this._sheet.select());
+            this.forEachSelectedColumn(function(sheet, index, i) {
+                sheet.deleteColumn(index - i);
+            });
         },
 
         deleteSelectedRows: function() {
-            this.deleteRow(this._sheet.select());
+            this.forEachSelectedRow(function(sheet, index, i) {
+                sheet.deleteRow(index - i);
+            });
         },
 
         hideSelectedColumns: function() {
-            this.hideColumn(this._sheet.select());
+            this.forEachSelectedColumn(function(sheet, index, i) {
+                sheet.hideColumn(index);
+            });
         },
 
         hideSelectedRows: function() {
-            this.hideRow(this._sheet.select());
+            this.forEachSelectedRow(function(sheet, index, i) {
+                sheet.hideRow(index);
+            });
+        },
+
+        unhideSelectedColumns: function() {
+            this.forEachSelectedColumn(function(sheet, index, i) {
+                sheet.unhideColumn(index);
+            });
+        },
+
+        unhideSelectedRows: function() {
+            this.forEachSelectedRow(function(sheet, index, i) {
+                sheet.unhideRow(index);
+            });
         }
     });
 

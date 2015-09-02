@@ -67,6 +67,10 @@
             return this._hidden.value(index, index) !== 0;
         },
 
+        includesHidden: function(start, end) {
+             return this._hidden.intersecting(start, end).length > 1;
+        },
+
         nextVisible: function(index, overflow) {
             var end = this._count - 1;
 

@@ -67,10 +67,14 @@
        topcorner: "sheet"
     };
 
-    var COMPOSITE_UNAVAILABLE_ACTION_SELECTORS = [ 'cut', 'copy', 'paste', 'insert-left', 'insert-right', 'insert-above', 'insert-below' ].map(function(action) {
-        return '[data-action="' + action + '"]';
-    }).join(",");
+    function toActionSelector(selectors) {
+        return selectors.map(function(action) {
+            return '[data-action="' + action + '"]';
+        }).join(",");
+    }
 
+    var COMPOSITE_UNAVAILABLE_ACTION_SELECTORS = toActionSelector([ 'cut', 'copy', 'paste', 'insert-left', 'insert-right', 'insert-above', 'insert-below' ]);
+    var UNHIDE_ACTION_SELECTORS = toActionSelector([ 'unhide-row', 'unhide-column' ]);
 
     var ACTION_KEYS = [];
     var SHIFT_ACTION_KEYS = [];
@@ -140,6 +144,12 @@
                         break;
                     case "hide-column":
                         this.axisManager.hideSelectedColumns();
+                        break;
+                    case "unhide-row":
+                        this.axisManager.unhideSelectedRows();
+                        break;
+                    case "unhide-column":
+                        this.axisManager.unhideSelectedColumns();
                         break;
                     case "delete-row":
                         this.axisManager.deleteSelectedRows();
@@ -277,16 +287,20 @@
             this.navigator.selectForContextMenu(object.ref, SELECTION_MODES[object.type]);
 
             var isComposite = this.navigator._sheet.select() instanceof kendo.spreadsheet.UnionRef;
+            var showUnhide = false;
 
             if (object.type === "cell") {
                 menu = this.cellContextMenu;
             } else if (object.type == "columnheader") {
                 menu = this.colHeaderContextMenu;
+                showUnhide = this.axisManager.selectionIncludesHiddenColumns();
             } else if (object.type == "rowheader") {
                 menu = this.rowHeaderContextMenu;
+                showUnhide = this.axisManager.selectionIncludesHiddenRows();
             }
 
             menu.element.find(COMPOSITE_UNAVAILABLE_ACTION_SELECTORS).toggle(!isComposite);
+            menu.element.find(UNHIDE_ACTION_SELECTORS).toggle(!isComposite && showUnhide);
 
             // avoid the immediate close
             setTimeout(function() {
