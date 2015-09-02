@@ -614,7 +614,7 @@
         var va1 = _var_sq(arr1, _mean(arr1)),
             va2 = _var_sq(arr2, _mean(arr2));
         if (!va1 || !va2) {
-            return new CalcError("DIV/0");
+            throw new CalcError("DIV/0");
         }
         return 2*Fdist(va1 / va2, n1, n2, true);
     }
