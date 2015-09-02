@@ -11,6 +11,7 @@
             this.workbook = workbook;
             this.origin = kendo.spreadsheet.NULLREF;
             this.iframe = document.createElement("iframe");
+            this._external = {};
             document.body.appendChild(this.iframe);
         },
 
@@ -29,7 +30,7 @@
             var sheet = this.workbook.activeSheet();
             var ref = this.pasteRef();
             if(ref === kendo.spreadsheet.NULLREF) {
-                return this._external !== undefined;
+                return this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
             }
             return ref.eq(sheet.unionWithMerged(ref));
         },
@@ -59,7 +60,7 @@
         paste: function() {
             var content = {};
             var sheet = this.workbook.activeSheet();
-            if($("<div/>").html(this._external).find("table.kendo-clipboard").length) {
+            if(this._isInternal()) {
                 content = this.contents;
             }else{
                 var rows = [];
@@ -74,7 +75,6 @@
                 var bottomRight = new CellRef(Math.max.apply(null, rows), Math.max.apply(null, cols));
                 this.origin = new RangeRef(topLeft, bottomRight, 0);
                 $.extend(true, content, {ref: new CellRef(0,0,0), mergedCells: []});
-                this._external = undefined;
             }
             var pasteRef = this.pasteRef();
             sheet.range(pasteRef).clear().setState(content);
@@ -82,55 +82,72 @@
 
         },
 
-        external: function(html) {
-            if(html){
-                this._external = html;
+        external: function(data) {
+            if(data.html || data.plain){
+                this._external = data;
             }else{
                 return this._external;
             }
         },
 
-        parse: function(html) {
-            var doc = this.iframe.contentWindow.document;
-            doc.open();
-            doc.write(html);
-            doc.close();
-            var table = $(doc).find("table:first");
-            if(table.length){
-                var tbody = table.find("tbody:first");
-                var colgroup = table.find("colgroup:first");
-                var contents = {};
-                tbody.find("tr").each(function(rowIndex, tr) {
-                    $(tr).find("td").each(function(colIndex, td) {
-                        var key = rowIndex + "," + colIndex;
-                        var styles = window.getComputedStyle(td);
-                        contents[key] = {
-                            "value" : $(td).text() === "" ? null : $(td).text(),
-                            "format" : null,
-                            "compiledFormula" : null,
-                            "background" : styles["background-color"],
-                            "borderBottom" : styles["border-bottom"],
-                            "borderRight" : styles["border-right"],
-                            "borderLeft" : styles["border-left"],
-                            "borderTop" : styles["border-top"],
-                            "color" : styles["color"],
-                            "fontFamily" : styles["font-family"],
-                            "underline" : window.getComputedStyle(td)["text-decoration"] == "underline" ? true : false,
-                            "fontSize" : styles["font-size"],
-                            "italic" : window.getComputedStyle(td)["font-style"] == "italic" ? true : false,
-                            "bold" : window.getComputedStyle(td)["font-weight"] == "bold" ? true : false,
-                            "textAlign" : styles["text-align"],
-                            "verticalAlign" : styles["vertical-align"],
-                            "wrap" : styles["word-wrap"]
-                        };
+        parse: function(data) {
+            var content = {};
+            var clipboard = this;
+            if(data.html) {
+                var doc = clipboard.iframe.contentWindow.document;
+                doc.open();
+                doc.write(data.html);
+                doc.close();
+                var table = $(doc).find("table:first");
+                if(table.length) {
+                    var tbody = table.find("tbody:first");
+                    var colgroup = table.find("colgroup:first");
+                    tbody.find("tr").each(function(rowIndex, tr) {
+                        $(tr).find("td").each(function(colIndex, td) {
+                            var key = rowIndex + "," + colIndex;
+                            content[key] = clipboard._populateCell($(td));
+                        });
                     });
-                });
-                return contents;
+                } else {
+                    var element = $(doc.body).find(":not(style)");
+                    content["0,0"] = clipboard._populateCell(element);
+                }
+            }else{
+                content["0,0"] = {
+                    value: data.plain
+                };
             }
-            return html;
+            return content;
+        },
+
+        _isInternal: function() {
+            return this._external.html.indexOf('class="kendo-clipboard"') >= 0 ? true : false;
+        },
+
+        _populateCell: function(element) {
+            var styles = window.getComputedStyle(element[0]);
+            var text = element.text();
+            return {
+                value: text === "" ? null : text,
+                format : null,
+                compiledFormula : null,
+                background : styles["background-color"],
+                borderBottom : styles["border-bottom"],
+                borderRight : styles["border-right"],
+                borderLeft : styles["border-left"],
+                borderTop : styles["border-top"],
+                color : styles["color"],
+                fontFamily : styles["font-family"],
+                underline : styles["text-decoration"] == "underline" ? true : false,
+                fontSize : styles["font-size"],
+                italic : styles["font-style"] == "italic" ? true : false,
+                bold : styles["font-weight"] == "bold" ? true : false,
+                textAlign : styles["text-align"],
+                verticalAlign : styles["vertical-align"],
+                wrap : styles["word-wrap"]
+            };
         }
     });
-
     kendo.spreadsheet.Clipboard = Clipboard;
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
