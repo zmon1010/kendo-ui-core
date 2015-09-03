@@ -9,14 +9,12 @@
             diagram = dataviz.diagram,
             Class = kendo.Class,
             Group = diagram.Group,
-            TextBlock = diagram.TextBlock,
             Rect = diagram.Rect,
             Rectangle = diagram.Rectangle,
             Utils = diagram.Utils,
             isUndefined = Utils.isUndefined,
             Point = diagram.Point,
             Circle = diagram.Circle,
-            Path = diagram.Path,
             Ticker = diagram.Ticker,
             deepExtend = kendo.deepExtend,
             Movable = kendo.ui.Movable,
@@ -46,7 +44,6 @@
             RIGHT = "Right",
             LEFT = "Left",
             BOTTOM = "Bottom",
-            DEFAULTCONNECTORNAMES = [TOP, RIGHT, BOTTOM, LEFT, AUTO],
             DEFAULT_SNAP_SIZE = 10,
             DEFAULT_SNAP_ANGLE = 10,
             DRAG_START = "dragStart",
@@ -67,9 +64,7 @@
             VELOCITY_MULTIPLIER = 5,
             TRANSPARENT = "transparent",
             PAN = "pan",
-            ROTATED = "rotated",
-            WIDTH = "width",
-            HEIGHT = "height";
+            ROTATED = "rotated";
 
         diagram.Cursors = Cursors;
 
@@ -596,7 +591,7 @@
             },
             end: function () {
             },
-            tryActivate: function (p, meta) {
+            tryActivate: function () {
                 return false;
             },
             getCursor: function () {
@@ -701,7 +696,7 @@
             init: function (toolService) {
                 this.toolService = toolService;
             },
-            tryActivate: function (p, meta) {
+            tryActivate: function () {
                 return true; // the pointer tool is last and handles all others requests.
             },
             start: function (p, meta) {
@@ -814,7 +809,7 @@
                 this.toolService = toolService;
                 this.type = "ConnectionTool";
             },
-            tryActivate: function (p, meta) {
+            tryActivate: function() {
                 return this.toolService._hoveredConnector;
             },
             start: function (p, meta) {
@@ -1749,7 +1744,7 @@
 
             _createHandles: function() {
                 var editable = this.options.editable,
-                    handles, item, i, y, x;
+                    handles, item, y, x;
 
                 if (editable && editable.resize) {
                     handles = editable.resize.handles;
@@ -2195,7 +2190,6 @@
             _diffStates: function() {
                 var shapes = this.shapes;
                 var states = this.shapeStates;
-                var bounds;
                 for (var idx = 0; idx < shapes.length; idx++) {
                     if (!shapes[idx].bounds().equals(states[idx])) {
                         return true;

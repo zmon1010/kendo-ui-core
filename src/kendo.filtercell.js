@@ -19,7 +19,6 @@ var __meta__ = { // jshint ignore:line
         BOOL = "boolean",
         ENUM = "enums",
         STRING = "string",
-        NS = ".kendoFilterCell",
         EQ = "Is equal to",
         NEQ = "Is not equal to",
         proxy = $.proxy;
@@ -289,7 +288,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _refreshUI: function(e) {
+        _refreshUI: function() {
             var that = this,
                 filter = findFilterForField(that.dataSource.filter(), this.options.field) || {},
                 viewModel = that.viewModel;

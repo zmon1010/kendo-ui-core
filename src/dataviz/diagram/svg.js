@@ -5,17 +5,13 @@
 (function ($, undefined) {
     // Imports ================================================================
     var kendo = window.kendo,
-        Observable = kendo.Observable,
         diagram = kendo.dataviz.diagram,
         Class = kendo.Class,
         deepExtend = kendo.deepExtend,
-        dataviz = kendo.dataviz,
         Point = diagram.Point,
         Rect = diagram.Rect,
-        RectAlign = diagram.RectAlign,
         Matrix = diagram.Matrix,
         Utils = diagram.Utils,
-        isUndefined = Utils.isUndefined,
         isNumber = Utils.isNumber,
         isString = Utils.isString,
         MatrixVector = diagram.MatrixVector,
@@ -35,8 +31,6 @@
             filledCircle: "FilledCircle",
             arrowEnd: "ArrowEnd"
         },
-        DEFAULTWIDTH = 100,
-        DEFAULTHEIGHT = 100,
         FULL_CIRCLE_ANGLE = 360,
         START = "start",
         END = "end",
@@ -46,6 +40,22 @@
         Y = "y";
 
     diagram.Markers = Markers;
+
+    function diffNumericOptions(options, fields) {
+        var elementOptions = this.options;
+        var hasChanges = false;
+        var value, field;
+        for (var i = 0; i < fields.length; i++) {
+            field = fields[i];
+            value = options[field];
+            if (isNumber(value) && elementOptions[field] !== value) {
+                elementOptions[field] = value;
+                hasChanges = true;
+            }
+        }
+
+        return hasChanges;
+    }
 
     var Scale = Class.extend({
         init: function (x, y) {
@@ -557,7 +567,7 @@
 
         _initPath: function() {
             var options = this.options;
-            var drawingElement = this.drawingElement = new d.Path({
+            this.drawingElement = new d.Path({
                 stroke: options.stroke,
                 closed: true
             });
@@ -1346,7 +1356,7 @@
             this.drawingElement.remove(visual.drawingContainer());
         },
 
-        insertBefore: function (visual, beforeVisual) {
+        insertBefore: function () {
 
         },
 
@@ -1405,22 +1415,6 @@
         var yDiff = p2.y - p1.y;
         var angle = kendo.util.deg(Math.atan2(yDiff, xDiff));
         return angle;
-    }
-
-    function diffNumericOptions(options, fields) {
-        var elementOptions = this.options;
-        var hasChanges = false;
-        var value, field;
-        for (var i = 0; i < fields.length; i++) {
-            field = fields[i];
-            value = options[field];
-            if (isNumber(value) && elementOptions[field] !== value) {
-                elementOptions[field] = value;
-                hasChanges = true;
-            }
-        }
-
-        return hasChanges;
     }
 
     function createSegment(x, y) {

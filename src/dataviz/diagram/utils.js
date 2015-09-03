@@ -5,7 +5,6 @@
 (function ($, undefined) {
     var kendo = window.kendo,
         diagram = kendo.dataviz.diagram = {},
-        Class = kendo.Class,
         deepExtend = kendo.deepExtend,
         isArray = $.isArray,
         EPSILON = 1e-06;

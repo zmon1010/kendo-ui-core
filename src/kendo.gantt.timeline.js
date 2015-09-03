@@ -21,7 +21,6 @@ var __meta__ = { // jshint ignore:line
     var extend = $.extend;
     var proxy = $.proxy;
     var browser = kendo.support.browser;
-    var mobileOS = kendo.support.mobileOS;
     var isRtl = false;
     var keys = kendo.keys;
     var Query = kendo.data.Query;
@@ -330,7 +329,7 @@ var __meta__ = { // jshint ignore:line
             return this._createTable(1, rows, { className: styles.rowsTable });
         },
 
-        _columnsTable: function(rowCount) {
+        _columnsTable: function() {
             var cells = [];
             var row;
             var styles = GanttView.styles;
@@ -628,7 +627,7 @@ var __meta__ = { // jshint ignore:line
             return element;
         },
 
-        _renderMilestone: function(task, position) {
+        _renderMilestone: function(task) {
             var styles = GanttView.styles;
             var element = kendoDomElement("div", { className: styles.task + " " + styles.taskMilestone, "data-uid": task.uid });
 
@@ -2146,15 +2145,15 @@ var __meta__ = { // jshint ignore:line
                         view._updateDragHint(updateHintDate);
                     }
                 }, 15))
-                .bind("dragend", function(e) {
+                .bind("dragend", function() {
                     that.trigger("moveEnd", { task: task, start: currentStart });
 
                     cleanUp();
                 })
-                .bind("dragcancel", function(e) {
+                .bind("dragcancel", function() {
                     cleanUp();
                 })
-                .userEvents.bind("select", function(e) {
+                .userEvents.bind("select", function() {
                     blurActiveElement();
                 });
         },
@@ -2237,15 +2236,15 @@ var __meta__ = { // jshint ignore:line
                         view._updateResizeHint(currentStart, currentEnd, resizeStart);
                     }
                 }, 15))
-                .bind("dragend", function(e) {
+                .bind("dragend", function() {
                     that.trigger("resizeEnd", { task: task, resizeStart: resizeStart, start: currentStart, end: currentEnd });
 
                     cleanUp();
                 })
-                .bind("dragcancel", function(e) {
+                .bind("dragcancel", function() {
                     cleanUp();
                 })
-                .userEvents.bind("select", function(e) {
+                .userEvents.bind("select", function() {
                     blurActiveElement();
                 });
         },
@@ -2334,17 +2333,17 @@ var __meta__ = { // jshint ignore:line
 
                     that.view()._updatePercentCompleteTooltip(tooltipTop, tooltipLeft, currentPercentComplete);
                 }, 15))
-                .bind("dragend", function(e) {
+                .bind("dragend", function() {
                     that.trigger("percentResizeEnd", { task: task, percentComplete: currentPercentComplete / 100 });
 
                     cleanUp();
                 })
-                .bind("dragcancel", function(e) {
+                .bind("dragcancel", function() {
                     updateElement(originalPercentWidth);
 
                     cleanUp();
                 })
-                .userEvents.bind("select", function(e) {
+                .userEvents.bind("select", function() {
                     blurActiveElement();
                 });
         },
@@ -2441,7 +2440,7 @@ var __meta__ = { // jshint ignore:line
 
                     toggleHandles(true);
                 }, 15))
-                .bind("dragend", function(e) {
+                .bind("dragend", function() {
                     if (hoveredHandle.length) {
                         var fromStart = originalHandle.hasClass(styles.taskDotStart);
                         var toStart = hoveredHandle.hasClass(styles.taskDotStart);
@@ -2458,10 +2457,10 @@ var __meta__ = { // jshint ignore:line
 
                     cleanUp();
                 })
-                .bind("dragcancel", function(e) {
+                .bind("dragcancel", function() {
                     cleanUp();
                 })
-                .userEvents.bind("select", function(e) {
+                .userEvents.bind("select", function() {
                     blurActiveElement();
                 });
         },
@@ -2496,7 +2495,7 @@ var __meta__ = { // jshint ignore:line
 
                         $(this).css("z-index", "");
                     })
-                    .on(CLICK + NS, DOT + styles.tasksWrapper, function(e) {
+                    .on(CLICK + NS, DOT + styles.tasksWrapper, function() {
                         if (that.selectDependency().length > 0) {
                             that.clearSelection();
                         } else {
@@ -2624,7 +2623,7 @@ var __meta__ = { // jshint ignore:line
 
             if (!kendo.support.mobileOS) {
                 this.wrapper
-                        .on(MOUSEENTER + NS, DOT + styles.task, function(e) {
+                        .on(MOUSEENTER + NS, DOT + styles.task, function() {
                             var element = this;
                             var task = that._taskByUid($(this).attr("data-uid"));
 
@@ -2638,7 +2637,7 @@ var __meta__ = { // jshint ignore:line
 
                             $(this).on(MOUSEMOVE, mouseMoveHandler);
                         })
-                        .on(MOUSELEAVE + NS, DOT + styles.task, function(e) {
+                        .on(MOUSELEAVE + NS, DOT + styles.task, function() {
                             clearTimeout(that._tooltipTimeout);
 
                             that.view()._removeTaskTooltip();
@@ -2671,7 +2670,7 @@ var __meta__ = { // jshint ignore:line
 
                         that.view()._createTaskTooltip(task, element, currentPosition);
                     })
-                    .bind("doubletap", function(e) {
+                    .bind("doubletap", function() {
                         that.view()._removeTaskTooltip();
                     });
             }

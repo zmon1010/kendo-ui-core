@@ -753,8 +753,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _itemTmpl: function() {
-            var that = this,
-                html = '<li class="k-tile" ' + kendo.attr("uid") + '="#=uid#" ';
+            var html = '<li class="k-tile" ' + kendo.attr("uid") + '="#=uid#" ';
 
             html += kendo.attr("type") + '="${' + TYPEFIELD + '}">';
             html += '#if(' + TYPEFIELD + ' == "d") { #';

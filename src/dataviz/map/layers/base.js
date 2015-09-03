@@ -5,7 +5,6 @@
 (function ($, undefined) {
     // Imports ================================================================
     var proxy = $.proxy,
-        noop = $.noop,
 
         kendo = window.kendo,
         Class = kendo.Class,
@@ -15,11 +14,8 @@
 
         Extent = dataviz.map.Extent,
 
-        geom = kendo.geometry,
-        draw = kendo.drawing,
         util = kendo.util,
-        defined = util.defined,
-        valueOrDefault = util.valueOrDefault;
+        defined = util.defined;
 
     // Implementation =========================================================
     var Layer = Class.extend({

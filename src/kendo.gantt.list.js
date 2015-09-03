@@ -210,7 +210,6 @@ var __meta__ = { // jshint ignore:line
 
         _columns: function() {
             var columns = this.options.columns;
-            var column;
             var model = function() {
                 this.field = "";
                 this.title = "";
@@ -684,7 +683,6 @@ var __meta__ = { // jshint ignore:line
                     field.validation.required === true : false
             };
             var editor;
-            var that = this;
 
             if (column.field === resourcesField) {
                 column.editor(cell, modelCopy);
@@ -886,10 +884,10 @@ var __meta__ = { // jshint ignore:line
                             status().addClass(action.className);
                         }
                     },
-                    "dragend": function(e) {
+                    "dragend": function() {
                         clear();
                     },
-                    "dragcancel": function(e) {
+                    "dragcancel": function() {
                         clear();
                     }
                 }).data("kendoDraggable");
@@ -905,11 +903,11 @@ var __meta__ = { // jshint ignore:line
                         defineLimits();
                         status().toggleClass(listStyles.dropDenied, !dropAllowed);
                     },
-                    "dragleave": function(e) {
+                    "dragleave": function() {
                         dropAllowed = true;
                         status();
                     },
-                    "drop": function(e) {
+                    "drop": function() {
                         var target = that._modelFromElement(dropTarget);
                         var orderId = target.orderId;
                         var taskInfo = {
@@ -951,7 +949,7 @@ var __meta__ = { // jshint ignore:line
                    distance: 0,
                    group: "listGroup",
                    filter: DOT + listStyles.gridContent,
-                   "drop": function(e) {
+                   "drop": function() {
                        var target = that._modelFromElement(that.content.find(selector));
                        var orderId = target.orderId;
                        var taskInfo = {
@@ -1053,7 +1051,7 @@ var __meta__ = { // jshint ignore:line
                     });
                     this.col.width(this.columnWidth + delta);
                 },
-                resizeend: function(e) {
+                resizeend: function() {
                     that.element.removeClass("k-grid-column-resizing");
 
                     var oldWidth = Math.floor(this.columnWidth);

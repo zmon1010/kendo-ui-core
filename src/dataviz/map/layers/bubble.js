@@ -4,9 +4,7 @@
 
 (function ($, undefined) {
     // Imports ================================================================
-    var proxy = $.proxy,
-
-        kendo = window.kendo,
+    var kendo = window.kendo,
         getter = kendo.getter,
 
         dataviz = kendo.dataviz,
@@ -14,7 +12,6 @@
 
         util = kendo.util,
         defined = util.defined,
-        isNumber = util.isNumber,
 
         g = kendo.geometry,
         d = kendo.drawing,
@@ -22,8 +19,6 @@
         map = dataviz.map,
         Location = map.Location,
         ShapeLayer = map.layers.ShapeLayer;
-
-    var PI = Math.PI;
 
     // Implementation =========================================================
     var BubbleLayer = ShapeLayer.extend({
@@ -52,7 +47,6 @@
                 return getValue(b) - getValue(a);
             });
 
-            var maxValue = getValue(data[0]);
             var scaleType = this._scaleType();
             var scale;
             for (var i = 0; i < data.length; i++) {

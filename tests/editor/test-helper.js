@@ -1,7 +1,9 @@
+/* exported getEditor */
 function getEditor(selector) {
     return $(selector || '#Editor1').data("kendoEditor");
 }
 
+/* exported editor_module */
 function editor_module(name, options, editorOptions) {
     QUnit.moduleStart(function(details) {
         if (details.name == name) {
@@ -23,6 +25,7 @@ function editor_module(name, options, editorOptions) {
     module(name, options);
 }
 
+/* exported createRangeFromText */
 function createRangeFromText(editor, html) {
     editor.value(html.replace(/\|/g, '<span class="t-marker"></span>'));
     var $markers = $('.t-marker', editor.body);
@@ -40,6 +43,7 @@ function createRangeFromText(editor, html) {
     return range;
 }
 
+/* exported withMock */
 function withMock(context, method, mock, callback) {
     var originalMethod = context[method];
 
@@ -52,6 +56,7 @@ function withMock(context, method, mock, callback) {
     }
 }
 
+/* exported propertyFrom */
 function propertyFrom(className, property) {
     var element = $("<span class='" + className + "' />").appendTo(QUnit.fixture);
     var result = element.css(property);
@@ -61,6 +66,7 @@ function propertyFrom(className, property) {
     return result;
 }
 
+/* exported rangeFromHtml */
 function rangeFromHtml(html) {
     QUnit.fixture.append(html.replace(/\|/g, '<span class="t-marker"></span>'));
 

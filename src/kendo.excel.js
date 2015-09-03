@@ -2,8 +2,6 @@
     define([ "./kendo.core", "./kendo.data", "./kendo.ooxml" ], f);
 })(function(){
 
-/* global JSZip */
-
 var __meta__ = { // jshint ignore:line
     id: "excel",
     name: "Excel export",
@@ -110,7 +108,7 @@ kendo.ExcelExporter = kendo.Class.extend({
         if (column.values) {
             values = {};
 
-            $.each(column.values, function(item) {
+            $.each(column.values, function() {
                values[this.value] = this.text;
             });
 

@@ -33,6 +33,7 @@ function withSandbox(callback) {
     doc.close();
 }
 
+/* exported sandboxed_test */
 function sandboxed_test(name, testMethod) {
     var oldTimeout = QUnit.config.testTimeout;
     QUnit.config.testTimeout = 3000;

@@ -26,8 +26,6 @@
         renderSize = util.renderSize,
         limit = util.limitValue;
 
-    var PAN_DELAY = 100;
-
     // Image tile layer =============================================================
     var TileLayer = Layer.extend({
         init: function(map, options) {

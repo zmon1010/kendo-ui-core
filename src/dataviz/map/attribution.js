@@ -2,12 +2,11 @@
     define([ "../../kendo.drawing" ], f);
 })(function(){
 
-(function($) {
+(function() {
     var kendo = window.kendo,
         Widget = kendo.ui.Widget,
         template = kendo.template,
 
-        dataviz = kendo.dataviz,
         valueOrDefault = kendo.util.valueOrDefault,
         defined = kendo.util.defined;
 

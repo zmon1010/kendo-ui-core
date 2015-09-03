@@ -4,13 +4,7 @@
 
 (function ($, undefined) {
     // Imports ================================================================
-    var math = Math,
-
-        proxy = $.proxy,
-
-        kendo = window.kendo,
-        Class = kendo.Class,
-        template = kendo.template,
+    var kendo = window.kendo,
 
         dataviz = kendo.dataviz,
         deepExtend = kendo.deepExtend,
@@ -18,7 +12,6 @@
 
         Extent = dataviz.map.Extent,
         Location = dataviz.map.Location,
-        Layer = dataviz.map.layers.Layer,
         TileLayer = dataviz.map.layers.TileLayer,
         TileView = dataviz.map.layers.TileView;
 

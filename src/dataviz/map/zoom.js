@@ -8,6 +8,13 @@
     var keys = kendo.keys;
     var proxy = $.proxy;
 
+    // Helper functions =======================================================
+    function button(dir, symbol) {
+       return kendo.format(
+           '<button class="k-button k-zoom-{0}" title="zoom-{0}">{1}</button>',
+           dir, symbol);
+    }
+
     var NS = ".kendoZoomControl";
     var BUTTONS = button("in", "+") + button("out", "-");
 
@@ -15,6 +22,7 @@
     var MINUS = 189;
     var FF_PLUS = 61;
     var FF_MINUS = 173;
+
 
     var ZoomControl = Widget.extend({
         init: function(element, options) {
@@ -79,12 +87,6 @@
         }
     });
 
-    // Helper functions =======================================================
-    function button(dir, symbol) {
-       return kendo.format(
-           '<button class="k-button k-zoom-{0}" title="zoom-{0}">{1}</button>',
-           dir, symbol);
-    }
 
     // Exports ================================================================
     kendo.dataviz.ui.plugin(ZoomControl);

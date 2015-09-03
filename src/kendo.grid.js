@@ -502,14 +502,6 @@ var __meta__ = { // jshint ignore:line
         }
     };
 
-    function heightAboveHeader(context) {
-        var top = 0;
-        $('> .k-grouping-header, > .k-grid-toolbar', context).each(function () {
-            top += this.offsetHeight;
-        });
-        return top;
-    }
-
     function cursor(context, value) {
         $('th, th .k-grid-filter, th .k-link', context)
             .add(document.body)
@@ -1056,14 +1048,14 @@ var __meta__ = { // jshint ignore:line
                 return this.colSpan > 1;
             });
 
-            for (idx = 0; idx < prevCells.length; idx++) {
+            for (var idx = 0; idx < prevCells.length; idx++) {
                 offset += prevCells[idx].colSpan || 1;
             }
 
             index += Math.max(offset - 1, 0);
 
             offset = 0;
-            for (var idx = 0; idx < parentCellsWithChildren.length; idx++) {
+            for (idx = 0; idx < parentCellsWithChildren.length; idx++) {
                 var parentCell = parentCellsWithChildren.eq(idx);
                 if (parentCell.attr("colSpan")) {
                     offset += parentCell[0].colSpan;
@@ -1090,7 +1082,6 @@ var __meta__ = { // jshint ignore:line
 
         if (level <= headerRows.length - 1) {
             var child = row.next();
-            var index = row.find("th:not(.k-group-cell,.k-hierarchy-cell)").index(cell);
             var prevCells = cell.prevAll(":not(.k-group-cell,.k-hierarchy-cell)");
 
             var idx;
@@ -1914,7 +1905,7 @@ var __meta__ = { // jshint ignore:line
             });
         },
 
-        _positionColumnResizeHandle: function(container) {
+        _positionColumnResizeHandle: function() {
             var that = this,
                 indicatorWidth = that.options.columnResizeHandleWidth,
                 lockedHead = that.lockedHeader ? that.lockedHeader.find("thead:first") : $();
@@ -1964,7 +1955,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _positionColumnResizeHandleTouch: function(container) {
+        _positionColumnResizeHandleTouch: function() {
             var that = this,
                 lockedHead = that.lockedHeader ? that.lockedHeader.find("thead:first") : $();
 
@@ -2342,7 +2333,6 @@ var __meta__ = { // jshint ignore:line
                 columns = that.columns,
                 index,
                 th,
-                header,
                 headerTable,
                 isLocked,
                 visibleLocked = that.lockedHeader ? leafDataCells(that.lockedHeader.find(">table>thead")).filter(isCellVisible).length : 0,
@@ -3270,8 +3260,7 @@ var __meta__ = { // jshint ignore:line
         cancelRow: function() {
             var that = this,
                 container = that._editContainer,
-                model,
-                tr;
+                model;
 
             if (container) {
                 model = that._modelForContainer(container);
@@ -4211,7 +4200,7 @@ var __meta__ = { // jshint ignore:line
             this._setTabIndex(table);
         },
 
-        _tableBlur: function(e) {
+        _tableBlur: function() {
             var current = this.current();
 
             if (current) {
@@ -5342,7 +5331,7 @@ var __meta__ = { // jshint ignore:line
                 that.angular("compile", function(){
                     return {
                         elements: footer.find("td:not(.k-group-cell, .k-hierarchy-cell)").get(),
-                        data: map(that.columns, function(col, i){
+                        data: map(that.columns, function(col){
                             return {
                                 column: col,
                                 aggregate: aggregates[col.field]

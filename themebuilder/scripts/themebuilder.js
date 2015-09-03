@@ -8,7 +8,6 @@
         colorInput = "ktb-colorinput",
         numeric = "ktb-numeric",
         ObservableObject = kendo.data.ObservableObject,
-        options = window.parent.KENDO_THEMEBUILDER_OPTIONS || {},
         propertyEditors = {
             "color": colorInput,
             "background-color": colorInput,

@@ -325,7 +325,7 @@ var __meta__ = { // jshint ignore:line
             this.popup = new kendo.ui.Popup(this.list,
                 extend({
                     anchor: this.element.find(appendButtonSelector),
-                    open: function(e) {
+                    open: function() {
                         that._adjustListWidth();
                     },
                     animation: this.options.animation
@@ -368,7 +368,7 @@ var __meta__ = { // jshint ignore:line
                     $(this).removeClass(ganttStyles.hovered);
                 })
                 .end()
-                .on(CLICK + NS, itemSelector, function(e) {
+                .on(CLICK + NS, itemSelector, function() {
                     that.trigger("command", { type: $(this).attr(kendo.attr("action")) });
                     that.popup.close();
                 });
@@ -1250,7 +1250,7 @@ var __meta__ = { // jshint ignore:line
                 }
             });
 
-            grid.wrapper.on(CLICK + NS, "input[type='checkbox']", function(e) {
+            grid.wrapper.on(CLICK + NS, "input[type='checkbox']", function() {
                 var element = $(this);
                 var row = $(element).closest("tr");
                 var model = grid.dataSource.getByUid(row.attr(kendo.attr("uid")));
@@ -1710,10 +1710,10 @@ var __meta__ = { // jshint ignore:line
                         that.view(name);
                     }
                 })
-                .on(CLICK + NS, pdfSelector, function(e) {
+                .on(CLICK + NS, pdfSelector, function() {
                     that.saveAsPDF();
                 })
-                .on(CLICK + NS, toggleSelector, function(e) {
+                .on(CLICK + NS, toggleSelector, function() {
                     if (treelist.is(":visible")) {
                         treelist.css({
                             "display": "none",
@@ -2007,7 +2007,6 @@ var __meta__ = { // jshint ignore:line
 
             this.timeline
                 .bind("navigate", function(e) {
-                    var treelist = that.list;
                     var viewName = e.view.replace(/\./g, "\\.").toLowerCase();
 
                     var text = that.toolbar
@@ -2133,7 +2132,7 @@ var __meta__ = { // jshint ignore:line
 
                     that.editTask(e.uid);
                 })
-                .bind("clear", function(e) {
+                .bind("clear", function() {
                     that.clearSelection();
                 })
                 .bind("removeTask", function(e) {
@@ -2238,7 +2237,7 @@ var __meta__ = { // jshint ignore:line
                 bind("change", this._assignmentsRefreshHandler);
         },
 
-        _createEditor: function(command) {
+        _createEditor: function() {
             var that = this;
 
             var editor = this._editor = new PopupEditor(this.wrapper, extend({}, this.options, {
@@ -2667,7 +2666,7 @@ var __meta__ = { // jshint ignore:line
             this._editor.showDialog(options);
         },
 
-        refresh: function(e) {
+        refresh: function() {
             if (this._preventRefresh || this.list.editable) {
                 return;
             }
@@ -2720,7 +2719,7 @@ var __meta__ = { // jshint ignore:line
             this.trigger("dataBound");
         },
 
-        refreshDependencies: function(e) {
+        refreshDependencies: function() {
             if (this._preventDependencyRefresh) {
                 return;
             }
@@ -2735,7 +2734,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         _assignResources: function(taskTree) {
-            var that = this;
             var resources = this.resources;
             var assignments = this.assignments;
             var groupAssigments = function() {
@@ -2854,16 +2852,16 @@ var __meta__ = { // jshint ignore:line
             this._resizeDraggable = wrapper
                 .find(DOT + ganttStyles.splitBar)
                 .height(treeListWrapper.height())
-                .hover(function (e) {
+                .hover(function () {
                     $(this).addClass(ganttStyles.splitBarHover);
-                }, function (e) {
+                }, function () {
                     $(this).removeClass(ganttStyles.splitBarHover);
                 })
                 .end()
                 .kendoResizable({
                     orientation: "horizontal",
                     handle: DOT + ganttStyles.splitBar,
-                    "start": function (e) {
+                    "start": function () {
                         treeListWidth = treeListWrapper.width();
                         timelineWidth = timelineWrapper.width();
                         timelineScroll = timelineWrapper.find(contentSelector).scrollLeft();
@@ -2901,13 +2899,13 @@ var __meta__ = { // jshint ignore:line
                 treeListContent.css("overflow-y", "auto");
             }
 
-            timelineContent.on("scroll", function(e) {
+            timelineContent.on("scroll", function() {
                 timelineHeader.scrollLeft(this.scrollLeft);
                 treeListContent.scrollTop(this.scrollTop);
             });
 
             treeListContent
-                .on("scroll", function(e) {
+                .on("scroll", function() {
                     treeListHeader.scrollLeft(this.scrollLeft);
                     timelineContent.scrollTop(this.scrollTop);
                 })
@@ -3034,9 +3032,8 @@ var __meta__ = { // jshint ignore:line
             }
 
             tables
-                .on("focus" + NS, function(e) {
+                .on("focus" + NS, function() {
                     var selector = this === contentTable.get(0) ? "td" : "th";
-                    var table = $(this);
                     var selection = that.select();
                     var current = that.current || $((selection.length ? selection : this))
                         .find(selector + ":eq(" + (cellIndex || 0) + ")");

@@ -24,7 +24,6 @@
             HierarchicalDataSource = kendo.data.HierarchicalDataSource,
             Canvas = diagram.Canvas,
             Group = diagram.Group,
-            Visual = diagram.Visual,
             Rectangle = diagram.Rectangle,
             Circle = diagram.Circle,
             CompositeTransform = diagram.CompositeTransform,
@@ -45,10 +44,8 @@
             Cursors = diagram.Cursors,
             Utils = diagram.Utils,
             Observable = kendo.Observable,
-            Ticker = diagram.Ticker,
             ToBackUnit = diagram.ToBackUnit,
             ToFrontUnit = diagram.ToFrontUnit,
-            Dictionary = diagram.Dictionary,
             PolylineRouter = diagram.PolylineRouter,
             CascadingRouter = diagram.CascadingRouter,
             isUndefined = Utils.isUndefined,
@@ -64,7 +61,6 @@
         // Constants ==============================================================
         var NS = ".kendoDiagram",
             CASCADING = "cascading",
-            POLYLINE = "polyline",
             ITEMBOUNDSCHANGE = "itemBoundsChange",
             CHANGE = "change",
             CLICK = "click",
@@ -85,11 +81,7 @@
             PAN = "pan",
             ZOOM_START = "zoomStart",
             ZOOM_END = "zoomEnd",
-            CONNECTION_CSS = "k-connection",
-            SHAPE_CSS = "k-shape",
-            SINGLE = "single",
             NONE = "none",
-            MULTIPLE = "multiple",
             DEFAULT_CANVAS_WIDTH = 600,
             DEFAULT_CANVAS_HEIGHT = 600,
             DEFAULT_SHAPE_TYPE = "rectangle",
@@ -98,13 +90,9 @@
             DEFAULT_SHAPE_MINWIDTH = 20,
             DEFAULT_SHAPE_MINHEIGHT = 20,
             DEFAULT_SHAPE_POSITION = 0,
-            DEFAULT_SHAPE_BACKGROUND = "SteelBlue",
             DEFAULT_CONNECTION_BACKGROUND = "Yellow",
-            DEFAULT_CONNECTOR_SIZE = 8,
-            DEFAULT_HOVER_COLOR = "#70CAFF",
             MAX_VALUE = Number.MAX_VALUE,
             MIN_VALUE = -Number.MAX_VALUE,
-            ALL = "all",
             ABSOLUTE = "absolute",
             TRANSFORMED = "transformed",
             ROTATED = "rotated",
@@ -225,17 +213,6 @@
             return indices;
         }
 
-        function deserializeConnector(diagram, value) {
-            var point = Point.parse(value), ctr;
-            if (point) {
-                return point;
-            }
-            ctr = Connector.parse(diagram, value);
-            if (ctr) {
-                return ctr;
-            }
-        }
-
         var DiagramElement = Observable.extend({
             init: function (options) {
                 var that = this;
@@ -305,7 +282,6 @@
             _content: function (content) {
                 if (content !== undefined) {
                     var options = this.options;
-                    var bounds = this.bounds();
 
                     if (diagram.Utils.isString(content)) {
                         options.content.text = content;
@@ -918,7 +894,6 @@
         });
 
         Shape.createShapeVisual = function(options) {
-            var diagram = options.diagram;
             delete options.diagram; // avoid stackoverflow and reassign later on again
             var shapeDefaults = deepExtend({}, options, { x: 0, y: 0 });
             var visualTemplate = shapeDefaults.visual; // Shape visual should not have position in its parent group.
@@ -3454,7 +3429,6 @@
                                 click: proxy(this._toolBarClick, this),
                                 modal: true
                             });
-                            var toolBarElement = this.singleToolBar.element;
                             var popupWidth = this.singleToolBar._popup.element.outerWidth();
                             var popupHeight = this.singleToolBar._popup.element.outerHeight();
                             if (element instanceof Shape) {
@@ -3717,7 +3691,7 @@
                 }
             },
 
-            _syncShapes: function(items) {
+            _syncShapes: function() {
                 var diagram = this;
                 var inactiveItems = diagram._inactiveShapeItems;
                 inactiveItems.forEach(function(inactiveItem) {
@@ -4060,9 +4034,6 @@
             return result;
         }
 
-        function isNumber(val) {
-            return typeof val === "number" && !isNaN(val);
-        }
 
         var DiagramToolBar = kendo.Observable.extend({
             init: function(diagram, options) {
@@ -4308,13 +4279,11 @@
             },
 
             rotateClockwise: function(options) {
-                var elements = this.selectedElements();
                 var angle = parseFloat(options.step || 90);
                 this._rotate(angle);
             },
 
             rotateAnticlockwise: function(options) {
-                var elements = this.selectedElements();
                 var angle = parseFloat(options.step || 90);
                 this._rotate(-angle);
             },
@@ -4554,7 +4523,6 @@
         });
 
         function connectionSelector(container, options) {
-            var type = options.model.fields[options.field];
             var model = this.dataSource.reader.model;
             if (model) {
                 var textField = model.fn.fields.text ? "text": model.idField;

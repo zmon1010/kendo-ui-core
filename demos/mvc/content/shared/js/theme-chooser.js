@@ -58,7 +58,6 @@
             name: "Details"
         },
         toggle: function() {
-            var options = this.options;
             var show = this._container.is(":visible");
             var animation = kendo.fx(this._container).expand("vertical");
 
@@ -218,7 +217,6 @@
             var exampleElement = $("#example");
             var less = window.less;
             var isLess = /\.less$/.test(link.attr("href"));
-            var browser = kendo.support.browser;
 
             link.eq(0).attr("href", url);
 
@@ -322,7 +320,7 @@
             });
         },
 
-        changeCommon: function(commonName, animate) {
+        changeCommon: function(commonName) {
             ThemeChooser.animateCssChange({
                 prefetch: ThemeChooser.getCommonUrl(commonName),
                 replace: function() {
@@ -348,7 +346,7 @@
             }
         },
 
-        changeThemePair: function(themeName, commonName, animate) {
+        changeThemePair: function(themeName, commonName) {
             var deferred = $.Deferred();
 
             ThemeChooser.animateCssChange({
