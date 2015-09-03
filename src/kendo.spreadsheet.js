@@ -30,7 +30,8 @@
         "./spreadsheet/toolbar",
         "./spreadsheet/dialogs",
         "./spreadsheet/sheetbinder",
-        "./spreadsheet/filtermenu"
+        "./spreadsheet/filtermenu",
+        "./spreadsheet/editor"
     ], f);
 })(function(){
     var __meta__ = {

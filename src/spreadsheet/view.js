@@ -14,7 +14,7 @@
         viewSize: "k-spreadsheet-view-size",
         clipboard: "k-spreadsheet-clipboard",
         cellEditor: "k-spreadsheet-cell-editor",
-        editor: "k-spreadsheet-editor",
+        barEditor: "k-spreadsheet-editor",
         topCorner: "k-spreadsheet-top-corner",
         filterHeadersWrapper: "k-filter-headers",
         filterButton: "k-spreadsheet-filter",
@@ -277,18 +277,19 @@
 
             element.append(VIEW_CONTENTS({ classNames: classNames }));
 
+            this._formulaInput();
+
             this.wrapper =      element.find(DOT + classNames.view);
             this.container =    element.find(DOT + classNames.fixedContainer)[0];
             this.scroller =     element.find(DOT + classNames.scroller)[0];
             this.clipboard =    element.find(DOT + classNames.clipboard);
-            this.editor =       element.find(DOT + classNames.editor);
 
             this.viewSize = $(this.scroller.firstChild);
-            this._formulaInput(element);
 
             this.tree = new kendo.dom.Tree(this.container);
             this.clipboardContents = new kendo.dom.Tree(this.clipboard[0]);
 
+            this.editor = new kendo.spreadsheet.SheetEditor(this);
             this.sheetsbar = new kendo.spreadsheet.SheetsBar(element.find(DOT + classNames.sheetsBar), $.extend(true, this.options.sheetsbar));
 
 
@@ -322,15 +323,17 @@
 
         _chrome: function() {
             var formulaBar = $("<div />").prependTo(this.element);
-            this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar, {
-                change: function(e) {
-                    this._workbook.execute(new kendo.spreadsheet.EditCommand({
-                        value: e.value
-                    }));
-                }.bind(this)
-            });
+            this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar);
 
             this._toolbar();
+        },
+
+        _formulaInput: function() {
+            var editor = this.element.find(DOT + View.classNames.cellEditor);
+
+            this.formulaInput = new kendo.spreadsheet.FormulaInput(editor, {
+                autoScale: true
+            });
         },
 
         _toolbar: function() {
@@ -369,6 +372,10 @@
 
         sheet: function(sheet) {
             this._sheet = sheet;
+        },
+
+        activeCellRectangle: function() {
+            return this.cellRectangle(this._sheet.activeCell());
         },
 
         objectAt: function(x, y) {
@@ -429,7 +436,7 @@
 
         refresh: function(reason) {
             var sheet = this._sheet;
-            this.formulaBar.value(this._workbook._editableValueForRef(sheet.activeCell()));
+            //this.formulaBar.value(this._workbook._editableValueForRef(sheet.activeCell()));
 
             if (this.toolbar) {
                 this.toolbar.refresh();
@@ -589,7 +596,9 @@
 
             this.tree.render(merged);
 
-            if (!sheet.selectionInProgress()) {
+            if (this.editor.isActive()) {
+                this.editor.position(this.activeCellRectangle());
+            } else if (!sheet.selectionInProgress()) {
                 this.renderClipboardContents();
             }
         },
@@ -650,19 +659,6 @@
             this.clipboardContents.render([ table.toDomTree(0, 0, "kendo-clipboard") ]);
 
             this.selectClipBoardContents();
-        },
-
-        _formulaInput: function(element) {
-            var editor = element.find(DOT + View.classNames.cellEditor);
-
-            this.formulaInput = new kendo.spreadsheet.FormulaInput(editor, {
-                position: "absolute",
-                change: (function(e) {
-                    this._workbook.execute(new kendo.spreadsheet.EditCommand({
-                        value: e.value
-                    }));
-                }).bind(this)
-            });
         },
 
         _pane: function(row, column, rowCount, columnCount) {

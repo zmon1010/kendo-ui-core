@@ -52,13 +52,16 @@
         "copy": "onCopy"
     };
 
-    var FORMULAINPUT_EVENTS = {
-        "esc": "onEsc",
-        "enter": "onEnter",
-        "shift+enter": "onEnter",
-        "tab": "onTab",
-        "shift+tab": "onTab"
+    var EDITOR_EVENTS = {
+        "esc": "onEditorEsc",
+        "enter": "onEditorBlur",
+        "shift+enter": "onEditorBlur",
+        "tab": "onEditorBlur",
+        "shift+tab": "oonEditorBlur"
     };
+
+    var FORMULABAR_EVENTS = $.extend({ focus: "onEditorBarFocus" }, EDITOR_EVENTS);
+    var FORMULAINPUT_EVENTS = $.extend({ focus: "onEditorCellFocus" }, EDITOR_EVENTS);
 
     var SELECTION_MODES = {
        cell: "range",
@@ -107,12 +110,16 @@
             this.rowHeaderContextMenu = view.rowHeaderContextMenu;
             this.colHeaderContextMenu = view.colHeaderContextMenu;
             this.scroller = view.scroller;
-            this.formulaInput = view.formulaInput;
+
+            this.editor = view.editor;
+            this.editor.bind("change", this.onEditorChange.bind(this));
 
             $(view.scroller).on("scroll", this.onScroll.bind(this));
             this.listener = new kendo.spreadsheet.EventListener(this.container, this, CONTAINER_EVENTS);
             this.keyListener = new kendo.spreadsheet.EventListener(this.clipboardElement, this, CLIPBOARD_EVENTS);
-            this.inputKeyListener = new kendo.spreadsheet.EventListener(this.formulaInput.element, this, FORMULAINPUT_EVENTS);
+
+            this.barKeyListener = new kendo.spreadsheet.EventListener(this.editor.barElement(), this, FORMULABAR_EVENTS);
+            this.inputKeyListener = new kendo.spreadsheet.EventListener(this.editor.cellElement(), this, FORMULAINPUT_EVENTS);
 
             view.sheetsbar.bind("select", this.onSheetBarSelect.bind(this));
             view.sheetsbar.bind("reorder", this.onSheetBarReorder.bind(this));
@@ -203,8 +210,12 @@
         },
 
         refresh: function() {
+            var workbook = this._workbook;
+
             this._viewPortHeight = this.view.scroller.clientHeight;
             this.navigator.height(this._viewPortHeight);
+
+            this.editor.value(workbook._editableValueForRef(workbook.activeSheet().activeCell()));
         },
 
         onScroll: function() {
@@ -240,21 +251,12 @@
 
         onEntryAction: function(event, action) {
             if (action === ":alphanum" || action === ":edit") {
-                var ref = this.view._sheet.activeCell();
-                var value = "";
-
-                if (action === ":edit") {
-                    value = new kendo.spreadsheet.Range(ref, this.view._sheet)._editableValue();
+                if (action === ":alphanum") {
+                    this.editor.value("");
                 }
 
-                this.formulaInput.activate({
-                    rectangle: this.view.cellRectangle(ref),
-                    value: value
-                });
-
-                $(this.view.scroller).on("scroll", kendo.throttle((function() {
-                    this.formulaInput.position(this.view.cellRectangle(ref));
-                }).bind(this), 50));
+                this.editor.activate(this.view.activeCellRectangle());
+                this.editor.focus();
             } else {
                 this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
                 event.preventDefault();
@@ -269,7 +271,7 @@
         onMouseDown: function(event, action) {
             var object = this.objectAt(event);
 
-            this.formulaInput.deactivate();
+            this.editor.deactivate();
 
             if (object.pane) {
                 this.originFrame = object.pane;
@@ -365,14 +367,9 @@
             this.stopAutoScroll();
         },
 
-        onDblClick: function(event, action) {
-            var ref = this.view._sheet.activeCell();
-            var value = new kendo.spreadsheet.Range(ref, this.view._sheet)._editableValue();
-
-            this.formulaInput.activate({
-                rectangle: this.view.cellRectangle(ref),
-                value: value
-            });
+        onDblClick: function() {
+            this.editor.activate(this.view.activeCellRectangle());
+            this.editor.focus();
         },
 
         onCut: function(event, action) {
@@ -504,19 +501,32 @@
 
 ////////////////////////////////////////////////////////////////////
 
-        onEsc: function() {
-            this.formulaInput.deactivate(true);
+        onEditorChange: function(e) {
+            this._workbook.execute(new kendo.spreadsheet.EditCommand({
+                value: e.value
+            }));
+        },
+
+        onEditorBarFocus: function(event) {
+            this.editor.activate(this.view.activeCellRectangle());
+        },
+
+        onEditorCellFocus: function(event) {
+            this.editor.scale();
+        },
+
+        onEditorEsc: function() {
+            this.editor.value(this._workbook._editableValueForRef(this._workbook.activeSheet().activeCell()));
+            this.editor.deactivate();
+
             this.clipboardElement.focus();
         },
 
-        onEnter: function() {
-            this.formulaInput.deactivate();
+        onEditorBlur: function(event, action) {
+            this.editor.deactivate();
             this.clipboardElement.focus();
-        },
 
-        onTab: function() {
-            this.formulaInput.deactivate();
-            this.clipboardElement.focus();
+            this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
         },
 
         onFilterHeaderClick: function(e) {

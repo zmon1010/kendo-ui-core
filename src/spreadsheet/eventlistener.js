@@ -56,7 +56,7 @@
             this._mousePressed = false;
 
             target.on("keydown", this.keyDownProxy);
-            target.on("contextmenu mousedown cut copy paste scroll wheel click dblclick", this.mouseProxy);
+            target.on("contextmenu mousedown cut copy paste scroll wheel click dblclick focus", this.mouseProxy);
 
             $(document.documentElement).on("mousemove mouseup", this.mouseProxy);
 
