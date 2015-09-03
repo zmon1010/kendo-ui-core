@@ -62,8 +62,12 @@
             }
         },
 
-        expandInput: function() {
-            //TODO: expand the input length to occupy cell value
+        isActive: function() {
+            return this._active;
+        },
+
+        expand: function() {
+            //TODO: expand the input to the length of the cell value
         },
 
         position: function(rect) {

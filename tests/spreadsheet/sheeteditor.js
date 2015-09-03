@@ -198,4 +198,17 @@
         equal(editor.value(), value);
     });
 
+    test("isActive returns true if editing is enabled", function() {
+        var editor = createEditor();
+
+        editor.activate({ top: 0, left: 0 });
+
+        ok(editor.isActive());
+    });
+
+    test("isActive returns false if editing is enabled", function() {
+        var editor = createEditor();
+
+        ok(!editor.isActive());
+    });
 })();
