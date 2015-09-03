@@ -39,6 +39,18 @@
         equal(formulaInput.value(), "bar");
     });
 
+    test("position method sets top and left of the element", function() {
+        createFormulaInput();
+
+        formulaInput.position({
+            top: 50,
+            left: 30
+        });
+
+        equal(element.css("top"), "50px");
+        equal(element.css("left"), "30px");
+    });
+
     test("resize method sets width and height of the element", function() {
         createFormulaInput();
 
@@ -133,5 +145,32 @@
         ok(formulaInput.isActive());
         equal(selection.focusOffset, 4);
         equal(selection.type, "Caret");
+    });
+
+    test("scale updates width of the element based on its value", function() {
+        var initialWidth = 50;
+
+        createFormulaInput();
+
+        formulaInput.element.width(initialWidth);
+        formulaInput.value("looooooooooooooooooooooooooong text");
+
+        formulaInput.scale();
+
+        ok(formulaInput.element.width() > initialWidth);
+    });
+
+    test("scale the input during typing", function() {
+        var initialWidth = 50;
+
+        createFormulaInput({
+            autoScale: true
+        });
+
+        formulaInput.element.width(initialWidth);
+        formulaInput.value("looooooooooooooooooooooooooong text");
+        formulaInput.element.triggerHandler("input");
+
+        ok(formulaInput.element.width() > initialWidth);
     });
 })();
