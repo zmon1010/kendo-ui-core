@@ -318,7 +318,8 @@
         _change: function(e) {
             var instance = e.sender;
             var value = instance.value();
-            var popupName = instance.dataItem().popup;
+            var dataItem = instance.dataItem();
+            var popupName = dataItem ? dataItem.popup : undefined;
 
             if (popupName) {
                 this.toolbar.openDialog(popupName);
