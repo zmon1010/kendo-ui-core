@@ -17,24 +17,20 @@ var __meta__ = { // jshint ignore:line
 (function ($, undefined) {
 
     // Imports ================================================================
-    var doc = document,
-        kendo = window.kendo,
+    var kendo = window.kendo,
 
         util = kendo.util,
         append = util.append,
         defined = util.defined,
         last = util.last,
-        limitValue = util.limitValue,
         valueOrDefault = util.valueOrDefault,
 
         dataviz = kendo.dataviz,
         geom = dataviz.geometry,
         draw = dataviz.drawing,
         measureText = draw.util.measureText,
-        Matrix = geom.Matrix,
         Class = kendo.Class,
         template = kendo.template,
-        map = $.map,
         noop = $.noop,
         indexOf = $.inArray,
         isPlainObject = $.isPlainObject,
@@ -42,12 +38,9 @@ var __meta__ = { // jshint ignore:line
         math = Math,
         deepExtend = kendo.deepExtend;
 
-    var CSS_PREFIX = "k-";
 
     // Constants ==============================================================
-    var ANIMATION_STEP = 10,
-        AXIS_LABEL_CLICK = "axisLabelClick",
-        BASELINE_MARKER_SIZE = 1,
+    var AXIS_LABEL_CLICK = "axisLabelClick",
         BLACK = "#000",
         BOTTOM = "bottom",
         CENTER = "center",
@@ -62,12 +55,8 @@ var __meta__ = { // jshint ignore:line
         DEFAULT_AUTO_MAJOR_UNIT_PRECISION = 10,
         DEFAULT_WIDTH = 600,
         DEG_TO_RAD = math.PI / 180,
-        FADEIN = "fadeIn",
         FORMAT_REGEX = /\{\d+:?/,
         HEIGHT = "height",
-        ID_PREFIX = "k",
-        ID_POOL_SIZE = 1000,
-        ID_START = 10000,
         COORDINATE_LIMIT = 100000,
         INITIAL_ANIMATION_DURATION = 600,
         INSIDE = "inside",
@@ -81,11 +70,8 @@ var __meta__ = { // jshint ignore:line
         OUTSIDE = "outside",
         RADIAL = "radial",
         RIGHT = "right",
-        SWING = "swing",
         TOP = "top",
         TRIANGLE = "triangle",
-        UNDEFINED = "undefined",
-        UPPERCASE_REGEX = /([A-Z])/g,
         WIDTH = "width",
         WHITE = "#fff",
         X = "x",
@@ -638,7 +624,6 @@ var __meta__ = { // jshint ignore:line
         destroy: function() {
             var element = this,
                 children = element.children,
-                root = element.getRoot(),
                 i;
 
             if (this.animation) {
@@ -1100,8 +1085,7 @@ var __meta__ = { // jshint ignore:line
         reflow: function(targetBox) {
             var text = this,
                 options = text.options,
-                size,
-                margin;
+                size;
 
             size = options.size =
                 measureText(text.content, { font: options.font });
@@ -1163,9 +1147,6 @@ var __meta__ = { // jshint ignore:line
         reflowChildren: function() {
             var floatElement = this;
             var box = floatElement.box;
-            var options = floatElement.options;
-            var elementSpacing = floatElement.elementSpacing;
-            var groupSpacing = floatElement.groupSpacing;
 
             var elementAxis = floatElement.elementAxis;
             var groupAxis = floatElement.groupAxis;
@@ -1327,7 +1308,6 @@ var __meta__ = { // jshint ignore:line
             var rows = (textbox.content + "").split(textbox.ROWS_SPLIT_REGEX);
             var floatElement = new FloatElement({vertical: true, align: options.align, wrap: false});
             var textOptions = deepExtend({ }, options, { opacity: 1, animation: null });
-            var hasBox = textbox.hasBox();
             var text;
             var rowIdx;
 
@@ -1643,8 +1623,7 @@ var __meta__ = { // jshint ignore:line
     function createAxisGridLine(options, gridLine) {
         var lineStart = options.lineStart,
             lineEnd = options.lineEnd,
-            position = options.position,
-            start, end;
+            position = options.position;
 
         var line = new draw.Path({
             stroke: {
@@ -1821,9 +1800,6 @@ var __meta__ = { // jshint ignore:line
                 options = axis.options,
                 box = axis.box,
                 vertical = options.vertical,
-                labels = axis.labels,
-                labelSize = vertical ? HEIGHT : WIDTH,
-                justified = options.justified,
                 mirror = options.labels.mirror,
                 axisX = mirror ? box.x1 : box.x2,
                 axisY = mirror ? box.y2 : box.y1,
@@ -1857,7 +1833,7 @@ var __meta__ = { // jshint ignore:line
                 options = axis.options,
                 notes = options.notes,
                 items = notes.data || [],
-                noteTemplate, i, text, item, note;
+                i, item, note;
 
             axis.notes = [];
 
@@ -1926,8 +1902,7 @@ var __meta__ = { // jshint ignore:line
                     // TODO
                     // _alignLines: options._alignLines,
                     vertical: options.vertical
-                },
-                start, end;
+                };
 
             function render(tickPositions, tickOptions, skipUnit) {
                 var i, count = tickPositions.length;
@@ -1955,8 +1930,7 @@ var __meta__ = { // jshint ignore:line
             var axis = this,
                 options = axis.options,
                 line = options.line,
-                lineBox = axis.lineBox(),
-                lineOptions;
+                lineBox = axis.lineBox();
 
             if (line.width > 0 && line.visible) {
                 var path = new draw.Path({
@@ -2040,11 +2014,9 @@ var __meta__ = { // jshint ignore:line
                 return a.options.vertical !== axis.options.vertical;
             })[0];
 
-            var range = this.range();
             $.each(plotBands, function(i, item) {
                 from = valueOrDefault(item.from, MIN_VALUE);
                 to = valueOrDefault(item.to, MAX_VALUE);
-                var element = [];
 
                 if (vertical) {
                     slotX = (altAxis || plotArea.axisX).lineBox();
@@ -2533,7 +2505,6 @@ var __meta__ = { // jshint ignore:line
             var options = that.options;
             var customVisual = options.visual;
             if (options.visible && customVisual) {
-                var targetPoint = that.targetPoint;
                 that.visual = customVisual({
                     dataItem: that.dataItem,
                     category: that.category,
@@ -2636,9 +2607,7 @@ var __meta__ = { // jshint ignore:line
                 box = marker.paddingBox,
                 element,
                 center = box.center(),
-                halfWidth = box.width() / 2,
-                points,
-                i;
+                halfWidth = box.width() / 2;
 
             if (!options.visible || !marker.hasBox())  {
                 return;
@@ -3161,8 +3130,6 @@ var __meta__ = { // jshint ignore:line
                 vertical = options.vertical,
                 reverse = options.reverse,
                 size = vertical ? lineBox.height() : lineBox.width(),
-                logMin = axis.logMin,
-                logMax = axis.logMax,
                 scale = size / (axis.logMax - axis.logMin),
                 offset = round(delta / scale, DEFAULT_PRECISION);
 
@@ -3206,8 +3173,8 @@ var __meta__ = { // jshint ignore:line
                     // TODO
                     // _alignLines: options._alignLines,
                     vertical: options.vertical
-                },
-                start, end;
+                };
+
 
             function render(tickPosition, tickOptions) {
                 tickLineOptions.tickX = mirror ? lineBox.x2 : lineBox.x2 - tickOptions.size;
@@ -3231,7 +3198,6 @@ var __meta__ = { // jshint ignore:line
         createGridLines: function(altAxis) {
             var axis = this,
                 options = axis.options,
-                axisLineVisible = altAxis.options.line.visible,
                 majorGridLines = options.majorGridLines,
                 minorGridLines = options.minorGridLines,
                 vertical = options.vertical,
@@ -3241,7 +3207,7 @@ var __meta__ = { // jshint ignore:line
                     lineEnd: lineBox[vertical ? "x2" : "y2"],
                     vertical: vertical
                 },
-                pos, majorTicks = [];
+                majorTicks = [];
 
             var container = this.gridLinesVisual();
             function render(tickPosition, gridLine) {
@@ -3598,15 +3564,6 @@ var __meta__ = { // jshint ignore:line
         return round(scale * scaleMultiplier, DEFAULT_AUTO_MAJOR_UNIT_PRECISION);
     }
 
-    function getHash(object) {
-        var hash = [];
-        for (var key in object) {
-            hash.push(key + object[key]);
-        }
-
-        return hash.sort().join(" ");
-    }
-
     // TODO: Replace with Point2D.rotate
     function rotatePoint(x, y, cx, cy, angle) {
         var theta = angle * DEG_TO_RAD;
@@ -3701,15 +3658,6 @@ var __meta__ = { // jshint ignore:line
         return a - b;
     }
 
-    function updateArray(arr, prop, value) {
-        var i,
-            length = arr.length;
-
-        for(i = 0; i < length; i++) {
-            arr[i][prop] = value;
-        }
-    }
-
     function autoFormat(format, value) {
         if (format.match(FORMAT_REGEX)) {
             return kendo.format.apply(this, arguments);
@@ -3718,15 +3666,6 @@ var __meta__ = { // jshint ignore:line
         return kendo.toString(value, format);
     }
 
-    function detached(element) {
-        var parent = element.parentNode;
-
-        while(parent && parent.parentNode) {
-            parent = parent.parentNode;
-        }
-
-        return parent !== doc;
-    }
 
     function clockwise(v1, v2) {
         // True if v2 is clockwise of v1
@@ -4072,8 +4011,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function innerRadialStops(options) {
-        var gradient = this,
-            stops = options.stops,
+        var stops = options.stops,
             usedSpace = ((options.innerRadius / options.radius) * 100),
             i,
             length = stops.length,

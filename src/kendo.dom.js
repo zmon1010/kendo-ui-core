@@ -173,7 +173,7 @@ var __meta__ = { // jshint ignore:line
         }
     };
 
-    Element.prototype.setAttribute = function(name, value, cachedValue) {
+    Element.prototype.setAttribute = function(name, value) {
         var node = this.node;
 
         if (node[name] !== undefined) {

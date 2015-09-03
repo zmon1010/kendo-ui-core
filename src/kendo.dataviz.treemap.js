@@ -30,7 +30,6 @@ var __meta__ = { // jshint ignore:line
         DATA_BOUND = "dataBound",
         ITEM_CREATED = "itemCreated",
         MAX_VALUE = Number.MAX_VALUE,
-        MIN_VALUE = -Number.MAX_VALUE,
         MOUSEOVER_NS = "mouseover" + NS,
         MOUSELEAVE_NS = "mouseleave" + NS,
         UNDEFINED = "undefined";
@@ -834,10 +833,6 @@ var __meta__ = { // jshint ignore:line
             return title.append($("<div></div>").html(this._getText(item)));
         }
     });
-
-    function valueOrDefault(value, defaultValue) {
-        return defined(value) ? value : defaultValue;
-    }
 
     function getField(field, row) {
         if (row === null) {

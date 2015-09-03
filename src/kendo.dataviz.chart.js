@@ -66,7 +66,6 @@ var __meta__ = { // jshint ignore:line
         Ring = dataviz.Ring,
         ShapeElement = dataviz.ShapeElement,
         ShapeBuilder = dataviz.ShapeBuilder,
-        Text = dataviz.Text,
         TextBox = dataviz.TextBox,
         Title = dataviz.Title,
         alignPathToPixel = dataviz.alignPathToPixel,
@@ -182,7 +181,6 @@ var __meta__ = { // jshint ignore:line
         OBJECT = "object",
         OHLC = "ohlc",
         OUTSIDE_END = "outsideEnd",
-        OUTLINE_SUFFIX = "_outline",
         PIE = "pie",
         PIE_SECTOR_ANIM_DELAY = 70,
         PLOT_AREA_CLICK = "plotAreaClick",
@@ -232,7 +230,6 @@ var __meta__ = { // jshint ignore:line
         TOOLTIP_HIDE_DELAY = 100,
         TOOLTIP_INVERSE = "chart-tooltip-inverse",
         VALUE = "value",
-        VERTICAL = "vertical",
         VERTICAL_AREA = "verticalArea",
         VERTICAL_BULLET = "verticalBullet",
         VERTICAL_LINE = "verticalLine",
@@ -1044,7 +1041,7 @@ var __meta__ = { // jshint ignore:line
                 highlight = chart._highlight,
                 coords = chart._eventCoordinates(e),
                 point = chart._activePoint,
-                tooltipOptions, owner, seriesPoint;
+                tooltipOptions, seriesPoint;
 
             if (chart._plotArea.box.containsPoint(coords)) {
                 if (point && point.tooltipTracking && point.series && point.parent.getNearestPoint) {
@@ -1954,9 +1951,8 @@ var __meta__ = { // jshint ignore:line
             var legendItem, items = this.children;
             var options = this.options;
             var vertical = options.vertical;
-            var spacing = options.spacing;
 
-            var visual = this.visual = new draw.Layout(null, {
+            this.visual = new draw.Layout(null, {
                 spacing: vertical ? 0 : options.spacing,
                 lineSpacing: vertical ? options.spacing : 0,
                 orientation: vertical ? "vertical" : "horizontal"
@@ -2124,8 +2120,7 @@ var __meta__ = { // jshint ignore:line
 
         reflow: function(targetBox) {
             var legend = this,
-                options = legend.options,
-                container = legend.container;
+                options = legend.options;
 
             targetBox = targetBox.clone();
 
@@ -3104,7 +3099,6 @@ var __meta__ = { // jshint ignore:line
             var options = this.options,
                 vertical = options.vertical,
                 positionAxis = vertical ? X : Y,
-                stackAxis = vertical ? Y : X,
                 children = this.children,
                 box = this.box = new Box2D(),
                 childrenCount = children.length,
@@ -3225,7 +3219,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         createLabel: function() {
-            var value = this.value;
             var options = this.options;
             var labels = options.labels;
             var labelText;
@@ -3264,7 +3257,6 @@ var __meta__ = { // jshint ignore:line
             this.render();
 
             var bar = this,
-                options = bar.options,
                 label = bar.label;
 
             bar.box = targetBox;
@@ -3437,7 +3429,6 @@ var __meta__ = { // jshint ignore:line
 
             var bbox = element.bbox();
             if (bbox) {
-                var origin = this.origin = options.origin;
 
                 var axis = options.vertical ? Y : X;
 
@@ -3872,7 +3863,6 @@ var __meta__ = { // jshint ignore:line
 
         stackedErrorRange: function(point, categoryIx) {
             var chart = this,
-                value = point.value,
                 plotValue = chart.plotRange(point, 0)[1] - point.value,
                 low = point.low + plotValue,
                 high = point.high + plotValue;
@@ -3893,7 +3883,6 @@ var __meta__ = { // jshint ignore:line
         addValue: function(data, fields) {
             var chart = this;
             var categoryIx = fields.categoryIx;
-            var category = fields.category;
             var series = fields.series;
             var seriesIx = fields.seriesIx;
 
@@ -3985,7 +3974,6 @@ var __meta__ = { // jshint ignore:line
                 point;
 
             chart.traverseDataPoints(function(data, fields) {
-                var category = fields.category;
                 var categoryIx = fields.categoryIx;
                 var currentSeries = fields.series;
 
@@ -4321,7 +4309,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         createLabel: function() {
-            var value = this.value;
             var labels = this.options.labels;
             var fromOptions = deepExtend({}, labels, labels.from);
             var toOptions = deepExtend({}, labels, labels.to);
@@ -4367,10 +4354,8 @@ var __meta__ = { // jshint ignore:line
             this.render();
 
             var rangeBar = this,
-                options = rangeBar.options,
                 labelFrom = rangeBar.labelFrom,
-                labelTo = rangeBar.labelTo,
-                value = rangeBar.value;
+                labelTo = rangeBar.labelTo;
 
             rangeBar.box = targetBox;
 
@@ -4560,7 +4545,7 @@ var __meta__ = { // jshint ignore:line
             return data.valueFields.current;
         },
 
-        aboveAxis: function(point, valueAxis) {
+        aboveAxis: function(point) {
             var value = point.value.current;
 
             return value > 0;
@@ -4568,7 +4553,7 @@ var __meta__ = { // jshint ignore:line
 
         createAnimation: function() {
             var points = this.points;
-            var point, pointVisual;
+            var point;
 
             this._setAnimationOptions();
 
@@ -4743,7 +4728,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         highlightVisualArgs: function() {
-            var options = this.options;
             return {
                 rect: this.box.toRect(),
                 visual: this.bodyVisual,
@@ -4868,7 +4852,6 @@ var __meta__ = { // jshint ignore:line
         createDefaultVisual: function() {
             var errorBar = this,
                 options = errorBar.options,
-                parent = errorBar.parent,
                 lineOptions = {
                     stroke: {
                         color: options.color,
@@ -5174,7 +5157,6 @@ var __meta__ = { // jshint ignore:line
         tooltipAnchor: function(tooltipWidth, tooltipHeight) {
             var point = this,
                 markerBox = point.markerBox(),
-                options = point.options,
                 aboveAxis = point.aboveAxis,
                 x = markerBox.x2 + TOOLTIP_OFFSET,
                 y = aboveAxis ? markerBox.y1 - tooltipHeight : markerBox.y2,
@@ -5441,12 +5423,7 @@ var __meta__ = { // jshint ignore:line
             var series = fields.series;
             var seriesIx = fields.seriesIx;
             var value = data.valueFields.value;
-            var options = chart.options;
-            var isStacked = options.isStacked;
-            var categoryPoints = chart.categoryPoints[categoryIx];
             var missingValues = chart.seriesMissingValues(series);
-            var stackPoint;
-            var plotValue = 0;
             var point;
             var pointOptions;
 
@@ -5627,7 +5604,6 @@ var __meta__ = { // jshint ignore:line
 
     var SplineSegment = LineSegment.extend({
         createVisual: function() {
-            var options = this.options;
             var series = this.series;
             var defaults = series._defaults;
             var color = series.color;
@@ -5688,7 +5664,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         createVisual: function() {
-            var options = this.options;
             var series = this.series;
             var defaults = series._defaults;
             var color = series.color;
@@ -5794,7 +5769,7 @@ var __meta__ = { // jshint ignore:line
             LineChart.fn.reflow.call(this, targetBox);
             var stackPoints = this._stackPoints;
             if (stackPoints) {
-                var stackPoint, pointSlot, point;
+                var stackPoint, pointSlot;
                 for (var idx = 0; idx < stackPoints.length; idx++) {
                     stackPoint = stackPoints[idx];
                     pointSlot = this.categoryAxis.getSlot(stackPoint.categoryIx);
@@ -5893,7 +5868,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         createVisual: function() {
-            var options = this.options;
             var series = this.series;
             var defaults = series._defaults;
             var color = series.color;
@@ -6116,8 +6090,7 @@ var __meta__ = { // jshint ignore:line
                 seriesIx = fields.seriesIx,
                 series = this.options.series[seriesIx],
                 missingValues = this.seriesMissingValues(series),
-                seriesPoints = chart.seriesPoints[seriesIx],
-                missingValue;
+                seriesPoints = chart.seriesPoints[seriesIx];
 
             if (!(hasValue(x) && hasValue(y))) {
                 value = this.createMissingValue(value, missingValues);
@@ -6276,7 +6249,6 @@ var __meta__ = { // jshint ignore:line
                 pointIx = 0,
                 point,
                 seriesAxes,
-                clip = chart.options.clip,
                 limit = !chart.options.clip;
 
             chart.traverseDataPoints(function(value, fields) {
@@ -6447,7 +6419,6 @@ var __meta__ = { // jshint ignore:line
         createPoint: function(value, fields) {
             var chart = this,
                 series = fields.series,
-                seriesColors = chart.plotArea.options.seriesColors || [],
                 pointsCount = series.data.length,
                 delay = fields.pointIx * (INITIAL_ANIMATION_DURATION / pointsCount),
                 animationOptions = {
@@ -7184,9 +7155,8 @@ var __meta__ = { // jshint ignore:line
                 markers = options.markers || {},
                 value = point.value,
                 outliers = value.outliers || [],
-                valueAxis = point.owner.seriesValueAxis(options),
                 outerFence = math.abs(value.q3 - value.q1) * 3,
-                markersBorder, markerBox, shape, outlierValue, i;
+                markersBorder, shape, outlierValue, i;
 
             var elements = [];
 
@@ -7406,7 +7376,6 @@ var __meta__ = { // jshint ignore:line
                         dashType: borderOptions.dashType
                     }
                 } : {},
-                elements = [],
                 color = options.color,
                 fill = {
                     color: color,
@@ -8288,7 +8257,6 @@ var __meta__ = { // jshint ignore:line
         createVisual: function() {
             ChartElement.fn.createVisual.call(this);
 
-            var options = this.options;
             var line = this.series.line || {};
 
             var path = draw.Path.fromPoints(this.linePoints(), {
@@ -8304,6 +8272,11 @@ var __meta__ = { // jshint ignore:line
             this.visual.append(path);
         }
     });
+
+    // exported returnSelf
+    function returnSelf() {
+        return this;
+    }
 
     var Pane = BoxElement.extend({
         init: function(options) {
@@ -9477,8 +9450,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         createCharts: function(panes) {
-            var plotArea = this,
-                seriesByPane = this.groupSeriesByPane();
+            var seriesByPane = this.groupSeriesByPane();
 
             for (var i = 0; i < panes.length; i++) {
                 var pane = panes[i];
@@ -9669,7 +9641,7 @@ var __meta__ = { // jshint ignore:line
             };
         },
 
-        groupSeriesByCategoryAxis: function(series, callback) {
+        groupSeriesByCategoryAxis: function(series) {
             var unique = {};
             var categoryAxes = $.map(series, function(s) {
                 var name = s.categoryAxis || "$$default$$";
@@ -10935,8 +10907,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         showAt: function(point) {
-            var crosshair = this;
-
             this.point = point;
             this.moveLine();
             this.line.visible(true);
@@ -12289,18 +12259,6 @@ var __meta__ = { // jshint ignore:line
         return a === b;
     }
 
-    function lastValue(array) {
-        var i = array.length,
-            value;
-
-        while (i--) {
-            value = array[i];
-            if (defined(value) && value !== null) {
-                return value;
-            }
-        }
-    }
-
     function appendIfNotNull(array, element) {
         if (element !== null) {
             array.push(element);
@@ -12599,9 +12557,6 @@ var __meta__ = { // jshint ignore:line
         return overlay && overlay.gradient && overlay.gradient != "none";
     }
 
-    function returnSelf() {
-        return this;
-    }
 
     function anyHasZIndex(elements) {
         for (var idx = 0; idx < elements.length; idx++) {

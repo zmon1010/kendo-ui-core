@@ -214,7 +214,6 @@ var __meta__ = { // jshint ignore:line
                 options = axis.options,
                 categories = options.categories.length,
                 angle = 0,
-                skipAngle = 0,
                 divCount = categories / size || 1,
                 divAngle = 360 / divCount,
                 divs = [],
@@ -374,7 +373,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         slot: function(from, to) {
-            var options = this.options;
             var slot = this.getSlot(from, to);
             var startAngle = slot.startAngle + 180;
             var endAngle = startAngle + slot.angle;
@@ -508,8 +506,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         renderGridLines: function(center, ticks, angles, options) {
-            var axis = this,
-                tickRadius,
+            var tickRadius,
                 tickIx,
                 angleIx;
 
@@ -1144,7 +1141,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         sortPoints: function(points) {
-            var missingValues, value, point;
+            var value, point;
             points.sort(xComparer);
 
             if (this._hasMissingValuesGap()) {

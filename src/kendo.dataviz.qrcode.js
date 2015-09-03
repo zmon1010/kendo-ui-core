@@ -13,7 +13,6 @@ var __meta__ = { // jshint ignore:line
 (function ($, undefined) {
     var kendo = window.kendo,
         extend = $.extend,
-        geom = kendo.geometry,
         draw = kendo.drawing,
         dataviz = kendo.dataviz,
         Widget = kendo.ui.Widget,

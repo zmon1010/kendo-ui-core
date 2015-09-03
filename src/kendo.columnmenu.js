@@ -424,7 +424,6 @@ var __meta__ = { // jshint ignore:line
                 that.menu.bind(SELECT, function(e) {
                     var item = $(e.item),
                         input,
-                        index,
                         column,
                         columns = leafColumns(that.owner.columns),
                         field;
@@ -505,7 +504,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _updateColumnsLockedState: function() {
-            var idx, length, current, locked, column;
+            var idx, length, current, column;
             var fieldAttr = kendo.attr("field");
             var lockedAttr = kendo.attr("locked");
             var columns = toHash(this._ownerColumns(), "field");

@@ -26,22 +26,18 @@ var __meta__ = { // jshint ignore:line
         Box2D = dataviz.Box2D,
         Class = kendo.Class,
         defined = util.defined,
-        isArray = $.isArray,
         isNumber = util.isNumber,
         interpolateValue = dataviz.interpolateValue,
-        valueOrDefault = util.valueOrDefault,
 
         getSpacing = dataviz.getSpacing,
         round = dataviz.round,
         geo = dataviz.geometry,
         draw = dataviz.drawing,
         Point = geo.Point,
-        Circle = draw.Circle,
         Group = draw.Group,
         Path = draw.Path,
         Rect = geo.Rect,
-        Text = draw.Text,
-        Surface = draw.Surface;
+        Text = draw.Text;
 
     // Constants ==============================================================
     var ANGULAR_SPEED = 150,
@@ -59,7 +55,6 @@ var __meta__ = { // jshint ignore:line
         DEFAULT_WIDTH = 200,
         DEFAULT_MIN_WIDTH = 60,
         DEFAULT_MIN_HEIGHT = 60,
-        DEFAULT_MARGIN = 5,
         DEGREE = math.PI / 180,
         GEO_ARC_ADJUST_ANGLE = 180,
         INSIDE = "inside",
@@ -164,7 +159,6 @@ var __meta__ = { // jshint ignore:line
             var scale = that.scale;
             var center = scale.arc.center;
             var options = that.options;
-            var minAngle = scale.slotAngle(scale.options.min);
             var elements = new Group();
 
             if (options.animation !== false) {
@@ -278,7 +272,6 @@ var __meta__ = { // jshint ignore:line
 
         render: function(center, radius) {
             var that = this;
-            var options = that.options;
             var arc = that.renderArc(center, radius);
 
             that.bbox = arc.bbox();
@@ -289,7 +282,6 @@ var __meta__ = { // jshint ignore:line
 
         reflow: function(bbox) {
             var that = this;
-            var options = that.options;
             var center = bbox.center();
             var radius = math.min(bbox.height(), bbox.width()) / 2;
 
@@ -390,7 +382,6 @@ var __meta__ = { // jshint ignore:line
 
         repositionRanges: function() {
             var that = this;
-            var arc = that.arc;
             var ranges = that.ranges.children;
             var rangeSize = that.options.rangeSize;
             var rangeDistance = that.options.rangeDistance;
@@ -421,7 +412,6 @@ var __meta__ = { // jshint ignore:line
             var segments = that.rangeSegments();
             var segmentsCount = segments.length;
             var reverse = that.options.reverse;
-            var radius = that.radius();
             var rangeSize = that.options.rangeSize;
             var rangeDistance = that.options.rangeDistance;
             var segment, rangeRadius, rangeGeom, i;
@@ -549,7 +539,6 @@ var __meta__ = { // jshint ignore:line
                     center = arc.center,
                     radius = arc.getRadiusX(),
                     i, tickStart, tickEnd,
-                    tickSize = unit.size,
                     visible = tickOptions.visible;
 
                 if (visible) {
@@ -631,8 +620,6 @@ var __meta__ = { // jshint ignore:line
 
         radius: function(radius) {
             var that = this;
-            var parent = that.parent;
-            var center = that.arc.center;
 
             if(radius) {
                 that.arc.setRadiusX(radius).setRadiusY(radius);
@@ -817,7 +804,6 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var options = that.options.gaugeArea;
             var size = that.surface.size();
-            var margin = that._gaugeAreaMargin = options.margin || DEFAULT_MARGIN;
             var border = options.border || {};
             var areaGeometry =  new Rect([0, 0], [size.width, size.height]);
 
@@ -903,7 +889,6 @@ var __meta__ = { // jshint ignore:line
             that._initialPlotArea = that.scale.bbox;
 
             for (var i = 0; i < pointers.length; i++) {
-                var pointerElement = pointers[i].reflow(that.scale.arc);
                 that._initialPlotArea = Rect.union(that._initialPlotArea, pointers[i].bbox);
             }
 
@@ -1079,7 +1064,6 @@ var __meta__ = { // jshint ignore:line
 
         reflow: function(bbox) {
             var that = this;
-            var surface = that.surface;
             var pointers = that.pointers;
             var bboxX = bbox.origin.x;
             var bboxY = bbox.origin.y;
@@ -1390,7 +1374,6 @@ var __meta__ = { // jshint ignore:line
                _alignLines: options._alignLines,
                vertical: options.vertical
             };
-            var start, end;
 
             function render(tickPositions, tickOptions) {
                 var i, count = tickPositions.length;
@@ -1540,8 +1523,6 @@ var __meta__ = { // jshint ignore:line
 
         getElementOptions: function() {
             var options = this.options;
-            var elements = new Group();
-            var scale = this.scale;
 
             return {
                 fill: {
@@ -1582,7 +1563,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        pointerShape: function(value) {
+        pointerShape: function() {
             var that = this;
             var options = that.options;
             var scale = that.scale;
@@ -1675,7 +1656,6 @@ var __meta__ = { // jshint ignore:line
             var sizeAxis = vertical ? X : Y;
             var margin = that._margin() * dir;
 
-            var shape = [];
             var p1 = new Point();
             p1[axis] = minSlot[axis + "1"];
             p1[sizeAxis] = minSlot[sizeAxis + "1"];
@@ -1733,9 +1713,7 @@ var __meta__ = { // jshint ignore:line
 
         render: function() {
             var that = this;
-            var options = that.options;
             var group = new Group();
-            var scale = that.scale;
             var elementOptions = that.getElementOptions();
 
             var pointer = new Path({
@@ -1783,7 +1761,6 @@ var __meta__ = { // jshint ignore:line
 
         setup: function() {
             var options = this.options;
-            var halfSize = this.element.bbox().width() / 2;
             var margin = options.margin;
             var from = options.from;
             var to = options.to;
@@ -1819,7 +1796,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         setup: function() {
-            var element = this.element;
             var options = this.options;
 
             var newPoints = options.newPoints;

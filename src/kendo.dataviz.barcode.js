@@ -23,7 +23,6 @@ var __meta__ = { // jshint ignore:line
         geom = kendo.geometry,
         util = kendo.util,
         defined = util.defined,
-        append = util.append,
         dataviz = kendo.dataviz,
         Box2D = dataviz.Box2D,
         TextBox = dataviz.TextBox,
