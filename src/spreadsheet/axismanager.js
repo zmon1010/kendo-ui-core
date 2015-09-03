@@ -16,7 +16,7 @@
             var sheet = this._sheet;
 
             sheet.batch(function() {
-                sheet._select().forEachColumnIndex(function(index, i) {
+                sheet.select().forEachColumnIndex(function(index, i) {
                     callback(sheet, index, i);
                 });
             }, true);
@@ -26,7 +26,7 @@
             var sheet = this._sheet;
 
             sheet.batch(function() {
-                sheet._select().forEachRowIndex(function(index, i) {
+                sheet.select().forEachRowIndex(function(index, i) {
                     callback(sheet, index, i);
                 });
             }, true);
