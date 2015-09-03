@@ -2727,7 +2727,6 @@
                 original = rect.clone();
 
                 rect.zoom(this._zoom);
-                this._storePan(new Point());
 
                 if (rect.width > viewport.width || rect.height > viewport.height) {
                     this._zoom = this._getValidZoom(math.min(viewport.width / original.width, viewport.height / original.height));

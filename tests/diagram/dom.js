@@ -973,18 +973,6 @@
             teardown: teardown
         });
 
-        test("clears current pan", function () {
-            diagram._storePan = function(pan) {
-                equal(pan.x, 0);
-                equal(pan.y, 0);
-            };
-
-            diagram.pan = function() {
-                return this._pan;
-            };
-            diagram.bringIntoView(new Rect(0, 0, 400, 400));
-        });
-
         test("passes animate option to pan", function () {
             diagram.pan = function(pan, animate) {
                 ok(animate);
