@@ -122,7 +122,7 @@
         },
         _click: function(e) {
             var toolName = e.target.attr("data-tool");
-            var tool = toolDefaults[toolName];
+            var tool = toolDefaults[toolName] || {};
             var commandType = tool.command;
 
             if (!commandType) {

@@ -189,6 +189,18 @@
         equal($(".k-i-refresh").length, 1 + 1); //+1 because of the overflow hamburger
     });
 
+    test("click on a custom button does not throw JS error", 0, function() {
+        createWithTools([
+            [ { type: "button", icon: "refresh", text: "Button", id: "foo" } ]
+        ]);
+
+        try {
+            tap($("#foo"));
+        } catch (e) {
+            ok(false);
+        }
+    });
+
     test("buttons has title attribute", function() {
         createWithTools([ "bold", "textWrap" ]);
 
