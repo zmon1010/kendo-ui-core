@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.popup" ], f);
+    define([ "../kendo.core", "../kendo.popup", "../kendo.treeview" ], f);
 })(function(){
 
     (function(kendo) {
@@ -8,14 +8,28 @@
             wrapper: "k-spreadsheet-filter-menu"
         };
 
+        function flatternValues(values) {
+            return [].concat.apply([], values);
+        }
+
+        function distinctValues(values) {
+            var hash = {};
+            var result = [];
+
+            for (var i = 0; i < values.length; i++) {
+                if (!hash[values[i]]) {
+                    hash[values[i]] = true;
+                    result.push(values[i]);
+                }
+            }
+
+            return result;
+        }
+
         var FilterMenu = kendo.ui.Widget.extend({
-            init: function(element, options) {
-                this.anchor = element;
-
-                element = $("<div />").appendTo(document.body);
+            init: function(options) {
+                var element = $("<div />", { "class": FilterMenu.classNames.wrapper }).appendTo(document.body);
                 kendo.ui.Widget.call(this, element, options);
-
-                this.element.addClass(FilterMenu.classNames.wrapper);
 
                 this._popup();
                 this._sort();
@@ -41,10 +55,21 @@
                 this.popup.open();
             },
 
+            getValues: function() {
+                var values = distinctValues(flatternValues(this.options.range.values()));
+
+                return [{
+                    text: "all",
+                    expanded: true,
+                    checked: true,
+                    items: values.map(function(item) {
+                        return { text: item }
+                    }) 
+                }];
+            },
+
             _popup: function() {
-                this.popup = this.element.kendoPopup({
-                    anchor: this.anchor
-                }).data("kendoPopup");
+                this.popup = this.element.kendoPopup().data("kendoPopup");
             },
 
             _sort: function() {
@@ -73,6 +98,13 @@
                 div.text("Filter by value");
 
                 div.appendTo(this.element);
+
+                this.valuesTree = $("<div />").appendTo(div).kendoTreeView({
+                    checkboxes: {
+                        checkChildren: true
+                    },
+                    dataSource: this.getValues()
+                });
             },
 
             _actionButtons: function() {
