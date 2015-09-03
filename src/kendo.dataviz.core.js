@@ -5,7 +5,7 @@
     ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "dataviz.core",
     name: "Core",
     description: "The DataViz core functions",

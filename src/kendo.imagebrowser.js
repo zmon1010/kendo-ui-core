@@ -2,7 +2,7 @@
     define([ "./kendo.filebrowser" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "imagebrowser",
     name: "ImageBrowser",
     category: "web",

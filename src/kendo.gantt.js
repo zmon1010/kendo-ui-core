@@ -2,7 +2,7 @@
     define(["./kendo.data", "./kendo.popup", "./kendo.window", "./kendo.resizable", "./kendo.gantt.list", "./kendo.gantt.timeline", "./kendo.grid", "./kendo.pdf"], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "gantt",
     name: "Gantt",
     category: "web",
@@ -143,7 +143,7 @@ var __meta__ = {
             headerWrapper: "k-floatwrap k-header k-gantt-toolbar",
             footerWrapper: "k-floatwrap k-header k-gantt-toolbar",
             toolbar: "k-gantt-toolbar",
-            expanded: "k-state-expanded", 
+            expanded: "k-state-expanded",
             views: "k-gantt-views",
             viewsWrapper: "k-reset k-header k-gantt-views",
             actions: "k-gantt-actions",

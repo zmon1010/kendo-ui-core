@@ -2,7 +2,7 @@
     define([ "./kendo.scheduler.view" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "scheduler.agendaview",
     name: "Scheduler Agenda View",
     category: "web",

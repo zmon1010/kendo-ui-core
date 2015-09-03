@@ -11,7 +11,7 @@
     ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "aspnetmvc",
     name: "ASP.NET MVC",
     category: "wrappers",

@@ -2,7 +2,7 @@
     define([ "./kendo.data", "./kendo.draganddrop" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "treeview.draganddrop",
     name: "Hierarchical Drag & Drop",
     category: "framework",

@@ -4,7 +4,7 @@
 
 /* global JSZip */
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "ooxml",
     name: "XLSX generation",
     category: "framework",

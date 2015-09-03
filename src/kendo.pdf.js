@@ -3,7 +3,7 @@
 
 }) (function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "pdf",
     name: "PDF export",
     description: "PDF Generation framework",

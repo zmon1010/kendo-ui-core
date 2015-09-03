@@ -2,7 +2,7 @@
     define([ "./kendo.dataviz.core", "./kendo.drawing", "./kendo.dataviz.themes" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "dataviz.gauge",
     name: "Gauge",
     category: "dataviz",

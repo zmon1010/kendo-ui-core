@@ -2,7 +2,7 @@
     define([ "./kendo.pivotgrid", "./kendo.menu", "./kendo.window", "./kendo.treeview", "./kendo.dropdownlist" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "pivot.fieldmenu",
     name: "PivotFieldMenu",
     category: "web",

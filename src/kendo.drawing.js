@@ -17,7 +17,7 @@
     ], f);
 })(function(){
 
-    var __meta__ = {
+    var __meta__ = { // jshint ignore:line
         id: "drawing",
         name: "Drawing API",
         category: "framework",

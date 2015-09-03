@@ -23,7 +23,7 @@
     ], f);
 })(function(){
 
-    var __meta__ = {
+    var __meta__ = { // jshint ignore:line
         id: "editor",
         name: "Editor",
         category: "web",

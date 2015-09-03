@@ -2,7 +2,7 @@
     define([ "./kendo.core", "./kendo.draganddrop" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "groupable",
     name: "Groupable",
     category: "framework",

@@ -2,7 +2,7 @@
     define([ "./kendo.dom" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "pivot.configurator",
     name: "PivotConfigurator",
     category: "web",

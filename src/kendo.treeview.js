@@ -2,7 +2,7 @@
     define([ "./kendo.data", "./kendo.treeview.draganddrop" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "treeview",
     name: "TreeView",
     category: "web",

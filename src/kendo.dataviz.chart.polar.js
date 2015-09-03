@@ -2,7 +2,7 @@
     define([ "./kendo.dataviz.chart", "./kendo.drawing" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "dataviz.chart.polar",
     name: "Polar Charts",
     category: "dataviz",

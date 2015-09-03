@@ -2,7 +2,7 @@
     define([ "./kendo.dom", "./kendo.touch", "./kendo.draganddrop" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "gantt.timeline",
     name: "Gantt Timeline",
     category: "web",
@@ -65,7 +65,7 @@ var __meta__ = {
             "<tr style='height:{0}'>" +
                 "<td>&nbsp;</td>" +
             "</tr>" +
-        "</tbody>" + 
+        "</tbody>" +
     "</table>";
 
     var defaultViews = {

@@ -2,7 +2,7 @@
     define([ "./kendo.listview", "./kendo.dropdownlist", "./kendo.upload" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "filebrowser",
     name: "FileBrowser",
     category: "web",

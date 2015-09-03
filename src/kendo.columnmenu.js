@@ -2,7 +2,7 @@
     define([ "./kendo.popup", "./kendo.filtermenu", "./kendo.menu" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "columnmenu",
     name: "Column Menu",
     category: "framework",

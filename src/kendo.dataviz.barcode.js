@@ -2,7 +2,7 @@
     define([ "./kendo.dataviz.core", "./kendo.drawing" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "dataviz.barcode",
     name: "Barcode",
     category: "dataviz",

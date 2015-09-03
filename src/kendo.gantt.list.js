@@ -2,7 +2,7 @@
     define([ "./kendo.dom", "./kendo.touch", "./kendo.draganddrop", "./kendo.columnsorter", "./kendo.datetimepicker", "./kendo.editable" ], f);
 })(function() {
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "gantt.list",
     name: "Gantt List",
     category: "web",
@@ -43,7 +43,7 @@ var __meta__ = {
             "<tr style='height:{0}'>" +
                 "<td>&nbsp;</td>" +
             "</tr>" +
-        "</tbody>" + 
+        "</tbody>" +
     "</table>";
 
     var listStyles = {

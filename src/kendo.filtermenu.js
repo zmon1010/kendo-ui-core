@@ -2,7 +2,7 @@
     define([ "./kendo.datepicker", "./kendo.numerictextbox", "./kendo.dropdownlist", "./kendo.binder" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "filtermenu",
     name: "Filtering Menu",
     category: "framework",

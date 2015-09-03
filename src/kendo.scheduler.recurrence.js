@@ -2,7 +2,7 @@
     define([ "./kendo.dropdownlist", "./kendo.datepicker", "./kendo.numerictextbox" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "scheduler.recurrence",
     name: "Recurrence",
     category: "web",

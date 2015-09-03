@@ -4,7 +4,7 @@
 
 /* global JSZip */
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "excel",
     name: "Excel export",
     category: "framework",

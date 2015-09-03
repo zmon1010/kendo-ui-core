@@ -2,7 +2,7 @@
     define([ "./kendo.dataviz.core" ], f);
 })(function(){
 
-var __meta__ = {
+var __meta__ = { // jshint ignore:line
     id: "dataviz.themes",
     name: "Themes",
     description: "Built-in themes for the DataViz widgets",
