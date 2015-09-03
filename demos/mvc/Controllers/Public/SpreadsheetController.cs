@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Kendo.Spreadsheet;
+using Telerik.Web.Spreadsheet;
 
 namespace Kendo.Controllers
 {
@@ -14,7 +14,7 @@ namespace Kendo.Controllers
         public ActionResult Upload(HttpPostedFileBase file)
         {            
             var workbook = Workbook.Load(file.InputStream, Path.GetExtension(file.FileName));
-            return Content(workbook.ToJson(), Kendo.Spreadsheet.MimeTypes.JSON);
+            return Content(workbook.ToJson(), Telerik.Web.Spreadsheet.MimeTypes.JSON);
         }
 
         [HttpPost]
@@ -25,7 +25,7 @@ namespace Kendo.Controllers
             {
                 workbook.Save(stream, extension);
 
-                var mimeType = Kendo.Spreadsheet.MimeTypes.ByExtension[extension];
+                var mimeType = Telerik.Web.Spreadsheet.MimeTypes.ByExtension[extension];
                 return File(stream.ToArray(), mimeType, "Exported" + extension);
             }
         }
