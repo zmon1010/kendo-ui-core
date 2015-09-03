@@ -7,7 +7,7 @@
     var CellRef = kendo.spreadsheet.CellRef;
     var RangeRef = kendo.spreadsheet.RangeRef;
     var DOT = ".";
-    var RESIZE_HANDLE_WIDTH = 14;
+    var RESIZE_HANDLE_WIDTH = 7;
     var viewClassNames = {
         view: "k-spreadsheet-view",
         fixedContainer: "k-spreadsheet-fixed-container",
@@ -429,8 +429,9 @@
             x -= this._sheet._grid._headerWidth;
 
             var handleWidth = RESIZE_HANDLE_WIDTH/2;
+            var right = rectangle.right - this.scroller.scrollLeft;
 
-            return rectangle.right - handleWidth <= x && x <= rectangle.right + handleWidth;
+            return right - handleWidth <= x && x <= right + handleWidth;
         },
 
         isRowResizer: function(y, pane, ref) {
@@ -439,8 +440,9 @@
             y -= this._sheet._grid._headerHeight;
 
             var handleWidth = RESIZE_HANDLE_WIDTH/2;
+            var bottom = rectangle.bottom - this.scroller.scrollTop;
 
-            return rectangle.bottom - handleWidth <= y && y <= rectangle.bottom + handleWidth;
+            return bottom - handleWidth <= y && y <= bottom + handleWidth;
         },
 
         objectAt: function(x, y) {
@@ -793,7 +795,9 @@
         bottom: "k-bottom",
         left: "k-left",
         resizeHandle: "k-resize-handle",
-        resizeHint: "k-resize-hint"
+        resizeHint: "k-resize-hint",
+        resizeHintHandle: "k-resize-hint-handle",
+        resizeHintMarker: "k-resize-hint-marker"
     };
 
     var Pane = kendo.Class.extend({
@@ -959,8 +963,11 @@
             }
             return kendo.dom.element("div", {
                 className: Pane.classNames.resizeHint,
-                style: style
-            });
+                style: style,
+            },[
+                kendo.dom.element("div", { className: Pane.classNames.resizeHintHandle }),
+                kendo.dom.element("div", { className: Pane.classNames.resizeHintMarker })
+            ]);
         },
 
         renderResizeHandler: function() {

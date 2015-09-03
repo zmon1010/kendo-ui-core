@@ -36,12 +36,6 @@
                 display: inline !important;
             }
 
-            .k-resize-handle {
-                position: absolute;
-                background-color: red;
-                width: 14px;
-            }
-
             .k-spreadsheet-cell-editor
             {
                 z-index: 2000;
@@ -302,14 +296,33 @@
 
             .k-spreadsheet-filter-menu dt {
                 padding: 0.5em 1.1em 0.4em;
-                line-height: 1.34em; 
+                line-height: 1.34em;
             }
              .k-spreadsheet-value-treeview-wrapper {
                 height: 200px;
                 overflow-y: scroll;
                 overflow-x: auto;
              }
-        </style>
+            .k-resize-handle {
+                position: absolute;
+                background-color: #1984c8;
+            }
+
+            .k-resize-hint {
+                position:absolute;
+            }
+            .k-resize-hint-handle {
+                width: 100%;
+                background-color: #1984c8;
+                height: 20px;
+            }
+            .k-resize-hint-marker {
+                width: 2px;
+                background-color: #1984c8;
+                height: 100%;
+                margin: 0 auto;
+            }
+    </style>
     </head>
     <body>
         <button class="k-button" id="sort">Sort I1:I4</button>
