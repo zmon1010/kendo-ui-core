@@ -797,7 +797,8 @@
         resizeHandle: "k-resize-handle",
         resizeHint: "k-resize-hint",
         resizeHintHandle: "k-resize-hint-handle",
-        resizeHintMarker: "k-resize-hint-marker"
+        resizeHintMarker: "k-resize-hint-marker",
+        resizeHintVertical: "k-resize-hint-vertical"
     };
 
     var Pane = kendo.Class.extend({
@@ -947,26 +948,31 @@
             var rectangle = this._rectangle(ref);
             var viewRectangle = this._rectangle(this._currentView.ref);
 
+            var horizontal = ref.col !== -Infinity;
+
             var style;
-            if (ref.col !== -Infinity) {
+            if (horizontal) {
                 style = {
-                    height: viewRectangle.height + "px",
+                    height: sheet._grid.totalHeight() + "px",
                     width: RESIZE_HANDLE_WIDTH + "px",
                     left: sheet.resizeHintPosition().x + "px"
                 };
             } else {
                 style = {
                     height: RESIZE_HANDLE_WIDTH + "px",
-                    width: viewRectangle.width + "px",
+                    width: sheet._grid.totalWidth() + "px",
                     top: sheet.resizeHintPosition().y + "px"
                 };
             }
+
+            var classNames = Pane.classNames;
+
             return kendo.dom.element("div", {
-                className: Pane.classNames.resizeHint,
+                className: classNames.resizeHint + (!horizontal ? " " + classNames.resizeHintVertical : ""),
                 style: style,
             },[
-                kendo.dom.element("div", { className: Pane.classNames.resizeHintHandle }),
-                kendo.dom.element("div", { className: Pane.classNames.resizeHintMarker })
+                kendo.dom.element("div", { className: classNames.resizeHintHandle }),
+                kendo.dom.element("div", { className: classNames.resizeHintMarker })
             ]);
         },
 
