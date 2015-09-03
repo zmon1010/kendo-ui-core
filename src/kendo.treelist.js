@@ -285,7 +285,7 @@ var __meta__ = { // jshint ignore:line
             return model;
         },
 
-        _shouldWrap: function(data) {
+        _shouldWrap: function() {
             return true;
         },
 
@@ -398,7 +398,7 @@ var __meta__ = { // jshint ignore:line
             options = options || {};
 
             var result = {};
-            var item, subtree, i, id, parentId;
+            var item, subtree, i;
             var filter = options.filter;
 
             if (filter) {
@@ -825,7 +825,6 @@ var __meta__ = { // jshint ignore:line
 
         _appendFields: function(form) {
             var idx, length, column;
-            var model = this.model;
             var columns = this.options.columns;
 
             for (idx = 0, length = columns.length; idx < length; idx++) {
@@ -879,7 +878,7 @@ var __meta__ = { // jshint ignore:line
             this.trigger(CANCEL, e);
         },
 
-        _save: function(e) {
+        _save: function() {
             this.trigger(SAVE);
         },
 
@@ -1086,7 +1085,7 @@ var __meta__ = { // jshint ignore:line
             this.angular(command, function() {
                 return {
                     elements: cells,
-                    data: map(columns, function(col, i){
+                    data: map(columns, function(col){
                         return {
                             column: col,
                             aggregate: aggregates && aggregates[col.field]
@@ -1534,7 +1533,7 @@ var __meta__ = { // jshint ignore:line
 
         _columnAttributes: function() {
             // column style attribute is string, kendo.dom expects object
-            var idx, length, column;
+            var idx, length;
             var columns = this.columns;
 
             function convertStyle(attr) {
@@ -1713,7 +1712,6 @@ var __meta__ = { // jshint ignore:line
 
             var messages = this.options.messages;
             var data = this.dataSource.rootNodes();
-            var aggregates = this.dataSource.aggregates();
             var selected = this.select().map(function(_, row) {
                 return $(row).attr("data-uid");
             });
@@ -1833,7 +1831,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         _ths: function(columns) {
-            var filterable = this.options.filterable;
             var ths = [];
             var column, title, children, cellClasses, attr, headerContent;
 
@@ -2245,7 +2242,7 @@ var __meta__ = { // jshint ignore:line
                 //TODO handle frozen columns index
                 var index= th.index();
                 if ($.contains(that.thead[0], th[0])) {
-                    index += grep(that.columns, function (val,idx) { return val.locked && !val.hidden; }).length;
+                    index += grep(that.columns, function (val) { return val.locked && !val.hidden; }).length;
                 }
                 that.autoFitColumn(index);
             });
@@ -2258,7 +2255,6 @@ var __meta__ = { // jshint ignore:line
                 index,
                 browser = kendo.support.browser,
                 th,
-                header,
                 headerTable,
                 isLocked,
                 visibleLocked = that.lockedHeader ? leafDataCells(that.lockedHeader.find(">table>thead")).filter(isCellVisible).length : 0,
@@ -2337,7 +2333,6 @@ var __meta__ = { // jshint ignore:line
             tables.addClass("k-autofitting");
             tables.css("table-layout", "");
 
-            var newTableWidth = Math.max(headerTable.width(), contentTable.width(), footerTable.width());
             var newColumnWidth = Math.ceil(Math.max(th.outerWidth(), contentTable.find("tr").eq(0).children("td:visible").eq(index).outerWidth(), footerTable.find("tr").eq(0).children("td:visible").eq(index).outerWidth()));
 
             col.width(newColumnWidth);

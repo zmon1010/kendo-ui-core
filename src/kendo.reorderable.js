@@ -95,7 +95,6 @@ var __meta__ = { // jshint ignore:line
                     }
                     var dropTarget = this.element;
                     var draggable = that._draggable;
-                    var containerChange = false;
 
                     if (that._dropTargetAllowed(dropTarget) && !that._isLastDraggable()) {
                         that.trigger(CHANGE, {

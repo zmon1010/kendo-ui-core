@@ -1526,8 +1526,6 @@ var __meta__ = { // jshint ignore:line
 
             this._eventsByResource(events, this.groupedResources, eventsByResource);
 
-            var that = this;
-
             var eventsPerDate = $.map(this._dates, function(date) {
                 return Math.max.apply(null,
                     $.map(eventsByResource, function(events) {

@@ -38,7 +38,6 @@ var __meta__ = { // jshint ignore:line
         DRAGEND = "dragend",
         DATABOUND = "dataBound",
         CLICK = "click",
-        VISIBILITY = "visibility",
         UNDEFINED = "undefined",
         KSTATEHOVER = "k-state-hover",
         KTREEVIEW = "k-treeview",

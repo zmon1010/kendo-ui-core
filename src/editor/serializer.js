@@ -334,7 +334,7 @@ var Serializer = {
 
         function styleAttr(cssText) {
             var properties = cssProperties(cssText);
-            var i, length = properties.length;
+            var i;
 
             for (i = 0; i < properties.length; i++) {
                 result.push(properties[i].property);

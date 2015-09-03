@@ -1901,11 +1901,11 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _eventOptionsForMove: function (event) {
+        _eventOptionsForMove: function () {
             return {};
         },
 
-        _updateEventForResize: function (event) {
+        _updateEventForResize: function () {
             return;
         },
 

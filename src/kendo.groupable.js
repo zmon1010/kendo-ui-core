@@ -49,7 +49,6 @@ var __meta__ = { // jshint ignore:line
     var Groupable = Widget.extend({
         init: function(element, options) {
             var that = this,
-                groupContainer,
                 group = kendo.guid(),
                 intializePositions = proxy(that._intializePositions, that),
                 draggable,

@@ -193,7 +193,6 @@ var InsertTableTool = PopupTool.extend({
         var element = this._popup.element;
         var status = element.find(".k-status");
         var cells = element.find(".k-ct-cell");
-        var rows = this.rows;
         var cols = this.cols;
         var messages = this._editor.options.messages;
 

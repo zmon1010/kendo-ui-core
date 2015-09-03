@@ -13,19 +13,14 @@ var __meta__ = { // jshint ignore:line
 
 (function($, undefined) {
     var kendo = window.kendo,
-        Widget = kendo.ui.Widget,
         FileBrowser = kendo.ui.FileBrowser,
         isPlainObject = $.isPlainObject,
         proxy = $.proxy,
         extend = $.extend,
-        placeholderSupported = kendo.support.placeholder,
         browser = kendo.support.browser,
         isFunction = kendo.isFunction,
         trimSlashesRegExp = /(^\/|\/$)/g,
-        CHANGE = "change",
-        APPLY = "apply",
         ERROR = "error",
-        CLICK = "click",
         NS = ".kendoImageBrowser",
         NAMEFIELD = "name",
         SIZEFIELD = "size",
@@ -177,15 +172,6 @@ var __meta__ = { // jshint ignore:line
         }
 
         return Math.round(value * 100) / 100 + suffix;
-    }
-
-    function fieldName(fields, name) {
-        var descriptor = fields[name];
-
-        if (isPlainObject(descriptor)) {
-            return descriptor.from || descriptor.field || name;
-        }
-        return descriptor;
     }
 
     var ImageBrowser = FileBrowser.extend({

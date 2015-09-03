@@ -637,7 +637,6 @@ var Workbook = kendo.Class.extend({
 
         var worksheets = xl.folder("worksheets");
 
-        var start = new Date();
         for (var idx = 0; idx < sheetCount; idx++) {
             worksheets.file(kendo.format("sheet{0}.xml", idx+1), this._sheets[idx].toXML(idx));
         }

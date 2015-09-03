@@ -210,7 +210,7 @@ var ImageCommand = Command.extend({
             .data("kendoWindow");
 
         if (showBrowser) {
-            new kendo.ui.ImageBrowser(
+            this._imageBrowser = new kendo.ui.ImageBrowser(
                 dialog.element.find(".k-imagebrowser"),
                 extend({}, imageBrowser, {
                     change: function() {

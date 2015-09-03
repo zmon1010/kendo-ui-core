@@ -167,7 +167,7 @@ var FileCommand = Command.extend({
             .data("kendoWindow");
 
         if (showBrowser) {
-            new kendo.ui.FileBrowser(
+            that._fileBrowser = new kendo.ui.FileBrowser(
                 dialog.element.find(".k-filebrowser"),
                 extend({}, fileBrowser, {
                     change: function() {

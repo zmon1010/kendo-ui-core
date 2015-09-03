@@ -222,7 +222,7 @@
 
             that._attachEvents();
 
-            that.items().each(function initializeTool(x, y) {
+            that.items().each(function initializeTool() {
                 var toolName = that._toolName(this),
                     tool = toolName !== "more" ? that.tools[toolName] : that.tools.overflowAnchor,
                     options = tool && tool.options,
@@ -426,8 +426,7 @@
                 browser = kendo.support.browser,
                 group, i, groupPosition = 0,
                 resizable = that.options.resizable && that.options.resizable.toolbar,
-                overflowFlaseTools = this.overflowFlaseTools,
-                overflow;
+                overflowFlaseTools = this.overflowFlaseTools;
 
             function stringify(template) {
                 var result;

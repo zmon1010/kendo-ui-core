@@ -142,7 +142,6 @@ var LinkCommand = Command.extend({
     },
 
     exec: function () {
-        var collapsed = this.getRange().collapsed;
         var messages = this.editor.options.messages;
 
         this._initialText = "";

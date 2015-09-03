@@ -129,7 +129,7 @@ var InsertHtmlTool = Tool.extend({
             options = this.options,
             dataSource = options.items ? options.items : editor.options.insertHtml;
 
-        new editorNS.SelectBox(ui, {
+        this._selectBox = new editorNS.SelectBox(ui, {
             dataSource: dataSource,
             dataTextField: "text",
             dataValueField: "value",
@@ -468,7 +468,7 @@ var SystemHandler = Class.extend({
         return false;
     },
 
-    keyup: function (e) {
+    keyup: function () {
         var that = this;
 
         if (that.systemCommandIsInProgress && that.changed()) {
@@ -754,8 +754,7 @@ var Clipboard = Class.extend({
                 range.deleteContents();
             },
             function afterPaste(editor, range) {
-                var html = "", args = { html: "" }, containers;
-                var browser = kendo.support.browser;
+                var html = "", containers;
 
                 editor.selectRange(range);
 

@@ -15,14 +15,11 @@ var __meta__ = { // jshint ignore:line
     var ui = kendo.ui;
     var proxy = $.proxy;
     var extend = $.extend;
-    var DRAGSTART = "dragstart";
-    var DRAG = "drag";
-    var DROP = "drop";
     var VISIBILITY = "visibility";
     var KSTATEHOVER = "k-state-hover";
     var INPUTSELECTOR = "input,a,textarea,.k-multiselect-wrap,select,button,a.k-button>.k-icon,button.k-button>.k-icon,span.k-icon.k-i-expand,span.k-icon.k-i-collapse";
 
-    var HierarchicalDragAndDrop = ui.HierarchicalDragAndDrop = kendo.Class.extend({
+    ui.HierarchicalDragAndDrop = kendo.Class.extend({
         init: function (element, options) {
             this.element = element;
             this.hovered = element;

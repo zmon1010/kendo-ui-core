@@ -686,7 +686,7 @@ var __meta__ = { // jshint ignore:line
 
             html += '<tbody>';
 
-            var appendRow = function(date, majorTick) {
+            var appendRow = function(date) {
                 var content = "";
                 var classes = "";
                 var tmplDate;
@@ -1474,7 +1474,7 @@ var __meta__ = { // jshint ignore:line
             };
         },
 
-        _changeViewPeriod: function(selection, reverse, vertical) {
+        _changeViewPeriod: function(selection, reverse) {
             var date = reverse ? this.previousDate() : this.nextDate();
             var start = selection.start;
             var end = selection.end;

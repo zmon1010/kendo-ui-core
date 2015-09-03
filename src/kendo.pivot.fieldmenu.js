@@ -343,7 +343,6 @@ var __meta__ = { // jshint ignore:line
             }
 
             var attr = kendo.attr("name");
-            var expression;
 
             this.currentMember = $(e.event.target).closest("[" + attr + "]").attr(attr);
 

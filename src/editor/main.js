@@ -307,7 +307,7 @@
 
                         this.editor.height(newSize);
                     },
-                    resizeend: function(e) {
+                    resizeend: function() {
                         this.editor.find(".k-overlay").remove();
                         this.editor = null;
                     }
@@ -423,7 +423,7 @@
             var falseTrigger = false;
 
             $(editor.body)
-                .on("contextmenu" + NS, function(e) {
+                .on("contextmenu" + NS, function() {
                     editor.one("select", function() {
                         beforeCorrection = null;
                     });
@@ -433,7 +433,7 @@
                         falseTrigger = false;
                     }, 10);
                 })
-                .on("input" + NS, function(e) {
+                .on("input" + NS, function() {
                     if (!beforeCorrection) {
                         return;
                     }
@@ -740,7 +740,6 @@
         value: function (html) {
             var body = this.body,
                 editorNS = kendo.ui.editor,
-                dom = editorNS.Dom,
                 currentHtml = editorNS.Serializer.domToXhtml(body, this.options.serialization);
 
             if (html === undefined) {

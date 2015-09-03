@@ -3695,7 +3695,7 @@ var __meta__ = { // jshint ignore:line
                 }
             });
 
-            toolbar.on(CLICK + NS, ".k-scheduler-views li.k-current-view", function(e) {
+            toolbar.on(CLICK + NS, ".k-scheduler-views li.k-current-view", function() {
                 that.element.find(".k-scheduler-views").toggleClass("k-state-expanded");
             });
 
