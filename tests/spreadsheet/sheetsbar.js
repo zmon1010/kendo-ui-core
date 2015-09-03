@@ -119,7 +119,6 @@
         createSheetsBar();
 
         sheetsBar.bind("select", function(e) {
-            debugger;
             ok(e.isAddButton);
         });
 
@@ -148,5 +147,117 @@
         createSheetsBar();
 
         equal(element.find("div.k-spreadsheet-sheets-items").length, 1);
+    });
+
+    test("double click on elements enters tab in edit mode", function() {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var sheets = [
+            {name: function() {return name}},
+            {name: function() {return name2}}
+        ];
+
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+
+        var bar = element.data("kendoSheetsBar");
+
+        bar.element.find("li:first").trigger("dblclick");
+
+        equal(element.find("input.k-spreadsheet-sheets-editor").length, 1);
+    });
+
+    test("entering edit mode and clicking on another tab does not throw error", function() {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var sheets = [
+            {name: function() {return name}},
+            {name: function() {return name2}}
+        ];
+
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+
+        var bar = element.data("kendoSheetsBar");
+
+        bar.element.find("li:first").trigger("dblclick");
+        bar.element.find("li:last").trigger("click");
+        ok(true);
+    });
+
+    test("leaving edit mode destroys the editor", function() {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var sheets = [
+            {name: function() {return name}},
+            {name: function() {return name2}}
+        ];
+
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+
+        var bar = element.data("kendoSheetsBar");
+
+        bar.element.find("li:first").trigger("dblclick");
+        bar.element.find("li:last").trigger("click");
+        ok(!bar._editor);
+    });
+
+    test("editing sheet title trigger rename", function() {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var newTitle = "Foo";
+        var sheets = [
+            {name: function() {return name}},
+            {name: function() {return name2}}
+        ];
+
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+
+        var bar = element.data("kendoSheetsBar");
+
+        bar.bind("rename", function(e) {
+            equal(e.name, newTitle);
+        });
+
+        bar.element.find("li:first").trigger("dblclick");
+        bar._editor.val(newTitle);
+
+        var event = $.Event("keydown");
+        event.target = bar._editor;
+        event.which = 13;
+
+        bar._editor.trigger(event);
+    });
+
+    test("editing sheet title and pressing escape key cancel changes", 2, function() {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var newTitle = "Foo";
+        var sheets = [
+            {name: function() {return name}},
+            {name: function() {return name2}}
+        ];
+
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+
+        var bar = element.data("kendoSheetsBar");
+
+        bar.bind("rename", function(e) {
+            ok(!e.name);
+        });
+
+        bar.element.find("li:first").trigger("dblclick");
+        bar._editor.val(newTitle);
+
+        var event = $.Event("keydown");
+        event.target = bar._editor;
+        event.which = 27;
+
+        bar._editor.trigger(event);
+
+        ok(!bar._editor);
     });
 })();

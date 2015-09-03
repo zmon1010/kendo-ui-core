@@ -116,6 +116,7 @@
 
             view.sheetsbar.bind("select", this.onSheetBarSelect.bind(this));
             view.sheetsbar.bind("reorder", this.onSheetBarReorder.bind(this));
+            view.sheetsbar.bind("rename", this.onSheetBarRename.bind(this));
 
             this.cellContextMenu.bind("select", this.onContextMenuSelect.bind(this));
             this.rowHeaderContextMenu.bind("select", this.onContextMenuSelect.bind(this));
@@ -162,14 +163,17 @@
 
         onSheetBarSelect: function(e) {
             var sheet;
+            var workbook = this._workbook;
 
             if (e.isAddButton) {
-                sheet = this._workbook.insertSheet();
+                sheet = workbook.insertSheet();
             } else {
-                sheet = this._workbook.sheetByName(e.name);
+                sheet = workbook.sheetByName(e.name);
             }
 
-            this._workbook.activeSheet(sheet);
+            if (workbook.activeSheet().name() !== sheet.name()) {
+                workbook.activeSheet(sheet);
+            }
         },
 
         onSheetBarReorder: function(e) {
@@ -178,6 +182,14 @@
             this._workbook.moveSheetToIndex(sheet, e.newIndex);
 
             this._workbook.activeSheet(sheet);
+        },
+
+        onSheetBarRename: function(e) {
+            var sheet = this._workbook.sheetByIndex(e.sheetIndex);
+
+            this._workbook.renameSheet(sheet, e.name);
+
+            this.clipboardElement.focus();
         },
 
         sheet: function(sheet) {
