@@ -293,16 +293,26 @@
                     var contentOptions = options.content;
                     var contentVisual = this._contentVisual;
 
-                    if (!contentVisual && contentOptions.text) {
-                        this._contentVisual = new TextBlock(contentOptions);
-                        this._contentVisual._includeInBBox = false;
-                        this.visual.append(this._contentVisual);
-                    } else if (contentVisual) {
-                        contentVisual.redraw(contentOptions);
+                    if (!contentVisual) {
+                        this._createContentVisual(contentOptions);
+                    } else {
+                        this._updateContentVisual(contentOptions);
                     }
                 }
 
                 return this.options.content.text;
+            },
+
+            _createContentVisual: function(options) {
+                if (options.text) {
+                    this._contentVisual = new TextBlock(options);
+                    this._contentVisual._includeInBBox = false;
+                    this.visual.append(this._contentVisual);
+                }
+            },
+
+            _updateContentVisual: function(options) {
+                this._contentVisual.redraw(options);
             },
 
             _hitTest: function (point) {
@@ -1296,6 +1306,32 @@
                     this._alignContent();
                 }
                 return result;
+            },
+
+            _createContentVisual: function(options) {
+                var visual;
+                if (isFunction(options.visual)) {
+                    visual = options.visual.call(this, options);
+                } else if (options.text) {
+                    visual = new TextBlock(options);
+                }
+
+                if (visual) {
+                    this._contentVisual = visual;
+                    visual._includeInBBox = false;
+                    this.visual.append(visual);
+                }
+
+                return visual;
+            },
+
+            _updateContentVisual: function(options) {
+                if (isFunction(options.visual)) {
+                    this.visual.remove(this._contentVisual);
+                    this._createContentVisual(options);
+                } else {
+                    this._contentVisual.redraw(options);
+                }
             },
 
             _alignContent: function() {

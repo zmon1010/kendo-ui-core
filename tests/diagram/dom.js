@@ -2219,11 +2219,7 @@
             }
 
             // ------------------------------------------------------------
-            module("Connection / content / alignment", {
-                setup: function() {
-                    setupConnection();
-                }
-            });
+            module("Connection / content / alignment");
 
             test("aligns to vertical path with some offset", function() {
                 testPosition(new Point(100, 20), new Point(100, 100), new Point(105, 52.5));
@@ -2270,6 +2266,72 @@
             test("aligns to the middle point without offset for even number of points if the middle path size is less than the size of the text", function() {
                 testPosition(new Point(0, 0), new Point(200, 10), new Point(76, 10), {
                     points: [new Point(100, 0), new Point(100, 10)]
+                });
+            });
+
+        })();
+
+        (function() {
+
+            // ------------------------------------------------------------
+            module("Connection / content / visual", {
+                setup: function() {
+
+                }
+            });
+
+            test("creates custom visual on initialization", function() {
+                var visual;
+                setupConnection({
+                    content: {
+                        visual: function() {
+                            visual = new dataviz.diagram.TextBlock();
+                            return visual;
+                        }
+                    }
+                });
+                ok(connection._contentVisual === visual);
+            });
+
+            test("recreates custom visual on update", 2, function() {
+                var visualFn = function() {
+                    ok(true);
+                    return new dataviz.diagram.TextBlock();
+                };
+                setupConnection({
+                    content: {
+                        visual: visualFn
+                    }
+                });
+                connection.content({text: "foo"});
+            });
+
+            test("passes content opitons to visual function", function() {
+                var visual;
+                setupConnection({
+                    content: {
+                        text: "foo",
+                        fontSize: 20,
+                        visual: function(options) {
+                            equal(options.fontSize, 20);
+                            equal(options.text, "foo");
+                            return new dataviz.diagram.TextBlock();
+                        }
+                    }
+                });
+            });
+
+            test("calls the visual function in the context of the connection", function() {
+                var visual;
+                setupConnection({
+                    text: "foo",
+                    fontSize: 20,
+                    content: {
+                        visual: function(options) {
+                            ok(this instanceof Connection);
+                            return new dataviz.diagram.TextBlock();
+                        }
+                    }
                 });
             });
 
