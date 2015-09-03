@@ -103,6 +103,36 @@
         tap(toolbar.element.find("[data-tool=mergeCells]"));
     });
 
+    test("mergeCells click triggers execute with correct value", 1, function() {
+        createWithTools([ "mergeSplitButton" ]);
+
+        toolbar.one("execute", function(e) {
+            equal(e.command.options.value, "cells");
+        });
+
+        sheet.select("A1:B2");
+        tap(toolbar.element.find("[data-tool=mergeSplitButton]"));
+    });
+
+    test("mergeCells buttons have data-tool attribute", function() {
+        createWithTools([ "mergeSplitButton" ]);
+
+        //adding +1 because of the hamburger buttons
+        equal($("[data-tool=mergeSplitButton]").length, 1 + 1);
+        equal($("[data-tool=mergeHorizontally]").length, 1 + 1);
+        equal($("[data-tool=mergeVertically]").length, 1 + 1);
+        equal($("[data-tool=unmerge]").length, 1 + 1);
+    });
+
+    test("mergeCells buttons have title attribute", function() {
+        createWithTools([ "mergeSplitButton" ]);
+
+        equal($("[data-tool=mergeSplitButton]").attr("title"), "Merge cells");
+        equal($("[data-tool=mergeHorizontally]").attr("title"), "Merge horizontally");
+        equal($("[data-tool=mergeVertically]").attr("title"), "Merge vertically");
+        equal($("[data-tool=unmerge]").attr("title"), "Unmerge");
+    });
+
     test("textAlign button click triggers execute with correct value", 2, function() {
         createWithTools([ [ "alignLeft", "alignCenter", "alignRight" ] ]);
 

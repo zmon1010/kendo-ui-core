@@ -22,7 +22,7 @@
         "format",
         "filter",
         "separator",
-        "mergeCells"
+        "mergeSplitButton"
     ];
 
     var toolDefaults = {
@@ -44,13 +44,13 @@
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
         backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
         textColor:             { type: "colorPicker", property: "color", iconClass: "text" },
-        mergeCells:            { type: "splitButton", command: "MergeCellCommand", value: "cells", showText: "overflow", iconClass: "merge-cells",
-                                 menuButtons: [
-                                    { command: "MergeCellCommand", value: "cells",        name: "mergeCells", iconclass: "merge-cells" },
-                                    { command: "MergeCellCommand", value: "horizontally", name: "mergeHorizontally", iconClass: "merge-horizontally" },
-                                    { command: "MergeCellCommand", value: "vertically",   name: "mergeVertically", iconClass: "merge-vertically" },
-                                    { command: "MergeCellCommand", value: "unmerge",      name: "unmerge", iconClass: "normal-layout" }
-                                 ] },
+
+        mergeSplitButton:      { type: "splitButton", name: "mergeCells",        command: "MergeCellCommand", value: "cells",        iconClass: "merge-cells"       , showText: "overflow", menuButtons: [ "mergeHorizontally", "mergeVertically", "unmerge" ] },
+        mergeCells:            { type: "button",      name: "mergeCells",        command: "MergeCellCommand", value: "cells",        iconClass: "merge-cells"       , showText: "always" },
+        mergeHorizontally:     { type: "button",      name: "mergeHorizontally", command: "MergeCellCommand", value: "horizontally", iconClass: "merge-horizontally", showText: "always" },
+        mergeVertically:       { type: "button",      name: "mergeVertically",   command: "MergeCellCommand", value: "vertically",   iconClass: "merge-vertically"  , showText: "always" },
+        unmerge:               { type: "button",      name: "unmerge",           command: "MergeCellCommand", value: "unmerge",      iconClass: "normal-layout"     , showText: "always" },
+
         borders:               { type: "borders", iconClass: "all-borders" },
         fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, iconClass: "text" },
         fontSize:              { type: "fontSize", property: "fontSize", width: 60, iconClass: "font-size" },
