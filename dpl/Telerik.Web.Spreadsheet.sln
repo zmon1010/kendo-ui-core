@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Web.Spreadsheet", "Kendo.Spreadsheet\Telerik.Web.Spreadsheet.csproj", "{D697E6A6-319F-44FA-A757-443415FF43BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Web.Spreadsheet", "Telerik.Web.Spreadsheet\Telerik.Web.Spreadsheet.csproj", "{D697E6A6-319F-44FA-A757-443415FF43BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Web.Spreadsheet.Tests", "Kendo.Spreadsheet.Tests\Telerik.Web.Spreadsheet.Tests.csproj", "{F5A6C645-40D3-4F08-9A8B-39CB0108FEFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Web.Spreadsheet.Tests", "Telerik.Web.Spreadsheet.Tests\Telerik.Web.Spreadsheet.Tests.csproj", "{F5A6C645-40D3-4F08-9A8B-39CB0108FEFF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F7E7386E-8813-4ECB-AC87-B11780F1EF83}"
 	ProjectSection(SolutionItems) = preProject

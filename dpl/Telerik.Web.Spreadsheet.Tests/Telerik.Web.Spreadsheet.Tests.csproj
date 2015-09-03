@@ -134,7 +134,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Kendo.Spreadsheet\Telerik.Web.Spreadsheet.csproj">
+    <ProjectReference Include="..\Telerik.Web.Spreadsheet\Telerik.Web.Spreadsheet.csproj">
       <Project>{d697e6a6-319f-44fa-a757-443415ff43bb}</Project>
       <Name>Telerik.Web.Spreadsheet</Name>
     </ProjectReference>
