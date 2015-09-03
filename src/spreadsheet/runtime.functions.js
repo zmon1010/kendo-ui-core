@@ -1352,7 +1352,7 @@
 
     defineFunction("column", function(ref){
         if (!ref) {
-            return this.col + 1;
+            return this.formula.col + 1;
         }
         if (ref instanceof CellRef) {
             return ref.col + 1;
@@ -1441,11 +1441,12 @@
         try {
             // XXX: does more work than needed.  we could go for parseReference, but that one
             // doesn't (yet?) support "SheetName!" prefix.
-            var exp = calc.parseFormula(this.sheet, this.row, this.col, thing);
+            var f = this.formula;
+            var exp = calc.parseFormula(f.sheet, f.row, f.col, thing);
             if (!(exp.ast instanceof Ref)) {
                 throw 1;
             }
-            return exp.ast.absolute(this.row, this.col);
+            return exp.ast.absolute(f.row, f.col);
         } catch(ex) {
             return new CalcError("REF");
         }
@@ -1509,7 +1510,7 @@
 
     defineFunction("row", function(ref){
         if (!ref) {
-            return this.row + 1;
+            return this.formula.row + 1;
         }
         if (ref instanceof CellRef) {
             return ref.row + 1;

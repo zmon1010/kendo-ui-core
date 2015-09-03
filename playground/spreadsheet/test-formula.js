@@ -547,7 +547,7 @@ false&&fillElements({
     }
 });
 
-fillElements({
+false&&fillElements({
     sheet1: {
         A1: '=ASUM(1000, C:E)',
         A2: '=A1 * 2',
@@ -566,7 +566,7 @@ fillElements({
     }
 });
 
-false&&fillElements({
+fillElements({
     sheet1: {
         A1: 1,
         A2: 2,

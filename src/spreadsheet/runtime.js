@@ -42,9 +42,6 @@
             this.callback = callback;
             this.formula = formula;
             this.ss = ss;
-            this.sheet = formula.sheet;
-            this.row = formula.row;
-            this.col = formula.col;
             this.parent = parent;
         },
 
@@ -65,8 +62,9 @@
         },
 
         _resolve: function(val) {
-            this.formula.value = val;
-            this.ss.onFormula(this.sheet, this.row, this.col, val);
+            var f = this.formula;
+            f.value = val;
+            this.ss.onFormula(f.sheet, f.row, f.col, val);
             if (this.callback) {
                 this.callback(val);
             }
@@ -1316,7 +1314,7 @@
     // range operator
     defineFunction("binary:", function(a, b){
         return new RangeRef(a, b)
-            .setSheet(a.sheet || this.sheet, a.hasSheet());
+            .setSheet(a.sheet || this.formula.sheet, a.hasSheet());
     }).args([
         [ "a", "cell" ],
         [ "b", "cell" ]
