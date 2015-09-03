@@ -205,7 +205,7 @@ namespace :generate do
 
         components.each do |component|
 
-            generator = CodeGen::DPLGenerator.new('dpl/Kendo.Spreadsheet/Models')
+            generator = CodeGen::DPLGenerator.new('dpl/Telerik.Web.Spreadsheet/Models')
 
             import_metadata(component, "lib/dpl/config/")
 
@@ -213,7 +213,7 @@ namespace :generate do
 
         end
 
-        CodeGen::DPLGenerator::register_files('dpl/Kendo.Spreadsheet/Kendo.Spreadsheet.csproj')
+        CodeGen::DPLGenerator::register_files('dpl/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj')
     end
 
     namespace :mvc_6 do
