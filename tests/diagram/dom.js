@@ -2126,7 +2126,7 @@
         test("positions content visual", function() {
             var position = connection._contentVisual.position();
             equal(position.x, 55);
-            equal(position.y, 60);
+            equal(position.y, 45);
         });
 
         // ------------------------------------------------------------
@@ -2157,8 +2157,8 @@
                 }
             });
             var position = connection._contentVisual.position();
-            equal(position.x, 55);
-            equal(position.y, 60);
+            equal(position.x, 21);
+            equal(position.y, 30);
         });
 
         test("updates path", function() {
@@ -2190,19 +2190,90 @@
             connection.content("foo");
             var position = connection._contentVisual.position();
             equal(position.x, 55);
-            equal(position.y, 60);
+            equal(position.y, 45);
         });
 
         test("updates content", function() {
             setupConnection({
                 content: {
                     text: "foo"
-                },
+                }
             });
 
             connection.content("bar");
             equal(connection._contentVisual.content(), "bar");
         });
+
+        (function() {
+            function testPosition(startPoint, endPoint, expectedPosition, options) {
+                connection = new Connection(startPoint, endPoint,  kendo.deepExtend({
+                    type: "polyline",
+                    content: {
+                        text: "foo"
+                    }
+                }, options));
+
+                var position = connection._contentVisual.position();
+                equal(position.x, expectedPosition.x);
+                equal(position.y, expectedPosition.y);
+            }
+
+            // ------------------------------------------------------------
+            module("Connection / content / alignment", {
+                setup: function() {
+                    setupConnection();
+                }
+            });
+
+            test("aligns to vertical path with some offset", function() {
+                testPosition(new Point(100, 20), new Point(100, 100), new Point(105, 52.5));
+            });
+
+            test("aligns to horizontal path with some offset", function() {
+                testPosition(new Point(20, 100), new Point(100, 100), new Point(48, 80));
+            });
+
+            test("aligns to -135 degrees path", function() {
+                testPosition(new Point(100, 100), new Point(0, 0), new Point(50, 35));
+            });
+
+            test("aligns to -45 degrees path", function() {
+                testPosition(new Point(100, 100), new Point(200, 0), new Point(126, 35));
+            });
+
+            test("aligns to 45 degrees path", function() {
+                testPosition(new Point(0, 0), new Point(100, 100), new Point(50, 35));
+            });
+
+            test("aligns to 135 degrees path", function() {
+                testPosition(new Point(100, 0), new Point(0, 100), new Point(26, 35));
+            });
+
+            test("aligns to middle point of middle segment", function() {
+                testPosition(new Point(0, 0), new Point(200, 100), new Point(105, 42.5), {
+                    points: [new Point(100, 0), new Point(100, 100)]
+                });
+            });
+
+            test("aligns to the path determined by the end points if the middle points are the same", function() {
+                testPosition(new Point(0, 0), new Point(0, 200), new Point(5, 92.5), {
+                    points: [new Point(0, 100), new Point(0, 100)]
+                });
+            });
+
+            test("aligns to the middle point with offset for odd number of points", function() {
+                testPosition(new Point(0, 0), new Point(100, 100), new Point(105,-20), {
+                    points: [new Point(100, 0)]
+                });
+            });
+
+            test("aligns to the middle point without offset for even number of points if the middle path size is less than the size of the text", function() {
+                testPosition(new Point(0, 0), new Point(200, 10), new Point(76, 10), {
+                    points: [new Point(100, 0), new Point(100, 10)]
+                });
+            });
+
+        })();
 
         // ------------------------------------------------------------
         module("Connection", {});

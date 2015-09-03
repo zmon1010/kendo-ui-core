@@ -104,7 +104,8 @@
             MOUSEWHEEL_NS = "DOMMouseScroll" + NS + " mousewheel" + NS,
             MOBILE_ZOOM_RATE = 0.05,
             MOBILE_PAN_DISTANCE = 5,
-            BUTTON_TEMPLATE = '<a class="k-button k-button-icontext #=className#" href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>';
+            BUTTON_TEMPLATE = '<a class="k-button k-button-icontext #=className#" href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>',
+            CONNECTION_CONTENT_OFFSET = 5;
 
         diagram.DefaultConnectors = [{
             name: TOP
@@ -1299,12 +1300,63 @@
 
             _alignContent: function() {
                 if (this._contentVisual) {
-                    var boundsTopLeft = this._bounds.topLeft();
-                    var localSourcePoint = this.sourcePoint().minus(boundsTopLeft);
-                    var localSinkPoint = this.targetPoint().minus(boundsTopLeft);
-                    var middle = Point.fn.middleOf(localSourcePoint, localSinkPoint);
+                    var offset = CONNECTION_CONTENT_OFFSET;
+                    var points = this.allPoints();
+                    var endIdx = math.floor(points.length / 2);
+                    var startIdx = endIdx - 1;
 
-                    this._contentVisual.position(new Point(middle.x + boundsTopLeft.x, middle.y + boundsTopLeft.y));
+                    while(startIdx > 0 && points[startIdx].equals(points[endIdx])) {
+                        startIdx--;
+                        endIdx++;
+                    }
+
+                    var endPoint = points[endIdx];
+                    var startPoint = points[startIdx];
+
+                    var boundingBox = this._contentVisual._measure();
+                    var width = boundingBox.width;
+                    var height = boundingBox.height;
+                    var alignToPath = points.length % 2 === 0;
+                    var distance = startPoint.distanceTo(endPoint);
+
+                    if (alignToPath && points.length > 2 && distance > 0 &&
+                        ((startPoint.y === endPoint.y && distance < width) || (startPoint.x === endPoint.x && distance < height))) {
+                        alignToPath = false;
+                        offset = 0;
+                    }
+
+                    var point;
+
+                    if (alignToPath) {
+                        var angle  = kendo.util.deg(math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x));
+                        point = new Point((endPoint.x - startPoint.x) / 2 + startPoint.x, (endPoint.y - startPoint.y) / 2 + startPoint.y);
+
+                        if (math.abs(angle) === 90) {
+                            point.x += offset;
+                            point.y-= height / 2;
+                        } else if (angle % 180 === 0) {
+                            point.x -= width / 2;
+                            point.y -= height + offset;
+                        } else if (angle < -90 || (0 < angle && angle < 90)) {
+                            point.y-= height;
+                        } else if (angle < 0 || angle > 90) {
+                            point.x -= width;
+                            point.y -= height;
+                        }
+                    } else {
+                        var midIdx = math.floor(points.length / 2);
+                        point = points[midIdx].clone();
+                        startPoint = points[midIdx - 1];
+                        endPoint = points[midIdx + 1];
+
+                        var offsetX = startPoint.x <= point.x && endPoint.x <= point.x ? offset : -boundingBox.width - offset;
+                        var offsetY = startPoint.y <= point.y && endPoint.y <= point.y ? offset : -boundingBox.height - offset;
+
+                        point.x += offsetX;
+                        point.y += offsetY;
+                    }
+
+                    this._contentVisual.position(point);
                 }
             },
 
