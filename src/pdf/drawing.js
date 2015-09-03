@@ -13,11 +13,11 @@
 
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
-    /*jshint eqnull:true  */
+    /* jshint eqnull: true  */
+    /* jshint latedef: nofunc */
 
     var drawing     = kendo.drawing;
     var geo         = kendo.geometry;
-    var Color       = drawing.Color;
 
     var TEXT_RENDERING_MODE = kendo.pdf.TEXT_RENDERING_MODE;
 
@@ -219,7 +219,7 @@
         }
     }
 
-    function setStrokeOptions(element, page, pdf) {
+    function setStrokeOptions(element, page) {
         var stroke = element.stroke && element.stroke();
         if (!stroke) {
             return;
@@ -266,7 +266,7 @@
         }
     }
 
-    function setFillOptions(element, page, pdf) {
+    function setFillOptions(element, page) {
         var fill = element.fill && element.fill();
         if (!fill) {
             return;
@@ -382,7 +382,7 @@
         }
     }
 
-    function maybeDrawRect(path, page, pdf) {
+    function maybeDrawRect(path, page) {
         var segments = path.segments;
         if (segments.length == 4 && path.options.closed) {
             // detect if this path looks like a rectangle parallel to the axis
@@ -475,7 +475,7 @@
         maybeFillStroke(element, page, pdf);
     }
 
-    function drawText(element, page, pdf) {
+    function drawText(element, page) {
         var style = kendo.pdf.parseFontDef(element.options.font);
         var pos = element._position;
         var mode;
@@ -505,7 +505,7 @@
         }
     }
 
-    function drawImage(element, page, pdf) {
+    function drawImage(element, page) {
         var url = element.src();
         if (!url) {
             return;

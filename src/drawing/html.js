@@ -12,6 +12,7 @@
 
     /* jshint eqnull:true */
     /* jshint -W069 */
+    /* jshint latedef: nofunc */
 
     /* -----[ local vars ]----- */
 
@@ -492,7 +493,7 @@
 
     var parseBackgroundImage = (function(){
         var tok_linear_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?linear-gradient\s*)\(/;
-        var tok_radial_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?radial-gradient\s*)\(/;
+        //var tok_radial_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?radial-gradient\s*)\(/;
         var tok_percent          = /^([-0-9.]+%)/;
         var tok_length           = /^([-0-9.]+px)/;
         var tok_keyword          = /^(left|right|top|bottom|to|center)\W/;
@@ -1791,12 +1792,11 @@
             }
         }
 
-        function drawBullet(box) {
+        function drawBullet() {
             var listStyleType = getPropertyValue(style, "list-style-type");
             if (listStyleType == "none") {
                 return;
             }
-            var listStyleImage = getPropertyValue(style, "list-style-image");
             var listStylePosition = getPropertyValue(style, "list-style-position");
 
             function _drawBullet(f) {
@@ -1853,7 +1853,7 @@
               case "decimal":
               case "decimal-leading-zero":
                 _drawBullet(function(bullet){
-                    elementIndex(function(idx, len){
+                    elementIndex(function(idx){
                         ++idx;
                         if (listStyleType == "decimal-leading-zero" && (idx+"").length < 2) {
                             idx = "0" + idx;
@@ -1866,7 +1866,7 @@
               case "lower-roman":
               case "upper-roman":
                 _drawBullet(function(bullet){
-                    elementIndex(function(idx, len){
+                    elementIndex(function(idx){
                         idx = romanNumeral(idx + 1);
                         if (listStyleType == "upper-roman") {
                             idx = idx.toUpperCase();
@@ -1881,7 +1881,7 @@
               case "upper-latin":
               case "upper-alpha":
                 _drawBullet(function(bullet){
-                    elementIndex(function(idx, len){
+                    elementIndex(function(idx){
                         idx = alphaNumeral(idx);
                         if (/^upper/i.test(listStyleType)) {
                             idx = idx.toUpperCase();
@@ -2040,7 +2040,7 @@
 
     function gradientRenderer(gradient) {
         return function(group, rect) {
-            var width = rect.width(), height = rect.height(), tl = rect.topLeft();
+            var width = rect.width(), height = rect.height();
 
             switch (gradient.type) {
               case "linear":

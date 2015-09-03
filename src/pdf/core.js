@@ -13,6 +13,7 @@
     /* jshint loopfunc:true */
     /* jshint newcap:false */
     /* global VBArray */
+    /* jshint latedef: nofunc */
 
     var kendo = window.kendo;
 
@@ -1018,7 +1019,6 @@
         },
         beforeRender: function() {
             var self = this;
-            var font = self._font;
             var sub = self._sub;
 
             // write the TTF data

@@ -362,7 +362,7 @@ var GlyfTable = (function(){
     var MORE_COMPONENTS           = 0x0020;
     var WE_HAVE_AN_X_AND_Y_SCALE  = 0x0040;
     var WE_HAVE_A_TWO_BY_TWO      = 0x0080;
-    var WE_HAVE_INSTRUCTIONS      = 0x0100;
+    //var WE_HAVE_INSTRUCTIONS      = 0x0100;
 
     function CompoundGlyph(data) {
         this.raw = data;
@@ -403,7 +403,7 @@ var GlyfTable = (function(){
     };
 
     return deftable({
-        parse: function(data) {
+        parse: function() {
             this.cache = {};
         },
         glyphFor: function(id) {
@@ -473,7 +473,7 @@ var NameTable = (function(){
     return deftable({
         parse: function(data) {
             data.offset(this.offset);
-            var format = data.readShort();
+            data.readShort();   // format
             var count = data.readShort();
             var stringOffset = this.offset + data.readShort();
             var nameRecords = data.times(count, function(){
@@ -1042,7 +1042,7 @@ function TTFFont(rawData, name) {
         if (!name) {
             throw new Error("Must specify a name for TTC files");
         }
-        var version = data.readLong();
+        data.readLong();        // version
         var numFonts = data.readLong();
         for (var i = 0; i < numFonts; ++i) {
             var offset = data.readLong();
