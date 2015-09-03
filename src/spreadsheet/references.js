@@ -106,7 +106,7 @@
             var r1 = this;
             var r2 = reference;
 
-            if (r1 === NULL || r2 == NULL) {
+            if (r1 === NULL || r2 === NULL) {
                 return r1 === r2;
             }
 
@@ -127,7 +127,8 @@
                 if (r2 instanceof UnionRef) {
                     return r2.single() && r1.eq(r2.refs[0]);
                 }
-            } else { // union eq union
+            }
+            else if (r1 instanceof UnionRef && r2 instanceof UnionRef) { // union eq union
                 var refs1 = r1.refs;
                 var refs2 = r2.refs;
                 if (refs1.length != refs2.length) {
@@ -142,6 +143,8 @@
 
                 return true;
             }
+
+            return r1 === r2;   // XXX: possibly NameRef when we'll support it.
         },
 
         concat: function(ref) {

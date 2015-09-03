@@ -556,12 +556,12 @@
                                     ref.topLeft.rel
                                 ),
                             fixCell(ref.bottomRight)
-                        ).setSheet(ref.sheet, ref.hasSheet());
+                        ).setSheet(ref.sheet, ref.hasSheet()).simplify();
                     }
                     return new RangeRef(
                         fixCell(ref.topLeft),
                         fixCell(ref.bottomRight)
-                    ).setSheet(ref.sheet, ref.hasSheet());
+                    ).setSheet(ref.sheet, ref.hasSheet()).simplify();
                 }
                 else if (!(ref instanceof NameRef || ref === NULL)) {
                     throw new Error("Unknown reference in adjust");
