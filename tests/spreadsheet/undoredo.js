@@ -23,12 +23,6 @@
         ok(spreadsheet._workbook.undoRedoStack instanceof kendo.util.UndoRedoStack);
     });
 
-    test("changing formulaBar pushes command to undoRedo stack", function() {
-        spreadsheet._view.formulaBar.trigger("change", { value: "foo" });
-
-        ok(spreadsheet._workbook.undoRedoStack.canUndo());
-    });
-
     test("execute pushes command to undo/redo stack", function() {
         var command = new kendo.spreadsheet.EditCommand({ value: "bar" });
 
