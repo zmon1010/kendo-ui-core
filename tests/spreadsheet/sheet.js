@@ -207,6 +207,42 @@
         equal(sheet.frozenRows(), 3);
     });
 
+    test("insertRow into merged cells region expands the merged cells", function() {
+        sheet.range("A1:C5").merge();
+
+        sheet.insertRow(1);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "A1:C6");
+    });
+
+    test("insertRow into multiple merged cells regions expands the merged cells", function() {
+        sheet.range("A1:C5").merge();
+        sheet.range("F2:G5").merge();
+
+        sheet.insertRow(2);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 2);
+        equal(mergedCells[0].toString(), "A1:C6");
+        equal(mergedCells[1].toString(), "F2:G6");
+    });
+
+    test("insertRow outside of merged cells region the merged cells", function() {
+        sheet.range("A1:C5").merge();
+
+        sheet.insertRow(7);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "A1:C5");
+    });
+
+
     test("insertRow frozen row expands frozen rows pane", function() {
         sheet.frozenRows(3);
 

@@ -168,6 +168,14 @@
                     this.frozenRows(frozenRows + 1);
                 }
 
+                var mergedCells = this._mergedCells.slice(0);
+
+                var insertedRow = new RangeRef(new CellRef(rowIndex, 0), new CellRef(rowIndex, columnCount));
+
+                insertedRow.intersecting(mergedCells).forEach(function(ref) {
+                    ref.bottomRight.row = ref.bottomRight.row + 1;
+                });
+
                 for (var ci = 0; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
 
@@ -183,6 +191,8 @@
 
                     new Range(ref, this).clear();
                 }
+
+                this._mergedCells = mergedCells;
 
                 this._adjustFormulas("row", rowIndex, 1);
             }, { recalc: true, layout: true });
