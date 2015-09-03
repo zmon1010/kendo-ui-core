@@ -565,7 +565,7 @@
                         fixCell(ref.bottomRight)
                     ).setSheet(ref.sheet, ref.hasSheet());
                 }
-                else if (!(ref instanceof NameRef)) {
+                else if (!(ref instanceof NameRef || ref === NULL)) {
                     throw new Error("Unknown reference in adjust");
                 }
             });
