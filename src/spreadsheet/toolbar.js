@@ -54,8 +54,8 @@
         borders:               { type: "borders", iconClass: "all-borders" },
         fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, iconClass: "text" },
         fontSize:              { type: "fontSize", property: "fontSize", width: 60, iconClass: "font-size" },
-        copy:                  { command: "CopyCommand", iconClass: "copy" },
-        paste:                 { command: "PasteCommand", iconClass: "paste" },
+        copy:                  { type: "button", command: "CopyCommand", iconClass: "copy" },
+        paste:                 { type: "button", command: "PasteCommand", iconClass: "paste" },
         separator:             { type: "separator" },
         filter:                { type: "button", command: "FilterCommand",         property: "hasFilter", iconClass: "filter", togglable: true }
     };
@@ -94,7 +94,7 @@
                     name: options.name || toolName,
                     text: messages[options.name || toolName],
                     spriteCssClass: spriteCssClass,
-                    attributes: {}
+                    attributes: { title: messages[options.name || toolName] }
                 }, typeDefaults[type], options);
 
                 if (type == "splitButton") {
@@ -171,7 +171,9 @@
                 fontSize: "Font size",
                 borders: "Borders",
                 textColor: "Text Color",
-                backgroundColor: "Background"
+                backgroundColor: "Background",
+                copy: "Copy",
+                paste: "Paste"
             }
         },
         openDialog: function(popupName, options) {

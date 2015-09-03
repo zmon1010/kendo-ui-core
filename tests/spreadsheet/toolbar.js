@@ -159,6 +159,13 @@
         equal($(".k-i-refresh").length, 1 + 1); //+1 because of the overflow hamburger
     });
 
+    test("buttons has title attribute", function() {
+        createWithTools([ "bold", "textWrap" ]);
+
+        equal(toolbar.element.find("[data-property=bold]").attr("title"), "Bold");
+        equal(toolbar.element.find("[data-property=wrap]").attr("title"), "Wrap text");
+    });
+
     test("refreshes toggle button state", function() {
         createWithTools([ "bold" ]);
 
