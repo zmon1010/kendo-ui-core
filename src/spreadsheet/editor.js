@@ -75,8 +75,8 @@
             return this._active;
         },
 
-        expand: function() {
-            //TODO: expand the input to the length of the cell value
+        scale: function() {
+            this.cellInput.scale();
         },
 
         position: function(rect) {

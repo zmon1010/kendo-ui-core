@@ -193,6 +193,18 @@
         equal(editor.cellInput.args("position")[0], rect);
     });
 
+    test("scale method calls cell formulaInput scale method", 1, function() {
+        var editor = createEditor();
+
+        stub(editor.cellInput, {
+            scale: editor.cellInput.scale
+        });
+
+        editor.scale();
+
+        equal(editor.cellInput.calls("scale"), 1);
+    });
+
     test("value method sets the value of both editors", 2, function() {
         var editor = createEditor();
         var value = "test";
