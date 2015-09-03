@@ -50,11 +50,19 @@
 
             cellInput.hide();
 
-            if (cellInput.value() !== this._value) {
+            if (cellInput.value() != this._value) {
                 this.trigger("change", { value: cellInput.value() });
             }
 
             this.trigger("deactivate");
+        },
+
+        barElement: function() {
+            return this.barInput.element;
+        },
+
+        cellElement: function() {
+            return this.cellInput.element;
         },
 
         focus: function(inputType) {

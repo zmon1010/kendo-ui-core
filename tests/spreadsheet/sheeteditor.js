@@ -225,4 +225,16 @@
 
         ok(!editor.isActive());
     });
+
+    test("cellElement retuns cell formulaInput html element", function() {
+        var editor = createEditor();
+
+        equal(editor.cellElement(), editor.cellInput.element);
+    });
+
+    test("barElement retuns bar formulaInput html element", function() {
+        var editor = createEditor();
+
+        equal(editor.barElement(), editor.barInput.element);
+    });
 })();
