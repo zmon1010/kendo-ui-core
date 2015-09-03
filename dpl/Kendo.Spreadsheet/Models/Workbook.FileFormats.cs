@@ -4,7 +4,7 @@ using Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.Xlsx;
 
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 
-namespace Kendo.Spreadsheet
+namespace Telerik.Web.Spreadsheet
 {
     public partial class Workbook
     {

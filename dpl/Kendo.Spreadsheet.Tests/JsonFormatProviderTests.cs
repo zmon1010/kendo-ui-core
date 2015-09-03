@@ -10,7 +10,7 @@ using Xunit;
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 using DocumentWorksheet = Telerik.Windows.Documents.Spreadsheet.Model.Worksheet;
 
-namespace Kendo.Spreadsheet.Tests
+namespace Telerik.Web.Spreadsheet.Tests
 {
     public class JsonFormatProviderTests
     {

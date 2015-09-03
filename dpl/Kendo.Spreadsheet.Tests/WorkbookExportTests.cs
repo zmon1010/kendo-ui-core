@@ -10,7 +10,7 @@ using Xunit;
 using Telerik.Windows.Documents.Spreadsheet.Model;
 using Telerik.Windows.Documents.Spreadsheet.Utilities;
 
-namespace Kendo.Spreadsheet.Tests
+namespace Telerik.Web.Spreadsheet.Tests
 {
     public class WorkbookExportTests
     {

@@ -1,7 +1,7 @@
 ﻿using Telerik.Windows.Documents.Spreadsheet.Model;
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 
-namespace Kendo.Spreadsheet.Tests
+namespace Telerik.Web.Spreadsheet.Tests
 {
     static class TestHelper
     {

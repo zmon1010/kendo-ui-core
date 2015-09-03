@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Kendo.Spreadsheet
+namespace Telerik.Web.Spreadsheet
 {
     /// <summary>
     /// Represents a Cell
@@ -20,6 +20,18 @@ namespace Kendo.Spreadsheet
         /// </summary>
         [DataMember(Name = "borderBottom", EmitDefaultValue = false)]
         public BorderStyle BorderBottom { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember(Name = "borderLeft", EmitDefaultValue = false)]
+        public BorderStyle BorderLeft { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember(Name = "borderTop", EmitDefaultValue = false)]
+        public BorderStyle BorderTop { get; set; }
 
         /// <summary>
         /// 

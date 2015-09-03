@@ -12,7 +12,7 @@ using Telerik.Windows.Documents.Spreadsheet.Utilities;
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 using DocumentWorksheet = Telerik.Windows.Documents.Spreadsheet.Model.Worksheet;
 
-namespace Kendo.Spreadsheet
+namespace Telerik.Web.Spreadsheet
 {
     public partial class Workbook
     {

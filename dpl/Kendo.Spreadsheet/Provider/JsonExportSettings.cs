@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kendo.Spreadsheet
+namespace Telerik.Web.Spreadsheet
 {
     /// <summary>
     /// Represents the settings used for JSON Export

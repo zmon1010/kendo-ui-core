@@ -9,7 +9,7 @@ using Telerik.Windows.Documents.Spreadsheet.FormatProviders;
 
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 
-namespace Kendo.Spreadsheet
+namespace Telerik.Web.Spreadsheet
 {
     /// <summary>
     /// A format provider that converts JSON streams to Telerik DPL Workbooks and vice versa

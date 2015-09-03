@@ -1,7 +1,7 @@
 ﻿using Telerik.Windows.Documents.Spreadsheet.Model;
 using Telerik.Windows.Documents.Spreadsheet.Utilities;
 
-namespace Kendo.Spreadsheet
+namespace Telerik.Web.Spreadsheet
 {
     /// <summary>
     /// Extensions for the Cells class
