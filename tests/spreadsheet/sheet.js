@@ -356,6 +356,17 @@
         equal(sheet.frozenColumns(), 3);
     });
 
+    test("insertColumn into a merged cells range expands the merged cells", function() {
+        sheet.range("A1:C3").merge();
+
+        sheet.insertColumn(1);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "A1:D3");
+    });
+
     test("insertColumn frozen column expands frozen columns pane", function() {
         sheet.frozenColumns(3);
 

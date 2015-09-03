@@ -270,6 +270,14 @@
                     this.frozenColumns(frozenColumns + 1);
                 }
 
+                var mergedCells = this._mergedCells.slice(0);
+
+                var insertedColumn = new RangeRef(new CellRef(0, columnIndex), new CellRef(rowCount, columnIndex));
+
+                insertedColumn.intersecting(mergedCells).forEach(function(ref) {
+                    ref.bottomRight.col = ref.bottomRight.col + 1;
+                });
+
                 for (var ci = columnCount; ci >= columnIndex; ci--) {
                     var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
 
@@ -289,6 +297,8 @@
 
                     this._copyRange(nextRef, topLeft);
                 }
+
+                this._mergedCells = mergedCells;
 
                 this._adjustFormulas("col", columnIndex, 1);
             }, { recalc: true, layout: true });
