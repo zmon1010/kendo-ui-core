@@ -110,21 +110,6 @@ var __meta__ = { // jshint ignore:line
         return name;
     }
 
-    function parentName(tuple, level) {
-        var member = tuple.members[level];
-        var parentNameValue = buildPath(tuple, level - 1);
-
-        if (member.parentName) {
-            parentNameValue.push(member.parentName);
-        }
-
-        if (!parentNameValue.length) {
-            parentNameValue = "";
-        }
-
-        return kendo.stringify(parentNameValue);
-    }
-
     function accumulateMembers(accumulator, rootTuple, tuple, level) {
         var idx, length;
         var children;
@@ -245,90 +230,6 @@ var __meta__ = { // jshint ignore:line
         }
 
         return members;
-    }
-
-    function addDataCellVertical(result, rowIndex, map, key, resultFuncs, formats, offset) {
-        var value, aggregate, columnKey, resultFunc, format, measuresCount = 0;
-
-        var start = rowIndex;
-
-        for (aggregate in map[key].aggregates) {
-            value = map[key].aggregates[aggregate];
-            resultFunc = resultFuncs[aggregate];
-            format = formats[aggregate];
-
-            value = resultFunc ? resultFunc(value) : value.accumulator;
-
-            result[start] = {
-                ordinal: start,
-                value: value,
-                fmtValue: format ? kendo.format(format, value) : value
-            };
-            ++measuresCount;
-            start += offset;
-        }
-
-        var items = map[key].items;
-
-        for (columnKey in items) {
-            var index = items[columnKey].index * measuresCount;
-
-            index = start + index*offset;
-
-            for (aggregate in items[columnKey].aggregates) {
-                value = items[columnKey].aggregates[aggregate];
-                resultFunc = resultFuncs[aggregate];
-                format = formats[aggregate];
-
-                value = resultFunc ? resultFunc(value) : value.accumulator;
-
-                result[index] = {
-                    ordinal: index,
-                    value: value,
-                    fmtValue: format ? kendo.format(format, value) : value
-                };
-                index += offset;
-            }
-        }
-    }
-
-    function addDataCell(result, rowIndex, map, key, resultFuncs, formats) {
-        var value, aggregate, columnKey, resultFunc, format, measuresCount = 0;
-
-        for (aggregate in map[key].aggregates) {
-            value = map[key].aggregates[aggregate];
-            resultFunc = resultFuncs[aggregate];
-            format = formats[aggregate];
-
-            value = resultFunc ? resultFunc(value) : value.accumulator;
-
-            result[result.length] = {
-                ordinal: rowIndex++,
-                value: value,
-                fmtValue: format ? kendo.format(format, value) : value
-            };
-            ++measuresCount;
-        }
-
-        var items = map[key].items;
-
-        for (columnKey in items) {
-            var index = items[columnKey].index * measuresCount;
-
-            for (aggregate in items[columnKey].aggregates) {
-                value = items[columnKey].aggregates[aggregate];
-                resultFunc = resultFuncs[aggregate];
-                format = formats[aggregate];
-
-                value = resultFunc ? resultFunc(value) : value.accumulator;
-
-                result[result.length] = {
-                    ordinal: rowIndex + index++,
-                    value: value,
-                    fmtValue: format ? kendo.format(format, value) : value
-                };
-            }
-        }
     }
 
     function createAggregateGetter(m) {
@@ -2183,7 +2084,6 @@ var __meta__ = { // jshint ignore:line
     function adjustDataByRow(sourceTuples, targetTuples, columnsLength, measures, data) {
         var columnIdx, rowIdx, dataIdx;
         var rowsLength = sourceTuples.length;
-        var targetRowsLength = membersCount(targetTuples, measures);
         var measuresLength = measures.length || 1;
 
         for (rowIdx = 0; rowIdx < rowsLength; rowIdx++) {
@@ -2208,7 +2108,7 @@ var __meta__ = { // jshint ignore:line
 
         var queue = tuples.slice();
         var current = queue.shift();
-        var idx, length, result = 1;
+        var result = 1;
 
         while (current) {
             if (current.members) {
@@ -2333,7 +2233,6 @@ var __meta__ = { // jshint ignore:line
     function equalTuples(first, second) {
         var equal = true;
         var idx, length;
-        var name;
 
         first = first.members;
         second = second.members;
@@ -2523,7 +2422,7 @@ var __meta__ = { // jshint ignore:line
         return result;
     }
 
-    function prepareDataOnColumns(tuples, data, rootAdded) {
+    function prepareDataOnColumns(tuples, data) {
         if (!tuples || !tuples.length) {
             return data;
         }
@@ -2645,24 +2544,12 @@ var __meta__ = { // jshint ignore:line
 
     function crossJoinCommand(members, measures) {
         var tmp = members.slice(0);
-        var names;
 
         if (measures.length > 1) {
             tmp.push("{" + measureNames(measures).join(",") + "}");
         }
+
         return crossJoin(tmp);
-    }
-
-    function expandedMembers(members) {
-        var result = [];
-
-        for (var idx = 0; idx < members.length; idx++) {
-            if (members[idx].expand) {
-                result.push(members[idx]);
-            }
-        }
-
-        return result;
     }
 
     function measureNames(measures) {
@@ -2912,7 +2799,7 @@ var __meta__ = { // jshint ignore:line
     };
 
     var convertersMap = {
-        read: function(options, type) {
+        read: function(options) {
             var command = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/"><Header/><Body><Execute xmlns="urn:schemas-microsoft-com:xml-analysis"><Command><Statement>';
 
             command += "SELECT NON EMPTY {";
@@ -2970,7 +2857,7 @@ var __meta__ = { // jshint ignore:line
             command += '</Statement></Command><Properties><PropertyList><Catalog>' + options.connection.catalog + '</Catalog><Format>Multidimensional</Format></PropertyList></Properties></Execute></Body></Envelope>';
             return command.replace(/\&/g, "&amp;");
         },
-        discover: function(options, type) {
+        discover: function(options) {
             options = options || {};
 
             var command = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/"><Header/><Body><Discover xmlns="urn:schemas-microsoft-com:xml-analysis">';
@@ -3470,7 +3357,6 @@ var __meta__ = { // jshint ignore:line
         add: function(name) {
             var items = this.dataSource[this.options.setting]();
             var i, l;
-            var idx;
 
             name = $.isArray(name) ? name.slice(0) : [name];
 
@@ -3915,9 +3801,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         _resize: function() {
-            var columnTable = this.columnsHeader.children("table");
-            var contentTable = this.content.children("table");
-
             if (this.content[0].firstChild) {
                 this._setSectionsWidth();
                 this._setSectionsHeight();
@@ -4142,7 +4025,6 @@ var __meta__ = { // jshint ignore:line
 
     var element = kendo.dom.element;
     var htmlNode = kendo.dom.html;
-    var text = kendo.dom.text;
 
     var createMetadata = function(levelNum, memberIdx) {
        return {
@@ -4179,7 +4061,7 @@ var __meta__ = { // jshint ignore:line
     };
 
     var ColumnBuilder = Class.extend({
-        init: function(options) {
+        init: function() {
             this.measures = 1;
             this.metadata = {};
         },
@@ -4503,7 +4385,7 @@ var __meta__ = { // jshint ignore:line
     });
 
     var RowBuilder = Class.extend({
-        init: function(options) {
+        init: function() {
             this.metadata = {};
         },
 
