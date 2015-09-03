@@ -293,14 +293,14 @@
                 menu = this.cellContextMenu;
             } else if (object.type == "columnheader") {
                 menu = this.colHeaderContextMenu;
-                showUnhide = this.axisManager.selectionIncludesHiddenColumns();
+                showUnhide = !isComposite && this.axisManager.selectionIncludesHiddenColumns();
             } else if (object.type == "rowheader") {
                 menu = this.rowHeaderContextMenu;
-                showUnhide = this.axisManager.selectionIncludesHiddenRows();
+                showUnhide = !isComposite && this.axisManager.selectionIncludesHiddenRows();
             }
 
             menu.element.find(COMPOSITE_UNAVAILABLE_ACTION_SELECTORS).toggle(!isComposite);
-            menu.element.find(UNHIDE_ACTION_SELECTORS).toggle(!isComposite && showUnhide);
+            menu.element.find(UNHIDE_ACTION_SELECTORS).toggle(showUnhide);
 
             // avoid the immediate close
             setTimeout(function() {
