@@ -3648,6 +3648,15 @@
                 });
             });
 
+            test("passes pointIndex as parameter", function() {
+                renderLegendItem({
+                    pointIndex: 3,
+                    visual: function(e) {
+                        deepEqual(e.pointIndex, 3);
+                    }
+                });
+            });
+
             test("passes options", function() {
                 renderLegendItem({
                     visual: function(e) {

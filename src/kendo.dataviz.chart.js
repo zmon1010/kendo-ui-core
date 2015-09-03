@@ -1928,6 +1928,7 @@ var __meta__ = { // jshint ignore:line
                 that.visual = customVisual({
                     active: options.active,
                     series: options.series,
+                    pointIndex: options.pointIndex,
                     options: {
                         markers: that.markerOptions(),
                         labels: options.labels
