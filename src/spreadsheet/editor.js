@@ -26,10 +26,6 @@
             "change"
         ],
 
-        //TODO:
-        //cellInputElement()
-        //barInputElement()
-
         activate: function(rect) {
             this._active = true;
 
