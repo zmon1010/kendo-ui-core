@@ -36,3 +36,11 @@
     - :name: sheets.rows.cells.borderRight
       :merge: true
       :type: BorderStyle
+
+    - :name: sheets.rows.cells.borderLeft
+      :merge: true
+      :type: BorderStyle
+
+    - :name: sheets.rows.cells.borderTop
+      :merge: true
+      :type: BorderStyle
