@@ -26,10 +26,15 @@
             "change"
         ],
 
+        //TODO:
+        //cellInputElement()
+        //barInputElement()
+
         activate: function(rect) {
             this._active = true;
 
             this.position(rect);
+            this.cellInput.resize(rect);
 
             this.trigger("activate");
         },

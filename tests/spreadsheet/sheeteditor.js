@@ -34,6 +34,20 @@
         equal(editor.cellInput.args("position")[0], rect);
     });
 
+    test("activate method calls cell formulaInput resize method", 2, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+
+        stub(editor.cellInput, {
+            resize: editor.cellInput.resize
+        });
+
+        editor.activate(rect);
+
+        equal(editor.cellInput.calls("resize"), 1);
+        equal(editor.cellInput.args("resize")[0], rect);
+    });
+
     test("activate method triggers active", 1, function() {
         var editor = createEditor();
 
