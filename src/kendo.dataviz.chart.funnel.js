@@ -377,8 +377,36 @@ var __meta__ = { // jshint ignore:line
         },
 
         createVisual: function() {
+            var segment = this;
+            var options = segment.options;
+            var border = options.border;
+            var visual;
+
             ChartElement.fn.createVisual.call(this);
 
+            if (options.visual) {
+                visual = options.visual({
+                    category: segment.category,
+                    dataItem: segment.dataItem,
+                    value: segment.value,
+                    series: segment.series,
+                    percentage: segment.percentage,
+                    points: segment.points,
+                    options: options,
+                    createVisual: function() {
+                        return segment.createPath();
+                    }
+                });
+            } else {
+                visual = segment.createPath();
+            }
+
+            if (visual)  {
+                this.visual.append(visual);
+            }
+        },
+
+        createPath: function() {
             var options = this.options;
             var border = options.border;
             var path = draw.Path.fromPoints(this.points, {
@@ -393,7 +421,7 @@ var __meta__ = { // jshint ignore:line
                 }
             }).close();
 
-            this.visual.append(path);
+            return path;
         },
 
         createHighlight: function(style) {

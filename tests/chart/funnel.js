@@ -847,7 +847,10 @@
         var VALUE = 1,
             Point = kendo.geometry.Point,
             draw = kendo.drawing,
-            segment, box, root;
+            segment, box, root,
+            CATEGORY = "A",
+            PERCENTAGE = 0.5,
+            SERIES_NAME = "series";
 
         function createFunnelSegment(options, index) {
            segment = new dataviz.FunnelSegment(
@@ -856,6 +859,11 @@
                     index: index || 0
                 }
             );
+
+            segment.percentage = PERCENTAGE;
+            segment.category = CATEGORY;
+            segment.series = { name: SERIES_NAME };
+            segment.dataItem = { value: VALUE };
             segment.points = [new Point(0, 0), new Point(100, 0), new Point(100, 100), new Point(0, 100)];
 
             box = new Box2D(0, 0, 100, 100);
@@ -886,6 +894,69 @@
             deepEqual(result.options, segment.options);
             sameLinePath(segment.visual.children[0], result.path);
         });
+
+    (function() {
+        var draw = kendo.drawing;
+
+        // ------------------------------------------------------------
+        module("Funnel Segment / custom visual");
+
+        test("adds custom visual", function() {
+            var visual;
+            createFunnelSegment({
+                visual: function(e) {
+                    visual = new draw.Path();
+                    return visual;
+                }
+            });
+            equal(segment.visual.children.length, 1);
+            ok(segment.visual.children[0] === visual);
+        });
+
+        test("doesn't add visual  if custom visual function returns undefined", function() {
+            createFunnelSegment({
+                visual: $.noop
+            });
+            equal(segment.visual.children.length, 0);
+        });
+
+        test("passes options to custom visual function", function() {
+            createFunnelSegment({
+                visual: function(e) {
+                   deepEqual(segment.options, e.options);
+                }
+            });
+        });
+
+        test("passes category, dataItem, value, series and percentage to custom visual function", function() {
+            createFunnelSegment({
+                visual: function(e) {
+                   equal(segment.category, CATEGORY);
+                   equal(segment.dataItem.value, VALUE);
+                   equal(segment.value, VALUE);
+                   equal(e.series.name, SERIES_NAME);
+                   equal(e.percentage, PERCENTAGE);
+                }
+            });
+        });
+
+        test("passes points to custom visual function", function() {
+            createFunnelSegment({
+                visual: function(e) {
+                   deepEqual(e.points, segment.points);
+                }
+            });
+        });
+
+        test("createVisual creates default visual", function() {
+            createFunnelSegment({
+                visual: function(e) {
+                   ok(e.createVisual() instanceof draw.Path);
+                }
+            });
+        });
+
+    })();
 
     })();
 

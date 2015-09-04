@@ -7366,6 +7366,45 @@ var __meta__ = { // jshint ignore:line
         createVisual: function() {
             var segment = this,
                 sector = segment.sector,
+                options = segment.options;
+
+            ChartElement.fn.createVisual.call(this);
+
+            if (segment.value) {
+                if (options.visual) {
+                    var startAngle = (sector.startAngle + 180) % 360;
+                    var visual = options.visual({
+                        category: segment.category,
+                        dataItem: segment.dataItem,
+                        value: segment.value,
+                        series: segment.series,
+                        percentage: segment.percentage,
+                        center: new geom.Point(sector.c.x, sector.c.y),
+                        radius: sector.r,
+                        innerRadius: sector.ir,
+                        startAngle: startAngle,
+                        endAngle: startAngle + sector.angle,
+                        options: options,
+                        createVisual: function() {
+                            var group = new draw.Group();
+                            segment.createSegmentVisual(group);
+
+                            return group;
+                        }
+                    });
+
+                    if (visual) {
+                        segment.visual.append(visual);
+                    }
+                } else {
+                    segment.createSegmentVisual(segment.visual);
+                }
+            }
+        },
+
+        createSegmentVisual: function(group) {
+            var segment = this,
+                sector = segment.sector,
                 options = segment.options,
                 borderOptions = options.border || {},
                 border = borderOptions.width > 0 ? {
@@ -7383,30 +7422,27 @@ var __meta__ = { // jshint ignore:line
                 },
                 visual;
 
-            ChartElement.fn.createVisual.call(this);
-            if (segment.value) {
-                visual = segment.createSegment(sector, deepExtend({
-                    fill: fill,
-                    stroke: {
-                        opacity: options.opacity
-                    },
-                    zIndex: options.zIndex
-                }, border));
+            visual = segment.createSegment(sector, deepExtend({
+                fill: fill,
+                stroke: {
+                    opacity: options.opacity
+                },
+                zIndex: options.zIndex
+            }, border));
 
-                this.visual.append(visual);
+            group.append(visual);
 
-                if (hasGradientOverlay(options)) {
-                    this.visual.append(this.createGradientOverlay(visual, {
-                            baseColor: color,
-                            fallbackFill: fill
-                        }, deepExtend({
-                            center: [sector.c.x, sector.c.y],
-                            innerRadius: sector.ir,
-                            radius: sector.r,
-                            userSpace: true
-                        }, options.overlay)
-                    ));
-                }
+            if (hasGradientOverlay(options)) {
+                group.append(this.createGradientOverlay(visual, {
+                        baseColor: color,
+                        fallbackFill: fill
+                    }, deepExtend({
+                        center: [sector.c.x, sector.c.y],
+                        innerRadius: sector.ir,
+                        radius: sector.r,
+                        userSpace: true
+                    }, options.overlay)
+                ));
             }
         },
 

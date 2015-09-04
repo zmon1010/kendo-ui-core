@@ -425,6 +425,7 @@
             sector,
             VALUE = 1,
             CATEGORY = "A",
+            PERCENTAGE = 0.5,
             segment,
             view,
             SERIES_NAME = "series";
@@ -436,6 +437,9 @@
                 options
             );
 
+            segment.percentage = PERCENTAGE;
+            segment.category = CATEGORY;
+            segment.series = { name: SERIES_NAME };
             segment.dataItem = { value: VALUE };
 
             box = new Box2D(0, 0, 100, 100);
@@ -487,6 +491,75 @@
             createSegment({ overlay: null });
             equal(segment.visual.children.length, 1);
         });
+
+        (function() {
+            // ------------------------------------------------------------
+            module("Pie Segment / custom visual");
+
+            test("adds custom visual", function() {
+                var visual;
+                createSegment({
+                    visual: function(e) {
+                        visual = new draw.Path();
+                        return visual;
+                    }
+                });
+                equal(segment.visual.children.length, 1);
+                ok(segment.visual.children[0] === visual);
+            });
+
+            test("doesn't add visual  if custom visual function returns undefined", function() {
+                createSegment({
+                    visual: $.noop
+                });
+                equal(segment.visual.children.length, 0);
+            });
+
+            test("passes options to custom visual function", function() {
+                createSegment({
+                    visual: function(e) {
+                       deepEqual(segment.options, e.options);
+                    }
+                });
+            });
+
+            test("passes category, dataItem, value, series and percentage to custom visual function", function() {
+                createSegment({
+                    visual: function(e) {
+                       equal(segment.category, CATEGORY);
+                       equal(segment.dataItem.value, VALUE);
+                       equal(segment.value, VALUE);
+                       equal(e.series.name, SERIES_NAME);
+                       equal(e.percentage, PERCENTAGE);
+                    }
+                });
+            });
+
+            test("passes radius, startAngle, endAngle and center to custom visual function", function() {
+                createSegment({
+                    visual: function(e) {
+                       var startAngle = (segment.sector.startAngle + 180) % 360;
+                       equal(e.radius, segment.sector.r);
+                       equal(e.startAngle, startAngle);
+                       equal(e.endAngle, startAngle + segment.sector.angle);
+                       equal(e.center.x, segment.sector.c.x);
+                       equal(e.center.y, segment.sector.c.y);
+                    }
+                });
+            });
+
+            test("createVisual creates default visual", function() {
+                createSegment({
+                    visual: function(e) {
+                       var defaultVisual = e.createVisual();
+                       ok(defaultVisual instanceof draw.Group);
+                       ok(defaultVisual.children[0] instanceof draw.Path);
+                       ok(defaultVisual.children[1] instanceof draw.Path);
+                    }
+                });
+            });
+
+        })();
 
         // ------------------------------------------------------------
         module("Pie Segment / Highlight", {
