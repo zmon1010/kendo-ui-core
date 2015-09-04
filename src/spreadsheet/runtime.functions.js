@@ -1879,24 +1879,17 @@
     ]);
 
     defineFunction("mmult", function(a, b){
-        var error = a.each(function(val){
-            if (typeof val != "number") {
-                return new CalcError("VALUE");
-            }
-        }, true) || b.each(function(val){
-            if (typeof val != "number") {
-                return new CalcError("VALUE");
-            }
-        }, true);
-        if (error) {
-            return error;
-        }
         var m = new Matrix(this);
         for (var row = 0; row < a.height; ++row) {
             for (var col = 0; col < b.width; ++col) {
                 var s = 0;
                 for (var i = 0; i < a.width; ++i) {
-                    s += a.get(row, i) * b.get(i, col);
+                    var va = a.get(row, i);
+                    var vb = b.get(i, col);
+                    if (typeof va != "number" || typeof vb != "number") {
+                        throw new CalcError("VALUE");
+                    }
+                    s += va * vb;
                 }
                 m.set(row, col, s);
             }
