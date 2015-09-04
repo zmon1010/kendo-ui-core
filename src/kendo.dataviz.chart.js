@@ -3429,7 +3429,7 @@ var __meta__ = { // jshint ignore:line
 
             var bbox = element.bbox();
             if (bbox) {
-
+                this.origin = options.origin;
                 var axis = options.vertical ? Y : X;
 
                 var fromScale = this.fromScale = new geom.Point(1, 1);
