@@ -55,6 +55,7 @@ var __meta__ = { // jshint ignore:line
         DEFAULT_WIDTH = 200,
         DEFAULT_MIN_WIDTH = 60,
         DEFAULT_MIN_HEIGHT = 60,
+        DEFAULT_MARGIN = 5,
         DEGREE = math.PI / 180,
         GEO_ARC_ADJUST_ANGLE = 180,
         INSIDE = "inside",
@@ -807,6 +808,8 @@ var __meta__ = { // jshint ignore:line
             var border = options.border || {};
             var areaGeometry =  new Rect([0, 0], [size.width, size.height]);
 
+            that._gaugeAreaMargin = options.margin || DEFAULT_MARGIN;
+
             if (border.width > 0) {
                 areaGeometry = _unpad(areaGeometry, border.width);
             }
@@ -885,10 +888,11 @@ var __meta__ = { // jshint ignore:line
         reflow: function(bbox) {
             var that = this;
             var pointers = that.pointers;
-            var scaleElements = that.scale.reflow(bbox);
+            that.scale.reflow(bbox);
             that._initialPlotArea = that.scale.bbox;
 
             for (var i = 0; i < pointers.length; i++) {
+                pointers[i].reflow(that.scale.arc);
                 that._initialPlotArea = Rect.union(that._initialPlotArea, pointers[i].bbox);
             }
 
