@@ -151,4 +151,80 @@
         equal(spreadsheet._view.filterMenus[1].popup.options.anchor.data("index"), 1);
     });
 
+    var defaults = kendo.ui.Spreadsheet.prototype.options;
+    var range;
+    var sheet;
+    var filterMenu;
+
+    function createWithValues(values) {
+        range = sheet.range("A1:A3").values(values);
+        return new kendo.spreadsheet.FilterMenu({ range: range });
+    }
+
+    module("filter menu: filter by value", {
+        setup: function() {
+            sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("creates TreeView", function() {
+        filterMenu = createWithValues([ ["A1"], ["A2"], ["A3"] ]);
+        ok(filterMenu.valuesTreeView instanceof kendo.ui.TreeView);
+    });
+
+    test("loads range values in TreeView", function() {
+        filterMenu = createWithValues([ ["A1"], ["A2"], ["A3"] ]);
+        var data = filterMenu.valuesTreeView.dataSource.data();
+
+        equal(data.length, 1, "has only one 'all' rote node");
+
+        var root = data[0];
+        var children = root.children.data();
+
+        equal(children.length, 3, "values are listed under the root node");
+
+        equal(children[0].text, "A1");
+        equal(children[1].text, "A2");
+        equal(children[2].text, "A3");
+    });
+
+    test("gets only distinct values", function() {
+        filterMenu = createWithValues([ ["A1"], ["A2"], ["A1"] ]);
+
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values.length, 2, "distinct values are loaded");
+
+        equal(values[0].text, "A1");
+        equal(values[1].text, "A2");
+    });
+
+    test("gets empty values", function() {
+        filterMenu = createWithValues([ ["A1"], ["A1"] ]);
+
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values[0].text, "A1");
+        equal(values[1].text, "(Blanks)");
+    });
+
+/*
+    test("recognizes the dataType of a value", function() {
+        sheet.range("A1").value("A1");
+        sheet.range("A2").value("'123").format("c");
+        sheet.range("A3").value(new Date(2015,1,1)).format("dd/mm/yyyy");
+
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A3") });
+
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values[0].dataType, "string");
+        equal(values[1].dataType, "number");
+        equal(values[1].dataType, "date");
+    });
+*/
+
 })();

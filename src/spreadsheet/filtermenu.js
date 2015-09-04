@@ -35,8 +35,8 @@
             var result = [];
 
             for (var i = 0; i < values.length; i++) {
-                if (!hash[values[i]]) {
-                    hash[values[i]] = true;
+                if (!hash[values[i].value]) {
+                    hash[values[i].value] = true;
                     result.push(values[i]);
                 }
             }
@@ -78,15 +78,38 @@
             },
 
             getValues: function() {
-                var values = distinctValues(flatternValues(this.options.range.values()));
+                var values = [];
+
+                this.options.range.forEachCell(function(row, col, cell) {
+                    var formatter;
+
+                    if (cell.value !== null && cell.format) {
+                        cell.dataType = kendo.spreadsheet.formatting.type(cell.value, cell.format);
+                    } else if (cell.value !== null) {
+                        cell.dataType = "string";
+                    }
+
+                    if (cell.value !== null && cell.format) {
+                        formatter = kendo.spreadsheet.formatting.compile(cell.format);
+                        cell.text = formatter(cell.value).text();
+                    } else {
+                        cell.text = cell.value ? cell.value : "(Blanks)";
+                    }
+
+                    if (cell.dataType === "date") {
+                        cell.value = kendo.spreadsheet.numberToDate(cell.value);
+                    }
+
+                    values.push(cell);
+                });
+
+                var values = distinctValues(values);
 
                 return [{
                     text: "all",
                     expanded: true,
                     checked: true,
-                    items: values.map(function(item) {
-                        return { text: item }
-                    }) 
+                    items: values
                 }];
             },
 
