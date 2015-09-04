@@ -806,16 +806,18 @@ var __meta__ = { // jshint ignore:line
         return options;
     }
 
+    /*
     function fieldType(field) {
         field = field != null ? field : "";
         return field.type || $.type(field) || "string";
     }
+    */
 
     function createValidationAttributes(model, field) {
         var modelField = (model.fields || model)[field];
         var specialRules = ["url", "email", "number", "date", "boolean"];
         var validation = modelField ? modelField.validation : {};
-        var type = fieldType(modelField);
+        // var type = fieldType(modelField);
         var datatype = kendo.attr("type");
         var inArray = $.inArray;
         var ruleName;
