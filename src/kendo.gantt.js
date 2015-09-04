@@ -460,7 +460,7 @@ var __meta__ = { // jshint ignore:line
 
     var createDataSource = function(type, name) {
         return function(options) {
-            options = isArray(dataSource) ? { data: options } : options;
+            options = isArray(options) ? { data: options } : options;
 
             var dataSource = options || {};
             var data = dataSource.data;
