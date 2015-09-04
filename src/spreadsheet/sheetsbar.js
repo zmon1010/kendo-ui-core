@@ -9,6 +9,7 @@
             sheetsBarActive: "k-spreadsheet-sheets-bar-active",
             sheetsBarInactive: "k-spreadsheet-sheets-bar-inactive",
             sheetsBarAdd: "k-spreadsheet-sheets-bar-add",
+            sheetsBarRemove: "k-spreadsheet-sheets-remove",
             sheetsBarItems: "k-spreadsheet-sheets-items",
             sheetsBarEditor: "k-spreadsheet-sheets-editor"
         };
@@ -28,6 +29,8 @@
                 this._sortable.bind("start", this._onSheetReorderStart.bind(this));
 
                 this._sortable.bind("end", this._onSheetReorderEnd.bind(this));
+
+                element.on("click", DOT + sheetsBarClassNames.sheetsBarRemove, this._onSheetRemove.bind(this));
 
                 element.on("click", "li", this._onSheetSelect.bind(this));
 
@@ -93,22 +96,31 @@
                     var sheet = this._sheets[idx];
                     var isSelectedSheet = (idx === selectedIndex);
                     var args = isSelectedSheet ? { className: sheetsBarClassNames.sheetsBarActive } : { className: sheetsBarClassNames.sheetsBarInactive };
-                    var elementContent;
+                    var elementContent = [];
 
                     if (isSelectedSheet && isInEditMode) {
-                        elementContent = element("input", {
+                        elementContent.push(element("input", {
                             type: "text",
                             value: sheet.name(),
                             className: "k-textbox " + sheetsBarClassNames.sheetsBarEditor,
                             maxlength: 50
-                        }, []);
+                        }, []));
                     } else {
-                        elementContent = element("span", {
+                        elementContent.push(element("span", {
                             title: sheet.name()
-                        }, [dom.text(sheet.name())]);
+                        }, [dom.text(sheet.name())]));
+
+                        var deleteIcon = element("span", {
+                            className: "k-icon k-si-close"
+                        }, []);
+
+                        elementContent.push(element("a", {
+                            href: "#",
+                            className: "k-link " + sheetsBarClassNames.sheetsBarRemove
+                        }, [deleteIcon]));
                     }
 
-                    sheetElements.push(element("li", args, [elementContent]));
+                    sheetElements.push(element("li", args, elementContent));
                 }
 
                 this._tree.render([this._addButton(),  this._sheetsWrapper(sheetElements)]);
@@ -160,10 +172,21 @@
                 }
             },
 
+            _onSheetRemove: function(e) {
+                var removedSheetName = $(e.target).closest("li").text();
+
+                if (this._editor) {
+                    this._destroyEditor();
+                    this._onSheetRename(this._editor.val());
+                }
+
+                this.trigger("remove", {name: removedSheetName});
+            },
+
             _onSheetSelect: function(e) {
                 var selectedSheetText = $(e.target).text();
 
-                if ($(e.target).is(DOT + sheetsBarClassNames.sheetsBarEditor)) {
+                if ($(e.target).is(DOT + sheetsBarClassNames.sheetsBarEditor) || !selectedSheetText) {
                     e.preventDefault();
                     return;
                 }

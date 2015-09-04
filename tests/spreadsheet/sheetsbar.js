@@ -260,4 +260,33 @@
 
         ok(!bar._editor);
     });
+
+    test("delete button is rendered", function() {
+        var name = "Sheet1";
+        var sheets = [
+            {name: function() {return name}}
+        ];
+
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+
+        equal(element.find(".k-spreadsheet-sheets-remove").length, 1);
+    });
+
+    test("delete trigger remove on click", function() {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var sheets = [
+            {name: function() {return name}},
+            {name: function() {return name2}}
+        ];
+
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+        sheetsBar.bind("remove", function () {
+            ok(true);
+        });
+
+        element.find(".k-spreadsheet-sheets-remove").trigger("click");
+    });
 })();

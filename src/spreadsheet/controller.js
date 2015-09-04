@@ -124,6 +124,7 @@
             view.sheetsbar.bind("select", this.onSheetBarSelect.bind(this));
             view.sheetsbar.bind("reorder", this.onSheetBarReorder.bind(this));
             view.sheetsbar.bind("rename", this.onSheetBarRename.bind(this));
+            view.sheetsbar.bind("remove", this.onSheetBarRemove.bind(this));
 
             this.cellContextMenu.bind("select", this.onContextMenuSelect.bind(this));
             this.rowHeaderContextMenu.bind("select", this.onContextMenuSelect.bind(this));
@@ -166,6 +167,16 @@
                         this.axisManager.deleteSelectedColumns();
                         break;
                 }
+        },
+
+        onSheetBarRemove: function(e) {
+            var sheet = this._workbook.sheetByName(e.name);
+
+            if (!sheet) {
+                return;
+            }
+
+            this._workbook.removeSheet(sheet);
         },
 
         onSheetBarSelect: function(e) {
