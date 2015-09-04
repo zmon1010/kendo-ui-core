@@ -208,6 +208,18 @@ var __meta__ = { // jshint ignore:line
             this.parentId = this.get(this.parentIdField);
         },
 
+        set: function(field, value, initiator) {
+            if (field == PARENTIDFIELD && this.parentIdField != PARENTIDFIELD) {
+                this[this.parentIdField] = value;
+            }
+
+            Model.fn.set.call(this, field, value, initiator);
+
+            if (field == this.parentIdField) {
+                this.parentId = this.get(this.parentIdField);
+            }
+        },
+
         loaded: function(value) {
             if (value !== undefined) {
                 this._loaded = value;

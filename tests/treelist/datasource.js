@@ -71,6 +71,44 @@
         equal(m.foo, 1);
     });
 
+    test("set parentId updates both parentId and mapped field", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel({ foo: 1 });
+
+        m.set("parentId", 100);
+
+        equal(m.parentId, 100);
+        equal(m.foo, 100);
+    });
+
+    test("set parentId when mapped field is parentId too", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "parentId"
+        });
+
+        var m = new MyModel({ parentId: 1 });
+
+        m.set("parentId", 100);
+
+        equal(m.parentId, 100);
+    });
+
+    test("set mapped parentId field updates both parentId and mapped field", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel({ foo: 1 });
+
+        m.set("foo", 100);
+
+        equal(m.parentId, 100);
+        equal(m.foo, 100);
+    });
+
     test("accept updated the parentId field", function() {
         var m = new TreeListModel({ parentId: 1 });
 
