@@ -47,9 +47,9 @@
         "*+pageup": "onPageUp",
         "*+pagedown": "onPageDown",
         "mouseup": "onMouseUp",
-        "cut": "onCut",
-        "paste": "onPaste",
-        "copy": "onCopy"
+        "*+cut": "onCut",
+        "*+paste": "onPaste",
+        "*+copy": "onCopy"
     };
 
     var EDITOR_EVENTS = {
@@ -146,7 +146,7 @@
                         this.onCopy();
                         break;
                     case "paste":
-                        this.onPaste(e);
+                        this.onPaste();
                         break;
                     case "hide-row":
                         this.axisManager.hideSelectedRows();
@@ -392,22 +392,47 @@
             return this.clipboardElement.html();
         },
 
-
-        onPaste: function(e, action) {
-            e.preventDefault();
+        onPaste: function(e) {
             var html = "";
             var plain = "";
-            if (e && e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
-                if (/text\/html/.test(e.originalEvent.clipboardData.types)) {
-                    html = e.originalEvent.clipboardData.getData('text/html');
+            if(e) {
+                if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
+                    e.preventDefault();
+                    if (/text\/html/.test(e.originalEvent.clipboardData.types)) {
+                        html = e.originalEvent.clipboardData.getData('text/html');
+                    }
+                    if (/text\/plain/.test(e.originalEvent.clipboardData.types)) {
+                        plain = e.originalEvent.clipboardData.getData('text/plain');
+                    }
+                } else {
+                    //workaround for IE's lack of access to the HTML clipboard data
+                    var table = this.clipboardElement.find("table.kendo-clipboard").detach();
+                    this.clipboardElement.empty();
+                    setTimeout(function() {
+                        this.clipboard.external({html: this.clipboardElement.html(), plain: window.clipboardData.getData("Text")});
+                        this.clipboardElement.empty().append(table);
+                        var command = new kendo.spreadsheet.PasteCommand({ workbook: this.view._workbook });
+                        this.view._workbook.execute(command);
+                    }.bind(this));
+
+                    return;
                 }
-                if (/text\/plain/.test(e.originalEvent.clipboardData.types)) {
-                    plain = e.originalEvent.clipboardData.getData('text/plain');
+
+            } else {
+                if(kendo.support.browser.msie) {
+                    this.clipboardElement.focus().select();
+                    document.execCommand('paste');
+                    return;
+                } else {
+                    alert("todo: add dialog \n use ctrl+v instead");
+                    return;
                 }
             }
+
             this.clipboard.external({html: html, plain:plain});
             var command = new kendo.spreadsheet.PasteCommand({ workbook: this.view._workbook });
             this.view._workbook.execute(command);
+
         },
 
         onCopy: function(event, action) {

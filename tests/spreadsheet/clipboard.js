@@ -14,6 +14,8 @@
         },
         teardown: function() {
             sheet.unbind();
+            kendo.destroy(QUnit.fixture);
+            QUnit.fixture.empty();
         }
     });
 

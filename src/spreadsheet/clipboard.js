@@ -121,7 +121,10 @@
         },
 
         _isInternal: function() {
-            return this._external.html.indexOf('class="kendo-clipboard"') >= 0 ? true : false;
+            if(this._external.html === undefined) {
+                return true;
+            }
+            return $("<div/>").html(this._external.html).find('table.kendo-clipboard').length ? true : false;
         },
 
         _populateCell: function(element) {
