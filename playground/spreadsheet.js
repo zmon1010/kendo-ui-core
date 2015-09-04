@@ -6,7 +6,7 @@ $("#spreadsheet").kendoSpreadsheet({
                 text: "Foo",
                 spriteCssClass: "k-icon k-font-icon k-i-cog",
                 click: function(e) {
-                    alert("custom tool");
+                    window.alert("custom tool");
                 }
             }
         ])
@@ -51,7 +51,7 @@ sheet.range("E15:E20")
     .borderTop({ color: "#000" })
     .borderBottom({ color: "#f00" })
     .borderLeft({ size: "3px", color: "#0f0" })
-    .borderRight({ size: "3px", color: "#00f" })
+    .borderRight({ size: "3px", color: "#00f" });
 
 sheet.frozenColumns(3).frozenRows(6);
 
@@ -99,10 +99,10 @@ $("#clipboard").on("paste", function(e) {
             return value.split(/\s+/);
         });
 
-        console.log(e.target.value, values);
+        window.console.log(e.target.value, values);
 
         spreadsheet.activeSheet().selection().values(values);
-    });;
+    });
 });
 
 var ascending = true;
