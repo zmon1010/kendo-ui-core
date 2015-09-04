@@ -115,7 +115,7 @@
 
         sheet.range("A1:A2").sort();
 
-        equal(sheet.range("A1").formula(), "=1");
+        equal(sheet.range("A1").formula(), "1");
     });
 
     test("descending sort", function() {

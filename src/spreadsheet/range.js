@@ -35,12 +35,7 @@
         _set: function(name, value, parseStrings, recalc) {
             var sheet = this._sheet;
             this._ref.forEach(function(ref) {
-                ref = ref.toRangeRef();
-                // TODO: update this - should be changed to dependant formula
-                if (name == "formula") {
-                    sheet._set(ref, "compiledFormula", null);
-                }
-                sheet._set(ref, name, value, parseStrings);
+                sheet._set(ref.toRangeRef(), name, value, parseStrings);
             });
             sheet.triggerChange({ recalc: name == "formula" || name == "value", value: value, ref: this._ref });
             return this;
@@ -132,32 +127,41 @@
 
         _editableValue: function(value) {
             if (value !== undefined) {
-                if ((/^=/).test(value)) {
-                    this.formula(value);
-                } else {
-                    this._sheet.batch(function() {
-                        this.formula(null);
-                        this.value(value);
-                    }.bind(this), { recalc: true, value: value, ref: this._ref });
+                var tl = this._ref.toRangeRef().topLeft, x;
+                try {
+                    x = kendo.spreadsheet.calc.parse(
+                        this._sheet.name(), tl.row, tl.col, value
+                    );
+                } catch(ex) {
+                    // XXX: error handling
+                    alert("Parse error: " + ex);
+                    x = { type: "string", value: value };
                 }
+                this._sheet.batch(function() {
+                    var formula = null;
+                    if (x.type == "exp") {
+                        formula = kendo.spreadsheet.calc.compile(x);
+                    } else if (x.type == "date") {
+                        this.format(toExcelFormat(kendo.culture().calendar.patterns.d));
+                    }
+                    this.formula(formula);
+                    this.value(x.value, false);
+                }.bind(this), { recalc: true, value: value, ref: this._ref });
 
                 return this;
             } else {
                 value = this._get("value");
-                var type = typeof value;
                 var format = this._get("format");
                 var formula = this._get("formula");
 
                 if (formula) {
-                    value = formula;
+                    // it's a Formula object which stringifies to the
+                    // formula as text (without the starting `=`).
+                    value = "=" + formula;
                 } else if (format && kendo.spreadsheet.formatting.type(value, format) === "date") {
                     value = kendo.toString(kendo.spreadsheet.numberToDate(value), kendo.culture().calendar.patterns.d);
-                } else if (type === "string") {
-                    var parsed = kendo.spreadsheet.Sheet.parse(value, true);
-
-                    if (parsed.type === "number") {
-                        value = "'" + value;
-                    }
+                } else if (typeof value == "string" && (/^=/.test(value) || looksLikeANumber(value))) {
+                    value = "'" + value;
                 }
 
                 return value;
@@ -170,8 +174,7 @@
 
         formula: function(value) {
             if (value === null) {
-                var sheet = this._sheet;
-                sheet.batch(function() {
+                this._sheet.batch(function() {
                     this._property("formula", null);
                     this.value(null);
                 }.bind(this), { recalc: true });
@@ -471,19 +474,8 @@
                     if (property === "_editableValue") {
                         property = "value";
                     }
-                    if (cell.formula) {
-                        if(property == "compiledFormula"){
-                            var index = sheet._grid.index(row,col);
-                            cellState.compiledFormula = sheet.compiledFormula(new CellRef(row, col));
-                            return;
-                        }
-                        if (property === "value") {
-                            return;
-                        }
-                    } else {
-                        if (property === "formula") {
-                            return;
-                        }
+                    if (cell.formula && property == "value") {
+                        return;
                     }
 
                     cellState[property] = cell[property] || null;
@@ -510,11 +502,10 @@
                     var range = sheet.range(row, col);
 
                     for (var property in cellState) {
-                        if (property == "compiledFormula") {
-                            if (cellState.compiledFormula) {
-                                var clone = cellState.compiledFormula.clone(sheetName, row, col);
-                                range.formula("=" + clone.print(row, col));
-                                range._set("compiledFormula", clone, null);
+                        if (property == "formula") {
+                            if (cellState.formula) {
+                                var clone = cellState.formula.clone(sheetName, row, col);
+                                range._set("formula", clone);
                             }
                         } else {
                             range[property](cellState[property]);
@@ -578,9 +569,13 @@
         };
     });
 
-
     function toExcelFormat(format) {
         return format.replace(/M/g, "m").replace(/'/g, '"').replace(/tt/, "am/pm");
+    }
+
+    function looksLikeANumber(str) {
+        // XXX: could do with just a regexp instead of calling parse.
+        return !(/^=/.test(str)) && kendo.spreadsheet.calc.parse(null, 0, 0, str).type == "number";
     }
 
     var measureBox = $('<div style="position: absolute !important; top: -4000px !important; height: auto !important;' +

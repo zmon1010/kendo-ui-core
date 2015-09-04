@@ -128,26 +128,15 @@
         },
 
         _adjustFormulas: function(operation, start, delta) {
-            this._forFormulas(function(formula, index){
+            this._forFormulas(function(formula){
                 formula.adjust(operation, start, delta);
-                var newStr = "=" + formula.print(formula.row, formula.col);
-                this._properties.set("formula", index, newStr);
             });
         },
 
         _forFormulas: function(callback) {
             var props = this._properties;
             props.get("formula").values().forEach(function(f){
-                for (var index = f.start; index <= f.end; ++index) {
-                    var formulaObj = props.get("compiledFormula", index);
-                    if (formulaObj === null) {
-                        var cell = this._grid.cellRef(index);
-                        var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, f.value);
-                        formulaObj = kendo.spreadsheet.calc.compile(x);
-                        props.set("compiledFormula", index, formulaObj);
-                    }
-                    callback.call(this, formulaObj, index);
-                }
+                callback.call(this, f.value);
             }, this);
         },
 
@@ -674,6 +663,11 @@
                     row.cells = [];
                 }
 
+                if (cell.formula) {
+                    // stringify Formula object.
+                    cell.formula = cell.formula.toString();
+                }
+
                 row.cells.push(cell);
             });
 
@@ -752,6 +746,10 @@
                                     columnIndex = ci;
                                 }
 
+                                if (cell.formula) {
+                                    cell.formula = this._compileFormula(rowIndex, columnIndex, cell.formula);
+                                }
+
                                 this._properties.fromJSON(this._grid.index(rowIndex, columnIndex), cell);
                             }
                         }
@@ -785,21 +783,17 @@
             });
         },
 
-        compiledFormula: function(ref) {
-            return this._properties.get("compiledFormula", this._grid.cellRefIndex(ref));
+        formula: function(ref) {
+            return this._properties.get("formula", this._grid.cellRefIndex(ref));
         },
 
         recalc: function(context) {
-            var compiledFormulas = [];
-
-            this._forFormulas(function(formula, cell){
+            this._forFormulas(function(formula){
                 formula.reset();
-                compiledFormulas.push(formula);
             });
-
-            compiledFormulas.forEach(function(formula) {
+            this._forFormulas(function(formula){
                 formula.exec(context);
-            }, this);
+            });
         },
 
         _value: function(row, col, value, parseStrings) {
@@ -812,16 +806,40 @@
             }
         },
 
+        _compileFormula: function(row, col, f) {
+            f = f.replace(/^=/, "");
+            f = kendo.spreadsheet.calc.parseFormula(this._name, row, col, f);
+            return kendo.spreadsheet.calc.compile(f);
+        },
+
         _set: function(ref, name, value, parseStrings) {
             var topLeft = this._grid.normalize(ref.topLeft);
-
             var bottomRight = this._grid.normalize(ref.bottomRight);
+            var ci, start, end;
 
-            for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
-                var start = this._grid.index(topLeft.row, ci);
-                var end = this._grid.index(bottomRight.row, ci);
-
-                this._properties.set(name, start, end, value, parseStrings);
+            if (value && name == "formula") {
+                if (typeof value == "string") {
+                    // get Formula object.  we don't care about handling errors
+                    // here since it won't be called interactively.
+                    value = this._compileFormula(topLeft.row, topLeft.col, value);
+                }
+                for (ci = topLeft.col; ci <= bottomRight.col; ci++) {
+                    start = this._grid.index(topLeft.row, ci);
+                    end = this._grid.index(bottomRight.row, ci);
+                    for (var index = start, row = topLeft.row; index <= end; ++index, ++row) {
+                        // Even if it's the same formula in multiple cells, we
+                        // need to have different Formula objects, hence cloning
+                        // it.  Don't worry, clone() is fast.
+                        value = value.clone(this._name, row, ci);
+                        this._properties.set("formula", index, index, value, false);
+                    }
+                }
+            } else {
+                for (ci = topLeft.col; ci <= bottomRight.col; ci++) {
+                    start = this._grid.index(topLeft.row, ci);
+                    end = this._grid.index(bottomRight.row, ci);
+                    this._properties.set(name, start, end, value, parseStrings);
+                }
             }
         },
 
@@ -936,29 +954,6 @@
             this._properties.setState(state.properties);
         }
     });
-
-    Sheet.parse = function(value, parseStrings) {
-        var type = null;
-
-        if (value !== null) {
-            if (value instanceof Date) {
-                value = kendo.spreadsheet.calc.runtime.dateToSerial(value);
-                type = "date";
-            } else {
-                type = typeof value;
-                if (type === "string" && parseStrings !== false) {
-                    var parseResult = kendo.spreadsheet.calc.parse(null, 0, 0, value);
-                    value = parseResult.value;
-                    type = parseResult.type;
-                }
-            }
-        }
-
-        return {
-            type: type,
-            value: value
-        };
-    };
 
     kendo.spreadsheet.Sheet = Sheet;
 })(kendo);

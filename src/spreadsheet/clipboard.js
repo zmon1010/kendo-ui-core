@@ -133,7 +133,6 @@
             return {
                 value: text === "" ? null : text,
                 format : null,
-                compiledFormula : null,
                 background : styles["background-color"],
                 borderBottom : styles["border-bottom"],
                 borderRight : styles["border-right"],

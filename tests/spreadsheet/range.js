@@ -611,7 +611,7 @@
         var formula = "=SUM(A1:A1)";
         sheet.range("A1")._editableValue(formula);
 
-        equal(sheet.range("A1").formula(), formula);
+        equal("=" + sheet.range("A1").formula(), formula);
     });
 
     test("editableValue sets value", function() {

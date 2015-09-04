@@ -955,6 +955,12 @@
                 };
             }
         }
+        if (input instanceof Date) {
+            return { type: "date", value: runtime.dateToSerial(input) };
+        }
+        if (typeof input == "number") {
+            return { type: "number", value: input };
+        }
         if (input.toLowerCase() == "true") {
             return { type: "boolean", value: true };
         }
@@ -963,10 +969,7 @@
         }
         var date = kendo.parseDate(input);
         if (date) {
-            return {
-                type: "date",
-                value: runtime.dateToSerial(date)
-            };
+            return { type: "date", value: runtime.dateToSerial(date) };
         }
         var num = parseFloat(input);
         if (!isNaN(num) && input.length > 0 && num == input) {

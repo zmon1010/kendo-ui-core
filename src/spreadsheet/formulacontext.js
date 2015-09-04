@@ -19,7 +19,7 @@
         getRefCells: function(ref, hiddenInfo) {
             var sheet = this.workbook.sheetByName(ref.sheet), formula, value;
             if (ref instanceof CellRef) {
-                formula = sheet.compiledFormula(ref);
+                formula = sheet.formula(ref);
                 value = sheet.range(ref.row, ref.col).value();
 
                 if (formula != null || value != null) {
@@ -49,7 +49,7 @@
                 for (var col = tl.col; col <= br.col; ++col) {
                     for (var row = tl.row; row <= br.row; ++row) {
                         var index = sheet._grid.index(row, col);
-                        formula = sheet._properties.get("compiledFormula", index);
+                        formula = sheet._properties.get("formula", index);
                         value = values.at(index);
                         if (formula != null || value != null) {
                             states.push({

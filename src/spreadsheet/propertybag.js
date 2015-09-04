@@ -54,13 +54,18 @@
         },
 
         set: function(start, end, value, parseStrings) {
-            var result = kendo.spreadsheet.Sheet.parse(value, parseStrings);
-
-            if (result.type === "date") {
-                this.formats.value(start, end, toExcelFormat(kendo.culture().calendar.patterns.d));
+            if (value !== null && parseStrings !== false) {
+                if (/^=/.test(value)) {
+                    // must make sure we don't parse formulas here.
+                    value = "'" + value;
+                }
+                var x = kendo.spreadsheet.calc.parse(null, 0, 0, value);
+                if (x.type == "date") {
+                    this.formats.value(start, end, toExcelFormat(kendo.culture().calendar.patterns.d));
+                }
+                value = x.value;
             }
-
-            this.list.value(start, end, result.value);
+            this.list.value(start, end, value);
         }
     });
 
@@ -73,7 +78,6 @@
             { property: ValueProperty, name: "value", value: null, sortable: true, serializable: true, depends: "format" },
             { property: Property, name: "format", value: null, sortable: true, serializable: true },
             { property: Property, name: "formula", value: null, sortable: true, serializable: true },
-            { property: Property, name: "compiledFormula", value: null, sortable: true, serializable: false },
             { property: Property, name: "background", value: null, sortable: true, serializable: true },
             { property: JsonProperty, name: "borderBottom", value: null, sortable: false, serializable: true },
             { property: JsonProperty, name: "borderRight", value: null, sortable: false, serializable: true },
