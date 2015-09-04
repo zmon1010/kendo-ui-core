@@ -5,8 +5,26 @@
     (function(kendo) {
         var $ = kendo.jQuery;
         var classNames = {
-            wrapper: "k-spreadsheet-filter-menu"
+            reset: "k-reset",
+            input: "k-input",
+            wrapper: "k-spreadsheet-filter-menu",
+            filterByValue: "k-spreadsheet-value-filter",
+            search: "k-spreadsheet-search-box",
+            valueTreeViewWrapper: "k-spreadsheet-value-treeview-wrapper"
         };
+        var templates = {
+            filterByValue:
+                "<dt><span class='k-icon k-font-icon k-i-arrow-e'></span><span>#= filterByValue #</span></dt>" +
+                "<dd class='" + classNames.reset + "'>" +
+                    "<input type='text' class='" + classNames.input + " " + classNames.search + "' />" +
+                    "<div class='" + classNames.valueTreeViewWrapper + "'><div></div></div>" +
+                "</dd>",
+            filterByCondition:
+                "<dt><span class='k-icon k-font-icon k-i-arrow-e'></span><span>#= filterByCondition #</span></dt>" +
+                "<dd class='" + classNames.reset + "'>" +
+                    "condition filtering" +
+                "</dd>"
+        }
 
         function flatternValues(values) {
             return [].concat.apply([], values);
@@ -39,7 +57,11 @@
             },
 
             options: {
-                name: "FilterMenu"
+                name: "FilterMenu",
+                messages: {
+                    filterByValue: "Filter by value",
+                    filterByCondition: "Filter by condition"
+                }
             },
 
             events: [
@@ -85,26 +107,27 @@
             },
 
             _filterByCondition: function() {
-                var div = $("<div />");
-
-                div.text("Filter by condition");
-
-                div.appendTo(this.element);
+                var template = kendo.template(FilterMenu.templates.filterByCondition);
+                var element = $("<dl/>", {
+                                "class": FilterMenu.classNames.filterByCondition,
+                                "html": template(this.options.messages)
+                              }).appendTo(this.element);
             },
 
             _filterByValue: function() {
-                var div = $("<div />");
+                var template = kendo.template(FilterMenu.templates.filterByValue);
+                var element = $("<dl/>", {
+                                "class": FilterMenu.classNames.filterByValue,
+                                "html": template(this.options.messages)
+                              }).appendTo(this.element);
 
-                div.text("Filter by value");
-
-                div.appendTo(this.element);
-
-                this.valuesTree = $("<div />").appendTo(div).kendoTreeView({
+                this.valuesTreeView = element.find("." + FilterMenu.classNames.valueTreeViewWrapper).children().first().kendoTreeView({
                     checkboxes: {
                         checkChildren: true
                     },
+                    dataTextField: "text",
                     dataSource: this.getValues()
-                });
+                }).data("kendoTreeView");
             },
 
             _actionButtons: function() {
@@ -119,7 +142,7 @@
         });
 
         kendo.spreadsheet.FilterMenu = FilterMenu;
-        $.extend(true, FilterMenu, { classNames: classNames });
+        $.extend(true, FilterMenu, { classNames: classNames, templates: templates });
 
     })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
