@@ -918,6 +918,22 @@
                     this._filterBy(this._filter.ref, columns);
                 }, { layout: true });
             }
+        },
+
+        getState: function() {
+            return {
+                rows: this._rows.getState(),
+                columns: this._columns.getState(),
+                mergedCells: this._mergedCells.map(function(cell) { return cell.clone(); }),
+                properties: this._properties.getState()
+            };
+        },
+
+        setState: function(state) {
+            this._rows.setState(state.rows);
+            this._columns.setState(state.columns);
+            this._mergedCells = state.mergedCells;
+            this._properties.setState(state.properties);
         }
     });
 

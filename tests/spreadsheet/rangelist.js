@@ -278,4 +278,13 @@
         equal(list.value(19, 19), 2);
         equal(list.value(20, 20), 2);
     });
+
+    test("get/setstate restores value", 1, function() {
+        var list = new RangeList(0, 100, 0);
+        list.value(11, 11, 1);
+        var state = list.getState();
+        list.value(11, 11, 2);
+        list.setState(state);
+        equal(list.value(11, 11), 1);
+    });
 })();

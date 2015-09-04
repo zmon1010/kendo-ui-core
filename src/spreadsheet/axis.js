@@ -228,6 +228,19 @@
             });
 
             this.total = current;
+        },
+
+        getState: function() {
+            return {
+                values: this.values.getState(),
+                hidden: this._hidden.getState()
+            };
+        },
+
+        setState: function(state) {
+            this.values.setState(state.values);
+            this._hidden.setState(state.hidden);
+            this._refresh();
         }
     });
 

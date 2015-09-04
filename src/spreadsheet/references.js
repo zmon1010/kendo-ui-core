@@ -336,8 +336,7 @@
             this.normalize();
         },
         clone: function() {
-            return new RangeRef(this.topLeft, this.bottomRight)
-                .setSheet(this.sheet, this.hasSheet());
+            return new RangeRef(this.topLeft.clone(), this.bottomRight.clone()).setSheet(this.sheet, this.hasSheet());
         },
         _containsRange: function(range) {
             return this._containsCell(range.topLeft)

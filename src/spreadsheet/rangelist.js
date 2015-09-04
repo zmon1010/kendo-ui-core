@@ -16,6 +16,10 @@
     NilNode.left = NilNode;
     NilNode.right = NilNode;
 
+    function passThrough(value) {
+        return value;
+    }
+
     function skew(node) {
         if (node.left.level === node.level) {
             var temp = node;
@@ -151,6 +155,10 @@
             var tree = new RangeTree();
             map(tree, this.root, callback);
             return tree;
+        },
+
+        clone: function() {
+            return this.map(passThrough);
         },
 
         first: function() {
@@ -391,6 +399,14 @@
 
         iterator: function(start, end) {
             return new Iterator(start, end, this.intersecting(start, end));
+        },
+
+        getState: function() {
+            return this.tree.clone();
+        },
+
+        setState: function(state) {
+            this.tree = state;
         }
     });
 

@@ -287,6 +287,7 @@
     test("insertRow pushing record outside of the sheet throws error", function() {
         sheet.range("A" + defaults.rows).values("some value");
 
+        /* global throws */
         throws(function() { sheet.insertRow(0); });
     });
 
@@ -418,5 +419,36 @@
         var range = new RangeRef(new CellRef(0,0), new CellRef(3,3));
 
         ok(sheet.trim(range).eq(new RangeRef(new CellRef(0,0), new CellRef(3,3))));
+    });
+
+    module("Sheet state", {
+        setup: function() {
+            sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
+            defaults.rowHeight, defaults.columnWidth);
+        }
+    });
+
+    test("sheet state preserves hidden columns", function() {
+        var state = sheet.getState();
+        sheet.hideColumn(1);
+        equal(sheet._grid._columns.sum(1, 1), 0);
+        sheet.setState(state);
+        equal(sheet._grid._columns.sum(1, 1), 64);
+    });
+
+    test("sheet state preserves merged cells", function() {
+        sheet.range("C3:D4").merge();
+        var state = sheet.getState();
+        sheet.range("C3:D4").unmerge();
+        sheet.setState(state);
+        ok(sheet._mergedCells[0].eq(sheet._ref("C3:D4")));
+    });
+
+    test("sheet state preserves the property bag", function() {
+        sheet.range("C3:D4").value("foo");
+        var state = sheet.getState();
+        sheet.range("C3:D4").value("bar");
+        sheet.setState(state);
+        equal(sheet.range("C3:D4").value(), "foo");
     });
 })();

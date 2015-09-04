@@ -3,6 +3,7 @@
     var PaneAxis = kendo.spreadsheet.PaneAxis;
 
     var axis;
+
     module("Sheet Axis", {
         setup: function() {
             axis = new Axis(1000, 15); // count, value
@@ -63,8 +64,8 @@
 
         var visible = axis.visible(0, 30);
 
-        equal(visible.values.start, 1)
-        equal(visible.values.end, 3)
+        equal(visible.values.start, 1);
+        equal(visible.values.end, 3);
     });
 
     test("hidden values are invisible (second value hidden)", function() {
@@ -72,17 +73,17 @@
 
         var visible = axis.visible(0, 30);
 
-        equal(visible.values.start, 0)
-        equal(visible.values.end, 3)
+        equal(visible.values.start, 0);
+        equal(visible.values.end, 3);
     });
 
     test("hidden return true for hidden values", function() {
         axis.hide(1);
-        equal(axis.hidden(1), true)
+        equal(axis.hidden(1), true);
     });
 
     test("values are not hidden by default", function() {
-        equal(axis.hidden(1), false)
+        equal(axis.hidden(1), false);
     });
 
     test("unhidden values update total", function() {
@@ -153,8 +154,7 @@
         equal(axis.nextPage(10, 700), 56);
     });
 
-    module("PaneAxis", {
-    });
+    module("PaneAxis", { });
 
     test("visible sets the offset of the result to zero if the axis is frozen", function() {
        axis = new PaneAxis(new  Axis(10, 4), 0, 2, 10);
@@ -176,5 +176,27 @@
     test("frozen paneaxis ignores scrolling", function() {
        axis = new PaneAxis(new  Axis(10, 5), 0, 10, 30);
        equal(axis.index(38, 100), 1);
+    });
+
+    module("Axis state", {
+        setup: function() {
+            axis = new Axis(1000, 15); // count, value
+        }
+    });
+
+    test("state preserves values", function() {
+        var state = axis.getState();
+        equal(axis.value(1, 1), 15);
+        axis.value(1, 1, 60);
+        axis.setState(state);
+        equal(axis.value(1, 1), 15);
+    });
+
+    test("state restores hidden", function() {
+        var state = axis.getState();
+        axis.hide(1);
+        equal(axis.total, 999 * 15);
+        axis.setState(state);
+        equal(axis.total, 1000 * 15);
     });
 })();

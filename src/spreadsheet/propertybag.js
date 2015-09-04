@@ -104,6 +104,22 @@
             }, this);
         },
 
+        getState: function() {
+            var state = {};
+
+            this.specs.forEach(function(spec) {
+               state[spec.name] = this.lists[spec.name].getState();
+            }, this);
+
+            return state;
+        },
+
+        setState: function(state) {
+            this.specs.forEach(function(spec) {
+                this.lists[spec.name].setState(state[spec.name]);
+            }, this);
+        },
+
         get: function(name, index) {
             if (index === undefined) {
                 return this.lists[name];
