@@ -857,6 +857,7 @@
 
             this.triggerChange({ recalc: true });
         },
+
         _filterBy: function(ref, columns) {
             this.batch(function() {
                 for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row; ri++) {
@@ -898,12 +899,15 @@
                 };
             }, { layout: true, filter: true });
         },
+
         filter: function() {
             return this._filter;
         },
+
         clearFilter: function(spec) {
             this._clearFilter(spec instanceof Array ? spec : [spec]);
         },
+
         _clearFilter: function(indices) {
             if (this._filter) {
                 this.batch(function() {
