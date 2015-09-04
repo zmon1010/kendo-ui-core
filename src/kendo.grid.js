@@ -6051,7 +6051,7 @@ var __meta__ = { // jshint ignore:line
                     typeof filterable.mode == STRING &&
                     filterable.mode.indexOf("row") != -1;
             var columns = this.columns;
-            var columnsWithoutFiltering = $.grep(columns, function(col, idx) {
+            var columnsWithoutFiltering = $.grep(columns, function(col) {
                 return col.filterable === false;
             });
 
@@ -6393,13 +6393,10 @@ var __meta__ = { // jshint ignore:line
                 hasDetails = that._hasDetails() && columns.length,
                 hasFilterRow = that._hasFilterRow(),
                 idx,
-                length,
                 html = "",
                 thead = that.table.find(">thead"),
                 hasTHead = that.element.find("thead:first").length > 0,
-                tr,
-                text,
-                th;
+                tr;
 
             if (!thead.length) {
                 thead = $("<thead/>").insertBefore(that.tbody);
@@ -6690,8 +6687,6 @@ var __meta__ = { // jshint ignore:line
                 footerDefaults = that._groupAggregatesDefaultObject || {},
                 aggregates = extend({}, footerDefaults, group.aggregates),
                 data = extend({}, { field: group.field, value: group.value, aggregates: aggregates }, group.aggregates[group.field]),
-                rowTemplate = templates.rowTemplate,
-                altRowTemplate = templates.altRowTemplate,
                 groupFooterTemplate = templates.groupFooterTemplate,
                 groupItems = group.items;
 
@@ -6899,9 +6894,7 @@ var __meta__ = { // jshint ignore:line
                 cols,
                 colWidth,
                 position,
-                row,
                 width = 0,
-                parents = [],
                 headerCellIndex,
                 length,
                 footer = that.footer || that.wrapper.find(".k-grid-footer"),
@@ -7057,7 +7050,6 @@ var __meta__ = { // jshint ignore:line
                 cell,
                 tables,
                 width,
-                row,
                 headerCellIndex,
                 position,
                 colWidth,
@@ -7209,9 +7201,6 @@ var __meta__ = { // jshint ignore:line
 
         refresh: function(e) {
             var that = this,
-                length,
-                idx,
-                html = "",
                 data = that.dataSource.view(),
                 navigatable = that.options.navigatable,
                 currentIndex,
@@ -7748,10 +7737,6 @@ var __meta__ = { // jshint ignore:line
        }
    }
 
-   function dataCellIndex(cell) {
-       return cell.parent().children(DATA_CELL).index(cell);
-   }
-
    function isInEdit(cell) {
        return cell &&
            (cell.hasClass("k-edit-cell") ||
@@ -7766,7 +7751,7 @@ var __meta__ = { // jshint ignore:line
        '</p></td></tr>';
    }
 
-   function groupRowLockedContentBuilder(colspan, level, text) {
+   function groupRowLockedContentBuilder(colspan) {
        return '<tr role="row" class="k-grouping-row">' +
            '<td colspan="' + colspan + '" aria-expanded="true">' +
            '<p class="k-reset">&nbsp;</p></td></tr>';
