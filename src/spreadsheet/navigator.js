@@ -77,6 +77,10 @@
             });
         },
 
+        selectAll: function() {
+            this._sheet.select(this._sheet._sheetRef);
+        },
+
         select: function(ref, mode, addToExisting) {
             ref = this.refForMode(ref, mode);
 

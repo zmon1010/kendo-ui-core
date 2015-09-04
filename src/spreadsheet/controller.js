@@ -20,6 +20,7 @@
        "ctrl+down": "last-row",
        "ctrl+home": "first",
        "ctrl+end": "last",
+       "ctrl+:alphanum": "ctrl",
        "pageup": "prev-page",
        "pagedown": "next-page"
     };
@@ -261,16 +262,34 @@
         },
 
         onEntryAction: function(event, action) {
-            if (action === ":alphanum" || action === ":edit") {
-                if (action === ":alphanum") {
-                    this.editor.value("");
+            if (event.mod) {
+                var key = String.fromCharCode(event.keyCode);
+
+                switch(key) {
+                    case "A":
+                        this.navigator.selectAll();
+                        break;
+                    case "Y":
+                        this._workbook.undoRedoStack.redo();
+                        break;
+                    case "Z":
+                        this._workbook.undoRedoStack.undo();
+                        break;
                 }
 
-                this.editor.activate(this.view.activeCellRectangle());
-                this.editor.focus();
-            } else {
-                this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
                 event.preventDefault();
+            } else {
+                if (action === ":alphanum" || action === ":edit") {
+                    if (action === ":alphanum") {
+                        this.editor.value("");
+                    }
+
+                    this.editor.activate(this.view.activeCellRectangle());
+                    this.editor.focus();
+                } else {
+                    this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
+                    event.preventDefault();
+                }
             }
         },
 
