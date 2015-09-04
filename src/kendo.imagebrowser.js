@@ -26,26 +26,7 @@ var __meta__ = { // jshint ignore:line
         SIZEFIELD = "size",
         TYPEFIELD = "type",
         DEFAULTSORTORDER = { field: TYPEFIELD, dir: "asc" },
-        EMPTYTILE = kendo.template('<li class="k-tile-empty"><strong>${text}</strong></li>'),
-        TOOLBARTMPL = '<div class="k-widget k-filebrowser-toolbar k-header k-floatwrap">' +
-                            '<div class="k-toolbar-wrap">' +
-                                '# if (showUpload) { # ' +
-                                    '<div class="k-widget k-upload"><div class="k-button k-button-icontext k-upload-button">' +
-                                        '<span class="k-icon k-add"></span>#=messages.uploadFile#<input type="file" name="file" /></div></div>' +
-                                '# } #' +
-
-                                '# if (showCreate) { #' +
-                                     '<button type="button" class="k-button k-button-icon"><span class="k-icon k-addfolder" /></button>' +
-                                '# } #' +
-
-                                '# if (showDelete) { #' +
-                                    '<button type="button" class="k-button k-button-icon k-state-disabled"><span class="k-icon k-delete" /></button>&nbsp;' +
-                                '# } #' +
-                            '</div>' +
-                            '<div class="k-tiles-arrange">' +
-                                '<label>#=messages.orderBy#: <select /></label></a>' +
-                            '</div>' +
-                        '</div>';
+        EMPTYTILE = kendo.template('<li class="k-tile-empty"><strong>${text}</strong></li>');
 
     extend(true, kendo.data, {
         schemas: {
@@ -109,31 +90,6 @@ var __meta__ = { // jshint ignore:line
             })
         }
     });
-
-    function bindDragEventWrappers(element, onDragEnter, onDragLeave) {
-        var hideInterval, lastDrag;
-
-        element
-            .on("dragenter" + NS, function() {
-                onDragEnter();
-                lastDrag = new Date();
-
-                if (!hideInterval) {
-                    hideInterval = setInterval(function() {
-                        var sinceLastDrag = new Date() - lastDrag;
-                        if (sinceLastDrag > 100) {
-                            onDragLeave();
-
-                            clearInterval(hideInterval);
-                            hideInterval = null;
-                        }
-                    }, 100);
-                }
-            })
-            .on("dragover" + NS, function() {
-                lastDrag = new Date();
-            });
-    }
 
     var offsetTop;
     if (browser.msie && browser.version < 8) {
