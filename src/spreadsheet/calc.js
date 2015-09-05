@@ -759,7 +759,7 @@
             return ";(){}[]".indexOf(ch) >= 0;
         }
         function isWhitespace(ch) {
-            return " \t\n".indexOf(ch) >= 0;
+            return " \t\n\xa0".indexOf(ch) >= 0;
         }
         function readNumber() {
             // XXX: TODO: exponential notation
