@@ -787,10 +787,16 @@
             return this._properties.get("formula", this._grid.cellRefIndex(ref));
         },
 
-        recalc: function(context) {
+        resetFormulas: function() {
             this._forFormulas(function(formula){
                 formula.reset();
             });
+        },
+
+        // NOTE: resetFormulas should be called first.  We don't do it in this
+        // function because it should be done from the Workbook object for all
+        // sheets.
+        recalc: function(context) {
             this._forFormulas(function(formula){
                 formula.exec(context);
             });

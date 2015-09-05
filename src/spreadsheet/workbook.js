@@ -65,8 +65,15 @@
             this.undoRedoStack.push(command);
         },
 
+        resetFormulas: function() {
+            this._sheets.forEach(function(sheet){
+                sheet.resetFormulas();
+            });
+        },
+
         refresh: function(reason) {
             if (reason.recalc) {
+                this.resetFormulas();
                 this._sheet.recalc(this._context);
             }
         },
@@ -265,6 +272,7 @@
         },
 
         toJSON: function() {
+            this.resetFormulas();
             return {
                 sheets: this._sheets.map(function(sheet) {
                     sheet.recalc(this._context);
