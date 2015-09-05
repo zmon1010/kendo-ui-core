@@ -134,7 +134,7 @@
                     );
                 } catch(ex) {
                     // XXX: error handling
-                    alert("Parse error: " + ex);
+                    alert(ex);
                     x = { type: "string", value: value };
                 }
                 this._sheet.batch(function() {

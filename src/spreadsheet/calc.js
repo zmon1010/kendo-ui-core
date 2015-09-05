@@ -192,6 +192,9 @@
                     input.next();
                     exp = parseArray();
                 }
+                else if (!input.peek()) {
+                    input.croak("Incomplete expression");
+                }
                 else {
                     input.croak("Parse error");
                 }
