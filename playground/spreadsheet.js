@@ -132,3 +132,8 @@ $("#pdf").on("click", function(){
         kendo.drawing.pdf.saveAs(group, "spreadsheet.pdf");
     });
 });
+
+var sheet2 = spreadsheet.sheetByName("Sheet2");
+sheet2.range("A1").formula("=Sheet1!A1:B3 ^ 2");
+
+sheet.range("C1").formula("=sum(Sheet2!A1:B3)");
