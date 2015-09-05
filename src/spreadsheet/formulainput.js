@@ -126,10 +126,10 @@
 
         value: function(value) {
             if (value === undefined) {
-                return this.element.html();
+                return this.element.text();
             }
 
-            this.element.html(value);
+            this.element.text(value);
         },
 
         destroy: function() {
