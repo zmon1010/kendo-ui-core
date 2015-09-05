@@ -594,6 +594,12 @@
         equal(sheet.range("A1")._editableValue(), "'123");
     });
 
+    test("editableValue returns string value for booleans", function() {
+        sheet.range("A1").value("'true");
+
+        equal(sheet.range("A1")._editableValue(), "'true");
+    });
+
     test("editableValue returns formatted date", function() {
         sheet.range("A1").value(new Date(2015, 0, 1));
 
