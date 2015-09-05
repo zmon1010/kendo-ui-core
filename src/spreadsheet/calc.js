@@ -494,7 +494,7 @@
                         { // then
                             type: "lambda",
                             vars: [ thenK ],
-                            body: cps(th, function(th){
+                            body: cps(th || TRUE, function(th){
                                 return {
                                     type: "call",
                                     func: { type: "var", name: thenK },
@@ -505,7 +505,7 @@
                         { // else
                             type: "lambda",
                             vars: [ elseK ],
-                            body: cps(el, function(el){
+                            body: cps(el || FALSE, function(el){
                                 return {
                                     type: "call",
                                     func: { type: "var", name: elseK },
