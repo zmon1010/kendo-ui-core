@@ -120,14 +120,12 @@
             style.borderBottom = cellBorder(cell.borderBottom);
         }
 
-        var data = cell.value, type = null;
+        var data = cell.value, type = typeof data;
         if (cell.format && data !== null) {
             data = kendo.spreadsheet.formatting.format(data, cell.format);
-            type = data.__dataType;
-        }
-
-        if (!type) {
-            type = typeof data;
+            if (data.__dataType) {
+                type = data.__dataType;
+            }
         }
 
         if (!style.textAlign) {
