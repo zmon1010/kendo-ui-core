@@ -312,7 +312,8 @@ var __meta__ = { // jshint ignore:line
         html: html,
         text: text,
         element: element,
-        Tree: Tree
+        Tree: Tree,
+        Node: Node
     };
 })(window.kendo);
 

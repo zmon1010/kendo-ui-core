@@ -120,8 +120,18 @@
             style.borderBottom = cellBorder(cell.borderBottom);
         }
 
+        var data = cell.value, type = null;
+        if (cell.format && data !== null) {
+            data = kendo.spreadsheet.formatting.format(data, cell.format);
+            type = data.__dataType;
+        }
+
+        if (!type) {
+            type = typeof data;
+        }
+
         if (!style.textAlign) {
-            switch (cell.type) {
+            switch (type) {
                case "number":
                case "date":
                    style.textAlign = "right";
@@ -132,7 +142,7 @@
             }
         }
 
-        var td = table.addCell(row, cell.value, style);
+        var td = table.addCell(row, data, style);
 
         var border, sibling;
 
@@ -150,11 +160,6 @@
             if (sibling && border) {
                 sibling.attr.style.borderBottom = border;
             }
-        }
-
-        if (cell.format && cell.value !== null) {
-            var formatter = kendo.spreadsheet.formatting.compile(cell.format);
-            td.children[0] = formatter(cell.value);
         }
 
         return td;
@@ -196,8 +201,11 @@
             if (text === null || text === undefined) {
                 text = "";
             }
+            if (!(text instanceof kendo.dom.Node)) {
+                text = kendo.dom.text(text);
+            }
 
-            var td = kendo.dom.element("td", { style: style, className: className }, [ kendo.dom.text(text) ]);
+            var td = kendo.dom.element("td", { style: style, className: className }, [ text ]);
             this.trs[rowIndex].children.push(td);
             return td;
         },
