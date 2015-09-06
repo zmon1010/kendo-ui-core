@@ -132,7 +132,7 @@
             var args = {
                 property: tool.property || null,
                 value: tool.value || null,
-                workbook: e.sender.workbook
+                workbook: e.sender.workbook()
             };
 
             if (typeof args.value === "boolean") {
