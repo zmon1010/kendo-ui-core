@@ -176,15 +176,6 @@
         },
 
         formula: function(value) {
-            if (value === null) {
-                this._sheet.batch(function() {
-                    this._property("formula", null);
-                    this.value(null);
-                }.bind(this), { recalc: true });
-
-                return this;
-            }
-
             return this._property("formula", value, false, true);
         },
 
@@ -477,10 +468,6 @@
                     if (property === "_editableValue") {
                         property = "value";
                     }
-                    if (cell.formula && property == "value") {
-                        return;
-                    }
-
                     cellState[property] = cell[property] || null;
                 });
             });
@@ -500,19 +487,24 @@
                     this.unmerge();
                 }
 
-                this.forEachCell(function(row, col, cell) {
+                this.forEachCell(function(row, col) {
                     var cellState = state[(row + rowDelta)  + "," + (col + colDelta)];
                     var range = sheet.range(row, col);
 
                     for (var property in cellState) {
-                        if (property == "formula") {
-                            if (cellState.formula) {
-                                var clone = cellState.formula.clone(sheetName, row, col);
-                                range._set("formula", clone);
-                            }
-                        } else {
-                            range[property](cellState[property]);
+                        if (property != "value") {
+                            // make sure value comes last (after the loop),
+                            // because if we set value here and get get to
+                            // formula later and cellState.formula is null,
+                            // it'll clear the value.
+                            range._set(property, cellState[property]);
                         }
+                    }
+
+                    if (!cellState.formula) {
+                        // only need to set the value if we don't have a
+                        // formula.
+                        range.value(cellState.value);
                     }
                 });
 

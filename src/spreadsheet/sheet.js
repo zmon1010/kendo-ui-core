@@ -845,6 +845,10 @@
                     start = this._grid.index(topLeft.row, ci);
                     end = this._grid.index(bottomRight.row, ci);
                     this._properties.set(name, start, end, value, parseStrings);
+                    if (name == "formula") {
+                        // removing a formula, must clear value.
+                        this._properties.set("value", start, end, null, false);
+                    }
                 }
             }
         },
