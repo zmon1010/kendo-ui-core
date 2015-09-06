@@ -57,6 +57,23 @@
         init: function(options) {
             options.property = "_editableValue";
             PropertyChangeCommand.fn.init.call(this, options);
+        },
+        exec: function() {
+            try {
+                return PropertyChangeCommand.fn.exec.apply(this, arguments);
+            } catch(ex) {
+                if (ex instanceof kendo.spreadsheet.calc.ParseError) {
+                    // XXX: error handling.  We should ask the user
+                    // whether to accept the formula as text (prepend
+                    // '), or re-edit.  ex.pos+1 will be the index of
+                    // the character where the error occurred.
+                    alert(ex);
+                    // store as string for now
+                    this.range()._editableValue("'" + this._value);
+                } else {
+                    throw ex;
+                }
+            }
         }
     });
 

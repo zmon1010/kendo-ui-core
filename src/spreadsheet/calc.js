@@ -19,6 +19,16 @@
 
     var OPERATORS = {};
 
+    var ParseError = kendo.Class.extend({
+        init: function ParseError(message, pos) {
+            this.message = message;
+            this.pos = pos;
+        },
+        toString: function() {
+            return this.message;
+        }
+    });
+
     (function(ops){
         ops.forEach(function(cls, i){
             cls.forEach(function(op){
@@ -885,7 +895,7 @@
             return peek() === "";
         }
         function croak(msg) {
-            throw new Error(msg + " (pos " + col + ")");
+            throw new ParseError(msg + " (pos " + col + ")", pos);
         }
         function skip(ch) {
             if (typeof ch == "string") {
@@ -991,5 +1001,6 @@
     exports.parseReference = parseReference;
     exports.compile = makeFormula;
     exports.InputStream = InputStream;
+    exports.ParseError = ParseError;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

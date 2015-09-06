@@ -127,16 +127,8 @@
 
         _editableValue: function(value) {
             if (value !== undefined) {
-                var tl = this._ref.toRangeRef().topLeft, x;
-                try {
-                    x = kendo.spreadsheet.calc.parse(
-                        this._sheet.name(), tl.row, tl.col, value
-                    );
-                } catch(ex) {
-                    // XXX: error handling
-                    alert(ex);
-                    x = { type: "string", value: value };
-                }
+                var tl = this._ref.toRangeRef().topLeft;
+                var x = kendo.spreadsheet.calc.parse(this._sheet.name(), tl.row, tl.col, value);
                 this._sheet.batch(function() {
                     var formula = null;
                     if (x.type == "exp") {
