@@ -1022,9 +1022,8 @@
             updateModel: function(syncChanges) {
                 if (this.diagram && this.diagram._isEditable) {
                     if (this.diagram.connectionsDataSource) {
-                        var dataMap = this.diagram._dataMap;
                         var model = this.diagram.connectionsDataSource.getByUid(this.dataItem.uid);
-                        var shape;
+
                         if (model) {
                             this.diagram._suspendModelRefresh();
                             if (defined(this.options.fromX) && this.options.fromX !== null) {
