@@ -2203,6 +2203,9 @@
            "aspnet-mvc": "Functionality",
            "jsp-ui": "Functionality",
            "php-ui": "Functionality" 
+         },
+         "description": {
+           "kendo-ui": "<p>In this sample we showcase how you can apply common settings for the Kendo UI grid filter menu configuration, and customize its UI on a per column basis. This is straight-forward and easy using the exposed API for the column menu.</p> <p>First we specify a single filter criterion using the <strong>filterable-&gt;extra=false</strong> setting, and limit the filter operators for string columns to <strong>starts with, equal and not equal </strong>only. Then we define built-in date picker UI to filter the datetime column in the grid, and instantiate Kendo UI AutoComplete and DropDownList for the Title and City columns, respectively. <br /> <br /> To create the dropdown filters, we assign javascript functions to the <strong>filterable-&gt;ui </strong>attributes of the corresponding columns.</p>"
          }
       },
     {
@@ -2219,6 +2222,9 @@
            "aspnet-mvc": "Functionality",
            "jsp-ui": "Functionality",
            "php-ui": "Functionality" 
+         }, 
+         "description": {
+           "kendo-ui": "<p>With the Kendo UI grid you can enable filter row in its header by setting the grid's <strong>filterable-&gt;mode</strong> property to <strong>row</strong>. Thus based on the data type of the underlying columns data the grid will render textboxes for string values, numeric inputs or date pickers for filtering in the column headers, as illustrated in this example.</p> <p>Additionally, you can specify default filter operator to be applied when the user enters value in the filter textbox and presses Enter or Tab via the keyboard. This can be done using the <strong>filterable-&gt;cell-&gt;operator </strong>attribute of the corresponding column, as demonstrated for the ShipName and Freight columns here.</p> <p>More information on the filtering grid configuration can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-filterable\">this documentation section</a>.</p> <p>&nbsp;</p>"
          }
       },
       {
@@ -2235,6 +2241,9 @@
            "aspnet-mvc": "Functionality",
            "jsp-ui": "Functionality",
            "php-ui": "Functionality" 
+         },
+         "description": {
+           "kendo-ui": "<p>You can enable filtering via checkbox list in the Kendo UI grid filter menu by specifying <strong>filterable-&gt;multi=true</strong> setting for the relevant grid columns you would like to use such a filter for. </p> <p>Furthermore, you have the ability to combine this filter with itemTemplate definition as it is done with the Country column in the second grid in this demo. Thus you can customize the items with checkboxes that will be visualized and available for selection to the end user. </p> <p>More information on the filtering grid configuration can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-filterable\">this documentation section</a>.</p> <p>&nbsp;</p>"
          }
       },
       {
