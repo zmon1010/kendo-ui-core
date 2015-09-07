@@ -556,7 +556,7 @@ var __meta__ = { // jshint ignore:line
             id: { type: "number" },
             parentId: { type: "number", defaultValue: null, validation: { required: true } },
             orderId: { type: "number", validation: { required: true } },
-            title: { type: "string", defaultValue: "" },
+            title: { type: "string", defaultValue: "New task" },
             start: { type: "date", validation: { required: true } },
             end: {
                 type: "date", validation: {
@@ -1869,8 +1869,6 @@ var __meta__ = { // jshint ignore:line
                 if (editable && editable.trigger("validate")) {
                     return;
                 }
-
-                task.set("title", "New task");
 
                 if (target) {
                     task.set("parentId", target.get("id"));

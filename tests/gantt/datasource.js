@@ -52,6 +52,11 @@
         ok(!task.isMilestone());
     });
 
+    test("GanttTask has default value for title", function() {
+        var task = new GanttTask();
+
+        equal(task.get("title"), "New task");
+    });
 
     module("GanttDataSource", {
         setup: function() {
