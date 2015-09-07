@@ -53,17 +53,10 @@
             this.formats = formats;
         },
 
-        set: function(start, end, value, parseStrings) {
-            if (value !== null && parseStrings !== false) {
-                if (/^=/.test(value)) {
-                    // must make sure we don't parse formulas here.
-                    value = "'" + value;
-                }
-                var x = kendo.spreadsheet.calc.parse(null, 0, 0, value);
-                if (x.type == "date") {
-                    this.formats.value(start, end, toExcelFormat(kendo.culture().calendar.patterns.d));
-                }
-                value = x.value;
+        set: function(start, end, value) {
+            if (value instanceof Date) {
+                value = kendo.spreadsheet.dateToNumber(value);
+                this.formats.value(start, end, toExcelFormat(kendo.culture().calendar.patterns.d));
             }
             this.list.value(start, end, value);
         }
@@ -132,8 +125,8 @@
             return this.properties[name].get(index);
         },
 
-        set: function(name, start, end, value, parseStrings) {
-            this.properties[name].set(start, end, value, parseStrings);
+        set: function(name, start, end, value) {
+            this.properties[name].set(start, end, value);
         },
 
         fromJSON: function(index, value) {

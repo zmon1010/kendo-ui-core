@@ -802,11 +802,11 @@
             });
         },
 
-        _value: function(row, col, value, parseStrings) {
+        _value: function(row, col, value) {
             var index = this._grid.index(row, col);
 
             if (value !== undefined) {
-                this._properties.set("value", index, index, value, parseStrings);
+                this._properties.set("value", index, index, value);
             } else {
                 return this._properties.get("value", index);
             }
@@ -818,7 +818,7 @@
             return kendo.spreadsheet.calc.compile(f);
         },
 
-        _set: function(ref, name, value, parseStrings) {
+        _set: function(ref, name, value) {
             var topLeft = this._grid.normalize(ref.topLeft);
             var bottomRight = this._grid.normalize(ref.bottomRight);
             var ci, start, end;
@@ -837,17 +837,17 @@
                         // need to have different Formula objects, hence cloning
                         // it.  Don't worry, clone() is fast.
                         value = value.clone(this._name, row, ci);
-                        this._properties.set("formula", index, index, value, false);
+                        this._properties.set("formula", index, index, value);
                     }
                 }
             } else {
                 for (ci = topLeft.col; ci <= bottomRight.col; ci++) {
                     start = this._grid.index(topLeft.row, ci);
                     end = this._grid.index(bottomRight.row, ci);
-                    this._properties.set(name, start, end, value, parseStrings);
+                    this._properties.set(name, start, end, value);
                     if (name == "formula") {
                         // removing a formula, must clear value.
-                        this._properties.set("value", start, end, null, false);
+                        this._properties.set("value", start, end, null);
                     }
                 }
             }

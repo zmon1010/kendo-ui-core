@@ -51,8 +51,8 @@
             this.trigger("change", e);
         },
 
-        _editableValueForRef: function(ref) {
-            return new kendo.spreadsheet.Range(ref, this._sheet)._editableValue();
+        _inputForRef: function(ref) {
+            return new kendo.spreadsheet.Range(ref, this._sheet).input();
         },
 
         _onUndoRedo: function(e) {

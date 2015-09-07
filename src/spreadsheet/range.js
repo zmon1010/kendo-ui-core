@@ -32,10 +32,10 @@
             return this._sheet._grid.normalize(ref);
         },
 
-        _set: function(name, value, parseStrings, recalc) {
+        _set: function(name, value, recalc) {
             var sheet = this._sheet;
             this._ref.forEach(function(ref) {
-                sheet._set(ref.toRangeRef(), name, value, parseStrings);
+                sheet._set(ref.toRangeRef(), name, value);
             });
             sheet.triggerChange({ recalc: name == "formula" || name == "value", value: value, ref: this._ref });
             return this;
@@ -45,16 +45,16 @@
             return this._sheet._get(this._ref.toRangeRef(), name);
         },
 
-        _property: function(name, value, parseStrings, recalc) {
+        _property: function(name, value, recalc) {
             if (value === undefined) {
                 return this._get(name);
             } else {
-                return this._set(name, value, parseStrings, recalc);
+                return this._set(name, value, recalc);
             }
         },
 
-        value: function(value, parseStrings) {
-            return this._property("value", value, parseStrings, true);
+        value: function(value) {
+            return this._property("value", value, true);
         },
 
         _resizedRef: function(direction) {
@@ -125,7 +125,7 @@
             return this._collapsedBorder("borderLeft");
         },
 
-        _editableValue: function(value) {
+        input: function(value) {
             if (value !== undefined) {
                 var tl = this._ref.toRangeRef().topLeft;
                 var x = kendo.spreadsheet.calc.parse(this._sheet.name(), tl.row, tl.col, value);
@@ -172,7 +172,7 @@
                 var f = this._get("formula");
                 return f ? "=" + f : null; // stringify if present
             }
-            return this._property("formula", value, false, true);
+            return this._property("formula", value, true);
         },
 
         merge: function() {
@@ -461,7 +461,7 @@
                 var cellState = state[row + "," + col] = {};
 
                 properties.forEach(function(property) {
-                    if (property === "_editableValue") {
+                    if (property === "input") {
                         property = "value";
                     }
                     cellState[property] = cell[property] || null;
@@ -499,8 +499,10 @@
 
                     if (!cellState.formula) {
                         // only need to set the value if we don't have a
-                        // formula.
-                        range.value(cellState.value);
+                        // formula.  Go through the lower level setter rather
+                        // than range.value(...), because range.value will clear
+                        // the formula!  chicken and egg issues.
+                        range._set("value", cellState.value);
                     }
                 });
 

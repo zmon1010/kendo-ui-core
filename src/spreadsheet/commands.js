@@ -55,7 +55,7 @@
 
     var EditCommand = kendo.spreadsheet.EditCommand = PropertyChangeCommand.extend({
         init: function(options) {
-            options.property = "_editableValue";
+            options.property = "input";
             PropertyChangeCommand.fn.init.call(this, options);
         },
         exec: function() {
@@ -69,7 +69,7 @@
                     // the character where the error occurred.
                     alert(ex);
                     // store as string for now
-                    this.range()._editableValue("'" + this._value);
+                    this.range().input("'" + this._value);
                 } else {
                     throw ex;
                 }

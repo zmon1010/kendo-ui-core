@@ -227,7 +227,7 @@
             this._viewPortHeight = this.view.scroller.clientHeight;
             this.navigator.height(this._viewPortHeight);
 
-            this.editor.value(workbook._editableValueForRef(workbook.activeSheet().activeCell()));
+            this.editor.value(workbook._inputForRef(workbook.activeSheet().activeCell()));
         },
 
         onScroll: function() {
@@ -571,7 +571,7 @@
         },
 
         onEditorEsc: function() {
-            this.editor.value(this._workbook._editableValueForRef(this._workbook.activeSheet().activeCell()));
+            this.editor.value(this._workbook._inputForRef(this._workbook.activeSheet().activeCell()));
             this.editor.deactivate();
 
             this.clipboardElement.focus();

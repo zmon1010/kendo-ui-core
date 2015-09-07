@@ -442,7 +442,7 @@
 
         refresh: function(reason) {
             var sheet = this._sheet;
-            //this.formulaBar.value(this._workbook._editableValueForRef(sheet.activeCell()));
+            //this.formulaBar.value(this._workbook._inputForRef(sheet.activeCell()));
 
             if (this.toolbar) {
                 this.toolbar.refresh();
