@@ -181,14 +181,6 @@ namespace Kendo.Mvc.UI
             {
                 json["excel"] = excel;
             }
-            var filterable = Filterable.ToJson();
-            if (filterable.Any())
-            {
-                json["filterable"] = filterable;
-            } else if (Filterable.Enabled != false) {
-                json["filterable"] = Filterable.Enabled;
-            }
-
             if (Height.HasValue)
             {
                 json["height"] = Height;
@@ -228,6 +220,19 @@ namespace Kendo.Mvc.UI
                 json["toolbar"] = toolbar;
             }
         //<< Serialization
+
+            var filterable = Filterable.ToJson();
+            if (Filterable.Enabled)
+            {
+                if (filterable.Any())
+                {
+                    json["filterable"] = filterable;
+                }
+                else
+                {
+                    json["filterable"] = Filterable.Enabled;
+                }
+            }            
 
             writer.Write(Initializer.Initialize(Selector, "TreeList", json));
 

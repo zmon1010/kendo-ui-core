@@ -65,7 +65,8 @@ module CodeGen::MVC::Wrappers
         'buttongroup.items.text',
         'tabstrip.items.text',
         'tabstrip.items.url',
-        'splitview.panes.id'
+        'splitview.panes.id',
+        'treelist.filterable'
     ]
 
     FLUENT_SKIP_LIST = [
