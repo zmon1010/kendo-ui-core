@@ -362,6 +362,7 @@
             }
 
             this.tabstrip = $("<div />").prependTo(this.element).kendoTabStrip({
+                animation: false,
                 dataTextField: "text",
                 dataContentField: "content",
                 dataSource: tabs
