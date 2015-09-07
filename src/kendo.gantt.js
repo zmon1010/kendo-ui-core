@@ -1853,12 +1853,12 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var actionsSelector = DOT + Gantt.styles.toolbar.actions;
             var actionMessages = this.options.messages.actions;
-            var dataSource = this.dataSource;
             var timeline = this.timeline;
 
             var handler = function(e) {
                 var type = e.type;
                 var orderId;
+                var dataSource = that.dataSource;
                 var task = dataSource._createNewModel();
                 var selected = that.dataItem(that.select());
                 var parent = dataSource.taskParent(selected);

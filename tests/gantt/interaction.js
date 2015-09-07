@@ -521,6 +521,38 @@
         equal(newTask.get("end"), firstTimeSlot.end);
     });
 
+    test("honors the dataSource set via setDataSource method", function() {
+        var selectedTask;
+        var dropDown = gantt.headerDropDown;
+        var dataSource = setupDataSource([{
+            id: 1000,
+            parentId: null,
+            orderId: 0,
+            title: "FooBar",
+            start: new Date("2014/03/31"),
+            end: new Date("2014/04/05"),
+            summary: true,
+            expanded: true
+        },
+        {
+            id: 1001,
+            parentId: 1000,
+            orderId: 0,
+            title: "FooFoo",
+            start: new Date("2014/03/31"),
+            end: new Date("2014/04/05"),
+            summary: false,
+            expanded: false
+        }]);
+
+        gantt.setDataSource(dataSource);
+        gantt.select("tr:eq(1)");
+        selectedTask = gantt.dataItem(gantt.select());
+        dropDown.trigger("command", { type: "insert-before" });
+
+        equal(gantt.dataSource.taskSiblings(selectedTask).length, 2);
+    });
+
     module("Footer TaskDropDown", {
         setup: function() {
             element = $("<div/>");
