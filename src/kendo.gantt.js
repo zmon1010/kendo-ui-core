@@ -151,7 +151,7 @@ var __meta__ = { // jshint ignore:line
             buttonToggle: "k-button k-button-icon k-gantt-toggle",
             iconPlus: "k-icon k-i-plus",
             iconPdf: "k-icon k-i-pdf",
-            iconToggle: "k-icon k-i-custom",
+            iconToggle: "k-icon k-i-gantt-toggle",
             viewButtonDefault: "k-state-default",
             viewButton: "k-view",
             currentView: "k-current-view",
