@@ -7,7 +7,7 @@ var __meta__ = { // jshint ignore:line
     name: "Web Components",
     category: "framework",
     description: "Adds Kendo UI custom elements for Web Components",
-    depends: [ "core" ],
+    depends: [ "core" ]
 };
 
 (function ($, undefined) {
@@ -58,7 +58,7 @@ var __meta__ = { // jshint ignore:line
         } else if (numberRegExp.test(value)) {
             value = parseFloat(value);
         } else if (jsonRegExp.test(value) && !jsonFormatRegExp.test(value)) {
-            value = new Function("return (" + value + ")")();
+            value = new Function("return (" + value + ")")(); // jshint ignore:line
         }
 
         return value;
@@ -100,40 +100,46 @@ var __meta__ = { // jshint ignore:line
         }
     }
 
+    function expose(component, obj) {
+        var props  = Object.keys(obj);
+        for(var idx = 0; idx <= props.length; idx++) {
+            if(typeof(obj[props[idx]]) === "function"){
+                component[props[idx]] = obj[props[idx]].bind(component.widget);
+            }else{
+                component[props[idx]] = component[props[idx]] || obj[props[idx]];
+            }
+        }
+    }
+
     function registerElement(name, widget) {
         var options = widget.prototype.options;
 
         var prototype = Object.create(HTMLElement.prototype);
 
         prototype.createdCallback = function() {
+            var that = this;
             var element = document.createElement(TAGNAMES[name] || "div");
 
-            this.appendChild(element);
+            that.appendChild(element);
 
-            this.widget = new widget(element, parseOptions(this, options));
+            that.widget = new widget(element, parseOptions(that, options));
 
-            var obj = this.widget;
+            var obj = that.widget;
             do {
-                Object.keys(obj).forEach(function(key) {
-                    if(typeof(obj[key]) === "function"){
-                        this[key] = obj[key].bind(this.widget);
-                    }else{
-                        this[key] = this[key] || obj[key];
-                    }
-                }.bind(this));
-            } while (obj = Object.getPrototypeOf(obj));
+                expose(that, obj);
+            } while ((obj = Object.getPrototypeOf(obj)));
 
             widget.prototype.events.forEach(function(eventName) {
-                this.widget.bind(eventName, eventHandler.bind(this, eventName));
-                this.widget.element.on(eventName, function(e){
+                that.widget.bind(eventName, eventHandler.bind(that, eventName));
+                that.widget.element.on(eventName, function(e){
                     e.stopPropagation();
                 });
-                if (this.hasAttribute(EVENT_PREFIX + eventName)) {
-                    this.bind(eventName, function(e) {
-                        window[this.getAttribute(EVENT_PREFIX + eventName)].call(this, e);
-                    }.bind(this));
+                if (that.hasAttribute(EVENT_PREFIX + eventName)) {
+                    that.bind(eventName, function(e) {
+                        window[that.getAttribute(EVENT_PREFIX + eventName)].call(that, e);
+                    });
                 }
-            }.bind(this));
+            });
         };
 
         prototype.detachedCallback = function() {
