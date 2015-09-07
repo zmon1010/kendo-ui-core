@@ -11,7 +11,7 @@
 
     var defaultTools = {
         home: [
-            [ "copy", "paste" ],
+            [ "cut", "copy", "paste" ],
             [ "bold", "italic", "underline" ],
             "backgroundColor", "textColor",
             "borders",
@@ -65,6 +65,7 @@
         borders:               { type: "borders", iconClass: "all-borders" },
         fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, iconClass: "text" },
         fontSize:              { type: "fontSize", property: "fontSize", width: 60, iconClass: "font-size" },
+        cut:                   { type: "button", command: "CutCommand", iconClass: "cut" },
         copy:                  { type: "button", command: "CopyCommand", iconClass: "copy" },
         paste:                 { type: "button", command: "PasteCommand", iconClass: "paste" },
         separator:             { type: "separator" },
