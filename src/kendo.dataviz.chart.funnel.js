@@ -379,7 +379,6 @@ var __meta__ = { // jshint ignore:line
         createVisual: function() {
             var segment = this;
             var options = segment.options;
-            var border = options.border;
             var visual;
 
             ChartElement.fn.createVisual.call(this);
