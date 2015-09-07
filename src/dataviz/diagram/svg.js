@@ -1243,6 +1243,35 @@
 
     deepExtend(Group.fn, AutoSizeableMixin);
 
+    var Layout = Group.extend({
+        init: function (rect, options) {
+            this.children = [];
+            Element.fn.init.call(this, options);
+            this.drawingElement = new d.Layout(toDrawingRect(rect), options);
+            this._initSize();
+        },
+
+        rect: function(rect) {
+            if (rect) {
+                this.drawingElement.rect(toDrawingRect(rect));
+            } else {
+                var drawingRect = this.drawingElement.rect();
+                if (drawingRect) {
+                    return new Rect(drawingRect.origin.x, drawingRect.origin.y, drawingRect.size.width, drawingRect.size.height);
+                }
+            }
+        },
+
+        reflow: function() {
+            this.drawingElement.reflow();
+        },
+
+        redraw: function (options) {
+            kendo.deepExtend(this.drawingElement.options, options);
+            Group.fn.redraw.call(this, options);
+        }
+    });
+
     var Circle = VisualBase.extend({
         init: function (options) {
             VisualBase.fn.init.call(this, options);
@@ -1421,6 +1450,12 @@
         return new d.Segment(new g.Point(x, y));
     }
 
+    function toDrawingRect(rect) {
+        if (rect) {
+            return new g.Rect([rect.x, rect.y], [rect.width, rect.height]);
+        }
+    }
+
     // Exports ================================================================
     kendo.deepExtend(diagram, {
         init: function (element) {
@@ -1436,6 +1471,7 @@
         Rectangle: Rectangle,
         Canvas: Canvas,
         Path: Path,
+        Layout: Layout,
         Line: Line,
         MarkerBase: MarkerBase,
         ArrowMarker: ArrowMarker,

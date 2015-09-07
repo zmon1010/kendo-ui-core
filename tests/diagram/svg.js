@@ -14,13 +14,21 @@
 
         TOLERANCE = 0.1;
 
-    function elementTests(name, type) {
+    function elementTests(name, type, initElement) {
         var element;
         var drawingElement;
 
+        function createElement(options) {
+            if (!initElement) {
+                return new type(options);
+            } else {
+                return initElement(options);
+            }
+        }
+
         module(name + " / element", {
             setup: function() {
-                element = new type({
+                element = createElement({
                     foo: "bar",
                     id: "foo"
                 });
@@ -143,7 +151,7 @@
 
         module( name + " / measure", {
             setup: function() {
-                element = new type({});
+                element = createElement({});
                 element._boundingBox = function() {
                     return new g.Rect(new g.Point(100, 200), new g.Size(100, 50));
                 };
@@ -464,7 +472,7 @@
         });
     }
 
-    function autoSizableTests(name, type) {
+    function autoSizableTests(name, type, initElement) {
         var element;
         var matrix, translate, scale;
         var drawingContainer;
@@ -472,13 +480,21 @@
         var defaultScaleY = 100 / 60;
         var defaultScaleX = 100 / 50;
 
+        function createElement(options) {
+            if (!initElement) {
+                return new type(options);
+            } else {
+                return initElement(options);
+            }
+        }
+
         module(name + " / autosize", {
             setup: function() {
                 type.fn._boundingBox = function() {
                     return new g.Rect(new g.Point(10, 20), new g.Size(50, 60));
                 };
 
-                element = new type({
+                element = createElement({
                     autoSize: true,
                     x: 10,
                     y: 20,
@@ -520,7 +536,7 @@
         });
 
         test("does not init scale if autoSize is set to false", function() {
-            element = new type({
+            element = createElement({
                 x: 10,
                 y: 20,
                 width: 100,
@@ -532,7 +548,7 @@
         });
 
         test("does not render scale if autoSize is set to false", function() {
-            element = new type({
+            element = createElement({
                 x: 10,
                 y: 20,
                 width: 100,
@@ -545,7 +561,7 @@
 
 
         test("does not render transformation if element has not x,y,width or height options", function() {
-            element = new type({});
+            element = createElement({});
             ok(!element.drawingContainer().transform());
         });
 
@@ -562,7 +578,7 @@
         });
 
         test("redraw does not render scale if autoSize is set to false", function() {
-            element = new type({
+            element = createElement({
                 width: 100,
                 height: 100,
                 x: 10,
@@ -2059,6 +2075,88 @@
         });
 
         autoSizableTests("Group", Group);
+
+    })();
+
+    (function() {
+        var Layout = diagram.Layout;
+        var layput;
+        var drawingElement;
+
+        function createElement(options) {
+            return new Layout(null, options);
+        }
+
+        elementTests("Layout", Layout, createElement);
+        autoSizableTests("Layout", Layout, createElement);
+
+        module("Layout", {
+            setup: function() {
+                layout = new Layout();
+                drawingElement = layout.drawingElement;
+            }
+        });
+
+        test("inits drawing layout", function() {
+            ok(drawingElement instanceof d.Layout);
+        });
+
+        test("sets initial rect", function() {
+            var rect = new Rect(10, 20, 30, 40);
+            layout = new Layout(rect);
+            var drawingRect = layout.drawingElement.rect();
+            equal(drawingRect.origin.x, 10);
+            equal(drawingRect.origin.y, 20);
+            equal(drawingRect.size.width, 30);
+            equal(drawingRect.size.height, 40);
+        });
+
+        test("does not set rect if a rect is not passed from the options", function() {
+            ok(drawingElement.rect() === undefined);
+        });
+
+        test("sets initial options", function() {
+            layout = new Layout(null, {
+                foo: "bar"
+            });
+            equal(layout.drawingElement.options.foo, "bar");
+        });
+
+        test("sets initial options", function() {
+            layout = new Layout(null, {
+                foo: "bar"
+            });
+            equal(layout.drawingElement.options.foo, "bar");
+        });
+
+        test("rect updates layout rect", function() {
+            layout.rect(new Rect(10, 20, 30, 40));
+            var drawingRect = drawingElement.rect();
+            equal(drawingRect.origin.x, 10);
+            equal(drawingRect.origin.y, 20);
+            equal(drawingRect.size.width, 30);
+            equal(drawingRect.size.height, 40);
+        });
+
+        test("rect returns drawing layout current rect", function() {
+            layout.rect(new Rect(10, 20, 30, 40));
+            var drawingRect = drawingElement.rect();
+            equal(drawingRect.origin.x, 10);
+            equal(drawingRect.origin.y, 20);
+            equal(drawingRect.size.width, 30);
+            equal(drawingRect.size.height, 40);
+        });
+
+        test("rect returns unedefind if there is no rect currently set", function() {
+            ok(layout.rect() === undefined);
+        });
+
+        test("redraw updates layout options", function() {
+            layout.redraw({
+                foo: "bar"
+            });
+            equal(drawingElement.options.foo, "bar");
+        });
 
     })();
 
