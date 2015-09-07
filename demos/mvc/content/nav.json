@@ -2108,7 +2108,10 @@
            "aspnet-mvc": "Templates",
            "jsp-ui": "Templates",
            "php-ui": "Templates" 
-          }
+          },
+        "description": {
+          "kendo-ui": "<p>This example demonstrates how you can utilize the detail template feature of the Kendo UI grid when implementing hierarchical table presentation. The key steps here are to:</p> <ul> <li> specify <strong>detailTemplate</strong> definition for the grid</li> <li>intercept its <strong>detailInit </strong>event in order to populate the details for the expanded item </li> </ul> <p>In the scenario presented above we inject a tabstrip widget with two tabs in the detail template - the first holding the orders of the pertinent employee, and the second containing the contact information of that employee. The orders are populated inside the detailInit event handler applying filter by EmployeeID of the expanded grid row.</p>"
+        }
       },
       {
         "text": "Server detail template",
@@ -2133,7 +2136,10 @@
            "aspnet-mvc": "Templates",
            "jsp-ui": "Templates",
            "php-ui": "Templates" 
-          }
+          },
+        "description": {
+          "kendo-ui": "<p>The Kendo UI grid exposes the option to define a template for the content of its toolbar, which can vary based on your requirements or preferences. </p> <p>Here we present a sample implementation of a toolbar template incorporating a Kendo UI dropdown to list the records in the grid by category. The dropdown is populated with the list of categories and the filter is applied on its change event by invoking the <strong>grid.dataSource.filter(params) </strong>method from the API. <br /> <br /> Note that the toolbar template is instantiated by calling the <strong>kendo.template </strong>method and assigning the returned value to the <strong>toolbar </strong>attribute of the grid instance. </p>"
+        }
       },
       {
         "text": "Column header template",
@@ -2431,6 +2437,9 @@
            "aspnet-mvc": "Templates",
            "jsp-ui": "Templates",
            "php-ui": "Templates" 
+        },
+        "description": {
+          "kendo-ui": "<p>The Kendo UI grid allows flexible customization of its rows in terms of layout and appearance by exposing row template feature for this purpose.</p> <p>In this example we present how you can specify your own custom layout for the rows in the grid using images and property bindings from its underlying data source. The templates are defined via script tags with ids associated with rendered html table row elements in the grid.<br /> <br /> Note that the row and altrow templates are instantiated by calling the <strong>kendo.template </strong>method and assigning the returned value to the <strong>rowTemplate </strong>and <strong>altRowTemplate </strong>attributes of the grid instance. </p>"
         }
       },
       {
