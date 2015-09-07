@@ -626,8 +626,14 @@
         equal(sheet.range("A1").value(), "foo");
     });
 
-    test("range.input removes formula when value is set", function() {
+    test("range.input removes formula when input() is set", function() {
         sheet.range("A1").formula("=SUM(A1:A1)").input("foo");
+
+        equal(sheet.range("A1").formula(), null);
+    });
+
+    test("range.input removes formula when value() is set", function() {
+        sheet.range("A1").formula("=SUM(A1:A1)").value("foo");
 
         equal(sheet.range("A1").formula(), null);
     });

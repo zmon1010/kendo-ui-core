@@ -32,12 +32,18 @@
             return this._sheet._grid.normalize(ref);
         },
 
-        _set: function(name, value, recalc) {
+        _set: function(name, value, noTrigger) {
             var sheet = this._sheet;
             this._ref.forEach(function(ref) {
                 sheet._set(ref.toRangeRef(), name, value);
             });
-            sheet.triggerChange({ recalc: name == "formula" || name == "value", value: value, ref: this._ref });
+            if (!noTrigger) {
+                sheet.triggerChange({
+                    recalc : name == "formula" || name == "value",
+                    value  : value,
+                    ref    : this._ref
+                });
+            }
             return this;
         },
 
@@ -45,16 +51,22 @@
             return this._sheet._get(this._ref.toRangeRef(), name);
         },
 
-        _property: function(name, value, recalc) {
+        _property: function(name, value) {
             if (value === undefined) {
                 return this._get(name);
             } else {
-                return this._set(name, value, recalc);
+                return this._set(name, value);
             }
         },
 
         value: function(value) {
-            return this._property("value", value, true);
+            if (value !== undefined) {
+                // When value is set through the public API we must clear the
+                // formula.  Don't trigger change (third parameter), it'll be
+                // done when setting the value below
+                this._set("formula", null, true);
+            }
+            return this._property("value", value);
         },
 
         _resizedRef: function(direction) {
@@ -172,7 +184,7 @@
                 var f = this._get("formula");
                 return f ? "=" + f : null; // stringify if present
             }
-            return this._property("formula", value, true);
+            return this._property("formula", value);
         },
 
         merge: function() {
