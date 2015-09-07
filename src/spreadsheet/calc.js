@@ -951,6 +951,16 @@
     //// exports
 
     exports.parse = function(sheet, row, col, input) {
+        if (input instanceof Date) {
+            return { type: "date", value: runtime.dateToSerial(input) };
+        }
+        if (typeof input == "number") {
+            return { type: "number", value: input };
+        }
+        if (typeof input == "boolean") {
+            return { type: "boolean", value: input };
+        }
+        input += "";
         if (/^'/.test(input)) {
             return {
                 type: "string",
@@ -967,12 +977,6 @@
                     value: "=" + input
                 };
             }
-        }
-        if (input instanceof Date) {
-            return { type: "date", value: runtime.dateToSerial(input) };
-        }
-        if (typeof input == "number") {
-            return { type: "number", value: input };
         }
         if (input.toLowerCase() == "true") {
             return { type: "boolean", value: true };
