@@ -5,24 +5,26 @@
         <link rel="stylesheet" href="../dist/styles/web/kendo.common.min.css">
         <link rel="stylesheet" href="../dist/styles/web/kendo.default.min.css">
         <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-        <script src="../src/jquery.min.js"></script>
-        <script src="../dist/js/kendo.web.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.6.0/webcomponents.min.js"></script>
-        <script src="web-components.js"></script>
+        <script>
+            requireSync([
+            "../src/jquery.js",
+            "../src/kendo.all.js"
+            ]);
+        </script>
+        <script src="../src/kendo.webcomponents.js"></script>
     </head>
     <body>
-        <input />
-        <kendo-datepicker value="03/27/2015" on-change="someHandler"></kendo-datepicker>
-        <kendo-numerictextbox value="42"></kendo-numerictextbox>
+        <kendo-datepicker value="03/27/2015"></kendo-datepicker>
+        <kendo-numerictextbox on-change="attrHandler"  onchange="attrHandler.call(this, event)" value="42"></kendo-numerictextbox>
         <kendo-dropdownlist value="1" dataTextField="text" dataValueField="value" dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-dropdownlist>
         <kendo-dropdownlist value="3" dataTextField="ProductName" dataValueField="ProductID" dataSource="{ type: 'odata', serverFiltering: true, transport: { read: { url: '//demos.telerik.com/kendo-ui/service/Northwind.svc/Products' } } }"></kendo-dropdownlist>
         <kendo-grid dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-grid>
 
         <script>
-            function someHandler(e){
-                console.log("someHandler called by", this, e);
+            function attrHandler(e){
+                console.log("attrHandler", this, e);
             }
-
             document.addEventListener("DOMContentLoaded", function() {
                 var datepicker = document.querySelector("kendo-datepicker");
                 datepicker.addEventListener("open", function(e) {
@@ -30,7 +32,13 @@
                 });
 
                 var numeric = document.querySelector("kendo-numerictextbox");
+                numeric.addEventListener("change", function(e) {
+                     console.log("addEventListener", this, e);
+                });
                 numeric.value(3.14);
+                $(numeric).on("change", function(e) {
+                    console.log("jQuery", this, e);
+                })
 
                 var dropdownlist = document.querySelector("kendo-dropdownlist");
                 dropdownlist.addEventListener("change", function(e) {
