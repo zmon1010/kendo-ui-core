@@ -25,16 +25,60 @@
         equal(element.find(".k-toolbar").length, 0);
     });
 
-    test("renders if option is set", function() {
+    test("renders all toolbars if option is set", function() {
         createSpreadsheet({ toolbar: true });
+
+        equal(element.find(".k-toolbar").length, 4); //home, insert, formulas, data toolbars
+    });
+
+    test("stores reference to each toolbar", function() {
+        createSpreadsheet();
+        var homeToolBar = spreadsheet._view.toolbars["home"];
+        var insertToolBar = spreadsheet._view.toolbars["insert"];
+        var formulasToolBar = spreadsheet._view.toolbars["formulas"];
+        var dataToolBar = spreadsheet._view.toolbars["data"];
+
+        ok(homeToolBar instanceof kendo.ui.ToolBar);
+        ok(insertToolBar instanceof kendo.ui.ToolBar);
+        ok(formulasToolBar instanceof kendo.ui.ToolBar);
+        ok(dataToolBar instanceof kendo.ui.ToolBar);
+    });
+
+    test("renders only specified toolbars", function() {
+        createSpreadsheet({
+            toolbar: {
+               home: false,
+               insert: true,
+               formulas: false,
+               data: false
+            }
+        });
 
         equal(element.find(".k-toolbar").length, 1);
     });
 
-    test("sets toolbar field", function() {
-        createSpreadsheet();
+    test("not explicitly set to false toolbars are rendered", function() {
+        createSpreadsheet({
+            toolbar: {
+               formulas: false,
+            }
+        });
 
-        ok(spreadsheet._view.toolbar instanceof kendo.ui.ToolBar);
+        equal(element.find(".k-toolbar").length, 3);
+    });
+
+    test("propagates options to the toolbar instance", function() {
+        createSpreadsheet({
+            toolbar: {
+                home: [ ["bold", "italic", "underline"] ],
+                insert: false
+            }
+        });
+
+        equal(element.find(".k-toolbar").length, 3);
+
+        var homeToolBar = spreadsheet._view.toolbars["home"];
+        ok(homeToolBar.options.items.length, 1);
     });
 
     var toolbar;
@@ -42,11 +86,14 @@
     function createWithTools(tools) {
         createSpreadsheet({
             toolbar: {
-                tools: tools
+                home: tools,
+                insert: false,
+                formulas: false,
+                data: false
             }
         });
 
-        toolbar = spreadsheet._view.toolbar;
+        toolbar = spreadsheet._view.toolbars["home"];
     }
 
     test("expands tools to items", function() {

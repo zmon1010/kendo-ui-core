@@ -277,6 +277,7 @@
             this.element = element;
             this.options = options;
 
+            this.toolbars = {};
             this._chrome();
 
             this._dialogs = [];
@@ -322,16 +323,18 @@
         },
 
         _resize: function() {
-            var toolbarHeight = this.toolbar ? this.toolbar.element.outerHeight() : 0;
+            var tabstripHeight = this.tabstrip ? this.tabstrip.element.outerHeight() : 0;
             var formulaBarHeight = this.formulaBar ? this.formulaBar.element.outerHeight() : 0;
-            this.wrapper.height(this.element.height() - toolbarHeight - formulaBarHeight);
+            this.wrapper.height(this.element.height() - tabstripHeight - formulaBarHeight);
         },
 
         _chrome: function() {
             var formulaBar = $("<div />").prependTo(this.element);
             this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar);
 
-            this._toolbar();
+            if (this.options.toolbar) {
+                this._tabstrip();
+            }
         },
 
         _formulaInput: function() {
@@ -342,19 +345,48 @@
             });
         },
 
-        _toolbar: function() {
+        _tabstrip: function() {
             var element;
-            var toolbarOptions = this.options.toolbar;
+            var options = $.extend(true, {}, { home: true, insert: true, formulas: true, data: true }, this.options.toolbar);
+            var tabs = [];
 
-            if (this.toolbar) {
-                this.toolbar.destroy();
-                this.element.children(".k-toolbar").remove();
+            if (this.tabstrip) {
+                this.tabstrip.destroy();
+                this.element.children(".k-tabstrip").remove();
             }
 
-            if (toolbarOptions) {
-                element = $("<div />").prependTo(this.element);
+            for (var name in options) {
+                if (options[name]) {
+                    tabs.push({ id: name, text: name.charAt(0).toUpperCase() + name.substr(1), content: "" });
+                }
+            }
 
-                toolbarOptions = $.extend(true, toolbarOptions, {
+            this.tabstrip = $("<div />").prependTo(this.element).kendoTabStrip({
+                dataTextField: "text",
+                dataContentField: "content",
+                dataSource: tabs
+            }).data("kendoTabStrip").select(0);
+
+            this.tabstrip.contentElements.each(function(idx, element) {
+                this._toolbar($(element), tabs[idx].id, options[tabs[idx].id]);
+            }.bind(this));
+        },
+
+        _toolbar: function(container, name, tools) {
+            var element;
+            var options;
+
+            if (this.toolbars[name]) {
+                this.toolbars[name].destroy();
+                container.children(".k-toolbar").remove();
+            }
+
+            if (tools) {
+                element = $("<div />").prependTo(container);
+
+                options = {
+                    tools: typeof tools === "boolean" ? undefined : tools,
+                    toolbarName: name,
                     workbook: function() {
                         return this._workbook;
                     }.bind(this),
@@ -362,9 +394,9 @@
                         this.openDialog(e.name, e.options);
                     }.bind(this),
                     execute: this._executeCommand.bind(this)
-                });
+                };
 
-                this.toolbar = new kendo.spreadsheet.ToolBar(element, toolbarOptions);
+                this.toolbars[name] = new kendo.spreadsheet.ToolBar(element, options);
             }
         },
 
@@ -444,8 +476,12 @@
             var sheet = this._sheet;
             //this.formulaBar.value(this._workbook._inputForRef(sheet.activeCell()));
 
-            if (this.toolbar) {
-                this.toolbar.refresh();
+            if (this.toolbars) {
+                for (var name in this.toolbars) {
+                    if (this.toolbars.hasOwnProperty(name)) {
+                        this.toolbars[name].refresh();
+                    }
+                }
             }
 
 

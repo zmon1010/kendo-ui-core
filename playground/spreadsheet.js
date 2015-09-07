@@ -1,6 +1,6 @@
 $("#spreadsheet").kendoSpreadsheet({
     toolbar: {
-        tools: kendo.spreadsheet.ToolBar.fn.options.tools.concat([
+        home: kendo.spreadsheet.ToolBar.fn.options.tools["home"].concat([
             {
                 type: "button",
                 text: "Foo",
@@ -9,7 +9,8 @@ $("#spreadsheet").kendoSpreadsheet({
                     window.alert("custom tool");
                 }
             }
-        ])
+        ]),
+        data: false
     }
 });
 

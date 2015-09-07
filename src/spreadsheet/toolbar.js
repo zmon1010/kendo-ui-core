@@ -9,21 +9,32 @@
 
     var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand;
 
-    var defaultTools = [
-        [ "copy", "paste" ],
-        [ "bold", "italic", "underline" ],
-        "backgroundColor", "textColor",
-        "borders",
-        "fontSize", "fontFamily",
-        [ "alignLeft", "alignCenter", "alignRight" ],
-        [ "alignTop", "alignMiddle", "alignBottom" ],
-        "textWrap",
-        [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ],
-        "format",
-        "filter",
-        "separator",
-        "mergeSplitButton"
-    ];
+    var defaultTools = {
+        home: [
+            [ "copy", "paste" ],
+            [ "bold", "italic", "underline" ],
+            "backgroundColor", "textColor",
+            "borders",
+            "fontSize", "fontFamily",
+            [ "alignLeft", "alignCenter", "alignRight" ],
+            [ "alignTop", "alignMiddle", "alignBottom" ],
+            "textWrap",
+            [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ],
+            "format",
+            "filter",
+            "separator",
+            "mergeSplitButton"
+        ],
+        insert: [
+            [ "bold", "italic", "underline" ]
+        ],
+        formulas: [
+            [ "bold", "italic", "underline" ]
+        ],
+        data: [
+            [ "bold", "italic", "underline" ]
+        ]
+    };
 
     var toolDefaults = {
         bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
@@ -62,7 +73,7 @@
 
     var SpreadsheetToolBar = ToolBar.extend({
         init: function(element, options) {
-            options.items = this._expandTools(options.tools || SpreadsheetToolBar.prototype.options.tools);
+            options.items = this._expandTools(options.tools || SpreadsheetToolBar.prototype.options.tools[options.toolbarName]);
 
             ToolBar.fn.init.call(this, element, options);
             var handleClick = this._click.bind(this);
