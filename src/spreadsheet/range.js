@@ -149,7 +149,13 @@
                         this.format(toExcelFormat(kendo.culture().calendar.patterns.d));
                     }
                     this.formula(formula);
-                    this.value(x.value, false);
+                    if (!formula) {
+                        // value() will clear the formula.  Lucky for us,
+                        // x.value is undefined so it actually won't, but let's
+                        // be explicit and only set value if formula is not
+                        // present.
+                        this.value(x.value);
+                    }
                 }.bind(this), { recalc: true, value: value, ref: this._ref });
 
                 return this;
