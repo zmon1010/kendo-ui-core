@@ -1116,6 +1116,20 @@
         }
     });
 
+    var RectDataNode = PathDataNode.extend({
+        renderData: function() {
+            var rect = this.srcElement.geometry();
+            var parts = ["m", printPoints([rect.topLeft()]), "l", printPoints([rect.topRight(), rect.bottomRight(), rect.bottomLeft()]), "x e"];
+            return parts.join(" ");
+        }
+    });
+
+    var RectNode = PathNode.extend({
+        createDataNode: function(srcElement) {
+            return new RectDataNode(srcElement);
+        }
+    });
+
     var nodeMap = {
         Group: GroupNode,
         Text: TextNode,
@@ -1123,7 +1137,8 @@
         MultiPath: MultiPathNode,
         Circle: CircleNode,
         Arc: ArcNode,
-        Image: ImageNode
+        Image: ImageNode,
+        Rect: RectNode
     };
 
     // Helper functions =======================================================
@@ -1265,6 +1280,8 @@
             Node: Node,
             PathDataNode: PathDataNode,
             PathNode: PathNode,
+            RectDataNode: RectDataNode,
+            RectNode: RectNode,
             RootNode: RootNode,
             StrokeNode: StrokeNode,
             Surface: Surface,

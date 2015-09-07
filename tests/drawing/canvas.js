@@ -32,7 +32,8 @@
         stroke: $.noop,
         strokeText: $.noop,
         createLinearGradient: $.noop,
-        createRadialGradient: $.noop
+        createRadialGradient: $.noop,
+        rect: $.noop
     });
 
     function mockContext(members) {
@@ -1330,6 +1331,36 @@
             });
 
             imageNode.renderTo(ctx);
+        });
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var Rect = d.Rect,
+            RectNode = canv.RectNode,
+            rect,
+            rectNode;
+
+        paintTests(Rect, RectNode, "RectNode");
+        clipTests(Rect, RectNode, "RectNode");
+
+        module("RectNode", {
+            setup: function() {
+                var geometry = new g.Rect([10,20],[30,40]);
+                rect = new d.Rect(geometry);
+                rectNode = new RectNode(rect);
+            }
+        });
+
+        test("renders rect", function() {
+            rectNode.renderTo(mockContext({
+                rect: function(x, y, width, height) {
+                    equal(x, 10);
+                    equal(y, 20);
+                    equal(width, 30);
+                    equal(height, 40);
+                }
+            }));
         });
     })();
 

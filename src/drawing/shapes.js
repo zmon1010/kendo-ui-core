@@ -11,7 +11,6 @@
 
         g = kendo.geometry,
         Point = g.Point,
-        Rect = g.Rect,
         Size = g.Size,
         Matrix = g.Matrix,
         toMatrix = g.toMatrix,
@@ -154,7 +153,7 @@
             var box = this._clippedBBox(transformation);
             if (box) {
                 var clip = this.clip();
-                return clip ? Rect.intersect(box, clip.bbox(transformation)) : box;
+                return clip ? g.Rect.intersect(box, clip.bbox(transformation)) : box;
             }
         },
 
@@ -545,7 +544,7 @@
         },
 
         _lineBoundingBox: function(p1, p2) {
-            return Rect.fromPoints(p1, p2);
+            return g.Rect.fromPoints(p1, p2);
         },
 
         _curveBoundingBox: function(p1, cp1, cp2, p2) {
@@ -555,7 +554,7 @@
                 xLimits = arrayLimits([extremesX.min, extremesX.max, p1.x, p2.x]),
                 yLimits = arrayLimits([extremesY.min, extremesY.max, p1.y, p2.y]);
 
-            return Rect.fromPoints(new Point(xLimits.min, yLimits.min), new Point(xLimits.max, yLimits.max));
+            return g.Rect.fromPoints(new Point(xLimits.min, yLimits.min), new Point(xLimits.max, yLimits.max));
         },
 
         _curveExtremesFor: function(points, field) {
@@ -735,12 +734,12 @@
 
             if (length === 1) {
                 var anchor = segments[0].anchor().transformCopy(matrix);
-                boundingBox = new Rect(anchor, Size.ZERO);
+                boundingBox = new g.Rect(anchor, Size.ZERO);
             } else if (length > 0) {
                 for (var i = 1; i < length; i++) {
                     var segmentBox = segments[i - 1].bboxTo(segments[i], matrix);
                     if (boundingBox) {
-                        boundingBox = Rect.union(boundingBox, segmentBox);
+                        boundingBox = g.Rect.union(boundingBox, segmentBox);
                     } else {
                         boundingBox = segmentBox;
                     }
@@ -1034,6 +1033,37 @@
 
     definePointAccessors(RadialGradient.fn, ["center"]);
 
+    var Rect = Element.extend({
+        nodeType: "Rect",
+
+        init: function(geometry, options) {
+            Element.fn.init.call(this, options);
+            this.geometry(geometry || new g.Rect());
+
+            if (!defined(this.options.stroke)) {
+                this.stroke("#000");
+            }
+        },
+
+        bbox: function(transformation) {
+            var combinedMatrix = toMatrix(this.currentTransform(transformation));
+            var rect = this._geometry.bbox(combinedMatrix);
+            var strokeWidth = this.options.get("stroke.width");
+            if (strokeWidth) {
+                expandRect(rect, strokeWidth / 2);
+            }
+
+            return rect;
+        },
+
+        rawBBox: function() {
+            return this._geometry.bbox();
+        }
+    });
+
+    drawing.mixins.Paintable.extend(Rect.fn);
+    defineGeometryAccessors(Rect.fn, ["geometry"]);
+
     var Layout = Group.extend({
         init: function(rect, options) {
             Group.fn.init.call(this, kendo.deepExtend({}, this._defaults, options));
@@ -1108,7 +1138,7 @@
                 groupOrigin[groupsAxis] = groupStart;
                 size[sizeField] = group.size;
                 size[groupsSizeField] = group.lineSize;
-                groupBox = new Rect(groupOrigin, size);
+                groupBox = new g.Rect(groupOrigin, size);
                 for (var idx = 0; idx < group.bboxes.length; idx++) {
                     element = group.elements[idx];
                     bbox = group.bboxes[idx];
@@ -1208,7 +1238,7 @@
                 var elementBoundingBox = applyTransform ? element.bbox(transformation) : element.rawBBox();
                 if (elementBoundingBox) {
                     if (boundingBox) {
-                        boundingBox = Rect.union(boundingBox, elementBoundingBox);
+                        boundingBox = g.Rect.union(boundingBox, elementBoundingBox);
                     } else {
                         boundingBox = elementBoundingBox;
                     }
@@ -1228,7 +1258,7 @@
                 var elementBoundingBox = element.clippedBBox(transformation);
                 if (elementBoundingBox) {
                     if (boundingBox) {
-                        boundingBox = Rect.union(boundingBox, elementBoundingBox);
+                        boundingBox = g.Rect.union(boundingBox, elementBoundingBox);
                     } else {
                         boundingBox = elementBoundingBox;
                     }
@@ -1505,6 +1535,7 @@
         MultiPath: MultiPath,
         Path: Path,
         RadialGradient: RadialGradient,
+        Rect: Rect,
         Segment: Segment,
         stack: stack,
         Text: Text,
