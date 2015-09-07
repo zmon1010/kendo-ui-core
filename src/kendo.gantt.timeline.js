@@ -1218,11 +1218,12 @@ var __meta__ = { // jshint ignore:line
             var content = this.content;
             var contentOffset = content.offset();
             var contentWidth = content.width();
-            var contentScrollLeft = content.scrollLeft();
+            var contentScrollLeft = kendo.scrollLeft(content);
             var row = $(element).parents("tr").first();
             var rowOffset = row.offset();
             var template = (options.tooltip && options.tooltip.template) ? kendo.template(options.tooltip.template) : TASK_TOOLTIP_TEMPLATE;
-            var left = mouseLeft - (contentOffset.left - content.scrollLeft());
+            var left = isRtl ? (mouseLeft + contentOffset.left) - (contentScrollLeft + (kendo.support.scrollbar() * 2))
+                : mouseLeft - (contentOffset.left - contentScrollLeft);
             var top = (rowOffset.top + row.outerHeight() - contentOffset.top) + content.scrollTop();
             var tooltip = this._taskTooltip = $('<div style="z-index: 100002;" class="' +styles.tooltipWrapper + '" >' +
                                    '<div class="' + styles.taskContent + '"></div></div>');
