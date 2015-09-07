@@ -3361,14 +3361,25 @@
                 if (action == "remove") {
                     this._removeDataItems(e.items, true);
                 } else {
+                    var triggerDataBound;
+                    if ((!action || action === "itemloaded") && !this._bindingRoots) {
+                        this._bindingRoots = true;
+                        triggerDataBound = true;
+                    }
+
                     if (!action && !node) {
-                         that.clear();
+                        that.clear();
                     }
 
                     this._addDataItems(items, node);
 
                     for (idx = 0; idx < items.length; idx++) {
                         items[idx].load();
+                    }
+
+                    if (triggerDataBound) {
+                        this.trigger("dataBound");
+                        this._bindingRoots = false;
                     }
                 }
 
@@ -3646,7 +3657,6 @@
             refresh: function() {
                 this._loadingShapes = false;
                 if (!this._loadingConnections) {
-                    this.trigger("dataBound");
                     this._rebindShapesAndConnections();
                 }
             },
@@ -3662,12 +3672,12 @@
                     this.layout(this.options.layout);
                 }
                 this._redrawConnections();
+                this.trigger("dataBound");
             },
 
             refreshConnections: function() {
                 this._loadingConnections = false;
                 if (!this._loadingShapes) {
-                    this.trigger("dataBound");
                     this._rebindShapesAndConnections();
                 }
             },

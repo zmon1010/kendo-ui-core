@@ -86,6 +86,56 @@
         equal(diagram.shapes.length, 2);
     });
 
+    test("triggers dataBound once after binding all items", 1, function() {
+        diagram = createDiagram({
+            dataSource: {
+                data: [{
+                    id: "1",
+                    items: [{
+                        id: "1.1"
+                    }]
+                }],
+                schema: {
+                    model: {
+                        children: "items"
+                    }
+                }
+            },
+            dataBound: function() {
+                equal(this.shapes.length, 2);
+            }
+        });
+    });
+
+    asyncTest("triggers dataBound for each level if the children are loaded asynchronously", 2, function() {
+        diagram = createDiagram({
+            dataSource: {
+                transport: {
+                    read: function(options) {
+                        setTimeout(function() {
+                            if (options.data.id) {
+                                options.success([{id: 2, hasChildren: false}]);
+                            } else {
+                                options.success([{id: 1, hasChildren: true}]);
+                            }
+                        }, 0);
+                    }
+                },
+                schema: {
+                    model: {
+                        hasChildren: "hasChildren"
+                    }
+                }
+            },
+            dataBound: function() {
+                ok(true);
+                if (this.shapes.length == 2) {
+                    start();
+                }
+            }
+        });
+    });
+
     test("Binds to flat data", function() {
         diagram = createDiagram({
             dataSource: {
@@ -247,6 +297,17 @@
             diagram.bind("dataBound", function() {
                 ok(true);
                 start();
+            });
+        });
+
+        test("triggers dataBound after the shapes and connections are created", function() {
+            diagram = createDiagram({
+                dataSource: shapesData,
+                connectionsDataSource: connectionsData,
+                dataBound: function() {
+                   equal(this.shapes.length, 2);
+                   equal(this.connections.length, 1);
+                }
             });
         });
 
