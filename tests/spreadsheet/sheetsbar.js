@@ -5,7 +5,7 @@
 
     module("Spreadsheet SheetsBar", {
         setup: function() {
-            element = $("<div />").appendTo(QUnit.fixture);
+            element = $("<div style='width:200px' />").appendTo(QUnit.fixture);
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -289,4 +289,42 @@
 
         element.find(".k-spreadsheet-sheets-remove").trigger("click");
     });
+
+    test('scrolling buttons are not rendered if sheet tabs fit', 1, function () {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var sheets = [
+            {name: function() {return name}},
+            {name: function() {return name2}}
+        ];
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+        var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-button-bare");
+
+        equal(buttons.length, 0);
+    });
+
+    //test('scrolling buttons are rendered if sheet tabs do not fit', 3, function () {
+    //    var sheets = [
+    //        {name: function() {return "Sheet1"}},
+    //        {name: function() {return "Sheet2"}},
+    //        {name: function() {return "Sheet3"}},
+    //        {name: function() {return "Sheet4"}},
+    //        {name: function() {return "Sheet5"}},
+    //        {name: function() {return "Sheet6"}},
+    //        {name: function() {return "Sheet7"}},
+    //        {name: function() {return "Sheet8"}},
+    //        {name: function() {return "Sheet9"}},
+    //        {name: function() {return "Sheet10"}}
+    //    ];
+
+    //    createSheetsBar();
+    //    sheetsBar.renderSheets(sheets, 3);
+
+    //    var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-button-bare");
+
+    //    equal(buttons.length, 2);
+    //    ok(buttons.eq(0).is(".k-spreadsheet-sheets-prev"));
+    //    ok(buttons.eq(1).is(".k-spreadsheet-sheets-next"));
+    //});
 })();

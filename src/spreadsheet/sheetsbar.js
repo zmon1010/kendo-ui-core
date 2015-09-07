@@ -11,7 +11,10 @@
             sheetsBarAdd: "k-spreadsheet-sheets-bar-add",
             sheetsBarRemove: "k-spreadsheet-sheets-remove",
             sheetsBarItems: "k-spreadsheet-sheets-items",
-            sheetsBarEditor: "k-spreadsheet-sheets-editor"
+            sheetsBarEditor: "k-spreadsheet-sheets-editor",
+            sheetsBarScrollable: "k-spreadsheet-sheets-scrollable",
+            sheetsBarNext: "k-spreadsheet-sheets-next",
+            sheetsBarPrev: "k-spreadsheet-sheets-prev"
         };
 
         var SheetsBar = kendo.ui.Widget.extend({
@@ -22,7 +25,7 @@
 
                 this._tree = new kendo.dom.Tree(element[0]);
 
-                this._tree.render([this._addButton(), this._sheetsWrapper([])]);
+                this._tree.render([this._addButton(), this._createSheetsWrapper([])]);
 
                 this._createSortable();
 
@@ -40,7 +43,10 @@
             },
 
             options: {
-                name: "SheetsBar"
+                name: "SheetsBar",
+                scrollable: {
+                    distance: 200
+                }
             },
 
             events: [
@@ -48,13 +54,6 @@
                 "reorder",
                 "rename"
             ],
-
-            //TODO:
-            //1) add sheet -- ready
-            //2) remove sheet from sheet tab
-            //3) reorder sheets --ready
-            //4) rename sheet with double click --ready
-            //5) scroll when more sheets are rendered (last one)
 
             _createEditor: function (e) {
                 if (this._editor) {
@@ -84,16 +83,80 @@
             },
 
             _renderSheets: function(sheets, selectedIndex, isInEditMode) {
-                var dom = kendo.dom;
-                var element = dom.element;
+                var that = this;
+                var wrapperOffsetWidth;
+                var sheetsGroupScrollWidth;
+                var scrollPrevButton;
+                var scrollNextButton;
+                var sheetsWrapper = that._sheetsWrapper();
+                var sheetsGroup = that._sheetsGroup();
+                var options = that.options;
+
+                that._sheets = sheets;
+                that._selectedIndex = selectedIndex;
+
+                if (!that._scrollableAllowed()) {
+                    that._renderHtml(isInEditMode, false);
+                    return;
+                }
+
+                sheetsWrapper.addClass(sheetsBarClassNames.sheetsBarScrollable);
+
+                wrapperOffsetWidth = sheetsWrapper[0].offsetWidth;
+                sheetsGroupScrollWidth = sheetsGroup[0].scrollWidth;
+
+                if (sheetsGroupScrollWidth > wrapperOffsetWidth && !that._scrollableModeActive) {
+
+                    that._nowScrollingSheets = false;
+                    that._isRtl = kendo.support.isRtl(that.element);
+
+                    that._renderHtml(isInEditMode, true);
+
+                    scrollPrevButton = sheetsWrapper.children(DOT + sheetsBarClassNames.sheetsBarPrev);
+                    scrollNextButton = sheetsWrapper.children(DOT + sheetsBarClassNames.sheetsBarNext);
+
+                    sheetsGroup.css({ marginLeft: scrollPrevButton.outerWidth() + 9, marginRight: scrollNextButton.outerWidth() + 12 });
+
+                    scrollPrevButton.on("mousedown", function () {
+                        that._nowScrollingSheets = true;
+                        that._scrollSheetsByDelta(options.scrollable.distance * (that._isRtl ? 1 : -1));
+                    });
+
+                    scrollNextButton.on("mousedown", function () {
+                        that._nowScrollingSheets = true;
+                        that._scrollSheetsByDelta(options.scrollable.distance * (that._isRtl ? -1 : 1));
+                    });
+
+                    scrollPrevButton.add(scrollNextButton).on("mouseup", function () {
+                        that._nowScrollingSheets = false;
+                    });
+
+                    that._scrollableModeActive = true;
+
+                    that._toggleScrollButtons();
+                } else if (that._scrollableModeActive && sheetsGroupScrollWidth <= wrapperOffsetWidth) {
+                    that._scrollableModeActive = false;
+
+                    sheetsWrapper.children(DOT + sheetsBarClassNames.sheetsBarPrev).off();
+                    sheetsWrapper.children(DOT + sheetsBarClassNames.sheetsBarNext).off();
+
+                    that._renderHtml(isInEditMode, false);
+                    that._sheetsGroup().css({ marginLeft: "", marginRight: "" });
+                } else {
+                    that._renderHtml(isInEditMode, false);
+                }
+            },
+
+            _renderHtml: function(isInEditMode, renderScrollButtons) {
                 var idx;
                 var sheetElements = [];
+                var dom = kendo.dom;
+                var element = dom.element;
+                var sheets = this._sheets;
+                var selectedIndex = this._selectedIndex;
 
-                this._sheets = sheets;
-                this._selectedIndex = selectedIndex;
-
-                for (idx = 0; idx < this._sheets.length; idx++) {
-                    var sheet = this._sheets[idx];
+                for (idx = 0; idx < sheets.length; idx++) {
+                    var sheet = sheets[idx];
                     var isSelectedSheet = (idx === selectedIndex);
                     var args = isSelectedSheet ? { className: sheetsBarClassNames.sheetsBarActive } : { className: sheetsBarClassNames.sheetsBarInactive };
                     var elementContent = [];
@@ -123,11 +186,24 @@
                     sheetElements.push(element("li", args, elementContent));
                 }
 
-                this._tree.render([this._addButton(),  this._sheetsWrapper(sheetElements)]);
+                this._tree.render([this._addButton(),  this._createSheetsWrapper(sheetElements, renderScrollButtons)]);
             },
 
-            _sheetsWrapper: function(sheetElements) {
-                return kendo.dom.element("div", { className: sheetsBarClassNames.sheetsBarItems }, [kendo.dom.element("ul", {}, sheetElements)]);
+            _createSheetsWrapper: function(sheetElements, renderScrollButtons) {
+                var element = kendo.dom.element;
+                var childrenElements = [element("ul", { className: "k-reset" }, sheetElements)];
+
+                if (renderScrollButtons) {
+                    childrenElements.push(element("span", {className: "k-button k-button-icon k-button-bare " + sheetsBarClassNames.sheetsBarPrev }, [
+                        element("span", {className: "k-icon k-i-arrow-w"}, [])
+                    ]));
+
+                    childrenElements.push(element("span", {className: "k-button k-button-icon k-button-bare " + sheetsBarClassNames.sheetsBarNext }, [
+                        element("span", {className: "k-icon k-i-arrow-e"}, [])
+                    ]));
+                }
+
+                return element("div", { className: sheetsBarClassNames.sheetsBarItems }, childrenElements);
             },
 
             _createSortable: function() {
@@ -215,6 +291,72 @@
 
             destroy: function() {
                 this._sortable.destroy();
+            },
+
+            _scrollableAllowed: function() {
+                var options = this.options;
+                return options.scrollable && !isNaN(options.scrollable.distance);
+            },
+
+            _scrollSheetsToItem: function (item) {
+                var that = this;
+                var sheetsGroup = that._sheetsGroup();
+                var currentScrollOffset = sheetsGroup.scrollLeft();
+                var itemWidth = item.outerWidth();
+                var itemOffset = that._isRtl ? item.position().left : item.position().left - sheetsGroup.children().first().position().left;
+                var sheetsGroupWidth = sheetsGroup[0].offsetWidth;
+                var sheetsGroupPadding = Math.ceil(parseFloat(sheetsGroup.css("padding-left")));
+                var itemPosition;
+
+                if (that._isRtl) {
+                    if (itemOffset < 0) {
+                        itemPosition = currentScrollOffset + itemOffset - (sheetsGroupWidth - currentScrollOffset) - sheetsGroupPadding;
+                    } else if (itemOffset + itemWidth > sheetsGroupWidth) {
+                        itemPosition = currentScrollOffset + itemOffset - itemWidth + sheetsGroupPadding * 2;
+                    }
+                } else {
+                    if (currentScrollOffset + sheetsGroupWidth < itemOffset + itemWidth) {
+                        itemPosition = itemOffset + itemWidth - sheetsGroupWidth + sheetsGroupPadding * 2;
+                    } else if (currentScrollOffset > itemOffset) {
+                        itemPosition = itemOffset - sheetsGroupPadding;
+                    }
+                }
+
+                sheetsGroup.finish().animate({ "scrollLeft": itemPosition }, "fast", "linear", function () {
+                    that._toggleScrollButtons();
+                });
+            },
+
+            _sheetsGroup: function() {
+                return this._sheetsWrapper().children("ul");
+            },
+
+            _sheetsWrapper: function() {
+                return this.element.find(DOT + sheetsBarClassNames.sheetsBarItems);
+            },
+
+            _scrollSheetsByDelta: function (delta) {
+                var that = this;
+                var sheetsGroup = that._sheetsGroup();
+                var scrLeft = sheetsGroup.scrollLeft();
+
+                sheetsGroup.finish().animate({ "scrollLeft": scrLeft + delta }, "fast", "linear", function () {
+                    if (that._nowScrollingSheets) {
+                        that._scrollSheetsByDelta(delta);
+                    } else {
+                        that._toggleScrollButtons();
+                    }
+                });
+            },
+
+            _toggleScrollButtons: function () {
+                var that = this;
+                var ul = that._sheetsGroup();
+                var wrapper = that._sheetsWrapper();
+                var scrollLeft = ul.scrollLeft();
+
+                wrapper.find(DOT + sheetsBarClassNames.sheetsBarPrev).toggle(that._isRtl ? scrollLeft < ul[0].scrollWidth - ul[0].offsetWidth - 1 : scrollLeft !== 0);
+                wrapper.find(DOT + sheetsBarClassNames.sheetsBarNext).toggle(that._isRtl ? scrollLeft !== 0 : scrollLeft < ul[0].scrollWidth - ul[0].offsetWidth - 1);
             }
         });
 
