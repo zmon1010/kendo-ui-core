@@ -104,7 +104,8 @@
             MOUSEWHEEL_NS = "DOMMouseScroll" + NS + " mousewheel" + NS,
             MOBILE_ZOOM_RATE = 0.05,
             MOBILE_PAN_DISTANCE = 5,
-            BUTTON_TEMPLATE = '<a class="k-button k-button-icontext #=className#" href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>';
+            BUTTON_TEMPLATE = '<a class="k-button k-button-icontext #=className#" href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>',
+            CONNECTION_CONTENT_OFFSET = 5;
 
         diagram.DefaultConnectors = [{
             name: TOP
@@ -292,16 +293,26 @@
                     var contentOptions = options.content;
                     var contentVisual = this._contentVisual;
 
-                    if (!contentVisual && contentOptions.text) {
-                        this._contentVisual = new TextBlock(contentOptions);
-                        this._contentVisual._includeInBBox = false;
-                        this.visual.append(this._contentVisual);
-                    } else if (contentVisual) {
-                        contentVisual.redraw(contentOptions);
+                    if (!contentVisual) {
+                        this._createContentVisual(contentOptions);
+                    } else {
+                        this._updateContentVisual(contentOptions);
                     }
                 }
 
                 return this.options.content.text;
+            },
+
+            _createContentVisual: function(options) {
+                if (options.text) {
+                    this._contentVisual = new TextBlock(options);
+                    this._contentVisual._includeInBBox = false;
+                    this.visual.append(this._contentVisual);
+                }
+            },
+
+            _updateContentVisual: function(options) {
+                this._contentVisual.redraw(options);
             },
 
             _hitTest: function (point) {
@@ -958,7 +969,9 @@
                 startCap: NONE,
                 endCap: NONE,
                 points: [],
-                selectable: true
+                selectable: true,
+                fromConnector: AUTO,
+                toConenctor: AUTO
             },
 
             _setOptionsFromModel: function(model) {
@@ -972,13 +985,21 @@
 
                     if (model) {
                         if (defined(options.from)) {
-                            this.source(dataMap[options.from]);
+                            var from = dataMap[options.from];
+                            if (from && defined(options.fromConnector)) {
+                               from = from.getConnector(options.fromConnector);
+                            }
+                            this.source(from);
                         } else if (defined(options.fromX) && defined(options.fromY)) {
                             this.source(new Point(options.fromX, options.fromY));
                         }
 
                         if (defined(options.to)) {
-                            this.target(dataMap[options.to]);
+                            var to = dataMap[options.to];
+                            if (to && defined(options.toConnector)) {
+                                to = to.getConnector(options.toConnector);
+                            }
+                            this.target(to);
                         } else if (defined(options.toX) && defined(options.toY)) {
                             this.target(new Point(options.toX, options.toY));
                         }
@@ -1002,26 +1023,35 @@
                 if (this.diagram && this.diagram._isEditable) {
                     if (this.diagram.connectionsDataSource) {
                         var model = this.diagram.connectionsDataSource.getByUid(this.dataItem.uid);
+
                         if (model) {
                             this.diagram._suspendModelRefresh();
                             if (defined(this.options.fromX) && this.options.fromX !== null) {
-                                model.set("from", null);
+                                clearField("from", model);
+                                clearField("fromConnector", model);
                                 model.set("fromX", this.options.fromX);
                                 model.set("fromY", this.options.fromY);
                             } else  {
                                 model.set("from", this.options.from);
-                                model.set("fromX", null);
-                                model.set("fromY", null);
+                                if (defined(model.fromConnector)) {
+                                    model.set("fromConnector", this.sourceConnector ? this.sourceConnector.options.name : null);
+                                }
+                                clearField("fromX", model);
+                                clearField("fromY", model);
                             }
 
                             if (defined(this.options.toX) && this.options.toX !== null) {
-                                model.set("to", null);
+                                clearField("to", model);
+                                clearField("toConnector", model);
                                 model.set("toX", this.options.toX);
                                 model.set("toY", this.options.toY);
                             } else {
                                 model.set("to", this.options.to);
-                                model.set("toX", null);
-                                model.set("toY", null);
+                                if (defined(model.toConnector)) {
+                                    model.set("toConnector", this.targetConnector ? this.targetConnector.options.name : null);
+                                }
+                                clearField("toX", model);
+                                clearField("toY", model);
                             }
 
                             if (defined(this.options.type) && defined(model.type)) {
@@ -1057,8 +1087,8 @@
                 var dataItem;
                 if (isDefined(source)) {
                     var shapeSource = source instanceof Shape;
-
-                    if (shapeSource && !source.getConnector(AUTO)) {
+                    var defaultConnector = this.options.fromConnector || AUTO;
+                    if (shapeSource && !source.getConnector(defaultConnector)) {
                         return;
                     }
 
@@ -1097,7 +1127,7 @@
                             this._setFromOptions(dataItem.id);
                         }
 
-                        this.sourceConnector = source.getConnector(AUTO);// source.getConnector(this.targetPoint());
+                        this.sourceConnector = source.getConnector(defaultConnector);
                         this.sourceConnector.connections.push(this);
                     }
 
@@ -1156,8 +1186,9 @@
                 var dataItem;
                 if (isDefined(target)) {
                     var shapeTarget = target instanceof Shape;
+                    var defaultConnector = this.options.toConnector || AUTO;
 
-                    if (shapeTarget && !target.getConnector(AUTO)) {
+                    if (shapeTarget && !target.getConnector(defaultConnector)) {
                         return;
                     }
 
@@ -1195,10 +1226,9 @@
                         if (dataItem) {
                             this._setToOptions(dataItem.id);
                         }
-                        this.targetConnector = target.getConnector(AUTO);
+                        this.targetConnector = target.getConnector(defaultConnector);
                         this.targetConnector.connections.push(this);
                     }
-
 
                     this.refresh();
                 }
@@ -1277,14 +1307,91 @@
                 return result;
             },
 
+            _createContentVisual: function(options) {
+                var visual;
+                if (isFunction(options.visual)) {
+                    visual = options.visual.call(this, options);
+                } else if (options.text) {
+                    visual = new TextBlock(options);
+                }
+
+                if (visual) {
+                    this._contentVisual = visual;
+                    visual._includeInBBox = false;
+                    this.visual.append(visual);
+                }
+
+                return visual;
+            },
+
+            _updateContentVisual: function(options) {
+                if (isFunction(options.visual)) {
+                    this.visual.remove(this._contentVisual);
+                    this._createContentVisual(options);
+                } else {
+                    this._contentVisual.redraw(options);
+                }
+            },
+
             _alignContent: function() {
                 if (this._contentVisual) {
-                    var boundsTopLeft = this._bounds.topLeft();
-                    var localSourcePoint = this.sourcePoint().minus(boundsTopLeft);
-                    var localSinkPoint = this.targetPoint().minus(boundsTopLeft);
-                    var middle = Point.fn.middleOf(localSourcePoint, localSinkPoint);
+                    var offset = CONNECTION_CONTENT_OFFSET;
+                    var points = this.allPoints();
+                    var endIdx = math.floor(points.length / 2);
+                    var startIdx = endIdx - 1;
 
-                    this._contentVisual.position(new Point(middle.x + boundsTopLeft.x, middle.y + boundsTopLeft.y));
+                    while(startIdx > 0 && points[startIdx].equals(points[endIdx])) {
+                        startIdx--;
+                        endIdx++;
+                    }
+
+                    var endPoint = points[endIdx];
+                    var startPoint = points[startIdx];
+
+                    var boundingBox = this._contentVisual._measure();
+                    var width = boundingBox.width;
+                    var height = boundingBox.height;
+                    var alignToPath = points.length % 2 === 0;
+                    var distance = startPoint.distanceTo(endPoint);
+
+                    if (alignToPath && points.length > 2 && distance > 0 &&
+                        ((startPoint.y === endPoint.y && distance < width) || (startPoint.x === endPoint.x && distance < height))) {
+                        alignToPath = false;
+                        offset = 0;
+                    }
+
+                    var point;
+
+                    if (alignToPath) {
+                        var angle  = kendo.util.deg(math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x));
+                        point = new Point((endPoint.x - startPoint.x) / 2 + startPoint.x, (endPoint.y - startPoint.y) / 2 + startPoint.y);
+
+                        if (math.abs(angle) === 90) {
+                            point.x += offset;
+                            point.y-= height / 2;
+                        } else if (angle % 180 === 0) {
+                            point.x -= width / 2;
+                            point.y -= height + offset;
+                        } else if (angle < -90 || (0 < angle && angle < 90)) {
+                            point.y-= height;
+                        } else if (angle < 0 || angle > 90) {
+                            point.x -= width;
+                            point.y -= height;
+                        }
+                    } else {
+                        var midIdx = math.floor(points.length / 2);
+                        point = points[midIdx].clone();
+                        startPoint = points[midIdx - 1];
+                        endPoint = points[midIdx + 1];
+
+                        var offsetX = startPoint.x <= point.x && endPoint.x <= point.x ? offset : -boundingBox.width - offset;
+                        var offsetY = startPoint.y <= point.y && endPoint.y <= point.y ? offset : -boundingBox.height - offset;
+
+                        point.x += offsetX;
+                        point.y += offsetY;
+                    }
+
+                    this._contentVisual.position(point);
                 }
             },
 
@@ -3769,16 +3876,6 @@
 
                     var connection = this._connectionsDataMap[dataItem.uid];
                     connection.updateOptionsFromModel(dataItem);
-
-                    var from = this._validateConnector(dataItem.from);
-                    if (from) {
-                        connection.source(from);
-                    }
-
-                    var to = this._validateConnector(dataItem.to);
-                    if (to) {
-                        connection.target(to);
-                    }
                 }
             },
 
@@ -4021,6 +4118,10 @@
                 result.from = dataItem.from;
             }
 
+            if (defined(dataItem.fromConnector) && dataItem.fromConnector !== null) {
+                result.fromConnector = dataItem.fromConnector;
+            }
+
             if (defined(dataItem.fromX) && dataItem.fromX !== null) {
                 result.fromX = dataItem.fromX;
             }
@@ -4031,6 +4132,10 @@
 
             if (defined(dataItem.to) && dataItem.to !== null) {
                 result.to = dataItem.to;
+            }
+
+            if (defined(dataItem.toConnector) && dataItem.toConnector !== null) {
+                result.toConnector = dataItem.toConnector;
             }
 
             if (defined(dataItem.toX) && dataItem.toX !== null) {
@@ -4882,6 +4987,12 @@
             }
 
             return new kendo.data.ObservableObject(model);
+        }
+
+        function clearField(field, model) {
+            if (defined(model[field])) {
+                model.set(field, null);
+            }
         }
 
         function copyDefaultOptions(mainOptions, elementOptions, fields) {
