@@ -102,6 +102,29 @@ test("select event fired on drop can be cancelled", 1, function() {
     equal($(".k-file", uploadInstance.wrapper).length, 0);
 });
 
+test("select event is not fired on drop when the widget is disabled", 1, function() {
+    var isFired = false;
+
+    uploadInstance = createUpload({ "select" : (function() { isFired = true; }), enabled: false });
+    simulateDrop([ { name: "first.txt", size: 1 } ]);
+
+    equal(isFired, false);
+});
+
+test("dropping file when the widget is disabled does not add it to files list", 1, function() {
+    uploadInstance = createUpload({ "select" : (function() { isFired = true; }), enabled: false });
+    simulateDrop([ { name: "first.txt", size: 1 } ]);
+
+    equal($(".k-file", uploadInstance.wrapper).length, 0);
+});
+
+test("k-upload-empty class is present after dropping file when the widget is disabled", 1, function() {
+    uploadInstance = createUpload({ "select" : (function() { isFired = true; }), enabled: false });
+    simulateDrop([ { name: "first.txt", size: 1 } ]);
+
+    ok($(uploadInstance.wrapper).hasClass("k-upload-empty"));
+});
+
 test("files in select event arguments are wrapped", 1, function() {
     uploadInstance = createUpload({ "select" : (function(e) {
             equal(e.files[0].rawFile.name, "first.txt");

@@ -238,7 +238,7 @@ var __meta__ = { // jshint ignore:line
 
             stopEvent(e);
 
-            if (droppedFiles.length > 0) {
+            if (droppedFiles.length > 0 && !that.wrapper.hasClass("k-state-disabled")) {
                 if (!that.multiple && files.length > 1) {
                     files.splice(1, files.length - 1);
                 }
@@ -682,8 +682,7 @@ var __meta__ = { // jshint ignore:line
         _setupDropZone: function() {
             var that = this;
 
-            $(".k-upload-button", this.wrapper)
-                .wrap("<div class='k-dropzone'></div>");
+            $(".k-upload-button", this.wrapper).wrap("<div class='k-dropzone'></div>");
 
             var ns = that._ns;
             var dropZone = $(".k-dropzone", that.wrapper)
@@ -693,13 +692,19 @@ var __meta__ = { // jshint ignore:line
                 .on("drop" + ns, $.proxy(this._onDrop, this));
 
             bindDragEventWrappers(dropZone, ns,
-                function() { dropZone.addClass("k-dropzone-hovered"); },
+                function() {
+                    if (!dropZone.closest('.k-upload').hasClass("k-state-disabled")) {
+                        dropZone.addClass("k-dropzone-hovered");
+                    }
+                },
                 function() { dropZone.removeClass("k-dropzone-hovered"); });
 
             bindDragEventWrappers($(document), ns,
                 function() {
-                    dropZone.addClass("k-dropzone-active");
-                    dropZone.closest('.k-upload').removeClass('k-upload-empty');
+                    if (!dropZone.closest('.k-upload').hasClass("k-state-disabled")) {
+                        dropZone.addClass("k-dropzone-active");
+                        dropZone.closest('.k-upload').removeClass('k-upload-empty');
+                    }
                 },
                 function() {
                     dropZone.removeClass("k-dropzone-active");
