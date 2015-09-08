@@ -350,17 +350,6 @@
         }
     });
 
-    function deletesCell(ref, forRow, start, delta) {
-        if (delta < 0) {
-            if (forRow) {
-                return ref.row >= start && ref.row < start - delta;
-            } else {
-                return ref.col >= start && ref.col < start - delta;
-            }
-        }
-        return false;
-    }
-
     /* -----[ Range reference ]----- */
 
     var RangeRef = Ref.extend({
@@ -489,6 +478,9 @@
             ).setSheet(this.sheet, this.hasSheet());
         },
         relative: function(arow, acol, relTL, relBR) {
+            if (relBR == null) {
+                relBR = relTL;
+            }
             return new RangeRef(
                 this.topLeft.relative(arow, acol, relTL),
                 this.bottomRight.relative(arow, acol, relBR)
