@@ -40,11 +40,11 @@
     });
 
     test("clicking the pdf button calls the pdf export method", 1, function() {
-        var grid = dom.kendoTreeList({
+        var treelist = dom.kendoTreeList({
             toolbar: [ { name: "pdf" }]
         }).data("kendoTreeList");
 
-        grid.saveAsPDF = function() {
+        treelist.saveAsPDF = function() {
             ok(true);
         };
 
@@ -52,14 +52,14 @@
     });
 
     test("clicking the pdf button fires the pdfExport event", 1, function() {
-        var grid = dom.kendoTreeList({
+        var treelist = dom.kendoTreeList({
             toolbar: [ { name: "pdf" }],
             pdfExport: function() {
               ok(true);
             }
         }).data("kendoTreeList");
 
-        grid.saveAsPDF = function() {
+        treelist.saveAsPDF = function() {
             this.trigger("pdfExport");
         };
 
@@ -70,7 +70,7 @@
 // ------------------------------------------------------------
 (function() {
     var draw = kendo.drawing;
-    var grid;
+    var treelist;
     var saveAs;
 
     function createTreeList(options) {
@@ -83,7 +83,7 @@
             pageable: true
         }, options));
 
-        grid = dom.getKendoTreeList();
+        treelist = dom.getKendoTreeList();
     }
 
     function exportNoop() {
@@ -105,75 +105,76 @@
         }
     });
 
-    test("passes reference to page content", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("passes reference to page content", 1, function () {
+        pdfStubMethod(draw, "exportPDF", function (group) {
             return exportNoop();
-        }, function() {
-            grid.saveAsPDF()
-            .progress(function(e) {
-                ok(e.page instanceof kendo.drawing.Group);
-            });
+        }, function () {
+            return treelist.saveAsPDF()
+                .progress(function (e) {
+                    ok(e.page instanceof kendo.drawing.Group);
+                });
         });
     });
 
-    test("triggers progress event", function() {
-        createTreeList();
-
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("triggers progress event", 1, function () {
+        pdfStubMethod(draw, "exportPDF", function (group) {
             return exportNoop();
-        }, function() {
-            grid.saveAsPDF().progress(function(e) {
+        }, function () {
+            return treelist.saveAsPDF().progress(function (e) {
                 equal(e.progress, 1);
             });
         });
     });
 
-    test("promise is available in event args", function() {
-        var promise = "foo";
+
+    asyncTest("promise is available in event args", 1, function () {
+        var promise = "foo", result;
 
         createTreeList({
-            pdfExport: function(e) {
+            pdfExport: function (e) {
                 promise = e.promise;
             }
         });
 
-        stubMethod(draw, "exportPDF", function(group) {
-            return exportNoop();
-        }, function() {
-            var result = grid.saveAsPDF();
+        pdfStubMethod(draw, "exportPDF", function (group) {
             equal(result, promise);
-        });
-    });
-
-    test("promise is resolved", function() {
-        stubMethod(draw, "exportPDF", function(group) {
             return exportNoop();
-        }, function() {
-            grid.saveAsPDF().done(function(e) {
+        }, function () {
+            result = treelist.saveAsPDF();
+            return result;
+
+        });
+    });
+
+    asyncTest("promise is resolved", 1, function () {
+        pdfStubMethod(draw, "exportPDF", function (group) {
+            return exportNoop();
+        }, function () {
+            return treelist.saveAsPDF().done(function (e) {
                 ok(true);
             });
         });
     });
 
-    test("promise is rejected on error", function() {
-        stubMethod(draw, "exportPDF", function(group) {
+    asyncTest("promise is rejected on error", 1, function () {
+        pdfStubMethod(draw, "exportPDF", function (group) {
             return $.Deferred().reject();
-        }, function() {
-            grid.saveAsPDF()
-            .fail(function(e) {
-                ok(true);
-            });
+        }, function () {
+            return treelist.saveAsPDF()
+                .fail(function (e) {
+                    ok(true);
+                });
         });
     });
 
-    test("promise is rejected on drawing error", function() {
-        stubMethod(draw, "drawDOM", function(group) {
+    asyncTest("promise is rejected on drawing error", 1, function () {
+        pdfStubMethod(draw, "drawDOM", function (group) {
             return $.Deferred().reject();
-        }, function() {
-            grid.saveAsPDF()
-            .fail(function(e) {
-                ok(true);
-            });
+        }, function () {
+            return treelist.saveAsPDF()
+                .fail(function (e) {
+                    ok(true);
+                });
         });
     });
 

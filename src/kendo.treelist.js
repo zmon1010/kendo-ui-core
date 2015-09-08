@@ -3208,8 +3208,31 @@ var __meta__ = { // jshint ignore:line
 
     if (kendo.PDFMixin) {
         kendo.PDFMixin.extend(TreeList.prototype);
-    }
 
+        TreeList.fn._drawPDF = function (progress) {
+            var promise = new $.Deferred();
+
+            this._drawPDFShadow({
+                width: this.wrapper.width()
+            })
+            .done(function (group) {
+                var args = {
+                    page: group,
+                    pageNumber: 1,
+                    progress: 1,
+                    totalPages: 1
+                };
+
+                progress.notify(args);
+                promise.resolve(args.page);
+            })
+            .fail(function (err) {
+                promise.reject(err);
+            });
+
+            return promise;
+        };
+    }
 
     extend(true, kendo.data, {
         TreeListDataSource: TreeListDataSource,

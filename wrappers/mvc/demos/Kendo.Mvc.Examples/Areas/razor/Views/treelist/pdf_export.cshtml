@@ -37,6 +37,8 @@
     .Excel(excel => excel.FileName("Kendo UI TreeList Export.pdf").ProxyURL(Url.Action("Pdf_Export_Save")))
     .Filterable()
     .Sortable()
+    .Scrollable(true)
+    .Height(300)
     .DataSource(dataSource => dataSource
         .Read(read => read.Action("All", "EmployeeDirectory"))
         .ServerOperation(false)
