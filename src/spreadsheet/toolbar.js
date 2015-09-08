@@ -412,9 +412,38 @@
         _click: $.noop
     });
 
-    var ColorPicker = kendo.toolbar.Item.extend({
+    var ColorPicker = PopupTool.extend({
         init: function(options, toolbar) {
-            var colorPicker = $("<input />").kendoColorPicker({
+            PopupTool.fn.init.call(this, options, toolbar);
+            this._colorPalette();
+
+            this.element.attr({
+                "data-property": options.property
+            });
+
+            this.element.data({
+                type: "colorPicker",
+                colorPicker: this,
+                instance: this
+            });
+        },
+        destroy: function() {
+            this.colorPalette.destroy();
+            PopupTool.fn.destroy.call(this);
+        },
+        update: function(value) {
+            this.value(value);
+        },
+        value: function(value) {
+            if (value !== undefined) {
+                this.colorPalette.value(value);
+            } else {
+                return this.colorPalette.value();
+            }
+        },
+        _colorPalette: function() {
+            var element = $("<div />").appendTo(this.popup.element);
+            this.colorPalette = element.kendoColorPalette({
                 palette: [ //metro palette
                     "#ffffff", "#000000", "#d6ecff", "#4e5b6f", "#7fd13b", "#ea157a", "#feb80a", "#00addc", "#738ac8", "#1ab39f",
                     "#f2f2f2", "#7f7f7f", "#a7d6ff", "#d9dde4", "#e5f5d7", "#fad0e4", "#fef0cd", "#c5f2ff", "#e2e7f4", "#c9f7f1",
@@ -423,47 +452,14 @@
                     "#a5a5a5", "#262626", "#003e75", "#3a4453", "#5ea226", "#af0f5b", "#c58c00", "#0081a5", "#425ea9", "#138677",
                     "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
                 ],
-                toolIcon: options.toolIcon,
                 change: this._colorChange.bind(this)
-            }).data("kendoColorPicker");
-
-            this.colorPicker = colorPicker;
-            this.element = colorPicker.wrapper;
-            this.options = options;
-            this.toolbar = toolbar;
-
-            this.attributes();
-            this.addUidAttr();
-            this.addOverflowAttr();
-
-            this.element.attr({
-                "data-command": "PropertyChangeCommand",
-                "data-property": options.property
-            });
-
-            this.element.data({
-                type: "colorPicker",
-                colorPicker: this
-            });
+            }).data("kendoColorPalette");
         },
-
         _colorChange: function(e) {
             this.toolbar.execute(new PropertyChangeCommand({
                 property: this.options.property,
                 value: e.sender.value()
             }));
-        },
-
-        update: function(value) {
-            this.value(value);
-        },
-
-        value: function(value) {
-            if (value !== undefined) {
-                this.colorPicker.value(value);
-            } else {
-                return this.colorPicker.value();
-            }
         }
     });
 

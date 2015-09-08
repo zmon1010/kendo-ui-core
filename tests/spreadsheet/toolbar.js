@@ -275,16 +275,16 @@
         ok(!toolbar.element.find("a[data-tool=alignRight]").hasClass("k-state-active"));
     });
 
-    test("refreshes color picker state", function() {
+    test("refreshes color palette state", function() {
         createWithTools([ "backgroundColor" ]);
 
-        var color = "#ff0000";
+        var color = "#7fd13b";
 
         sheet.range("A1").background(color);
 
-        var colorpicker = toolbar.element.find("[data-role=colorpicker]").data("kendoColorPicker");
+        var colorPalette = $("[data-role=colorpalette]").data("kendoColorPalette");
 
-        equal(colorpicker.value(), color);
+        equal(colorPalette.value(), color);
     });
 
     test("refreshes font size state", function() {
