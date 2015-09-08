@@ -1776,8 +1776,10 @@ var __meta__ = { // jshint ignore:line
                 this._touchScroller.contentResized();
             }
 
-            this._angularItems("compile");
-            this._angularFooters("compile");
+            this._muteAngularRebind(function() {
+                this._angularItems("compile");
+                this._angularFooters("compile");
+            });
 
             this._adjustRowsHeight();
         },

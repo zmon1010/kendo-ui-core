@@ -226,4 +226,34 @@
         equal(treeList.tbody.find(".k-footer-template td").eq(0).text(), "");
         equal(treeList.lockedContent.find(".k-footer-template td").eq(0).text(), "");
     });
+
+    ngTest("k-rebind doesn't re-initialize the widget", 1, function() {
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                columns: [
+                    { field: "id" },
+                    { template: "{{dataItem.text}}" }
+                ]
+            };
+
+            $scope.options.dataSource = new kendo.data.TreeListDataSource({
+                data: [
+                    { id: 1, parentId: null, text: "foo" },
+                    { id: 2, parentId: 1, text: "foo" }
+                ]
+            });
+        });
+
+        $("<div ng-controller=mine><div kendo-treelist='tree' options='options' k-rebind='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var treeList = QUnit.fixture.find('[data-role=treelist]').getKendoTreeList();
+
+        spy(treeList, "destroy");
+
+        treeList.expand(treeList.items().eq(0));
+
+        equal(treeList.calls("destroy"), 0);
+    });
 })();
