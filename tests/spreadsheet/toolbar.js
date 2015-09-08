@@ -204,30 +204,6 @@
         $("[data-property=verticalAlign][data-value=middle]").trigger("click");
     });
 
-    test("formatCurrency button click triggers execute with correct value", 2, function() {
-        createWithTools([ [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ] ]);
-
-        toolbar.one("execute", function(e) {
-            equal(e.command.options.property, "format");
-            equal(e.command.options.value, "$?");
-        });
-
-        sheet.select("A1:B2");
-        tap(toolbar.element.find("[data-tool=formatCurrency]"));
-    });
-
-    test("formatPercentage button click triggers execute with correct value", 2, function() {
-        createWithTools([ [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ] ]);
-
-        toolbar.one("execute", function(e) {
-            equal(e.command.options.property, "format");
-            equal(e.command.options.value, "?.00%");
-        });
-
-        sheet.select("A1:B2");
-        tap(toolbar.element.find("[data-tool=formatPercentage]"));
-    });
-
     test("custom tool", function() {
         createWithTools([
             [ { type: "button", icon: "refresh", text: "Button" } ]
