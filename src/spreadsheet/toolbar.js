@@ -248,7 +248,7 @@
             for (var i = 0; i < tools.length; i++) {
                 var property = tools[i].property;
                 var tool = tools[i].tool;
-                var value = range[property]();
+                var value = kendo.isFunction(range[property]) ? range[property]() : range;
 
                 if (tool.type === "button") {
                     setToggle(tool, value);
