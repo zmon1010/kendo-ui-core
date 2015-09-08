@@ -62,7 +62,7 @@
         mergeVertically:       { type: "button",      name: "mergeVertically",   command: "MergeCellCommand", value: "vertically",   iconClass: "merge-vertically"  , showText: "always" },
         unmerge:               { type: "button",      name: "unmerge",           command: "MergeCellCommand", value: "unmerge",      iconClass: "normal-layout"     , showText: "always" },
 
-        borders:               { type: "borders", iconClass: "all-borders" },
+        borders:               { type: "borders", command: "BorderChangeCommand", iconClass: "all-borders" },
         fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, iconClass: "text" },
         fontSize:              { type: "fontSize", property: "fontSize", width: 60, iconClass: "font-size" },
         cut:                   { type: "button", command: "CutCommand", iconClass: "cut" },
@@ -351,6 +351,39 @@
         }
     });
 
+    var PopupTool = kendo.toolbar.Item.extend({
+        init: function(options, toolbar) {
+            this.element = $("<a href='#' data-command='" + options.command + "' class='k-button k-button-icon'>" +
+                                "<span class='" + options.spriteCssClass + "'>" +
+                                "</span><span class='k-font-icon k-icon k-i-arrow-s'></span>" +
+                            "</a>");
+
+            this.element.on("click", this.open.bind(this));
+
+            this.options = options;
+            this.toolbar = toolbar;
+
+            this.attributes();
+            this.addUidAttr();
+            this.addOverflowAttr();
+
+            this._popup();
+        },
+        destroy: function() {
+            this.popup.destroy();
+        },
+        open: function() {
+            this.popup.toggle();
+        },
+        _popup: function() {
+            var element = this.element;
+
+            this.popup = $("<div />").appendTo(element).kendoPopup({
+                anchor: element
+            }).data("kendoPopup");
+        }
+    });
+
     kendo.toolbar.registerComponent("dialog", kendo.toolbar.ToolBarButton.extend({
         init: function(options, toolbar) {
             kendo.toolbar.ToolBarButton.fn.init.call(this, options, toolbar);
@@ -591,56 +624,26 @@
 
     kendo.toolbar.registerComponent("format", Format, FormatButton);
 
-    var BorderChangeTool = kendo.toolbar.Item.extend({
+    var BorderChangeTool = PopupTool.extend({
         init: function(options, toolbar) {
-            this.element = $("<a href='#' data-command='BorderChangeCommand' class='k-button k-button-icon'>" +
-                                "<span class='k-sprite k-font-icon k-icon k-i-all-borders'>" +
-                                "</span><span class='k-font-icon k-icon k-i-arrow-s'></span>" +
-                            "</a>");
-
-            this.element.on("click", this.open.bind(this));
-
-            this.options = options;
-            this.toolbar = toolbar;
-
-            this.attributes();
-            this.addUidAttr();
-            this.addOverflowAttr();
-
+            PopupTool.fn.init.call(this, options, toolbar);
             this._borderPalette();
-            this._popup();
 
             this.element.data({
                 type: "borders",
                 instance: this
             });
         },
-
-        open: function() {
-            this.popup.toggle();
-        },
-
         destroy: function() {
             this.borderPalette.destroy();
-            this.popup.destroy();
+            PopupTool.fn.destroy.call(this);
         },
-
         _borderPalette: function() {
-            var borderPalette = this.borderPalette = new kendo.spreadsheet.BorderPalette($("<div />"), {
+            var element = $("<div />").appendTo(this.popup.element);
+            this.borderPalette = new kendo.spreadsheet.BorderPalette(element, {
                 change: this._execute.bind(this)
             });
-
-            this.element.append(borderPalette.element);
         },
-
-        _popup: function() {
-            var element = this.element;
-
-            this.popup = this.borderPalette.element.kendoPopup({
-                anchor: element
-            }).data("kendoPopup");
-        },
-
         _execute: function(e) {
             this.toolbar.execute(new kendo.spreadsheet.BorderChangeCommand({
                 border: e.type,
