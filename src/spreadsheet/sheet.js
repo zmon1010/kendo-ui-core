@@ -387,11 +387,7 @@
             }
 
             if (typeof row === "string") {
-                if (row.toLowerCase() === "#sheet") {
-                    ref = kendo.spreadsheet.SHEETREF;
-                } else {
-                    ref = kendo.spreadsheet.calc.parseReference(row);
-                }
+                ref = kendo.spreadsheet.calc.parseReference(row);
             } else {
                 if (!numRows) {
                     numRows = 1;

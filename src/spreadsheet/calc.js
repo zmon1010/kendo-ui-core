@@ -339,7 +339,7 @@
                     var topLeft = getref(a, true);
                     var bottomRight = getref(c, false);
                     if (topLeft != null && bottomRight != null) {
-                        if (bottomRight.hasSheet() && topLeft.sheet != bottomRight.sheet) {
+                        if (bottomRight.hasSheet() && topLeft.sheet.toLowerCase() != bottomRight.sheet.toLowerCase()) {
                             input.croak("Invalid range");
                         } else {
                             input.skip(3);

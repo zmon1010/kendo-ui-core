@@ -165,6 +165,7 @@
         },
 
         sheetByName: function (sheetName) {
+            sheetName = sheetName.toLowerCase();
             var sheets = this._sheets;
             var idx = this._sheetsSearchCache[sheetName];
 
@@ -174,7 +175,7 @@
 
             for (idx = 0; idx < sheets.length; idx++) {
                 var sheet = sheets[idx];
-                var name = sheet.name();
+                var name = sheet.name().toLowerCase();
                 this._sheetsSearchCache[name] = idx;
 
                 if (name === sheetName) {

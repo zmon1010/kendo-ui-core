@@ -184,11 +184,11 @@
     });
 
     test("sheetByName save sheets indexes to cache", function() {
-        workbook.insertSheet();
+        var shit = workbook.insertSheet();
 
-        workbook.sheetByName(workbook.sheets()[1].name());
+        workbook.sheetByName(shit.name());
 
-        equal(workbook._sheetsSearchCache[workbook.sheets()[1].name()], 1);
+        equal(workbook._sheetsSearchCache[shit.name().toLowerCase()], 1);
     });
 
     test("sheetIndex save found sheets to cache", function() {

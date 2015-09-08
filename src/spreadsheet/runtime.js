@@ -516,9 +516,10 @@
             delete this.value;
         },
         adjust: function(affectedSheet, operation, start, delta) {
+            affectedSheet = affectedSheet.toLowerCase();
             var formulaRow = this.row;
             var formulaCol = this.col;
-            var formulaSheet = this.sheet;
+            var formulaSheet = this.sheet.toLowerCase();
             if (formulaSheet == affectedSheet) {
                 // move formula if it's after the change point
                 if (operation == "row" && formulaRow >= start) {
@@ -532,7 +533,7 @@
             var newFormulaCol = this.col;
             this.absrefs = null;
             this.refs = this.refs.map(function(ref){
-                if (ref.sheet != affectedSheet) {
+                if (ref.sheet.toLowerCase() != affectedSheet) {
                     // a reference to another sheet should still point to the same location after
                     // adjustment; thus if row/col was removed before formula, relative references
                     // must be adjusted by delta.
