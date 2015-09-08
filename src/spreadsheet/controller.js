@@ -341,7 +341,11 @@
         },
 
         onContextMenu: function(event, action) {
-            var that = this;
+            var sheet = this._workbook.activeSheet();
+
+            if (sheet.resizingInProgress()) {
+                return;
+            }
 
             event.preventDefault();
 
@@ -355,6 +359,10 @@
             var location = { pageX: event.pageX, pageY: event.pageY };
 
             var object = this.objectAt(location);
+
+            if (object.type === "columnresizehandle" || object.type === "rowresizehandle") {
+                return;
+            }
 
             this.navigator.selectForContextMenu(object.ref, SELECTION_MODES[object.type]);
 
@@ -384,6 +392,13 @@
             event.preventDefault();
         },
 
+        constrainResize: function(type, ref) {
+            var sheet = this._workbook.activeSheet();
+            var resizeHandle = sheet.resizeHandlePosition();
+
+            return !resizeHandle || type === "outside" || type === "topcorner" || ref.col < resizeHandle.col || ref.row < resizeHandle.row;
+        },
+
         onMouseDrag: function(event, action) {
             if (this._selectionMode === "sheet") {
                 return;
@@ -394,7 +409,11 @@
 
             var sheet = this._workbook.activeSheet();
             if (sheet.resizingInProgress()) {
-                sheet.resizeHintPosition({ x: object.x, y: object.y });
+
+                if (!this.constrainResize(object.type, object.ref)) {
+                    sheet.resizeHintPosition({ x: object.x, y: object.y });
+                }
+
                 return;
             }
 

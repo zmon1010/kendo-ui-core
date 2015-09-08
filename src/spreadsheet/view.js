@@ -690,7 +690,7 @@
 
             if (this.editor.isActive()) {
                 this.editor.position(this.activeCellRectangle());
-            } else if (!sheet.selectionInProgress()) {
+            } else if (!sheet.selectionInProgress() && !sheet.resizingInProgress()) {
                 this.renderClipboardContents();
             }
         },
