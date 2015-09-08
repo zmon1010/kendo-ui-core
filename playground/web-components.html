@@ -15,16 +15,63 @@
         <script src="../src/kendo.webcomponents.js"></script>
     </head>
     <body>
+    <!--
+    
+
+        <kendo-splitter panes="[{}]"></kendo-splitter>
+    
+    -->
         <kendo-datepicker value="03/27/2015"></kendo-datepicker>
         <kendo-numerictextbox on-change="attrHandler"  onchange="attrHandler.call(this, event)" value="42"></kendo-numerictextbox>
-        <kendo-dropdownlist value="1" dataTextField="text" dataValueField="value" dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-dropdownlist>
         <kendo-dropdownlist value="3" dataTextField="ProductName" dataValueField="ProductID" dataSource="{ type: 'odata', serverFiltering: true, transport: { read: { url: '//demos.telerik.com/kendo-ui/service/Northwind.svc/Products' } } }"></kendo-dropdownlist>
         <kendo-grid dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-grid>
-
+        <kendo-editor></kendo-editor>
+        <kendo-window content="{template: 'asdasd'}">
+        <kendo-dropdownlist value="1" dataTextField="text" dataValueField="value" dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-dropdownlist>
+        </kendo-window>
         <script>
-            function attrHandler(e){
-                console.log("attrHandler", this, e);
-            }
+            // var coreWidgets = [
+                // "Editor",
+                // "AutoComplete",
+                // "Button",
+                // "Calendar",
+                // "ColorPicker",
+                // "ComboBox",
+                // "DatePicker",
+                // "DateTimePicker",
+                // "DropDownList",
+                // "ListView",
+                // "MaskedTextBox",
+                // "Menu",
+                // "MultiSelect",
+                // "NumericTextBox",
+                // "PanelBar",
+                // "ProgressBar",
+                // "Slider",
+                // "Sortable",
+                // "Splitter",
+                // "TabStrip",
+                // "TimePicker",
+                // "Tooltip",
+                // "Window"
+            // ];
+            // var mobileWidgets = [
+                // "Button",
+                // "BackButton",
+                // "DetailButton",
+                // "Switch",
+                // "ListView"
+            // ];
+            // coreWidgets.forEach(function(index, key) {
+                // var element= $("<kendo-"+ index.toLowerCase() +"/>").appendTo(document.body)[0]; 
+            // });
+            // mobileWidgets.forEach(function(name) {
+                // var element= $("<kendo-mobile"+ name.toLowerCase() +"/>").appendTo(document.body)[0]; 
+            // });
+            // kendo.destroy(document.body);
+            // function attrHandler(e){
+                // console.log("attrHandler", this, e);
+            // }
             document.addEventListener("DOMContentLoaded", function() {
                 var datepicker = document.querySelector("kendo-datepicker");
                 datepicker.addEventListener("open", function(e) {

@@ -121,12 +121,11 @@ var __meta__ = { // jshint ignore:line
 
         var prototype = Object.create(HTMLElement.prototype);
 
-        prototype.createdCallback = function() {
+        prototype.attachedCallback = function() {
             var that = this;
             var element = document.createElement(TAGNAMES[name] || "div");
 
             that.appendChild(element);
-
             that.widget = new widget(element, parseOptions(that, options));
 
             var obj = that.widget;
@@ -148,7 +147,7 @@ var __meta__ = { // jshint ignore:line
         };
 
         prototype.detachedCallback = function() {
-            this.widget.destroy();
+            kendo.destroy(this.element);
         };
 
         document.registerElement("kendo-" + name, {
