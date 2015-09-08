@@ -16,8 +16,7 @@
             "backgroundColor", "textColor",
             "borders",
             "fontSize", "fontFamily",
-            [ "alignLeft", "alignCenter", "alignRight" ],
-            [ "alignTop", "alignMiddle", "alignBottom" ],
+            "alignment",
             "textWrap",
             [ "formatCurrency", "formatPercentage", "formatDecreaseDecimal", "formatIncreaseDecimal" ],
             "format",
@@ -40,12 +39,14 @@
         bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
         italic:                { type: "button", command: "PropertyChangeCommand", property: "italic",        value: true,     iconClass: "italic", togglable: true },
         underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
+        /*
         alignLeft:             { type: "button", command: "PropertyChangeCommand", property: "textAlign",     value: "left",   iconClass: "justify-left", togglable: true },
         alignCenter:           { type: "button", command: "PropertyChangeCommand", property: "textAlign",     value: "center", iconClass: "justify-center", togglable: true },
         alignRight:            { type: "button", command: "PropertyChangeCommand", property: "textAlign",     value: "right",  iconClass: "justify-right", togglable: true },
         alignTop:              { type: "button", command: "PropertyChangeCommand", property: "verticalAlign", value: "top",    iconClass: "align-top", togglable: true },
         alignMiddle:           { type: "button", command: "PropertyChangeCommand", property: "verticalAlign", value: "middle", iconClass: "align-middle", togglable: true },
         alignBottom:           { type: "button", command: "PropertyChangeCommand", property: "verticalAlign", value: "bottom", iconClass: "align-bottom", togglable: true },
+        */
         formatCurrency:        { type: "button", command: "PropertyChangeCommand", property: "format",        value: "$?",     iconClass: "dollar" },
         formatPercentage:      { type: "button", command: "PropertyChangeCommand", property: "format",        value: "?.00%",  iconClass: "percent" },
         formatDecreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: -1,       iconClass: "decrease-decimal" },
@@ -69,7 +70,8 @@
         copy:                  { type: "button", command: "CopyCommand", iconClass: "copy" },
         paste:                 { type: "button", command: "PasteCommand", iconClass: "paste" },
         separator:             { type: "separator" },
-        filter:                { type: "button", command: "FilterCommand",         property: "hasFilter", iconClass: "filter", togglable: true }
+        filter:                { type: "button", command: "FilterCommand",         property: "hasFilter", iconClass: "filter", togglable: true },
+        alignment:             { type: "alignment", command: "PropertyChangeCommand", iconClass: "justify-left" }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -655,6 +657,78 @@
     });
 
     kendo.toolbar.registerComponent("borders", BorderChangeTool, BorderChangeButton);
+
+    var AlignmentTool = PopupTool.extend({
+        init: function(options, toolbar) {
+            PopupTool.fn.init.call(this, options, toolbar);
+
+            this.element.attr({ "data-property": "alignment" });
+
+            this._commandPalette();
+            this.popup.element.on("click", ".k-button", function(e) {
+                this._execute($(e.currentTarget));
+            }.bind(this));
+
+            this.element.data({
+                type: "alignment",
+                alignment: this,
+                instance: this
+            });
+        },
+        buttons: [
+            { property: "textAlign",     value: "left",    iconClass: "justify-left" },
+            { property: "textAlign",     value: "center",  iconClass: "justify-center" },
+            { property: "textAlign",     value: "right",   iconClass: "justify-right" },
+            { property: "textAlign",     value: "justify", iconClass: "justify-full" },
+            { property: "verticalAlign", value: "top",     iconClass: "align-top" },
+            { property: "verticalAlign", value: "middle",  iconClass: "align-middle" },
+            { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom" }
+        ],
+        destroy: function() {
+            this.popup.element.off();
+            PopupTool.fn.destroy.call(this);
+        },
+        update: function(range) {
+            var textAlign = range.textAlign();
+            var verticalAlign = range.verticalAlign();
+
+            this.popup.element.find(".k-button").removeClass("k-state-active");
+
+            if (textAlign) {
+                this.popup.element.find(".k-button[data-value=" + textAlign + "]").addClass("k-state-active");
+            }
+
+            if (verticalAlign) {
+                this.popup.element.find(".k-button[data-value=" + verticalAlign + "]").addClass("k-state-active");
+            }
+        },
+        _commandPalette: function() {
+            var element = $("<div />").appendTo(this.popup.element);
+            this.buttons.forEach(function(options, index) {
+                var button = "<a title='Align " + options.value + "' data-property='" + options.property + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
+                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" +
+                             "</a>";
+                element.append(button);
+            });
+        },
+        _execute: function(button) {
+            var property = button.attr("data-property");
+            var value = button.attr("data-value");
+
+            this.toolbar.execute(new kendo.spreadsheet.PropertyChangeCommand({
+                property: property,
+                value: value
+            }));
+        }
+    });
+
+    var AlignmentButton = OverflowDialogButton.extend({
+        _click: function(e) {
+            this.toolbar.openDialog("alignment");
+        }
+    });
+
+    kendo.toolbar.registerComponent("alignment", AlignmentTool, AlignmentButton);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 
