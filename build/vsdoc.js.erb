@@ -1,3 +1,4 @@
+// jshint unused: false
 var kendo = {
     ui: {},
     mobile: {ui: {}},
@@ -85,8 +86,8 @@ $.fn.<%= the_class.plugin %> = function(options) {
 };
 
 % else # namespace
-if (!<%= the_class.name %>) {
-    <%= the_class.name %> = {};
+if (!kendo.<%= the_class.name %>) {
+    kendo.<%= the_class.name %> = {};
 }
 % end
 % end
