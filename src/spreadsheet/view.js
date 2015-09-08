@@ -594,6 +594,19 @@
                 dialog.destroy();
             });
             this.cellContextMenu.destroy();
+            this.rowHeaderContextMenu.destroy();
+            this.colHeaderContextMenu.destroy();
+
+            if (this.tabstrip) {
+                this.tabstrip.destroy();
+            }
+
+            if (this.toolbars) {
+                for (var name in this.toolbars) {
+                    this.toolbars[name].destroy();
+                }
+            }
+
             this.destroyFilterMenus();
         },
 
