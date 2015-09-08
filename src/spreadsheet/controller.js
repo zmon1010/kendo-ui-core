@@ -332,6 +332,7 @@
             var sheet = this._workbook.activeSheet();
             if (object.type === "columnresizehandle" || object.type === "rowresizehandle") {
                 sheet.startResizing({ x: object.x, y: object.y });
+                event.preventDefault();
                 return;
             }
 
