@@ -35,9 +35,9 @@
         var handle = pane.renderResizeHandler();
 
         equal(handle.attr.style.height, "10px");
-        equal(handle.attr.style.width, "14px");
+        equal(handle.attr.style.width, "7px");
         equal(handle.attr.className, "k-resize-handle");
-        equal(handle.attr.style.left, "3px");
+        equal(handle.attr.style.left, "6.5px");
     });
 
     test("renders the resize handler for row", function() {
@@ -49,42 +49,10 @@
 
         var handle = pane.renderResizeHandler();
 
-        equal(handle.attr.style.height, "14px");
+        equal(handle.attr.style.height, "7px");
         equal(handle.attr.style.width, "10px");
         equal(handle.attr.className, "k-resize-handle");
-        equal(handle.attr.style.top, "13px");
-    });
-
-    test("renders the resize hint for column", function() {
-        var pane = createPane(0, 0);
-
-        sheet.positionResizeHandle(new CellRef(-Infinity, 0));
-        sheet.startResizing({ x: 10 + 10, y: 10 });
-        sheet.resizeHintPosition({ x: 10 + 20, y: 10 }); // move the hint with 20px
-
-        pane._currentView = DUMMY_VIEW;
-
-        var handle = pane.renderResizeHint();
-
-        equal(handle.attr.style.width, "14px");
-        equal(handle.attr.className, "k-resize-hint");
-        equal(handle.attr.style.left, "30px");
-    });
-
-    test("renders the resize hint for row", function() {
-        var pane = createPane(0, 0);
-
-        sheet.positionResizeHandle(new CellRef(0, -Infinity));
-        sheet.startResizing({ x: 10, y: 10 });
-        sheet.resizeHintPosition({ x: 10, y: 10 + 20 }); // move the hint with 20px
-
-        pane._currentView = DUMMY_VIEW;
-
-        var handle = pane.renderResizeHint();
-
-        equal(handle.attr.style.height, "14px");
-        equal(handle.attr.className, "k-resize-hint");
-        equal(handle.attr.style.top, "30px");
+        equal(handle.attr.style.top, "16.5px");
     });
 
     test("set the column width", function() {
@@ -111,6 +79,45 @@
         sheet.completeResizing();
 
         equal(sheet.rowHeight(0), initialHeight + 20);
+    });
+
+    module("view resizing hing rendering", {
+        setup: function() {
+            element = $("<div>").appendTo(QUnit.fixture);
+
+            spreadsheet = new kendo.ui.Spreadsheet(element, { rows: 3, columns: 3 });
+
+            sheet = spreadsheet.activeSheet();
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("renders the resize hint for column", function() {
+        sheet.positionResizeHandle(new CellRef(-Infinity, 0));
+        sheet.startResizing({ x: 10 + 10, y: 10 });
+        sheet.resizeHintPosition({ x: 10 + 20, y: 10 }); // move the hint with 20px
+
+        sheet.trigger("change", { resize: true });
+
+        var handle = element.find(".k-resize-hint")[0];
+
+        equal(handle.style.width, "7px");
+        equal(handle.style.left, "30px");
+    });
+
+    test("renders the resize hint for row", function() {
+        sheet.positionResizeHandle(new CellRef(0, -Infinity));
+        sheet.startResizing({ x: 10, y: 10 });
+        sheet.resizeHintPosition({ x: 10, y: 10 + 20 }); // move the hint with 20px
+
+        sheet.trigger("change", { resize: true });
+
+        var handle = element.find(".k-resize-hint")[0];
+
+        equal(handle.style.height, "7px");
+        equal(handle.style.top, "30px");
     });
 
 })();

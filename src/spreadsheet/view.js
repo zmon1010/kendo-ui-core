@@ -419,7 +419,6 @@
         },
 
         _rectangle: function(pane, ref) {
-            var view = pane._grid.view(this.scroller.scrollLeft, this.scroller.scrollTop);
             return pane._grid.boundingRectangle(ref.toRangeRef());
         },
 
@@ -683,6 +682,10 @@
 
             merged.push(topCorner);
 
+            if (sheet.resizeHandlePosition() && sheet.resizeHintPosition()) {
+                merged.push(this.renderResizeHint());
+            }
+
             this.tree.render(merged);
 
             if (this.editor.isActive()) {
@@ -691,6 +694,40 @@
                 this.renderClipboardContents();
             }
         },
+
+        renderResizeHint: function() {
+            var sheet = this._sheet;
+            var ref = sheet.resizeHandlePosition();
+            var rectangle = this._sheet._grid.rectangle(ref.toRangeRef());
+
+            var horizontal = ref.col !== -Infinity;
+
+            var style;
+            if (horizontal) {
+                style = {
+                    height: this.scroller.clientHeight + "px",
+                    width: RESIZE_HANDLE_WIDTH + "px",
+                    left: sheet.resizeHintPosition().x + "px"
+                };
+            } else {
+                style = {
+                    height: RESIZE_HANDLE_WIDTH + "px",
+                    width: this.scroller.clientWidth + "px",
+                    top: sheet.resizeHintPosition().y + "px"
+                };
+            }
+
+            var classNames = Pane.classNames;
+
+            return kendo.dom.element("div", {
+                className: classNames.resizeHint + (!horizontal ? " " + classNames.resizeHintVertical : ""),
+                style: style
+            },[
+                kendo.dom.element("div", { className: classNames.resizeHintHandle }),
+                kendo.dom.element("div", { className: classNames.resizeHintMarker })
+            ]);
+        },
+
 
         renderClipboardContents: function() {
             var sheet = this._sheet;
@@ -873,9 +910,7 @@
                 var ref = sheet._grid.normalize(sheet.resizeHandlePosition());
 
                 if (view.ref.intersects(ref)) {
-                    if (sheet.resizeHintPosition()) {
-                        children.push(this.renderResizeHint());
-                    } else {
+                    if (!sheet.resizeHintPosition()) {
                         children.push(this.renderResizeHandler());
                     }
                 }
@@ -940,40 +975,6 @@
             }.bind(this));
 
             return kendo.dom.element("div", { className: classNames.mergedCellsWrapper }, mergedCells);
-        },
-
-        renderResizeHint: function() {
-            var sheet = this._sheet;
-            var ref = sheet.resizeHandlePosition();
-            var rectangle = this._rectangle(ref);
-            var viewRectangle = this._rectangle(this._currentView.ref);
-
-            var horizontal = ref.col !== -Infinity;
-
-            var style;
-            if (horizontal) {
-                style = {
-                    height: sheet._grid.totalHeight() + "px",
-                    width: RESIZE_HANDLE_WIDTH + "px",
-                    left: sheet.resizeHintPosition().x + "px"
-                };
-            } else {
-                style = {
-                    height: RESIZE_HANDLE_WIDTH + "px",
-                    width: sheet._grid.totalWidth() + "px",
-                    top: sheet.resizeHintPosition().y + "px"
-                };
-            }
-
-            var classNames = Pane.classNames;
-
-            return kendo.dom.element("div", {
-                className: classNames.resizeHint + (!horizontal ? " " + classNames.resizeHintVertical : ""),
-                style: style,
-            },[
-                kendo.dom.element("div", { className: classNames.resizeHintHandle }),
-                kendo.dom.element("div", { className: classNames.resizeHintMarker })
-            ]);
         },
 
         renderResizeHandler: function() {
