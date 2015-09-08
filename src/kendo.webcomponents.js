@@ -107,7 +107,9 @@ var __meta__ = { // jshint ignore:line
         var props  = Object.keys(obj);
         for(var idx = 0; idx <= props.length; idx++) {
             if(typeof(obj[props[idx]]) === "function"){
-                component[props[idx]] = obj[props[idx]].bind(component.widget);
+                if(!component[props[idx]]) {
+                    component[props[idx]] = obj[props[idx]].bind(component.widget);
+                }
             }else{
                 component[props[idx]] = component[props[idx]] || obj[props[idx]];
             }
