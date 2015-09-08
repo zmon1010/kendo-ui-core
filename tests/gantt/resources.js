@@ -483,6 +483,50 @@
         equal(resourcesContainer.find("span.k-resource:eq(1)")[0].style.color, "green");
     });
 
+    module("Gantt timeline resource rendering with rowHeight options", {
+        setup: function() {
+            element = $("<div />").appendTo(QUnit.fixture);
+            gantt = new Gantt(element, {
+                dataSource: {
+                    data: [
+                        new GanttTask(extend({}, {
+                            id: 0,
+                            start: new Date("2014/04/17"),
+                            end: new Date("2014/04/18")
+                        })),
+                        new GanttTask(extend({}, {
+                            id: 1,
+                            start: new Date("2014/04/17"),
+                            end: new Date("2014/04/18")
+                        }))
+                    ]
+                },
+                resources: {
+                    dataSource: [
+                        { id: 0, name: "foo", color: "red" },
+                        { id: 1, name: "bar", color: "green" }
+                    ]
+                },
+                assignments: {
+                    dataSource: [
+                        { taskId: 0, resourceId: 0, value: 5 },
+                        { taskId: 0, resourceId: 1, value: 6 }
+                    ]
+                },
+                rowHeight: 100,
+                showWorkDays: false
+            });
+        },
+        teardown: function() {
+            kendo.destroy(element);
+            element.remove();
+        }
+    });
+
+    test("renders inline height to resource wrap container", function() {
+        ok(gantt.timeline.view().content.find(".k-gantt-tasks tr:first div.k-resources-wrap").attr("style").match("height"));
+    });
+
     module("Gantt list resources", {
         setup: function() {
             element = $("<div />").appendTo(QUnit.fixture);

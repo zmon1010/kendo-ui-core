@@ -379,6 +379,7 @@ var __meta__ = { // jshint ignore:line
             var milestoneWidth = Math.round(size.width);
             var resourcesField = this.options.resourcesField;
             var className = [styles.resource, styles.resourceAlt];
+            var calculatedSize = this.options.calculatedSize;
             var resourcesPosition;
             var resourcesMargin = this._calculateResourcesMargin();
             var taskBorderWidth = this._calculateTaskBorderWidth();
@@ -425,6 +426,10 @@ var __meta__ = { // jshint ignore:line
                     };
 
                     resourceStyle[isRtl ? "right" : "left"] = resourcesPosition + "px";
+
+                    if (calculatedSize) {
+                        resourceStyle.height = calculatedSize.cell + "px";
+                    }
 
                     cell.children.push(kendoDomElement("div",
                         {
