@@ -4290,6 +4290,17 @@
         }
       },
       {
+        "text": "Task Template",
+        "url": "gantt/task-template",
+        "new": "true",
+        "title": {
+            "kendo-ui": "Task template support of Kendo UI Gantt"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the Task template support of Kendo UI Gantt."
+        }
+      },
+      {
         "text": "MVVM",
         "url": "gantt/mvvm",
         "title": {
