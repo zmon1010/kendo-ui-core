@@ -3,7 +3,6 @@
 })(function(){
 
 (function(kendo) {
-    var Sheet = kendo.spreadsheet.Sheet;
 
     var Workbook = kendo.Observable.extend({
         init: function(options) {
@@ -143,6 +142,8 @@
                 options.headerHeight || this.options.headerHeight,
                 options.headerWidth || this.options.headerWidth
             );
+
+            sheet._workbook = this;
 
             sheet.name(sheetName);
 

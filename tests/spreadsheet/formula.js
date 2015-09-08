@@ -516,43 +516,43 @@
         var f = makeFormula("=sum(a10:c15)");
 
         // insert 3 rows before row 7; the formula is at 5,5
-        f.adjust("row", 7, 3);
+        f.adjust(Sheet1, "row", 7, 3);
         equal(f.print(5, 5), "sum(A13:C18)");
 
         // insert 2 cols before col 1; the formula will move to 5,7
-        f.adjust("col", 1, 2);
+        f.adjust(Sheet1, "col", 1, 2);
         equal(f.print(5, 7), "sum(A13:E18)");
 
         // insert 1 col before col A; the formula moves to 5,8
-        f.adjust("col", 0, 1);
+        f.adjust(Sheet1, "col", 0, 1);
         equal(f.print(5, 8), "sum(B13:F18)");
 
         // delete col A; the formula moves back to 5,7
-        f.adjust("col", 0, -1);
+        f.adjust(Sheet1, "col", 0, -1);
         equal(f.print(5, 7), "sum(A13:E18)");
 
         // delete col E; the formula moves to 5,6
-        f.adjust("col", 4, -1);
+        f.adjust(Sheet1, "col", 4, -1);
         equal(f.print(5, 6), "sum(A13:D18)");
 
         // delete cols C and D; the formula moves to 5,4
-        f.adjust("col", 2, -2);
+        f.adjust(Sheet1, "col", 2, -2);
         equal(f.print(5, 4), "sum(A13:B18)");
 
         // delete rows 1-4; the formula moves to 1,4
-        f.adjust("row", 0, -4);
+        f.adjust(Sheet1, "row", 0, -4);
         equal(f.print(1, 4), "sum(A9:B14)");
 
         // delete row 10
-        f.adjust("row", 9, -1);
+        f.adjust(Sheet1, "row", 9, -1);
         equal(f.print(1, 4), "sum(A9:B13)");
 
         // delete rows 9 and 10
-        f.adjust("row", 8, -2);
+        f.adjust(Sheet1, "row", 8, -2);
         equal(f.print(1, 4), "sum(A9:B11)");
 
         // delete col A; the formula moves to 1,3
-        f.adjust("col", 0, -1);
+        f.adjust(Sheet1, "col", 0, -1);
         equal(f.print(1, 3), "sum(A9:A11)");
     });
 

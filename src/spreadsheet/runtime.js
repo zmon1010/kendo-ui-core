@@ -515,94 +515,42 @@
             this.pending = false;
             delete this.value;
         },
-        adjust: function(operation, start, delta) {
+        adjust: function(affectedSheet, operation, start, delta) {
             var formulaRow = this.row;
             var formulaCol = this.col;
-            switch (operation) {
-              case "row":
-                if (formulaRow >= start) {
+            var formulaSheet = this.sheet;
+            if (formulaSheet == affectedSheet) {
+                // move formula if it's after the change point
+                if (operation == "row" && formulaRow >= start) {
                     this.row += delta;
                 }
-                break;
-              case "col":
-                if (formulaCol >= start) {
+                if (operation == "col" && formulaCol >= start) {
                     this.col += delta;
                 }
-                break;
             }
+            var newFormulaRow = this.row;
+            var newFormulaCol = this.col;
             this.absrefs = null;
             this.refs = this.refs.map(function(ref){
-                if (ref instanceof CellRef) {
-                    return deletesCell(ref) ? NULL : fixCell(ref);
-                }
-                else if (ref instanceof RangeRef) {
-                    var del_start = deletesCell(ref.topLeft);
-                    var del_end = deletesCell(ref.bottomRight);
-                    if (del_start && del_end) {
-                        return NULL;
+                if (ref.sheet != affectedSheet) {
+                    // a reference to another sheet should still point to the same location after
+                    // adjustment; thus if row/col was removed before formula, relative references
+                    // must be adjusted by delta.
+                    if (operation == "row" && formulaRow >= start) {
+                        ref = ref.relative(delta, 0);
                     }
-                    if (del_start) {
-                        // this case is rather tricky to handle with relative references.  what we
-                        // want here is that the range top-left stays in place, even if the cell
-                        // itself is being deleted.  So, we (1) convert it to absolute cell based on
-                        // formula position, then make it relative to the location where the formula
-                        // will end up after the deletion.
-                        return new RangeRef(
-                            ref.topLeft
-                                .absolute(formulaRow, formulaCol)
-                                .relative(
-                                    operation == "row" ? fixNumber(formulaRow) : formulaRow,
-                                    operation == "col" ? fixNumber(formulaCol) : formulaCol,
-                                    ref.topLeft.rel
-                                ),
-                            fixCell(ref.bottomRight)
-                        ).setSheet(ref.sheet, ref.hasSheet()).simplify();
+                    if (operation == "col" && formulaCol >= start) {
+                        ref = ref.relative(0, delta);
                     }
-                    return new RangeRef(
-                        fixCell(ref.topLeft),
-                        fixCell(ref.bottomRight)
-                    ).setSheet(ref.sheet, ref.hasSheet()).simplify();
+                    return ref;
                 }
-                else if (!(ref instanceof NameRef || ref === NULL)) {
-                    throw new Error("Unknown reference in adjust");
-                }
-            });
-            function deletesCell(ref) {
-                if (delta >= 0) {
-                    return false;
-                }
-                ref = ref.absolute(formulaRow, formulaCol);
-                if (operation == "row") {
-                    return ref.row >= start && ref.row < start - delta;
-                } else {
-                    return ref.col >= start && ref.col < start - delta;
-                }
-            }
-            function fixCell(ref) {
-                return new CellRef(
-                    operation == "row" ? fixNumber(ref.row, ref.rel & 2, formulaRow) : ref.row,
-                    operation == "col" ? fixNumber(ref.col, ref.rel & 1, formulaCol) : ref.col,
-                    ref.rel
-                ).setSheet(ref.sheet, ref.hasSheet());
-            }
-            function fixNumber(num, relative, base) {
-                if (relative) {
-                    var abs = base + num;
-                    if (abs < start && start <= base) {
-                        return num - delta;
-                    } else if (base < start && start <= abs) {
-                        return num + delta;
-                    } else {
-                        return num;
-                    }
-                } else {
-                    if (num >= start) {
-                        return num + delta;
-                    } else {
-                        return num;
-                    }
-                }
-            }
+                return ref.adjust(
+                    formulaRow, formulaCol,
+                    newFormulaRow, newFormulaCol,
+                    operation == "row",
+                    start, delta
+                );
+            }, this);
         },
         toString: function() {
             return this.print(this.row, this.col);

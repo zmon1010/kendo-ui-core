@@ -70,8 +70,11 @@
         relative: function(){
             return this;
         },
+        adjust: function(){
+            return this;
+        },
         toString: function() {
-            return this.relative(0, 0, 3).print(0, 0);
+            return this.relative(0, 0, 3, 3).print(0, 0);
         },
         forEach: function(callback) {
             callback(this);
@@ -266,25 +269,28 @@
             }
         },
         absolute: function(arow, acol) {
-            if (this.rel & 3 === 0) {
-                return this;    // already absolute
-            }
             var ret = this.clone();
-            ret.rel = 0;
-            if (this.rel & 1) {
+            if (ret.rel & 3 === 0) {
+                return ret;    // already absolute
+            }
+            if (ret.rel & 1) {
                 // relative col, add anchor
                 ret.col += acol;
             }
-            if (this.rel & 2) {
+            if (ret.rel & 2) {
                 // relative row, add anchor
                 ret.row += arow;
             }
+            ret.rel = 0;
             return ret;
         },
         toRangeRef: function() {
             return new RangeRef(this, this);
         },
         relative: function(arow, acol, rel) {
+            if (rel == null) {
+                rel = this.rel;
+            }
             var row = rel & 2 ? this.row - arow : this.row;
             var col = rel & 1 ? this.col - acol : this.col;
             return new CellRef(row, col, rel)
@@ -322,8 +328,38 @@
         },
         forEachColumn: function(callback) {
             callback(this.toRangeRef());
+        },
+        adjust: function(row, col, trow, tcol, forRow, start, delta) {
+            var ref = this.absolute(row, col);
+            if (forRow) {
+                if (ref.row >= start) {
+                    if (delta < 0 && ref.row < start - delta) {
+                        return NULL;
+                    }
+                    ref.row += delta;
+                }
+            } else {
+                if (ref.col >= start) {
+                    if (delta < 0 && ref.col < start - delta) {
+                        return NULL;
+                    }
+                    ref.col += delta;
+                }
+            }
+            return ref.relative(trow, tcol, this.rel);
         }
     });
+
+    function deletesCell(ref, forRow, start, delta) {
+        if (delta < 0) {
+            if (forRow) {
+                return ref.row >= start && ref.row < start - delta;
+            } else {
+                return ref.col >= start && ref.col < start - delta;
+            }
+        }
+        return false;
+    }
 
     /* -----[ Range reference ]----- */
 
@@ -452,10 +488,10 @@
                 this.bottomRight.absolute(arow, acol)
             ).setSheet(this.sheet, this.hasSheet());
         },
-        relative: function(arow, acol, rel) {
+        relative: function(arow, acol, relTL, relBR) {
             return new RangeRef(
-                this.topLeft.relative(arow, acol, rel),
-                this.bottomRight.relative(arow, acol, rel)
+                this.topLeft.relative(arow, acol, relTL),
+                this.bottomRight.relative(arow, acol, relBR)
             ).setSheet(this.sheet, this.hasSheet());
         },
         height: function() {
@@ -594,6 +630,34 @@
         },
         toString: function() {
             return this.topLeft + ":" + this.bottomRight;
+        },
+        adjust: function(row, col, trow, tcol, forRow, start, delta) {
+            var tl = this.topLeft.adjust(row, col, trow, tcol, forRow, start, delta);
+            var tr = this.bottomRight.adjust(row, col, trow, tcol, forRow, start, delta);
+            if (tl === NULL && tr === NULL) {
+                return NULL;
+            }
+            if (tl === NULL) {
+                tl = this.topLeft.absolute(row, col);
+                if (forRow) {
+                    tl.row = start;
+                } else {
+                    tl.col = start;
+                }
+                tl = tl.relative(trow, tcol, this.topLeft.rel);
+            }
+            else if (tr === NULL) {
+                tr = this.bottomRight.absolute(row, col);
+                if (forRow) {
+                    tr.row = start - 1;
+                } else {
+                    tr.col = start - 1;
+                }
+                tr = tr.relative(trow, tcol, this.bottomRight.rel);
+            }
+            return new RangeRef(tl, tr)
+                .setSheet(this.sheet, this.hasSheet())
+                .simplify();
         }
     });
 

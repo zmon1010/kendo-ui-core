@@ -1,5 +1,6 @@
 (function() {
     var sheet;
+    var sheet2;
     var spreadsheet;
 
     var defaults = kendo.ui.Spreadsheet.prototype.options;
@@ -11,6 +12,7 @@
             spreadsheet = new kendo.ui.Spreadsheet(element);
 
             sheet = spreadsheet.activeSheet();
+            sheet2 = spreadsheet.insertSheet({ name: "Sheet2" });
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -96,6 +98,30 @@
         sheet.deleteColumn(3);
         equal(sheet.range("G1").formula(), "=sum(A1:C5)");
         equal(sheet.range("G1").value(), 50);
+    });
+
+    test("insert/delete row/col keeps cross-sheet references", function(){
+        sheet.range("C3").formula("=sum(Sheet2!A1:C3)");
+        sheet.insertColumn(1);
+        equal(sheet.range("D3").formula(), "=sum(Sheet2!A1:C3)");
+        sheet.deleteColumn(1);
+        equal(sheet.range("C3").formula(), "=sum(Sheet2!A1:C3)");
+        sheet.insertRow(1);
+        equal(sheet.range("C4").formula(), "=sum(Sheet2!A1:C3)");
+        sheet.deleteRow(1);
+        equal(sheet.range("C3").formula(), "=sum(Sheet2!A1:C3)");
+    });
+
+    test("insert/delete row/col updates cross-sheet references", function(){
+        sheet.range("C3").formula("=sum(Sheet2!A1:C3)");
+        sheet2.insertColumn(1);
+        equal(sheet.range("C3").formula(), "=sum(Sheet2!A1:D3)");
+        sheet2.deleteColumn(0);
+        equal(sheet.range("C3").formula(), "=sum(Sheet2!A1:C3)");
+        sheet2.insertRow(1);
+        equal(sheet.range("C3").formula(), "=sum(Sheet2!A1:C4)");
+        sheet2.deleteRow(0);
+        equal(sheet.range("C3").formula(), "=sum(Sheet2!A1:C3)");
     });
 
 })();

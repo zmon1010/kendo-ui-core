@@ -128,8 +128,11 @@
         },
 
         _adjustFormulas: function(operation, start, delta) {
-            this._forFormulas(function(formula){
-                formula.adjust(operation, start, delta);
+            var affectedSheet = this._name;
+            this._workbook._sheets.forEach(function(sheet){
+                sheet._forFormulas(function(formula){
+                    formula.adjust(affectedSheet, operation, start, delta);
+                });
             });
         },
 
