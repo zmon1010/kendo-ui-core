@@ -39,6 +39,9 @@ var __meta__ = { // jshint ignore:line
     Object.keys(kendo.ui.roles).forEach(function(name) {
         registerElement(name, kendo.ui.roles[name]);
     });
+    Object.keys(kendo.mobile.ui.roles).forEach(function(name) {
+        registerElement("mobile" + name, kendo.mobile.ui.roles[name]);
+    });
 
     var jsonRegExp = /^\s*(?:\{(?:.|\r\n|\n)*\}|\[(?:.|\r\n|\n)*\])\s*$/;
     var jsonFormatRegExp = /^\{(\d+)(:[^\}]+)?\}|^\[[A-Za-z_]*\]$/;
