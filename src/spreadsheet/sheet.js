@@ -128,12 +128,14 @@
         },
 
         _adjustFormulas: function(operation, start, delta) {
-            var affectedSheet = this._name;
-            this._workbook._sheets.forEach(function(sheet){
-                sheet._forFormulas(function(formula){
-                    formula.adjust(affectedSheet, operation, start, delta);
+            if (this._workbook) {
+                var affectedSheet = this._name;
+                this._workbook._sheets.forEach(function(sheet){
+                    sheet._forFormulas(function(formula){
+                        formula.adjust(affectedSheet, operation, start, delta);
+                    });
                 });
-            });
+            }
         },
 
         _forFormulas: function(callback) {
