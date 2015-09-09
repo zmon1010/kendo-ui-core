@@ -153,10 +153,10 @@
     test("mergeCells buttons have title attribute", function() {
         createWithTools([ "merge" ]);
 
-        equal($("[title='Merge cells']").attr("data-value"), "cells");
-        equal($("[title='Merge horizontally']").attr("data-value"), "horizontally");
-        equal($("[title='Merge vertically']").attr("data-value"), "vertically");
-        equal($("[title='Unmerge']").attr("data-value"), "unmerge");
+        equal($(".k-popup .k-button:not(.k-overflow-button)[title='Merge cells']").attr("data-value"), "cells");
+        equal($(".k-popup [title='Merge horizontally']").attr("data-value"), "horizontally");
+        equal($(".k-popup [title='Merge vertically']").attr("data-value"), "vertically");
+        equal($(".k-popup [title='Unmerge']").attr("data-value"), "unmerge");
     });
 
     test("textAlign button click triggers execute with correct value", 2, function() {
