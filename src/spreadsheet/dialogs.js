@@ -540,5 +540,53 @@
 
     kendo.spreadsheet.dialogs.register("colorPicker", ColorPickerDialog);
 
+    var AlignmentDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+
+            this._list();
+        },
+        options: {
+            title: "Alignment",
+            template: "<ul class='k-list k-reset'></ul>",
+            buttons: [
+                { property: "textAlign",     value: "left",    iconClass: "justify-left" },
+                { property: "textAlign",     value: "center",  iconClass: "justify-center" },
+                { property: "textAlign",     value: "right",   iconClass: "justify-right" },
+                { property: "textAlign",     value: "justify", iconClass: "justify-full" },
+                { property: "verticalAlign", value: "top",     iconClass: "align-top" },
+                { property: "verticalAlign", value: "middle",  iconClass: "align-middle" },
+                { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom" }
+            ]
+        },
+        _list: function() {
+            var ul = this.dialog().element.find("ul");
+
+            this.list = new kendo.ui.StaticList(ul, {
+                dataSource: new kendo.data.DataSource({ data: this.options.buttons }),
+                template: "<a title='Align #=value#' data-property='#=property#' data-value='#=value#'>" +
+                                "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>" +
+                                "Align #=value#" +
+                           "</a>",
+                change: this.apply.bind(this)
+            });
+
+            this.list.dataSource.fetch();
+        },
+        apply: function(e) {
+            var dataItem = e.sender.value()[0];
+            SpreadsheetDialog.fn.apply.call(this);
+
+            var command = new kendo.spreadsheet.PropertyChangeCommand({
+                property: dataItem.property,
+                value: dataItem.value
+            });
+
+            this.trigger("execute", { command: command });
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("alignment", AlignmentDialog);
+
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
