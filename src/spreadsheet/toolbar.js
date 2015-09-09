@@ -734,7 +734,7 @@
             this.buttons.forEach(function(options, index) {
                 var title = options.value === "unmerge" ? "Unmerge" : "Merge " + options.value;
                 var button = "<a title='" + title + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
-                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" +
+                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + title +
                              "</a>";
                 element.append(button);
             });
