@@ -10,6 +10,7 @@
     // == into === to make JSHint happy will break functionality.
     /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, validthis:true, -W054, loopfunc: true */
     /* global console */
+    /* jshint latedef: nofunc */
 
     var calc = {};
     var spreadsheet = kendo.spreadsheet;
@@ -18,11 +19,9 @@
     var Class = kendo.Class;
 
     var Ref = spreadsheet.Ref;
-    var NameRef = spreadsheet.NameRef;
     var CellRef = spreadsheet.CellRef;
     var RangeRef = spreadsheet.RangeRef;
     var UnionRef = spreadsheet.UnionRef;
-    var NULL = spreadsheet.NULLREF;
 
     /* -----[ Errors ]----- */
 
@@ -93,8 +92,8 @@
             for (var pending = formulas.length, i = 0; i < formulas.length; ++i) {
                 fetch(formulas[i]);
             }
-            function fetch(cell) {
-                cell.formula.exec(context.ss, function(val){
+            function fetch(cell) { // jshint ignore:line, because you are stupid.
+                cell.formula.exec(context.ss, function(){
                     if (!--pending) {
                         f.call(context);
                     }
@@ -601,7 +600,7 @@
     function compileArgumentChecks(args) {
         var arrayArgs = "function arrayArgs(args) { var xargs = [], width = 0, height = 0, arrays = [], i = 0; ";
         var resolve = "function resolve(args, callback) { var toResolve = [], i = 0; ";
-        var name, out, forced, main = "'use strict'; function check(args) { var xargs = [], i = 0, m, err = 'VALUE'; ", haveForced = false;
+        var name, forced, main = "'use strict'; function check(args) { var xargs = [], i = 0, m, err = 'VALUE'; ", haveForced = false;
         var canBeArrayArg = false, hasArrayArgs = false;
         main += args.map(comp).join("");
         main += "if (i < args.length) return new CalcError('N/A'); ";
@@ -979,11 +978,6 @@
                 return this;
             }
         };
-        function fname(name) {
-            return name.replace(/[^a-z0-9_]/g, function(s){
-                return "$" + s.charCodeAt(0) + "$";
-            });
-        }
     }
 
     /* -----[ date calculations ]----- */

@@ -703,7 +703,6 @@
     }
 
     function _var_sp(numbers, divisor, avg) {
-        var n = numbers.length;
         if (avg == null) {
             avg = _avg(numbers);
         }
@@ -1466,7 +1465,7 @@
         } else if (type === 1) {
             cmp = parseCriteria(">=" + val);
         }
-        if (m.each(function(el, row, col){
+        if (m.each(function(el){
             if (el != null && cmp(el)) {
                 if (type !== 0 && val != el) {
                     --index;
@@ -1581,7 +1580,7 @@
         [ "date", "*date" ]
     ]);
 
-    defineFunction("weekday", function(date, type){
+    defineFunction("weekday", function(date){
         // XXX: TODO type
         return unpackDate(date).day + 1;
     }).args([
@@ -1843,7 +1842,7 @@
             var hh = parseFloat(m[1]);
             var mm = parseFloat(m[2]);
             var ss = m[3] ? parseFloat(m[4]) : 0;
-            var ms = m[5] ? parseFloat(m[6]) : 0;
+            //var ms = m[5] ? parseFloat(m[6]) : 0;
             var ampm = m[7];
             if (ampm && (hh > 12 || hh < 1)) {
                 return new CalcError("VALUE");

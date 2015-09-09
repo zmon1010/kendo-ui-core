@@ -9,18 +9,13 @@
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
     /* jshint eqnull:true, newcap:false, laxbreak:true, validthis:true */
+    /* jshint latedef: nofunc */
 
     var spreadsheet = kendo.spreadsheet;
     var calc = spreadsheet.calc;
     var runtime = calc.runtime;
     var defineFunction = runtime.defineFunction;
-    var defineAlias = runtime.defineAlias;
     var CalcError = runtime.CalcError;
-    var RangeRef = spreadsheet.RangeRef;
-    var CellRef = spreadsheet.CellRef;
-    var UnionRef = spreadsheet.UnionRef;
-    var Matrix = runtime.Matrix;
-    var Ref = spreadsheet.Ref;
 
     /* -----[ Spreadsheet API ]----- */
 
@@ -667,7 +662,7 @@
                 d += delta;
                 d2 += delta*delta;
             }
-            var md = d/n1, md2 = d2 / n1;
+            var md = d/n1; //, md2 = d2 / n1;
             t_st = md / Math.sqrt((d2 - d*md)/(n1*(n1-1))); // has a "Student T" distribution
             return tail == 1 ? Tdist_right(t_st, n1-1) : Tdist_2tail(t_st, n1-1);
         }
