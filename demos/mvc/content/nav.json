@@ -2164,6 +2164,9 @@
            "aspnet-mvc": "Columns",
            "jsp-ui": "Columns",
            "php-ui": "Columns" 
+         },
+         "description": {
+           "kendo-ui": "<p>This sample represents how you can implement custom command handling for records in the Kendo UI grid.&nbsp; <br /> <br /> For this purpose you need to include a command column in the grid which will render a button in the column cells that triggers the command. Through the column definition you can specify the text for the button and wire its click event to a JavaScript function, which receives the corresponding grid data item as an argument. Then in this function definition you can handle the command.</p> <p>In this demo we use Window widget instance to display details about the chosen row (Person) in the grid.</p> More information about handling custom commands can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.command\">this section</a> of the docs."
          }
       },
       {
@@ -2330,6 +2333,9 @@
            "aspnet-mvc": "Columns",
            "jsp-ui": "Columns",
            "php-ui": "Columns" 
+         },
+         "description": {
+           "kendo-ui": "<p>In this demo we showcase how to implement foreign key column in the Kendo UI grid, hosting dropdown list editor for data editing. </p> <p>The column in question is defined via a key field (CategoryID). Through the column definition you set the key field as <strong>Field </strong>attribute, and the <strong>values </strong>attribute points to the source data for the items displayed in the dropdown list editor of that column. The editor items should have matching values of the same type as the key field (CategoryID in this case).</p> <p>See the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.values\">relevant API section</a> of the docs for more info.</p>"
          }
       },
       {
@@ -2346,6 +2352,9 @@
            "aspnet-mvc": "Columns",
            "jsp-ui": "Columns",
            "php-ui": "Columns" 
+         },
+         "description": {
+           "kendo-ui": "<p>The Kendo UI grid supports multi-column headers by specifying column groups which incorporate inner column structures. Here the Contact Info and Location columns have nested columns, depicted via an array of column definitions. </p> <p>Operations like sorting and filtering are supported on each column level, regardless of the chosen multi-header pattern.</p>"
          }
       },
       {
@@ -2364,6 +2373,9 @@
            "aspnet-mvc": "Columns",
            "jsp-ui": "Columns",
            "php-ui": "Columns" 
+         },
+         "description": {
+           "kendo-ui":"<p>You can enable column reordering for the Kendo UI grid via a simple configuration setting. All you have to do is set its <strong>reorderable</strong> attribute to <strong>true</strong>, which will automatically make its columns draggable and reorderable, as illustrated in this example.</p>"
          }
       },
       {
@@ -2382,6 +2394,9 @@
            "aspnet-mvc": "Columns",
            "jsp-ui": "Columns",
            "php-ui": "Columns" 
+         },
+         "description": {
+           "kendo-ui":"<p>You can enable column resizing for the Kendo UI grid via a simple configuration setting. All you have to do is set its <strong>resizable</strong> attribute to <strong>true</strong>, which will make its columns resizable by displaying drag handles/hints when you hover in between their headers. </p>"
          }
       },
       {
@@ -2400,6 +2415,9 @@
            "aspnet-mvc": "Columns",
            "jsp-ui": "Columns",
            "php-ui": "Columns" 
+         },
+         "description": {
+           "kendo-ui":"<p>When you interact with grid columns, you may want to be able to trigger column operations via a dedicated menu for this purpose.<br /> <br /> The Kendo UI grid has built-in support for such a feature, which can be enabled via a single configuration setting, i.e. <strong>columnMenu=true</strong>. Thus an option to display a column menu will be rendered in the grid column headers, which when activated allows&nbsp; you to sort, filter or change the visibility of the column. <br /> <br /> Furthermore, this menu takes into account whether a certain column operation is disabled via the column definition, and excludes the corresponding UI from its rendering. In this showcase this is done for the ShipAddress column where filtering is disabled. <br /> <br /> Further information about the available columnMenu API can be collected from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columnMenu\">this article</a>.</p>"
          }
       },
       {
