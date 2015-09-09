@@ -194,7 +194,6 @@
         },
 
         renameSheet: function(sheet, newSheetName) {
-            var that = this;
             var oldSheetName = sheet.name();
 
             if (!newSheetName ||

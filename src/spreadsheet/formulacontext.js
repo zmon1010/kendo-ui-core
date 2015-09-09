@@ -5,8 +5,6 @@
     /* jshint eqnull:true */
 
     var spreadsheet = kendo.spreadsheet;
-    var Class = kendo.Class;
-    var Ref = kendo.spreadsheet.Ref;
     var CellRef = kendo.spreadsheet.CellRef;
     var RangeRef = kendo.spreadsheet.RangeRef;
     var UnionRef = kendo.spreadsheet.UnionRef;

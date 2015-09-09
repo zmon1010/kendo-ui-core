@@ -200,7 +200,6 @@
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
-                var rowCount = grid.rowCount;
 
                 var frozenRows = this.frozenRows();
                 if (rowIndex < frozenRows) {
@@ -738,7 +737,7 @@
             if (this._sort) {
                json.sort = {
                    ref: this._sort.ref.toString(),
-                   columns: this._sort.columns.map(function(column, index) {
+                   columns: this._sort.columns.map(function(column) {
                        return {
                            index: column.index,
                            ascending: column.ascending
@@ -750,7 +749,7 @@
             if (this._filter) {
                json.filter = {
                    ref: this._filter.ref.toString(),
-                   columns: this._filter.columns.map(function(column, index) {
+                   columns: this._filter.columns.map(function(column) {
                         var filter = column.filter.toJSON();
                         filter.index = column.index;
                         return filter;

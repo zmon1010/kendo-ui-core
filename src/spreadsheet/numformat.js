@@ -9,6 +9,7 @@
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
     /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, -W054 */
+    /* jshint latedef: nofunc */
 
     var calc = kendo.spreadsheet.calc;
 
