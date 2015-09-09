@@ -75,6 +75,11 @@
             return this._active;
         },
 
+        //TODO Test and find better name
+        keep: function() {
+            return this.barInput.popup.visible() || this.cellInput.popup.visible();
+        },
+
         scale: function() {
             this.cellInput.scale();
         },

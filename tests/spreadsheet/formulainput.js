@@ -85,7 +85,7 @@
         createFormulaInput();
 
         var value = "test";
-        var editor = new kendo.spreadsheet.FormulaInput($("<div/>"));
+        var editor = new kendo.spreadsheet.FormulaInput($("<div/>").appendTo(QUnit.fixture));
 
         formulaInput.syncWith(editor);
 
@@ -172,5 +172,417 @@
         formulaInput.element.triggerHandler("input");
 
         ok(formulaInput.element.width() > initialWidth);
+    });
+
+    module("Spreadsheet searching", {
+        setup: function() {
+            element = $("<div />").appendTo(QUnit.fixture);
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("creates formula source with all available functions", 3, function() {
+        createFormulaInput();
+
+        var source = formulaInput.formulaSource;
+
+        source.read();
+
+        var data = source.data();
+
+        equal(data.length, Object.keys(kendo.spreadsheet.calc.runtime.FUNCS).length);
+        equal(data[0].text, "IF");
+        equal(data[0].value, "IF");
+    });
+
+    test("creates StaticList bound to formulaSource", function() {
+        createFormulaInput();
+
+        ok(formulaInput.list instanceof kendo.ui.StaticList);
+        equal(formulaInput.list.dataSource, formulaInput.formulaSource);
+    });
+
+    test("creates Popup with widget anchor", function() {
+        createFormulaInput();
+
+        ok(formulaInput.popup instanceof kendo.ui.Popup);
+        equal(formulaInput.popup.options.anchor[0], element[0]);
+    });
+
+    test("filters source based on value", function() {
+        createFormulaInput();
+
+        formulaInput.filter("su");
+
+        var ul = formulaInput.list.element;
+        var children = ul.children();
+
+        ok(children.length > 1);
+        ok(children.eq(0).text(), "SUM");
+    });
+
+    test("does not filter if text is shorter than minLength", 0, function() {
+        createFormulaInput();
+
+        formulaInput.formulaSource.bind("change", function() {
+            ok(false);
+        });
+
+        formulaInput.filter("");
+    });
+
+    test("clears previous selection of selectlist on search", 1, function() {
+        createFormulaInput();
+
+        formulaInput.filter("sum");
+        formulaInput.list.select(0);
+        formulaInput.filter("su");
+
+        ok(!formulaInput.list.value()[0]);
+    });
+
+    test("show formula list on typing", 1, function() {
+        createFormulaInput();
+
+        element.focus();
+        element.text("=s");
+        formulaInput.caretToEnd();
+        element.trigger("keyup");
+
+        ok(formulaInput.popup.visible());
+    });
+
+    test("filter list on typing", 2, function() {
+        createFormulaInput();
+
+        element.focus();
+        element.text("=s");
+        formulaInput.caretToEnd();
+
+        stub(formulaInput, { filter: formulaInput.filter });
+
+        element.trigger("keyup");
+
+        equal(formulaInput.calls("filter"), 1);
+        equal(formulaInput.args("filter")[0], "s");
+    });
+
+    test("do not filter if text does not contain '=' at the begining of the input", 1, function() {
+        createFormulaInput();
+
+        element.focus();
+        element.text("s");
+        formulaInput.caretToEnd();
+
+        stub(formulaInput, { filter: formulaInput.filter });
+
+        element.trigger("keyup");
+
+        equal(formulaInput.calls("filter"), 0);
+    });
+
+    function filterInput(filter, inputValue) {
+        formulaInput.filter(filter);
+        formulaInput.popup.open();
+
+        element.focus();
+        element.text(inputValue);
+        formulaInput.caretToEnd();
+    }
+
+    test("close popup if formula value contains '(' symbol", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("sum", "=sum(");
+
+        element.trigger("keyup");
+
+        ok(!formulaInput.popup.visible());
+        kendo.effects.enable();
+    });
+
+    test("close popup if formula value contains ',' symbol", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("sum", "=sum,");
+
+        element.trigger("keyup");
+
+        ok(!formulaInput.popup.visible());
+        kendo.effects.enable();
+    });
+
+    test("close popup if filter result is empty", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("sum", "=fake");
+
+        element.trigger("keyup");
+
+        ok(!formulaInput.popup.visible());
+        kendo.effects.enable();
+    });
+
+    test("close popup on 'left/right' arrow", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("sum", "=sum");
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.LEFT
+        });
+
+        ok(!formulaInput.popup.visible());
+        kendo.effects.enable();
+    });
+
+    test("close popup on 'enter' arrow", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("sum", "=sum");
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.ENTER
+        });
+
+        ok(!formulaInput.popup.visible());
+        kendo.effects.enable();
+    });
+
+    test("close popup on 'esc' arrow", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("sum", "=sum");
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.ESC
+        });
+
+        ok(!formulaInput.popup.visible());
+        kendo.effects.enable();
+    });
+
+    test("close popup on 'spacebar' arrow", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("sum", "=sum");
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.SPACEBAR
+        });
+
+        ok(!formulaInput.popup.visible());
+        kendo.effects.enable();
+    });
+
+    test("close popup on 'home/end' arrow", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("sum", "=sum");
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.HOME
+        });
+
+        ok(!formulaInput.popup.visible());
+        kendo.effects.enable();
+    });
+
+    test("close popup on blur", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("sum", "=sum");
+
+        element.blur();
+
+        ok(!formulaInput.popup.visible());
+        kendo.effects.enable();
+    });
+
+    module("Spreadsheet navigation", {
+        setup: function() {
+            element = $("<div />").appendTo(QUnit.fixture);
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("focus next item on 'down'", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+        list.focus(0);
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.DOWN
+        });
+
+        equal(list.focus()[0], list.element.children().eq(1)[0]);
+    });
+
+    test("focus first item on 'down' if last is focused", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        list.focusLast();
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.DOWN
+        });
+
+        equal(list.focus()[0], list.element.children().eq(0)[0]);
+    });
+
+    test("focus prev item on 'up'", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        list.focus(1);
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.UP
+        });
+
+
+        equal(list.focus()[0], list.element.children().eq(0)[0]);
+    });
+
+    test("focus last item on 'up' if first is focused", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        list.focusFirst();
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.UP
+        });
+
+        equal(list.focus()[0], list.element.children().last()[0]);
+    });
+
+    test("focus last item on 'pagedown'", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        list.focus(0);
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.PAGEDOWN
+        });
+
+        equal(list.focus()[0], list.element.children().last()[0]);
+    });
+
+    test("focus last item on 'pageup'", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        list.focusFirst();
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.PAGEUP
+        });
+
+        equal(list.focus()[0], list.element.children().first()[0]);
+    });
+
+    test("select focused item on 'enter'", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        list.focusFirst();
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.ENTER
+        });
+
+        equal(list.value(), "SUM");
+    });
+
+    test("if no focused item just close popup on 'enter'", 3, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.ENTER
+        });
+
+        equal(list.value(), "");
+        equal(element.text(), "=su");
+        ok(!formulaInput.popup.visible());
+    });
+
+    test("replace formula value on enter", 1, function() {
+        kendo.effects.disable();
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        list.focusFirst();
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.ENTER
+        });
+
+        equal(element.text(), "=SUM");
     });
 })();

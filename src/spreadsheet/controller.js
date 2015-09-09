@@ -637,6 +637,11 @@
         },
 
         onEditorBlur: function(event, action) {
+            //TODO Test this
+            if (this.editor.keep()) {
+                return;
+            }
+
             this.editor.deactivate();
             this.clipboardElement.focus();
 
