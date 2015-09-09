@@ -18,7 +18,6 @@
     <!--
     
 
-        <kendo-splitter panes="[{}]"></kendo-splitter>
     
     -->
         <kendo-datepicker value="03/27/2015"></kendo-datepicker>
@@ -26,9 +25,12 @@
         <kendo-dropdownlist value="3" dataTextField="ProductName" dataValueField="ProductID" dataSource="{ type: 'odata', serverFiltering: true, transport: { read: { url: '//demos.telerik.com/kendo-ui/service/Northwind.svc/Products' } } }"></kendo-dropdownlist>
         <kendo-grid dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-grid>
         <kendo-editor></kendo-editor>
-        <kendo-window content="{template: 'asdasd'}">
+        <kendo-window>test</kendo-window>
         <kendo-dropdownlist value="1" dataTextField="text" dataValueField="value" dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-dropdownlist>
-        </kendo-window>
+        <kendo-splitter>
+            <div>left</div>
+            <div>right</div>
+        </kendo-splitter>
         <script>
             // var coreWidgets = [
                 // "Editor",

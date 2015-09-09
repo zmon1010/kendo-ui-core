@@ -132,6 +132,7 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var element = document.createElement(TAGNAMES[name] || "div");
 
+            $(element).append(that.childNodes);
             that.appendChild(element);
             that.widget = new widget(element, parseOptions(that, options));
 

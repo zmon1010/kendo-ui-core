@@ -17,7 +17,7 @@
         "ProgressBar",
         "Slider",
         "Sortable",
-        // "Splitter", //TODO: cannot initialize splitter with no nested divs
+        // "Splitter", Cannot initialize splitter with no nested divs. Separate test added
         "TabStrip",
         "TimePicker",
         "Tooltip",
@@ -56,5 +56,15 @@
             var element = $("<kendo-mobile"+ name.toLowerCase() +"/>").appendTo(dom)[0];
             ok(element.widget instanceof kendo.mobile.ui[name]);
         });
+    });
+
+    test("Window gets its content option from element's childNodes", function() {
+        var element = $("<kendo-window>foo</kendo-window>").appendTo(dom)[0];
+        equal(element.content(), "foo");
+    });
+
+    test("Splitter gets its panes option from element's childNodes", function() {
+        var element = $("<kendo-splitter><div></div></kendo-splitter>").appendTo(dom)[0];
+        equal(element._panes().length, 1);
     });
 })();
