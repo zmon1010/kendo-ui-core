@@ -24,7 +24,7 @@
                 "<dd class='" + classNames.reset + "'>" +
                     "condition filtering" +
                 "</dd>"
-        }
+        };
 
         function flatternValues(values) {
             return [].concat.apply([], values);

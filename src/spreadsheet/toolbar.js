@@ -54,7 +54,7 @@
         format:                { type: "format",      property: "format",                             width: 100 },
         merge:                 { type: "merge",                               iconClass: "merge-cells" },
         borders:               { type: "borders",                             iconClass: "all-borders" },
-        formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
+        formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
