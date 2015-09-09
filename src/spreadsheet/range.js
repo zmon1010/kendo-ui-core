@@ -171,7 +171,7 @@
                 } else if (format && kendo.spreadsheet.formatting.type(value, format) === "date") {
                     value = kendo.toString(kendo.spreadsheet.numberToDate(value), kendo.culture().calendar.patterns.d);
                 } else if (typeof value == "string" &&
-                           (/^=/.test(value) ||
+                           (/^[=']/.test(value) ||
                             (/^(?:true|false)$/i).test(value) ||
                             looksLikeANumber(value))) {
                     value = "'" + value;

@@ -588,16 +588,12 @@
         equal(sheet.range("A1").input(), "foo");
     });
 
-    test("range.input returns numeric string value", function() {
+    test("range.input quotes the quote", function() {
         sheet.range("A1").value("'123");
+        sheet.range("A2").value("'true");
 
-        equal(sheet.range("A1").input(), "'123");
-    });
-
-    test("range.input returns string value for booleans", function() {
-        sheet.range("A1").value("'true");
-
-        equal(sheet.range("A1").input(), "'true");
+        equal(sheet.range("A1").input(), "''123");
+        equal(sheet.range("A2").input(), "''true");
     });
 
     test("range.input returns formatted date", function() {
