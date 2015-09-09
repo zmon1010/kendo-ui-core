@@ -5,9 +5,7 @@
 (function(kendo) {
     var $ = kendo.jQuery;
 
-    var RangeRef = kendo.spreadsheet.RangeRef;
     var UnionRef = kendo.spreadsheet.UnionRef;
-    var CellRef = kendo.spreadsheet.CellRef;
 
     var styles = [
         "color", "fontFamily", "underline", "fontSize",
@@ -463,7 +461,6 @@
         },
 
         getState: function(propertyName) {
-            var sheet = this._sheet;
             var state = {ref: this._ref.first()};
             var properties = [propertyName];
             if (!propertyName) {
@@ -494,7 +491,6 @@
             var origin = this._ref.first();
             var rowDelta = state.ref.row - origin.row;
             var colDelta = state.ref.col - origin.col;
-            var sheetName = sheet.name();
 
             sheet.batch(function() {
                 if (state.mergedCells) {
