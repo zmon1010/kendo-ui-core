@@ -20,6 +20,11 @@
             var sheet, formula, value, i;
             if (ref instanceof CellRef) {
                 sheet = this.workbook.sheetByName(ref.sheet);
+                if (!sheet) {
+                    return [{
+                        value: new kendo.spreadsheet.calc.runtime.CalcError("SHEET")
+                    }];
+                }
                 formula = sheet.formula(ref);
                 value = sheet.range(ref.row, ref.col).value();
 
@@ -47,6 +52,12 @@
                         i = n;
                         n = tmp;
                     }
+                }
+
+                if (i < 0 || n < 0) {
+                    return [{
+                        value: new kendo.spreadsheet.calc.runtime.CalcError("SHEET")
+                    }];
                 }
 
                 // XXX: This is nicer, but significantly slower.
