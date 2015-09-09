@@ -20,9 +20,8 @@
             "textWrap",
             [ "formatDecreaseDecimal", "formatIncreaseDecimal" ],
             "format",
-            "filter",
-            "separator",
-            "mergeSplitButton"
+            "merge",
+            "filter"
         ],
         insert: [
             [ "bold", "italic", "underline" ]
@@ -41,27 +40,21 @@
         underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
         formatDecreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: -1,       iconClass: "decrease-decimal" },
         formatIncreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: +1,       iconClass: "increase-decimal" },
-        format:                { type: "format",                                   property: "format",                         width: 100 },
         textWrap:              { type: "button", command: "TextWrapCommand",       property: "wrap",          value: true,     iconClass: "text-wrap", togglable: true },
-        formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
-        backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
-        textColor:             { type: "colorPicker", property: "color", iconClass: "text" },
-
-        mergeSplitButton:      { type: "splitButton", name: "mergeCells",        command: "MergeCellCommand", value: "cells",        iconClass: "merge-cells"       , showText: "overflow", menuButtons: [ "mergeHorizontally", "mergeVertically", "unmerge" ] },
-        mergeCells:            { type: "button",      name: "mergeCells",        command: "MergeCellCommand", value: "cells",        iconClass: "merge-cells"       , showText: "always" },
-        mergeHorizontally:     { type: "button",      name: "mergeHorizontally", command: "MergeCellCommand", value: "horizontally", iconClass: "merge-horizontally", showText: "always" },
-        mergeVertically:       { type: "button",      name: "mergeVertically",   command: "MergeCellCommand", value: "vertically",   iconClass: "merge-vertically"  , showText: "always" },
-        unmerge:               { type: "button",      name: "unmerge",           command: "MergeCellCommand", value: "unmerge",      iconClass: "normal-layout"     , showText: "always" },
-
-        borders:               { type: "borders", command: "BorderChangeCommand", iconClass: "all-borders" },
-        fontFamily:            { type: "fontFamily", property: "fontFamily", width: 130, iconClass: "text" },
-        fontSize:              { type: "fontSize", property: "fontSize", width: 60, iconClass: "font-size" },
-        cut:                   { type: "button", command: "CutCommand", iconClass: "cut" },
-        copy:                  { type: "button", command: "CopyCommand", iconClass: "copy" },
-        paste:                 { type: "button", command: "PasteCommand", iconClass: "paste" },
+        cut:                   { type: "button", command: "CutCommand",                                                        iconClass: "cut" },
+        copy:                  { type: "button", command: "CopyCommand",                                                       iconClass: "copy" },
+        paste:                 { type: "button", command: "PasteCommand",                                                      iconClass: "paste" },
+        filter:                { type: "button", command: "FilterCommand",         property: "hasFilter",                      iconClass: "filter", togglable: true },
         separator:             { type: "separator" },
-        filter:                { type: "button", command: "FilterCommand",         property: "hasFilter", iconClass: "filter", togglable: true },
-        alignment:             { type: "alignment", command: "PropertyChangeCommand", iconClass: "justify-left" }
+        alignment:             { type: "alignment",   command: "PropertyChangeCommand",                         iconClass: "justify-left" },
+        backgroundColor:       { type: "colorPicker", command: "PropertyChangeCommand", property: "background", iconClass: "background" },
+        textColor:             { type: "colorPicker", command: "PropertyChangeCommand", property: "color",      iconClass: "text" },
+        fontFamily:            { type: "fontFamily",  command: "PropertyChangeCommand", property: "fontFamily", iconClass: "text", width: 130 },
+        fontSize:              { type: "fontSize",    command: "PropertyChangeCommand", property: "fontSize",   iconClass: "font-size", width: 60 },
+        format:                { type: "format",      command: "PropertyChangeCommand", property: "format",                             width: 100 },
+        merge:                 { type: "merge",       command: "MergeCellCommand",                              iconClass: "merge-cells" },
+        borders:               { type: "borders",     command: "BorderChangeCommand",                           iconClass: "all-borders" },
+        formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -719,6 +712,59 @@
     });
 
     kendo.toolbar.registerComponent("alignment", AlignmentTool, AlignmentButton);
+
+    var MergeTool = PopupTool.extend({
+        init: function(options, toolbar) {
+            PopupTool.fn.init.call(this, options, toolbar);
+
+            this._commandPalette();
+            this.popup.element.on("click", ".k-button", function(e) {
+                this._execute($(e.currentTarget));
+            }.bind(this));
+
+            this.element.data({
+                type: "merge",
+                merge: this,
+                instance: this
+            });
+        },
+        buttons: [
+            { value: "cells",        iconClass: "merge-cells"   },
+            { value: "horizontally", iconClass: "merge-horizontally" },
+            { value: "vertically",   iconClass: "merge-vertically"  },
+            { value: "unmerge",      iconClass: "normal-layout"   }
+        ],
+        destroy: function() {
+            this.popup.element.off();
+            PopupTool.fn.destroy.call(this);
+        },
+        _commandPalette: function() {
+            var element = $("<div />").appendTo(this.popup.element);
+            this.buttons.forEach(function(options, index) {
+                var title = options.value === "unmerge" ? "Unmerge" : "Merge " + options.value;
+                var button = "<a title='" + title + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
+                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" +
+                             "</a>";
+                element.append(button);
+            });
+        },
+        _execute: function(button) {
+            var property = button.attr("data-property");
+            var value = button.attr("data-value");
+
+            this.toolbar.execute(new kendo.spreadsheet.MergeCellCommand({
+                value: value
+            }));
+        }
+    });
+
+    var MergeButton = OverflowDialogButton.extend({
+        _click: function(e) {
+            this.toolbar.openDialog("merge");
+        }
+    });
+
+    kendo.toolbar.registerComponent("merge", MergeTool, MergeButton);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 

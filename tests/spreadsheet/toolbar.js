@@ -140,44 +140,23 @@
     });
 
     test("mergeCell click triggers execute with correct value", 1, function() {
-        createWithTools([ "mergeCells" ]);
+        createWithTools([ "merge" ]);
 
         toolbar.one("execute", function(e) {
             equal(e.command.options.value, "cells");
         });
 
         sheet.select("A1:B2");
-        tap(toolbar.element.find("[data-tool=mergeCells]"));
-    });
-
-    test("mergeCells click triggers execute with correct value", 1, function() {
-        createWithTools([ "mergeSplitButton" ]);
-
-        toolbar.one("execute", function(e) {
-            equal(e.command.options.value, "cells");
-        });
-
-        sheet.select("A1:B2");
-        tap(toolbar.element.find("[data-tool=mergeSplitButton]"));
-    });
-
-    test("mergeCells buttons have data-tool attribute", function() {
-        createWithTools([ "mergeSplitButton" ]);
-
-        //adding +1 because of the hamburger buttons
-        equal($("[data-tool=mergeSplitButton]").length, 1 + 1);
-        equal($("[data-tool=mergeHorizontally]").length, 1 + 1);
-        equal($("[data-tool=mergeVertically]").length, 1 + 1);
-        equal($("[data-tool=unmerge]").length, 1 + 1);
+        $("[title='Merge cells'][data-value=cells]").trigger("click");
     });
 
     test("mergeCells buttons have title attribute", function() {
-        createWithTools([ "mergeSplitButton" ]);
+        createWithTools([ "merge" ]);
 
-        equal($("[data-tool=mergeSplitButton]").attr("title"), "Merge cells");
-        equal($("[data-tool=mergeHorizontally]").attr("title"), "Merge horizontally");
-        equal($("[data-tool=mergeVertically]").attr("title"), "Merge vertically");
-        equal($("[data-tool=unmerge]").attr("title"), "Unmerge");
+        equal($("[title='Merge cells']").attr("data-value"), "cells");
+        equal($("[title='Merge horizontally']").attr("data-value"), "horizontally");
+        equal($("[title='Merge vertically']").attr("data-value"), "vertically");
+        equal($("[title='Unmerge']").attr("data-value"), "unmerge");
     });
 
     test("textAlign button click triggers execute with correct value", 2, function() {
