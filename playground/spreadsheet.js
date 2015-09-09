@@ -1,3 +1,46 @@
+var STATS = {};
+
+function timeFunction(obj, func, name) {
+    var orig = obj.prototype[func];
+    if (!name) {
+        name = func;
+    }
+    var tm = STATS[name] = {
+        min: null, max: null, avg: null, timer: null, tot: 0, calls: 0, last: 0, lastCalls: 0
+    };
+    function update(t1, t2) {
+        var dt = t2 - t1;
+        tm.calls++;
+        tm.lastCalls++;
+        if (tm.min == null || dt < tm.min) tm.min = dt;
+        if (tm.max == null || dt > tm.max) tm.max = dt;
+        tm.tot += dt;
+        tm.last += dt;
+        tm.avg = tm.tot / tm.calls;
+        clearTimeout(tm.timer);
+        tm.timer = setTimeout(function(){
+            var last = tm.last;
+            delete tm.timer;
+            delete tm.last;
+            console.log(name + " (last: " + last.toFixed(3) + "ms) " + JSON.stringify(tm, null, 2));
+            tm.last = 0;
+            tm.lastCalls = 0;
+        });
+    }
+    obj.prototype[func] = function() {
+        var t1 = performance.now();
+        var result = orig.apply(this, arguments);
+        var t2 = performance.now();
+        update(t1, t2);
+        return result;
+    };
+}
+
+timeFunction(kendo.spreadsheet.View, "refresh", "View::refresh");
+timeFunction(kendo.spreadsheet.Sheet, "recalc", "Sheet::recalc");
+timeFunction(kendo.spreadsheet.FormulaContext, "getRefCells");
+
+
 $("#spreadsheet").kendoSpreadsheet({
     toolbar: {
         home: kendo.spreadsheet.ToolBar.fn.options.tools["home"].concat([
@@ -134,6 +177,12 @@ $("#pdf").on("click", function(){
     });
 });
 
+$("#recalc").on("click", function(){
+    //console.time("recalc");
+    spreadsheet.refresh({ recalc: true });
+    //console.timeEnd("recalc");
+});
+
 var sheet2 = spreadsheet.sheetByName("Sheet2");
 sheet2.range("A1").formula("=Sheet1!A1:B3 ^ 2");
 
@@ -147,4 +196,11 @@ sheet2.range("D3").input("=sum( indirect(D1):indirect(D2) )");
 sheet2.range("D5").input("=sum(sheet1!E11:AX200)");
 sheet2.range("D6").input("=sum(sheet1!A:AX)");
 sheet2.range("D7").input("=sum(sheet1!A:AX)");
+
+
+
+
+
+
+
 
