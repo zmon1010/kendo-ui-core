@@ -147,20 +147,10 @@
                 bold: "Bold",
                 italic: "Italic",
                 underline: "Underline",
-                alignLeft: "Align left",
-                alignCenter: "Align center",
-                alignRight: "Align right",
-                alignTop: "Align top",
-                alignMiddle: "Align middle",
-                alignBottom: "Align bottom",
-                mergeCells: "Merge cells",
-                mergeHorizontally: "Merge horizontally",
-                mergeVertically: "Merge vertically",
-                unmerge: "Unmerge",
+                alignment: "Alignment",
+                merge: "Merge cells",
                 filter: "Filter",
                 format: "Custom format...",
-                formatCurrency: "Currency",
-                formatPercentage: "Percentage",
                 formatDecreaseDecimal: "Decrease decimal",
                 formatIncreaseDecimal: "Increase decimal",
                 textWrap: "Wrap text",
@@ -169,6 +159,7 @@
                 borders: "Borders",
                 textColor: "Text Color",
                 backgroundColor: "Background",
+                cut: "Cut",
                 copy: "Copy",
                 paste: "Paste"
             }
@@ -729,10 +720,10 @@
             });
         },
         buttons: [
-            { value: "cells",        iconClass: "merge-cells"   },
+            { value: "cells",        iconClass: "merge-cells" },
             { value: "horizontally", iconClass: "merge-horizontally" },
-            { value: "vertically",   iconClass: "merge-vertically"  },
-            { value: "unmerge",      iconClass: "normal-layout"   }
+            { value: "vertically",   iconClass: "merge-vertically" },
+            { value: "unmerge",      iconClass: "normal-layout" }
         ],
         destroy: function() {
             this.popup.element.off();
