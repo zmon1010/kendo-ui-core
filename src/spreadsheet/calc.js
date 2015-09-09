@@ -63,11 +63,11 @@
     }
 
     function parseReference(name) {
-        if (name.indexOf(",") >= 0) {
-            return new spreadsheet.UnionRef(name.split(/\s*,\s*/g).map(parseReference));
-        }
         if (name.toLowerCase() == "#sheet") {
             return spreadsheet.SHEETREF;
+        }
+        if (name.indexOf(",") >= 0) {
+            return new spreadsheet.UnionRef(name.split(/\s*,\s*/g).map(parseReference));
         }
         var m;
         if ((m = /^\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
