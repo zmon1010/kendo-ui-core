@@ -84,9 +84,10 @@ namespace Kendo.Mvc.UI
 				tag.MergeAttribute("style", "display:none");
 			}			
 						
-            writer.Write(tag.ToString(TagRenderMode.StartTag));
+            tag.TagRenderMode = TagRenderMode.StartTag;
+            tag.WriteTo(writer, HtmlEncoder);
 
-			if (Html.HasValue())
+            if (Html.HasValue())
 			{
 				writer.Write(Html);
 			}
@@ -99,9 +100,10 @@ namespace Kendo.Mvc.UI
 				ContentAction();
 			}
 
-			writer.Write(tag.ToString(TagRenderMode.EndTag));
+            tag.TagRenderMode = TagRenderMode.EndTag;
+            tag.WriteTo(writer, HtmlEncoder);
 
-			base.WriteHtml(writer);
+            base.WriteHtml(writer);
         }
 
         public override void WriteInitializationScript(TextWriter writer)

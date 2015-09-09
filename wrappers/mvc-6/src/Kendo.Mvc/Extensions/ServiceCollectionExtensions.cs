@@ -6,7 +6,10 @@ namespace Microsoft.Framework.DependencyInjection
     {
         public static IServiceCollection AddKendo(this IServiceCollection services)
         {
-            services.TryAdd(KendoServices.GetServices());
+            foreach (var service in KendoServices.GetServices())
+            {
+                services.Add(service);
+            }
 
             return services;
         }

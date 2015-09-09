@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI
 
             tag.AddCssClass("k-qrcode");
 
-            writer.Write(tag.ToString());
+            tag.WriteTo(writer, HtmlEncoder);
 
             base.WriteHtml(writer);
         }

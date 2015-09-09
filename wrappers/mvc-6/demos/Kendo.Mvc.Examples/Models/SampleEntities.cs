@@ -169,16 +169,16 @@ namespace Kendo.Mvc.Examples.Models
                 entity.ToSqlServerTable("Order Details");
                 
                 entity.Property(e => e.Discount)
-                    .DefaultValue(0D);
+                    .Metadata.SqlServer().DefaultValue = 0D;
                 
                 entity.Property(e => e.Quantity)
-                    .DefaultValue(1);
+                    .Metadata.SqlServer().DefaultValue = 1;
                 
                 entity.Property(e => e.UnitPrice)
                     .HasColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.UnitPrice)
-                    .DefaultValue(0m);
+                    .Metadata.SqlServer().DefaultValue = 0m;
             });
             
             modelBuilder.Entity<Order>(entity =>
@@ -193,7 +193,7 @@ namespace Kendo.Mvc.Examples.Models
                     .HasColumnType("decimal(6, 2)");
                 
                 entity.Property(e => e.Freight)
-                    .DefaultValue(0m);
+                    .Metadata.SqlServer().DefaultValue = 0m;
             });
             
             modelBuilder.Entity<OrgChartConnection>(entity =>
@@ -222,22 +222,22 @@ namespace Kendo.Mvc.Examples.Models
                     .UseSqlServerIdentityColumn();
                 
                 entity.Property(e => e.Discontinued)
-                    .DefaultValue(false);
+                    .Metadata.SqlServer().DefaultValue = false;
                 
                 entity.Property(e => e.ReorderLevel)
-                    .DefaultValue(0);
+                    .Metadata.SqlServer().DefaultValue = 0;
                 
                 entity.Property(e => e.UnitPrice)
                     .HasColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.UnitPrice)
-                    .DefaultValue(0m);
+                    .Metadata.SqlServer().DefaultValue = 0m;
                 
                 entity.Property(e => e.UnitsInStock)
-                    .DefaultValue(0);
+                    .Metadata.SqlServer().DefaultValue = 0;
                 
                 entity.Property(e => e.UnitsOnOrder)
-                    .DefaultValue(0);
+                    .Metadata.SqlServer().DefaultValue = 0;
             });
             
             modelBuilder.Entity<Region>(entity =>

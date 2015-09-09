@@ -73,7 +73,8 @@ namespace Kendo.Mvc.UI
                 tag.Attributes.Remove("value");
             }
 
-            writer.Write(tag.ToString(TagRenderMode.SelfClosing));
+            tag.TagRenderMode = TagRenderMode.SelfClosing;
+            tag.WriteTo(writer, HtmlEncoder);
 
             base.WriteHtml(writer);
         }

@@ -28,9 +28,10 @@ namespace Kendo.Mvc.UI
 				tag.MergeAttribute("disabled", "disabled");
 			}
 
-			writer.Write(tag.ToString(TagRenderMode.SelfClosing));
+			tag.TagRenderMode = TagRenderMode.SelfClosing;
+            tag.WriteTo(writer, HtmlEncoder);
 
-			base.WriteHtml(writer);
+            base.WriteHtml(writer);
         }
 
         public override void WriteInitializationScript(TextWriter writer)

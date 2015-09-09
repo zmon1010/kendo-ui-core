@@ -22,12 +22,12 @@ namespace Kendo.Mvc.Rendering
         /// Initializes a new instance of the <see cref="KendoHtmlGenerator"/> class.
         /// </summary>
         public KendoHtmlGenerator(
-            IScopedInstance<ActionBindingContext> actionBindingContext,
+            IActionBindingContextAccessor actionBindingContextAccessor,
             IModelMetadataProvider metadataProvider,
             IServiceProvider requestServices)
 
         {
-            _actionBindingContext = actionBindingContext.Value;
+            _actionBindingContext = actionBindingContextAccessor.ActionBindingContext;
             _metadataProvider = metadataProvider;
             _requestServices = requestServices;
         }

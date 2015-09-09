@@ -85,7 +85,7 @@ namespace Kendo.Mvc.UI
                 HtmlAttributes["id"] = Id;
             }
 
-            writer.Write(tag.ToString());
+            tag.WriteTo(writer, HtmlEncoder);
 
             base.WriteHtml(writer);
         }

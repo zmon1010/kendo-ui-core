@@ -19,14 +19,16 @@ namespace Kendo.Mvc.UI
         {
             var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
 
-            writer.Write(tag.ToString(TagRenderMode.StartTag));
+            tag.TagRenderMode = TagRenderMode.StartTag;
+            tag.WriteTo(writer, HtmlEncoder);
 
             tag.AddCssClass("k-widget k-splitter");          
             tag.AddCssClass(Orientation == SplitterOrientation.Horizontal ? "k-splitter-horizontal" : "k-splitter-vertical");
 
             Panes.Each(p => p.WriteHtml(writer, Generator, HtmlEncoder));
 
-            writer.Write(tag.ToString(TagRenderMode.EndTag));
+            tag.TagRenderMode = TagRenderMode.EndTag;
+            tag.WriteTo(writer, HtmlEncoder);
 
             base.WriteHtml(writer);
         }

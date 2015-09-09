@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI
     {
         public Grid(ViewContext viewContext) : base(viewContext)
         {
-            ActionBindingContext = GetService<IScopedInstance<ActionBindingContext>>();
+            ActionBindingContext = GetService<IActionBindingContextAccessor>().ActionBindingContext;
 
             Editable = new GridEditableSettings<T>(this)
 			{
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI
 			DataSource.ModelType(typeof(T));
         }
 
-		public IScopedInstance<ActionBindingContext> ActionBindingContext
+		public ActionBindingContext ActionBindingContext
 		{
 			get;
 			set;
@@ -176,8 +176,7 @@ namespace Kendo.Mvc.UI
 			}
 
 			var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
-
-			writer.Write(tag.ToString());
+            tag.WriteTo(writer, HtmlEncoder);
 
 			base.WriteHtml(writer);
 		}
@@ -360,7 +359,7 @@ namespace Kendo.Mvc.UI
 
 			var bindingContext = new ModelBindingContext
 			{
-				ValueProvider = ActionBindingContext.Value.ValueProvider,
+				ValueProvider = ActionBindingContext.ValueProvider,
 				ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
 			};
 

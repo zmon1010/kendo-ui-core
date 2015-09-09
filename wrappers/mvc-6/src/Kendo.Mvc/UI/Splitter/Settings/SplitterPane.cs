@@ -63,7 +63,8 @@ namespace Kendo.Mvc.UI
         {
             var tag = generator.GenerateTag("div", HtmlAttributes);
 
-            writer.Write(tag.ToString(TagRenderMode.StartTag));
+            tag.TagRenderMode = TagRenderMode.StartTag;
+            tag.WriteTo(writer, encoder);
 
             tag.AddCssClass("k-pane");
 
@@ -85,7 +86,8 @@ namespace Kendo.Mvc.UI
                 TemplateAction();
             }
 
-            writer.Write(tag.ToString(TagRenderMode.EndTag));
+            tag.TagRenderMode = TagRenderMode.EndTag;
+            tag.WriteTo(writer, encoder);
         }
     }
 }

@@ -86,12 +86,17 @@ namespace Kendo.Mvc.UI
             firstInput.MergeAttributes(defaultOptions);
             secondInput.MergeAttributes(defaultOptions);
 
-            writer.Write(wrapper.ToString(TagRenderMode.StartTag));
+            wrapper.TagRenderMode = TagRenderMode.StartTag;
+            wrapper.WriteTo(writer, HtmlEncoder);
+            
+            firstInput.TagRenderMode = TagRenderMode.SelfClosing;
+            firstInput.WriteTo(writer, HtmlEncoder);
 
-            writer.Write(firstInput.ToString(TagRenderMode.SelfClosing));
-            writer.Write(secondInput.ToString(TagRenderMode.SelfClosing));
-
-            writer.Write(wrapper.ToString(TagRenderMode.EndTag));
+            secondInput.TagRenderMode = TagRenderMode.SelfClosing;
+            secondInput.WriteTo(writer, HtmlEncoder);
+            
+            wrapper.TagRenderMode = TagRenderMode.EndTag;
+            wrapper.WriteTo(writer, HtmlEncoder);
 
             base.WriteHtml(writer);
         }

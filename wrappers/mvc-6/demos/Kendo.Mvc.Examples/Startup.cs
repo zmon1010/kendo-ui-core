@@ -12,8 +12,7 @@ using Microsoft.Data.Entity;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
-using Microsoft.Framework.Logging.Console;
-using Microsoft.Framework.Runtime;
+using Microsoft.Dnx.Runtime;
 using Kendo.Mvc.Examples.Models;
 
 namespace Kendo.Mvc.Examples

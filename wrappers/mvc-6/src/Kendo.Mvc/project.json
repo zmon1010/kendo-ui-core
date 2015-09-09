@@ -1,6 +1,6 @@
 {
     "version": "1.0.0-*",
-    "title": "Telerik UI for ASP.NET MVC 6 Beta 6",
+    "title": "Telerik UI for ASP.NET MVC 6 Beta 7",
     "description": "Telerik UI for ASP.NET MVC provides server-side helpers for Kendo UI's JavaScript framework. It enables developers comfortable with the ASP.NET MVC framework to easily configure and work with Kendo UI via familiar server-side programming instead of relying solely on hand-coding of HTML and JavaScript.",
     "authors": ["Telerik"],
     "owners": ["Telerik"],
@@ -9,11 +9,9 @@
     "projectUrl": "http://www.telerik.com/aspnet-mvc",
     "tags": ["aspnet", "mvc", "aspnext", "vnext", "VS2015", "Kendo", "Kendo UI", "JavaScript", "UI"],
     "dependencies": {
-        "Microsoft.AspNet.Mvc": "6.0.0-beta6",
-        "Microsoft.Framework.Runtime.Roslyn": "1.0.0-beta6",        
-        "System.Runtime": "4.0.20-beta-23109",
-        "System.Runtime.Serialization.Primitives": "4.0.10-beta-23109",
-        "EntityFramework.Commands": "7.0.0-beta6"
+        "Microsoft.AspNet.Mvc": "6.0.0-beta7",
+        "Microsoft.Dnx.Compilation": "1.0.0-beta7",
+        "EntityFramework.Commands": "7.0.0-beta7"
     },
     "compilationOptions": {
         "warningsAsErrors": true
@@ -24,20 +22,24 @@
             "dependencies": {
             },
             "frameworkAssemblies": {
-                "System.Reflection": ""
+                "System.Reflection": "",
+                "System.Runtime.Serialization": "",
+                "System.Resources.ResourceManager": ""
             }
         },
         "dnxcore50": {
-            "dependencies": {
-                "System.Collections": "4.0.10-beta-23109",
-                "System.Diagnostics.TraceSource":  "4.0.0-beta-23109",
-                "System.Linq": "4.0.0-beta-23109",
-                "System.Linq.Queryable": "4.0.0-beta-23109",
-                "System.Reflection": "4.0.10-beta-23109",
-                "System.Reflection.Extensions": "4.0.0-beta-23109",
-                "System.Xml.XmlDocument": "4.0.0-beta-23109",
-                "System.Data.Common": "4.0.0-beta-23109"
-            }
+          "dependencies": {
+            "System.Collections": "4.0.11-beta-23225",
+            "System.Data.Common": "4.0.1-beta-23225",
+            "System.Diagnostics.TraceSource": "4.0.0-beta-23225",
+            "System.Linq": "4.0.1-beta-23225",
+            "System.Linq.Queryable": "4.0.1-beta-23225",
+            "System.Reflection": "4.1.0-beta-23225",
+            "System.Reflection.Extensions": "4.0.1-beta-23225",
+            "System.Resources.ResourceManager": "4.0.1-beta-23225",
+            "System.Runtime.Serialization.Primitives": "4.0.11-beta-23225",
+            "System.Xml.XmlDocument": "4.0.1-beta-23225"
+          }
         }
     }
 }

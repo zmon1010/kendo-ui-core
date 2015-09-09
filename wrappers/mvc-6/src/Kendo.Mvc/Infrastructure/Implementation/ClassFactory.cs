@@ -10,10 +10,10 @@ namespace Kendo.Mvc.Infrastructure.Implementation
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Emit;
-    using Microsoft.Framework.Runtime;
-    using Microsoft.Framework.Runtime.Infrastructure;
-    using Microsoft.Framework.Runtime.Roslyn;
-    using Microsoft.Framework.Runtime.Compilation;
+    using Microsoft.Dnx.Runtime;
+    using Microsoft.Dnx.Runtime.Infrastructure;
+    using Microsoft.Dnx.Compilation.CSharp;
+    using Microsoft.Dnx.Compilation;
 
     internal class ClassFactory
     {
@@ -125,8 +125,8 @@ namespace Kendo.Mvc.Infrastructure.Implementation
 
 #if DNXCORE50
             var serviceProvider = CallContextServiceLocator.Locator.ServiceProvider;
-            var libraryManager = (ILibraryManager) serviceProvider.GetService(typeof(ILibraryManager));
-            var libraryExport = libraryManager.GetLibraryExport("System");
+            var libraryExporter = (ILibraryExporter)serviceProvider.GetService(typeof(ILibraryExporter));
+            var libraryExport = libraryExporter.GetExport("System");
             if (libraryExport != null)
             {
                 foreach (var metadataReference in libraryExport.MetadataReferences)

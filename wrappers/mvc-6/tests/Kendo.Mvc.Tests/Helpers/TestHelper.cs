@@ -11,15 +11,6 @@ using Microsoft.AspNet.Http.Internal;
 
 namespace Kendo.Mvc.Tests
 {
-	public class MockScopedInstance<T> : IScopedInstance<T>
-	{
-		public T Value { get; set; }
-
-		public void Dispose()
-		{
-		}
-	}
-
 	public static class TestHelper
 	{
 		public static ViewContext CreateViewContext()
@@ -29,6 +20,7 @@ namespace Kendo.Mvc.Tests
 			var htmlHelper = new Mock<ITestableHtmlHelper>();
 			var urlGenerator = new Mock<IUrlGenerator>();
 			var kendoHtmlGenerator = new Mock<IKendoHtmlGenerator>();
+            var actionBindingContextAccessor = new Mock<IActionBindingContextAccessor>();
 			var provider = new EmptyModelMetadataProvider();
 
 			var serviceProvider = new Mock<IServiceProvider>();
@@ -57,8 +49,8 @@ namespace Kendo.Mvc.Tests
 				.Returns(new DefaultViewComponentActivator());
 
 			serviceProvider
-				.Setup(s => s.GetService(typeof(IScopedInstance<ActionBindingContext>)))
-				.Returns(new MockScopedInstance<ActionBindingContext>());
+				.Setup(s => s.GetService(typeof(IActionBindingContextAccessor)))
+				.Returns(actionBindingContextAccessor.Object);
 
 			httpContext.RequestServices = serviceProvider.Object;
 

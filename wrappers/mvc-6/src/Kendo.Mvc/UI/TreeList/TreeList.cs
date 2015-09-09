@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI
     {
         public TreeList(ViewContext viewContext) : base(viewContext)
         {
-            ActionBindingContext = GetService<IScopedInstance<ActionBindingContext>>();
+            ActionBindingContext = GetService<IActionBindingContextAccessor>();
 
             DataSource = new DataSource(ModelMetadataProvider)
 			{
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI
 			DataSource.Schema.Model = new TreeListModelDescriptor(typeof(T), ModelMetadataProvider);
 		}
 
-		public IScopedInstance<ActionBindingContext> ActionBindingContext
+		public IActionBindingContextAccessor ActionBindingContext
 		{
 			get;
 			set;
@@ -174,7 +174,7 @@ namespace Kendo.Mvc.UI
 
 			var bindingContext = new ModelBindingContext
 			{
-				ValueProvider = ActionBindingContext.Value.ValueProvider,
+				ValueProvider = ActionBindingContext.ActionBindingContext.ValueProvider,
 				ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
 			};
 

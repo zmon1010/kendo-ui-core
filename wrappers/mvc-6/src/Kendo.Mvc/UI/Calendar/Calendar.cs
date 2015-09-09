@@ -33,7 +33,7 @@ namespace Kendo.Mvc.UI
 
             var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
 
-            writer.Write(tag.ToString());
+            tag.WriteTo(writer, HtmlEncoder);
 
             base.WriteHtml(writer);
         }
