@@ -271,7 +271,7 @@ module.exports = function(grunt) {
 
         less: {
             options: {
-                destDir: "<%= kendo.options.destDir %>"
+                destDir: "<%= kendo.options.destDir %>",
                 autoprefixer: {
                     browsers: ([
                         "Explorer >= 7",
