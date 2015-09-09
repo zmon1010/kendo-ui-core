@@ -165,32 +165,16 @@
         },
 
         sheetByName: function (sheetName) {
-            sheetName = sheetName.toLowerCase();
-            var sheets = this._sheets;
-            var idx = this._sheetsSearchCache[sheetName];
-
-            if (idx >= 0) {
-                return sheets[idx];
-            }
-
-            for (idx = 0; idx < sheets.length; idx++) {
-                var sheet = sheets[idx];
-                var name = sheet.name().toLowerCase();
-                this._sheetsSearchCache[name] = idx;
-
-                if (name === sheetName) {
-                    return sheet;
-                }
-            }
+            return this._sheets[this.sheetIndex(sheetName)];
         },
 
         sheetByIndex: function(index) {
-           return this._sheets[index];
+            return this._sheets[index];
         },
 
         sheetIndex: function(sheet) {
             var sheets = this._sheets;
-            var sheetName = sheet.name();
+            var sheetName = (typeof sheet == "string" ? sheet : sheet.name()).toLowerCase();
             var idx = this._sheetsSearchCache[sheetName];
 
             if (idx >= 0) {
@@ -198,7 +182,7 @@
             }
 
             for(idx = 0; idx < sheets.length; idx++) {
-                var name = sheets[idx].name();
+                var name = sheets[idx].name().toLowerCase();
                 this._sheetsSearchCache[name] = idx;
 
                 if (name === sheetName) {
