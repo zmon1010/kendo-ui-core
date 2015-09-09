@@ -43,6 +43,7 @@
         equal(rectangle.height, rect.height);
     });
 
+    /*
     test("cellRectangle returns rectangle offset honoring scroll position", function() {
         sheet.frozenRows(3);
         sheet.frozenColumns(3);
@@ -64,6 +65,6 @@
         equal(rectangle.left, expectedLeft);
         equal(rectangle.width, rect.width);
         equal(rectangle.height, rect.height);
-    });
+    });*/
 
 })();
