@@ -207,7 +207,7 @@
         init: function NameRef(name){
             this.name = name;
         },
-        print: function(tcol, trow) {
+        print: function() {
             var ret = this.name;
             if (this.hasSheet()) {
                 ret = this.sheet + "!" + ret;
