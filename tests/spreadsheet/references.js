@@ -11,7 +11,7 @@
     });
 
     function loc(row, col) {
-        return { row: row, col: col };
+        return new CellRef(row, col);
     }
 
     test("RangeRef resize left", function() {

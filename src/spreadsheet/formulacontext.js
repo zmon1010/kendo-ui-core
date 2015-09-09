@@ -17,8 +17,9 @@
         },
 
         getRefCells: function(ref, hiddenInfo) {
-            var sheet = this.workbook.sheetByName(ref.sheet), formula, value;
+            var sheet, formula, value, i;
             if (ref instanceof CellRef) {
+                sheet = this.workbook.sheetByName(ref.sheet);
                 formula = sheet.formula(ref);
                 value = sheet.range(ref.row, ref.col).value();
 
@@ -36,30 +37,61 @@
                 }
             }
             if (ref instanceof RangeRef) {
-                var tl = sheet._grid.normalize(ref.topLeft);
-                var br = sheet._grid.normalize(ref.bottomRight);
+                i = this.workbook.sheetIndex(ref.sheet);
+                var states = [], n = i;
+                if (ref.endSheet) {
+                    // "3D" reference.
+                    n = this.workbook.sheetIndex(ref.endSheet);
+                    if (i > n) {
+                        var tmp = i;
+                        i = n;
+                        n = tmp;
+                    }
+                }
 
-                var startCellIndex = sheet._grid.cellRefIndex(tl);
-                var endCellIndex = sheet._grid.cellRefIndex(br);
+                // XXX: This is nicer, but significantly slower.
+                // Should investigate why, or add some options to make
+                // it faster (i.e. probably because it adds all cell
+                // properties, while we only need value and formula).
+                //
+                //     var add = function(row, col, data){
+                //         data.row = row;
+                //         data.col = col;
+                //         data.sheet = sheet.name();
+                //         states.push(data);
+                //     };
+                //     while (i <= n) {
+                //         sheet = this.workbook.sheetByIndex(i++);
+                //         sheet.forEach(ref, add);
+                //     }
+                //
+                // For now keep doing it "manually".
 
-                var values = sheet._properties.iterator("value", startCellIndex, endCellIndex);
+                while (i <= n) {
+                    sheet = this.workbook.sheetByIndex(i++);
+                    var tl = sheet._grid.normalize(ref.topLeft);
+                    var br = sheet._grid.normalize(ref.bottomRight);
 
-                var states = [];
+                    var startCellIndex = sheet._grid.cellRefIndex(tl);
+                    var endCellIndex = sheet._grid.cellRefIndex(br);
 
-                for (var col = tl.col; col <= br.col; ++col) {
-                    for (var row = tl.row; row <= br.row; ++row) {
-                        var index = sheet._grid.index(row, col);
-                        formula = sheet._properties.get("formula", index);
-                        value = values.at(index);
-                        if (formula != null || value != null) {
-                            states.push({
-                                formula: formula,
-                                value: value,
-                                row: row,
-                                col: col,
-                                sheet: ref.sheet,
-                                hidden: hiddenInfo ? (sheet.columnWidth(col) === 0 || sheet.rowHeight(row) === 0) : false
-                            });
+                    var values = sheet._properties.iterator("value", startCellIndex, endCellIndex);
+
+                    for (var col = tl.col; col <= br.col; ++col) {
+                        for (var row = tl.row; row <= br.row; ++row) {
+                            var index = sheet._grid.index(row, col);
+                            formula = sheet._properties.get("formula", index);
+                            value = values.at(index);
+                            if (formula != null || value != null) {
+                                states.push({
+                                    formula : formula,
+                                    value   : value,
+                                    row     : row,
+                                    col     : col,
+                                    sheet   : sheet.name(),
+                                    hidden  : hiddenInfo ? (sheet.columnWidth(col) === 0 || sheet.rowHeight(row) === 0) : false
+                                });
+                            }
                         }
                     }
                 }
@@ -68,7 +100,7 @@
             }
             if (ref instanceof UnionRef) {
                 var a = [];
-                for (var i = 0; i < ref.refs.length; ++i) {
+                for (i = 0; i < ref.refs.length; ++i) {
                     a = a.concat(this.getRefCells(ref.refs[i], hiddenInfo));
                 }
                 return a;

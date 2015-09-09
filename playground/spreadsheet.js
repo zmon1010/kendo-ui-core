@@ -139,3 +139,12 @@ sheet2.range("A1").formula("=Sheet1!A1:B3 ^ 2");
 
 sheet.range("C1").formula("=sum(Sheet2!A1:B3)");
 sheet.range("D1").formula("=sum(sHEEt2!A1:B3)");
+
+sheet2.range("D1").input("Sheet1!A1");
+sheet2.range("D2").input("Sheet2!B3");
+sheet2.range("D3").input("=sum( indirect(D1):indirect(D2) )");
+
+sheet2.range("D5").input("=sum(sheet1!E11:AX200)");
+sheet2.range("D6").input("=sum(sheet1!A:AX)");
+sheet2.range("D7").input("=sum(sheet1!A:AX)");
+

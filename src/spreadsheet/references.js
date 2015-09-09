@@ -76,11 +76,11 @@
         toString: function() {
             return this.relative(0, 0, 3, 3).print(0, 0);
         },
-        forEach: function(callback) {
-            callback(this);
+        forEach: function(callback, obj) {
+            callback.call(obj, this);
         },
-        map: function(callback) {
-            return callback(this);
+        map: function(callback, obj) {
+            return callback.call(obj, this);
         },
         isCell: function() {
             return false;
@@ -308,9 +308,6 @@
         isCell: function() {
             return true;
         },
-        simplify: function() {
-            return this;
-        },
         leftColumn: function() {
             return this;
         },
@@ -355,6 +352,10 @@
     var RangeRef = Ref.extend({
         ref: "range",
         init: function RangeRef(tl, br) {
+            if (tl._hasSheet && br._hasSheet && tl.sheet.toLowerCase() != br.sheet.toLowerCase()) {
+                // "3D" reference
+                this.endSheet = br.sheet;
+            }
             // we want to drop any sheet information from the cells here.
             this.topLeft = new CellRef(tl.row, tl.col, tl.rel);
             this.bottomRight = new CellRef(br.row, br.col, br.rel);
@@ -618,7 +619,7 @@
             return this.topLeft;
         },
         isCell: function() {
-            return this.topLeft.eq(this.bottomRight);
+            return !this.endSheet && this.topLeft.eq(this.bottomRight);
         },
         toString: function() {
             return this.topLeft + ":" + this.bottomRight;
@@ -684,8 +685,8 @@
                 return ref.absolute(arow, acol);
             }));
         },
-        forEach: function(callback) {
-            this.refs.forEach(callback);
+        forEach: function(callback, obj) {
+            this.refs.forEach(callback, obj);
         },
         toRangeRef: function() {
             return this.refs[0].toRangeRef();
@@ -693,8 +694,8 @@
         contains: function(theRef) {
             return this.refs.some(function(ref) { return ref.contains(theRef); });
         },
-        map: function(callback) {
-            return new UnionRef(this.refs.map(callback));
+        map: function(callback, obj) {
+            return new UnionRef(this.refs.map(callback, obj));
         },
         first: function() {
             return this.refs[0].first();

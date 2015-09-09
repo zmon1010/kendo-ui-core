@@ -90,13 +90,13 @@
                 return new RangeRef(
                     this.normalize(ref.topLeft),
                     this.normalize(ref.bottomRight)
-                );
+                ).setSheet(ref.sheet, ref.hasSheet());
             }
 
             if (ref instanceof UnionRef) {
                 return ref.map(function(ref) {
                     return this.normalize(ref);
-                }.bind(this));
+                }, this);
             }
 
             var clone = ref.clone();
