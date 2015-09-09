@@ -320,4 +320,27 @@
         equal(dialog.dialog().options.title, "background");
     });
 
+    module("Alignment dialog", {
+        setup: function() {
+            moduleOptions.setup();
+
+            dialog = spreadsheet.openDialog("alignment");
+        },
+        teardown: moduleOptions.teardown
+    });
+
+    test("sets correct window title", function() {
+        equal(dialog.dialog().options.title, "Alignment");
+    });
+
+    test("triggers PropertyChangeCommand when command is clicked", 3, function() {
+        dialog.one("execute", function(e) {
+            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
+            equal(e.command.options.property, "textAlign");
+            equal(e.command.options.value, "right");
+        });
+
+        $(".k-item a[data-value='right']").trigger("click");
+    });
+
 })();
