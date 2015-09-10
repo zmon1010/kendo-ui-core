@@ -229,7 +229,7 @@ var __meta__ = { // jshint ignore:line
 
                var lastChild = parent.lastChild;
 
-               parent.insertAdjacentHTML("beforeend", this.html);
+               insertHtml(parent, this.html);
 
                this.nodes = [];
 
@@ -241,6 +241,16 @@ var __meta__ = { // jshint ignore:line
            }
        }
     };
+
+    var HTML_CONTAINER = document.createElement("div");
+
+    function insertHtml(node, html) {
+        HTML_CONTAINER.innerHTML = html;
+
+        while (HTML_CONTAINER.firstChild) {
+            node.appendChild(HTML_CONTAINER.firstChild);
+        }
+    }
 
     function html(value) {
         return new HtmlNode(value);
