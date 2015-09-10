@@ -136,10 +136,10 @@
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
                 value.each(function(value, r, c) {
-                    sheet._value(row + r, col + c, value, false);
+                    sheet._value(row + r, col + c, value);
                 });
             } else {
-                sheet._value(row, col, value, false);
+                sheet._value(row, col, value);
             }
         }
     });
