@@ -20,7 +20,6 @@
     function trigger(type, el, e) {
         el.trigger($.Event(type, e));
     }
-
     ngTest("Grid cell templates after edit", 7, function() {
 
         angular.module("kendo.tests").controller("mine", function($scope) {
@@ -409,6 +408,28 @@
         var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
         var groupRows = $("tr.k-grouping-row", grid.tbody);
 
+        equal(groupRows.first().text(), "|Bar|");
+        equal(groupRows.last().text(), "|Foo|");
+    }
+   );
+
+    ngTest("Grid group template is compiled when locked columns are set", 2, function(){
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    data: fixtureData,
+                    group: { field: "text" }
+                },
+                columns: [
+                    { field: "text", locked:true, groupHeaderTemplate: "|{{dataItem.value}}|" },
+                    { field: "id" }
+                ]
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    }, function() {
+        var groupRows = $(".k-grid-content-locked").find("tr.k-grouping-row");
         equal(groupRows.first().text(), "|Bar|");
         equal(groupRows.last().text(), "|Foo|");
     }

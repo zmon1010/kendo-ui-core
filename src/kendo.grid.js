@@ -7348,12 +7348,19 @@ var __meta__ = { // jshint ignore:line
        },
 
        _angularGroupItems: function(cmd) {
-           var that = this;
+           var that = this,
+               elements;
+
+           if (that.lockedContent) {
+               elements = that.lockedTable.find(".k-grouping-row");
+           } else {
+               elements = that.tbody.children(".k-grouping-row");
+           }
 
            if (that._group) {
               that.angular(cmd, function(){
                    return {
-                       elements: that.tbody.children(".k-grouping-row"),
+                       elements: elements,
                        data: $.map(groupRows(that.dataSource.view()), function(dataItem){
                            return { dataItem: dataItem };
                        })
