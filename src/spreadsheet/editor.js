@@ -75,8 +75,7 @@
             return this._active;
         },
 
-        //TODO Test and find better name
-        keep: function() {
+        activeSearch: function() {
             return this.barInput.popup.visible() || this.cellInput.popup.visible();
         },
 

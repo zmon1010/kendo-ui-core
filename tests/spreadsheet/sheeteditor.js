@@ -249,4 +249,15 @@
 
         equal(editor.barElement(), editor.barInput.element);
     });
+
+    test("activeSearch returns true if formulaInput popup is opened", function() {
+        var editor = createEditor();
+
+        editor.activate({ top: 0, left: 0 });
+
+        editor.cellInput.filter("sum");
+        editor.cellInput.popup.open();
+
+        ok(editor.activeSearch());
+    });
 })();
