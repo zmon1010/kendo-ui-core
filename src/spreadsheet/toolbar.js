@@ -24,17 +24,17 @@
             "filter"
         ],
         insert: [
-            [ "bold", "italic", "underline" ]
-        ],
-        formulas: [
-            [ "bold", "italic", "underline" ]
+            [ "addColumnLeft", "addColumnRight", "addRowBelow", "addRowAbove" ],
+            [ "deleteColumn", "deleteRow" ]
         ],
         data: [
-            [ "bold", "italic", "underline" ]
+            [ "sortAsc", "sortDesc" ],
+            "filter"
         ]
     };
 
     var toolDefaults = {
+        //home tab
         bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
         italic:                { type: "button", command: "PropertyChangeCommand", property: "italic",        value: true,     iconClass: "italic", togglable: true },
         underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
@@ -54,7 +54,19 @@
         format:                { type: "format",      property: "format",                             width: 100 },
         merge:                 { type: "merge",                               iconClass: "merge-cells" },
         borders:               { type: "borders",                             iconClass: "all-borders" },
-        formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" }
+        formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
+
+        //insert tab
+        addColumnLeft:         { type: "button", command: "AddColumnCommand",    value: "left",  iconClass: "add-column-left"  },
+        addColumnRight:        { type: "button", command: "AddColumnCommand",    value: "right", iconClass: "add-column-right" },
+        addRowBelow:           { type: "button", command: "AddRowCommand",       value: "below", iconClass: "add-row-below"    },
+        addRowAbove:           { type: "button", command: "AddRowCommand",       value: "above", iconClass: "add-row-above"    },
+        deleteColumn:          { type: "button", command: "DeleteColumnCommand",                 iconClass: "delete-column"    },
+        deleteRow:             { type: "button", command: "DeleteRowCommand",                    iconClass: "delete-row"       },
+
+        //data tab
+        sortAsc:               { type: "button", command: "SortCommand",         value: "asc",   iconClass: "sort-asc"         },
+        sortDesc:              { type: "button", command: "SortCommand",         value: "desc",  iconClass: "sort-desc"        }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -161,7 +173,15 @@
                 backgroundColor: "Background",
                 cut: "Cut",
                 copy: "Copy",
-                paste: "Paste"
+                paste: "Paste",
+                addColumnLeft: "Add column left",
+                addColumnRight: "Add column right",
+                addRowBelow: "Add row below",
+                addRowAbove: "Add row above",
+                deleteColumn: "Delete column",
+                deleteRow: "Delete row",
+                sortAsc: "Sort ascending",
+                sortDesc: "Sort descending"
             }
         },
         openDialog: function(popupName, options) {

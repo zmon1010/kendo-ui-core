@@ -342,7 +342,7 @@
         },
 
         _tabstrip: function() {
-            var options = $.extend(true, {}, { home: true, insert: true, formulas: true, data: true }, this.options.toolbar);
+            var options = $.extend(true, {}, { home: true, insert: true, data: true }, this.options.toolbar);
             var tabs = [];
 
             if (this.tabstrip) {
