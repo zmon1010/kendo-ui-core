@@ -4,7 +4,7 @@
 
 (function(kendo) {
     var RangeTreeNode = kendo.Class.extend({
-        init: function(level, value, left, right) {
+        init: function Node(level, value, left, right) {
             this.level = level;
             this.value = value;
             this.left = left;
@@ -12,9 +12,11 @@
         }
     });
 
-    var NilNode = new RangeTreeNode(0);
-    NilNode.left = NilNode;
-    NilNode.right = NilNode;
+    var NilNode = new (function NIL() { // jshint ignore:line
+        this.left = this;
+        this.right = this;
+        this.level = 0;
+    })();
 
     function passThrough(value) {
         return value;
@@ -99,7 +101,7 @@
     }
 
     var Range = kendo.Class.extend({
-        init: function(start, end, value) {
+        init: function Value(start, end, value) {
             this.start = start;
             this.end = end;
             this.value = value;
@@ -242,11 +244,11 @@
             return this.tree.intersecting(start, end);
         },
 
-        first: function(start, end) {
+        first: function() {
             return this.tree.first().value;
         },
 
-        last: function(start, end) {
+        last: function() {
             return this.tree.last().value;
         },
 
