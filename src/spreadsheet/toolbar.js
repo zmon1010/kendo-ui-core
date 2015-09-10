@@ -561,7 +561,7 @@
             ddl.setOptions({
                 dataValueField: "format",
                 dataValuePrimitive: true,
-                valueTemplate: "123",
+                valueTemplate: "<span class='k-icon k-font-icon k-i-format-number' style='line-height: 1em; width: 1.35em;'></span>",
                 template:
                     "# if (data.sample) { #" +
                         "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
