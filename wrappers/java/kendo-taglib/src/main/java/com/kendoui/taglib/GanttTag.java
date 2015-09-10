@@ -21,6 +21,10 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
     public int doEndTag() throws JspException {
 //>> doEndTag
 //<< doEndTag
+        
+        if (isSet("taskTemplate")) {
+            setProperty("taskTemplate", new Function("kendo.template($(\"#" + getTaskTemplate() + "\").html())"));
+        }
 
         return super.doEndTag();
     }
