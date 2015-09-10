@@ -761,7 +761,7 @@
             return (/[0-9]/i.test(ch));
         }
         function isIdStart(ch) {
-            return (/[a-z$_]/i.test(ch));
+            return (/[a-z$_]/i.test(ch) || ch.toLowerCase() != ch.toUpperCase());
         }
         function isId(ch) {
             return isIdStart(ch) || isDigit(ch) || ch == "!" || ch == ".";

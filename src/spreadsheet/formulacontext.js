@@ -8,6 +8,7 @@
     var CellRef = kendo.spreadsheet.CellRef;
     var RangeRef = kendo.spreadsheet.RangeRef;
     var UnionRef = kendo.spreadsheet.UnionRef;
+    var NameRef = kendo.spreadsheet.NameRef;
 
     var FormulaContext = kendo.Class.extend({
         init: function (workbook) {
@@ -113,6 +114,12 @@
                     a = a.concat(this.getRefCells(ref.refs[i], hiddenInfo));
                 }
                 return a;
+            }
+            if (ref instanceof NameRef) {
+                // XXX: NameRef-s not yet supported
+                return [{
+                    value: new kendo.spreadsheet.calc.runtime.CalcError("NAME")
+                }];
             }
             return [];
         },

@@ -95,6 +95,11 @@
                 }
                 return a;
             }
+            if (ref instanceof spreadsheet.NameRef) {
+                return [{
+                    value: new kendo.spreadsheet.calc.runtime.CalcError("NAME")
+                }];
+            }
             return [];
         },
         getData: function(ref) {
@@ -642,6 +647,19 @@
         });
         ss.recalculate(function(){
             equal(ss.getData(ss.makeRef("D1")), 5);
+        });
+    });
+
+    test("error in cell is propagated as formula result", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: "=undefined",
+            A2: "=A1 * 2",
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A2: "#NAME!"
+            });
         });
     });
 

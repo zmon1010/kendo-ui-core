@@ -25,14 +25,16 @@
 
     /* -----[ Errors ]----- */
 
-    var CalcError = Class.extend({
-        init: function CalcError(code) {
-            this.code = code;
-        },
-        toString: function() {
-            return "#" + this.code + "!";
+    function CalcError(code) {
+        if (code instanceof CalcError) {
+            return code;
         }
-    });
+        this.code = code;
+    }
+
+    CalcError.prototype.toString = function() {
+        return "#" + this.code + "!";
+    };
 
     /* -----[ Context ]----- */
 
@@ -591,6 +593,10 @@
                     }
                 }
             });
+        },
+
+        "φ": function(callback) {
+            callback((1+Math.sqrt(5))/2);
         }
     };
 
@@ -669,12 +675,14 @@
                     code += "xargs.push(args.slice(i)); i = args.length; ";
                 } else {
                     code += "var $" + name + " = args[i++]; ";
+                    var allowError = false;
                     if (/!$/.test(type)) {
                         type = type.substr(0, type.length - 1);
+                        allowError = true;
                     } else {
                         code += "if ($"+name+" instanceof CalcError) return $"+name+"; ";
                     }
-                    code += typeCheck(type) + "xargs.push($"+name+"); ";
+                    code += typeCheck(type, allowError) + "xargs.push($"+name+"); ";
                 }
             }
             code += "} ";
@@ -691,10 +699,14 @@
             return "($"+name+" = this.force($"+name+"))";
         }
 
-        function typeCheck(type) {
+        function typeCheck(type, allowError) {
             canBeArrayArg = false;
             forced = false;
-            var ret = "if (!(" + cond(type) + ")) return new CalcError(err); ";
+            var ret = "if (!(" + cond(type) + ")) { ";
+            if (forced && !allowError) {
+                ret += " if ($" + name + " instanceof CalcError) return $" + name + "; ";
+            }
+            ret += "return new CalcError(err); } ";
             if (!forced) {
                 resolve += "i++; ";
             }
