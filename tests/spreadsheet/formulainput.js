@@ -160,7 +160,25 @@
         ok(formulaInput.element.width() > initialWidth);
     });
 
-    test("scale the input during typing", function() {
+    test("scale method does not set width to the input less than cell width", function() {
+        var initialWidth = 100;
+
+        createFormulaInput({
+            autoScale: true
+        });
+
+        formulaInput.resize({
+            width: initialWidth,
+            height: 30
+        });
+
+        formulaInput.value("s text");
+        formulaInput.element.triggerHandler("input");
+
+        equal(formulaInput.element.width(), initialWidth);
+    });
+
+    test("scale sets input width to cell width", function() {
         var initialWidth = 50;
 
         createFormulaInput({

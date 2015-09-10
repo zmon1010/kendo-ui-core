@@ -66,6 +66,7 @@
             name: "FormulaInput",
             autoScale: false,
             filterOperator: "startswith",
+            scalePadding: 30,
             minLength: 1
         },
 
@@ -313,13 +314,20 @@
         },
 
         scale: function() {
+            var element = this.element;
+            var width;
+
             if (!this._span) {
                 this._textContainer();
             }
 
-            this._span.html(this.element.html());
+            this._span.html(element.html());
 
-            this.element.width(this._span.width());
+            width = this._span.width() + this.options.scalePadding;
+
+            if (width > element.width()) {
+                element.width(width);
+            }
         },
 
         value: function(value) {
