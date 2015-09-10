@@ -112,6 +112,7 @@
             this.rowHeaderContextMenu = view.rowHeaderContextMenu;
             this.colHeaderContextMenu = view.colHeaderContextMenu;
             this.scroller = view.scroller;
+            this.quickAccessToolBar = view.quickAccessToolBar;
 
             this.editor = view.editor;
             this.editor.bind("change", this.onEditorChange.bind(this));
@@ -135,6 +136,7 @@
             // this is necessary for Windows to catch prevent context menu correctly
             this.cellContextMenu.element.add(this.rowHeaderContextMenu.element).add(this.colHeaderContextMenu.element).on("contextmenu", false);
 
+            this.quickAccessToolBar.on("click", ".k-button", this.onQuickAccessToolBarClick.bind(this));
             $(this.view.container).on("click", ".k-link.k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
         },
 
@@ -645,6 +647,15 @@
             var target = $(e.currentTarget);
 
             this.view.filterMenus[target.data("index")].openFor(target);
+        },
+
+        onQuickAccessToolBarClick: function(e) {
+            var target = $(e.currentTarget);
+            var action = target.attr("title").toLowerCase();
+
+            if (action) {
+                this._workbook.undoRedoStack[action]();
+            }
         }
     });
 

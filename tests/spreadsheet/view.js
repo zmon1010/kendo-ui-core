@@ -82,4 +82,21 @@
         ok(true);
     });
 
+    test("renders tabstrip", function() {
+        ok(spreadsheet._view.tabstrip instanceof kendo.ui.TabStrip);
+        ok($(".k-tabstrip").length);
+    });
+
+    test("renders quickAccessToolBar", function() {
+        ok($(".k-spreadsheet-quick-access-toolbar").length);
+        equal($(".k-spreadsheet-quick-access-toolbar").children().length, 3);
+    });
+
+    test("shifts tabstrip tabGroup elements", function() {
+        var tabstrip = spreadsheet._view.tabstrip;
+        var quickAccessToolBar = spreadsheet._view.quickAccessToolBar;
+
+        equal(tabstrip.tabGroup.css("margin-left"), quickAccessToolBar.outerWidth() + "px");
+    });
+
 })();

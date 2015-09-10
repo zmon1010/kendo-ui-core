@@ -366,6 +366,25 @@
             this.tabstrip.contentElements.each(function(idx, element) {
                 this._toolbar($(element), tabs[idx].id, options[tabs[idx].id]);
             }.bind(this));
+
+            this._quickAccessButtons();
+        },
+
+        _quickAccessButtons: function() {
+            var tabstrip = this.tabstrip;
+            var buttons = [
+                { title: "", iconClass: "page-layout" },
+                { title: "Undo", iconClass: "undo-large", action: "undo" },
+                { title: "Redo", iconClass: "redo-large", action: "redo" }
+            ];
+            var buttonTemplate = kendo.template("<a href='\\#' title='#= data.title #' class='k-button k-button-icon'><span class='k-icon k-font-icon k-i-#=iconClass#'></span></a>");
+
+            this.quickAccessToolBar = $("<div />", {
+                "class": "k-spreadsheet-quick-access-toolbar",
+                "html": kendo.render(buttonTemplate, buttons)
+            }).insertBefore(this.tabstrip.wrapper);
+
+            this.tabstrip.tabGroup.css("margin-left", this.quickAccessToolBar.outerWidth());
         },
 
         _toolbar: function(container, name, tools) {
