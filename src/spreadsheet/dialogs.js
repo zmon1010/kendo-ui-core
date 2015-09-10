@@ -436,7 +436,7 @@
             this.element = this.dialog().element;
             this._borderPalette();
 
-            var viewModel = this.viewModel = kendo.observable({
+            this.viewModel = kendo.observable({
                 apply: this.apply.bind(this),
                 close: this.close.bind(this)
             });
@@ -452,7 +452,7 @@
                             "<button class='k-button' data-bind='click: close'>Cancel</button>" +
                         "</div>"
         },
-        apply: function(e) {
+        apply: function() {
             SpreadsheetDialog.fn.apply.call(this);
 
             var state = this.value();
@@ -486,11 +486,11 @@
             SpreadsheetDialog.fn.init.call(this, options);
 
             this.element = this.dialog().element;
-            this._colorPalette(options);
+            this._colorPalette();
             this.property = options.property;
             this.options.title = options.title;
 
-            var viewModel = this.viewModel = kendo.observable({
+            this.viewModel = kendo.observable({
                 apply: this.apply.bind(this),
                 close: this.close.bind(this)
             });
@@ -505,7 +505,7 @@
                             "<button class='k-button' data-bind='click: close'>Cancel</button>" +
                         "</div>"
         },
-        apply: function(e) {
+        apply: function() {
             SpreadsheetDialog.fn.apply.call(this);
 
             var command = new kendo.spreadsheet.PropertyChangeCommand({
@@ -515,7 +515,7 @@
 
             this.trigger("execute", { command: command });
         },
-        _colorPalette: function(options) {
+        _colorPalette: function() {
             var element = this.dialog().element.find("div:first");
             this.colorPalette = element.kendoColorPalette({
                 palette: [ //metro palette

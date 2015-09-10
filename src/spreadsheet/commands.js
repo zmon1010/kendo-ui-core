@@ -53,7 +53,7 @@
         }
     });
 
-    var EditCommand = kendo.spreadsheet.EditCommand = PropertyChangeCommand.extend({
+    kendo.spreadsheet.EditCommand = PropertyChangeCommand.extend({
         init: function(options) {
             options.property = "input";
             PropertyChangeCommand.fn.init.call(this, options);
@@ -77,7 +77,7 @@
         }
     });
 
-    var TextWrapCommand = kendo.spreadsheet.TextWrapCommand = PropertyChangeCommand.extend({
+    kendo.spreadsheet.TextWrapCommand = PropertyChangeCommand.extend({
         init: function(options) {
             options.property = "wrap";
             PropertyChangeCommand.fn.init.call(this, options);
@@ -107,7 +107,7 @@
         }
     });
 
-    var AdjustDecimalsCommand = kendo.spreadsheet.AdjustDecimalsCommand = Command.extend({
+    kendo.spreadsheet.AdjustDecimalsCommand = Command.extend({
         init: function(options) {
             this._decimals = options.decimals;
             options.property = "format";
@@ -133,7 +133,7 @@
         }
     });
 
-    var BorderChangeCommand = kendo.spreadsheet.BorderChangeCommand = Command.extend({
+    kendo.spreadsheet.BorderChangeCommand = Command.extend({
         init: function(options) {
             options.property = "border";
             Command.fn.init.call(this, options);
@@ -201,7 +201,7 @@
         }
     });
 
-    var MergeCellCommand = kendo.spreadsheet.MergeCellCommand = Command.extend({
+    kendo.spreadsheet.MergeCellCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
             this._type = options.value;
@@ -257,7 +257,7 @@
         }
     });
 
-    var PasteCommand = kendo.spreadsheet.PasteCommand = Command.extend({
+    kendo.spreadsheet.PasteCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
             this._workbook = options.workbook;
@@ -275,7 +275,7 @@
         }
     });
 
-    var CopyCommand = kendo.spreadsheet.CopyCommand = Command.extend({
+    kendo.spreadsheet.CopyCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
             this._clipboard = options.workbook.clipboard();
@@ -287,7 +287,7 @@
         }
     });
 
-    var CutCommand = kendo.spreadsheet.CutCommand = Command.extend({
+    kendo.spreadsheet.CutCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
             this._clipboard = options.workbook.clipboard();
@@ -299,7 +299,7 @@
         }
     });
 
-    var FilterCommand = kendo.spreadsheet.FilterCommand = Command.extend({
+    kendo.spreadsheet.FilterCommand = Command.extend({
         exec: function() {
             var range = this.range();
 

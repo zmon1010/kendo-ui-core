@@ -444,7 +444,7 @@
             options.iconName = "text";
             OverflowDialogButton.fn.init.call(this, options, toolbar);
         },
-        _click: function(e) {
+        _click: function() {
             this.toolbar.openDialog("colorPicker", { title: this.options.property, property: this.options.property });
         }
     });
@@ -503,7 +503,7 @@
     });
 
     var FontSizeButton = OverflowDialogButton.extend({
-        _click: function(e) {
+        _click: function() {
             this.toolbar.openDialog("fontSize", { sizes: FONT_SIZES, defaultSize: DEFAULT_FONT_SIZE });
         },
         update: function(value) {
@@ -536,7 +536,7 @@
     });
 
     var FontFamilyButton = OverflowDialogButton.extend({
-        _click: function(e) {
+        _click: function() {
             this.toolbar.openDialog("fontFamily", { fonts: FONT_FAMILIES, defaultFont: DEFAULT_FONT_FAMILY });
         },
         update: function(value) {
@@ -589,7 +589,7 @@
     });
 
     var FormatButton = OverflowDialogButton.extend({
-        _click: function(e) {
+        _click: function() {
             this.toolbar.openDialog("formatCells");
         }
     });
@@ -625,7 +625,7 @@
     });
 
     var BorderChangeButton = OverflowDialogButton.extend({
-        _click: function(e) {
+        _click: function() {
             this.toolbar.openDialog("borders");
         }
     });
@@ -678,7 +678,7 @@
         },
         _commandPalette: function() {
             var element = $("<div />").appendTo(this.popup.element);
-            this.buttons.forEach(function(options, index) {
+            this.buttons.forEach(function(options) {
                 var button = "<a title='Align " + options.value + "' data-property='" + options.property + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
                                 "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" +
                              "</a>";
@@ -697,7 +697,7 @@
     });
 
     var AlignmentButton = OverflowDialogButton.extend({
-        _click: function(e) {
+        _click: function() {
             this.toolbar.openDialog("alignment");
         }
     });
@@ -731,7 +731,7 @@
         },
         _commandPalette: function() {
             var element = $("<div />").appendTo(this.popup.element);
-            this.buttons.forEach(function(options, index) {
+            this.buttons.forEach(function(options) {
                 var title = options.value === "unmerge" ? "Unmerge" : "Merge " + options.value;
                 var button = "<a title='" + title + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
                                 "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + title +
@@ -740,7 +740,6 @@
             });
         },
         _execute: function(button) {
-            var property = button.attr("data-property");
             var value = button.attr("data-value");
 
             this.toolbar.execute(new kendo.spreadsheet.MergeCellCommand({
@@ -750,7 +749,7 @@
     });
 
     var MergeButton = OverflowDialogButton.extend({
-        _click: function(e) {
+        _click: function() {
             this.toolbar.openDialog("merge");
         }
     });

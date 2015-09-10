@@ -5,7 +5,6 @@
 (function(kendo) {
     var $ = kendo.jQuery;
     var CellRef = kendo.spreadsheet.CellRef;
-    var RangeRef = kendo.spreadsheet.RangeRef;
     var DOT = ".";
     var RESIZE_HANDLE_WIDTH = 7;
     var viewClassNames = {
@@ -28,10 +27,6 @@
         rowHeaderContextMenu: "k-spreadsheet-row-header-context-menu",
         colHeaderContextMenu: "k-spreadsheet-col-header-context-menu"
     };
-
-    function hasChanged(e, name) {
-       return !e || e.changed == name;
-    }
 
     function selectElementContents(el) {
         var sel = window.getSelection();
@@ -347,7 +342,6 @@
         },
 
         _tabstrip: function() {
-            var element;
             var options = $.extend(true, {}, { home: true, insert: true, formulas: true, data: true }, this.options.toolbar);
             var tabs = [];
 
@@ -698,7 +692,6 @@
         renderResizeHint: function() {
             var sheet = this._sheet;
             var ref = sheet.resizeHandlePosition();
-            var rectangle = this._sheet._grid.rectangle(ref.toRangeRef());
 
             var horizontal = ref.col !== -Infinity;
 
@@ -871,8 +864,6 @@
 
             children.push(this.renderFilterHeaders());
 
-            var selectedHeaders = sheet.selectedHeaders();
-
             if (grid.hasRowHeader) {
                 var rowHeader = new HtmlTable();
                 rowHeader.addColumn(grid.headerWidth);
@@ -881,7 +872,7 @@
                     rowHeader.addRow(height);
                 });
 
-                sheet.forEach(view.ref.leftColumn(), function(row, col, cell) {
+                sheet.forEach(view.ref.leftColumn(), function(row) {
                     var text = row + 1;
                     rowHeader.addCell(row - view.ref.topLeft.row, text, {}, this.headerClassName(row, "row"));
                 }.bind(this));
@@ -898,7 +889,7 @@
 
                 columnHeader.addRow(grid.headerHeight);
 
-                sheet.forEach(view.ref.topRow(), function(row, col, cell) {
+                sheet.forEach(view.ref.topRow(), function(row, col) {
                     var text = kendo.spreadsheet.Ref.display(null, Infinity, col);
                     columnHeader.addCell(0, text, {}, this.headerClassName(col, "col"));
                 }.bind(this));
@@ -968,7 +959,6 @@
             var classNames = Pane.classNames;
             var mergedCells = [];
             var sheet = this._sheet;
-            var view = this._currentView;
 
             sheet.forEachMergedCell(function(ref) {
                 this._addTable(mergedCells, ref, classNames.mergedCell);
