@@ -258,6 +258,6 @@
         editor.cellInput.filter("sum");
         editor.cellInput.popup.open();
 
-        ok(editor.activeSearch());
+        ok(editor.isFiltered());
     });
 })();

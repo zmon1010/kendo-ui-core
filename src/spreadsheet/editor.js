@@ -75,7 +75,7 @@
             return this._active;
         },
 
-        activeSearch: function() {
+        isFiltered: function() {
             return this.barInput.popup.visible() || this.cellInput.popup.visible();
         },
 

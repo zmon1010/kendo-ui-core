@@ -637,7 +637,7 @@
         },
 
         onEditorBlur: function(event, action) {
-            if (this.editor.activeSearch()) {
+            if (this.editor.isFiltered()) {
                 return;
             }
 
