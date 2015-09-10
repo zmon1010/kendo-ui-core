@@ -31,8 +31,12 @@
         32: 'spacebar'
     };
 
-    var FORMULA_REGEXP = /(?!=)([a-zA-Z])*/;
-    var FORMULA_LOOKAHEAD = /(?!=)([a-zA-Z])*(\S| )?/;
+    var FORMULA_LOOKAHEAD = /(?!=)(\w)([a-zA-Z])*(\S| )?/;
+    var FORMULA_START_SYMBOLS = {
+        "=": true,
+        "(": true,
+        ",": true
+    };
 
     var FormulaInput = Widget.extend({
         init: function(element, options) {
@@ -93,15 +97,30 @@
         },
 
         _formulaListChange: function() {
-            var node = window.getSelection().focusNode;
-            var value = this.list.value();
+            var selection = window.getSelection();
+            var node = selection.focusNode;
 
-            if (!node || !value) {
+            var value = this.list.value();
+            var startIdx, endIdx, character;
+            var nodeValue;
+
+            if (!node || !value || this._mute) {
                 return;
             }
 
             if (node.nodeType === 3) {
-                node.nodeValue = node.nodeValue.replace(FORMULA_REGEXP, value);
+                nodeValue = node.nodeValue;
+
+                startIdx = endIdx = selection.focusOffset;
+                while(startIdx > 0) {
+                    if (FORMULA_START_SYMBOLS[nodeValue[startIdx - 1]]) {
+                        break;
+                    }
+
+                    startIdx -= 1;
+                }
+
+                node.nodeValue = nodeValue.substr(0, startIdx) + value + nodeValue.substring(endIdx);
             }
 
             this.scale();
@@ -119,24 +138,26 @@
             this.popup.close();
         },
 
+        _isFormula: function() {
+            return this.element.text()[0] === "=";
+        },
+
         _keydown: function(e) {
             var key = e.keyCode;
+
             if (KEY_NAMES[key]) {
                 this.popup.close();
-                return;
-            }
-
-            if (this._move(key)) {
+                this._navigated = true;
+            } else  if (this._move(key)) {
+                this._navigated = true;
                 e.preventDefault();
-                this._handled = true;
-                return;
             }
         },
 
         _keyup: function(e) {
             var value;
 
-            if (this.element.text()[0] === "=" && !this._handled) { //improve this check
+            if (this._isFormula() && !this._navigated) {
                 value = this._searchValue();
 
                 this.filter(value);
@@ -148,8 +169,7 @@
                 }
             }
 
-            //TODO: test this
-            this._handled = false;
+            this._navigated = false;
         },
 
         _move: function(key) {
@@ -191,10 +211,12 @@
                 return value;
             }
 
-            value = value.substr(0, selection.focusOffset).split(/\(|,/);
+            value = value.split(/\(|,/);
             value = value[value.length - 1];
 
-            return FORMULA_LOOKAHEAD.exec(value)[0];
+            value = FORMULA_LOOKAHEAD.exec(value);
+
+            return value ? value[0] : value;
         },
 
         _sync: function() {
@@ -236,17 +258,19 @@
         },
 
         filter: function(value) {
-            this.list.select(-1);
-
-            value = value || "";
-
-            if (value.length >= this.options.minLength) {
-                this.formulaSource.filter({
-                    field: this.list.options.dataValueField,
-                    operator: this.options.filterOperator,
-                    value: value
-                });
+            if (!value || value.length < this.options.minLength) {
+                return;
             }
+
+            this._mute = true;
+            this.list.select(-1);
+            this._mute = false;
+
+            this.formulaSource.filter({
+                field: this.list.options.dataValueField,
+                operator: this.options.filterOperator,
+                value: value
+            });
         },
 
         hide: function() {

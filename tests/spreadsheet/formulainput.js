@@ -417,15 +417,16 @@
 
     module("Spreadsheet navigation", {
         setup: function() {
+            kendo.effects.disable();
             element = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
+            kendo.effects.enable();
         }
     });
 
     test("focus next item on 'down'", 1, function() {
-        kendo.effects.disable();
         createFormulaInput();
 
         filterInput("su", "=su");
@@ -442,7 +443,6 @@
     });
 
     test("focus first item on 'down' if last is focused", 1, function() {
-        kendo.effects.disable();
         createFormulaInput();
 
         filterInput("su", "=su");
@@ -460,7 +460,6 @@
     });
 
     test("focus prev item on 'up'", 1, function() {
-        kendo.effects.disable();
         createFormulaInput();
 
         filterInput("su", "=su");
@@ -479,7 +478,6 @@
     });
 
     test("focus last item on 'up' if first is focused", 1, function() {
-        kendo.effects.disable();
         createFormulaInput();
 
         filterInput("su", "=su");
@@ -497,7 +495,6 @@
     });
 
     test("focus last item on 'pagedown'", 1, function() {
-        kendo.effects.disable();
         createFormulaInput();
 
         filterInput("su", "=su");
@@ -515,7 +512,6 @@
     });
 
     test("focus last item on 'pageup'", 1, function() {
-        kendo.effects.disable();
         createFormulaInput();
 
         filterInput("su", "=su");
@@ -533,7 +529,6 @@
     });
 
     test("select focused item on 'enter'", 1, function() {
-        kendo.effects.disable();
         createFormulaInput();
 
         filterInput("su", "=su");
@@ -551,7 +546,6 @@
     });
 
     test("if no focused item just close popup on 'enter'", 3, function() {
-        kendo.effects.disable();
         createFormulaInput();
 
         filterInput("su", "=su");
@@ -569,7 +563,6 @@
     });
 
     test("replace formula value on enter", 1, function() {
-        kendo.effects.disable();
         createFormulaInput();
 
         filterInput("su", "=su");
@@ -584,5 +577,89 @@
         });
 
         equal(element.text(), "=SUM");
+    });
+
+    test("do not filter during navigation", 1, function() {
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.DOWN
+        });
+
+        element.trigger({
+            type: "keyup",
+            keyCode: kendo.keys.DOWN
+        });
+
+        equal(list.focus()[0], list.element.children().first()[0]);
+    });
+
+    test("do not open popup on 'right' arrow", 1, function() {
+        createFormulaInput();
+
+        filterInput("sum", "=sum");
+
+        var list = formulaInput.list;
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.RIGHT
+        });
+
+        element.trigger({
+            type: "keyup",
+            keyCode: kendo.keys.RIGHT
+        });
+
+        ok(!formulaInput.popup.visible());
+    });
+
+    test("do not de-select when filter value is empty string", 1, function() {
+        createFormulaInput();
+
+        filterInput("sum(", "=sum(");
+
+        stub(formulaInput.formulaSource, {
+            filter: formulaInput.formulaSource.filter
+        });
+
+        element.trigger({
+            type: "keyup",
+            keyCode: kendo.keys.RIGHT
+        });
+
+        equal(formulaInput.formulaSource.calls("filter"), 0);
+    });
+
+    test("clear selection silently on filter", 1, function() {
+        createFormulaInput();
+
+        filterInput("si", "=SUM(si");
+        formulaInput.element.focus();
+        formulaInput.caretToEnd();
+
+        formulaInput.list.select(0);
+
+        equal(element.text(), "=SUM(SIN");
+    });
+
+    test("search when value contains white spaces", 1, function() {
+        createFormulaInput();
+
+        formulaInput.element.text("=SUM(A1,  s");
+        formulaInput.element.focus();
+        formulaInput.caretToEnd();
+
+        element.trigger({
+            type: "keyup",
+            keyCode: 0
+        });
+
+        ok(formulaInput.popup.visible());
     });
 })();
