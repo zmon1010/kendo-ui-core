@@ -637,8 +637,7 @@
         },
 
         onEditorBlur: function(event, action) {
-            //TODO Test this
-            if (this.editor.keep()) {
+            if (this.editor.activeSearch()) {
                 return;
             }
 
