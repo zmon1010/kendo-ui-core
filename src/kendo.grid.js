@@ -7269,6 +7269,7 @@ var __meta__ = { // jshint ignore:line
                 } else if (that.touchScroller) {
                     that.touchScroller.movable.trigger("change");
                 } else {
+                    that.wrapper.one("scroll", function(e) { e.stopPropagation(); });
                     that.content.trigger("scroll");
                 }
             }
