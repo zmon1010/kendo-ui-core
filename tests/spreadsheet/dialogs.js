@@ -343,4 +343,26 @@
         $(".k-item a[data-value='right']").trigger("click");
     });
 
+    module("Merge dialog", {
+        setup: function() {
+            moduleOptions.setup();
+
+            dialog = spreadsheet.openDialog("merge");
+        },
+        teardown: moduleOptions.teardown
+    });
+
+    test("sets correct window title", function() {
+        equal(dialog.dialog().options.title, "Merge cells");
+    });
+
+    test("triggers MergeCellsCommand when item is clicked", 2, function() {
+        dialog.one("execute", function(e) {
+            ok(e.command instanceof kendo.spreadsheet.MergeCellCommand);
+            equal(e.command.options.value, "vertically");
+        });
+
+        $(".k-item a[data-value='vertically']").trigger("click");
+    });
+
 })();

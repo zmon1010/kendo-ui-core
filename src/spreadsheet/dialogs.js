@@ -588,5 +588,52 @@
 
     kendo.spreadsheet.dialogs.register("alignment", AlignmentDialog);
 
+    var MergeDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+
+            this._list();
+        },
+        options: {
+            title: "Merge cells",
+            template: "<ul class='k-list k-reset'></ul>",
+            buttons: [
+                { value: "cells",        iconClass: "merge-cells" },
+                { value: "horizontally", iconClass: "merge-horizontally" },
+                { value: "vertically",   iconClass: "merge-vertically" },
+                { value: "unmerge",      iconClass: "normal-layout" }
+            ]
+        },
+        _list: function() {
+            var ul = this.dialog().element.find("ul");
+
+            this.list = new kendo.ui.StaticList(ul, {
+                dataSource: new kendo.data.DataSource({ data: this.options.buttons }),
+                template: function(data) {
+                    var title = data.value === "unmerge" ? "Unmerge" : "Merge " + data.value;
+
+                    return "<a title='" + title + "' data-value=" + data.value + ">" +
+                                "<span class='k-icon k-font-icon k-i-" + data.iconClass + "'></span>" + title +
+                           "</a>";
+                },
+                change: this.apply.bind(this)
+            });
+
+            this.list.dataSource.fetch();
+        },
+        apply: function(e) {
+            var dataItem = e.sender.value()[0];
+            SpreadsheetDialog.fn.apply.call(this);
+
+            var command = new kendo.spreadsheet.MergeCellCommand({
+                value: dataItem.value
+            });
+
+            this.trigger("execute", { command: command });
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("merge", MergeDialog);
+
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
