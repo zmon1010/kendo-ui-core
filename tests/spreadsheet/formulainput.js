@@ -220,6 +220,7 @@
 
         ok(formulaInput.list instanceof kendo.ui.StaticList);
         equal(formulaInput.list.dataSource, formulaInput.formulaSource);
+        ok(formulaInput.list.element.hasClass("k-spreadsheet-formula-list"));
     });
 
     test("creates Popup with widget anchor", function() {

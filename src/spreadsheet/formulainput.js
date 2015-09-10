@@ -83,7 +83,7 @@
         },
 
         _formulaList: function() {
-            this.list = new kendo.ui.StaticList($("<ul/>").insertAfter(this.element), {
+            this.list = new kendo.ui.StaticList($('<ul class="k-spreadsheet-formula-list" />').insertAfter(this.element), {
                 autoBind: false,
                 selectable: true,
                 change: this._formulaListChange.bind(this),
