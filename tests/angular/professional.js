@@ -435,6 +435,33 @@
     }
    );
 
+    ngTest("Grid groupFootertemplate is compiled when locked columns are set", 1, function(){
+        angular.module("kendo.tests").controller("mine", function($scope) {
+                $scope.options = {
+                    columns: [
+                        { field: "name", locked:true, width:200, groupFooterTemplate: "{{'#:count#'}}" },
+                        { field: "age", width:300}
+                    ],
+                    dataSource: {
+                        data: [
+                            { name: "Jane Doe", age: 30 },
+                            { name: "John Doe", age: 30 }
+                        ],
+                        group: { field: "age", aggregates: [
+                            { field: "age", aggregate: "sum" },
+                            { field: "name", aggregate: "count" }
+                            ]}
+                    }
+                };
+        });
+
+        $("<div ng-controller=mine><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    }, function() {
+        var groupRows = $(".k-grid-content-locked").find("tr.k-group-footer");
+        equal(groupRows.first().text().trim(), "2");
+    }
+   );
+
     ngTest("Grid group template are in correct order with multiple group descriptors", 4, function(){
         angular.module("kendo.tests").controller("mine", function($scope) {
             $scope.options = {

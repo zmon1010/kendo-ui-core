@@ -7369,13 +7369,18 @@ var __meta__ = { // jshint ignore:line
        },
 
        _angularGroupFooterItems: function(cmd) {
-           var that = this;
+           var that = this,
+               container = that.tbody;
+
+           if (that.lockedContent) {
+               container = that.lockedTable.find("tbody");
+           }
 
            if (that._group && that.groupFooterTemplate) {
 
                that.angular(cmd, function() {
                    return {
-                       elements: that.tbody.children(".k-group-footer"),
+                       elements: container.children(".k-group-footer"),
                        data: $.map(groupFooters(that.dataSource.view()), function(dataItem){
                            return { dataItem: dataItem };
                        })
