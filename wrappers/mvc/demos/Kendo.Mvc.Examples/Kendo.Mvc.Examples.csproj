@@ -202,6 +202,7 @@
     <Compile Include="Controllers\ComboBox\GroupingController.cs" />
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
+    <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\TabStrip\Scrollable_TabsController.cs" />
     <Compile Include="Controllers\ToolBar\Keyboard_NavigationController.cs" />
@@ -943,6 +944,7 @@
     <Content Include="Areas\aspx\Views\gantt\index.aspx" />
     <Content Include="Areas\aspx\Views\gantt\keyboard_navigation.aspx" />
     <Content Include="Areas\aspx\Views\gantt\serverbinding.aspx" />
+    <Content Include="Areas\aspx\Views\gantt\task_template.aspx" />
     <Content Include="Areas\aspx\Views\grid\copy_to_excel.aspx" />
     <Content Include="Areas\aspx\Views\grid\filter_multi_checkboxes.aspx" />
     <Content Include="Areas\aspx\Views\grid\persist_state.aspx" />
@@ -3308,6 +3310,7 @@
     <Content Include="Areas\razor\Views\toolbar\keyboard_navigation.cshtml" />
     <Content Include="Areas\razor\Views\treelist\dragdrop.cshtml" />
     <Content Include="Areas\razor\Views\gantt\column_resizing.cshtml" />
+    <Content Include="Areas\razor\Views\gantt\task_template.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
