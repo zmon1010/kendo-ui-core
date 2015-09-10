@@ -7349,18 +7349,16 @@ var __meta__ = { // jshint ignore:line
 
        _angularGroupItems: function(cmd) {
            var that = this,
-               elements;
+               container = that.tbody;
 
            if (that.lockedContent) {
-               elements = that.lockedTable.find(".k-grouping-row");
-           } else {
-               elements = that.tbody.children(".k-grouping-row");
+               container = that.lockedTable.find("tbody");
            }
 
            if (that._group) {
               that.angular(cmd, function(){
                    return {
-                       elements: elements,
+                       elements: container.children(".k-grouping-row"),
                        data: $.map(groupRows(that.dataSource.view()), function(dataItem){
                            return { dataItem: dataItem };
                        })
