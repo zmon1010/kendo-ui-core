@@ -31,6 +31,7 @@
         32: 'spacebar'
     };
 
+    var PRIVATE_FORMULA_CHECK = /[a-z0-9]$/i;
     var FORMULA_LOOKAHEAD = /(?!=)(\w)([a-zA-Z])*(\S| )?/;
     var FORMULA_START_SYMBOLS = {
         "=": true,
@@ -75,7 +76,7 @@
             var value;
 
             for (var key in kendo.spreadsheet.calc.runtime.FUNCS) {
-                if (/[a-z0-9]$/i.test(key)) {
+                if (PRIVATE_FORMULA_CHECK.test(key)) {
                     value = key.toUpperCase();
                     result.push({ value: value, text: value });
                 }
