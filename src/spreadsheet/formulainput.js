@@ -122,6 +122,7 @@
                 node.nodeValue = nodeValue.substr(0, startIdx) + value + nodeValue.substring(endIdx);
 
                 this.caretAt(node, startIdx + value.length);
+                this._sync();
             }
 
             this.scale();

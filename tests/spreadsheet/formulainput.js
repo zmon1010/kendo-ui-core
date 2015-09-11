@@ -723,4 +723,21 @@
 
         ok(formulaInput.popup.visible());
     });
+
+    test("update wired editor on click", 1, function() {
+        createFormulaInput();
+
+        var value = "test";
+        var editor = new kendo.spreadsheet.FormulaInput($("<div/>").appendTo(QUnit.fixture));
+
+        formulaInput.syncWith(editor);
+
+        filterInput("si", "=SUM(si");
+        formulaInput.element.focus();
+        formulaInput.caretToEnd();
+
+        formulaInput.list.select(0);
+
+        equal(editor.value(), "=SUM(SIN");
+    });
 })();
