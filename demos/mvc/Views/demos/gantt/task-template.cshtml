@@ -2,6 +2,20 @@
         <div id="gantt"></div>
 
         <style type="text/css">
+
+            /*center treelist cell content vertically*/
+            .k-gantt .k-treelist td
+            {
+                vertical-align: middle;
+            }
+
+            /*hide the resource labels, as they are present in the task template*/
+            .k-gantt .k-resource
+            {
+                display: none;
+            }
+
+            /*style the task template*/
             .k-task-template {
                 height: 100%;
                 padding: 0 !important;
@@ -9,48 +23,58 @@
 
             .template {
                 height: 100%;
-                white-space: nowrap;
-            }
-
-            .resource-img {
-                width: 32px;
-                height: 32px;
-                border-radius: 15px;
                 overflow: hidden;
             }
 
-                .resource-img img,
-                .wrapper {
-                    display: inline-block;
-                }
-
-            resource-img {
+            .resource-img {
+                float: left;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                margin: 8px;
             }
 
-            .wrapper span {
+            .wrapper {
+                padding: 8px;
+                color: #fff;
+            }
+
+            .k-task-template .wrapper > * {
                 display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .title {
-                font-size: 14px;
                 font-weight: bold;
+                font-size: 13px;
             }
 
             .resource {
                 text-transform: uppercase;
                 font-size: 9px;
+                margin-top: .5em;
+            }
+
+            .progress
+            {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 0%;
+                height: 4px;
+                background: rgba(0, 0, 0, .3);
             }
         </style>
 
         <script id="task-template" type="text/x-kendo-template">
             <div class="template" style="background-color: #= resources[0].color #;">
-                <span class="resource-img">
-                    <img src="../content/web/gantt/resources/#:resources[0].id#.jpg" alt="#: resources[0].id #" />
-                </span>
+                <img class="resource-img" src="../content/web/gantt/resources/#:resources[0].id#.jpg" alt="#: resources[0].id #" />
                 <div class="wrapper">
-                    <span class="title">#= title # </span>
-                    <span class="resource">#= resources[0].name # </span>
+                    <strong class="title">#= title # </strong>
+                    <span class="resource">#= resources[0].name #</span>
                 </div>
+                <div class="progress" style="width:#= (100 * parseFloat(percentComplete)) #%"> </div>
             </div>
         </script>
         <script>
@@ -212,7 +236,7 @@
                     showWorkHours: false,
                     showWorkDays: false,
 
-                    rowHeight: 54,
+                    rowHeight: 62,
                     taskTemplate: $("#task-template").html(),
 
                     snap: false
