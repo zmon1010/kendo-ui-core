@@ -343,7 +343,10 @@
                     ref.col += delta;
                 }
             }
-            return ref.relative(trow, tcol, this.rel);
+            if (trow != null && tcol != null) {
+                ref = ref.relative(trow, tcol, this.rel);
+            }
+            return ref;
         }
     });
 
@@ -637,7 +640,9 @@
                 } else {
                     tl.col = start;
                 }
-                tl = tl.relative(trow, tcol, this.topLeft.rel);
+                if (trow != null && tcol != null) {
+                    tl = tl.relative(trow, tcol, this.topLeft.rel);
+                }
             }
             else if (tr === NULL) {
                 tr = this.bottomRight.absolute(row, col);
@@ -646,7 +651,9 @@
                 } else {
                     tr.col = start - 1;
                 }
-                tr = tr.relative(trow, tcol, this.bottomRight.rel);
+                if (trow != null && tcol != null) {
+                    tr = tr.relative(trow, tcol, this.bottomRight.rel);
+                }
             }
             return new RangeRef(tl, tr)
                 .setSheet(this.sheet, this.hasSheet())
@@ -675,10 +682,20 @@
             return NULL;
         },
         simplify: function() {
-            if (this.single()) {
-                return this.refs[0].simplify();
+            var u = new UnionRef(this.refs.reduce(function(a, ref){
+                ref = ref.simplify();
+                if (ref !== NULL) {
+                    a.push(ref);
+                }
+                return a;
+            }, []));
+            if (u.empty()) {
+                return NULL;
             }
-            return this;
+            if (u.single()) {
+                return u.refs[0];
+            }
+            return u;
         },
         absolute: function(arow, acol) {
             return new UnionRef(this.refs.map(function(ref){
@@ -708,6 +725,9 @@
         },
         single: function() {
             return this.length == 1;
+        },
+        empty: function() {
+            return this.length === 0;
         },
         isCell: function() {
             return this.single() && this.refs[0].isCell();
@@ -771,6 +791,11 @@
             this.forEach(function(ref) {
                 ref.forEachColumn(callback);
             });
+        },
+        adjust: function(row, col, trow, tcol, forRow, start, delta) {
+            return this.map(function(ref){
+                return ref.adjust(row, col, trow, tcol, forRow, start, delta);
+            }).simplify();
         }
     });
 

@@ -127,7 +127,7 @@
             this._properties.copy(nextIndex, nextBottomIndex, targetIndex);
         },
 
-        _adjustFormulas: function(operation, start, delta) {
+        _adjustReferences: function(operation, start, delta) {
             if (this._workbook) {
                 var affectedSheet = this._name;
                 this._workbook._sheets.forEach(function(sheet){
@@ -135,6 +135,11 @@
                         formula.adjust(affectedSheet, operation, start, delta);
                     });
                 });
+            }
+            var selection = this.select();
+            selection = selection.adjust(null, null, null, null, operation == "row", start, delta);
+            if (selection !== kendo.spreadsheet.NULLREF) {
+                this.select(selection);
             }
         },
 
@@ -188,7 +193,7 @@
 
                 this._mergedCells = mergedCells;
 
-                this._adjustFormulas("row", rowIndex, 1);
+                this._adjustReferences("row", rowIndex, 1);
             }, { recalc: true, layout: true });
 
             this.trigger("insertRow", { index: rowIndex });
@@ -243,7 +248,7 @@
 
                 this._mergedCells = mergedCells;
 
-                this._adjustFormulas("row", rowIndex, -1);
+                this._adjustReferences("row", rowIndex, -1);
             }, { recalc: true, layout: true });
 
             this.trigger("deleteRow", { index: rowIndex });
@@ -293,7 +298,7 @@
 
                 this._mergedCells = mergedCells;
 
-                this._adjustFormulas("col", columnIndex, 1);
+                this._adjustReferences("col", columnIndex, 1);
             }, { recalc: true, layout: true });
 
             return this;
@@ -348,7 +353,7 @@
 
                 this._mergedCells = mergedCells;
 
-                this._adjustFormulas("col", columnIndex, -1);
+                this._adjustReferences("col", columnIndex, -1);
             }, { recalc: true, layout: true });
 
             return this;
