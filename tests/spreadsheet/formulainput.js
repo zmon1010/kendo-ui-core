@@ -210,7 +210,11 @@
 
         var data = source.data();
 
-        equal(data.length, Object.keys(kendo.spreadsheet.calc.runtime.FUNCS).length);
+        var funcs = Object.keys(kendo.spreadsheet.calc.runtime.FUNCS).filter(function(key){
+            return /[a-z0-9]$/i.test(key);
+        });
+
+        equal(data.length, funcs.length);
         equal(data[0].text, "IF");
         equal(data[0].value, "IF");
     });

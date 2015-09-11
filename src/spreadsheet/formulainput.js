@@ -75,8 +75,10 @@
             var value;
 
             for (var key in kendo.spreadsheet.calc.runtime.FUNCS) {
-                value = key.toUpperCase();
-                result.push({ value: value, text: value });
+                if (/[a-z0-9]$/i.test(key)) {
+                    value = key.toUpperCase();
+                    result.push({ value: value, text: value });
+                }
             }
 
             this.formulaSource = new kendo.data.DataSource({ data: result });
