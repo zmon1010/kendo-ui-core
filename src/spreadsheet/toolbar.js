@@ -697,11 +697,15 @@
             }
         },
         _commandPalette: function() {
+            var buttons = this.buttons;
             var element = $("<div />").appendTo(this.popup.element);
-            this.buttons.forEach(function(options) {
+            buttons.forEach(function(options, index) {
                 var button = "<a title='Align " + options.value + "' data-property='" + options.property + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
                                 "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" +
                              "</a>";
+                if (index !== 0 && buttons[index - 1].property !== options.property) {
+                    element.append($("<span class='k-separator' />"));
+                }
                 element.append(button);
             });
         },
