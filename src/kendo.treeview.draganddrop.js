@@ -30,7 +30,7 @@ var __meta__ = { // jshint ignore:line
             this._draggable = new ui.Draggable(element, {
                 ignore: INPUTSELECTOR,
                 filter: options.filter,
-                autoScrolL: options.autoScroll,
+                autoScroll: options.autoScroll,
                 cursorOffset: {
                     left: 10,
                     top: kendo.support.mobileOS ? -40 / kendo.support.zoomLevel() : 10
