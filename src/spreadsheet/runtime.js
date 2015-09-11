@@ -521,13 +521,16 @@
             var formulaRow = this.row;
             var formulaCol = this.col;
             var formulaSheet = this.sheet.toLowerCase();
+            var formulaMoves = false;
             if (formulaSheet == affectedSheet) {
                 // move formula if it's after the change point
                 if (operation == "row" && formulaRow >= start) {
                     this.row += delta;
+                    formulaMoves = true;
                 }
                 if (operation == "col" && formulaCol >= start) {
                     this.col += delta;
+                    formulaMoves = true;
                 }
             }
             var newFormulaRow = this.row;
@@ -535,14 +538,16 @@
             this.absrefs = null;
             this.refs = this.refs.map(function(ref){
                 if (ref.sheet.toLowerCase() != affectedSheet) {
-                    // a reference to another sheet should still point to the same location after
-                    // adjustment; thus if row/col was removed before formula, relative references
-                    // must be adjusted by delta.
-                    if (operation == "row" && formulaRow >= start) {
-                        ref = ref.relative(delta, 0);
-                    }
-                    if (operation == "col" && formulaCol >= start) {
-                        ref = ref.relative(0, delta);
+                    if (formulaMoves) {
+                        // a reference to another sheet should still point to the same location
+                        // after adjustment; thus if row/col was removed before formula, relative
+                        // references must be adjusted by delta.
+                        if (operation == "row" && formulaRow >= start) {
+                            ref = ref.relative(delta, 0);
+                        }
+                        if (operation == "col" && formulaCol >= start) {
+                            ref = ref.relative(0, delta);
+                        }
                     }
                     return ref;
                 }
