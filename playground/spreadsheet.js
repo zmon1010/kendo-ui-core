@@ -52,8 +52,7 @@ $("#spreadsheet").kendoSpreadsheet({
                     window.alert("custom tool");
                 }
             }
-        ]),
-        data: false
+        ])
     }
 });
 

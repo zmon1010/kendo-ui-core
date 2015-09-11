@@ -373,7 +373,7 @@
         _quickAccessButtons: function() {
             var tabstrip = this.tabstrip;
             var buttons = [
-                { title: "", iconClass: "page-layout" },
+                { title: "", iconClass: "hamburger" },
                 { title: "Undo", iconClass: "undo-large", action: "undo" },
                 { title: "Redo", iconClass: "redo-large", action: "redo" }
             ];
