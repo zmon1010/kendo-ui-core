@@ -33,7 +33,9 @@
         "./kendo.mobile.scrollview",
         "./kendo.mobile.switch",
         "./kendo.mobile.tabstrip",
-        "./kendo.angular"
+        "./kendo.angular",
+        "./kendo.webcomponents",
+        "./kendo.angular2"
     ], f);
 })(function(){
     "bundle all";

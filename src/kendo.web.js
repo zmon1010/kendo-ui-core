@@ -74,7 +74,9 @@
         "./kendo.treelist",
         "./kendo.pivotgrid",
         "./kendo.pivot.configurator",
-        "./kendo.angular"
+        "./kendo.angular",
+        "./kendo.webcomponents",
+        "./kendo.angular2"
     ], f);
 })(function(){
     "bundle all";
