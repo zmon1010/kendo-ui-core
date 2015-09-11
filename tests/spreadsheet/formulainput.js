@@ -277,6 +277,23 @@
         ok(formulaInput.popup.visible());
     });
 
+    test("position popup if already opened", 1, function() {
+        createFormulaInput();
+
+        element.focus();
+        element.text("=s");
+        formulaInput.caretToEnd();
+        element.trigger("keyup");
+
+        stub(formulaInput.popup, {
+            position: formulaInput.popup.position
+        });
+
+        element.trigger("keyup");
+
+        equal(formulaInput.popup.calls("position"), 1);
+    });
+
     test("filter list on typing", 2, function() {
         createFormulaInput();
 

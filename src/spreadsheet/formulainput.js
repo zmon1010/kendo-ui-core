@@ -156,6 +156,7 @@
 
         _keyup: function() {
             var value;
+            var popup = this.popup;
 
             if (this._isFormula() && !this._navigated) {
                 value = this._searchValue();
@@ -163,9 +164,9 @@
                 this.filter(value);
 
                 if (!value || !this.formulaSource.view().length) {
-                    this.popup.close();
+                    popup.close();
                 } else {
-                    this.popup.open();
+                    popup[popup.visible() ? "position" : "open"]();
                 }
             }
 
