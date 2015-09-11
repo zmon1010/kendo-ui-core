@@ -69,6 +69,7 @@
             ],
 
             destroy: function() {
+                this.valuesTreeView.destroy();
                 this.popup.destroy();
             },
 
