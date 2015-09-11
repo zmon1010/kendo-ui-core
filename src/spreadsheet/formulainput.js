@@ -102,7 +102,7 @@
             var node = selection.focusNode;
 
             var value = this.list.value();
-            var startIdx, endIdx, character;
+            var startIdx, endIdx;
             var nodeValue;
 
             if (!node || !value || this._mute) {
@@ -155,7 +155,7 @@
             }
         },
 
-        _keyup: function(e) {
+        _keyup: function() {
             var value;
 
             if (this._isFormula() && !this._navigated) {
