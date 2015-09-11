@@ -292,6 +292,27 @@
         equal(formulaInput.args("filter")[0], "s");
     });
 
+    test("show result when caret is in the middle of node", 2, function() {
+        createFormulaInput();
+
+        element.focus();
+        element.text("=su(sin");
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.setStart(element[0].childNodes[0], 3);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        stub(formulaInput, { filter: formulaInput.filter });
+
+        element.trigger("keyup");
+
+        equal(formulaInput.calls("filter"), 1);
+        equal(formulaInput.args("filter")[0], "su");
+    });
+
     test("do not filter if text does not contain '=' at the begining of the input", 1, function() {
         createFormulaInput();
 

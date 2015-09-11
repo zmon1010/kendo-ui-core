@@ -32,11 +32,11 @@
     };
 
     var PRIVATE_FORMULA_CHECK = /[a-z0-9]$/i;
-    var FORMULA_LOOKAHEAD = /(?!=)(\w)([a-zA-Z])*(\S| )?/;
     var FORMULA_START_SYMBOLS = {
         "=": true,
         "(": true,
-        ",": true
+        ",": true,
+        " ": true
     };
 
     var FormulaInput = Widget.extend({
@@ -104,7 +104,7 @@
             var selection = window.getSelection();
             var node = selection.focusNode;
 
-            var value = this.list.value();
+            var value = this.list.value()[0];
             var startIdx, endIdx;
             var nodeValue;
 
@@ -114,22 +114,18 @@
 
             if (node.nodeType === 3) {
                 nodeValue = node.nodeValue;
-
                 startIdx = endIdx = selection.focusOffset;
-                while(startIdx > 0) {
-                    if (FORMULA_START_SYMBOLS[nodeValue[startIdx - 1]]) {
-                        break;
-                    }
 
-                    startIdx -= 1;
-                }
+                startIdx = this._startIdx(nodeValue, startIdx);
+                endIdx = this._endIdx(nodeValue, endIdx);
 
                 node.nodeValue = nodeValue.substr(0, startIdx) + value + nodeValue.substring(endIdx);
+
+                this.caretAt(node, startIdx + value.length);
             }
 
             this.scale();
             this.popup.close();
-            this.caretToEnd(); //need to move the caret to the end of the this.formulaList.value()... not to the end of the input
         },
 
         _popup: function() {
@@ -176,6 +172,30 @@
             this._navigated = false;
         },
 
+        _startIdx: function(value, idx) {
+            while(idx > 0) {
+                if (FORMULA_START_SYMBOLS[value[idx - 1]]) {
+                    break;
+                }
+
+                idx -= 1;
+            }
+
+            return idx;
+        },
+
+        _endIdx: function(value, idx) {
+            while(idx < value.length) {
+                if (FORMULA_START_SYMBOLS[value[idx]]) {
+                    break;
+                }
+
+                idx += 1;
+            }
+
+            return idx;
+        },
+
         _move: function(key) {
             var list = this.list;
             var pressed = false;
@@ -209,18 +229,15 @@
 
         _searchValue: function() {
             var selection = window.getSelection();
+
+            var idx = selection.focusOffset;
             var value = selection.focusNode.nodeValue;
 
             if (!value) {
                 return value;
             }
 
-            value = value.split(/\(|,/);
-            value = value[value.length - 1];
-
-            value = FORMULA_LOOKAHEAD.exec(value);
-
-            return value ? value[0] : value;
+            return value.substr(this._startIdx(value, idx), this._endIdx(value, idx) - 1);
         },
 
         _sync: function() {
@@ -242,6 +259,20 @@
 
         isActive: function() {
             return this.element.is(":focus");
+        },
+
+        caretAt: function(node, idx) {
+            if (!node || !this.isActive()) {
+                return;
+            }
+
+            var selection = window.getSelection();
+            var range = document.createRange();
+
+            range.setStart(node, idx);
+
+            selection.removeAllRanges();
+            selection.addRange(range);
         },
 
         caretToEnd: function() {
