@@ -28,19 +28,28 @@
 
 <demo:header />
 
-	<script id="task-template" type="text/x-kendo-template">
-		<div class="template" style="background-color: #= resources[0].color #;">
-			<span class="resource-img">
-				<img src="../resources/web/gantt/resources/#:resources[0].id#.jpg" alt="#: resources[0].id #" />
-			</span>
-			<div class="wrapper">
-				<span class="title">#= title # </span>
-				<span class="resource">#= resources[0].name # </span>
-			</div>
-		</div>
+    <script id="task-template" type="text/x-kendo-template">
+        # if (resources[0]) { #
+        <div class="template" style="background-color: #= resources[0].color #;">
+            <img class="resource-img" src="../resources/web/gantt/resources/#:resources[0].id#.jpg" alt="#: resources[0].id #" />
+            <div class="wrapper">
+                <strong class="title">#= title # </strong>
+                <span class="resource">#= resources[0].name #</span>
+            </div>
+            <div class="progress" style="width:#= (100 * parseFloat(percentComplete)) #%"> </div>
+        </div>
+        # } else { #
+        <div class="template">
+            <div class="wrapper">
+                <strong class="title">#= title # </strong>
+                <span class="resource">no resource assigned</span>
+            </div>
+            <div class="progress" style="width:#= (100 * parseFloat(percentComplete)) #%"> </div>
+        </div>
+        # } #
     </script>
         
-    <kendo:gantt name="gantt" height="700" rowHeight="54" showWorkDays="false" taskTemplate="task-template" showWorkHours="false" snap="false">
+    <kendo:gantt name="gantt" height="700" rowHeight="62" showWorkDays="false" taskTemplate="task-template" showWorkHours="false" snap="false">
     	<kendo:gantt-views>
     		<kendo:gantt-view type="day" />
     		<kendo:gantt-view type="week" selected="true" />
@@ -151,5 +160,71 @@
             </kendo:dataSource-transport>
         </kendo:dependencies>
     </kendo:gantt>
+    
+    <style type="text/css">
+
+        /*center treelist cell content vertically*/
+        .k-gantt .k-treelist td
+        {
+            vertical-align: middle;
+        }
+
+        /*hide the resource labels, as they are present in the task template*/
+        .k-gantt .k-resource
+        {
+            display: none;
+        }
+
+        /*style the task template*/
+        .k-task-template {
+            height: 100%;
+            padding: 0 !important;
+        }
+
+        .template {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .resource-img {
+            float: left;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin: 8px;
+        }
+
+        .wrapper {
+            padding: 8px;
+            color: #fff;
+        }
+
+        .k-task-template .wrapper > * {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .resource {
+            text-transform: uppercase;
+            font-size: 9px;
+            margin-top: .5em;
+        }
+
+        .progress
+        {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0%;
+            height: 4px;
+            background: rgba(0, 0, 0, .3);
+        }
+    </style>
     
 <demo:footer />
