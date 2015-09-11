@@ -1870,6 +1870,8 @@ var __meta__ = { // jshint ignore:line
                     return;
                 }
 
+                task.set("title", "New task");
+
                 if (target) {
                     task.set("parentId", target.get("id"));
                     task.set("start", target.get("start"));
