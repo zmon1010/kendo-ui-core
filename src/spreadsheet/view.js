@@ -373,11 +373,10 @@
         _quickAccessButtons: function() {
             var tabstrip = this.tabstrip;
             var buttons = [
-                { title: "", iconClass: "hamburger" },
                 { title: "Undo", iconClass: "undo-large", action: "undo" },
                 { title: "Redo", iconClass: "redo-large", action: "redo" }
             ];
-            var buttonTemplate = kendo.template("<a href='\\#' title='#= data.title #' class='k-button k-button-icon'><span class='k-icon k-font-icon k-i-#=iconClass#'></span></a>");
+            var buttonTemplate = kendo.template("<a href='\\#' title='#= title #' class='k-button k-button-icon'><span class='k-icon k-font-icon k-i-#=iconClass#'></span></a>");
 
             this.quickAccessToolBar = $("<div />", {
                 "class": "k-spreadsheet-quick-access-toolbar",
