@@ -249,7 +249,7 @@
         equal(values[0].dataType, "blank");
     });
 
-    test("sorts the values according their dataType (blank, number, date, string)", function() {
+    test("sorts the values according to their dataType (blank, number, date, string)", function() {
         sheet.range("A1").value(new Date(2015,1,1)).format("dd/mm/yyyy");
         sheet.range("A2").value(123);
         sheet.range("A3");
