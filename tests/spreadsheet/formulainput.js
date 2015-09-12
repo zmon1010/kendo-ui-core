@@ -246,6 +246,77 @@
         equal(formula, null);
     });
 
+    test("ref method inserts passed ref address", 2, function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(");
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.setStart(element[0].childNodes[0], 5);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        formulaInput.ref("A1");
+
+        equal(formulaInput.value(), "=SUM(A1");
+        equal(selection.focusOffset, 5);
+    });
+
+    test("ref method replaces current single cell ref", 2, function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(B1");
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.setStart(element[0].childNodes[0], 5);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        formulaInput.ref("A1");
+
+        equal(formulaInput.value(), "=SUM(A1");
+        equal(selection.focusOffset, 5);
+    });
+
+    test("ref method replaces current range ref", 2, function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(B1:c1");
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.setStart(element[0].childNodes[0], 5);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        formulaInput.ref("A1");
+
+        equal(formulaInput.value(), "=SUM(A1");
+        equal(selection.focusOffset, 5);
+    });
+
+    test("ref method does nothing if caret is not in correct place", 1, function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(sum");
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.setStart(element[0].childNodes[0], 6);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        formulaInput.ref("A1");
+
+        equal(formulaInput.value(), "=SUM(sum");
+    });
+
     module("Spreadsheet searching", {
         setup: function() {
             element = $("<div />").appendTo(QUnit.fixture);

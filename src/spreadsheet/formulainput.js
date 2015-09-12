@@ -369,6 +369,26 @@
                 });
         },
 
+        ref: function(ref) {
+            var formula = this.activeFormula();
+            var selection = window.getSelection();
+
+            if (formula) {
+                var index = selection.focusOffset;
+                var node = selection.focusNode;
+                var nodeValue = node.nodeValue;
+
+                var value = nodeValue.substring(index);
+                var replace_regexp = /^(\s)*([\w|\$])*(:)?([\w|\$])*/;
+
+                nodeValue = nodeValue.substr(0, index) + value.replace(replace_regexp, ref);
+                node.nodeValue = nodeValue;
+
+                this.caretAt(selection.focusNode, index);
+                this._sync();
+            }
+        },
+
         resize: function(rectangle) {
             if (!rectangle) {
                 return;
