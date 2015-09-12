@@ -60,7 +60,8 @@
                 name: "FilterMenu",
                 messages: {
                     filterByValue: "Filter by value",
-                    filterByCondition: "Filter by condition"
+                    filterByCondition: "Filter by condition",
+                    blanks: "(Blanks)"
                 }
             },
 
@@ -80,21 +81,24 @@
 
             getValues: function() {
                 var values = [];
+                var messages = this.options.messages;
 
                 this.options.range.forEachCell(function(row, col, cell) {
                     var formatter;
 
-                    if (cell.value !== null && cell.format) {
+                    if (cell.value === undefined) {
+                        cell.dataType = "blank";
+                    } else if (cell.format) {
                         cell.dataType = kendo.spreadsheet.formatting.type(cell.value, cell.format);
-                    } else if (cell.value !== null) {
-                        cell.dataType = "string";
+                    } else {
+                        cell.dataType = typeof cell.value;
                     }
 
                     if (cell.value !== null && cell.format) {
                         formatter = kendo.spreadsheet.formatting.compile(cell.format);
                         cell.text = formatter(cell.value).text();
                     } else {
-                        cell.text = cell.value ? cell.value : "(Blanks)";
+                        cell.text = cell.value ? cell.value : messages.blanks;
                     }
 
                     if (cell.dataType === "date") {
