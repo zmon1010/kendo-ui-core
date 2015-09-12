@@ -263,4 +263,18 @@
         equal(values[2].dataType, "date");
     });
 
+    module("filter menu: filter by condition", {
+        setup: function() {
+            sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("creates DropDownList with operators", function() {
+        filterMenu = createWithValues([ ["A1"], ["A2"], ["A3"] ]);
+        ok(filterMenu.element.find(".k-dropdown").length);
+    });
+
 })();

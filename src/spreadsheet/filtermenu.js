@@ -8,6 +8,7 @@
             reset: "k-reset",
             input: "k-input",
             wrapper: "k-spreadsheet-filter-menu",
+            filterByCondition: "k-spreadsheet-condition-filter",
             filterByValue: "k-spreadsheet-value-filter",
             search: "k-spreadsheet-search-box",
             valueTreeViewWrapper: "k-spreadsheet-value-treeview-wrapper"
@@ -20,9 +21,28 @@
                     "<div class='" + classNames.valueTreeViewWrapper + "'><div></div></div>" +
                 "</dd>",
             filterByCondition:
-                "<dt><span class='k-icon k-font-icon k-i-arrow-e'></span><span>#= filterByCondition #</span></dt>" +
+                "<dt><span class='k-icon k-font-icon k-i-arrow-e'></span><span>#= messages.filterByCondition #</span></dt>" +
                 "<dd class='" + classNames.reset + "'>" +
-                    "condition filtering" +
+                    '<select data-#=ns#bind="value: filters[0].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
+                        '#for(var type in operators){#'+
+                            '#for(var op in operators[type]){#' +
+                                '<option value="#=op#">#=operators[type][op]#</option>' +
+                            '#}#'+
+                        '#}#'+
+                    '</select>'+
+                    '<input data-#=ns#bind="value:filters[0].value" class="k-textbox" type="text" />'+
+                    '<select class="k-filter-and" data-#=ns#bind="value: logic" data-#=ns#role="dropdownlist">'+
+                        '<option value="and">#=messages.and#</option>'+
+                        '<option value="or">#=messages.or#</option>'+
+                    '</select>'+
+                    '<select data-#=ns#bind="value: filters[1].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
+                        '#for(var type in operators){#'+
+                            '#for(var op in operators[type]){#' +
+                                '<option value="#=op#">#=operators[type][op]#</option>' +
+                            '#}#'+
+                        '#}#'+
+                    '</select>'+
+                    '<input data-#=ns#bind="value: filters[1].value" class="k-textbox" type="text" />'+
                 "</dd>"
         };
 
@@ -63,7 +83,31 @@
                     filterByCondition: "Filter by condition",
                     apply: "Apply",
                     cancel: "Cancel",
-                    blanks: "(Blanks)"
+                    blanks: "(Blanks)",
+                    and: "And",
+                    or: "Or"
+                },
+                operators: {
+                    string: {
+                        contains: "Text contains",
+                        doesnotcontain: "Text does not contain",
+                        startswith: "Text starts with",
+                        endswith: "Text ends with"
+                    },
+                    date: {
+                        eq:  "Date is",
+                        neq: "Date is not",
+                        lt:  "Date is before",
+                        gt:  "Date is after",
+                    },
+                    number: {
+                        eq: "Is equal to",
+                        neq: "Is not equal to",
+                        gte: "Is greater than or equal to",
+                        gt: "Is greater than",
+                        lte: "Is less than or equal to",
+                        lt: "Is less than"
+                    }
                 }
             },
 
@@ -160,8 +204,10 @@
                 var template = kendo.template(FilterMenu.templates.filterByCondition);
                 var element = $("<dl/>", {
                                 "class": FilterMenu.classNames.filterByCondition,
-                                "html": template(this.options.messages)
+                                "html": template({ messages: this.options.messages, operators: this.options.operators, ns: kendo.ns })
                               }).appendTo(this.element);
+
+                kendo.init(element);
             },
 
             _filterByValue: function() {
