@@ -268,6 +268,35 @@
             this._span = $("<span/>").css(computedStyles).insertAfter(this.element);
         },
 
+        activeFormula: function() {
+            var selection = window.getSelection();
+            var currentIdx = selection.focusOffset;
+            var node = selection.focusNode;
+            var formula = null;
+
+            if (!node) {
+                return formula;
+            }
+
+            var value = node.nodeValue.substr(0, currentIdx);
+            var braketIdx = value.lastIndexOf("(");
+            var commaIdx = value.lastIndexOf(",");
+            var startIdx = braketIdx;
+
+            if (braketIdx > value.lastIndexOf(")")) {
+                if (commaIdx > startIdx) {
+                    startIdx = commaIdx;
+                }
+
+                if ((startIdx + 1) === currentIdx) {
+                    value = value.substr(this._startIdx(value, braketIdx), braketIdx - 1);
+                    formula = kendo.spreadsheet.calc.runtime.FUNCS[value.toLowerCase()];
+                }
+            }
+
+            return formula;
+        },
+
         isActive: function() {
             return this.element.is(":focus");
         },

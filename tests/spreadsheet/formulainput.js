@@ -16,6 +16,10 @@
         formulaInput = new kendo.spreadsheet.FormulaInput(element, options);
     }
 
+    function getFormula(name) {
+        return kendo.spreadsheet.calc.runtime.FUNCS[name];
+    }
+
     test("decorates div element", function() {
         createFormulaInput();
 
@@ -147,6 +151,8 @@
         equal(selection.type, "Caret");
     });
 
+    //TODO: test caretAt
+
     test("scale updates width of the element based on its value", function() {
         var initialWidth = 50;
 
@@ -190,6 +196,54 @@
         formulaInput.element.triggerHandler("input");
 
         ok(formulaInput.element.width() > initialWidth);
+    });
+
+    test("activeFormula returns formula if caret is after '('", 1, function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(");
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.setStart(element[0].childNodes[0], 5);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        var formula = formulaInput.activeFormula();
+
+        equal(formula, getFormula("sum"));
+    });
+
+    test("activeFormula returns formula if caret is after ','", 1, function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(,");
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.setStart(element[0].childNodes[0], 6);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        var formula = formulaInput.activeFormula();
+
+        equal(formula, getFormula("sum"));
+    });
+
+    test("activeFormula returns null if caret is not in correct place", 1, function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(sin,");
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.setStart(element[0].childNodes[0], 6);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        var formula = formulaInput.activeFormula();
+
+        equal(formula, null);
     });
 
     module("Spreadsheet searching", {
