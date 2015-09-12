@@ -168,6 +168,7 @@
                     popup.close();
                 } else {
                     popup[popup.visible() ? "position" : "open"]();
+                    this.list.focusFirst();
                 }
             }
 

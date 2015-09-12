@@ -487,6 +487,20 @@
         }
     });
 
+    test("focus first item on open", 1, function() {
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        element.trigger({
+            type: "keyup"
+        });
+
+        var list = formulaInput.list;
+
+        equal(list.focus()[0], list.element.children().eq(0)[0]);
+    });
+
     test("focus next item on 'down'", 1, function() {
         createFormulaInput();
 
