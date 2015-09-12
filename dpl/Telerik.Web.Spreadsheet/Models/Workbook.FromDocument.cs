@@ -37,6 +37,22 @@ namespace Telerik.Web.Spreadsheet
                     continue;
                 }
 
+                var columns = documentWorksheet.Columns;
+                for (var columnIndex = 0; columnIndex < columns.Count; columnIndex++)
+                {
+                    var width = columns[columnIndex].GetWidth();
+
+                    if (width.Value.IsCustom)
+                    {
+                        sheet.Columns.Add(new Column
+                        {
+                            Index = columnIndex,
+                            Width = width.Value.Value
+                        });
+                    }
+                }
+                
+
                 for (int rowIndex = usedCellRange.FromIndex.RowIndex; rowIndex <= usedCellRange.ToIndex.RowIndex; rowIndex++)
                 {
                     Range rowUsedRange = context.ValuePropertyDataInfo.GetRowUsedRange(rowIndex);
@@ -47,12 +63,18 @@ namespace Telerik.Web.Spreadsheet
 
                     var cells = GetCellsToExport(documentWorksheet, rowUsedRange, rowIndex).ToList();
                     if (cells.Count > 0)
-                    {
+                    {                        
                         var dtoRow = new Row
                         {
-                            Index = rowIndex,
+                            Index = rowIndex,                            
                             Cells = cells
                         };
+
+                        var rowHeight = documentWorksheet.Rows[rowIndex, rowIndex].GetHeight();
+                        if (rowHeight.Value.IsCustom)
+                        {
+                            dtoRow.Height = rowHeight.Value.Value;
+                        }
 
                         sheet.Rows.Add(dtoRow);
                     }
@@ -86,7 +108,7 @@ namespace Telerik.Web.Spreadsheet
                     var cellValue = selection.GetValue().Value;
                     var formatting = selection.GetFormat().Value;
                     string formula = null;
-
+                    
                     FormulaCellValue formulaCellValue = cellValue as FormulaCellValue;
                     if (formulaCellValue != null)
                     {

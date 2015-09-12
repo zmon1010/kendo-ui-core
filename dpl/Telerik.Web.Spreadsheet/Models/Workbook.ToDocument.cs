@@ -34,6 +34,13 @@ namespace Telerik.Web.Spreadsheet
                     foreach (var row in sheet.Rows)
                     {
                         ImportCells(row, documentSheet);
+
+                        documentSheet.Rows[row.Index].SetHeight(new RowHeight(row.Height, true));
+                    }
+
+                    foreach (var column in sheet.Columns)
+                    {                        
+                        documentSheet.Columns[column.Index].SetWidth(new ColumnWidth(column.Width, true));
                     }
 
                     foreach (var mergedRange in sheet.MergedCells)
