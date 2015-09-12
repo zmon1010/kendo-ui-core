@@ -17,6 +17,10 @@
       :item_type: object
       :type: Array
 
+    - :name: sheets.columns.index
+      :merge: true
+      :type: int
+
     - :name: sheets.rows.index
       :merge: true
       :type: int
