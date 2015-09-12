@@ -110,6 +110,26 @@
 
                 var values = distinctValues(values);
 
+                values.sort(function(a, b) {
+                    if (a.dataType === b.dataType) {
+                        return 0;
+                    }
+
+                    if (a.dataType === "blank" || b.dataType === "blank") {
+                        return a.dataType === "blank" ? -1 : 1;
+                    }
+
+                    if (a.dataType === "number" || b.dataType === "number") {
+                        return a.dataType === "number" ? -1 : 1;
+                    }
+
+                    if (a.dataType === "date" || b.dataType === "date") {
+                        return a.dataType === "date" ? -1 : 1;
+                    }
+
+                    return 0;
+                });
+
                 return [{
                     text: "all",
                     expanded: true,
