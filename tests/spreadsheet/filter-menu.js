@@ -207,24 +207,60 @@
 
         var values = filterMenu.getValues()[0].items;
 
-        equal(values[0].text, "A1");
-        equal(values[1].text, "(Blanks)");
+        equal(values[0].text, "(Blanks)");
+        equal(values[1].text, "A1");
     });
 
-/*
-    test("recognizes the dataType of a value", function() {
+    test("recognizes number dataType", function() {
+        sheet.range("A1").value(123);
+
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1") });
+
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values[0].dataType, "number");
+    });
+
+    test("recognizes date dataType", function() {
+        sheet.range("A1").value(new Date(2015,1,1)).format("dd/mm/yyyy");
+
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1") });
+
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values[0].dataType, "date");
+    });
+
+    test("recognizes string dataType", function() {
         sheet.range("A1").value("A1");
-        sheet.range("A2").value("'123").format("c");
-        sheet.range("A3").value(new Date(2015,1,1)).format("dd/mm/yyyy");
+
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1") });
+
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values[0].dataType, "string");
+    });
+
+    test("recognizes blank dataType", function() {
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1") });
+
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values[0].dataType, "blank");
+    });
+
+    test("sorts the values according their dataType (blank, number, date, string)", function() {
+        sheet.range("A1").value(new Date(2015,1,1)).format("dd/mm/yyyy");
+        sheet.range("A2").value(123);
+        sheet.range("A3");
 
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A3") });
 
         var values = filterMenu.getValues()[0].items;
 
-        equal(values[0].dataType, "string");
+        equal(values[0].dataType, "blank");
         equal(values[1].dataType, "number");
-        equal(values[1].dataType, "date");
+        equal(values[2].dataType, "date");
     });
-*/
 
 })();
