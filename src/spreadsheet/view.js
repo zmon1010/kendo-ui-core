@@ -568,7 +568,7 @@
                 if (sheet.filter()) {
                     sheet.filter().ref.forEachColumn(function(ref) {
                         var filterMenu = new kendo.spreadsheet.FilterMenu({
-                            range: new kendo.spreadsheet.Range(ref, sheet)
+                            range: new kendo.spreadsheet.Range(ref.resize({ top: 1 }), sheet)
                         });
 
                         this.filterMenus.push(filterMenu);
