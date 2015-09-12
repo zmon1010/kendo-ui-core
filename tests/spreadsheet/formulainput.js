@@ -651,7 +651,24 @@
             keyCode: kendo.keys.ENTER
         });
 
-        equal(element.text(), "=SUM");
+        equal(element.text(), "=SUM(");
+    });
+
+    test("autocomplete formula on TAB", 1, function() {
+        createFormulaInput();
+
+        filterInput("su", "=su");
+
+        var list = formulaInput.list;
+
+        list.focusFirst();
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.TAB
+        });
+
+        equal(element.text(), "=SUM(");
     });
 
     test("do not filter during navigation", 1, function() {
@@ -720,7 +737,25 @@
 
         formulaInput.list.select(0);
 
-        equal(element.text(), "=SUM(SIN");
+        equal(element.text(), "=SUM(SIN(");
+    });
+
+    test("do not add '(' if already in place", 1, function() {
+        createFormulaInput();
+
+        filterInput("s", "=s(");
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.setStart(element[0].childNodes[0], 2);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        formulaInput.list.select(0);
+
+        var value = formulaInput.list.value()[0];
+
+        equal(element.text(), "=" + value + "(");
     });
 
     test("search when value contains white spaces", 1, function() {
@@ -752,6 +787,6 @@
 
         formulaInput.list.select(0);
 
-        equal(editor.value(), "=SUM(SIN");
+        equal(editor.value(), "=SUM(SIN(");
     });
 })();

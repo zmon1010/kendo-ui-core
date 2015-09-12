@@ -119,6 +119,10 @@
                 startIdx = this._startIdx(nodeValue, startIdx);
                 endIdx = this._endIdx(nodeValue, endIdx);
 
+                if (nodeValue[endIdx] !== "(") {
+                    value += "(";
+                }
+
                 node.nodeValue = nodeValue.substr(0, startIdx) + value + nodeValue.substring(endIdx);
 
                 this.caretAt(node, startIdx + value.length);
@@ -216,6 +220,10 @@
                 }
                 pressed = true;
             } else if (key === keys.ENTER) {
+                list.select(list.focus());
+                this.popup.close();
+                pressed = true;
+            } else if (key === keys.TAB) {
                 list.select(list.focus());
                 this.popup.close();
                 pressed = true;
