@@ -61,6 +61,8 @@
                 messages: {
                     filterByValue: "Filter by value",
                     filterByCondition: "Filter by condition",
+                    apply: "Apply",
+                    cancel: "Cancel",
                     blanks: "(Blanks)"
                 }
             },
@@ -179,10 +181,11 @@
             },
 
             _actionButtons: function() {
+                var messages = this.options.messages;
                 var div = $("<div />", {
                             "class": "k-action-buttons",
-                            "html": "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
-                                    "<button class='k-button' data-bind='click: close'>Cancel</button>"
+                            "html": "<button class='k-button k-primary'>" + messages.apply + "</button>" +
+                                    "<button class='k-button'>" + messages.cancel + "</button>"
                           });
 
                 div.appendTo(this.element);
