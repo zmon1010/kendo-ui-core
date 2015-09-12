@@ -3,9 +3,6 @@
 })(function(){
 
 (function(kendo) {
-    var RangeRef = kendo.spreadsheet.RangeRef;
-    var CellRef = kendo.spreadsheet.CellRef;
-
     var SheetEditor = kendo.Observable.extend({
         init: function(view) {
             kendo.Observable.fn.init.call(this);

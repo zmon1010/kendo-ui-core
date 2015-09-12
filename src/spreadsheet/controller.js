@@ -623,11 +623,11 @@
             }));
         },
 
-        onEditorBarFocus: function(event) {
+        onEditorBarFocus: function() {
             this.editor.activate(this.view.activeCellRectangle());
         },
 
-        onEditorCellFocus: function(event) {
+        onEditorCellFocus: function() {
             this.editor.scale();
         },
 
@@ -638,7 +638,7 @@
             this.clipboardElement.focus();
         },
 
-        onEditorBlur: function(event, action) {
+        onEditorBlur: function(_, action) {
             if (this.editor.isFiltered()) {
                 return;
             }
