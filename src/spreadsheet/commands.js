@@ -311,6 +311,28 @@
         }
     });
 
+    kendo.spreadsheet.HideLineCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this.axis = options.axis;
+            this.sheet = options.sheet;
+        },
+
+        undo: function() {
+            this.sheet.setAxisState(this._state);
+        },
+
+        exec: function() {
+            this._state = this.sheet.getAxisState();
+
+            if (this.axis == "row") {
+                this.range()._sheet.axisManager().hideSelectedRows();
+            } else {
+                this.range()._sheet.axisManager().unhideSelectedColumns();
+            }
+        }
+    });
+
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

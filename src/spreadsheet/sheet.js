@@ -1005,6 +1005,19 @@
             }
         },
 
+        getAxisState: function() {
+            return {
+                rows: this._rows.getState(),
+                columns: this._columns.getState()
+            };
+        },
+
+        setAxisState: function(state) {
+            this._rows.setState(state.rows);
+            this._columns.setState(state.columns);
+            this.triggerChange({ layout: true });
+        },
+
         getState: function() {
             return {
                 rows: this._rows.getState(),
@@ -1019,6 +1032,7 @@
             this._columns.setState(state.columns);
             this._mergedCells = state.mergedCells;
             this._properties.setState(state.properties);
+            this.triggerChange(kendo.spreadsheet.ALL_REASONS);
         }
     });
 

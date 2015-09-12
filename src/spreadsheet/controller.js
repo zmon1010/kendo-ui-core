@@ -142,6 +142,7 @@
 
         onContextMenuSelect: function(e) {
                 var action = $(e.item).data("action");
+                var command;
                 switch(action) {
                     case "cut":
                         this.onCut();
@@ -153,7 +154,8 @@
                         this.onPaste();
                         break;
                     case "hide-row":
-                        this.axisManager.hideSelectedRows();
+                        command = new kendo.spreadsheet.HideLineCommand({ axis: "row", sheet: this._workbook.activeSheet() });
+                        this._workbook.execute(command);
                         break;
                     case "hide-column":
                         this.axisManager.hideSelectedColumns();
