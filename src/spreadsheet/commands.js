@@ -268,8 +268,8 @@
             this._state = this._range.getState();
         },
         exec: function() {
-            this.getState();
             if(this._clipboard.canPaste()) {
+                this.getState();
                 this._clipboard.paste();
             }
         }
@@ -280,6 +280,7 @@
             Command.fn.init.call(this, options);
             this._clipboard = options.workbook.clipboard();
         },
+        undo: $.noop,
         exec: function() {
             if(this._clipboard.canCopy()) {
                 this._clipboard.copy();
@@ -294,6 +295,7 @@
         },
         exec: function() {
             if(this._clipboard.canCopy()) {
+                this.getState();
                 this._clipboard.cut();
             }
         }
