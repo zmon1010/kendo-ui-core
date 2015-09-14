@@ -5,7 +5,9 @@ namespace Kendo.Mvc.UI
     using Kendo.Mvc.Resources;
 
     public class PageableMessages : JsonObject
-    { 
+    {
+        private const string DefaultAllPages = "All";
+
         private const string DefaultDisplay = "{0} - {1} of {2} items";
 
         private const string DefaultEmpty = "No items to display";
@@ -30,6 +32,7 @@ namespace Kendo.Mvc.UI
 
         public PageableMessages()
         {
+            AllPages = Messages.Pager_AllPages;
             Display = Messages.Pager_Display;
             Empty = Messages.Pager_Empty;
             Page = Messages.Pager_Page;
@@ -42,6 +45,8 @@ namespace Kendo.Mvc.UI
             Refresh = Messages.Pager_Refresh;
             MorePages = Messages.Pager_MorePages;
         }
+
+        public string AllPages { get; set; }
 
         public string Display { get; set; }
 
@@ -67,6 +72,11 @@ namespace Kendo.Mvc.UI
 
         protected override void Serialize(IDictionary<string, object> json)
         {
+            if (AllPages != DefaultAllPages)
+            {
+                json["allPages"] = AllPages;
+            }
+
             if (Display != DefaultDisplay)
             {
                 json["display"] = Display;

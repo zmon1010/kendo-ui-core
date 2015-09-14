@@ -9,6 +9,13 @@ namespace Kendo.Mvc.UI.Fluent
             this.messages = messages;
         }
 
+        public PageableMessagesBuilder AllPages(string message)
+        {
+            messages.AllPages = message;
+
+            return this;
+        }
+
         public PageableMessagesBuilder Display(string message)
         {
             messages.Display = message;

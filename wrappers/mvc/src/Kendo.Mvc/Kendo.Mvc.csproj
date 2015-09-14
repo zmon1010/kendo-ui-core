@@ -373,6 +373,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.ru-RU.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Messages.sv-SE.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.sv-SE.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Messages.tr-TR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.tr-TR.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Messages.uk-UA.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1942,8 +1952,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.ru-RU.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Messages.sv-SE.resx" />
-    <EmbeddedResource Include="Resources\Messages.tr-TR.resx" />
+    <EmbeddedResource Include="Resources\Messages.sv-SE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.sv-SE.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.tr-TR.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.tr-TR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Messages.uk-UA.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.uk-UA.Designer.cs</LastGenOutput>

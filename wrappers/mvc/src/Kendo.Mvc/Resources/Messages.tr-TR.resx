@@ -768,4 +768,7 @@
   <data name="Grid_Excel" xml:space="preserve">
     <value>Excel'e aktar</value>
   </data>
+  <data name="Pager_AllPages" xml:space="preserve">
+    <value>All</value>
+  </data>
 </root>

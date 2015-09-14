@@ -765,4 +765,7 @@
   <data name="Grid_Excel" xml:space="preserve">
     <value>Export to Excel</value>
   </data>
+  <data name="Pager_AllPages" xml:space="preserve">
+    <value>All</value>
+  </data>
 </root>
