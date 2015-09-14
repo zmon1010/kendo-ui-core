@@ -747,16 +747,16 @@
                     return "(" + cond("null") + " ? (($"+name+" = " + type[1] + "), true) : false)";
                 }
                 if (type[0] == "between" || type[0] == "[between]") {
-                    return "(" + force() + " >= " + type[1] + " && " + "$"+name+" <= " + type[2] + ")";
+                    return "(" + force() + " >= " + type[1] + " && " + "$"+name+" <= " + type[2] + " ? true : ((err = 'NUM'), false))";
                 }
                 if (type[0] == "(between)") {
-                    return "(" + force() + " > " + type[1] + " && " + "$"+name+" < " + type[2] + ")";
+                    return "(" + force() + " > " + type[1] + " && " + "$"+name+" < " + type[2] + " ? true : ((err = 'NUM'), false))";
                 }
                 if (type[0] == "(between]") {
-                    return "(" + force() + " > " + type[1] + " && " + "$"+name+" <= " + type[2] + ")";
+                    return "(" + force() + " > " + type[1] + " && " + "$"+name+" <= " + type[2] + " ? true : ((err = 'NUM'), false))";
                 }
                 if (type[0] == "[between)") {
-                    return "(" + force() + " >= " + type[1] + " && " + "$"+name+" < " + type[2] + ")";
+                    return "(" + force() + " >= " + type[1] + " && " + "$"+name+" < " + type[2] + " ? true : ((err = 'NUM'), false))";
                 }
                 if (type[0] == "assert") {
                     var err = type[2] || "N/A";
@@ -788,16 +788,16 @@
                     + "($"+name+" == 0 ? ((err = 'DIV/0'), false) : true))";
             }
             if (type == "number+") {
-                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" >= 0)";
+                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" >= 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "integer+") {
-                return "(((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" >= 0) ? ($"+name+" |= 0, true) : false)";
+                return "(((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" >= 0 ? true : ((err = 'NUM'), false))) ? ($"+name+" |= 0, true) : false)";
             }
             if (type == "number++") {
-                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" > 0)";
+                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" > 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "integer++") {
-                return "(((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" > 0) ? ($"+name+" |= 0, true) : false)";
+                return "(((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" > 0) ? true : ((err = 'NUM'), false)) ? ($"+name+" |= 0, true) : false)";
             }
             if (type == "string") {
                 return "(typeof " + force() + " == 'string')";

@@ -1345,7 +1345,7 @@
             return arguments[index];
         }
     }).args([
-        [ "index", "*integer++" ],
+        [ "index", "*integer" ],
         [ "+", [ "value", "anything" ] ]
     ]);
 
