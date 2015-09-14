@@ -37,7 +37,7 @@ namespace Kendo.Controllers
                 return HttpNotFound();
             }
 
-            if (path.StartsWith("~/content"))
+            if (path.StartsWith("~/content") && path.EndsWith("html"))
             {
                 return Content(IOFile.ReadAllText(mappedPath), "text/html");
             }
