@@ -19,6 +19,11 @@ namespace Telerik.Web.Spreadsheet
         public const string JSON = "application/json";
 
         /// <summary>
+        /// MIME type for PDF files
+        /// </summary>
+        public const string PDF = "application/pdf";
+
+        /// <summary>
         /// MIME type for Tab-delimited text file
         /// </summary>
         public const string TXT = "text/tab-separated-values";
@@ -35,6 +40,7 @@ namespace Telerik.Web.Spreadsheet
             new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {                
                 { ".csv", MimeTypes.CSV },
                 { ".json", MimeTypes.JSON },
+                { ".pdf", MimeTypes.PDF },
                 { ".txt", MimeTypes.TXT },
                 { ".xlsx", MimeTypes.XLSX }
             };

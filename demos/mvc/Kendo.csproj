@@ -84,6 +84,22 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="Telerik.Windows.Documents.Core, Version=2015.2.728.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Fixed, Version=2015.2.728.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Fixed.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet, Version=2015.2.728.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf, Version=2015.2.728.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
@@ -113,6 +129,8 @@
     <Compile Include="Models\IFrameworkDescription.cs" />
     <Compile Include="Models\NavigationItem.cs" />
     <Compile Include="Models\ExampleFramework.cs" />
+    <Compile Include="Models\PrintMargins.cs" />
+    <Compile Include="Models\PrintOptions.cs" />
     <Compile Include="Models\StyleGroups.cs" />
     <Compile Include="Models\NavigationExample.cs" />
     <Compile Include="Models\NavigationWidget.cs" />
@@ -1194,8 +1212,8 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\demos\spreadsheet\index.cshtml" />
-    <Content Include="Views\demos\spreadsheet\document-processing.cshtml" />
-    <Content Include="Views\demos\spreadsheet\document-processing-pdf.cshtml" />
+    <Content Include="Views\demos\spreadsheet\server-side-import-export.cshtml" />
+    <Content Include="Views\demos\spreadsheet\server-side-pdf-export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

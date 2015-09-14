@@ -36,7 +36,7 @@ namespace Kendo
                 "Spreadsheet",
                 "spreadsheet/{action}",
                 new { controller = "Spreadsheet" },
-                new { action = "(upload|download)" }
+                new { action = "(upload|download|saveaspdf)" }
             );
 
             routes.MapRoute(

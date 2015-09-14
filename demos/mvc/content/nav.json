@@ -2684,8 +2684,8 @@
         }
       },
       {
-          "text": "Server-side Import/Export",
-          "url": "spreadsheet/document-processing",
+          "text": "Server Import/Export",
+          "url": "spreadsheet/server-side-import-export",
           "title": {
               "kendo-ui": "Kendo Spreadsheet integration with the Telerik Document Processing Library"
           },
@@ -2697,8 +2697,8 @@
           ]
       },
       {
-          "text": "Server-side Export to PDF",
-          "url": "spreadsheet/document-processing-pdf",
+          "text": "Server Export to PDF",
+          "url": "spreadsheet/server-side-pdf-export",
           "title": {
               "kendo-ui": "Kendo Spreadsheet PDF Export with the Telerik Document Processing Library"
           },
