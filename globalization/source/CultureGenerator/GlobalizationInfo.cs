@@ -24,7 +24,27 @@ namespace CultureGenerator
         {
             NumberFormatInfo numberFormats = cultureInfo.NumberFormat;
             DateTimeFormatInfo dateTimeFormats = cultureInfo.DateTimeFormat;
-            RegionInfo regionInfo = new RegionInfo(cultureInfo.Name);
+            RegionInfo regionInfo;
+
+            if (!cultureInfo.IsNeutralCulture)
+            {
+                regionInfo = new RegionInfo(cultureInfo.Name);
+            }
+            else
+            {
+                // get first specific region for neutral cultures
+                var specifics = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(c => c.Parent.Name == cultureInfo.Name);
+
+                if (specifics.Any())
+                {
+                    regionInfo = new RegionInfo(specifics.First().Name);
+                }
+                else
+                {
+                    // ... or fall back to en-US
+                    regionInfo = new RegionInfo("en-US");
+                }
+            }
 
             IDictionary<string, object> globalization = new Dictionary<string, object>();
 
