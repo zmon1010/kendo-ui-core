@@ -128,9 +128,13 @@
         },
 
         _adjustReferences: function(operation, start, delta, mergedCells) {
-            this._mergedCells = mergedCells.map(function(ref){
-                return ref.adjust(null, null, null, null, operation == "row", start, delta);
-            });
+            this._mergedCells = mergedCells.reduce(function(a, ref){
+                ref = ref.adjust(null, null, null, null, operation == "row", start, delta);
+                if (ref !== kendo.spreadsheet.NULLREF) {
+                    a.push(ref);
+                }
+                return a;
+            }, []);
             if (this._workbook) {
                 var affectedSheet = this._name;
                 this._workbook._sheets.forEach(function(sheet){

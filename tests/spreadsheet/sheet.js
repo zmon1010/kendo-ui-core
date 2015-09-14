@@ -109,6 +109,24 @@
         equal(sheet.range("2:2").value(), null);
     });
 
+    test("deleteRow removes merged cells when all of them are deleted", function(){
+        sheet.range("A1:B2").merge();
+        sheet.deleteRow(0);
+        equal(sheet._mergedCells.length, 1);
+        equal(sheet._mergedCells[0].toString(), "A1:B1");
+        sheet.deleteRow(0);
+        equal(sheet._mergedCells.length, 0);
+    });
+
+    test("deleteColumn removes merged cells when all of them are deleted", function(){
+        sheet.range("A1:B2").merge();
+        sheet.deleteColumn(0);
+        equal(sheet._mergedCells.length, 1);
+        equal(sheet._mergedCells[0].toString(), "A1:A2");
+        sheet.deleteColumn(0);
+        equal(sheet._mergedCells.length, 0);
+    });
+
     test("deleteRow persist merged cells when deleting row is at the start of the merged group", function() {
         sheet.range("A2:B3").merge();
 
