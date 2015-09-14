@@ -166,7 +166,9 @@
             sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
         },
         teardown: function() {
-            kendo.destroy(QUnit.fixture);
+            if (filterMenu) {
+                filterMenu.destroy();
+            }
         }
     });
 
@@ -268,7 +270,9 @@
             sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
         },
         teardown: function() {
-            kendo.destroy(QUnit.fixture);
+            if (filterMenu) {
+                filterMenu.destroy();
+            }
         }
     });
 

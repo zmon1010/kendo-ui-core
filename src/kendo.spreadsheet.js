@@ -176,7 +176,7 @@
 
             fromJSON: function(json) {
                 if (json.sheets) {
-                    this._workbook.unbind();
+                    this._workbook.destroy();
 
                     this._workbook = new Workbook($.extend({}, this.options, { sheets: json.sheets }));
 
@@ -194,6 +194,7 @@
             destroy: function() {
                 kendo.ui.Widget.fn.destroy.call(this);
 
+                this._workbook.destroy();
                 this._controller.destroy();
                 this._view.destroy();
             },

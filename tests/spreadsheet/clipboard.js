@@ -14,6 +14,7 @@
         },
         teardown: function() {
             sheet.unbind();
+            workbook.destroy();
             kendo.destroy(QUnit.fixture);
             QUnit.fixture.empty();
         }

@@ -57,6 +57,10 @@
             return this.origin.relative(rowDelta, colDelta, 3);
         },
 
+        destroy: function() {
+            document.body.removeChild(this.iframe);
+        },
+
         paste: function() {
             var content = {};
             var sheet = this.workbook.activeSheet();

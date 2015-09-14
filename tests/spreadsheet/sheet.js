@@ -79,7 +79,7 @@
     });
 
     test("select triggers the change event", 1, function() {
-       sheet.bind("change", success).range("A1:A1").select();
+       sheet.bind("change", success).range("A2").select();
     });
 
     test("triggerChange triggers the change event", 1, function() {

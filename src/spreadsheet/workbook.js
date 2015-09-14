@@ -42,6 +42,14 @@
             return this._clipboard;
         },
 
+        destroy: function() {
+            this.unbind();
+
+            if (this._clipboard) {
+                this._clipboard.destroy();
+            }
+        },
+
         events: [
             "change"
         ],
