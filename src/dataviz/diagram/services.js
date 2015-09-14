@@ -1955,7 +1955,7 @@
 
             redraw: function () {
                 var i, handle,
-                    visibleHandles = this._handleOptions();
+                    visibleHandles = this._resizable();
 
                 for (i = 0; i < this.map.length; i++) {
                     handle = this.map[i];
