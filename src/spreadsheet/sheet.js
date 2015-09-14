@@ -272,6 +272,13 @@
 
                 var insertedColumn = new RangeRef(new CellRef(0, columnIndex), new CellRef(rowCount, columnIndex));
 
+                mergedCells.forEach(function(ref) {
+                    if (ref.topLeft.col > insertedColumn.bottomRight.col) {
+                        ref.topLeft.col = ref.topLeft.col + 1;
+                        ref.bottomRight.col = ref.bottomRight.col + 1;
+                    }
+                });
+
                 insertedColumn.intersecting(mergedCells).forEach(function(ref) {
                     ref.bottomRight.col = ref.bottomRight.col + 1;
                 });
