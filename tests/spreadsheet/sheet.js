@@ -368,6 +368,17 @@
         equal(mergedCells[0].toString(), "C1:D3");
     });
 
+    test("insertColumn as merged cell first column moves the merged cells range", function() {
+        sheet.range("A1:C3").merge();
+
+        sheet.insertColumn(0);
+
+        var mergedCells = sheet._mergedCells;
+
+        equal(mergedCells.length, 1);
+        equal(mergedCells[0].toString(), "B1:D3");
+    });
+
     test("insertColumn into a merged cells range expands the merged cells", function() {
         sheet.range("A1:C3").merge();
 
