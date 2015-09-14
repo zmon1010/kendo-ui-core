@@ -51,7 +51,7 @@
         textColor:             { type: "colorPicker", property: "color",      iconClass: "text" },
         fontFamily:            { type: "fontFamily",  property: "fontFamily", iconClass: "text", width: 130 },
         fontSize:              { type: "fontSize",    property: "fontSize",   iconClass: "font-size", width: 60 },
-        format:                { type: "format",      property: "format",                             width: 100 },
+        format:                { type: "format",      property: "format",                             width: 100, iconClass: "format-number" },
         merge:                 { type: "merge",                               iconClass: "merge-cells" },
         borders:               { type: "borders",                             iconClass: "all-borders" },
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
@@ -581,7 +581,7 @@
             ddl.setOptions({
                 dataValueField: "format",
                 dataValuePrimitive: true,
-                valueTemplate: "<span class='k-icon k-font-icon k-i-format-number' style='line-height: 1em; width: 1.35em;'></span>",
+                valueTemplate: "<span class='k-icon k-font-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>",
                 template:
                     "# if (data.sample) { #" +
                         "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
