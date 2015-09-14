@@ -1100,7 +1100,7 @@
             equal(ss.$("B6"), false);
             equal(ss.$("C6"), false);
             equal(ss.$("D6"), true);
-            equal(ss.$("E6"), false);
+            equal(ss.$("E6"), true);
             equal(ss.$("F6"), true);
             equal(ss.$("G6"), false);
             equal(ss.$("H6"), true);

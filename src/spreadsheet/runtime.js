@@ -1347,7 +1347,7 @@
     ]);
 
     defineFunction("istext", function(val){
-        return typeof val == "string" && val !== "";
+        return typeof val == "string";
     }).args([
         [ "value", "*forced!" ]
     ]);
