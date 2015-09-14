@@ -478,12 +478,14 @@
         completeResizing: function() {
             if (this._resizeInProgress) {
                 this._resizeInProgress = false;
-                if (this._initialPosition) {
+                var hintPosition = this.resizeHintPosition();
+
+                if (this._initialPosition && hintPosition) {
                     var handlePosition = this.resizeHandlePosition();
                     if (handlePosition.col !== -Infinity) {
-                        this.columnWidth(handlePosition.col, this.columnWidth(handlePosition.col) - (this._initialPosition.x - this.resizeHintPosition().x));
+                        this.columnWidth(handlePosition.col, this.columnWidth(handlePosition.col) - (this._initialPosition.x - hintPosition.x));
                     } else {
-                        this.rowHeight(handlePosition.row, this.rowHeight(handlePosition.row) - (this._initialPosition.y - this.resizeHintPosition().y));
+                        this.rowHeight(handlePosition.row, this.rowHeight(handlePosition.row) - (this._initialPosition.y - hintPosition.y));
                     }
                 } else {
                     this.trigger("change", { resize: true });
