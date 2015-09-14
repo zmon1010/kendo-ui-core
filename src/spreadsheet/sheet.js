@@ -127,7 +127,10 @@
             this._properties.copy(nextIndex, nextBottomIndex, targetIndex);
         },
 
-        _adjustReferences: function(operation, start, delta) {
+        _adjustReferences: function(operation, start, delta, mergedCells) {
+            this._mergedCells = mergedCells.map(function(ref){
+                return ref.adjust(null, null, null, null, operation == "row", start, delta);
+            });
             if (this._workbook) {
                 var affectedSheet = this._name;
                 this._workbook._sheets.forEach(function(sheet){
@@ -167,13 +170,7 @@
                     this.frozenRows(frozenRows + 1);
                 }
 
-                var mergedCells = this._mergedCells.slice(0);
-
-                var insertedRow = new RangeRef(new CellRef(rowIndex, 0), new CellRef(rowIndex, columnCount));
-
-                insertedRow.intersecting(mergedCells).forEach(function(ref) {
-                    ref.bottomRight.row = ref.bottomRight.row + 1;
-                });
+                var mergedCells = this._mergedCells.slice();
 
                 for (var ci = 0; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
@@ -191,9 +188,7 @@
                     new Range(ref, this).clear();
                 }
 
-                this._mergedCells = mergedCells;
-
-                this._adjustReferences("row", rowIndex, 1);
+                this._adjustReferences("row", rowIndex, 1, mergedCells);
             }, { recalc: true, layout: true });
 
             this.trigger("insertRow", { index: rowIndex });
@@ -211,20 +206,7 @@
                     this.frozenRows(frozenRows - 1);
                 }
 
-                var mergedCells = this._mergedCells.slice(0);
-
-                var firstRow = new RangeRef(new CellRef(rowIndex, 0), new CellRef(rowIndex, columnCount));
-
-                firstRow.intersecting(mergedCells).forEach(function(ref) {
-                    ref.bottomRight.row = ref.bottomRight.row - 1;
-                });
-
-                mergedCells.forEach(function(ref) {
-                    if (ref.topLeft.row > firstRow.bottomRight.row) {
-                        ref.topLeft.row = ref.topLeft.row - 1;
-                        ref.bottomRight.row = ref.bottomRight.row - 1;
-                    }
-                });
+                var mergedCells = this._mergedCells.slice();
 
                 for (var ci = 0; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
@@ -246,9 +228,7 @@
                     new Range(new RangeRef(nextRefBottomRight, nextRefBottomRight), this).clear();
                 }
 
-                this._mergedCells = mergedCells;
-
-                this._adjustReferences("row", rowIndex, -1);
+                this._adjustReferences("row", rowIndex, -1, mergedCells);
             }, { recalc: true, layout: true });
 
             this.trigger("deleteRow", { index: rowIndex });
@@ -260,7 +240,6 @@
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
-                var rowCount = grid.rowCount;
 
                 var frozenColumns = this.frozenColumns();
 
@@ -268,20 +247,7 @@
                     this.frozenColumns(frozenColumns + 1);
                 }
 
-                var mergedCells = this._mergedCells.slice(0);
-
-                var insertedColumn = new RangeRef(new CellRef(0, columnIndex), new CellRef(rowCount, columnIndex));
-
-                mergedCells.forEach(function(ref) {
-                    if (ref.topLeft.col >= insertedColumn.bottomRight.col) {
-                        ref.topLeft.col = ref.topLeft.col + 1;
-                        ref.bottomRight.col = ref.bottomRight.col + 1;
-                    }
-                });
-
-                insertedColumn.intersecting(mergedCells).forEach(function(ref) {
-                    ref.bottomRight.col = ref.bottomRight.col + 1;
-                });
+                var mergedCells = this._mergedCells.slice();
 
                 for (var ci = columnCount; ci >= columnIndex; ci--) {
                     var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
@@ -303,9 +269,7 @@
                     this._copyRange(nextRef, topLeft);
                 }
 
-                this._mergedCells = mergedCells;
-
-                this._adjustReferences("col", columnIndex, 1);
+                this._adjustReferences("col", columnIndex, 1, mergedCells);
             }, { recalc: true, layout: true });
 
             return this;
@@ -315,7 +279,6 @@
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
-                var rowCount = grid.rowCount;
 
                 var frozenColumns = this.frozenColumns();
 
@@ -323,20 +286,7 @@
                     this.frozenColumns(frozenColumns - 1);
                 }
 
-                var mergedCells = this._mergedCells.slice(0);
-
-                var deletedColumn = new RangeRef(new CellRef(0, columnIndex), new CellRef(rowCount, columnIndex));
-
-                deletedColumn.intersecting(mergedCells).forEach(function(ref) {
-                    ref.bottomRight.col = ref.bottomRight.col - 1;
-                });
-
-                mergedCells.forEach(function(ref) {
-                    if (ref.topLeft.col > deletedColumn.bottomRight.col) {
-                        ref.topLeft.col = ref.topLeft.col - 1;
-                        ref.bottomRight.col = ref.bottomRight.col - 1;
-                    }
-                });
+                var mergedCells = this._mergedCells.slice();
 
                 for (var ci = columnIndex; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
@@ -358,9 +308,7 @@
                     this._copyRange(nextRef, topLeft);
                 }
 
-                this._mergedCells = mergedCells;
-
-                this._adjustReferences("col", columnIndex, -1);
+                this._adjustReferences("col", columnIndex, -1, mergedCells);
             }, { recalc: true, layout: true });
 
             return this;
