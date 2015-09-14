@@ -16,6 +16,8 @@
                 symbol: "{{PercentSymbol}}"
             },
             currency: {
+                name: "{{CurrencyEnglishName}}",
+                abbr: "{{CurrencyISOSymbol}}",
                 pattern: {{CurrencyPattern}},
                 decimals: {{CurrencyDecimalDigits}},
                 ",": "{{CurrencyGroupSeparator}}",
