@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Pakistan Rupee",
-                abbr: "PKR",
+                name: "",
+                abbr: "",
                 pattern: ["-$ n","$ n"],
                 decimals: 2,
                 ",": ",",

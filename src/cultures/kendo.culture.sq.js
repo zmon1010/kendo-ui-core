@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Albanian Lek",
-                abbr: "ALL",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ".",

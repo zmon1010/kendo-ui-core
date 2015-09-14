@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Icelandic Krona",
-                abbr: "ISK",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 0,
                 ",": ".",

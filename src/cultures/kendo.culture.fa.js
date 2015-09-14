@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Iranian Rial",
-                abbr: "IRR",
+                name: "",
+                abbr: "",
                 pattern: ["$n-","$n"],
                 decimals: 2,
                 ",": ",",

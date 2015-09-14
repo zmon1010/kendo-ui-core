@@ -16,8 +16,8 @@
                 symbol: "٪"
             },
             currency: {
-                name: "Iraqi Dinar",
-                abbr: "IQD",
+                name: "",
+                abbr: "",
                 pattern: ["$-n","$n"],
                 decimals: 2,
                 ",": ",",

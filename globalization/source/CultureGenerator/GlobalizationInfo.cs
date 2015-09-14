@@ -24,29 +24,20 @@ namespace CultureGenerator
         {
             NumberFormatInfo numberFormats = cultureInfo.NumberFormat;
             DateTimeFormatInfo dateTimeFormats = cultureInfo.DateTimeFormat;
-            RegionInfo regionInfo;
+
+            IDictionary<string, object> globalization = new Dictionary<string, object>();
 
             if (!cultureInfo.IsNeutralCulture)
             {
-                regionInfo = new RegionInfo(cultureInfo.Name);
+                RegionInfo regionInfo = new RegionInfo(cultureInfo.Name);
+                globalization["CurrencyISOSymbol"] = regionInfo.ISOCurrencySymbol;
+                globalization["CurrencyEnglishName"] = regionInfo.CurrencyEnglishName;
             }
             else
             {
-                // get first specific region for neutral cultures
-                var specifics = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(c => c.Parent.Name == cultureInfo.Name);
-
-                if (specifics.Any())
-                {
-                    regionInfo = new RegionInfo(specifics.First().Name);
-                }
-                else
-                {
-                    // ... or fall back to en-US
-                    regionInfo = new RegionInfo("en-US");
-                }
+                globalization["CurrencyISOSymbol"] = "";
+                globalization["CurrencyEnglishName"] = "";
             }
-
-            IDictionary<string, object> globalization = new Dictionary<string, object>();
 
             globalization["Name"] = cultureInfo.Name;
 
@@ -72,8 +63,6 @@ namespace CultureGenerator
             globalization["CurrencyDecimalSeparator"] = numberFormats.CurrencyDecimalSeparator;
             globalization["CurrencyGroupSizes"] = numberFormats.CurrencyGroupSizes;
             globalization["CurrencySymbol"] = numberFormats.CurrencySymbol;
-            globalization["CurrencyISOSymbol"] = regionInfo.ISOCurrencySymbol;
-            globalization["CurrencyEnglishName"] = regionInfo.CurrencyEnglishName;
 
             //standard calendar info
             globalization["DayNames"] = dateTimeFormats.DayNames;

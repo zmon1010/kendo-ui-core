@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Malagasy Ariary",
-                abbr: "MGA",
+                name: "",
+                abbr: "",
                 pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",

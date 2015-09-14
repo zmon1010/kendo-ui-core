@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Boliviano",
-                abbr: "BOB",
+                name: "",
+                abbr: "",
                 pattern: ["($ n)","$ n"],
                 decimals: 2,
                 ",": ".",

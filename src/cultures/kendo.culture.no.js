@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "US Dollar",
-                abbr: "USD",
+                name: "",
+                abbr: "",
                 pattern: ["$ -n","$ n"],
                 decimals: 2,
                 ",": " ",

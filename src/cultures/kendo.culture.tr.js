@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Turkish Lira",
-                abbr: "TRY",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ".",

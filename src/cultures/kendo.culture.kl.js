@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Danish Krone",
-                abbr: "DKK",
+                name: "",
+                abbr: "",
                 pattern: ["$ -n","$ n"],
                 decimals: 2,
                 ",": ".",

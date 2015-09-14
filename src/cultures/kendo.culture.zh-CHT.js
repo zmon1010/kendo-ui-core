@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Hong Kong Dollar",
-                abbr: "HKD",
+                name: "",
+                abbr: "",
                 pattern: ["($n)","$n"],
                 decimals: 2,
                 ",": ",",

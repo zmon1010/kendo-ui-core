@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Israeli New Shekel",
-                abbr: "ILS",
+                name: "",
+                abbr: "",
                 pattern: ["$-n","$ n"],
                 decimals: 2,
                 ",": ",",

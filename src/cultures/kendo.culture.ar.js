@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "UAE Dirham",
-                abbr: "AED",
+                name: "",
+                abbr: "",
                 pattern: ["$n-","$ n"],
                 decimals: 2,
                 ",": ",",

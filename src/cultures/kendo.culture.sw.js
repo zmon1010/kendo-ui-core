@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Kenyan Shilling",
-                abbr: "KES",
+                name: "",
+                abbr: "",
                 pattern: ["($n)","$n"],
                 decimals: 2,
                 ",": ",",

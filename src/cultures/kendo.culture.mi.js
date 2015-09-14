@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "New Zealand Dollar",
-                abbr: "NZD",
+                name: "",
+                abbr: "",
                 pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",

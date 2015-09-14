@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Rufiyaa",
-                abbr: "MVR",
+                name: "",
+                abbr: "",
                 pattern: ["n $-","n $"],
                 decimals: 2,
                 ",": ",",

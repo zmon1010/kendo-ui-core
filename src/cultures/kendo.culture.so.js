@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Somali Shilling",
-                abbr: "SOS",
+                name: "",
+                abbr: "",
                 pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",

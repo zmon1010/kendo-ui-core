@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Moldovan Leu",
-                abbr: "MDL",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ".",

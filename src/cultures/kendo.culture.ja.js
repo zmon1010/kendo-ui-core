@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Japanese Yen",
-                abbr: "JPY",
+                name: "",
+                abbr: "",
                 pattern: ["-$n","$n"],
                 decimals: 0,
                 ",": ",",

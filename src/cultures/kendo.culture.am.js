@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Ethiopian Birr",
-                abbr: "ETB",
+                name: "",
+                abbr: "",
                 pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",

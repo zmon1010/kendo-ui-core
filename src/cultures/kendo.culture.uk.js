@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Ukrainian Hryvnia",
-                abbr: "UAH",
+                name: "",
+                abbr: "",
                 pattern: ["-n$","n$"],
                 decimals: 2,
                 ",": " ",

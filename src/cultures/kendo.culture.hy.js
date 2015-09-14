@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Armenian Dram",
-                abbr: "AMD",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ",",

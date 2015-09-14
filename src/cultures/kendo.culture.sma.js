@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Norwegian Krone",
-                abbr: "NOK",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ".",

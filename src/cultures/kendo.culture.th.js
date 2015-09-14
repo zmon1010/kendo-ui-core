@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Thai Baht",
-                abbr: "THB",
+                name: "",
+                abbr: "",
                 pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",

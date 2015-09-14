@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Paraguay Guarani",
-                abbr: "PYG",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 0,
                 ",": ".",

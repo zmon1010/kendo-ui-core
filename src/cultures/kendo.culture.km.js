@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Riel",
-                abbr: "KHR",
+                name: "",
+                abbr: "",
                 pattern: ["-n$","n$"],
                 decimals: 2,
                 ",": ",",

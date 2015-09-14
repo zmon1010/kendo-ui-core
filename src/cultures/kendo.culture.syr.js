@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Syrian Pound",
-                abbr: "SYP",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ",",

@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Belarusian Ruble",
-                abbr: "BYR",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": " ",

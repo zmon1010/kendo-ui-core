@@ -16,8 +16,8 @@
                 symbol: "%"
             },
             currency: {
-                name: "Hungarian Forint",
-                abbr: "HUF",
+                name: "",
+                abbr: "",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": " ",
