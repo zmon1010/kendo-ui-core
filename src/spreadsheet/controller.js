@@ -20,7 +20,6 @@
        "ctrl+down": "last-row",
        "ctrl+home": "first",
        "ctrl+end": "last",
-       "ctrl+:alphanum": "ctrl",
        "pageup": "prev-page",
        "pagedown": "next-page"
     };
@@ -32,6 +31,7 @@
         "shift+enter": "upper",
         "shift+:alphanum": "edit",
         ":alphanum": "edit",
+        "ctrl+:alphanum": "ctrl",
         ":edit": "edit"
     };
 
@@ -276,6 +276,7 @@
 
         onEntryAction: function(event, action) {
             if (event.mod) {
+                var shouldPrevent = true;
                 var key = String.fromCharCode(event.keyCode);
 
                 switch(key) {
@@ -288,9 +289,13 @@
                     case "Z":
                         this._workbook.undoRedoStack.undo();
                         break;
+                    default:
+                        shouldPrevent = false;
+                        break;
                 }
-
-                event.preventDefault();
+                if(shouldPrevent) {
+                    event.preventDefault();
+                }
             } else {
                 if (action === ":alphanum" || action === ":edit") {
                     if (action === ":alphanum") {
