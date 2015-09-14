@@ -33,7 +33,7 @@
     }
 
     CalcError.prototype.toString = function() {
-        return "#" + this.code + "!";
+        return "#" + this.code + (this.code == "NAME" ? "?" : "!");
     };
 
     /* -----[ Context ]----- */

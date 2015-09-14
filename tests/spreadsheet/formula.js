@@ -658,7 +658,7 @@
         });
         ss.recalculate(function(){
             ss.expectEqual({
-                A2: "#NAME!"
+                A2: "#NAME?"
             });
         });
     });
