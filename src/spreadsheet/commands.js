@@ -315,21 +315,58 @@
         init: function(options) {
             Command.fn.init.call(this, options);
             this.axis = options.axis;
-            this.sheet = options.sheet;
         },
 
         undo: function() {
-            this.sheet.setAxisState(this._state);
+            var sheet = this.range().sheet();
+            sheet.setAxisState(this._state);
         },
 
         exec: function() {
-            this._state = this.sheet.getAxisState();
+            var sheet = this.range().sheet();
+            this._state = sheet.getAxisState();
 
             if (this.axis == "row") {
-                this.range()._sheet.axisManager().hideSelectedRows();
+                sheet.axisManager().hideSelectedRows();
             } else {
-                this.range()._sheet.axisManager().unhideSelectedColumns();
+                sheet.axisManager().unhideSelectedColumns();
             }
+        }
+    });
+
+    kendo.spreadsheet.DeleteRowCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this.axis = options.axis;
+        },
+
+        undo: function() {
+            var sheet = this.range().sheet();
+            sheet.setState(this._state);
+        },
+
+        exec: function() {
+            var sheet = this.range().sheet();
+            this._state = sheet.getState();
+            sheet.axisManager().deleteSelectedRows();
+        }
+    });
+
+    kendo.spreadsheet.DeleteColumnCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this.axis = options.axis;
+        },
+
+        undo: function() {
+            var sheet = this.range().sheet();
+            sheet.setState(this._state);
+        },
+
+        exec: function() {
+            var sheet = this.range().sheet();
+            this._state = sheet.getState();
+            sheet.axisManager().deleteSelectedColumns();
         }
     });
 

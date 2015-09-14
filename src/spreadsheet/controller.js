@@ -156,7 +156,7 @@
                         this.onPaste();
                         break;
                     case "hide-row":
-                        command = new kendo.spreadsheet.HideLineCommand({ axis: "row", sheet: this._workbook.activeSheet() });
+                        command = new kendo.spreadsheet.HideLineCommand({ axis: "row" });
                         this._workbook.execute(command);
                         break;
                     case "hide-column":
