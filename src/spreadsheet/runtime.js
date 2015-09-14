@@ -1309,7 +1309,7 @@
     defineFunction("isblank", function(val){
         if (val instanceof CellRef) {
             val = this.ss.getData(val);
-            return val == null || val === "";
+            return val == null;
         }
         return false;
     }).args([
@@ -1341,7 +1341,7 @@
     ]);
 
     defineFunction("isnontext", function(val){
-        return typeof val != "string" || val === "";
+        return typeof val != "string";
     }).args([
         [ "value", "*forced!" ]
     ]);

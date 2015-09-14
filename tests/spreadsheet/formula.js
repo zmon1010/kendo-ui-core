@@ -1101,13 +1101,13 @@
             equal(ss.$("C6"), false);
             equal(ss.$("D6"), true);
             equal(ss.$("E6"), true);
-            equal(ss.$("F6"), true);
+            equal(ss.$("F6"), false);
             equal(ss.$("G6"), false);
             equal(ss.$("H6"), true);
 
             // ISBLANK returns true if the argument is an empty cell
             equal(ss.$("A7"), false);
-            equal(ss.$("B7"), true);
+            equal(ss.$("B7"), false);
             equal(ss.$("C7"), true);
 
             // ISNUMBER returns true if the argument is numeric
