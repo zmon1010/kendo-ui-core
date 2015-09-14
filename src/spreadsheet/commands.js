@@ -336,7 +336,20 @@
         }
     });
 
-    var DeleteCommand = Command.extend({
+    kendo.spreadsheet.UnHideLineCommand = kendo.spreadsheet.HideLineCommand.extend({
+        exec: function() {
+            var sheet = this.range().sheet();
+            this._state = sheet.getAxisState();
+
+            if (this.axis == "row") {
+                sheet.axisManager().unhideSelectedRows();
+            } else {
+                sheet.axisManager().unhideSelectedColumns();
+            }
+        }
+    });
+
+    var DeleteCommand = kendo.spreadsheet.DeleteCommand = Command.extend({
         undo: function() {
             var sheet = this.range().sheet();
             sheet.setState(this._state);

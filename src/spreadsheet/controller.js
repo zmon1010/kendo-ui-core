@@ -153,17 +153,15 @@
                         break;
                     case "hide-row":
                         command = new kendo.spreadsheet.HideLineCommand({ axis: "row" });
-                        this._workbook.execute(command);
                         break;
                     case "hide-column":
                         command = new kendo.spreadsheet.HideLineCommand({ axis: "column" });
-                        this._workbook.execute(command);
                         break;
                     case "unhide-row":
-                        this.axisManager.unhideSelectedRows();
+                        command = new kendo.spreadsheet.UnHideLineCommand({ axis: "row" });
                         break;
                     case "unhide-column":
-                        this.axisManager.unhideSelectedColumns();
+                        command = new kendo.spreadsheet.UnHideLineCommand({ axis: "column" });
                         break;
                     case "delete-row":
                         this.axisManager.deleteSelectedRows();
@@ -171,6 +169,10 @@
                     case "delete-column":
                         this.axisManager.deleteSelectedColumns();
                         break;
+                }
+
+                if (command) {
+                    this._workbook.execute(command);
                 }
         },
 
