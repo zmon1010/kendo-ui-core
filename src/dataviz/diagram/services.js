@@ -1718,7 +1718,23 @@
             },
 
             options: {
-                editable: {
+                handles: {
+                    fill: {
+                        color: "#fff"
+                    },
+                    stroke: {
+                        color: "#282828"
+                    },
+                    height: 7,
+                    width: 7,
+                    hover: {
+                        fill: {
+                            color: "#282828"
+                        },
+                        stroke: {
+                            color: "#282828"
+                        }
+                    }
                 },
                 selectable: {
                     stroke: {
@@ -1742,12 +1758,19 @@
                 that.visual.append(that.rect);
             },
 
-            _createHandles: function() {
-                var editable = this.options.editable,
-                    handles, item, y, x;
+            _resizable: function() {
+                return this.options.editable && this.options.editable.resize !== false;
+            },
 
-                if (editable && editable.resize) {
-                    handles = editable.resize.handles;
+            _handleOptions: function() {
+                return (this.options.editable.resize || {}).handles || this.options.handles;
+            },
+
+            _createHandles: function() {
+                var handles, item, y, x;
+
+                if (this._resizable()) {
+                    handles = this._handleOptions();
                     for (x = -1; x <= 1; x++) {
                         for (y = -1; y <= 1; y++) {
                             if ((x !== 0) || (y !== 0)) { // (0, 0) element, (-1, -1) top-left, (+1, +1) bottom-right
@@ -1772,20 +1795,13 @@
 
             _hitTest: function (p) {
                 var tp = this.diagram.modelToLayer(p),
-                    editable = this.options.editable,
                     i, hit, handleBounds, handlesCount = this.map.length, handle;
 
                 if (this._angle) {
                     tp = tp.clone().rotate(this._bounds.center(), this._angle);
                 }
 
-                if (editable && editable.rotate && this._rotationThumbBounds) {
-                    if (this._rotationThumbBounds.contains(tp)) {
-                        return new Point(-1, -2);
-                    }
-                }
-
-                if (editable && editable.resize) {
+                if (this._resizable()) {
                     for (i = 0; i < handlesCount; i++) {
                         handle = this.map[i];
                         hit = new Point(handle.x, handle.y);
@@ -1803,9 +1819,8 @@
             },
 
             _getHandleBounds: function (p) {
-                var editable = this.options.editable;
-                if (editable && editable.resize) {
-                    var handles = editable.resize.handles || {},
+                if (this._resizable()) {
+                    var handles = this._handleOptions(),
                         w = handles.width,
                         h = handles.height,
                         r = new Rect(0, 0, w, h);
@@ -1830,7 +1845,7 @@
 
             _getCursor: function (point) {
                 var hit = this._hitTest(point);
-                if (hit && (hit.x >= -1) && (hit.x <= 1) && (hit.y >= -1) && (hit.y <= 1) && this.options.editable && this.options.editable.resize) {
+                if (hit && (hit.x >= -1) && (hit.x <= 1) && (hit.y >= -1) && (hit.y <= 1) && this._resizable()) {
                     var angle = this._angle;
                     if (angle) {
                         angle = 360 - angle;
@@ -1907,9 +1922,8 @@
             },
 
             _hover: function(value, element) {
-                var editable = this.options.editable;
-                if (editable && editable.resize) {
-                    var handleOptions = editable.resize.handles,
+                if (this._resizable()) {
+                    var handleOptions = this._handleOptions(),
                         hover = handleOptions.hover,
                         stroke = handleOptions.stroke,
                         fill = handleOptions.fill;
@@ -1940,20 +1954,12 @@
             },
 
             redraw: function () {
-                var that = this, i, handle,
-                    editable = that.options.editable,
-                    resize = editable.resize,
-                    rotate = editable.rotate,
-                    visibleHandles = editable && resize ? true : false,
-                    visibleThumb = editable && rotate ? true : false;
+                var i, handle,
+                    visibleHandles = this._handleOptions();
 
                 for (i = 0; i < this.map.length; i++) {
                     handle = this.map[i];
                     handle.visual.visible(visibleHandles);
-                }
-
-                if (that.rotationThumb) {
-                    that.rotationThumb.visible(visibleThumb);
                 }
             },
 

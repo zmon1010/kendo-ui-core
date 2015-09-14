@@ -1920,7 +1920,7 @@
                 var editable = this.options.editable;
                 if (editable) {
                     var tools = editable.tools;
-                    if (this._isEditable && tools.length === 0) {
+                    if (this._isEditable && tools !== false && (!tools || tools.length === 0)) {
                         tools = ["createShape", "undo", "redo", "rotateClockwise", "rotateAnticlockwise"];
                     }
 
@@ -2266,6 +2266,11 @@
                     themeOptions = (themes[themeName] || {}).diagram;
 
                 that.options = deepExtend({}, themeOptions, that.options);
+                if (that.options.editable === true) {
+                    deepExtend(that.options, {
+                        editable: (themeOptions || {}).editable
+                    });
+                }
             },
 
             _createShapes: function() {

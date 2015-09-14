@@ -75,6 +75,22 @@
         equal(diagram.options.theme, "default");
     });
 
+    test("applies theme editable options if editable is set to true", function () {
+        createDiagram({
+            theme: "default",
+            editable: true
+        });
+        equal(diagram.options.editable.resize.handles.stroke.color, "#282828");
+    });
+
+    test("does not override editable false", function () {
+        createDiagram({
+            theme: "default",
+            editable: false
+        });
+        equal(diagram.options.editable, false);
+    });
+
     test("inits elements", function () {
         createDiagram();
         var element = diagram.element;
