@@ -331,7 +331,7 @@
             if (this.axis == "row") {
                 sheet.axisManager().hideSelectedRows();
             } else {
-                sheet.axisManager().unhideSelectedColumns();
+                sheet.axisManager().hideSelectedColumns();
             }
         }
     });

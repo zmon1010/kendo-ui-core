@@ -156,7 +156,8 @@
                         this._workbook.execute(command);
                         break;
                     case "hide-column":
-                        this.axisManager.hideSelectedColumns();
+                        command = new kendo.spreadsheet.HideLineCommand({ axis: "column" });
+                        this._workbook.execute(command);
                         break;
                     case "unhide-row":
                         this.axisManager.unhideSelectedRows();
