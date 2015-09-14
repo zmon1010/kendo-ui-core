@@ -9,6 +9,8 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
+
     var Command = kendo.spreadsheet.Command = kendo.Class.extend({
         init: function(options) {
             this.options = options;
