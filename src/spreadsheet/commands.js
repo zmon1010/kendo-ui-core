@@ -67,7 +67,7 @@
                     // whether to accept the formula as text (prepend
                     // '), or re-edit.  ex.pos+1 will be the index of
                     // the character where the error occurred.
-                    alert(ex);
+                    window.alert(ex);
                     // store as string for now
                     this.range().input("'" + this._value);
                 } else {
@@ -341,7 +341,7 @@
             var sheet = this.range().sheet();
             sheet.setState(this._state);
         }
-    })
+    });
 
     kendo.spreadsheet.DeleteRowCommand = DeleteCommand.extend({
         exec: function() {
