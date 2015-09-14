@@ -390,6 +390,22 @@
         equal(sheet.range("A1").background(), "red");
     });
 
+    test("fromJSON loads borders", function() {
+        var border = { color: "#f00", size: "3px" };
+
+        sheet.fromJSON(singleCell({ borderBottom: border }));
+        deepEqual(sheet.range("A1").borderBottom(), border);
+
+        sheet.fromJSON(singleCell({ borderTop: border }));
+        deepEqual(sheet.range("A1").borderTop(), border);
+
+        sheet.fromJSON(singleCell({ borderLeft: border }));
+        deepEqual(sheet.range("A1").borderLeft(), border);
+
+        sheet.fromJSON(singleCell({ borderRight: border }));
+        deepEqual(sheet.range("A1").borderRight(), border);
+    });
+
     test("fromJSON loads cell formula", function() {
         sheet.fromJSON(singleCell({ formula: "SUM(B1,B2)" }));
         equal(sheet.range("A1").formula(), "=SUM(B1, B2)");
