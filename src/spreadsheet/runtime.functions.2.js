@@ -230,6 +230,99 @@
                  [ "assert", "$array2.length >= 2", "DIV/0" ] ] ]
     ]);
 
+    defineFunction("CONFIDENCE.T", confidence_t).args([
+        [ "alpha", [ "and", "number", [ "(between)", 0, 1 ] ] ],
+        [ "standard_dev", "number++" ],
+        [ "size", [ "and", "integer++",
+                    [ "assert", "$size != 1", "DIV/0" ] ] ]
+    ]);
+
+    defineFunction("CONFIDENCE.NORM", confidence_norm).args([
+        [ "alpha", [ "and", "number", [ "(between)", 0, 1 ] ] ],
+        [ "standard_dev", "number++" ],
+        [ "size", [ "and", "integer++" ] ]
+    ]);
+
+    defineFunction("GAUSS", gauss).args([
+        [ "z", "number" ]
+    ]);
+
+    defineFunction("PHI", phi).args([
+        [ "x", "number" ]
+    ]);
+
+    defineFunction("LOGNORM.DIST", lognorm_dist).args([
+        [ "x", "number++" ],
+        [ "mean", "number" ],
+        [ "standard_dev", "number++" ],
+        [ "cumulative", "logical" ]
+    ]);
+
+    defineFunction("LOGNORM.INV", lognorm_inv).args([
+        [ "probability", [ "and", "number", [ "(between)", 0, 1 ] ] ],
+        [ "mean", "number" ],
+        [ "standard_dev", "number++" ]
+    ]);
+
+    defineFunction("PROB", prob).args([
+        [ "x_range", [ "collect", "number", 1 ] ],
+        [ "prob_range", [ "collect", "number", 1 ] ],
+        [ "lower_limit", "number" ],
+        [ "upper_limit", [ "or", "number", [ "null", "$lower_limit" ] ] ],
+        [ "?", [ "and",
+                 [ "assert", "$prob_range.length == $x_range.length", "N/A" ] ] ]
+    ]);
+
+    defineFunction("SLOPE", slope).args([
+        [ "known_y", [ "collect", "number", 1 ] ],
+        [ "known_x", [ "collect", "number", 1 ] ],
+        [ "?", [ "and",
+                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
+                 [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ] ]
+    ]);
+
+    defineFunction("INTERCEPT", intercept).args([
+        [ "known_y", [ "collect", "number", 1 ] ],
+        [ "known_x", [ "collect", "number", 1 ] ],
+        [ "?", [ "and",
+                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
+                 [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ] ]
+    ]);
+
+    defineFunction("PEARSON", pearson).args([
+        [ "array1", [ "collect", "number", 1 ] ],
+        [ "array2", [ "collect", "number", 1 ] ],
+        [ "?", [ "and",
+                 [ "assert", "$array2.length == $array1.length", "N/A" ],
+                 [ "assert", "$array2.length > 0 && $array1.length > 0", "N/A" ] ] ]
+    ]);
+
+    defineFunction("RSQ", rsq).args([
+        [ "known_y", [ "collect", "number", 1 ] ],
+        [ "known_x", [ "collect", "number", 1 ] ],
+        [ "?", [ "and",
+                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
+                 [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ],
+                 [ "assert", "$known_x.length != 1 && $known_y.length != 1", "N/A" ] ] ]
+    ]);
+
+    defineFunction("STEYX", steyx).args([
+        [ "known_y", [ "collect", "number", 1 ] ],
+        [ "known_x", [ "collect", "number", 1 ] ],
+        [ "?", [ "and",
+                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
+                 [ "assert", "$known_x.length >= 3 && $known_y.length >= 3", "DIV/0" ] ] ]
+    ]);
+
+    defineFunction("FORECAST", forecast).args([
+        [ "x", "number" ],
+        [ "known_y", [ "collect", "number", 1 ] ],
+        [ "known_x", [ "collect", "number", 1 ] ],
+        [ "?", [ "and",
+                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
+                 [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ] ]
+    ]);
+
     /* -----[ definitions ]----- */
 
     var MAX_IT = 300,     // Maximum allowed number of iterations
@@ -681,6 +774,123 @@
             t_st = f_abs(m1-m2)*Math.sqrt(df*n1*n2/((n1+n2)*((n1-1)*v1+(n2-1)*v2)));
             return tail == 1 ? Tdist_right(t_st, df) : Tdist_2tail(t_st, df);
         }
+    }
+
+    function confidence_t(alpha, stddev, size) { // CONFIDENCE.T(alpha,standard_dev,size)
+        return -Tdist_inv(alpha/2, size-1)*stddev/Math.sqrt(size);
+    }
+
+    function confidence_norm(alpha, stddev, size) { // CONFIDENCE.NORM(alpha,standard_dev,size)
+        return -NORM_S_INV(alpha/2)*stddev/Math.sqrt(size);
+    }
+
+    function gauss(z) { // GAUSS(z)
+        return NORM_S_DIST(z, true) - 0.5;
+    }
+
+    function phi(x) { // PHI(x)
+        return NORM_S_DIST(x);
+    }
+
+    function lognorm_dist(x, m, s, cumulative) { // LOGNORM.DIST(x,mean,standard_dev,cumulative)
+        if (cumulative) {
+            return 0.5 + 0.5*ERF((Math.log(x)-m)/(s*Math.sqrt(2)));
+        }
+        var t = Math.log(x)-m;
+        return Math.exp(-t*t/(2*s*s))/(x*s*Math.sqrt(2*Math.PI));
+    }
+
+    function lognorm_inv(p, m, s) { //LOGNORM.INV(probability, mean, standard_dev)
+        return Math.exp(NORM_INV(p, m, s));
+    }
+
+    function prob(x_, p_, lw, up) { //PROB(x_range, prob_range, [lower_limit], [upper_limit])
+        var n = x_.length;
+        var s = 0, i;
+        for (i = 0; i < n; i++) {
+            if (p_[i] <= 0 || p_[i] > 1) {
+                throw new CalcError("NUM");
+            }
+            s += p_[i];
+        }
+        if (s != 1) {
+            throw new CalcError("NUM");
+        }
+        var res = 0;
+        for (i = 0; i < n; i++) {
+            var x = x_[i];
+            if (x >= lw && x <= up) {
+                res += p_[i];
+            }
+        }
+        return res;
+    }
+
+    function slope(y_, x_) { // SLOPE(known_y's, known_x's)
+        var mx = _mean(x_), my = _mean(y_), b1 = 0, b2 = 0;
+        for (var i = 0, n = y_.length; i < n; i++) {
+            var t = x_[i] - mx;
+            b1 += t*(y_[i] - my);
+            b2 += t*t;
+        }
+        return b1/b2;
+    }
+
+    function intercept(y_, x_) { // INTERCEPT(known_y's, known_x's)
+        var mx = _mean(x_), my = _mean(y_);
+        // return my - mx*slope(y_, x_);  //but repeating the calls for _mean()
+        var b1 = 0, b2 = 0;
+        for (var i = 0, n = y_.length; i < n; i++) {
+            var t = x_[i] - mx;
+            b1 += t*(y_[i] - my);
+            b2 += t*t;
+        }
+        return my - b1*mx/b2;
+    }
+
+    function pearson(x_, y_) { // PEARSON(array1, array2)
+        var mx = _mean(x_), my = _mean(y_);
+        var s1 = 0, s2 = 0, s3 = 0;
+        for(var i = 0, n = x_.length; i < n; i++) {
+            var t1 = x_[i] - mx, t2 = y_[i] - my;
+            s1 += t1*t2;
+            s2 += t1*t1;
+            s3 += t2*t2;
+        }
+        return s1/Math.sqrt(s2*s3);
+    }
+
+    function rsq(x_, y_) { // RSQ(known_y's,known_x's)
+        var r = pearson(x_, y_);
+        return r*r;
+    }
+
+    function steyx(y_, x_) { //STEYX(known_y's, known_x's)
+        var n = x_.length;
+        var mx = _mean(x_), my = _mean(y_);
+        var s1 = 0, s2 = 0, s3 = 0;
+        for (var i = 0; i < n; i++) {
+            var t1 = x_[i] - mx, t2 = y_[i] - my;
+            s1 += t2*t2;
+            s2 += t1*t2;
+            s3 += t1*t1;
+        }
+        return Math.sqrt((s1 - s2*s2/s3)/(n-2));
+    }
+
+    function forecast(x, y_, x_) { //FORECAST(x, known_y's, known_x's)
+        var mx = _mean(x_), my = _mean(y_);
+        var s1 = 0, s2 = 0;
+        for (var i = 0, n = x_.length; i < n; i++) {
+            var t1 = x_[i] - mx, t2 = y_[i] - my;
+            s1 += t1*t2;
+            s2 += t1*t1;
+        }
+        if (s2 === 0) {
+            throw new CalcError("N/A");
+        }
+        var b = s1/s2, a = my - b*mx;
+        return a + b*x;
     }
 
     /*

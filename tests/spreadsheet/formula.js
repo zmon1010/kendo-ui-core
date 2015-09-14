@@ -1853,4 +1853,69 @@
         });
     });
 
+    test("CONFIDENCE.*", function(){
+        calcTest({
+            "=CONFIDENCE.T(0.05, 1, 50)": 0.284196855,
+            "=CONFIDENCE.NORM(0.05, 2.5, 50)": 0.692952,
+        });
+    });
+
+    test("GAUSS, PHI", function(){
+        calcTest({
+            "=GAUSS(2)": 0.47725,
+            "=PHI(0.75)": 0.301137432,
+        });
+    });
+
+    test("LOGNORM.*", function(){
+        calcTest({
+            "=LOGNORM.DIST(4, 3.5, 1.2, false)": 0.0176176,
+            "=LOGNORM.DIST(4, 3.5, 1.2, true)": 0.0390836,
+            "=LOGNORM.INV(0.039084, 3.5, 1.2)": 4.0000252
+        });
+    });
+
+    test("PROB", function(){
+        calcTest({
+            "=prob({0,1,2,3}, {0.2,0.3,0.1,0.4}, 1, 3)": 0.8,
+            "=prob({0,1,2,3}, {0.2,0.3,0.1,0.4}, 2)": 0.1
+        });
+    });
+
+    test("SLOPE", function(){
+        calcTest({
+            "=slope({11.4, 17.3, 21.3, 25.9, 40.1}, {23.2, 25.8, 29.9, 33.5, 42.7})": 1.417959936
+        });
+    });
+
+    test("INTERCEPT", function(){
+        calcTest({
+            "=intercept({2,3,9,1,8}, {6,5,11,7,5})": 0.0483871
+        });
+    });
+
+    test("PEARSON", function(){
+        calcTest({
+            "=pearson({9,7,5,3,1}, {10,6,1,5,3})": 0.699379
+        });
+    });
+
+    test("RSQ", function(){
+        calcTest({
+            "=rsq({2,3,9,1,8,7,5}, {6,5,11,7,5,4,4})": 0.05795
+        });
+    });
+
+    test("STEYX", function(){
+        calcTest({
+            "=steyx({2,3,9,1,8,7,5}, {6,5,11,7,5,4,4})": 3.305719
+        });
+    });
+
+    test("FORECAST", function(){
+        calcTest({
+            "=forecast(30, {6,7,9,15,21}, {20,28,31,38,40})": 10.607253
+        });
+    });
+
 })();
