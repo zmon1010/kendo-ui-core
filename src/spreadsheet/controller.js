@@ -136,7 +136,9 @@
             // this is necessary for Windows to catch prevent context menu correctly
             this.cellContextMenu.element.add(this.rowHeaderContextMenu.element).add(this.colHeaderContextMenu.element).on("contextmenu", false);
 
-            this.quickAccessToolBar.on("click", ".k-button", this.onQuickAccessToolBarClick.bind(this));
+            if (this.quickAccessToolBar) {
+                this.quickAccessToolBar.on("click", ".k-button", this.onQuickAccessToolBarClick.bind(this));
+            }
             $(this.view.container).on("click", ".k-link.k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
         },
 

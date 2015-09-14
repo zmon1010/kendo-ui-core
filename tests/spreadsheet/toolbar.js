@@ -28,19 +28,17 @@
     test("renders all toolbars if option is set", function() {
         createSpreadsheet({ toolbar: true });
 
-        equal(element.find(".k-toolbar").length, 4); //home, insert, formulas, data toolbars
+        equal(element.find(".k-toolbar").length, 3); //home, insert, data toolbars
     });
 
     test("stores reference to each toolbar", function() {
         createSpreadsheet();
         var homeToolBar = spreadsheet._view.toolbars["home"];
         var insertToolBar = spreadsheet._view.toolbars["insert"];
-        var formulasToolBar = spreadsheet._view.toolbars["formulas"];
         var dataToolBar = spreadsheet._view.toolbars["data"];
 
         ok(homeToolBar instanceof kendo.ui.ToolBar);
         ok(insertToolBar instanceof kendo.ui.ToolBar);
-        ok(formulasToolBar instanceof kendo.ui.ToolBar);
         ok(dataToolBar instanceof kendo.ui.ToolBar);
     });
 
@@ -75,7 +73,7 @@
             }
         });
 
-        equal(element.find(".k-toolbar").length, 3);
+        equal(element.find(".k-toolbar").length, 2);
 
         var homeToolBar = spreadsheet._view.toolbars["home"];
         ok(homeToolBar.options.items.length, 1);

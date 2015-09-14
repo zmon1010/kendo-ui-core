@@ -89,7 +89,7 @@
 
     test("renders quickAccessToolBar", function() {
         ok($(".k-spreadsheet-quick-access-toolbar").length);
-        equal($(".k-spreadsheet-quick-access-toolbar").children().length, 3);
+        equal($(".k-spreadsheet-quick-access-toolbar").children().length, 2);
     });
 
     test("shifts tabstrip tabGroup elements", function() {
