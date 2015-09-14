@@ -336,7 +336,7 @@
         }
     });
 
-    var DeleteCommand = kendo.spreadsheet.DeleteCommand = Command.extend({
+    var DeleteCommand = Command.extend({
         undo: function() {
             var sheet = this.range().sheet();
             sheet.setState(this._state);
@@ -356,6 +356,52 @@
             var sheet = this.range().sheet();
             this._state = sheet.getState();
             sheet.axisManager().deleteSelectedColumns();
+        }
+    });
+
+    /*
+     *
+        addColumnLeft:         { type: "button", command: "AddColumnCommand",    value: "left",  iconClass: "add-column-left"  },
+        addColumnRight:        { type: "button", command: "AddColumnCommand",    value: "right", iconClass: "add-column-right" },
+        addRowBelow:           { type: "button", command: "AddRowCommand",       value: "below", iconClass: "add-row-below"    },
+        addRowAbove:           { type: "button", command: "AddRowCommand",       value: "above", iconClass: "add-row-above"    },
+    *
+    */
+
+    var AddCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._value = options.value;
+        },
+        undo: function() {
+            var sheet = this.range().sheet();
+            sheet.setState(this._state);
+        }
+    });
+
+    kendo.spreadsheet.AddColumnCommand = AddCommand.extend({
+        exec: function() {
+            var sheet = this.range().sheet();
+            this._state = sheet.getState();
+
+            if (this._value === "left") {
+                sheet.axisManager().addColumnLeft();
+            } else {
+                sheet.axisManager().addColumnRight();
+            }
+        }
+    });
+
+    kendo.spreadsheet.AddRowCommand = AddCommand.extend({
+        exec: function() {
+            var sheet = this.range().sheet();
+            this._state = sheet.getState();
+
+            if (this._value === "above") {
+                sheet.axisManager().addRowAbove();
+            } else {
+                sheet.axisManager().addRowBelow();
+            }
         }
     });
 

@@ -82,6 +82,30 @@
             this.forEachSelectedRow(function(sheet, index, i) {
                 sheet.unhideRow(index);
             });
+        },
+
+        addColumnLeft: function() {
+            this.forEachSelectedColumn(function(sheet, index, i) {
+                sheet.insertColumn(index - i);
+            });
+        },
+
+        addColumnRight: function() {
+            this.forEachSelectedColumn(function(sheet, index, i) {
+                sheet.insertColumn(index + (i+1));
+            });
+        },
+
+        addRowAbove: function() {
+            this.forEachSelectedRow(function(sheet, index, i) {
+                sheet.insertRow(index - i);
+            });
+        },
+
+        addRowBelow: function() {
+            this.forEachSelectedRow(function(sheet, index, i) {
+                sheet.insertRow(index + (i+1));
+            });
         }
     });
 
