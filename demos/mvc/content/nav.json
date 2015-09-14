@@ -6690,7 +6690,8 @@
         },
         "meta": {
             "kendo-ui": "This demo illustrates how Angular 2 can be integrated with the Kendo UI framework"
-        }
+        },
+        "new": "true"
       }
     ],
     "category": "Framework"
