@@ -3378,8 +3378,7 @@
         "meta": {
             "kendo-ui": "In this demo you will find more about the Tag mode feature of Kendo UI MultiSelect widget.",
             "aspnet-mvc": "In this demo you will find more about the Tag mode feature of ASP.NET MVC MultiSelect control."
-        },
-        "new": "true"
+        }
       },
       {
         "text": "RTL support",
@@ -5170,7 +5169,6 @@
       {
         "text": "Tab position",
         "url": "tabstrip/tab-position",
-		"new": "true",
         "title": {
             "kendo-ui": "Kendo UI jQuery TabStrip tab position demo",
             "aspnet-mvc": "ASP.NET MVC TabStrip tab position demo"
@@ -5183,7 +5181,6 @@
       {
         "text": "Scrollable tabs",
         "url": "tabstrip/scrollable-tabs",
-		"new": "true",
         "title": {
             "kendo-ui": "Kendo UI jQuery TabStrip scrollable tabs demo",
             "aspnet-mvc": "ASP.NET MVC TabStrip scrollable tabs demo"
@@ -5712,7 +5709,6 @@
       },
       {
         "text": "Drag & drop",
-        "new": "true",
         "url": "treelist/dragdrop",
         "title": {
             "kendo-ui": "Kendo UI TreeList widget | Kendo UI Web demo"
@@ -6775,7 +6771,6 @@
       {
         "text": "Source and template binding",
         "url": "mvvm/source",
-        "new": "true",
         "title": {
             "kendo-ui": "Source and template binding demo | Kendo UI MVVM"
         },
@@ -6796,7 +6791,6 @@
       {
         "text": "CSS class binding",
         "url": "mvvm/css",
-        "new": "true",
         "title": {
             "kendo-ui": "CSS class binding | Kendo UI MVVM"
         },
