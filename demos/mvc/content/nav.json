@@ -6675,6 +6675,22 @@
         "meta": {
             "kendo-ui": "This demo illustrates how Twitter Bootstrap can be integrated with the Kendo UI framework into a responsive web application."
         }
+      },
+      {
+        "text": "Kendo UI + Angular2",
+        "url": "integration/angular2",
+        "title": {
+            "kendo-ui": "Integrating Angular 2 with Kendo UI (experimental)"
+        },
+        "sources": {
+            "kendo-ui": [{
+                "name": "angular2-app.ts",
+                "url": "~/content/web/integration/angular2-app.ts"
+            }]
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates how Angular 2 can be integrated with the Kendo UI framework"
+        }
       }
     ],
     "category": "Framework"
