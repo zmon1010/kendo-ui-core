@@ -334,17 +334,14 @@
         }
     });
 
-    kendo.spreadsheet.DeleteRowCommand = Command.extend({
-        init: function(options) {
-            Command.fn.init.call(this, options);
-            this.axis = options.axis;
-        },
-
+    var DeleteCommand = kendo.spreadsheet.DeleteCommand = Command.extend({
         undo: function() {
             var sheet = this.range().sheet();
             sheet.setState(this._state);
-        },
+        }
+    })
 
+    kendo.spreadsheet.DeleteRowCommand = DeleteCommand.extend({
         exec: function() {
             var sheet = this.range().sheet();
             this._state = sheet.getState();
@@ -352,17 +349,7 @@
         }
     });
 
-    kendo.spreadsheet.DeleteColumnCommand = Command.extend({
-        init: function(options) {
-            Command.fn.init.call(this, options);
-            this.axis = options.axis;
-        },
-
-        undo: function() {
-            var sheet = this.range().sheet();
-            sheet.setState(this._state);
-        },
-
+    kendo.spreadsheet.DeleteColumnCommand = DeleteCommand.extend({
         exec: function() {
             var sheet = this.range().sheet();
             this._state = sheet.getState();
