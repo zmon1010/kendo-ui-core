@@ -590,10 +590,10 @@
             });
             ddl.setDataSource([
                 { format: null, name: "Automatic" },
-                { format: "?.00", name: "Number", sample: "1,499.99" },
-                { format: "?.00%", name: "Percent", sample: "14.50%" },
+                { format: "0", name: "Number", sample: "1,499.99" },
+                { format: "0.00%", name: "Percent", sample: "14.50%" },
                 { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: "Financial", sample: "(1,000.12)" },
-                { format: "$?", name: "Currency", sample: "$1,499.99" },
+                { format: "$#,##0.00;[Red]$#,##0.00", name: "Currency", sample: "$1,499.99" },
                 { format: "m/d/yyyy", name: "Date", sample: "4/21/2012" },
                 { format: "h:mm:ss AM/PM", name: "Time", sample: "5:49:00 PM" },
                 { format: "m/d/yyyy h:mm", name: "Date time", sample: "4/21/2012 5:49:00" },
