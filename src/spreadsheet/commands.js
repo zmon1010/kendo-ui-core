@@ -374,15 +374,6 @@
         }
     });
 
-    /*
-     *
-        addColumnLeft:         { type: "button", command: "AddColumnCommand",    value: "left",  iconClass: "add-column-left"  },
-        addColumnRight:        { type: "button", command: "AddColumnCommand",    value: "right", iconClass: "add-column-right" },
-        addRowBelow:           { type: "button", command: "AddRowCommand",       value: "below", iconClass: "add-row-below"    },
-        addRowAbove:           { type: "button", command: "AddRowCommand",       value: "above", iconClass: "add-row-above"    },
-    *
-    */
-
     var AddCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
