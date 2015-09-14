@@ -41,7 +41,7 @@ var MyAppComponent = (function () {
             selector: 'my-app'
         }),
         angular2_1.View({
-            template: "\n    <form [ng-form-model]='capForm'>\n\n    Color:<br />\n    <kendo-dropdownlist [options]=\"dropDownListOptions\" data-text-field=\"text\" data-value-field=\"value\" ng-control=\"color\"></kendo-dropdownlist>\n\n    <br /><br />\n\n    Amount:<br />\n    <kendo-numerictextbox min=\"0\" max=\"10\" format=\"n0\" ng-control=\"amount\"></kendo-numerictextbox>\n\n    <button (click)=\"preSet()\">Help me choose</button>\n    <hr />\n    <pre>\n        {{ formState() }}\n    </pre>\n    </form>\n    ",
+            template: "\n    <form [ng-form-model]='capForm'>\n    <div id=\"cap\"></div>\n    <p>\n        <pre class=\"order-status\">{{ formState() }}</pre>\n    </p>\n\n    <h4 style=\"margin-top: 2em;\">Change Color</h4>\n    <kendo-dropdownlist [options]=\"dropDownListOptions\" data-text-field=\"text\" data-value-field=\"value\" ng-control=\"color\" style=\"text-align: left;\"></kendo-dropdownlist>\n\n    <h4 style=\"margin-top: 2em;\">Change Amount</h4>\n    <kendo-numerictextbox min=\"0\" max=\"10\" format=\"n0\" ng-control=\"amount\"></kendo-numerictextbox>\n\n    <h4 style=\"margin-top: 2em;\">Or just</h4>\n    <button class=\"k-button k-primary\" (click)=\"preSet()\">Help me choose</button>\n    \n    </form>\n    ",
             directives: [angular2_1.FORM_DIRECTIVES, angular2_2.KendoValueAccessor]
         }), 
         __metadata('design:paramtypes', [])
@@ -49,18 +49,3 @@ var MyAppComponent = (function () {
     return MyAppComponent;
 })();
 angular2_1.bootstrap(MyAppComponent);
-/*
-    <button (click)="log()">log</button>
-    <button (click)="setValue()">set value</button>
-    <button (click)="setFormat()">set format</button>
-    <div>
-        <label>age: {{ data.age }} {{ myForm.controls.age.value }}</label>
-    </div>
-    <fieldset>
-        <legend>Web Component</legend>
-        <label>[control] and [value]</label><kendo-numerictextbox [options]="numericOptions" ng-control="age" (spin)="log()" [(ng-model)]='data.age'></kendo-numerictextbox>
-        <kendo-slider [options]="sliderOptions" ng-control="age" [(ng-model)]='data.age'></kendo-slider>
-        </div>
-    </fieldset>
-    <button (click)="onLogin()">Login</button>
-*/

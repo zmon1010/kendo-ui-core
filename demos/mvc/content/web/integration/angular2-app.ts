@@ -10,20 +10,20 @@ import {KendoValueAccessor} from 'kendo/angular2';
 @View({
     template: `
     <form [ng-form-model]='capForm'>
+    <div id="cap"></div>
+    <p>
+        <pre class="order-status">{{ formState() }}</pre>
+    </p>
 
-    Color:<br />
-    <kendo-dropdownlist [options]="dropDownListOptions" data-text-field="text" data-value-field="value" ng-control="color"></kendo-dropdownlist>
+    <h4 style="margin-top: 2em;">Change Color</h4>
+    <kendo-dropdownlist [options]="dropDownListOptions" data-text-field="text" data-value-field="value" ng-control="color" style="text-align: left;"></kendo-dropdownlist>
 
-    <br /><br />
-
-    Amount:<br />
+    <h4 style="margin-top: 2em;">Change Amount</h4>
     <kendo-numerictextbox min="0" max="10" format="n0" ng-control="amount"></kendo-numerictextbox>
 
-    <button (click)="preSet()">Help me choose</button>
-    <hr />
-    <pre>
-        {{ formState() }}
-    </pre>
+    <h4 style="margin-top: 2em;">Or just</h4>
+    <button class="k-button k-primary" (click)="preSet()">Help me choose</button>
+    
     </form>
     `,
     directives: [FORM_DIRECTIVES, KendoValueAccessor]
