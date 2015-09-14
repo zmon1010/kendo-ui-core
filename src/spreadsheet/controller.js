@@ -164,10 +164,10 @@
                         command = new kendo.spreadsheet.UnHideLineCommand({ axis: "column" });
                         break;
                     case "delete-row":
-                        this.axisManager.deleteSelectedRows();
+                        command = new kendo.spreadsheet.DeleteRowCommand({});
                         break;
                     case "delete-column":
-                        this.axisManager.deleteSelectedColumns();
+                        command = new kendo.spreadsheet.DeleteColumnCommand({});
                         break;
                 }
 
