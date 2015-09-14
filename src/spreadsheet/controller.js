@@ -98,10 +98,6 @@
     CLIPBOARD_EVENTS[SHIFT_ACTION_KEYS] = "onShiftAction";
     CLIPBOARD_EVENTS[ENTRY_ACTION_KEYS] = "onEntryAction";
 
-    function empty() {
-        return "";
-    }
-
     var Controller = kendo.Class.extend({
         init: function(view, workbook) {
             this.view = view;
@@ -316,7 +312,7 @@
             event.preventDefault();
         },
 
-        onMouseMove: function(event, action) {
+        onMouseMove: function(event) {
             var sheet = this._workbook.activeSheet();
 
             if (sheet.resizingInProgress() || sheet.selectionInProgress()) {
@@ -331,7 +327,7 @@
             }
         },
 
-        onMouseDown: function(event, action) {
+        onMouseDown: function(event) {
             var object = this.objectAt(event);
 
             this.editor.deactivate();
@@ -352,7 +348,7 @@
             this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
         },
 
-        onContextMenu: function(event, action) {
+        onContextMenu: function(event) {
             var sheet = this._workbook.activeSheet();
 
             if (sheet.resizingInProgress()) {
@@ -366,7 +362,6 @@
             this.rowHeaderContextMenu.close();
 
             var menu;
-            var ref;
 
             var location = { pageX: event.pageX, pageY: event.pageY };
 
@@ -411,7 +406,7 @@
             return !resizeHandle || type === "outside" || type === "topcorner" || ref.col < resizeHandle.col || ref.row < resizeHandle.row;
         },
 
-        onMouseDrag: function(event, action) {
+        onMouseDrag: function(event) {
             if (this._selectionMode === "sheet") {
                 return;
             }
@@ -457,7 +452,7 @@
             event.preventDefault();
         },
 
-        onMouseUp: function(event, action) {
+        onMouseUp: function() {
             var sheet = this._workbook.activeSheet();
             sheet.completeResizing();
 
@@ -470,7 +465,7 @@
             this.editor.focus();
         },
 
-        onCut: function(event, action) {
+        onCut: function() {
             var command = new kendo.spreadsheet.CutCommand({ workbook: this.view._workbook });
             this.view._workbook.execute(command);
         },
@@ -511,7 +506,7 @@
                     document.execCommand('paste');
                     return;
                 } else {
-                    alert("todo: add dialog \n use ctrl+v instead");
+                    window.alert("todo: add dialog \n use ctrl+v instead");
                     return;
                 }
             }
@@ -522,7 +517,7 @@
 
         },
 
-        onCopy: function(event, action) {
+        onCopy: function() {
             var command = new kendo.spreadsheet.CopyCommand({ workbook: this.view._workbook });
             this.view._workbook.execute(command);
         },
@@ -582,7 +577,6 @@
             var boundaries = this.originFrame._grid;
             var scroller = this.view.scroller;
             var scrollStep = 8;
-            var object;
 
             var scrollLeft = scroller.scrollLeft;
             var scrollTop = scroller.scrollTop;
