@@ -20,9 +20,6 @@
             box-sizing: border-box;
             overflow: hidden;
             height: 20px;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            ms-user-select: none;
             user-select: none;
         }
 
@@ -308,3 +305,51 @@
     border: none;
     border-radius: 0;
 }
+
+
+.k-spreadsheet .k-tabstrip > .k-content {
+    padding: 0;
+}
+
+.k-spreadsheet-filter-menu dl {
+    margin: 0;
+}
+
+.k-spreadsheet-filter-menu dt {
+    padding: 0.5em 1.1em 0.4em;
+    line-height: 1.34em;
+}
+
+.k-spreadsheet-value-treeview-wrapper {
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.k-resize-handle,
+.k-resize-hint {
+    position: absolute;
+}
+
+.k-resize-hint-handle {
+    width: 100%;
+    height: 20px;
+}
+
+.k-resize-hint-marker {
+    width: 2px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.k-resize-hint-vertical .k-resize-hint-handle {
+    height: 100%;
+    width: 20px;
+    float: left;
+}
+
+.k-resize-hint-vertical .k-resize-hint-marker {
+    height: 2px;
+    width: 100%;
+}
+
