@@ -3,6 +3,7 @@
     var Sheet = kendo.spreadsheet.Sheet;
     var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
+    var sheet;
 
     module("merged cells", {
         setup: function() {
@@ -10,7 +11,6 @@
         }
     });
 
-    var DUMMY_VIEW = { ref: rangeRef(0, 0, 100, 100), top: 0, left: 0 };
 
     function createPane(row, column, rowCount, columnCount) {
         return new Pane(sheet, sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
@@ -24,6 +24,8 @@
 
         return ref;
     }
+
+    var DUMMY_VIEW = { ref: rangeRef(0, 0, 100, 100), top: 0, left: 0 };
 
     test("pane renders merged cell", function() {
         var pane = createPane(0, 0);
@@ -39,7 +41,7 @@
         equal(table.attr.style.width, 3 * 10 + "px");
         equal(table.attr.className, "k-spreadsheet-merged-cell");
         var cell = table.children[1].children[0].children[0];
-        equal(cell.children[0].nodeValue, "foo")
+        equal(cell.children[0].nodeValue, "foo");
     });
 
     test("pane renders multiple merged cell", function() {
