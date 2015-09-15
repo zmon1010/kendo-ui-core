@@ -8,6 +8,7 @@ using Telerik.Windows.Documents.Spreadsheet.FormatProviders;
 using Telerik.Windows.Documents.Spreadsheet.FormatProviders.Contexts;
 using Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.Xlsx;
 using Telerik.Windows.Documents.Spreadsheet.Model;
+using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
 using Telerik.Windows.Documents.Spreadsheet.Utilities;
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 using DocumentWorksheet = Telerik.Windows.Documents.Spreadsheet.Model.Worksheet;
@@ -36,22 +37,20 @@ namespace Telerik.Web.Spreadsheet
                 {
                     continue;
                 }
-
-                var columns = documentWorksheet.Columns;
-                for (var columnIndex = 0; columnIndex < columns.Count; columnIndex++)
+                
+                var ranges = documentWorksheet.Columns.PropertyBag.GetPropertyValueCollection(ColumnsPropertyBag.WidthProperty).GetNonDefaultRanges();
+                foreach (var range in ranges)
                 {
-                    var width = columns[columnIndex].GetWidth();
-
-                    if (width.Value.IsCustom)
+                    var width = range.Value.Value;
+                    for (var i = range.Start; i <= range.End; i++)
                     {
                         sheet.Columns.Add(new Column
                         {
-                            Index = columnIndex,
-                            Width = width.Value.Value
+                            Index = (int)i,
+                            Width = width
                         });
                     }
-                }
-                
+                }             
 
                 for (int rowIndex = usedCellRange.FromIndex.RowIndex; rowIndex <= usedCellRange.ToIndex.RowIndex; rowIndex++)
                 {
@@ -63,10 +62,10 @@ namespace Telerik.Web.Spreadsheet
 
                     var cells = GetCellsToExport(documentWorksheet, rowUsedRange, rowIndex).ToList();
                     if (cells.Count > 0)
-                    {                        
+                    {
                         var dtoRow = new Row
                         {
-                            Index = rowIndex,                            
+                            Index = rowIndex,
                             Cells = cells
                         };
 
@@ -117,7 +116,7 @@ namespace Telerik.Web.Spreadsheet
                     var cellValue = selection.GetValue().Value;
                     var formatting = selection.GetFormat().Value;
                     string formula = null;
-                    
+
                     FormulaCellValue formulaCellValue = cellValue as FormulaCellValue;
                     if (formulaCellValue != null)
                     {
@@ -162,7 +161,7 @@ namespace Telerik.Web.Spreadsheet
                             Underline = selection.GetUnderline().Value != UnderlineType.None,
                             VerticalAlign = selection.GetVerticalAlignment().Value.ToString(),
                             FontSize = selection.GetFontSize().Value.ToString() + "px",
-                            FontFamily = selection.GetFontFamily().Value.ToString(),                            
+                            FontFamily = selection.GetFontFamily().Value.ToString(),
                             BorderBottom = ConvertToBorder(selection.GetBorders().Bottom),
                             BorderTop = ConvertToBorder(selection.GetBorders().Top),
                             BorderLeft = ConvertToBorder(selection.GetBorders().Left),
