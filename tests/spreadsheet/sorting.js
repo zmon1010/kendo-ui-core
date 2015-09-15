@@ -45,6 +45,21 @@
         equal(values[2], 3);
     });
 
+    test("sorting a range by arbitrary column changes the order of the rows in the sheet", function() {
+        sheet.range("A1:B3")
+             .values([
+              [ 4, 3 ] ,
+              [ 9, 2 ],
+              [ 3, 1 ]
+            ])
+        .sort(1);
+
+        var values = sheet.range("A1:A3").values();
+        equal(values[0], 3);
+        equal(values[1], 9);
+        equal(values[2], 4);
+    });
+
     test("sort by spec object", function() {
         sheet.range("A1:B3")
              .values([
