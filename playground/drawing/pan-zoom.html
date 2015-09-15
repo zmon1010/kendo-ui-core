@@ -5,14 +5,14 @@
     <link type="text/css" href="../../dist/styles/web/kendo.silver.css" rel="stylesheet"/>
     <link type="text/css" href="../../dist/styles/dataviz/kendo.dataviz.css" rel="stylesheet"/>
     <link type="text/css" href="../../dist/styles/dataviz/kendo.dataviz.silver.css" rel="stylesheet"/>
-    
+
     <script src="../../src/jquery.js"></script>
     <script src="../../src/kendo.core.js"></script>
     <script src="../../src/kendo.color.js"></script>
-                
+
     <script src="../../src/kendo.data.js"></script>
     <script src="../../src/kendo.binder.js"></script>
-               
+
     <script src="../../src/kendo.popup.js"></script>
     <script src="../../src/kendo.userevents.js"></script>
     <script src="../../src/kendo.draganddrop.js"></script>
@@ -22,11 +22,11 @@
     <script src="../../src/kendo.numerictextbox.js"></script>
     <script src="../../src/kendo.list.js"></script>
     <script src="../../src/kendo.dropdownlist.js"></script>
-                
+
     <script src="../../src/util/main.js"></script>
     <script src="../../src/mixins/observers.js"></script>
     <script src="../../src/geometry/main.js"></script>
-    <script src="../../src/drawing/core.js"></script>         
+    <script src="../../src/drawing/core.js"></script>
     <script src="../../src/drawing/mixins.js"></script>
     <script src="../../src/drawing/text-metrics.js"></script>
     <script src="../../src/drawing/shapes.js"></script>
@@ -35,7 +35,7 @@
     <script src="../../src/drawing/svg.js"></script>
     <script src="../../src/drawing/canvas.js"></script>
     <script src="../../src/drawing/vml.js"></script>
-                
+
     <script src="../../src/kendo.dataviz.core.js"></script>
     <script src="../../src/kendo.dataviz.chart.js"></script>
     <script src="../../src/kendo.dataviz.sparkline.js"></script>
@@ -43,85 +43,236 @@
     <script src="../../src/kendo.dataviz.themes.js"></script>
 </head>
 <body>
-<div id="chart"></div>
+<div id="chart" style="height: 700px;"></div>
 <script>
 var draw = kendo.drawing;
 var geom = kendo.geometry;
- $("#chart").kendoChart({
+function getCursorPosition(e) {
+    var element = e.sender.element;
+    var offset = element.offset();
+    var x = e.originalEvent.x.location - offset.left;
+    var y = e.originalEvent.y.location - offset.top;
+    return new geom.Point(x, y);
+}
+
+var data = [];
+var categories = [];
+for (var idx = 0; idx < 20; idx++) {
+    data.push({
+        value: Math.floor(Math.random()* 100) + 1
+    });
+    categories.push(2000 + idx);
+}
+data[0] = 1;
+data[5] = -30;
+var lock = {
+    x: false,
+    y: false
+};
+ var stats = [
+                    { value: 30, date: new Date("2011/12/20") },
+                    { value: 50, date: new Date("2011/12/21") },
+                    { value: 45, date: new Date("2011/12/22") },
+                    { value: 40, date: new Date("2011/12/23") },
+                    { value: 35, date: new Date("2011/12/24") },
+                    { value: 40, date: new Date("2011/12/25") },
+                    { value: 42, date: new Date("2011/12/26") },
+                    { value: 40, date: new Date("2011/12/27") },
+                    { value: 35, date: new Date("2011/12/28") },
+                    { value: 43, date: new Date("2011/12/29") },
+                    { value: 38, date: new Date("2011/12/30") },
+                    { value: 30, date: new Date("2011/12/31") },
+                    { value: 48, date: new Date("2012/01/01") },
+                    { value: 50, date: new Date("2012/01/02") },
+                    { value: 55, date: new Date("2012/01/03") },
+                    { value: 35, date: new Date("2012/01/04") },
+                    { value: 30, date: new Date("2012/01/05") }
+                ];
+var snap = 5;
+kendo.dataviz.ui.Chart.fn.updateAxes  = function(pos, cursor) {
+    var plotArea = this._plotArea;
+    var diff = cursor[pos] - this._position[pos];
+    if (diff !== 0 && !lock[pos]) {
+        var redraw = false;
+        this._position[pos] = cursor[pos];
+        var axes = plotArea.axes;
+        for (var idx = 0; idx < axes.length; idx++) {
+            var axis = axes[idx];
+            if (pos == "x" && !axis.options.vertical || pos == "y" && axis.options.vertical) {
+
+                var newRange = axis.pan ? axis.pan(-diff) : axis.translateRange(-diff);
+
+                var panRange = axis.panRange();
+
+                if (newRange.min < panRange.min && panRange.min < axis.options.min) {
+                    newRange.min = panRange.min;
+                }
+
+                if (panRange.max < newRange.max && axis.options.max < panRange.max) {
+                    newRange.max = panRange.max;
+                }
+
+                if (newRange.min >= panRange.min && panRange.max >= newRange.max) {
+                    redraw = true;
+                    min = Math.max(newRange.min, panRange.min);
+                    max = Math.min(newRange.max, panRange.max);
+                    plotArea.updateAxisOptionsRange(axis, newRange.min, newRange.max);
+                }
+            }
+        }
+    }
+
+    return redraw;
+}
+
+
+
+	$("#chart").kendoChart({
         seriesDefaults: {
             type: "column"
         },
         render: function(e) {
-            this._selectionPath = new draw.Path().visible(false).close();
-            this.surface.draw(this._selectionPath);
+            this._marquee = $("<div class='k-marquee'><div class='k-marquee-color'></div></div>");
         },
         dragStart: function(e) {
-            this._selectionPath.visible(true);
-        },
-        drag: function(e) {
-            var offset = this.element.offset();
-            var x = e.originalEvent.x.startLocation - offset.left;
-            var y = e.originalEvent.y.startLocation - offset.top;
-            var width = e.originalEvent.x.location - x - offset.left;
-            var height = e.originalEvent.y.location - y -  offset.top;
-            this._selectionRect = new geom.Rect([x, y], [width, height]);
-            var newPath = draw.Path.fromRect(this._selectionRect);
-            this._selectionPath.segments.elements(newPath.segments.elements());           
-        },
-        dragEnd: function(e) {
-            this._selectionPath.visible(false);
-            var pane = this._plotArea.panes[0];
-            var chartContainer = pane.chartContainer;
-            var clipRect = chartContainer.clipBox.toRect();
-            var selectionRect = this._selectionRect;
-            
-            selectionRect.origin.translate(-clipRect.origin.x, -clipRect.origin.y);
-            var scaleX = clipRect.size.width / selectionRect.size.width;
-            var scaleY = clipRect.size.height / selectionRect.size.height;
-            var center = selectionRect.center();
-           
-            var transform = geom.transform().scale(scaleX, scaleY, center);
-            chartContainer.visual.children[0].transform(transform);
-            var axes = pane.axes;
-            var axis, vertical, range;
-            for (var idx = 0; idx < axes.length; idx++) {
-                axis = axes[idx];
-                vertical = axis.options.vertical;
-                range = axis.range();
+            //this._selectionPath.visible(true);
+            this._position = getCursorPosition(e);
+            if (e.originalEvent.event.shiftKey) {
+                this._marquee
+                    .appendTo(document.body)
+                    .css({
+                        left: e.originalEvent.x.client + 1,
+                        top: e.originalEvent.y.client + 1,
+                        width: 0,
+                        height: 0
+                    });
             }
         },
+
+        drag: function(e) {
+            if (e.originalEvent.event.shiftKey) {
+                var left = e.originalEvent.x.startLocation > e.originalEvent.x.location ? e.originalEvent.x.location : e.originalEvent.x.startLocation;
+                var top = e.originalEvent.y.startLocation > e.originalEvent.y.location ? e.originalEvent.y.location : e.originalEvent.y.startLocation;
+                var width = Math.abs(e.originalEvent.x.initialDelta);
+                var height = Math.abs(e.originalEvent.y.initialDelta);
+                if (lock.x || lock.y) {
+                    var element = e.sender.element;
+                    var offset = element.offset();
+                    var cursor = getCursorPosition(e);
+                    var panes = this._plotArea.panes;
+                    var pane;
+                    for (var idx = 0; idx < panes.length; idx++) {                                            
+                        if (panes[idx].box.containsPoint(cursor)) {
+                            pane = panes[idx];
+                            break;
+                        }
+                    }
+                    var clipbox = pane.clipBox();
+                    if (lock.x) {
+                        left =  clipbox.x1 + offset.left;
+                        width = clipbox.width();
+                    }
+                    if (lock.y) {
+                        top =  clipbox.y1 + offset.top;
+                        height = clipbox.height();
+                    }
+                }
+                
+                var position = {
+                        left: left,
+                        top: top,
+                        width: width,
+                        height: height
+                    };
+
+                this._marquee.css(position);
+            } else {
+                var cursor = getCursorPosition(e);
+               // if (cursor.distanceTo(this._position) > snap) {
+                    var plotArea = this._plotArea;
+                    var redrawX = this.updateAxes("x", cursor);
+                    var redrawY = this.updateAxes("y", cursor);
+
+                    if (redrawX || redrawY) {                     
+                        plotArea.redraw(plotArea.panes);                   
+                    }
+               // }
+            }
+        },
+
+        dragEnd: function(e) {
+            if (e.originalEvent.event.shiftKey) {
+                this._marquee.remove();
+                var cursor = getCursorPosition(e);
+                var plotArea = this._plotArea;
+                var axes = plotArea.axes;
+                for (var idx = 0; idx < axes.length; idx++) {
+                    var axis = axes[idx];
+                    var vertical = axis.options.vertical;
+                    if ((!lock.x && !vertical) || (!lock.y && vertical)) {   
+                        var range = axis.pointsRange(this._position, cursor);
+
+                        plotArea.updateAxisOptionsRange(axis, range.min, range.max);
+                    }
+                }
+                plotArea.redraw(plotArea.panes);
+            }
+        },
+        
+        zoom: function(e) {
+            var plotArea = this._plotArea;
+            var axes = plotArea.axes;
+            for (var idx = 0; idx < axes.length; idx++) {
+                var axis = axes[idx];
+                var vertical = axis.options.vertical;
+                var range = axis.scaleRange(-e.delta, true); 
+                if ((!lock.x && !vertical) || (!lock.y && vertical)) {   
+                    plotArea.updateAxisOptionsRange(axis, range.min, range.max);
+                }
+            }
+            plotArea.redraw(plotArea.panes);
+        },
+
         series: [{
-            border: {   
+            border: {
                 width: 0
             },
-            data: [{
-                value: 3.907, 
-                color: "red"
-            }, {
-                value: 7.943, 
-                color: "blue"
-            }, {
-                value: 7.848, 
-                color: "green"
-            }, {
-                value: 9.284,
-                color: "yellow"
-            }]
+            labels: {
+                visible: true
+            },
+            data: data
+            // data: stats,
+            // categoryField: "date"
         }],
         valueAxis: {
+            type: "log",
             labels: {
-                format: "{0}%"
+               // format: "{0:n}%"
             },
-            line: {
-                visible: false
+            minorTicks: {
+                visible: true
             },
-            axisCrossingValue: 0
-        },
-        categoryAxis: {
-            categories: [2002, 2003, 2004, 2005],
-            line: {
-                visible: false
+            minorGridLines:{
+                visible: true
             }
+            // line: {
+                // visible: true
+            // }
+            // min: 10,
+            // max: 50,
+
+        },
+        // chartArea: {
+            // margin: 100
+        // },
+        categoryAxis: {
+            // roundToBaseUnit: true,
+            // min: new Date("2011/12/23 10:00"),
+            // max: new Date("2011/12/27 10:00")
+            categories: categories,
+            min: 0.5,
+            max: 5.5
+            // axisCrossingValues: [3]
         },
         tooltip: {
             visible: true,
