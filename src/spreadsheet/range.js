@@ -493,7 +493,7 @@
                         sheet.range(merged).merge();
                     }, this);
                 }
-            }.bind(this), {});
+            }.bind(this), { recalc: true });
         },
 
         forEachCell: function(callback) {

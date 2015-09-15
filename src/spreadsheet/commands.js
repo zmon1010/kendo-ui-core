@@ -14,7 +14,7 @@
     var Command = kendo.spreadsheet.Command = kendo.Class.extend({
         init: function(options) {
             this.options = options;
-            this._property = options.property;
+            this._property = options && options.property;
             this._state = {};
         },
         range: function(range) {
@@ -52,6 +52,13 @@
             var range = this.range();
             this.getState();
             range[this._property](this._value);
+        }
+    });
+
+    kendo.spreadsheet.ClearContentCommand = Command.extend({
+        exec: function() {
+            this.getState();
+            this.range().clearContent();
         }
     });
 

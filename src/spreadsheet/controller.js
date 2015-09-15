@@ -29,6 +29,8 @@
         "shift+tab": "previous",
         "enter": "lower",
         "shift+enter": "upper",
+        "delete": "clearContents",
+        "backspace": "clearContents",
         "shift+:alphanum": "edit",
         ":alphanum": "edit",
         "ctrl+:alphanum": "ctrl",
@@ -302,7 +304,10 @@
                     event.preventDefault();
                 }
             } else {
-                if (action === ":alphanum" || action === ":edit") {
+                if (action == "delete" || action == "backspace") {
+                    this._workbook.execute(new kendo.spreadsheet.ClearContentCommand());
+                }
+                else if (action === ":alphanum" || action === ":edit") {
                     if (action === ":alphanum") {
                         this.editor.value("");
                     }
