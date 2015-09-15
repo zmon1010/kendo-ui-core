@@ -378,7 +378,7 @@
 
     test("fromJSON loads cell formula", function() {
         sheet.fromJSON(singleCell({ formula: "SUM(B1,B2)" }));
-        equal(sheet.range("A1").formula(), "=SUM(B1, B2)");
+        equal(sheet.range("A1").formula(), "SUM(B1, B2)");
     });
 
     test("fromJSON loads cell formula", function() {

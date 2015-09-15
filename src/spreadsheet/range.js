@@ -186,7 +186,7 @@
         formula: function(value) {
             if (value === undefined) {
                 var f = this._get("formula");
-                return f ? "=" + f : null; // stringify if present
+                return f ? "" + f : null; // stringify if present
             }
             return this._property("formula", value);
         },

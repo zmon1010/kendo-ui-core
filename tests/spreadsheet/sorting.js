@@ -126,11 +126,11 @@
 
 
         sheet.range("A1").value("foo");
-        sheet.range("A2").value(2).formula("=1");
+        sheet.range("A2").value(2).formula("1+2");
 
         sheet.range("A1:A2").sort();
 
-        equal(sheet.range("A1").formula(), "=1");
+        equal(sheet.range("A1").formula(), "1+2");
     });
 
     test("descending sort", function() {

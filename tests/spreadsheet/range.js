@@ -501,7 +501,7 @@
         sheet.range("A1").value(1);
 
         sheet.range("A2")
-            .formula("=SUM(A1:A1)")
+            .formula("SUM(A1:A1)")
             .clearContent();
 
         equal(sheet.range("A2").formula(), null);
@@ -513,7 +513,7 @@
         var sheet = workbook.activeSheet();
         sheet.range("A1").value(1);
 
-        var range = sheet.range("A2").formula("=A1");
+        var range = sheet.range("A2").formula("A1");
         workbook.refresh({recalc: true});
         equal(sheet.range("A2").value(), 1);
     });
@@ -603,17 +603,15 @@
     });
 
     test("range.input returns formula", function() {
-        var formula = "=SUM(A1:A1)";
-        sheet.range("A1").formula(formula);
+        sheet.range("A1").formula("SUM(A1:A2)");
 
-        equal(sheet.range("A1").input(), formula);
+        equal(sheet.range("A1").input(), "=SUM(A1:A2)");
     });
 
     test("range.input sets formula", function() {
-        var formula = "=SUM(A1:A1)";
-        sheet.range("A1").input(formula);
+        sheet.range("A1").input("=SUM(A1:A2)");
 
-        equal(sheet.range("A1").formula(), formula);
+        equal(sheet.range("A1").formula(), "SUM(A1:A2)");
     });
 
     test("range.input sets value", function() {
@@ -623,13 +621,13 @@
     });
 
     test("range.input removes formula when input() is set", function() {
-        sheet.range("A1").formula("=SUM(A1:A1)").input("foo");
+        sheet.range("A1").formula("SUM(A1:A1)").input("foo");
 
         equal(sheet.range("A1").formula(), null);
     });
 
     test("range.input removes formula when value() is set", function() {
-        sheet.range("A1").formula("=SUM(A1:A1)").value("foo");
+        sheet.range("A1").formula("SUM(A1:A1)").value("foo");
 
         equal(sheet.range("A1").formula(), null);
     });
@@ -755,7 +753,7 @@
         sheet.range("A1").value(1);
         sheet.range("B1").value(2);
 
-        var range = sheet.range("A2").formula("=SUM(A1)");
+        var range = sheet.range("A2").formula("SUM(A1)");
         workbook.refresh({recalc: true});
         equal(sheet.range("A2").value(), 1);
         var state = range.getState();
