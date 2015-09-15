@@ -98,6 +98,15 @@ namespace Telerik.Web.Spreadsheet
             return workbook;
         }
 
+        private static BorderStyle ConvertToBorder(CellBorder border)
+        {
+            return new BorderStyle
+            {
+                Color = "#" + border.Color.ToString().Remove(0, 3),
+                Size = border.Thickness.ToString() + "px"
+            };
+        }
+
         private static IEnumerable<Cell> GetCellsToExport(DocumentWorksheet worksheet, Range usedRange, int rowIndex)
         {
             if (usedRange != null)
@@ -137,12 +146,27 @@ namespace Telerik.Web.Spreadsheet
                                 break;
                         }
 
+                        var colorScheme = selection.Worksheet.Workbook.Theme.ColorScheme;
+
                         yield return new Cell
                         {
                             Index = columnIndex,
                             Format = formatting.FormatString,
                             Formula = formula,
-                            Value = value
+                            Value = value,
+                            Color = "#" + selection.GetForeColor().Value.GetActualValue(colorScheme).ToString().Remove(0, 3),
+                            Background = "#" + ((PatternFill)selection.GetFill().Value).PatternColor.GetActualValue(colorScheme).ToString().Remove(0, 3),
+                            Bold = selection.GetIsBold().Value,
+                            Italic = selection.GetIsItalic().Value,
+                            Wrap = selection.GetIsItalic().Value,
+                            Underline = selection.GetUnderline().Value != UnderlineType.None,
+                            VerticalAlign = selection.GetVerticalAlignment().Value.ToString(),
+                            FontSize = selection.GetFontSize().Value.ToString() + "px",
+                            FontFamily = selection.GetFontFamily().Value.ToString(),                            
+                            BorderBottom = ConvertToBorder(selection.GetBorders().Bottom),
+                            BorderTop = ConvertToBorder(selection.GetBorders().Top),
+                            BorderLeft = ConvertToBorder(selection.GetBorders().Left),
+                            BorderRight = ConvertToBorder(selection.GetBorders().Right)
                         };
                     }
                 }
