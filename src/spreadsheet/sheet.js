@@ -1016,6 +1016,48 @@
             this._mergedCells = state.mergedCells;
             this._properties.setState(state.properties);
             this.triggerChange(kendo.spreadsheet.ALL_REASONS);
+        },
+
+        _merge: function(ref) {
+            var mergedCells = this._mergedCells;
+
+            var sheet = this;
+            var mergedRef;
+            this.batch(function() {
+                mergedRef = ref.map(function(ref) {
+                    if (ref instanceof kendo.spreadsheet.CellRef) {
+                        return ref;
+                    }
+
+                    var currentRef = ref.toRangeRef().union(mergedCells, function(ref) {
+                        mergedCells.splice(mergedCells.indexOf(ref), 1);
+                    });
+
+                    var range = new Range(currentRef, sheet);
+                    var value = range.value();
+                    var format = range.format();
+                    var background = range.background();
+
+                    range.value(null);
+                    range.format(null);
+                    range.background(null);
+
+                    var topLeft = new Range(currentRef.collapse(), sheet);
+
+                    topLeft.value(value);
+                    topLeft.format(format);
+                    topLeft.background(background);
+
+                    mergedCells.push(currentRef);
+                    return currentRef;
+                });
+
+
+                sheet._selection = sheet.unionWithMerged(sheet._originalSelection);
+                sheet._activeCell = sheet.unionWithMerged(sheet._originalActiveCell);
+            }, { activeCell: true, selection: true });
+
+            return mergedRef;
         }
     });
 

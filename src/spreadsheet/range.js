@@ -192,40 +192,7 @@
         },
 
         merge: function() {
-            var sheet = this._sheet;
-            var mergedCells = sheet._mergedCells;
-
-            sheet.batch(function() {
-                this._ref = this._ref.map(function(ref) {
-                    if (ref instanceof kendo.spreadsheet.CellRef) {
-                        return ref;
-                    }
-
-                    var currentRef = ref.toRangeRef().union(mergedCells, function(ref) {
-                        mergedCells.splice(mergedCells.indexOf(ref), 1);
-                    });
-
-                    var range = new Range(currentRef, sheet);
-                    var value = range.value();
-                    var format = range.format();
-                    var background = range.background();
-
-                    range.value(null);
-                    range.format(null);
-                    range.background(null);
-
-                    var topLeft = new Range(currentRef.collapse(), sheet);
-
-                    topLeft.value(value);
-                    topLeft.format(format);
-                    topLeft.background(background);
-
-                    mergedCells.push(currentRef);
-                    return currentRef;
-                });
-
-            }.bind(this), {});
-
+            this._ref = this._sheet._merge(this._ref);
             return this;
         },
 

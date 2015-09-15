@@ -240,4 +240,9 @@
         equal(sheet.range("B1").value(), "bar1");
     });
 
+    test("merging re-applies the selection", function() {
+        equal(sheet.select().toString(), "A1:A1");
+        sheet.range("A1:B3").merge();
+        equal(sheet.select().toString(), "A1:B3");
+    });
 })();
