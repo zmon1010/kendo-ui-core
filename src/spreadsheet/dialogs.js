@@ -239,21 +239,7 @@
             var options = this.options;
 
             if (!options.currencies) {
-                options.currencies = $.map(kendo.cultures, function(culture, name) {
-                    if (name != culture.name) {
-                        return;
-                    }
-
-                    var currency = culture.numberFormat.currency;
-                    var description = kendo.format(
-                        "{0} ({1}, {2})",
-                        currency.name,
-                        currency.abbr,
-                        currency.symbol
-                    );
-
-                    return { description: description, value: currency };
-                });
+                options.currencies = FormatCellsDialog.currenciesFrom(kendo.cultures);
             }
 
             if (!options.numberFormats) {
@@ -327,7 +313,27 @@
         }
     });
 
+    FormatCellsDialog.currenciesFrom = function (cultures) {
+        return uniqueBy("description", $.map(cultures, function(culture, name) {
+            if (!(/-/).test(name)) {
+                return;
+            }
+
+            var currency = culture.numberFormat.currency;
+            var description = kendo.format(
+                "{0} ({1}, {2})",
+                currency.name,
+                currency.abbr,
+                currency.symbol
+            );
+
+            return { description: description, value: currency };
+        }));
+    };
+
     kendo.spreadsheet.dialogs.register("formatCells", FormatCellsDialog);
+
+    kendo.spreadsheet.dialogs.FormatCellsDialog = FormatCellsDialog;
 
     var MessageDialog = SpreadsheetDialog.extend({
         options: {

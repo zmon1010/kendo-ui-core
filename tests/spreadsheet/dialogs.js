@@ -168,6 +168,59 @@
         dialog.close();
     });
 
+    function cultureMock(name, currencyName, abbr, symbol) {
+        return {
+            name: name,
+            numberFormat: {
+                currency: {
+                    name: currencyName,
+                    abbr: abbr,
+                    symbol: symbol
+                }
+            }
+        };
+    }
+
+    var currenciesFrom = kendo.spreadsheet.dialogs.FormatCellsDialog.currenciesFrom;
+
+    test("currency formats do not include current culture", function() {
+        var cultures = {
+            "foo-BAR": cultureMock("foo-BAR", "Foo dolbar", "FBAR", "fb")
+        };
+
+        cultures.current = cultures["foo-BAR"];
+
+        var currencies = currenciesFrom(cultures);
+
+        equal(currencies.length, 1);
+    });
+
+    test("currency formats have a formatted description", function() {
+        var currencies = currenciesFrom({
+            "foo-BAR": cultureMock("foo-BAR", "Foo dolbar", "FBAR", "fb")
+        });
+
+        equal(currencies[0].description, "Foo dolbar (FBAR, fb)");
+    });
+
+    test("duplicate currencies are skipped", function() {
+        var currencies = currenciesFrom({
+            "de-DE": cultureMock("de-DE", "Euro", "EUR", "€"),
+            "el-GR": cultureMock("el-GR", "Euro", "EUR", "€")
+        });
+
+        equal(currencies.length, 1);
+    });
+
+    test("does not show currencies for neutral cultures", function() {
+        var currencies = currenciesFrom({
+            "de": cultureMock("de", "", "", "€"),
+            "el-GR": cultureMock("el-GR", "Euro", "EUR", "€")
+        });
+
+        equal(currencies.length, 1);
+    });
+
     var list;
 
     module("FontFamiltyDialog", {
