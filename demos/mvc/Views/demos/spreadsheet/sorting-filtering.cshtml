@@ -1,0 +1,42 @@
+<div id="example">
+    <div id="spreadsheet" style="width: 1000px"></div>
+    <script>
+    $(function() {
+        $("#spreadsheet").kendoSpreadsheet({
+            sheets: [
+                {
+                    name: "OrdersLog",
+                    mergedCells: [
+                        "A1:H1",
+                        "A2:F2",
+                        "G2:H2"
+                    ],
+                    rows: [
+                        {
+                           cells: [
+                              {
+                                 value: "ORDERS LOG", fontSize: 25,
+                                 background: "rgb(94,151,50)", color: "white"
+                              }
+                           ]
+                        },
+                        {
+                            cells: [
+                                {
+                                    index: 0,
+                                    value: "REPORT"
+                                },
+                                {
+                                    index: 6,
+                                    formula: "TODAY()",
+                                    format: "[$-409]mmm\-yy;@"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+    });
+    </script>
+</div>

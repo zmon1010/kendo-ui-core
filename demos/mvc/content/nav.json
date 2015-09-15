@@ -2684,6 +2684,16 @@
         }
       },
       {
+          "text": "Sorting and Filtering",
+          "url": "spreadsheet/sorting-filtering",
+          "title": {
+             "kendo-ui": "Sorting and filtering"
+          },
+          "meta": {
+              "kendo-ui": "This demo shows the sorting and filtering support that Kendo UI Spreadsheet provides"
+          }
+      },
+      {
           "text": "Server Import/Export",
           "url": "spreadsheet/server-side-import-export",
           "title": {
