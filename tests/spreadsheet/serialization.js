@@ -2,8 +2,6 @@
     var sheet;
     var spreadsheet;
 
-    var defaults = kendo.ui.Spreadsheet.prototype.options;
-
     module("Sheet serialization", {
         setup: function() {
             var element = $("<div>").appendTo(QUnit.fixture);
@@ -280,6 +278,26 @@
 
         equal(json.sheets[1].name, spreadsheet.sheets()[1].name());
     });
+
+    test("toJSON serializes selection and active cell", function() {
+        sheet.range("A1:C3").select();
+
+        var json = sheet.toJSON();
+
+        equal(json.selection, "A1:C3");
+        equal(json.activeCell, "A1:A1");
+    });
+
+    test("fromJSON loads selection and active cell", function() {
+        sheet.fromJSON({
+            selection: "A1:C3",
+            activeCell: "A1:A1"
+        });
+
+        equal(sheet.select().toString(), "A1:C3");
+        equal(sheet.activeCell().toString(), "A1:A1");
+    });
+
 
     test("fromJSON loads column widths", function() {
         sheet.fromJSON({

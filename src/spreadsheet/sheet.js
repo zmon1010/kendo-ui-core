@@ -693,6 +693,10 @@
                 name: this._name,
                 rows: rows,
                 columns: columns,
+                selection: this._selection.toString(),
+                originalSelection: this._originalSelection.toString(),
+                activeCell: this._activeCell.toString(),
+                originalActiveCell: this._originalActiveCell.toString(),
                 frozenRows: this.frozenRows(),
                 frozenColumns: this.frozenColumns(),
                 mergedCells: this._mergedCells.map(function(ref) {
@@ -773,6 +777,24 @@
                         }
                     }
                 }
+
+
+                if (json.selection) {
+                    this._selection = this._ref(json.selection);
+                }
+
+                if (json.originalSelection) {
+                    this._originalSelection = this._ref(json.originalSelection);
+                }
+
+                if (json.activeCell) {
+                    this._activeCell = this._ref(json.activeCell);
+                }
+
+                if (json.originalactiveCell) {
+                    this._originalActiveCell = this._ref(json.originalActiveCell);
+                }
+
 
                 if (json.mergedCells) {
                     json.mergedCells.forEach(function(ref) {
