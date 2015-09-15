@@ -831,10 +831,32 @@
     kendo.toolbar.registerComponent("sort", Sort, SortButton);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
+
     kendo.spreadsheet.TabStrip = kendo.ui.TabStrip.extend({
         init: function(element, options) {
             kendo.ui.TabStrip.fn.init.call(this, element, options);
             element.addClass("k-spreadsheet-tabstrip");
+            this._quickAccessButtons();
+
+            var tabs = options.dataSource;
+            this.contentElements.each(function(idx, element) {
+                this._toolbar($(element), tabs[idx].id, options.toolbarOptions[tabs[idx].id]);
+            }.bind(options.view));
+        },
+
+        _quickAccessButtons: function() {
+            var buttons = [
+                { title: "Undo", iconClass: "undo-large", action: "undo" },
+                { title: "Redo", iconClass: "redo-large", action: "redo" }
+            ];
+            var buttonTemplate = kendo.template("<a href='\\#' title='#= title #' class='k-button k-button-icon'><span class='k-icon k-font-icon k-i-#=iconClass#'></span></a>");
+
+            this.quickAccessToolBar = $("<div />", {
+                "class": "k-spreadsheet-quick-access-toolbar",
+                "html": kendo.render(buttonTemplate, buttons)
+            }).insertBefore(this.wrapper);
+
+            this.tabGroup.css("padding-left", this.quickAccessToolBar.outerWidth());
         }
     });
 

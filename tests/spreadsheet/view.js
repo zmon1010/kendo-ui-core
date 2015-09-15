@@ -94,7 +94,7 @@
 
     test("shifts tabstrip tabGroup elements", function() {
         var tabstrip = spreadsheet._view.tabstrip;
-        var quickAccessToolBar = spreadsheet._view.quickAccessToolBar;
+        var quickAccessToolBar = $(".k-spreadsheet-quick-access-toolbar");
 
         equal(tabstrip.tabGroup.css("padding-left"), quickAccessToolBar.outerWidth() + "px");
     });
