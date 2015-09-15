@@ -22,6 +22,7 @@
     var CellRef = spreadsheet.CellRef;
     var RangeRef = spreadsheet.RangeRef;
     var UnionRef = spreadsheet.UnionRef;
+    var NULL = spreadsheet.NULLREF;
 
     /* -----[ Errors ]----- */
 
@@ -537,6 +538,9 @@
             var newFormulaCol = this.col;
             this.absrefs = null;
             this.refs = this.refs.map(function(ref){
+                if (ref === NULL) {
+                    return ref;
+                }
                 if (ref.sheet.toLowerCase() != affectedSheet) {
                     if (formulaMoves) {
                         // a reference to another sheet should still point to the same location
