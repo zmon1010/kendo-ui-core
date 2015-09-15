@@ -358,7 +358,7 @@
                 }
             }
 
-            this.tabstrip = new kendo.spreadsheet.TabStrip($("<div />").appendTo(this.element), {
+            this.tabstrip = new kendo.spreadsheet.TabStrip($("<div />").prependTo(this.element), {
                 animation: false,
                 dataTextField: "text",
                 dataContentField: "content",
