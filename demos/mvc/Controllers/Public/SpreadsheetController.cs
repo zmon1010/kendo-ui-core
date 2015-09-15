@@ -60,11 +60,7 @@ namespace Kendo.Controllers
 
                 pageSetup.PrintOptions.PrintGridlines = options.PrintGridlines;
 
-                pageSetup.Margins = new PageMargins(
-                    UnitHelper.CmToDip(options.Margins.Left),
-                    UnitHelper.CmToDip(options.Margins.Top),
-                    UnitHelper.CmToDip(options.Margins.Right),
-                    UnitHelper.CmToDip(options.Margins.Bottom));
+                pageSetup.Margins = options.Margins;
             }
 
             using (var stream = new MemoryStream())

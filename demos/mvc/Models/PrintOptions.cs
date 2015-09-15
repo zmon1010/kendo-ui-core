@@ -8,6 +8,9 @@ using Telerik.Windows.Documents.Spreadsheet.Model.Printing;
 
 namespace Kendo.Models
 {
+    /// <summary>
+    /// Model for Spreadsheet print options
+    /// </summary>
     public class PrintOptions
     {
         public ExportWhat Source { get; set; }
