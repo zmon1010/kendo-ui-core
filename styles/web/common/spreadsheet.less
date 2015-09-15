@@ -1,3 +1,5 @@
+@first-tool-offset: .2em;
+
 .k-spreadsheet {
     width: 800px;
     height: 600px;
@@ -115,12 +117,11 @@
         margin: 3px 0 0 3px;
     }
 
-    > .k-toolbar {
-        border-width: 0 0 1px;
-        padding-left: .3em;
+    > .k-spreadsheet-view {
+        position: relative;
     }
 
-    > .k-spreadsheet-view {
+    .k-tabstrip-wrapper {
         position: relative;
     }
 
@@ -128,8 +129,9 @@
         display: inline-block;
         position: absolute;
         z-index: 1;
-        top: 40px;
-        left: 13px;
+        top: 0;
+        left: 0;
+        padding: .3em @first-tool-offset 0;
     }
 
     .k-merged-cells-wrapper {
@@ -144,9 +146,11 @@
 }
 
 .k-font-icon,
+.k-font-icon.k-icon,
 .k-font-icon.k-tool-icon {
     .use-font-icon();
-    background-image: none !important;
+    background-image: none;
+    font-size: 16px;
 }
 
 .k-spreadsheet .k-colorpicker .k-tool-icon {
@@ -159,6 +163,10 @@
 
 .k-spreadsheet-sample {
     float: right;
+}
+
+.k-spreadsheet-clipboard {
+    display: none;
 }
 
 .k-spreadsheet-top-corner {
@@ -307,10 +315,6 @@
 }
 
 
-.k-spreadsheet .k-tabstrip > .k-content {
-    padding: 0;
-}
-
 .k-spreadsheet-filter-menu dl {
     margin: 0;
 }
@@ -353,3 +357,54 @@
     width: 100%;
 }
 
+.k-spreadsheet-quick-access-toolbar .k-button {
+    border-color: transparent;
+    border-left-width: 1px;
+    border-left-style: solid;
+    background-color: transparent;
+}
+
+.k-spreadsheet-tabstrip {
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+
+    > .k-content {
+        border-left-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.k-spreadsheet-toolbar {
+    &.k-toolbar {
+        border-width: 0;
+        background-color: transparent;
+
+        .k-overflow-anchor + * {
+            border-left-style: none;
+            margin-left: @first-tool-offset;
+        }
+    }
+
+    > .k-widget,
+    .k-button,
+    > .k-button-group,
+    > .k-widget .k-state-default:not(.k-state-hover) {
+        margin: 0;
+        border-color: transparent;
+        border-left-width: 1px;
+        border-left-style: solid;
+        background-color: transparent;
+    }
+
+    > .k-widget .k-state-default:not(.k-state-hover) .k-select {
+        border-color: transparent;
+    }
+}
+
+.k-popup .k-colorpalette {
+    vertical-align: bottom;
+}

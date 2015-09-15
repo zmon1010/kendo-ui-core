@@ -361,7 +361,7 @@
                 dataTextField: "text",
                 dataContentField: "content",
                 dataSource: tabs
-            }).data("kendoTabStrip").select(0);
+            }).addClass("k-spreadsheet-tabstrip").data("kendoTabStrip").select(0);
 
             this.tabstrip.contentElements.each(function(idx, element) {
                 this._toolbar($(element), tabs[idx].id, options[tabs[idx].id]);
@@ -383,7 +383,7 @@
                 "html": kendo.render(buttonTemplate, buttons)
             }).insertBefore(this.tabstrip.wrapper);
 
-            this.tabstrip.tabGroup.css("margin-left", this.quickAccessToolBar.outerWidth());
+            this.tabstrip.tabGroup.css("padding-left", this.quickAccessToolBar.outerWidth());
         },
 
         _toolbar: function(container, name, tools) {
@@ -396,7 +396,7 @@
             }
 
             if (tools) {
-                element = $("<div />").prependTo(container);
+                element = container.html("<div />").children("div");
 
                 options = {
                     tools: typeof tools === "boolean" ? undefined : tools,

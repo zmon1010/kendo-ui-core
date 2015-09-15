@@ -96,7 +96,7 @@
         var tabstrip = spreadsheet._view.tabstrip;
         var quickAccessToolBar = spreadsheet._view.quickAccessToolBar;
 
-        equal(tabstrip.tabGroup.css("margin-left"), quickAccessToolBar.outerWidth() + "px");
+        equal(tabstrip.tabGroup.css("padding-left"), quickAccessToolBar.outerWidth() + "px");
     });
 
 })();

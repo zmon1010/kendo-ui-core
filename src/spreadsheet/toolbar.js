@@ -76,6 +76,8 @@
             ToolBar.fn.init.call(this, element, options);
             var handleClick = this._click.bind(this);
 
+            this.element.addClass("k-spreadsheet-toolbar");
+
             this.bind({
                 click: handleClick,
                 toggle: handleClick
