@@ -796,6 +796,11 @@
             return this.map(function(ref){
                 return ref.adjust(row, col, trow, tcol, forRow, start, delta);
             }).simplify();
+        },
+        toString: function() {
+            return this.refs.map(function(ref){
+                return ref.toString();
+            }).join(", ");
         }
     });
 
