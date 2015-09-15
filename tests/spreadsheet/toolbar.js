@@ -112,14 +112,14 @@
         equal(element.find(".k-toolbar .k-button-group").length, 2);
     });
 
-    test("bold executes correct command", 3, function() {
+    test("bold triggers activate with correct args", 3, function() {
         createWithTools([ "bold" ]);
 
-        toolbar.one("execute", function(e) {
+        toolbar.one("action", function(e) {
             var command = e.command;
-            ok(command instanceof kendo.spreadsheet.PropertyChangeCommand);
-            equal(command.options.property, "bold");
-            equal(command.options.value, true);
+            ok(command === "PropertyChangeCommand");
+            equal(e.options.property, "bold");
+            equal(e.options.value, true);
         });
 
         tap($(".k-i-bold"));
@@ -130,8 +130,8 @@
 
         sheet.range("A1").bold(true);
 
-        toolbar.one("execute", function(e) {
-            equal(e.command.options.value, null);
+        toolbar.one("action", function(e) {
+            equal(e.options.value, null);
         });
 
         tap($(".k-i-bold"));
@@ -140,8 +140,8 @@
     test("mergeCell click triggers execute with correct value", 1, function() {
         createWithTools([ "merge" ]);
 
-        toolbar.one("execute", function(e) {
-            equal(e.command.options.value, "cells");
+        toolbar.one("action", function(e) {
+            equal(e.options.value, "cells");
         });
 
         sheet.select("A1:B2");
@@ -160,9 +160,9 @@
     test("textAlign button click triggers execute with correct value", 2, function() {
         createWithTools([ "alignment" ]);
 
-        toolbar.one("execute", function(e) {
-            equal(e.command.options.property, "textAlign");
-            equal(e.command.options.value, "right");
+        toolbar.one("action", function(e) {
+            equal(e.options.property, "textAlign");
+            equal(e.options.value, "right");
         });
 
         sheet.select("A1:B2");
@@ -172,9 +172,9 @@
     test("verticalAlign button click triggers execute with correct value", 2, function() {
         createWithTools([ "alignment" ]);
 
-        toolbar.one("execute", function(e) {
-            equal(e.command.options.property, "verticalAlign");
-            equal(e.command.options.value, "middle");
+        toolbar.one("action", function(e) {
+            equal(e.options.property, "verticalAlign");
+            equal(e.options.value, "middle");
         });
 
         sheet.select("A1:B2");

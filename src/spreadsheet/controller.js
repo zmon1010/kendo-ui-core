@@ -111,6 +111,7 @@
             this.colHeaderContextMenu = view.colHeaderContextMenu;
             this.scroller = view.scroller;
             this.quickAccessToolBar = view.quickAccessToolBar;
+            this.toolbars = view.toolbars;
 
             this.editor = view.editor;
             this.editor.bind("change", this.onEditorChange.bind(this));
@@ -135,8 +136,15 @@
             this.cellContextMenu.element.add(this.rowHeaderContextMenu.element).add(this.colHeaderContextMenu.element).on("contextmenu", false);
 
             if (this.quickAccessToolBar) {
-                this.quickAccessToolBar.on("click", ".k-button", this.onQuickAccessToolBarClick.bind(this));
+                this.quickAccessToolBar.bind("action", this.onQuickAccessToolBarClick.bind(this));
             }
+
+            if (this.toolbars) {
+                for (key in this.toolbars) {
+                    this.toolbars[key].bind("action", this.onAction.bind(this));
+                }
+            }
+
             $(this.view.container).on("click", ".k-link.k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
         },
 
@@ -674,12 +682,12 @@
         },
 
         onQuickAccessToolBarClick: function(e) {
-            var target = $(e.currentTarget);
-            var action = target.attr("title").toLowerCase();
+            this._workbook.undoRedoStack[e.action]();
+        },
 
-            if (action) {
-                this._workbook.undoRedoStack[action]();
-            }
+        onAction: function(e) {
+            var command = new kendo.spreadsheet[e.command](e.options);
+            this.view._workbook.execute(command);
         }
     });
 

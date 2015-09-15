@@ -140,18 +140,20 @@
             }
 
             var args = {
-                property: tool.property || null,
-                value: tool.value || null,
-                workbook: e.sender.workbook()
+                command: commandType,
+                options: {
+                    property: tool.property || null,
+                    value: tool.value || null
+                }
             };
 
-            if (typeof args.value === "boolean") {
-                args.value = e.checked ? true : null;
+            if (typeof args.options.value === "boolean") {
+                args.options.value = e.checked ? true : null;
             }
 
-            this.execute(new kendo.spreadsheet[commandType](args));
+            this.action(args);
         },
-        events: ToolBar.fn.events.concat([ "execute", "openDialog" ]),
+        events: ToolBar.fn.events.concat([ "action", "dialog" ]),
         options: {
             name: "SpreadsheetToolBar",
             resizable: true,
@@ -185,21 +187,14 @@
                 sortDesc: "Sort descending"
             }
         },
+        action: function(args) {
+            this.trigger("action", args);
+        },
         openDialog: function(popupName, options) {
-            this.trigger("openDialog", { name: popupName, options: options });
+            this.trigger("dialog", { name: popupName, options: options });
         },
-        execute: function(command) {
-            this.trigger("execute", { command: command });
-        },
-        range: function() {
-            var sheet = this.workbook().activeSheet();
-            return sheet.range(sheet.activeCell());
-        },
-        workbook: function() {
-            return this.options.workbook();
-        },
-        refresh: function() {
-            var range = this.range();
+        refresh: function(activeCell) {
+            var range = activeCell;
             var tools = this._tools();
 
             function setToggle(tool, value) {
@@ -333,10 +328,13 @@
             if (popupName) {
                 this.toolbar.openDialog(popupName);
             } else {
-                this.toolbar.execute(new PropertyChangeCommand({
-                    property: this.options.property,
-                    value: value == "null" ? null : value
-                }));
+                this.toolbar.action({
+                    command: "PropertyChangeCommand",
+                    options: {
+                        property: this.options.property,
+                        value: value == "null" ? null : value
+                    }
+                });
             }
         },
         value: function(value) {
@@ -453,10 +451,13 @@
             }).data("kendoColorPalette");
         },
         _colorChange: function(e) {
-            this.toolbar.execute(new PropertyChangeCommand({
-                property: this.options.property,
-                value: e.sender.value()
-            }));
+            this.toolbar.action({
+                command: "PropertyChangeCommand",
+                options: {
+                    property: this.options.property,
+                    value: e.sender.value()
+                }
+            });
         }
     });
 
@@ -504,10 +505,13 @@
         },
 
         _valueChange: function(e) {
-            this.toolbar.execute(new PropertyChangeCommand({
-                property: this.options.property,
-                value: kendo.parseInt(e.sender.value()) + "px"
-            }));
+            this.toolbar.action({
+                command: "PropertyChangeCommand",
+                options: {
+                    property: this.options.property,
+                    value: kendo.parseInt(e.sender.value()) + "px"
+                }
+            });
         },
 
         update: function(value) {
@@ -634,14 +638,17 @@
         _borderPalette: function() {
             var element = $("<div />").appendTo(this.popup.element);
             this.borderPalette = new kendo.spreadsheet.BorderPalette(element, {
-                change: this._execute.bind(this)
+                change: this._action.bind(this)
             });
         },
-        _execute: function(e) {
-            this.toolbar.execute(new kendo.spreadsheet.BorderChangeCommand({
-                border: e.type,
-                style: { size: "1px", color: e.color }
-            }));
+        _action: function(e) {
+            this.toolbar.action({
+                command: "BorderChangeCommand",
+                options: {
+                    border: e.type,
+                    style: { size: "1px", color: e.color }
+                }
+            });
         }
     });
 
@@ -661,7 +668,7 @@
 
             this._commandPalette();
             this.popup.element.on("click", ".k-button", function(e) {
-                this._execute($(e.currentTarget));
+                this._action($(e.currentTarget));
             }.bind(this));
 
             this.element.data({
@@ -710,14 +717,17 @@
                 element.append(button);
             });
         },
-        _execute: function(button) {
+        _action: function(button) {
             var property = button.attr("data-property");
             var value = button.attr("data-value");
 
-            this.toolbar.execute(new kendo.spreadsheet.PropertyChangeCommand({
-                property: property,
-                value: value
-            }));
+            this.toolbar.action({
+                command: "PropertyChangeCommand",
+                options: {
+                    property: property,
+                    value: value
+                }
+            });
         }
     });
 
@@ -735,7 +745,7 @@
 
             this._commandPalette();
             this.popup.element.on("click", ".k-button", function(e) {
-                this._execute($(e.currentTarget));
+                this._action($(e.currentTarget));
             }.bind(this));
 
             this.element.data({
@@ -764,12 +774,15 @@
                 element.append(button);
             });
         },
-        _execute: function(button) {
+        _action: function(button) {
             var value = button.attr("data-value");
 
-            this.toolbar.execute(new kendo.spreadsheet.MergeCellCommand({
-                value: value
-            }));
+            this.toolbar.action({
+                command: "MergeCellCommand",
+                options: {
+                    value: value
+                }
+            });
         }
     });
 
@@ -813,11 +826,14 @@
             var instance = e.sender;
             var dataItem = instance.dataItem();
 
-            this.toolbar.execute(new kendo.spreadsheet.SortCommand({
-                asc: dataItem.asc,
-                sheet: dataItem.sheet,
-                range: dataItem.range
-            }));
+            this.toolbar.action({
+                command: "SortCommand",
+                options: {
+                    asc: dataItem.asc,
+                    sheet: dataItem.sheet,
+                    range: dataItem.range
+                }
+            });
         },
         value: $.noop
     });
@@ -837,6 +853,12 @@
             kendo.ui.TabStrip.fn.init.call(this, element, options);
             element.addClass("k-spreadsheet-tabstrip");
             this._quickAccessButtons();
+
+            this.quickAccessToolBar.on("click", ".k-button", function(e) {
+                var action = $(e.currentTarget).attr("title").toLowerCase();
+
+                this.trigger("action", { action: action });
+            }.bind(this));
 
             var tabs = options.dataSource;
             this.contentElements.each(function(idx, element) {

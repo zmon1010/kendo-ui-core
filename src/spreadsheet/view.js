@@ -383,14 +383,7 @@
 
                 options = {
                     tools: typeof tools === "boolean" ? undefined : tools,
-                    toolbarName: name,
-                    workbook: function() {
-                        return this._workbook;
-                    }.bind(this),
-                    openDialog: function(e) {
-                        this.openDialog(e.name, e.options);
-                    }.bind(this),
-                    execute: this._executeCommand.bind(this)
+                    toolbarName: name
                 };
 
                 this.toolbars[name] = new kendo.spreadsheet.ToolBar(element, options);
@@ -507,7 +500,7 @@
             if (this.toolbars) {
                 for (var name in this.toolbars) {
                     if (this.toolbars.hasOwnProperty(name)) {
-                        this.toolbars[name].refresh();
+                        this.toolbars[name].refresh(sheet.range(sheet.activeCell()));
                     }
                 }
             }
