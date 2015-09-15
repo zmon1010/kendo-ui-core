@@ -30,9 +30,7 @@
 
             this._context = new kendo.spreadsheet.FormulaContext(this);
 
-            if (this.options.sheets) {
-                this.fromJSON(this.options.sheets);
-            }
+            this.fromJSON(this.options);
         },
 
         clipboard: function() {
@@ -250,23 +248,28 @@
             }
         },
 
-        fromJSON: function(sheets) {
-            var idx;
+        fromJSON: function(json) {
+            if (json.sheets) {
+                for (var idx = 0; idx < json.sheets.length; idx++) {
+                    var sheet = this.sheetByIndex(idx);
 
-            for (idx = 0; idx < sheets.length; idx++) {
-                var sheet = this.sheetByIndex(idx);
+                    if (!sheet) {
+                        sheet = this.insertSheet();
+                    }
 
-                if (!sheet) {
-                    sheet = this.insertSheet();
+                    sheet.fromJSON(json.sheets[idx]);
                 }
+            }
 
-                sheet.fromJSON(sheets[idx]);
+            if (json.activeSheet) {
+                this.activeSheet(this.sheetByName(json.activeSheet));
             }
         },
 
         toJSON: function() {
             this.resetFormulas();
             return {
+                activeSheet: this.activeSheet().name(),
                 sheets: this._sheets.map(function(sheet) {
                     sheet.recalc(this._context);
                     return sheet.toJSON();

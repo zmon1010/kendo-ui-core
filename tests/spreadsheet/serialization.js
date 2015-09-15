@@ -255,50 +255,6 @@
         equal(json.frozenRows, 1);
     });
 
-    test("toJSON serializes the sheets of the spreadsheet", function() {
-        var json = spreadsheet.toJSON();
-
-        equal(json.sheets.length, 1);
-        equal(json.sheets[0].rows.length, 0);
-    });
-
-    test("toJSON serializes multiple sheets", function() {
-        spreadsheet.insertSheet();
-
-        var json = spreadsheet.toJSON();
-
-        equal(json.sheets.length, 2);
-        equal(json.sheets[1].rows.length, 0);
-    });
-
-    test("toJSON serializes sheet names", function() {
-        spreadsheet.insertSheet();
-
-        var json = spreadsheet.toJSON();
-
-        equal(json.sheets[1].name, spreadsheet.sheets()[1].name());
-    });
-
-    test("toJSON serializes selection and active cell", function() {
-        sheet.range("A1:C3").select();
-
-        var json = sheet.toJSON();
-
-        equal(json.selection, "A1:C3");
-        equal(json.activeCell, "A1:A1");
-    });
-
-    test("fromJSON loads selection and active cell", function() {
-        sheet.fromJSON({
-            selection: "A1:C3",
-            activeCell: "A1:A1"
-        });
-
-        equal(sheet.select().toString(), "A1:C3");
-        equal(sheet.activeCell().toString(), "A1:A1");
-    });
-
-
     test("fromJSON loads column widths", function() {
         sheet.fromJSON({
             columns: [
@@ -392,10 +348,6 @@
         equal(sheet.range("B1").value(), "B1");
     });
 
-    function singleCell(cell) {
-        return { rows: [ { cells: [ cell ] } ] };
-    }
-
     test("fromJSON loads row cells with implicit cell index", function() {
         sheet.fromJSON(singleCell({ value: "A1" }));
 
@@ -456,59 +408,6 @@
         });
     });
 
-    test("fromJSON loads spreadsheet sheets", function() {
-        spreadsheet.fromJSON({
-            sheets: [
-                singleCell({ background: "red" }),
-                singleCell({ background: "yellow" })
-            ]
-        });
-
-        equal(spreadsheet.sheets()[1].range("A1").background(), "yellow");
-    });
-
-    test("fromJSON refresh the view", function() {
-        spreadsheet.fromJSON({
-            sheets: [
-                singleCell({ background: "red" }),
-                singleCell({ background: "yellow" })
-            ]
-        });
-
-        var firstCell = spreadsheet._view.element.find(".k-spreadsheet-data td")[0];
-
-        equal(firstCell.style.backgroundColor, "red");
-    });
-
-    test("fromJSON remove old spreadsheet sheets", function() {
-        spreadsheet.insertSheet();
-
-        spreadsheet.fromJSON({
-            sheets: [
-                singleCell({ background: "yellow" })
-            ]
-        });
-
-        equal(spreadsheet.sheets().length, 1);
-        equal(spreadsheet.sheets()[0].range("A1").background(), "yellow");
-        equal(spreadsheet.activeSheet().range("A1").background(), "yellow");
-    });
-
-    test("fromJSON insert sheets with specified names", function() {
-        spreadsheet.insertSheet();
-
-        var name = "Sheet2";
-
-        spreadsheet.fromJSON({
-            sheets: [
-                $.extend(singleCell({ background: "yellow"}), { name:  name })
-            ]
-        });
-
-        equal(spreadsheet.sheets().length, 1);
-        equal(spreadsheet.activeSheet().name(), name);
-    });
-
     test("fromJSON loads frozenColumns and frozenRows", function() {
         sheet.fromJSON({
             frozenColumns: 1,
@@ -566,4 +465,139 @@
         ok(sheet._filter.columns[1].filter instanceof kendo.spreadsheet.ValueFilter);
         ok(sheet._filter.columns[2].filter instanceof kendo.spreadsheet.TopFilter);
     });
+
+    // ------------------------------------------------------------
+    module("Workbook serialization", {
+        setup: function() {
+            var element = $("<div>").appendTo(QUnit.fixture);
+            spreadsheet = new kendo.ui.Spreadsheet(element);
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("toJSON serializes the sheets of the spreadsheet", function() {
+        var json = spreadsheet.toJSON();
+
+        equal(json.sheets.length, 1);
+        equal(json.sheets[0].rows.length, 0);
+    });
+
+    test("toJSON serializes multiple sheets", function() {
+        spreadsheet.insertSheet();
+
+        var json = spreadsheet.toJSON();
+
+        equal(json.sheets.length, 2);
+        equal(json.sheets[1].rows.length, 0);
+    });
+
+    test("toJSON serializes sheet names", function() {
+        spreadsheet.insertSheet();
+
+        var json = spreadsheet.toJSON();
+
+        equal(json.sheets[1].name, spreadsheet.sheets()[1].name());
+    });
+
+    test("toJSON serializes active sheet", function() {
+        spreadsheet.insertSheet({
+            name: "Foo"
+        });
+        spreadsheet.activeSheet(spreadsheet.sheetByIndex(1));
+
+        var json = spreadsheet.toJSON();
+
+        equal(json.activeSheet, "Foo");
+    });
+
+    test("toJSON serializes selection and active cell", function() {
+        sheet.range("A1:C3").select();
+
+        var json = sheet.toJSON();
+
+        equal(json.selection, "A1:C3");
+        equal(json.activeCell, "A1:A1");
+    });
+
+    test("fromJSON loads spreadsheet sheets", function() {
+        spreadsheet.fromJSON({
+            sheets: [
+                singleCell({ background: "red" }),
+                singleCell({ background: "yellow" })
+            ]
+        });
+
+        equal(spreadsheet.sheets()[1].range("A1").background(), "yellow");
+    });
+
+    test("fromJSON refresh the view", function() {
+        spreadsheet.fromJSON({
+            sheets: [
+                singleCell({ background: "red" }),
+                singleCell({ background: "yellow" })
+            ]
+        });
+
+        var firstCell = spreadsheet._view.element.find(".k-spreadsheet-data td")[0];
+
+        equal(firstCell.style.backgroundColor, "red");
+    });
+
+    test("fromJSON remove old spreadsheet sheets", function() {
+        spreadsheet.insertSheet();
+
+        spreadsheet.fromJSON({
+            sheets: [
+                singleCell({ background: "yellow" })
+            ]
+        });
+
+        equal(spreadsheet.sheets().length, 1);
+        equal(spreadsheet.sheets()[0].range("A1").background(), "yellow");
+        equal(spreadsheet.activeSheet().range("A1").background(), "yellow");
+    });
+
+    test("fromJSON insert sheets with specified names", function() {
+        spreadsheet.insertSheet();
+
+        var name = "Sheet2";
+
+        spreadsheet.fromJSON({
+            sheets: [
+                $.extend(singleCell({ background: "yellow"}), { name:  name })
+            ]
+        });
+
+        equal(spreadsheet.sheets().length, 1);
+        equal(spreadsheet.activeSheet().name(), name);
+    });
+
+    test("fromJSON sets active sheet", function() {
+        spreadsheet.fromJSON({
+            activeSheet: "Bar",
+            sheets: [{
+                name: "Foo"
+            }, {
+                name: "Bar"
+            }]
+        });
+
+        equal(spreadsheet.activeSheet().name(), "Bar");
+    });
+
+    test("fromJSON loads selection and active cell", function() {
+        sheet.fromJSON({
+            selection: "A1:C3",
+            activeCell: "A1:A1"
+        });
+
+        equal(sheet.select().toString(), "A1:C3");
+        equal(sheet.activeCell().toString(), "A1:A1");
+    });
+
+    function singleCell(cell) {
+        return { rows: [ { cells: [ cell ] } ] };
+    }
 })();

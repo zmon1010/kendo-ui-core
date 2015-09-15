@@ -178,7 +178,7 @@
                 if (json.sheets) {
                     this._workbook.destroy();
 
-                    this._workbook = new Workbook($.extend({}, this.options, { sheets: json.sheets }));
+                    this._workbook = new Workbook($.extend({}, this.options, json));
 
                     this._workbook.bind("change", this._workbookChange.bind(this));
 
