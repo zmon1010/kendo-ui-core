@@ -11,7 +11,7 @@
             this.workbook = workbook;
             this.origin = kendo.spreadsheet.NULLREF;
             this.iframe = document.createElement("iframe");
-            this.iframe.className = "k-spreadsheet-clipboard";
+            this.iframe.className = "k-spreadsheet-clipboard-paste";
             this._external = {};
             document.body.appendChild(this.iframe);
         },
