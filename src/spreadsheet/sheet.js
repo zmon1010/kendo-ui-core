@@ -16,6 +16,7 @@
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
+            this._editorSelection = [];
             this._frozenRows = 0;
             this._frozenColumns = 0;
             this._suspendChanges = false;
@@ -651,6 +652,11 @@
                 allCols: allCols,
                 all: allRows && allCols
             };
+        },
+
+        _setEditorSelection: function(selection) {
+            this._editorSelection = (selection || []).slice();
+            this.triggerChange({ selection: true });
         },
 
         toJSON: function() {

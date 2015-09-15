@@ -484,11 +484,16 @@
         ok(sheet._mergedCells[0].eq(sheet._ref("C3:D4")));
     });
 
-    test("sheet state preserves the property bag", function() {
+    test("sheet state preserves the property bag", 1, function() {
         sheet.range("C3:D4").value("foo");
         var state = sheet.getState();
         sheet.range("C3:D4").value("bar");
         sheet.setState(state);
         equal(sheet.range("C3:D4").value(), "foo");
+    });
+
+    test("setting the editor selection triggers change", 1, function() {
+       sheet.bind("change", success);
+       sheet._setEditorSelection([]);
     });
 })();
