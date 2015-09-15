@@ -6,18 +6,13 @@
 
     var PARTIAL = "k-selection-partial";
     var FULL = "k-selection-full";
+    var sheet;
 
     module("selection", {
         setup: function() {
             sheet = new Sheet(1000, 100, 10, 10, 10, 10);
         }
     });
-
-    var DUMMY_VIEW = { ref: rangeRef(0,0, 100, 100), top: 0, left: 0 };
-
-    function createPane(row, column, rowCount, columnCount) {
-        return new Pane(sheet, sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
-    }
 
     function rangeRef(topLeftRow, topLeftCol, bottomRightRow, bottomRightCol) {
         var ref = new RangeRef(
@@ -26,6 +21,12 @@
         );
 
         return ref;
+    }
+
+    var DUMMY_VIEW = { ref: rangeRef(0,0, 100, 100), top: 0, left: 0 };
+
+    function createPane(row, column, rowCount, columnCount) {
+        return new Pane(sheet, sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
     }
 
     test("selects the range", function() {
@@ -144,14 +145,14 @@
         var selectedHeaders = sheet.selectedHeaders();
 
         equal(Object.keys(selectedHeaders.cols).length, 3);
-        equal(selectedHeaders.cols[0], "partial")
-        equal(selectedHeaders.cols[1], "partial")
-        equal(selectedHeaders.cols[3], "partial")
+        equal(selectedHeaders.cols[0], "partial");
+        equal(selectedHeaders.cols[1], "partial");
+        equal(selectedHeaders.cols[3], "partial");
 
         equal(Object.keys(selectedHeaders.rows).length, 3);
-        equal(selectedHeaders.rows[0], "partial")
-        equal(selectedHeaders.rows[1], "partial")
-        equal(selectedHeaders.rows[2], "partial")
+        equal(selectedHeaders.rows[0], "partial");
+        equal(selectedHeaders.rows[1], "partial");
+        equal(selectedHeaders.rows[2], "partial");
     });
 
     test("selection sets the FULL headers for range and row", function() {
@@ -160,19 +161,19 @@
         var selectedHeaders = sheet.selectedHeaders();
 
         equal(Object.keys(selectedHeaders.cols).length, 3);
-        equal(selectedHeaders.cols[0], "partial")
-        equal(selectedHeaders.cols[1], "partial")
-        equal(selectedHeaders.cols[2], "partial")
+        equal(selectedHeaders.cols[0], "partial");
+        equal(selectedHeaders.cols[1], "partial");
+        equal(selectedHeaders.cols[2], "partial");
         equal(selectedHeaders.allRows, false);
 
         equal(Object.keys(selectedHeaders.rows).length, 6);
-        equal(selectedHeaders.rows[2], "partial")
-        equal(selectedHeaders.rows[3], "partial")
-        equal(selectedHeaders.rows[4], "partial")
-        equal(selectedHeaders.rows[5], "partial")
-        equal(selectedHeaders.rows[6], "partial")
+        equal(selectedHeaders.rows[2], "partial");
+        equal(selectedHeaders.rows[3], "partial");
+        equal(selectedHeaders.rows[4], "partial");
+        equal(selectedHeaders.rows[5], "partial");
+        equal(selectedHeaders.rows[6], "partial");
 
-        equal(selectedHeaders.rows[9], "full")
+        equal(selectedHeaders.rows[9], "full");
         equal(selectedHeaders.allCols, true);
     });
 
@@ -271,5 +272,4 @@
         equal(colHeaderCells[1].attr.className, PARTIAL);
         equal(colHeaderCells[2].attr.className, FULL);
     });
-
 })();
