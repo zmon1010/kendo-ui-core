@@ -356,12 +356,13 @@
                 }
             }
 
-            this.tabstrip = $("<div />").prependTo(this.element).kendoTabStrip({
+            this.tabstrip = new kendo.spreadsheet.TabStrip($("<div />").appendTo(this.element), {
                 animation: false,
                 dataTextField: "text",
                 dataContentField: "content",
                 dataSource: tabs
-            }).addClass("k-spreadsheet-tabstrip").data("kendoTabStrip").select(0);
+            });
+            this.tabstrip.select(0);
 
             this.tabstrip.contentElements.each(function(idx, element) {
                 this._toolbar($(element), tabs[idx].id, options[tabs[idx].id]);

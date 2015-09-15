@@ -783,6 +783,12 @@
     kendo.toolbar.registerComponent("merge", MergeTool, MergeButton);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
+    kendo.spreadsheet.TabStrip = kendo.ui.TabStrip.extend({
+        init: function(element, options) {
+            kendo.ui.TabStrip.fn.init.call(this, element, options);
+            element.addClass("k-spreadsheet-tabstrip");
+        }
+    });
 
 })(window.kendo);
 
