@@ -231,6 +231,9 @@
         '<li data-action=cut>Cut</li>' +
         '<li data-action=copy>Copy</li>' +
         '<li data-action=paste>Paste</li>' +
+        '<li class="k-separator"></li>' +
+        '<li data-action=merge>Merge</li>' +
+        '<li data-action=unmerge>Unmerge</li>' +
     '</ul>';
 
     var ROW_HEADER_CONTEXT_MENU = '<ul class="#=classNames.rowHeaderContextMenu#">' +
@@ -247,9 +250,6 @@
         '<li data-action=cut>Cut</li>' +
         '<li data-action=copy>Copy</li>' +
         '<li data-action=paste>Paste</li>' +
-        '<li class="k-separator"></li>' +
-        '<li data-action="insert-left">Insert 1 Left</li>'+
-        '<li data-action="insert-right">Insert 1 Right</li>'+
         '<li class="k-separator"></li>' +
         '<li data-action="delete-column">Delete</li>'+
         '<li data-action="hide-column">Hide</li>'+

@@ -151,6 +151,12 @@
                     case "paste":
                         this.onPaste();
                         break;
+                    case "unmerge":
+                        command = new kendo.spreadsheet.MergeCellCommand({ value: "unmerge" });
+                        break;
+                    case "merge":
+                        this.view.openDialog("merge");
+                        break;
                     case "hide-row":
                         command = new kendo.spreadsheet.HideLineCommand({ axis: "row" });
                         break;
@@ -378,9 +384,11 @@
 
             var isComposite = this.navigator._sheet.select() instanceof kendo.spreadsheet.UnionRef;
             var showUnhide = false;
+            var showUnmerge = false;
 
             if (object.type === "cell") {
                 menu = this.cellContextMenu;
+                showUnmerge = this.navigator.selectionIncludesMergedCells();
             } else if (object.type == "columnheader") {
                 menu = this.colHeaderContextMenu;
                 showUnhide = !isComposite && this.axisManager.selectionIncludesHiddenColumns();
@@ -391,6 +399,7 @@
 
             menu.element.find(COMPOSITE_UNAVAILABLE_ACTION_SELECTORS).toggle(!isComposite);
             menu.element.find(UNHIDE_ACTION_SELECTORS).toggle(showUnhide);
+            menu.element.find('[data-action=unmerge]').toggle(showUnmerge);
 
             // avoid the immediate close
             setTimeout(function() {

@@ -6,7 +6,7 @@
 
     module("Spreadsheet refs", {
         setup: function() {
-            ref = new RangeRef(loc(0, 0), loc(1, 1))
+            ref = new RangeRef(loc(0, 0), loc(1, 1));
         }
     });
 
@@ -51,12 +51,12 @@
     });
 
     test("range ref is equal to the same", function() {
-        var ref2 = new RangeRef(loc(0, 0), loc(1, 1))
+        var ref2 = new RangeRef(loc(0, 0), loc(1, 1));
         ok(ref.eq(ref2));
     });
 
     test("range ref does not equal another", function() {
-        var ref2 = new RangeRef(loc(0, 1), loc(1, 1))
+        var ref2 = new RangeRef(loc(0, 1), loc(1, 1));
         ok(!ref.eq(ref2));
     });
 
@@ -90,6 +90,16 @@
         });
 
         equal(rows.toString(), "R1C1:R1C3,R2C1:R2C3,R3C1:R3C3");
+    });
+
+    test("contains works with an array of refs", function() {
+        var range = new RangeRef(loc(0, 0), loc(2, 2));
+        var inside = new RangeRef(loc(0, 0), loc(0, 1));
+        var outside = new RangeRef(loc(3, 3), loc(4, 4));
+
+        ok(range.contains( [ inside ]));
+        ok(range.contains( [ inside, outside ]));
+        ok(!range.contains( [ outside ]));
     });
 
     test("forEachColumn provides correct row references to the callback", function() {

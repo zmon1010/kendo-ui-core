@@ -69,6 +69,10 @@
             return this._sheet._ref(row, leftCol, 1, rightCol - leftCol);
         },
 
+        selectionIncludesMergedCells: function() {
+            return this._sheet.select().contains(this._sheet._mergedCells);
+        },
+
         setSelectionValue: function(value) {
             var selection = this._sheet.selection();
 
@@ -310,7 +314,6 @@
             var sheet = this._sheet;
             var activeCell = sheet.activeCell();
             var topLeft = activeCell.topLeft;
-            var bottomRight = activeCell.bottomRight;
 
             var cell = sheet.originalActiveCell();
             var rows = sheet._grid._rows;
@@ -324,13 +327,9 @@
             var selBottomRight = selection.bottomRight;
 
             var done = false;
-            var newActiveCell;
 
             var topLeftCol = topLeft.col;
             var topLeftRow = topLeft.row;
-
-            var bottomRightCol = bottomRight.col;
-            var bottomRightRow = bottomRight.row;
 
             while (!done) {
                 var current = new CellRef(row, column);

@@ -379,6 +379,11 @@
                 && cell.col <= this.bottomRight.col;
         },
         contains: function(ref) {
+            if (ref instanceof Array) {
+                var that = this;
+
+                return ref.some(function(_ref) { return that.contains(_ref); });
+            }
             if (ref instanceof CellRef) {
                 return this._containsCell(ref);
             }
