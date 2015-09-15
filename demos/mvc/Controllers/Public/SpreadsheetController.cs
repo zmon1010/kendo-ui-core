@@ -1,4 +1,5 @@
-﻿using Kendo.Models;
+﻿#if WINDOWS
+using Kendo.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -73,3 +74,4 @@ namespace Kendo.Controllers
         }
     }
 }
+#endif

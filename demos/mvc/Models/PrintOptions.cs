@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,3 +23,4 @@ namespace Kendo.Models
         public bool PrintGridlines { get; set; }
     }
 }
+#endif
