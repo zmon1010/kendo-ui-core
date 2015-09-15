@@ -478,6 +478,53 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets the client-side alt row template of the grid. The client-side alt row template must contain a table row element (tr).
+        /// </summary>
+        /// <param name="template">The template</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        ///     .ClientAltRowTemplate(grid =&gt;
+        ///     &quot;&lt;tr&gt;&quot; +
+        ///         &quot;&lt;td&gt;#: ProductName #&lt;/td&gt;&quot; +
+        ///         &quot;&lt;td&gt;#: UnitsInStock #&lt;/td&gt;&quot; +
+        ///     &quot;&lt;/tr&gt;&quot;
+        ///     )
+        /// )
+        /// </code>
+        /// <code lang="ASPX">
+        /// &lt;%:Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        ///     .ClientAltRowTemplate(grid =&gt;
+        ///     &quot;&lt;tr&gt;&quot; +
+        ///         &quot;&lt;td&gt;#: ProductName #&lt;/td&gt;&quot; +
+        ///         &quot;&lt;td&gt;#: UnitsInStock #&lt;/td&gt;&quot; +
+        ///     &quot;&lt;/tr&gt;&quot;
+        ///     )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public GridBuilder<T> ClientAltRowTemplate(Func<Grid<T>, string> template)
+        {
+            Component.ClientAltRowTemplate = template(Component);
+
+            return this;
+        }
+
+        /// <summary>
         /// If set to <c>false</c> the widget will not bind to the data source during initialization; the default value is <c>true</c>.
         /// Setting AutoBind to <c>false</c> is supported in ajax-bound mode.
         /// </summary>
