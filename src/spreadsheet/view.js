@@ -257,6 +257,8 @@
     '</ul>';
 
 
+    kendo.spreadsheet.ContextMenu = kendo.ui.ContextMenu;
+
     var VIEW_CONTENTS = kendo.template('<div class="#=classNames.view#"><div class="#=classNames.fixedContainer#"></div><div class="#=classNames.scroller#"><div class="#=classNames.viewSize#"></div></div>' +
         '<div tabindex="0" class="#=classNames.clipboard#" contenteditable=true></div><div class="#=classNames.cellEditor#"></div></div><div class="#=classNames.sheetsBar#"></div>' +
         CELL_CONTEXT_MENU + ROW_HEADER_CONTEXT_MENU + COL_HEADER_CONTEXT_MENU
@@ -302,11 +304,11 @@
                 showOn: "never" // this is just an invalid event name to prevent the show
             };
 
-            this.cellContextMenu = new kendo.ui.ContextMenu(element.find(DOT + classNames.cellContextMenu), contextMenuConfig);
+            this.cellContextMenu = new kendo.spreadsheet.ContextMenu(element.find(DOT + classNames.cellContextMenu), contextMenuConfig);
 
-            this.colHeaderContextMenu = new kendo.ui.ContextMenu(element.find(DOT + classNames.colHeaderContextMenu), contextMenuConfig);
+            this.colHeaderContextMenu = new kendo.spreadsheet.ContextMenu(element.find(DOT + classNames.colHeaderContextMenu), contextMenuConfig);
 
-            this.rowHeaderContextMenu = new kendo.ui.ContextMenu(element.find(DOT + classNames.rowHeaderContextMenu), contextMenuConfig);
+            this.rowHeaderContextMenu = new kendo.spreadsheet.ContextMenu(element.find(DOT + classNames.rowHeaderContextMenu), contextMenuConfig);
 
             this.filterMenus = [];
 
