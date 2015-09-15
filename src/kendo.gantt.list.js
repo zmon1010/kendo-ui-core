@@ -617,6 +617,11 @@ var __meta__ = { // jshint ignore:line
                 .on("focusout" + NS, function() {
                     that.timer = setTimeout(finishEdit, 1);
                 })
+                .on("keydown" + NS, function(e) {
+                    if (e.keyCode === keys.ENTER) {
+                        e.preventDefault();
+                    }
+                })
                 .on("keyup" + NS, function(e) {
                     var key = e.keyCode;
                     var cell;
