@@ -131,8 +131,15 @@
             return ref instanceof CellRef ? data[0] : data;
         },
 
-        onFormula: function(sheet, row, col, value) {
-            sheet = this.workbook.sheetByName(sheet);
+        onFormula: function(f) {
+            var sheet = this.workbook.sheetByName(f.sheet);
+            var row = f.row, col = f.col, value = f.value;
+            var currentFormula = sheet.formula({ row: row, col: col });
+            if (currentFormula !== f) {
+                // could have been deleted or modified in the mean time,
+                // if the formula was asynchronous.  ignore this result.
+                return false;
+            }
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
                 value.each(function(value, r, c) {
@@ -141,6 +148,8 @@
             } else {
                 sheet._value(row, col, value);
             }
+
+            return true;
         }
     });
 

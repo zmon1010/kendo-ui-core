@@ -26,8 +26,12 @@ function Spreadsheet() {
 
 Spreadsheet.prototype = {
 
-    onFormula: function(sheet, row, col, value) {
+    onFormula: function(f) {
+        var sheet = f.sheet, row = f.row, col = f.col, value = f.value;
         var cell = this._getCell(sheet, row, col);
+        if (f !== cell.formula) {
+            return false;
+        }
         if (typeof value == "number") {
             cell.type = "num";
         } else if (typeof value == "string") {
@@ -35,6 +39,7 @@ Spreadsheet.prototype = {
         }
         cell.value = value;
         this.updateDisplay(sheet, row, col);
+        return true;
     },
 
     getRefCells: function(ref) {
@@ -370,8 +375,7 @@ function makeElements(container) {
         .on("focus", "input", _onFocus)
         .on("blur", "input", _onBlur)
         .on("keydown", "input", _onKeyDown)
-        .on("input", "input", _onInput)
-        .on("change", "input", _onChange);
+        .on("input", "input", _onInput);
 }
 
 function _getInput(sheet, row, col) {
@@ -401,14 +405,19 @@ function _onFocus(ev) {
 
 function _saveInput(input) {
     withInput(input, function(input, sheet, sheetName, row, col){
-        var x = SS.setInputData(sheetName, row, col, input.val());
-        SS.updateDisplay(sheetName, row, col);
-        SS.recalculate();
+        var val = input.val(), orig = SS.getInputData(sheetName, row, col);
+        if (orig != input.val() && !(orig == null && val == "")) {
+            var x = SS.setInputData(sheetName, row, col, input.val());
+            SS.updateDisplay(sheetName, row, col);
+            SS.recalculate();
+        } else {
+            input.val(SS.getDisplayData(sheetName, row, col));
+        }
     });
 }
 
 function _onBlur(ev) {
-    // _saveInput(this);
+    _saveInput(this);
 }
 
 function _onChange(ev) {
@@ -547,7 +556,7 @@ false&&fillElements({
     }
 });
 
-false&&fillElements({
+fillElements({
     sheet1: {
         A1: '=ASUM(1000, C:E)',
         A2: '=A1 * 2',
@@ -566,7 +575,7 @@ false&&fillElements({
     }
 });
 
-fillElements({
+false&&fillElements({
     sheet1: {
         A1: 1,
         A2: 2,

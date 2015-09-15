@@ -66,9 +66,8 @@
         _resolve: function(val) {
             var f = this.formula;
             f.value = val;
-            this.ss.onFormula(f.sheet, f.row, f.col, val);
-            if (this.callback) {
-                this.callback(val);
+            if (this.ss.onFormula(f) && this.callback) {
+                this.callback.call(f, val);
             }
         },
 
@@ -466,29 +465,28 @@
         clone: function(sheet, row, col) {
             return new Formula(this.refs, this.handler, this.print, sheet, row, col);
         },
+        resolve: function(val) {
+            this.pending = false;
+            this.onReady.forEach(function(callback){
+                callback(val);
+            });
+        },
         exec: function(ss, callback, parentContext) {
-            var self = this;
-
-            if ("value" in self) {
+            if ("value" in this) {
                 if (callback) {
-                    callback(self.value);
+                    callback(this.value);
                 }
             } else {
                 if (callback) {
-                    self.onReady.push(callback);
+                    this.onReady.push(callback);
                 }
 
-                var ctx = new Context(function(val){
-                    self.pending = false;
-                    self.onReady.forEach(function(callback){
-                        callback(val);
-                    });
-                }, self, ss, parentContext);
+                var ctx = new Context(this.resolve, this, ss, parentContext);
 
                 // if the call chain leads back to this same formula, we have a circular dependency.
                 while (parentContext) {
-                    if (parentContext.formula === self) {
-                        self.pending = false;
+                    if (parentContext.formula === this) {
+                        this.pending = false;
                         ctx.resolve(new CalcError("CIRCULAR"));
                         return;
                     }
@@ -496,20 +494,20 @@
                 }
 
                 // pending is still useful for ASYNC formulas
-                if (self.pending) {
+                if (this.pending) {
                     return;
                 }
-                self.pending = true;
+                this.pending = true;
 
                 // compute and cache the absolute references
-                if (!self.absrefs) {
-                    self.absrefs = self.refs.map(function(ref){
+                if (!this.absrefs) {
+                    this.absrefs = this.refs.map(function(ref){
                         return ref.absolute(this.row, this.col);
-                    }, self);
+                    }, this);
                 }
 
                 // finally invoke the handler given to us by the compiler in calc.js
-                self.handler.call(ctx);
+                this.handler.call(ctx);
             }
         },
         reset: function() {
