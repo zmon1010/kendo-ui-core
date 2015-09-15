@@ -49,6 +49,13 @@
             this._headerWidth = headerWidth;
         },
 
+        isAxis: function(ref) {
+            ref = ref.toRangeRef();
+            var topLeft = ref.topLeft;
+            var bottomRight = ref.bottomRight;
+            return (topLeft.row === 0 && bottomRight.row === this.rowCount - 1) || (topLeft.col === 0 && bottomRight.col === this.columnCount - 1);
+        },
+
         width: function(start, end) {
             return this._columns.sum(start, end);
         },

@@ -24,7 +24,7 @@
 
     test("gets index from ref", function() {
         var grid = new Grid(null, null, 1000, 1000);
-        equal(grid.cellRefIndex({row: 2, col: 2}), 2002)
+        equal(grid.cellRefIndex({row: 2, col: 2}), 2002);
     });
 
     test("width returns the sum of column values within the specified range", function() {
@@ -247,6 +247,15 @@
         var trimmed = grid.trim(range, values);
         ok(trimmed.topLeft.eq(range.topLeft));
         ok(trimmed.bottomRight.eq(new CellRef(9,9)));
+    });
+
+    test("grid recognizes rows and columns", function() {
+        var grid = new Grid(null, null, 100, 100);
+        ok(!grid.isAxis(new RangeRef(new CellRef(0, 1), new CellRef(90, 1))));
+        ok(grid.isAxis(new RangeRef(new CellRef(0, 1), new CellRef(99, 1))));
+
+        ok(!grid.isAxis(new RangeRef(new CellRef(1, 0), new CellRef(1, 90))));
+        ok(grid.isAxis(new RangeRef(new CellRef(1, 0), new CellRef(1, 99))));
     });
 
 })();

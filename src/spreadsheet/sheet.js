@@ -496,7 +496,8 @@
                 }
 
                 this._originalSelection = ref;
-                this._selection = this.unionWithMerged(ref);
+
+                this._selection = this._grid.isAxis(ref) ? ref : this.unionWithMerged(ref);
 
                 if (changeActiveCell !== false) {
                     if (ref.isCell()) {
