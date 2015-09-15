@@ -567,7 +567,7 @@ var __meta__ = { // jshint ignore:line
                 taskElement = this._renderSummary(task, position);
             } else if (task.isMilestone()) {
                 taskElement = this._renderMilestone(task, position);
-                wrapClassName += " " + styles.taskMilestoneWrap;
+                taskWrapAttr.className += " " + styles.taskMilestoneWrap;
             } else {
                 taskElement = this._renderSingleTask(task, position);
             }

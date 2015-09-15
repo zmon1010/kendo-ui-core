@@ -1388,6 +1388,12 @@
         ok(timeline.view().content.find(".k-task-wrap").length);
     });
 
+    test("wrapper has milestone class name", function() {
+        renderMilestone();
+
+        ok(timeline.view().content.find(".k-task-wrap").hasClass("k-milestone-wrap"));
+    });
+
     test("dependency drag handles rendered", function() {
         var taskWrap;
 
