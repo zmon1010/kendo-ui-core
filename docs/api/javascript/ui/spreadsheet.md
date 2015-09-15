@@ -10,6 +10,9 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 
 ## Configuration
 
+### activeSheet `String`
+The name of the currently active sheet.
+
 ### columnWidth `Number` *(default: 64)*
 
 ### columns `Number` *(default: 50)*
@@ -23,6 +26,9 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 ### rows `Number` *(default: 200)*
 
 ### sheets `Array`
+
+### sheets.activeCell `String`
+The active cell in the sheet, e.g. "A1".
 
 ### sheets.columns `Array`
 
@@ -99,6 +105,15 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 ### sheets.rows.height `Number`
 
 ### sheets.rows.index `Number`
+
+### sheets.originalActiveCell `String`
+The original active cell, in case the current [active cell](#configuration-sheets.activeCell) is a merged cell.
+
+### sheets.originalSelection `String`
+The original selected range, in case the [current selection](#configuration-sheets.selection) is a merged cell.
+
+### sheets.selection `String`
+The selected range in the sheet, e.g. "A1:B10".
 
 ### sheets.sort `Object`
 
