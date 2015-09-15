@@ -169,8 +169,10 @@
     position: absolute;
     width: 0;
     height: 0;
-    top: -9999px;
-    left: -9999px;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    border: 0;
     opacity: 0;
 }
 
@@ -373,7 +375,6 @@
 .k-spreadsheet-toolbar {
     &.k-toolbar {
         border-width: 0;
-        background-color: transparent;
 
         .k-overflow-anchor + * {
             border-left-style: none;
@@ -381,10 +382,11 @@
         }
     }
 
+    // hide button/widget default state
     > .k-widget,
     .k-button,
     > .k-button-group,
-    > .k-widget .k-state-default:not(.k-state-hover) {
+    > .k-widget .k-state-default:not(.k-state-hover):not(.k-state-active) {
         margin: 0;
         border-color: transparent;
         border-left-width: 1px;
@@ -392,7 +394,12 @@
         background-color: transparent;
     }
 
-    > .k-widget .k-state-default:not(.k-state-hover) .k-select {
+    > .k-combobox .k-state-default:not(.k-state-hover):not(.k-state-active) .k-input {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    > .k-widget .k-state-default:not(.k-state-hover):not(.k-state-active) .k-select {
         border-color: transparent;
     }
 }
