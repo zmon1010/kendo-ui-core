@@ -37,16 +37,23 @@
          System.config({ defaultJSExtensions: true });
         </script>
         <script src="https://code.angularjs.org/2.0.0-alpha.36/angular2.dev.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.6.0/webcomponents.min.js"></script>
+    }
+
+    @if (ViewBag.CurrentExample != null && ViewBag.CurrentExample.Url.Contains("webcomponents")) {
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.6.0/webcomponents.min.js"></script>
     }
 
     @foreach (string scriptName in Kendo.Models.ScriptGroups.All)
     {
-        if (scriptName.Contains("angular") && !isAngularJsExample) {
+        if (scriptName.Contains("angular") && !isAngularJsExample)
+        {
             continue;
         }
 
         if (scriptName.Contains("jszip") && ViewBag.CurrentExample != null
-        && !ViewBag.CurrentExample.Text.Contains("Excel")) {
+        && !ViewBag.CurrentExample.Text.Contains("Excel"))
+        {
             continue;
         }
 
