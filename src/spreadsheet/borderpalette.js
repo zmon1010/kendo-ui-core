@@ -13,7 +13,7 @@
                 this.element = element;
                 this.color = "#000";
 
-                this.element.addClass("k-spreadsheet-popup k-spreadsheet-border-palette");
+                this.element.addClass("k-spreadsheet-border-palette");
 
                 this._borderTypePalette();
                 this._borderColorPalette();

@@ -375,7 +375,7 @@
         _popup: function() {
             var element = this.element;
 
-            this.popup = $("<div />").appendTo(element).kendoPopup({
+            this.popup = $("<div class='k-spreadsheet-popup' />").appendTo(element).kendoPopup({
                 anchor: element
             }).data("kendoPopup");
         }
@@ -758,7 +758,7 @@
             var element = $("<div />").appendTo(this.popup.element);
             this.buttons.forEach(function(options) {
                 var title = options.value === "unmerge" ? "Unmerge" : "Merge " + options.value;
-                var button = "<a title='" + title + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
+                var button = "<a title='" + title + "' data-value='" + options.value + "' class='k-button k-button-icontext'>" +
                                 "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + title +
                              "</a>";
                 element.append(button);
