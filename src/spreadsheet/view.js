@@ -795,7 +795,16 @@
         resizeHint: "k-resize-hint",
         resizeHintHandle: "k-resize-hint-handle",
         resizeHintMarker: "k-resize-hint-marker",
-        resizeHintVertical: "k-resize-hint-vertical"
+        resizeHintVertical: "k-resize-hint-vertical",
+        selectionDashed: "k-spreadsheet-selection-dashed",
+        series: [
+            "k-series-a",
+            "k-series-b",
+            "k-series-c",
+            "k-series-d",
+            "k-series-e",
+            "k-series-f"
+        ]
     };
 
     var Pane = kendo.Class.extend({
@@ -828,6 +837,8 @@
             children.push(this.renderMergedCells());
 
             children.push(this.renderSelection());
+
+            children.push(this.renderEditorSelection());
 
             children.push(this.renderFilterHeaders());
 
@@ -996,6 +1007,28 @@
             }.bind(this));
 
             return kendo.dom.element("div", { className: classNames.filterHeadersWrapper }, filterIcons);
+
+        },
+
+        renderEditorSelection: function() {
+            var classNames = Pane.classNames;
+            var sheet = this._sheet;
+            var selections = [];
+
+            sheet._editorSelection.forEach(function(range) {
+                var ref = range.ref;
+                var className = classNames.selectionDashed;
+
+                if (ref === kendo.spreadsheet.NULLREF) {
+                    return;
+                }
+
+                className += " " + (classNames.series[range.series] || classNames.series[0]);
+
+                this._addDiv(selections, ref, className);
+            }.bind(this));
+
+            return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);
 
         },
 
