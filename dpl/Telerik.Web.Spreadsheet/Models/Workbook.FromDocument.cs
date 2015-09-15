@@ -122,7 +122,7 @@ namespace Telerik.Web.Spreadsheet
                     if (formulaCellValue != null)
                     {
                         cellValue = formulaCellValue.GetResultValueAsCellValue();
-                        formula = formulaCellValue.RawValue;
+                        formula = formulaCellValue.RawValue.Substring(1);
                     }
 
                     if (cellValue.ValueType != CellValueType.Empty)

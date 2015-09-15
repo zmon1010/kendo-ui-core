@@ -91,7 +91,7 @@ namespace Telerik.Web.Spreadsheet.Tests
         public void FromDocument_imports_cell_formula()
         {
             var value = GetCell(1, 4).Formula;
-            Assert.Equal("=A1 + B1", value);
+            Assert.Equal("A1 + B1", value);
         }
 
         [Fact]

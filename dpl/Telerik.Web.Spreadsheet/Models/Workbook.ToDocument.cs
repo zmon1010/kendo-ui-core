@@ -73,15 +73,16 @@ namespace Telerik.Web.Spreadsheet
                 var selection = documentSheet.Cells[srcRow.Index, cell.Index];
                 double numericValue;
 
-                if (!string.IsNullOrEmpty(cell.Formula))
+                var formula = cell.Formula;
+                if (!string.IsNullOrEmpty(formula))
                 {
-                    selection.SetValueAsFormula(cell.Formula);
+                    selection.SetValueAsFormula("=" + formula);
                 }
                 else if (double.TryParse(stringValue, out numericValue))
                 {
                     selection.SetValue(numericValue);
                 }
-                else
+                else if (!string.IsNullOrEmpty(stringValue))
                 {
                     selection.SetValueAsText(stringValue);
                 }
