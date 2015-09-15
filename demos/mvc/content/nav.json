@@ -6688,6 +6688,17 @@
             "kendo-ui": "This demo illustrates how Angular 2 can be integrated with the Kendo UI framework"
         },
         "new": "true"
+      },
+      {
+        "text": "Kendo UI + WebComponents",
+        "url": "integration/webcomponents",
+        "title": {
+            "kendo-ui": "Integrating Kendo UI widgets with WebComponents (experimental)"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates how Kendo UI widget can be initialized and used the WebComponents way"
+        },
+        "new": "true"
       }
     ],
     "category": "Framework"
