@@ -109,9 +109,16 @@
         equal(tableB5B5.attr.className, "k-spreadsheet-selection");
     });
 
-    test("expands the selection ref around merged cell", function() {
-        var pane = createPane(0, 0);
+    test("expands the selection ref around two neighbour merged cells", function() {
+        sheet.range("A1:B2").merge();
+        sheet.range("C2:D3").merge();
 
+        var ref = sheet.select("B3:C3");
+
+        equal(ref.toString(), "A1:D3");
+    });
+
+    test("expands the selection ref around merged cell", function() {
         sheet.range("B2:C3").merge().value("foo");
         var ref = sheet.select("A1:B2");
 

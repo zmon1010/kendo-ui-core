@@ -562,28 +562,35 @@
                 return ref.intersects(this);
             }, this);
         },
+
         union: function(refs, callback) {
-            refs = this.intersecting(refs);
+            var intersecting = this.intersecting(refs);
 
             var topLeftRow = this.topLeft.row;
             var topLeftCol = this.topLeft.col;
             var bottomRightRow = this.bottomRight.row;
             var bottomRightCol = this.bottomRight.col;
 
-            refs.forEach(function(ref) {
+            var modified = false;
+
+            intersecting.forEach(function(ref) {
                 if (ref.topLeft.row < topLeftRow) {
+                    modified = true;
                     topLeftRow = ref.topLeft.row;
                 }
 
                 if (ref.topLeft.col < topLeftCol) {
+                    modified = true;
                     topLeftCol = ref.topLeft.col;
                 }
 
                 if (ref.bottomRight.row > bottomRightRow) {
+                    modified = true;
                     bottomRightRow = ref.bottomRight.row;
                 }
 
                 if (ref.bottomRight.col > bottomRightCol) {
+                    modified = true;
                     bottomRightCol = ref.bottomRight.col;
                 }
 
@@ -592,10 +599,16 @@
                 }
             });
 
-            return new RangeRef(
+            var result = new RangeRef(
                 new CellRef(topLeftRow, topLeftCol),
                 new CellRef(bottomRightRow, bottomRightCol)
             );
+
+            if (modified) {
+                return result.union(refs, callback);
+            } else {
+                return result;
+            }
         },
         resize: function(options) {
             var limit = Math.max.bind(Math, 0);
