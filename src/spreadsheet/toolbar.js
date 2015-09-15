@@ -28,7 +28,7 @@
             [ "deleteColumn", "deleteRow" ]
         ],
         data: [
-            [ "sortAsc", "sortDesc" ],
+            "sort",
             "filter"
         ]
     };
@@ -65,8 +65,7 @@
         deleteRow:             { type: "button", command: "DeleteRowCommand",                    iconClass: "delete-row"       },
 
         //data tab
-        sortAsc:               { type: "button", command: "SortCommand",         value: "asc",   iconClass: "sort-asc"         },
-        sortDesc:              { type: "button", command: "SortCommand",         value: "desc",  iconClass: "sort-desc"        }
+        sort:                  { type: "sort", iconClass: "sort-desc" }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -781,6 +780,55 @@
     });
 
     kendo.toolbar.registerComponent("merge", MergeTool, MergeButton);
+
+    var Sort = DropDownTool.extend({
+        _revertTitle: function(e) {
+            e.sender.value("");
+            e.sender.wrapper.width("auto");
+        },
+        init: function(options, toolbar) {
+            DropDownTool.fn.init.call(this, options, toolbar);
+
+            var ddl = this.dropDownList;
+            ddl.bind("change", this._revertTitle.bind(this));
+            ddl.bind("dataBound", this._revertTitle.bind(this));
+            ddl.setOptions({
+                valueTemplate: "<span class='k-icon k-font-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>",
+                dataValueField: "value",
+                dataTextField: "name",
+            });
+            ddl.setDataSource([
+                { value: 1, sheet: true, asc: true,  name: "Sort sheet A to Z",  iconClass: "sort-asc" },
+                { value: 2, sheet: true, asc: false, name: "Sort sheet Z to A", iconClass: "sort-desc" },
+                { value: 3, range: true, asc: true,  name: "Sort range A to Z",  iconClass: "sort-asc" },
+                { value: 4, range: true, asc: false, name: "Sort range Z to A", iconClass: "sort-desc" }
+            ]);
+
+            this.element.data({
+                type: "sort",
+                sort: this
+            });
+        },
+        _change: function(e) {
+            var instance = e.sender;
+            var dataItem = instance.dataItem();
+
+            this.toolbar.execute(new kendo.spreadsheet.SortCommand({
+                asc: dataItem.asc,
+                sheet: dataItem.sheet,
+                range: dataItem.range
+            }));
+        },
+        value: $.noop
+    });
+
+    var SortButton = OverflowDialogButton.extend({
+        _click: function() {
+            this.toolbar.openDialog("sort");
+        }
+    });
+
+    kendo.toolbar.registerComponent("sort", Sort, SortButton);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
     kendo.spreadsheet.TabStrip = kendo.ui.TabStrip.extend({
