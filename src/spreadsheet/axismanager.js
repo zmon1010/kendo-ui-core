@@ -19,7 +19,7 @@
                 sheet.select().forEachColumnIndex(function(index, i) {
                     callback(sheet, index, i);
                 });
-            }, true);
+            }, { layout: true, recalc: true });
         },
 
         forEachSelectedRow: function(callback) {
@@ -29,7 +29,7 @@
                 sheet.select().forEachRowIndex(function(index, i) {
                     callback(sheet, index, i);
                 });
-            }, true);
+            }, { layout: true, recalc: true });
         },
 
         includesHiddenColumns: function(ref) {
