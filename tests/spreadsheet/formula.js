@@ -50,7 +50,8 @@
             this.maxrow = 0;
             this.maxcol = 0;
         },
-        onFormula: function(sheet, row, col, value) {
+        onFormula: function(f) {
+            var sheet = f.sheet, row = f.row, col = f.col, value = f.value;
             this.maxrow = Math.max(row, this.maxrow);
             this.maxcol = Math.max(col, this.maxcol);
             var cell = this.data[this.id(row, col)];
@@ -58,6 +59,7 @@
                 this.data[this.id(row, col)] = cell = {};
             }
             cell.value = value;
+            return true;
         },
         getRefCells: function(ref) {
             if (ref instanceof spreadsheet.CellRef) {
