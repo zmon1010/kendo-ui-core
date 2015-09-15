@@ -694,4 +694,116 @@
         ok(!range.hasFilter());
     });
 
+    module("SpreadSheet SortCommand", moduleOptions);
+
+    var SortCommand = $.proxy(command, this, kendo.spreadsheet.SortCommand);
+
+    test("Sorts range ascending", function() {
+        var command = SortCommand({ range: true, asc: true });
+        
+        sheet.range("A1:B3").values([
+            [ 3, "a" ],
+            [ 2, "b" ],
+            [ 1, "c" ]
+        ]);
+
+        sheet.select("A1:B2");
+        command.range(sheet.range("A1:B2"));
+
+        command.exec();
+
+        var valuesA = sheet.range("A1:A3").values();
+
+        equal(valuesA[0], 2);
+        equal(valuesA[1], 3);
+        equal(valuesA[2], 1);
+
+        var valuesB = sheet.range("B1:B3").values();
+
+        equal(valuesB[0], "b");
+        equal(valuesB[1], "a");
+        equal(valuesB[2], "c");
+    });
+
+    test("Sorts range descending", function() {
+        var command = SortCommand({ range: true, asc: false });
+        
+        sheet.range("A1:B3").values([
+            [ 2, "a" ],
+            [ 3, "b" ],
+            [ 1, "c" ]
+        ]);
+
+        sheet.select("A1:B2");
+        command.range(sheet.range("A1:B2"));
+
+        command.exec();
+
+        var valuesA = sheet.range("A1:A3").values();
+
+        equal(valuesA[0], 3);
+        equal(valuesA[1], 2);
+        equal(valuesA[2], 1);
+
+        var valuesB = sheet.range("B1:B3").values();
+
+        equal(valuesB[0], "b");
+        equal(valuesB[1], "a");
+        equal(valuesB[2], "c");
+    });
+
+    test("Sorts sheet ascending", function() {
+        var command = SortCommand({ sheet: true, asc: true });
+        
+        sheet.range("A1:B3").values([
+            [ 3, "a" ],
+            [ 2, "b" ],
+            [ 1, "c" ]
+        ]);
+
+        sheet.select("A1:B2");
+        command.range(sheet.range("A1:B2"));
+
+        command.exec();
+
+        var valuesA = sheet.range("A1:A3").values();
+
+        equal(valuesA[0], 1);
+        equal(valuesA[1], 2);
+        equal(valuesA[2], 3);
+
+        var valuesB = sheet.range("B1:B3").values();
+
+        equal(valuesB[0], "c");
+        equal(valuesB[1], "b");
+        equal(valuesB[2], "a");
+    });
+
+    test("Sorts sheet descending", function() {
+        var command = SortCommand({ sheet: true, asc: false });
+        
+        sheet.range("A1:B3").values([
+            [ 1, "a" ],
+            [ 2, "b" ],
+            [ 3, "c" ]
+        ]);
+
+        sheet.select("A1:B2");
+        command.range(sheet.range("A1:B2"));
+
+        command.exec();
+
+        var valuesA = sheet.range("A1:A3").values();
+
+        equal(valuesA[0], 3);
+        equal(valuesA[1], 2);
+        equal(valuesA[2], 1);
+
+        var valuesB = sheet.range("B1:B3").values();
+
+        equal(valuesB[0], "c");
+        equal(valuesB[1], "b");
+        equal(valuesB[2], "a");
+    });
+
 })();

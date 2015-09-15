@@ -315,6 +315,32 @@
         }
     });
 
+    kendo.spreadsheet.SortCommand = Command.extend({
+        undo: function() {
+            var sheet = this.range().sheet();
+            sheet.setState(this._state);
+        },
+        exec: function() {
+            var range = this.range();
+            var sheet = range.sheet();
+            var activeCell = sheet.activeCell();
+            var col = activeCell.topLeft.col;
+            var ascending = this.options.asc;
+
+            this._state = sheet.getState();
+
+            if (this.options.range) {
+                range.sort({ column: col, ascending: ascending });
+            } else if (this.options.sheet) {
+                this.expandRange().sort({ column: col, ascending: ascending });
+            }
+        },
+        expandRange: function() {
+            var sheet = this.range().sheet();
+            return new kendo.spreadsheet.Range(sheet._sheetRef, sheet);
+        }
+    });
+
     kendo.spreadsheet.HideLineCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
