@@ -138,13 +138,8 @@
             this.cellContextMenu.element.add(this.rowHeaderContextMenu.element).add(this.colHeaderContextMenu.element).on("contextmenu", false);
 
             if (this.tabstrip) {
-                this.tabstrip.bind("action", this.onQuickAccessToolBarClick.bind(this));
-
-                this.toolbars = this.tabstrip.toolbars;
-                for (key in this.toolbars) {
-                    this.toolbars[key].bind("action", this.onToolBarAction.bind(this));
-                    this.toolbars[key].bind("dialog", this.onToolBarDialog.bind(this));
-                }
+                this.tabstrip.bind("action", this.onToolBarAction.bind(this));
+                this.tabstrip.bind("dialog", this.onToolBarDialog.bind(this));
             }
 
             $(this.view.container).on("click", ".k-link.k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
@@ -741,13 +736,14 @@
             filterMenu.openFor(target);
         },
 
-        onQuickAccessToolBarClick: function(e) {
-            this._workbook.undoRedoStack[e.action]();
-        },
-
         onToolBarAction: function(e) {
-            var command = new kendo.spreadsheet[e.command]($.extend(e.options, { workbook: this._workbook }));
-            this._workbook.execute(command);
+            var command;
+            if (e.command) {
+                command = new kendo.spreadsheet[e.command]($.extend(e.options, { workbook: this._workbook }));
+                this._workbook.execute(command);
+            } else {
+                this._workbook.undoRedoStack[e.action]();
+            }
         },
 
         onToolBarDialog: function(e) {

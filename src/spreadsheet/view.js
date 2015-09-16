@@ -473,13 +473,8 @@
         refresh: function(reason) {
             var sheet = this._sheet;
 
-            var toolbars = this.tabstrip ? this.tabstrip.toolbars : null;
-            if (toolbars) {
-                for (var name in toolbars) {
-                    if (toolbars.hasOwnProperty(name)) {
-                        toolbars[name].refresh(sheet.range(sheet.activeCell()));
-                    }
-                }
+            if (this.tabstrip) {
+                this.tabstrip.refreshTools(sheet.range(sheet.activeCell()));
             }
 
             if (reason.sheetSelection) {

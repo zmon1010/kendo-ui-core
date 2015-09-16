@@ -866,18 +866,36 @@
             this.toolbars = {};
 
             var tabs = options.dataSource;
+
             this.contentElements.each(function(idx, element) {
                 this._toolbar($(element), tabs[idx].id, options.toolbarOptions[tabs[idx].id]);
             }.bind(this));
         },
 
-        events: kendo.ui.TabStrip.fn.events.concat([ "action" ]),
+        events: kendo.ui.TabStrip.fn.events.concat([ "action", "dialog" ]),
 
         destroy: function() {
             this.quickAccessToolBar.off("click");
             kendo.ui.TabStrip.fn.destroy.call(this);
             for (var name in this.toolbars) {
                 this.toolbars[name].destroy();
+            }
+        },
+
+        action: function(args) {
+            this.trigger("action", args);
+        },
+
+        dialog: function(popupName, options) {
+            this.trigger("dialog", { name: popupName, options: options });
+        },
+
+        refreshTools: function(range) {
+            var toolbars = this.toolbars;
+            for (var name in toolbars) {
+                if (toolbars.hasOwnProperty(name)) {
+                    toolbars[name].refresh(range);
+                }
             }
         },
 
@@ -895,7 +913,7 @@
 
             this.quickAccessToolBar.on("click", ".k-button", function(e) {
                 var action = $(e.currentTarget).attr("title").toLowerCase();
-                this.trigger("action", { action: action });
+                this.action({ action: action });
             }.bind(this));
 
             this.tabGroup.css("padding-left", this.quickAccessToolBar.outerWidth());
@@ -915,7 +933,9 @@
 
                 options = {
                     tools: typeof tools === "boolean" ? undefined : tools,
-                    toolbarName: name
+                    toolbarName: name,
+                    action: this.action.bind(this),
+                    dialog: this.dialog.bind(this)
                 };
 
                 this.toolbars[name] = new kendo.spreadsheet.ToolBar(element, options);
