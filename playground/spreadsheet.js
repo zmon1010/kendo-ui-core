@@ -174,6 +174,10 @@ $("#recalc").on("click", function(){
     //console.timeEnd("recalc");
 });
 
+var sheet1 = spreadsheet.sheetByName("Sheet1")
+sheet1.range("C17").formula("=SUM(A1:B1)");
+sheet1.range("C18").formula("=SUM(A1:B1, A2:B2, A3:B3)");
+
 var sheet2 = spreadsheet.sheetByName("Sheet2");
 sheet2.range("A1").formula("=Sheet1!A1:B3 ^ 2");
 
