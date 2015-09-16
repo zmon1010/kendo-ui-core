@@ -507,6 +507,8 @@
             var object = this.objectAt(event);
             if (object && object.ref && editor.canInsertRef()) {
                 editor.refAtPoint(sheet.selection()._ref);
+
+                sheet._setRangeSelections(this._parseRefs(editor.value()));
             }
         },
 
