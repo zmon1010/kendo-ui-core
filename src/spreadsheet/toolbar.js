@@ -7,8 +7,6 @@
 
     var ToolBar = kendo.ui.ToolBar;
 
-    var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand;
-
     var defaultTools = {
         home: [
             [ "cut", "copy", "paste" ],
@@ -810,14 +808,13 @@
             ddl.bind("dataBound", this._revertTitle.bind(this));
             ddl.setOptions({
                 valueTemplate: "<span class='k-icon k-font-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>",
-                dataValueField: "value",
-                dataTextField: "name",
+                dataValueField: "value"
             });
             ddl.setDataSource([
-                { value: 1, sheet: true, asc: true,  name: "Sort sheet A to Z",  iconClass: "sort-asc" },
-                { value: 2, sheet: true, asc: false, name: "Sort sheet Z to A", iconClass: "sort-desc" },
-                { value: 3, range: true, asc: true,  name: "Sort range A to Z",  iconClass: "sort-asc" },
-                { value: 4, range: true, asc: false, name: "Sort range Z to A", iconClass: "sort-desc" }
+                { value: 1, sheet: true, asc: true,  text: "Sort sheet A to Z",  iconClass: "sort-asc" },
+                { value: 2, sheet: true, asc: false, text: "Sort sheet Z to A", iconClass: "sort-desc" },
+                { value: 3, range: true, asc: true,  text: "Sort range A to Z",  iconClass: "sort-asc" },
+                { value: 4, range: true, asc: false, text: "Sort range Z to A", iconClass: "sort-desc" }
             ]);
 
             this.element.data({

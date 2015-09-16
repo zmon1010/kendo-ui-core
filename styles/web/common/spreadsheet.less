@@ -326,19 +326,80 @@
     border-radius: 0;
 }
 
-.k-spreadsheet-filter-menu dl {
-    margin: 0;
-}
+.k-spreadsheet-filter-menu {
+    width: 280px;
 
-.k-spreadsheet-filter-menu dt {
-    padding: 0.5em 1.1em 0.4em;
-    line-height: 1.34em;
-}
+    > .k-menu {
+        border-width: 0;
 
-.k-spreadsheet-value-treeview-wrapper {
-    height: 200px;
-    overflow-y: scroll;
-    overflow-x: auto;
+        .k-link {
+            padding-left: 26px;
+        }
+
+        .k-icon.k-font-icon {
+            margin-left: -26px;
+            width: 26px;
+        }
+    }
+
+    .k-spreadsheet-value-treeview-wrapper {
+        height: 200px;
+        overflow-y: scroll;
+        overflow-x: auto;
+        border-width: 1px;
+        border-style: solid;
+
+        .k-treeview {
+            overflow: visible;
+            padding: 6px 7px;
+        }
+    }
+
+    .k-details {
+        border-top-width: 1px;
+        border-top-style: solid;
+        padding: 4px 0;
+    }
+
+    .k-details-summary {
+        cursor: pointer;
+        line-height: 26px;
+
+        .k-icon {
+            margin: 0 5px;
+        }
+    }
+
+    .k-details-content {
+        padding: 0 8px 0 26px;
+
+        > .k-textbox,
+        > .k-widget {
+            width: 100%;
+            margin-bottom: 3px;
+        }
+
+        .k-space-right {
+            background-image: none;
+        }
+
+        .k-filter-and {
+            width: 75px;
+            margin: 8px 0;
+        }
+    }
+
+    .k-action-buttons {
+        border-top-width: 0;
+        margin: 8px;
+        padding: 0;
+        position: static;
+
+        .k-button {
+            margin: 0 0 0 6px;
+            min-width: 75px;
+        }
+    }
 }
 
 .k-resize-handle,

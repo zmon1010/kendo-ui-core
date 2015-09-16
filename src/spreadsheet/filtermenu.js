@@ -6,25 +6,30 @@
         var $ = kendo.jQuery;
         var Widget = kendo.ui.Widget;
         var classNames = {
-            reset: "k-reset",
-            input: "k-input",
+            details: "k-details",
+            detailsSummary: "k-details-summary",
+            detailsContent: "k-details-content",
+            icon: "k-icon k-font-icon",
+            iconCollapse: "k-i-collapse-se",
+            iconExpand: "k-i-expand-e",
+            iconSearch: "k-i-search",
+            textbox: "k-textbox",
             wrapper: "k-spreadsheet-filter-menu",
             filterByCondition: "k-spreadsheet-condition-filter",
             filterByValue: "k-spreadsheet-value-filter",
-            search: "k-spreadsheet-search-box",
-            valueTreeViewWrapper: "k-spreadsheet-value-treeview-wrapper"
+            valuesTreeViewWrapper: "k-spreadsheet-value-treeview-wrapper"
         };
 
         var Details = Widget.extend({
             init: function(element, options) {
                 Widget.fn.init.call(this, element, options);
 
-                this.element.addClass("k-details");
+                this.element.addClass(FilterMenu.classNames.details);
 
-                this._summary = this.element.find(".k-details-summary")
+                this._summary = this.element.find("." + FilterMenu.classNames.detailsSummary)
                     .on("click", this.toggle.bind(this));
 
-                this._icon = $("<span class='k-icon k-font-icon k-i-arrow-s' />")
+                this._icon = $("<span />", { "class": FilterMenu.classNames.icon + " " + FilterMenu.classNames.iconCollapse })
                     .prependTo(this._summary);
 
                 this._container = kendo.wrap(this._summary.next(), true);
@@ -38,24 +43,26 @@
 
                 animation.stop()[show ? "reverse" : "play"]();
 
-                this._summary.toggleClass("k-details-summary-active", !show);
-                this._icon.toggleClass("k-i-arrow-e", show)
-                          .toggleClass("k-i-arrow-s", !show);
+                this._icon.toggleClass(FilterMenu.classNames.iconExpand, show)
+                          .toggleClass(FilterMenu.classNames.iconCollapse, !show);
             }
         });
 
-        var searchId = "spreadsheet_filter_search_" + kendo.guid();
-
         var templates = {
             filterByValue:
-                "<div class='k-details-summary'><label for='" + searchId + "'>#= filterByValue #</label></div>" +
-                "<div class='k-details-content'>" +
-                    "<input id='" + searchId + "' class='" + classNames.input + " " + classNames.search + "' />" +
-                    "<div class='" + classNames.valueTreeViewWrapper + "'><div /></div>" +
+                "<div class='" + classNames.detailsSummary + "'>#= messages.filterByValue #</div>" +
+                "<div class='" + classNames.detailsContent + "'>" +
+                    "<div class='k-textbox k-space-right'>" +
+                        "<input placeholder='#= messages.search #' />" +
+                        "<span class='k-icon k-font-icon k-i-search' />" +
+                    "</div>" +
+                    "<div class='" + classNames.valuesTreeViewWrapper + "'>" +
+                        "<div data-role='treeview' data-checkboxes='{ checkChildren: true }' />" +
+                    "</div>" +
                 "</div>",
             filterByCondition:
-                "<div class='k-details-summary'><label>#= messages.filterByCondition #</label></div>" +
-                "<div class='k-details-content'>" +
+                "<div class='" + classNames.detailsSummary + "'>#= messages.filterByCondition #</div>" +
+                "<div class='" + classNames.detailsContent + "'>" +
                     '<select data-#=ns#bind="value: filters[0].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
                         '#for(var type in operators){#'+
                             '#for(var op in operators[type]){#' +
@@ -73,19 +80,15 @@
                             '#for(var op in operators[type]){#' +
                                 '<option value="#=op#">#=operators[type][op]#</option>' +
                             '#}#'+
-                        '#}#'+
+                        '#}#'
                     '</select>'+
-                    '<input data-#=ns#bind="value: filters[1].value" class="k-textbox" />' +
+                    '<input data-#=ns#bind="value: filters[1].value" class="' + classNames.textbox + '" />' +
                 "</div>",
             menuItem:
                 "<li data-command='#=command#' data-dir='#=dir#'>" +
                     "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>#=text#" +
                 "</li>"
         };
-
-        function flatternValues(values) {
-            return [].concat.apply([], values);
-        }
 
         function distinctValues(values) {
             var hash = {};
@@ -121,10 +124,11 @@
                     filterByValue: "Filter by value",
                     filterByCondition: "Filter by condition",
                     apply: "Apply",
+                    search: "Search",
                     cancel: "Cancel",
                     blanks: "(Blanks)",
-                    and: "And",
-                    or: "Or"
+                    and: "AND",
+                    or: "OR"
                 },
                 operators: {
                     string: {
@@ -137,7 +141,7 @@
                         eq:  "Date is",
                         neq: "Date is not",
                         lt:  "Date is before",
-                        gt:  "Date is after",
+                        gt:  "Date is after"
                     },
                     number: {
                         eq: "Is equal to",
@@ -196,7 +200,7 @@
                     values.push(cell);
                 });
 
-                var values = distinctValues(values);
+                values = distinctValues(values);
 
                 values.sort(function(a, b) {
                     if (a.dataType === b.dataType) {
@@ -256,33 +260,40 @@
                 }).data("kendoMenu");
             },
 
+            _appendTemplate: function(template) {
+                var compiledTemplate = kendo.template(template);
+                var wrapper = $("<div />").html(compiledTemplate({
+                    messages: this.options.messages,
+                    operators: this.options.operators,
+                    ns: kendo.ns
+                }));
+
+                this.element.append(wrapper);
+
+                var details = new Details(wrapper);
+
+                kendo.init(wrapper);
+
+                return wrapper;
+            },
+
             _filterByCondition: function() {
-                var template = kendo.template(FilterMenu.templates.filterByCondition);
-                var element = $("<div />", {
-                                "class": FilterMenu.classNames.filterByCondition,
-                                "html": template({ messages: this.options.messages, operators: this.options.operators, ns: kendo.ns })
-                              }).appendTo(this.element);
-
-                this._filterByConditionDetails = new Details(element);
-
-                kendo.init(element);
+                this._appendTemplate(FilterMenu.templates.filterByCondition);
             },
 
             _filterByValue: function() {
-                var template = kendo.template(FilterMenu.templates.filterByValue);
-                var element = $("<div />", {
-                                "class": FilterMenu.classNames.filterByValue,
-                                "html": template(this.options.messages)
-                              }).appendTo(this.element);
+                var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue);
 
-                this._filterByValueDetails = new Details(element);
+                this.valuesTreeView = wrapper.find("[data-role=treeview]").data("kendoTreeView");
 
-                this.valuesTreeView = element.find("." + FilterMenu.classNames.valueTreeViewWrapper).children().first().kendoTreeView({
-                    checkboxes: {
-                        checkChildren: true
-                    },
-                    dataSource: this.getValues()
-                }).data("kendoTreeView");
+                this.valuesTreeView.bind("select", function(e) {
+                    e.preventDefault();
+
+                    var node = this.dataItem(e.node);
+                    node.set("checked", !node.checked);
+                });
+
+                this.valuesTreeView.setDataSource(this.getValues());
             },
 
             _actionButtons: function() {
@@ -293,7 +304,7 @@
                                     "<button class='k-button'>" + messages.cancel + "</button>"
                           });
 
-                div.appendTo(this.element);
+                this.element.append(div);
             }
         });
 
