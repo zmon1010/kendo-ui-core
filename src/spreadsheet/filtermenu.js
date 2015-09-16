@@ -80,7 +80,7 @@
                             '#for(var op in operators[type]){#' +
                                 '<option value="#=op#">#=operators[type][op]#</option>' +
                             '#}#'+
-                        '#}#'
+                        '#}#' +
                     '</select>'+
                     '<input data-#=ns#bind="value: filters[1].value" class="' + classNames.textbox + '" />' +
                 "</div>",
