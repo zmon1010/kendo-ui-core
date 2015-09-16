@@ -44,7 +44,7 @@
         },
 
         _selectionState: function() {
-            return this._inEdit ? this._viewSelection : this._editSelection;
+            return this._inEdit ? this._editSelection : this._viewSelection;
         },
 
         navigator: function() {
