@@ -688,6 +688,8 @@
         },
 
         onEditorChange: function(e) {
+            sheet._edit(false);
+
             this._workbook.execute(new kendo.spreadsheet.EditCommand({
                 value: e.value
             }));
@@ -697,15 +699,15 @@
             var workbook = this._workbook;
             var sheet = workbook.activeSheet();
 
-            sheet._edit(true);
             sheet._setRangeSelections(this._parseRefs(workbook._inputForRef(sheet.activeCell())));
+            sheet._edit(true);
         },
 
         onEditorDeactivate: function() {
             var sheet = this._workbook.activeSheet();
 
-            sheet._setRangeSelections([]);
             sheet._edit(false);
+            sheet._setRangeSelections([]);
         },
 
         onEditorUpdate: function(e) {
