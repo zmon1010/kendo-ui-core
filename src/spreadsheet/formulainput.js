@@ -3,6 +3,10 @@
 })(function(){
 
 (function(kendo, window) {
+
+    /* jshint eqnull:true */
+    /* jshint latedef: nofunc */
+
     var $ = kendo.jQuery;
     var Widget = kendo.ui.Widget;
     var ns = ".kendoFormulaInput";
@@ -71,6 +75,79 @@
             scalePadding: 30,
             minLength: 1
         },
+
+        getPos: function() {
+            var div = this.element[0];
+            var sel = window.getSelection();
+            var a = lookup(sel.focusNode, sel.focusOffset);
+            var b = lookup(sel.anchorNode, sel.anchorOffset);
+            if (a != null && b != null) {
+                if (a > b) {
+                    var tmp = a;
+                    a = b;
+                    b = tmp;
+                }
+                return { begin: a, end: b, collapsed: a == b };
+            }
+            function lookup(lookupNode, pos) {
+                try {
+                    (function loop(node){
+                        if (node === lookupNode) {
+                            throw pos;
+                        } else if (node.nodeType == 1 /* Element */) {
+                            for (var i = node.firstChild; i; i = i.nextSibling) {
+                                loop(i);
+                            }
+                        } else if (node.nodeType == 3 /* Text */) {
+                            pos += node.nodeValue.length;
+                        }
+                    })(div);
+                } catch(index) {
+                    return index;
+                }
+            }
+        },
+
+        setPos: function(begin, end) {
+            var eiv = this.element[0];
+            begin = lookup(eiv, begin);
+            if (end != null) {
+                end = lookup(eiv, end);
+            } else {
+                end = begin;
+            }
+            if (begin.node && end.node) {
+                var r = document.createRange();
+                r.setStart(begin.node, begin.pos);
+                r.setEnd(end.node, end.pos);
+                var sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(r);
+            }
+            function lookup(node, pos) {
+                try {
+                    (function loop(node){
+                        if (node.nodeType == 3 /* Text */) {
+                            var len = node.nodeValue.length;
+                            if (len >= pos) {
+                                throw node;
+                            }
+                            pos -= len;
+                        } else if (node.nodeType == 1 /* Element */) {
+                            for (var i = node.firstChild; i; i = i.nextSibling) {
+                                loop(i);
+                            }
+                        }
+                    })(node);
+                } catch(el) {
+                    return { node: el, pos: pos };
+                }
+            }
+        },
+
+        // length: function() {
+        //     return this.element.text().length;
+        // },
 
         _formulaSource: function() {
             var result = [];
