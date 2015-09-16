@@ -4,6 +4,7 @@
 
     (function(kendo) {
         var $ = kendo.jQuery;
+        var Widget = kendo.ui.Widget;
         var classNames = {
             reset: "k-reset",
             input: "k-input",
@@ -13,16 +14,48 @@
             search: "k-spreadsheet-search-box",
             valueTreeViewWrapper: "k-spreadsheet-value-treeview-wrapper"
         };
+
+        var Details = Widget.extend({
+            init: function(element, options) {
+                Widget.fn.init.call(this, element, options);
+
+                this.element.addClass("k-details");
+
+                this._summary = this.element.find(".k-details-summary")
+                    .on("click", this.toggle.bind(this));
+
+                this._icon = $("<span class='k-icon k-font-icon k-i-arrow-s' />")
+                    .prependTo(this._summary);
+
+                this._container = kendo.wrap(this._summary.next(), true);
+            },
+            options: {
+                name: "Details"
+            },
+            toggle: function() {
+                var show = this._container.is(":visible");
+                var animation = kendo.fx(this._container).expand("vertical");
+
+                animation.stop()[show ? "reverse" : "play"]();
+
+                this._summary.toggleClass("k-details-summary-active", !show);
+                this._icon.toggleClass("k-i-arrow-e", show)
+                          .toggleClass("k-i-arrow-s", !show);
+            }
+        });
+
+        var searchId = "spreadsheet_filter_search_" + kendo.guid();
+
         var templates = {
             filterByValue:
-                "<dt><span class='k-icon k-font-icon k-i-arrow-e'></span><span>#= filterByValue #</span></dt>" +
-                "<dd class='" + classNames.reset + "'>" +
-                    "<input type='text' class='" + classNames.input + " " + classNames.search + "' />" +
-                    "<div class='" + classNames.valueTreeViewWrapper + "'><div></div></div>" +
-                "</dd>",
+                "<div class='k-details-summary'><label for='" + searchId + "'>#= filterByValue #</label></div>" +
+                "<div class='k-details-content'>" +
+                    "<input id='" + searchId + "' class='" + classNames.input + " " + classNames.search + "' />" +
+                    "<div class='" + classNames.valueTreeViewWrapper + "'><div /></div>" +
+                "</div>",
             filterByCondition:
-                "<dt><span class='k-icon k-font-icon k-i-arrow-e'></span><span>#= messages.filterByCondition #</span></dt>" +
-                "<dd class='" + classNames.reset + "'>" +
+                "<div class='k-details-summary'><label>#= messages.filterByCondition #</label></div>" +
+                "<div class='k-details-content'>" +
                     '<select data-#=ns#bind="value: filters[0].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
                         '#for(var type in operators){#'+
                             '#for(var op in operators[type]){#' +
@@ -30,7 +63,7 @@
                             '#}#'+
                         '#}#'+
                     '</select>'+
-                    '<input data-#=ns#bind="value:filters[0].value" class="k-textbox" type="text" />'+
+                    '<input data-#=ns#bind="value:filters[0].value" class="k-textbox" />'+
                     '<select class="k-filter-and" data-#=ns#bind="value: logic" data-#=ns#role="dropdownlist">'+
                         '<option value="and">#=messages.and#</option>'+
                         '<option value="or">#=messages.or#</option>'+
@@ -42,8 +75,8 @@
                             '#}#'+
                         '#}#'+
                     '</select>'+
-                    '<input data-#=ns#bind="value: filters[1].value" class="k-textbox" type="text" />'+
-                "</dd>"
+                    '<input data-#=ns#bind="value: filters[1].value" class="k-textbox" />' +
+                "</div>"
         };
 
         function flatternValues(values) {
@@ -64,10 +97,10 @@
             return result;
         }
 
-        var FilterMenu = kendo.ui.Widget.extend({
+        var FilterMenu = Widget.extend({
             init: function(options) {
                 var element = $("<div />", { "class": FilterMenu.classNames.wrapper }).appendTo(document.body);
-                kendo.ui.Widget.call(this, element, options);
+                Widget.call(this, element, options);
 
                 this._popup();
                 this._sort();
@@ -116,6 +149,8 @@
             ],
 
             destroy: function() {
+                Widget.fn.destroy.call(this);
+
                 this.valuesTreeView.destroy();
                 this.popup.destroy();
             },
@@ -177,7 +212,7 @@
                 });
 
                 return [{
-                    text: "all",
+                    text: "All",
                     expanded: true,
                     checked: true,
                     items: values
@@ -202,26 +237,29 @@
 
             _filterByCondition: function() {
                 var template = kendo.template(FilterMenu.templates.filterByCondition);
-                var element = $("<dl/>", {
+                var element = $("<div />", {
                                 "class": FilterMenu.classNames.filterByCondition,
                                 "html": template({ messages: this.options.messages, operators: this.options.operators, ns: kendo.ns })
                               }).appendTo(this.element);
+
+                this._filterByConditionDetails = new Details(element);
 
                 kendo.init(element);
             },
 
             _filterByValue: function() {
                 var template = kendo.template(FilterMenu.templates.filterByValue);
-                var element = $("<dl/>", {
+                var element = $("<div />", {
                                 "class": FilterMenu.classNames.filterByValue,
                                 "html": template(this.options.messages)
                               }).appendTo(this.element);
+
+                this._filterByValueDetails = new Details(element);
 
                 this.valuesTreeView = element.find("." + FilterMenu.classNames.valueTreeViewWrapper).children().first().kendoTreeView({
                     checkboxes: {
                         checkChildren: true
                     },
-                    dataTextField: "text",
                     dataSource: this.getValues()
                 }).data("kendoTreeView");
             },

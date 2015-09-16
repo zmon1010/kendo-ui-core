@@ -109,17 +109,11 @@
         }
     });
 
-    test("initialises filterMenu for each column of the filter range", function() {
-        sheet.range("A1:B2").filter(true);
-
-        equal(spreadsheet._view.filterMenus.length, 2);
-    });
-
-    test("destroys filterMenus after filtration is disabled", function() {
+    test("destroys filterMenus after filter is disabled", function() {
         sheet.range("A1:B2").filter(true);
         sheet.range("A1:B2").filter(false);
 
-        equal(spreadsheet._view.filterMenus.length, 0);
+        ok(!spreadsheet._view._filterMenu);
     });
 
     test("destroys previous filterMenus after filter range is changed", function() {

@@ -309,8 +309,6 @@
 
             this.rowHeaderContextMenu = new kendo.spreadsheet.ContextMenu(element.find(DOT + classNames.rowHeaderContextMenu), contextMenuConfig);
 
-            this.filterMenus = [];
-
             var scrollbar = kendo.support.scrollbar();
 
             $(this.container).css({
@@ -517,22 +515,26 @@
             }
 
             if (reason.filter) {
-                this.destroyFilterMenus();
-
-                if (sheet.filter()) {
-                    sheet.filter().ref.forEachColumn(function(ref) {
-                        var filterMenu = new kendo.spreadsheet.FilterMenu({
-                            range: new kendo.spreadsheet.Range(ref.resize({ top: 1 }), sheet)
-                        });
-
-                        this.filterMenus.push(filterMenu);
-                    }.bind(this));
-                }
+                this._destroyFilterMenu();
             }
 
             if (reason.activeCell) {
                 this._focus = sheet.activeCell().toRangeRef();
             }
+        },
+
+        createFilterMenu: function(column) {
+            var sheet = this._sheet;
+            var ref = sheet.filter().ref.toColumn(column);
+            var filterMenu = new kendo.spreadsheet.FilterMenu({
+                range: new kendo.spreadsheet.Range(ref.resize({ top: 1 }), sheet)
+            });
+
+            this._destroyFilterMenu();
+
+            this._filterMenu = filterMenu;
+
+            return filterMenu;
         },
 
         selectClipBoardContents: function() {
@@ -599,12 +601,14 @@
                 this.tabstrip.destroy();
             }
 
-            this.destroyFilterMenus();
+            this._destroyFilterMenu();
         },
 
-        destroyFilterMenus: function() {
-            this.filterMenus.forEach(function(instance) { instance.destroy(); });
-            this.filterMenus = [];
+        _destroyFilterMenu: function() {
+            if (this._filterMenu) {
+                this._filterMenu.destroy();
+                this._filterMenu = undefined;
+            }
         },
 
         render: function() {
@@ -992,7 +996,7 @@
 
                 var button = kendo.dom.element(
                     "a",
-                    { href: "#", className: "k-link " + classNames.filterButton, style: style, "data-index": index },
+                    { href: "#", className: "k-link " + classNames.filterButton, style: style, "data-column": index },
                     [ icon(classNames.iconFilterDefault) ]
                 );
 

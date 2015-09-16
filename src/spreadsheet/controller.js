@@ -736,8 +736,9 @@
 
         onFilterHeaderClick: function(e) {
             var target = $(e.currentTarget);
+            var filterMenu = this.view.createFilterMenu(target.data("column"));
 
-            this.view.filterMenus[target.data("index")].openFor(target);
+            filterMenu.openFor(target);
         },
 
         onQuickAccessToolBarClick: function(e) {
