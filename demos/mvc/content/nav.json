@@ -6645,6 +6645,7 @@
     "text": "Integration with JS libraries",
     "name": "integration",
     "spriteCssClass": "integrationIcon",
+    "new": "true",
     "items": [
       {
         "text": "Kendo UI + Handlebars",
