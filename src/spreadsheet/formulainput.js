@@ -256,6 +256,13 @@
             }
 
             this._navigated = false;
+
+            var val = this.value();
+            if (/^=\s*\S/.test(val)) {
+                var pos = this.getPos();
+                this._syntaxHighlight(val);
+                this.setPos(pos.begin, pos.end);
+            }
         },
 
         _startIdx: function(value, idx) {
@@ -510,7 +517,7 @@
                 return this.element.text();
             }
 
-            if (/^=/.test(value)) {
+            if (/^=\s*\S/.test(value)) {
                 this._syntaxHighlight(value);
             } else {
                 this.element.text(value);
