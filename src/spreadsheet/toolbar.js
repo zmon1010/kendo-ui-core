@@ -460,6 +460,7 @@
                     value: e.sender.value()
                 }
             });
+            this.popup.close();
         }
     });
 
