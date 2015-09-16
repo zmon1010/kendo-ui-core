@@ -171,6 +171,7 @@
 
                 if (!value || !this.formulaSource.view().length) {
                     popup.close();
+
                 } else {
                     popup[popup.visible() ? "position" : "open"]();
                     this.list.focusFirst();
@@ -275,7 +276,7 @@
             var node = selection.focusNode;
             var formula = null;
 
-            if (!node) {
+            if (!node || !node.nodeValue) {
                 return formula;
             }
 
@@ -378,14 +379,16 @@
                 var index = selection.focusOffset;
                 var node = selection.focusNode;
                 var nodeValue = node.nodeValue;
+                var refString = ref.toString();
 
                 var value = nodeValue.substring(index);
                 var replace_regexp = /^(\s)*([\w|\$])*(:)?([\w|\$])*/;
 
-                nodeValue = nodeValue.substr(0, index) + value.replace(replace_regexp, ref);
+                nodeValue = nodeValue.substr(0, index) + value.replace(replace_regexp, refString);
                 node.nodeValue = nodeValue;
 
                 this.caretAt(selection.focusNode, index);
+                this.scale();
                 this._sync();
             }
         },
