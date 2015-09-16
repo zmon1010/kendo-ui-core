@@ -32,6 +32,8 @@ namespace Telerik.Web.Spreadsheet
                 var sheet = new Worksheet();
                 workbook.Sheets.Add(sheet);
 
+                sheet.Name = documentWorksheet.Name;
+
                 sheet.ActiveCell = NameConverter.ConvertCellIndexToName(documentWorksheet.ViewState.SelectionState.ActiveCellIndex);
 
                 var selection = documentWorksheet.ViewState.SelectionState.SelectedRanges.First();

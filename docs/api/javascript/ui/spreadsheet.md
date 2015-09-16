@@ -30,6 +30,9 @@ The name of the currently active sheet.
 ### sheets.activeCell `String`
 The active cell in the sheet, e.g. "A1".
 
+### sheets.name `String`
+The name of the sheet.
+
 ### sheets.columns `Array`
 
 ### sheets.columns.index `Number`
@@ -105,12 +108,6 @@ The active cell in the sheet, e.g. "A1".
 ### sheets.rows.height `Number`
 
 ### sheets.rows.index `Number`
-
-### sheets.originalActiveCell `String`
-The original active cell, in case the current [active cell](#configuration-sheets.activeCell) is a merged cell.
-
-### sheets.originalSelection `String`
-The original selected range, in case the [current selection](#configuration-sheets.selection) is a merged cell.
 
 ### sheets.selection `String`
 The selected range in the sheet, e.g. "A1:B10".
