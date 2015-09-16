@@ -33,9 +33,10 @@
 
     test("stores reference to each toolbar", function() {
         createSpreadsheet();
-        var homeToolBar = spreadsheet._view.toolbars["home"];
-        var insertToolBar = spreadsheet._view.toolbars["insert"];
-        var dataToolBar = spreadsheet._view.toolbars["data"];
+        var tabstrip = spreadsheet._view.tabstrip;
+        var homeToolBar = tabstrip.toolbars["home"];
+        var insertToolBar = tabstrip.toolbars["insert"];
+        var dataToolBar = tabstrip.toolbars["data"];
 
         ok(homeToolBar instanceof kendo.ui.ToolBar);
         ok(insertToolBar instanceof kendo.ui.ToolBar);
@@ -75,7 +76,7 @@
 
         equal(element.find(".k-toolbar").length, 2);
 
-        var homeToolBar = spreadsheet._view.toolbars["home"];
+        var homeToolBar = spreadsheet._view.tabstrip.toolbars["home"];
         ok(homeToolBar.options.items.length, 1);
     });
 
@@ -91,7 +92,7 @@
             }
         });
 
-        toolbar = spreadsheet._view.toolbars["home"];
+        toolbar = spreadsheet._view.tabstrip.toolbars["home"];
     }
 
     test("expands tools to items", function() {

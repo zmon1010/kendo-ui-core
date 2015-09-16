@@ -190,7 +190,7 @@
         action: function(args) {
             this.trigger("action", args);
         },
-        openDialog: function(popupName, options) {
+        dialog: function(popupName, options) {
             this.trigger("dialog", { name: popupName, options: options });
         },
         refresh: function(activeCell) {
@@ -326,7 +326,7 @@
             var popupName = dataItem ? dataItem.popup : undefined;
 
             if (popupName) {
-                this.toolbar.openDialog(popupName);
+                this.toolbar.dialog(popupName);
             } else {
                 this.toolbar.action({
                     command: "PropertyChangeCommand",
@@ -391,7 +391,7 @@
                         .data("instance", this);
         },
         open: function() {
-            this.toolbar.openDialog(this._dialogName);
+            this.toolbar.dialog(this._dialogName);
         }
     }));
 
@@ -469,7 +469,7 @@
             OverflowDialogButton.fn.init.call(this, options, toolbar);
         },
         _click: function() {
-            this.toolbar.openDialog("colorPicker", { title: this.options.property, property: this.options.property });
+            this.toolbar.dialog("colorPicker", { title: this.options.property, property: this.options.property });
         }
     });
 
@@ -531,7 +531,7 @@
 
     var FontSizeButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.openDialog("fontSize", { sizes: FONT_SIZES, defaultSize: DEFAULT_FONT_SIZE });
+            this.toolbar.dialog("fontSize", { sizes: FONT_SIZES, defaultSize: DEFAULT_FONT_SIZE });
         },
         update: function(value) {
             this._value = value || DEFAULT_FONT_SIZE + "px";
@@ -564,7 +564,7 @@
 
     var FontFamilyButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.openDialog("fontFamily", { fonts: FONT_FAMILIES, defaultFont: DEFAULT_FONT_FAMILY });
+            this.toolbar.dialog("fontFamily", { fonts: FONT_FAMILIES, defaultFont: DEFAULT_FONT_FAMILY });
         },
         update: function(value) {
             this._value = value || DEFAULT_FONT_FAMILY;
@@ -617,7 +617,7 @@
 
     var FormatButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.openDialog("formatCells");
+            this.toolbar.dialog("formatCells");
         }
     });
 
@@ -656,7 +656,7 @@
 
     var BorderChangeButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.openDialog("borders");
+            this.toolbar.dialog("borders");
         }
     });
 
@@ -735,7 +735,7 @@
 
     var AlignmentButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.openDialog("alignment");
+            this.toolbar.dialog("alignment");
         }
     });
 
@@ -790,7 +790,7 @@
 
     var MergeButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.openDialog("merge");
+            this.toolbar.dialog("merge");
         }
     });
 
@@ -842,7 +842,7 @@
 
     var SortButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.openDialog("sort");
+            this.toolbar.dialog("sort");
         }
     });
 
@@ -862,10 +862,19 @@
                 this.trigger("action", { action: action });
             }.bind(this));
 
+            this.toolbars = {};
+
             var tabs = options.dataSource;
             this.contentElements.each(function(idx, element) {
                 this._toolbar($(element), tabs[idx].id, options.toolbarOptions[tabs[idx].id]);
-            }.bind(options.view));
+            }.bind(this));
+        },
+
+        destroy: function() {
+            kendo.ui.TabStrip.fn.destroy.call(this);
+            for (var name in this.toolbars) {
+                this.toolbars[name].destroy();
+            }
         },
 
         _quickAccessButtons: function() {
@@ -881,7 +890,29 @@
             }).insertBefore(this.wrapper);
 
             this.tabGroup.css("padding-left", this.quickAccessToolBar.outerWidth());
+        },
+
+        _toolbar: function(container, name, tools) {
+            var element;
+            var options;
+
+            if (this.toolbars[name]) {
+                this.toolbars[name].destroy();
+                container.children(".k-toolbar").remove();
+            }
+
+            if (tools) {
+                element = container.html("<div />").children("div");
+
+                options = {
+                    tools: typeof tools === "boolean" ? undefined : tools,
+                    toolbarName: name
+                };
+
+                this.toolbars[name] = new kendo.spreadsheet.ToolBar(element, options);
+            }
         }
+
     });
 
 })(window.kendo);

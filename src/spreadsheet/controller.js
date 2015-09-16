@@ -111,7 +111,7 @@
             this.colHeaderContextMenu = view.colHeaderContextMenu;
             this.scroller = view.scroller;
             this.quickAccessToolBar = view.quickAccessToolBar;
-            this.toolbars = view.toolbars;
+            this.toolbars = view.tabstrip ? view.tabstrip.toolbars : null;
 
             this.editor = view.editor;
             this.editor.bind("change", this.onEditorChange.bind(this));
@@ -141,7 +141,8 @@
 
             if (this.toolbars) {
                 for (key in this.toolbars) {
-                    this.toolbars[key].bind("action", this.onAction.bind(this));
+                    this.toolbars[key].bind("action", this.onToolBarAction.bind(this));
+                    this.toolbars[key].bind("dialog", this.onToolBarDialog.bind(this));
                 }
             }
 
@@ -685,9 +686,13 @@
             this._workbook.undoRedoStack[e.action]();
         },
 
-        onAction: function(e) {
-            var command = new kendo.spreadsheet[e.command](e.options);
-            this.view._workbook.execute(command);
+        onToolBarAction: function(e) {
+            var command = new kendo.spreadsheet[e.command]($.extend(e.options, { workbook: this._workbook }));
+            this._workbook.execute(command);
+        },
+
+        onToolBarDialog: function(e) {
+            this.view.openDialog(e.name, e.options);
         }
     });
 

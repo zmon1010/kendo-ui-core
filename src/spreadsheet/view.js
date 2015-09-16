@@ -275,7 +275,6 @@
             this.element = element;
             this.options = options;
 
-            this.toolbars = {};
             this._chrome();
 
             this._dialogs = [];
@@ -366,28 +365,8 @@
                 toolbarOptions: options,
                 view: this
             });
+
             this.tabstrip.select(0);
-        },
-
-        _toolbar: function(container, name, tools) {
-            var element;
-            var options;
-
-            if (this.toolbars[name]) {
-                this.toolbars[name].destroy();
-                container.children(".k-toolbar").remove();
-            }
-
-            if (tools) {
-                element = container.html("<div />").children("div");
-
-                options = {
-                    tools: typeof tools === "boolean" ? undefined : tools,
-                    toolbarName: name
-                };
-
-                this.toolbars[name] = new kendo.spreadsheet.ToolBar(element, options);
-            }
         },
 
         _executeCommand: function(e) {
@@ -497,14 +476,14 @@
             var sheet = this._sheet;
             //this.formulaBar.value(this._workbook._inputForRef(sheet.activeCell()));
 
-            if (this.toolbars) {
-                for (var name in this.toolbars) {
-                    if (this.toolbars.hasOwnProperty(name)) {
-                        this.toolbars[name].refresh(sheet.range(sheet.activeCell()));
+            var toolbars = this.tabstrip ? this.tabstrip.toolbars : null;
+            if (toolbars) {
+                for (var name in toolbars) {
+                    if (toolbars.hasOwnProperty(name)) {
+                        toolbars[name].refresh(sheet.range(sheet.activeCell()));
                     }
                 }
             }
-
 
             if (reason.sheetSelection) {
                 this.sheetsbar.renderSheets(this._workbook.sheets(), this._workbook.sheetIndex(this._sheet));
@@ -619,12 +598,6 @@
 
             if (this.tabstrip) {
                 this.tabstrip.destroy();
-            }
-
-            if (this.toolbars) {
-                for (var name in this.toolbars) {
-                    this.toolbars[name].destroy();
-                }
             }
 
             this.destroyFilterMenus();
