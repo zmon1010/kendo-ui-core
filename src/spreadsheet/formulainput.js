@@ -263,9 +263,7 @@
         _input: function() {
             var val = this.value();
             if (/^=\s*\S/.test(val)) {
-                var pos = this.getPos();
                 this._syntaxHighlight(val);
-                this.setPos(pos.begin, pos.end);
             }
         },
 
@@ -529,25 +527,29 @@
         },
 
         _syntaxHighlight: function(formula) {
+            var pos = this.getPos();
             formula = formula.substr(1);
             var tokens = kendo.spreadsheet.calc.tokenize(formula);
-
-            // will get the references array here
-            var references = [];
-
-            tokens.reverse().forEach(function(tok){
+            var refClasses = kendo.spreadsheet.Pane.classNames.series;
+            var refIndex = 0;
+            tokens.forEach(function(tok){
                 if (tok.type == "ref") {
-                    references.push(tok.ref);
+                    tok.cls = refClasses[(refIndex++) % refClasses.length];
                 }
+            });
+            tokens.reverse().forEach(function(tok){
                 var begin = tok.begin.pos, end = tok.end.pos;
                 var text = kendo.htmlEncode(formula.substring(begin, end));
                 formula = formula.substr(0, begin) +
-                    "<span class='k-syntax-" + tok.type + "'>" + text + "</span>" +
+                    "<span class='k-syntax-" + tok.type +
+                    (tok.cls ? " " + tok.cls : "") +
+                    "'>" + text + "</span>" +
                     formula.substr(end);
             });
             this.element.html("=" + formula);
-
-            // XXX: highlight references on the sheet now
+            if (pos) {
+                this.setPos(pos.begin, pos.end);
+            }
         },
 
         destroy: function() {
