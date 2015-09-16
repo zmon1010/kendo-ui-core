@@ -14,7 +14,13 @@ namespace Kendo.Mvc.UI.Html
 
             foreach (var pageSize in section.PageSizes)
             {
-                new HtmlElement("option").Text(pageSize.ToString()).AppendTo(select);
+                var pageSizeText = pageSize.ToString().ToLowerInvariant();
+                if (pageSizeText == "all")
+                {
+                    pageSizeText = section.Messages.AllPages;
+                }
+
+                new HtmlElement("option").Text(pageSizeText).AppendTo(select);
             }
 
             new LiteralNode(section.Messages.ItemsPerPage).AppendTo(span);
