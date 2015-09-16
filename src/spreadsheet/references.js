@@ -178,7 +178,9 @@
                 }
             });
 
-            sorted.sort().forEach(callback);
+            sorted.sort(function(a,b) {
+                return a > b ? 1 : (a < b ? -1 : 0);
+            }).forEach(callback);
         }
     });
 
