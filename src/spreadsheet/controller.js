@@ -357,9 +357,8 @@
             if (this.editor.insertRef()) {
                 this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
                 event.preventDefault();
-                return;
-            }
-            else {
+                return
+            } else {
                 this.editor.deactivate();
             }
 
@@ -486,14 +485,14 @@
             event.preventDefault();
         },
 
-        onMouseUp: function() {
+        onMouseUp: function(event) {
             var sheet = this._workbook.activeSheet();
             sheet.completeResizing();
 
             this.navigator.completeSelection();
             this.stopAutoScroll();
 
-            if (this.editor.insertRef()) {
+            if (this.editor.insertRef() && !this.objectAt(event).ref.eq(sheet._activeCell)) {
                 this.editor.activeEditor().refAtPoint(sheet.selection()._ref);
             }
         },
@@ -676,8 +675,6 @@
         },
 
         onEditorChange: function(e) {
-            this._workbook.activeSheet().select(this._editorActiveCell);
-
             this._workbook.execute(new kendo.spreadsheet.EditCommand({
                 value: e.value
             }));
@@ -686,21 +683,20 @@
         onEditorActivate: function() {
             var workbook = this._workbook;
             var sheet = workbook.activeSheet();
-            var activeCell = sheet.activeCell();
 
-            this._editorActiveCell = activeCell;
-
-            sheet._setEditorSelection(this._parseRefs(workbook._inputForRef(activeCell)));
+            sheet._edit(true);
+            sheet._setRangeSelections(this._parseRefs(workbook._inputForRef(sheet.activeCell())));
         },
 
         onEditorDeactivate: function() {
-            this._editorActiveCell = null;
-            this._workbook.activeSheet()._setEditorSelection([]);
+            var sheet = this._workbook.activeSheet();
+
+            sheet._setRangeSelections([]);
+            sheet._edit(false);
         },
 
         onEditorUpdate: function(e) {
-            this._workbook.activeSheet().select(this._editorActiveCell);
-            this._workbook.activeSheet()._setEditorSelection(this._parseRefs(e.value));
+            this._workbook.activeSheet()._setRangeSelections(this._parseRefs(e.value));
         },
 
         onEditorBarFocus: function() {

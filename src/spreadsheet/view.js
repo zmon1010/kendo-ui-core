@@ -1015,7 +1015,7 @@
             var sheet = this._sheet;
             var selections = [];
 
-            sheet._editorSelection.forEach(function(range) {
+            sheet._rangeSelections.forEach(function(range) {
                 var ref = range.ref;
                 var className = classNames.selectionDashed;
 

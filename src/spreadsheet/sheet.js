@@ -16,7 +16,6 @@
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
-            this._editorSelection = [];
             this._frozenRows = 0;
             this._frozenColumns = 0;
             this._suspendChanges = false;
@@ -29,6 +28,11 @@
             this._sheetRef = this._grid.normalize(kendo.spreadsheet.SHEETREF);
             this._properties = new kendo.spreadsheet.PropertyBag(cellCount);
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, this._properties.sortable());
+
+            this._rangeSelections = [];
+
+            this._editorSelection = kendo.spreadsheet.FIRSTREF.toRangeRef();
+            this._editorActiveCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
         },
 
         navigator: function() {
@@ -498,21 +502,21 @@
 
                 this._originalSelection = ref;
 
-                this._selection = this._grid.isAxis(ref) ? ref : this.unionWithMerged(ref);
+                this._setSelection(this._grid.isAxis(ref) ? ref : this.unionWithMerged(ref));
 
                 if (changeActiveCell !== false) {
                     if (ref.isCell()) {
                         this.activeCell(ref);
                     } else {
-                        this.activeCell(this._selection.lastRange().first());
+                        this.activeCell(this._getSelection().lastRange().first());
                     }
-                    this._selectionRangeIndex = this._selection.size() - 1;
+                    this._selectionRangeIndex = this._getSelection().size() - 1;
                 } else {
                     this.triggerChange({ selection: true });
                 }
             }
 
-            return this._selection;
+            return this._getSelection();
         },
 
         originalSelect: function() {
@@ -523,7 +527,7 @@
             if (this.singleCellSelection()) {
                 return this._sheetRef;
             } else {
-                return this._selection.rangeAt(this._selectionRangeIndex).toRangeRef();
+                return this._getSelection().rangeAt(this._selectionRangeIndex).toRangeRef();
             }
         },
 
@@ -533,7 +537,7 @@
 
         nextSelectionRange: function() {
             if (!this.singleCellSelection()) {
-                this._selectionRangeIndex = this._selection.nextRangeIndex(this._selectionRangeIndex);
+                this._selectionRangeIndex = this._getSelection().nextRangeIndex(this._selectionRangeIndex);
             }
             return this.currentSelectionRange();
         },
@@ -544,7 +548,7 @@
 
         previousSelectionRange: function() {
             if (!this.singleCellSelection()) {
-                this._selectionRangeIndex = this._selection.previousRangeIndex(this._selectionRangeIndex);
+                this._selectionRangeIndex = this._getSelection().previousRangeIndex(this._selectionRangeIndex);
             }
             return this.currentSelectionRange();
         },
@@ -569,12 +573,12 @@
         activeCell: function(ref) {
             if (ref) {
                 this._originalActiveCell = ref;
-                this._activeCell = this.unionWithMerged(ref.toRangeRef());
-                this.focus(this._activeCell);
+                this._setActiveCell(this.unionWithMerged(ref.toRangeRef()));
+                this.focus(this._getActiveCell());
                 this.triggerChange({ activeCell: true, selection: true });
             }
 
-            return this._activeCell;
+            return this._getActiveCell();
         },
 
         originalActiveCell: function() {
@@ -592,11 +596,11 @@
         },
 
         selection: function() {
-            return new Range(this._grid.normalize(this._selection), this);
+            return new Range(this._grid.normalize(this._getSelection()), this);
         },
 
         singleCellSelection: function() {
-            return this._activeCell.eq(this._selection);
+            return this._getActiveCell().eq(this._getSelection());
         },
 
         selectedHeaders: function() {
@@ -654,8 +658,34 @@
             };
         },
 
-        _setEditorSelection: function(selection) {
-            this._editorSelection = (selection || []).slice();
+        _getSelection: function() {
+            return this._inEdit ? this._editorSelection : this._selection;
+        },
+
+        _setSelection: function(ref) {
+            this[this._inEdit ? "_editorSelection" : "_selection"] = ref;
+        },
+
+        _getActiveCell: function() {
+            return this._inEdit ? this._editorActiveCell : this._activeCell;
+        },
+
+        _setActiveCell: function(ref) {
+            this[this._inEdit ? "_editorActiveCell" : "_activeCell"] = ref;
+        },
+
+        _edit: function(isInEdit) {
+            this._inEdit = isInEdit;
+
+            this._editorSelection = this._selection.toRangeRef();
+            this._originalSelection = this._selection.toRangeRef();
+
+            this._editorActiveCell = this._activeCell;
+            this._originalActiveCell = this._activeCell;
+        },
+
+        _setRangeSelections: function(selection) {
+            this._rangeSelections = (selection || []).slice();
             this.triggerChange({ selection: true });
         },
 
