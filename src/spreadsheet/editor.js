@@ -15,21 +15,44 @@
 
             this.barInput.syncWith(this.cellInput);
             this.cellInput.syncWith(this.barInput);
+
+            //XXX: Trigger formulaInput events intead of wiring keyup here
+            this.barInput.element
+                .add(this.cellInput.element)
+                .on("keyup", (function() {
+                    this.trigger("update", { value: this.value() });
+                }).bind(this));
         },
 
         events: [
             "activate",
             "deactivate",
-            "change"
+            "change",
+            "update"
         ],
 
-        activate: function(rect) {
+        //TODO: Test
+        activeEditor: function() {
+            var editor = null;
+
+            if (this.barElement().is(":focus")) {
+                editor = this.barInput;
+            } else if (this.cellElement().is(":focus")) {
+                editor = this.cellInput;
+            }
+
+            return editor;
+        },
+
+        activate: function(options) {
             this._active = true;
 
-            this.position(rect);
-            this.cellInput.resize(rect);
+            this.position(options.rect);
+            this.cellInput.resize(options.rect);
 
             this.trigger("activate");
+
+            return this;
         },
 
         deactivate: function() {
@@ -74,6 +97,12 @@
 
         isFiltered: function() {
             return this.barInput.popup.visible() || this.cellInput.popup.visible();
+        },
+
+        //TODO: Test
+        insertRef: function() {
+            var editor = this.activeEditor();
+            return editor && !!editor.activeFormula();
         },
 
         scale: function() {

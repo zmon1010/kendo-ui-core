@@ -28,7 +28,7 @@
             position: editor.cellInput.position
         });
 
-        editor.activate(rect);
+        editor.activate({ rect: rect });
 
         equal(editor.cellInput.calls("position"), 1);
         equal(editor.cellInput.args("position")[0], rect);
@@ -42,7 +42,7 @@
             resize: editor.cellInput.resize
         });
 
-        editor.activate(rect);
+        editor.activate({ rect: rect });
 
         equal(editor.cellInput.calls("resize"), 1);
         equal(editor.cellInput.args("resize")[0], rect);
@@ -55,7 +55,7 @@
             ok(true);
         });
 
-        editor.activate({ top: 0, left: 0 });
+        editor.activate({ rect: { top: 0, left: 0 } });
     });
 
     test("deactivate method triggers deactivate", 1, function() {
@@ -65,7 +65,7 @@
             ok(true);
         });
 
-        editor.activate({ top: 0, left: 0 });
+        editor.activate({ rect: { top: 0, left: 0 } });
         editor.deactivate();
     });
 
@@ -97,7 +97,7 @@
             hide: editor.cellInput.hide
         });
 
-        editor.activate(rect);
+        editor.activate({ rect: rect });
         editor.deactivate();
 
         equal(editor.cellInput.calls("hide"), 1);
@@ -112,7 +112,7 @@
             equal(e.value, newValue);
         });
 
-        editor.activate(rect);
+        editor.activate({ rect: rect });
         editor.value("test");
 
         editor.cellInput.value(newValue);
@@ -129,7 +129,7 @@
             ok(false);
         });
 
-        editor.activate(rect);
+        editor.activate({ rect: rect });
         editor.value("test");
 
         editor.deactivate();
@@ -138,7 +138,7 @@
     test("focus method focuses cell formulaInput", 1, function() {
         var editor = createEditor();
 
-        editor.activate({ top: 0, left: 0 });
+        editor.activate({ rect: { rect: { top: 0, left: 0 } } });
         editor.focus();
 
         ok(editor.cellInput.element.is(":focus"));
@@ -158,7 +158,7 @@
         var barInput = bar.formulaInput.element;
         var value = "test";
 
-        editor.activate({ top: 0, left: 0 });
+        editor.activate({ rect: { top: 0, left: 0 } });
 
         barInput.focus().html(value).trigger("input");
 
@@ -171,7 +171,7 @@
         var cellInput = input.element;
         var value = "test";
 
-        editor.activate({ top: 0, left: 0 });
+        editor.activate({ rect: { top: 0, left: 0 } });
         editor.focus();
 
         cellInput.html(value).trigger("input");
@@ -227,7 +227,7 @@
     test("isActive returns true if editing is enabled", function() {
         var editor = createEditor();
 
-        editor.activate({ top: 0, left: 0 });
+        editor.activate({ rect: { top: 0, left: 0 } });
 
         ok(editor.isActive());
     });
@@ -253,7 +253,7 @@
     test("activeSearch returns true if formulaInput popup is opened", function() {
         var editor = createEditor();
 
-        editor.activate({ top: 0, left: 0 });
+        editor.activate({ rect: { top: 0, left: 0 } });
 
         editor.cellInput.filter("sum");
         editor.cellInput.popup.open();
