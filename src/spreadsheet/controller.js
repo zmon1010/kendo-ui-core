@@ -492,8 +492,21 @@
             this.navigator.completeSelection();
             this.stopAutoScroll();
 
-            if (this.editor.insertRef() && !this.objectAt(event).ref.eq(sheet._activeCell)) {
-                this.editor.activeEditor().refAtPoint(sheet.selection()._ref);
+            var editor = this.editor.activeEditor();
+            if (!editor) {
+                return;
+            }
+            var el = event.target;
+            while (el) {
+                if (el === editor.element[0]) {
+                    return;
+                }
+                el = el.parentNode;
+            }
+
+            var object = this.objectAt(event);
+            if (object && object.ref && editor.canInsertRef()) {
+                editor.refAtPoint(sheet.selection()._ref);
             }
         },
 
