@@ -6,7 +6,7 @@
     var $ = kendo.jQuery;
 
     var KEY_NAMES = {
-        8: 'tab',
+        8: 'backspace',
         9: 'tab',
         13: 'enter',
         27: 'esc',

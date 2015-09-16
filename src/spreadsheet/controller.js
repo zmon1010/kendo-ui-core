@@ -315,6 +315,7 @@
             } else {
                 if (action == "delete" || action == "backspace") {
                     this._workbook.execute(new kendo.spreadsheet.ClearContentCommand());
+                    event.preventDefault();
                 }
                 else if (action === ":alphanum" || action === ":edit") {
                     if (action === ":alphanum") {
