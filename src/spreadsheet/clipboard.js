@@ -139,10 +139,10 @@
                 value: text === "" ? null : text,
                 format : null,
                 background : styles["background-color"],
-                borderBottom : styles["border-bottom"],
-                borderRight : styles["border-right"],
-                borderLeft : styles["border-left"],
-                borderTop : styles["border-top"],
+                borderBottom : this._borderObject(styles["border-bottom"]),
+                borderRight : this._borderObject(styles["border-right"]),
+                borderLeft : this._borderObject(styles["border-left"]),
+                borderTop : this._borderObject(styles["border-top"]),
                 color : styles["color"], // jshint ignore:line
                 fontFamily : styles["font-family"],
                 underline : styles["text-decoration"] == "underline" ? true : null,
@@ -166,6 +166,19 @@
                 style = style.replace(prefix, "");
             });
             return style;
+        },
+
+        _borderObject: function(border) {
+            if(border.indexOf("none") >=0 || border.indexOf("0px") >=0) {
+                return null;
+            }
+
+            var obj = {
+                size : "1px",
+                color : kendo.parseColor(border.slice(border.indexOf("rgb"), border.length)).toCss()
+            };
+
+            return obj;
         }
     });
     kendo.spreadsheet.Clipboard = Clipboard;
