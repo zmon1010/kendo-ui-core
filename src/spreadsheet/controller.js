@@ -499,7 +499,7 @@
             this.stopAutoScroll();
 
             if (this.editor.insertRef()) {
-                this.editor.activeEditor().ref(sheet.selection()._ref);
+                this.editor.activeEditor().refAtPoint(sheet.selection()._ref);
             }
         },
 
@@ -688,7 +688,7 @@
             }));
         },
 
-        onEditorActivate: function(e) {
+        onEditorActivate: function() {
             var workbook = this._workbook;
             var sheet = workbook.activeSheet();
             var activeCell = sheet.activeCell();
@@ -698,14 +698,14 @@
             sheet._setEditorSelection(this._parseRefs(workbook._inputForRef(activeCell)));
         },
 
-        onEditorDeactivate: function(e) {
+        onEditorDeactivate: function() {
             this._editorActiveCell = null;
-            sheet._setEditorSelection([]);
+            this._workbook.activeSheet()._setEditorSelection([]);
         },
 
         onEditorUpdate: function(e) {
             this._workbook.activeSheet().select(this._editorActiveCell);
-            sheet._setEditorSelection(this._parseRefs(e.value));
+            this._workbook.activeSheet()._setEditorSelection(this._parseRefs(e.value));
         },
 
         onEditorBarFocus: function() {

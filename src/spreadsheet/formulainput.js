@@ -118,7 +118,7 @@
             } else {
                 end = begin;
             }
-            if (begin.node && end.node) {
+            if (begin && end) {
                 var r = document.createRange();
                 r.setStart(begin.node, begin.pos);
                 r.setEnd(end.node, end.pos);
@@ -181,36 +181,23 @@
         },
 
         _formulaListChange: function() {
-            var selection = window.getSelection();
-            var node = selection.focusNode;
-
-            var value = this.list.value()[0];
-            var startIdx, endIdx;
-            var nodeValue;
-
-            if (!node || !value || this._mute) {
+            var pos = this.getPos();
+            if (!pos || this._mute) {
                 return;
             }
-
-            if (node.nodeType === 3) {
-                nodeValue = node.nodeValue;
-                startIdx = endIdx = selection.focusOffset;
-
-                startIdx = this._startIdx(nodeValue, startIdx);
-                endIdx = this._endIdx(nodeValue, endIdx);
-
-                if (nodeValue[endIdx] !== "(") {
-                    value += "(";
-                }
-
-                node.nodeValue = nodeValue.substr(0, startIdx) + value + nodeValue.substring(endIdx);
-
-                this.caretAt(node, startIdx + value.length);
-                this._sync();
+            var completion = this.list.value()[0];
+            var value = this.value();
+            var begin = this._startIdx(value, pos.begin);
+            var end = this._endIdx(value, pos.end);
+            if (value.charAt(end) != "(") {
+                completion += "(";
             }
+            value = value.substr(0, begin) + completion + value.substr(end);
+            this.value(value);
 
             this.scale();
             this.popup.close();
+            this.setPos(begin + completion.length);
         },
 
         _popup: function() {
@@ -224,7 +211,7 @@
         },
 
         _isFormula: function() {
-            return this.element.text()[0] === "=";
+            return /^=\s*\S/.test(this.value());
         },
 
         _keydown: function(e) {
@@ -268,26 +255,22 @@
         },
 
         _startIdx: function(value, idx) {
-            while(idx > 0) {
+            while (idx > 0) {
                 if (FORMULA_START_SYMBOLS[value[idx - 1]]) {
                     break;
                 }
-
-                idx -= 1;
+                idx--;
             }
-
             return idx;
         },
 
         _endIdx: function(value, idx) {
-            while(idx < value.length) {
+            while (idx < value.length) {
                 if (FORMULA_START_SYMBOLS[value[idx]]) {
                     break;
                 }
-
-                idx += 1;
+                idx++;
             }
-
             return idx;
         },
 
@@ -327,16 +310,12 @@
         },
 
         _searchValue: function() {
-            var selection = window.getSelection();
-
-            var idx = selection.focusOffset;
-            var value = selection.focusNode.nodeValue;
-
-            if (!value) {
-                return value;
+            var value = this.value();
+            var pos = this.getPos();
+            if (!pos || !pos.collapsed) {
+                return;
             }
-
-            return value.substr(this._startIdx(value, idx), this._endIdx(value, idx) - 1);
+            return value.substr(this._startIdx(value, pos.begin), this._endIdx(value, pos.begin) - 1);
         },
 
         _sync: function() {
@@ -357,67 +336,25 @@
         },
 
         activeFormula: function() {
-            var selection = window.getSelection();
-            var currentIdx = selection.focusOffset;
-            var node = selection.focusNode;
-            var formula = null;
-
-            if (!node || !node.nodeValue) {
-                return formula;
-            }
-
-            var value = node.nodeValue.substr(0, currentIdx);
-            var braketIdx = value.lastIndexOf("(");
-            var commaIdx = value.lastIndexOf(",");
-            var startIdx = braketIdx;
-
-            if (braketIdx > value.lastIndexOf(")")) {
-                if (commaIdx > startIdx) {
-                    startIdx = commaIdx;
-                }
-
-                if ((startIdx + 1) === currentIdx) {
-                    value = value.substr(this._startIdx(value, braketIdx), braketIdx - 1);
-                    formula = kendo.spreadsheet.calc.runtime.FUNCS[value.toLowerCase()];
-                }
-            }
-
-            return formula;
+            return this._isFormula();
+            // var pos = this.pos();
+            // if (!pos || !this._isFormula()) {
+            //     return false;
+            // }
+            // var tokens = kendo.spreadsheet.calc.tokenize(this.value().substr(1));
+            // var func = null;
+            // for (var i = 0; i < tokens.length; ++i) {
+            //     var tok = tokens[i];
+            //     if (tok.begin.pos <= pos.begin && tok.end.pos > pos.begin) {
+            //         func = tok.value;
+            //         break;
+            //     }
+            // }
+            // return func && kendo.spreadsheet.calc.runtime.FUNCS[func];
         },
 
         isActive: function() {
             return this.element.is(":focus");
-        },
-
-        caretAt: function(node, idx) {
-            if (!node || !this.isActive()) {
-                return;
-            }
-
-            var selection = window.getSelection();
-            var range = document.createRange();
-
-            range.setStart(node, idx);
-
-            selection.removeAllRanges();
-            selection.addRange(range);
-        },
-
-        caretToEnd: function() {
-            var nodes = this.element[0].childNodes;
-            var length = nodes.length;
-
-            if (!length || !this.isActive()) {
-                return;
-            }
-
-            var selection = window.getSelection();
-            var range = document.createRange();
-
-            range.setStartAfter(nodes[nodes.length - 1]);
-
-            selection.removeAllRanges();
-            selection.addRange(range);
         },
 
         filter: function(value) {
@@ -457,23 +394,51 @@
                 });
         },
 
-        ref: function(ref) {
-            var formula = this.activeFormula();
-            var selection = window.getSelection();
-
-            if (formula) {
-                var index = selection.focusOffset;
-                var node = selection.focusNode;
-                var nodeValue = node.nodeValue;
-                var refString = ref.toString();
-
-                var value = nodeValue.substring(index);
-                var replace_regexp = /^(\s)*([\w|\$])*(:)?([\w|\$])*/;
-
-                nodeValue = nodeValue.substr(0, index) + value.replace(replace_regexp, refString);
-                node.nodeValue = nodeValue;
-
-                this.caretAt(selection.focusNode, index);
+        refAtPoint: function(ref) {
+            var pos = this.getPos();
+            if (pos && this._isFormula()) {
+                var value = this.value().substr(1);
+                pos.begin--;
+                pos.end--;
+                var tokens = kendo.spreadsheet.calc.tokenize(value);
+                var prevToken = null, thisToken = null;
+                for (var i = 0; i < tokens.length; ++i) {
+                    var tok = tokens[i];
+                    if (tok.begin.pos <= pos.begin && tok.end.pos >= pos.end) {
+                        thisToken = tok;
+                        break;
+                    }
+                    if (tok.begin.pos > pos.begin) {
+                        break;
+                    }
+                    prevToken = tok;
+                }
+                var refName = ref.simplify().toString();
+                if (thisToken && !/^(?:ref|str|num|bool|sym)/.test(thisToken.type)) {
+                    prevToken = thisToken;
+                    thisToken = null;
+                }
+                if (thisToken) {
+                    // replace current token
+                    value = value.substr(0, thisToken.begin.pos) +
+                        refName + value.substr(thisToken.end.pos);
+                    this.value("=" + value);
+                    this.setPos(thisToken.begin.pos + 1, thisToken.end.pos + 1);
+                } else if (prevToken) {
+                    var rest = value.substr(prevToken.end.pos);
+                    value = value.substr(0, prevToken.end.pos);
+                    if (/^(?:ref|str|num|bool|sym)/.test(prevToken.type)) {
+                        value += " ";
+                    }
+                    var begin = value.length;
+                    value += refName;
+                    var end = value.length;
+                    if (/\S/.test(rest)) {
+                        value += " " + rest;
+                    }
+                    this.value("=" + value);
+                    this.setPos(begin + 1, end + 1);
+                }
                 this.scale();
                 this._sync();
             }
