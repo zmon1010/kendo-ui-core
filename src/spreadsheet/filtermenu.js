@@ -76,7 +76,11 @@
                         '#}#'+
                     '</select>'+
                     '<input data-#=ns#bind="value: filters[1].value" class="k-textbox" />' +
-                "</div>"
+                "</div>",
+            menuItem:
+                "<li data-command='#=command#' data-dir='#=dir#'>" +
+                    "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>#=text#" +
+                "</li>"
         };
 
         function flatternValues(values) {
@@ -112,6 +116,8 @@
             options: {
                 name: "FilterMenu",
                 messages: {
+                    sortAscending: "Sort range A to Z",
+                    sortDescending: "Sort range Z to A",
                     filterByValue: "Filter by value",
                     filterByCondition: "Filter by condition",
                     apply: "Apply",
@@ -145,12 +151,13 @@
             },
 
             events: [
-
+                "action"
             ],
 
             destroy: function() {
                 Widget.fn.destroy.call(this);
 
+                this.menu.destroy();
                 this.valuesTreeView.destroy();
                 this.popup.destroy();
             },
@@ -224,15 +231,29 @@
             },
 
             _sort: function() {
-                var ul = $("<ul />");
+                var template = kendo.template(FilterMenu.templates.menuItem);
+                var messages = this.options.messages;
+                var items = [
+                    { command: "sort", dir: "asc", text: messages.sortAscending, iconClass: "sort-asc" },
+                    { command: "sort", dir: "desc", text: messages.sortDescending, iconClass: "sort-desc" }
+                ];
 
-                ul.appendTo(this.element).kendoMenu({
-                    dataSource: [
-                        { text: "Sort Ascending", spriteCssClass: "k-icon k-font-icon k-i-sort-asc" },
-                        { text: "Sort Descending", spriteCssClass: "k-icon k-font-icon k-i-sort-desc" }
-                    ],
-                    orientation: "vertical"
-                });
+                var ul = $("<ul />", {
+                    "html": kendo.render(template, items)
+                }).appendTo(this.element);
+
+                this.menu = ul.kendoMenu({
+                    orientation: "vertical",
+                    select: function(e) {
+                        var options = {
+                            asc: $(e.item).data("dir") === "asc",
+                            sheet: false,
+                            range: true
+                        }
+
+                        this.trigger("action", { command: "SortCommand", options: options });
+                    }.bind(this)
+                }).data("kendoMenu");
             },
 
             _filterByCondition: function() {

@@ -733,6 +733,8 @@
             var target = $(e.currentTarget);
             var filterMenu = this.view.createFilterMenu(target.data("column"));
 
+            filterMenu.bind("action", this.onToolBarAction.bind(this));
+
             filterMenu.openFor(target);
         },
 
