@@ -63,7 +63,7 @@
         return parseFloat(str) - 1;
     }
 
-    function parseReference(name) {
+    function parseReference(name, noThrow) {
         if (name.toLowerCase() == "#sheet") {
             return spreadsheet.SHEETREF;
         }
@@ -92,7 +92,9 @@
                 new spreadsheet.CellRef(getrow(m[2]), +Infinity, 0)
             );
         }
-        throw new Error("Cannot parse reference: " + name);
+        if (!noThrow) {
+            throw new Error("Cannot parse reference: " + name);
+        }
     }
 
     function parseFormula(sheet, row, col, input) {
@@ -323,20 +325,7 @@
         // - 2:2
         function maybeRange() {
             return input.ahead(4, function(a, b, c, d){
-                if ((a.type == "sym" || a.type == "num") &&
-                    (b.type == "op" && b.value == ":") &&
-                    (c.type == "sym" || c.type == "num") &&
-                    !(d.type == "punc" && d.value == "(" && !c.space))
-                    // We need c.space here to resolve an ambiguity:
-                    //
-                    //   - A1:C3 (A2, A3) -- parse as intersection between range and union
-                    //
-                    //   - A1:CHOOSE(2, A1, A2, A3) -- parse as range operator where the
-                    //     bottom-right side is returned by the CHOOSE function
-                    //
-                    // note no space between CHOOSE and the paren in the second example.  I believe
-                    // this is the Right Way™.
-                {
+                if (looksLikeRange(a, b, c, d)) {
                     var topLeft = getref(a, true);
                     var bottomRight = getref(c, false);
                     if (topLeft != null && bottomRight != null) {
@@ -746,9 +735,19 @@
         }
     }
 
-    function TokenStream(input) {
+    function TokenStream(input, forEditor) {
         var tokens = [], index = 0;
         var readWhile = input.readWhile;
+        var addPos = forEditor ? function(thing) {
+            var begin = input.pos();
+            thing = thing();
+            thing.begin = begin;
+            thing.end = input.pos();
+            return thing;
+        } : function(thing) {
+            return thing();
+        };
+
         return {
             next  : next,
             peek  : peek,
@@ -757,6 +756,7 @@
             ahead : ahead,
             skip  : skip
         };
+
         function isDigit(ch) {
             return (/[0-9]/i.test(ch));
         }
@@ -811,6 +811,12 @@
                 })
             };
         }
+        function readPunc() {
+            return {
+                type  : "punc",
+                value : input.next()
+            };
+        }
         function readNext() {
             readWhile(isWhitespace);
             if (input.eof()) {
@@ -818,24 +824,29 @@
             }
             var ch = input.peek();
             if (ch == '"') {
-                return readString();
+                return addPos(readString);
             }
             if (isDigit(ch)) {
-                return readNumber();
+                return addPos(readNumber);
             }
             if (isIdStart(ch)) {
-                return readSymbol();
+                return addPos(readSymbol);
             }
             if (isOpChar(ch)) {
-                return readOperator();
+                return addPos(readOperator);
             }
             if (isPunc(ch)) {
+                return addPos(readPunc);
+            }
+            if (!forEditor) {
+                input.croak("Can't handle character: " + ch);
+            }
+            return addPos(function(){
                 return {
-                    type  : "punc",
+                    type  : "error",
                     value : input.next()
                 };
-            }
-            input.croak("Can't handle character: " + ch);
+            });
         }
         function peek() {
             while (tokens.length <= index) {
@@ -877,8 +888,12 @@
             readEscaped : readEscaped,
             lookingAt   : lookingAt,
             skip        : skip,
-            forward     : forward
+            forward     : forward,
+            pos         : location
         };
+        function location() { // jshint ignore:line, :-(
+            return { line: line, col: col, pos: pos };
+        }
         function next() {
             var ch = input.charAt(pos++);
             if (ch == "\n") {
@@ -1002,10 +1017,71 @@
         };
     };
 
+    function looksLikeRange(a, b, c, d) {
+        // We need c.space here to resolve an ambiguity:
+        //
+        //   - A1:C3 (A2, A3) -- parse as intersection between range and union
+        //
+        //   - A1:CHOOSE(2, A1, A2, A3) -- parse as range operator where the
+        //     bottom-right side is returned by the CHOOSE function
+        //
+        // note no space between CHOOSE and the paren in the second example.
+        // I believe this is the Right Way™.
+        return ((a.type == "sym" || a.type == "num") &&
+                (b.type == "op" && b.value == ":") &&
+                (c.type == "sym" || c.type == "num") &&
+                !(d.type == "punc" && d.value == "(" && !c.space));
+    }
+
+    function tokenize(input) {
+        input = TokenStream(InputStream(input), true);
+        var tokens = [];
+        while (!input.eof()) {
+            tokens.push(input.ahead(4, maybeRange) ||
+                        input.ahead(2, maybeCall) ||
+                        next());
+        }
+        return tokens;
+
+        function maybeRange(a, b, c, d) {
+            if (looksLikeRange(a, b, c, d)) {
+                var ref = parseReference(a.value + ":" + c.value, true);
+                if (ref) {
+                    input.skip(3);
+                    return {
+                        type: "ref",
+                        ref: ref,
+                        begin: a.begin,
+                        end: c.end
+                    };
+                }
+            }
+        }
+        function next() {
+            var tok = input.next();
+            if (tok.type == "sym") {
+                var ref = parseReference(tok.value, true);
+                if (ref) {
+                    tok.type = "ref";
+                    tok.ref = ref;
+                }
+            }
+            return tok;
+        }
+        function maybeCall(fname, b) {
+            if (fname.type == "sym" && b.type == "punc" && b.value == "(") {
+                input.skip(1);
+                fname.type = "func";
+                return fname;
+            }
+        }
+    }
+
     exports.parseFormula = parseFormula;
     exports.parseReference = parseReference;
     exports.compile = makeFormula;
     exports.InputStream = InputStream;
     exports.ParseError = ParseError;
+    exports.tokenize = tokenize;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
