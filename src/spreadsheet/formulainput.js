@@ -46,7 +46,8 @@
             element = this.element;
 
             element.addClass(FormulaInput.classNames.wrapper)
-                .attr("contenteditable", true);
+                .attr("contenteditable", true)
+                .attr("spellcheck", false);
 
             if (this.options.autoScale) {
                 element.on("input", this.scale.bind(this));
