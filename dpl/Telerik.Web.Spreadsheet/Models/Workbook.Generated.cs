@@ -10,6 +10,12 @@ namespace Telerik.Web.Spreadsheet
     public partial class Workbook
     {
         /// <summary>
+        /// The name of the currently active sheet.
+        /// </summary>
+        [DataMember(Name = "activeSheet", EmitDefaultValue = false)]
+        public string ActiveSheet { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         [DataMember(Name = "columnWidth", EmitDefaultValue = false)]

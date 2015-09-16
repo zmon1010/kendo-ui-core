@@ -9,6 +9,12 @@ namespace Telerik.Web.Spreadsheet
     [DataContract]
     public partial class Worksheet
     {
+        /// <summary>
+        /// The active cell in the sheet, e.g. "A1".
+        /// </summary>
+        [DataMember(Name = "activeCell", EmitDefaultValue = false)]
+        public string ActiveCell { get; set; }
+
         private List<Column> columns = new List<Column>();
 
         /// <summary>
@@ -74,6 +80,24 @@ namespace Telerik.Web.Spreadsheet
                 return rows;
             }
         }
+
+        /// <summary>
+        /// The original active cell, in case the current active cell is a merged cell.
+        /// </summary>
+        [DataMember(Name = "originalActiveCell", EmitDefaultValue = false)]
+        public string OriginalActiveCell { get; set; }
+
+        /// <summary>
+        /// The original selected range, in case the current selection is a merged cell.
+        /// </summary>
+        [DataMember(Name = "originalSelection", EmitDefaultValue = false)]
+        public string OriginalSelection { get; set; }
+
+        /// <summary>
+        /// The selected range in the sheet, e.g. "A1:B10".
+        /// </summary>
+        [DataMember(Name = "selection", EmitDefaultValue = false)]
+        public string Selection { get; set; }
 
         private Sort sort = new Sort();
 
