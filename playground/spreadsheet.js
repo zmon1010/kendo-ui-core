@@ -36,9 +36,9 @@ function timeFunction(obj, func, name) {
     };
 }
 
-timeFunction(kendo.spreadsheet.View, "refresh", "View::refresh");
-timeFunction(kendo.spreadsheet.Sheet, "recalc", "Sheet::recalc");
-timeFunction(kendo.spreadsheet.FormulaContext, "getRefCells");
+// timeFunction(kendo.spreadsheet.View, "refresh", "View::refresh");
+// timeFunction(kendo.spreadsheet.Sheet, "recalc", "Sheet::recalc");
+// timeFunction(kendo.spreadsheet.FormulaContext, "getRefCells");
 
 
 $("#spreadsheet").kendoSpreadsheet({

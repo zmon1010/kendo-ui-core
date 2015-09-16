@@ -1064,6 +1064,12 @@
                 if (ref) {
                     tok.type = "ref";
                     tok.ref = ref;
+                } else if (tok.upper == "TRUE") {
+                    tok.type = "bool";
+                    tok.value = true;
+                } else if (tok.upper == "FALSE") {
+                    tok.type = "bool";
+                    tok.value = false;
                 }
             }
             return tok;
