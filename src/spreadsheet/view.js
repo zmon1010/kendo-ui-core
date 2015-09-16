@@ -1024,7 +1024,7 @@
                     return;
                 }
 
-                className += " " + (classNames.series[range.series] || classNames.series[0]);
+                className += " " + (classNames.series[range.color] || classNames.series[0]);
 
                 this._addDiv(selections, ref, className);
             }.bind(this));

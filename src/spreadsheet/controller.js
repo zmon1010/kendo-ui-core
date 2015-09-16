@@ -671,7 +671,7 @@
                 if (token.type === "ref") {
                     refs.push({
                         ref: token.ref,
-                        series: idx % 6
+                        color: idx % 6
                     });
                     idx += 1;
                 }
