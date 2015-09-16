@@ -8,8 +8,12 @@
     background-image: none;
 }
 
-.k-spreadsheet-top-corner:after {
-    border-color: transparent @cell-border-color @cell-border-color transparent;
+.k-spreadsheet-top-corner {
+    border-color: @cell-border-color;
+
+    &:after {
+        border-color: transparent @cell-border-color @cell-border-color transparent;
+    }
 }
 
 .k-spreadsheet-pane {
