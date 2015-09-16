@@ -663,21 +663,17 @@
 ////////////////////////////////////////////////////////////////////
 
         _parseRefs: function(value) {
-            var parts = (value || "").split(",");
+            var tokens = kendo.spreadsheet.calc.tokenize(value);
             var refs = [];
+            var idx = 0;
 
-            parts.forEach(function(part, index) {
-                var match = /([\w|\$])+(\d)+(\s)*(:)?(\s)*([\w|\$])*/gi.exec(part);
-
-                if (match) {
-                    var ref = kendo.spreadsheet.calc.parseReference(match[0]);
-
-                    if (ref) {
-                        refs.push({
-                            ref: ref,
-                            series: index % 6
-                        });
-                    }
+            tokens.forEach(function(token) {
+                if (token.type === "ref") {
+                    refs.push({
+                        ref: token.ref,
+                        series: idx % 6
+                    });
+                    idx += 1;
                 }
             });
 
