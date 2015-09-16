@@ -743,6 +743,7 @@
             thing = thing();
             thing.begin = begin;
             thing.end = input.pos();
+            thing.cls = "";
             return thing;
         } : function(thing) {
             return thing();
@@ -892,7 +893,7 @@
             pos         : location
         };
         function location() { // jshint ignore:line, :-(
-            return { line: line, col: col, pos: pos };
+            return pos;
         }
         function next() {
             var ch = input.charAt(pos++);
@@ -1034,8 +1035,8 @@
     }
 
     function tokenize(input) {
-        input = TokenStream(InputStream(input), true);
         var tokens = [];
+        input = TokenStream(InputStream(input), true);
         while (!input.eof()) {
             tokens.push(input.ahead(4, maybeRange) ||
                         input.ahead(2, maybeCall) ||

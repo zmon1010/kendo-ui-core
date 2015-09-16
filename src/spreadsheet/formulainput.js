@@ -225,10 +225,7 @@
                 e.preventDefault();
             }
 
-            // clearTimeout(this.blah);
-            // this.blah = setTimeout(function(){
-            //     console.log(this.canInsertRef());
-            // }.bind(this), 50);
+            setTimeout(this._syntaxHighlight.bind(this));
         },
 
         _keyup: function() {
@@ -250,13 +247,11 @@
             }
 
             this._navigated = false;
+            this._syntaxHighlight();
         },
 
         _input: function() {
-            var val = this.value();
-            if (/^=\s*\S/.test(val)) {
-                this._syntaxHighlight(val);
-            }
+            this._syntaxHighlight();
         },
 
         _startIdx: function(value, idx) {
@@ -384,9 +379,7 @@
         canInsertRef: function() {
             var point = this.getPos();
             if (point && this._isFormula()) {
-                var value = this.value().substr(1);
-                point.begin--;  // account for the '='
-                point.end--;
+                var value = this.value();
                 var tokens = kendo.spreadsheet.calc.tokenize(value);
                 for (var i = 0; i < tokens.length; ++i) {
                     var tok = tokens[i];
@@ -405,14 +398,14 @@
             return null;
 
             function atPoint(tok) {
-                return tok.begin.pos <= point.begin && tok.end.pos >= point.end;
+                return tok.begin <= point.begin && tok.end >= point.end;
             }
             function afterPoint(tok) {
-                return tok.begin.pos >= point.begin;
+                return tok.begin >= point.begin;
             }
             function canReplace(tok) {
                 if (/^(?:num|str|bool|sym|ref)$/.test(tok.type)) {
-                    return { replace: true, token: tok, end: tok.end.pos };
+                    return { replace: true, token: tok, end: tok.end };
                 }
             }
             function canInsertAfter(current, tok) {
@@ -439,14 +432,14 @@
             var x = this.canInsertRef();
             if (x) {
                 ref = ref.simplify().toString();
-                var value = this.value().substr(1);
+                var value = this.value();
                 var tok = x.token;
                 var rest = value.substr(x.end);
-                value = value.substr(0, x.replace ? tok.begin.pos : x.end) + ref;
+                value = value.substr(0, x.replace ? tok.begin : x.end) + ref;
                 var point = value.length;
                 value += rest;
-                this.value("=" + value);
-                this.setPos(point + 1);
+                this.value(value);
+                this.setPos(point);
                 this.scale();
                 this._sync();
             }
@@ -492,34 +485,56 @@
                 return this.element.text();
             }
 
-            if (/^=\s*\S/.test(value)) {
-                this._syntaxHighlight(value);
-            } else {
-                this.element.text(value);
-            }
+            this.element.text(value);
+            this._syntaxHighlight();
         },
 
-        _syntaxHighlight: function(formula) {
+        _syntaxHighlight: function() {
+            var value = this.value();
+            if (!/^=\s*\S/.test(value)) {
+                return;
+            }
             var pos = this.getPos();
-            formula = formula.substr(1);
-            var tokens = kendo.spreadsheet.calc.tokenize(formula);
+            var tokens = kendo.spreadsheet.calc.tokenize(value);
             var refClasses = kendo.spreadsheet.Pane.classNames.series;
             var refIndex = 0;
+            var parens = [];
             tokens.forEach(function(tok){
                 if (tok.type == "ref") {
-                    tok.cls = refClasses[(refIndex++) % refClasses.length];
+                    tok.cls = " " + refClasses[(refIndex++) % refClasses.length];
+                }
+                if (pos && tok.type == "punc") {
+                    if (isOpenParen(tok.value)) {
+                        parens.unshift(tok);
+                    } else if (isCloseParen(tok.value)) {
+                        var open = parens.shift();
+                        if (open) {
+                            if (isMatchingParen(tok.value, open.value)) {
+                                if (touches(tok, pos) || touches(open, pos)) {
+                                    tok.cls = " k-syntax-paren-match";
+                                    open.cls = " k-syntax-paren-match";
+                                }
+                            } else {
+                                tok.cls = " k-syntax-error";
+                                open.cls = " k-syntax-error";
+                            }
+                        } else {
+                            tok.cls = " k-syntax-error";
+                        }
+                    }
+                } else if (pos && touches(tok, pos)) {
+                    tok.cls = " k-syntax-at-point";
                 }
             });
             tokens.reverse().forEach(function(tok){
-                var begin = tok.begin.pos, end = tok.end.pos;
-                var text = kendo.htmlEncode(formula.substring(begin, end));
-                formula = formula.substr(0, begin) +
+                var begin = tok.begin, end = tok.end;
+                var text = kendo.htmlEncode(value.substring(begin, end));
+                value = value.substr(0, begin) +
                     "<span class='k-syntax-" + tok.type +
-                    (tok.cls ? " " + tok.cls : "") +
-                    "'>" + text + "</span>" +
-                    formula.substr(end);
+                    tok.cls + "'>" + text + "</span>" +
+                    value.substr(end);
             });
-            this.element.html("=" + formula);
+            this.element.html(value);
             if (pos) {
                 this.setPos(pos.begin, pos.end);
             }
@@ -536,6 +551,25 @@
             Widget.fn.destroy.call(this);
         }
     });
+
+    function isOpenParen(ch) {
+        return ch == "(" || ch == "[" || ch == "{";
+    }
+
+    function isCloseParen(ch) {
+        return ch == ")" || ch == "]" || ch == "}";
+    }
+
+    function isMatchingParen(close, open) {
+        return open == "(" ? close == ")"
+            :  open == "[" ? close == "]"
+            :  open == "{" ? close == "}"
+            :  false;
+    }
+
+    function touches(pos, target) {
+        return pos.begin <= target.begin && pos.end >= target.end;
+    }
 
     kendo.spreadsheet.FormulaInput = FormulaInput;
     $.extend(true, FormulaInput, { classNames: classNames });
