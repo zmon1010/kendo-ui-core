@@ -102,7 +102,7 @@
         //TODO: Test
         insertRef: function() {
             var editor = this.activeEditor();
-            return editor && !!editor.activeFormula();
+            return editor && editor.canInsertRef();
         },
 
         scale: function() {

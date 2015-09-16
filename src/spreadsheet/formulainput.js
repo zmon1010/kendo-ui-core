@@ -224,6 +224,11 @@
                 this._navigated = true;
                 e.preventDefault();
             }
+
+            // clearTimeout(this.blah);
+            // this.blah = setTimeout(function(){
+            //     console.log(this.canInsertRef());
+            // }.bind(this), 50);
         },
 
         _keyup: function() {
@@ -335,24 +340,6 @@
             this._span = $("<span/>").css(computedStyles).insertAfter(this.element);
         },
 
-        activeFormula: function() {
-            return this._isFormula();
-            // var pos = this.pos();
-            // if (!pos || !this._isFormula()) {
-            //     return false;
-            // }
-            // var tokens = kendo.spreadsheet.calc.tokenize(this.value().substr(1));
-            // var func = null;
-            // for (var i = 0; i < tokens.length; ++i) {
-            //     var tok = tokens[i];
-            //     if (tok.begin.pos <= pos.begin && tok.end.pos > pos.begin) {
-            //         func = tok.value;
-            //         break;
-            //     }
-            // }
-            // return func && kendo.spreadsheet.calc.runtime.FUNCS[func];
-        },
-
         isActive: function() {
             return this.element.is(":focus");
         },
@@ -394,51 +381,72 @@
                 });
         },
 
-        refAtPoint: function(ref) {
-            var pos = this.getPos();
-            if (pos && this._isFormula()) {
+        canInsertRef: function() {
+            var point = this.getPos();
+            if (point && this._isFormula()) {
                 var value = this.value().substr(1);
-                pos.begin--;
-                pos.end--;
+                point.begin--;  // account for the '='
+                point.end--;
                 var tokens = kendo.spreadsheet.calc.tokenize(value);
-                var prevToken = null, thisToken = null;
                 for (var i = 0; i < tokens.length; ++i) {
                     var tok = tokens[i];
-                    if (tok.begin.pos <= pos.begin && tok.end.pos >= pos.end) {
-                        thisToken = tok;
-                        break;
+                    if (atPoint(tok)) {
+                        var operation = canReplace(tok);
+                        if (operation) {
+                            return operation;
+                        }
                     }
-                    if (tok.begin.pos > pos.begin) {
-                        break;
+                    if (afterPoint(tok)) {
+                        return canInsertAfter(tok, tok = tokens[i - 1]);
                     }
-                    prevToken = tok;
                 }
-                var refName = ref.simplify().toString();
-                if (thisToken && !/^(?:ref|str|num|bool|sym)/.test(thisToken.type)) {
-                    prevToken = thisToken;
-                    thisToken = null;
+                return canInsertAfter(null, tok);
+            }
+            return null;
+
+            function atPoint(tok) {
+                return tok.begin.pos <= point.begin && tok.end.pos >= point.end;
+            }
+            function afterPoint(tok) {
+                return tok.begin.pos >= point.begin;
+            }
+            function canReplace(tok) {
+                if (/^(?:num|str|bool|sym|ref)$/.test(tok.type)) {
+                    return { replace: true, token: tok, end: tok.end.pos };
                 }
-                if (thisToken) {
-                    // replace current token
-                    value = value.substr(0, thisToken.begin.pos) +
-                        refName + value.substr(thisToken.end.pos);
-                    this.value("=" + value);
-                    this.setPos(thisToken.begin.pos + 1, thisToken.end.pos + 1);
-                } else if (prevToken) {
-                    var rest = value.substr(prevToken.end.pos);
-                    value = value.substr(0, prevToken.end.pos);
-                    if (/^(?:ref|str|num|bool|sym)/.test(prevToken.type)) {
-                        value += " ";
-                    }
-                    var begin = value.length;
-                    value += refName;
-                    var end = value.length;
-                    if (/\S/.test(rest)) {
-                        value += " " + rest;
-                    }
-                    this.value("=" + value);
-                    this.setPos(begin + 1, end + 1);
+            }
+            function canInsertAfter(current, tok) {
+                if (tok == null && current) {
+                    return (/^(?:op)/.test(current.type) ?
+                            { token: tok, end: point.end } : null);
                 }
+                if (/^(?:ref|op|punc)$/.test(tok.type) && current) {
+                    var tmp = canReplace(current);
+                    if (tmp) {
+                        return tmp;
+                    }
+                    return { token: tok, end: point.end };
+                }
+                if (/^(?:punc|op)$/.test(tok.type)) {
+                    return (/^[,;({]$/.test(tok.value) ?
+                            { token: tok, end: point.end } : null);
+                }
+                return false;
+            }
+        },
+
+        refAtPoint: function(ref) {
+            var x = this.canInsertRef();
+            if (x) {
+                ref = ref.simplify().toString();
+                var value = this.value().substr(1);
+                var tok = x.token;
+                var rest = value.substr(x.end);
+                value = value.substr(0, x.replace ? tok.begin.pos : x.end) + ref;
+                var point = value.length;
+                value += rest;
+                this.value("=" + value);
+                this.setPos(point + 1);
                 this.scale();
                 this._sync();
             }
