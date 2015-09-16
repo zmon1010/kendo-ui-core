@@ -663,7 +663,7 @@
 ////////////////////////////////////////////////////////////////////
 
         _parseRefs: function(value) {
-            var tokens = kendo.spreadsheet.calc.tokenize(value);
+            var tokens = kendo.spreadsheet.calc.tokenize(value || "");
             var refs = [];
             var idx = 0;
 
