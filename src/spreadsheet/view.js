@@ -384,7 +384,8 @@
         },
 
         activeCellRectangle: function() {
-            return this.cellRectangle(this._sheet.activeCell());
+            //XXX: add method that returns view active cell
+            return this.cellRectangle(this._sheet._viewSelection.activeCell);
         },
 
         _rectangle: function(pane, ref) {
