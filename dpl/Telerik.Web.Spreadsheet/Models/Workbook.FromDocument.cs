@@ -26,58 +26,13 @@ namespace Telerik.Web.Spreadsheet
         {
             var workbook = new Workbook();
             foreach (var documentWorksheet in document.Worksheets)
-            {
-                var context = new WorksheetExportContext(documentWorksheet);
-                var usedCellRange = context.ValuePropertyDataInfo.GetUsedCellRange();
-
+            {                
                 var sheet = new Worksheet();
                 workbook.Sheets.Add(sheet);
 
-                if (usedCellRange == null)
-                {
-                    continue;
-                }
-                
-                var ranges = documentWorksheet.Columns.PropertyBag.GetPropertyValueCollection(ColumnsPropertyBag.WidthProperty).GetNonDefaultRanges();
-                foreach (var range in ranges)
-                {
-                    var width = range.Value.Value;
-                    for (var i = range.Start; i <= range.End; i++)
-                    {
-                        sheet.Columns.Add(new Column
-                        {
-                            Index = (int)i,
-                            Width = width
-                        });
-                    }
-                }             
-
-                for (int rowIndex = usedCellRange.FromIndex.RowIndex; rowIndex <= usedCellRange.ToIndex.RowIndex; rowIndex++)
-                {
-                    Range rowUsedRange = context.ValuePropertyDataInfo.GetRowUsedRange(rowIndex);
-                    if (rowUsedRange != null)
-                    {
-                        rowUsedRange = rowUsedRange.Expand(usedCellRange.FromIndex.ColumnIndex);
-                    }
-
-                    var cells = GetCellsToExport(documentWorksheet, rowUsedRange, rowIndex).ToList();
-                    if (cells.Count > 0)
-                    {
-                        var dtoRow = new Row
-                        {
-                            Index = rowIndex,
-                            Cells = cells
-                        };
-
-                        var rowHeight = documentWorksheet.Rows[rowIndex, rowIndex].GetHeight();
-                        if (rowHeight.Value.IsCustom)
-                        {
-                            dtoRow.Height = rowHeight.Value.Value;
-                        }
-
-                        sheet.Rows.Add(dtoRow);
-                    }
-                }
+                sheet.Columns.AddRange(GetColumns(documentWorksheet));
+             
+                sheet.Rows.AddRange(GetRows(documentWorksheet));
 
                 foreach (var mergedRange in documentWorksheet.Cells.GetMergedCellRanges())
                 {
@@ -95,6 +50,82 @@ namespace Telerik.Web.Spreadsheet
             }
 
             return workbook;
+        }
+
+        private static IEnumerable<Column> GetColumns(DocumentWorksheet worksheet)
+        {
+            var ranges = worksheet.Columns.PropertyBag.GetPropertyValueCollection(ColumnsPropertyBag.WidthProperty).GetNonDefaultRanges();
+
+            foreach (var range in ranges)
+            {
+                var width = range.Value.Value;
+                for (var i = range.Start; i <= range.End; i++)
+                {
+                    yield return new Column
+                    {
+                        Index = (int)i,
+                        Width = width
+                    };
+                }
+            }           
+        }
+
+        private static IEnumerable<Row> GetRows(DocumentWorksheet worksheet)
+        {
+            var rows = GetRowsWithHeight(worksheet);
+            var context = new WorksheetExportContext(worksheet);
+            var usedCellRange = context.ValuePropertyDataInfo.GetUsedCellRange();
+
+            for (int rowIndex = usedCellRange.FromIndex.RowIndex; rowIndex <= usedCellRange.ToIndex.RowIndex; rowIndex++)
+            {
+                var rowUsedRange = context.ValuePropertyDataInfo.GetRowUsedRange(rowIndex);
+
+                if (rowUsedRange != null)
+                {
+                    rowUsedRange = rowUsedRange.Expand(usedCellRange.FromIndex.ColumnIndex);
+                }
+
+                var cells = GetCellsToExport(worksheet, rowUsedRange, rowIndex).ToList();
+
+                if (rows.ContainsKey(rowIndex))
+                {
+                    rows[rowIndex].Cells = cells;
+                }
+                else
+                {
+                    rows.Add(rowIndex, new Row
+                    {
+                        Index = rowIndex,
+                        Cells = cells
+                    });
+                }
+            }
+
+            return rows.Values;
+        }
+
+        private static SortedDictionary<int, Row> GetRowsWithHeight(DocumentWorksheet worksheet)
+        {
+            var result = new SortedDictionary<int, Row>();
+
+            var ranges = worksheet.Rows.PropertyBag.GetPropertyValueCollection(RowsPropertyBag.HeightProperty).GetNonDefaultRanges();
+
+            foreach (var range in ranges)
+            {
+                var height = range.Value.Value;
+                for (var i = range.Start; i <= range.End; i++)
+                {
+                    var rowIndex = (int)i;
+
+                    result.Add(rowIndex, new Row
+                    {
+                        Index = rowIndex,
+                        Height = height
+                    });
+                }
+            }
+
+            return result;
         }
 
         private static BorderStyle ConvertToBorder(CellBorder border)
