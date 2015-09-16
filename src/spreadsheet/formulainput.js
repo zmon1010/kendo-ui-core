@@ -525,6 +525,9 @@
                 } else if (pos && touches(tok, pos)) {
                     tok.cls = " k-syntax-at-point";
                 }
+                if (tok.type == "func" && !knownFunction(tok.value) && (!pos || !touches(tok, pos))) {
+                    tok.cls += " k-syntax-error";
+                }
             });
             tokens.reverse().forEach(function(tok){
                 var begin = tok.begin, end = tok.end;
@@ -569,6 +572,10 @@
 
     function touches(pos, target) {
         return pos.begin <= target.begin && pos.end >= target.end;
+    }
+
+    function knownFunction(name) {
+        return kendo.spreadsheet.calc.runtime.FUNCS[name.toLowerCase()];
     }
 
     kendo.spreadsheet.FormulaInput = FormulaInput;
