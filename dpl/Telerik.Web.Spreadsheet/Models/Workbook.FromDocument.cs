@@ -25,10 +25,17 @@ namespace Telerik.Web.Spreadsheet
         public static Workbook FromDocument(Document document)
         {
             var workbook = new Workbook();
+            workbook.ActiveSheet = document.ActiveSheet.Name;
+            
             foreach (var documentWorksheet in document.Worksheets)
             {                
                 var sheet = new Worksheet();
                 workbook.Sheets.Add(sheet);
+
+                sheet.ActiveCell = NameConverter.ConvertCellIndexToName(documentWorksheet.ViewState.SelectionState.ActiveCellIndex);
+
+                var selection = documentWorksheet.ViewState.SelectionState.SelectedRanges.First();
+                sheet.Selection = NameConverter.ConvertCellRangeToName(selection.FromIndex, selection.ToIndex);
 
                 sheet.Columns.AddRange(GetColumns(documentWorksheet));
              
