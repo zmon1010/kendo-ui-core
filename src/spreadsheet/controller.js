@@ -115,6 +115,9 @@
 
             this.editor = view.editor;
             this.editor.bind("change", this.onEditorChange.bind(this));
+            this.editor.bind("activate", this.onEditorActivate.bind(this));
+            this.editor.bind("deactivate", this.onEditorDeactivate.bind(this));
+            this.editor.bind("update", this.onEditorUpdate.bind(this));
 
             $(view.scroller).on("scroll", this.onScroll.bind(this));
             this.listener = new kendo.spreadsheet.EventListener(this.container, this, CONTAINER_EVENTS);
@@ -256,7 +259,9 @@
             this._viewPortHeight = this.view.scroller.clientHeight;
             this.navigator.height(this._viewPortHeight);
 
-            this.editor.value(workbook._inputForRef(workbook.activeSheet().activeCell()));
+            if (!this.editor.isActive()) {
+                this.editor.value(workbook._inputForRef(workbook.activeSheet().activeCell()));
+            }
         },
 
         onScroll: function() {
@@ -322,8 +327,10 @@
                         this.editor.value("");
                     }
 
-                    this.editor.activate(this.view.activeCellRectangle());
-                    this.editor.focus();
+                    this.editor
+                        .activate({ rect: this.view.activeCellRectangle() })
+                        .focus();
+
                 } else {
                     this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
                     event.preventDefault();
@@ -354,7 +361,14 @@
         onMouseDown: function(event) {
             var object = this.objectAt(event);
 
-            this.editor.deactivate();
+            if (this.editor.insertRef()) {
+                this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
+                event.preventDefault();
+                return;
+            }
+            else {
+                this.editor.deactivate();
+            }
 
             if (object.pane) {
                 this.originFrame = object.pane;
@@ -485,11 +499,16 @@
 
             this.navigator.completeSelection();
             this.stopAutoScroll();
+
+            if (this.editor.insertRef()) {
+                this.editor.activeEditor().ref(sheet.selection()._ref);
+            }
         },
 
         onDblClick: function() {
-            this.editor.activate(this.view.activeCellRectangle());
-            this.editor.focus();
+            this.editor
+                .activate({ rect: this.view.activeCellRectangle() })
+                .focus();
         },
 
         onCut: function() {
@@ -645,14 +664,58 @@
 
 ////////////////////////////////////////////////////////////////////
 
+        _parseRefs: function(value) {
+            var parts = (value || "").split(",");
+            var refs = [];
+
+            parts.forEach(function(part, index) {
+                var match = /([\w|\$])+(\d)+(\s)*(:)?(\s)*([\w|\$])*/gi.exec(part);
+
+                if (match) {
+                    var ref = kendo.spreadsheet.calc.parseReference(match[0]);
+
+                    if (ref) {
+                        refs.push({
+                            ref: ref,
+                            series: index % 6
+                        });
+                    }
+                }
+            });
+
+            return refs;
+        },
+
         onEditorChange: function(e) {
+            this._workbook.activeSheet().select(this._editorActiveCell);
+
             this._workbook.execute(new kendo.spreadsheet.EditCommand({
                 value: e.value
             }));
         },
 
+        onEditorActivate: function(e) {
+            var workbook = this._workbook;
+            var sheet = workbook.activeSheet();
+            var activeCell = sheet.activeCell();
+
+            this._editorActiveCell = activeCell;
+
+            sheet._setEditorSelection(this._parseRefs(workbook._inputForRef(activeCell)));
+        },
+
+        onEditorDeactivate: function(e) {
+            this._editorActiveCell = null;
+            sheet._setEditorSelection([]);
+        },
+
+        onEditorUpdate: function(e) {
+            this._workbook.activeSheet().select(this._editorActiveCell);
+            sheet._setEditorSelection(this._parseRefs(e.value));
+        },
+
         onEditorBarFocus: function() {
-            this.editor.activate(this.view.activeCellRectangle());
+            this.editor.activate({ rect: this.view.activeCellRectangle() });
         },
 
         onEditorCellFocus: function() {

@@ -474,7 +474,6 @@
 
         refresh: function(reason) {
             var sheet = this._sheet;
-            //this.formulaBar.value(this._workbook._inputForRef(sheet.activeCell()));
 
             var toolbars = this.tabstrip ? this.tabstrip.toolbars : null;
             if (toolbars) {
@@ -650,7 +649,9 @@
             this.tree.render(merged);
 
             if (this.editor.isActive()) {
-                this.editor.position(this.activeCellRectangle());
+                if (!this.editor.insertRef()) {
+                    this.editor.position(this.activeCellRectangle());
+                }
             } else if (!sheet.selectionInProgress() && !sheet.resizingInProgress()) {
                 this.renderClipboardContents();
             }
