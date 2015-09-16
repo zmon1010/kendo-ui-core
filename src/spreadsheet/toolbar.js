@@ -871,7 +871,10 @@
             }.bind(this));
         },
 
+        events: kendo.ui.TabStrip.fn.events.concat([ "action" ]),
+
         destroy: function() {
+            this.quickAccessToolBar.off("click");
             kendo.ui.TabStrip.fn.destroy.call(this);
             for (var name in this.toolbars) {
                 this.toolbars[name].destroy();
@@ -889,6 +892,11 @@
                 "class": "k-spreadsheet-quick-access-toolbar",
                 "html": kendo.render(buttonTemplate, buttons)
             }).insertBefore(this.wrapper);
+
+            this.quickAccessToolBar.on("click", ".k-button", function(e) {
+                var action = $(e.currentTarget).attr("title").toLowerCase();
+                this.trigger("action", { action: action });
+            }.bind(this));
 
             this.tabGroup.css("padding-left", this.quickAccessToolBar.outerWidth());
         },

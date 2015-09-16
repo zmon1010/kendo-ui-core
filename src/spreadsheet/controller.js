@@ -110,8 +110,7 @@
             this.rowHeaderContextMenu = view.rowHeaderContextMenu;
             this.colHeaderContextMenu = view.colHeaderContextMenu;
             this.scroller = view.scroller;
-            this.quickAccessToolBar = view.quickAccessToolBar;
-            this.toolbars = view.tabstrip ? view.tabstrip.toolbars : null;
+            this.tabstrip = view.tabstrip;
 
             this.editor = view.editor;
             this.editor.bind("change", this.onEditorChange.bind(this));
@@ -138,11 +137,10 @@
             // this is necessary for Windows to catch prevent context menu correctly
             this.cellContextMenu.element.add(this.rowHeaderContextMenu.element).add(this.colHeaderContextMenu.element).on("contextmenu", false);
 
-            if (this.quickAccessToolBar) {
-                this.quickAccessToolBar.bind("action", this.onQuickAccessToolBarClick.bind(this));
-            }
+            if (this.tabstrip) {
+                this.tabstrip.bind("action", this.onQuickAccessToolBarClick.bind(this));
 
-            if (this.toolbars) {
+                this.toolbars = this.tabstrip.toolbars;
                 for (key in this.toolbars) {
                     this.toolbars[key].bind("action", this.onToolBarAction.bind(this));
                     this.toolbars[key].bind("dialog", this.onToolBarDialog.bind(this));
