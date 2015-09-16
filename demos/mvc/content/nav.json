@@ -6251,12 +6251,6 @@
     "packages": [
       "!offline"
     ],
-    "sources": {
-        "kendo-ui": [{
-            "name": "Sample service",
-            "url": "~/Controllers/Public/UploadController.cs"
-        }]
-    },
     "items": [
       {
         "text": "Basic usage",
