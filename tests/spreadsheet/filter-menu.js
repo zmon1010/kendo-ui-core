@@ -96,55 +96,6 @@
 
     */
 
-    module("filter menu creation", {
-        setup: function() {
-            element = $("<div>").appendTo(QUnit.fixture);
-
-            spreadsheet = new kendo.ui.Spreadsheet(element, { rows: 3, columns: 3 });
-
-            sheet = spreadsheet.activeSheet();
-        },
-        teardown: function() {
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    test("destroys filterMenus after filter is disabled", function() {
-        sheet.range("A1:B2").filter(true);
-        sheet.range("A1:B2").filter(false);
-
-        ok(!spreadsheet._view._filterMenu);
-    });
-
-    test("destroys previous filterMenus after filter range is changed", function() {
-        sheet.range("A1:B2").filter(true);
-        sheet.range("A1:C2").filter(true);
-
-        equal(spreadsheet._view.filterMenus.length, 3);
-    });
-
-    test("spreadsheet filter headers has data-index attribute", 2, function() {
-        sheet.range("A1:B2").filter(true);
-        $(".k-link.k-spreadsheet-filter").each(function(index, element) {
-            equal($(element).data("index"), index);
-        });
-    });
-
-    test("click on filter header opens the corresponding filter menu", function() {
-        sheet.range("A1:B2").filter(true);
-        $(".k-link.k-spreadsheet-filter").eq(1).trigger("click");
-
-        ok(!spreadsheet._view.filterMenus[0].popup.visible());
-        ok(spreadsheet._view.filterMenus[1].popup.visible());
-    });
-
-    test("click on filter header opens the corresponding filter menu with correct anchor", function() {
-        sheet.range("A1:B2").filter(true);
-        $(".k-link.k-spreadsheet-filter").eq(1).trigger("click");
-
-        equal(spreadsheet._view.filterMenus[1].popup.options.anchor.data("index"), 1);
-    });
-
     var defaults = kendo.ui.Spreadsheet.prototype.options;
     var range;
     var sheet;

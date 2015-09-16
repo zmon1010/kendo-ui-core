@@ -50,7 +50,6 @@
         var rightCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(1)");
 
         equal(leftCell.css("borderRightWidth"), "3px");
-        equal(rightCell.css("borderLeftWidth"), "0px");
     });
 
     test("borderLeft of first cell can be set", function() {
@@ -73,7 +72,6 @@
         var bottomCell = element.find(".k-spreadsheet-data tr:eq(1) td:eq(1)");
 
         equal(topCell.css("borderBottomWidth"), "3px");
-        equal(bottomCell.css("borderTopWidth"), "0px");
     });
 
     test("borderTop of first cell can be set", function() {
@@ -99,4 +97,21 @@
         equal(tabstrip.tabGroup.css("padding-left"), quickAccessToolBar.outerWidth() + "px");
     });
 
+    test("createFilterMenu creates filter menu for column range", function() {
+        sheet.range("A1:B3").filter(true);
+
+        var filterMenu = spreadsheet._view.createFilterMenu(0);
+
+        ok(filterMenu instanceof kendo.spreadsheet.FilterMenu);
+        equal(filterMenu.options.range._ref.print(), "R2C1:R3C1");
+    });
+
+    test("createFilterMenu creates filter menu for correct column range", function() {
+        sheet.range("A1:B3").filter(true);
+
+        var filterMenu = spreadsheet._view.createFilterMenu(1);
+
+        ok(filterMenu instanceof kendo.spreadsheet.FilterMenu);
+        equal(filterMenu.options.range._ref.print(), "R2C2:R3C2");
+    });
 })();
