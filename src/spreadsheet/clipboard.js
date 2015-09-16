@@ -106,7 +106,6 @@
                 var table = $(doc).find("table:first");
                 if(table.length) {
                     var tbody = table.find("tbody:first");
-                    var colgroup = table.find("colgroup:first");
                     tbody.find("tr").each(function(rowIndex, tr) {
                         $(tr).find("td").each(function(colIndex, td) {
                             var key = rowIndex + "," + colIndex;
@@ -144,7 +143,7 @@
                 borderRight : styles["border-right"],
                 borderLeft : styles["border-left"],
                 borderTop : styles["border-top"],
-                color : styles["color"],
+                color : styles["color"], // jshint ignore:line
                 fontFamily : styles["font-family"],
                 underline : styles["text-decoration"] == "underline" ? true : null,
                 fontSize : styles["font-size"],
@@ -152,7 +151,7 @@
                 bold : styles["font-weight"] == "bold" ? true : null,
                 textAlign : this._strippedStyle(styles["text-align"]),
                 verticalAlign : styles["vertical-align"],
-                wrap : styles["word-wrap"] != "normal" ? true : null,
+                wrap : styles["word-wrap"] != "normal" ? true : null
             };
         },
 
@@ -160,14 +159,14 @@
             var prefixes = [
                 "-ms-",
                 "-moz-",
-                "-webkit-",
+                "-webkit-"
             ];
 
             prefixes.forEach(function(prefix) {
                 style = style.replace(prefix, "");
-            })
+            });
             return style;
-        },
+        }
     });
     kendo.spreadsheet.Clipboard = Clipboard;
 })(kendo);
