@@ -63,9 +63,11 @@
 
             this._popup();
 
-            element.on("keydown", this._keydown.bind(this));
-            element.on("keyup", this._keyup.bind(this));
-            element.on("blur", this._blur.bind(this));
+            element
+                .on("keydown", this._keydown.bind(this))
+                .on("keyup", this._keyup.bind(this))
+                .on("blur", this._blur.bind(this))
+                .on("input", this._input.bind(this));
         },
 
         options: {
@@ -256,7 +258,9 @@
             }
 
             this._navigated = false;
+        },
 
+        _input: function() {
             var val = this.value();
             if (/^=\s*\S/.test(val)) {
                 var pos = this.getPos();
