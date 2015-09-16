@@ -195,3 +195,4 @@ sheet2.range("D7").input("=sum(sheet1!A:AX)");
 
 
 
+sheet.range("E2").input('=SUM(A1:C3, 100, B2, 200, D1, INDIRECT("A1:C3"))');

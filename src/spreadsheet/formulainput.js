@@ -46,7 +46,7 @@
             element = this.element;
 
             element.addClass(FormulaInput.classNames.wrapper)
-                   .attr("contenteditable", true);
+                .attr("contenteditable", true);
 
             if (this.options.autoScale) {
                 element.on("input", this.scale.bind(this));
@@ -429,7 +429,33 @@
                 return this.element.text();
             }
 
-            this.element.text(value);
+            if (/^=/.test(value)) {
+                this._syntaxHighlight(value);
+            } else {
+                this.element.text(value);
+            }
+        },
+
+        _syntaxHighlight: function(formula) {
+            formula = formula.substr(1);
+            var tokens = kendo.spreadsheet.calc.tokenize(formula);
+
+            // will get the references array here
+            var references = [];
+
+            tokens.reverse().forEach(function(tok){
+                if (tok.type == "ref") {
+                    references.push(tok.ref);
+                }
+                var begin = tok.begin.pos, end = tok.end.pos;
+                var text = kendo.htmlEncode(formula.substring(begin, end));
+                formula = formula.substr(0, begin) +
+                    "<span class='k-syntax-" + tok.type + "'>" + text + "</span>" +
+                    formula.substr(end);
+            });
+            this.element.html("=" + formula);
+
+            // XXX: highlight references on the sheet now
         },
 
         destroy: function() {
