@@ -135,6 +135,7 @@
         _populateCell: function(element) {
             var styles = window.getComputedStyle(element[0]);
             var text = element.text();
+
             return {
                 value: text === "" ? null : text,
                 format : null,
@@ -145,15 +146,28 @@
                 borderTop : styles["border-top"],
                 color : styles["color"],
                 fontFamily : styles["font-family"],
-                underline : styles["text-decoration"] == "underline" ? true : false,
+                underline : styles["text-decoration"] == "underline" ? true : null,
                 fontSize : styles["font-size"],
-                italic : styles["font-style"] == "italic" ? true : false,
-                bold : styles["font-weight"] == "bold" ? true : false,
-                textAlign : styles["text-align"],
+                italic : styles["font-style"] == "italic" ? true : null,
+                bold : styles["font-weight"] == "bold" ? true : null,
+                textAlign : this._strippedStyle(styles["text-align"]),
                 verticalAlign : styles["vertical-align"],
-                wrap : styles["word-wrap"]
+                wrap : styles["word-wrap"] != "normal" ? true : null,
             };
-        }
+        },
+
+        _strippedStyle: function(style) {
+            var prefixes = [
+                "-ms-",
+                "-moz-",
+                "-webkit-",
+            ];
+
+            prefixes.forEach(function(prefix) {
+                style = style.replace(prefix, "");
+            })
+            return style;
+        },
     });
     kendo.spreadsheet.Clipboard = Clipboard;
 })(kendo);
