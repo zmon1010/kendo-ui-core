@@ -63,6 +63,7 @@
         return parseFloat(str) - 1;
     }
 
+    // XXX: rewrite this with the TokenStream.
     function parseReference(name, noThrow) {
         if (name.toLowerCase() == "#sheet") {
             return spreadsheet.SHEETREF;
@@ -71,26 +72,33 @@
             return new spreadsheet.UnionRef(name.split(/\s*,\s*/g).map(parseReference));
         }
         var m;
-        if ((m = /^\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.CellRef(getrow(m[2]), getcol(m[1]), 0);
+        if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
+            return new spreadsheet.CellRef(getrow(m[4]), getcol(m[3]), 0)
+                .setSheet(m[2], !!m[2]);
         }
-        if ((m = /^\$?([A-Z]+)\$?([0-9]+):\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
+        if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+):(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
             return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(getrow(m[2]), getcol(m[1]), 0),
                 new spreadsheet.CellRef(getrow(m[4]), getcol(m[3]), 0)
-            );
+                    .setSheet(m[2], !!m[2]),
+                new spreadsheet.CellRef(getrow(m[8]), getcol(m[7]), 0)
+                    .setSheet(m[6], !!m[6])
+            ).setSheet(m[2], !!m[2]);
         }
-        if ((m = /^\$?([A-Z]+):\$?([A-Z]+)$/i.exec(name))) {
+        if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+):(([A-Z0-9]+)!)?\$?([A-Z]+)$/i.exec(name))) {
             return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(-Infinity, getcol(m[1]), 0),
-                new spreadsheet.CellRef(+Infinity, getcol(m[2]), 0)
-            );
+                new spreadsheet.CellRef(-Infinity, getcol(m[3]), 0)
+                    .setSheet(m[2], !!m[2]),
+                new spreadsheet.CellRef(+Infinity, getcol(m[6]), 0)
+                    .setSheet(m[5], !!m[5])
+            ).setSheet(m[2], !!m[2]);
         }
-        if ((m = /^\$?([0-9]+):\$?([0-9]+)$/i.exec(name))) {
+        if ((m = /^(([A-Z0-9]+)!)?\$?([0-9]+):(([A-Z0-9]+)!)?\$?([0-9]+)$/i.exec(name))) {
             return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(getrow(m[1]), -Infinity, 0),
-                new spreadsheet.CellRef(getrow(m[2]), +Infinity, 0)
-            );
+                new spreadsheet.CellRef(getrow(m[3]), -Infinity, 0)
+                    .setSheet(m[2], !!m[2]),
+                new spreadsheet.CellRef(getrow(m[6]), +Infinity, 0)
+                    .setSheet(m[5], !!m[5])
+            ).setSheet(m[2], !!m[2]);
         }
         if (!noThrow) {
             throw new Error("Cannot parse reference: " + name);
