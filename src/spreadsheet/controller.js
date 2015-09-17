@@ -671,20 +671,20 @@
 ////////////////////////////////////////////////////////////////////
 
         _parseRefs: function(value) {
-            var tokens = kendo.spreadsheet.calc.tokenize(value || "");
-            var refs = [];
-            var idx = 0;
-
-            tokens.forEach(function(token) {
-                if (token.type === "ref") {
-                    refs.push({
-                        ref: token.ref,
-                        color: idx % 6
-                    });
-                    idx += 1;
-                }
-            });
-
+            if (/^=/.test(value)) {
+                var tokens = kendo.spreadsheet.calc.tokenize(value || "");
+                var refs = [];
+                var idx = 0;
+                tokens.forEach(function(token) {
+                    if (token.type === "ref") {
+                        refs.push({
+                            ref: token.ref,
+                            color: idx % 6
+                        });
+                        idx += 1;
+                    }
+                });
+            }
             return refs;
         },
 

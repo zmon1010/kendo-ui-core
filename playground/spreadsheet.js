@@ -181,7 +181,7 @@ sheet1.range("C18").formula("=SUM(A1:B1, A2:B2, A3:B3)");
 var sheet2 = spreadsheet.sheetByName("Sheet2");
 sheet2.range("A1").formula("=Sheet1!A1:B3 ^ 2");
 
-sheet.range("C1").formula("=sum(Sheet2!A1:B3)");
+sheet.range("C1").formula("=sum(Sheet2!A1:B3, Sheet1!A1:B3)");
 sheet.range("D1").formula("=sum(sHEEt2!A1:B3)");
 
 sheet2.range("D1").input("Sheet1!A1");
