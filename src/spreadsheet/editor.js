@@ -31,7 +31,6 @@
             "update"
         ],
 
-        //TODO: Test
         activeEditor: function() {
             var editor = null;
 

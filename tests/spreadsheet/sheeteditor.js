@@ -267,7 +267,7 @@
         equal(editor.barElement(), editor.barInput.element);
     });
 
-    test("activeSearch returns true if formulaInput popup is opened", function() {
+    test("isFiltered returns true if formulaInput popup is opened", function() {
         var editor = createEditor();
 
         editor.activate({ rect: { top: 0, left: 0 } });
@@ -276,5 +276,33 @@
         editor.cellInput.popup.open();
 
         ok(editor.isFiltered());
+    });
+
+    test("activeEditor returns the focused cell formula input", function() {
+        var editor = createEditor();
+
+        editor.activate({ rect: { top: 0, left: 0 } });
+
+        input.element.focus();
+
+        equal(editor.activeEditor(), input);
+    });
+
+    test("activeEditor returns the focused bar formula input", function() {
+        var editor = createEditor();
+
+        editor.activate({ rect: { top: 0, left: 0 } });
+
+        bar.formulaInput.element.focus();
+
+        equal(editor.activeEditor(), bar.formulaInput);
+    });
+
+    test("activeEditor returns null if no focused formulaInput", function() {
+        var editor = createEditor();
+
+        editor.activate({ rect: { top: 0, left: 0 } });
+
+        equal(editor.activeEditor(), null);
     });
 })();
