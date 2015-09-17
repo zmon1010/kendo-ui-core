@@ -507,53 +507,60 @@
 
         _syntaxHighlight: function() {
             var value = this.value();
-            if (!/^=\s*\S/.test(value)) {
-                return;
-            }
             var pos = this.getPos();
-            var tokens = kendo.spreadsheet.calc.tokenize(value);
-            var refClasses = kendo.spreadsheet.Pane.classNames.series;
-            var refIndex = 0;
-            var parens = [];
-            tokens.forEach(function(tok){
-                if (tok.type == "ref") {
-                    tok.cls = " " + refClasses[(refIndex++) % refClasses.length];
-                }
-                if (pos && tok.type == "punc") {
-                    if (isOpenParen(tok.value)) {
-                        parens.unshift(tok);
-                    } else if (isCloseParen(tok.value)) {
-                        var open = parens.shift();
-                        if (open) {
-                            if (isMatchingParen(tok.value, open.value)) {
-                                if (touches(tok, pos) || touches(open, pos)) {
-                                    tok.cls = " k-syntax-paren-match";
-                                    open.cls = " k-syntax-paren-match";
+            if (!/^=\s*\S/.test(value)) {
+                // if an user deleted the initial =, we should discard
+                // any highlighting.  we still need to restore caret
+                // position thereafter.
+                this.element.text(value);
+
+                // also make sure the completion popup goes away
+                this.popup.close();
+            } else {
+                var tokens = kendo.spreadsheet.calc.tokenize(value);
+                var refClasses = kendo.spreadsheet.Pane.classNames.series;
+                var refIndex = 0;
+                var parens = [];
+                tokens.forEach(function(tok){
+                    if (tok.type == "ref") {
+                        tok.cls = " " + refClasses[(refIndex++) % refClasses.length];
+                    }
+                    if (pos && tok.type == "punc") {
+                        if (isOpenParen(tok.value)) {
+                            parens.unshift(tok);
+                        } else if (isCloseParen(tok.value)) {
+                            var open = parens.shift();
+                            if (open) {
+                                if (isMatchingParen(tok.value, open.value)) {
+                                    if (touches(tok, pos) || touches(open, pos)) {
+                                        tok.cls = " k-syntax-paren-match";
+                                        open.cls = " k-syntax-paren-match";
+                                    }
+                                } else {
+                                    tok.cls = " k-syntax-error";
+                                    open.cls = " k-syntax-error";
                                 }
                             } else {
                                 tok.cls = " k-syntax-error";
-                                open.cls = " k-syntax-error";
                             }
-                        } else {
-                            tok.cls = " k-syntax-error";
                         }
+                    } else if (pos && touches(tok, pos)) {
+                        tok.cls = " k-syntax-at-point";
                     }
-                } else if (pos && touches(tok, pos)) {
-                    tok.cls = " k-syntax-at-point";
-                }
-                if (tok.type == "func" && !knownFunction(tok.value) && (!pos || !touches(tok, pos))) {
-                    tok.cls += " k-syntax-error";
-                }
-            });
-            tokens.reverse().forEach(function(tok){
-                var begin = tok.begin, end = tok.end;
-                var text = kendo.htmlEncode(value.substring(begin, end));
-                value = value.substr(0, begin) +
-                    "<span class='k-syntax-" + tok.type +
-                    tok.cls + "'>" + text + "</span>" +
-                    value.substr(end);
-            });
-            this.element.html(value);
+                    if (tok.type == "func" && !knownFunction(tok.value) && (!pos || !touches(tok, pos))) {
+                        tok.cls += " k-syntax-error";
+                    }
+                });
+                tokens.reverse().forEach(function(tok){
+                    var begin = tok.begin, end = tok.end;
+                    var text = kendo.htmlEncode(value.substring(begin, end));
+                    value = value.substr(0, begin) +
+                        "<span class='k-syntax-" + tok.type +
+                        tok.cls + "'>" + text + "</span>" +
+                        value.substr(end);
+                });
+                this.element.html(value);
+            }
             if (pos) {
                 this.setPos(pos.begin, pos.end);
             }
