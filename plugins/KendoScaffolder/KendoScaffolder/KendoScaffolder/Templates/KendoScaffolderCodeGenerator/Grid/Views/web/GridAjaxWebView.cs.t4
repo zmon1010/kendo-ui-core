@@ -1,4 +1,4 @@
-﻿﻿<#@ template language="C#" HostSpecific="True" debug="true" #>
+﻿<#@ template language="C#" HostSpecific="True" debug="true" #>
 <#@ output extension=".cshtml" #>
 <#@ include file="..\ImportsGridView.include.t4" #>
 <#
@@ -14,14 +14,14 @@
 <#
     var properties = ModelMetadata.Properties
         .Where(prop => prop.Scaffold && !prop.IsPrimaryKey && !prop.IsForeignKey && !prop.IsAssociation)
-        .ToList();    
-    for (int i = 0; i < properties.Count; i++) { 
+        .ToList();
+    for (int i = 0; i < properties.Count; i++) {
         var propertyName = properties[i].PropertyName;
         var isLast = i == properties.Count - 1;
 #>
 <#
         if (UseViewModel) {
-            foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) { 
+            foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) {
                 if(child.Name.Equals(propertyName)) {
 #>
 <#
@@ -38,8 +38,8 @@
                             var item = annotations["Name"];
                             RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, item);
                             rendered = true;
-                        }                                  
-                    } 
+                        }
+                    }
                     if (!rendered) {
                         RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, "");
                     }
@@ -51,10 +51,10 @@
         }  else {
 #>
 <#
-            RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, "");      
+            RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, "");
 #>
 <#
-        }    
+        }
     }
 #>
 <#
@@ -110,7 +110,7 @@
 #>
         selectable: "<#=SelectionMode.ToString().ToLower() #> <#=SelectionType.ToString().ToLower() #>",
 <#
-    } 
+    }
     if(Sortable) {
 #>
         sortable: {
@@ -122,7 +122,7 @@
 #>
         filterable: <#= FilterMode.ToString() == "Row" ? "{ " + newLine + "\t\t\tmode: \"row\""+ newLine +"\t\t}," : "true," #>
 <#
-    } 
+    }
     if (GridEvents.Count > 0) {
         for (int i = 0; i < GridEvents.Count; i++) {
         RenderEvents(GridEvents[i], i == properties.Count - 1);
@@ -145,7 +145,7 @@
 #>
             {field: "<#= field#>"<#= title.Length > 0 ?", title: \"" + title +"\"" : "" #>}<#= isLast ? "" : "," #>
 <#+
-  }  
+  }
 #>
 <#+
     private void RenderEvents(string ev, bool isLast)
@@ -153,7 +153,7 @@
 #>
         <#= Char.ToLowerInvariant(ev[0]) + ev.Substring(1) #>: on<#= ev #>,
 <#+
-    }  
+    }
 #>
 <#+
     private void RenderEventHandlers(string ev)
@@ -164,13 +164,13 @@
     }
 
 <#+
-    }  
+    }
 #>
 <#+
-    private void RenderToolbarOptions() 
+    private void RenderToolbarOptions()
     {
         string result = "[";
-        string[] toolbarOperations = new string[] { 
+        string[] toolbarOperations = new string[] {
             EditableCreate ? "\"create\"" : "",
             Editable && EditMode.Equals("InCell") ? "\"save\"" : "",
             ExcelExport ? "\"excel\"" : "",
@@ -192,7 +192,7 @@
 #>
 
 <#+
-    private void RenderCRUDOptions(string EntitySetName, string ControllerRootName) 
+    private void RenderCRUDOptions(string EntitySetName, string ControllerRootName)
     {
         var newLine = Environment.NewLine;
         string result = "";
@@ -202,7 +202,7 @@
             result += ", " + newLine;
         }
 
-        string[] transportOptions = new string[] { 
+        string[] transportOptions = new string[] {
             EditableCreate ? "create" : "",
             EditableUpdate ? "update" : "",
             EditableDestroy ? "destroy" : "",
@@ -214,7 +214,7 @@
             result += GetTabs(4) + transportOptions[i] + ": { " + newLine + GetTabs(5) +"url: \"" + EntitySetName + "_" + operation + "\""+ newLine + GetTabs(4) + "}";
             if (i != transportOptions.Length - 1){
                 result += "," + newLine;
-            } 
+            }
         }
         result += newLine + GetTabs(3) + "},";
 #>
@@ -237,8 +237,8 @@
             result += GetTabs(6) + "\"" + model.Key + "\"" + ": {" + newLine;
             result += GetTabs(7) + "type: " + "\"" + model.Value["type"] + "\"";
             result += distinctValidators ? "" : newLine;
-        
-            if (distinctValidators) 
+
+            if (distinctValidators)
             {
                 result += "," + newLine + GetTabs(7) + "validation: {";
                 result += RenderValidationAttributes(model);
@@ -268,16 +268,16 @@
         string result = "";
         Dictionary<string,string> distincValues = GetDistinctValidation(model.Value);
 
-        foreach (var item in distincValues) 
+        foreach (var item in distincValues)
         {
             var isLast = item.Equals(distincValues.Last());
 
-            if (item.Key == "pattern") 
+            if (item.Key == "pattern")
             {
                 result += item.Key + ": \"" + item.Value + "\"";
-            } else 
+            } else
             {
-                result += item.Key + ": " + item.Value; 
+                result += item.Key + ": " + item.Value;
             }
 
             result += isLast ? "" : ", ";
@@ -285,16 +285,16 @@
         return result;
     }
 
-    private void RenderFields(string primaryKey) 
+    private void RenderFields(string primaryKey)
     {
         var newLine = Environment.NewLine;
         string tabs = GetTabs(5);
-        string result = "," + newLine + tabs + "fields: {" + newLine;   
- 
+        string result = "," + newLine + tabs + "fields: {" + newLine;
+
         DataAnnotationAttributes.Remove(primaryKey);
-        
+
         foreach (var model in DataAnnotationAttributes)
-        {            
+        {
             if (!(model.Value.ContainsKey("scaffold") && model.Value["scaffold"] == "false"))
             {
                 var isLast = model.Equals(DataAnnotationAttributes.Last());

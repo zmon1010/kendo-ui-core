@@ -1,6 +1,6 @@
-﻿﻿<#@ template language="C#" HostSpecific="True" #>
-<#@ output extension=".cshtml" #>
-<#@ include file="..\ImportsGridView.include.t4" #>
+﻿<#@ template language="C#" HostSpecific="True"#>
+<#@ output extension=".cshtml"#>
+<#@include file="..\ImportsGridView.include.t4"#>
 <#
     var entitySetName = ModelMetadata.EntitySetName;
     var batchEditMode = "InCell";
@@ -17,7 +17,7 @@ foreach (PropertyMetadata property in properties) {
 <#
         if (property.IsAssociation) { continue; }
             if (UseViewModel) {
-                foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) { 
+                foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) {
                     if(child.Name.Equals(property.PropertyName)) {
 #>
         columns.Bound(c => c.<#= property.PropertyName#>);
@@ -65,8 +65,8 @@ if(EditableCreate || ExcelExport || PdfExport) {
 <#
         }
 #>
-      }) 
-<#       
+      })
+<#
     }
     if(ColumnMenu) {
 #>
@@ -100,7 +100,7 @@ if(EditableCreate || ExcelExport || PdfExport) {
 #>
       .Sortable(sortable => {
           sortable.SortMode(GridSortMode.<#= SortMode #>);
-<# 
+<#
         if(!AllowUnsort){
 #>
           sortable.AllowUnsort(false);
@@ -189,5 +189,5 @@ if(Editable) {
 <#
     }
 #>
-</script>     
+</script>
 <# } #>

@@ -1,4 +1,4 @@
-﻿﻿<#@ template language="C#" HostSpecific="True" #>
+﻿<#@ template language="C#" HostSpecific="True" #>
 <#@ output extension=".cshtml" #>
 <#@ include file="..\ImportsSchedulerView.include.t4" #>
 <#
@@ -128,5 +128,5 @@ config.Routes.MapHttpRoute(
 <#
     }
 #>
-</script>     
+</script>
 <# } #>

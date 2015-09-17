@@ -1,4 +1,4 @@
-﻿﻿<#@ template language="C#" HostSpecific="True" #>
+﻿<#@ template language="C#" HostSpecific="True" #>
 <#@ output extension=".cshtml" #>
 <#@ include file="..\ImportsSchedulerView.include.t4" #>
 <#
@@ -108,12 +108,12 @@
 
 <# if(SchedulerEvents.Count > 0){ #>
 <script>
-<# foreach (string ev in SchedulerEvents) 
+<# foreach (string ev in SchedulerEvents)
     { #>
     function on<#= ev #>(e){
         //Implement the event handler for <#= ev #>
     }
 
 <# } #>
-</script>     
+</script>
 <# } #>

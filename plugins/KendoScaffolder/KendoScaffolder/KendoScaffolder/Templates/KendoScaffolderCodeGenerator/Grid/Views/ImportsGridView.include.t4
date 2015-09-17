@@ -1,4 +1,4 @@
-﻿﻿<#@ assembly name="System.Core" #>
+﻿<#@ assembly name="System.Core" #>
 <#@ assembly name="System.Data.Entity" #>
 <#@ assembly name="System.Data.Linq" #>
 <#@ assembly name="EnvDTE" #>

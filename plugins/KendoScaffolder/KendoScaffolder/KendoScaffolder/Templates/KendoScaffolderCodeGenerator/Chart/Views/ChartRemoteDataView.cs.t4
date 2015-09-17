@@ -1,4 +1,4 @@
-﻿﻿<#@ template language="C#" HostSpecific="True" #>
+﻿<#@ template language="C#" HostSpecific="True" #>
 <#@ output extension=".cshtml" #>
 <#@ include file="ImportsChartView.include.t4" #>
 <#
@@ -22,7 +22,7 @@ if(TooltipVisible) {
       .DataSource(ds => ds.Read(read => read.Action("<#= entitySetName #>_Read", "<#= ControllerRootName #>")))
       .Series(series => {
 <# for (int i = 0; i < SeriesNames.Count; i++) { #>
-            series.<#= SeriesType #>(<# for (int j = 0; j < SeriesConfigs[i].Count; j++) { #><#= 
+            series.<#= SeriesType #>(<# for (int j = 0; j < SeriesConfigs[i].Count; j++) { #><#=
                 Convert.ToChar(j + 97) #> => <#= Convert.ToChar(j + 97) #>.<#= SeriesConfigs[i][j] #><# if(j < SeriesConfigs[i].Count - 1){ #>,<# } #>
 <#        } #>)<# if(SeriesNames[i] != string.Empty){ #>.Name("<#= SeriesNames[i] #>")<# } #><# if(SeriesColors[i] != string.Empty){ #>.Color("<#= SeriesColors[i] #>")<# } #>;
 <# } #>
