@@ -198,6 +198,7 @@
             this.scale();
             this.popup.close();
             this.setPos(begin + completion.length);
+            this._sync();
         },
 
         _popup: function() {
