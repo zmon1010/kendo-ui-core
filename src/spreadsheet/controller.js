@@ -680,16 +680,20 @@
 
         _parseRefs: function(value) {
             var refs = [];
+            var sheetName = this._workbook.activeSheet().name().toLowerCase();
             if (/^=/.test(value)) {
                 var tokens = kendo.spreadsheet.calc.tokenize(value || "");
                 var idx = 0;
                 tokens.forEach(function(token) {
                     if (token.type === "ref") {
-                        refs.push({
-                            ref: token.ref,
-                            color: idx % 6
-                        });
-                        idx += 1;
+                        var ref = token.ref;
+                        if (!ref.sheet || ref.sheet.toLowerCase() == sheetName) {
+                            ref.sheet = null;
+                            refs.push({
+                                ref: ref,
+                                color: (idx++) % 6
+                            });
+                        }
                     }
                 });
             }
