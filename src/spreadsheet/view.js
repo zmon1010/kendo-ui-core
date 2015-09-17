@@ -271,7 +271,7 @@
             var classNames = View.classNames;
 
             this.element = element;
-            this.options = options;
+            $.extend(true, this.options, options);
 
             this._chrome();
 
@@ -313,6 +313,14 @@
                 width: this.wrapper[0].clientWidth - scrollbar,
                 height: this.wrapper[0].clientHeight - scrollbar
             });
+        },
+
+        options: {
+            messages: {
+                errors: {
+                    shiftingNonblankCells: "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet."
+                }
+            }
         },
 
         _resize: function() {
@@ -583,7 +591,8 @@
         },
 
         showError: function(options) {
-            this.openDialog("message", { title: "Error", text: options.reason });
+            var errorMessages = this.options.messages.errors;
+            this.openDialog("message", { title: "Error", text: errorMessages[options.reason] });
         },
 
         destroy: function() {
