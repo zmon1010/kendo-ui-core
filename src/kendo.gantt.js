@@ -244,19 +244,7 @@ var __meta__ = { // jshint ignore:line
                 .add(window);
     }
 
-    var defaultCommands = {
-        append: {
-            text: "Add Task",
-            action: "add",
-            className: ganttStyles.toolbar.appendButton,
-            iconClass: ganttStyles.toolbar.iconPlus
-        },
-        pdf: {
-            text: "Export to PDF",
-            className: ganttStyles.toolbar.pdfButton,
-            iconClass: ganttStyles.toolbar.iconPdf
-        }
-    };
+    var defaultCommands;
 
     var TaskDropDown = Observable.extend({
         init: function(element, options) {
@@ -1392,6 +1380,20 @@ var __meta__ = { // jshint ignore:line
             if (isArray(options)) {
                 options = { dataSource: options };
             }
+
+            defaultCommands = {
+                append: {
+                    text: "Add Task",
+                    action: "add",
+                    className: Gantt.styles.toolbar.appendButton,
+                    iconClass: Gantt.styles.toolbar.iconPlus
+                },
+                pdf: {
+                    text: "Export to PDF",
+                    className: Gantt.styles.toolbar.pdfButton,
+                    iconClass: Gantt.styles.toolbar.iconPdf
+                }
+            };
 
             Widget.fn.init.call(this, element, options);
 
