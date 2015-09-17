@@ -1712,7 +1712,9 @@ var __meta__ = { // jshint ignore:line
                         that.view(name);
                     }
                 })
-                .on(CLICK + NS, pdfSelector, function() {
+                .on(CLICK + NS, pdfSelector, function(e) {
+                    e.preventDefault();
+
                     that.saveAsPDF();
                 })
                 .on(CLICK + NS, toggleSelector, function() {
