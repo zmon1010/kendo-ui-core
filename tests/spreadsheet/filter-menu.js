@@ -226,4 +226,28 @@
         ok(filterMenu.element.find(".k-dropdown").length);
     });
 
+    module("filter menu actions", {
+        setup: function() {
+            sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
+        },
+        teardown: function() {
+            if (filterMenu) {
+                filterMenu.destroy();
+            }
+        }
+    });
+
+    test("clicking sort items sorts the range", function() {
+        filterMenu = createWithValues([ ["A1"], ["A2"], ["A3"] ]);
+
+        filterMenu.bind("action", function(e) {
+            equal(e.command, "SortCommand");
+            ok(!e.options.sheet);
+        });
+
+        filterMenu.menu.trigger("select", {
+            item: filterMenu.menu.element.find(".k-item[data-dir=asc]")
+        });
+    });
+
 })();

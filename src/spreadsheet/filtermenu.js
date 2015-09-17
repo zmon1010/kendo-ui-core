@@ -171,6 +171,10 @@
                 this.popup.open();
             },
 
+            action: function(options) {
+                this.trigger("action", $.extend({ }, options));
+            },
+
             getValues: function() {
                 var values = [];
                 var messages = this.options.messages;
@@ -251,11 +255,10 @@
                     select: function(e) {
                         var options = {
                             asc: $(e.item).data("dir") === "asc",
-                            sheet: false,
-                            range: true
+                            sheet: false
                         }
 
-                        this.trigger("action", { command: "SortCommand", options: options });
+                        this.action({ command: "SortCommand", options: options });
                     }.bind(this)
                 }).data("kendoMenu");
             },
