@@ -1113,6 +1113,10 @@
                         input.ahead(2, maybeCall) ||
                         next());
         }
+        var tok = tokens[0];
+        if (tok.type == "op" && tok.value == "=") {
+            tok.type = "startexp";
+        }
         return tokens;
 
         function maybeRange(a, b, c, d) {

@@ -224,7 +224,7 @@
         },
 
         _isFormula: function() {
-            return /^=\s*\S/.test(this.value());
+            return /^=/.test(this.value());
         },
 
         _keydown: function(e) {
@@ -420,7 +420,7 @@
                 return tok.begin >= point.begin;
             }
             function canReplace(tok) {
-                if (/^(?:num|str|bool|sym|ref)$/.test(tok.type)) {
+                if (tok && (/^(?:num|str|bool|sym|ref)$/.test(tok.type))) {
                     return { replace: true, token: tok, end: tok.end };
                 }
             }
@@ -429,7 +429,10 @@
                     return (/^(?:op)/.test(current.type) ?
                             { token: tok, end: point.end } : null);
                 }
-                if (/^(?:ref|op|punc)$/.test(tok.type) && current) {
+                if (tok.type == "startexp") {
+                    return { token: tok, end: point.end };
+                }
+                if (/^(?:ref|op|punc)$/.test(tok.type)) {
                     var tmp = canReplace(current);
                     if (tmp) {
                         return tmp;
@@ -508,7 +511,7 @@
         _syntaxHighlight: function() {
             var value = this.value();
             var pos = this.getPos();
-            if (!/^=\s*\S/.test(value)) {
+            if (!(/^=/.test(value))) {
                 // if an user deleted the initial =, we should discard
                 // any highlighting.  we still need to restore caret
                 // position thereafter.
