@@ -464,6 +464,8 @@
                 this.value(value);
                 this.setPos(point);
                 this.scale();
+
+                this._syntaxHighlight();
                 this._sync();
             }
         },
