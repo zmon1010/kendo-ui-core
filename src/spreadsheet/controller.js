@@ -354,16 +354,16 @@
         onMouseDown: function(event) {
             var object = this.objectAt(event);
 
-            if (this.editor.insertRef()) {
-                this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
-                event.preventDefault();
-                return
-            } else {
-                this.editor.deactivate();
-            }
-
             if (object.pane) {
                 this.originFrame = object.pane;
+            }
+
+            if (this.editor.insertRef() && object.ref) {
+                this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
+                event.preventDefault();
+                return;
+            } else {
+                this.editor.deactivate();
             }
 
             var sheet = this._workbook.activeSheet();
@@ -507,7 +507,6 @@
             var object = this.objectAt(event);
             if (object && object.ref && editor.canInsertRef()) {
                 editor.refAtPoint(sheet.selection()._ref);
-
                 sheet._setRangeSelections(this._parseRefs(editor.value()));
             }
         },
