@@ -395,10 +395,10 @@
                 if (point.begin === 0) {
                     return null;
                 }
-                var value = this.value();
+                var value = this.value(), tok;
                 var tokens = kendo.spreadsheet.calc.tokenize(value);
                 for (var i = 0; i < tokens.length; ++i) {
-                    var tok = tokens[i];
+                    tok = tokens[i];
                     if (atPoint(tok)) {
                         var operation = canReplace(tok);
                         if (operation) {

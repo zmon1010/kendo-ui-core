@@ -29,14 +29,14 @@
                 selection: kendo.spreadsheet.FIRSTREF.toRangeRef(),
                 originalSelection: kendo.spreadsheet.FIRSTREF.toRangeRef(),
                 activeCell: kendo.spreadsheet.FIRSTREF.toRangeRef(),
-                originalActiveCell: kendo.spreadsheet.FIRSTREF,
+                originalActiveCell: kendo.spreadsheet.FIRSTREF
             };
 
             this._editSelection = {
                 selection: kendo.spreadsheet.FIRSTREF.toRangeRef(),
                 originalSelection: kendo.spreadsheet.FIRSTREF.toRangeRef(),
                 activeCell: kendo.spreadsheet.FIRSTREF.toRangeRef(),
-                originalActiveCell: kendo.spreadsheet.FIRSTREF,
+                originalActiveCell: kendo.spreadsheet.FIRSTREF
             };
 
             //XXX: decide whether to put in editSelection structure

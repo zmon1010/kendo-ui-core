@@ -679,9 +679,9 @@
 ////////////////////////////////////////////////////////////////////
 
         _parseRefs: function(value) {
+            var refs = [];
             if (/^=/.test(value)) {
                 var tokens = kendo.spreadsheet.calc.tokenize(value || "");
-                var refs = [];
                 var idx = 0;
                 tokens.forEach(function(token) {
                     if (token.type === "ref") {
@@ -697,7 +697,7 @@
         },
 
         onEditorChange: function(e) {
-            sheet._edit(false);
+            this._workbook.activeSheet()._edit(false);
 
             this._workbook.execute({
                 command: "EditCommand",
