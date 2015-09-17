@@ -948,8 +948,8 @@ var __meta__ = { // jshint ignore:line
 
             if (this.form) {
                 if (e && forceUnique && e.sender === dataSource && !dataSource.options.serverPaging &&
-                     (e.action == "itemchange" || e.action == "add" || e.action == "remove" || (dataSource.options.autoSync && e.action === "sync"))
-                         && !this._foreignKeyValues()) {
+                     (e.action == "itemchange" || e.action == "add" || e.action == "remove" || (dataSource.options.autoSync && e.action === "sync")) &&
+                         !this._foreignKeyValues()) {
                     this.checkSource.data(distinct(this.dataSource.data(),this.field));
                     this.container.empty();
                 }
