@@ -1031,9 +1031,16 @@
 
         },
 
+        _active: function() {
+            return this._sheet._formulaSelections.filter(function(sel) {
+                return sel.active;
+            })[0];
+        },
+
         renderSelection: function() {
             var classNames = Pane.classNames;
             var selections = [];
+            var seriesColorClass = "";
             var sheet = this._sheet;
             var view = this._currentView;
             var activeCell = sheet.activeCell().toRangeRef();
@@ -1046,6 +1053,15 @@
                 !activeCell.move(1, 0).intersects(view.ref)
             );
 
+            if (sheet._edit()) {
+                var token = this._active();
+
+                if (token) {
+                    seriesColorClass = " " + token.seriesCls;
+                    className += seriesColorClass
+                }
+            }
+
             if (sheet.select().eq(activeCell)) {
                 className += " " + classNames.single;
             }
@@ -1055,7 +1071,7 @@
                     return;
                 }
 
-                this._addDiv(selections, ref, classNames.selection);
+                this._addDiv(selections, ref, classNames.selection + seriesColorClass);
             }.bind(this));
 
             this._addTable(selections, activeCell, className);

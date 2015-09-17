@@ -808,7 +808,7 @@
 
         formulaInput.value("=SUM(A1:B1, C1:C2, SUM(D1:D2))");
 
-        var tokens = formulaInput.highlightTokens();
+        var tokens = formulaInput.highlightedRefs();
 
         equal(tokens.length, 3);
         equal(tokens[0].ref.toString(), "A1:B1");

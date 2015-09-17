@@ -57,7 +57,7 @@
                 element.on("input", this.scale.bind(this));
             }
 
-            this._highlightTokens = [];
+            this._highlightedRefs = [];
 
             this._formulaSource();
 
@@ -461,10 +461,11 @@
                 value = value.substr(0, x.replace ? tok.begin : x.end) + ref;
                 var point = value.length;
                 value += rest;
-                this.value(value);
+                this.value(value); //_syntaxhighglight is called here too
                 this.setPos(point);
                 this.scale();
 
+                //need to call it here to update active token highlighting
                 this._syntaxHighlight();
                 this._sync();
             }
@@ -514,14 +515,14 @@
             this._syntaxHighlight();
         },
 
-        highlightTokens: function() {
-            return this._highlightTokens.slice();
+        highlightedRefs: function() {
+            return this._highlightedRefs.slice();
         },
 
         _syntaxHighlight: function() {
             var value = this.value();
             var pos = this.getPos();
-            var highlightTokens = [];
+            var highlightedRefs = [];
 
             if (!(/^=/.test(value))) {
                 // if an user deleted the initial =, we should discard
@@ -537,10 +538,15 @@
                 var refIndex = 0;
                 var parens = [];
                 tokens.forEach(function(tok){
+                    tok.active = false;
+
                     if (tok.type == "ref") {
-                        tok.cls = " " + refClasses[(refIndex++) % refClasses.length];
-                        highlightTokens.push(tok);
+                        tok.seriesCls = refClasses[(refIndex++) % refClasses.length];
+                        tok.cls = " " + tok.seriesCls;
+
+                        highlightedRefs.push(tok);
                     }
+
                     if (pos && tok.type == "punc") {
                         if (isOpenParen(tok.value)) {
                             parens.unshift(tok);
@@ -562,6 +568,7 @@
                         }
                     } else if (pos && touches(tok, pos)) {
                         tok.cls = " k-syntax-at-point";
+                        tok.active = true;
                     }
                     if (tok.type == "func" && !knownFunction(tok.value) && (!pos || !touches(tok, pos))) {
                         tok.cls += " k-syntax-error";
@@ -581,7 +588,7 @@
                 this.setPos(pos.begin, pos.end);
             }
 
-            this._highlightTokens = highlightTokens;
+            this._highlightedRefs = highlightedRefs;
         },
 
         destroy: function() {

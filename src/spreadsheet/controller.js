@@ -369,6 +369,7 @@
             }
 
             if (this.editor.canInsertRef() && object.ref) {
+                this._workbook.activeSheet()._setFormulaSelections(this.editor.highlightedRefs());
                 this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
                 event.preventDefault();
                 return;
@@ -517,7 +518,7 @@
             var object = this.objectAt(event);
             if (object && object.ref && editor.canInsertRef()) {
                 editor.refAtPoint(sheet.selection()._ref);
-                sheet._setFormulaSelections(editor.highlightTokens());
+                sheet._setFormulaSelections(editor.highlightedRefs());
             }
         },
 
@@ -731,7 +732,7 @@
             var workbook = this._workbook;
             var sheet = workbook.activeSheet();
 
-            sheet._setFormulaSelections(this.editor.highlightTokens());
+            sheet._setFormulaSelections(this.editor.highlightedRefs());
             sheet._edit(true);
         },
 
@@ -743,7 +744,7 @@
         },
 
         onEditorUpdate: function(e) {
-            this._workbook.activeSheet()._setFormulaSelections(this.editor.highlightTokens());
+            this._workbook.activeSheet()._setFormulaSelections(this.editor.highlightedRefs());
         },
 
         onEditorBarFocus: function() {

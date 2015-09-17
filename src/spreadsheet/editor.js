@@ -104,8 +104,15 @@
             return editor && editor.canInsertRef();
         },
 
-        highlightTokens: function() {
-            return this.barInput.highlightTokens();
+        highlightedRefs: function() {
+            var editor = this.activeEditor();
+            var refs = [];
+
+            if (editor) {
+                refs = editor.highlightedRefs();
+            }
+
+            return refs;
         },
 
         scale: function() {
