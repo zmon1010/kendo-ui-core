@@ -384,4 +384,68 @@
         $("[type='submit']").click();
         equal(widget.dataSource.view().length, 1);
     });
+
+    test("pushcreate with autosync updates the items", function() {
+        var ds = new kendo.data.DataSource({
+            serverPaging: false,
+            data: [{
+                foo: "some string"
+            }]
+        });
+        ds.read();
+
+        widget = setup({
+            dataSource: ds,
+            field: "foo"
+        });
+
+        var chkbxs = widget.container.find(":checkbox:not(.k-check-all)");
+        equal(chkbxs.length, 1);
+        equal(chkbxs.eq(0).val(), "some string");
+        equal(chkbxs.eq(0).closest("label").text(), "some string");
+
+        ds.pushCreate({ foo: "new" });
+
+        chkbxs = widget.container.find(":checkbox:not(.k-check-all)");
+        equal(chkbxs.length, 2);
+        equal(chkbxs.eq(0).val(), "some string");
+        equal(chkbxs.eq(0).closest("label").text(), "some string");
+        equal(chkbxs.eq(1).val(), "new");
+        equal(chkbxs.eq(1).closest("label").text(), "new");
+    });
+
+    test("pushUpdate with autosync updates the items", function() {
+        var ds = new kendo.data.DataSource({
+            data: [{
+                id: 0,
+                foo: "some string"
+            }],
+            schema: {
+                model: {
+                    id: "id"
+                }
+            },
+            autoSync: true
+        });
+
+        ds.read();
+
+        widget = setup({
+            dataSource: ds,
+            field: "foo"
+        });
+
+        var chkbxs = widget.container.find(":checkbox:not(.k-check-all)");
+        equal(chkbxs.length, 1);
+        equal(chkbxs.eq(0).val(), "some string");
+        equal(chkbxs.eq(0).closest("label").text(), "some string");
+
+        ds.pushUpdate({id:0, foo: "new string" });
+
+        chkbxs = widget.container.find(":checkbox:not(.k-check-all)");
+        equal(chkbxs.length, 1);
+        equal(chkbxs.eq(0).val(), "new string");
+        equal(chkbxs.eq(0).closest("label").text(), "new string");
+    });
+
 })();
