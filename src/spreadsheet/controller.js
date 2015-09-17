@@ -755,7 +755,7 @@
         },
 
         onEditorEsc: function() {
-            this.editor.value(this._workbook._inputForRef(this._workbook.activeSheet().activeCell()));
+            this.editor.value(this._workbook._inputForRef(this._workbook.activeSheet()._viewActiveCell()));
             this.editor.deactivate();
 
             this.clipboardElement.focus();
