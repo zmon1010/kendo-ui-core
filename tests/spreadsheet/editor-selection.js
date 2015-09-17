@@ -35,9 +35,9 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        sheet._editorSelection = [{
+        sheet._rangeSelections = [{
             ref: ref,
-            series: 0
+            color: 0
         }];
 
         var selections = pane.renderEditorSelection().children;
@@ -56,9 +56,9 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        sheet._editorSelection = [
-            { ref: ref1, series: 0 },
-            { ref: ref2, series: 1 }
+        sheet._rangeSelections = [
+            { ref: ref1, color: 0 },
+            { ref: ref2, color: 1 }
         ];
 
         var selections = pane.renderEditorSelection().children;
@@ -82,9 +82,9 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        sheet._editorSelection = [{
+        sheet._rangeSelections = [{
             ref: ref,
-            series: 10
+            color: 10
         }];
 
         var selections = pane.renderEditorSelection().children;
@@ -102,9 +102,9 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        sheet._editorSelection = [
-            { ref: kendo.spreadsheet.NULLREF, series: 0 },
-            { ref: ref, series: 1 }
+        sheet._rangeSelections = [
+            { ref: kendo.spreadsheet.NULLREF, color: 0 },
+            { ref: ref, color: 1 }
         ];
 
         var selections = pane.renderEditorSelection().children;
@@ -123,7 +123,7 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        sheet._editorSelection = [ ];
+        sheet._rangeSelections = [ ];
 
         var selections = pane.renderEditorSelection().children;
         var divC2D3 = selections[0];
