@@ -159,28 +159,28 @@
                         this.onPaste();
                         break;
                     case "unmerge":
-                        command = new kendo.spreadsheet.MergeCellCommand({ value: "unmerge" });
+                        command = { command: "MergeCellCommand", options: { value: "unmerge" } };
                         break;
                     case "merge":
                         this.view.openDialog("merge");
                         break;
                     case "hide-row":
-                        command = new kendo.spreadsheet.HideLineCommand({ axis: "row" });
+                        command = { command: "HideLineCommand", options: { axis: "row" } };
                         break;
                     case "hide-column":
-                        command = new kendo.spreadsheet.HideLineCommand({ axis: "column" });
+                        command = { command: "HideLineCommand", options: { axis: "column" } };
                         break;
                     case "unhide-row":
-                        command = new kendo.spreadsheet.UnHideLineCommand({ axis: "row" });
+                        command = { command: "UnHideLineCommand", options: { axis: "row" } };
                         break;
                     case "unhide-column":
-                        command = new kendo.spreadsheet.UnHideLineCommand({ axis: "column" });
+                        command = { command: "UnHideLineCommand", options: { axis: "column" } };
                         break;
                     case "delete-row":
-                        command = new kendo.spreadsheet.DeleteRowCommand({});
+                        command = { command: "DeleteRowCommand" };
                         break;
                     case "delete-column":
-                        command = new kendo.spreadsheet.DeleteColumnCommand({});
+                        command = { command: "DeleteColumnCommand" };
                         break;
                 }
 
@@ -312,7 +312,7 @@
                 }
             } else {
                 if (action == "delete" || action == "backspace") {
-                    this._workbook.execute(new kendo.spreadsheet.ClearContentCommand());
+                    this._workbook.execute({ command: "ClearContentCommand" });
                     event.preventDefault();
                 }
                 else if (action === ":alphanum" || action === ":edit") {
@@ -518,8 +518,10 @@
         },
 
         onCut: function() {
-            var command = new kendo.spreadsheet.CutCommand({ workbook: this.view._workbook });
-            this.view._workbook.execute(command);
+            this.view._workbook.execute({
+                command: "CutCommand",
+                options: { workbook: this.view._workbook }
+            });
         },
 
         clipBoardValue: function() {
@@ -545,8 +547,10 @@
                     setTimeout(function() {
                         this.clipboard.external({html: this.clipboardElement.html(), plain: window.clipboardData.getData("Text")});
                         this.clipboardElement.empty().append(table);
-                        var command = new kendo.spreadsheet.PasteCommand({ workbook: this.view._workbook });
-                        this.view._workbook.execute(command);
+                        this.view._workbook.execute({
+                            command: "PasteCommand",
+                            options: { workbook: this.view._workbook }
+                        });
                     }.bind(this));
 
                     return;
@@ -564,14 +568,18 @@
             }
 
             this.clipboard.external({html: html, plain:plain});
-            var command = new kendo.spreadsheet.PasteCommand({ workbook: this.view._workbook });
-            this.view._workbook.execute(command);
+            this.view._workbook.execute({
+                command: "PasteCommand",
+                options: { workbook: this.view._workbook }
+            });
 
         },
 
         onCopy: function() {
-            var command = new kendo.spreadsheet.CopyCommand({ workbook: this.view._workbook });
-            this.view._workbook.execute(command);
+            this.view._workbook.execute({
+                command: "CopyCommand",
+                options: { workbook: this.view._workbook }
+            });
         },
 
 ////////////////////////////////////////////////////////////////////
@@ -691,9 +699,12 @@
         onEditorChange: function(e) {
             sheet._edit(false);
 
-            this._workbook.execute(new kendo.spreadsheet.EditCommand({
-                value: e.value
-            }));
+            this._workbook.execute({
+                command: "EditCommand",
+                options: {
+                    value: e.value
+                }
+            });
         },
 
         onEditorActivate: function() {
