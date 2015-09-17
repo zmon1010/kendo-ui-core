@@ -145,6 +145,14 @@
             $(this.view.container).on("click", ".k-link.k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
         },
 
+        _execute: function(command) {
+            var result = this._workbook.execute(command);
+
+            if (result) {
+                this.view.showError(result);
+            }
+        },
+
         onContextMenuSelect: function(e) {
                 var action = $(e.item).data("action");
                 var command;
@@ -185,7 +193,7 @@
                 }
 
                 if (command) {
-                    this._workbook.execute(command);
+                    this._execute(command);
                 }
         },
 
@@ -314,7 +322,7 @@
                 }
             } else {
                 if (action == "delete" || action == "backspace") {
-                    this._workbook.execute({ command: "ClearContentCommand" });
+                    this._execute({ command: "ClearContentCommand" });
                     event.preventDefault();
                 }
                 else if (action === ":alphanum" || action === ":edit") {
@@ -520,7 +528,7 @@
         },
 
         onCut: function() {
-            this.view._workbook.execute({
+            this._execute({
                 command: "CutCommand",
                 options: { workbook: this.view._workbook }
             });
@@ -549,7 +557,7 @@
                     setTimeout(function() {
                         this.clipboard.external({html: this.clipboardElement.html(), plain: window.clipboardData.getData("Text")});
                         this.clipboardElement.empty().append(table);
-                        this.view._workbook.execute({
+                        this._execute({
                             command: "PasteCommand",
                             options: { workbook: this.view._workbook }
                         });
@@ -570,7 +578,7 @@
             }
 
             this.clipboard.external({html: html, plain:plain});
-            this.view._workbook.execute({
+            this._execute({
                 command: "PasteCommand",
                 options: { workbook: this.view._workbook }
             });
@@ -578,7 +586,7 @@
         },
 
         onCopy: function() {
-            this.view._workbook.execute({
+            this._execute({
                 command: "CopyCommand",
                 options: { workbook: this.view._workbook }
             });
@@ -705,7 +713,7 @@
         onEditorChange: function(e) {
             this._workbook.activeSheet()._edit(false);
 
-            this._workbook.execute({
+            this._execute({
                 command: "EditCommand",
                 options: {
                     value: e.value
@@ -769,7 +777,7 @@
 
         onCommandRequest: function(e) {
             if (e.command) {
-                this._workbook.execute(e);
+                this._execute(e);
             } else {
                 this._workbook.undoRedoStack[e.action]();
             }

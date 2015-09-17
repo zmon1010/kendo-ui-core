@@ -589,6 +589,10 @@
             }
         },
 
+        showError: function(options) {
+            this.openDialog("message", { title: "Error", text: options.reason });
+        },
+
         destroy: function() {
             this._dialogs.forEach(function(dialog) {
                 dialog.destroy();

@@ -75,8 +75,13 @@
                 command.range(this._sheet.selection());
             }
 
-            command.exec();
-            this.undoRedoStack.push(command);
+            var result = command.exec();
+
+            if (!result) {
+                this.undoRedoStack.push(command);
+            } else {
+                return result;
+            }
         },
 
         resetFormulas: function() {

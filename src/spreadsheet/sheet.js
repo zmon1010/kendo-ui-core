@@ -185,8 +185,15 @@
             }, this);
         },
 
+        canInsertRow: function(rowIndex, count) {
+            count = count || 1;
+            var grid = this._grid;
+            var range = this.range(grid.rowCount - count, 0, count, grid.columnCount);
+            return !range.hasValue();
+        },
+
         insertRow: function(rowIndex) {
-            if (this.range(this._grid.rowCount, 0, 0, this._grid.columnCount).hasValue()) {
+            if (!this.canInsertRow(rowIndex)) {
                 throw new Error("Shifting nonblank cells off the worksheet is not supported!");
             }
 

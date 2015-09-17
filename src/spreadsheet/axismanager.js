@@ -96,6 +96,13 @@
             });
         },
 
+        canAddRow: function() {
+            var range = this._sheet.select().toRangeRef();
+            var rowCount = range.height();
+
+            return sheet.canInsertRow(0, rowCount);
+        },
+
         addRowAbove: function() {
             this.forEachSelectedRow(function(sheet, index, i) {
                 sheet.insertRow(index - i);

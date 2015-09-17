@@ -434,6 +434,11 @@
     kendo.spreadsheet.AddRowCommand = AddCommand.extend({
         exec: function() {
             var sheet = this.range().sheet();
+
+            if (!sheet.axisManager().canAddRow()) {
+                return { reason: "shiftingNonblankCells" };
+            }
+
             this._state = sheet.getState();
 
             if (this._value === "above") {
