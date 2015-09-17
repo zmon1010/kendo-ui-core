@@ -114,4 +114,17 @@
         ok(filterMenu instanceof kendo.spreadsheet.FilterMenu);
         equal(filterMenu.options.range._ref.print(), "R2C2:R3C2");
     });
+
+    test("do not render clipboard content if in edit mode", function() {
+        var view = spreadsheet._view;
+
+        stub(view, {
+            renderClipboardContents: view.renderClipboardContents
+        });
+
+        sheet._edit(true);
+        view.render();
+
+        equal(view.calls("renderClipboardContents"), 0);
+    });
 })();
