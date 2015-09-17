@@ -86,6 +86,7 @@
 
             if (inputType === "cell") {
                 this.cellInput.element.focus();
+                this.cellInput.setPos(this.value().length);
             } else {
                 this.barInput.element.focus();
             }

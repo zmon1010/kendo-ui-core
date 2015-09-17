@@ -144,6 +144,23 @@
         ok(editor.cellInput.element.is(":focus"));
     });
 
+    test("focus method places the caret to the end", 2, function() {
+        var editor = createEditor();
+        var cellInput = editor.cellInput;
+        var value = "test";
+
+        stub(cellInput, {
+            setPos: cellInput.setPos
+        });
+
+        editor.activate({ rect: { rect: { top: 0, left: 0 } } });
+        editor.value(value);
+        editor.focus();
+
+        equal(cellInput.calls("setPos"), 1);
+        equal(cellInput.args("setPos")[0], value.length);
+    });
+
     test("formulaInputs are not synced when editing is not active", function() {
         var editor = createEditor();
         var barInput = bar.formulaInput.element;
