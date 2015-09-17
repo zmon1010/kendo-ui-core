@@ -2,6 +2,9 @@
     var element;
     var formulaInput;
 
+    var CellRef = kendo.spreadsheet.CellRef;
+    var A1 = new CellRef(0, 0);
+
     module("Spreadsheet FormulaInput", {
         setup: function() {
             element = $("<div />").appendTo(QUnit.fixture);
@@ -113,46 +116,6 @@
         ok(!formulaInput.isActive());
     });
 
-    test("caretToEnd method does nothing if element is not focused", function() {
-        createFormulaInput();
-
-        formulaInput.value("test");
-        formulaInput.caretToEnd();
-
-        var selection = window.getSelection();
-
-        ok(!formulaInput.isActive());
-        equal(selection.focusOffset, 0);
-    });
-
-    test("caretToEnd method does nothing if element is empty", function() {
-        createFormulaInput();
-
-        formulaInput.caretToEnd();
-
-        var selection = window.getSelection();
-
-        ok(!formulaInput.isActive());
-        equal(selection.focusOffset, 0);
-    });
-
-    test("caretToEnd method does nothing if element is empty", function() {
-        createFormulaInput();
-
-        formulaInput.value("test");
-        formulaInput.element.focus();
-
-        formulaInput.caretToEnd();
-
-        var selection = window.getSelection();
-
-        ok(formulaInput.isActive());
-        equal(selection.focusOffset, 4);
-        equal(selection.type, "Caret");
-    });
-
-    //TODO: test caretAt
-
     test("scale updates width of the element based on its value", function() {
         var initialWidth = 50;
 
@@ -198,121 +161,46 @@
         ok(formulaInput.element.width() > initialWidth);
     });
 
-    test("activeFormula returns formula if caret is after '('", 1, function() {
-        createFormulaInput();
-
-        formulaInput.value("=SUM(");
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        range.setStart(element[0].childNodes[0], 5);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        var formula = formulaInput.activeFormula();
-
-        equal(formula, getFormula("sum"));
-    });
-
-    test("activeFormula returns formula if caret is after ','", 1, function() {
-        createFormulaInput();
-
-        formulaInput.value("=SUM(,");
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        range.setStart(element[0].childNodes[0], 6);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        var formula = formulaInput.activeFormula();
-
-        equal(formula, getFormula("sum"));
-    });
-
-    test("activeFormula returns null if caret is not in correct place", 1, function() {
-        createFormulaInput();
-
-        formulaInput.value("=SUM(sin,");
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        range.setStart(element[0].childNodes[0], 6);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        var formula = formulaInput.activeFormula();
-
-        equal(formula, null);
-    });
-
     test("ref method inserts passed ref address", 2, function() {
         createFormulaInput();
 
         formulaInput.value("=SUM(");
+        formulaInput.end();
 
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        range.setStart(element[0].childNodes[0], 5);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        formulaInput.ref("A1");
+        formulaInput.refAtPoint(A1);
 
         equal(formulaInput.value(), "=SUM(A1");
-        equal(selection.focusOffset, 5);
+        equal(formulaInput.getPos().begin, 7);
     });
 
     test("ref method replaces current single cell ref", 2, function() {
         createFormulaInput();
 
         formulaInput.value("=SUM(B1");
-
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        range.setStart(element[0].childNodes[0], 5);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        formulaInput.ref("A1");
+        formulaInput.end();
+        formulaInput.refAtPoint(A1);
 
         equal(formulaInput.value(), "=SUM(A1");
-        equal(selection.focusOffset, 5);
+        equal(formulaInput.getPos().begin, 7);
     });
 
     test("ref method replaces current range ref", 2, function() {
         createFormulaInput();
 
         formulaInput.value("=SUM(B1:c1");
-
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        range.setStart(element[0].childNodes[0], 5);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        formulaInput.ref("A1");
+        formulaInput.end();
+        formulaInput.refAtPoint(A1);
 
         equal(formulaInput.value(), "=SUM(A1");
-        equal(selection.focusOffset, 5);
+        equal(formulaInput.getPos().begin, 7);
     });
 
     test("ref method does nothing if caret is not in correct place", 1, function() {
         createFormulaInput();
 
         formulaInput.value("=SUM(sum");
-
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        range.setStart(element[0].childNodes[0], 6);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        formulaInput.ref("A1");
+        formulaInput.setPos(2); // the last sum *will* be replaced.
+        formulaInput.refAtPoint(A1);
 
         equal(formulaInput.value(), "=SUM(sum");
     });
@@ -396,7 +284,7 @@
 
         element.focus();
         element.text("=s");
-        formulaInput.caretToEnd();
+        formulaInput.end();
         element.trigger("keyup");
 
         ok(formulaInput.popup.visible());
@@ -407,7 +295,7 @@
 
         element.focus();
         element.text("=s");
-        formulaInput.caretToEnd();
+        formulaInput.end();
         element.trigger("keyup");
 
         stub(formulaInput.popup, {
@@ -424,7 +312,7 @@
 
         element.focus();
         element.text("=s");
-        formulaInput.caretToEnd();
+        formulaInput.end();
 
         stub(formulaInput, { filter: formulaInput.filter });
 
@@ -460,7 +348,7 @@
 
         element.focus();
         element.text("s");
-        formulaInput.caretToEnd();
+        formulaInput.end();
 
         stub(formulaInput, { filter: formulaInput.filter });
 
@@ -475,7 +363,7 @@
 
         element.focus();
         element.text(inputValue);
-        formulaInput.caretToEnd();
+        formulaInput.end();
     }
 
     test("close popup if formula value contains '(' symbol", 1, function() {
@@ -858,7 +746,7 @@
 
         filterInput("si", "=SUM(si");
         formulaInput.element.focus();
-        formulaInput.caretToEnd();
+        formulaInput.end();
 
         formulaInput.list.select(0);
 
@@ -888,7 +776,7 @@
 
         formulaInput.element.text("=SUM(A1,  s");
         formulaInput.element.focus();
-        formulaInput.caretToEnd();
+        formulaInput.end();
 
         element.trigger({
             type: "keyup",
@@ -908,7 +796,7 @@
 
         filterInput("si", "=SUM(si");
         formulaInput.element.focus();
-        formulaInput.caretToEnd();
+        formulaInput.end();
 
         formulaInput.list.select(0);
 

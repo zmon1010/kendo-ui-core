@@ -147,6 +147,18 @@
             }
         },
 
+        end: function() {
+            this.setPos(this.length());
+        },
+
+        home: function() {
+            this.setPos(0);
+        },
+
+        length: function() {
+            return this.value().length;
+        },
+
         // length: function() {
         //     return this.element.text().length;
         // },
