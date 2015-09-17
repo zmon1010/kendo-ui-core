@@ -243,6 +243,7 @@
         filterMenu.bind("action", function(e) {
             equal(e.command, "SortCommand");
             ok(!e.options.sheet);
+            ok(e.options.operatingRange instanceof kendo.spreadsheet.Range);
         });
 
         filterMenu.menu.trigger("select", {

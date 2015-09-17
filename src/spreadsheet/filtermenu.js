@@ -255,7 +255,8 @@
                     select: function(e) {
                         var options = {
                             asc: $(e.item).data("dir") === "asc",
-                            sheet: false
+                            sheet: false,
+                            operatingRange: this.options.range
                         }
 
                         this.action({ command: "SortCommand", options: options });
