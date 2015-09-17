@@ -7,7 +7,13 @@ var __meta__ = { // jshint ignore:line
     name: "TreeView",
     category: "web",
     description: "The TreeView widget displays hierarchical data in a traditional tree structure,with support for interactive drag-and-drop operations.",
-    depends: [ "data", "draganddrop" ]
+    depends: [ "data" ],
+    features: [{
+        id: "treeview-dragging",
+        name: "Drag & Drop",
+        description: "Support for drag & drop",
+        depends: [ "treeview.draganddrop" ]
+    }]
 };
 
 /*jshint eqnull: true */
