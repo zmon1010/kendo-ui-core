@@ -521,7 +521,13 @@
             }
         },
 
-        onDblClick: function() {
+        onDblClick: function(event) {
+            var object = this.objectAt(event);
+
+            if (object.type !== "cell") {
+                return;
+            }
+
             this.editor
                 .activate({ rect: this.view.activeCellRectangle() })
                 .focus();
