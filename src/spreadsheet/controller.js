@@ -517,7 +517,7 @@
             var object = this.objectAt(event);
             if (object && object.ref && editor.canInsertRef()) {
                 editor.refAtPoint(sheet.selection()._ref);
-                sheet._setRangeSelections(this._parseRefs(editor.value()));
+                sheet._setFormulaSelections(editor.highlightTokens());
             }
         },
 
@@ -731,7 +731,7 @@
             var workbook = this._workbook;
             var sheet = workbook.activeSheet();
 
-            sheet._setRangeSelections(this._parseRefs(workbook._inputForRef(sheet.activeCell())));
+            sheet._setFormulaSelections(this.editor.highlightTokens());
             sheet._edit(true);
         },
 
@@ -739,11 +739,11 @@
             var sheet = this._workbook.activeSheet();
 
             sheet._edit(false);
-            sheet._setRangeSelections([]);
+            sheet._setFormulaSelections([]);
         },
 
         onEditorUpdate: function(e) {
-            this._workbook.activeSheet()._setRangeSelections(this._parseRefs(e.value));
+            this._workbook.activeSheet()._setFormulaSelections(this.editor.highlightTokens());
         },
 
         onEditorBarFocus: function() {

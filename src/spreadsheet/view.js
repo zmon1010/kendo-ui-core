@@ -1018,17 +1018,14 @@
             var sheet = this._sheet;
             var selections = [];
 
-            sheet._rangeSelections.forEach(function(range) {
+            sheet._formulaSelections.forEach(function(range) {
                 var ref = range.ref;
-                var className = classNames.selectionDashed;
 
                 if (ref === kendo.spreadsheet.NULLREF) {
                     return;
                 }
 
-                className += " " + (classNames.series[range.color] || classNames.series[0]);
-
-                this._addDiv(selections, ref, className);
+                this._addDiv(selections, ref, classNames.selectionDashed + range.cls);
             }.bind(this));
 
             return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);

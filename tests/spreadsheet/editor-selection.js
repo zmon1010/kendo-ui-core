@@ -7,6 +7,7 @@
 
     var PARTIAL = "k-selection-partial";
     var FULL = "k-selection-full";
+    var refClasses = kendo.spreadsheet.Pane.classNames.series;
 
     module("editor selection", {
         setup: function() {
@@ -29,15 +30,19 @@
         return ref;
     }
 
+    function refClass(idx) {
+        return " " + refClasses[idx];
+    }
+
     test("selects the range", function() {
         var pane = createPane(0, 0);
         var ref = kendo.spreadsheet.calc.parseReference("A1:C2");
 
         pane._currentView = DUMMY_VIEW;
 
-        sheet._rangeSelections = [{
+        sheet._formulaSelections = [{
             ref: ref,
-            color: 0
+            cls: refClass(0)
         }];
 
         var selections = pane.renderEditorSelection().children;
@@ -56,9 +61,9 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        sheet._rangeSelections = [
-            { ref: ref1, color: 0 },
-            { ref: ref2, color: 1 }
+        sheet._formulaSelections = [
+            { ref: ref1, cls: refClass(0) },
+            { ref: ref2, cls: refClass(1) }
         ];
 
         var selections = pane.renderEditorSelection().children;
@@ -76,35 +81,15 @@
         equal(divC2D3.attr.className, "k-spreadsheet-selection-dashed k-series-b");
     });
 
-    test("selection uses first color if series is not valid", function() {
-        var pane = createPane(0, 0);
-        var ref = kendo.spreadsheet.calc.parseReference("A1:C2");
-
-        pane._currentView = DUMMY_VIEW;
-
-        sheet._rangeSelections = [{
-            ref: ref,
-            color: 10
-        }];
-
-        var selections = pane.renderEditorSelection().children;
-        var div = selections[0];
-
-        equal(selections.length, 1);
-        equal(div.attr.style.height, 1 + 2 * 10 + "px");
-        equal(div.attr.style.width, 1 + 3 * 10 + "px");
-        equal(div.attr.className, "k-spreadsheet-selection-dashed k-series-a");
-    });
-
     test("selection skips NULLREF", function() {
         var pane = createPane(0, 0);
         var ref = kendo.spreadsheet.calc.parseReference("C2:D3");
 
         pane._currentView = DUMMY_VIEW;
 
-        sheet._rangeSelections = [
-            { ref: kendo.spreadsheet.NULLREF, color: 0 },
-            { ref: ref, color: 1 }
+        sheet._formulaSelections = [
+            { ref: kendo.spreadsheet.NULLREF, cls: refClass(0) },
+            { ref: ref, cls: refClass(1) }
         ];
 
         var selections = pane.renderEditorSelection().children;
@@ -123,7 +108,7 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        sheet._rangeSelections = [ ];
+        sheet._formulaSelections = [ ];
 
         var selections = pane.renderEditorSelection().children;
         var divC2D3 = selections[0];

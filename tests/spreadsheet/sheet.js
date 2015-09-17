@@ -570,6 +570,6 @@
 
     test("setting the editor selection triggers change", 1, function() {
        sheet.bind("change", success);
-       sheet._setRangeSelections([]);
+       sheet._setFormulaSelections([]);
     });
 })();

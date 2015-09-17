@@ -39,8 +39,7 @@
                 originalActiveCell: kendo.spreadsheet.FIRSTREF
             };
 
-            //XXX: decide whether to put in editSelection structure
-            this._rangeSelections = [];
+            this._formulaSelections = [];
         },
 
         _selectionState: function() {
@@ -716,9 +715,13 @@
             }
         },
 
-        _setRangeSelections: function(selection) {
-            this._rangeSelections = (selection || []).slice();
+        _setFormulaSelections: function(selection) {
+            this._formulaSelections = (selection || []).slice();
             this.triggerChange({ selection: true });
+        },
+
+        _viewActiveCell: function() {
+            return this._viewSelection.activeCell.toRangeRef();
         },
 
         toJSON: function() {
