@@ -831,8 +831,8 @@
             ddl.setDataSource([
                 { value: 1, sheet: true, asc: true,  text: "Sort sheet A to Z",  iconClass: "sort-asc" },
                 { value: 2, sheet: true, asc: false, text: "Sort sheet Z to A", iconClass: "sort-desc" },
-                { value: 3, range: true, asc: true,  text: "Sort range A to Z",  iconClass: "sort-asc" },
-                { value: 4, range: true, asc: false, text: "Sort range Z to A", iconClass: "sort-desc" }
+                { value: 3, sheet: false, asc: true,  text: "Sort range A to Z",  iconClass: "sort-asc" },
+                { value: 4, sheet: false, asc: false, text: "Sort range Z to A", iconClass: "sort-desc" }
             ]);
 
             this.element.data({
@@ -848,8 +848,7 @@
                 command: "SortCommand",
                 options: {
                     asc: dataItem.asc,
-                    sheet: dataItem.sheet,
-                    range: dataItem.range
+                    sheet: dataItem.sheet
                 }
             });
         },

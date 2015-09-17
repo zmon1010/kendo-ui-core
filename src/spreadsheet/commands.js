@@ -336,10 +336,10 @@
 
             this._state = sheet.getState();
 
-            if (this.options.range) {
-                range.sort({ column: col, ascending: ascending });
-            } else if (this.options.sheet) {
+            if (this.options.sheet) {
                 this.expandRange().sort({ column: col, ascending: ascending });
+            } else {
+                range.sort({ column: col, ascending: ascending });
             }
         },
         expandRange: function() {
