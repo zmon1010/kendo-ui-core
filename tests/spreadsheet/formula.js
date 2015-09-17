@@ -638,7 +638,6 @@
         };
 
         var exp = calc.parseValidation(Sheet1, 0, 0, $.extend({}, customOptions));
-
         var f = calc.compileValidation(exp);
 
         f.adjust("Sheet1","row", 0, 1);
