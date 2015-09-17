@@ -2719,6 +2719,16 @@
           "packages": [
               "!offline"
           ]
+      },
+      {
+          "text": "DataSource binding",
+          "url": "spreadsheet/datasource",
+          "title": {
+             "kendo-ui": "DataSource binding"
+          },
+          "meta": {
+              "kendo-ui": "This demo shows the integration with the DataSource component that Kendo UI Spreadsheet provides"
+          }
       }
     ],
     "category": "Data Management"

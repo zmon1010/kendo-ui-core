@@ -258,6 +258,12 @@
                     }
 
                     sheet.fromJSON(json.sheets[idx]);
+
+                    var dataSource = json.sheets[idx].dataSource;
+
+                    if (dataSource) {
+                        sheet.setDataSource(dataSource);
+                    }
                 }
             }
 
