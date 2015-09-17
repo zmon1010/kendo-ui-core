@@ -729,9 +729,7 @@
             }
         },
 
-        toString: function() {
-            //TODO: Update address output and include type:
-
+        toJSON: function() {
             var options = this._getOptions();
 
             if (options.from) {
@@ -742,7 +740,7 @@
                 options.to = options.to.toString();
             }
 
-            return JSON.stringify(options);
+            return options;
         },
 
         _getOptions: function () {

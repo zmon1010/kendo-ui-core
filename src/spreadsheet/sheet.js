@@ -746,7 +746,7 @@
                 }
 
                 if (cell.validation) {
-                    cell.validation = cell.validation.toString();
+                    cell.validation = cell.validation.toJSON();
                 }
 
                 row.cells.push(cell);
@@ -836,7 +836,7 @@
                                 }
 
                                 if (cell.validation) {
-                                    cell.validation = this._compileValidation(rowIndex, columnIndex, JSON.parse(cell.validation));
+                                    cell.validation = this._compileValidation(rowIndex, columnIndex, cell.validation);
                                 }
 
                                 this._properties.fromJSON(this._grid.index(rowIndex, columnIndex), cell);

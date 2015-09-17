@@ -535,6 +535,7 @@
         ok(sheet.range("A1").validation() != null);
         ok(sheet.range("A2").validation() != null);
         ok(sheet.range("A3").validation() != null);
+        ok(sheet.range("A1").validation().from == "A4");
 
         currentRange.clear();
 
