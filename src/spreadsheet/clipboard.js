@@ -72,6 +72,9 @@
                 var cols = [];
                 content = this.parse(this._external);
                 for (var key in content) {
+                    if(key === "mergedCells" || key === "ref") {
+                        continue;
+                    }
                     var address = key.split(",");
                     rows.push(address[0]);
                     cols.push(address[1]);
@@ -79,7 +82,6 @@
                 var topLeft = new CellRef(Math.min.apply(null, rows), Math.min.apply(null, cols));
                 var bottomRight = new CellRef(Math.max.apply(null, rows), Math.max.apply(null, cols));
                 this.origin = new RangeRef(topLeft, bottomRight, 0);
-                $.extend(true, content, {ref: new CellRef(0,0,0), mergedCells: []});
             }
             var pasteRef = this.pasteRef();
             sheet.range(pasteRef).clear().setState(content);
@@ -96,7 +98,7 @@
         },
 
         parse: function(data) {
-            var content = {};
+            var content = {ref:  new CellRef(0,0,0), mergedCells: []};
             var clipboard = this;
             if(data.html) {
                 var doc = clipboard.iframe.contentWindow.document;
@@ -109,7 +111,22 @@
                     tbody.find("tr").each(function(rowIndex, tr) {
                         $(tr).find("td").each(function(colIndex, td) {
                             var key = rowIndex + "," + colIndex;
-                            content[key] = clipboard._populateCell($(td));
+                            var rowspan = parseInt($(td).attr("rowspan")) -1 || 0;
+                            var colspan = parseInt($(td).attr("colspan")) -1 || 0;
+                            var cellState = clipboard._populateCell($(td));
+                            content[key] = cellState;
+                            if(rowspan || colspan) {
+                                var startCol = String.fromCharCode(65 + colIndex);
+                                var endCol = String.fromCharCode(65 + colIndex + colspan);
+                                var address = startCol + (rowIndex + 1) + ":" + endCol + (rowIndex + 1 + rowspan);
+                                content.mergedCells.push(address);
+
+                                for(var ri = 0; ri <= rowspan; ri++) {
+                                    for(var ci = 0; ci <= colspan; ci++) {
+                                        content[(rowIndex + ri) + "," + (colIndex + ci)] = cellState;
+                                    }
+                                }
+                            }
                         });
                     });
                 } else {
