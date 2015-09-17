@@ -802,4 +802,22 @@
 
         equal(editor.value(), "=SUM(SIN(");
     });
+
+    test("set formulaTokens on value update", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(A1:B1, C1:C2, SUM(D1:D2))");
+
+        var tokens = formulaInput.highlightTokens();
+
+        equal(tokens.length, 3);
+        equal(tokens[0].ref.toString(), "A1:B1");
+        equal(tokens[0].cls, " k-series-a");
+
+        equal(tokens[1].ref.toString(), "C1:C2");
+        equal(tokens[1].cls, " k-series-b");
+
+        equal(tokens[2].ref.toString(), "D1:D2");
+        equal(tokens[2].cls, " k-series-c");
+    });
 })();

@@ -57,6 +57,8 @@
                 element.on("input", this.scale.bind(this));
             }
 
+            this._highlightTokens = [];
+
             this._formulaSource();
 
             this._formulaList();
@@ -504,9 +506,15 @@
             this._syntaxHighlight();
         },
 
+        highlightTokens: function() {
+            return this._highlightTokens.slice();
+        },
+
         _syntaxHighlight: function() {
             var value = this.value();
             var pos = this.getPos();
+            var highlightTokens = [];
+
             if (!(/^=/.test(value))) {
                 // if an user deleted the initial =, we should discard
                 // any highlighting.  we still need to restore caret
@@ -523,6 +531,7 @@
                 tokens.forEach(function(tok){
                     if (tok.type == "ref") {
                         tok.cls = " " + refClasses[(refIndex++) % refClasses.length];
+                        highlightTokens.push(tok);
                     }
                     if (pos && tok.type == "punc") {
                         if (isOpenParen(tok.value)) {
@@ -563,6 +572,8 @@
             if (pos) {
                 this.setPos(pos.begin, pos.end);
             }
+
+            this._highlightTokens = highlightTokens;
         },
 
         destroy: function() {
