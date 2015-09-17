@@ -111,8 +111,8 @@
                     tbody.find("tr").each(function(rowIndex, tr) {
                         $(tr).find("td").each(function(colIndex, td) {
                             var key = rowIndex + "," + colIndex;
-                            var rowspan = parseInt($(td).attr("rowspan")) -1 || 0;
-                            var colspan = parseInt($(td).attr("colspan")) -1 || 0;
+                            var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
+                            var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
                             var cellState = clipboard._populateCell($(td));
                             content[key] = cellState;
                             if(rowspan || colspan) {
