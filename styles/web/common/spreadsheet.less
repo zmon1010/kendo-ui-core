@@ -482,6 +482,30 @@
     }
 }
 
-.k-popup .k-colorpalette {
-    vertical-align: bottom;
+.k-spreadsheet-formula-input {
+    > .k-syntax-func.k-syntax-at-point,
+    > .k-syntax-bool.k-syntax-at-point,
+    > .k-syntax-ref.k-syntax-at-point,
+    > .k-syntax-str.k-syntax-at-point,
+    > .k-syntax-num.k-syntax-at-point {
+        text-decoration: underline;
+    }
+
+    > .k-series-a,
+    > .k-series-b,
+    > .k-series-c,
+    > .k-series-d {
+        background-color: transparent;
+    }
+}
+
+.k-spreadsheet-selection-dashed {
+    border-width: 1px;
+    border-style: dashed;
+    position: absolute;
+    box-sizing: border-box;
+}
+
+.k-spreadsheet-formula-input {
+    font-family: Consolas, monospace;
 }

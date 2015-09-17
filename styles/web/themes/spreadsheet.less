@@ -147,6 +147,11 @@
     background-color: @selected-background;
 }
 
+.k-resize-hint-vertical .k-resize-hint-handle,
+.k-resize-hint-vertical .k-resize-hint-marker {
+    background-color: @selected-background;
+}
+
 .k-spreadsheet-toolbar {
     &.k-toolbar .k-button-group .k-button {
         border-radius: @border-radius;
@@ -183,3 +188,33 @@
         border-radius: @border-radius 0 0 @border-radius;
     }
 }
+
+.k-syntax-ref { color: #ff8822; }
+.k-syntax-num { color: #0099ff; }
+.k-syntax-func { font-weight: bold; }
+.k-syntax-str { color: #38b714; }
+.k-syntax-error { color: red; }
+.k-syntax-bool { color: #a9169c; }
+.k-syntax-startexp { font-weight: bold; }
+.k-syntax-paren-match { background-color: #caf200; }
+
+.k-series-a {
+    border-color: red;
+    background-color: rgba(217, 88, 88, 0.25);
+}
+
+.k-series-b {
+    border-color: yellow;
+    background-color: rgba(212, 232, 63, 0.25);
+}
+
+.k-series-c {
+    border-color: #E6AE45;
+    background-color: rgba(230, 174, 69, 0.25);
+}
+
+.k-series-d {
+    border-color: #45E648;
+    background-color: rgba(69, 230, 72, 0.25);
+}
+
