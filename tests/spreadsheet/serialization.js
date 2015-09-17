@@ -643,7 +643,7 @@
     });
 
     test("fromJSON loads validations", function() {
-        var validationString = JSON.parse('{"from":"A4",' +
+        var validationObject = JSON.parse('{"from":"A4",' +
             '"to":"",' +
             '"dataType":"date",' +
             '"type":"warning",' +
@@ -655,7 +655,11 @@
             '"messageTemplate":"Please enter a valid #=dataType# value greater than #=from#.",' +
             '"titleTemplate":"Validation #=type#"}');
 
-        sheet.fromJSON(singleCell({ validation: validationString }));
-        equal(sheet.range("A1").validation(), validationString);
+        sheet.fromJSON(singleCell({ validation: validationObject }));
+        equal(sheet.range("A1").validation().type, validationObject.type);
+        equal(sheet.range("A1").validation().dataType, validationObject.dataType);
+        equal(sheet.range("A1").validation().sheet, validationObject.sheet);
+        equal(sheet.range("A1").validation().row, validationObject.row);
+        equal(sheet.range("A1").validation().col, validationObject.col);
     });
 })();

@@ -445,19 +445,20 @@
         sheet.insertRow(0);
 
         equal(sheet.range("A1").validation(), null);
-        ok(sheet.range("A2").validation().indexOf("greater than") > 0);
+
+        ok(sheet.range("A2").validation().messageTemplate.indexOf("greater than") > 0);
     });
 
     test("deleteRow adjust validation", function() {
         sheet.range("2:2").validation({
             from: "A2",
-                comparerType: "greaterThan",
-                dataType: "date"
+            comparerType: "greaterThan",
+            dataType: "date"
         });
 
         sheet.deleteRow(0);
 
-        ok(sheet.range("1:1").validation().indexOf("greater than") > 0);
+        ok(sheet.range("1:1").validation().messageTemplate.indexOf("greater than") > 0);
         equal(sheet.range("2:2").validation(), null);
     });
 
@@ -470,7 +471,7 @@
 
         sheet.deleteColumn(0);
 
-        ok(sheet.range("A:A").validation().indexOf("greater than") > 0);
+        ok(sheet.range("A:A").validation().messageTemplate.indexOf("greater than") > 0);
         equal(sheet.range("B:B").value(), null);
     });
 
@@ -489,8 +490,8 @@
         sheet.insertColumn(0);
 
         equal(sheet.range("A:A").value(), null);
-        ok(sheet.range("B:B").validation().indexOf("greater than") > 0);
-        ok(sheet.range("C:C").validation().indexOf("less than") > 0);
+        ok(sheet.range("B:B").validation().messageTemplate.indexOf("greater than") > 0);
+        ok(sheet.range("C:C").validation().messageTemplate.indexOf("less than") > 0);
     });
 
 

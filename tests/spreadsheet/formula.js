@@ -560,7 +560,7 @@
         ok(f.to instanceof kendo.spreadsheet.calc.runtime.Formula);
     });
 
-    test("validation toString exports JSON object as string", function(){
+    test("validation toJSON exports JSON object", function(){
         var customOptions = {
             from: "A2",
             to: "A3",
@@ -576,7 +576,7 @@
 
         var f = calc.compileValidation(exp);
 
-        var parsedOutput = JSON.parse(f.toString());
+        var parsedOutput = f.toJSON();
 
         equal(parsedOutput.from, customOptions.from);
         equal(parsedOutput.to, customOptions.to);
@@ -600,7 +600,7 @@
 
         var f = calc.compileValidation(exp);
 
-        var parsedOutput = JSON.parse(f.toString());
+        var parsedOutput = f.toJSON();
 
         equal(parsedOutput.type, "warning");
     });
