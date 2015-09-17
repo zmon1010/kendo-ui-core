@@ -89,7 +89,31 @@ namespace Telerik.Web.Spreadsheet
 
             GetCellProperty(worksheet, CellPropertyDefinitions.FormatProperty, state);
 
-            GetCellProperty(worksheet, CellPropertyDefinitions.ValueProperty, state);            
+            GetCellProperty(worksheet, CellPropertyDefinitions.ValueProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.FillProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.IsBoldProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.IsItalicProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.IsWrappedProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.UnderlineProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.VerticalAlignmentProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.FontSizeProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.FontFamilyProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.BottomBorderProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.TopBorderProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.LeftBorderProperty, state);
+
+            GetCellProperty(worksheet, CellPropertyDefinitions.RightBorderProperty, state);
    
             return state;
         }
@@ -141,6 +165,78 @@ namespace Telerik.Web.Spreadsheet
                 }
             },
             {
+                CellPropertyDefinitions.FillProperty,
+                (cell, theme, value) => {
+                    cell.Background = "#" + ((PatternFill)value).PatternColor.GetActualValue(theme.ColorScheme).ToString().Remove(0, 3);
+                }
+            },
+            {
+                CellPropertyDefinitions.IsBoldProperty,
+                (cell, theme, value) => {
+                    cell.Bold = (bool)value;
+                }
+            },
+            {
+                CellPropertyDefinitions.IsItalicProperty,
+                (cell, theme, value) => {
+                    cell.Italic = (bool)value;
+                }
+            },
+            {
+                CellPropertyDefinitions.IsWrappedProperty,
+                (cell, theme, value) => {
+                    cell.Wrap = (bool)value;
+                }
+            },
+            {
+                CellPropertyDefinitions.UnderlineProperty,
+                (cell, theme, value) => {
+                    cell.Underline = ((UnderlineType)value) != UnderlineType.None;
+                }
+            },
+            {
+                CellPropertyDefinitions.VerticalAlignmentProperty,
+                (cell, theme, value) => {
+                    cell.VerticalAlign = ((RadVerticalAlignment)value).ToString().ToLower();
+                }
+            },
+            {
+                CellPropertyDefinitions.FontSizeProperty,
+                (cell, theme, value) => {
+                    cell.FontSize = Math.Round((double)value).ToString() + "px";
+                }
+            },
+            {
+                CellPropertyDefinitions.FontFamilyProperty,
+                (cell, theme, value) => {
+                    cell.FontFamily = ((ThemableFontFamily)value).GetActualValue(theme).FamilyNames.Values.First();
+                }
+            },
+            {
+                CellPropertyDefinitions.BottomBorderProperty,
+                (cell, theme, value) => {
+                    cell.BorderBottom = ConvertToBorder((CellBorder)value, theme);
+                }
+            },
+            {
+                CellPropertyDefinitions.TopBorderProperty,
+                (cell, theme, value) => {
+                    cell.BorderTop = ConvertToBorder((CellBorder)value, theme);
+                }
+            },
+            {
+                CellPropertyDefinitions.LeftBorderProperty,
+                (cell, theme, value) => {
+                    cell.BorderLeft = ConvertToBorder((CellBorder)value, theme);
+                }
+            },
+            {
+                CellPropertyDefinitions.RightBorderProperty,
+                (cell, theme, value) => {
+                    cell.BorderRight = ConvertToBorder((CellBorder)value, theme);
+                }
+            },
+            {
                 CellPropertyDefinitions.FormatProperty,
                 (cell, theme, value) => {
                     cell.Format = ((CellValueFormat)value).FormatString;
@@ -184,42 +280,7 @@ namespace Telerik.Web.Spreadsheet
 
         private static IEnumerable<Row> GetRows(DocumentWorksheet worksheet)
         {
-            var rows = GetRowsWithHeight(worksheet);
-            /*
-            var context = new WorksheetExportContext(worksheet);
-            var usedCellRange = context.ValuePropertyDataInfo.GetUsedCellRange();
-
-            if (usedCellRange == null)
-            {
-                return rows.Values;
-            }
-
-            for (int rowIndex = usedCellRange.FromIndex.RowIndex; rowIndex <= usedCellRange.ToIndex.RowIndex; rowIndex++)
-            {
-                
-                var rowUsedRange = context.ValuePropertyDataInfo.GetRowUsedRange(rowIndex);
-
-                if (rowUsedRange != null)
-                {
-                    rowUsedRange = rowUsedRange.Expand(usedCellRange.FromIndex.ColumnIndex);
-                }
-                
-                var cells = GetCellsToExport(worksheet, rowUsedRange, rowIndex).ToList();
-
-                if (rows.ContainsKey(rowIndex))
-                {
-                    rows[rowIndex].Cells = cells;
-                }
-                else
-                {
-                    rows.Add(rowIndex, new Row
-                    {
-                        Index = rowIndex,
-                        Cells = cells
-                    });
-                }                
-            }
-            */
+            var rows = GetRowsWithHeight(worksheet);            
 
             var cells = CellProperties(worksheet);
 
@@ -269,79 +330,13 @@ namespace Telerik.Web.Spreadsheet
             return result;
         }
 
-        private static BorderStyle ConvertToBorder(CellBorder border)
+        private static BorderStyle ConvertToBorder(CellBorder border, DocumentTheme theme)
         {
             return new BorderStyle
             {
-                Color = "#" + border.Color.ToString().Remove(0, 3),
+                Color = "#" + border.Color.GetActualValue(theme).ToString().Remove(0, 3),
                 Size = border.Thickness.ToString() + "px"
             };
-        }
-
-        private static IEnumerable<Cell> GetCellsToExport(DocumentWorksheet worksheet, Range usedRange, int rowIndex)
-        {
-            if (usedRange != null)
-            {
-                for (int columnIndex = usedRange.Start; columnIndex <= usedRange.End; columnIndex++)
-                {
-                    var selection = worksheet.Cells[rowIndex, columnIndex];
-                    var cellValue = selection.GetValue().Value;
-                    var formatting = selection.GetFormat().Value;
-                    string formula = null;
-
-                    FormulaCellValue formulaCellValue = cellValue as FormulaCellValue;
-                    if (formulaCellValue != null)
-                    {
-                        cellValue = formulaCellValue.GetResultValueAsCellValue();
-                        formula = formulaCellValue.RawValue.Substring(1);
-                    }
-
-                    if (cellValue.ValueType != CellValueType.Empty)
-                    {
-                        object value = cellValue.RawValue;
-                        switch (cellValue.ValueType)
-                        {
-                            case CellValueType.Number:
-                                int intValue;
-                                double doubleValue;
-
-                                if (int.TryParse(cellValue.RawValue, out intValue))
-                                {
-                                    value = intValue;
-                                }
-                                else if (double.TryParse(cellValue.RawValue, out doubleValue))
-                                {
-                                    value = doubleValue;
-                                }
-
-                                break;
-                        }
-
-                        var colorScheme = selection.Worksheet.Workbook.Theme.ColorScheme;
-
-                        yield return new Cell
-                        {
-                            Index = columnIndex,
-                            Format = formatting.FormatString,
-                            Formula = formula,
-                            Value = value,
-                            Color = "#" + selection.GetForeColor().Value.GetActualValue(colorScheme).ToString().Remove(0, 3),
-                            Background = "#" + ((PatternFill)selection.GetFill().Value).PatternColor.GetActualValue(colorScheme).ToString().Remove(0, 3),
-                            Bold = selection.GetIsBold().Value,
-                            Italic = selection.GetIsItalic().Value,
-                            Wrap = selection.GetIsItalic().Value,
-                            Underline = selection.GetUnderline().Value != UnderlineType.None,
-                            VerticalAlign = selection.GetVerticalAlignment().Value.ToString(),
-                            FontSize = selection.GetFontSize().Value.ToString() + "px",
-                            FontFamily = selection.GetFontFamily().Value.ToString(),
-                            BorderBottom = ConvertToBorder(selection.GetBorders().Bottom),
-                            BorderTop = ConvertToBorder(selection.GetBorders().Top),
-                            BorderLeft = ConvertToBorder(selection.GetBorders().Left),
-                            BorderRight = ConvertToBorder(selection.GetBorders().Right)
-                        };
-                    }
-                }
-            }
-        }
+        }   
     }
 }
