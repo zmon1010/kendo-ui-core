@@ -80,6 +80,10 @@
             minLength: 1
         },
 
+        events: [
+            "keyup"
+        ],
+
         getPos: function() {
             var div = this.element[0];
             var sel = window.getSelection();
@@ -259,6 +263,8 @@
 
             this._navigated = false;
             this._syntaxHighlight();
+
+            this.trigger("keyup");
         },
 
         _input: function() {

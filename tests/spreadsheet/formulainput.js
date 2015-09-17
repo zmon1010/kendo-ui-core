@@ -820,4 +820,23 @@
         equal(tokens[2].ref.toString(), "D1:D2");
         equal(tokens[2].cls, " k-series-c");
     });
+
+    module("Spreadsheet FormulaInput events", {
+        setup: function() {
+            element = $("<div />").appendTo(QUnit.fixture);
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("trigger keyup event on element keyup", 1, function() {
+        createFormulaInput({
+            keyup: function() {
+                ok(true);
+            }
+        });
+
+        formulaInput.element.trigger("keyup");
+    });
 })();
