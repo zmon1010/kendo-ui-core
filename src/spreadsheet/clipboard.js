@@ -134,15 +134,16 @@
         _populateCell: function(element) {
             var styles = window.getComputedStyle(element[0]);
             var text = element.text();
+            var borders = this._borderObject(styles);
 
             return {
                 value: text === "" ? null : text,
                 format : null,
                 background : styles["background-color"],
-                borderBottom : this._borderObject(styles["border-bottom"]),
-                borderRight : this._borderObject(styles["border-right"]),
-                borderLeft : this._borderObject(styles["border-left"]),
-                borderTop : this._borderObject(styles["border-top"]),
+                borderBottom : borders.borderBottom,
+                borderRight : borders.borderRight,
+                borderLeft : borders.borderLeft,
+                borderTop : borders.borderTop,
                 color : styles["color"], // jshint ignore:line
                 fontFamily : styles["font-family"],
                 underline : styles["text-decoration"] == "underline" ? true : null,
@@ -168,17 +169,27 @@
             return style;
         },
 
-        _borderObject: function(border) {
-            if(border.indexOf("none") >=0 || border.indexOf("0px") >=0) {
-                return null;
-            }
+        _borderObject: function(styles) {
+            var borderObject = {};
+            var borders = [
+                "borderBottom",
+                "borderRight",
+                "borderLeft",
+                "borderTop"
+            ];
 
-            var obj = {
-                size : "1px",
-                color : kendo.parseColor(border.slice(border.indexOf("rgb"), border.length)).toCss()
-            };
+            borders.forEach(function(key, index) {
+                if(styles[key + "Style"] == "none") {
+                    borderObject[key] = null;
+                    return;
+                }
+                borderObject[key] = {
+                    size: "1px",
+                    color: styles[key + "Color"]
+                };
+            });
 
-            return obj;
+            return borderObject;
         }
     });
     kendo.spreadsheet.Clipboard = Clipboard;
