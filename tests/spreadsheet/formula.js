@@ -433,6 +433,494 @@
         equal(f.print(0, 0), "sum(A1, , B1)");
     });
 
+    /* -----[ validation tests ]----- */
+
+    test("validation parse greaterThan", function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A1",
+            //to: "",
+            comparerType: "greaterThan",
+            dataType: "date"
+        });
+
+        hasProps(exp, {
+            comparerType: "greaterThan",
+            dataType: "date",
+            from: {
+                type: "exp",
+                ast: {
+                    type: "ref",
+                    ref: "cell",
+                    sheet: Sheet1,
+                    row: 0,
+                    col: 0,
+                    rel: 3
+                }
+            }
+        });
+    });
+
+    test("validation parse between", function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date"
+        });
+
+        hasProps(exp, {
+            comparerType: "between",
+            dataType: "date",
+            from: {
+                type: "exp",
+                ast: {
+                    type: "ref",
+                    ref: "cell",
+                    sheet: Sheet1,
+                    row: 1,
+                    col: 0,
+                    rel: 3
+                }
+            },
+            to: {
+                type: "exp",
+                ast: {
+                    type: "ref",
+                    ref: "cell",
+                    sheet: Sheet1,
+                    row: 2,
+                    col: 0,
+                    rel: 3
+                }
+            }
+        });
+    });
+
+    test("validation exec calls exec of nested functions as well and execute passed callback", 3, function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date"
+        });
+
+        var validationCallback = function(e) {
+            ok(true);
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+              ok(true);
+            callback();
+        };
+
+        f.to.exec = function(e, callback) {
+            ok(true);
+            callback();
+        };
+
+        f.exec(ss, 10, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation exec call without compare values executes nested functions without error", 2, function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date"
+        });
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            ok(true);
+            callback();
+        };
+
+        f.to.exec = function(e, callback) {
+            ok(true);
+            callback();
+        };
+
+        f.exec(ss);
+    });
+
+    test("validation initializes nested functions correctly", function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date"
+        });
+
+        var f = calc.compileValidation(exp);
+
+        ok(f.from instanceof kendo.spreadsheet.calc.runtime.Formula);
+        ok(f.to instanceof kendo.spreadsheet.calc.runtime.Formula);
+    });
+
+    test("validation toString exports JSON object as string", function(){
+        var customOptions = {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date",
+            type: "reject",
+            tooltipTitleTemplate: "tooltipTitle",
+            tooltipMessageTemplate: "tooltipMessage",
+            messageTemplate: "Custom message",
+            titleTemplate: "CustomTitle"
+        };
+        var exp = calc.parseValidation(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var f = calc.compileValidation(exp);
+
+        var parsedOutput = JSON.parse(f.toString());
+
+        equal(parsedOutput.from, customOptions.from);
+        equal(parsedOutput.to, customOptions.to);
+        equal(parsedOutput.comparerType, customOptions.comparerType);
+        equal(parsedOutput.dataType, customOptions.dataType);
+        equal(parsedOutput.type, customOptions.type);
+        equal(parsedOutput.tooltipTitleTemplate, customOptions.tooltipTitleTemplate);
+        equal(parsedOutput.tooltipMessageTemplate, customOptions.tooltipMessageTemplate);
+        equal(parsedOutput.messageTemplate, customOptions.messageTemplate);
+        equal(parsedOutput.titleTemplate, customOptions.titleTemplate);
+    });
+
+    test("validation type is set to warning by default", function(){
+        var customOptions = {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date"
+        };
+        var exp = calc.parseValidation(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var f = calc.compileValidation(exp);
+
+        var parsedOutput = JSON.parse(f.toString());
+
+        equal(parsedOutput.type, "warning");
+    });
+
+    test("validation default messages are set", function(){
+        var customOptions = {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date",
+            type: "reject"
+        };
+
+        var exp = calc.parseValidation(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var f = calc.compileValidation(exp);
+
+        var validationCallback = function(result) {
+            equal(f.tooltipTitle, undefined);
+            equal(f.tooltipMessage, undefined);
+            equal(f.message, "Please enter a valid date value between 4 and 7.");
+            equal(f.title, "Validation reject");
+        };
+
+        f.exec(ss, 2, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation adjust modify both the validation ref and the nested formulas", 5, function(){
+        var customOptions = {
+            from: "Sheet1!A2",
+            to: "Sheet1!A3",
+            comparerType: "between",
+            dataType: "date",
+            type: "reject"
+        };
+
+        var exp = calc.parseValidation(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var f = calc.compileValidation(exp);
+
+        f.adjust("Sheet1","row", 0, 1);
+
+        var validationCallback = function(result) {
+            equal(f.row, 1);
+            equal(f.from.row, 1);
+            equal(f.to.row, 1);
+            equal(f.from.absrefs[0].row, 2);
+            equal(f.to.absrefs[0].row, 3);
+        };
+
+        f.exec(ss, 2, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation reset modify both the validation and the nested formulas", 5, function(){
+        var customOptions = {
+            from: "Sheet1!A2",
+            to: "Sheet1!A3",
+            comparerType: "between",
+            dataType: "date",
+            type: "reject"
+        };
+
+        var exp = calc.parseValidation(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var f = calc.compileValidation(exp);
+
+        f.adjust("row", 0, 1);
+
+        var validationCallback = function(result) {
+            f.pending = true;
+
+            f.from.reset = function () {
+                ok(true);
+            };
+
+            f.to.reset = function () {
+                ok(true);
+            };
+
+            f.reset();
+
+            equal(f.onReady.length, 0);
+            equal(f.value, undefined);
+            equal(f.pending, false);
+        };
+
+        f.exec(ss, 2, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation clone is working as expected", 8, function(){
+        var customOptions = {
+            from: "Sheet1!A2",
+            to: "Sheet1!A3",
+            comparerType: "between",
+            dataType: "date",
+            type: "reject"
+        };
+
+        var exp = calc.parseValidation(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var f = calc.compileValidation(exp);
+
+        var newFormula = f.clone("Sheet2", 1, 1);
+
+        equal(newFormula.handler, f.handler);
+        equal(newFormula.row, 1);
+        equal(newFormula.col, 1);
+        equal(newFormula.type, customOptions.type);
+
+        equal(newFormula.from.row, 1);
+        equal(newFormula.from.col, 1);
+        equal(newFormula.to.row, 1);
+        equal(newFormula.to.col, 1);
+    });
+
+    test("validation compare values between correctly", 1, function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date"
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 1;
+            callback(1);
+        };
+
+        f.to.exec = function(e, callback) {
+            f.to.value = 3;
+            callback(3);
+        };
+
+        f.exec(ss, 2, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation compare values greaterThan correctly", 1, function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            comparerType: "greaterThan",
+            dataType: "date"
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 1;
+            callback(1);
+        };
+
+        f.exec(ss, 2, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation compare values lessThan correctly", 1, function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            comparerType: "lessThan",
+            dataType: "date"
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 2;
+            callback(2);
+        };
+
+        f.exec(ss, 1, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation compare values equalTo correctly", 1, function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            comparerType: "equalTo",
+            dataType: "date"
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 2;
+            callback(2);
+        };
+
+        f.exec(ss, 2, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation compare values notEqualTo correctly", 1, function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            comparerType: "notEqualTo",
+            dataType: "date"
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 2;
+            callback(2);
+        };
+
+        f.exec(ss, 21321321, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation compare values greaterThanOrEqualTo correctly", 2, function(){
+        var firstExecute = true;
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            comparerType: "greaterThanOrEqualTo",
+            dataType: "date"
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+            if (firstExecute) {
+
+                firstExecute = false;
+                f.reset();
+
+                f.exec(ss, 2, "m/d/yyyy", validationCallback);
+            }
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 2;
+            callback(2);
+        };
+
+        f.exec(ss, 23, "m/d/yyyy", validationCallback);
+
+    });
+
+    test("validation compare values lessThanOrEqualTo correctly", 2, function(){
+        var firstExecute = true;
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            comparerType: "lessThanOrEqualTo",
+            dataType: "date"
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+            if (firstExecute) {
+
+                firstExecute = false;
+                f.reset();
+
+                f.exec(ss, 2, "m/d/yyyy", validationCallback);
+            }
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 2;
+            callback(2);
+        };
+
+        f.exec(ss, 1, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation compare values notBetween correctly", 2, function(){
+        var firstExecute = true;
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            to: "A3",
+            comparerType: "notBetween",
+            dataType: "date"
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+            if (firstExecute) {
+
+                firstExecute = false;
+                f.reset();
+
+                f.exec(ss, 4, "m/d/yyyy", validationCallback);
+            }
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 1;
+            callback(1);
+        };
+
+        f.to.exec = function(e, callback) {
+            f.to.value = 3;
+            callback(3);
+        };
+
+        f.exec(ss, 0, "m/d/yyyy", validationCallback);
+    });
+
     /* -----[ printer tests ]----- */
 
     test("print adjusts cell references", function(){

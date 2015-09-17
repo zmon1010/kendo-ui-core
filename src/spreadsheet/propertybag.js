@@ -47,17 +47,20 @@
     });
 
     var ValueProperty = Property.extend({
-        init: function(values, formats) {
+        init: function(values, formats, validations) {
             Property.prototype.init.call(this, values);
 
+            this.validations = validations;
             this.formats = formats;
         },
 
         set: function(start, end, value) {
+            //TODO: RESET VALIDATION AS WELL?
             if (value instanceof Date) {
                 value = kendo.spreadsheet.dateToNumber(value);
                 this.formats.value(start, end, toExcelFormat(kendo.culture().calendar.patterns.d));
             }
+
             this.list.value(start, end, value);
         }
     });
@@ -84,7 +87,8 @@
             { property: Property, name: "bold", value: null, sortable: true, serializable: true },
             { property: Property, name: "textAlign", value: null, sortable: true, serializable: true },
             { property: Property, name: "verticalAlign", value: null, sortable: true, serializable: true },
-            { property: Property, name: "wrap", value: null, sortable: true, serializable: true }
+            { property: Property, name: "wrap", value: null, sortable: true, serializable: true },
+            { property: Property, name: "validation", value: null, sortable: false, serializable: true }
         ],
 
         init: function(cellCount) {

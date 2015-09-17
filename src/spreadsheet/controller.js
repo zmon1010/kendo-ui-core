@@ -192,6 +192,7 @@
         onSheetBarRemove: function(e) {
             var sheet = this._workbook.sheetByName(e.name);
 
+            //TODO: move to model!
             if (!sheet) {
                 return;
             }
@@ -215,6 +216,7 @@
                 sheet = workbook.sheetByName(e.name);
             }
 
+            //TODO: move to model
             if (workbook.activeSheet().name() !== sheet.name()) {
                 workbook.activeSheet(sheet);
             }

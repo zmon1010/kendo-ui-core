@@ -85,9 +85,16 @@
             });
         },
 
+        resetValidations: function() {
+            this._sheets.forEach(function(sheet){
+                sheet.resetValidations();
+            });
+        },
+
         refresh: function(reason) {
             if (reason.recalc) {
                 this.resetFormulas();
+                this.resetValidations();
                 this._sheet.recalc(this._context);
             }
         },
@@ -283,6 +290,7 @@
 
         toJSON: function() {
             this.resetFormulas();
+            this.resetValidations();
             return {
                 activeSheet: this.activeSheet().name(),
                 sheets: this._sheets.map(function(sheet) {

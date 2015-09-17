@@ -508,6 +508,41 @@
         equal(sheet.range("A2").value(), null);
     });
 
+    test("clearContent clears the validation", function() {
+        var currentRange = sheet.range("A2").validation({
+            from: "A4",
+            to: "",
+            comparerType: "greaterThan",
+            dataType: "date"
+        });
+
+        ok(sheet.range("A2").validation());
+
+        currentRange.clearContent();
+
+        equal(sheet.range("A2").validation(), null);
+    });
+
+    test("clear clears the validations", function() {
+        var currentRange = sheet.range("A1:A3")
+            .validation({
+                from: "A4",
+                to: "",
+                comparerType: "greaterThan",
+                dataType: "date"
+            });
+
+        ok(sheet.range("A1").validation() != null);
+        ok(sheet.range("A2").validation() != null);
+        ok(sheet.range("A3").validation() != null);
+
+        currentRange.clear();
+
+        equal(sheet.range("A1").validation(), null);
+        equal(sheet.range("A2").validation(), null);
+        equal(sheet.range("A3").validation(), null);
+    });
+
     test("formula `=A1` works", function() {
         var workbook = new kendo.spreadsheet.Workbook(defaults);
         var sheet = workbook.activeSheet();

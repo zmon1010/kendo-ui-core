@@ -33,11 +33,12 @@
         _set: function(name, value, noTrigger) {
             var sheet = this._sheet;
             this._ref.forEach(function(ref) {
+                //TODO: set validation formula as OBJECT or JSON STRINGIFY?!!
                 sheet._set(ref.toRangeRef(), name, value);
             });
             if (!noTrigger) {
                 sheet.triggerChange({
-                    recalc : name == "formula" || name == "value",
+                    recalc : name == "formula" || name == "value" || name == "validation",
                     value  : value,
                     ref    : this._ref
                 });
@@ -191,6 +192,17 @@
             return this._property("formula", value);
         },
 
+        validation: function(value) {
+            //TODO: Accept objects only?
+
+            if (value === undefined) {
+                var f = this._get("validation");
+                //TODO: DO NOT STRINGIFY?
+                return f ? f.toString() : null; // stringify if present
+            }
+            return this._property("validation", value);
+        },
+
         merge: function() {
             this._ref = this._sheet._merge(this._ref);
             return this;
@@ -284,6 +296,7 @@
 
                 if (reason.recalc) {
                     this.formula(null);
+                    this.validation(null);
                 }
 
                 if (clearAll || (options && options.formatOnly === true)) {

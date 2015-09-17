@@ -28,6 +28,28 @@
         equal(json.rows.length, 2);
     });
 
+    test("toJSON serializes validations", function() {
+        var validationOptions = {
+            from: "A2",
+            to: "",
+            comparerType: "greaterThan",
+            dataType: "date"
+        };
+
+        sheet.range("A1").validation($.extend({}, validationOptions));
+
+        var json = sheet.toJSON();
+        var parsedJSON = JSON.parse(json.rows[0].cells[0].validation);
+
+        equal(json.rows.length, 1);
+        equal(json.rows[0].cells[0].validation, sheet.range("A1").validation());
+        equal(parsedJSON.from, validationOptions.from);
+        equal(parsedJSON.to, validationOptions.to);
+        equal(parsedJSON.dataType, validationOptions.dataType);
+        equal(parsedJSON.comparerType, validationOptions.comparerType);
+        ok(parsedJSON.messageTemplate.indexOf("greater than") > 0);
+    });
+
     test("toJSON serializes the index of the row", function() {
         sheet.range("A2").value("bar");
 
@@ -600,4 +622,40 @@
     function singleCell(cell) {
         return { rows: [ { cells: [ cell ] } ] };
     }
+
+    test("fromJSON loads filter state", function() {
+        sheet.fromJSON({
+            filter: {
+                ref: "A1:B1",
+                columns: [
+                    { index: 1, filter: "custom", criteria: [ { operator: "eq", value: "foo" } ] },
+                    { index: 0, filter: "value", values: [1, 2] },
+                    { index: 2, filter: "top", type: "topPercent", value: 1 }
+                ]
+            }
+        });
+
+        equal(sheet._filter.ref.toString(), "A1:B1");
+        equal(sheet._filter.columns[0].index, 1);
+        ok(sheet._filter.columns[0].filter instanceof kendo.spreadsheet.CustomFilter);
+        ok(sheet._filter.columns[1].filter instanceof kendo.spreadsheet.ValueFilter);
+        ok(sheet._filter.columns[2].filter instanceof kendo.spreadsheet.TopFilter);
+    });
+
+    test("fromJSON loads validations", function() {
+        var validationString = '{"from":"A4",' +
+            '"to":"",' +
+            '"dataType":"date",' +
+            '"type":"warning",' +
+            '"comparerType":"greaterThan",' +
+            '"row":0,' + '"col":0,' +
+            '"sheet":"Sheet1",' +
+            '"tooltipMessageTemplate":"",' +
+            '"tooltipTitleTemplate":"",' +
+            '"messageTemplate":"Please enter a valid #=dataType# value greater than #=from#.",' +
+            '"titleTemplate":"Validation #=type#"}';
+
+        sheet.fromJSON(singleCell({ validation: validationString }));
+        equal(sheet.range("A1").validation(), validationString);
+    });
 })();

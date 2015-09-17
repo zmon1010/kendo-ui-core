@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "./runtime", "./references" ], f);
+    define([ "../kendo.core", "./runtime", "./references", "./validator" ], f);
 })(function(){
 
 (function(kendo) {
@@ -158,6 +158,10 @@
                     sheet._forFormulas(function(formula){
                         formula.adjust(affectedSheet, operation, start, delta);
                     });
+
+                    sheet._forValidations(function(validation){
+                        validation.adjust(affectedSheet, operation, start, delta);
+                    });
                 });
             }
             var selection = this.select();
@@ -170,6 +174,13 @@
         _forFormulas: function(callback) {
             var props = this._properties;
             props.get("formula").values().forEach(function(f){
+                callback.call(this, f.value);
+            }, this);
+        },
+
+        _forValidations: function(callback) {
+            var props = this._properties;
+            props.get("validation").values().forEach(function(f){
                 callback.call(this, f.value);
             }, this);
         },
@@ -734,6 +745,10 @@
                     cell.formula = cell.formula.toString();
                 }
 
+                if (cell.validation) {
+                    cell.validation = cell.validation.toString();
+                }
+
                 row.cells.push(cell);
             });
 
@@ -820,6 +835,10 @@
                                     cell.formula = this._compileFormula(rowIndex, columnIndex, cell.formula);
                                 }
 
+                                if (cell.validation) {
+                                    cell.validation = this._compileValidation(rowIndex, columnIndex, JSON.parse(cell.validation));
+                                }
+
                                 this._properties.fromJSON(this._grid.index(rowIndex, columnIndex), cell);
                             }
                         }
@@ -875,18 +894,36 @@
             return this._properties.get("formula", this._grid.cellRefIndex(ref));
         },
 
+        validation: function(ref) {
+            return this._properties.get("validation", this._grid.cellRefIndex(ref));
+        },
+
+        // NOTE: resetFormulas should be called first.  We don't do it in this
+        // function because it should be done from the Workbook object for all
+        // sheets.
         resetFormulas: function() {
             this._forFormulas(function(formula){
                 formula.reset();
             });
         },
 
-        // NOTE: resetFormulas should be called first.  We don't do it in this
-        // function because it should be done from the Workbook object for all
-        // sheets.
+        resetValidations: function() {
+            this._forValidations(function(validation){
+                validation.reset();
+            });
+        },
+
         recalc: function(context) {
+            var self = this;
             this._forFormulas(function(formula){
                 formula.exec(context);
+            });
+
+            this._forValidations(function(validation){
+                var cellRef = new CellRef(validation.row, validation.col);
+                var ref =  new RangeRef(cellRef, cellRef);
+
+                validation.exec(context, self._get(ref, "value"), self._get(ref, "format"));
             });
         },
 
@@ -900,10 +937,41 @@
             }
         },
 
+        _compileValidation: function(row, col, validation) {
+            if (validation.from) {
+                validation.from = validation.from.replace(/^=/, "");
+            }
+
+            if (validation.to) {
+                validation.to = validation.from.replace(/^=/, "");
+            }
+
+            validation = kendo.spreadsheet.calc.parseValidation(this._name, row, col, validation);
+            return kendo.spreadsheet.calc.compileValidation(validation);
+        },
+
         _compileFormula: function(row, col, f) {
             f = f.replace(/^=/, "");
+
             f = kendo.spreadsheet.calc.parseFormula(this._name, row, col, f);
             return kendo.spreadsheet.calc.compile(f);
+        },
+
+        _copyValuesInRange: function (topLeft, bottomRight, value, property) {
+            var ci, start, end;
+
+            for (ci = topLeft.col; ci <= bottomRight.col; ci++) {
+                start = this._grid.index(topLeft.row, ci);
+                end = this._grid.index(bottomRight.row, ci);
+                for (var index = start, row = topLeft.row; index <= end; ++index, ++row) {
+                    // Even if it's the same formula in multiple cells, we
+                    // need to have different Formula objects, hence cloning
+                    // it.  Don't worry, clone() is fast.
+                    value = value.clone(this._name, row, ci);
+                    this._properties.set(property, index, index, value);
+                }
+            }
+            return value;
         },
 
         _set: function(ref, name, value) {
@@ -917,17 +985,16 @@
                     // here since it won't be called interactively.
                     value = this._compileFormula(topLeft.row, topLeft.col, value);
                 }
-                for (ci = topLeft.col; ci <= bottomRight.col; ci++) {
-                    start = this._grid.index(topLeft.row, ci);
-                    end = this._grid.index(bottomRight.row, ci);
-                    for (var index = start, row = topLeft.row; index <= end; ++index, ++row) {
-                        // Even if it's the same formula in multiple cells, we
-                        // need to have different Formula objects, hence cloning
-                        // it.  Don't worry, clone() is fast.
-                        value = value.clone(this._name, row, ci);
-                        this._properties.set("formula", index, index, value);
-                    }
+
+                value = this._copyValuesInRange(topLeft, bottomRight, value, "formula");
+
+            } else if (value && name == "validation") {
+                if (typeof value.from == "string" || typeof value.to == "string" ) {
+                    value = this._compileValidation(topLeft.row, topLeft.col, value);
                 }
+
+                value = this._copyValuesInRange(topLeft, bottomRight, value, "validation");
+
             } else {
                 for (ci = topLeft.col; ci <= bottomRight.col; ci++) {
                     start = this._grid.index(topLeft.row, ci);
