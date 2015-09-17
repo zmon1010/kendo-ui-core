@@ -3,6 +3,7 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
 
     var Workbook = kendo.Observable.extend({
         init: function(options) {
