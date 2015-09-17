@@ -63,6 +63,7 @@ ROOT_MAP = {
     'src/styles' => /dist\/styles\//,
     'src/Kendo.Mvc/Kendo.Mvc' => 'wrappers/mvc/src/Kendo.Mvc/',
     'src/Kendo.Mvc/packages' => 'wrappers/mvc/packages/',
+    'quickstart' => 'demos/quickstart',
     'wrappers/aspnetmvc/LegacyThemes' => 'wrappers/mvc/legacy-themes/',
     'styles/telerik' => 'wrappers/mvc/legacy-themes/',
     'wrappers/aspnetmvc/EditorTemplates/ascx' => 'wrappers/mvc/demos/Kendo.Mvc.Examples/Views/Shared/EditorTemplates/',
@@ -212,6 +213,8 @@ PHP_CONTENT = {
     'wrappers/php' => PHP_DEMOS_SRC
 }
 
+QUICKSTART_CONTENT = FileList['demos/quickstart/**/*'];
+
 
 file KENDO_CONFIG_FILE do |t|
     sh "./node_modules/.bin/grunt download_builder:config"
@@ -298,7 +301,8 @@ bundle :name => 'professional.commercial',
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
             'src/js' => COMPLETE_SRC_JS,
-            'src/styles' => SRC_CSS
+            'src/styles' => SRC_CSS,
+            'quickstart' => QUICKSTART_CONTENT
        }
 
 bundle :name => 'professional.trial',
@@ -315,6 +319,7 @@ bundle :name => 'professional.trial',
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
+            'quickstart' => QUICKSTART_CONTENT
        },
        :product => 'Kendo UI Professional',
        :release_build => {

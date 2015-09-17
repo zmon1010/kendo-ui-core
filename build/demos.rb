@@ -121,7 +121,6 @@ def offline_navigation
 end
 
 def offline_demos(categories, path)
-
     demos = []
 
     categories.each do |category|
@@ -146,6 +145,10 @@ def demos(options)
     mkdir_p path, :verbose => false
 
     files = FileList["#{path}/index.html"].include("#{path}/content")
+
+    tree :to => "#{path}/content",
+         :from => FileList['demos/mvc/content/**/*'].exclude('**/docs/*'),
+         :root => 'demos/mvc/content/'
 
     tree :to => "#{path}/content",
          :from => FileList['demos/mvc/content/**/*'].exclude('**/docs/*'),
