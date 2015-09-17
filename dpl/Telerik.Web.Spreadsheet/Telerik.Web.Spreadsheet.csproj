@@ -147,6 +147,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\CellSelectionExtensions.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\CellBorderExtensions.cs" />
+    <Compile Include="Extensions\CommonExtensions.cs" />
+    <Compile Include="Extensions\DocumentWorksheetExtensions.cs" />
     <Compile Include="Models\Workbook.Json.cs" />
     <Compile Include="Provider\JsonSettings.cs" />
     <Compile Include="Provider\JsonImportSettings.cs" />
