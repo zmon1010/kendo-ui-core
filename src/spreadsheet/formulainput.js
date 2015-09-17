@@ -69,7 +69,7 @@
                 .on("keydown", this._keydown.bind(this))
                 .on("keyup", this._keyup.bind(this))
                 .on("blur", this._blur.bind(this))
-                .on("input", this._input.bind(this));
+                .on("input click", this._input.bind(this));
         },
 
         options: {
