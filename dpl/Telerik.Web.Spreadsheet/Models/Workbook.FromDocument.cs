@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using Telerik.Windows.Documents.Spreadsheet.Core;
-using Telerik.Windows.Documents.Spreadsheet.Core.DataStructures;
-using Telerik.Windows.Documents.Spreadsheet.FormatProviders;
-using Telerik.Windows.Documents.Spreadsheet.FormatProviders.Contexts;
-using Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.Xlsx;
 using Telerik.Windows.Documents.Spreadsheet.Model;
+using Telerik.Windows.Documents.Spreadsheet.Model.Sorting;
 using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
-using Telerik.Windows.Documents.Spreadsheet.Theming;
 using Telerik.Windows.Documents.Spreadsheet.Utilities;
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 using DocumentWorksheet = Telerik.Windows.Documents.Spreadsheet.Model.Worksheet;
@@ -58,6 +50,8 @@ namespace Telerik.Web.Spreadsheet
                     sheet.FrozenRows = pane.TopLeftCellIndex.RowIndex;
                     sheet.FrozenColumns = pane.TopLeftCellIndex.ColumnIndex;
                 }
+
+                sheet.Sort = GetSorting(documentWorksheet);                
             }
 
             return workbook;
@@ -79,6 +73,26 @@ namespace Telerik.Web.Spreadsheet
                     };
                 }
             }
-        }        
+        }
+
+        private static Sort GetSorting(DocumentWorksheet worksheet)
+        {
+            var range = worksheet.SortState.SortRange;            
+
+            if (range == null)
+            {
+                return null;
+            }
+
+            return new Sort
+            {
+                Ref = NameConverter.ConvertCellRangeToName(range.FromIndex, range.ToIndex),
+                Columns = worksheet.SortState.SortConditions.OfType<ValuesSortCondition>().Select(cond => new SortColumn
+                {
+                    Ascending = cond.SortOrder == SortOrder.Ascending,
+                    Index = cond.RelativeIndex
+                }).ToList()
+            };            
+        }
     }
 }
