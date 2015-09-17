@@ -3545,6 +3545,8 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (isPlainObject(command)) {
+                command = extend(true, {}, command);
+
                 if (command.className && inArray(options.className, command.className.split(" ")) < 0) {
                     command.className += " " + options.className;
                 } else if (command.className === undefined) {

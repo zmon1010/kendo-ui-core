@@ -1788,6 +1788,20 @@
         ok(grid.tbody.find("tr:first > td:first a").hasClass("myclass"));
     });
 
+    test("commands preserve classes when added as string attributes in grouped grid", function(){
+        var grid = new Grid(table, {
+            dataSource: {
+                data: [{ foo: 1, bar: "bar"}, { foo: 2, bar: "baz"}],
+                group: { field: "foo" }
+            },
+            columns: [ { command: { name: "bar", attr: "class=\"myclass1 myclass2\"" } }]
+        });
+
+        var classNames = grid.tbody.find("tr:not(.k-grouping-row):first > td:eq(1) a")[0].className.split(" ");
+
+        equal($.grep(classNames, function(item) { return item == "myclass1" } ).length, 1);
+    });
+
     test("commands preserve rest of attributes when class added through attributes as string", function(){
         var grid = new Grid(table, {
             dataSource: [{ foo: 1, bar: "bar"}, { foo: 2, bar: "baz"}],
