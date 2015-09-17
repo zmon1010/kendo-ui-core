@@ -894,7 +894,7 @@
             if (input.eof()) {
                 return null;
             }
-            var ch = input.peek();
+            var ch = input.peek(), m;
             if (ch == '"') {
                 return addPos(readString);
             }
@@ -910,14 +910,17 @@
             if (isPunc(ch)) {
                 return addPos(readPunc);
             }
+            if ((m = input.lookingAt(/^#([a-z\/]+)[?!]/i))) {
+                return addPos(function(){
+                    input.skip(m);
+                    return { type: "error", value: m[1] };
+                });
+            }
             if (!forEditor) {
                 input.croak("Can't handle character: " + ch);
             }
             return addPos(function(){
-                return {
-                    type  : "error",
-                    value : input.next()
-                };
+                return { type: "error", value: input.next() };
             });
         }
         function peek() {
