@@ -156,4 +156,25 @@
 
         spreadsheet.moveSheetToIndex(spreadsheet.sheets()[1], 0);
     });
+
+    test("openDialog opens dialog", function() {
+        spreadsheet.openDialog("formatCells");
+
+        equal($(".k-spreadsheet-format-cells").length, 1);
+    });
+
+    test("dialogs allow to execute commands", function() {
+        var dialog = spreadsheet.openDialog("formatCells");
+        var opts = { bar: true };
+
+        spreadsheet._workbook.execute = function(e) {
+            equal(e.command, "foo");
+            equal(e.options, opts);
+        };
+
+        dialog.trigger("action", {
+            command: "foo",
+            options: opts
+        });
+    });
 })();

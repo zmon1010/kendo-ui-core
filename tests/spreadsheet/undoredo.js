@@ -24,9 +24,7 @@
     });
 
     test("execute pushes command to undo/redo stack", function() {
-        var command = new kendo.spreadsheet.EditCommand({ value: "bar" });
-
-        spreadsheet._workbook.execute(command);
+        spreadsheet._workbook.execute({ command: "EditCommand", options: { value: "bar" } });
 
         ok(spreadsheet._workbook.undoRedoStack.canUndo());
     });

@@ -304,12 +304,13 @@
 
             SpreadsheetDialog.fn.apply.call(this);
 
-            var command = new kendo.spreadsheet.PropertyChangeCommand({
-                property: "format",
-                value: format
+            this.trigger("action", {
+                command: "PropertyChangeCommand",
+                options: {
+                    property: "format",
+                    value: format
+                }
             });
-
-            this.trigger("execute", { command: command });
         }
     });
 
@@ -386,12 +387,13 @@
         apply: function(e) {
             SpreadsheetDialog.fn.apply.call(this);
 
-            var command = new kendo.spreadsheet.PropertyChangeCommand({
-                property: "fontFamily",
-                value: e.sender.value()[0]
+            this.trigger("action", {
+                command: "PropertyChangeCommand",
+                options: {
+                    property: "fontFamily",
+                    value: e.sender.value()[0]
+                }
             });
-
-            this.trigger("execute", { command: command });
         }
     });
 
@@ -424,12 +426,13 @@
         apply: function(e) {
             SpreadsheetDialog.fn.apply.call(this);
 
-            var command = new kendo.spreadsheet.PropertyChangeCommand({
-                property: "fontSize",
-                value: kendo.parseInt(e.sender.value()[0]) + "px"
+            this.trigger("action", {
+                command: "PropertyChangeCommand",
+                options: {
+                    property: "fontSize",
+                    value: kendo.parseInt(e.sender.value()[0]) + "px"
+                }
             });
-
-            this.trigger("execute", { command: command });
         }
     });
 
@@ -462,12 +465,14 @@
             SpreadsheetDialog.fn.apply.call(this);
 
             var state = this.value();
-            var command = new kendo.spreadsheet.BorderChangeCommand({
-                border: state.type,
-                style: { size: "1px", color: state.color }
-            });
 
-            this.trigger("execute", { command: command });
+            this.trigger("action", {
+                command: "BorderChangeCommand",
+                options: {
+                    border: state.type,
+                    style: { size: "1px", color: state.color }
+                }
+            });
         },
         _borderPalette: function() {
             var element = this.dialog().element.find("div:first");
@@ -514,12 +519,13 @@
         apply: function() {
             SpreadsheetDialog.fn.apply.call(this);
 
-            var command = new kendo.spreadsheet.PropertyChangeCommand({
-                property: this.property,
-                value: this.value()
+            this.trigger("action", {
+                command: "PropertyChangeCommand",
+                options: {
+                    property: this.property,
+                    value: this.value()
+                }
             });
-
-            this.trigger("execute", { command: command });
         },
         _colorPalette: function() {
             var element = this.dialog().element.find("div:first");
@@ -583,12 +589,13 @@
             var dataItem = e.sender.value()[0];
             SpreadsheetDialog.fn.apply.call(this);
 
-            var command = new kendo.spreadsheet.PropertyChangeCommand({
-                property: dataItem.property,
-                value: dataItem.value
+            this.trigger("action", {
+                command: "PropertyChangeCommand",
+                options: {
+                    property: dataItem.property,
+                    value: dataItem.value
+                }
             });
-
-            this.trigger("execute", { command: command });
         }
     });
 
@@ -631,11 +638,12 @@
             var dataItem = e.sender.value()[0];
             SpreadsheetDialog.fn.apply.call(this);
 
-            var command = new kendo.spreadsheet.MergeCellCommand({
-                value: dataItem.value
+            this.trigger("action", {
+                command: "MergeCellCommand",
+                options: {
+                    value: dataItem.value
+                }
             });
-
-            this.trigger("execute", { command: command });
         }
     });
 

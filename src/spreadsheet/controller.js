@@ -138,8 +138,8 @@
             this.cellContextMenu.element.add(this.rowHeaderContextMenu.element).add(this.colHeaderContextMenu.element).on("contextmenu", false);
 
             if (this.tabstrip) {
-                this.tabstrip.bind("action", this.onToolBarAction.bind(this));
-                this.tabstrip.bind("dialog", this.onToolBarDialog.bind(this));
+                this.tabstrip.bind("action", this.onCommandRequest.bind(this));
+                this.tabstrip.bind("dialog", this.onDialogRequest.bind(this));
             }
 
             $(this.view.container).on("click", ".k-link.k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
@@ -745,22 +745,20 @@
             var target = $(e.currentTarget);
             var filterMenu = this.view.createFilterMenu(target.data("column"));
 
-            filterMenu.bind("action", this.onToolBarAction.bind(this));
+            filterMenu.bind("action", this.onCommandRequest.bind(this));
 
             filterMenu.openFor(target);
         },
 
-        onToolBarAction: function(e) {
-            var command;
+        onCommandRequest: function(e) {
             if (e.command) {
-                command = new kendo.spreadsheet[e.command]($.extend(e.options, { workbook: this._workbook }));
-                this._workbook.execute(command);
+                this._workbook.execute(e);
             } else {
                 this._workbook.undoRedoStack[e.action]();
             }
         },
 
-        onToolBarDialog: function(e) {
+        onDialogRequest: function(e) {
             this.view.openDialog(e.name, e.options);
         }
     });

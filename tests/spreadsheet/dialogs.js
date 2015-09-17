@@ -149,10 +149,10 @@
         var formats = dialog.viewModel.formats;
         var format = formats[formats.length-1].value;
 
-        dialog.one("execute", function(e) {
-            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
-            equal(e.command.options.property, "format");
-            equal(e.command.options.value, format);
+        dialog.one("action", function(e) {
+            equal(e.command, "PropertyChangeCommand");
+            equal(e.options.property, "format");
+            equal(e.options.value, format);
         });
 
         dialog.viewModel.set("format", format);
@@ -160,8 +160,8 @@
         dialog.apply();
     });
 
-    test("close does not execute command", 0, function() {
-        dialog.one("execute", function(e) {
+    test("close does not trigger action event", 0, function() {
+        dialog.one("action", function(e) {
             ok(false);
         });
 
@@ -243,18 +243,18 @@
     });
 
     test("list change event triggers PropertyChangeCommand", 3, function() {
-        dialog.one("execute", function(e) {
-            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
-            equal(e.command.options.property, "fontFamily");
-            equal(e.command.options.value, "bar");
+        dialog.one("action", function(e) {
+            equal(e.command, "PropertyChangeCommand");
+            equal(e.options.property, "fontFamily");
+            equal(e.options.value, "bar");
         });
 
         list.value(["bar"]);
         list.trigger("change");
     });
 
-    test("close does not execute command", 0, function() {
-        dialog.one("execute", function(e) {
+    test("close does not trigger action event", 0, function() {
+        dialog.one("action", function(e) {
             ok(false);
         });
 
@@ -283,18 +283,18 @@
     });
 
     test("list change event triggers PropertyChangeCommand", 3, function() {
-        dialog.one("execute", function(e) {
-            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
-            equal(e.command.options.property, "fontSize");
-            equal(e.command.options.value, "11px");
+        dialog.one("action", function(e) {
+            equal(e.command, "PropertyChangeCommand");
+            equal(e.options.property, "fontSize");
+            equal(e.options.value, "11px");
         });
 
         list.value([11]);
         list.trigger("change");
     });
 
-    test("close does not execute command", 0, function() {
-        dialog.one("execute", function(e) {
+    test("close does not trigger action event", 0, function() {
+        dialog.one("action", function(e) {
             ok(false);
         });
 
@@ -316,9 +316,9 @@
     });
 
     test("triggers BorderChangeCommand when apply is clicked", function() {
-        dialog.one("execute", function(e) {
-            ok(e.command instanceof kendo.spreadsheet.BorderChangeCommand);
-            equal(e.command.options.border, "allBorders");
+        dialog.one("action", function(e) {
+            equal(e.command, "BorderChangeCommand");
+            equal(e.options.border, "allBorders");
         });
 
         spreadsheet.activeSheet().select("A1:B2");
@@ -327,8 +327,8 @@
         dialog.apply();
     });
 
-    test("close does not execute command", 0, function() {
-        dialog.one("execute", function(e) {
+    test("close does not trigger action event", 0, function() {
+        dialog.one("action", function(e) {
             ok(false);
         });
 
@@ -350,10 +350,10 @@
     });
 
     test("triggers PropertyChangeCommand when apply is clicked", 3, function() {
-        dialog.one("execute", function(e) {
-            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
-            equal(e.command.options.property, "background");
-            equal(e.command.options.value, "#ff0000");
+        dialog.one("action", function(e) {
+            equal(e.command, "PropertyChangeCommand");
+            equal(e.options.property, "background");
+            equal(e.options.value, "#ff0000");
         });
 
         colorPalette.value("#ff0000");
@@ -361,8 +361,8 @@
         dialog.apply();
     });
 
-    test("close does not execute command", 0, function() {
-        dialog.one("execute", function(e) {
+    test("close does not trigger action event", 0, function() {
+        dialog.one("action", function(e) {
             ok(false);
         });
 
@@ -387,10 +387,10 @@
     });
 
     test("triggers PropertyChangeCommand when command is clicked", 3, function() {
-        dialog.one("execute", function(e) {
-            ok(e.command instanceof kendo.spreadsheet.PropertyChangeCommand);
-            equal(e.command.options.property, "textAlign");
-            equal(e.command.options.value, "right");
+        dialog.one("action", function(e) {
+            equal(e.command, "PropertyChangeCommand");
+            equal(e.options.property, "textAlign");
+            equal(e.options.value, "right");
         });
 
         $(".k-item a[data-value='right']").trigger("click");
@@ -410,9 +410,9 @@
     });
 
     test("triggers MergeCellsCommand when item is clicked", 2, function() {
-        dialog.one("execute", function(e) {
-            ok(e.command instanceof kendo.spreadsheet.MergeCellCommand);
-            equal(e.command.options.value, "vertically");
+        dialog.one("action", function(e) {
+            equal(e.command, "MergeCellCommand");
+            equal(e.options.value, "vertically");
         });
 
         $(".k-item a[data-value='vertically']").trigger("click");

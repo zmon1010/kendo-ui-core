@@ -117,8 +117,7 @@
         createWithTools([ "bold" ]);
 
         toolbar.one("action", function(e) {
-            var command = e.command;
-            ok(command === "PropertyChangeCommand");
+            equal(e.command, "PropertyChangeCommand");
             equal(e.options.property, "bold");
             equal(e.options.value, true);
         });
@@ -126,7 +125,7 @@
         tap($(".k-i-bold"));
     });
 
-    test("bold toggle off triggers execute with value null", 1, function() {
+    test("bold toggle off triggers action event with value null", 1, function() {
         createWithTools([ "bold" ]);
 
         sheet.range("A1").bold(true);
@@ -138,7 +137,7 @@
         tap($(".k-i-bold"));
     });
 
-    test("mergeCell click triggers execute with correct value", 1, function() {
+    test("mergeCell click triggers action event with correct value", 1, function() {
         createWithTools([ "merge" ]);
 
         toolbar.one("action", function(e) {
@@ -158,7 +157,7 @@
         equal($(".k-popup [title='Unmerge']").attr("data-value"), "unmerge");
     });
 
-    test("textAlign button click triggers execute with correct value", 2, function() {
+    test("textAlign button click triggers action event with correct value", 2, function() {
         createWithTools([ "alignment" ]);
 
         toolbar.one("action", function(e) {
@@ -170,7 +169,7 @@
         $("[data-property=textAlign][data-value=right]").trigger("click");
     });
 
-    test("verticalAlign button click triggers execute with correct value", 2, function() {
+    test("verticalAlign button click triggers action event with correct value", 2, function() {
         createWithTools([ "alignment" ]);
 
         toolbar.one("action", function(e) {
@@ -316,6 +315,19 @@
         range.filter(false);
 
         ok(!toolbar.element.find("[data-property=hasFilter]").hasClass("k-state-active"));
+    });
+
+    test("tabstrip bubbles toolbar dialog requests", 1, function() {
+        createSpreadsheet();
+
+        var tabstrip = spreadsheet._view.tabstrip;
+        var toolbar = tabstrip.toolbars["home"];
+
+        tabstrip.bind("dialog", function(e) {
+            equal(e.name, "foo");
+        });
+
+        toolbar.dialog({ name: "foo" });
     });
 
 })();

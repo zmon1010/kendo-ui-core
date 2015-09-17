@@ -372,7 +372,7 @@
         },
 
         _executeCommand: function(e) {
-            this._workbook.execute(e.command);
+            this._workbook.execute(e);
         },
 
         workbook: function(workbook) {
@@ -582,7 +582,7 @@
             var dialog = kendo.spreadsheet.dialogs.create(name, options);
 
             if (dialog) {
-                dialog.bind("execute", this._executeCommand.bind(this));
+                dialog.bind("action", this._executeCommand.bind(this));
                 this._dialogs.push(dialog);
                 dialog.open(range);
                 return dialog;

@@ -188,8 +188,8 @@
         action: function(args) {
             this.trigger("action", args);
         },
-        dialog: function(popupName, options) {
-            this.trigger("dialog", { name: popupName, options: options });
+        dialog: function(args) {
+            this.trigger("dialog", args);
         },
         refresh: function(activeCell) {
             var range = activeCell;
@@ -324,7 +324,7 @@
             var popupName = dataItem ? dataItem.popup : undefined;
 
             if (popupName) {
-                this.toolbar.dialog(popupName);
+                this.toolbar.dialog({ name: popupName });
             } else {
                 this.toolbar.action({
                     command: "PropertyChangeCommand",
@@ -389,7 +389,7 @@
                         .data("instance", this);
         },
         open: function() {
-            this.toolbar.dialog(this._dialogName);
+            this.toolbar.dialog({ name: this._dialogName });
         }
     }));
 
@@ -468,7 +468,12 @@
             OverflowDialogButton.fn.init.call(this, options, toolbar);
         },
         _click: function() {
-            this.toolbar.dialog("colorPicker", { title: this.options.property, property: this.options.property });
+            this.toolbar.dialog({
+                name: "colorPicker",
+                options: {
+                    title: this.options.property, property: this.options.property
+                }
+            });
         }
     });
 
@@ -530,7 +535,13 @@
 
     var FontSizeButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.dialog("fontSize", { sizes: FONT_SIZES, defaultSize: DEFAULT_FONT_SIZE });
+            this.toolbar.dialog({
+                name: "fontSize",
+                options: {
+                    sizes: FONT_SIZES,
+                    defaultSize: DEFAULT_FONT_SIZE
+                }
+            });
         },
         update: function(value) {
             this._value = value || DEFAULT_FONT_SIZE + "px";
@@ -563,7 +574,13 @@
 
     var FontFamilyButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.dialog("fontFamily", { fonts: FONT_FAMILIES, defaultFont: DEFAULT_FONT_FAMILY });
+            this.toolbar.dialog({
+                name: "fontFamily",
+                options: {
+                    fonts: FONT_FAMILIES,
+                    defaultFont: DEFAULT_FONT_FAMILY
+                }
+            });
         },
         update: function(value) {
             this._value = value || DEFAULT_FONT_FAMILY;
@@ -616,7 +633,7 @@
 
     var FormatButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.dialog("formatCells");
+            this.toolbar.dialog({ name: "formatCells" });
         }
     });
 
@@ -655,7 +672,7 @@
 
     var BorderChangeButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.dialog("borders");
+            this.toolbar.dialog({ name: "borders" });
         }
     });
 
@@ -734,7 +751,7 @@
 
     var AlignmentButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.dialog("alignment");
+            this.toolbar.dialog({ name: "alignment" });
         }
     });
 
@@ -789,7 +806,7 @@
 
     var MergeButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.dialog("merge");
+            this.toolbar.dialog({ name: "merge" });
         }
     });
 
@@ -840,7 +857,7 @@
 
     var SortButton = OverflowDialogButton.extend({
         _click: function() {
-            this.toolbar.dialog("sort");
+            this.toolbar.dialog({ name: "sort" });
         }
     });
 
@@ -883,8 +900,8 @@
             this.trigger("action", args);
         },
 
-        dialog: function(popupName, options) {
-            this.trigger("dialog", { name: popupName, options: options });
+        dialog: function(args) {
+            this.trigger("dialog", args);
         },
 
         refreshTools: function(range) {

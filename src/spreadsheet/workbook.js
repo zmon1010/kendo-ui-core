@@ -64,7 +64,9 @@
             e.command.range().select();
         },
 
-        execute: function(command) {
+        execute: function(options) {
+            var commandOptions = $.extend({ workbook: this }, options.options);
+            var command = new kendo.spreadsheet[options.command](commandOptions);
             command.range(this._sheet.selection());
             command.exec();
             this.undoRedoStack.push(command);
