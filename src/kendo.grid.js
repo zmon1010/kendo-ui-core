@@ -7373,14 +7373,14 @@ var __meta__ = { // jshint ignore:line
                container = that.tbody;
 
            if (that.lockedContent) {
-               container = that.lockedTable.find("tbody");
+                container = that.element;
            }
 
            if (that._group && that.groupFooterTemplate) {
 
                that.angular(cmd, function() {
                    return {
-                       elements: container.children(".k-group-footer"),
+                       elements: container.find(".k-group-footer"),
                        data: $.map(groupFooters(that.dataSource.view()), function(dataItem){
                            return { dataItem: dataItem };
                        })
