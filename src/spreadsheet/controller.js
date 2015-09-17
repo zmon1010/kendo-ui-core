@@ -368,7 +368,7 @@
                 this.originFrame = object.pane;
             }
 
-            if (this.editor.insertRef() && object.ref) {
+            if (this.editor.canInsertRef() && object.ref) {
                 this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
                 event.preventDefault();
                 return;

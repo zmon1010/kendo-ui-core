@@ -305,4 +305,19 @@
 
         equal(editor.activeEditor(), null);
     });
+
+    test("canInsertRef calls formulaInput canInsertRef method", function() {
+        var editor = createEditor();
+
+        editor.activate({ rect: { top: 0, left: 0 } });
+        editor.focus();
+
+        stub(editor.cellInput, {
+            canInsertRef: editor.cellInput.canInsertRef
+        });
+
+        editor.canInsertRef();
+
+        equal(editor.cellInput.calls("canInsertRef"), 1);
+    });
 })();

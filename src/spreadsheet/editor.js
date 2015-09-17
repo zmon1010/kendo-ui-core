@@ -99,8 +99,7 @@
             return this.barInput.popup.visible() || this.cellInput.popup.visible();
         },
 
-        //TODO: Test
-        insertRef: function() {
+        canInsertRef: function() {
             var editor = this.activeEditor();
             return editor && editor.canInsertRef();
         },

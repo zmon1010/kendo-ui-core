@@ -651,7 +651,7 @@
             this.tree.render(merged);
 
             if (this.editor.isActive()) {
-                if (!this.editor.insertRef()) {
+                if (!this.editor.canInsertRef()) {
                     this.editor.position(this.activeCellRectangle());
                 }
             } else if (!sheet.selectionInProgress() && !sheet.resizingInProgress() && !sheet._edit()) {
