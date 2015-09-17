@@ -15,42 +15,6 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "activeSheet", EmitDefaultValue = false)]
         public string ActiveSheet { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember(Name = "columnWidth", EmitDefaultValue = false)]
-        public double ColumnWidth { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember(Name = "columns", EmitDefaultValue = false)]
-        public double Columns { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember(Name = "headerHeight", EmitDefaultValue = false)]
-        public double HeaderHeight { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember(Name = "headerWidth", EmitDefaultValue = false)]
-        public double HeaderWidth { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember(Name = "rowHeight", EmitDefaultValue = false)]
-        public double RowHeight { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember(Name = "rows", EmitDefaultValue = false)]
-        public double Rows { get; set; }
-
         private List<Worksheet> sheets = new List<Worksheet>();
 
         /// <summary>
@@ -68,12 +32,6 @@ namespace Telerik.Web.Spreadsheet
                 return sheets;
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember(Name = "toolbar", EmitDefaultValue = false)]
-        public bool Toolbar { get; set; }
 
     }
 }

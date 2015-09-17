@@ -19,7 +19,8 @@ namespace Telerik.Web.Spreadsheet
         public static Workbook FromDocument(Document document)
         {
             var workbook = new Workbook();
-            workbook.ActiveSheet = document.ActiveSheet.Name;
+
+            workbook.ActiveSheet = document.ActiveSheet.Name;            
 
             foreach (var documentWorksheet in document.Worksheets)
             {
