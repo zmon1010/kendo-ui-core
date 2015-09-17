@@ -35,13 +35,7 @@
         var range = document.createRange();
         range.selectNodeContents(el);
 
-        setTimeout(function () {
-            sel.removeAllRanges(); // XXX: should we actually do it above too?
-            // if we don't removeAllRanges here, we sometimes end up
-            // with "discontinuous selection not supported" exception.
-
-            sel.addRange(range);
-        });
+        sel.addRange(range);
     }
 
     function cellBefore(table, row) {
