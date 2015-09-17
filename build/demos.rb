@@ -326,6 +326,18 @@ end
 directory 'dist/demos/staging-php'
 directory 'dist/demos/staging-java'
 
+DPL_FILES = [
+	'Telerik.Windows.Documents.Core',
+	'Telerik.Windows.Documents.Fixed',
+	'Telerik.Windows.Documents.Flow',
+	'Telerik.Windows.Documents.Flow.FormatProviders.Pdf',
+	'Telerik.Windows.Documents.Spreadsheet',
+	'Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml',
+	'Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf',
+	'Telerik.Windows.Maths',
+	'Telerik.Windows.Zip'
+].flat_map { |file| ["#{file}.dll", "#{file}.xml"] }
+
 namespace :demos do
 
     desc('Build debug demo site')
@@ -338,7 +350,22 @@ namespace :demos do
             file.write FileList[YAML.load(`node #{METAJS} --all-deps kendo.all.js`)].gsub("\\", "/").join("\n")
         end
 
-        msbuild t.prerequisites[0], '/p:Configuration=Debug'
+		if PLATFORM =~ /linux|darwin|bsd/
+	        msbuild t.prerequisites[0], "/p:Configuration=Debug"
+		else
+			{'WPF40' => { :dest => 'NET40' }, 'WPF45' => { :dest => 'NET45' }}.each do |key, value|
+				DPL_FILES.each do |file|
+					source = "\\\\telerik.com\\distributions\\DailyBuilds\\XAML\\Release\\Binaries\\#{key}\\Dev\\#{file}"
+					dest = "dpl\\lib\\#{value[:dest]}"
+					demos_dest = "demos\\mvc\\bin"
+
+					system("xcopy #{source} #{dest} /y > nul")
+					system("xcopy #{source} #{demos_dest} /y > nul") if value[:dest] == 'NET40'
+				 end
+			end
+
+			msbuild 'demos/mvc/Kendo-Windows.sln', "/p:Configuration=Debug"
+		end
     end
 
     task :clean do
