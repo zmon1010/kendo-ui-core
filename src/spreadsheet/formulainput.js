@@ -379,6 +379,9 @@
         canInsertRef: function() {
             var point = this.getPos();
             if (point && this._isFormula()) {
+                if (point.begin === 0) {
+                    return null;
+                }
                 var value = this.value();
                 var tokens = kendo.spreadsheet.calc.tokenize(value);
                 for (var i = 0; i < tokens.length; ++i) {
