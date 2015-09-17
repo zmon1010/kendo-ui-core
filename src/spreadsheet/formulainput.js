@@ -159,10 +159,6 @@
             return this.value().length;
         },
 
-        // length: function() {
-        //     return this.element.text().length;
-        // },
-
         _formulaSource: function() {
             var result = [];
             var value;
