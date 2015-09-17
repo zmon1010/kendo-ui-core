@@ -16,12 +16,8 @@
             this.barInput.syncWith(this.cellInput);
             this.cellInput.syncWith(this.barInput);
 
-            //XXX: Trigger formulaInput events intead of wiring keyup here
-            this.barInput.element
-                .add(this.cellInput.element)
-                .on("keyup", (function() {
-                    this.trigger("update", { value: this.value() });
-                }).bind(this));
+            this.barInput.bind("keyup", this._triggerUpdate.bind(this));
+            this.cellInput.bind("keyup", this._triggerUpdate.bind(this));
         },
 
         events: [
@@ -30,6 +26,10 @@
             "change",
             "update"
         ],
+
+        _triggerUpdate: function() {
+            this.trigger("update", { value: this.value() });
+        },
 
         activeEditor: function() {
             var editor = null;
@@ -102,6 +102,10 @@
         canInsertRef: function() {
             var editor = this.activeEditor();
             return editor && editor.canInsertRef();
+        },
+
+        highlightTokens: function() {
+            return this.barInput.highlightTokens();
         },
 
         scale: function() {

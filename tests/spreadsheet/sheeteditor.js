@@ -48,93 +48,6 @@
         equal(editor.cellInput.args("resize")[0], rect);
     });
 
-    test("activate method triggers active", 1, function() {
-        var editor = createEditor();
-
-        editor.bind("activate", function() {
-            ok(true);
-        });
-
-        editor.activate({ rect: { top: 0, left: 0 } });
-    });
-
-    test("deactivate method triggers deactivate", 1, function() {
-        var editor = createEditor();
-
-        editor.bind("deactivate", function() {
-            ok(true);
-        });
-
-        editor.activate({ rect: { top: 0, left: 0 } });
-        editor.deactivate();
-    });
-
-    test("deactivate method does not trigger events if editor is not active", 0, function() {
-        var editor = createEditor();
-
-        editor.bind("deactivate", function() {
-            ok(false);
-        });
-
-        editor.deactivate();
-    });
-
-    test("deactivate method does not trigger events if editor is not active", 0, function() {
-        var editor = createEditor();
-
-        editor.bind("deactivate", function() {
-            ok(false);
-        });
-
-        editor.deactivate();
-    });
-
-    test("deactivate method calls cell input hide method", 1, function() {
-        var editor = createEditor();
-        var rect = { top: 0, left: 0 };
-
-        stub(editor.cellInput, {
-            hide: editor.cellInput.hide
-        });
-
-        editor.activate({ rect: rect });
-        editor.deactivate();
-
-        equal(editor.cellInput.calls("hide"), 1);
-    });
-
-    test("deactivate method calls change event if value has been changed", 1, function() {
-        var editor = createEditor();
-        var rect = { top: 0, left: 0 };
-        var newValue = "changed";
-
-        editor.bind("change", function(e) {
-            equal(e.value, newValue);
-        });
-
-        editor.activate({ rect: rect });
-        editor.value("test");
-
-        editor.cellInput.value(newValue);
-
-        editor.deactivate();
-    });
-
-    test("deactivate method does not trigger change if no value change", 0, function() {
-        var editor = createEditor();
-        var rect = { top: 0, left: 0 };
-        var newValue = "changed";
-
-        editor.bind("change", function(e) {
-            ok(false);
-        });
-
-        editor.activate({ rect: rect });
-        editor.value("test");
-
-        editor.deactivate();
-    });
-
     test("focus method focuses cell formulaInput", 1, function() {
         var editor = createEditor();
 
@@ -319,5 +232,132 @@
         editor.canInsertRef();
 
         equal(editor.cellInput.calls("canInsertRef"), 1);
+    });
+
+    module("Spreadsheet Editor events", {
+        setup: function() {
+            bar = new kendo.spreadsheet.FormulaBar($("<div />").appendTo(QUnit.fixture));
+            input = new kendo.spreadsheet.FormulaInput($("<div />").hide().appendTo(QUnit.fixture));
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("activate method triggers active", 1, function() {
+        var editor = createEditor();
+
+        editor.bind("activate", function() {
+            ok(true);
+        });
+
+        editor.activate({ rect: { top: 0, left: 0 } });
+    });
+
+    test("deactivate method triggers deactivate", 1, function() {
+        var editor = createEditor();
+
+        editor.bind("deactivate", function() {
+            ok(true);
+        });
+
+        editor.activate({ rect: { top: 0, left: 0 } });
+        editor.deactivate();
+    });
+
+    test("deactivate method does not trigger events if editor is not active", 0, function() {
+        var editor = createEditor();
+
+        editor.bind("deactivate", function() {
+            ok(false);
+        });
+
+        editor.deactivate();
+    });
+
+    test("deactivate method does not trigger events if editor is not active", 0, function() {
+        var editor = createEditor();
+
+        editor.bind("deactivate", function() {
+            ok(false);
+        });
+
+        editor.deactivate();
+    });
+
+    test("deactivate method calls cell input hide method", 1, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+
+        stub(editor.cellInput, {
+            hide: editor.cellInput.hide
+        });
+
+        editor.activate({ rect: rect });
+        editor.deactivate();
+
+        equal(editor.cellInput.calls("hide"), 1);
+    });
+
+    test("deactivate method calls change event if value has been changed", 1, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+        var newValue = "changed";
+
+        editor.bind("change", function(e) {
+            equal(e.value, newValue);
+        });
+
+        editor.activate({ rect: rect });
+        editor.value("test");
+
+        editor.cellInput.value(newValue);
+
+        editor.deactivate();
+    });
+
+    test("deactivate method does not trigger change if no value change", 0, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+        var newValue = "changed";
+
+        editor.bind("change", function(e) {
+            ok(false);
+        });
+
+        editor.activate({ rect: rect });
+        editor.value("test");
+
+        editor.deactivate();
+    });
+
+    test("trigger update event on cell formulainput keyup", 1, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+        var value = "test";
+
+        editor.bind("update", function(e) {
+            equal(e.value, value);
+        });
+
+        editor.activate({ rect: rect });
+        editor.value(value);
+
+        editor.cellInput.trigger("keyup");
+    });
+
+    test("trigger update event on cell formulainput keyup", 1, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+        var value = "test";
+
+        editor.bind("update", function(e) {
+            equal(e.value, value);
+        });
+
+        editor.activate({ rect: rect });
+        editor.value(value);
+
+        editor.barInput.trigger("keyup");
     });
 })();
