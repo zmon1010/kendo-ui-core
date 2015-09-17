@@ -654,7 +654,7 @@
                 if (!this.editor.insertRef()) {
                     this.editor.position(this.activeCellRectangle());
                 }
-            } else if (!sheet.selectionInProgress() && !sheet.resizingInProgress()) {
+            } else if (!sheet.selectionInProgress() && !sheet.resizingInProgress() && !sheet._edit()) {
                 this.renderClipboardContents();
             }
         },

@@ -702,6 +702,10 @@
         },
 
         _edit: function(isInEdit) {
+            if (isInEdit === undefined) {
+                return this._inEdit;
+            }
+
             this._inEdit = isInEdit;
 
             if (isInEdit) {
