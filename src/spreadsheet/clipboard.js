@@ -110,7 +110,7 @@
                 } else {
                     if (!data.plain) {
                         var element = $(doc.body).find(":not(style)");
-                        state["0,0"] = this._populateCell(element.text());
+                        state["0,0"] = this._cellState(element.text());
                     } else {
                         state = this._parseTSV(data.plain);
                     }
@@ -122,13 +122,14 @@
         },
 
         _parseHTML: function(tbody) {
+            var that = this;
             var state = {ref:  new CellRef(0,0,0), mergedCells: []};
             tbody.find("tr").each(function(rowIndex, tr) {
                 $(tr).find("td").each(function(colIndex, td) {
                     var key = rowIndex + "," + colIndex;
                     var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
                     var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
-                    var cellState = this._populateCell($(td));
+                    var cellState = that._cellState($(td));
 
                     state[key] = cellState;
 
@@ -175,29 +176,45 @@
             return $("<div/>").html(this._external.html).find('table.kendo-clipboard').length ? true : false;
         },
 
-        _populateCell: function(element) {
+        _cellState: function(element) {
             var styles = window.getComputedStyle(element[0]);
             var text = element.text();
             var borders = this._borderObject(styles);
-
-            return {
+            var state = {
                 value: text === "" ? null : text,
-                format : null,
-                background : styles["background-color"],
                 borderBottom : borders.borderBottom,
                 borderRight : borders.borderRight,
                 borderLeft : borders.borderLeft,
                 borderTop : borders.borderTop,
-                color : styles["color"], // jshint ignore:line
-                fontFamily : styles["font-family"],
-                underline : styles["text-decoration"] == "underline" ? true : null,
-                fontSize : styles["font-size"],
-                italic : styles["font-style"] == "italic" ? true : null,
-                bold : styles["font-weight"] == "bold" ? true : null,
-                textAlign : this._strippedStyle(styles["text-align"]),
-                verticalAlign : styles["vertical-align"],
-                wrap : styles["word-wrap"] != "normal" ? true : null
+                fontSize : styles["font-size"]
             };
+
+            if(styles["background-color"] !== "rgb(0, 0, 0)" && styles["background-color"] !== "rgba(0, 0, 0, 0)") {
+                state.background = styles["background-color"];
+            }
+            if(styles.color !== "rgb(0, 0, 0)" && styles.color !== "rgba(0, 0, 0, 0)") {
+                state.color = styles.color;
+            }
+            if(styles["text-decoration"] == "underline") {
+                state.underline = true;
+            }
+            if(styles["font-style"] == "italic") {
+                state.italic = true;
+            }
+            if(styles["font-weight"] == "bold") {
+                state.bold = true;
+            }
+            if(this._strippedStyle(styles["text-align"]) !== "right") {
+                state.textAlign = this._strippedStyle(styles["text-align"]);
+            }
+            if(styles["vertical-align"] !== "middle") {
+                state.verticalAlign = styles["vertical-align"];
+            }
+            if(styles["word-wrap"] !== "normal" ) {
+                state.wrap = true;
+            }
+
+            return state;
         },
 
         _strippedStyle: function(style) {
