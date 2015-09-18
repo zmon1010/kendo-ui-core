@@ -100,6 +100,9 @@
     CLIPBOARD_EVENTS[SHIFT_ACTION_KEYS] = "onShiftAction";
     CLIPBOARD_EVENTS[ENTRY_ACTION_KEYS] = "onEntryAction";
 
+    FORMULAINPUT_EVENTS[ACTION_KEYS] = "onEditorAction";
+    FORMULAINPUT_EVENTS[SHIFT_ACTION_KEYS] = "onEditorShiftAction";
+
     var Controller = kendo.Class.extend({
         init: function(view, workbook) {
             this.view = view;
@@ -695,28 +698,6 @@
 
 ////////////////////////////////////////////////////////////////////
 
-        _parseRefs: function(value) {
-            var refs = [];
-            var sheetName = this._workbook.activeSheet().name().toLowerCase();
-            if (/^=/.test(value)) {
-                var tokens = kendo.spreadsheet.calc.tokenize(value || "");
-                var idx = 0;
-                tokens.forEach(function(token) {
-                    if (token.type === "ref") {
-                        var ref = token.ref;
-                        if (!ref.sheet || ref.sheet.toLowerCase() == sheetName) {
-                            ref.sheet = null;
-                            refs.push({
-                                ref: ref,
-                                color: (idx++) % 6
-                            });
-                        }
-                    }
-                });
-            }
-            return refs;
-        },
-
         onEditorChange: function(e) {
             this._workbook.activeSheet()._edit(false);
 
@@ -772,6 +753,36 @@
 
             this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
         },
+
+        onEditorAction: function(event, action) {
+            var editor = this.editor;
+            var sheet = this._workbook.activeSheet();
+
+            if (editor.canInsertRef()) {
+                this.navigator.moveActiveCell(ACTIONS[action]);
+
+                editor.activeEditor().refAtPoint(sheet.selection()._ref);
+                sheet._setFormulaSelections(editor.highlightedRefs());
+
+                event.preventDefault();
+            }
+        },
+
+        onEditorShiftAction: function(event, action) {
+            var editor = this.editor;
+            var sheet = this._workbook.activeSheet();
+
+            if (editor.canInsertRef()) {
+                this.navigator.modifySelection(ACTIONS[action.replace("shift+", "")], this.appendSelection);
+
+                editor.activeEditor().refAtPoint(sheet.selection()._ref);
+                sheet._setFormulaSelections(editor.highlightedRefs());
+
+                event.preventDefault();
+            }
+        },
+
+////////////////////////////////////////////////////////////////////
 
         onFilterHeaderClick: function(e) {
             var target = $(e.currentTarget);
