@@ -326,6 +326,8 @@ end
 directory 'dist/demos/staging-php'
 directory 'dist/demos/staging-java'
 
+# Change to XAML\Release when InternalsVisibleTo lands there!
+DPL_ROOT = "\\\\telerik.com\\distributions\\DailyBuilds\\XAML\\Dev\\Binaries"
 DPL_FILES = [
 	'Telerik.Windows.Documents.Core',
 	'Telerik.Windows.Documents.Fixed',
@@ -355,7 +357,7 @@ namespace :demos do
 		else
 			{'WPF40' => { :dest => 'NET40' }, 'WPF45' => { :dest => 'NET45' }}.each do |key, value|
 				DPL_FILES.each do |file|
-					source = "\\\\telerik.com\\distributions\\DailyBuilds\\XAML\\Release\\Binaries\\#{key}\\Dev\\#{file}"
+					source = "#{DPL_ROOT}\\#{key}\\Dev\\#{file}"
 					dest = "dpl\\lib\\#{value[:dest]}"
 					demos_dest = "demos\\mvc\\bin"
 
