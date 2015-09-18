@@ -13,11 +13,11 @@ window.draw = function draw(sel, type) {
     });
 }
 
-window.pdf = function pdf(sel) {
+window.pdf = function pdf(sel, options) {
     var el = $(sel)[0];
     console.time("pdf");
     console.time("drawing");
-    kendo.dataviz.drawing.drawDOM(el).done(function(root){
+    kendo.dataviz.drawing.drawDOM(el, options).done(function(root){
         console.timeEnd("drawing");
         root.options.set("pdf", {
             paperSize: "auto",

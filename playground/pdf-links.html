@@ -19,12 +19,20 @@
     </style>
   </head>
   <body>
-    <button onclick="pdf('#test')">PDF</button>
+    <button onclick="pdf('#test', { avoidLinks: '.avoid-link, .foo .bar' })">PDF</button>
     <hr />
     <div id="test">
       Check <a href="http://lisperator.net/">this</a> out <br />
       <a href="http://lisperator.net/">this</a> out Check <br />
       out Check <a href="http://lisperator.net/">this</a> <br />
+      <br />
+      This <a href="http://google.com/" class="avoid-link">link to Google</a><br />
+      should not be hyperlinked in PDF.
+
+      <div class="foo">
+        <a href="http://google.com/" class="bar">neither this one</a>
+      </div>
+    </div>
     </div>
   </body>
 </html>
