@@ -1,14 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using Telerik.Windows.Documents.Spreadsheet.Core;
-using Telerik.Windows.Documents.Spreadsheet.Core.DataStructures;
-using Telerik.Windows.Documents.Spreadsheet.FormatProviders;
-using Telerik.Windows.Documents.Spreadsheet.FormatProviders.Contexts;
-using Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.Xlsx;
+﻿using Telerik.Windows.Documents.Spreadsheet.Core;
 using Telerik.Windows.Documents.Spreadsheet.Model;
-using Telerik.Windows.Documents.Spreadsheet.Utilities;
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 using DocumentWorksheet = Telerik.Windows.Documents.Spreadsheet.Model.Worksheet;
 
@@ -30,31 +21,40 @@ namespace Telerik.Web.Spreadsheet
                 foreach (var sheet in Sheets)
                 {
                     var documentSheet = document.Worksheets.Add();
+
+                    documentSheet.Name = sheet.Name;
+
+                    if (sheet.Name == ActiveSheet)
+                    {
+                        document.ActiveWorksheet = documentSheet;
+                    }
+
+                    documentSheet.ViewState.SelectionState = CreateSelectionState(sheet, documentSheet);
                     
-                    foreach (var row in sheet.Rows)
-                    {
-                        ImportCells(row, documentSheet);
+                    //foreach (var row in sheet.Rows)
+                    //{
+                    //    ImportCells(row, documentSheet);
 
-                        documentSheet.Rows[row.Index].SetHeight(new RowHeight(row.Height, true));
-                    }
+                    //    documentSheet.Rows[row.Index].SetHeight(new RowHeight(row.Height, true));
+                    //}
 
-                    foreach (var column in sheet.Columns)
-                    {                        
-                        documentSheet.Columns[column.Index].SetWidth(new ColumnWidth(column.Width, true));
-                    }
+                    //foreach (var column in sheet.Columns)
+                    //{                        
+                    //    documentSheet.Columns[column.Index].SetWidth(new ColumnWidth(column.Width, true));
+                    //}
 
-                    foreach (var mergedRange in sheet.MergedCells)
-                    {
-                        documentSheet.Cells.GetCellSelection(mergedRange).Merge();
-                    }
+                    //foreach (var mergedRange in sheet.MergedCells)
+                    //{
+                    //    documentSheet.Cells.GetCellSelection(mergedRange).Merge();
+                    //}
 
-                    if (sheet.FrozenColumns > 0 || sheet.FrozenRows > 0)
-                    {
-                        documentSheet.ViewState.FreezePanes(sheet.FrozenRows, sheet.FrozenColumns);
-                    }
+                    //if (sheet.FrozenColumns > 0 || sheet.FrozenRows > 0)
+                    //{
+                    //    documentSheet.ViewState.FreezePanes(sheet.FrozenRows, sheet.FrozenColumns);
+                    //}
                 }
 
-                if (document.Worksheets.Count > 0)
+                if (document.Worksheets == null && document.Worksheets.Count > 0)
                 {
                     document.ActiveWorksheet = document.Worksheets[0];
                 }
@@ -94,5 +94,9 @@ namespace Telerik.Web.Spreadsheet
             }
         }
 
-    }
+        private static SelectionState CreateSelectionState(Worksheet sheet, DocumentWorksheet documentSheet)
+        {
+            return new SelectionState(sheet.Selection.ToCellRange(), sheet.ActiveCell.ToCellIndex(), documentSheet.ViewState.SelectionState.Pane);
+        }
+    }  
 }
