@@ -1910,6 +1910,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.es-ES.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.fr-CA.resx" />
     <EmbeddedResource Include="Resources\Messages.fr-FR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.fr-FR.Designer.cs</LastGenOutput>
