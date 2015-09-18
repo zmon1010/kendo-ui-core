@@ -42,6 +42,29 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+
+        /// <summary>
+        /// Defines the source shape Id.
+        /// </summary>
+        /// <param name="value">The value that configures the source shape id.</param>
+        public DiagramConnectionFromSettingsBuilder<TShapeModel, TConnectionModel> Id(object value)
+        {
+            container.Id = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the source shape connector.
+        /// </summary>
+        /// <param name="value">The value that configures the source shape connector name.</param>
+        public DiagramConnectionFromSettingsBuilder<TShapeModel, TConnectionModel> Connector(string value)
+        {
+            container.Connector = value;
+
+            return this;
+        }
         
         //<< Fields
     }

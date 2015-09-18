@@ -20,6 +20,10 @@ namespace Kendo.Mvc.UI
         public double? X { get; set; }
         
         public double? Y { get; set; }
+
+        public object Id { get; set; }
+
+        public string Connector { get; set; }
         
         //<< Fields
 
@@ -35,6 +39,16 @@ namespace Kendo.Mvc.UI
             if (Y.HasValue)
             {
                 json["y"] = Y;
+            }
+
+            if (Id != null)
+            {
+                json["id"] = Id;
+            }
+
+            if (Connector.HasValue())
+            {
+                json["connector"] = Connector;
             }
                 
         //<< Serialization
