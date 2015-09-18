@@ -102,6 +102,27 @@
         equal(divC2D3.attr.className, "k-spreadsheet-selection-dashed k-series-b");
     });
 
+    test("selection uses cls class of active token", function() {
+        var pane = createPane(0, 0);
+        var ref = kendo.spreadsheet.calc.parseReference("C2:D3");
+
+        pane._currentView = DUMMY_VIEW;
+
+        sheet._formulaSelections = [
+            { ref: kendo.spreadsheet.NULLREF, seriesCls: refClass(0) },
+            { ref: ref, cls: refClass(1) }
+        ];
+
+        var selections = pane.renderEditorSelection().children;
+        var divC2D3 = selections[0];
+
+        equal(selections.length, 1);
+
+        equal(divC2D3.attr.style.height, 1 + 2 * 10 + "px");
+        equal(divC2D3.attr.style.width, 1 + 2 * 10 + "px");
+        equal(divC2D3.attr.className, "k-spreadsheet-selection-dashed k-series-b");
+    });
+
     test("selection returns empty wrapper if no editor selection", function() {
         var pane = createPane(0, 0);
         var ref = kendo.spreadsheet.calc.parseReference("C2:D3");

@@ -600,8 +600,8 @@
                     tok.active = false;
 
                     if (tok.type == "ref") {
-                        tok.seriesCls = refClasses[(refIndex++) % refClasses.length];
-                        tok.cls = " " + tok.seriesCls;
+                        tok.seriesCls = " " + refClasses[(refIndex++) % refClasses.length];
+                        tok.cls = tok.seriesCls;
 
                         highlightedRefs.push(tok);
                     }

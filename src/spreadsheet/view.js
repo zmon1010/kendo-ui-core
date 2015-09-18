@@ -1034,7 +1034,7 @@
                     return;
                 }
 
-                this._addDiv(selections, ref, classNames.selectionDashed + range.cls);
+                this._addDiv(selections, ref, classNames.selectionDashed + (range.seriesCls || range.cls));
             }.bind(this));
 
             return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);
@@ -1067,7 +1067,7 @@
                 var token = this._active();
 
                 if (token) {
-                    seriesColorClass = " " + token.seriesCls;
+                    seriesColorClass = token.seriesCls;
                     className += seriesColorClass;
                 }
             }
