@@ -7,6 +7,7 @@
         var Widget = kendo.ui.Widget;
         var classNames = {
             details: "k-details",
+            button: "k-button",
             detailsSummary: "k-details-summary",
             detailsContent: "k-details-content",
             icon: "k-icon k-font-icon",
@@ -17,7 +18,8 @@
             wrapper: "k-spreadsheet-filter-menu",
             filterByCondition: "k-spreadsheet-condition-filter",
             filterByValue: "k-spreadsheet-value-filter",
-            valuesTreeViewWrapper: "k-spreadsheet-value-treeview-wrapper"
+            valuesTreeViewWrapper: "k-spreadsheet-value-treeview-wrapper",
+            actionButtons: "k-action-buttons"
         };
 
         var Details = Widget.extend({
@@ -63,31 +65,38 @@
             filterByCondition:
                 "<div class='" + classNames.detailsSummary + "'>#= messages.filterByCondition #</div>" +
                 "<div class='" + classNames.detailsContent + "'>" +
-                    '<select data-#=ns#bind="value: filters[0].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
+                    '<select data-#=ns#bind="value: customFilter.criteria[0].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
+                        '<option value="">None</option>' +
                         '#for(var type in operators){#'+
                             '#for(var op in operators[type]){#' +
                                 '<option value="#=op#">#=operators[type][op]#</option>' +
                             '#}#'+
                         '#}#'+
                     '</select>'+
-                    '<input data-#=ns#bind="value:filters[0].value" class="k-textbox" />'+
-                    '<select class="k-filter-and" data-#=ns#bind="value: logic" data-#=ns#role="dropdownlist">'+
+                    '<input data-#=ns#bind="value: customFilter.criteria[0].value" class="k-textbox" />'+
+                    '<select class="k-filter-and" data-#=ns#bind="value: customFilter.logic" data-#=ns#role="dropdownlist">'+
                         '<option value="and">#=messages.and#</option>'+
                         '<option value="or">#=messages.or#</option>'+
                     '</select>'+
-                    '<select data-#=ns#bind="value: filters[1].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
+                    '<select data-#=ns#bind="value: customFilter.criteria[1].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
+                        '<option value="">None</option>' +
                         '#for(var type in operators){#'+
                             '#for(var op in operators[type]){#' +
                                 '<option value="#=op#">#=operators[type][op]#</option>' +
                             '#}#'+
                         '#}#' +
                     '</select>'+
-                    '<input data-#=ns#bind="value: filters[1].value" class="' + classNames.textbox + '" />' +
+                    '<input data-#=ns#bind="value: customFilter.criteria[1].value" class="' + classNames.textbox + '" />' +
                 "</div>",
             menuItem:
                 "<li data-command='#=command#' data-dir='#=dir#'>" +
                     "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>#=text#" +
-                "</li>"
+                "</li>",
+            actionButtons:
+                "<div class='" + classNames.actionButtons + "'>" +
+                    "<button data-#=ns#bind='click: apply' class='k-button k-primary'>#=messages.apply#</button>" +
+                    "<button data-#=ns#bind='click: close' class='k-button'>#=messages.cancel#</button>" +
+                "</div>"
         };
 
         function distinctValues(values) {
@@ -109,11 +118,24 @@
                 var element = $("<div />", { "class": FilterMenu.classNames.wrapper }).appendTo(document.body);
                 Widget.call(this, element, options);
 
+                this.viewModel = kendo.observable({
+                    customFilter: {
+                        logic: "and",
+                        criteria: [
+                            { operator: "", value: "" },
+                            { operator: "", value: "" }
+                        ]
+                    },
+                    close: this.close.bind(this),
+                    apply: this.apply.bind(this)
+                });
+
                 this._popup();
                 this._sort();
                 this._filterByCondition();
                 this._filterByValue();
                 this._actionButtons();
+
             },
 
             options: {
@@ -169,6 +191,20 @@
             openFor: function(anchor) {
                 this.popup.setOptions({ anchor: anchor });
                 this.popup.open();
+            },
+
+            close: function() {
+                this.popup.close();
+            },
+
+            apply: function() {
+                var customFilter = this.viewModel.customFilter.toJSON();
+
+                customFilter.criteria = customFilter.criteria.filter(function(item) {
+                    return item.operator && item.value;
+                });
+
+                //this.action({ command: "ApplyFilterCommand", options: options });
             },
 
             action: function(options) {
@@ -264,7 +300,7 @@
                 }).data("kendoMenu");
             },
 
-            _appendTemplate: function(template) {
+            _appendTemplate: function(template, details) {
                 var compiledTemplate = kendo.template(template);
                 var wrapper = $("<div />").html(compiledTemplate({
                     messages: this.options.messages,
@@ -274,19 +310,21 @@
 
                 this.element.append(wrapper);
 
-                var details = new Details(wrapper); // jshint ignore:line
+                if (details) {
+                    var details = new Details(wrapper); // jshint ignore:line
+                }
 
-                kendo.init(wrapper);
+                kendo.bind(wrapper, this.viewModel);
 
                 return wrapper;
             },
 
             _filterByCondition: function() {
-                this._appendTemplate(FilterMenu.templates.filterByCondition);
+                this._appendTemplate(FilterMenu.templates.filterByCondition, true);
             },
 
             _filterByValue: function() {
-                var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue);
+                var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue, true);
 
                 this.valuesTreeView = wrapper.find("[data-role=treeview]").data("kendoTreeView");
 
@@ -301,14 +339,7 @@
             },
 
             _actionButtons: function() {
-                var messages = this.options.messages;
-                var div = $("<div />", {
-                            "class": "k-action-buttons",
-                            "html": "<button class='k-button k-primary'>" + messages.apply + "</button>" +
-                                    "<button class='k-button'>" + messages.cancel + "</button>"
-                          });
-
-                this.element.append(div);
+                this._appendTemplate(FilterMenu.templates.actionButtons, false);
             }
         });
 
