@@ -10,6 +10,8 @@
             kendo.destroy(QUnit.fixture);
 
             dom = instance = null;
+
+            kendo.ns = "";
         }
     });
 
@@ -1075,5 +1077,16 @@
 
         var columnMenuLink = dom.find("th.k-header a.k-header-column-menu");
         equal(columnMenuLink.length, 1);
+    });
+
+    test("rows data attributes honor kendo.ns", function() {
+        kendo.ns = "foo-";
+
+        createTreeList();
+
+        var tr = instance.content.find("tr");
+
+        ok(tr.attr("data-foo-uid"));
+        ok(!tr.attr("data-uid"));
     });
 })();

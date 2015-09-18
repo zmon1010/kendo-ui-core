@@ -1725,7 +1725,7 @@ var __meta__ = { // jshint ignore:line
             var messages = this.options.messages;
             var data = this.dataSource.rootNodes();
             var selected = this.select().map(function(_, row) {
-                return $(row).attr("data-uid");
+                return $(row).attr(kendo.attr("uid"));
             });
 
             this._absoluteIndex = 0;
@@ -1984,10 +1984,9 @@ var __meta__ = { // jshint ignore:line
                 childNodes = model.loaded() && dataSource.childNodes(model);
                 hasChildren = childNodes && childNodes.length;
 
-                attr = {
-                    "data-uid": model.uid,
-                    "role": "row"
-                };
+                attr = { "role": "row" };
+
+                attr[kendo.attr("uid")] = model.uid;
 
                 if (hasChildren) {
                     attr["aria-expanded"] = !!model.expanded;
