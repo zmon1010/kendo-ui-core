@@ -394,34 +394,35 @@
         },
 
         canInsertRef: function() {
+            var result = this._canInsertRef();
+
+            return result;
+        },
+
+        _canInsertRef: function() {
             var point = this.getPos();
+            var operation, tokens, tok;
+
             if (point && this._isFormula()) {
                 if (point.begin === 0) {
                     return null;
                 }
-                var value = this.value(), tok;
-                var tokens = kendo.spreadsheet.calc.tokenize(value);
+
+                tokens = kendo.spreadsheet.calc.tokenize(this.value());
+
                 for (var i = 0; i < tokens.length; ++i) {
                     tok = tokens[i];
                     if (atPoint(tok)) {
-                        var operation = canReplace(tok);
-                        if (operation) {
-                            return operation;
-                        }
-                    }
-                    if (afterPoint(tok)) {
-                        return canInsertAfter(tok, tok = tokens[i - 1]);
+                        return canReplace(tok) || canInsertAfter(tok, tokens[i + 1]);
                     }
                 }
                 return canInsertAfter(null, tok);
             }
+
             return null;
 
             function atPoint(tok) {
                 return tok.begin <= point.begin && tok.end >= point.end;
-            }
-            function afterPoint(tok) {
-                return tok.begin >= point.begin;
             }
             function canReplace(tok) {
                 if (tok && (/^(?:num|str|bool|sym|ref)$/.test(tok.type))) {
@@ -429,9 +430,18 @@
                 }
             }
             function canInsertAfter(current, tok) {
+                if (current && /^(?:func)/.test(current.type) && atPoint(current)) {
+                    return null;
+                }
                 if (tok == null && current) {
-                    return (/^(?:op)/.test(current.type) ?
-                            { token: tok, end: point.end } : null);
+                    var isStartPunc = /^(?:punc)/.test(current.type) && current.value === "(";
+                    if (isStartPunc || /^(?:op)/.test(current.type)) {
+                        return { token: tok, end: point.end };
+                    }
+                    return null;
+                }
+                if (current === null && /^(?:punc)$/.test(tok.type)) {
+                    return null;
                 }
                 if (tok.type == "startexp") {
                     return { token: tok, end: point.end };
@@ -506,13 +516,19 @@
             }
         },
 
+        _value: function(value) {
+            this.element.text(value);
+        },
+
         value: function(value) {
             if (value === undefined) {
                 return this.element.text();
             }
 
-            this.element.text(value);
+            this._value(value);
             this._syntaxHighlight();
+
+            this._originHighlightedRefs = this._highlightedRefs.slice();
         },
 
         highlightedRefs: function() {
