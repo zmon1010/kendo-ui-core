@@ -1,0 +1,70 @@
+<div id="example">
+    <div id="spreadsheet" style="width: 1000px"></div>
+    <script>
+        $(function() {
+            var crudServiceBaseUrl = "//demos.telerik.com/kendo-ui/service";
+
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read:  {
+                        url: crudServiceBaseUrl + "/Products",
+                        dataType: "jsonp"
+                    },
+                },
+                schema: {
+                    model: {
+                        id: "ProductID"
+                    }
+                }
+            });
+
+            $("#spreadsheet").kendoSpreadsheet({
+                columns: 5,
+                rows: 78,
+                toolbar: false,
+                sheetsbar: false,
+                sheets: [{
+                    name: "Products",
+                    dataSource: dataSource,
+                    rows: [{
+                        height: 50,
+                        cells: [
+                        {
+                            fontSize: 25,
+                            background: "rgb(142,196,65)",
+                            textAlign: "center",
+                            color: "white"
+                        },{
+                            fontSize: 25,
+                            background: "rgb(142,196,65)",
+                            textAlign: "center",
+                            color: "white"
+                        },{
+                            fontSize: 25,
+                            background: "rgb(142,196,65)",
+                            textAlign: "center",
+                            color: "white"
+                        },{
+                            fontSize: 25,
+                            background: "rgb(142,196,65)",
+                            textAlign: "center",
+                            color: "white"
+                        },{
+                            fontSize: 25,
+                            background: "rgb(142,196,65)",
+                            textAlign: "center",
+                            color: "white"
+                        }]
+                    }],
+                    columns: [
+                        { width: 100 },
+                        { width: 415 },
+                        { width: 145 },
+                        { width: 145 },
+                        { width: 145 }
+                    ]
+                }]
+            });
+    });
+    </script>
+</div>

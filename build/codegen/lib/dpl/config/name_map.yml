@@ -1,0 +1,14 @@
+spreadsheet:
+    name: Workbook
+
+spreadsheet.sheets:
+    name: Worksheet
+    key: sheets
+
+spreadsheet.sheets.filter.columns:
+    name: FilterColumn
+    key: columns
+
+spreadsheet.sheets.sort.columns:
+    name: SortColumn
+    key: columns

@@ -1,680 +1,291 @@
 <!doctype html>
 <html>
-    <head>
-        <script src="loader.js"></script>
-        <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-        <script>
-          requireSync([
+<head>
+    <script src="loader.js"></script>
+    <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet/less" href="../styles/web/kendo.common.less">
+    <link rel="stylesheet/less" href="../styles/web/kendo.silver.less">
+    <script>
+        less = {
+            logLevel: 1,
+            env: "development"
+        };
+    </script>
+    <script src="../demos/mvc/content/shared/js/less.js"></script>
+
+    <script>
+        requireSync([
             "../src/jquery.js",
-            "../src/kendo.dom.js"
-          ]);
-        </script>
-        <style>
-            #wrapper {
-                border: 1px solid black;
-                width: 800px;
-                height: 600px;
-                overflow: scroll;
-            }
+            "../src/kendo.dom.js",
+            "../src/cultures/kendo.culture.bg-BG.js",
+            "../src/cultures/kendo.culture.de-DE.js",
+            "../src/cultures/kendo.culture.el-GR.js",
+            "../src/cultures/kendo.culture.en-GB.js",
+            "../src/kendo.spreadsheet.js",
+            "../src/kendo.pdf.js"
+        ]);
+    </script>
+    <style>
+        body {
+            font: 12px/1.5 Arial, sans-serif;
+        }
+
+        div.k-spreadsheet-sheets-items {
+            display: inline !important;
+        }
+
+        div.k-spreadsheet-sheets-items ul {
+            display: inline !important;
+        }
+
+        .k-spreadsheet-sheets-bar-inactive {
+            background-color: rgb(234, 232, 232);
+            background-image: none, linear-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.6) 100%);
+            background-position: 50% 50%, 50% 50%;
+            background-repeat: repeat, repeat;
+            border-bottom-color: rgb(197, 197, 197);
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-left-color: rgb(197, 197, 197);
+            border-left-style: solid;
+            border-left-width: 1px;
+            border-right-color: rgb(197, 197, 197);
+            border-right-style: solid;
+            border-right-width: 1px;
+            border-top-color: rgb(197, 197, 197);
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-top-style: solid;
+            border-top-width: 0px;
+            box-sizing: content-box;
+            color: rgb(49, 49, 49);
+            display: inline-block;
+            font-size: 16px;
+            height: 34px;
+            line-height: normal;
+            list-style-image: none;
+            list-style-position: outside;
+            list-style-type: none;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: -1px;
+            margin-top: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            padding-top: 0px;
+            position: relative;
+            text-align: left;
+            vertical-align: top;
+            min-width: 90px;
+            zoom: 1;
+        }
+
+        .k-spreadsheet-sheets-bar-active {
+            background-color: rgb(255, 255, 255);
+            background-image: none;
+            background-position: 50% 50%;
+            background-repeat: repeat;
+            border-bottom-color: rgb(159, 159, 159);
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-left-color: rgb(159, 159, 159);
+            border-left-style: solid;
+            border-left-width: 1px;
+            border-right-color: rgb(159, 159, 159);
+            border-right-style: solid;
+            border-right-width: 1px;
+            border-top-color: rgb(159, 159, 159);
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-top-style: solid;
+            border-top-width: 0px;
+            box-shadow: none;
+            box-sizing: content-box;
+            color: rgb(49, 49, 49);
+            display: inline-block;
+            font-size: 16px;
+            height: 34px;
+            line-height: normal;
+            list-style-image: none;
+            list-style-position: outside;
+            list-style-type: none;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: -1px;
+            margin-top: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            padding-top: 0px;
+            position: relative;
+            text-align: left;
+            vertical-align: top;
+            width: 90px;
+            z-index: 1;
+            zoom: 1;
+        }
+
+        .k-spreadsheet-sheets-bar {
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            background-color: rgb(234, 232, 232);
+            background-image: none, linear-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.6) 100%);
+            background-position: 50% 50%, 50% 50%;
+            background-repeat: repeat, repeat;
+            border-bottom-color: rgb(197, 197, 197);
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-left-color: rgb(197, 197, 197);
+            border-left-style: solid;
+            border-left-width: 1px;
+            border-right-color: rgb(197, 197, 197);
+            border-right-style: solid;
+            border-right-width: 1px;
+            border-top-color: rgb(197, 197, 197);
+            border-top-style: solid;
+            border-top-width: 1px;
+            box-shadow: none;
+            box-sizing: content-box;
+            color: rgb(49, 49, 49);
+            display: block;
+            line-height: normal;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-top: 0px;
+            outline-color: rgb(49, 49, 49);
+            outline-style: none;
+            outline-width: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            padding-top: 0px;
+            position: relative;
+            width: 100%;
+            zoom: 1;
+        }
+
+        .k-spreadsheet-sheets-bar>ul {
+            border-bottom-color: rgb(49, 49, 49);
+            border-bottom-style: none;
+            border-bottom-width: 0px;
+            border-image-outset: 0px;
+            border-image-repeat: stretch;
+            border-image-slice: 100%;
+            border-image-source: none;
+            border-image-width: 1;
+            border-left-color: rgb(49, 49, 49);
+            border-left-style: none;
+            border-left-width: 0px;
+            border-right-color: rgb(49, 49, 49);
+            border-right-style: none;
+            border-right-width: 0px;
+            border-top-color: rgb(49, 49, 49);
+            border-top-style: none;
+            border-top-width: 0px;
+            box-sizing: content-box;
+            color: rgb(49, 49, 49);
+            display: block;
+            font-size: 16px;
+            height: 35px;
+            line-height: normal;
+            list-style-image: none;
+            list-style-position: outside;
+            list-style-type: none;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-top: -1px;
+            outline-color: rgb(49, 49, 49);
+            outline-style: none;
+            outline-width: 0px;
+            padding-bottom: 4.80000019073486px;
+            padding-left: 4.80000019073486px;
+            padding-right: 4.80000019073486px;
+            padding-top: 0px;
+            text-decoration: none;
+            width: 100%;
+            zoom: 1;
+        }
+
+        .k-spreadsheet-sheets-bar span:not(.k-icon) {
+            background-image: none;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-bottom-width: 0px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            box-sizing: content-box;
+            color: rgb(46, 46, 46);
+            cursor: pointer;
+            display: inline-block;
+            font-size: 16px;
+            height: 18px;
+            line-height: normal;
+            list-style-image: none;
+            list-style-position: outside;
+            list-style-type: none;
+            outline-color: rgb(46, 46, 46);
+            outline-style: none;
+            outline-width: 0px;
+            padding-bottom: 8px;
+            padding-left: 14.7200002670288px;
+            padding-right: 14.7200002670288px;
+            padding-top: 8px;
+            text-align: left;
+            text-decoration: none;
+            min-width: 36.875px;
+            zoom: 1;
+        }
+
+        .k-spreadsheet-sheets-bar-active span:not(.k-icon),
+        .k-spreadsheet-sheets-bar-inactive span:not(.k-icon) {
+            background-image: none;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-bottom-width: 0px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            box-sizing: content-box;
+            color: rgb(46, 46, 46);
+            cursor: pointer;
+            display: inline-block;
+            font-size: 16px;
+            height: 18px;
+            line-height: normal;
+            list-style-image: none;
+            list-style-position: outside;
+            list-style-type: none;
+            outline-color: rgb(46, 46, 46);
+            outline-style: none;
+            outline-width: 0px;
+            padding-bottom: 8px;
+            padding-left: 14.7200002670288px;
+            padding-right: 14.7200002670288px;
+            padding-top: 8px;
+            text-align: left;
+            text-decoration: none;
+            max-width: 38.875px;
+            zoom: 1;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+<button class="k-button" id="sort">Sort I1:I4</button>
+<button class="k-button" id="filter">Filter A1:B3 (values: [3])</button>
+<button class="k-button" id="pdf">Make PDF</button>
+<button class="k-button" id="copy">Copy</button>
+<button class="k-button" id="recalc">Recalc</button>
+<div id="spreadsheet"></div>
+<script type="text/javascript" src="spreadsheet.js"></script>
+</body>
 
-            @media only screen and (max-device-width: 667px) {
-                #wrapper {
-                    width: 100%;
-                    -webkit-overflow-scrolling: touch;
-                }
-
-                form {
-                    display: none;
-                }
-            }
-
-            #area {
-                height: 10000000px;
-                width: 1000000px;
-            }
-
-            #container {
-                position: fixed;
-                overflow: hidden;
-            }
-
-            #area table {
-                table-layout: fixed;
-                position: absolute;
-                border-collapse: collapse;
-                box-sizing: border-box;
-            }
-
-            #container table {
-                width: 100%;
-                height: 100%;
-            }
-
-            #area canvas {
-                position:absolute;
-            }
-
-            #container canvas {
-                width: 100%;
-                height: 100%;
-            }
-
-            #area table td {
-                border: 1px solid gray;
-                box-sizing: border-box;
-                overflow: hidden;
-                font-size: 11px;
-                height: 20px;
-            }
-
-            .cell {
-                box-sizing: border-box;
-                border: 1px solid gray;
-                overflow: hidden;
-                font-size: 11px;
-                position: absolute;
-            }
-
-            form {
-                float: right;
-            }
-        </style>
-    </head>
-    <body>
-        <form>
-            <p>
-            <label>FPS:<span id="fps"></span></label>
-            </p>
-            <p>
-            <label>Canvas:<span id="canvas"></span></label>
-            </p>
-            <p>
-            <label>Scroll:<span id="scroll"></span></label>
-            </p>
-            <p>
-            <label>Virtual DOM:<span id="virtual"></span></label>
-            </p>
-            <p>
-            <label>Table:<span id="table"></span></label>
-            </p>
-            <p>
-            <label>innerHTML:<span id="innerHTML"></span></label>
-            </p>
-            <p>
-            <label>translate:<span id="translate"></span></label>
-            </p>
-            <p>
-            <label>translate3d:<span id="translate3d"></span></label>
-            </p>
-            <p>
-            <label>requestAnimationFrame:<span id="raf"></span></label>
-            </p>
-        </form>
-        <button>add cell</button>
-        <div id="wrapper">
-            <div id="area">
-                <div id="container"></div>
-            </div>
-        </div>
-
-        <script>
-            var COLUMNS = 16384;
-            var ROWS = 1048576;
-            var COLUMN_WIDTH = 64;
-            var ROW_HEIGHT = 20;
-
-            var wrapper = document.getElementById("wrapper");
-            var container = document.getElementById("container");
-            var area = document.getElementById("area");
-
-
-            var viewportWidth = wrapper.clientWidth;
-            var viewportHeight = wrapper.clientHeight;
-            container.style.width = viewportWidth + "px";
-            container.style.height = viewportHeight + "px";
-
-            var widths = { 1: 120, 50: 200 };
-            var heights = { 1: 40, 50: 200 };//, 50: 200 };
-
-            var cells= {
-                0: {
-                    2: {
-                        value: "foo",
-                        bold: true,
-                        italic: true,
-                        color: "#a0b0c0"
-                    }
-                }
-            };
-
-            var widthSegments = [ {
-                size: COLUMN_WIDTH,
-                from: 0,
-                fromIndex: 0,
-                to: COLUMNS * COLUMN_WIDTH,
-                toIndex: COLUMNS - 1
-            }];
-
-            var heightSegments = [{
-                size: ROW_HEIGHT,
-                from:0,
-                fromIndex: 0,
-                to: ROWS * ROW_HEIGHT,
-                toIndex: ROWS - 1
-            }];
-
-            function partition(segments, sizes, defaultSize) {
-                var diff = 0;
-                for (var sizeIndex in sizes) {
-                    var lastSegment = segments.pop();
-
-                    var size = sizes[sizeIndex];
-
-                    var previousSegment = {
-                        size: lastSegment.size,
-                        from: lastSegment.from,
-                        to: sizeIndex * lastSegment.size + diff - 1,
-                        fromIndex: lastSegment.fromIndex,
-                        toIndex: sizeIndex - 1
-                    };
-
-                    var currentSegment = {
-                        size: size,
-                        from: previousSegment.to + 1,
-                        to: previousSegment.to + size,
-                        fromIndex: previousSegment.toIndex + 1,
-                        toIndex: previousSegment.toIndex + 1
-                    };
-
-                    lastSegment.from = currentSegment.to + 1;
-                    lastSegment.fromIndex = currentSegment.toIndex + 1;
-                    lastSegment.to += size - lastSegment.size;
-
-                    segments.push(previousSegment, currentSegment, lastSegment);
-
-                    diff += size - defaultSize;
-                }
-            }
-
-            partition(widthSegments, widths, COLUMN_WIDTH);
-
-            partition(heightSegments, heights, ROW_HEIGHT);
-
-            //area.style.width = widthSegments[widthSegments.length-1].to + "px";
-            //area.style.height = heightSegments[heightSegments.length-1].to + "px";
-
-            var maxWidth = wrapper.scrollWidth - (wrapper.offsetWidth - viewportWidth);
-            var maxHeight = wrapper.scrollHeight - (wrapper.offsetHeight - viewportHeight);
-
-            kendo.support.kineticScrollNeeded = false;
-
-            var canvas = false;
-            var virtual = true;
-            var table = true;
-            var innerHTML = !virtual;
-            var raf = false;
-            var translate = false;
-            var translate3d = true;
-
-            if (kendo.support.kineticScrollNeeded) {
-                area.removeChild(container);
-                area.style.position = "relative";
-                container = area;
-                //area.style.width = widthSegments[widthSegments.length-1].to + "px";
-                //area.style.height = heightSegments[heightSegments.length-1].to + "px";
-            }
-
-            document.getElementById("canvas").innerHTML = canvas;
-            document.getElementById("virtual").innerHTML = virtual;
-            document.getElementById("table").innerHTML = table;
-            document.getElementById("innerHTML").innerHTML = innerHTML;
-            document.getElementById("translate").innerHTML = translate;
-            document.getElementById("translate3d").innerHTML = translate3d;
-            document.getElementById("raf").innerHTML = raf;
-            document.getElementById("scroll").innerHTML = kendo.support.kineticScrollNeeded;
-
-            if (canvas) {
-                canvas = document.createElement("canvas");
-                canvas.width = viewportWidth;
-                canvas.height = viewportHeight;
-                container.appendChild(canvas);
-                var ctx = canvas.getContext("2d");
-            }
-
-            function heightForRowAtIndex(index) {
-                return heights[index] || ROW_HEIGHT;
-            }
-
-            function widthForColumnAtIndex(index) {
-                return widths[index] || COLUMN_WIDTH;
-            }
-
-            var tree = new kendo.dom.Tree(container);
-
-            function visibleRange(segments, start, end, max) {
-                var startSegment = null;
-                var endSegment = null;
-                var lastPage = false
-
-
-                if (end >= max) {
-                    lastPage = true;
-                }
-
-                for (var si = 0; si < segments.length; si++) {
-                    var segment = segments[si];
-
-                    if (segment.from <= start && start <= segment.to) {
-                        startSegment = segment;
-                    }
-
-                    if (segment.from <= end && end <= segment.to) {
-                        endSegment = segment;
-                        break;
-                    }
-                }
-
-                var startOffset = start - startSegment.from;
-                var startIndex = ((startOffset / startSegment.size) >> 0) + startSegment.fromIndex;
-
-                var offset = startOffset - (startIndex-startSegment.fromIndex) * startSegment.size;
-
-                var endOffset = end - endSegment.from;
-                var endIndex = ((endOffset / endSegment.size) >> 0) + endSegment.fromIndex;
-
-                if (endIndex > endSegment.toIndex) {
-                    endIndex = endSegment.toIndex;
-                }
-
-                if (lastPage) {
-                    offset += endSegment.size - (endOffset - (endIndex-endSegment.fromIndex) * endSegment.size);
-                }
-
-                return {
-                    offset: offset,
-                    startIndex: startIndex,
-                    endIndex: endIndex
-                };
-            }
-
-            wrapper.onscroll = scroll;
-
-            var start = new Date();
-
-            function drawCanvas(left, right, top, bottom) {
-                var rows = visibleRange(heightSegments, top, bottom, maxHeight);
-
-                var columns = visibleRange(widthSegments, left, right, maxWidth);
-
-                var y = -rows.offset;
-
-                if (kendo.support.kineticScrollNeeded) {
-                    canvas.style.left = left / ((totalWidth - wrapper.clientWidth) / (wrapper.scrollWidth - wrapper.clientWidth)) + "px";
-                    canvas.style.top = top / ((totalHeight - wrapper.clientHeight) / (wrapper.scrollHeight - wrapper.clientHeight)) + "px";
-                }
-
-                ctx.strokeStyle = "black";
-                ctx.clearRect(0, 0, viewportWidth, viewportHeight);
-
-                for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
-                    var x = -columns.offset;
-
-                    var height = heightForRowAtIndex(ri);
-
-                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
-                        var width = widthForColumnAtIndex(ci);
-
-                        ctx.strokeRect(x, y, width, height);
-                        ctx.fillText(ri + ":" + ci, x+1, y+11)
-
-                        x += width;
-                    }
-                    y += height;
-                }
-
-                var end = new Date();
-
-                var fps = Math.round(1000/(end-start));
-                document.getElementById("fps").innerHTML = fps;
-
-                start = new Date();
-            }
-
-            var totalHeight = heightSegments[heightSegments.length-1].to;
-            var totalWidth = widthSegments[widthSegments.length-1].to;
-
-            function drawTable(left, right, top, bottom) {
-                var rows = visibleRange(heightSegments, top, bottom, maxHeight);
-
-                var columns = visibleRange(widthSegments, left, right, maxWidth);
-
-                var x = - columns.offset - 1;
-                var y = - rows.offset - 1;
-
-                if (kendo.support.kineticScrollNeeded) {
-                    x += left / ((totalWidth - wrapper.clientWidth) / (wrapper.scrollWidth - wrapper.clientWidth));
-                    y += top / ((totalHeight - wrapper.clientHeight) / (wrapper.scrollHeight - wrapper.clientHeight));
-                }
-
-                if (innerHTML) {
-                    var html = '<table style="left:';
-                    html += x;
-                    html += "px;top:";
-                    html += y;
-                    html += 'px">'
-
-                    html += "<colgroup>"
-
-                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
-                        html += '<col style="width:';
-                        html += widthForColumnAtIndex(ci);
-                        html += 'px">'
-                    }
-
-                    html += "</colgroup>"
-                    html += "<tbody>"
-                    for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
-                        html += '<tr style="height:';
-                        html += heightForRowAtIndex(ri);
-                        html += 'px">'
-                        for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
-                            html += "<td>";
-                            html += ri;
-                            html += ":";
-                            html += ci;
-                            html += "</td>"
-                        }
-                        html += "</tr>";
-                    }
-                    html += "</tbody>"
-
-                    html += "</table>";
-                    container.innerHTML = html;
-                } else if (virtual) {
-                    var cols = [];
-
-                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
-                        cols.push(tree.element("col", { style: { width: widthForColumnAtIndex(ci) + "px" } }));
-                    }
-
-                    var tr = [];
-
-                    for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
-                        var height = heightForRowAtIndex(ri);
-                        var tds = [];
-
-                        for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
-                            var cell = (cells[ci] || {})[ri];
-
-                            var text = "";//ri + ":" + ci;
-                            var attr = {
-                                style: {}
-                            };
-
-                            if (cell) {
-                                text = cell.value;
-                                if (cell.bold) {
-                                    attr.style.fontWeight = "bold";
-                                }
-
-                                if (cell.color) {
-                                    attr.style.color = cell.color;
-                                }
-
-                                if (cell.italic) {
-                                    attr.style.fontStyle = "italic";
-                                }
-                            }
-
-                            tds.push(tree.element("td", attr, [ tree.text(text) ] ));
-                        }
-
-                        var attr = null;
-
-                        if (height != ROW_HEIGHT) {
-                            attr = { style: { height: height + "px" } };
-                        }
-
-                        tr.push(tree.element("tr", attr, tds));
-                    }
-
-                    var tableAttr = {
-                        style: {}
-                    };
-
-                    if (translate) {
-                        if (kendo.support.touch) {
-                            if (translate3d) {
-                                tableAttr.style.webkitTransform = "translate3d(" + x + "px," + y + "px,0)";
-                            } else {
-                                tableAttr.style.webkitTransform = "translate(" + x + "px," + y + "px)";
-                            }
-                        } else {
-                            tableAttr.style.transform = "translate(" + x + "px," + y + "px)";
-                        }
-                    } else {
-                        tableAttr.style.left = x + "px";
-                        tableAttr.style.top = y + "px";
-                    }
-
-                    tree.render([
-                        tree.element("table", tableAttr,
-                        [
-                            tree.element("colgroup", null, cols),
-                            tree.element("tbody", null, tr)
-                        ])
-                    ]);
-                }
-
-                var end = new Date();
-
-                var fps = Math.round(1000/(end-start));
-                document.getElementById("fps").innerHTML = fps;
-
-                start = new Date();
-            }
-
-            function draw(left, right, top, bottom) {
-                var rows = visibleRange(heightSegments, top, bottom, maxHeight);
-
-                var columns = visibleRange(widthSegments, left, right, maxWidth);
-
-                //var y = top - rowRange.offset;
-                var y = -rows.offset;
-
-                if (kendo.support.kineticScrollNeeded) {
-                    y += top;
-                }
-                var tds = [];
-                var html = "";
-
-                var childIndex = 0;
-
-                for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
-                    var height = heightForRowAtIndex(ri);
-
-                    //var x = left - columnRange.offset;
-                    var x = -columns.offset;
-
-                if (kendo.support.kineticScrollNeeded) {
-                    x += left;
-                }
-                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
-                        var width = widthForColumnAtIndex(ci);
-
-                        if (virtual) {
-                            var style = {
-                                width: width + "px",
-                                height: height + "px",
-                            };
-
-                            if (translate) {
-                                if (translate3d) {
-                                    style.transform = "translate3d(" + x + "px," + y + "px,0)";
-                                } else {
-                                    style["-webkit-transform"] = "translate(" + x + "px," + y + "px)";
-                                }
-                            } else {
-                                style.top = y + "px";
-                                style.left =  x + "px";
-                            }
-                            var cell = tree.element("div", {
-                                class: "cell",
-                                style: style,
-                            }, [ tree.text(ri + ":" + ci) ]);
-
-                            tds.push(cell);
-                        } else if(innerHTML) {
-                            html += '<div class="cell" style="width:';
-                            html += width;
-                            html += "px;height:";
-                            html += height;
-                            html += "px;"
-                            if (translate) {
-                                html += "-webkit-transform:"
-                                if (translate3d) {
-                                    html += "translate3d(";
-                                    html += x;
-                                    html += "px,";
-                                    html += y;
-                                    html += "px,0)"
-                                } else {
-                                    html += "translate(";
-                                    html += x;
-                                    html += "px,";
-                                    html += y;
-                                    html += "px)"
-                                }
-                            } else {
-                                html += "left:";
-                                html += x;
-                                html += "px;top:";
-                                html += y;
-                                html += "px";
-                            }
-                            html += '">';
-                            html += ri;
-                            html += ":";
-                            html += ci;
-                            html += "</div>";
-                        } else {
-                            var cell = container.childNodes[childIndex++];
-                            var existing = !!cell;
-
-                            if (!existing) {
-                                cell = document.createElement("div");
-                                cell.className = "cell";
-                            }
-                            var cssText = "width:";
-                            cssText += width;
-                            cssText += "px;height:";
-                            cssText += height;
-                            cssText += "px;";
-                            if (translate) {
-                                cssText += "-webkit-transform:"
-                                if (translate3d) {
-                                    cssText += "translate3d(" + x + "px, " + y + "px,0)";
-                                } else {
-                                    cssText += "translate(" + x + "px, " + y + "px)";
-                                }
-                            } else {
-                                cssText += "top:";
-                                cssText += y;
-                                cssText += "px;left:";
-                                cssText += x;
-                                cssText += "px";
-                            }
-                            //cell.style.transform = "translate(" + x + "px, " + y + "px)";
-                            //cell.style.webkitTransform = "translate(" + x + "px, " + y + "px)";
-                            cell.innerHTML = ri + ":" + ci;
-                            cell.style.cssText = cssText;
-                            if (!existing) {
-                                container.appendChild(cell);
-                            }
-                        }
-
-                        x += width;
-                    }
-
-                    y += height;
-                }
-
-                if (virtual) {
-                    tree.render(tds);
-                } else if (innerHTML) {
-                    container.innerHTML = html;
-                }
-
-                var end = new Date();
-
-                var fps = Math.round(1000/(end-start));
-                document.getElementById("fps").innerHTML = fps;
-
-                start = new Date();
-            }
-
-            if (canvas) {
-                drawCanvas(0, viewportWidth, 0, viewportHeight);
-            } else if (table) {
-                drawTable(0, viewportWidth, 0, viewportHeight);
-            } else {
-                draw(0, viewportWidth, 0, viewportHeight);
-            }
-
-            var count = 1;
-
-            $("button").click(function() {
-                var row = {};
-                cells[10] = row;
-
-                for (var i = 0; i < 100; i++) {
-                    row[i] = {
-                        value: i + "",
-                        bold: Math.floor(Math.random() * 1000) % 2 == 0,
-                        italic: Math.floor(Math.random() * 1000) % 2 == 0,
-                        color: "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," +Math.floor(Math.random() * 255) + ")"
-                    };
-                }
-                scroll();
-            });
-
-            function scroll() {
-                var top = Math.floor(wrapper.scrollTop * ((totalHeight - wrapper.clientHeight) / (wrapper.scrollHeight - wrapper.clientHeight)));
-                var bottom = top + viewportHeight;
-
-                if (top < 0) {
-                    bottom -= top;
-                    top = 0;
-                }
-
-                var left = Math.floor(wrapper.scrollLeft * ((totalWidth - wrapper.clientWidth) / (wrapper.scrollWidth - wrapper.clientWidth)));
-                var right = left + viewportWidth;
-
-                if (left < 0) {
-                    right -= left;
-                    left = 0;
-                }
-
-                if (raf) {
-                    requestAnimationFrame(function() {
-                        if (canvas) {
-                            drawCanvas(left, right, top, bottom);
-                        } else if (table) {
-                            drawTable(left, right, top, bottom);
-                        } else {
-                            draw(left, right, top, bottom);
-                        }
-                    });
-                } else {
-                    if (canvas) {
-                        drawCanvas(left, right, top, bottom);
-                    } else if (table) {
-                        drawTable(left, right, top, bottom);
-                    } else {
-                        draw(left, right, top, bottom);
-                    }
-                }
-            }
-        </script>
-    </body>
 </html>

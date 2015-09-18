@@ -100,7 +100,7 @@
     if (!now) {
         now = function() {
             return new Date().getTime();
-        }
+        };
     }
 
     // Array helpers ==========================================================
@@ -224,6 +224,75 @@
         return color === "" || color === null || color === "none" || color === "transparent" || !defined(color);
     }
 
+    function arabicToRoman(n) {
+        var literals = {
+            1    : "i",       10   : "x",       100  : "c",
+            2    : "ii",      20   : "xx",      200  : "cc",
+            3    : "iii",     30   : "xxx",     300  : "ccc",
+            4    : "iv",      40   : "xl",      400  : "cd",
+            5    : "v",       50   : "l",       500  : "d",
+            6    : "vi",      60   : "lx",      600  : "dc",
+            7    : "vii",     70   : "lxx",     700  : "dcc",
+            8    : "viii",    80   : "lxxx",    800  : "dccc",
+            9    : "ix",      90   : "xc",      900  : "cm",
+            1000 : "m"
+        };
+        var values = [ 1000,
+                       900 , 800, 700, 600, 500, 400, 300, 200, 100,
+                       90  , 80 , 70 , 60 , 50 , 40 , 30 , 20 , 10 ,
+                       9   , 8  , 7  , 6  , 5  , 4  , 3  , 2  , 1 ];
+        var roman = "";
+        while (n > 0) {
+            if (n < values[0]) {
+                values.shift();
+            } else {
+                roman += literals[values[0]];
+                n -= values[0];
+            }
+        }
+        return roman;
+    }
+
+    function romanToArabic(r) {
+        r = r.toLowerCase();
+        var digits = {
+            i: 1,
+            v: 5,
+            x: 10,
+            l: 50,
+            c: 100,
+            d: 500,
+            m: 1000
+        };
+        var value = 0, prev = 0;
+        for (var i = 0; i < r.length; ++i) {
+            var v = digits[r.charAt(i)];
+            if (!v) {
+                return null;
+            }
+            value += v;
+            if (v > prev) {
+                value -= 2 * prev;
+            }
+            prev = v;
+        }
+        return value;
+    }
+
+    function memoize(f) {
+        var cache = Object.create(null);
+        return function() {
+            var id = "";
+            for (var i = arguments.length; --i >= 0;) {
+                id += ":" + arguments[i];
+            }
+            if (id in cache) {
+                return cache[id];
+            }
+            return f.apply(this, arguments);
+        };
+    }
+
     // Exports ================================================================
     deepExtend(kendo, {
         util: {
@@ -256,7 +325,10 @@
             sparseArrayMin: sparseArrayMin,
             sparseArrayMax: sparseArrayMax,
             sqr: sqr,
-            valueOrDefault: valueOrDefault
+            valueOrDefault: valueOrDefault,
+            romanToArabic: romanToArabic,
+            arabicToRoman: arabicToRoman,
+            memoize: memoize
         }
     });
 

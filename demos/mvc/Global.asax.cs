@@ -33,6 +33,13 @@ namespace Kendo
             );
 
             routes.MapRoute(
+                "Spreadsheet",
+                "spreadsheet/{action}",
+                new { controller = "Spreadsheet" },
+                new { action = "(upload|download|saveaspdf)" }
+            );
+
+            routes.MapRoute(
                 "SourceView",
                 "source/index",
                 new { controller = "Source", action = "Index" }

@@ -1,0 +1,68 @@
+body,
+input,
+textarea,
+button,
+select {
+  font: 14px sans-serif;
+}
+.sheet {
+  border: 1px solid #000;
+  padding: 5px;
+  margin: 1em;
+  max-height: 500px;
+  overflow: auto;
+}
+.sheet table {
+  counter-reset: therow;
+  counter-reset: thecol;
+  border-collapse: collapse;
+}
+.sheet table tr td {
+  border: 1px solid #ccc;
+}
+.sheet table tr td input {
+  border: 0;
+  padding: 2px 5px;
+  box-sizing: border-box;
+}
+.sheet table tr td input:focus {
+  background: #fea;
+}
+.sheet table tr td input.type-number {
+  text-align: right;
+}
+.sheet table tr td input.type-error {
+  background: #faa;
+}
+.sheet table tr td input.type-boolean,
+.sheet table tr td input.type-date {
+  text-align: center;
+}
+.sheet table tr.head td,
+.sheet table td.head {
+  text-align: center;
+  background: #ddd;
+  padding: 2px 5px;
+  border-color: #888;
+}
+.sheet table tr.row {
+  counter-increment: therow;
+}
+.sheet table td.rowhead {
+  width: 2em;
+}
+.sheet table td.rowhead:before {
+  content: counter(therow);
+}
+.sheet table td.colhead {
+  counter-increment: thecol;
+}
+.sheet table td.colhead:before {
+  content: counter(thecol, upper-alpha);
+}
+.sheet .formula {
+  border: 1px solid #888;
+  margin-bottom: 5px;
+  background: #ddd;
+  padding: 2px 5px;
+}

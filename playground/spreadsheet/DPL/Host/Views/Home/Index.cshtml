@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <link rel="stylesheet" href="/kendo/dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="/kendo/dist/styles/web/kendo.silver.css" />
+    <script src="/kendo/playground/loader.js"></script>
+    <script>
+        requireSync([
+          "/kendo/src/jquery.js",
+          "/kendo/src/kendo.dom.js",
+          "/kendo/src/kendo.spreadsheet.js",
+          "/kendo/src/kendo.upload.js"
+        ]);
+    </script>
+    <style>
+        body {
+            font: 14px/1.5 Arial,sans-serif;
+        }
+    </style>
+</head>
+<body>    
+    <div id="spreadsheet"></div>
+
+    <form action="@Url.Action("Download", "Home")" method="POST">
+        <input type="hidden" id="data" name="data" />
+        <input type="submit" id="download" value="Download as XLSX" />
+    </form>
+    
+    <input type="submit" id="save" value="Save" />
+
+    <input type="file" name="file" id="upload" />
+
+    <script>
+        var spreadsheet = $("#spreadsheet").kendoSpreadsheet({
+            rows: 1000,
+            columns: 300
+        }).data("kendoSpreadsheet");
+
+        var sheet = spreadsheet.activeSheet();
+        var calc = kendo.spreadsheet.calc;
+
+        $.ajax("@Url.Action("Load", "Home", new { file = "Sample.xlsx" })").done(function (dtoWorkbook) {
+            spreadsheet.fromJSON(dtoWorkbook);
+        });
+
+        $("#download").click(function() {
+            $("#data").val(JSON.stringify(spreadsheet.toJSON()));
+        });       
+
+        $("#save").click(function() {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Save", "Home")",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    workbook: spreadsheet.toJSON()
+                }),
+                success: function() {
+                    alert("Saved");
+                }
+            });
+        });
+
+        $("#upload").kendoUpload({
+            async: {
+                saveUrl: "@Url.Action("Upload", "Home")"
+            },
+            localization: {
+                "select": "Upload XLSX"
+            },
+            success: function(e) {
+                spreadsheet.fromJSON(e.response);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
-// (c) Copyright 2002-2010 Telerik 
+// (c) Copyright 2002-2015 Telerik
 // This source is subject to the GNU General Public License, version 2
-// See http://www.gnu.org/licenses/gpl-2.0.html. 
+// See http://www.gnu.org/licenses/gpl-2.0.html.
 // All other rights reserved.
 
 namespace CultureGenerator
@@ -9,7 +9,7 @@ namespace CultureGenerator
     using System.Globalization;
     using System.Collections.Generic;
     using System.Web.Script.Serialization;
-    
+
     public static class GlobalizationInfo
     {
         static string[] numberNegativePatterns = new string[] { "(n)", "-n", "- n", "n-", "n -" };
@@ -27,8 +27,20 @@ namespace CultureGenerator
 
             IDictionary<string, object> globalization = new Dictionary<string, object>();
 
+            if (!cultureInfo.IsNeutralCulture)
+            {
+                RegionInfo regionInfo = new RegionInfo(cultureInfo.Name);
+                globalization["CurrencyISOSymbol"] = regionInfo.ISOCurrencySymbol;
+                globalization["CurrencyEnglishName"] = regionInfo.CurrencyEnglishName;
+            }
+            else
+            {
+                globalization["CurrencyISOSymbol"] = "";
+                globalization["CurrencyEnglishName"] = "";
+            }
+
             globalization["Name"] = cultureInfo.Name;
-            
+
             //number info
             globalization["NumberPattern"] = new string[] { numberNegativePatterns[cultureInfo.NumberFormat.NumberNegativePattern] };
             globalization["NumberDecimalDigits"] = cultureInfo.NumberFormat.NumberDecimalDigits;
@@ -55,7 +67,7 @@ namespace CultureGenerator
             //standard calendar info
             globalization["DayNames"] = dateTimeFormats.DayNames;
             globalization["AbbreviatedDayNames"] = dateTimeFormats.AbbreviatedDayNames;
-            globalization["ShortestDayNames"] = dateTimeFormats.ShortestDayNames;         
+            globalization["ShortestDayNames"] = dateTimeFormats.ShortestDayNames;
 
             globalization["MonthNames"] = dateTimeFormats.MonthNames.Take(12).ToArray();
             globalization["AbbreviatedMonthNames"] = dateTimeFormats.AbbreviatedMonthNames.Take(12).ToArray();
@@ -86,11 +98,11 @@ namespace CultureGenerator
             return globalization;
         }
 
-        public static string Format(this CultureInfo cultureInfo, string culturePattern) 
+        public static string Format(this CultureInfo cultureInfo, string culturePattern)
         {
             var serializer = new JavaScriptSerializer();
             var cultureDictionary = BuildFlatDictionary(cultureInfo);
-            
+
             foreach (KeyValuePair<string, object> pair in cultureDictionary)
             {
                 var key = pair.Key;

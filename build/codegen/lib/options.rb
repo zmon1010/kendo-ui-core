@@ -58,6 +58,10 @@ module CodeGen
 
             remove_existing = settings[:remove_existing] || false
 
+            primitive = settings[:primitive] || false
+
+            item_type = settings[:item_type]
+
             return unless types
 
             if types.is_a?(String)
@@ -87,24 +91,32 @@ module CodeGen
                       :values => values,
                       :enum_type => enum_type,
                       :description => description,
+                      :primitive => primitive,
+                      :item_type => item_type,
                       :remove_existing => remove_existing
                     )
 
                 end
-
             else
 
                 @options.delete_if { |o| o.name == name } if remove_existing
 
-                @options.push option_class.new(:name => name,
+                option = option_class.new(:name => name,
                                                :owner => self,
                                                :recursive => recursive,
                                                :content => content,
                                                :type => type,
                                                :default => default,
                                                :values => values,
+                                               :primitive => primitive,
+                                               :item_type => item_type,
                                                :enum_type => enum_type,
                                                :description => description)
+                if primitive
+                    options = option.to_composite
+                end
+
+                @options.push option
             end
 
         end

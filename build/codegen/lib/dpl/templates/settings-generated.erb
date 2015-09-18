@@ -1,0 +1,16 @@
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+
+namespace Telerik.Web.Spreadsheet
+{
+    /// <summary>
+    /// Represents a <%= csharp_class %>
+    /// </summary>
+    [DataContract]
+    public partial class <%= csharp_class %>
+    {
+% unique_options.map { |o| o.to_declaration  }.each do |ser|
+% _erbout << ser
+%end
+    }
+}

@@ -35,11 +35,28 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-WINDOWS|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-WINDOWS|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -87,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Public\SpreadsheetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MobileAppsController.cs" />
     <Compile Include="Controllers\ResponsiveController.cs" />
@@ -112,6 +130,8 @@
     <Compile Include="Models\IFrameworkDescription.cs" />
     <Compile Include="Models\NavigationItem.cs" />
     <Compile Include="Models\ExampleFramework.cs" />
+    <Compile Include="Models\PrintMargins.cs" />
+    <Compile Include="Models\PrintOptions.cs" />
     <Compile Include="Models\StyleGroups.cs" />
     <Compile Include="Models\NavigationExample.cs" />
     <Compile Include="Models\NavigationWidget.cs" />
@@ -1192,6 +1212,9 @@
     <Content Include="Views\demos\mvvm\class.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\demos\spreadsheet\index.cshtml" />
+    <Content Include="Views\demos\spreadsheet\server-side-import-export.cshtml" />
+    <Content Include="Views\demos\spreadsheet\server-side-pdf-export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
@@ -1203,6 +1226,28 @@
     <None Include="content\web\24x24\Thumbs.db" />
     <None Include="content\web\32x32\Thumbs.db" />
     <None Include="content\web\48x48\Thumbs.db" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-WINDOWS|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release-WINDOWS|AnyCPU'">
+    <ProjectReference Include="..\..\dpl\Telerik.Web.Spreadsheet\Telerik.Web.Spreadsheet.csproj">
+      <Project>{d697e6a6-319f-44fa-a757-443415ff43bb}</Project>
+      <Name>Telerik.Web.Spreadsheet</Name>
+    </ProjectReference>
+    <Reference Include="Telerik.Windows.Documents.Core, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Fixed, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Fixed.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

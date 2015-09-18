@@ -1,0 +1,7 @@
+- spreadsheet.columns
+- spreadsheet.rows
+- spreadsheet.columnWidth
+- spreadsheet.rowHeight
+- spreadsheet.headerWidth
+- spreadsheet.headerHeight
+- spreadsheet.toolbar

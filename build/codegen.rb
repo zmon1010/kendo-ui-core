@@ -28,6 +28,8 @@ require 'codegen/lib/php/api'
 
 require 'codegen/lib/aspx/aspx'
 
+require 'codegen/lib/dpl/main'
+
 namespace :generate do
     def import_metadata(component, path = '')
         metadata = "build/codegen/#{path}#{component.name.downcase}.yml"
@@ -185,6 +187,33 @@ namespace :generate do
             end
         end
 
+    end
+
+    desc 'Generate Spreadsheet DPL files'
+    task :dpl do
+        filename = 'docs/api/javascript/ui/spreadsheet.md'
+
+        spreadsheet_component = CodeGen::MarkdownParser.read(filename, CodeGen::DPL::Component)
+
+        additional_components = [
+            'BorderStyle'
+        ]
+
+        components = additional_components.map { |name| CodeGen::DPL::Component.new({ :name => name }) }
+
+        components.push spreadsheet_component
+
+        components.each do |component|
+
+            generator = CodeGen::DPLGenerator.new('dpl/Telerik.Web.Spreadsheet/Models')
+
+            import_metadata(component, "lib/dpl/config/")
+
+            generator.component(component)
+
+        end
+
+        CodeGen::DPLGenerator::register_files('dpl/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj')
     end
 
     namespace :mvc_6 do

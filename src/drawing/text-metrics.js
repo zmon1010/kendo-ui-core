@@ -14,9 +14,6 @@
         util = kendo.util,
         defined = util.defined;
 
-    // Constants ===============================================================
-    var BASELINE_MARKER_SIZE = 1;
-
     // Text metrics calculations ===============================================
     var LRUCache = Class.extend({
         init: function(size) {
@@ -77,12 +74,21 @@
         }
     });
 
+    var defaultMeasureBox = $("<div style='position: absolute !important; top: -4000px !important; width: auto !important; height: auto !important;" +
+                      "padding: 0 !important; margin: 0 !important; border: 0 !important;" +
+                      "line-height: normal !important; visibility: hidden !important; white-space: nowrap!important;' />")[0];
+
     var TextMetrics = Class.extend({
-        init: function() {
+        init: function(options) {
             this._cache = new LRUCache(1000);
+            this._initOptions(options);
         },
 
-        measure: function(text, style) {
+        options: {
+            baselineMarkerSize: 1
+        },
+
+        measure: function(text, style, box) {
             var styleKey = util.objectKey(style),
                 cacheKey = util.hashKey(text + styleKey),
                 cachedResult = this._cache.get(cacheKey);
@@ -93,8 +99,8 @@
 
             var size = { width: 0, height: 0, baseline: 0 };
 
-            var measureBox = this._measureBox,
-                baselineMarker = this._baselineMarker.cloneNode(false);
+            var measureBox = box ? box : defaultMeasureBox;
+            var baselineMarker = this._baselineMarker().cloneNode(false);
 
             for (var key in style) {
                 var value = style[key];
@@ -108,9 +114,9 @@
             doc.body.appendChild(measureBox);
 
             if ((text + "").length) {
-                size.width = measureBox.offsetWidth - BASELINE_MARKER_SIZE;
+                size.width = measureBox.offsetWidth - this.options.baselineMarkerSize;
                 size.height = measureBox.offsetHeight;
-                size.baseline = baselineMarker.offsetTop + BASELINE_MARKER_SIZE;
+                size.baseline = baselineMarker.offsetTop + this.options.baselineMarkerSize;
             }
 
             if (size.width > 0 && size.height > 0) {
@@ -120,24 +126,21 @@
             measureBox.parentNode.removeChild(measureBox);
 
             return size;
+        },
+
+        _baselineMarker: function() {
+            return $("<div class='k-baseline-marker' " +
+              "style='display: inline-block; vertical-align: baseline;" +
+              "width: " + this.options.baselineMarkerSize + "px; height: " + this.options.baselineMarkerSize + "px;" +
+              "overflow: hidden;' />")[0];
         }
+
     });
-
-    TextMetrics.fn._baselineMarker =
-        $("<div class='k-baseline-marker' " +
-          "style='display: inline-block; vertical-align: baseline;" +
-          "width: " + BASELINE_MARKER_SIZE + "px; height: " + BASELINE_MARKER_SIZE + "px;" +
-          "overflow: hidden;' />")[0];
-
-    TextMetrics.fn._measureBox =
-        $("<div style='position: absolute !important; top: -4000px !important; width: auto !important; height: auto !important;" +
-                      "padding: 0 !important; margin: 0 !important; border: 0 !important;" +
-                      "line-height: normal !important; visibility: hidden !important; white-space:nowrap !important;' />")[0];
 
     TextMetrics.current = new TextMetrics();
 
-    function measureText(text, style) {
-        return TextMetrics.current.measure(text, style);
+    function measureText(text, style, measureBox) {
+        return TextMetrics.current.measure(text, style, measureBox);
     }
 
     // Exports ================================================================

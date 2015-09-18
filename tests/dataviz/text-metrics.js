@@ -4,8 +4,8 @@
     // ------------------------------------------------------------
     var metrics;
 
-    function measure(text, style) {
-        return metrics.measure(text, style);
+    function measure(text, style, box) {
+        return metrics.measure(text, style, box);
     }
 
     module("Text Metrics", {
@@ -43,6 +43,17 @@
 
     test("measureText alias is exported", function() {
         ok(util.measureText("Foo"));
+    });
+
+    var measureBox = $('<div style="position: absolute !important; top: -4000px !important; height: auto !important;' +
+                        'padding: 0 !important; margin: 0 !important; border: 0 !important;' +
+                        'line-height: normal !important; visibility: hidden !important;' +
+                        'white-space: normal !important; word-break: break-all !important;" />'
+                     )[0];
+
+    test("height varies with element styles (width, text-wrap, word-break)", function() {
+        ok(measure("FooBarBazFooBarBaz", { width: "20px" }, measureBox).height>
+           measure("FooBarBazFooBarBaz", { width: "80px" }, measureBox).height);
     });
 
     // ------------------------------------------------------------

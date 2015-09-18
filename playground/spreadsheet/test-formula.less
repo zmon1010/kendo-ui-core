@@ -1,0 +1,67 @@
+// -*- less-css-compile-at-save: t -*-
+
+body, input, textarea, button, select {
+  font: 14px sans-serif;
+}
+
+.sheet {
+  border: 1px solid #000;
+  padding: 5px;
+  margin: 1em;
+  max-height: 500px;
+  overflow: auto;
+  table {
+    counter-reset: therow;
+    counter-reset: thecol;
+    border-collapse: collapse;
+    tr {
+      td {
+        border: 1px solid #ccc;
+        input {
+          border: 0;
+          padding: 2px 5px;
+          box-sizing: border-box;
+          &:focus {
+            background: #fea;
+          }
+          &.type-number {
+            text-align: right;
+          }
+          &.type-error {
+            background: #faa;
+          }
+          &.type-boolean, &.type-date {
+            text-align: center;
+          }
+        }
+      }
+    }
+    tr.head td, td.head {
+      text-align: center;
+      background: #ddd;
+      padding: 2px 5px;
+      border-color: #888;
+    }
+    tr.row {
+      counter-increment: therow;
+    }
+    td.rowhead {
+      width: 2em;
+      &:before {
+        content: counter(therow);
+      }
+    }
+    td.colhead {
+      counter-increment: thecol;
+      &:before {
+        content: counter(thecol, upper-alpha);
+      }
+    }
+  }
+  .formula {
+    border: 1px solid #888;
+    margin-bottom: 5px;
+    background: #ddd;
+    padding: 2px 5px;
+  }
+}

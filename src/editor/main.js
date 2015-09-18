@@ -1,6 +1,12 @@
 /*jshint scripturl: true */
 (function(f, define){
-    define([ "../kendo.combobox", "../kendo.dropdownlist", "../kendo.window", "../kendo.colorpicker" ], f);
+    define([
+        "../util/undoredostack",
+        "../kendo.combobox",
+        "../kendo.dropdownlist",
+        "../kendo.window",
+        "../kendo.colorpicker"
+    ], f);
 })(function(){
 
 (function($,undefined) {
@@ -233,7 +239,7 @@
 
             that.clipboard = new editorNS.Clipboard(this);
 
-            that.undoRedoStack = new editorNS.UndoRedoStack();
+            that.undoRedoStack = new kendo.util.UndoRedoStack();
 
             if (options && options.value) {
                 value = options.value;

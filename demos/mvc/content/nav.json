@@ -2647,6 +2647,94 @@
     "category": "Data Management"
   },
   {
+    "text": "Spreadsheet",
+    "name": "spreadsheet",
+    "pro": "true",
+    "new": "true",
+    "api": "web/spreadsheet",
+    "documentation": {
+       "kendo-ui": "getting-started/web/spreadsheet/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/spreadsheet/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/spreadsheet/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/spreadsheet/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/spreadsheet",
+       "aspnet-mvc": "aspnet-mvc/spreadsheet",
+       "jsp-ui": "jsp/spreadsheet",
+       "php-ui": "php/spreadsheet"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/spreadsheet",
+       "aspnet-mvc": "aspnet-mvc/spreadsheet",
+       "jsp-ui": "jsp/spreadsheet",
+       "php-ui": "php/spreadsheet"
+    },
+    "spriteCssClass": "spreadsheetIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "spreadsheet/index",
+        "title": {
+            "kendo-ui": "jQuery Spreadsheet control example | Kendo UI Spreadsheet Demos",
+            "aspnet-mvc": " ASP.NET MVC Spreadsheet control example"
+        },
+        "meta": {
+            "kendo-ui": "This demo for Kendo UI jQuery-based Spreadsheet component shows how you can make your static HTML tables and raw data much more interactive to match your modern web app.",
+            "aspnet-mvc": "In this demo for Kendo UI jQuery-powered Spreadsheet in ASP.NET MVC you will see all basic functionalities of the extension."
+        }
+      },
+      {
+          "text": "Sorting and Filtering",
+          "url": "spreadsheet/sorting-filtering",
+          "title": {
+             "kendo-ui": "Sorting and filtering"
+          },
+          "meta": {
+              "kendo-ui": "This demo shows the sorting and filtering support that Kendo UI Spreadsheet provides"
+          }
+      },
+      {
+          "text": "Server Import/Export",
+          "url": "spreadsheet/server-side-import-export",
+          "title": {
+              "kendo-ui": "Kendo Spreadsheet integration with the Telerik Document Processing Library"
+          },
+          "meta": {
+              "kendo-ui": "Export to and import from Microsoft Excel (.xlsx), CSV, Text and JSON files"
+          },
+          "packages": [
+              "!offline"
+          ]
+      },
+      {
+          "text": "Server Export to PDF",
+          "url": "spreadsheet/server-side-pdf-export",
+          "title": {
+              "kendo-ui": "Kendo Spreadsheet PDF Export with the Telerik Document Processing Library"
+          },
+          "meta": {
+              "kendo-ui": "Export to print-ready PDF files"
+          },
+          "packages": [
+              "!offline"
+          ]
+      },
+      {
+          "text": "DataSource binding",
+          "url": "spreadsheet/datasource",
+          "title": {
+             "kendo-ui": "DataSource binding"
+          },
+          "meta": {
+              "kendo-ui": "This demo shows the integration with the DataSource component that Kendo UI Spreadsheet provides"
+          }
+      }
+    ],
+    "category": "Data Management"
+  },
+
+  {
     "text": "ListView",
     "name": "listview",
     "api": "web/listview",
@@ -6163,16 +6251,16 @@
        "jsp-ui": "jsp/upload",
        "php-ui": "php/upload"
     },
+	"sources": {
+		"kendo-ui": [{
+			"name": "Sample service",
+			"url": "~/Controllers/Public/UploadController.cs"
+		}]
+	},
     "spriteCssClass": "uploadIcon",
     "packages": [
       "!offline"
     ],
-    "sources": {
-        "kendo-ui": [{
-            "name": "Sample service",
-            "url": "~/Controllers/Public/UploadController.cs"
-        }]
-    },
     "items": [
       {
         "text": "Basic usage",

@@ -1,7 +1,7 @@
 module CodeGen
 
     class Option
-        attr_accessor :name, :description, :type, :owner, :default, :values, :enum_type
+        attr_accessor :name, :description, :type, :owner, :default, :values, :enum_type, :primitive, :item_type
 
         def initialize(options)
             @name = options[:name]
@@ -13,6 +13,8 @@ module CodeGen
             @content = options[:content]
             @values = options[:values]
             @enum_type = options[:enum_type]
+            @primitive = options[:primitive]
+            @item_type = options[:item_type]
         end
 
         def content?
@@ -55,6 +57,8 @@ module CodeGen
                                       :type => type,
                                       :toggleable => toggleable,
                                       :default => @default,
+                                      :primitive => @primitive,
+                                      :item_type => @item_type,
                                       :description => @description)
 
             @owner.options.push(parent)

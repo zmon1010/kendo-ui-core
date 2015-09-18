@@ -4,16 +4,6 @@ CSHARP_NAME_MAP = {
     'dragstart' => 'DragStart'
 }
 
-class String
-    def to_attribute
-        self.gsub(/[A-Z]/, '-\0').downcase
-    end
-
-    def to_csharp_name
-        CSHARP_NAME_MAP[self] || self.slice(0,1).capitalize + self.slice(1..-1)
-    end
-end
-
 module CodeGen::MVC::Wrappers
     TYPES = {
         'Number' => 'double',
