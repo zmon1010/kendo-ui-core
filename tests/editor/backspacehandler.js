@@ -80,6 +80,20 @@
         equal(editor.value(), "<p><em><a></a>foo</em></p>");
     });
 
+    test("unwraps block to text node", function() {
+        editor.value('foo <p>bar</p>');
+        var range = editor.createRange();
+        range.setStart(editor.body.childNodes[1].firstChild, 0);
+        range.collapse(true);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "foo <a></a>bar");
+    });
+
     test("does not change selection unnecessarily", function() {
         editor.selectRange(createRangeFromText(editor, 'foo||bar'));
 

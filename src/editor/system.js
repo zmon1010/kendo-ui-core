@@ -241,7 +241,7 @@ var BackspaceHandler = Class.extend({
     },
     _addCaret: function(container) {
         var caret = dom.create(this.editor.document, "a");
-        container.appendChild(caret);
+        dom.insertAt(container, caret, 0);
         return caret;
     },
     _restoreCaret: function(caret) {
@@ -257,13 +257,12 @@ var BackspaceHandler = Class.extend({
 
         if (block && editorNS.RangeUtils.isEndOf(range, block)) {
             // join with next sibling
-            var caret = this._addCaret(block);
-
             var next = dom.next(block);
             if (!next || dom.name(next) != "p") {
-                dom.remove(caret);
                 return false;
             }
+
+            var caret = this._addCaret(next);
 
             this._merge(block, next);
 
@@ -295,7 +294,7 @@ var BackspaceHandler = Class.extend({
         // unwrap block
         if (block && block.previousSibling && editorNS.RangeUtils.isStartOf(range, block)) {
             var prev = block.previousSibling;
-            var caret = this._addCaret(prev);
+            var caret = this._addCaret(block);
             this._merge(prev, block);
 
             this._restoreCaret(caret);
@@ -385,7 +384,11 @@ var BackspaceHandler = Class.extend({
         dom.removeTrailingBreak(dest);
 
         while (src.firstChild) {
-            dest.appendChild(src.firstChild);
+            if (dest.nodeType == 1) {
+                dest.appendChild(src.firstChild);
+            } else {
+                dest.parentNode.appendChild(src.firstChild);
+            }
         }
 
         dom.remove(src);
