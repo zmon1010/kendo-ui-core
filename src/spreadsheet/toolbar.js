@@ -27,7 +27,8 @@
         ],
         data: [
             "sort",
-            "filter"
+            "filter",
+            "validation"
         ]
     };
 
@@ -63,7 +64,8 @@
         deleteRow:             { type: "button", command: "DeleteRowCommand",                    iconClass: "delete-row"       },
 
         //data tab
-        sort:                  { type: "sort", iconClass: "sort-desc" }
+        sort:                  { type: "sort", iconClass: "sort-desc" },
+        validation:           { type: "dialog", dialogName: "validation", iconClass: "exception", overflow: "never" }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -182,7 +184,8 @@
                 deleteColumn: "Delete column",
                 deleteRow: "Delete row",
                 sortAsc: "Sort ascending",
-                sortDesc: "Sort descending"
+                sortDesc: "Sort descending",
+                validation: "Data validation..."
             }
         },
         action: function(args) {

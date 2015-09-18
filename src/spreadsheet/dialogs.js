@@ -649,5 +649,246 @@
 
     kendo.spreadsheet.dialogs.register("merge", MergeDialog);
 
+    var ValidationViewModel = kendo.spreadsheet.ValidationCellsViewModel = ObservableObject.extend({
+        init: function(options) {
+            ObservableObject.fn.init.call(this, options);
+
+            this.bind("change", (function(e) {
+                if (e.field === "criterion") {
+                    this.clear();
+                }
+            }).bind(this));
+
+            this._init();
+        },
+        _init: function() {
+            this.number = {};
+            this.text = {};
+            this.date = {};
+            this.custom = {};
+            this.clear();
+        },
+        clear: function() {
+            this.set("number.comparer", "greaterThan");
+            this.set("number.from", null);
+            this.set("number.to", null);
+
+            this.set("text.comparer", "greaterThan");
+            this.set("text.from", null);
+
+            this.set("date.comparer", "greaterThan");
+            this.set("date.from", null);
+            this.set("date.to", null);
+
+            this.set("custom.from", null);
+        },
+        isNumber: function() {
+            return this.get("criterion") === "number";
+        },
+        isText: function() {
+            return this.get("criterion") === "text";
+        },
+        isDate: function() {
+            return this.get("criterion") === "date";
+        },
+        isCustom: function() {
+            return this.get("criterion") === "custom";
+        },
+        showRemove: function() {
+            return this.get("hasValidation");
+        },
+        reset: function() {
+            this.set("criterion", "any");
+        },
+        update: function(validation) {
+            this.set("hasValidation", !!validation);
+
+            if (validation) {
+                var context = this[validation.dataType || "text"];
+
+                context.comparer = validation.comparerType;
+                context.from = validation.from;
+                context.to = validation.to;
+
+                this.criterion = validation.dataType;
+                this.type = validation.type;
+            }
+        },
+        toValidationObject: function() { //TODO: build proper validation object here
+            var criterion = this.criterion;
+            var context = this[criterion];
+
+            if (!context) {
+                return null;
+            }
+
+            return {
+                type: this.type,
+                dataType: criterion !== "custom" ? criterion : "",
+                comparerType: context.comparer,
+                from: context.from,
+                to: context.to
+            };
+        }
+    });
+
+    var ValidationDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+        },
+        options: {
+            width: 420,
+            title: "Data Validation",
+            criterion: "any",
+            type: "reject",
+            hint: "Please enter message!",
+            criteria: [
+                { type: "any", name: "Any value" },
+                { type: "number", name: "Number" },
+                { type: "text", name: "Text" },
+                { type: "date", name: "Date" },
+                { type: "custom", name: "Custom Formula" }
+            ],
+            comparers: [
+                { type: "greaterThan", name: "greater than" },
+                { type: "lessThan", name: "less than" },
+                { type: "between", name: "between" },
+                { type: "notBetween", name: "not between" },
+                { type: "equalTo", name: "equal to" },
+                { type: "notEqualTo", name: "not equal to" },
+                { type: "greaterThanOrEqualTo", name: "greater than or equal to" },
+                { type: "lessThanOrEqualTo", name: "less than or equal to" }
+            ],
+            template:
+                '<div class="k-edit-form-container">' +
+                    '<div class="k-edit-label"><label>Criteria:</label></div>' +
+                    '<div class="k-edit-field">' +
+                        '<select data-role="dropdownlist" ' +
+                            'data-text-field="name" ' +
+                            'data-value-field="type" ' +
+                            'data-bind="value: criterion, source: criteria" />' +
+                    '</div>' +
+
+                    '<div data-bind="visible: isNumber">' +
+                        '<div class="k-edit-label"><label>Data:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<select data-role="dropdownlist" ' +
+                                'data-text-field="name" ' +
+                                'data-value-field="type" ' +
+                                'data-bind="value: number.comparer, source: comparers" />' +
+                        '</div>' +
+                        '<div class="k-edit-label"><label>Min:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input placeholder="e.g. 10" class="k-textbox" data-bind="value: number.from" />' +
+                        '</div>' +
+                        '<div class="k-edit-label"><label>Max:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input placeholder="e.g. 100" class="k-textbox" data-bind="value: number.to" />' +
+                        '</div>' +
+                    '</div>' +
+
+                    '<div data-bind="visible: isText">' +
+                        '<div class="k-edit-label"><label>Data:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<select data-role="dropdownlist" ' +
+                                'data-text-field="name" ' +
+                                'data-value-field="type" ' +
+                                'data-bind="value: text.comparer, source: comparers" />' +
+                        '</div>' +
+                        '<div class="k-edit-label"><label>Value:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input class="k-textbox" data-bind="value: text.from" />' +
+                        '</div>' +
+                    '</div>' +
+
+                    '<div data-bind="visible: isDate">' +
+                        '<div class="k-edit-label"><label>Data:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<select data-role="dropdownlist" ' +
+                                'data-text-field="name" ' +
+                                'data-value-field="type" ' +
+                                'data-bind="value: text.comparer, source: comparers" />' +
+                        '</div>' +
+                        '<div class="k-edit-label"><label>Start:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input class="k-textbox" data-bind="value: date.from" />' +
+                        '</div>' +
+                        '<div class="k-edit-label"><label>End:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input class="k-textbox" data-bind="value: date.to" />' +
+                        '</div>' +
+                    '</div>' +
+
+                    '<div data-bind="visible: isCustom">' +
+                        '<div class="k-edit-label"><label>Value:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input class="k-textbox" data-bind="value: custom.from" />' +
+                        '</div>' +
+                    '</div>' +
+
+                    '<div class="k-edit-label"><label>On invalid data:</label></div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="radio" name="validationType" value="reject" data-bind="checked: type" />' +
+                        'Reject input' +
+                    '</div>' +
+                    '<div class="k-edit-field">' +
+                        '<input type="radio" name="validationType" value="warning" data-bind="checked: type" />' +
+                        'Show warning' +
+                    '</div>' +
+
+                    '<div class="k-edit-label"><label>Hint message:</label></div>' +
+                    '<div class="k-edit-field">' +
+                        '<input class="k-textbox" placeholder="Type message" data-bind="value: hint" />' +
+                    '</div>' +
+
+                    '<div class="k-action-buttons">' +
+                        '<button class="k-button" data-bind="visible: showRemove, click: remove">Remove</button>' +
+                        '<button class="k-button k-primary" data-bind="click: apply">Apply</button>' +
+                        '<button class="k-button" data-bind="click: close">Cancel</button>' +
+                    "</div>" +
+                "</div>"
+        },
+        open: function(range) {
+            var options = this.options;
+            var element;
+
+            this.viewModel = new ValidationViewModel({
+                type: options.type,
+                hint: options.hint,
+                comparers: options.comparers.slice(0),
+                criteria: options.criteria.slice(0),
+                criterion: options.criterion,
+                apply: this.apply.bind(this),
+                close: this.close.bind(this),
+                remove: this.remove.bind(this)
+            });
+
+            this.viewModel.update(range.validation());
+
+            SpreadsheetDialog.fn.open.call(this);
+
+            element = this.dialog().element;
+
+            kendo.bind(element, this.viewModel);
+        },
+        apply: function() {
+            SpreadsheetDialog.fn.apply.call(this);
+
+            this.trigger("action", {
+                command: "EditValidationCommand",
+                options: {
+                    value: this.viewModel.toValidationObject()
+                }
+            });
+        },
+        remove: function() {
+            this.viewModel.reset();
+            this.apply();
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("validation", ValidationDialog);
+    kendo.spreadsheet.dialogs.ValidationDialog = ValidationDialog;
+
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

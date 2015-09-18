@@ -796,6 +796,7 @@
         },
 
         onCommandRequest: function(e) {
+                debugger;
             if (e.command) {
                 this._execute(e);
             } else {

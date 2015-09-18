@@ -449,6 +449,17 @@
         }
     });
 
+    kendo.spreadsheet.EditValidationCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._value = options.value;
+        },
+        exec: function() {
+            var range = this.range();
+            this.range().validation(this._value);
+        }
+    });
+
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
