@@ -471,11 +471,10 @@
                 value = value.substr(0, x.replace ? tok.begin : x.end) + ref;
                 var point = value.length;
                 value += rest;
-                this.value(value); //_syntaxhighglight is called here too
+                this._value(value);
                 this.setPos(point);
                 this.scale();
 
-                //need to call it here to update active token highlighting
                 this._syntaxHighlight();
                 this._sync();
             }
