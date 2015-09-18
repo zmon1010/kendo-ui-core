@@ -410,6 +410,7 @@
             comparerType: validation.comparerType,
             dataType: validation.dataType,
             type: validation.type,
+            allowNulls: validation.allowNulls,
             tooltipMessageTemplate: validation.tooltipMessageTemplate,
             tooltipTitleTemplate: validation.tooltipTitleTemplate,
             messageTemplate: validation.messageTemplate,
@@ -783,22 +784,24 @@
             validation.to = makeFormula(validation.to);
         }
 
-        //TODO: OPTION FOR CHECKING FOR EMPTY VALUES? (IGNORE BLANKS)
-        if (validation.dataType === "custom") {
-            throw "Not implemented";
-        }
-
         var comparer = exports.validationComparers[validation.comparerType];
+
+        if (!comparer) {
+            throw kendo.format("'{0}' comparer is not implemented.", validation.comparerType);
+        }
 
         validationHandler = function (valueToCompare, valueFormat) {
 
-            //TODO: MAKE WORKS FOR OTHER TYPES, DIFF THAN DATE:
-            var type = valueFormat ? spreadsheet.formatting.type(valueToCompare, valueFormat) : "";
+            if (this.allowNulls && valueToCompare === null) {
+                this.value = true;
+            } else {
+                //TODO: MAKE WORKS FOR OTHER TYPES, DIFF THAN DATE:
+                var type = valueFormat ? spreadsheet.formatting.type(valueToCompare, valueFormat) : "";
 
-            //TODO: value can be null :) check if undefined only
-            var toValue = this.to && this.to.value ? this.to.value : undefined;
+                var toValue = this.to && this.to.value ? this.to.value : undefined;
 
-            this.value = !type || type == this.dataType ? comparer(valueToCompare, this.from.value,  toValue) : "type error";
+                this.value = !type || type == this.dataType ? comparer(valueToCompare, this.from.value,  toValue) : "type error";
+            }
 
             return this.value;
         };

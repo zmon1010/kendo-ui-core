@@ -689,13 +689,14 @@
         f.exec(ss, 2, "m/d/yyyy", validationCallback);
     });
 
-    test("validation clone is working as expected", 8, function(){
+    test("validation clone is working as expected", 9, function(){
         var customOptions = {
             from: "Sheet1!A2",
             to: "Sheet1!A3",
             comparerType: "between",
             dataType: "date",
-            type: "reject"
+            type: "reject",
+            allowNulls: true
         };
 
         var exp = calc.parseValidation(Sheet1, 0, 0, $.extend({}, customOptions));
@@ -713,6 +714,62 @@
         equal(newFormula.from.col, 1);
         equal(newFormula.to.row, 1);
         equal(newFormula.to.col, 1);
+        equal(newFormula.allowNulls, true);
+    });
+
+    test("validation allow null values when allowNulls is set to true", 1, function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date",
+            allowNulls: true
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 1;
+            callback(1);
+        };
+
+        f.to.exec = function(e, callback) {
+            f.to.value = 3;
+            callback(3);
+        };
+
+        f.exec(ss, null, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation does not allow null values by default", 1, function(){
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date"
+        });
+
+        var validationCallback = function(result) {
+            ok(!result);
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = 1;
+            callback(1);
+        };
+
+        f.to.exec = function(e, callback) {
+            f.to.value = 3;
+            callback(3);
+        };
+
+        f.exec(ss, null, "m/d/yyyy", validationCallback);
     });
 
     test("validation compare values between correctly", 1, function(){

@@ -588,6 +588,7 @@
             this.dataType = options.dataType; //date, time etc
             this.comparerType =  options.comparerType; //greaterThan, EqaulTo etc
             this.type = options.type ? options.type : "warning"; //info, warning, reject
+            this.allowNulls = options.allowNulls ? true : false;
 
             //TODO: address to be range / cell ref, and adjust it based on it
             this.sheet = options.sheet;
@@ -753,6 +754,7 @@
                 row: this.row,
                 col: this.col,
                 sheet: this.sheet,
+                allowNulls: this.allowNulls,
                 tooltipMessageTemplate: this.tooltipMessageTemplate,
                 tooltipTitleTemplate: this.tooltipTitleTemplate,
                 //TODO: export generated messages instead?

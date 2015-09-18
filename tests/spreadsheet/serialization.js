@@ -648,7 +648,7 @@
             '"dataType":"date",' +
             '"type":"warning",' +
             '"comparerType":"greaterThan",' +
-            '"row":0,' + '"col":0,' +
+            '"row":0,' + '"col":0,' + ' "allowNulls":"true",' +
             '"sheet":"Sheet1",' +
             '"tooltipMessageTemplate":"",' +
             '"tooltipTitleTemplate":"",' +
@@ -656,10 +656,14 @@
             '"titleTemplate":"Validation #=type#"}');
 
         sheet.fromJSON(singleCell({ validation: validationObject }));
-        equal(sheet.range("A1").validation().type, validationObject.type);
-        equal(sheet.range("A1").validation().dataType, validationObject.dataType);
-        equal(sheet.range("A1").validation().sheet, validationObject.sheet);
-        equal(sheet.range("A1").validation().row, validationObject.row);
-        equal(sheet.range("A1").validation().col, validationObject.col);
+
+        var validationOptions = sheet.range("A1").validation();
+
+        equal(validationOptions.type, validationObject.type);
+        equal(validationOptions.dataType, validationObject.dataType);
+        equal(validationOptions.sheet, validationObject.sheet);
+        equal(validationOptions.row, validationObject.row);
+        equal(validationOptions.col, validationObject.col);
+        equal(validationOptions.col, validationObject.col);
     });
 })();

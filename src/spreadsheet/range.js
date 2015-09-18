@@ -197,7 +197,7 @@
 
             if (value === undefined) {
                 var f = this._get("validation");
-                //TODO: DO NOT STRINGIFY?
+
                 return f ? f.toJSON() : null; // stringify if present
             }
             return this._property("validation", value);
