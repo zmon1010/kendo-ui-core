@@ -524,6 +524,14 @@
             var pos = this.getPos();
             var highlightedRefs = [];
 
+            if (pos && !pos.collapsed) {
+                // Backward selection (hold shift, move right to left)
+                // will not work properly if we continuously re-set
+                // the HTML.  If the selection is on, presumably the
+                // text has already been highlighted, so stop here.
+                return;
+            }
+
             if (!(/^=/.test(value))) {
                 // if an user deleted the initial =, we should discard
                 // any highlighting.  we still need to restore caret
