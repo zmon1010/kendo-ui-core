@@ -1,5 +1,6 @@
 ﻿using Telerik.Windows.Documents.Spreadsheet.Core;
 using Telerik.Windows.Documents.Spreadsheet.Model;
+using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 using DocumentWorksheet = Telerik.Windows.Documents.Spreadsheet.Model.Worksheet;
 
@@ -38,20 +39,23 @@ namespace Telerik.Web.Spreadsheet
                     //    documentSheet.Rows[row.Index].SetHeight(new RowHeight(row.Height, true));
                     //}
 
-                    //foreach (var column in sheet.Columns)
-                    //{                        
-                    //    documentSheet.Columns[column.Index].SetWidth(new ColumnWidth(column.Width, true));
-                    //}
+                    foreach (var column in sheet.Columns)
+                    {
+                        if (ColumnsPropertyBag.WidthProperty.DefaultValue.Value != column.Width)
+                        {
+                            documentSheet.Columns[column.Index].SetWidth(new ColumnWidth(column.Width, true));
+                        }
+                    }
 
-                    //foreach (var mergedRange in sheet.MergedCells)
-                    //{
-                    //    documentSheet.Cells.GetCellSelection(mergedRange).Merge();
-                    //}
+                    foreach (var mergedRange in sheet.MergedCells)
+                    {
+                        documentSheet.Cells.GetCellSelection(mergedRange).Merge();
+                    }
 
-                    //if (sheet.FrozenColumns > 0 || sheet.FrozenRows > 0)
-                    //{
-                    //    documentSheet.ViewState.FreezePanes(sheet.FrozenRows, sheet.FrozenColumns);
-                    //}
+                    if (sheet.FrozenColumns > 0 || sheet.FrozenRows > 0)
+                    {
+                        documentSheet.ViewState.FreezePanes(sheet.FrozenRows, sheet.FrozenColumns);
+                    }
                 }
 
                 if (document.Worksheets == null && document.Worksheets.Count > 0)
