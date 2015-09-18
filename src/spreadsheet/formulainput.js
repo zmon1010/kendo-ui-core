@@ -271,7 +271,7 @@
             this.trigger("keyup");
         },
 
-        _input: function(e) {
+        _input: function() {
             this._syntaxHighlight();
         },
 

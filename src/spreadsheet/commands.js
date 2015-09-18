@@ -455,7 +455,6 @@
             this._value = options.value;
         },
         exec: function() {
-            var range = this.range();
             this.range().validation(this._value);
         }
     });
