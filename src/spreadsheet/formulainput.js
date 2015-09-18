@@ -244,7 +244,7 @@
                 e.preventDefault();
             }
 
-            setTimeout(this._syntaxHighlight.bind(this));
+            this._keyDownTimeout = setTimeout(this._syntaxHighlight.bind(this));
         },
 
         _keyup: function() {
@@ -296,7 +296,7 @@
         },
 
         _focus: function() {
-            this._focusId = setTimeout(this._syntaxHighlight.bind(this));
+            this._focusTimeout = setTimeout(this._syntaxHighlight.bind(this));
         },
 
         _move: function(key) {
@@ -661,6 +661,9 @@
             this._editorToSync = null;
 
             this.element.off(ns);
+
+            clearTimeout(this._focusTimeout);
+            clearTimeout(this._keyDownTimeout);
 
             this.popup.destroy();
             this.popup = null;
