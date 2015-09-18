@@ -23,6 +23,8 @@
 
                 element = this.element;
 
+                element.addClass("k-widget k-header k-tabstrip k-tabstrip-bottom");
+
                 this._tree = new kendo.dom.Tree(element[0]);
 
                 this._tree.render([this._addButton(), this._createSheetsWrapper([])]);
@@ -100,7 +102,7 @@
                     return;
                 }
 
-                sheetsWrapper.addClass(sheetsBarClassNames.sheetsBarScrollable);
+                sheetsWrapper.addClass(sheetsBarClassNames.sheetsBarScrollable + " k-tabstrip k-floatwrap k-tabstrip-bottom");
 
                 wrapperOffsetWidth = sheetsWrapper[0].offsetWidth;
                 sheetsGroupScrollWidth = sheetsGroup[0].scrollWidth;
@@ -158,8 +160,14 @@
                 for (idx = 0; idx < sheets.length; idx++) {
                     var sheet = sheets[idx];
                     var isSelectedSheet = (idx === selectedIndex);
-                    var args = isSelectedSheet ? { className: sheetsBarClassNames.sheetsBarActive } : { className: sheetsBarClassNames.sheetsBarInactive };
+                    var attr = { className: "k-item k-state-default" };
                     var elementContent = [];
+
+                    if (isSelectedSheet) {
+                        attr.className += " k-state-active k-state-tab-on-top " + sheetsBarClassNames.sheetsBarActive;
+                    } else {
+                        attr.className += " " + sheetsBarClassNames.sheetsBarInactive;
+                    }
 
                     if (isSelectedSheet && isInEditMode) {
                         elementContent.push(element("input", {
@@ -170,6 +178,7 @@
                         }, []));
                     } else {
                         elementContent.push(element("span", {
+                            className: "k-link",
                             title: sheet.name()
                         }, [dom.text(sheet.name())]));
 
@@ -177,13 +186,17 @@
                             className: "k-icon k-si-close"
                         }, []);
 
+                        var deleteButton = element("button", {
+                            className: "k-button k-button-icon"
+                        }, [deleteIcon]);
+
                         elementContent.push(element("a", {
                             href: "#",
                             className: "k-link " + sheetsBarClassNames.sheetsBarRemove
-                        }, [deleteIcon]));
+                        }, [deleteButton]));
                     }
 
-                    sheetElements.push(element("li", args, elementContent));
+                    sheetElements.push(element("li", attr, elementContent));
                 }
 
                 this._tree.render([this._addButton(),  this._createSheetsWrapper(sheetElements, renderScrollButtons)]);
@@ -191,7 +204,7 @@
 
             _createSheetsWrapper: function(sheetElements, renderScrollButtons) {
                 var element = kendo.dom.element;
-                var childrenElements = [element("ul", { className: "k-reset" }, sheetElements)];
+                var childrenElements = [element("ul", { className: "k-reset k-tabstrip-items" }, sheetElements)];
 
                 if (renderScrollButtons) {
                     childrenElements.push(element("span", {className: "k-button k-button-icon k-button-bare " + sheetsBarClassNames.sheetsBarPrev }, [
@@ -286,7 +299,9 @@
 
             _addButton: function() {
                 var element = kendo.dom.element;
-                return element("a", {className: sheetsBarClassNames.sheetsBarAdd}, [element("span", {className: "k-sprite k-icon k-font-icon k-i-plus"}, [])]);
+                return element("a", {
+                    className: sheetsBarClassNames.sheetsBarAdd + " k-button k-button-icon"
+                }, [element("span", {className: "k-sprite k-icon k-font-icon k-i-plus"}, [])]);
             },
 
             destroy: function() {
