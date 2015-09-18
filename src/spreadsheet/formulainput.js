@@ -71,7 +71,8 @@
                 .on("keydown", this._keydown.bind(this))
                 .on("keyup", this._keyup.bind(this))
                 .on("blur", this._blur.bind(this))
-                .on("input click", this._input.bind(this)); //replace click to focus
+                .on("input click", this._input.bind(this))
+                .on("focus", this._focus.bind(this));
         },
 
         options: {
@@ -225,6 +226,7 @@
 
         _blur: function() {
             this.popup.close();
+            clearTimeout(this._focusId);
         },
 
         _isFormula: function() {
@@ -269,7 +271,7 @@
             this.trigger("keyup");
         },
 
-        _input: function() {
+        _input: function(e) {
             this._syntaxHighlight();
         },
 
@@ -291,6 +293,10 @@
                 idx++;
             }
             return idx;
+        },
+
+        _focus: function() {
+            this._focusId = setTimeout(this._syntaxHighlight.bind(this));
         },
 
         _move: function(key) {
@@ -419,7 +425,7 @@
 
         _canInsertRef: function() {
             var point = this.getPos();
-            var operation, tokens, tok;
+            var tokens, tok;
 
             if (point && this._isFormula()) {
                 if (point.begin === 0) {

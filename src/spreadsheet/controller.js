@@ -535,6 +535,8 @@
             this.editor
                 .activate({ rect: this.view.activeCellRectangle() })
                 .focus();
+
+            this.onEditorUpdate();
         },
 
         onCut: function() {
