@@ -708,10 +708,10 @@
             this._inEdit = isInEdit;
 
             if (isInEdit) {
-                this._editSelection.selection = this._viewSelection.selection.toRangeRef();
-                this._editSelection.originalSelection = this._viewSelection.originalSelection.toRangeRef();
-                this._editSelection.activeCell = this._viewSelection.activeCell.toRangeRef();
-                this._editSelection.originalActiveCell = this._viewSelection.originalActiveCell.toRangeRef();
+                this._editSelection.selection = this._viewSelection.selection.clone();
+                this._editSelection.originalSelection = this._viewSelection.originalSelection.clone();
+                this._editSelection.activeCell = this._viewSelection.activeCell.clone();
+                this._editSelection.originalActiveCell = this._viewSelection.originalActiveCell.clone();
             }
         },
 
