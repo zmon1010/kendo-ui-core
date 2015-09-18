@@ -13,6 +13,7 @@
             this.iframe = document.createElement("iframe");
             this.iframe.className = "k-spreadsheet-clipboard-paste";
             this._external = {};
+            this._uid = kendo.guid();
             document.body.appendChild(this.iframe);
         },
 
@@ -173,7 +174,7 @@
             if(this._external.html === undefined) {
                 return true;
             }
-            return $("<div/>").html(this._external.html).find('table.kendo-clipboard').length ? true : false;
+            return $("<div/>").html(this._external.html).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
         },
 
         _cellState: function(element) {
