@@ -271,7 +271,8 @@
             var classNames = View.classNames;
 
             this.element = element;
-            $.extend(true, this.options, options);
+
+            this.options = $.extend(true, {}, this.options, options);
 
             this._chrome();
 
@@ -347,7 +348,7 @@
         },
 
         _tabstrip: function() {
-            var options = $.extend(true, {}, { home: true, insert: true, data: true }, this.options.toolbar);
+            var options = $.extend(true, { home: true, insert: true, data: true }, this.options.toolbar);
             var tabs = [];
 
             if (this.tabstrip) {
