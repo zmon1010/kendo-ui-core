@@ -1859,17 +1859,49 @@
             teardown: teardown
         });
 
-        test("connection is created with 'to' reference to a shape", function() {
+        test("connection is connected to the specified shapes", function() {
             createDiagram({
                 shapes: [{id: "s1"}, {id: "s2"}],
                 connections: [{
-                    from: { shapeId: "s1", connector: "auto" },
+                    from: { shapeId: "s1"},
                     to: "s2"
                 }]
             });
 
-            equal(diagram.connections.length, 1, "diagram should have a single connection");
-            equal(diagram.connections[0].to.shape, diagram.getShapeById("s2"), "the to property should point to the second shape");
+            equal(diagram.connections.length, 1);
+            ok(diagram.connections[0].from === diagram.getShapeById("s1"));
+            ok(diagram.connections[0].to === diagram.getShapeById("s2"));
+        });
+
+        test("connection is connected to the specified shapes if id is used instead of shapeId", function() {
+            createDiagram({
+                shapes: [{id: "s1"}, {id: "s2"}],
+                connections: [{
+                    from: { id: "s1" },
+                    to: { id: "s2" }
+                }]
+            });
+
+            equal(diagram.connections.length, 1);
+            ok(diagram.connections[0].from === diagram.getShapeById("s1"));
+            ok(diagram.connections[0].to === diagram.getShapeById("s2"));
+        });
+
+        test("connection is connected to the specified points if id is not specified", function() {
+            createDiagram({
+                shapes: [{id: "s1"}, {id: "s2"}],
+                connections: [{
+                    from: { x: 100, y: 200 },
+                    to: { x: 50 }
+                }]
+            });
+            var from = diagram.connections[0].from;
+            var to = diagram.connections[0].to;
+            equal(diagram.connections.length, 1);
+            equal(from.x, 100);
+            equal(from.y, 200);
+            equal(to.x, 50);
+            equal(to.y, 0);
         });
 
         test("creates connection on init", function() {

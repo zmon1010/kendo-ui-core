@@ -2294,20 +2294,27 @@
 
                 for(i = 0; i < connections.length; i++) {
                     conn = connections[i];
-                    source = diagram._findConnectionShape(conn.from);
-                    target = diagram._findConnectionShape(conn.to);
+                    source = diagram._findConnectionTarget(conn.from);
+                    target = diagram._findConnectionTarget(conn.to);
 
                     diagram.connect(source, target, deepExtend({}, defaults, conn));
                 }
             },
 
-            _findConnectionShape: function(options) {
-                var diagram = this,
-                    shapeId = isString(options) ? options : options.shapeId;
+            _findConnectionTarget: function(options) {
+                var diagram = this;
+                var shapeId = isString(options) ? options : options.shapeId || options.id;
+                var target;
+                if (shapeId) {
+                    target = diagram.getShapeById(shapeId);
+                    if (options.connector) {
+                        target = target.getConnector(options.connector);
+                    }
+                } else {
+                    target = new Point(options.x || 0, options.y || 0);
+                }
 
-                var shape = diagram.getShapeById(shapeId);
-
-                return shape.getConnector(options.connector || AUTO);
+                return target;
             },
 
             destroy: function () {
