@@ -115,6 +115,18 @@ namespace Kendo.Mvc.UI
                 json["footerAttributes"] = attributes;
             }
 
+            if (HeaderHtmlAttributes.Any())
+            {
+                var attributes = new Dictionary<string, object>();
+
+                HeaderHtmlAttributes.Each(attr =>
+                {
+                    attributes[HttpUtility.HtmlAttributeEncode(attr.Key)] = HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
+                });
+
+                json["headerAttributes"] = attributes;
+            }
+
             if (Hidden)
             {
                 json["hidden"] = true;
