@@ -58,6 +58,8 @@
             }
 
             this._highlightedRefs = [];
+            this._staticTokens = [];
+            this._tokens = [];
 
             this._formulaSource();
 
@@ -69,7 +71,7 @@
                 .on("keydown", this._keydown.bind(this))
                 .on("keyup", this._keyup.bind(this))
                 .on("blur", this._blur.bind(this))
-                .on("input click", this._input.bind(this));
+                .on("input click", this._input.bind(this)); //replace click to focus
         },
 
         options: {
@@ -394,7 +396,23 @@
         },
 
         canInsertRef: function() {
+            var idx;
             var result = this._canInsertRef();
+            var eq = function(tok1, tok2) {
+                if (tok1.type == "ref" && tok2.type == "ref" && tok1.ref.eq(tok2.ref)) {
+                    return true;
+                }
+
+                return tok1.value === tok2.value;
+            };
+
+            if (result && result.token) {
+                for (idx = 0; idx < this._staticTokens.length; idx++) {
+                    if (eq(result.token, this._staticTokens[idx])) {
+                        return null;
+                    }
+                }
+            }
 
             return result;
         },
@@ -434,13 +452,13 @@
                     return null;
                 }
                 if (tok == null && current) {
-                    var isStartPunc = /^(?:punc)/.test(current.type) && current.value === "(";
-                    if (isStartPunc || /^(?:op)/.test(current.type)) {
-                        return { token: tok, end: point.end };
-                    }
-                    return null;
+                    return (isStartBrace(current) || /^(?:op)/.test(current.type)) ?
+                            { token: tok, end: point.end } : null;
                 }
                 if (current === null && /^(?:punc)$/.test(tok.type)) {
+                    return null;
+                }
+                if (isEndBrace(current) && isEndBrace(tok)) {
                     return null;
                 }
                 if (tok.type == "startexp") {
@@ -458,6 +476,12 @@
                             { token: tok, end: point.end } : null);
                 }
                 return false;
+            }
+            function isStartBrace(token) {
+                return /^(?:punc)/.test(token.type) && token.value === "(";
+            }
+            function isEndBrace(token) {
+                return /^(?:punc)/.test(token.type) && token.value === ")";
             }
         },
 
@@ -515,6 +539,19 @@
             }
         },
 
+        _setStaticTokens: function() {
+            var idx, tok;
+
+            this._staticTokens = [];
+
+            for (idx = 0; idx < this._tokens.length; idx++) {
+                tok = this._tokens[idx];
+                if (/^(?:num|str|bool|sym|ref)$/.test(tok.type)) {
+                    this._staticTokens.push(tok);
+                }
+            }
+        },
+
         _value: function(value) {
             this.element.text(value);
         },
@@ -526,8 +563,7 @@
 
             this._value(value);
             this._syntaxHighlight();
-
-            this._originHighlightedRefs = this._highlightedRefs.slice();
+            this._setStaticTokens();
         },
 
         highlightedRefs: function() {
@@ -605,6 +641,7 @@
                         tok.cls + "'>" + text + "</span>" +
                         value.substr(end);
                 });
+                this._tokens = tokens;
                 this.element.html(value);
             }
             if (pos) {

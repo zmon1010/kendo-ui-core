@@ -161,6 +161,60 @@
         ok(formulaInput.element.width() > initialWidth);
     });
 
+    test("canRef method allows insert after formula '('", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(");
+        formulaInput.end();
+
+        ok(formulaInput.canInsertRef());
+    });
+
+    test("canRef method allows insert after formula ','", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(,");
+        formulaInput.end();
+
+        ok(formulaInput.canInsertRef());
+    });
+
+    test("canRef method doesn't allow insert after '='", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(,");
+        formulaInput.setPos(1);
+
+        ok(!formulaInput.canInsertRef());
+    });
+
+    test("canRef method doesn't allow insert when in middle of func", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(,");
+        formulaInput.setPos(2);
+
+        ok(!formulaInput.canInsertRef());
+    });
+
+    test("canRef method doesn't allow insertion after ')'", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM()");
+        formulaInput.end();
+
+        ok(!formulaInput.canInsertRef());
+    });
+
+    test("canRef method doesn't replace origin value token", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(A1:B1, C1:C2, SUM(D1:D2))");
+        formulaInput.setPos(5);
+
+        ok(!formulaInput.canInsertRef());
+    });
+
     test("ref method inserts passed ref address", 2, function() {
         createFormulaInput();
 
@@ -176,23 +230,30 @@
     test("ref method replaces current single cell ref", 2, function() {
         createFormulaInput();
 
-        formulaInput.value("=SUM(B1");
+        formulaInput.value("=SUM(B1,");
+
+        //simulate typed value after value set
+        formulaInput.element.html(formulaInput.element.html() + "B2");
         formulaInput.end();
+
         formulaInput.refAtPoint(A1);
 
-        equal(formulaInput.value(), "=SUM(A1");
-        equal(formulaInput.getPos().begin, 7);
+        equal(formulaInput.value(), "=SUM(B1,A1");
+        equal(formulaInput.getPos().begin, 10);
     });
 
     test("ref method replaces current range ref", 2, function() {
         createFormulaInput();
 
-        formulaInput.value("=SUM(B1:c1");
+        formulaInput.value("=SUM(B2,");
+
+        //simulate typed value after value set
+        formulaInput.element.html(formulaInput.element.html() + "B1:c1");
         formulaInput.end();
         formulaInput.refAtPoint(A1);
 
-        equal(formulaInput.value(), "=SUM(A1");
-        equal(formulaInput.getPos().begin, 7);
+        equal(formulaInput.value(), "=SUM(B2,A1");
+        equal(formulaInput.getPos().begin, 10);
     });
 
     test("ref method does nothing if caret is not in correct place", 1, function() {
@@ -203,6 +264,17 @@
         formulaInput.refAtPoint(A1);
 
         equal(formulaInput.value(), "=SUM(sum");
+    });
+
+    test("ref method does nothing if try to replace initial value token", 2, function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(B1");
+        formulaInput.end();
+        formulaInput.refAtPoint(A1);
+
+        equal(formulaInput.value(), "=SUM(B1");
+        equal(formulaInput.getPos().begin, 7);
     });
 
     module("Spreadsheet searching", {
