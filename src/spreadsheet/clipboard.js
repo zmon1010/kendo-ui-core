@@ -98,47 +98,74 @@
         },
 
         parse: function(data) {
-            var content = {ref:  new CellRef(0,0,0), mergedCells: []};
-            var clipboard = this;
+            var state = {ref:  new CellRef(0,0,0), mergedCells: []};
             if(data.html) {
-                var doc = clipboard.iframe.contentWindow.document;
+                var doc = this.iframe.contentWindow.document;
                 doc.open();
                 doc.write(data.html);
                 doc.close();
                 var table = $(doc).find("table:first");
                 if(table.length) {
-                    var tbody = table.find("tbody:first");
-                    tbody.find("tr").each(function(rowIndex, tr) {
-                        $(tr).find("td").each(function(colIndex, td) {
-                            var key = rowIndex + "," + colIndex;
-                            var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
-                            var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
-                            var cellState = clipboard._populateCell($(td));
-                            content[key] = cellState;
-                            if(rowspan || colspan) {
-                                var startCol = String.fromCharCode(65 + colIndex);
-                                var endCol = String.fromCharCode(65 + colIndex + colspan);
-                                var address = startCol + (rowIndex + 1) + ":" + endCol + (rowIndex + 1 + rowspan);
-                                content.mergedCells.push(address);
-
-                                for(var ri = 0; ri <= rowspan; ri++) {
-                                    for(var ci = 0; ci <= colspan; ci++) {
-                                        content[(rowIndex + ri) + "," + (colIndex + ci)] = cellState;
-                                    }
-                                }
-                            }
-                        });
-                    });
+                    state = this._parseHTML(table.find("tbody:first"));
                 } else {
-                    var element = $(doc.body).find(":not(style)");
-                    content["0,0"] = clipboard._populateCell(element);
+                    if (!data.plain) {
+                        var element = $(doc.body).find(":not(style)");
+                        state["0,0"] = this._populateCell(element.text());
+                    } else {
+                        state = this._parseTSV(data.plain);
+                    }
                 }
-            }else{
-                content["0,0"] = {
-                    value: data.plain
-                };
+            } else {
+                state = this._parseTSV(data.plain);
             }
-            return content;
+            return state;
+        },
+
+        _parseHTML: function(tbody) {
+            var state = {ref:  new CellRef(0,0,0), mergedCells: []};
+            tbody.find("tr").each(function(rowIndex, tr) {
+                $(tr).find("td").each(function(colIndex, td) {
+                    var key = rowIndex + "," + colIndex;
+                    var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
+                    var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
+                    var cellState = this._populateCell($(td));
+
+                    state[key] = cellState;
+
+                    if(rowspan || colspan) {
+                        var startCol = String.fromCharCode(65 + colIndex);
+                        var endCol = String.fromCharCode(65 + colIndex + colspan);
+                        var address = startCol + (rowIndex + 1) + ":" + endCol + (rowIndex + 1 + rowspan);
+
+                        state.mergedCells.push(address);
+
+                        for(var ri = 0; ri <= rowspan; ri++) {
+                            for(var ci = 0; ci <= colspan; ci++) {
+                                state[(rowIndex + ri) + "," + (colIndex + ci)] = cellState;
+                            }
+                        }
+                    }
+                });
+            });
+            return state;
+        },
+
+        _parseTSV: function(data) {
+            var state = {ref:  new CellRef(0,0,0), mergedCells: []};
+            if(data.indexOf("\t") === -1 && data.indexOf("\n") == -1) {
+                state["0,0"] = {
+                    value: data
+                };
+            } else {
+                var rows = data.split("\n");
+                for(var ri = 0; ri < rows.length; ri++) {
+                    var cols = rows[ri].split("\t");
+                    for(var ci = 0; ci < cols.length; ci++) {
+                        state[ri + "," + ci] = {value: cols[ci]};
+                    }
+                }
+            }
+            return state;
         },
 
         _isInternal: function() {
