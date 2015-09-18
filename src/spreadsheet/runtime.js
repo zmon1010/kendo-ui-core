@@ -665,7 +665,7 @@
 
                 self.pending = true;
 
-                var calculateFromCallBack = function(value) {
+                var calculateFromCallBack = function() {
                     self.pending = false;
 
                     self.value = self.handler.call(this, compareValue, compareFormat);
@@ -678,7 +678,7 @@
                 };
 
                 if (self.to) {
-                    var calculateToCallBack = function(value) {
+                    var calculateToCallBack = function() {
                         self.from.exec(ss, calculateFromCallBack.bind(this));
                     };
 

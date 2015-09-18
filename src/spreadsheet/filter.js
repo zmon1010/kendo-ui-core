@@ -4,7 +4,7 @@
 (function(kendo) {
     /*jshint evil: true */
     var Filter = kendo.spreadsheet.Filter = kendo.Class.extend({
-        prepare: function(cells) {
+        prepare: function() {
         },
         value: function(cell) {
             return cell.value;

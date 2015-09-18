@@ -12,7 +12,7 @@
             //4) Ignore blank option
             //5) List validation type - get values from range
 
-            init: function(options) {
+            init: function() {
                 kendo.Observable.prototype.init.call(this);
             },
 

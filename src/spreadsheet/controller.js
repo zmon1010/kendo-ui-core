@@ -743,7 +743,7 @@
             sheet._setFormulaSelections([]);
         },
 
-        onEditorUpdate: function(e) {
+        onEditorUpdate: function() {
             this._workbook.activeSheet()._setFormulaSelections(this.editor.highlightedRefs());
         },
 

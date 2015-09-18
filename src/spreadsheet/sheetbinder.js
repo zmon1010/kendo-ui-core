@@ -114,7 +114,7 @@
                 .bind("change", this._changeHandler);
         },
 
-        _change: function(e) {
+        _change: function() {
             if (this._skipRebind) {
                 return;
             }

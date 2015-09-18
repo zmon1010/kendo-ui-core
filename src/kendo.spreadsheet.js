@@ -34,7 +34,7 @@
         "./spreadsheet/editor"
     ], f);
 })(function(){
-    var __meta__ = {
+    var __meta__ = { // jshint ignore:line
         id: "spreadsheet",
         name: "Spreadsheet",
         category: "web",

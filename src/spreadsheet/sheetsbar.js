@@ -55,7 +55,7 @@
                 "rename"
             ],
 
-            _createEditor: function (e) {
+            _createEditor: function () {
                 if (this._editor) {
                     return;
                 }
@@ -280,7 +280,7 @@
                 this.trigger("rename", {name: newSheetName, sheetIndex: this._selectedIndex });
             },
 
-            _onAddSelect: function(e) {
+            _onAddSelect: function() {
                 this.trigger("select", {isAddButton: true});
             },
 

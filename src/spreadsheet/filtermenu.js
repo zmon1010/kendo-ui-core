@@ -257,7 +257,7 @@
                             asc: $(e.item).data("dir") === "asc",
                             sheet: false,
                             operatingRange: this.options.range
-                        }
+                        };
 
                         this.action({ command: "SortCommand", options: options });
                     }.bind(this)
@@ -274,7 +274,7 @@
 
                 this.element.append(wrapper);
 
-                var details = new Details(wrapper);
+                var details = new Details(wrapper); // jshint ignore:line
 
                 kendo.init(wrapper);
 

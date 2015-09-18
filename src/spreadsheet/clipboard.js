@@ -195,7 +195,7 @@
                 "borderTop"
             ];
 
-            borders.forEach(function(key, index) {
+            borders.forEach(function(key) {
                 if(styles[key + "Style"] == "none") {
                     borderObject[key] = null;
                     return;

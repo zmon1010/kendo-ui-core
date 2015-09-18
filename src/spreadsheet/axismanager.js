@@ -4,9 +4,6 @@
 })(function(){
 
 (function(kendo) {
-    var RangeRef = kendo.spreadsheet.RangeRef;
-    var CellRef = kendo.spreadsheet.CellRef;
-
     var AxisManager = kendo.Class.extend({
         init: function(sheet) {
             this._sheet = sheet;
@@ -61,25 +58,25 @@
         },
 
         hideSelectedColumns: function() {
-            this.forEachSelectedColumn(function(sheet, index, i) {
+            this.forEachSelectedColumn(function(sheet, index) {
                 sheet.hideColumn(index);
             });
         },
 
         hideSelectedRows: function() {
-            this.forEachSelectedRow(function(sheet, index, i) {
+            this.forEachSelectedRow(function(sheet, index) {
                 sheet.hideRow(index);
             });
         },
 
         unhideSelectedColumns: function() {
-            this.forEachSelectedColumn(function(sheet, index, i) {
+            this.forEachSelectedColumn(function(sheet, index) {
                 sheet.unhideColumn(index);
             });
         },
 
         unhideSelectedRows: function() {
-            this.forEachSelectedRow(function(sheet, index, i) {
+            this.forEachSelectedRow(function(sheet, index) {
                 sheet.unhideRow(index);
             });
         },
@@ -100,7 +97,7 @@
             var range = this._sheet.select().toRangeRef();
             var rowCount = range.height();
 
-            return sheet.canInsertRow(0, rowCount);
+            return this._sheet.canInsertRow(0, rowCount);
         },
 
         addRowAbove: function() {

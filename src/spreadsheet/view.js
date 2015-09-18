@@ -1067,7 +1067,7 @@
 
                 if (token) {
                     seriesColorClass = " " + token.seriesCls;
-                    className += seriesColorClass
+                    className += seriesColorClass;
                 }
             }
 
