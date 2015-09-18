@@ -84,6 +84,7 @@
                 element: element,
                 group: group
             };
+            nodeInfo._avoidLinks = options.avoidLinks;
 
             $(element).addClass("k-pdf-export");
             renderElement(element, group);
@@ -1611,13 +1612,15 @@
             group.append(background);
 
             if (element.tagName == "A" && element.href && !/^#?$/.test($(element).attr("href"))) {
-                background._pdfLink = {
-                    url    : element.href,
-                    top    : box.top,
-                    right  : box.right,
-                    bottom : box.bottom,
-                    left   : box.left
-                };
+                if (!nodeInfo._avoidLinks || !$(element).is(nodeInfo._avoidLinks)) {
+                    background._pdfLink = {
+                        url    : element.href,
+                        top    : box.top,
+                        right  : box.right,
+                        bottom : box.bottom,
+                        left   : box.left
+                    };
+                }
             }
 
             if (backgroundColor) {
