@@ -2,6 +2,7 @@ MVC_SRC_ROOT = 'wrappers/mvc/src/'
 MVC_BIN_ROOT = MVC_SRC_ROOT + 'Kendo.Mvc/bin/'
 MVC_DEMOS_ROOT = 'wrappers/mvc/demos/Kendo.Mvc.Examples/'
 DEMO_SHARED_ROOT = 'demos/mvc/content/'
+DPL_ROOT = 'dpl/Telerik.Web.Spreadsheet'
 
 # The list of files which Kendo.Mvc.dll depends on
 MVC_WRAPPERS_SRC = FileList[MVC_SRC_ROOT + '**/*.cs']
@@ -339,12 +340,23 @@ else
         rule "#{output_dir}/**/*.resources.dll" => dll_file
     end
 
+	{
+        "Release" => ['Release-MVC3', 'Release'], "Release-NET45" => ['Release-MVC5']
+    }.each do |configuration, targets|
+		msbuild DPL_ROOT + '/Telerik.Web.Spreadsheet.csproj', "/p:Configuration=#{configuration}"
+
+		targets.each do |target|
+			src = "dpl\\Telerik.Web.Spreadsheet\\bin\\#{configuration}"
+			dest = "wrappers\\mvc\\src\\Kendo.Mvc\\bin\\#{target}"
+			system("xcopy #{src}\\* #{dest} /y > nul")
+		end
+	end
+
     # Produce Kendo.Mvc.Examples.dll by building Kendo.Mvc.Examples.csproj
     file MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll' =>
         MVC_DEMOS_SRC.include('wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll') do |t|
         msbuild MVC_DEMOS_ROOT + 'Kendo.Mvc.Examples.csproj'
     end
-
 
     tree :to => 'dist/binaries/',
          :from => FileList[

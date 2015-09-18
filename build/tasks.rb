@@ -11,6 +11,18 @@ LESSC = File.join(Rake.application.original_dir, "build", "less-js", "bin", "les
 CSSMIN = File.join(Rake.application.original_dir, "node_modules", "cssmin", "bin", "cssmin")
 COMPILEJS = File.join(Rake.application.original_dir, "build", "compile.js");
 UGLIFYJS = File.join(Rake.application.original_dir, "node_modules", "uglify-js", "bin", "uglifyjs");
+DPL_DIST = "\\\\telerik.com\\distributions\\DailyBuilds\\XAML\\Release\\Binaries"
+DPL_FILES = [
+	'Telerik.Windows.Documents.Core',
+	'Telerik.Windows.Documents.Fixed',
+	'Telerik.Windows.Documents.Flow',
+	'Telerik.Windows.Documents.Flow.FormatProviders.Pdf',
+	'Telerik.Windows.Documents.Spreadsheet',
+	'Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml',
+	'Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf',
+	'Telerik.Windows.Maths',
+	'Telerik.Windows.Zip'
+].flat_map { |file| ["#{file}.dll", "#{file}.xml"] }
 
 class MergeTask < Rake::FileTask
     def execute(args=nil)
@@ -161,3 +173,15 @@ def tree(options)
     end
 end
 
+def copy_dpl_binaries
+	{'WPF40' => { :dest => 'NET40' }, 'WPF45' => { :dest => 'NET45' }}.each do |key, value|
+		DPL_FILES.each do |file|
+			source = "#{DPL_DIST}\\#{key}\\Dev\\#{file}"
+			dest = "dpl\\lib\\#{value[:dest]}"
+			demos_dest = "demos\\mvc\\bin"
+
+			system("xcopy #{source} #{dest} /y > nul")
+			system("xcopy #{source} #{demos_dest} /y > nul") if value[:dest] == 'NET40'
+			end
+	end
+end
