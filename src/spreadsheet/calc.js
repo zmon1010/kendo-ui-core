@@ -1204,6 +1204,10 @@
 
         notBetween: function (valueToCompare, from, to) {
             return valueToCompare < from || valueToCompare > to;
+        },
+
+        custom: function (valueToCompare, from) {
+            return from;
         }
     };
 

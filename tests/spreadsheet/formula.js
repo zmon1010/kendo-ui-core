@@ -628,6 +628,29 @@
         f.exec(ss, 2, "m/d/yyyy", validationCallback);
     });
 
+    test("validation default messages are set when custom comparer is used", function(){
+        var customOptions = {
+            from: "A2",
+            comparerType: "custom",
+            dataType: "date",
+            type: "reject",
+            allowNulls: false
+        };
+
+        var exp = calc.parseValidation(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var f = calc.compileValidation(exp);
+
+        var validationCallback = function(result) {
+            equal(f.tooltipTitle, undefined);
+            equal(f.tooltipMessage, undefined);
+            equal(f.message, "Please enter a valid date value that satisfies the formula: A2.");
+            equal(f.title, "Validation reject");
+        };
+
+        f.exec(ss, null, "m/d/yyyy", validationCallback);
+    });
+
     test("validation adjust modify both the validation ref and the nested formulas", 5, function(){
         var customOptions = {
             from: "Sheet1!A2",
@@ -975,6 +998,29 @@
         };
 
         f.exec(ss, 0, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation compare values custom comparer correctly", 1, function(){
+        var forumulaResult = true;
+
+        var exp = calc.parseValidation(Sheet1, 0, 0, {
+            from: "ISODD(5)",
+            comparerType: "custom",
+            allowNulls: false
+        });
+
+        var validationCallback = function(result) {
+            ok(result);
+        };
+
+        var f = calc.compileValidation(exp);
+
+        f.from.exec = function(e, callback) {
+            f.from.value = forumulaResult;
+            callback(forumulaResult);
+        };
+
+        f.exec(ss, null, "m/d/yyyy", validationCallback);
     });
 
     /* -----[ printer tests ]----- */

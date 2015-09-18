@@ -33,7 +33,8 @@
         notEqualTo: { type: "notEqualTo",  text: "not equal to #=from#"},
         greaterThanOrEqualTo: { type: "greaterThanOrEqualTo",  text: "greater than or equal to #=from#"},
         lessThanOrEqualTo: { type: "lessThanOrEqualTo",  text: "less than or equal to #=from#"},
-        notBetween: { type: "notBetween",  text: "not between #=from# and #=to#"}
+        notBetween: { type: "notBetween",  text: "not between #=from# and #=to#"},
+        custom: { type: "custom",  text: "that satisfies the formula: #=fromFormula#"}
     };
 
     /* -----[ Errors ]----- */
@@ -606,6 +607,8 @@
             var options = {
                 from: this.from ? this.from.value : "",
                 to: this.to ? this.to.value : "",
+                fromFormula: this.from ? this.from.toString() : "",
+                toFormula: this.from ? this.from.toString() : "",
                 dataType: this.dataType,
                 type: this.type,
                 comparerType: this.comparerType
