@@ -85,7 +85,7 @@ Deletes the contents of the column at the provided index and shifts the remainin
 
 The zero-based index of the column
 
-#### Example
+##### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -259,7 +259,7 @@ Inserts a new, empty column at the provided index. The contents of the spreadshe
 
 The zero-based index of the column
 
-#### Example
+##### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -286,7 +286,7 @@ Inserts a new, empty row at the provided index. The contents of the spreadsheet 
 
 The zero-based index of the column
 
-#### Example
+##### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -347,7 +347,7 @@ The zero-based index of the row
 
 If passed, the method will set the height of the row at the passed index.
 
-#### Example
+##### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -371,7 +371,7 @@ Returns a range with the current active selection.
 
 `kendo.spreadsheet.Range` the selection range.
 
-#### Example
+##### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -403,7 +403,7 @@ Shows the hidden column at the provided index. Does not have any effect if the c
 
 The zero-based index of the column
 
-#### Example
+##### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -432,7 +432,7 @@ Shows the hidden row at the provided index. Does not have any effect if the row 
 
 The zero-based index of the row
 
-#### Example
+##### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -463,7 +463,7 @@ Fires when the configuration or the data of the sheet change.
 
 The sheet instance.
 
-#### Example - subscribe to the "change" event during initialization
+##### Example - subscribe to the "change" event during initialization
 
 ```html
     <input id="dropdownlist" />
