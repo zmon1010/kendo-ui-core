@@ -1,6 +1,5 @@
 (function(f, define){
     define([
-        "./util/undoredostack",
         "./spreadsheet/commands",
         "./spreadsheet/formulabar",
         "./spreadsheet/formulainput",
@@ -39,7 +38,8 @@
         name: "Spreadsheet",
         category: "web",
         description: "Spreadsheet component",
-        depends: [],
+        depends: [ "core", "binder", "colorpicker", "combobox", "data", "dom", "dropdownlist",
+                  "menu", "popup", "sortable", "tabstrip", "toolbar", "treeview", "window" ],
         features: []
     };
 
