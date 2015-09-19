@@ -253,13 +253,7 @@ The zero-based index of the row
 
 Inserts a new, empty column at the provided index. The contents of the spreadsheet (including the ones in the current column index) are shifted to the right.
 
-#### Parameters
-
-##### index `Number`
-
-The zero-based index of the column
-
-##### Example
+#### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -276,6 +270,13 @@ The zero-based index of the column
         sheet.insertColumn(1);
     </script>
 ```
+
+#### Parameters
+
+##### index `Number`
+
+The zero-based index of the column
+
 ### insertRow
 
 Inserts a new, empty row at the provided index. The contents of the spreadsheet (including the ones in the current row index) are shifted down.
@@ -286,7 +287,7 @@ Inserts a new, empty row at the provided index. The contents of the spreadsheet 
 
 The zero-based index of the column
 
-##### Example
+#### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -318,6 +319,7 @@ Returns a [Range](/api/javascript/spreadsheet/range) for the given range specifi
 
 `kendo.spreadsheet.Range` a range object, which may be used to manipulate the cell state further.
 
+#### Example
 ```html
     <div id="spreadsheet"></div>
     <script type="text/javascript" charset="utf-8">
@@ -347,7 +349,7 @@ The zero-based index of the row
 
 If passed, the method will set the height of the row at the passed index.
 
-##### Example
+#### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -371,7 +373,7 @@ Returns a range with the current active selection.
 
 `kendo.spreadsheet.Range` the selection range.
 
-##### Example
+#### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -403,7 +405,7 @@ Shows the hidden column at the provided index. Does not have any effect if the c
 
 The zero-based index of the column
 
-##### Example
+#### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -432,7 +434,7 @@ Shows the hidden row at the provided index. Does not have any effect if the row 
 
 The zero-based index of the row
 
-##### Example
+#### Example
 
 ```html
     <div id="spreadsheet"></div>
@@ -463,7 +465,7 @@ Fires when the configuration or the data of the sheet change.
 
 The sheet instance.
 
-##### Example - subscribe to the "change" event during initialization
+#### Example - subscribe to the "change" event during initialization
 
 ```html
     <input id="dropdownlist" />

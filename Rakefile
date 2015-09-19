@@ -115,7 +115,8 @@ def md_api_suite(suite)
     when 'all'
         all_docs("").exclude("docs/api/javascript/effects/**/*.md")
     when 'web'
-        all_docs("ui").include(framework_api_doc)
+        all_docs("ui")
+        .include(all_docs("spreadsheet")).include(framework_api_doc)
     when 'dataviz'
         all_docs("dataviz").include(framework_api_doc)
     when 'mobile'
