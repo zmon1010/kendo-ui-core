@@ -153,7 +153,17 @@
 
             this.action(args);
         },
-        events: ToolBar.fn.events.concat([ "action", "dialog" ]),
+        events: [
+            "click",
+            "toggle",
+            "open",
+            "close",
+            "overflowOpen",
+            "overflowClose",
+
+            "action",
+            "dialog"
+        ],
         options: {
             name: "SpreadsheetToolBar",
             resizable: true,
