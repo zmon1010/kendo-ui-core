@@ -3,7 +3,6 @@
 (function(f, define){
     define([ "./calc", "../kendo.dom" ], f);
 })(function(){
-    (function(){
 
     "use strict";
 
@@ -719,5 +718,4 @@
         }
     };
 
-    })();
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
