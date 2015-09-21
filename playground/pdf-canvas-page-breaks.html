@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+      ]);
+    </script>
+    <script src="./pako.min.js"></script>
+    <style type="text/css">
+      body {
+        font-family: "DejaVu Serif";
+      }
+      #canvas {
+        border: 1px solid red;
+        background: yellow;
+        margin: 1em auto;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      function pdf() {
+        kendo.drawing.drawDOM("#test", {
+          paperSize: "A4",
+          margin: "1cm"
+        }).then(function(group){
+          kendo.drawing.pdf.saveAs(group, "test.pdf");
+        });
+      }
+
+      // draw something on the canvas
+      $(document).ready(function(){
+        var canvas = $("#canvas")[0];
+        var context = canvas.getContext("2d");
+        var w = canvas.width, h = canvas.height;
+        context.font = "30px serif";
+        context.textAlign = "center";
+        context.fillText("This is <canvas>", w/2, h/2);
+      });
+    </script>
+    <button onclick="pdf()">Generate</button>
+    <div id="test">
+      <p>Aliquam erat volutpat.  Nunc eleifend leo vitae magna.  In id
+        erat non orci commodo lobortis.  Proin neque massa, cursus ut,
+        gravida ut, lobortis eget, lacus.  Sed diam.  Praesent fermentum
+        tempor tellus.  Nullam tempus.  Mauris ac felis vel velit tristique
+        imperdiet.  Donec at pede.  Etiam vel neque nec dui dignissim
+        bibendum.  Vivamus id enim.  Phasellus neque orci, porta a, aliquet
+        quis, semper a, massa.  Phasellus purus.  Pellentesque tristique
+        imperdiet tortor.  Nam euismod tellus id erat.</p>
+
+      <p>Pellentesque dapibus suscipit ligula.  Donec posuere augue in quam.
+        Etiam vel tortor sodales tellus ultricies commodo.  Suspendisse
+        potenti.  Aenean in sem ac leo mollis blandit.  Donec neque quam,
+        dignissim in, mollis nec, sagittis eu, wisi.  Phasellus lacus.
+        Etiam laoreet quam sed arcu.  Phasellus at dui in ligula mollis
+        ultricies.  Integer placerat tristique nisl.  Praesent augue.  Fusce
+        commodo.  Vestibulum convallis, lorem a tempus semper, dui dui
+        euismod elit, vitae placerat urna tortor vitae lacus.  Nullam libero
+        mauris, consequat quis, varius et, dictum id, arcu.  Mauris mollis
+        tincidunt felis.  Aliquam feugiat tellus ut neque.  Nulla facilisis,
+        risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum
+        nunc justo sit amet elit.</p>
+
+      <p>Aliquam erat volutpat.  Nunc eleifend leo vitae magna.  In id
+        erat non orci commodo lobortis.  Proin neque massa, cursus ut,
+        gravida ut, lobortis eget, lacus.  Sed diam.  Praesent fermentum
+        tempor tellus.  Nullam tempus.  Mauris ac felis vel velit tristique
+        imperdiet.  Donec at pede.  Etiam vel neque nec dui dignissim
+        bibendum.  Vivamus id enim.  Phasellus neque orci, porta a, aliquet
+        quis, semper a, massa.  Phasellus purus.  Pellentesque tristique
+        imperdiet tortor.  Nam euismod tellus id erat.</p>
+
+      <canvas id="canvas" width="300" height="200"></canvas>
+
+      <p>Pellentesque dapibus suscipit ligula.  Donec posuere augue in quam.
+        Etiam vel tortor sodales tellus ultricies commodo.  Suspendisse
+        potenti.  Aenean in sem ac leo mollis blandit.  Donec neque quam,
+        dignissim in, mollis nec, sagittis eu, wisi.  Phasellus lacus.
+        Etiam laoreet quam sed arcu.  Phasellus at dui in ligula mollis
+        ultricies.  Integer placerat tristique nisl.  Praesent augue.  Fusce
+        commodo.  Vestibulum convallis, lorem a tempus semper, dui dui
+        euismod elit, vitae placerat urna tortor vitae lacus.  Nullam libero
+        mauris, consequat quis, varius et, dictum id, arcu.  Mauris mollis
+        tincidunt felis.  Aliquam feugiat tellus ut neque.  Nulla facilisis,
+        risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum
+        nunc justo sit amet elit.</p>
+
+      <p>Aliquam erat volutpat.  Nunc eleifend leo vitae magna.  In id
+        erat non orci commodo lobortis.  Proin neque massa, cursus ut,
+        gravida ut, lobortis eget, lacus.  Sed diam.  Praesent fermentum
+        tempor tellus.  Nullam tempus.  Mauris ac felis vel velit tristique
+        imperdiet.  Donec at pede.  Etiam vel neque nec dui dignissim
+        bibendum.  Vivamus id enim.  Phasellus neque orci, porta a, aliquet
+        quis, semper a, massa.  Phasellus purus.  Pellentesque tristique
+        imperdiet tortor.  Nam euismod tellus id erat.</p>
+
+      <p>Pellentesque dapibus suscipit ligula.  Donec posuere augue in quam.
+        Etiam vel tortor sodales tellus ultricies commodo.  Suspendisse
+        potenti.  Aenean in sem ac leo mollis blandit.  Donec neque quam,
+        dignissim in, mollis nec, sagittis eu, wisi.  Phasellus lacus.
+        Etiam laoreet quam sed arcu.  Phasellus at dui in ligula mollis
+        ultricies.  Integer placerat tristique nisl.  Praesent augue.  Fusce
+        commodo.  Vestibulum convallis, lorem a tempus semper, dui dui
+        euismod elit, vitae placerat urna tortor vitae lacus.  Nullam libero
+        mauris, consequat quis, varius et, dictum id, arcu.  Mauris mollis
+        tincidunt felis.  Aliquam feugiat tellus ut neque.  Nulla facilisis,
+        risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum
+        nunc justo sit amet elit.</p>
+    </div>
+  </body>
+</html>
