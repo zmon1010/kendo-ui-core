@@ -643,7 +643,7 @@
     <value>Termin löschen</value>
   </data>
   <data name="Scheduler_ShowFullDay" xml:space="preserve">
-    <value>Zeigen ganztags</value>
+    <value>Ganzen Tag anzeigen</value>
   </data>
   <data name="Scheduler_ShowWorkDay" xml:space="preserve">
     <value>Zeigen Geschäftszeiten</value>
