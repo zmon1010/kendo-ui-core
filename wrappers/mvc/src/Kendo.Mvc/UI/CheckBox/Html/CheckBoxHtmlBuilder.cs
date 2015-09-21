@@ -60,13 +60,14 @@
 
         public IHtmlNode Label()
         {
+            var defaultLabel = Component.ModelMetadata != null ? Component.ModelMetadata.DisplayName : "";
             return new HtmlElement("label")
                         .Attributes(new
                         {
                             @for = Component.Id,
                             @class = "k-checkbox-label"
                         })
-                        .Text(Component.Label);
+                        .Text(Component.Label ?? defaultLabel);
             
         }
 

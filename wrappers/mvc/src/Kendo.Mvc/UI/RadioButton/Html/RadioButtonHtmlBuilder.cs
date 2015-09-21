@@ -66,13 +66,14 @@
 
         public IHtmlNode Label()
         {
+            var defaultLabel = Component.ModelMetadata != null ? Component.ModelMetadata.DisplayName : "";
             return new HtmlElement("label")
                 .Attributes(new
                 {
                     @for = RenderId(),
                     @class = "k-radio-label"
                 })
-                .Text(Component.Label);
+                .Text(Component.Label ?? defaultLabel);
         }
 
         private string RenderId()
