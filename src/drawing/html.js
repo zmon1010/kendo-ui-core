@@ -177,11 +177,32 @@
             }
         }
 
+        // clone nodes ourselves, so that we redraw <canvas> (DOM or
+        // jQuery clone will not).  https://github.com/telerik/kendo/issues/4872
+        function cloneNodes(el) {
+            var clone = el.cloneNode(false);
+            if (el.nodeType == 1 /* Element */) {
+                var $el = $(el), $clone = $(clone), i;
+                var data = $el.data();
+                for (i in data) {
+                    $clone.data(i, data[i]);
+                }
+                if (/^canvas$/i.test(el.tagName)) {
+                    clone.getContext("2d").drawImage(el, 0, 0);
+                } else {
+                    for (i = el.firstChild; i; i = i.nextSibling) {
+                        clone.appendChild(cloneNodes(i));
+                    }
+                }
+            }
+            return clone;
+        }
+
         function handlePageBreaks(callback, element, forceBreak, pageWidth, pageHeight, margin, options) {
             var template = makeTemplate(options.template);
             var doc = element.ownerDocument;
             var pages = [];
-            var copy = $(element).clone(true, true)[0];
+            var copy = cloneNodes(element);
             var container = doc.createElement("KENDO-PDF-DOCUMENT");
             var adjust = 0;
 
