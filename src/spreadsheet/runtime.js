@@ -340,6 +340,24 @@
             }
             return this;
         },
+        multiply: function(b) {
+            var a = this, m = new Matrix(a.context);
+            for (var row = 0; row < a.height; ++row) {
+                for (var col = 0; col < b.width; ++col) {
+                    var s = 0;
+                    for (var i = 0; i < a.width; ++i) {
+                        var va = a.get(row, i);
+                        var vb = b.get(i, col);
+                        if (typeof va != "number" || typeof vb != "number") {
+                            throw new CalcError("VALUE");
+                        }
+                        s += va * vb;
+                    }
+                    m.set(row, col, s);
+                }
+            }
+            return m;
+        },
         determinant: function() {
             // have to thank my father for this function.
             // http://docere.ro/o-aplicatie-pentru-browser-cu-determinanti-si-sisteme-liniare/

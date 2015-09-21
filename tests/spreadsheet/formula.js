@@ -1416,6 +1416,21 @@
         });
     });
 
+    test("MMULT", function(){
+        ss.fill({
+            A2: 1, B2: 3,
+            A3: 7, B3: 2,
+            A5: 2, B5: 0,
+            A6: 0, B6: 2,
+            A1: '=MMULT(A2:B3, A5:B6)'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A1: "[[2,6],[14,4]]" // ends up like this through stringification
+            });
+        });
+    });
+
     test("BINOMDIST and friends", function(){
         var ss = new Spreadsheet();
         // some examples I found over the net

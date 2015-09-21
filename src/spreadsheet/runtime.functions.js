@@ -1878,22 +1878,7 @@
     ]);
 
     defineFunction("mmult", function(a, b){
-        var m = new Matrix(this);
-        for (var row = 0; row < a.height; ++row) {
-            for (var col = 0; col < b.width; ++col) {
-                var s = 0;
-                for (var i = 0; i < a.width; ++i) {
-                    var va = a.get(row, i);
-                    var vb = b.get(i, col);
-                    if (typeof va != "number" || typeof vb != "number") {
-                        throw new CalcError("VALUE");
-                    }
-                    s += va * vb;
-                }
-                m.set(row, col, s);
-            }
-        }
-        return m;
+        return a.multiply(b);
     }).args([
         [ "a", "matrix" ],
         [ "b", [ "and", "matrix",
