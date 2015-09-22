@@ -516,8 +516,8 @@
             }
 
             this.element.css({
-                width: rectangle.width,
-                height: rectangle.height
+                width: rectangle.width + 1,
+                height: rectangle.height + 1
             });
         },
 

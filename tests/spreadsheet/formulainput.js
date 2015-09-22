@@ -66,8 +66,8 @@
             height: 30
         });
 
-        equal(element.width(), 50);
-        equal(element.height(), 30);
+        equal(element.width(), 51);
+        equal(element.height(), 31);
     });
 
     test("hide method shows the element", function() {
@@ -144,7 +144,7 @@
         formulaInput.value("s text");
         formulaInput.element.triggerHandler("input");
 
-        equal(formulaInput.element.width(), initialWidth);
+        equal(formulaInput.element.width(), initialWidth+1);
     });
 
     test("scale sets input width to cell width", function() {

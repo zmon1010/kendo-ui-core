@@ -75,7 +75,7 @@ sheet.hideRow(12);
 sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);
 
-sheet.range("K10").value("'123");
+sheet.range("K10").value("123");
 sheet.range("J10").value(new Date(2015,1,1));
 
 sheet.range("A1:B3").values([
@@ -93,8 +93,8 @@ sheet.range("E15:E20")
     .background("#afa")
     .borderTop({ color: "#000" })
     .borderBottom({ color: "#f00" })
-    .borderLeft({ size: "3px", color: "#0f0" })
-    .borderRight({ size: "3px", color: "#00f" });
+    .borderLeft({ color: "#0f0" })
+    .borderRight({ color: "#00f" });
 
 sheet.frozenColumns(3).frozenRows(6);
 
