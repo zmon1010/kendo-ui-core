@@ -216,9 +216,9 @@ var getKendoFile = (function() {
             var ast = this.buildMinAST();
             var f = walkAST(ast, findDefine).factory;
             return new U2.AST_Toplevel({
-                body: new U2.AST_SimpleStatement({
+                body: [ new U2.AST_SimpleStatement({
                     body: new U2.AST_Call({ expression: f, args: [] })
-                })
+                }) ]
             });
         }),
 
