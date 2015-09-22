@@ -28,33 +28,30 @@
     }
 }
 
+.k-selection-partial,
 .k-selection-full {
     .k-spreadsheet-pane & {
         border-color: lighten(@selected-background, 30%);
         background-color: lighten(@selected-background, 30%);
     }
 
-    @border-style: 2px solid @selected-background;
-
     .k-spreadsheet-column-header & {
-        border-bottom: @border-style;
+        border-bottom-color: @selected-background;
     }
 
     .k-spreadsheet-row-header & {
-        border-right: @border-style;
+        border-right-color: @selected-background;
     }
 }
 
 .k-spreadsheet-pane .k-selection-partial {
     background-color: lighten(@selected-background, 40%);
-    border-color: lighten(@selected-background, 40%);
 }
 
 .k-spreadsheet-selection {
     background-color: fadeout(@selected-background, 80%);
     border-color: @selected-background;
 }
-
 
 .k-spreadsheet-cell-editor {
     box-shadow: inset 0 0 0 2px @selected-background;
