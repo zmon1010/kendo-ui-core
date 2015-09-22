@@ -277,7 +277,7 @@ formatter allows any number of conditional sections.
 ##### Text and number formatting
 
 | Character | Meaning                                                                                                                                                                                                                    |
-|-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `0`       | Digit placeholder.  Use this to display insignificant zeroes, for example `8.9` with the format `00.000` will display as `08.900`                                                                                          |
 | `#`       | Digit placeholder.  This does not display insignificant zeroes, for example `12.34` in format `###.###` will display as `12.34`                                                                                            |
 | `?`       | Digit placeholder.  Similar to `0`, but this displays a space character instead of zero.  You can use this to align numbers by decimal point, for example (but you should use a fixed-width font for this to be effective) |
@@ -299,7 +299,7 @@ useful:
 Example values:
 
 |    Value | Display      |
-|----------+--------------|
+|----------|--------------|
 | 12345678 | 12.35M       |
 |    34567 | 34.57K       |
 |      123 | 123B         |
@@ -309,7 +309,7 @@ Example values:
 ##### Date and time formatting
 
 | Format string | Meaning                                                                           |
-|---------------+-----------------------------------------------------------------------------------|
+|---------------|-----------------------------------------------------------------------------------|
 | m             | Display month number without leading zero                                         |
 | mm            | Display month number with leading zero                                            |
 | mmm           | Display short month name in current culture                                       |
@@ -320,7 +320,7 @@ Example values:
 | dddd          | Display the full week day name                                                    |
 | yy            | Display the year as two digit number                                              |
 | yyyy          | Display the full year number                                                      |
-|---------------+-----------------------------------------------------------------------------------|
+|---------------|-----------------------------------------------------------------------------------|
 | h             | Display hour without leading zero                                                 |
 | hh            | Display hour including leading zero                                               |
 | m             | Display minute without leading zero                                               |
@@ -339,7 +339,7 @@ You can notice that the month and minute specifiers are ambiguous (`m` or `mm`).
 unless preceded by a hour part (`h` or `hh`) in which case it'll display minutes.  Therefore:
 
 | Format string             | Example display         |
-|---------------------------+-------------------------|
+|---------------------------|-------------------------|
 | d m yyyy                  | 22 9 2015               |
 | h "hours and" m "minutes" | 12 hours and 25 minutes |
 
