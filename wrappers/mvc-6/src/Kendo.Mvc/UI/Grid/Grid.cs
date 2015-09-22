@@ -332,7 +332,7 @@ namespace Kendo.Mvc.UI
 						return;
 					}
 
-					var editorHtml = column.GetEditor(htmlHelper);
+					var editorHtml = column.GetEditor(htmlHelper, HtmlEncoder);
 
 					if (IsInClientTemplate)
 					{

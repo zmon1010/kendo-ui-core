@@ -1,23 +1,25 @@
 namespace Kendo.Mvc.UI
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.IO;
-	using System.Linq;
-	using System.Linq.Expressions;
-	using System.Reflection;
-	using System.Text.RegularExpressions;
-	using System.Threading;
-	using Kendo.Mvc.Extensions;
-	using Kendo.Mvc.Resources;
-	using Microsoft.AspNet.Mvc;
-	using Microsoft.AspNet.Mvc.ModelBinding;
-	using Microsoft.AspNet.Mvc.Rendering;
-	using Microsoft.AspNet.Mvc.Rendering.Expressions;
-	using Microsoft.AspNet.Routing;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.IO;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.Resources;
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNet.Mvc.Rendering.Expressions;
+    using Microsoft.AspNet.Routing;
+    using Microsoft.Framework.WebEncoders;
+    using System.Text;
 
-	public class GridBoundColumn<TModel, TValue> : GridColumnBase<TModel>, IGridBoundColumn/*, IGridTemplateColumn<TModel>*/ where TModel : class
+    public class GridBoundColumn<TModel, TValue> : GridColumnBase<TModel>, IGridBoundColumn/*, IGridTemplateColumn<TModel>*/ where TModel : class
     {
         private static readonly IDictionary<string, Func<TModel, TValue>> expressionCache = new Dictionary<string, Func<TModel, TValue>>();
         private static readonly ReaderWriterLockSlim syncLock = new ReaderWriterLockSlim();
@@ -289,13 +291,18 @@ namespace Kendo.Mvc.UI
             }
         }
 
-		public string GetEditor(IHtmlHelper helper)
+		public string GetEditor(IHtmlHelper helper, IHtmlEncoder encoder)
 		{
 			((ICanHasViewContext)helper).Contextualize(Grid.ViewContext.ViewContextForType<TModel>(Grid.ModelMetadataProvider));
 
-			var validation = helper.ValidationMessage(Member);
+            var sb = new StringBuilder();
 
-			return helper.Editor(Member, EditorTemplateName, AdditionalViewData).ToString() + validation ?? string.Empty;
+            using (var writer = new StringWriter(sb)) {                
+                helper.Editor(Member, EditorTemplateName, AdditionalViewData).WriteTo(writer, encoder);
+                helper.ValidationMessage(Member).WriteTo(writer, encoder);                
+            }
+
+            return sb.ToString();                
 		}
 	}
 }
