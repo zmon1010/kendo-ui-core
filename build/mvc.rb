@@ -2,7 +2,6 @@ MVC_SRC_ROOT = 'wrappers/mvc/src/'
 MVC_BIN_ROOT = MVC_SRC_ROOT + 'Kendo.Mvc/bin/'
 MVC_DEMOS_ROOT = 'wrappers/mvc/demos/Kendo.Mvc.Examples/'
 DEMO_SHARED_ROOT = 'demos/mvc/content/'
-DPL_ROOT = 'dpl/Telerik.Web.Spreadsheet'
 
 # The list of files which Kendo.Mvc.dll depends on
 MVC_WRAPPERS_SRC = FileList[MVC_SRC_ROOT + '**/*.cs']
@@ -291,8 +290,7 @@ namespace :mvc do
     end
 end
 
-# the USE_MONO flag is useful when debugging builds on linux w/o having binaries
-if PLATFORM =~ /linux|darwin/ && !ENV['USE_MONO']
+if PLATFORM =~ /linux|darwin/
     # copy pre-built binaries
 
     FileList[
@@ -312,25 +310,22 @@ else
         "Release", "Release-MVC3", "Release-MVC5",
         "Release-Trial", "Release-MVC3-Trial", "Release-MVC5-Trial"
     ].each do |configuration|
-        options = '/p:Configuration="' + configuration + '"'
 
         output_dir = "wrappers/mvc/src/Kendo.Mvc/bin/#{configuration}"
         dll_file = "#{output_dir}/Kendo.Mvc.dll"
 
+        dpl_configuration = configuration =~ /MVC5/ ? 'Release-NET45' : 'Release';
+
         # Produce Kendo.Mvc.dll by building Kendo.Mvc.csproj
         file dll_file => MVC_WRAPPERS_SRC do |t|
-            msbuild 'wrappers/mvc/src/Kendo.Mvc/Kendo.Mvc.csproj', options
+            copy_dpl_binaries
 
-            if PLATFORM =~ /linux|darwin/
-                # xbuild can't set the version of satellite assemblies so we build them using `al`
-                resources_for(configuration).each do |resource|
-                    culture = resource.pathmap("%-1d")
-                    obj = "wrappers/mvc/src/Kendo.Mvc/obj/#{configuration}/Kendo.Mvc.Resources.Messages.#{culture}.resources";
-                    key = 'wrappers/mvc/src/shared/Kendo.snk'
+            msbuild DPL_ROOT + '/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj', "/p:Configuration=#{dpl_configuration}"
+            msbuild 'wrappers/mvc/src/Kendo.Mvc/Kendo.Mvc.csproj', "/p:Configuration=#{configuration}"
 
-                    sh "al /t:lib /embed:#{obj} /culture:#{culture} /out:#{resource} /template:#{t.name} /keyfile:#{key}", :verbose => VERBOSE
-                end
-            end
+            dpl_src = "dpl\\Telerik.Web.Spreadsheet\\bin\\#{dpl_configuration}"
+            dpl_dest = "wrappers\\mvc\\src\\Kendo.Mvc\\bin\\#{configuration}"
+            system("xcopy #{dpl_src}\\* #{dpl_dest} /y > nul")
         end
 
         # XML API documentation
@@ -339,18 +334,6 @@ else
         # Satellite assemblies (<culture>\Kendo.Mvc.resources.dll) depend on Kendo.Mvc.dll
         rule "#{output_dir}/**/*.resources.dll" => dll_file
     end
-
-	{
-        "Release" => ['Release-MVC3', 'Release'], "Release-NET45" => ['Release-MVC5']
-    }.each do |configuration, targets|
-		msbuild DPL_ROOT + '/Telerik.Web.Spreadsheet.csproj', "/p:Configuration=#{configuration}"
-
-		targets.each do |target|
-			src = "dpl\\Telerik.Web.Spreadsheet\\bin\\#{configuration}"
-			dest = "wrappers\\mvc\\src\\Kendo.Mvc\\bin\\#{target}"
-			system("xcopy #{src}\\* #{dest} /y > nul")
-		end
-	end
 
     # Produce Kendo.Mvc.Examples.dll by building Kendo.Mvc.Examples.csproj
     file MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll' =>
