@@ -327,7 +327,12 @@
         _resize: function() {
             var tabstripHeight = this.tabstrip ? this.tabstrip.element.outerHeight() : 0;
             var formulaBarHeight = this.formulaBar ? this.formulaBar.element.outerHeight() : 0;
-            this.wrapper.height(this.element.height() - tabstripHeight - formulaBarHeight);
+            var sheetsBarHeight = this.sheetsbar ? this.sheetsbar.element.outerHeight() : 0;
+
+            this.wrapper.height(
+                this.element.height() -
+                    (tabstripHeight + formulaBarHeight + sheetsBarHeight)
+            );
         },
 
         _chrome: function() {
@@ -486,6 +491,7 @@
 
             if (reason.sheetSelection) {
                 this.sheetsbar.renderSheets(this._workbook.sheets(), this._workbook.sheetIndex(this._sheet));
+                this._resize();
             }
 
             //TODO: refresh sheets list on sheetSelection
