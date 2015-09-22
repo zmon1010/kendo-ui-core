@@ -19,6 +19,7 @@ STAGING_CDN_ROOT = '//kendo.cdn.telerik.com/staging/'
 DIST_JS_ROOT = "dist/js"
 DIST_STYLES_ROOT = "dist/styles/"
 KENDO_CONFIG_FILE = File.join("download-builder", "config", "kendo-config.json")
+DPL_ROOT = 'dpl'
 
 PLATFORM = RbConfig::CONFIG['host_os']
 

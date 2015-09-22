@@ -23,7 +23,10 @@ namespace Telerik.Web.Spreadsheet
                 {
                     var documentSheet = document.Worksheets.Add();
 
-                    documentSheet.Name = sheet.Name;
+                    if (!string.IsNullOrEmpty(sheet.Name))
+                    {
+                        documentSheet.Name = sheet.Name;
+                    }
 
                     if (sheet.Name == ActiveSheet)
                     {
@@ -100,7 +103,14 @@ namespace Telerik.Web.Spreadsheet
 
         private static SelectionState CreateSelectionState(Worksheet sheet, DocumentWorksheet documentSheet)
         {
-            return new SelectionState(sheet.Selection.ToCellRange(), sheet.ActiveCell.ToCellIndex(), documentSheet.ViewState.SelectionState.Pane);
+            if (sheet.Selection != null)
+            {
+                return new SelectionState(sheet.Selection.ToCellRange(), sheet.ActiveCell.ToCellIndex(), documentSheet.ViewState.SelectionState.Pane);
+            }
+            else
+            {
+                return new SelectionState();
+            }
         }
     }  
 }
