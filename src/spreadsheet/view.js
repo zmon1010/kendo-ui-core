@@ -814,7 +814,7 @@
         resizeHintHandle: "k-resize-hint-handle",
         resizeHintMarker: "k-resize-hint-marker",
         resizeHintVertical: "k-resize-hint-vertical",
-        selectionDashed: "k-spreadsheet-selection-dashed",
+        selectionHighlight: "k-spreadsheet-selection-highlight",
         series: [
             "k-series-a",
             "k-series-b",
@@ -1040,7 +1040,7 @@
                     return;
                 }
 
-                this._addDiv(selections, ref, classNames.selectionDashed + (range.seriesCls || range.cls));
+                this._addDiv(selections, ref, classNames.selectionHighlight + (range.seriesCls || range.cls));
             }.bind(this));
 
             return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);
