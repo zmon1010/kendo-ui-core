@@ -1,6 +1,7 @@
 ﻿using Telerik.Windows.Documents.Spreadsheet.Core;
 using Telerik.Windows.Documents.Spreadsheet.Model;
 using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
+using Telerik.Windows.Documents.Spreadsheet.Utilities;
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
 using DocumentWorksheet = Telerik.Windows.Documents.Spreadsheet.Model.Worksheet;
 
@@ -35,12 +36,15 @@ namespace Telerik.Web.Spreadsheet
 
                     documentSheet.ViewState.SelectionState = CreateSelectionState(sheet, documentSheet);
                     
-                    //foreach (var row in sheet.Rows)
-                    //{
-                    //    ImportCells(row, documentSheet);
+                    foreach (var row in sheet.Rows)
+                    {
+                        //ImportCells(row, documentSheet);
 
-                    //    documentSheet.Rows[row.Index].SetHeight(new RowHeight(row.Height, true));
-                    //}
+                        if (row.Height > 0)
+                        {
+                            documentSheet.Rows[row.Index].SetHeight(new RowHeight(row.Height, true));
+                        }
+                    }
 
                     foreach (var column in sheet.Columns)
                     {
@@ -70,6 +74,18 @@ namespace Telerik.Web.Spreadsheet
             document.History.IsEnabled = true;
 
             return document;
+        }        
+
+        private static SelectionState CreateSelectionState(Worksheet sheet, DocumentWorksheet documentSheet)
+        {
+            if (sheet.Selection != null)
+            {
+                return new SelectionState(sheet.Selection.ToCellRange(), sheet.ActiveCell.ToCellIndex(), documentSheet.ViewState.SelectionState.Pane);
+            }
+            else
+            {
+                return new SelectionState();
+            }
         }
 
         private static void ImportCells(Row srcRow, DocumentWorksheet documentSheet)
@@ -98,18 +114,6 @@ namespace Telerik.Web.Spreadsheet
                 {
                     selection.SetFormat(new CellValueFormat(cell.Format));
                 }
-            }
-        }
-
-        private static SelectionState CreateSelectionState(Worksheet sheet, DocumentWorksheet documentSheet)
-        {
-            if (sheet.Selection != null)
-            {
-                return new SelectionState(sheet.Selection.ToCellRange(), sheet.ActiveCell.ToCellIndex(), documentSheet.ViewState.SelectionState.Pane);
-            }
-            else
-            {
-                return new SelectionState();
             }
         }
     }  
