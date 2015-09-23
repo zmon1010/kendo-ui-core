@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+  <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+
+  <script src="./loader.js"></script>
+  <script>
+    requireSync([
+      "../src/jquery.js",
+      "../src/kendo.pdf.js"
+    ]);
+  </script>
+
+  <script>
+    $(document).ready(function() {
+            $('button').on('click', function () {
+
+                kendo.drawing.drawDOM($('#pdf-page'), {
+                    forcePageBreak: ".page-break"
+                }).then(function (group) {
+                    group.options.set("pdf.margin", "1cm");
+                    kendo.drawing.pdf.saveAs(group, "test.pdf");
+                });
+
+               /* kendo.drawing.drawDOM($('#pdf-page')).then(function (group) {
+                    //group.page = formatPage(group);
+                    kendo.drawing.pdf.saveAs(group,  {
+                        paperSize: "auto", multiPage: true,
+                        margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" },
+                    }, "OA.pdf");
+                });*/
+            });
+        });
+  </script>
+</head>
+<body>
+<div id="example">
+  <button>pdf</button>
+  <div id="pdf-page">
+    <table class="k-grid" id="results-grid">
+    <thead>
+        <tr class="k-header">
+            <th colspan="3">Results
+            </th>
+            <th colspan="3">Price
+            </th>
+            <th colspan="3">Savings
+            </th>
+            <th rowspan="3">Comments</th>
+        </tr>
+        <tr class="k-header">
+            <th rowspan="2">Customer</th>
+            <th rowspan="2">Date Submitted</th>
+            <th rowspan="2">Credit</th>
+                <th>RFP 18431</th>
+                <th>RFP 18432</th>
+                <th>RFP 18433</th>
+                <th>RFP 18431</th>
+                <th>RFP 18432</th>
+                <th>RFP 18433</th>
+        </tr>
+        <tr class="k-header">
+                <th>12 mos</th>
+                <th>24 mos</th>
+                <th>36 mos</th>
+                <th>12 mos</th>
+                <th>24 mos</th>
+                <th>36 mos</th>
+        </tr>
+    </thead>
+    <tbody>
+
+            <tr class="k-alt">
+                <td class="a-l">Price To Compare</td>
+                <td>6/15/2015</td>
+                <td></td>
+                    <td class="rank-0">
+$0.11000                    </td>
+                    <td class="rank-0">
+$0.11000                    </td>
+                    <td class="rank-0">
+$0.11000                    </td>
+                                    <td class="rank-0">
+                    </td>
+                    <td class="rank-0">
+                    </td>
+                    <td class="rank-0">
+                    </td>
+                <td>
+                </td>
+            </tr>
+            <tr class="">
+                <td class="a-l">asdf</td>
+                <td>6/15/2015</td>
+                <td>Approved</td>
+                    <td class="rank-1">
+($0.77250)                    </td>
+                    <td class="rank-2">
+($0.69500)                    </td>
+                    <td class="rank-2">
+($0.61250)                    </td>
+                                    <td class="rank-1">
+$95,736.00                    </td>
+                    <td class="rank-2">
+$174,658.00                    </td>
+                    <td class="rank-2">
+$235,137.00                    </td>
+                <td>
+                        <i class="fa fa-comment"></i>
+                </td>
+            </tr>
+            <tr class="k-alt">
+                <td class="a-l">asdf</td>
+                <td>2/10/2015</td>
+                <td>Approved</td>
+                    <td class="rank-3">
+($0.67500)                    </td>
+                    <td class="rank-3">
+($0.64100)                    </td>
+                    <td class="rank-3">
+($0.54100)                    </td>
+                                    <td class="rank-3">
+$85,159.00                    </td>
+                    <td class="rank-3">
+$162,941.00                    </td>
+                    <td class="rank-3">
+$211,867.00                    </td>
+                <td>
+                        <i class="fa fa-comment"></i>
+                </td>
+            </tr>
+            <tr class="">
+                <td class="a-l">asdf</td>
+                <td>4/16/2015</td>
+                <td>Pending</td>
+                    <td class="rank-2">
+($0.76000)                    </td>
+                    <td class="rank-1">
+($0.74000)                    </td>
+                    <td class="rank-1">
+($0.63000)                    </td>
+                                    <td class="rank-2">
+$94,380.00                    </td>
+                    <td class="rank-1">
+$184,421.00                    </td>
+                    <td class="rank-1">
+$240,832.00                    </td>
+                <td>
+                        <i class="fa fa-comment"></i>
+                </td>
+            </tr>
+            <tr class="k-alt">
+                <td class="a-l">asdf</td>
+                <td>1/14/2014</td>
+                <td>Pending</td>
+                    <td class="rank-0">
+($0.16000)                    </td>
+                    <td class="rank-0">
+($0.16000)                    </td>
+                    <td class="rank-0">
+($0.16000)                    </td>
+                                    <td class="rank-4">
+$29,290.00                    </td>
+                    <td class="rank-4">
+$58,581.00                    </td>
+                    <td class="rank-4">
+$87,871.00                    </td>
+                <td>
+                </td>
+            </tr>
+    </tbody>
+</table>
+  </div>
+</div>
+
+
+</body>
+</html>
