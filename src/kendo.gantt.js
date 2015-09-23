@@ -39,12 +39,12 @@ var __meta__ = { // jshint ignore:line
     var STRING = "string";
     var DIRECTIONS = {
         "down": {
-            origin: "bottom center",
-            position: "top center"
+            origin: "bottom left",
+            position: "top left"
         },
         "up": {
-            origin: "top center",
-            position: "bottom center"
+            origin: "top left",
+            position: "bottom left"
         }
     };
     var ARIA_DESCENDANT = "aria-activedescendant";
@@ -410,6 +410,7 @@ var __meta__ = { // jshint ignore:line
             var ganttStyles = Gantt.styles;
             var width = list[0].style.width;
             var wrapper = this.element.find(DOT + ganttStyles.toolbar.appendButton);
+            var outerWidth = list.outerWidth();
             var computedStyle;
             var computedWidth;
 
@@ -428,6 +429,10 @@ var __meta__ = { // jshint ignore:line
                 width = computedWidth - (list.outerWidth() - list.width());
             } else {
                 width = computedWidth;
+            }
+
+            if (outerWidth > width) {
+                width = outerWidth;
             }
 
             list.css({
