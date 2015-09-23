@@ -1843,14 +1843,31 @@ var __meta__ = { // jshint ignore:line
 
         _scrollTo: function(value) {
             var view = this.timeline.view();
+            var list = this.list;
             var attr = kendo.attr("uid");
             var id = typeof value === "string" ? value :
                 value.closest("tr" + selector()).attr(attr);
-            var scrollTarget = view.content.find(selector(id));
+            var action;
+            var scrollTarget;
+            var scrollIntoView = function() {
+                if (scrollTarget.length !== 0) {
+                    action();
+                }
+            };
 
-            if (scrollTarget.length !== 0) {
-                view._scrollTo(scrollTarget);
+            if (view.content.is(":visible")) {
+                scrollTarget = view.content.find(selector(id));
+                action = function() {
+                    view._scrollTo(scrollTarget);
+                };
+            } else {
+                scrollTarget = list.content.find(selector(id));
+                action = function() {
+                    scrollTarget.get(0).scrollIntoView();
+                };
             }
+
+            scrollIntoView();
         },
 
         _dropDowns: function() {
