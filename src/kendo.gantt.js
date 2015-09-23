@@ -1632,6 +1632,7 @@ var __meta__ = { // jshint ignore:line
             var viewsSelector = DOT + ganttStyles.toolbar.views + " > li";
             var pdfSelector = DOT + ganttStyles.toolbar.pdfButton;
             var toggleSelector = DOT + ganttStyles.buttonToggle;
+            var contentSelector = DOT + ganttStyles.gridContent;
             var treelist = $(DOT + ganttStyles.list);
             var timeline = $(DOT + ganttStyles.timeline);
             var hoveredClassName = ganttStyles.hovered;
@@ -1654,6 +1655,12 @@ var __meta__ = { // jshint ignore:line
                     });
 
                     timeline.css("display", "inline-block");
+
+                    that.refresh();
+
+                    timeline
+                        .find(contentSelector)
+                        .scrollTop(that.scrollTop);
                 }
 
                 that._resize();
@@ -1727,16 +1734,25 @@ var __meta__ = { // jshint ignore:line
                             "display": "inline-block",
                             "width": "100%"
                         });
+
+                        that.refresh();
+
+                        timeline
+                            .find(contentSelector)
+                            .scrollTop(that.scrollTop);
                     } else {
                         timeline.css({
                             "display": "none",
                             "width": 0
                         });
-                        treelist.css({
-                            "display": "inline-block",
-                            "width": "100%",
-                            "max-width": "none"
-                        });
+                        treelist
+                            .css({
+                                "display": "inline-block",
+                                "width": "100%",
+                                "max-width": "none"
+                            })
+                            .find(contentSelector)
+                            .scrollTop(that.scrollTop);
                     }
 
                     that._resize();
@@ -2908,6 +2924,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _scrollable: function() {
+            var that = this;
             var ganttStyles = Gantt.styles;
             var contentSelector = DOT + ganttStyles.gridContent;
             var headerSelector = DOT + ganttStyles.gridHeaderWrap;
@@ -2921,12 +2938,14 @@ var __meta__ = { // jshint ignore:line
             }
 
             timelineContent.on("scroll", function() {
+                that.scrollTop = this.scrollTop;
                 timelineHeader.scrollLeft(this.scrollLeft);
                 treeListContent.scrollTop(this.scrollTop);
             });
 
             treeListContent
                 .on("scroll", function() {
+                    that.scrollTop = this.scrollTop;
                     treeListHeader.scrollLeft(this.scrollLeft);
                     timelineContent.scrollTop(this.scrollTop);
                 })
