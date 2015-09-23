@@ -51,7 +51,7 @@
         equal(selections.length, 1);
         equal(div.attr.style.height, 1 + 2 * 10 + "px");
         equal(div.attr.style.width, 1 + 3 * 10 + "px");
-        equal(div.attr.className, "k-spreadsheet-selection-dashed k-series-a");
+        equal(div.attr.className, "k-spreadsheet-selection-highlight k-series-a");
     });
 
     test("selects a list of ranges", function() {
@@ -74,11 +74,11 @@
 
         equal(divA1C2.attr.style.height, 1 + 2 * 10 + "px");
         equal(divA1C2.attr.style.width, 1 + 3 * 10 + "px");
-        equal(divA1C2.attr.className, "k-spreadsheet-selection-dashed k-series-a");
+        equal(divA1C2.attr.className, "k-spreadsheet-selection-highlight k-series-a");
 
         equal(divC2D3.attr.style.height, 1 + 2 * 10 + "px");
         equal(divC2D3.attr.style.width, 1 + 2 * 10 + "px");
-        equal(divC2D3.attr.className, "k-spreadsheet-selection-dashed k-series-b");
+        equal(divC2D3.attr.className, "k-spreadsheet-selection-highlight k-series-b");
     });
 
     test("selection skips NULLREF", function() {
@@ -99,7 +99,7 @@
 
         equal(divC2D3.attr.style.height, 1 + 2 * 10 + "px");
         equal(divC2D3.attr.style.width, 1 + 2 * 10 + "px");
-        equal(divC2D3.attr.className, "k-spreadsheet-selection-dashed k-series-b");
+        equal(divC2D3.attr.className, "k-spreadsheet-selection-highlight k-series-b");
     });
 
     test("selection uses cls class of active token", function() {
@@ -120,7 +120,7 @@
 
         equal(divC2D3.attr.style.height, 1 + 2 * 10 + "px");
         equal(divC2D3.attr.style.width, 1 + 2 * 10 + "px");
-        equal(divC2D3.attr.className, "k-spreadsheet-selection-dashed k-series-b");
+        equal(divC2D3.attr.className, "k-spreadsheet-selection-highlight k-series-b");
     });
 
     test("selection returns empty wrapper if no editor selection", function() {
