@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "./runtime", "./references", "./validator" ], f);
+    define([ "../kendo.core", "./runtime", "./validation", "./references"], f);
 })(function(){
 
 (function(kendo) {
@@ -960,8 +960,8 @@
                 validation.to = validation.from.replace(/^=/, "");
             }
 
-            validation = kendo.spreadsheet.calc.parseValidation(this._name, row, col, validation);
-            return kendo.spreadsheet.calc.compileValidation(validation);
+            validation = kendo.spreadsheet.validation.parse(this._name, row, col, validation);
+            return kendo.spreadsheet.validation.compile(validation);
         },
 
         _compileFormula: function(row, col, f) {

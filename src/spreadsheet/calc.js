@@ -388,36 +388,6 @@
         }
     }
 
-    function parseValidation(sheet, row, col, validation) {
-        if (typeof validation === "string") {
-            validation = JSON.parse(validation);
-        }
-
-        if (validation.from) {
-            validation.from = parseFormula(sheet, row, col, validation.from);
-        }
-
-        if (validation.to) {
-            validation.to = parseFormula(sheet, row, col, validation.to);
-        }
-
-        return {
-            from: validation.from,
-            to: validation.to,
-            sheet: sheet,
-            row: row,
-            col: col,
-            comparerType: validation.comparerType,
-            dataType: validation.dataType,
-            type: validation.type,
-            allowNulls: validation.allowNulls,
-            tooltipMessageTemplate: validation.tooltipMessageTemplate,
-            tooltipTitleTemplate: validation.tooltipTitleTemplate,
-            messageTemplate: validation.messageTemplate,
-            titleTemplate: validation.titleTemplate
-        };
-    }
-
     function makePrinter(exp) {
         return makeClosure("function(row, col){return(" + print(exp.ast, 0) + ")}");
         function print(node, prec) { // jshint ignore:line, because you are stupid.
@@ -771,42 +741,6 @@
         function jsArray(a) {
             return "[ " + a.map(js).join(", ") + " ]";
         }
-    }
-
-    function makeValidation(validation) {
-        var validationHandler;
-
-        if (validation.from) {
-            validation.from = makeFormula(validation.from);
-        }
-
-        if (validation.to) {
-            validation.to = makeFormula(validation.to);
-        }
-
-        var comparer = exports.validationComparers[validation.comparerType];
-
-        if (!comparer) {
-            throw kendo.format("'{0}' comparer is not implemented.", validation.comparerType);
-        }
-
-        validationHandler = function (valueToCompare, valueFormat) {
-
-            if (this.allowNulls && valueToCompare === null) {
-                this.value = true;
-            } else {
-                //TODO: MAKE WORKS FOR OTHER TYPES, DIFF THAN DATE:
-                var type = valueFormat ? spreadsheet.formatting.type(valueToCompare, valueFormat) : "";
-
-                var toValue = this.to && this.to.value ? this.to.value : undefined;
-
-                this.value = !type || type == this.dataType ? comparer(valueToCompare, this.from.value,  toValue) : "type error";
-            }
-
-            return this.value;
-        };
-
-        return new runtime.Validation($.extend(validation, { handler: validationHandler }));
     }
 
     function TokenStream(input, forEditor) {
@@ -1165,50 +1099,13 @@
         }
     }
 
-    exports.parseValidation = parseValidation;
+
     exports.parseFormula = parseFormula;
     exports.parseReference = parseReference;
     exports.compile = makeFormula;
-    exports.compileValidation = makeValidation;
+
     exports.InputStream = InputStream;
     exports.ParseError = ParseError;
     exports.tokenize = tokenize;
-    exports.validationComparers = {
-        greaterThan: function (valueToCompare, from) {
-            return valueToCompare > from;
-        },
-
-        lessThan: function (valueToCompare, from) {
-            return valueToCompare < from;
-        },
-
-        between: function (valueToCompare, from, to) {
-            return valueToCompare > from && valueToCompare < to;
-        },
-
-        equalTo: function (valueToCompare, from) {
-            return valueToCompare == from;
-        },
-
-        notEqualTo: function (valueToCompare, from) {
-            return valueToCompare != from;
-        },
-
-        greaterThanOrEqualTo: function (valueToCompare, from) {
-            return valueToCompare >= from;
-        },
-
-        lessThanOrEqualTo: function (valueToCompare, from) {
-            return valueToCompare <= from;
-        },
-
-        notBetween: function (valueToCompare, from, to) {
-            return valueToCompare < from || valueToCompare > to;
-        },
-
-        custom: function (valueToCompare, from) {
-            return from;
-        }
-    };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

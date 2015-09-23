@@ -509,18 +509,18 @@
     });
 
     test("clearContent clears the validation", function() {
-        var currentRange = sheet.range("A2").validation({
-            from: "A4",
+        var currentRange = sheet.range("B1").validation({
+            from: "B4",
             to: "",
             comparerType: "greaterThan",
             dataType: "date"
         });
 
-        ok(sheet.range("A2").validation());
+        ok(sheet.range("B1").validation());
 
         currentRange.clearContent();
 
-        equal(sheet.range("A2").validation(), null);
+        equal(sheet.range("B1").validation(), null);
     });
 
     test("clear clears the validations", function() {
