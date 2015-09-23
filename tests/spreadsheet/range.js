@@ -836,4 +836,13 @@
 
         ok(sheet.range("2:2").hasValue());
     });
+
+    test("column convets range to column", function() {
+        sheet.range("A1:B2").column(1).values([ [ "B1" ], [ "B2" ] ]);
+
+        equal(sheet.range("A1").value(), null);
+        equal(sheet.range("A2").value(), null);
+        equal(sheet.range("B1").value(), "B1");
+        equal(sheet.range("B2").value(), "B2");
+    });
 })();

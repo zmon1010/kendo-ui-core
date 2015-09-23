@@ -322,6 +322,9 @@
         bottomRow: function() {
             return this;
         },
+        toColumn: function() {
+            return this;
+        },
         forEachRow: function(callback) {
             callback(this.toRangeRef());
         },

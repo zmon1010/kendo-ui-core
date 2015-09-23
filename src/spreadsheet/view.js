@@ -537,15 +537,15 @@
             }
 
             var sheet = this._sheet;
-            var ref = sheet.filter().ref.toColumn(column);
+            var ref = sheet.filter().ref.resize({ top: 1 });
             var filterMenu = new kendo.spreadsheet.FilterMenu({
-                range: new kendo.spreadsheet.Range(ref.resize({ top: 1 }), sheet)
+                column: column,
+                range: new kendo.spreadsheet.Range(ref, sheet)
             });
 
             this._destroyFilterMenu();
 
             this._filterMenu = filterMenu;
-            this._filterMenuColumn = column;
 
             return filterMenu;
         },

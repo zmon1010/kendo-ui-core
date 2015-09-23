@@ -791,6 +791,7 @@
             var filterMenu = this.view.createFilterMenu(target.data("column"));
 
             filterMenu.bind("action", this.onCommandRequest.bind(this));
+            filterMenu.bind("action", filterMenu.close.bind(filterMenu));
 
             filterMenu.openFor(target);
         },

@@ -407,6 +407,10 @@
             return new Range(this._ref.bottomRow(), this._sheet);
         },
 
+        column: function(column) {
+            return new Range(this._ref.toColumn(column), this._sheet);
+        },
+
         forEachRow: function(callback) {
             this._ref.forEachRow(function(ref) {
                 callback(new Range(ref, this._sheet));

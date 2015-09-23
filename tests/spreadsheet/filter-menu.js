@@ -101,8 +101,8 @@
     var sheet;
     var filterMenu;
 
-    function createWithValues(values) {
-        range = sheet.range("A1:A3").values(values);
+    function createWithValues(values, ref) {
+        range = sheet.range(ref || "A1:A3").values(values);
         return new kendo.spreadsheet.FilterMenu({ range: range });
     }
 
@@ -244,6 +244,19 @@
             equal(e.command, "SortCommand");
             ok(!e.options.sheet);
             ok(e.options.operatingRange instanceof kendo.spreadsheet.Range);
+        });
+
+        filterMenu.menu.trigger("select", {
+            item: filterMenu.menu.element.find(".k-item[data-dir=asc]")
+        });
+    });
+
+    test("clicking sort items sorts the complete range, not only column", function() {
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        filterMenu.bind("action", function(e) {
+            ok(e.options.operatingRange.hasValue("A1"));
+            ok(e.options.operatingRange.hasValue("B1"));
         });
 
         filterMenu.menu.trigger("select", {

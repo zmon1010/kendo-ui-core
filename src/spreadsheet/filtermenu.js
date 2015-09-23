@@ -140,6 +140,8 @@
 
             options: {
                 name: "FilterMenu",
+                column: 0,
+                range: null,
                 messages: {
                     sortAscending: "Sort range A to Z",
                     sortDescending: "Sort range Z to A",
@@ -214,8 +216,10 @@
             getValues: function() {
                 var values = [];
                 var messages = this.options.messages;
+                var column = this.options.column;
+                var columnRange = this.options.range.column(column);
 
-                this.options.range.forEachCell(function(row, col, cell) {
+                columnRange.forEachCell(function(row, col, cell) {
                     var formatter;
 
                     if (cell.value === undefined) {
