@@ -1,5 +1,7 @@
-﻿using Telerik.Windows.Documents.Spreadsheet.Core;
+﻿using System.Linq;
+using Telerik.Windows.Documents.Spreadsheet.Core;
 using Telerik.Windows.Documents.Spreadsheet.Model;
+using Telerik.Windows.Documents.Spreadsheet.Model.Sorting;
 using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
 using Telerik.Windows.Documents.Spreadsheet.Utilities;
 using Document = Telerik.Windows.Documents.Spreadsheet.Model.Workbook;
@@ -23,7 +25,7 @@ namespace Telerik.Web.Spreadsheet
                 foreach (var sheet in Sheets)
                 {
                     var documentSheet = document.Worksheets.Add();
-
+                    
                     if (!string.IsNullOrEmpty(sheet.Name))
                     {
                         documentSheet.Name = sheet.Name;
@@ -34,8 +36,8 @@ namespace Telerik.Web.Spreadsheet
                         document.ActiveWorksheet = documentSheet;
                     }
 
-                    documentSheet.ViewState.SelectionState = CreateSelectionState(sheet, documentSheet);
-                    
+                    documentSheet.ViewState.SelectionState = CreateSelectionState(sheet, documentSheet);                                                            
+
                     foreach (var row in sheet.Rows)
                     {
                         ImportCells(row, documentSheet);
@@ -63,12 +65,14 @@ namespace Telerik.Web.Spreadsheet
                     {
                         documentSheet.ViewState.FreezePanes(sheet.FrozenRows, sheet.FrozenColumns);
                     }
+
+                    ImportSortState(documentSheet, sheet.Sort);
                 }
 
                 if (document.Worksheets == null && document.Worksheets.Count > 0)
                 {
                     document.ActiveWorksheet = document.Worksheets[0];
-                }
+                }                
             }
 
             document.History.IsEnabled = true;
@@ -155,7 +159,7 @@ namespace Telerik.Web.Spreadsheet
                 }
 
                 //FontSize - should be int
-                //selection.SetFontSize(cell.FontSize);
+                //selection.SetFontSize(cell.FontSize);                
             }
         }
 
@@ -216,6 +220,14 @@ namespace Telerik.Web.Spreadsheet
                 default:
                     return RadHorizontalAlignment.General;
             }
+        }
+
+        public static void ImportSortState(DocumentWorksheet documentWorksheet, Sort sort)
+        {
+            var conditions = sort.Columns.Select(column => new ValuesSortCondition((int)column.Index, column.Ascending ? SortOrder.Ascending : SortOrder.Descending)).ToArray();
+            var range = sort.Ref.ToCellRange().First();
+
+            documentWorksheet.SortState.Set(range, conditions);
         }
     }  
 }
