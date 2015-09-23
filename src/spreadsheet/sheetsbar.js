@@ -25,7 +25,7 @@
 
                 element = this.element;
 
-                element.addClass("k-widget k-header k-tabstrip k-tabstrip-bottom");
+                element.addClass("k-widget k-header");
 
                 this._tree = new kendo.dom.Tree(element[0]);
 
@@ -229,7 +229,11 @@
                     container: DOT + SheetsBar.classNames.sheetsBarItems,
                     axis: "x",
                     animation: false,
-                    ignore: "input"
+                    ignore: "input",
+                    hint: function (element) {
+                        var hint = $(element).clone();
+                        return hint.wrap("<div class='k-widget k-tabstrip k-tabstrip-bottom k-spreadsheet-sheets-items-hint'><ul class='k-reset k-tabstrip-items'></ul></div>").closest("div");
+                    }
                 });
             },
 
