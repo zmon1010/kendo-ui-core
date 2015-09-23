@@ -532,6 +532,10 @@
         },
 
         createFilterMenu: function(column) {
+            if (this._filterMenuColumn == column) {
+                return this._filterMenu;
+            }
+
             var sheet = this._sheet;
             var ref = sheet.filter().ref.toColumn(column);
             var filterMenu = new kendo.spreadsheet.FilterMenu({
@@ -541,6 +545,7 @@
             this._destroyFilterMenu();
 
             this._filterMenu = filterMenu;
+            this._filterMenuColumn = column;
 
             return filterMenu;
         },
@@ -621,6 +626,7 @@
             if (this._filterMenu) {
                 this._filterMenu.destroy();
                 this._filterMenu = undefined;
+                this._filterMenuColumn = undefined;
             }
         },
 
@@ -1008,8 +1014,8 @@
                 };
 
                 var button = kendo.dom.element(
-                    "a",
-                    { href: "#", className: "k-link " + classNames.filterButton, style: style, "data-column": index },
+                    "span",
+                    { className: classNames.filterButton, style: style, "data-column": index },
                     [ icon(classNames.iconFilterDefault) ]
                 );
 

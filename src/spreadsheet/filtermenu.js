@@ -54,10 +54,10 @@
             filterByValue:
                 "<div class='" + classNames.detailsSummary + "'>#= messages.filterByValue #</div>" +
                 "<div class='" + classNames.detailsContent + "'>" +
-                    "<div class='k-textbox k-space-right'>" +
-                        "<input placeholder='#= messages.search #' />" +
-                        "<span class='k-icon k-font-icon k-i-search' />" +
-                    "</div>" +
+                    //"<div class='k-textbox k-space-right'>" +
+                        //"<input placeholder='#= messages.search #' />" +
+                        //"<span class='k-icon k-font-icon k-i-search' />" +
+                    //"</div>" +
                     "<div class='" + classNames.valuesTreeViewWrapper + "'>" +
                         "<div data-role='treeview' data-checkboxes='{ checkChildren: true }' />" +
                     "</div>" +

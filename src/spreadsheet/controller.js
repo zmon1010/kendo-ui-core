@@ -145,7 +145,7 @@
                 this.tabstrip.bind("dialog", this.onDialogRequest.bind(this));
             }
 
-            $(this.view.container).on("click", ".k-link.k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
+            $(this.view.container).on("click", ".k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
         },
 
         _execute: function(command) {
