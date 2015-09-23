@@ -69,7 +69,7 @@
         },
 
         matches: function(value) {
-            if (value === null) {
+            if (value === null || value === undefined) {
                 return this._blanks;
             }
 
