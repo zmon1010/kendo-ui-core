@@ -38,7 +38,7 @@ namespace Telerik.Web.Spreadsheet
                     
                     foreach (var row in sheet.Rows)
                     {
-                        //ImportCells(row, documentSheet);
+                        ImportCells(row, documentSheet);
 
                         if (row.Height > 0)
                         {
@@ -114,6 +114,85 @@ namespace Telerik.Web.Spreadsheet
                 {
                     selection.SetFormat(new CellValueFormat(cell.Format));
                 }
+
+                if (!string.IsNullOrEmpty(cell.Color))
+                {                                    
+                    selection.SetForeColor(new ThemableColor(cell.Color.ToColor()));
+                }
+
+                if (!string.IsNullOrEmpty(cell.Background))
+                {
+                    var fill = PatternFill.CreateSolidFill(cell.Background.ToColor());
+                    selection.SetFill(fill);
+                }                
+
+                selection.SetIsBold(cell.Bold);
+
+                selection.SetIsItalic(cell.Italic);
+
+                selection.SetIsWrapped(cell.Wrap);
+
+                if (cell.Underline)
+                {
+                    selection.SetUnderline(UnderlineType.Single);
+                }
+
+                selection.SetBorders(CreateCellBorders(cell));
+
+                if (!string.IsNullOrEmpty(cell.VerticalAlign))
+                {                    
+                    selection.SetVerticalAlignment(ConvertToVerticalAlignment(cell.VerticalAlign));
+                }
+
+                if (!string.IsNullOrEmpty(cell.FontFamily))
+                {
+                    selection.SetFontFamily(new ThemableFontFamily(cell.FontFamily));
+                }
+
+                //FontSize - should be int
+                //selection.SetFontSize(cell.FontSize);
+            }
+        }
+
+        private static CellBorders CreateCellBorders(Cell cell)
+        {
+            var borders = new CellBorders();
+
+            if (cell.BorderTop != null)
+            {             
+                borders.Top = new CellBorder(CellBorderStyle.Thick, new ThemableColor(cell.BorderTop.Color.ToColor()));
+            }
+
+            if (cell.BorderBottom != null)
+            {
+                borders.Bottom = new CellBorder(CellBorderStyle.Thick, new ThemableColor(cell.BorderBottom.Color.ToColor()));
+            }
+
+            if (cell.BorderLeft != null)
+            {
+                borders.Left = new CellBorder(CellBorderStyle.Thick, new ThemableColor(cell.BorderLeft.Color.ToColor()));
+            }
+
+            if (cell.BorderRight != null)
+            {
+                borders.Right = new CellBorder(CellBorderStyle.Thick, new ThemableColor(cell.BorderRight.Color.ToColor()));
+            }
+
+            return borders;
+        }
+
+        public static RadVerticalAlignment ConvertToVerticalAlignment(string alignment)
+        {
+            switch(alignment)
+            {
+                case "top":
+                    return RadVerticalAlignment.Top;
+                case "middle":
+                    return RadVerticalAlignment.Center;
+                case "bottom":
+                    return RadVerticalAlignment.Bottom;
+                default:
+                    return RadVerticalAlignment.Undetermined;
             }
         }
     }  

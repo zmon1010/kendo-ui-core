@@ -18,5 +18,15 @@ namespace Telerik.Web.Spreadsheet
         {            
             return "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
         }
+
+        /// <summary>
+        /// Converts CSS style color to System.Windows.Media.Color
+        /// </summary>
+        /// <param name="value">Hex color code to convert</param>
+        /// <returns>System.Windows.Media.Color instance</returns>
+        public static Color ToColor(this string hex)
+        {            
+            return (Color)ColorConverter.ConvertFromString(hex);
+        }
     }
 }
