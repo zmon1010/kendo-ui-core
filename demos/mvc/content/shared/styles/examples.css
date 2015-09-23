@@ -2698,10 +2698,10 @@ h5 {
 .demo-section {
     margin: 4.5em auto;
     padding: 3em;
-    border: 1px solid rgba(20,53,80,0.05);
+    border: 1px solid rgba(20,53,80,0.14);
 }
 
-.demo-section:not(.wide):not(.k-content),
+.demo-section:not(.wide),
 #exampleWrap .box:not(.wide) {
     max-width: 400px;
 }
@@ -2718,7 +2718,11 @@ h5 {
     margin: 4.5em auto;
 }
 
+.demo-section.k-content {
+    box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);
+}
 
+/* Remove k-header classes
 .box.k-header,
 .demo-section.k-header {
     background-position: 50% 70%;
@@ -2751,6 +2755,7 @@ html.k-materialblack .demo-section.k-content {
      color: #fff;
      font-weight: normal;
 }
+*/
 
 .box h4,
 .demo-section h4 {

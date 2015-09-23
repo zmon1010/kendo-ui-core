@@ -1,6 +1,6 @@
 <div id="example">
     <div id="form-container">
-        <div class="demo-section k-header">
+        <div class="demo-section k-content">
             <h4>Select Product</h4>
             <select data-role="dropdownlist" data-option-label="Select product"
                              data-value-field="ProductID" data-text-field="ProductName"
@@ -8,7 +8,7 @@
 
             <button data-bind="click: save, enabled: hasChanges" class="k-button k-primary">Submit All Changes</button>
         </div>
-        <div class="demo-section k-header product-info" data-bind="visible: showForm">
+        <div class="demo-section k-content product-info" data-bind="visible: showForm">
             <ul>
                 <li><h4>ID: <span data-bind="text:selectedProduct.ProductID, events: { change: change }"></span></h4></li>
                 <li><h4>Name</h4> <input type="text" class="k-textbox" id="products" data-bind="value: selectedProduct.ProductName, events: { change: change }" style="width: 100%;" /></li>
@@ -83,7 +83,7 @@
         <pre class="prettyprint">
 
 &lt;div id=&quot;form-container&quot;&gt;
-    &lt;div class=&quot;demo-section k-header&quot;&gt;
+    &lt;div class=&quot;demo-section k-content&quot;&gt;
         &lt;h4&gt;Select Product&lt;/h4&gt;
         &lt;select data-role=&quot;dropdownlist&quot; data-option-label=&quot;Select product&quot;
                          data-value-field=&quot;ProductID&quot; data-text-field=&quot;ProductName&quot;
@@ -91,7 +91,7 @@
 
         &lt;button data-bind=&quot;click: save, enabled: hasChanges&quot; class=&quot;k-button k-primary&quot;&gt;Submit All Changes&lt;/button&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;demo-section k-header product-info&quot; data-bind=&quot;visible: showForm&quot;&gt;
+    &lt;div class=&quot;demo-section k-content product-info&quot; data-bind=&quot;visible: showForm&quot;&gt;
         &lt;ul&gt;
             &lt;li&gt;&lt;h4&gt;ID: &lt;span data-bind=&quot;text:selectedProduct.ProductID, events: { change: change }&quot;&gt;&lt;/span&gt;&lt;/h4&gt;&lt;/li&gt;
             &lt;li&gt;&lt;h4&gt;Name&lt;/h4&gt; &lt;input type=&quot;text&quot; class=&quot;k-textbox&quot; id=&quot;products&quot; data-bind=&quot;value: selectedProduct.ProductName, events: { change: change }&quot; style=&quot;width: 100%;&quot; /&gt;&lt;/li&gt;
