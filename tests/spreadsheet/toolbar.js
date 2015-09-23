@@ -293,7 +293,7 @@
         sheet.range("A1").fontSize(9);
 
         var text = toolbar.popup.element.find("[data-tool=fontSize] .k-text").text();
-        equal(text, "Font size (9px) ...");
+        equal(text, "Font size (9) ...");
     });
 
     test("refreshes filter button state", function() {

@@ -286,7 +286,7 @@
         dialog.one("action", function(e) {
             equal(e.command, "PropertyChangeCommand");
             equal(e.options.property, "fontSize");
-            equal(e.options.value, "11px");
+            equal(e.options.value, 11);
         });
 
         list.value([11]);

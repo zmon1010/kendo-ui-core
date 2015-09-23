@@ -452,6 +452,10 @@
         margin: 0;
         padding: 0;
     }
+
+    .k-loading {
+        display: none;
+    }
 }
 
 .k-spreadsheet-toolbar {
@@ -474,6 +478,7 @@
         border-left-width: 1px;
         border-left-style: solid;
         background-color: transparent;
+        background-image: none;
     }
 
     > .k-combobox .k-state-default:not(.k-state-hover):not(.k-state-active) .k-input {
@@ -504,7 +509,7 @@
 }
 
 .k-spreadsheet-selection-highlight {
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
     position: absolute;
     box-sizing: border-box;
