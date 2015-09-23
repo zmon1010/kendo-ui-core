@@ -20,11 +20,6 @@ end
 def dll_for(configuration)
     FileList['Kendo.Mvc.dll']
             .include('Kendo.Mvc.xml')
-            .include('Newtonsoft.Json.xml')
-            .include('Newtonsoft.Json.dll')
-            .include(DPL_FILES)
-            .include('Telerik.Web.Spreadsheet.xml')
-            .include('Telerik.Web.Spreadsheet.dll')
             .pathmap(MVC_SRC_ROOT + "Kendo.Mvc/bin/#{configuration}/%f")
             .include(resources_for(configuration))
 end

@@ -74,6 +74,8 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Binaries/Mvc5' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC5/',
     'wrappers/aspnetmvc/Binaries/Mvc6' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
+    'spreadsheet/binaries/net40' => 'dpl/Telerik.Web.Spreadsheet/bin/Release',
+    'spreadsheet/binaries/net45' => 'dpl/Telerik.Web.Spreadsheet/bin/Release-NET45',
     'wrappers/jsp/kendo-taglib' => 'wrappers/java/kendo-taglib/target/',
     'src/kendo-taglib' => 'wrappers/java/kendo-taglib/',
     'src/php' => 'wrappers/php/',
@@ -135,6 +137,7 @@ require 'css'
 require 'tasks'
 require 'mvc'
 require 'mvc_6'
+require 'spreadsheet'
 require 'java'
 require 'php'
 require 'vsdoc'
@@ -166,7 +169,9 @@ MVC_BINARIES = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => MVC3_DLL,
     'wrappers/aspnetmvc/Binaries/Mvc4' => MVC4_DLL,
     'wrappers/aspnetmvc/Binaries/Mvc5' => MVC5_DLL,
-    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST
+    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST,
+    'spreadsheet/binaries/net40' => SPREADSHEET_REDIST_NET40,
+    'spreadsheet/binaries/net45' => SPREADSHEET_REDIST_NET45
 }
 
 MVC_CONTENT = {
