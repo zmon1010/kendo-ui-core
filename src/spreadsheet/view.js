@@ -96,7 +96,7 @@
         }
 
         if (cell.fontSize) {
-            style.fontSize = cell.fontSize;
+            style.fontSize = cell.fontSize + "px";
         }
 
         if (cell.wrap === true) {

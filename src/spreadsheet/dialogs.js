@@ -430,7 +430,7 @@
                 command: "PropertyChangeCommand",
                 options: {
                     property: "fontSize",
-                    value: kendo.parseInt(e.sender.value()[0]) + "px"
+                    value: kendo.parseInt(e.sender.value()[0])
                 }
             });
         }

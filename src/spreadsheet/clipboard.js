@@ -187,7 +187,7 @@
                 borderRight : borders.borderRight,
                 borderLeft : borders.borderLeft,
                 borderTop : borders.borderTop,
-                fontSize : styles["font-size"]
+                fontSize : parseInt(styles["font-size"], 10)
             };
 
             if(styles["background-color"] !== "rgb(0, 0, 0)" && styles["background-color"] !== "rgba(0, 0, 0, 0)") {

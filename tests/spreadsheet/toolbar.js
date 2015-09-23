@@ -243,7 +243,7 @@
     test("refreshes font size state", function() {
         createWithTools([ "fontSize" ]);
 
-        sheet.range("A1").fontSize("15px");
+        sheet.range("A1").fontSize(15);
 
         var combobox = toolbar.element.find("[data-role=combobox]").data("kendoComboBox");
 
@@ -253,7 +253,7 @@
     test("refreshes font size state", function() {
         createWithTools([ "fontSize" ]);
 
-        sheet.range("A1").fontSize("15px");
+        sheet.range("A1").fontSize(15);
 
         var combobox = toolbar.element.find("[data-role=combobox]").data("kendoComboBox");
 
@@ -290,7 +290,7 @@
     test("refreshes fontSize overflow button state", function() {
         createWithTools([ "fontSize" ]);
 
-        sheet.range("A1").fontSize("9px");
+        sheet.range("A1").fontSize(9);
 
         var text = toolbar.popup.element.find("[data-tool=fontSize] .k-text").text();
         equal(text, "Font size (9px) ...");

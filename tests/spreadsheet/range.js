@@ -126,9 +126,9 @@
     });
 
     test("fontSize returns the fontSize of a range", function() {
-        range.fontSize("12px");
+        range.fontSize(12);
 
-        equal(range.fontSize(), "12px");
+        equal(range.fontSize(), 12);
     });
 
     test("italic returns the italic of a range", function() {

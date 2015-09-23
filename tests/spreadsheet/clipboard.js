@@ -72,4 +72,12 @@
 
         ok(!clipboard.canPaste());
     });
+
+    test("parse returns font-size as integer", function() {
+        var state = clipboard.parse({
+            html: "<table><trbody><tr><td style='font-size: 8px'>foo</td></tr></tbody></table>"
+        });
+
+        equal(state["0,0"].fontSize, 8);
+    });
 })();

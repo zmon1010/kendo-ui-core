@@ -96,7 +96,7 @@
         addCell(table, {}, { fontSize: 12 });
 
         equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].fontSize, 12);
+        equal(table.args("addCell", 0)[2].fontSize, "12px");
     });
 
     test("adds font-style style to the cell", function() {

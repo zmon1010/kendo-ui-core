@@ -97,7 +97,7 @@
                          .color("green")
                          .fontFamily("Arial")
                          .underline(true)
-                         .fontSize("1px")
+                         .fontSize(1)
                          .italic(true)
                          .bold(true)
                          .format("#")
@@ -113,7 +113,7 @@
         equal(sheet.range("A1").color(), "green");
         equal(sheet.range("A1").fontFamily(), "Arial");
         equal(sheet.range("A1").underline(), true);
-        equal(sheet.range("A1").fontSize(), "1px");
+        equal(sheet.range("A1").fontSize(), 1);
         equal(sheet.range("A1").italic(), true);
         equal(sheet.range("A1").bold(), true);
         equal(sheet.range("A1").background(), "green");

@@ -528,7 +528,7 @@
                 command: "PropertyChangeCommand",
                 options: {
                     property: this.options.property,
-                    value: kendo.parseInt(e.sender.value()) + "px"
+                    value: kendo.parseInt(e.sender.value())
                 }
             });
         },
@@ -557,7 +557,7 @@
             });
         },
         update: function(value) {
-            this._value = value || DEFAULT_FONT_SIZE + "px";
+            this._value = value || DEFAULT_FONT_SIZE;
             this.element.find(".k-text").text(this.message + " (" + this._value + ") ...");
         }
     });

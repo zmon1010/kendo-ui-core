@@ -32,6 +32,12 @@
         equal(element.find(".k-spreadsheet-data td").css("borderBottomWidth"), "2px");
     });
 
+    test("renders fontSize", function() {
+        sheet.fromJSON(singleCell({ fontSize: 8 }));
+
+        equal(element.find(".k-spreadsheet-data td").css("fontSize"), "8px");
+    });
+
     test("does not render null border", function() {
         sheet.fromJSON(singleCell({ borderBottom: null }));
 
