@@ -187,17 +187,12 @@
                         }, [dom.text(sheet.name())]));
 
                         var deleteIcon = element("span", {
-                            className: "k-icon k-si-close"
+                            className: "k-icon k-font-icon k-i-x"
                         }, []);
 
-                        var deleteButton = element("button", {
-                            className: "k-button k-button-icon"
-                        }, [deleteIcon]);
-
-                        elementContent.push(element("a", {
-                            href: "#",
+                        elementContent.push(element("span", {
                             className: "k-link " + classNames.sheetsBarRemove
-                        }, [deleteButton]));
+                        }, [deleteIcon]));
                     }
 
                     sheetElements.push(element("li", attr, elementContent));
