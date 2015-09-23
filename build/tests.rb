@@ -13,10 +13,9 @@ namespace :tests do
         msbuild "wrappers/mvc/Kendo.Mvc.sln"
         sh "build/xunit/xunit.console.clr4.exe wrappers/mvc/tests/Kendo.Mvc.Tests/bin/Release/Kendo.Mvc.Tests.dll"
 
-        # Commented until tests stop failing
-        #copy_dpl_binaries
-        #msbuild DPL_ROOT + '/Telerik.Web.Spreadsheet.sln', "/p:Configuration=Debug-NET45"
-        #sh "build/xunit-2.0/xunit.console.exe #{DPL_ROOT}/Telerik.Web.Spreadsheet.Tests/bin/Debug-NET45/Telerik.Web.Spreadsheet.Tests.dll"
+        copy_dpl_binaries
+        msbuild DPL_ROOT + '/Telerik.Web.Spreadsheet.sln', "/p:Configuration=Debug-NET45"
+        sh "build/xunit-2.0/xunit.console.exe #{DPL_ROOT}/Telerik.Web.Spreadsheet.Tests/bin/Debug-NET45/Telerik.Web.Spreadsheet.Tests.dll"
     end
 
     desc "Run tests in supported jQuery versions"
