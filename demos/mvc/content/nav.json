@@ -2730,6 +2730,16 @@
           "meta": {
               "kendo-ui": "This demo shows the integration with the DataSource component that Kendo UI Spreadsheet provides"
           }
+      },
+      {
+          "text": "Events",
+          "url": "spreadsheet/events",
+          "title": {
+              "kendo-ui": "Events in Kendo UI Spreadsheet widget"
+          },
+          "meta": {
+              "kendo-ui": "This example shows events which are triggered in Kendo UI Spreadsheet widget."
+          }
       }
     ],
     "category": "Data Management"
