@@ -94,6 +94,8 @@ namespace Telerik.Web.Spreadsheet
 
             GetCellProperty(worksheet, CellPropertyDefinitions.VerticalAlignmentProperty, state);
 
+            GetCellProperty(worksheet, CellPropertyDefinitions.HorizontalAlignmentProperty, state);
+
             GetCellProperty(worksheet, CellPropertyDefinitions.FontSizeProperty, state);
 
             GetCellProperty(worksheet, CellPropertyDefinitions.FontFamilyProperty, state);
@@ -181,6 +183,11 @@ namespace Telerik.Web.Spreadsheet
         private static void SetVerticalAlign(Cell cell, DocumentTheme theme, object value)
         {
             cell.VerticalAlign = ((RadVerticalAlignment)value).ToString().ToLower();
+        }
+
+        private static void SetHorizontalAlign(Cell cell, DocumentTheme theme, object value)
+        {
+            cell.TextAlign = ((RadHorizontalAlignment)value).ToString().ToLower();
         }
 
         private static void SetFontSize(Cell cell, DocumentTheme theme, object value)
@@ -279,6 +286,10 @@ namespace Telerik.Web.Spreadsheet
             {
                 CellPropertyDefinitions.VerticalAlignmentProperty,
                 SetVerticalAlign
+            },
+            {
+                CellPropertyDefinitions.HorizontalAlignmentProperty,
+                SetHorizontalAlign
             },
             {
                 CellPropertyDefinitions.FontSizeProperty,

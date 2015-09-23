@@ -144,6 +144,11 @@ namespace Telerik.Web.Spreadsheet
                     selection.SetVerticalAlignment(ConvertToVerticalAlignment(cell.VerticalAlign));
                 }
 
+                if (!string.IsNullOrEmpty(cell.TextAlign))
+                {
+                    selection.SetHorizontalAlignment(ConvertToHorizontalAlignment(cell.TextAlign));
+                }
+
                 if (!string.IsNullOrEmpty(cell.FontFamily))
                 {
                     selection.SetFontFamily(new ThemableFontFamily(cell.FontFamily));
@@ -193,6 +198,23 @@ namespace Telerik.Web.Spreadsheet
                     return RadVerticalAlignment.Bottom;
                 default:
                     return RadVerticalAlignment.Undetermined;
+            }
+        }
+
+        public static RadHorizontalAlignment ConvertToHorizontalAlignment(string alignment)
+        {
+            switch (alignment)
+            {
+                case "left":
+                    return RadHorizontalAlignment.Left;
+                case "center":
+                    return RadHorizontalAlignment.Center;
+                case "right":
+                    return RadHorizontalAlignment.Right;
+                case "justify":
+                    return RadHorizontalAlignment.Justify;
+                default:
+                    return RadHorizontalAlignment.General;
             }
         }
     }  
