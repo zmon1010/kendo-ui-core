@@ -109,7 +109,8 @@
         var filterMenu = spreadsheet._view.createFilterMenu(0);
 
         ok(filterMenu instanceof kendo.spreadsheet.FilterMenu);
-        equal(filterMenu.options.range._ref.print(), "R2C1:R3C1");
+        equal(filterMenu.options.range._ref.print(), "R2C1:R3C2");
+        equal(filterMenu.options.column, 0);
     });
 
     test("createFilterMenu creates filter menu for correct column range", function() {
@@ -118,7 +119,8 @@
         var filterMenu = spreadsheet._view.createFilterMenu(1);
 
         ok(filterMenu instanceof kendo.spreadsheet.FilterMenu);
-        equal(filterMenu.options.range._ref.print(), "R2C2:R3C2");
+        equal(filterMenu.options.range._ref.print(), "R2C1:R3C2");
+        equal(filterMenu.options.column, 1);
     });
 
     test("do not render clipboard content if in edit mode", function() {
