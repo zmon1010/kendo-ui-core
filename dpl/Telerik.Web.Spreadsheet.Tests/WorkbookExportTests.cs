@@ -42,7 +42,7 @@ namespace Telerik.Web.Spreadsheet.Tests
         [Fact]
         public void ToDocument_sets_first_sheet_as_active()
         {
-            workbook.Sheets.Add(new Worksheet());
+            workbook.Sheets.Add(new Worksheet() { Name = "Sheet2" });
             var document = workbook.ToDocument();
 
             Assert.Equal(document.Worksheets[0], document.ActiveWorksheet);
