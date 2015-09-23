@@ -210,7 +210,7 @@ end
 CLEAN.include('dist/demos')
 
 file 'demos/mvc/bin/Kendo.dll' => DEMOS_CS do |t|
-    msbuild 'demos/mvc/Kendo.csproj'
+    sync 'dist/binaries/demos/Kendo/*', 'demos/mvc/bin'
 end
 
 THEME_BUILDER_ROOT = 'http://kendoui-themebuilder.telerik.com'
@@ -338,12 +338,12 @@ namespace :demos do
             file.write FileList[YAML.load(`node #{METAJS} --all-deps kendo.all.js`)].gsub("\\", "/").join("\n")
         end
 
-		if PLATFORM =~ /linux|darwin|bsd/
-	        msbuild t.prerequisites[0], "/p:Configuration=Debug"
-		else
-			copy_dpl_binaries
-			msbuild 'demos/mvc/Kendo-Windows.sln', "/p:Configuration=Debug"
-		end
+        if PLATFORM =~ /linux|darwin|bsd/
+            msbuild t.prerequisites[0], "/p:Configuration=Debug"
+        else
+            copy_dpl_binaries
+            msbuild 'demos/mvc/Kendo-Windows.sln', "/p:Configuration=Debug"
+        end
     end
 
     task :clean do
