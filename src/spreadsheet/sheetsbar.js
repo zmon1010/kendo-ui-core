@@ -19,6 +19,8 @@
 
         var SheetsBar = kendo.ui.Widget.extend({
             init: function(element, options) {
+                var classNames = SheetsBar.classNames;
+
                 kendo.ui.Widget.call(this, element, options);
 
                 element = this.element;
@@ -35,13 +37,13 @@
 
                 this._sortable.bind("end", this._onSheetReorderEnd.bind(this));
 
-                element.on("click", DOT + sheetsBarClassNames.sheetsBarRemove, this._onSheetRemove.bind(this));
+                element.on("click", DOT + classNames.sheetsBarRemove, this._onSheetRemove.bind(this));
 
                 element.on("click", "li", this._onSheetSelect.bind(this));
 
-                element.on("dblclick", "li" + DOT + sheetsBarClassNames.sheetsBarActive, this._createEditor.bind(this));
+                element.on("dblclick", "li" + DOT + classNames.sheetsBarActive, this._createEditor.bind(this));
 
-                element.on("click", DOT + sheetsBarClassNames.sheetsBarAdd, this._onAddSelect.bind(this));
+                element.on("click", DOT + classNames.sheetsBarAdd, this._onAddSelect.bind(this));
             },
 
             options: {
@@ -64,7 +66,7 @@
 
                 this._renderSheets(this._sheets, this._selectedIndex, true);
                 this._editor = this.element
-                                   .find(kendo.format("input{0}{1}",DOT,sheetsBarClassNames.sheetsBarEditor))
+                                   .find(kendo.format("input{0}{1}",DOT,SheetsBar.classNames.sheetsBarEditor))
                                    .focus()
                                    .on("keydown", this._onEditorKeydown.bind(this))
                                    .on("blur", this._onEditorBlur.bind(this));
@@ -93,6 +95,7 @@
                 var sheetsWrapper = that._sheetsWrapper();
                 var sheetsGroup = that._sheetsGroup();
                 var options = that.options;
+                var classNames = SheetsBar.classNames;
 
                 that._sheets = sheets;
                 that._selectedIndex = selectedIndex;
@@ -102,7 +105,7 @@
                     return;
                 }
 
-                sheetsWrapper.addClass(sheetsBarClassNames.sheetsBarScrollable + " k-tabstrip k-floatwrap k-tabstrip-bottom");
+                sheetsWrapper.addClass(classNames.sheetsBarScrollable + " k-tabstrip k-floatwrap k-tabstrip-bottom");
 
                 wrapperOffsetWidth = sheetsWrapper[0].offsetWidth;
                 sheetsGroupScrollWidth = sheetsGroup[0].scrollWidth;
@@ -114,8 +117,8 @@
 
                     that._renderHtml(isInEditMode, true);
 
-                    scrollPrevButton = sheetsWrapper.children(DOT + sheetsBarClassNames.sheetsBarPrev);
-                    scrollNextButton = sheetsWrapper.children(DOT + sheetsBarClassNames.sheetsBarNext);
+                    scrollPrevButton = sheetsWrapper.children(DOT + classNames.sheetsBarPrev);
+                    scrollNextButton = sheetsWrapper.children(DOT + classNames.sheetsBarNext);
 
                     sheetsGroup.css({ marginLeft: scrollPrevButton.outerWidth() + 9, marginRight: scrollNextButton.outerWidth() + 12 });
 
@@ -139,8 +142,8 @@
                 } else if (that._scrollableModeActive && sheetsGroupScrollWidth <= wrapperOffsetWidth) {
                     that._scrollableModeActive = false;
 
-                    sheetsWrapper.children(DOT + sheetsBarClassNames.sheetsBarPrev).off();
-                    sheetsWrapper.children(DOT + sheetsBarClassNames.sheetsBarNext).off();
+                    sheetsWrapper.children(DOT + classNames.sheetsBarPrev).off();
+                    sheetsWrapper.children(DOT + classNames.sheetsBarNext).off();
 
                     that._renderHtml(isInEditMode, false);
                     that._sheetsGroup().css({ marginLeft: "", marginRight: "" });
@@ -156,6 +159,7 @@
                 var element = dom.element;
                 var sheets = this._sheets;
                 var selectedIndex = this._selectedIndex;
+                var classNames = SheetsBar.classNames;
 
                 for (idx = 0; idx < sheets.length; idx++) {
                     var sheet = sheets[idx];
@@ -164,16 +168,16 @@
                     var elementContent = [];
 
                     if (isSelectedSheet) {
-                        attr.className += " k-state-active k-state-tab-on-top " + sheetsBarClassNames.sheetsBarActive;
+                        attr.className += " k-state-active k-state-tab-on-top " + classNames.sheetsBarActive;
                     } else {
-                        attr.className += " " + sheetsBarClassNames.sheetsBarInactive;
+                        attr.className += " " + classNames.sheetsBarInactive;
                     }
 
                     if (isSelectedSheet && isInEditMode) {
                         elementContent.push(element("input", {
                             type: "text",
                             value: sheet.name(),
-                            className: "k-textbox " + sheetsBarClassNames.sheetsBarEditor,
+                            className: "k-textbox " + classNames.sheetsBarEditor,
                             maxlength: 50
                         }, []));
                     } else {
@@ -192,7 +196,7 @@
 
                         elementContent.push(element("a", {
                             href: "#",
-                            className: "k-link " + sheetsBarClassNames.sheetsBarRemove
+                            className: "k-link " + classNames.sheetsBarRemove
                         }, [deleteButton]));
                     }
 
@@ -207,22 +211,22 @@
                 var childrenElements = [element("ul", { className: "k-reset k-tabstrip-items" }, sheetElements)];
 
                 if (renderScrollButtons) {
-                    childrenElements.push(element("span", {className: "k-button k-button-icon k-button-bare " + sheetsBarClassNames.sheetsBarPrev }, [
+                    childrenElements.push(element("span", {className: "k-button k-button-icon k-button-bare " + SheetsBar.classNames.sheetsBarPrev }, [
                         element("span", {className: "k-icon k-i-arrow-w"}, [])
                     ]));
 
-                    childrenElements.push(element("span", {className: "k-button k-button-icon k-button-bare " + sheetsBarClassNames.sheetsBarNext }, [
+                    childrenElements.push(element("span", {className: "k-button k-button-icon k-button-bare " + SheetsBar.classNames.sheetsBarNext }, [
                         element("span", {className: "k-icon k-i-arrow-e"}, [])
                     ]));
                 }
 
-                return element("div", { className: sheetsBarClassNames.sheetsBarItems }, childrenElements);
+                return element("div", { className: SheetsBar.classNames.sheetsBarItems }, childrenElements);
             },
 
             _createSortable: function() {
                 this._sortable = new kendo.ui.Sortable(this.element, {
-                    filter: kendo.format("ul li.{0},ul li.{1}", sheetsBarClassNames.sheetsBarActive, sheetsBarClassNames.sheetsBarInactive),
-                    container: DOT + sheetsBarClassNames.sheetsBarItems,
+                    filter: kendo.format("ul li.{0},ul li.{1}", SheetsBar.classNames.sheetsBarActive, SheetsBar.classNames.sheetsBarInactive),
+                    container: DOT + SheetsBar.classNames.sheetsBarItems,
                     axis: "x",
                     animation: false,
                     ignore: "input"
@@ -275,7 +279,7 @@
             _onSheetSelect: function(e) {
                 var selectedSheetText = $(e.target).text();
 
-                if ($(e.target).is(DOT + sheetsBarClassNames.sheetsBarEditor) || !selectedSheetText) {
+                if ($(e.target).is(DOT + SheetsBar.classNames.sheetsBarEditor) || !selectedSheetText) {
                     e.preventDefault();
                     return;
                 }
@@ -300,7 +304,7 @@
             _addButton: function() {
                 var element = kendo.dom.element;
                 return element("a", {
-                    className: sheetsBarClassNames.sheetsBarAdd + " k-button k-button-icon"
+                    className: SheetsBar.classNames.sheetsBarAdd + " k-button k-button-icon"
                 }, [element("span", {className: "k-sprite k-icon k-font-icon k-i-plus"}, [])]);
             },
 
@@ -347,7 +351,7 @@
             },
 
             _sheetsWrapper: function() {
-                return this.element.find(DOT + sheetsBarClassNames.sheetsBarItems);
+                return this.element.find(DOT + SheetsBar.classNames.sheetsBarItems);
             },
 
             _scrollSheetsByDelta: function (delta) {
@@ -370,8 +374,8 @@
                 var wrapper = that._sheetsWrapper();
                 var scrollLeft = ul.scrollLeft();
 
-                wrapper.find(DOT + sheetsBarClassNames.sheetsBarPrev).toggle(that._isRtl ? scrollLeft < ul[0].scrollWidth - ul[0].offsetWidth - 1 : scrollLeft !== 0);
-                wrapper.find(DOT + sheetsBarClassNames.sheetsBarNext).toggle(that._isRtl ? scrollLeft !== 0 : scrollLeft < ul[0].scrollWidth - ul[0].offsetWidth - 1);
+                wrapper.find(DOT + SheetsBar.classNames.sheetsBarPrev).toggle(that._isRtl ? scrollLeft < ul[0].scrollWidth - ul[0].offsetWidth - 1 : scrollLeft !== 0);
+                wrapper.find(DOT + SheetsBar.classNames.sheetsBarNext).toggle(that._isRtl ? scrollLeft !== 0 : scrollLeft < ul[0].scrollWidth - ul[0].offsetWidth - 1);
             }
         });
 
