@@ -209,8 +209,22 @@ end
 
 CLEAN.include('dist/demos')
 
-file 'demos/mvc/bin/Kendo.dll' => DEMOS_CS do |t|
-    sync 'dist/binaries/demos/Kendo/*', 'demos/mvc/bin'
+if PLATFORM =~ /linux|darwin|bsd/
+    file 'demos/mvc/bin/Kendo.dll' => DEMOS_CS do |t|
+        sync 'dist/binaries/demos/Kendo/*', 'demos/mvc/bin'
+    end
+else
+    file 'demos/mvc/bin/Kendo.dll' => ["spreadsheet:binaries"] do |t|
+        msbuild 'demos/mvc/Kendo-Windows.sln', "/p:Configuration=Release"
+    end
+
+    tree :to => 'dist/binaries/demos/Kendo',
+         :from => 'demos/mvc/bin/*',
+         :root => 'demos/mvc/bin'
+
+    tree :to => 'dist/binaries/demos/Kendo',
+         :from => SPREADSHEET_REDIST_NET40,
+         :root => SPREADSHEET_SRC_ROOT + '/bin/Release'
 end
 
 THEME_BUILDER_ROOT = 'http://kendoui-themebuilder.telerik.com'
@@ -350,7 +364,7 @@ namespace :demos do
         rm_rf 'dist/demos'
     end
 
-    task :release => 'demos/mvc/bin/Kendo.dll'
+    task :release => ['demos/mvc/bin/Kendo.dll', 'dist/binaries/demos/Kendo']
 
     task :upload_to_cdn => [
         :js,

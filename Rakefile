@@ -1165,7 +1165,10 @@ namespace :build do
     { :production => "Production", :master => "Stable" }.each do |env, destination|
         namespace env do
             desc 'Build and publish ASP.NET MVC DLLs for #{destination} distribution'
-            task :aspnetmvc_binaries => [ "mvc:binaries", "tests:aspnetmvc", 'vs_plugin:build', 'vs_scaffold:build' ] do
+            task :aspnetmvc_binaries => [ "mvc:binaries", "tests:aspnetmvc",
+                                          "spreadsheet:binaries", "tests:spreadsheet",
+                                          'demos:release',
+                                          'vs_plugin:build', 'vs_scaffold:build' ] do
                 map_archive_root 'L:'
 
                 target_dir = "L:\\#{destination}\\binaries\\"
