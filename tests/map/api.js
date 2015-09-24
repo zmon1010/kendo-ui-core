@@ -33,7 +33,7 @@
 
     // ------------------------------------------------------------
     module("Map / Center", {
-        setup: createMap,
+        setup: function() { createMap(); },
         teardown: destroyMap
     });
 
@@ -68,7 +68,7 @@
 
     // ------------------------------------------------------------
     module("Map / Zoom", {
-        setup: createMap,
+        setup: function() { createMap(); },
         teardown: destroyMap
     });
 
@@ -116,7 +116,7 @@
 
     // ------------------------------------------------------------
     module("Map / Extent", {
-        setup: createMap,
+        setup: function() { createMap(); },
         teardown: destroyMap
     });
 
@@ -296,7 +296,7 @@
 
     // ------------------------------------------------------------
     module("Map / setOptions", {
-        setup: createMap,
+        setup: function() { createMap(); },
         teardown: destroyMap
     });
 
@@ -310,7 +310,7 @@
 
     // ------------------------------------------------------------
     module("Map / viewSize", {
-        setup: createMap,
+        setup: function() { createMap(); },
         teardown: destroyMap
     });
 
@@ -327,7 +327,7 @@
 
     // ------------------------------------------------------------
     module("Map / pannable", {
-        setup: createMap,
+        setup: function() { createMap(); },
         teardown: destroyMap
     });
 
@@ -338,7 +338,7 @@
 
     // ------------------------------------------------------------
     module("Map / zoomable", {
-        setup: createMap,
+        setup: function() { createMap(); },
         teardown: destroyMap
     });
 

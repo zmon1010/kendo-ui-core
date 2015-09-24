@@ -1438,7 +1438,7 @@
             });
         });
 
-        asyncTest("does not throw an error if image is CORS-enabled", function() {
+        asyncTest("does not throw an error if image is CORS-enabled", 1, function() {
             var image = new d.Image("http://upload.wikimedia.org/wikipedia/en/b/bc/Wiki.png", new g.Rect([0, 0], [100, 100]));
             group.append(image);
 

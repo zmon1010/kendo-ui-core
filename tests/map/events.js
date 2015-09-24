@@ -36,7 +36,7 @@
 
     // ------------------------------------------------------------
     module("Map / Events / zoomStart", {
-        setup: createMap,
+        setup: function() { createMap(); },
         teardown: destroyMap
     });
 
@@ -81,7 +81,7 @@
 
     // ------------------------------------------------------------
     module("Map / Events / reset", {
-        setup: createMap,
+        setup: function() { createMap(); },
         teardown: destroyMap
     });
 
@@ -123,7 +123,7 @@
     // ------------------------------------------------------------
     (function() {
         module("Map / Events / pan", {
-            setup: createMap,
+            setup: function() { createMap(); },
             teardown: destroyMap
         });
 

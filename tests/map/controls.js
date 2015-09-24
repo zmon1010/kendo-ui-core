@@ -26,7 +26,7 @@
     (function() {
         // ------------------------------------------------------------
         module("Map / Navigator", {
-            setup: createMap,
+            setup: function() { createMap(); },
             teardown: destroyMap
         });
 
@@ -126,7 +126,7 @@
     (function() {
         // ------------------------------------------------------------
         module("Map / ZoomControl", {
-            setup: createMap,
+            setup: function() { createMap(); },
             teardown: destroyMap
         });
 

@@ -26,7 +26,7 @@
     (function() {
         // ------------------------------------------------------------
         module("Map / Scroller", {
-            setup: createMap,
+            setup: function() { createMap(); },
             teardown: destroyMap
         });
 
