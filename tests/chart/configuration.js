@@ -1062,7 +1062,7 @@
 
     // ------------------------------------------------------------
     module("Size", {
-        setup: setupChart,
+        setup: function() { setupChart(); },
         teardown: destroyChart
     });
 
@@ -1166,7 +1166,6 @@
         equal(chart._model.options.height, 200);
     });
 })();
-
 
     // ------------------------------------------------------------
     module("Themes", {
