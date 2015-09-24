@@ -960,8 +960,7 @@
                 validation.to = validation.from.replace(/^=/, "");
             }
 
-            validation = kendo.spreadsheet.validation.parse(this._name, row, col, validation);
-            return kendo.spreadsheet.validation.compile(validation);
+            return kendo.spreadsheet.validation.compile(this._name, row, col, validation);
         },
 
         _compileFormula: function(row, col, f) {

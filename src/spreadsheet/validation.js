@@ -25,45 +25,19 @@
         custom: { type: "custom",  text: "that satisfies the formula: #=fromFormula#"}
     };
 
-    function parseValidation(sheet, row, col, validation) {
+    function compileValidation(sheet, row, col, validation) {
+        var validationHandler;
+
         if (typeof validation === "string") {
             validation = JSON.parse(validation);
         }
 
         if (validation.from) {
-            validation.from = calc.parseFormula(sheet, row, col, validation.from);
+            validation.from = calc.compile(calc.parseFormula(sheet, row, col, validation.from));
         }
 
         if (validation.to) {
-            validation.to = calc.parseFormula(sheet, row, col, validation.to);
-        }
-
-        return {
-            from: validation.from,
-            to: validation.to,
-            sheet: sheet,
-            row: row,
-            col: col,
-            comparerType: validation.comparerType,
-            dataType: validation.dataType,
-            type: validation.type,
-            allowNulls: validation.allowNulls,
-            tooltipMessageTemplate: validation.tooltipMessageTemplate,
-            tooltipTitleTemplate: validation.tooltipTitleTemplate,
-            messageTemplate: validation.messageTemplate,
-            titleTemplate: validation.titleTemplate
-        };
-    }
-
-    function compileValidation(validation) {
-        var validationHandler;
-
-        if (validation.from) {
-            validation.from = calc.compile(validation.from);
-        }
-
-        if (validation.to) {
-            validation.to = calc.compile(validation.to);
+            validation.to = calc.compile(calc.parseFormula(sheet, row, col, validation.to));
         }
 
         var comparer = exports.validationComparers[validation.comparerType];
@@ -88,7 +62,12 @@
             return this.value;
         };
 
-        return new kendo.spreadsheet.validation.Validation($.extend(validation, { handler: validationHandler }));
+        return new kendo.spreadsheet.validation.Validation($.extend(validation, {
+            handler: validationHandler,
+            sheet: sheet,
+            row: row,
+            col: col
+        }));
     }
 
     var Validation = Class.extend({
@@ -124,7 +103,6 @@
                 comparerType: this.comparerType
             };
 
-            //TODO: Use kendo.format instead of templates?
             if (this.tooltipMessageTemplate && this.tooltipTitleTemplate) {
                 this.tooltipMessage = kendo.template(this.tooltipMessageTemplate)(options);
                 this.tooltipTitle = kendo.template(this.tooltipTitleTemplate)(options);
@@ -249,7 +227,6 @@
             };
         }
     });
-    exports.parse = parseValidation;
     exports.compile = compileValidation;
     exports.validationComparers = {
         greaterThan: function (valueToCompare, from) {
