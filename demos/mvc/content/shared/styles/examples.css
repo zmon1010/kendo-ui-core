@@ -2723,6 +2723,10 @@ h5 {
     margin: 4.5em auto;
 }
 
+#example .box:first-child {
+    margin-top: 0;
+}
+
 .demo-section.k-content {
     box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);
 }
