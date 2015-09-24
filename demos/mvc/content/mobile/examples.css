@@ -228,6 +228,11 @@ pre .dec { color: #3e526b; } /* decimal */
     display: none;
 }
 
+.km-phone .km-on-ios #source-code-button .km-icon,
+.km-phone .km-on-android #source-code-button .km-icon {
+    margin-right: 0;
+}
+
 #source-code-container {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
