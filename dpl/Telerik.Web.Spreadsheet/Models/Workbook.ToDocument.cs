@@ -189,8 +189,13 @@ namespace Telerik.Web.Spreadsheet
 
             return borders;
         }
-       
-        private static RadHorizontalAlignment ConvertToHorizontalAlignment(string alignment)
+
+        /// <summary>
+        /// Converts alignment text to enum
+        /// </summary>
+        /// <param name="alignment">The alignment, such as "center"</param>
+        /// <returns>The parsed allignment</returns>
+        public static RadHorizontalAlignment ConvertToHorizontalAlignment(string alignment)
         {
             switch (alignment)
             {

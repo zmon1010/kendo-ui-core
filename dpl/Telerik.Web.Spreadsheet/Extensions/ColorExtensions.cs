@@ -22,7 +22,7 @@ namespace Telerik.Web.Spreadsheet
         /// <summary>
         /// Converts CSS style color to System.Windows.Media.Color
         /// </summary>
-        /// <param name="value">Hex color code to convert</param>
+        /// <param name="hex">Hex color code to convert</param>
         /// <returns>System.Windows.Media.Color instance</returns>
         public static Color ToColor(this string hex)
         {            
