@@ -55,7 +55,7 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "fontSize", EmitDefaultValue = false)]
-        public string FontSize { get; set; }
+        public double FontSize { get; set; }
 
         /// <summary>
         /// 

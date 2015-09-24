@@ -83,7 +83,7 @@ The name of the sheet.
 
 ### sheets.rows.cells.fontFamily `String`
 
-### sheets.rows.cells.fontSize `String`
+### sheets.rows.cells.fontSize `Number`
 
 ### sheets.rows.cells.italic `Boolean`
 

@@ -192,7 +192,7 @@ namespace Telerik.Web.Spreadsheet
 
         private static void SetFontSize(Cell cell, DocumentTheme theme, object value)
         {
-            cell.FontSize = ((double)value).ToPixels();
+            cell.FontSize = UnitHelper.DipToPoint((double)value);
         }
 
         private static void SetFontFamily(Cell cell, DocumentTheme theme, object value)

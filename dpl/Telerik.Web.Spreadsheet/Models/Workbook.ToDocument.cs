@@ -158,8 +158,7 @@ namespace Telerik.Web.Spreadsheet
                     selection.SetFontFamily(new ThemableFontFamily(cell.FontFamily));
                 }
 
-                //FontSize - should be int
-                //selection.SetFontSize(cell.FontSize);                
+                selection.SetFontSize(UnitHelper.PointToDip(cell.FontSize));
             }
         }
 
