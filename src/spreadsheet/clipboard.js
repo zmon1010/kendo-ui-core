@@ -3,6 +3,7 @@
 })(function(){
 
 (function(kendo) {
+    var $ = kendo.jQuery;
     var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
 
