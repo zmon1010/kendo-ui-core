@@ -2264,7 +2264,8 @@
            "php-ui": "Functionality"
          },
          "description": {
-           "kendo-ui": "<p>You can enable filtering via checkbox list in the Kendo UI grid filter menu by specifying <strong>filterable-&gt;multi=true</strong> setting for the relevant grid columns you would like to use such a filter for. </p> <p>Furthermore, you have the ability to combine this filter with itemTemplate definition as it is done with the Country column in the second grid in this demo. Thus you can customize the items with checkboxes that will be visualized and available for selection to the end user. </p> <p>More information on the filtering grid configuration can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-filterable\">this documentation section</a>.</p> <p>&nbsp;</p>"
+           "kendo-ui": "<p>You can enable filtering via checkbox list in the Kendo UI grid filter menu by specifying <strong>filterable-&gt;multi=true</strong> setting for the relevant grid columns you would like to use such a filter for. </p> <p>Furthermore, you have the ability to combine this filter with itemTemplate definition as it is done with the Country column in the second grid in this demo. Thus you can customize the items with checkboxes that will be visualized and available for selection to the end user. </p> <p>More information on the filtering grid configuration can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-filterable\">this documentation section</a>.</p> <p>&nbsp;</p>",
+		   "aspnet-mvc": "<p>You can enable checkbox list filtering in the filter menu of the Grid HtmlHelper by specifying<span> </span><strong>Columns</strong> -&gt; <strong>Filterable -&gt; Multi(true) </strong>setting for the relevant grid columns.</p> <p>In addition, you could customize the checkbox filter menu by combining the filter with <strong>ItemTemplate</strong> definition as it is done with the Country column in the bottom grid.</p>"
          }
       },
       {
@@ -2283,7 +2284,8 @@
            "php-ui": "Functionality"
          },
          "description": {
-           "kendo-ui": "<p>Having used to the copy-paste functionality available in MS Excel, many users would want to copy grid cell content from web apps and paste in Excel, or some other place for further review, or just to duplicate it.</p> <p>With the Kendo UI grid this is built-in functionality which is supported by setting two properties: <strong>selectable-&gt;multi cell</strong> and <strong>allowCopy-&gt;true</strong>. As simple as that, your users will be able to utilize copy and paste between across their apps, using the browser clipboard for this purpose \"behind the scenes\". </p>"
+           "kendo-ui": "<p>Having used to the copy-paste functionality available in MS Excel, many users would want to copy grid cell content from web apps and paste in Excel, or some other place for further review, or just to duplicate it.</p> <p>With the Kendo UI grid this is built-in functionality which is supported by setting two properties: <strong>selectable-&gt;multi cell</strong> and <strong>allowCopy-&gt;true</strong>. As simple as that, your users will be able to utilize copy and paste between across their apps, using the browser clipboard for this purpose \"behind the scenes\". </p>",
+		   "aspnet-mvc": "<p>Having used to the copy-paste functionality available in MS Excel, many users would want to copy grid cell content from web apps and paste in Excel, or some other place for further review, or just to duplicate it.</p> <p>With the Telerik Grid HTML helper this built-in functionality is supported by setting two configuration settings: <strong>Selectable</strong> -&gt; GridSelectionMode.Multiple and <strong>AllowCopy</strong>(true). As simple as that, your users will be able to utilize copy and paste between the browser and their apps.</p>"
          }
       },
       {
@@ -2311,7 +2313,8 @@
            "php-ui": "Functionality"
          },
          "description": {
-           "kendo-ui": "<p>This example demonstrates how to enable sorting for the Kendo UI grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>sortable </strong>grid attribute. Supported sorting modes are single and multiple.</p> <p>Check the relevant <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-sortable\" target=\"_blank\">sorting API section</a> for more details.</p>"
+           "kendo-ui": "<p>This example demonstrates how to enable sorting for the Kendo UI grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>sortable </strong>grid attribute. Supported sorting modes are single and multiple.</p> <p>Check the relevant <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-sortable\" target=\"_blank\">sorting API section</a> for more details.</p>",
+		   "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p>"
          }
       },
       {
@@ -2332,7 +2335,8 @@
            "php-ui": "Functionality"
          },
          "description": {
-           "kendo-ui": "<p>There are situations when you would like to enable the end user to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The Kendo UI grid supports selection by specifying its configuration via its selectable attribute. Accepted values are:</p> <ul> <li>true (enables row selection)</li> <li>row</li> <li>cell</li> <li>multiple, row</li> <li>multiple, cell</li> </ul> <p>Further details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-selectable\" target=\"_blank\">selectable API section</a> of the docs.</p>"
+           "kendo-ui": "<p>There are situations when you would like to enable the end user to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The Kendo UI grid supports selection by specifying its configuration via its selectable attribute. Accepted values are:</p> <ul> <li>true (enables row selection)</li> <li>row</li> <li>cell</li> <li>multiple, row</li> <li>multiple, cell</li> </ul> <p>Further details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-selectable\" target=\"_blank\">selectable API section</a> of the docs.</p>",
+		   "aspnet-mvc": "<p>There are situations when you&rsquo;d like to enable your users to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The MVC Grid supports selection by specifying its configuration through its <strong>Selectable</strong> -&gt; <strong>Mode</strong> and <strong>Type</strong> attributes. <br /> <br /> The accepted values for Mode are <strong>Single</strong><strong> </strong>and<strong> Multiple</strong>, while these for Type are <strong>Cell</strong> and <strong>Row</strong>.</p> <p>More details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridSelectionSettingsBuilder#methods-Mode%28Kendo.Mvc.UI.GridSelectionMode%29\">documentation</a>.</p>"
          }
       },
       {
@@ -2353,7 +2357,8 @@
            "php-ui": "Columns"
          },
          "description": {
-           "kendo-ui": "<p>In this demo we showcase how to implement foreign key column in the Kendo UI grid, hosting dropdown list editor for data editing. </p> <p>The column in question is defined via a key field (CategoryID). Through the column definition you set the key field as <strong>Field </strong>attribute, and the <strong>values </strong>attribute points to the source data for the items displayed in the dropdown list editor of that column. The editor items should have matching values of the same type as the key field (CategoryID in this case).</p> <p>See the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.values\">relevant API section</a> of the docs for more info.</p>"
+           "kendo-ui": "<p>In this demo we showcase how to implement foreign key column in the Kendo UI grid, hosting dropdown list editor for data editing. </p> <p>The column in question is defined via a key field (CategoryID). Through the column definition you set the key field as <strong>Field </strong>attribute, and the <strong>values </strong>attribute points to the source data for the items displayed in the dropdown list editor of that column. The editor items should have matching values of the same type as the key field (CategoryID in this case).</p> <p>See the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.values\">relevant API section</a> of the docs for more info.</p>",
+		   "aspnet-mvc": "<p>In this example you can see how to implement foreign key column in the Telerik MVC grid, holding DropDownList editor for data editing. The ForeignKey column definition is shown below:<br /> <br /> <span>columns.ForeignKey(p =&gt; p.CategoryID, (System.Collections.IEnumerable)ViewData[\"categories\"], \"CategoryID\", \"CategoryName\").Title(\"Category\").Width(150);</span></p> <p > Here is the definition for the DropDownList user control:</p> <p>&lt;%@ Control Language=\"C#\" Inherits=\"System.Web.Mvc.ViewUserControl&lt;object&gt;\" %&gt;<br /> &lt;%= Html.Kendo().DropDownListFor(m =&gt; m)<span>&nbsp;&nbsp;&nbsp; </span><br /> <span>&nbsp;&nbsp;&nbsp; </span>.BindTo((SelectList)ViewData[ViewData.TemplateInfo.GetFullHtmlFieldName(\"\") + \"_Data\"])<br /> %&gt;</p>"
          }
       },
       {
@@ -2372,7 +2377,8 @@
            "php-ui": "Columns"
          },
          "description": {
-           "kendo-ui": "<p>The Kendo UI grid supports multi-column headers by specifying column groups which incorporate inner column structures. Here the Contact Info and Location columns have nested columns, depicted via an array of column definitions. </p> <p>Operations like sorting and filtering are supported on each column level, regardless of the chosen multi-header pattern.</p>"
+           "kendo-ui": "<p>The Kendo UI grid supports multi-column headers by specifying column groups which incorporate inner column structures. Here the Contact Info and Location columns have nested columns, depicted via an array of column definitions. </p> <p>Operations like sorting and filtering are supported on each column level, regardless of the chosen multi-header pattern.</p>",
+		   "aspnet-mvc": "<p>The Telerik MVC Grid extension supports multi-column headers by specifying column groups which incorporate inner-column structures. In this demo, you can see the Contact Info and Location columns have nested columns, defined trough the Columns -&gt; Group -&gt; Columns scheme. In addition, operations like sorting and filtering are supported on each column level, regardless of the chosen multi-header pattern.</p>"
          }
       },
       {
@@ -2393,7 +2399,8 @@
            "php-ui": "Columns"
          },
          "description": {
-           "kendo-ui":"<p>You can enable column reordering for the Kendo UI grid via a simple configuration setting. All you have to do is set its <strong>reorderable</strong> attribute to <strong>true</strong>, which will automatically make its columns draggable and reorderable, as illustrated in this example.</p>"
+           "kendo-ui":"<p>You can enable column reordering for the Kendo UI grid via a simple configuration setting. All you have to do is set its <strong>reorderable</strong> attribute to <strong>true</strong>, which will automatically make its columns draggable and reorderable, as illustrated in this example.</p>",
+		   "aspnet-mvc": "<p>You can see in this demo how simple it is to reorder columns in Telerik ASP.NET MVC Grid. Just drag a column header over another header cell.</p> <p>You can enable this behavior by setting the <strong>Reorderable</strong> property of the grid.</p>"
          }
       },
       {
@@ -2414,7 +2421,8 @@
            "php-ui": "Columns"
          },
          "description": {
-           "kendo-ui":"<p>You can enable column resizing for the Kendo UI grid via a simple configuration setting. All you have to do is set its <strong>resizable</strong> attribute to <strong>true</strong>, which will make its columns resizable by displaying drag handles/hints when you hover in between their headers. </p>"
+           "kendo-ui":"<p>You can enable column resizing for the Kendo UI grid via a simple configuration setting. All you have to do is set its <strong>resizable</strong> attribute to <strong>true</strong>, which will make its columns resizable by displaying drag handles/hints when you hover in between their headers. </p>",
+		   "aspnet-mvc": "<p>This example demonstrates how you can enable the columns resizing feature of the ASP.NET MVC Grid by setting the <strong>Resizable</strong> property.</p> <p>Once it is set the users can resize columns by dragging the edges (resize handles) of their header cells. They can also auto-fit a column by double-clicking its resize handle as in Excel.</p>"
          }
       },
       {
@@ -2435,7 +2443,8 @@
            "php-ui": "Columns"
          },
          "description": {
-           "kendo-ui":"<p>When you interact with grid columns, you may want to be able to trigger column operations via a dedicated menu for this purpose.<br /> <br /> The Kendo UI grid has built-in support for such a feature, which can be enabled via a single configuration setting, i.e. <strong>columnMenu=true</strong>. Thus an option to display a column menu will be rendered in the grid column headers, which when activated allows&nbsp; you to sort, filter or change the visibility of the column. <br /> <br /> Furthermore, this menu takes into account whether a certain column operation is disabled via the column definition, and excludes the corresponding UI from its rendering. In this showcase this is done for the ShipAddress column where filtering is disabled. <br /> <br /> Further information about the available columnMenu API can be collected from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columnMenu\">this article</a>.</p>"
+           "kendo-ui":"<p>When you interact with grid columns, you may want to be able to trigger column operations via a dedicated menu for this purpose.<br /> <br /> The Kendo UI grid has built-in support for such a feature, which can be enabled via a single configuration setting, i.e. <strong>columnMenu=true</strong>. Thus an option to display a column menu will be rendered in the grid column headers, which when activated allows&nbsp; you to sort, filter or change the visibility of the column. <br /> <br /> Furthermore, this menu takes into account whether a certain column operation is disabled via the column definition, and excludes the corresponding UI from its rendering. In this showcase this is done for the ShipAddress column where filtering is disabled. <br /> <br /> Further information about the available columnMenu API can be collected from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columnMenu\">this article</a>.</p>",
+		   "aspnet-mvc": "<p>You can try in this example the column menu functionality of the Grid extension for ASP.NET MVC.</p> <p>If you set the grid <strong>ColumnMenu</strong> setting, it will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows to show and hide columns as well as filter and sort them (if filtering and sorting are enabled).</p>"
          }
       },
       {
@@ -2456,7 +2465,8 @@
            "php-ui": "Scrolling"
         },
         "description": {
-          "kendo-ui": "<p>There are apps which require to display grids with large number of columns on limited screen estates, and making a small subset of them static when scrolling the rest horizontally to bring them in the viewable area. The concept of pinned columns is mostly known from MS Excel, and many users would like to utilize it in web context as well.</p> <p>The Kendo UI grid widget supports static/frozen columns by a single configuration setting. Simply set the <strong>locked</strong> attribute of the corresponding column to true, and this will bring the column in the locked columns group positioned on the left in the grid. Here locked columns are OrderID and ShipName, while the rest of the columns can be scrolled horizontally. </p>"
+          "kendo-ui": "<p>There are apps which require to display grids with large number of columns on limited screen estates, and making a small subset of them static when scrolling the rest horizontally to bring them in the viewable area. The concept of pinned columns is mostly known from MS Excel, and many users would like to utilize it in web context as well.</p> <p>The Kendo UI grid widget supports static/frozen columns by a single configuration setting. Simply set the <strong>locked</strong> attribute of the corresponding column to true, and this will bring the column in the locked columns group positioned on the left in the grid. Here locked columns are OrderID and ShipName, while the rest of the columns can be scrolled horizontally. </p>",
+		  "aspnet-mvc": "<p>There are scenarios in which you might be required to display a large number of grid columns on limited screen space, and making a small subset of them static when scrolling the rest horizontally to bring them in the viewable area. The concept of frozen columns is well known from MS Excel, and many users would like to utilize it in a web environment too.</p> <p>The Telerik ASP.NET Grid widget for MVC supports static/frozen columns by a single configuration setting. Simply set the <strong>Locked</strong> boolean setting of the corresponding column to true, and this will bring the column in the locked columns group positioned on the left in the grid. Here the locked columns are Order ID and Ship Name, while the rest of the columns can be scrolled horizontally.</p>"
         }
       },
       {
