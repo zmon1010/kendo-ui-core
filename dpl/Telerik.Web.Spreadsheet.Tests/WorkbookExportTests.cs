@@ -93,7 +93,7 @@ namespace Telerik.Web.Spreadsheet.Tests
         [Fact]
         public void ToDocument_exports_merged_cells()
         {
-            sheet.MergedCells.Add("A2:B2");
+            sheet.AddMergedCells("A2:B2");
             var mergedRanges = workbook.ToDocument().ActiveWorksheet.Cells.GetMergedCellRanges();
             var firstRange = mergedRanges.First();
 

@@ -16,7 +16,7 @@ namespace Telerik.Web.Spreadsheet.Tests
         public void Can_insert_sheets()
         {
             var workbook = new Workbook();
-            workbook.Sheets.Add(new Worksheet());
+            workbook.AddSheet();
 
             Assert.Equal(workbook.Sheets.Count, 1);
         }

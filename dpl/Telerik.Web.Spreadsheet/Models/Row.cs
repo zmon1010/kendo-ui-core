@@ -17,6 +17,11 @@ namespace Telerik.Web.Spreadsheet
 
             Cells.AddRange(cells);
         }
+
+        public void AddCell(Cell cell)
+        {
+            AddCells(new[] { cell });
+        }
     }
 }
 

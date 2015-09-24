@@ -8,16 +8,16 @@ namespace Telerik.Web.Spreadsheet.Tests
         public static Workbook CreateWorkbook()
         {
             var workbook = new Workbook();
-            var sheet = new Worksheet();
-            var row = new Row { Index = 1 };
-            row.Cells.Add(new Cell { Index = 1, Value = "Foo", Format = "@" });
-            row.Cells.Add(new Cell { Index = 2, Value = 42 });
-            row.Cells.Add(new Cell { Index = 3, Value = 2.71 });
-            row.Cells.Add(new Cell { Index = 4, Formula = "A1 + B1" });
-            row.Cells.Add(new Cell { Index = 5, Value = "Фу" });
+            var sheet = workbook.AddSheet(); 
 
-            sheet.Rows.Add(row);
-            workbook.Sheets.Add(sheet);
+            var row = new Row { Index = 1 };
+            row.AddCell(new Cell { Index = 1, Value = "Foo", Format = "@" });
+            row.AddCell(new Cell { Index = 2, Value = 42 });
+            row.AddCell(new Cell { Index = 3, Value = 2.71 });
+            row.AddCell(new Cell { Index = 4, Formula = "A1 + B1" });
+            row.AddCell(new Cell { Index = 5, Value = "Фу" });
+
+            sheet.AddRow(row);            
 
             return workbook;
         }

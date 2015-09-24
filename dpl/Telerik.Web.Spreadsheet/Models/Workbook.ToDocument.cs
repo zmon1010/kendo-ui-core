@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Telerik.Windows.Documents.Spreadsheet.Core;
 using Telerik.Windows.Documents.Spreadsheet.Model;
 using Telerik.Windows.Documents.Spreadsheet.Model.Sorting;
@@ -61,9 +61,9 @@ namespace Telerik.Web.Spreadsheet
                         documentSheet.Cells.GetCellSelection(mergedRange).Merge();
                     }
 
-                    if (sheet.FrozenColumns.HasValue && sheet.FrozenRows.HasValue && (sheet.FrozenColumns > 0 || sheet.FrozenRows > 0))
+                    if (sheet.FrozenColumns.GetValueOrDefault() > 0 || sheet.FrozenRows.GetValueOrDefault() > 0)
                     {
-                        documentSheet.ViewState.FreezePanes(sheet.FrozenRows.Value, sheet.FrozenColumns.Value);
+                        documentSheet.ViewState.FreezePanes(sheet.FrozenRows.GetValueOrDefault(), sheet.FrozenColumns.GetValueOrDefault());
                     }
 
                     SetSortState(documentSheet, sheet.Sort);
@@ -201,11 +201,6 @@ namespace Telerik.Web.Spreadsheet
             return borders;
         }
 
-        /// <summary>
-        /// Converts alignment text to enum
-        /// </summary>
-        /// <param name="alignment">The alignment, such as "center"</param>
-        /// <returns>The parsed allignment</returns>
         private RadHorizontalAlignment ConvertToHorizontalAlignment(string alignment)
         {
             switch (alignment)

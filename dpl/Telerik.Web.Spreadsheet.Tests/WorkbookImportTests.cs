@@ -110,8 +110,8 @@ namespace Telerik.Web.Spreadsheet.Tests
         [Fact]
         public void FromDocument_does_not_freeze_pane()
         {
-            Assert.Equal(Workbook.FromDocument(document).Sheets[0].FrozenRows, 0);
-            Assert.Equal(Workbook.FromDocument(document).Sheets[0].FrozenColumns, 0);
+            Assert.Equal(null, Workbook.FromDocument(document).Sheets[0].FrozenRows);
+            Assert.Equal(null, Workbook.FromDocument(document).Sheets[0].FrozenColumns);
         }
 
         [Fact]
