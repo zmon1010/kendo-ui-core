@@ -5,7 +5,10 @@
     (function(kendo) {
         var $ = kendo.jQuery;
         var DOT = ".";
+        var EMPTYCHAR = " ";
         var sheetsBarClassNames = {
+            sheetsBarWrapper: "k-widget k-header",
+            sheetsBarSheetsWrapper: "k-tabstrip k-floatwrap k-tabstrip-bottom",
             sheetsBarActive: "k-spreadsheet-sheets-bar-active",
             sheetsBarInactive: "k-spreadsheet-sheets-bar-inactive",
             sheetsBarAdd: "k-spreadsheet-sheets-bar-add",
@@ -14,7 +17,23 @@
             sheetsBarEditor: "k-spreadsheet-sheets-editor",
             sheetsBarScrollable: "k-spreadsheet-sheets-scrollable",
             sheetsBarNext: "k-spreadsheet-sheets-next",
-            sheetsBarPrev: "k-spreadsheet-sheets-prev"
+            sheetsBarPrev: "k-spreadsheet-sheets-prev",
+            sheetsBarKItem: "k-item k-state-default",
+            sheetsBarKActive: "k-state-active k-state-tab-on-top",
+            sheetsBarKTextbox: "k-textbox",
+            sheetsBarKLink: "k-link",
+            sheetsBarKIcon: "k-icon",
+            sheetsBarKFontIcon: "k-font-icon",
+            sheetsBarKButton: "k-button k-button-icon",
+            sheetsBarKButtonBare: "k-button-bare",
+            sheetsBarKArrowW: "k-i-arrow-w",
+            sheetsBarKArrowE: "k-i-arrow-e",
+            sheetsBarKReset: "k-reset k-tabstrip-items",
+            sheetsBarKIconX: "k-i-x",
+            sheetsBarKSprite: "k-sprite",
+            sheetsBarKIconPlus: "k-i-plus",
+            sheetsBarHintWrapper: "k-widget k-tabstrip k-tabstrip-bottom k-spreadsheet-sheets-items-hint",
+            sheetsBarKResetItems: "k-reset k-tabstrip-items"
         };
 
         var SheetsBar = kendo.ui.Widget.extend({
@@ -25,7 +44,7 @@
 
                 element = this.element;
 
-                element.addClass("k-widget k-header");
+                element.addClass(classNames.sheetsBarWrapper);
 
                 this._tree = new kendo.dom.Tree(element[0]);
 
@@ -105,7 +124,7 @@
                     return;
                 }
 
-                sheetsWrapper.addClass(classNames.sheetsBarScrollable + " k-tabstrip k-floatwrap k-tabstrip-bottom");
+                sheetsWrapper.addClass(classNames.sheetsBarScrollable + EMPTYCHAR + classNames.sheetsBarSheetsWrapper);
 
                 wrapperOffsetWidth = sheetsWrapper[0].offsetWidth;
                 sheetsGroupScrollWidth = sheetsGroup[0].scrollWidth;
@@ -164,34 +183,34 @@
                 for (idx = 0; idx < sheets.length; idx++) {
                     var sheet = sheets[idx];
                     var isSelectedSheet = (idx === selectedIndex);
-                    var attr = { className: "k-item k-state-default" };
+                    var attr = { className: classNames.sheetsBarKItem + EMPTYCHAR };
                     var elementContent = [];
 
                     if (isSelectedSheet) {
-                        attr.className += " k-state-active k-state-tab-on-top " + classNames.sheetsBarActive;
+                        attr.className += classNames.sheetsBarKActive + EMPTYCHAR + classNames.sheetsBarActive;
                     } else {
-                        attr.className += " " + classNames.sheetsBarInactive;
+                        attr.className += classNames.sheetsBarInactive;
                     }
 
                     if (isSelectedSheet && isInEditMode) {
                         elementContent.push(element("input", {
                             type: "text",
                             value: sheet.name(),
-                            className: "k-textbox " + classNames.sheetsBarEditor,
+                            className: classNames.sheetsBarKTextbox + EMPTYCHAR + classNames.sheetsBarEditor,
                             maxlength: 50
                         }, []));
                     } else {
                         elementContent.push(element("span", {
-                            className: "k-link",
+                            className: classNames.sheetsBarKLink,
                             title: sheet.name()
                         }, [dom.text(sheet.name())]));
 
                         var deleteIcon = element("span", {
-                            className: "k-icon k-font-icon k-i-x"
+                            className: classNames.sheetsBarKIcon + EMPTYCHAR + classNames.sheetsBarKFontIcon + EMPTYCHAR + classNames.sheetsBarKIconX
                         }, []);
 
                         elementContent.push(element("span", {
-                            className: "k-link " + classNames.sheetsBarRemove
+                            className: classNames.sheetsBarKLink + EMPTYCHAR + classNames.sheetsBarRemove
                         }, [deleteIcon]));
                     }
 
@@ -203,31 +222,35 @@
 
             _createSheetsWrapper: function(sheetElements, renderScrollButtons) {
                 var element = kendo.dom.element;
-                var childrenElements = [element("ul", { className: "k-reset k-tabstrip-items" }, sheetElements)];
+                var classNames = SheetsBar.classNames;
+                var childrenElements = [element("ul", { className: classNames.sheetsBarKReset }, sheetElements)];
 
                 if (renderScrollButtons) {
-                    childrenElements.push(element("span", {className: "k-button k-button-icon k-button-bare " + SheetsBar.classNames.sheetsBarPrev }, [
-                        element("span", {className: "k-icon k-i-arrow-w"}, [])
+                    var baseButtonClass = classNames.sheetsBarKButton + EMPTYCHAR + classNames.sheetsBarKButtonBare + EMPTYCHAR;
+
+                    childrenElements.push(element("span", {className: baseButtonClass + classNames.sheetsBarPrev }, [
+                        element("span", {className: classNames.sheetsBarKIcon + EMPTYCHAR + classNames.sheetsBarKArrowW}, [])
                     ]));
 
-                    childrenElements.push(element("span", {className: "k-button k-button-icon k-button-bare " + SheetsBar.classNames.sheetsBarNext }, [
-                        element("span", {className: "k-icon k-i-arrow-e"}, [])
+                    childrenElements.push(element("span", {className: baseButtonClass + classNames.sheetsBarNext }, [
+                        element("span", {className: classNames.sheetsBarKIcon + EMPTYCHAR + classNames.sheetsBarKArrowE}, [])
                     ]));
                 }
 
-                return element("div", { className: SheetsBar.classNames.sheetsBarItems }, childrenElements);
+                return element("div", { className: classNames.sheetsBarItems }, childrenElements);
             },
 
             _createSortable: function() {
+                var classNames = SheetsBar.classNames;
                 this._sortable = new kendo.ui.Sortable(this.element, {
-                    filter: kendo.format("ul li.{0},ul li.{1}", SheetsBar.classNames.sheetsBarActive, SheetsBar.classNames.sheetsBarInactive),
-                    container: DOT + SheetsBar.classNames.sheetsBarItems,
+                    filter: kendo.format("ul li.{0},ul li.{1}", classNames.sheetsBarActive, classNames.sheetsBarInactive),
+                    container: DOT + classNames.sheetsBarItems,
                     axis: "x",
                     animation: false,
                     ignore: "input",
                     hint: function (element) {
                         var hint = $(element).clone();
-                        return hint.wrap("<div class='k-widget k-tabstrip k-tabstrip-bottom k-spreadsheet-sheets-items-hint'><ul class='k-reset k-tabstrip-items'></ul></div>").closest("div");
+                        return hint.wrap("<div class='" + classNames.sheetsBarHintWrapper + "'><ul class='" + classNames.sheetsBarKResetItems + "'></ul></div>").closest("div");
                     }
                 });
             },
@@ -302,9 +325,10 @@
 
             _addButton: function() {
                 var element = kendo.dom.element;
+                var classNames = SheetsBar.classNames;
                 return element("a", {
-                    className: SheetsBar.classNames.sheetsBarAdd + " k-button k-button-icon"
-                }, [element("span", {className: "k-sprite k-icon k-font-icon k-i-plus"}, [])]);
+                    className: classNames.sheetsBarAdd + EMPTYCHAR + classNames.sheetsBarKButton
+                }, [element("span", {className: classNames.sheetsBarKSprite + EMPTYCHAR + classNames.sheetsBarKIcon + EMPTYCHAR + classNames.sheetsBarKFontIcon + EMPTYCHAR + classNames.sheetsBarKIconPlus}, [])]);
             },
 
             destroy: function() {
