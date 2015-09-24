@@ -2814,6 +2814,10 @@ html.k-materialblack .demo-section.k-content {
     box-shadow: none;
 }
 
+.box .k-upload-status .k-button-bare {
+    min-width: 0;
+}
+
 .box .k-button:hover,
 .box .k-button:focus:active:not(.k-state-disabled):not([disabled]),
 .box .k-button:focus:not(.k-state-disabled):not([disabled]) {
