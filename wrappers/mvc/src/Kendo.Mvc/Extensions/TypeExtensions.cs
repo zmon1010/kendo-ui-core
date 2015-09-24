@@ -47,7 +47,7 @@ namespace Kendo.Mvc.Extensions
         
         internal static string FirstSortableProperty(this Type type)
         {
-            PropertyInfo firstSortableProperty = type.GetProperties().Where(property => property.PropertyType.IsPredefinedType()).FirstOrDefault();
+            PropertyInfo firstSortableProperty = type.GetProperties().Where(property => property.PropertyType.IsPredefinedType() && !property.PropertyType.IsEnum).FirstOrDefault();
 
             if (firstSortableProperty == null)
             {
