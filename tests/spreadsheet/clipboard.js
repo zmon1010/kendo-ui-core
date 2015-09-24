@@ -178,4 +178,59 @@
         
         equal(JSON.stringify(newState), JSON.stringify(expected));
     });
+    test("parseHTML handles merged cells with colspan and rowspan", function() {
+        var state = clipboard.parse({
+            html: '<table> <td>0,0</td> <td colspan="2" rowspan="3">0,1-0,2:2,1-2,2</td> </tr> <tr> <td>1,0</td> </tr> <tr> <td >2,0</td> </tr> </tbody> </table>'
+        });
+        var newState = {};
+        delete state.ref;
+        Object.keys(state).sort().forEach(function(key, i){
+            if(key != "mergedCells"){
+                newState[key] = {value: state[key].value};
+            }else{
+                newState[key] = state[key];
+            }
+        });
+        var targetState = {
+            "mergedCells" : ["B1:C3"],
+            "0,0" : {
+                "value" : "0,0" 
+            },
+            "1,0" : {
+                "value" : "1,0" 
+            },
+            "2,0" : {
+                "value" : "2,0" 
+            },
+            "0,1" : {
+                "value" : "0,1-0,2:2,1-2,2" 
+            },
+            "1,1" : {
+                "value" : null 
+            },
+            "2,1" : {
+                "value" : null 
+            },
+            "0,2" : {
+                "value" : null 
+            },
+            "1,2" : {
+                "value" : null 
+            },
+            "2,2" : {
+                "value" : null 
+            }
+        };
+
+        var expected = {};
+        Object.keys(targetState).sort().forEach(function(key, i){
+            if(key != "mergedCells"){
+                expected[key] = {value: targetState[key].value};
+            }else{
+                expected[key] = targetState[key];
+            }
+        });
+        
+        equal(JSON.stringify(newState), JSON.stringify(expected));
+    });
 })();
