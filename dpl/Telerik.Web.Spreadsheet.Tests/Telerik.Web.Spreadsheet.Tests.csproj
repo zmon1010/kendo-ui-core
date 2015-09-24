@@ -114,6 +114,9 @@
     <Reference Include="xunit.core">
       <HintPath>..\lib\xunit.core.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.execution.desktop">
+      <HintPath>..\lib\xunit.execution.desktop.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonFormatProviderTests.cs" />
