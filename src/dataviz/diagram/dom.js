@@ -1784,6 +1784,35 @@
                 if (this.targetConnector) {
                     Utils.remove(this.targetConnector.connections, this);
                 }
+            },
+
+            toJSON: function() {
+                var connection = this;
+                var from, to, point;
+                if (connection.from && connection.from.toJSON) {
+                    from = connection.from.toJSON();
+                } else {
+                    point = connection._sourcePoint;
+                    from = {
+                        x: point.x,
+                        y: point.y
+                    };
+                }
+
+                if (connection.to && connection.to.toJSON) {
+                    to = connection.to.toJSON();
+                } else {
+                    point = connection._targetPoint;
+                    to = {
+                        x: point.x,
+                        y: point.y
+                    };
+                }
+
+                return {
+                    from : from,
+                    to: to
+                };
             }
         });
 
@@ -2352,22 +2381,23 @@
             },
 
             save: function () {
-                var json = {}, i;
-
-                json.shapes = [];
-                json.connections = [];
+                var json = {
+                    shapes: [],
+                    connections: []
+                };
+                var i, connection, shape;
 
                 for (i = 0; i < this.shapes.length; i++) {
-                    var shape = this.shapes[i];
+                    shape = this.shapes[i];
                     if (shape.options.serializable) {
                         json.shapes.push(shape.options);
                     }
                 }
 
                 for (i = 0; i < this.connections.length; i++) {
-                    var con = this.connections[i];
-                    var conOptions = deepExtend({}, con.options, { from: con.from.toJSON(), to: con.to.toJSON() });
-                    json.connections.push(conOptions);
+                    connection = this.connections[i];
+
+                    json.connections.push(deepExtend({}, connection.options, connection.toJSON()));
                 }
 
                 return json;

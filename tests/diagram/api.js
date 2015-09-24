@@ -5,10 +5,10 @@
         Rect = dataviz.diagram.Rect,
         diagram;
 
-    function createDiagram() {
+    function createDiagram(options) {
         diagram = $('<div id="diagram" style="width: 800px; height: 600px;" />')
             .appendTo(QUnit.fixture)
-            .kendoDiagram({
+            .kendoDiagram(kendo.deepExtend({
                 shapes: [{
                     id: "rect",
                     type: "Rectangle",
@@ -24,7 +24,7 @@
                     width: 100,
                     height: 100
                 }]
-            })
+            }, options))
             .getKendoDiagram();
 
         return diagram;
@@ -174,4 +174,101 @@
 
     exportTests("Diagram", createDiagram);
     saveAsPDFTests("Diagram", createDiagram);
+
+
+    /*-----------------------------------------------*/
+    module("Diagram API / save", {
+        teardown: function () {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("saves shapes options", function() {
+        createDiagram();
+        var shapes = diagram.save().shapes;
+        deepEqual(shapes, [diagram.shapes[0].options, diagram.shapes[1].options]);
+    });
+
+    test("saves connections from and to connectors", function() {
+        createDiagram({
+            connections: [{
+                from: {
+                    id: "rect",
+                    connector: "Bottom"
+                },
+                to: {
+                    id: "rect1",
+                    connector: "Top"
+                }
+            }]
+        });
+
+        var connection = diagram.save().connections[0];
+        equal(connection.from.shapeId, "rect");
+        equal(connection.from.connector, "Bottom");
+        equal(connection.to.shapeId, "rect1");
+        equal(connection.to.connector, "Top");
+    });
+
+    test("saves connections from and to shapes", function() {
+        createDiagram({
+            connections: [{
+                from: {
+                    id: "rect"
+                },
+                to: {
+                    id: "rect1"
+                }
+            }]
+        });
+
+        var connection = diagram.save().connections[0];
+        equal(connection.from.shapeId, "rect");
+        equal(connection.to.shapeId, "rect1");
+    });
+
+    test("saves connections from and to points", function() {
+        createDiagram({
+            connections: [{
+                from: {
+                    x: 100,
+                    y: 200
+                },
+                to: {
+                    x: 300,
+                    y: 400
+                }
+            }]
+        });
+
+        var connection = diagram.save().connections[0];
+        equal(connection.from.x, 100);
+        equal(connection.from.y, 200);
+        equal(connection.to.x, 300);
+        equal(connection.to.y, 400);
+    });
+
+    test("saves connections source and target points if from and to are null", function() {
+        createDiagram({
+            connections: [{
+                from: {
+                    x: 100,
+                    y: 200
+                },
+                to: {
+                    x: 300,
+                    y: 400
+                }
+            }]
+        });
+        diagram.connections[0].source(null);
+        diagram.connections[0].target(null);
+
+        var connection = diagram.save().connections[0];
+        equal(connection.from.x, 100);
+        equal(connection.from.y, 200);
+        equal(connection.to.x, 300);
+        equal(connection.to.y, 400);
+    });
+
 })();
