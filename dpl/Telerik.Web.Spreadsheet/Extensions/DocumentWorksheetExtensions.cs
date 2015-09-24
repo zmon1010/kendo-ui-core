@@ -182,7 +182,7 @@ namespace Telerik.Web.Spreadsheet
 
         private static void SetVerticalAlign(Cell cell, DocumentTheme theme, object value)
         {
-            cell.VerticalAlign = ((RadVerticalAlignment)value).ToString().ToLower();
+            cell.VerticalAlign = ((RadVerticalAlignment)value).AsString();
         }
 
         private static void SetHorizontalAlign(Cell cell, DocumentTheme theme, object value)

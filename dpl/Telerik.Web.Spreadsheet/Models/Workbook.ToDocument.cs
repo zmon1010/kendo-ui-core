@@ -145,7 +145,7 @@ namespace Telerik.Web.Spreadsheet
 
                 if (!string.IsNullOrEmpty(cell.VerticalAlign))
                 {                    
-                    selection.SetVerticalAlignment(ConvertToVerticalAlignment(cell.VerticalAlign));
+                    selection.SetVerticalAlignment(cell.VerticalAlign.ToVerticalAlignment());
                 }
 
                 if (!string.IsNullOrEmpty(cell.TextAlign))
@@ -189,22 +189,7 @@ namespace Telerik.Web.Spreadsheet
 
             return borders;
         }
-
-        private static RadVerticalAlignment ConvertToVerticalAlignment(string alignment)
-        {
-            switch(alignment)
-            {
-                case "top":
-                    return RadVerticalAlignment.Top;
-                case "middle":
-                    return RadVerticalAlignment.Center;
-                case "bottom":
-                    return RadVerticalAlignment.Bottom;
-                default:
-                    return RadVerticalAlignment.Undetermined;
-            }
-        }
-
+       
         private static RadHorizontalAlignment ConvertToHorizontalAlignment(string alignment)
         {
             switch (alignment)
