@@ -125,6 +125,26 @@
         _parseHTML: function(tbody) {
             var that = this;
             var state = {ref:  new CellRef(0,0,0), mergedCells: []};
+            
+            tbody.find("tr").each(function(rowIndex, tr) {
+                $(tr).find("td").each(function(colIndex, td) {
+                    var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
+                    var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
+                    var blankCell = $("<td/>");
+                    if(colspan) {
+                        for(var ci = colIndex; ci <= colspan; ci++) {
+                            $(tr).find("td").eq(ci).after(blankCell);
+                        }
+                    }
+                    if(rowspan) {
+                        for(var ri = rowIndex + 1; ri <= rowspan; ri++) {
+                            tbody.find("tr").eq(ri).find("td").eq(colIndex).before(blankCell);
+                        }
+                    }
+                    console.log(tbody.html())
+                });
+                
+            });
             tbody.find("tr").each(function(rowIndex, tr) {
                 $(tr).find("td").each(function(colIndex, td) {
                     var key = rowIndex + "," + colIndex;
@@ -140,12 +160,6 @@
                         var address = startCol + (rowIndex + 1) + ":" + endCol + (rowIndex + 1 + rowspan);
 
                         state.mergedCells.push(address);
-
-                        for(var ri = 0; ri <= rowspan; ri++) {
-                            for(var ci = 0; ci <= colspan; ci++) {
-                                state[(rowIndex + ri) + "," + (colIndex + ci)] = cellState;
-                            }
-                        }
                     }
                 });
             });
