@@ -13,13 +13,13 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "index", EmitDefaultValue = false)]
-        public int Index { get; set; }
+        public int? Index { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [DataMember(Name = "width", EmitDefaultValue = false)]
-        public double Width { get; set; }
+        public double? Width { get; set; }
 
     }
 }

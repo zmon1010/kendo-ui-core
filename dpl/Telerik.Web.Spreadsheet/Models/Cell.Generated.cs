@@ -55,19 +55,19 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "fontSize", EmitDefaultValue = false)]
-        public double FontSize { get; set; }
+        public double? FontSize { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [DataMember(Name = "italic", EmitDefaultValue = false)]
-        public bool Italic { get; set; }
+        public bool? Italic { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [DataMember(Name = "bold", EmitDefaultValue = false)]
-        public bool Bold { get; set; }
+        public bool? Bold { get; set; }
 
         /// <summary>
         /// 
@@ -85,7 +85,7 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "index", EmitDefaultValue = false)]
-        public int Index { get; set; }
+        public int? Index { get; set; }
 
         /// <summary>
         /// 
@@ -97,7 +97,7 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "underline", EmitDefaultValue = false)]
-        public bool Underline { get; set; }
+        public bool? Underline { get; set; }
 
         /// <summary>
         /// 
@@ -115,7 +115,7 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "wrap", EmitDefaultValue = false)]
-        public bool Wrap { get; set; }
+        public bool? Wrap { get; set; }
 
     }
 }

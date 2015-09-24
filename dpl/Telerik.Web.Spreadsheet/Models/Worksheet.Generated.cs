@@ -61,13 +61,13 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "frozenColumns", EmitDefaultValue = false)]
-        public int FrozenColumns { get; set; }
+        public int? FrozenColumns { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [DataMember(Name = "frozenRows", EmitDefaultValue = false)]
-        public int FrozenRows { get; set; }
+        public int? FrozenRows { get; set; }
 
         private List<Row> rows = new List<Row>();
 

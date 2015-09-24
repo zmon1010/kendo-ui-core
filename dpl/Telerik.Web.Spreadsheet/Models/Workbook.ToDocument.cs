@@ -44,7 +44,7 @@ namespace Telerik.Web.Spreadsheet
 
                         if (row.Height > 0)
                         {
-                            documentSheet.Rows[row.Index].SetHeight(new RowHeight(row.Height, true));
+                            documentSheet.Rows[row.Index.Value].SetHeight(new RowHeight(row.Height.Value, true));
                         }
                     }
 
@@ -52,7 +52,7 @@ namespace Telerik.Web.Spreadsheet
                     {
                         if (ColumnsPropertyBag.WidthProperty.DefaultValue.Value != column.Width)
                         {
-                            documentSheet.Columns[column.Index].SetWidth(new ColumnWidth(column.Width, true));
+                            documentSheet.Columns[column.Index.Value].SetWidth(new ColumnWidth(column.Width.Value, true));
                         }
                     }
 
@@ -61,9 +61,9 @@ namespace Telerik.Web.Spreadsheet
                         documentSheet.Cells.GetCellSelection(mergedRange).Merge();
                     }
 
-                    if (sheet.FrozenColumns > 0 || sheet.FrozenRows > 0)
+                    if (sheet.FrozenColumns.HasValue && sheet.FrozenRows.HasValue && (sheet.FrozenColumns > 0 || sheet.FrozenRows > 0))
                     {
-                        documentSheet.ViewState.FreezePanes(sheet.FrozenRows, sheet.FrozenColumns);
+                        documentSheet.ViewState.FreezePanes(sheet.FrozenRows.Value, sheet.FrozenColumns.Value);
                     }
 
                     SetSortState(documentSheet, sheet.Sort);
@@ -97,7 +97,7 @@ namespace Telerik.Web.Spreadsheet
             foreach (var cell in srcRow.Cells)
             {
                 var stringValue = cell.Value == null ? null : cell.Value.ToString();
-                var selection = documentSheet.Cells[srcRow.Index, cell.Index];
+                var selection = documentSheet.Cells[srcRow.Index.Value, cell.Index.Value];
                 double numericValue;
 
                 var formula = cell.Formula;
@@ -128,15 +128,24 @@ namespace Telerik.Web.Spreadsheet
                 {
                     var fill = PatternFill.CreateSolidFill(cell.Background.ToColor());
                     selection.SetFill(fill);
-                }                
+                }
 
-                selection.SetIsBold(cell.Bold);
+                if (cell.Bold.HasValue)
+                {
+                    selection.SetIsBold(cell.Bold.Value);
+                }
 
-                selection.SetIsItalic(cell.Italic);
+                if (cell.Italic.HasValue)
+                {
+                    selection.SetIsItalic(cell.Italic.Value);
+                }
 
-                selection.SetIsWrapped(cell.Wrap);
+                if (cell.Wrap.HasValue)
+                {
+                    selection.SetIsWrapped(cell.Wrap.Value);
+                }
 
-                if (cell.Underline)
+                if (cell.Underline.HasValue)
                 {
                     selection.SetUnderline(UnderlineType.Single);
                 }
@@ -158,7 +167,7 @@ namespace Telerik.Web.Spreadsheet
                     selection.SetFontFamily(new ThemableFontFamily(cell.FontFamily));
                 }
 
-                selection.SetFontSize(UnitHelper.PointToDip(cell.FontSize));
+                selection.SetFontSize(UnitHelper.PointToDip(cell.FontSize.Value));
             }
         }
 
@@ -218,7 +227,7 @@ namespace Telerik.Web.Spreadsheet
                 return;
             }
 
-            var conditions = sort.Columns.Select(column => new ValuesSortCondition((int)column.Index, column.Ascending ? SortOrder.Ascending : SortOrder.Descending)).ToArray();
+            var conditions = sort.Columns.Select(column => new ValuesSortCondition((int)column.Index, column.Ascending.Value ? SortOrder.Ascending : SortOrder.Descending)).ToArray();
             var range = sort.Ref.ToCellRange().First();
 
             documentWorksheet.SortState.Set(range, conditions);

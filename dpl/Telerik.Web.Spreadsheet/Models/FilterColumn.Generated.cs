@@ -25,7 +25,7 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "index", EmitDefaultValue = false)]
-        public double Index { get; set; }
+        public double? Index { get; set; }
 
         /// <summary>
         /// 
@@ -43,7 +43,7 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "value", EmitDefaultValue = false)]
-        public double Value { get; set; }
+        public double? Value { get; set; }
 
         private List<object> values = new List<object>();
 

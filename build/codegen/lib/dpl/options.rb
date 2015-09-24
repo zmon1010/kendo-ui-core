@@ -9,10 +9,10 @@ module CodeGen::DPL::Options
     SETTINGS_GENERATED = ERB.new(File.read("build/codegen/lib/dpl/templates/settings-generated.erb"), 0, '%<>')
 
     CSHARP_TYPES = {
-        'Number' => 'double',
+        'Number' => 'double?',
         'String' => 'string',
-        'Boolean' => 'bool',
-        'Date' => 'DateTime',
+        'Boolean' => 'bool?',
+        'Date' => 'DateTime?',
         'Function' => 'ClientHandlerDescriptor'
     }
 

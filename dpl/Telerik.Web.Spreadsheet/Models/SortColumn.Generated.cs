@@ -13,13 +13,13 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "ascending", EmitDefaultValue = false)]
-        public bool Ascending { get; set; }
+        public bool? Ascending { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [DataMember(Name = "index", EmitDefaultValue = false)]
-        public double Index { get; set; }
+        public double? Index { get; set; }
 
     }
 }
