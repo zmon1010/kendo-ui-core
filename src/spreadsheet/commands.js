@@ -311,8 +311,13 @@
     });
 
     kendo.spreadsheet.FilterCommand = Command.extend({
+        undo: function() {
+            this.range().filter(this._state);
+        },
         exec: function() {
             var range = this.range();
+
+            this._state = range.hasFilter();
 
             if (range.hasFilter()) {
                 range.filter(false);
@@ -349,13 +354,34 @@
     });
 
     kendo.spreadsheet.ApplyFilterCommand = Command.extend({
+        column: function() {
+            return this.options.column || 0;
+        },
+        undo: function() {
+            var sheet = this.range().sheet();
+
+            sheet.clearFilter(this.column());
+
+            if (this._state.length) {
+                this.range().filter(this._state);
+            }
+        },
         exec: function() {
+            var range = this.range();
+            var sheet = range.sheet();
+            var column = this.column();
             var filter = new kendo.spreadsheet.ValueFilter({
                 values: this.options.values
             });
 
+            this._state = sheet.filter().columns.filter(function(c) {
+                return c.index == column;
+            });
+
+            this.range().clearFilter(column);
+
             this.range().filter({
-                column: this.options.column || 0,
+                column: column,
                 filter: filter
             });
         }

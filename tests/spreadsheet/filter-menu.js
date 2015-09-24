@@ -264,4 +264,62 @@
         });
     });
 
+    test("apply of filtered items triggers ApplyFilterCommand", function() {
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        filterMenu.bind("action", function(e) {
+            equal(e.command, "ApplyFilterCommand");
+            ok(e.options.values.length, 1);
+            ok(e.options.values[0], "A1");
+            ok(e.options.operatingRange instanceof kendo.spreadsheet.Range);
+            ok(e.options.operatingRange.hasValue("B2"));
+        });
+
+        var tree = filterMenu.valuesTreeView;
+
+        tree.element.find(".k-in").each(function() {
+            var dataItem = tree.dataItem(this);
+
+            dataItem.set("checked", dataItem.text == "A1");
+        });
+
+        filterMenu.apply();
+    });
+
+    var viewModel;
+
+    module("FilterMenuViewModel", {
+        setup: function() {
+            viewModel = new kendo.spreadsheet.FilterMenuViewModel({ });
+        }
+    });
+
+    function valuesDataSource(data) {
+        var dataSource = new kendo.data.HierarchicalDataSource({
+            data: [ { text: "All", items: data } ]
+        });
+
+        dataSource.read();
+        dataSource.data()[0].load();
+
+        return dataSource;
+    }
+
+    test("values are updated upon checkbox check", function() {
+
+        viewModel.valuesChange({
+            sender: {
+                dataSource: valuesDataSource([
+                    { text: "1", dataType: "string", checked: true },
+                    { text: "2", dataType: "string", checked: false }
+                ])
+            }
+        });
+
+        var values = viewModel.valueFilter.values;
+
+        equal(values.length, 1);
+        strictEqual(values[0], "1");
+    });
+
 })();

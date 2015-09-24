@@ -116,8 +116,18 @@
             return result;
         }
 
-        var FilterMenuViewModel = kendo.data.ObservableObject.extend({
-            valuesChange: function() {
+        var FilterMenuViewModel = kendo.spreadsheet.FilterMenuViewModel = kendo.data.ObservableObject.extend({
+            valuesChange: function(e) {
+                var checked = function(item) { return item.checked; };
+                var text = function(item) { return item.text; };
+                var data = e.sender.dataSource.data();
+                var values = data[0].children.data().toJSON();
+
+                values = values.filter(checked).map(text);
+
+                this.set("valueFilter", {
+                    values: values
+                });
             },
             valueSelect: function(e) {
                 e.preventDefault();
@@ -217,16 +227,16 @@
             },
 
             apply: function() {
-                // custom filter
-                //var customFilter = this.viewModel.customFilter.toJSON();
+                this.viewModel.valuesChange({ sender: this.valuesTreeView });
 
-                //customFilter.criteria = customFilter.criteria.filter(function(item) {
-                    //return item.operator && item.value;
-                //});
+                var options = { operatingRange: this.options.range };
+                var values = this.viewModel.valueFilter.values;
 
-                //this.viewModel.values
+                if (values && values.length) {
+                    options.values = values;
+                }
 
-                //this.action({ command: "ApplyFilterCommand", options: options });
+                this.action({ command: "ApplyFilterCommand", options: options });
             },
 
             action: function(options) {

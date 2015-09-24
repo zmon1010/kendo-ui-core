@@ -694,6 +694,16 @@
         ok(!range.hasFilter());
     });
 
+    test("can be undone", function() {
+        var command = FilterCommand({});
+        var range = sheet.range("A1:B2");
+
+        command.exec();
+        command.undo();
+
+        ok(!range.hasFilter());
+    });
+
     module("SpreadSheet SortCommand", moduleOptions);
 
     var sortCommand = $.proxy(command, this, kendo.spreadsheet.SortCommand);
@@ -814,7 +824,7 @@
         var command = applyFilterCommand({
             values: [ 1 ]
         });
-        var range = sheet.range("A1:B2");
+        var range = sheet.range("A1:B2").filter(true);
 
         command.range(range);
         command.exec();
@@ -837,7 +847,7 @@
             column: 1,
             values: [ 1 ]
         });
-        var range = sheet.range("A1:B2");
+        var range = sheet.range("A1:B3").filter(true);
 
         command.range(range);
         command.exec();
@@ -845,6 +855,44 @@
         var column = sheet.filter().columns[0];
 
         equal(column.index, 1);
+    });
+
+    test("undo clears filter", function() {
+        var command = applyFilterCommand({
+            column: 1,
+            values: [ 1 ]
+        });
+
+        var range = sheet.range("A1:B3").filter(true);
+
+        command.range(range);
+        command.exec();
+        command.undo();
+
+        var columns = sheet.filter().columns;
+        equal(columns.length, 0);
+    });
+
+    test("undo restores previous filter", function() {
+        var first = applyFilterCommand({ column: 1, values: [ 1 ] });
+        var second = applyFilterCommand({ column: 1, values: [ 2 ] });
+
+        var range = sheet.range("A1:B3").filter(true);
+
+        first.range(range);
+        first.exec();
+
+        second.range(range);
+        second.exec();
+        second.undo();
+
+        equal(sheet.filter().columns.length, 1);
+
+        var column = sheet.filter().columns[0];
+        var filter = column.filter.toJSON();
+
+        deepEqual(filter.filter, "value");
+        deepEqual(filter.values, [ 1 ]);
     });
 
 })();
