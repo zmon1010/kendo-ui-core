@@ -59,7 +59,10 @@
                         //"<span class='k-icon k-font-icon k-i-search' />" +
                     //"</div>" +
                     "<div class='" + classNames.valuesTreeViewWrapper + "'>" +
-                        "<div data-role='treeview' data-checkboxes='{ checkChildren: true }' />" +
+                        "<div data-#=ns#role='treeview' " +
+                            "data-#=ns#checkboxes='{ checkChildren: true }' "+
+                            "data-#=ns#bind='events: { check: valuesChange, select: valueSelect }' "+
+                            "/>" +
                     "</div>" +
                 "</div>",
             filterByCondition:
@@ -113,18 +116,32 @@
             return result;
         }
 
+        var FilterMenuViewModel = kendo.data.ObservableObject.extend({
+            valuesChange: function() {
+            },
+            valueSelect: function(e) {
+                e.preventDefault();
+
+                var node = e.sender.dataItem(e.node);
+                node.set("checked", !node.checked);
+            }
+        });
+
         var FilterMenu = Widget.extend({
             init: function(options) {
                 var element = $("<div />", { "class": FilterMenu.classNames.wrapper }).appendTo(document.body);
                 Widget.call(this, element, options);
 
-                this.viewModel = kendo.observable({
+                this.viewModel = new FilterMenuViewModel({
                     customFilter: {
                         logic: "and",
                         criteria: [
                             { operator: "", value: "" },
                             { operator: "", value: "" }
                         ]
+                    },
+                    valueFilter: {
+                        values: []
                     },
                     close: this.close.bind(this),
                     apply: this.apply.bind(this)
@@ -200,11 +217,14 @@
             },
 
             apply: function() {
-                var customFilter = this.viewModel.customFilter.toJSON();
+                // custom filter
+                //var customFilter = this.viewModel.customFilter.toJSON();
 
-                customFilter.criteria = customFilter.criteria.filter(function(item) {
-                    return item.operator && item.value;
-                });
+                //customFilter.criteria = customFilter.criteria.filter(function(item) {
+                    //return item.operator && item.value;
+                //});
+
+                //this.viewModel.values
 
                 //this.action({ command: "ApplyFilterCommand", options: options });
             },
@@ -315,7 +335,7 @@
                 this.element.append(wrapper);
 
                 if (details) {
-                    var details = new Details(wrapper); // jshint ignore:line
+                    details = new Details(wrapper); // jshint ignore:line
                 }
 
                 kendo.bind(wrapper, this.viewModel);
@@ -331,13 +351,6 @@
                 var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue, true);
 
                 this.valuesTreeView = wrapper.find("[data-role=treeview]").data("kendoTreeView");
-
-                this.valuesTreeView.bind("select", function(e) {
-                    e.preventDefault();
-
-                    var node = this.dataItem(e.node);
-                    node.set("checked", !node.checked);
-                });
 
                 this.valuesTreeView.setDataSource(this.getValues());
             },

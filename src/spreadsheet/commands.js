@@ -348,6 +348,19 @@
         }
     });
 
+    kendo.spreadsheet.ApplyFilterCommand = Command.extend({
+        exec: function() {
+            var filter = new kendo.spreadsheet.ValueFilter({
+                values: this.options.values
+            });
+
+            this.range().filter({
+                column: this.options.column || 0,
+                filter: filter
+            });
+        }
+    });
+
     kendo.spreadsheet.HideLineCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);

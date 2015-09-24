@@ -696,10 +696,10 @@
 
     module("SpreadSheet SortCommand", moduleOptions);
 
-    var SortCommand = $.proxy(command, this, kendo.spreadsheet.SortCommand);
+    var sortCommand = $.proxy(command, this, kendo.spreadsheet.SortCommand);
 
     test("Sorts range ascending", function() {
-        var command = SortCommand({ sheet: false, asc: true });
+        var command = sortCommand({ sheet: false, asc: true });
         
         sheet.range("A1:B3").values([
             [ 3, "a" ],
@@ -726,7 +726,7 @@
     });
 
     test("Sorts range descending", function() {
-        var command = SortCommand({ sheet: false, asc: false });
+        var command = sortCommand({ sheet: false, asc: false });
         
         sheet.range("A1:B3").values([
             [ 2, "a" ],
@@ -753,7 +753,7 @@
     });
 
     test("Sorts sheet ascending", function() {
-        var command = SortCommand({ sheet: true, asc: true });
+        var command = sortCommand({ sheet: true, asc: true });
         
         sheet.range("A1:B3").values([
             [ 3, "a" ],
@@ -780,7 +780,7 @@
     });
 
     test("Sorts sheet descending", function() {
-        var command = SortCommand({ sheet: true, asc: false });
+        var command = sortCommand({ sheet: true, asc: false });
         
         sheet.range("A1:B3").values([
             [ 1, "a" ],
@@ -804,6 +804,47 @@
         equal(valuesB[0], "c");
         equal(valuesB[1], "b");
         equal(valuesB[2], "a");
+    });
+
+    module("SpreadSheet ApplyFilterCommand", moduleOptions);
+
+    var applyFilterCommand = $.proxy(command, this, kendo.spreadsheet.ApplyFilterCommand);
+
+    test("exec applies value filter on range", function() {
+        var command = applyFilterCommand({
+            values: [ 1 ]
+        });
+        var range = sheet.range("A1:B2");
+
+        command.range(range);
+        command.exec();
+
+        ok(range.hasFilter());
+
+        var column = sheet.filter().columns[0];
+
+        equal(column.index, 0);
+        ok(column.filter instanceof kendo.spreadsheet.ValueFilter);
+
+        var filter = column.filter.toJSON();
+
+        deepEqual(filter.filter, "value");
+        deepEqual(filter.values, [ 1 ]);
+    });
+
+    test("exec applies filter on passed column", function() {
+        var command = applyFilterCommand({
+            column: 1,
+            values: [ 1 ]
+        });
+        var range = sheet.range("A1:B2");
+
+        command.range(range);
+        command.exec();
+
+        var column = sheet.filter().columns[0];
+
+        equal(column.index, 1);
     });
 
 })();
