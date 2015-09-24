@@ -69,7 +69,7 @@ namespace Telerik.Web.Spreadsheet
                     SetSortState(documentSheet, sheet.Sort);
                 }
 
-                if (document.Worksheets == null && document.Worksheets.Count > 0)
+                if (document.Worksheets.Count > 0)
                 {
                     document.ActiveWorksheet = document.Worksheets[0];
                 }                
@@ -190,7 +190,7 @@ namespace Telerik.Web.Spreadsheet
             return borders;
         }
 
-        public static RadVerticalAlignment ConvertToVerticalAlignment(string alignment)
+        private static RadVerticalAlignment ConvertToVerticalAlignment(string alignment)
         {
             switch(alignment)
             {
@@ -205,7 +205,7 @@ namespace Telerik.Web.Spreadsheet
             }
         }
 
-        public static RadHorizontalAlignment ConvertToHorizontalAlignment(string alignment)
+        private static RadHorizontalAlignment ConvertToHorizontalAlignment(string alignment)
         {
             switch (alignment)
             {
@@ -222,7 +222,7 @@ namespace Telerik.Web.Spreadsheet
             }
         }
 
-        public static void SetSortState(DocumentWorksheet documentWorksheet, Sort sort)
+        private static void SetSortState(DocumentWorksheet documentWorksheet, Sort sort)
         {
             if (sort.Ref == null)
             {

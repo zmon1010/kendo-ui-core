@@ -82,7 +82,7 @@ namespace Telerik.Web.Spreadsheet
 
             if (range == null)
             {
-                return null;
+                return new Sort();
             }
 
             return new Sort
