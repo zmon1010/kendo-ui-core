@@ -55,10 +55,7 @@ def copy_dpl_binaries
 
         DPL_FILES.each do |file|
             source = "#{DPL_DIST}\\#{key}\\Dev\\#{file}"
-            demos_dest = "demos\\mvc\\bin"
-
             system("xcopy #{source} #{dest} /d /y > nul")
-            #system("xcopy #{source} #{demos_dest} /d /y") if value[:dest] == 'NET40'
             end
     end
 end

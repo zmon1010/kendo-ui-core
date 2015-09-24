@@ -356,6 +356,7 @@ namespace :demos do
             msbuild t.prerequisites[0], "/p:Configuration=Debug"
         else
             copy_dpl_binaries
+            system("xcopy dpl\\lib\\NET40\\* demos\\mvc\\bin\\ /d /y > nul")
             msbuild 'demos/mvc/Kendo-Windows.sln', "/p:Configuration=Debug"
         end
     end
