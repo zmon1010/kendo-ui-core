@@ -26,6 +26,9 @@ SPREADSHEET_REDIST_NET40 = spreadsheet_dll_for('Release')
 SPREADSHEET_REDIST_NET45 = spreadsheet_dll_for('Release-NET45')
 SPREADSHEET_REDIST = FileList[SPREADSHEET_REDIST_NET40 + SPREADSHEET_REDIST_NET45]
 
+CLEAN.include(FileList[SPREADSHEET_ROOT + '/**/Telerik.Web.Spreadsheet.dll'])
+rule 'Telerik.Web.Spreadsheet.xml' => SPREADSHEET_SRC_ROOT + '/bin/Release/Telerik.Web.Spreadsheet.dll'
+
 if PLATFORM =~ /linux|darwin/
     # Copy pre-built binaries
     SPREADSHEET_REDIST.each do |file|

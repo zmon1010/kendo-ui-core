@@ -8,6 +8,10 @@ namespace Telerik.Web.Spreadsheet
     /// </summary>
     public partial class Workbook
     {
+        /// <summary>
+        /// Adds an empty sheet
+        /// </summary>
+        /// <returns>The new sheet</returns>
         public Worksheet AddSheet()
         {
             if (Sheets == null)

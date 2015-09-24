@@ -8,6 +8,10 @@ namespace Telerik.Web.Spreadsheet
     /// </summary>
     public partial class Row
     {
+        /// <summary>
+        /// Adds the cells to the row
+        /// </summary>
+        /// <param name="cells">The cells to add</param>
         public void AddCells(IEnumerable<Cell> cells)
         {
             if (Cells == null)
@@ -18,6 +22,10 @@ namespace Telerik.Web.Spreadsheet
             Cells.AddRange(cells);
         }
 
+        /// <summary>
+        /// Adds a cell to the row
+        /// </summary>
+        /// <param name="cell">The cell to add</param>
         public void AddCell(Cell cell)
         {
             AddCells(new[] { cell });

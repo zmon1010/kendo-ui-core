@@ -59,6 +59,12 @@ namespace Telerik.Web.Spreadsheet
             return result;        
         }
 
+        /// <summary>
+        /// Returns the collection, if not null, or a new collection.
+        /// </summary>
+        /// <typeparam name="T">The collection item type</typeparam>
+        /// <param name="collection">A collection</param>
+        /// <returns>The collection, if not null, or a new collection.</returns>
         public static List<T> GetOrDefault<T>(this List<T> collection)
         {            
             return collection ?? new List<T>();

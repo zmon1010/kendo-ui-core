@@ -8,6 +8,10 @@ namespace Telerik.Web.Spreadsheet
     /// </summary>
     public partial class Worksheet
     {
+        /// <summary>
+        /// Adds rows to the worksheet.
+        /// </summary>
+        /// <param name="rows">The rows to add</param>
         public void AddRows(IEnumerable<Row> rows)
         {
             if (Rows == null)
@@ -18,11 +22,19 @@ namespace Telerik.Web.Spreadsheet
             Rows.AddRange(rows);
         }
 
+        /// <summary>
+        /// Adds a row to the worksheet.
+        /// </summary>
+        /// <param name="row">The row to add</param>
         public void AddRow(Row row)
         {
             AddRows(new[] { row });
         }
 
+        /// <summary>
+        /// Adds a merged range to the worksheet.
+        /// </summary>
+        /// <param name="range">The merged range, e.g. "A1:B4"</param>
         public void AddMergedCells(string range)
         {
             var merged = MergedCells.GetOrDefault();
