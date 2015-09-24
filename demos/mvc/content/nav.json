@@ -5910,7 +5910,7 @@
         "url": "treelist/frozen-columns",
         "title": {
             "kendo-ui": "Static columns of Kendo UI TreeList control | Kendo UI Web demo",
-            "aspnet-mvc": "Frozen columns demo in Telerik ASP.NET MVC Grid "
+            "aspnet-mvc": "Frozen columns demo in Telerik ASP.NET MVC TreeList"
         },
         "meta": {
             "kendo-ui": "This demo shows locked columns feature of KendoTreeList control.",
