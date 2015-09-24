@@ -126,26 +126,44 @@
         _parseHTML: function(tbody) {
             var that = this;
             var state = {ref:  new CellRef(0,0,0), mergedCells: []};
-            
+
             tbody.find("tr").each(function(rowIndex, tr) {
                 $(tr).find("td").each(function(colIndex, td) {
                     var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
                     var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
-                    var blankCell = $("<td/>");
-                    if(colspan) {
-                        for(var ci = colIndex; ci <= colspan; ci++) {
-                            $(tr).find("td").eq(ci).after(blankCell);
+                    var blankCell = "<td/>";
+                    var ci;
+                    if(rowspan){
+                        var endRow = rowIndex + rowspan;
+                        for(var ri = rowIndex; ri <= endRow; ri++) {
+                            var row = tbody.find("tr").eq(ri);
+                            if(ri > rowIndex) {
+                                blankCell = "<td class='rowspan'></td>";
+                                if(colIndex === 0) {
+                                    row.find("td").eq(colIndex).after(blankCell);
+                                } else {
+                                    var last = Math.min(row.find("td").length, colIndex);
+                                    row.find("td").eq(last - 1).after(blankCell);
+                                }
+                            }
+                            if(colspan) {
+                                for(ci = colIndex; ci < colspan + colIndex; ci++) {
+                                    blankCell = "<td class='rowspan colspan'></td>";
+                                    row.find("td").eq(ci).after(blankCell);
+                                }
+                            }
+                        }
+                    } else {
+                        if(colspan) {
+                            for(ci = colIndex; ci < colspan + colIndex; ci++) {
+                                blankCell = "<td class='colspan'></td>";
+                                $(tr).find("td").eq(ci).after(blankCell);
+                            }
                         }
                     }
-                    if(rowspan) {
-                        for(var ri = rowIndex + 1; ri <= rowspan; ri++) {
-                            tbody.find("tr").eq(ri).find("td").eq(colIndex).before(blankCell);
-                        }
-                    }
-                    console.log(tbody.html())
                 });
-                
             });
+
             tbody.find("tr").each(function(rowIndex, tr) {
                 $(tr).find("td").each(function(colIndex, td) {
                     var key = rowIndex + "," + colIndex;
