@@ -20,11 +20,6 @@ end
 def dll_for(configuration)
     FileList['Kendo.Mvc.dll']
             .include('Kendo.Mvc.xml')
-            .include('Newtonsoft.Json.xml')
-            .include('Newtonsoft.Json.dll')
-            .include(DPL_FILES)
-            .include('Telerik.Web.Spreadsheet.xml')
-            .include('Telerik.Web.Spreadsheet.dll')
             .pathmap(MVC_SRC_ROOT + "Kendo.Mvc/bin/#{configuration}/%f")
             .include(resources_for(configuration))
 end
@@ -323,20 +318,7 @@ else
 
         # Produce Kendo.Mvc.dll by building Kendo.Mvc.csproj
         file dll_file => MVC_WRAPPERS_SRC do |t|
-            copy_dpl_binaries
-
-            msbuild DPL_ROOT + '/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj', "/p:Configuration=#{dpl_configuration}"
             msbuild 'wrappers/mvc/src/Kendo.Mvc/Kendo.Mvc.csproj', "/p:Configuration=#{configuration}"
-
-            if configuration == 'Release'
-                msbuild 'demos/mvc/Kendo-Windows.sln', "/p:Configuration=Release"
-                mkdir_p('dist/binaries/demos/Kendo')
-                system("xcopy demos\\mvc\\bin\\* dist\\binaries\\demos\\Kendo /q /d /y")
-            end
-
-            dpl_src = "dpl\\Telerik.Web.Spreadsheet\\bin\\#{dpl_configuration}"
-            dpl_dest = "wrappers\\mvc\\src\\Kendo.Mvc\\bin\\#{configuration}"
-            system("xcopy #{dpl_src}\\* #{dpl_dest} /y > nul")
         end
 
         # XML API documentation
