@@ -44,7 +44,7 @@
 
     // minimal data object with the glue functionality so we
     // can run expressions.
-    var Spreadsheet = kendo.Class.extend({
+    var Spreadsheet = kendo.TEST_SpreadsheetData = kendo.Class.extend({
         init: function() {
             this.data = {};
             this.maxrow = 0;

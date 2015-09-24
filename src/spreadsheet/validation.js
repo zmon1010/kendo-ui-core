@@ -96,8 +96,6 @@
             this.handler = options.handler;
             this.from = options.from;
             this.to = options.to;
-            this.onReady = [];
-            this.pending = false;
             this.dataType = options.dataType; //date, time etc
             this.comparerType =  options.comparerType; //greaterThan, EqaulTo etc
             this.type = options.type ? options.type : "warning"; //info, warning, reject
@@ -166,42 +164,20 @@
         exec: function(ss, compareValue, compareFormat, callback) {
             var self = this;
 
-            if ("value" in self) {
+            var calculateFromCallBack = function() {
+                self.value = self.handler.call(self, compareValue, compareFormat);
+                self._setMessages();
                 if (callback) {
                     callback(self.value);
                 }
+            };
+
+            if (self.to) {
+                self.to.exec(ss, function() {
+                    self.from.exec(ss, calculateFromCallBack);
+                });
             } else {
-                if (callback) {
-                    self.onReady.push(callback);
-                }
-
-                if (self.pending) {
-                    return;
-                }
-
-                self.pending = true;
-
-                var calculateFromCallBack = function() {
-                    self.pending = false;
-
-                    self.value = self.handler.call(this, compareValue, compareFormat);
-
-                    self._setMessages();
-
-                    self.onReady.forEach(function(callback){
-                        callback(self.value);
-                    });
-                };
-
-                if (self.to) {
-                    var calculateToCallBack = function() {
-                        self.from.exec(ss, calculateFromCallBack.bind(this));
-                    };
-
-                    self.to.exec(ss, calculateToCallBack.bind(this));
-                } else {
-                    self.from.exec(ss, calculateFromCallBack.bind(this));
-                }
+                self.from.exec(ss, calculateFromCallBack);
             }
         },
 
@@ -209,13 +185,9 @@
             if (this.from) {
                 this.from.reset();
             }
-
             if (this.to) {
                 this.to.reset();
             }
-
-            this.onReady = [];
-            this.pending = false;
             delete this.value;
         },
 
@@ -223,25 +195,24 @@
             if (this.from) {
                 this.from.adjust(affectedSheet, operation, start, delta);
             }
-
             if (this.to) {
                 this.to.adjust(affectedSheet, operation, start, delta);
             }
-
-            var formulaRow = this.row;
-            var formulaCol = this.col;
-
-            switch (operation) {
-                case "row":
+            if (this.sheet.toLowerCase() == affectedSheet.toLowerCase()) {
+                var formulaRow = this.row;
+                var formulaCol = this.col;
+                switch (operation) {
+                  case "row":
                     if (formulaRow >= start) {
                         this.row += delta;
                     }
                     break;
-                case "col":
+                  case "col":
                     if (formulaCol >= start) {
                         this.col += delta;
                     }
                     break;
+                }
             }
         },
 
