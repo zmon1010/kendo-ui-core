@@ -5178,8 +5178,13 @@ var __meta__ = { // jshint ignore:line
 
         _modelChange: function(e) {
             var that = this,
-                tbody = that.tbody,
-                model = e.model,
+                tbody = that.tbody;
+
+            if (!tbody) {
+                return;
+            }
+
+            var model = e.model,
                 row = that.tbody.find("tr[" + kendo.attr("uid") + "=" + model.uid +"]"),
                 relatedRow,
                 cell,
