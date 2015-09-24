@@ -81,7 +81,7 @@
         equal(state["0,0"].fontSize, 8);
     });
 
-    test("parseHTML handles merged cells", function() {
+    test("parseHTML handles merged cells with rowspan", function() {
         var state = clipboard.parse({
             html: '<table> <tbody> <tr> <td>0,0</td> <td rowspan="2">0,1 - 1,1</td> <td>0,2</td> </tr> <tr> <td>1,0</td> <td>1,2</td> </tr> </tbody> </table>'
         });
@@ -99,22 +99,74 @@
             "0,0" : {
                 "value" : "0,0",
             },
-            "1,0" : {
-                "value" : "1,0",
-            },
             "0,1" : {
-                "value" : "0,1 - 1,1",
-            },
-            "1,1" : {
                 "value" : "0,1 - 1,1",
             },
             "0,2" : {
                 "value" : "0,2",
             },
+            "1,0" : {
+                "value" : "1,0",
+            },
+            "1,1" : {
+                "value" : null,
+            },
             "1,2" : {
                 "value" : "1,2",
             }
         };
+        var expected = {};
+        Object.keys(targetState).sort().forEach(function(key, i){
+            if(key != "mergedCells"){
+                expected[key] = {value: targetState[key].value};
+            }else{
+                expected[key] = targetState[key];
+            }
+        });
+        
+        equal(JSON.stringify(newState), JSON.stringify(expected));
+    });
+    test("parseHTML handles merged cells with colspan", function() {
+        var state = clipboard.parse({
+            html: '<table> <tbody> <tr><td>0,0</td><td colspan="2">0,1 - 0,2</td><td>0,3</td></tr><tr><td>1,0</td><td>1,1</td><td>1,2</td><td>1,3</td></tr> </tbody> </table>'
+        });
+        var newState = {};
+        delete state.ref;
+        Object.keys(state).sort().forEach(function(key, i){
+            if(key != "mergedCells"){
+                newState[key] = {value: state[key].value};
+            }else{
+                newState[key] = state[key];
+            }
+        });
+        var targetState = {
+            "mergedCells" : ["B1:C1"],
+            "0,0" : {
+                "value" : "0,0"
+            },
+            "1,0" : {
+                "value" : "1,0"
+            },
+            "0,1" : {
+                "value" : "0,1 - 0,2"
+            },
+            "1,1" : {
+                "value" : "1,1"
+            },
+            "0,2" : {
+                "value" : null
+            },
+            "1,2" : {
+                "value" : "1,2"
+            },
+            "0,3" : {
+                "value" : "0,3"
+            },
+            "1,3" : {
+                "value" : "1,3"
+            }
+        };
+
         var expected = {};
         Object.keys(targetState).sort().forEach(function(key, i){
             if(key != "mergedCells"){
