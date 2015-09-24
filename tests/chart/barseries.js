@@ -289,7 +289,7 @@
         });
 
         test("Throws error when unable to locate value axis", function() {
-            raises(function() {
+            throws(function() {
                     setupBarChart(plotArea, {
                         series: [{ axis: "b", data: [1] }]
                     });

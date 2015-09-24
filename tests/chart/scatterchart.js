@@ -185,7 +185,7 @@
         });
 
         test("Throws error when unable to locate X axis", function() {
-            raises(function() {
+            throws(function() {
                     setupScatterChart(plotArea, {
                         series: [
                             { data: [[1, 10], [2, 20]], xAxis: "b" }
@@ -196,7 +196,7 @@
         });
 
         test("Throws error when unable to locate Y axis", function() {
-            raises(function() {
+            throws(function() {
                     setupScatterChart(plotArea, {
                         series: [
                             { data: [[1, 10], [2, 20]], yAxis: "b" }

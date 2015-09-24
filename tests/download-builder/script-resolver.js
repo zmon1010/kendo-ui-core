@@ -74,7 +74,7 @@
     test("signals missing components", function() {
         createResolver([]);
 
-        raises(function() {
+        throws(function() {
             resolver.addComponent("a");
         }, function(error) {
             return error.message ===
@@ -89,7 +89,7 @@
             depends: [ "b" ]
         }]);
 
-        raises(function() {
+        throws(function() {
             resolver.addComponent("a");
         }, function(error) {
             return error.message ===
@@ -108,7 +108,7 @@
             depends: [ "a" ]
         }]);
 
-        raises(function() {
+        throws(function() {
             resolver.addComponent("a");
         }, function(error) {
             return error.message ===
@@ -122,7 +122,7 @@
             source: "a.js"
         }]);
 
-        raises(function() {
+        throws(function() {
             resolver.addComponent("a", [ "f" ]);
         }, function(error) {
             return error.message ===

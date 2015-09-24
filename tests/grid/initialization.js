@@ -1744,7 +1744,7 @@
     });
 
     test("custom command without name throws error", function() {
-        raises(function() {
+        throws(function() {
             var grid = new Grid(table, {
                 dataSource: [{ foo: 1, bar: "bar"}],
                 columns: [{ command: { className: "foo" } }]

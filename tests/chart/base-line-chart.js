@@ -312,7 +312,7 @@ function baseLineChartTests(seriesName, TChart) {
         });
 
         test("Throws error when unable to locate value axis", function() {
-            raises(function() {
+            throws(function() {
                     setupChart(plotArea, {
                         series: [{ axis: "b", data: [1] }]
                     });

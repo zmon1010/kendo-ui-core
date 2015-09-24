@@ -87,7 +87,7 @@
         });
 
         test("error is thrown if no key is defined", function() {
-            raises(function() {
+            throws(function() {
                     map = new MapMock();
                     layer = new BingLayer(map);
                 },

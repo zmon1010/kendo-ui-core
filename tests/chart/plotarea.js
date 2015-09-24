@@ -638,7 +638,7 @@
         });
 
         test("Throws error when value axis name is duplicate", function() {
-            raises(function() {
+            throws(function() {
                 plotArea = new dataviz.CategoricalPlotArea([{
                         type: "column",
                         data: [100]
@@ -955,7 +955,7 @@
         });
 
         test("Throws error when unable to locate category axis", function() {
-            raises(function() {
+            throws(function() {
                 createPlotArea([{
                     data: [100, 200, 300],
                     categoryAxis: "b"
@@ -964,7 +964,7 @@
         });
 
         test("Throws error when category axis name is duplicate", function() {
-            raises(function() {
+            throws(function() {
                 plotArea = new dataviz.CategoricalPlotArea([{
                         type: "column",
                         data: [100]
@@ -2383,7 +2383,7 @@
         });
 
         test("Throws error when unable to locate category axis", function() {
-            raises(function() {
+            throws(function() {
                 createPlotArea([{
                     type: "bar",
                     data: [100, 200, 300],
@@ -4646,7 +4646,7 @@
         });
 
         test("Throws error when X axis name is duplicate", function() {
-            raises(function() {
+            throws(function() {
                 plotArea = createPlotArea(scatterSeriesData, {
                     xAxis: [{
                         name: "b"
@@ -4659,7 +4659,7 @@
         });
 
         test("Throws error when Y axis name is duplicate", function() {
-            raises(function() {
+            throws(function() {
                 plotArea = createPlotArea(scatterSeriesData, {
                     yAxis: [{
                         name: "b"
