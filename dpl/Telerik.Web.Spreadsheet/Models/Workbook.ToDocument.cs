@@ -25,7 +25,7 @@ namespace Telerik.Web.Spreadsheet
                 foreach (var sheet in Sheets.GetOrDefault())
                 {
                     var documentSheet = document.Worksheets.Add();
-                    
+
                     if (!string.IsNullOrEmpty(sheet.Name))
                     {
                         documentSheet.Name = sheet.Name;
@@ -47,7 +47,7 @@ namespace Telerik.Web.Spreadsheet
                             documentSheet.Rows[row.Index.Value].SetHeight(new RowHeight(row.Height.Value, true));
                         }
                     }
-                    
+
                     foreach (var column in sheet.Columns.GetOrDefault())
                     {
                         if (ColumnsPropertyBag.WidthProperty.DefaultValue.Value != column.Width)
@@ -72,15 +72,15 @@ namespace Telerik.Web.Spreadsheet
                 if (document.Worksheets.Count > 0)
                 {
                     document.ActiveWorksheet = document.Worksheets[0];
-                }                
+                }
             }
 
             document.History.IsEnabled = true;
 
             return document;
-        }        
+        }
 
-        private static SelectionState CreateSelectionState(Worksheet sheet, DocumentWorksheet documentSheet)
+        private SelectionState CreateSelectionState(Worksheet sheet, DocumentWorksheet documentSheet)
         {
             if (sheet.Selection != null)
             {
@@ -92,7 +92,7 @@ namespace Telerik.Web.Spreadsheet
             }
         }
 
-        private static void SetCells(Row srcRow, DocumentWorksheet documentSheet)
+        private void SetCells(Row srcRow, DocumentWorksheet documentSheet)
         {
             foreach (var cell in srcRow.Cells.GetOrDefault())
             {
@@ -120,7 +120,7 @@ namespace Telerik.Web.Spreadsheet
                 }
 
                 if (!string.IsNullOrEmpty(cell.Color))
-                {                                    
+                {
                     selection.SetForeColor(new ThemableColor(cell.Color.ToColor()));
                 }
 
@@ -153,7 +153,7 @@ namespace Telerik.Web.Spreadsheet
                 selection.SetBorders(CreateCellBorders(cell));
 
                 if (!string.IsNullOrEmpty(cell.VerticalAlign))
-                {                    
+                {
                     selection.SetVerticalAlignment(cell.VerticalAlign.ToVerticalAlignment());
                 }
 
@@ -174,12 +174,12 @@ namespace Telerik.Web.Spreadsheet
             }
         }
 
-        private static CellBorders CreateCellBorders(Cell cell)
+        private CellBorders CreateCellBorders(Cell cell)
         {
             var borders = new CellBorders();
 
             if (cell.BorderTop != null)
-            {             
+            {
                 borders.Top = new CellBorder(CellBorderStyle.Thin, new ThemableColor(cell.BorderTop.Color.ToColor()));
             }
 
@@ -206,7 +206,7 @@ namespace Telerik.Web.Spreadsheet
         /// </summary>
         /// <param name="alignment">The alignment, such as "center"</param>
         /// <returns>The parsed allignment</returns>
-        public static RadHorizontalAlignment ConvertToHorizontalAlignment(string alignment)
+        private RadHorizontalAlignment ConvertToHorizontalAlignment(string alignment)
         {
             switch (alignment)
             {
@@ -223,7 +223,7 @@ namespace Telerik.Web.Spreadsheet
             }
         }
 
-        private static void SetSortState(DocumentWorksheet documentWorksheet, Sort sort)
+        private void SetSortState(DocumentWorksheet documentWorksheet, Sort sort)
         {
             if (sort == null)
             {
@@ -235,5 +235,5 @@ namespace Telerik.Web.Spreadsheet
 
             documentWorksheet.SortState.Set(range, conditions);
         }
-    }  
+    }
 }

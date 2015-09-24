@@ -37,12 +37,7 @@ namespace Telerik.Web.Spreadsheet
 
                 sheet.Rows = documentWorksheet.ImportRows().ToList();
 
-                foreach (var mergedRange in documentWorksheet.Cells.GetMergedCellRanges())
-                {
-                    sheet.MergedCells.Add(
-                        NameConverter.ConvertCellRangeToName(mergedRange.FromIndex, mergedRange.ToIndex)
-                    );
-                }
+                sheet.MergedCells = GetMergedCells(documentWorksheet).ToList();
 
                 var pane = documentWorksheet.ViewState.Pane;
                 if (pane != null && pane.State == PaneState.Frozen)
@@ -55,7 +50,15 @@ namespace Telerik.Web.Spreadsheet
             }
 
             return workbook;
-        }                
+        }
+
+        private static IEnumerable<string> GetMergedCells(DocumentWorksheet worksheet)
+        {
+            foreach (var mergedRange in worksheet.Cells.GetMergedCellRanges())
+            {
+                yield return NameConverter.ConvertCellRangeToName(mergedRange.FromIndex, mergedRange.ToIndex);             
+            }
+        }
 
         private static IEnumerable<Column> GetColumns(DocumentWorksheet worksheet)
         {
