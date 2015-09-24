@@ -9,22 +9,14 @@ namespace Telerik.Web.Spreadsheet
     [DataContract]
     public partial class Filter
     {
-        private List<FilterColumn> columns = new List<FilterColumn>();
-
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "columns")]
+        [DataMember(Name = "columns", EmitDefaultValue = false)]
         public List<FilterColumn> Columns
         {
-            set
-            {
-                columns = value;
-            }
-            get
-            {
-                return columns;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -32,6 +24,5 @@ namespace Telerik.Web.Spreadsheet
         /// </summary>
         [DataMember(Name = "ref", EmitDefaultValue = false)]
         public string Ref { get; set; }
-
     }
 }

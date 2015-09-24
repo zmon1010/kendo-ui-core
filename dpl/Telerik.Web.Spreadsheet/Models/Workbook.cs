@@ -8,6 +8,19 @@ namespace Telerik.Web.Spreadsheet
     /// </summary>
     public partial class Workbook
     {
+        public Worksheet AddSheet()
+        {
+            if (Sheets == null)
+            {
+                Sheets = new List<Worksheet>();
+            }
+
+            var sheet = new Worksheet();
+
+            Sheets.Add(sheet);
+
+            return sheet;
+        }
     }
 }
 

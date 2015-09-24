@@ -33,7 +33,7 @@ namespace Telerik.Web.Spreadsheet
 
                 if (rows.ContainsKey(rowIndex))
                 {
-                    rows[rowIndex].Cells.AddRange(rowCells);
+                    rows[rowIndex].AddCells(rowCells);
                 }
                 else
                 {

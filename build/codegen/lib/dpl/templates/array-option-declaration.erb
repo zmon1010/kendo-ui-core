@@ -1,18 +1,10 @@
-        private <%= csharp_class %> <%= key.camelize %> = new <%= csharp_class %>();
-
         /// <summary>
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>
-        [DataMember(Name = "<%= key.camelize %>")]
+        [DataMember(Name = "<%= key.camelize %>", EmitDefaultValue = false)]
         public <%= csharp_class %> <%= key %>
         {
-            set
-            {
-                <%= key.camelize %> = value;
-            }
-            get
-            {
-                return <%= key.camelize %>;
-            }
+            get;
+            set;
         }
 

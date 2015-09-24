@@ -22,7 +22,7 @@ namespace Telerik.Web.Spreadsheet
 
             using (new UpdateScope(document.SuspendLayoutUpdate, document.ResumeLayoutUpdate))
             {
-                foreach (var sheet in Sheets)
+                foreach (var sheet in Sheets.GetOrDefault())
                 {
                     var documentSheet = document.Worksheets.Add();
                     
@@ -36,9 +36,9 @@ namespace Telerik.Web.Spreadsheet
                         document.ActiveWorksheet = documentSheet;
                     }
 
-                    documentSheet.ViewState.SelectionState = CreateSelectionState(sheet, documentSheet);                                                            
+                    documentSheet.ViewState.SelectionState = CreateSelectionState(sheet, documentSheet);
 
-                    foreach (var row in sheet.Rows)
+                    foreach (var row in sheet.Rows.GetOrDefault())
                     {
                         SetCells(row, documentSheet);
 
@@ -47,8 +47,8 @@ namespace Telerik.Web.Spreadsheet
                             documentSheet.Rows[row.Index.Value].SetHeight(new RowHeight(row.Height.Value, true));
                         }
                     }
-
-                    foreach (var column in sheet.Columns)
+                    
+                    foreach (var column in sheet.Columns.GetOrDefault())
                     {
                         if (ColumnsPropertyBag.WidthProperty.DefaultValue.Value != column.Width)
                         {
@@ -56,7 +56,7 @@ namespace Telerik.Web.Spreadsheet
                         }
                     }
 
-                    foreach (var mergedRange in sheet.MergedCells)
+                    foreach (var mergedRange in sheet.MergedCells.GetOrDefault())
                     {
                         documentSheet.Cells.GetCellSelection(mergedRange).Merge();
                     }
@@ -94,7 +94,7 @@ namespace Telerik.Web.Spreadsheet
 
         private static void SetCells(Row srcRow, DocumentWorksheet documentSheet)
         {
-            foreach (var cell in srcRow.Cells)
+            foreach (var cell in srcRow.Cells.GetOrDefault())
             {
                 var stringValue = cell.Value == null ? null : cell.Value.ToString();
                 var selection = documentSheet.Cells[srcRow.Index.Value, cell.Index.Value];
@@ -167,7 +167,10 @@ namespace Telerik.Web.Spreadsheet
                     selection.SetFontFamily(new ThemableFontFamily(cell.FontFamily));
                 }
 
-                selection.SetFontSize(UnitHelper.PointToDip(cell.FontSize.Value));
+                if (cell.FontSize.HasValue)
+                {
+                    selection.SetFontSize(UnitHelper.PointToDip(cell.FontSize.Value));
+                }
             }
         }
 
@@ -177,22 +180,22 @@ namespace Telerik.Web.Spreadsheet
 
             if (cell.BorderTop != null)
             {             
-                borders.Top = new CellBorder(CellBorderStyle.Thick, new ThemableColor(cell.BorderTop.Color.ToColor()));
+                borders.Top = new CellBorder(CellBorderStyle.Thin, new ThemableColor(cell.BorderTop.Color.ToColor()));
             }
 
             if (cell.BorderBottom != null)
             {
-                borders.Bottom = new CellBorder(CellBorderStyle.Thick, new ThemableColor(cell.BorderBottom.Color.ToColor()));
+                borders.Bottom = new CellBorder(CellBorderStyle.Thin, new ThemableColor(cell.BorderBottom.Color.ToColor()));
             }
 
             if (cell.BorderLeft != null)
             {
-                borders.Left = new CellBorder(CellBorderStyle.Thick, new ThemableColor(cell.BorderLeft.Color.ToColor()));
+                borders.Left = new CellBorder(CellBorderStyle.Thin, new ThemableColor(cell.BorderLeft.Color.ToColor()));
             }
 
             if (cell.BorderRight != null)
             {
-                borders.Right = new CellBorder(CellBorderStyle.Thick, new ThemableColor(cell.BorderRight.Color.ToColor()));
+                borders.Right = new CellBorder(CellBorderStyle.Thin, new ThemableColor(cell.BorderRight.Color.ToColor()));
             }
 
             return borders;
@@ -222,7 +225,7 @@ namespace Telerik.Web.Spreadsheet
 
         private static void SetSortState(DocumentWorksheet documentWorksheet, Sort sort)
         {
-            if (sort.Ref == null)
+            if (sort == null)
             {
                 return;
             }

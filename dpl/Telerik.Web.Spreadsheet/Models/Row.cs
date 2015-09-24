@@ -8,6 +8,15 @@ namespace Telerik.Web.Spreadsheet
     /// </summary>
     public partial class Row
     {
+        public void AddCells(IEnumerable<Cell> cells)
+        {
+            if (Cells == null)
+            {
+                Cells = new List<Cell>();
+            }
+
+            Cells.AddRange(cells);
+        }
     }
 }
 

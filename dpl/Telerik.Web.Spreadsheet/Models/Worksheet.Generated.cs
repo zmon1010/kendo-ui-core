@@ -21,40 +21,24 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
 
-        private List<Column> columns = new List<Column>();
-
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "columns")]
+        [DataMember(Name = "columns", EmitDefaultValue = false)]
         public List<Column> Columns
         {
-            set
-            {
-                columns = value;
-            }
-            get
-            {
-                return columns;
-            }
+            get;
+            set;
         }
-
-        private Filter filter = new Filter();
 
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "filter")]
+        [DataMember(Name = "filter", EmitDefaultValue = false)]
         public Filter Filter
         {
-            set
-            {
-                filter = value;
-            }
-            get
-            {
-                return filter;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -69,22 +53,14 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "frozenRows", EmitDefaultValue = false)]
         public int? FrozenRows { get; set; }
 
-        private List<Row> rows = new List<Row>();
-
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "rows")]
+        [DataMember(Name = "rows", EmitDefaultValue = false)]
         public List<Row> Rows
         {
-            set
-            {
-                rows = value;
-            }
-            get
-            {
-                return rows;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -93,40 +69,24 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "selection", EmitDefaultValue = false)]
         public string Selection { get; set; }
 
-        private Sort sort = new Sort();
-
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "sort")]
+        [DataMember(Name = "sort", EmitDefaultValue = false)]
         public Sort Sort
         {
-            set
-            {
-                sort = value;
-            }
-            get
-            {
-                return sort;
-            }
+            get;
+            set;
         }
-
-        private List<string> mergedCells = new List<string>();
 
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "mergedCells")]
+        [DataMember(Name = "mergedCells", EmitDefaultValue = false)]
         public List<string> MergedCells
         {
-            set
-            {
-                mergedCells = value;
-            }
-            get
-            {
-                return mergedCells;
-            }
+            get;
+            set;
         }
 
     }

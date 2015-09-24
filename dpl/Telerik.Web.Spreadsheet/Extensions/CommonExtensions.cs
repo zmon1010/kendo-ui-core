@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Telerik.Windows.Documents.Spreadsheet.Model;
 using Telerik.Windows.Documents.Spreadsheet.Utilities;
 
@@ -56,6 +57,11 @@ namespace Telerik.Web.Spreadsheet
             }
 
             return result;        
+        }
+
+        public static List<T> GetOrDefault<T>(this List<T> collection)
+        {            
+            return collection ?? new List<T>();
         }
     }
 }

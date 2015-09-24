@@ -24,8 +24,7 @@ namespace Telerik.Web.Spreadsheet
 
             foreach (var documentWorksheet in document.Worksheets)
             {
-                var sheet = new Worksheet();
-                workbook.Sheets.Add(sheet);
+                var sheet = workbook.AddSheet();
 
                 sheet.Name = documentWorksheet.Name;
 
@@ -34,9 +33,9 @@ namespace Telerik.Web.Spreadsheet
                 var selection = documentWorksheet.ViewState.SelectionState.SelectedRanges.First();
                 sheet.Selection = NameConverter.ConvertCellRangeToName(selection.FromIndex, selection.ToIndex);
 
-                sheet.Columns.AddRange(GetColumns(documentWorksheet));
+                sheet.Columns = GetColumns(documentWorksheet).ToList();
 
-                sheet.Rows.AddRange(documentWorksheet.ImportRows());
+                sheet.Rows = documentWorksheet.ImportRows().ToList();
 
                 foreach (var mergedRange in documentWorksheet.Cells.GetMergedCellRanges())
                 {
@@ -56,7 +55,7 @@ namespace Telerik.Web.Spreadsheet
             }
 
             return workbook;
-        }
+        }                
 
         private static IEnumerable<Column> GetColumns(DocumentWorksheet worksheet)
         {
@@ -82,7 +81,7 @@ namespace Telerik.Web.Spreadsheet
 
             if (range == null)
             {
-                return new Sort();
+                return null;
             }
 
             return new Sort

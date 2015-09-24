@@ -9,22 +9,14 @@ namespace Telerik.Web.Spreadsheet
     [DataContract]
     public partial class Sort
     {
-        private List<SortColumn> columns = new List<SortColumn>();
-
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "columns")]
+        [DataMember(Name = "columns", EmitDefaultValue = false)]
         public List<SortColumn> Columns
         {
-            set
-            {
-                columns = value;
-            }
-            get
-            {
-                return columns;
-            }
+            get;
+            set;
         }
 
         /// <summary>

@@ -45,22 +45,14 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "value", EmitDefaultValue = false)]
         public double? Value { get; set; }
 
-        private List<object> values = new List<object>();
-
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "values")]
+        [DataMember(Name = "values", EmitDefaultValue = false)]
         public List<object> Values
         {
-            set
-            {
-                values = value;
-            }
-            get
-            {
-                return values;
-            }
+            get;
+            set;
         }
 
     }

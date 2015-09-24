@@ -9,22 +9,14 @@ namespace Telerik.Web.Spreadsheet
     [DataContract]
     public partial class Row
     {
-        private List<Cell> cells = new List<Cell>();
-
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "cells")]
+        [DataMember(Name = "cells", EmitDefaultValue = false)]
         public List<Cell> Cells
         {
-            set
-            {
-                cells = value;
-            }
-            get
-            {
-                return cells;
-            }
+            get;
+            set;
         }
 
         /// <summary>

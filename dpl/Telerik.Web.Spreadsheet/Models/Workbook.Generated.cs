@@ -15,22 +15,14 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "activeSheet", EmitDefaultValue = false)]
         public string ActiveSheet { get; set; }
 
-        private List<Worksheet> sheets = new List<Worksheet>();
-
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "sheets")]
+        [DataMember(Name = "sheets", EmitDefaultValue = false)]
         public List<Worksheet> Sheets
         {
-            set
-            {
-                sheets = value;
-            }
-            get
-            {
-                return sheets;
-            }
+            get;
+            set;
         }
 
     }
