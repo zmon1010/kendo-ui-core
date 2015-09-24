@@ -2,6 +2,9 @@
     var element;
     var sheet;
     var spreadsheet;
+    var dialog;
+    var colorPalette;
+
     var moduleOptions = {
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
@@ -16,7 +19,10 @@
         }
     };
 
-    module("spreadsheet dialogs", moduleOptions);
+    module("spreadsheet dialogs", {
+        setup: moduleOptions.setup,
+        teardown: moduleOptions.teardown
+    });
 
     test("opens formatCells dialog", function() {
         spreadsheet.openDialog("formatCells");
