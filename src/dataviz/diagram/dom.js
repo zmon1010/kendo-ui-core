@@ -1945,6 +1945,10 @@
                 DRAG_END
             ],
 
+            items: function() {
+                return $();
+            },
+
             _createGlobalToolBar: function() {
                 var editable = this.options.editable;
                 if (editable) {
