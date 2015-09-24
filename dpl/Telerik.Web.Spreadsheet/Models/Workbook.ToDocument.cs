@@ -40,7 +40,7 @@ namespace Telerik.Web.Spreadsheet
 
                     foreach (var row in sheet.Rows)
                     {
-                        ImportCells(row, documentSheet);
+                        SetCells(row, documentSheet);
 
                         if (row.Height > 0)
                         {
@@ -66,7 +66,7 @@ namespace Telerik.Web.Spreadsheet
                         documentSheet.ViewState.FreezePanes(sheet.FrozenRows, sheet.FrozenColumns);
                     }
 
-                    ImportSortState(documentSheet, sheet.Sort);
+                    SetSortState(documentSheet, sheet.Sort);
                 }
 
                 if (document.Worksheets == null && document.Worksheets.Count > 0)
@@ -92,7 +92,7 @@ namespace Telerik.Web.Spreadsheet
             }
         }
 
-        private static void ImportCells(Row srcRow, DocumentWorksheet documentSheet)
+        private static void SetCells(Row srcRow, DocumentWorksheet documentSheet)
         {
             foreach (var cell in srcRow.Cells)
             {
@@ -222,8 +222,13 @@ namespace Telerik.Web.Spreadsheet
             }
         }
 
-        public static void ImportSortState(DocumentWorksheet documentWorksheet, Sort sort)
+        public static void SetSortState(DocumentWorksheet documentWorksheet, Sort sort)
         {
+            if (sort.Ref == null)
+            {
+                return;
+            }
+
             var conditions = sort.Columns.Select(column => new ValuesSortCondition((int)column.Index, column.Ascending ? SortOrder.Ascending : SortOrder.Descending)).ToArray();
             var range = sort.Ref.ToCellRange().First();
 
