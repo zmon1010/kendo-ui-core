@@ -371,7 +371,7 @@
                 this.originFrame = object.pane;
             }
 
-            if (this.editor.canInsertRef() && object.ref) {
+            if (this.editor.canInsertRef(false) && object.ref) {
                 this._workbook.activeSheet()._setFormulaSelections(this.editor.highlightedRefs());
                 this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
                 event.preventDefault();
@@ -519,7 +519,7 @@
             }
 
             var object = this.objectAt(event);
-            if (object && object.ref && editor.canInsertRef()) {
+            if (object && object.ref && editor.canInsertRef(false)) {
                 editor.refAtPoint(sheet.selection()._ref);
                 sheet._setFormulaSelections(editor.highlightedRefs());
             }
@@ -760,7 +760,7 @@
             var editor = this.editor;
             var sheet = this._workbook.activeSheet();
 
-            if (editor.canInsertRef()) {
+            if (editor.canInsertRef(true)) {
                 this.navigator.moveActiveCell(ACTIONS[action]);
 
                 editor.activeEditor().refAtPoint(sheet.selection()._ref);
@@ -774,7 +774,7 @@
             var editor = this.editor;
             var sheet = this._workbook.activeSheet();
 
-            if (editor.canInsertRef()) {
+            if (editor.canInsertRef(true)) {
                 this.navigator.modifySelection(ACTIONS[action.replace("shift+", "")], this.appendSelection);
 
                 editor.activeEditor().refAtPoint(sheet.selection()._ref);

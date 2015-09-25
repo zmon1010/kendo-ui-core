@@ -99,9 +99,9 @@
             return this.barInput.popup.visible() || this.cellInput.popup.visible();
         },
 
-        canInsertRef: function() {
+        canInsertRef: function(isKeyboardAction) {
             var editor = this.activeEditor();
-            return editor && editor.canInsertRef();
+            return editor && editor.canInsertRef(isKeyboardAction);
         },
 
         highlightedRefs: function() {

@@ -58,8 +58,6 @@
             }
 
             this._highlightedRefs = [];
-            this._staticTokens = [];
-            this._tokens = [];
 
             this._formulaSource();
 
@@ -401,26 +399,11 @@
                 });
         },
 
-        canInsertRef: function() {
-            var idx;
-            var result = this._canInsertRef();
-            var eq = function(tok1, tok2) {
-                if (tok1.type == "ref" && tok2.type == "ref" && tok1.ref.eq(tok2.ref)) {
-                    return true;
-                }
-
-                return tok1.value === tok2.value;
-            };
-
-            if (result && result.token) {
-                for (idx = 0; idx < this._staticTokens.length; idx++) {
-                    if (eq(result.token, this._staticTokens[idx])) {
-                        return null;
-                    }
-                }
+        canInsertRef: function(isKeyboardAction) {
+            if (isKeyboardAction) {
+                return null;
             }
-
-            return result;
+            return this._canInsertRef();
         },
 
         _canInsertRef: function() {
@@ -437,10 +420,13 @@
                 for (var i = 0; i < tokens.length; ++i) {
                     tok = tokens[i];
                     if (atPoint(tok)) {
-                        return canReplace(tok) || canInsertAfter(tok, tokens[i + 1]);
+                        return canReplace(tok);
+                    }
+                    if (afterPoint(tok)) {
+                        return canInsertBetween(tokens[i-1], tok);
                     }
                 }
-                return canInsertAfter(null, tok);
+                return canInsertBetween(tok, null);
             }
 
             return null;
@@ -448,51 +434,48 @@
             function atPoint(tok) {
                 return tok.begin <= point.begin && tok.end >= point.end;
             }
+            function afterPoint(tok) {
+                return tok.begin > point.begin;
+            }
             function canReplace(tok) {
-                if (tok && (/^(?:num|str|bool|sym|ref)$/.test(tok.type))) {
-                    return { replace: true, token: tok, end: tok.end };
+                if (tok) {
+                    if (/^(?:num|str|bool|sym|ref)$/.test(tok.type)) {
+                        return { replace: true, token: tok, end: tok.end };
+                    }
+                    if (/^(?:op|punc)$/.test(tok.type)) {
+                        if (tok.end == point.end) {
+                            return canInsertBetween(tok, tokens[i+1]);
+                        }
+                        return canInsertBetween(tokens[i-1], tok);
+                    }
                 }
             }
-            function canInsertAfter(current, tok) {
-                if (current && /^(?:func)/.test(current.type) && atPoint(current)) {
+            function canInsertBetween(left, right) {
+                if (left == null) {
                     return null;
                 }
-                if (tok == null && current) {
-                    return (isStartBrace(current) || /^(?:op)/.test(current.type)) ?
-                            { token: tok, end: point.end } : null;
-                }
-                if (current === null && /^(?:punc)$/.test(tok.type)) {
-                    return null;
-                }
-                if (isEndBrace(current) && isEndBrace(tok)) {
-                    return null;
-                }
-                if (tok.type == "startexp") {
-                    return { token: tok, end: point.end };
-                }
-                if (/^(?:ref|op|punc)$/.test(tok.type)) {
-                    var tmp = canReplace(current);
-                    if (tmp) {
-                        return tmp;
+                if (right == null) {
+                    if (left.type == "op" || isOpenParen(left.value)) {
+                        return { token: left, end: point.end };
                     }
-                    return { token: tok, end: point.end };
+                    return null;
                 }
-                if (/^(?:punc|op)$/.test(tok.type)) {
-                    return (/^[,;({]$/.test(tok.value) ?
-                            { token: tok, end: point.end } : null);
+                if (left.type == "startexp") {
+                    return { token: left, end: point.end };
+                }
+                if (/^(?:ref|op|punc)$/.test(left.type)) {
+                    return { token: left, end: point.end };
+                }
+                if (/^(?:punc|op)$/.test(left.type)) {
+                    return (/^[,;({]$/.test(left.value) ?
+                            { token: left, end: point.end } : null);
                 }
                 return false;
-            }
-            function isStartBrace(token) {
-                return /^(?:punc)/.test(token.type) && token.value === "(";
-            }
-            function isEndBrace(token) {
-                return /^(?:punc)/.test(token.type) && token.value === ")";
             }
         },
 
         refAtPoint: function(ref) {
-            var x = this.canInsertRef();
+            var x = this._canInsertRef();
             if (x) {
                 ref = ref.simplify().toString();
                 var value = this.value();
@@ -545,19 +528,6 @@
             }
         },
 
-        _setStaticTokens: function() {
-            var idx, tok;
-
-            this._staticTokens = [];
-
-            for (idx = 0; idx < this._tokens.length; idx++) {
-                tok = this._tokens[idx];
-                if (/^(?:num|str|bool|sym|ref)$/.test(tok.type)) {
-                    this._staticTokens.push(tok);
-                }
-            }
-        },
-
         _value: function(value) {
             this.element.text(value);
         },
@@ -569,7 +539,6 @@
 
             this._value(value);
             this._syntaxHighlight();
-            this._setStaticTokens();
         },
 
         highlightedRefs: function() {
