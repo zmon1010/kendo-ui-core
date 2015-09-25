@@ -31,14 +31,23 @@ module CodeGen::MVC::Wrappers
         'toolbar.items.toggle' => 'ClientHandlerDescriptor',
         'toolbar.items.buttons.click' => 'ClientHandlerDescriptor',
         'toolbar.items.buttons.toggle' => 'ClientHandlerDescriptor',
-        'treelist.columns.command.click' => 'ClientHandlerDescriptor'
+        'treelist.columns.command.click' => 'ClientHandlerDescriptor',
+
+        'spreadsheet.sheets.frozencolumns' => 'int',
+        'spreadsheet.sheets.frozenrows' => 'int',
+        'spreadsheet.sheets.columns.index' => 'int',
+        'spreadsheet.sheets.rows.index' => 'int',
+        'spreadsheet.sheets.rows.cells.index' => 'int',
+        'spreadsheet.sheets.rows.cells.value' => 'object',
+        'spreadsheet.sheets.mergedcells' => 'string[]',
+        'spreadsheet.sheets.filter.columns.values' => 'object[]'
     }
 
     SERIALIZATION_SKIP_LIST = [
-		'diagram.editable',
-		'diagram.editable.select',
-		'diagram.editable.rotate',
-		'diagram.editable.resize',
+        'diagram.editable',
+        'diagram.editable.select',
+        'diagram.editable.rotate',
+        'diagram.editable.resize',
         'map.center',
         'map.controls.attribution',
         'map.controls.navigator',
@@ -49,26 +58,27 @@ module CodeGen::MVC::Wrappers
         'map.layers.shape',
         'map.layers.symbol',
         'map.markers.position',
-		'map.markers.shape',
-		'map.markerdefaults.shape',
+        'map.markers.shape',
+        'map.markerdefaults.shape',
         'actionsheet.items.text',
         'buttongroup.items.text',
         'tabstrip.items.text',
         'tabstrip.items.url',
         'splitview.panes.id',
-        'treelist.filterable'
+        'treelist.filterable',
+        'spreadsheet.sheets.rows.cells.value'
     ]
 
     FLUENT_SKIP_LIST = [
         'map.layers',
-		'map.markers',
-		'map.markerdefaults'
+        'map.markers',
+        'map.markerdefaults'
     ]
 
     INITIALIZATION_SKIP_LIST = [
-		'map.markerdefaults',
-		'map.layerdefaults',
-		'map.layerdefaults.marker'
+        'map.markerdefaults',
+        'map.layerdefaults',
+        'map.layerdefaults.marker'
     ]
 
     GENERIC_BUILDER_SKIP_LIST = [
@@ -120,11 +130,15 @@ module CodeGen::MVC::Wrappers
         'editor.pdf',
         'colorpicker.palette',
         'colorpicker.tilesize',
-		'diagram.shapedefaults.visual',
-		'diagram.shapes.visual',
-		'diagram.datasource',
-		'diagram.connectionsdatasource',
-		'treemap.datasource'
+        'diagram.shapedefaults.visual',
+        'diagram.shapes.visual',
+        'diagram.datasource',
+        'diagram.connectionsdatasource',
+        'treemap.datasource',
+        'spreadsheet.sheets.rows.cells.bordertop',
+        'spreadsheet.sheets.rows.cells.borderbottom',
+        'spreadsheet.sheets.rows.cells.borderright',
+        'spreadsheet.sheets.rows.cells.borderleft'
     ]
 
     CSPROJ = 'wrappers/mvc/src/Kendo.Mvc/Kendo.Mvc.csproj'

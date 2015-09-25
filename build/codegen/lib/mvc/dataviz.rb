@@ -144,6 +144,8 @@ module CodeGen::MVC::Wrappers::DataViz
         end
 
         def csharp_item_class
+            return item.item_type if item.primitive
+
             item_class = "#{owner.csharp_class}#{csharp_name}"
 
             item_class.chop! if item_class.end_with? "s"
