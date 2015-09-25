@@ -68,6 +68,11 @@
             return this._property("value", value);
         },
 
+        resize: function(direction) {
+            var ref = this._resizedRef(direction);
+            return new Range(ref, this._sheet);
+        },
+
         _resizedRef: function(direction) {
             return this._ref.map(function(ref) {
                 return ref.toRangeRef().resize(direction);

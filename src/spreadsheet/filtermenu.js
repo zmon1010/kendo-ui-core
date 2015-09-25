@@ -229,7 +229,10 @@
             apply: function() {
                 this.viewModel.valuesChange({ sender: this.valuesTreeView });
 
-                var options = { operatingRange: this.options.range };
+                var options = {
+                    operatingRange: this.options.range,
+                    column: this.options.column
+                };
                 var values = this.viewModel.valueFilter.values;
 
                 if (values && values.length) {
@@ -247,7 +250,7 @@
                 var values = [];
                 var messages = this.options.messages;
                 var column = this.options.column;
-                var columnRange = this.options.range.column(column);
+                var columnRange = this.options.range.resize({ top: 1 }).column(column);
 
                 columnRange.forEachCell(function(row, col, cell) {
                     var formatter;
@@ -323,10 +326,12 @@
                 this.menu = ul.kendoMenu({
                     orientation: "vertical",
                     select: function(e) {
+                        var dir = $(e.item).data("dir") === "asc";
+                        var range = this.options.range.resize({ top: 1 });
                         var options = {
-                            asc: $(e.item).data("dir") === "asc",
+                            asc: dir,
                             sheet: false,
-                            operatingRange: this.options.range
+                            operatingRange: range
                         };
 
                         this.action({ command: "SortCommand", options: options });

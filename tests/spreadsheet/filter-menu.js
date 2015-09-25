@@ -102,13 +102,13 @@
     var filterMenu;
 
     function createWithValues(values, ref) {
-        range = sheet.range(ref || "A1:A3").values(values);
+        range = sheet.range(ref || "A1:A4").values(values);
         return new kendo.spreadsheet.FilterMenu({ range: range });
     }
 
     module("filter menu: filter by value", {
         setup: function() {
-            sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
+            sheet = new kendo.spreadsheet.Sheet(4, 4, defaults.rowHeight, defaults.columnWidth);
         },
         teardown: function() {
             if (filterMenu) {
@@ -123,7 +123,7 @@
     });
 
     test("loads range values in TreeView", function() {
-        filterMenu = createWithValues([ ["A1"], ["A2"], ["A3"] ]);
+        filterMenu = createWithValues([ ["header"], ["A2"], ["A3"], ["A4"] ]);
         var data = filterMenu.valuesTreeView.dataSource.data();
 
         equal(data.length, 1, "has only one 'all' rote node");
@@ -133,24 +133,33 @@
 
         equal(children.length, 3, "values are listed under the root node");
 
-        equal(children[0].text, "A1");
-        equal(children[1].text, "A2");
-        equal(children[2].text, "A3");
+        equal(children[0].text, "A2");
+        equal(children[1].text, "A3");
+        equal(children[2].text, "A4");
     });
 
     test("gets only distinct values", function() {
-        filterMenu = createWithValues([ ["A1"], ["A2"], ["A1"] ]);
+        filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["aaa"] ]);
 
         var values = filterMenu.getValues()[0].items;
 
         equal(values.length, 2, "distinct values are loaded");
 
-        equal(values[0].text, "A1");
-        equal(values[1].text, "A2");
+        equal(values[0].text, "aaa");
+        equal(values[1].text, "bbb");
     });
 
     test("gets empty values", function() {
-        filterMenu = createWithValues([ ["A1"], ["A1"] ]);
+        filterMenu = createWithValues([ ["header"], [], ["A1"] ]);
+
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values[0].text, "(Blanks)");
+        equal(values[1].text, "A1");
+    });
+
+    test("skips header row value", function() {
+        filterMenu = createWithValues([ ["header"], ["A1"] ]);
 
         var values = filterMenu.getValues()[0].items;
 
@@ -159,9 +168,9 @@
     });
 
     test("recognizes number dataType", function() {
-        sheet.range("A1").value(123);
+        sheet.range("A2").value(123);
 
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1") });
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
 
         var values = filterMenu.getValues()[0].items;
 
@@ -169,9 +178,9 @@
     });
 
     test("recognizes date dataType", function() {
-        sheet.range("A1").value(new Date(2015,1,1)).format("dd/mm/yyyy");
+        sheet.range("A2").value(new Date(2015,1,1)).format("dd/mm/yyyy");
 
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1") });
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
 
         var values = filterMenu.getValues()[0].items;
 
@@ -179,9 +188,9 @@
     });
 
     test("recognizes string dataType", function() {
-        sheet.range("A1").value("A1");
+        sheet.range("A2").value("A2");
 
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1") });
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
 
         var values = filterMenu.getValues()[0].items;
 
@@ -189,7 +198,7 @@
     });
 
     test("recognizes blank dataType", function() {
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1") });
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
 
         var values = filterMenu.getValues()[0].items;
 
@@ -197,11 +206,12 @@
     });
 
     test("sorts the values according to their dataType (blank, number, date, string)", function() {
-        sheet.range("A1").value(new Date(2015,1,1)).format("dd/mm/yyyy");
-        sheet.range("A2").value(123);
-        sheet.range("A3");
+        sheet.range("A1").value("header");
+        sheet.range("A2").value(new Date(2015,1,1)).format("dd/mm/yyyy");
+        sheet.range("A3").value(123);
+        sheet.range("A4");
 
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A3") });
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A4") });
 
         var values = filterMenu.getValues()[0].items;
 
@@ -251,12 +261,21 @@
         });
     });
 
-    test("clicking sort items sorts the complete range, not only column", function() {
+    function indludesValue(range, value) {
+        var values = range.values();
+        values = [].concat.apply([], values);
+        return values.indexOf(value) >= 0;
+    }
+
+    test("clicking sort items sorts all columns, sans header", function() {
         filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
 
         filterMenu.bind("action", function(e) {
-            ok(e.options.operatingRange.hasValue("A1"));
-            ok(e.options.operatingRange.hasValue("B1"));
+            var range = e.options.operatingRange;
+            ok(!indludesValue(range, "A1"), "header sorted");
+            ok(!indludesValue(range, "B1"), "header sorted");
+            ok(indludesValue(range, "A2"));
+            ok(indludesValue(range, "B3"));
         });
 
         filterMenu.menu.trigger("select", {
@@ -264,15 +283,17 @@
         });
     });
 
-    test("apply of filtered items triggers ApplyFilterCommand", function() {
+    test("apply of filtered items triggers ApplyFilterCommand on complete range", function() {
         filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
 
         filterMenu.bind("action", function(e) {
             equal(e.command, "ApplyFilterCommand");
             ok(e.options.values.length, 1);
             ok(e.options.values[0], "A1");
-            ok(e.options.operatingRange instanceof kendo.spreadsheet.Range);
-            ok(e.options.operatingRange.hasValue("B2"));
+            var range = e.options.operatingRange;
+            ok(range instanceof kendo.spreadsheet.Range);
+            ok(indludesValue(range, "A1"));
+            ok(indludesValue(range, "B2"));
         });
 
         var tree = filterMenu.valuesTreeView;
@@ -280,8 +301,20 @@
         tree.element.find(".k-in").each(function() {
             var dataItem = tree.dataItem(this);
 
-            dataItem.set("checked", dataItem.text == "A1");
+            dataItem.set("checked", dataItem.text == "A2");
         });
+
+        filterMenu.apply();
+    });
+
+    test("apply triggers command on passed column", function() {
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"] ]);
+
+        filterMenu.bind("action", function(e) {
+            equal(e.options.column, 1);
+        });
+
+        filterMenu.options.column = 1;
 
         filterMenu.apply();
     });

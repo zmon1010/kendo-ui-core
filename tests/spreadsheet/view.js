@@ -109,7 +109,7 @@
         var filterMenu = spreadsheet._view.createFilterMenu(0);
 
         ok(filterMenu instanceof kendo.spreadsheet.FilterMenu);
-        equal(filterMenu.options.range._ref.print(), "R2C1:R3C2");
+        equal(filterMenu.options.range._ref.print(), "R1C1:R3C2");
         equal(filterMenu.options.column, 0);
     });
 
@@ -119,7 +119,7 @@
         var filterMenu = spreadsheet._view.createFilterMenu(1);
 
         ok(filterMenu instanceof kendo.spreadsheet.FilterMenu);
-        equal(filterMenu.options.range._ref.print(), "R2C1:R3C2");
+        equal(filterMenu.options.range._ref.print(), "R1C1:R3C2");
         equal(filterMenu.options.column, 1);
     });
 

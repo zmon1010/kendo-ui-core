@@ -537,11 +537,9 @@
             }
 
             var sheet = this._sheet;
-            var ref = sheet.filter().ref.resize({ top: 1 }); // TODO: do not resize
-            var filterMenu = new kendo.spreadsheet.FilterMenu({
-                column: column,
-                range: new kendo.spreadsheet.Range(ref, sheet)
-            });
+            var ref = sheet.filter().ref;
+            var range = new kendo.spreadsheet.Range(ref, sheet);
+            var filterMenu = new kendo.spreadsheet.FilterMenu({ column: column, range: range });
 
             this._destroyFilterMenu();
 

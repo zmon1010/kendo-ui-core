@@ -845,4 +845,13 @@
         equal(sheet.range("B1").value(), "B1");
         equal(sheet.range("B2").value(), "B2");
     });
+
+    test("resize resizes range on top", function() {
+        sheet.range("A1:B2").resize({ top: 1 }).values([ [ "A2", "B2" ] ]);
+
+        equal(sheet.range("A1").value(), null);
+        equal(sheet.range("A2").value(), "A2");
+        equal(sheet.range("B1").value(), null);
+        equal(sheet.range("B2").value(), "B2");
+    });
 })();
