@@ -135,4 +135,23 @@
 
         equal(view.calls("renderClipboardContents"), 0);
     });
+
+    test("renderes filter headers", function() {
+        sheet.range("A1:B3").filter(true);
+
+        equal(element.find(".k-spreadsheet-filter").length, 2);
+    });
+
+    test("renders filted state of filter headers", function() {
+        sheet.range("A1:B3").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.ValueFilter({
+                values: [ 1 ]
+            })
+        })
+
+        var activeBottom = element.find(".k-spreadsheet-filter.k-state-active");
+        equal(activeBottom.length, 1);
+        equal(activeBottom.index(), 0);
+    });
 })();

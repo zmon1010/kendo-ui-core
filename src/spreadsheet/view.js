@@ -18,6 +18,7 @@
         topCorner: "k-spreadsheet-top-corner",
         filterHeadersWrapper: "k-filter-headers",
         filterButton: "k-spreadsheet-filter",
+        filterButtonActive: "k-state-active",
         icon: "k-icon k-font-icon",
         iconFilterDefault: "k-i-arrow-s",
         sheetsBar: "k-spreadsheet-sheets-bar",
@@ -997,6 +998,7 @@
             var filterIcons = [];
             var classNames = View.classNames;
             var index = 0;
+            var filter = sheet.filter();
 
             function icon(className) {
                 return kendo.dom.element("span", {
@@ -1010,10 +1012,18 @@
                     left: rect.left + rect.width - BUTTON_SIZE - 3 + "px",
                     top: rect.top + (rect.height - BUTTON_SIZE) / 2 + "px"
                 };
+                var filtered = filter && filter.columns.some(function(c) {
+                    return c.index === index;
+                });
+                var classes = classNames.filterButton;
+
+                if (filtered) {
+                    classes += " " + classNames.filterButtonActive;
+                }
 
                 var button = kendo.dom.element(
                     "span",
-                    { className: classNames.filterButton, style: style, "data-column": index },
+                    { className: classes, style: style, "data-column": index },
                     [ icon(classNames.iconFilterDefault) ]
                 );
 
