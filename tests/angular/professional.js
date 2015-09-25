@@ -139,6 +139,45 @@
         equal(grid.lockedTable.find("tr").eq(0).find("td").eq(0).text(), "|3|");
     });
 
+    ngTest("Grid locked cell templates after cancel edit - inline edit mode", 1, function () {
+
+        angular.module("kendo.tests").controller("mine", function ($scope) {
+            $scope.onClick = function () {
+                ok(true);
+            };
+
+            $scope.options = {
+                dataSource: new kendo.data.DataSource({
+                    data: fixtureData
+                }),
+                columns: [
+                    { field: "text", template: "|{{dataItem.text}}|" },
+                    { field: "id", template: "|{{dataItem.id}}|", locked: true },
+                    {
+                        command: ["edit",
+                           { template: "<div class='command-template' ng-click='onClick()'>{{dataItem.text}}/{{dataItem.id}}</div>" }],
+                        locked: true
+                    }
+                ],
+                editable: "popup"
+            };
+        });
+
+        $("<div ng-controller='mine'><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function () {
+        var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
+        var el = grid.element;
+        var tbody = grid.tbody;
+        var rows = tbody.find("tr");
+        var scope = grid.element.scope();
+
+        grid.editRow(grid.tbody.find("tr").eq(0));
+        grid.cancelRow();
+
+        grid.lockedTable.find("tr").eq(0).find(".command-template").click();
+    });
 
     ngTest("Grid cell templates", 4, function(){
         angular.module("kendo.tests").controller("mine", function($scope) {

@@ -3274,6 +3274,7 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     that._displayRow(that.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]"));
                 }
+
             }
         },
 
@@ -3311,10 +3312,18 @@ var __meta__ = { // jshint ignore:line
                 newRow = $((isAlt ? that.altRowTemplate : that.rowTemplate)(model));
                 row.replaceWith(newRow);
 
+                var angularElements = newRow;
+                var angularData = [{ dataItem: model }];
+
+                if (related && related.length) {
+                    angularElements = newRow.add(related);
+                    angularData.push({ dataItem: model });
+                }
+
                 that.angular("compile", function(){
                     return {
-                        elements: newRow.get(),
-                        data: [ { dataItem: model } ]
+                        elements: angularElements.get(),
+                        data: angularData
                     };
                 });
 
@@ -5178,13 +5187,8 @@ var __meta__ = { // jshint ignore:line
 
         _modelChange: function(e) {
             var that = this,
-                tbody = that.tbody;
-
-            if (!tbody) {
-                return;
-            }
-
-            var model = e.model,
+                tbody = that.tbody,
+                model = e.model,
                 row = that.tbody.find("tr[" + kendo.attr("uid") + "=" + model.uid +"]"),
                 relatedRow,
                 cell,
