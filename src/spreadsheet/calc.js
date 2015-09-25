@@ -751,7 +751,6 @@
             thing = thing();
             thing.begin = begin;
             thing.end = input.pos();
-            thing.cls = "";
             return thing;
         } : function(thing) {
             return thing();

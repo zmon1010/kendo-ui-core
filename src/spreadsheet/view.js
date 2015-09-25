@@ -1046,7 +1046,7 @@
                     return;
                 }
 
-                this._addDiv(selections, ref, classNames.selectionHighlight + (range.seriesCls || range.cls));
+                this._addDiv(selections, ref, classNames.selectionHighlight + " " + range.seriesCls);
             }.bind(this));
 
             return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);
@@ -1079,7 +1079,7 @@
                 var token = this._active();
 
                 if (token) {
-                    seriesColorClass = token.seriesCls;
+                    seriesColorClass = " " + token.seriesCls;
                     className += seriesColorClass;
                 }
             }

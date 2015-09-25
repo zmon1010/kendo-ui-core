@@ -573,14 +573,13 @@
                 var parens = [];
                 tokens.forEach(function(tok){
                     tok.active = false;
+                    tok.cls = [ "k-syntax-" + tok.type ];
 
                     if (tok.type == "ref") {
-                        tok.seriesCls = " " + refClasses[(refIndex++) % refClasses.length];
-                        tok.cls = tok.seriesCls;
-
+                        tok.seriesCls = refClasses[(refIndex++) % refClasses.length];
+                        tok.cls.push(tok.seriesCls);
                         highlightedRefs.push(tok);
                     }
-
                     if (pos && tok.type == "punc") {
                         if (isOpenParen(tok.value)) {
                             parens.unshift(tok);
@@ -589,31 +588,31 @@
                             if (open) {
                                 if (isMatchingParen(tok.value, open.value)) {
                                     if (touches(tok, pos) || touches(open, pos)) {
-                                        tok.cls = " k-syntax-paren-match";
-                                        open.cls = " k-syntax-paren-match";
+                                        tok.cls.push("k-syntax-paren-match");
+                                        open.cls.push("k-syntax-paren-match");
                                     }
                                 } else {
-                                    tok.cls = " k-syntax-error";
-                                    open.cls = " k-syntax-error";
+                                    tok.cls.push("k-syntax-error");
+                                    open.cls.push("k-syntax-error");
                                 }
                             } else {
-                                tok.cls = " k-syntax-error";
+                                tok.cls.push("k-syntax-error");
                             }
                         }
-                    } else if (pos && touches(tok, pos)) {
-                        tok.cls = " k-syntax-at-point";
+                    }
+                    if (pos && touches(tok, pos)) {
+                        tok.cls.push("k-syntax-at-point");
                         tok.active = true;
                     }
                     if (tok.type == "func" && !knownFunction(tok.value) && (!pos || !touches(tok, pos))) {
-                        tok.cls += " k-syntax-error";
+                        tok.cls.push("k-syntax-error");
                     }
                 });
                 tokens.reverse().forEach(function(tok){
                     var begin = tok.begin, end = tok.end;
                     var text = kendo.htmlEncode(value.substring(begin, end));
                     value = value.substr(0, begin) +
-                        "<span class='k-syntax-" + tok.type +
-                        tok.cls + "'>" + text + "</span>" +
+                        "<span class='" + tok.cls.join(" ") + "'>" + text + "</span>" +
                         value.substr(end);
                 });
                 this._tokens = tokens;
