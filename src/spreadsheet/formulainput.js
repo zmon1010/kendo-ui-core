@@ -442,7 +442,7 @@
                     if (/^(?:num|str|bool|sym|ref)$/.test(tok.type)) {
                         return { replace: true, token: tok, end: tok.end };
                     }
-                    if (/^(?:op|punc)$/.test(tok.type)) {
+                    if (/^(?:op|punc|startexp)$/.test(tok.type)) {
                         if (tok.end == point.end) {
                             return canInsertBetween(tok, tokens[i+1]);
                         }
@@ -455,7 +455,7 @@
                     return null;
                 }
                 if (right == null) {
-                    if (left.type == "op" || isOpenParen(left.value)) {
+                    if (/^(?:op|startexp)$/.test(left.type) || isOpenParen(left.value)) {
                         return { token: left, end: point.end };
                     }
                     return null;
