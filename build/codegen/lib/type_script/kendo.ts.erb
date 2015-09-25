@@ -1097,7 +1097,7 @@ declare module kendo.data {
         dir?: string;
     }
 
-    interface DataSourceTransportCreate {
+    interface DataSourceTransportCreate extends JQueryAjaxSettings {
         cache?: boolean;
         contentType?: string;
         data?: any;
@@ -1106,7 +1106,7 @@ declare module kendo.data {
         url?: any;
     }
 
-    interface DataSourceTransportDestroy {
+    interface DataSourceTransportDestroy extends JQueryAjaxSettings {
         cache?: boolean;
         contentType?: string;
         data?: any;
@@ -1115,7 +1115,7 @@ declare module kendo.data {
         url?: any;
     }
 
-    interface DataSourceTransportRead {
+    interface DataSourceTransportRead extends JQueryAjaxSettings {
         cache?: boolean;
         contentType?: string;
         data?: any;
@@ -1124,7 +1124,7 @@ declare module kendo.data {
         url?: any;
     }
 
-    interface DataSourceTransportUpdate {
+    interface DataSourceTransportUpdate extends JQueryAjaxSettings {
         cache?: boolean;
         contentType?: string;
         data?: any;
