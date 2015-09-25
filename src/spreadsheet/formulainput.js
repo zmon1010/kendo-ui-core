@@ -12,7 +12,8 @@
     var ns = ".kendoFormulaInput";
     var keys = kendo.keys;
     var classNames = {
-        wrapper: "k-spreadsheet-formula-input"
+        wrapper: "k-spreadsheet-formula-input",
+        listWrapper: "k-spreadsheet-formula-list"
     };
     var styles = [
         "font-family",
@@ -181,14 +182,16 @@
         },
 
         _formulaList: function() {
-            this.list = new kendo.ui.StaticList($('<ul class="k-spreadsheet-formula-list" />').insertAfter(this.element), {
-                autoBind: false,
-                selectable: true,
-                change: this._formulaListChange.bind(this),
-                dataSource: this.formulaSource,
-                dataValueField: "value",
-                template: "#:data.value#"
-            });
+            this.list = new kendo.ui.StaticList($('<ul />')
+                .addClass(FormulaInput.classNames.listWrapper)
+                .insertAfter(this.element), {
+                    autoBind: false,
+                    selectable: true,
+                    change: this._formulaListChange.bind(this),
+                    dataSource: this.formulaSource,
+                    dataValueField: "value",
+                    template: "#:data.value#"
+                });
 
             this.list.element.on("mousedown", function(e) {
                 e.preventDefault();
