@@ -14,13 +14,6 @@
     cursor: default;
 
     .k-spreadsheet-pane {
-        table {
-            table-layout: fixed;
-            border-collapse: collapse;
-            box-sizing: border-box;
-            position: absolute;
-        }
-
         td {
             white-space: nowrap;
             border-width: 1px;
@@ -31,19 +24,32 @@
             user-select: none;
         }
 
-        &.k-spreadsheet-merged-cell {
-            width: auto;
-            height: auto;
-        }
+        table {
+            table-layout: fixed;
+            border-collapse: collapse;
+            box-sizing: border-box;
+            position: absolute;
 
-        &.k-spreadsheet-row-header {
-            width: auto;
-            border-left: hidden;
-        }
+            &.k-spreadsheet-merged-cell {
+                width: auto;
+                height: auto;
+            }
 
-        &.k-spreadsheet-column-header {
-            height: auto;
-            border-top: hidden;
+            &.k-spreadsheet-row-header {
+                width: auto;
+
+                td {
+                    border-left-width: 0;
+                }
+            }
+
+            &.k-spreadsheet-column-header {
+                height: auto;
+
+                td {
+                    border-top-width: 0;
+                }
+            }
         }
     }
 
