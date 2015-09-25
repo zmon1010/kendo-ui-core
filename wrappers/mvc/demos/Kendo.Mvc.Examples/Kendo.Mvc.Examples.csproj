@@ -3726,6 +3726,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\dpl\Telerik.Web.Spreadsheet\Telerik.Web.Spreadsheet.csproj">
+      <Project>{d697e6a6-319f-44fa-a757-443415ff43bb}</Project>
+      <Name>Telerik.Web.Spreadsheet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Kendo.Mvc\Kendo.Mvc.csproj">
       <Project>{a7f7c110-d7f0-49b7-8dda-fd2d1cc6f3b1}</Project>
       <Name>Kendo.Mvc</Name>
