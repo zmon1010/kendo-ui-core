@@ -20,7 +20,10 @@ module.exports = function(grunt) {
 
     var browsers = ['Chrome'];
 
-    var tests = [ "tests/**/*.js" ];
+    var tests = [
+        "tests/**/*.js",
+        { pattern: "tests/download-builder/*.js", included: false }
+    ];
 
     var browserOption = grunt.option('browser');
     var testsOption = grunt.option('tests');
