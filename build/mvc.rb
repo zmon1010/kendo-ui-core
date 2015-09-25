@@ -257,6 +257,7 @@ namespace :mvc do
         MVC6_NUGET,
         MVC6_NUGET_SYMBOLS,
         'dist/binaries/',
+        'dist/binaries/demos/Kendo.Mvc.Examples/bin/',
         'dist/binaries/mvc-6/'
     ]
 
@@ -329,7 +330,7 @@ else
     end
 
     # Produce Kendo.Mvc.Examples.dll by building Kendo.Mvc.Examples.csproj
-    file MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll' =>
+    file MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll' => ["spreadsheet:binaries"]
         MVC_DEMOS_SRC.include('wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll') do |t|
         msbuild MVC_DEMOS_ROOT + 'Kendo.Mvc.Examples.csproj'
     end
@@ -341,6 +342,10 @@ else
              FileList['wrappers/mvc/**/*.dll']
          ].include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll'),
          :root => 'wrappers/mvc/'
+
+    tree :to => 'dist/binaries/demos/Kendo.Mvc.Examples/bin/',
+         :from => SPREADSHEET_REDIST_NET40,
+         :root => SPREADSHEET_SRC_ROOT + '/bin/Release'
 
     # MVC6 package
     file MVC6_NUGET => MVC6_SOURCES do
