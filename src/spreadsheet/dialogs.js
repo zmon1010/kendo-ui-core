@@ -651,6 +651,8 @@
 
     var ValidationViewModel = kendo.spreadsheet.ValidationCellsViewModel = ObservableObject.extend({
         init: function(options) {
+            //TODO: on init apply default messages from  the validation object.
+
             ObservableObject.fn.init.call(this, options);
 
             this.bind("change", (function(e) {
@@ -681,6 +683,9 @@
             this.set("date.to", null);
 
             this.set("custom.from", null);
+        },
+        isAny: function() {
+            return this.get("criterion") === "any";
         },
         isNumber: function() {
             return this.get("criterion") === "number";
@@ -741,7 +746,8 @@
             title: "Data Validation",
             criterion: "any",
             type: "reject",
-            hint: "Please enter message!",
+            hintMessage: "Please enter message.",
+            hintTitle: "Please enter title.",
             criteria: [
                 { type: "any", name: "Any value" },
                 { type: "number", name: "Number" },
@@ -826,19 +832,27 @@
                         '</div>' +
                     '</div>' +
 
-                    '<div class="k-edit-label"><label>On invalid data:</label></div>' +
-                    '<div class="k-edit-field">' +
-                        '<input type="radio" name="validationType" value="reject" data-bind="checked: type" />' +
-                        'Reject input' +
-                    '</div>' +
-                    '<div class="k-edit-field">' +
-                        '<input type="radio" name="validationType" value="warning" data-bind="checked: type" />' +
-                        'Show warning' +
+                    '<div data-bind="invisible: isAny">' +
+                        '<div class="k-edit-label"><label>On invalid data:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input type="radio" name="validationType" value="reject" data-bind="checked: type" />' +
+                            'Reject input' +
+                        '</div>' +
+                        '<div class="k-edit-field">' +
+                            '<input type="radio" name="validationType" value="warning" data-bind="checked: type" />' +
+                            'Show warning' +
+                        '</div>' +
                     '</div>' +
 
-                    '<div class="k-edit-label"><label>Hint message:</label></div>' +
-                    '<div class="k-edit-field">' +
-                        '<input class="k-textbox" placeholder="Type message" data-bind="value: hint" />' +
+                    '<div data-bind="invisible: isAny">' +
+                        '<div class="k-edit-label"><label>Hint title:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input class="k-textbox" placeholder="Type title" data-bind="value: hintTitle" />' +
+                        '</div>' +
+                        '<div class="k-edit-label"><label>Hint message:</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input class="k-textbox" placeholder="Type message" data-bind="value: hintMessage" />' +
+                        '</div>' +
                     '</div>' +
 
                     '<div class="k-action-buttons">' +
@@ -854,7 +868,8 @@
 
             this.viewModel = new ValidationViewModel({
                 type: options.type,
-                hint: options.hint,
+                hintMessage: options.hintMessage,
+                hintTitle: options.hintTitle,
                 comparers: options.comparers.slice(0),
                 criteria: options.criteria.slice(0),
                 criterion: options.criterion,
