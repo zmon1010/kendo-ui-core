@@ -1452,13 +1452,26 @@
             }
         })();
 
-        var boxes = element.getClientRects();
-        if (boxes.length == 1) {
-            // Workaround the missing borders in Chrome!  getClientRects() boxes contains values
-            // rounded to integer.  getBoundingClientRect() appears to work fine.  We still need
-            // getClientRects() to support cases where there are more boxes (continued inline
-            // elements that might have border/background).
-            boxes = [ element.getBoundingClientRect() ];
+        var boxes, i, cells;
+        var display = getPropertyValue(style, "display");
+
+        if (display == "table-row") {
+            // because of rowspan/colspan, we shouldn't draw background of table row elements on the
+            // box given by its getBoundingClientRect, because if we do we risk overwritting a
+            // previously rendered cell.  https://github.com/telerik/kendo/issues/4881
+            boxes = [];
+            for (i = 0, cells = element.children; i < cells.length; ++i) {
+                boxes.push(cells[i].getBoundingClientRect());
+            }
+        } else {
+            boxes = element.getClientRects();
+            if (boxes.length == 1) {
+                // Workaround the missing borders in Chrome!  getClientRects() boxes contains values
+                // rounded to integer.  getBoundingClientRect() appears to work fine.  We still need
+                // getClientRects() to support cases where there are more boxes (continued inline
+                // elements that might have border/background).
+                boxes = [ element.getBoundingClientRect() ];
+            }
         }
 
         // This function workarounds another Chrome bug, where boxes returned for a table with
@@ -1466,11 +1479,11 @@
         // such case anyway, but with this is better than without it.
         boxes = adjustBoxes(boxes);
 
-        for (var i = 0; i < boxes.length; ++i) {
+        for (i = 0; i < boxes.length; ++i) {
             drawOneBox(boxes[i], i === 0, i == boxes.length - 1);
         }
 
-        if (boxes.length > 0 && getPropertyValue(style, "display") == "list-item") {
+        if (boxes.length > 0 && display == "list-item") {
             drawBullet(boxes[0]);
         }
 
