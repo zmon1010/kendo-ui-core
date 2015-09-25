@@ -247,6 +247,7 @@ namespace :mvc do
 
     desc('Build ASP.NET MVC binaries')
     task :binaries => [
+        "spreadsheet:binaries",
         MVC_BIN_ROOT + 'Release/Kendo.Mvc.dll',
         MVC_BIN_ROOT + 'Release-MVC3/Kendo.Mvc.dll',
         MVC_BIN_ROOT + 'Release-MVC5/Kendo.Mvc.dll',
@@ -330,8 +331,7 @@ else
     end
 
     # Produce Kendo.Mvc.Examples.dll by building Kendo.Mvc.Examples.csproj
-    file MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll' => ["spreadsheet:binaries"]
-        MVC_DEMOS_SRC.include('wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll') do |t|
+    file MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll' => MVC_DEMOS_SRC.include('wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll') do |t|
         msbuild MVC_DEMOS_ROOT + 'Kendo.Mvc.Examples.csproj'
     end
 
