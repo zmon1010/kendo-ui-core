@@ -19,7 +19,6 @@ STAGING_CDN_ROOT = '//kendo.cdn.telerik.com/staging/'
 DIST_JS_ROOT = "dist/js"
 DIST_STYLES_ROOT = "dist/styles/"
 KENDO_CONFIG_FILE = File.join("download-builder", "config", "kendo-config.json")
-DPL_ROOT = 'dpl'
 
 PLATFORM = RbConfig::CONFIG['host_os']
 
@@ -64,6 +63,8 @@ ROOT_MAP = {
     'src/styles' => /dist\/styles\//,
     'src/Kendo.Mvc/Kendo.Mvc' => 'wrappers/mvc/src/Kendo.Mvc/',
     'src/Kendo.Mvc/packages' => 'wrappers/mvc/packages/',
+    'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => 'dpl/Telerik.Web.Spreadsheet/',
+    'src/Telerik.Web.Spreadsheet/lib' => 'dpl/lib/',
     'apptemplates' => 'demos/apptemplates',
     'wrappers/aspnetmvc/LegacyThemes' => 'wrappers/mvc/legacy-themes/',
     'styles/telerik' => 'wrappers/mvc/legacy-themes/',
@@ -76,6 +77,7 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'spreadsheet/binaries/net40' => 'dpl/Telerik.Web.Spreadsheet/bin/Release',
     'spreadsheet/binaries/net45' => 'dpl/Telerik.Web.Spreadsheet/bin/Release-NET45',
+    'spreadsheet/' => 'dpl/',
     'wrappers/jsp/kendo-taglib' => 'wrappers/java/kendo-taglib/target/',
     'src/kendo-taglib' => 'wrappers/java/kendo-taglib/',
     'src/php' => 'wrappers/php/',
@@ -169,9 +171,7 @@ MVC_BINARIES = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => MVC3_DLL,
     'wrappers/aspnetmvc/Binaries/Mvc4' => MVC4_DLL,
     'wrappers/aspnetmvc/Binaries/Mvc5' => MVC5_DLL,
-    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST,
-    'spreadsheet/binaries/net40' => SPREADSHEET_REDIST_NET40,
-    'spreadsheet/binaries/net45' => SPREADSHEET_REDIST_NET45
+    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST
 }
 
 MVC_CONTENT = {
@@ -221,6 +221,12 @@ PHP_CONTENT = {
 }
 
 APPTEMPLATES_CONTENT = FileList['demos/apptemplates/**/*'];
+
+SPREADSHEET_CONTENT = {
+    'spreadsheet/binaries/net40' => SPREADSHEET_REDIST_NET40,
+    'spreadsheet/binaries/net45' => SPREADSHEET_REDIST_NET45,
+    'spreadsheet/' => FileList[SPREADSHEET_ROOT + '/ReadMe.txt']
+}
 
 
 file KENDO_CONFIG_FILE do |t|
@@ -537,7 +543,7 @@ bundle :name => 'aspnetmvc.trial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
-       .merge(MVC_CONTENT),
+       .merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
        :post_build => ['mvc:copy_trials', 'mvc_6:update_demo_deps_trial'],
        :prerequisites => [
            'mvc:assets',
@@ -589,7 +595,7 @@ bundle :name => 'aspnetmvc.hotfix.trial',
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/LegacyThemes' => FileList['wrappers/mvc/legacy-themes/**/*']
-       }.merge(MVC_BINARIES),
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
        :post_build => 'mvc:copy_trials',
        :prerequisites => [
            'mvc:assets',
@@ -670,8 +676,13 @@ bundle :name => 'aspnetmvc.commercial',
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
                 .exclude('**/*.csproj'),
+            'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => FileList[SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/**/*']
+                .exclude('**/bin/**/*')
+                .exclude('**/obj/**/*')
+                .exclude('**/*.snk')
+                .exclude('**/*.csproj'),
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
-       }.merge(MVC_CONTENT),
+       }.merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
        :post_build => 'mvc_6:update_demo_deps_commercial',
        :prerequisites => [
            'mvc:assets',
@@ -681,6 +692,10 @@ bundle :name => 'aspnetmvc.commercial',
            'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
            'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
+           'dist/bundles/aspnetmvc.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
+           'dist/bundles/aspnetmvc.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
+           'dist/bundles/aspnetmvc.commercial/src/Telerik.Web.Spreadsheet/lib',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples.sln',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
@@ -719,14 +734,23 @@ bundle :name => 'aspnetmvc.internal.commercial',
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
                 .exclude('**/*.csproj'),
-       }.merge(MVC_BINARIES),
+            'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => FileList[SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/**/*']
+                .exclude('**/bin/**/*')
+                .exclude('**/obj/**/*')
+                .exclude('**/*.snk')
+                .exclude('**/*.csproj')
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
            'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc.sln',
            'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
-           'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj'
+           'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
+           'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
+           'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
+           'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/lib'
        ]
 
 bundle :name => 'aspnetmvc.hotfix.commercial',
@@ -763,7 +787,7 @@ bundle :name => 'aspnetmvc.hotfix.commercial',
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/LegacyThemes' => FileList['wrappers/mvc/legacy-themes/**/*']
-       }.merge(MVC_BINARIES),
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test'

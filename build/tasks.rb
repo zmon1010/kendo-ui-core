@@ -160,3 +160,27 @@ def tree(options)
         file_copy :to => f, :from => src, :license => options[:license]
     end
 end
+
+# Updates assembly version if the VERSION constant is changed
+class AssemblyInfoTask < Rake::FileTask
+    def execute(args=nil)
+        assemblyInfo = File.read(name)
+
+        assemblyInfo.gsub!(/Version\("(\d+\.){3}(\d+)"\)/,  "Version(\"#{VERSION}.\\2\")")
+        assemblyInfo.gsub!(/2012-\d{4}/, "2012-#{Date.today.year}")
+
+        puts "Updating assembly version to #{VERSION}"
+
+        File.open(name, 'w') do |file|
+            file.write assemblyInfo
+        end
+    end
+
+    def needed?
+        super || !File.read(name).include?(VERSION)
+    end
+end
+
+def assembly_info_file (*args, &block)
+    AssemblyInfoTask.define_task(*args, &block)
+end

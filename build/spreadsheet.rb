@@ -63,6 +63,45 @@ def copy_dpl_binaries
     end
 end
 
+['commercial', 'internal.commercial'].each do |bundle|
+    # Copy Source.snk as Kendo.snk (the original Kendo.snk should not be distributed)
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk",
+              :from => 'wrappers/mvc/src/shared/Source.snk'
+
+    # Copy Telerik.Web.Spreadsheet.csproj (needed for the next task)
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj",
+              :from => SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj'
+
+    # Copy Telerik.Web.Spreadsheet.sln in the src directory
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln",
+              :from => SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet.sln'
+
+    # Patch the solution - leave only the Telerik.Web.Spreadsheet project
+    file "dist/bundles/aspnetmvc.#{bundle}/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln" do |t|
+        sln = File.read(t.name)
+
+        #Remove the Telerik.Web.Spreadsheet.Tests project
+        sln.sub!(/\s*Project.*?=\s*"Telerik\.Web.\Spreadsheet\.Tests"((.|\r|\n)*?)EndProject/, '')
+
+        #Remove empty lines
+        sln.gsub!(/^$\n/, '')
+
+        File.write(t.name, sln)
+    end
+
+    # Copy the DPL libraries for NET40/NET45
+    libs = FileList[SPREADSHEET_ROOT + '/lib/Newtonsoft.Json.dll']
+          .include(FileList[DPL_FILES].pathmap(SPREADSHEET_ROOT + "/lib/NET40/%f"))
+          .include(FileList[DPL_FILES].pathmap(SPREADSHEET_ROOT + "/lib/NET45/%f"))
+
+    tree :to => "dist/bundles/aspnetmvc.#{bundle}/src/Telerik.Web.Spreadsheet/lib",
+         :from => libs,
+         :root => SPREADSHEET_ROOT + "/lib"
+end
+
+# Update AssemblyInfo.cs whenever the VERSION constant changes
+assembly_info_file SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/Properties/AssemblyInfo.cs'
+
 namespace :spreadsheet do
     desc('Build Telerik.Web.Spreadsheet binaries')
     task :binaries => [
