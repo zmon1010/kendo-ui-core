@@ -1,11 +1,12 @@
 (function(f, define){
-    define([ "../kendo.core", "./runtime", "./validation", "./references"], f);
+    define([ "../kendo.core", "../kendo.color", "./runtime", "./validation", "./references"], f);
 })(function(){
 
 (function(kendo) {
     var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
     var Range = kendo.spreadsheet.Range;
+    var Color = kendo.Color;
 
     var Sheet = kendo.Observable.extend({
         init: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth) {
@@ -761,6 +762,30 @@
 
                 if (cell.validation) {
                     cell.validation = cell.validation.toJSON();
+                }
+
+                if (cell.color) {
+                    cell.color = new Color(cell.color).toHex();
+                }
+
+                if (cell.background) {
+                    cell.background = new Color(cell.background).toHex();
+                }
+
+                if (cell.borderTop && cell.borderTop.color) {
+                    cell.borderTop.color = new Color(cell.borderTop.color).toHex();
+                }
+
+                if (cell.borderBottom && cell.borderBottom.color) {
+                    cell.borderBottom.color = new Color(cell.borderBottom.color).toHex();
+                }
+
+                if (cell.borderRight && cell.borderRight.color) {
+                    cell.borderRight.color = new Color(cell.borderRight.color).toHex();
+                }
+
+                if (cell.borderLeft && cell.borderLeft.color) {
+                    cell.borderLeft.color = new Color(cell.borderLeft.color).toHex();
                 }
 
                 row.cells.push(cell);

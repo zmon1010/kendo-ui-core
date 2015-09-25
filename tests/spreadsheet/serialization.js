@@ -210,7 +210,7 @@
 
         equal(json.rows.length, 1);
         equal(json.rows[0].index, 1);
-        equal(json.rows[0].cells[0].background, "red");
+        equal(json.rows[0].cells[0].background, "#ff0000");
     });
 
     test("toJSON doesn't serialize null value", function() {
