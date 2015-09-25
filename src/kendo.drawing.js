@@ -2,6 +2,7 @@
     define([
         "./kendo.color",
         "./util/main",
+        "./util/text-metrics",
         "./util/base64",
         "./mixins/observers",
         "./geometry/main",

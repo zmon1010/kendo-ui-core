@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../drawing/text-metrics" ], f);
+    define([ "../kendo.core", "../util/text-metrics" ], f);
 })(function(){
 
 (function(kendo) {
@@ -581,7 +581,7 @@
                      )[0];
 
     function getTextHeight(text, width) {
-        return kendo.drawing.util.measureText(text, { baselineMarkerSize: 0, width: width + "px" }, measureBox).height;
+        return kendo.util.measureText(text, { baselineMarkerSize: 0, width: width + "px" }, measureBox).height;
     }
 
     kendo.spreadsheet.util = { getTextHeight: getTextHeight };

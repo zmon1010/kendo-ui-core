@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./core", "../util/main" ], f);
+    define([ "../kendo.core", "./main" ], f);
 })(function(){
 
 (function ($) {
@@ -144,14 +144,9 @@
     }
 
     // Exports ================================================================
-    deepExtend(kendo.drawing, {
-        util: {
-            TextMetrics: TextMetrics,
-            LRUCache: LRUCache,
-
-            measureText: measureText
-        }
-    });
+    kendo.util.TextMetrics = TextMetrics;
+    kendo.util.LRUCache = LRUCache;
+    kendo.util.measureText = measureText;
 
 })(window.kendo.jQuery);
 

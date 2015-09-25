@@ -332,6 +332,7 @@
         }
     });
 
+    kendo.drawing.util = kendo.util;
     kendo.dataviz.util = kendo.util;
 
 })(window.kendo.jQuery);

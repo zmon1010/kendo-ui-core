@@ -1,7 +1,7 @@
 (function(f, define){
     define([
         "./util/undoredostack",
-        //"./drawing/text-metrics",
+        "./util/text-metrics",
         "./spreadsheet/commands",
         "./spreadsheet/formulabar",
         "./spreadsheet/formulainput",

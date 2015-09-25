@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./core", "./mixins", "./text-metrics", "../mixins/observers" ], f);
+    define([ "./core", "./mixins", "../util/text-metrics", "../mixins/observers" ], f);
 })(function(){
 
 (function ($) {
@@ -412,7 +412,7 @@
         },
 
         measure: function() {
-            var metrics = drawing.util.measureText(this.content(), {
+            var metrics = util.measureText(this.content(), {
                 font: this.options.get("font")
             });
 
