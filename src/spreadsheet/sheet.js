@@ -1076,7 +1076,15 @@
                 columns: columns
             };
 
+            this._refreshFilter();
+
             this.triggerChange({ recalc: true });
+        },
+
+        _refreshFilter: function() {
+            if (this._filter) {
+                this._filterBy(this._filter.ref, this._filter.columns);
+            }
         },
 
         _filterBy: function(ref, columns) {
@@ -1132,11 +1140,11 @@
         _clearFilter: function(indices) {
             if (this._filter) {
                 this.batch(function() {
-                    var columns = this._filter.columns.filter(function(column) {
+                    this._filter.columns = this._filter.columns.filter(function(column) {
                         return indices.indexOf(column.index) < 0;
                     });
 
-                    this._filterBy(this._filter.ref, columns);
+                    this._refreshFilter();
                 }, { layout: true });
             }
         },

@@ -4,7 +4,7 @@
 
     module("sorting", {
         setup: function() {
-            sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
+            sheet = new kendo.spreadsheet.Sheet(4, 4, defaults.rowHeight, defaults.columnWidth);
         }
     });
 
@@ -161,5 +161,31 @@
         equal(sort.ref.toString(), "A1:B3");
         equal(sort.columns.length, 2);
         equal(sort.columns[1].index, 1);
+    });
+
+    test("sort re-applies filter", function() {
+        sheet.range("A1:B4").values(
+            [
+                [0, 1], // header
+                [3, 0], // hide
+                [1, 0], // hide
+                [2, 2]  // show
+            ]
+        )
+        .filter({
+            column: 1,
+            filter: new kendo.spreadsheet.ValueFilter( {
+                values: [2]
+            })
+        })
+
+        sheet.range("A2:B4").sort([
+            { column: 0, ascending: true }
+        ]);
+
+        ok(sheet.rowHeight(0) > 0, "header is shown");
+        ok(sheet.rowHeight(1) === 0, "first filtered out row remains hidden");
+        ok(sheet.rowHeight(2) > 0, "row that matches filter is shown");
+        ok(sheet.rowHeight(3) === 0, "second filtered out row remains hidden");
     });
 })();
