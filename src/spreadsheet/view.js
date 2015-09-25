@@ -1078,7 +1078,7 @@
             if (sheet._edit()) {
                 var token = this._active();
 
-                if (token) {
+                if (token && token.type == "ref") {
                     seriesColorClass = " " + token.seriesCls;
                     className += seriesColorClass;
                 }

@@ -31,7 +31,7 @@
     }
 
     function refClass(idx) {
-        return " " + refClasses[idx];
+        return refClasses[idx];
     }
 
     test("selects the range", function() {
@@ -42,7 +42,7 @@
 
         sheet._formulaSelections = [{
             ref: ref,
-            cls: refClass(0)
+            seriesCls: refClass(0)
         }];
 
         var selections = pane.renderEditorSelection().children;
@@ -62,8 +62,8 @@
         pane._currentView = DUMMY_VIEW;
 
         sheet._formulaSelections = [
-            { ref: ref1, cls: refClass(0) },
-            { ref: ref2, cls: refClass(1) }
+            { ref: ref1, seriesCls: refClass(0) },
+            { ref: ref2, seriesCls: refClass(1) }
         ];
 
         var selections = pane.renderEditorSelection().children;
@@ -88,8 +88,8 @@
         pane._currentView = DUMMY_VIEW;
 
         sheet._formulaSelections = [
-            { ref: kendo.spreadsheet.NULLREF, cls: refClass(0) },
-            { ref: ref, cls: refClass(1) }
+            { ref: kendo.spreadsheet.NULLREF, seriesCls: refClass(0) },
+            { ref: ref, seriesCls: refClass(1) }
         ];
 
         var selections = pane.renderEditorSelection().children;
@@ -102,7 +102,7 @@
         equal(divC2D3.attr.className, "k-spreadsheet-selection-highlight k-series-b");
     });
 
-    test("selection uses cls class of active token", function() {
+    test("selection uses seriesCls class of active token", function() {
         var pane = createPane(0, 0);
         var ref = kendo.spreadsheet.calc.parseReference("C2:D3");
 
@@ -110,7 +110,7 @@
 
         sheet._formulaSelections = [
             { ref: kendo.spreadsheet.NULLREF, seriesCls: refClass(0) },
-            { ref: ref, cls: refClass(1) }
+            { ref: ref, seriesCls: refClass(1) }
         ];
 
         var selections = pane.renderEditorSelection().children;

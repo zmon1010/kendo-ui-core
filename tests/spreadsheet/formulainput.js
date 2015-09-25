@@ -179,13 +179,13 @@
         ok(formulaInput.canInsertRef());
     });
 
-    test("canRef method doesn't allow insert after '='", function() {
+    test("canRef method DOES allow insert after '='", function() {
         createFormulaInput();
 
         formulaInput.value("=SUM(,");
         formulaInput.setPos(1);
 
-        ok(!formulaInput.canInsertRef());
+        ok(!!formulaInput.canInsertRef());
     });
 
     test("canRef method doesn't allow insert when in middle of func", function() {
@@ -206,14 +206,14 @@
         ok(!formulaInput.canInsertRef());
     });
 
-    test("canRef method doesn't replace origin value token", function() {
-        createFormulaInput();
+    // test("canRef method doesn't replace origin value token", function() {
+    //     createFormulaInput();
 
-        formulaInput.value("=SUM(A1:B1, C1:C2, SUM(D1:D2))");
-        formulaInput.setPos(5);
+    //     formulaInput.value("=SUM(A1:B1, C1:C2, SUM(D1:D2))");
+    //     formulaInput.setPos(5);
 
-        ok(!formulaInput.canInsertRef());
-    });
+    //     ok(!formulaInput.canInsertRef());
+    // });
 
     test("ref method inserts passed ref address", 2, function() {
         createFormulaInput();
@@ -266,16 +266,16 @@
         equal(formulaInput.value(), "=SUM(sum");
     });
 
-    test("ref method does nothing if try to replace initial value token", 2, function() {
-        createFormulaInput();
+    // test("ref method does nothing if try to replace initial value token", 2, function() {
+    //     createFormulaInput();
 
-        formulaInput.value("=SUM(B1");
-        formulaInput.end();
-        formulaInput.refAtPoint(A1);
+    //     formulaInput.value("=SUM(B1");
+    //     formulaInput.end();
+    //     formulaInput.refAtPoint(A1);
 
-        equal(formulaInput.value(), "=SUM(B1");
-        equal(formulaInput.getPos().begin, 7);
-    });
+    //     equal(formulaInput.value(), "=SUM(B1");
+    //     equal(formulaInput.getPos().begin, 7);
+    // });
 
     module("Spreadsheet searching", {
         setup: function() {
@@ -884,13 +884,13 @@
 
         equal(tokens.length, 3);
         equal(tokens[0].ref.toString(), "A1:B1");
-        equal(tokens[0].cls, " k-series-a");
+        equal(tokens[0].cls, "k-syntax-ref,k-series-a");
 
         equal(tokens[1].ref.toString(), "C1:C2");
-        equal(tokens[1].cls, " k-series-b");
+        equal(tokens[1].cls, "k-syntax-ref,k-series-b");
 
         equal(tokens[2].ref.toString(), "D1:D2");
-        equal(tokens[2].cls, " k-series-c");
+        equal(tokens[2].cls, "k-syntax-ref,k-series-c");
     });
 
     module("Spreadsheet FormulaInput events", {

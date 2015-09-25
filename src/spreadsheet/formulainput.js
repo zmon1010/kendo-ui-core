@@ -615,7 +615,6 @@
                         "<span class='" + tok.cls.join(" ") + "'>" + text + "</span>" +
                         value.substr(end);
                 });
-                this._tokens = tokens;
                 this.element.html(value);
             }
             if (pos) {
