@@ -564,7 +564,7 @@
         },
         intersecting: function(refs) {
             return refs.filter(function(ref) {
-                return ref.intersects(this);
+                return ref.toRangeRef().intersects(this);
             }, this);
         },
 
@@ -579,6 +579,7 @@
             var modified = false;
 
             intersecting.forEach(function(ref) {
+                ref = ref.toRangeRef();
                 if (ref.topLeft.row < topLeftRow) {
                     modified = true;
                     topLeftRow = ref.topLeft.row;
