@@ -796,9 +796,7 @@
                 rows: rows,
                 columns: columns,
                 selection: viewSelection.selection.toString(),
-                originalSelection: viewSelection.originalSelection.toString(),
                 activeCell: viewSelection.activeCell.toString(),
-                originalActiveCell: viewSelection.originalActiveCell.toString(),
                 frozenRows: this.frozenRows(),
                 frozenColumns: this.frozenColumns(),
                 mergedCells: this._mergedCells.map(function(ref) {
@@ -886,19 +884,13 @@
 
 
                 if (json.selection) {
-                    this._viewSelection.selection = this._ref(json.selection);
-                }
-
-                if (json.originalSelection) {
-                    this._viewSelection.originalSelection = this._ref(json.originalSelection);
+                    this._viewSelection.selection =
+                        this._viewSelection.originalSelection = this._ref(json.selection);
                 }
 
                 if (json.activeCell) {
-                    this._viewSelection.activeCell = this._ref(json.activeCell);
-                }
-
-                if (json.originalactiveCell) {
-                    this._viewSelection.originalActiveCell = this._ref(json.originalActiveCell);
+                    this._viewSelection.activeCell =
+                        this._viewSelection.originalActiveCell = this._ref(json.activeCell);
                 }
 
 

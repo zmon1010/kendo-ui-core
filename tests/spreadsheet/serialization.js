@@ -619,6 +619,16 @@
         equal(sheet.activeCell().toString(), "A1:A1");
     });
 
+    test("fromJSON loads original selection and active cell", function() {
+        sheet.fromJSON({
+            selection: "A1:C3",
+            activeCell: "A1:A1"
+        });
+
+        equal(sheet._viewSelection.originalSelection.toString(), "A1:C3");
+        equal(sheet._viewSelection.originalActiveCell.toString(), "A1:A1");
+    });
+
     function singleCell(cell) {
         return { rows: [ { cells: [ cell ] } ] };
     }
