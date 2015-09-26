@@ -504,9 +504,7 @@ var Worksheet = kendo.Class.extend({
         style = this._lookupStyle(style);
 
         var cells = [];
-        var colSpanLength, cellRef;
-
-        cellRef = ref(rowIndex, cellIndex);
+        var cellRef = ref(rowIndex, cellIndex);
         cells.push({
             value: value,
             formula: data.formula,
