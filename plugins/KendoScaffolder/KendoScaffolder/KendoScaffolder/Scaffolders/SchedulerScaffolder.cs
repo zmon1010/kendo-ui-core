@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +32,7 @@ namespace KendoScaffolder.Scaffolders
         public Dictionary<string, object> CommonParameters { get; set; }
         public Dictionary<string, object> ControllerParameters { get; set; }
         public Dictionary<string, object> ViewParameters { get; set; }
+        public Dictionary<string, Dictionary<string, string>> DataAnnotationAttributes { get; set; }
 
         private static readonly string PathSeparator = Path.DirectorySeparatorChar.ToString();
 
@@ -48,6 +50,7 @@ namespace KendoScaffolder.Scaffolders
             try
             {
                 EfMetadata = efService.AddRequiredEntity(context, dbContextTypeName, ModelType.FullName);
+                DataAnnotationAttributes = GetDataAnnotations(ViewModelType);
             }
             catch (InvalidOperationException ex)
             {
@@ -88,6 +91,7 @@ namespace KendoScaffolder.Scaffolders
                 {"ControllerRootName" , controllerRootName},
                 {"ModelVariable", modelTypeVariable},
                 {"ModelMetadata", EfMetadata},
+                {"DataAnnotationAttributes", DataAnnotationAttributes},
                 {"PdfExport", ViewModel.PdfExport},
                 {"PrimaryKeyMetadata", primaryKey},
                 {"PrimaryKeyName", primaryKey.PropertyName},
@@ -242,6 +246,94 @@ namespace KendoScaffolder.Scaffolders
             widgetViewModelParameters.Add("SelectedEventRecurrenceExceptionField", ViewModel.SelectedEventRecurrenceExceptionField.ShortTypeName);
 
             return widgetViewModelParameters;
+        }
+
+        private TService GetService<TService>() where TService : class
+        {
+            return (TService)Context.ServiceProvider.GetService(typeof(TService));
+        }
+
+        private Type GetReflectionType(string typeName)
+        {
+            return GetService<IReflectedTypesService>().GetType(Context.ActiveProject, typeName);
+        }
+
+        protected Dictionary<string, Dictionary<string, string>> GetDataAnnotations(CodeType modelType)
+        {
+            var attributes = new Dictionary<string, Dictionary<string, string>>();
+            if (modelType != null)
+            {
+                var type = GetReflectionType(modelType.FullName);
+                foreach (PropertyInfo prop in type.GetProperties())
+                {
+                    var parsedAttributes = GetAttributes(prop);
+                    attributes.Add(prop.Name, parsedAttributes);
+                }
+            }
+            return attributes;
+        }
+
+        private Dictionary<string, string> GetAttributes(PropertyInfo prop)
+        {
+            var customAttributes = prop.CustomAttributes;
+            var attributes = new Dictionary<string, Dictionary<string, string>>();
+            var options = new Dictionary<string, string>();
+            foreach (var attribute in customAttributes)
+            {
+                string attributeName = attribute.AttributeType.Name;
+
+                if (attributeName == "DisplayAttribute")
+                {
+                    foreach (var arg in attribute.NamedArguments)
+                    {
+                        if (arg.MemberName.ToString() == "Name")
+                        {
+                            options.Add(arg.MemberName.ToString(), arg.TypedValue.Value.ToString());
+                        }
+                    }
+                    continue;
+                }
+
+                if (attributeName == "RequiredAttribute")
+                {
+                    options.Add("required", "true");
+                    continue;
+                }
+
+                if (attributeName == "RangeAttribute")
+                {
+                    var min = attribute.ConstructorArguments.ElementAt(0).Value.ToString();
+                    var max = attribute.ConstructorArguments.ElementAt(1).Value.ToString();
+                    options.Add("min", min);
+                    options.Add("max", max);
+                    continue;
+                }
+
+                if (attributeName == "ScaffoldColumnAttribute")
+                {
+                    options.Add("scaffold", attribute.ConstructorArguments.First().Value.ToString().ToLower());
+                    continue;
+                }
+
+                if (attributeName == "RegularExpressionAttribute")
+                {
+                    options.Add("pattern", attribute.ConstructorArguments.First().Value.ToString());
+                }
+            }
+            options.Add("type", GetDataType(prop));
+            return options;
+        }
+
+        private string GetDataType(PropertyInfo prop)
+        {
+            var dataType = prop.PropertyType.Name;
+            switch (dataType)
+            {
+                case "String": return "string";
+                case "Boolean": return "boolean";
+                case "DateTime": return "date";
+                default: return "number";
+            }
         }
     }
 }

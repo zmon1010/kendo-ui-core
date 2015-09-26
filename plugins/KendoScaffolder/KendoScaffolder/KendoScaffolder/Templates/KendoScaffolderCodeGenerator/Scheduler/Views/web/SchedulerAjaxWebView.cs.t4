@@ -8,7 +8,145 @@
 <div id="scheduler"></div>
 <script>
     $("#scheduler").kendoScheduler({
-        height: 400,
-   
+        height: 600,
+        dataSource: {
+            type: "aspnetmvc-ajax",
+            transport: {
+                read: {
+                     url: "<#= entitySetName #>_Read"
+                }
+            },
+            schema: {
+                data: "Data",
+                model: {
+                    id: "<#= PrimaryKeyName#>"<# RenderFields(PrimaryKeyName); #>
+                }
+            }
+        }
     });
 </script>
+
+<#+
+    private string GetTabs(int count)
+    {
+        return String.Concat(Enumerable.Repeat("\t", count));
+    }
+
+    private string RenderValidationAttributes(KeyValuePair<string, Dictionary<string, string>> model)
+    {
+        string result = "";
+        Dictionary<string,string> distincValues = GetDistinctValidation(model.Value);
+
+        foreach (var item in distincValues)
+        {
+            var isLast = item.Equals(distincValues.Last());
+
+            if (item.Key == "pattern")
+            {
+                result += item.Key + ": \"" + item.Value + "\"";
+            } else
+            {
+                result += item.Key + ": " + item.Value;
+            }
+
+            result += isLast ? "" : ", ";
+        }
+        return result;
+    }
+
+    public Dictionary<string, string> GetDistinctValidation(Dictionary<string, string> models)
+    {
+        Dictionary<string, string> distinct = new Dictionary<string, string>();
+        foreach (var item in models)
+        {
+            if (item.Key == "pattern" || item.Key == "max" || item.Key == "required" || item.Key == "min")
+            {
+                distinct.Add(item.Key, item.Value);
+            }
+        }
+        return distinct;
+    }
+
+    private string LowerFirstLetter(string name)
+    {
+        return Char.ToLowerInvariant(name[0]) + name.Substring(1);
+    }
+
+    private string RenderSchemaFields(KeyValuePair<string, Dictionary<string, string>> model, bool isLast)
+    {
+            bool distinctValidators = GetDistinctValidation(model.Value).Count > 0 ? true : false;
+            var newLine = Environment.NewLine;
+            string result = "";
+            result += GetTabs(6) + "\"" + LowerFirstLetter(model.Key) + "\"" + ": {" + newLine;
+            result += GetTabs(7) + "type: " + "\"" + model.Value["type"] + "\"";
+            result += GetTabs(7) + "from: " + "\"" + model.Key + "\"";
+            result += distinctValidators ? "" : newLine;
+
+            if (distinctValidators)
+            {
+                result += "," + newLine + GetTabs(7) + "validation: {";
+                result += RenderValidationAttributes(model);
+                result += "}" + newLine;
+            }
+            result += GetTabs(6);
+            result +=  isLast? "}" : "}," + Environment.NewLine;
+
+            return result;
+    }
+
+    private void RenderFields(string primaryKey)
+    {
+        var newLine = Environment.NewLine;
+        string tabs = GetTabs(5);
+        string result = "," + newLine + tabs + "fields: {" + newLine;
+
+        DataAnnotationAttributes.Remove(primaryKey);
+
+        List<string> addedFields = new List<string>();
+        foreach (var model in DataAnnotationAttributes)
+        {
+            if (!(model.Value.ContainsKey("scaffold") && model.Value["scaffold"] == "false"))
+            {
+                var isLast = model.Equals(DataAnnotationAttributes.Last());
+                addedFields.Add(model.Key);
+                result += RenderSchemaFields(model, isLast);
+            }
+        }
+
+         List<KeyValuePair<string, string>> requiredFields = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("Title", "string"),
+                new KeyValuePair<string, string>("Start", "date"),
+                new KeyValuePair<string, string>("End", "date"),
+                new KeyValuePair<string, string>("StartTimezone", "string"),
+                new KeyValuePair<string, string>("EndTimezone", "string"),
+                new KeyValuePair<string, string>("Description", "string"),
+                new KeyValuePair<string, string>("IsAllDay", "boolean"),
+                new KeyValuePair<string, string>("RecurrenceRule", "string"),
+                new KeyValuePair<string, string>("RecurrenceException", "string"),
+                new KeyValuePair<string, string>("RecurrenceId", "")
+        };
+
+        bool isFirst = true;
+
+        foreach (KeyValuePair<string, string> field in requiredFields)
+        {
+            if(addedFields.FirstOrDefault(str => str.Contains(field.Key)) == null)
+            {
+                if (addedFields.Count != 0 && isFirst) {
+                    result += "," + newLine;
+                    isFirst = false;
+                }
+
+                result += GetTabs(6) + "\"" + LowerFirstLetter(field.Key) + "\"" + ": {" + newLine;
+                result += field.Value != "" ?  GetTabs(7) + "type: " + "\"" + field.Value + "\"," + newLine : "";
+                result += GetTabs(7) + "from: " + "\"" + field.Key + "\"" + newLine + GetTabs(6);
+                result +=  requiredFields[requiredFields.Count - 1].Key == field.Key ? "}" : "}," + newLine;
+            }
+        }
+
+        result += newLine + tabs + "}";
+#>
+<#=result#>
+<#+
+    }
+#>
