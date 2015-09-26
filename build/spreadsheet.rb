@@ -28,6 +28,7 @@ SPREADSHEET_REDIST_NET40_TRIAL = spreadsheet_dll_for('Release-Trial')
 SPREADSHEET_REDIST_NET45_TRIAL = spreadsheet_dll_for('Release-NET45-Trial')
 SPREADSHEET_REDIST = FileList[SPREADSHEET_REDIST_NET40 + SPREADSHEET_REDIST_NET45 +
                               SPREADSHEET_REDIST_NET40_TRIAL + SPREADSHEET_REDIST_NET45_TRIAL]
+SPREADSHEET_ASSEMBLY_INFO = SPREADSHEET_SRC_ROOT + '/Properties/AssemblyInfo.cs'
 
 CLEAN.include(FileList[SPREADSHEET_ROOT + '/**/Telerik.Web.Spreadsheet.dll'])
 rule 'Telerik.Web.Spreadsheet.xml' => SPREADSHEET_SRC_ROOT + '/bin/Release/Telerik.Web.Spreadsheet.dll'
@@ -51,7 +52,7 @@ if PLATFORM =~ /linux|darwin/
 else
     ['Release', 'Release-NET45', 'Release-Trial', 'Release-NET45-Trial'].each do |configuration|
         # Build Telerik.Web.Spreadsheet
-        file SPREADSHEET_SRC_ROOT + "/bin/#{configuration}/Telerik.Web.Spreadsheet.dll" do
+        file SPREADSHEET_SRC_ROOT + "/bin/#{configuration}/Telerik.Web.Spreadsheet.dll" => 'spreadsheet:assembly_version' do
             copy_dpl_binaries
             msbuild SPREADSHEET_SRC_ROOT + '/Telerik.Web.Spreadsheet.csproj', "/p:Configuration=#{configuration}"
         end
@@ -113,7 +114,7 @@ end
 end
 
 # Update AssemblyInfo.cs whenever the VERSION constant changes
-assembly_info_file SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/Properties/AssemblyInfo.cs'
+assembly_info_file SPREADSHEET_ASSEMBLY_INFO
 
 namespace :spreadsheet do
     desc('Build Telerik.Web.Spreadsheet binaries')
@@ -139,4 +140,7 @@ namespace :spreadsheet do
             end
         end
     end
+
+    desc('Update AssemblyInfo.cs with current VERSION')
+    task :assembly_version => SPREADSHEET_ASSEMBLY_INFO
 end
