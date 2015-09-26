@@ -41,7 +41,7 @@
         category: "web",
         description: "Spreadsheet component",
         depends: [ "core", "binder", "colorpicker", "combobox", "data", "dom", "dropdownlist",
-                  "menu", "popup", "sortable", "tabstrip", "toolbar", "treeview", "window" ],
+                  "menu", "ooxml", "popup", "sortable", "tabstrip", "toolbar", "treeview", "window" ],
         features: []
     };
 
@@ -82,7 +82,7 @@
 
                 this._autoRefresh = true;
 
-                this._workbook.bind("change", this._workbookChange.bind(this));
+                this._bindWorkbookEvents();
 
                 this._resize();
 
@@ -182,7 +182,7 @@
 
                     this._workbook = new Workbook($.extend({}, this.options, json));
 
-                    this._workbook.bind("change", this._workbookChange.bind(this));
+                    this._bindWorkbookEvents();
 
                     this._view.workbook(this._workbook);
                     this._controller.workbook(this._workbook);
@@ -191,6 +191,21 @@
                 } else {
                     this.refresh();
                 }
+            },
+
+            saveAsExcel: function(options) {
+                this._workbook.saveAsExcel(options);
+            },
+
+            _workbookExcelExport: function(e) {
+                if (this.trigger("excelExport", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _bindWorkbookEvents: function() {
+                this._workbook.bind("change", this._workbookChange.bind(this));
+                this._workbook.bind("excelExport", this._workbookExcelExport.bind(this));
             },
 
             destroy: function() {
@@ -210,10 +225,15 @@
                 rowHeight: 20,
                 columnWidth: 64,
                 headerHeight: 20,
-                headerWidth: 32
+                headerWidth: 32,
+                excel: {
+                    proxyURL: "",
+                    fileName: "Workbook.xlsx"
+                }
             },
 
             events: [
+                "excelExport",
                 "render"
             ]
         });
