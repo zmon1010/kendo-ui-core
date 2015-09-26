@@ -98,6 +98,7 @@ module.exports = function(grunt) {
                     reporters: ['dots', 'junit'],
 
                     junitReporter: {
+                      outputDir: '.',
                       outputFile: grunt.option('junit-results')
                     },
 
@@ -120,6 +121,7 @@ module.exports = function(grunt) {
                     reporters: ['dots'],
 
                     junitReporter: {
+                      outputDir: '.',
                       outputFile: grunt.option('junit-results')
                     },
 
@@ -152,6 +154,7 @@ module.exports = function(grunt) {
                     singleRun: true,
                     reportSlowerThan: 5000,
                     junitReporter: {
+                      outputDir: '.',
                       outputFile: grunt.option('junit-results')
                     },
 

@@ -3006,9 +3006,9 @@
       "resolved": "https://registry.npmjs.org/karma-html2js-preprocessor/-/karma-html2js-preprocessor-0.1.0.tgz"
     },
     "karma-junit-reporter": {
-      "version": "0.3.4",
+      "version": "0.3.3",
       "from": "karma-junit-reporter@>=0.3.0 <0.4.0",
-      "resolved": "https://registry.npmjs.org/karma-junit-reporter/-/karma-junit-reporter-0.3.4.tgz",
+      "resolved": "https://registry.npmjs.org/karma-junit-reporter/-/karma-junit-reporter-0.3.3.tgz",
       "dependencies": {
         "xmlbuilder": {
           "version": "2.6.4",
