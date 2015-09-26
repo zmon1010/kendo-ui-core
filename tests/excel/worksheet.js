@@ -515,13 +515,13 @@ test("toXML sets the 'ySplit' attribute when the rowSplit option is set", functi
     equal(dom.find("pane").attr("topLeftCell"), "A3");
 });
 
-test("toXML creates 'cols' element when the columns option is set", function() {
+test("toXML does not create empty 'cols' element", function() {
     var worksheet = Worksheet({
         columns: []
     });
 
     var dom = $(worksheet.toXML());
-    equal(dom.find("cols").length, 1);
+    equal(dom.find("cols").length, 0);
 });
 
 test("toXML creates 'col' element for every item in the columns option that has width set", function() {

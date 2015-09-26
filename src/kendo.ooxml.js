@@ -131,7 +131,7 @@ var WORKSHEET = kendo.template(
    '<sheetFormatPr x14ac:dyDescent="0.25" defaultRowHeight="#= defaults.rowHeight ? defaults.rowHeight * 0.75 : 15 #" ' +
        '# if (defaults.columnWidth) { # defaultColWidth="#= kendo.ooxml.toWidth(defaults.columnWidth) #" # } #' +
    ' />' +
-   '# if (columns) { #' +
+   '# if (columns && columns.length > 0) { #' +
    '<cols>' +
    '# for (var ci = 0; ci < columns.length; ci++) { #' +
        '# var column = columns[ci]; #' +
@@ -158,11 +158,11 @@ var WORKSHEET = kendo.template(
        '# for (var ci = 0; ci < row.data.length; ci++) { #' +
            '# var cell = row.data[ci];#' +
            '<c r="#=cell.ref#"# if (cell.style) { # s="#=cell.style#" # } ## if (cell.type) { # t="#=cell.type#"# } #>' +
-           '# if (cell.value != null) { #' +
-               '<v>${cell.value}</v>' +
-           '# } #' +
            '# if (cell.formula != null) { #' +
                '<f>${cell.formula}</f>' +
+           '# } #' +
+           '# if (cell.value != null) { #' +
+               '<v>${cell.value}</v>' +
            '# } #' +
            '</c>' +
        '# } #' +
@@ -270,11 +270,14 @@ var STYLES = kendo.template(
     '<borders count="1">' +
         '<border><left/><right/><top/><bottom/><diagonal/></border>' +
     '</borders>' +
+    '<cellStyleXfs count="1">' +
+        '<xf borderId="0" fillId="0" fontId="0" />' +
+    '</cellStyleXfs>' +
    '<cellXfs count="${styles.length+1}">' +
        '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>' +
    '# for (var si = 0; si < styles.length; si++) { #' +
        '# var style = styles[si]; #' +
-       '<xf xfid="0"' +
+       '<xf xfId="0"' +
        '# if (style.fontId) { #' +
           ' fontId="${style.fontId}" applyFont="1"' +
        '# } #' +
