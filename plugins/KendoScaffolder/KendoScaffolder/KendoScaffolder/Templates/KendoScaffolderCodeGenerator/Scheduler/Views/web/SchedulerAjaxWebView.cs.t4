@@ -1,0 +1,14 @@
+﻿<#@ template language="C#" HostSpecific="True" debug="true" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="..\ImportsSchedulerView.include.t4" #>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+    var newLine = Environment.NewLine;
+#>
+<div id="scheduler"></div>
+<script>
+    $("#scheduler").kendoScheduler({
+        height: 400,
+   
+    });
+</script>

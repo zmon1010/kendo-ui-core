@@ -197,6 +197,9 @@
     <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Views\razor\SchedulerWebApiView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Views\web\SchedulerAjaxWebView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

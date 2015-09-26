@@ -204,6 +204,12 @@ namespace KendoScaffolder.Scaffolders
         public string GetViewTemplate()
         {
             string dataSourceType = ViewModel.SelectedDataSourceType;
+
+            if (ViewModel.ViewType == ViewType.Web)
+            {
+                return "Scheduler" + dataSourceType + "WebView";
+            }
+
             return "Scheduler" + dataSourceType + "View";
         }
 

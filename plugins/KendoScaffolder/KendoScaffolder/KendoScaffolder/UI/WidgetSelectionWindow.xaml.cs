@@ -79,7 +79,16 @@ namespace KendoScaffolder.UI
 
                 case "WidgetsListViewSchedulerItem":
                     SelectedWidget = KendoWidget.Scheduler;
+                    SelectedViewType = ViewType.MVC;
                     WidgetName.Text = "UI for MVC Scheduler";
+                    widgetDescription = rm.GetString("SchedulerDescription");
+                    WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
+                    return;
+
+                case "WidgetsListViewWebSchedulerItem":
+                    SelectedWidget = KendoWidget.Scheduler;
+                    SelectedViewType = ViewType.Web;
+                    WidgetName.Text = "Kendo UI Scheduler";
                     widgetDescription = rm.GetString("SchedulerDescription");
                     WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
                     return;

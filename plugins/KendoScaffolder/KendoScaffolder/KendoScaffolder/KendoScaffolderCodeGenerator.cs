@@ -61,6 +61,7 @@ namespace KendoScaffolder
                         break;
                     case KendoWidget.Scheduler:
                         viewModel = new SchedulerConfigurationViewModel(Context);
+                        viewModel.ViewType = widgetSelection.SelectedViewType;
                         widgetConfigurationWindow = new SchedulerConfigurationWindow((SchedulerConfigurationViewModel)viewModel);
                         break;
                 }

@@ -12,6 +12,9 @@
     /// </summary>
     public partial class SchedulerConfigurationWindow : Window
     {
+        public const string WebSchedulerTitle = "Kendo UI Scheduler";
+        public const string MvcSchedulerTitle = "Telerik ASP.NET MVC Scheduler";
+
         public SchedulerConfigurationWindow(SchedulerConfigurationViewModel viewModel)
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -21,6 +24,18 @@
             SchedulerEventsListBox.SelectionChanged += SchedulerEventsListBoxSelectionChanged;
             SchedulerViewsListBox.SelectionChanged += SchedulerViewsListBoxSelectionChanged;
             ValidationErrors = new ObservableCollection<ValidationError>();
+
+            if (viewModel.ViewType == ViewType.MVC)
+            {
+                WidgetTitle.Text = MvcSchedulerTitle;
+                this.Title = MvcSchedulerTitle;
+            }
+            else
+            {
+                WidgetTitle.Text = WebSchedulerTitle;
+                this.Title = WebSchedulerTitle;
+            }
+
             DataContext = viewModel;
         }
 
