@@ -38,6 +38,16 @@ if PLATFORM =~ /linux|darwin/
         file_copy :to => file,
                   :from => file.sub(SPREADSHEET_SRC_ROOT + '/bin', 'dist/binaries/spreadsheet')
     end
+
+    DPL_FILES.each do |file|
+        file_copy :to => SPREADSHEET_ROOT + '/lib/NET40/' + file,
+                  :from => 'dist/binaries/spreadsheet/Release/' + file
+    end
+
+    DPL_FILES.each do |file|
+        file_copy :to => SPREADSHEET_ROOT + '/lib/NET45/' + file,
+                  :from => 'dist/binaries/spreadsheet/Release-NET45/' + file
+    end
 else
     ['Release', 'Release-NET45', 'Release-Trial', 'Release-NET45-Trial'].each do |configuration|
         # Build Telerik.Web.Spreadsheet
