@@ -389,6 +389,25 @@ test("toXML sets the 'r' attribute to index plus one", function() {
     equal(dom.find("row").attr("r"), "2");
 });
 
+test("toXML exports rows in order (indexed)", function() {
+    var worksheet = Worksheet({
+        rows: [{
+            height: 100,
+            cells: [],
+            index: 1
+        }, {
+            height: 100,
+            cells: [],
+            index: 0
+        }]
+    });
+
+    var dom = $(worksheet.toXML());
+    var cells = dom.find("row");
+    equal(cells.eq(0).attr("r"), "1");
+    equal(cells.eq(1).attr("r"), "2");
+});
+
 test("toXML sets the 'ht' attribute to the row height", function() {
     var worksheet = Worksheet({
         rows: [{

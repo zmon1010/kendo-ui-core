@@ -366,6 +366,10 @@ var Worksheet = kendo.Class.extend({
             data.push(this._row(rows[i], i));
         }
 
+        data.sort(function(a, b) {
+            return a.index - b.index;
+        });
+
         var filter = this.options.filter;
         if (filter) {
             filter = {
