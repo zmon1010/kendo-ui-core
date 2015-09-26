@@ -224,6 +224,11 @@ var STYLES = kendo.template(
    '# for (var fi = 0; fi < fonts.length; fi++) { #' +
        '# var font = fonts[fi]; #' +
       '<font>' +
+         '# if (font.fontSize) { #' +
+         '<sz val="${font.fontSize}" />' +
+         '# } else { #' +
+         '<sz val="11" />' +
+         '# } #' +
          '# if (font.bold) { #' +
             '<b/>' +
          '# } #' +
@@ -238,18 +243,14 @@ var STYLES = kendo.template(
          '# } else { #' +
          '<color theme="1" />' +
          '# } #' +
-         '# if (font.fontSize) { #' +
-         '<sz val="${font.fontSize}" />' +
-         '# } else { #' +
-         '<sz val="11" />' +
-         '# } #' +
          '# if (font.fontName) { #' +
          '<name val="${font.fontName}" />' +
+         '<family val="2" />' +
          '# } else { #' +
          '<name val="Calibri" />' +
+         '<family val="2" />' +
          '<scheme val="minor" />' +
          '# } #' +
-         '<family val="2" />' +
       '</font>' +
    '# } #' +
    '</fonts>' +
