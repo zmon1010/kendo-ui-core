@@ -905,5 +905,74 @@
     kendo.spreadsheet.dialogs.register("validation", ValidationDialog);
     kendo.spreadsheet.dialogs.ValidationDialog = ValidationDialog;
 
+    var SaveAsDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+
+            this.viewModel = kendo.observable({
+                name: this.options.name,
+                extension: this.options.extension,
+                fileFormats: this.options.fileFormats,
+                fileName: function() {
+                    return this.name + this.extension;
+                },
+
+                apply: this.apply.bind(this),
+                close: this.close.bind(this)
+            });
+
+            kendo.bind(this.dialog().element, this.viewModel);
+        },
+        options: {
+            title: "Save As...",
+            name: "Workbook",
+            extension: ".xlsx",
+            editExtension: true,
+            fileFormats: [{
+                description: "Excel Workbook (.xlsx)",
+                extension: ".xlsx"
+            }],
+            width: 350,
+            template:
+                "<div class='k-edit-label'><label>File name:</label></div>" +
+                    "<div class='k-edit-field'>" +
+                    "<input class='k-textbox' data-bind='value: name' />" +
+                "</div>" +
+                "<div data-bind='visible: editExtension'>" +
+                    "<div class='k-edit-label'><label>Save as type:</label></div>" +
+                        "<div class='k-edit-field'>" +
+                        "<select data-role='dropdownlist' class='k-file-format' " +
+                            "data-text-field='description' " +
+                            "data-value-field='extension' " +
+                            "data-bind='value: extension, source: fileFormats' />" +
+                    "</div>" +
+                "</div>" +
+
+                "<div class='k-action-buttons'>" +
+                    "<button class='k-button k-primary' data-bind='click: apply'>Save</button>" +
+                    "<button class='k-button' data-bind='click: close'>Cancel</button>" +
+                "</div>"
+        },
+        apply: function() {
+            SpreadsheetDialog.fn.apply.call(this);
+
+            this.trigger("action", {
+                command: "SaveAsCommand",
+                options: {
+                    fileName: this.viewModel.fileName()
+                }
+            });
+        }
+    });
+    kendo.spreadsheet.dialogs.register("saveAs", SaveAsDialog);
+
+    var ExcelExportDialog = SaveAsDialog.extend({
+        options: {
+            title: "Export to Excel...",
+            editExtension: false
+        }
+    });
+    kendo.spreadsheet.dialogs.register("excelExport", ExcelExportDialog);
+
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

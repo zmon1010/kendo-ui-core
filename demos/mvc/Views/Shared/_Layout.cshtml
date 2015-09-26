@@ -52,7 +52,7 @@
         }
 
         if (scriptName.Contains("jszip") && ViewBag.CurrentExample != null
-        && !ViewBag.CurrentExample.Text.Contains("Excel"))
+        && !ViewBag.CurrentExample.Text.Contains("Excel") && !ViewBag.CurrentExample.Url.Contains("spreadsheet"))
         {
             continue;
         }

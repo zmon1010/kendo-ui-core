@@ -424,4 +424,57 @@
         $(".k-item a[data-value='vertically']").trigger("click");
     });
 
+    module("ExcelExport dialog", {
+        setup: function() {
+            moduleOptions.setup();
+
+            dialog = spreadsheet.openDialog("excelExport");
+        },
+        teardown: moduleOptions.teardown
+    });
+
+    test("sets correct window title", function() {
+        equal(dialog.dialog().options.title, "Export to Excel...");
+    });
+
+    test("triggers SaveAsCommand with default name", 2, function() {
+        stubMethod(kendo.ooxml.Workbook.fn, "toDataURL", function() {
+            return "";
+        }, function() {
+            stubMethod(kendo, "saveAs", function(options) { }, function() {
+                dialog.one("action", function(e) {
+                    equal(e.command, "SaveAsCommand");
+                    equal(e.options.fileName, "Workbook.xlsx");
+                });
+
+                dialog.apply();
+            });
+        });
+    });
+
+    test("triggers SaveAsCommand with set name", 2, function() {
+        stubMethod(kendo.ooxml.Workbook.fn, "toDataURL", function() {
+            return "";
+        }, function() {
+            stubMethod(kendo, "saveAs", function(options) { }, function() {
+                $(".k-textbox").val("Name").trigger("change");
+
+                dialog.one("action", function(e) {
+                    equal(e.command, "SaveAsCommand");
+                    equal(e.options.fileName, "Name.xlsx");
+                });
+
+                dialog.apply();
+            });
+        });
+    });
+
+    test("close does not trigger action event", 0, function() {
+        dialog.one("action", function(e) {
+            ok(false);
+        });
+
+        dialog.close();
+    });
+
 })();

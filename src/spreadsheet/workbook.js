@@ -303,6 +303,22 @@
                     return sheet.toJSON();
                 }, this)
             };
+        },
+
+        saveAsExcel: function(options) {
+            options = $.extend({}, this.options.excel, options);
+            var data = this.toJSON();
+
+            if (!this.trigger("excelExport", { workbook: data })) {
+                var workbook = new kendo.ooxml.Workbook(data);
+
+                kendo.saveAs({
+                    dataURI: workbook.toDataURL(),
+                    fileName: data.fileName || options.fileName,
+                    proxyURL: options.proxyURL,
+                    forceProxy: options.forceProxy
+                });
+            }
         }
     });
 

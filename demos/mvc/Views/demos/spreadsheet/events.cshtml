@@ -11,9 +11,14 @@
             kendoConsole.log("Spreadsheet is rendered");
         }
 
+        function onExcelExport(arg) {
+            kendoConsole.log("Spreadsheet is exported to Excel");
+        }
+
         $(function() {
             $("#spreadsheet").kendoSpreadsheet({
                 render: onRender,
+                excelExport: onExcelExport,
                 sheets: [
                 {
                     name: "Food Order",

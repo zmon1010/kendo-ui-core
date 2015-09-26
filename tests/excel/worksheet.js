@@ -32,12 +32,85 @@ test("toXML creates a 'c' element for cells", function() {
     equal(dom.find("c").length, 1);
 });
 
-test("toXML sets the r attribute to the alphanumeric and cell number (index plus one)", function() {
+test("toXML sets the 'r' attribute to the A1 reference of a cell", function() {
     var worksheet = Worksheet();
 
     var dom = $(worksheet.toXML());
 
     equal(dom.find("c").attr("r"), "A1");
+});
+
+test("toXML sets the 'r' attribute to the A1 reference of a cell with index", function() {
+    var worksheet = Worksheet([{
+        cells: [{ index: 4 }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("c").attr("r"), "E1");
+});
+
+test("toXML exports only cells with data (mixed)", function() {
+    var worksheet = Worksheet([{
+        cells: [{ }, { index: 4 }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("c").length, 2);
+});
+
+test("toXML exports only cells with data (indexed)", function() {
+    var worksheet = Worksheet([{
+        cells: [{ index: 1 }, { index: 4 }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("c").length, 2);
+});
+
+test("toXML exports only cells with data (indexed on multiple rows)", function() {
+    var worksheet = Worksheet([{
+        cells: [{ index: 1 }, { index: 2 }]
+    }, {
+        cells: [{ index: 1 }, { index: 2 }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("c").length, 4);
+});
+
+test("toXML exports cells in order (indexed)", function() {
+    var worksheet = Worksheet([{
+        cells: [{
+            index: 2,
+            value: 2
+        }, {
+            index: 4,
+            value: 4
+        }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    var cells = dom.find("c");
+    equal(cells.eq(0).attr("r"), "C1");
+    equal(cells.eq(1).attr("r"), "E1");
+});
+
+test("toXML restarts index", function() {
+    var worksheet = Worksheet([{
+        cells: [{
+            index: 2,
+            value: "Bar"
+        }, {
+            value: "Foo"
+        }]
+    }]);
+
+    var dom = $(worksheet.toXML());
+    var cells = dom.find("c");
+    equal(cells.length, 2);
+    equal(cells.eq(0).attr("r"), "C1");
+    equal(cells.eq(1).attr("r"), "D1");
 });
 
 test("toXML sets the tabSelected attribute to 1 if the sheet is first", function() {
@@ -255,6 +328,16 @@ test("toXML creates a 'v' element for the value", function() {
     equal(dom.find("c").children("v").length, 1);
 });
 
+test("toXML creates a 'f' element for the formula", function() {
+    var worksheet = Worksheet([
+        { cells: [{ value: 0, formula: "SUM(A1:A10)" }] }
+    ]);
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("c").children("f").text(), "SUM(A1:A10)");
+});
+
 test("toXML uses the shared string index as the toXML value", function() {
     var worksheet = Worksheet();
 
@@ -284,12 +367,87 @@ test("toXML creates a 'row' element", function() {
     equal(dom.find("> sheetData > row").length, 1);
 });
 
-test("toXML sets the 'r' attribute to index plus one", function() {
+test("toXML sets the 'r' attribute", function() {
     var worksheet = Worksheet();
 
     var dom = $(worksheet.toXML());
 
     equal(dom.find("row").attr("r"), "1");
+});
+
+test("toXML sets the 'r' attribute to index plus one", function() {
+    var worksheet = Worksheet({
+        rows: [{
+            height: 100,
+            cells: [],
+            index: 1
+        }]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("r"), "2");
+});
+
+test("toXML exports rows in order (indexed)", function() {
+    var worksheet = Worksheet({
+        rows: [{
+            height: 100,
+            cells: [],
+            index: 1
+        }, {
+            height: 100,
+            cells: [],
+            index: 0
+        }]
+    });
+
+    var dom = $(worksheet.toXML());
+    var cells = dom.find("row");
+    equal(cells.eq(0).attr("r"), "1");
+    equal(cells.eq(1).attr("r"), "2");
+});
+
+test("toXML sets the 'ht' attribute to the row height", function() {
+    var worksheet = Worksheet({
+        rows: [{
+            height: 100,
+            cells: []
+        }]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("ht"), "75");
+});
+
+test("toXML does not set the 'ht' attribute if the row has no height set", function() {
+    var worksheet = Worksheet();
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("ht"), null);
+});
+
+test("toXML sets the 'customHeight' attribute if row height is set", function() {
+    var worksheet = Worksheet({
+        rows: [{
+            height: 100,
+            cells: []
+        }]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("customHeight"), "1");
+});
+
+test("toXML does not set the 'customHeight' attribute if row height is not set", function() {
+    var worksheet = Worksheet();
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("row").attr("customHeight"), null);
 });
 
 test("toXML renders cells as children elements", function() {
@@ -376,13 +534,13 @@ test("toXML sets the 'ySplit' attribute when the rowSplit option is set", functi
     equal(dom.find("pane").attr("topLeftCell"), "A3");
 });
 
-test("toXML creates 'cols' element when the columns option is set", function() {
+test("toXML does not create empty 'cols' element", function() {
     var worksheet = Worksheet({
         columns: []
     });
 
     var dom = $(worksheet.toXML());
-    equal(dom.find("cols").length, 1);
+    equal(dom.find("cols").length, 0);
 });
 
 test("toXML creates 'col' element for every item in the columns option that has width set", function() {
@@ -404,6 +562,16 @@ test("toXML sets the 'min' and 'max' attribute of the 'col' element to the colum
     equal(dom.find("col").attr("max"), 1);
 });
 
+test("toXML sets the 'min' and 'max' attribute of the 'col' element to explicit column index plus one", function() {
+    var worksheet = Worksheet({
+        columns: [{ width: 10, index: 4 }]
+    });
+
+    var dom = $($.parseXML(worksheet.toXML()));
+    equal(dom.find("col").attr("min"), 5);
+    equal(dom.find("col").attr("max"), 5);
+});
+
 test("toXML sets the 'customWidth' attribute of the 'col' element when width is set", function() {
     var worksheet = Worksheet({
         columns: [{
@@ -414,6 +582,7 @@ test("toXML sets the 'customWidth' attribute of the 'col' element when width is 
     var dom = $($.parseXML(worksheet.toXML()));
     equal(dom.find("col").attr("customWidth"), 1);
 });
+
 
 test("toXML sets the 'width' attribute of the 'col' element according to formula", function() {
 // see: http://msdn.microsoft.com/en-us/library/documentformat.openxml.spreadsheet.column(v=office.14).aspx
@@ -427,6 +596,30 @@ test("toXML sets the 'width' attribute of the 'col' element according to formula
 
     var dom = $($.parseXML(worksheet.toXML()));
     equal(Math.round(dom.find("col").attr("width")), 71);
+});
+
+test("toXML sets the 'defaultColWidth' attribute of the 'sheetFormatPr' element to the default column width", function() {
+    var worksheet = Worksheet({
+        columns: [{}],
+        defaults: {
+            columnWidth: 500
+        }
+    });
+
+    var dom = $($.parseXML(worksheet.toXML()));
+    equal(Math.round(dom.find("sheetFormatPr").attr("defaultColWidth")), 71);
+});
+
+test("toXML sets the 'defaultRowHeight' attribute of the 'sheetFormatPr' element to the default row height", function() {
+    var worksheet = Worksheet({
+        columns: [{}],
+        defaults: {
+            rowHeight: 100
+        }
+    });
+
+    var dom = $($.parseXML(worksheet.toXML()));
+    equal(Math.round(dom.find("sheetFormatPr").attr("defaultRowHeight")), 75);
 });
 
 test("toXML calculates the 'width' attribute based on string length", function() {
@@ -516,7 +709,14 @@ test("toXML adds missing cells after cell with rowSpan", function() {
 
     var dom = $(worksheet.toXML());
 
-    equal(dom.find("c").length, 6);
+    var cells = dom.find("c");
+    equal(cells.length, 6);
+
+    var refs = [];
+    cells.each(function() {
+        refs.push($(this).attr("r"));
+    });
+    deepEqual(refs, ["A1", "B1", "A2", "B2", "A3", "B3"]);
 });
 
 test("toXML creates empty extra cells after cell with colSpan", function() {
@@ -539,7 +739,7 @@ test("toXML adjusts the ref of cells after colspan", function() {
     equal(dom.find("c:last").attr("r"), "D1");
 });
 
-test("toXML sets the 'count' attribute of the 'mergeCells' element", function() {
+test("toXML sets the 'count' attribute of the 'mergeCells' element for colSpans", function() {
     var worksheet = Worksheet([
         { cells: [{ colSpan: 3 }, { }] }
     ]);
@@ -547,6 +747,40 @@ test("toXML sets the 'count' attribute of the 'mergeCells' element", function() 
     var dom = $(worksheet.toXML());
 
     equal(dom.find("mergeCells").attr("count"), 1);
+});
+
+test("toXML sets the 'count' attribute of the 'mergeCells' element for merged sheet cells", function() {
+    var worksheet = Worksheet({
+        mergedCells: ["C3:E5"]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("mergeCells").attr("count"), 1);
+});
+
+test("toXML creates 'mergeCell' elements for merged sheet cells", function() {
+    var worksheet = Worksheet({
+        mergedCells: ["C3:E5"]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("mergeCell").length, 1);
+    equal(dom.find("mergeCell").attr("ref"), "C3:E5");
+});
+
+test("toXML sets the 'count' attribute of the 'mergeCells' element for spans and mergedCells", function() {
+    var worksheet = Worksheet({
+        mergedCells: ["C3:E5"],
+        rows: [{
+            cells: [{ colSpan: 3 }, { }]
+        }],
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("mergeCells").attr("count"), 2);
 });
 
 test("toXML creates 'mergeCell' elements for multiple cells with colSpan attribute", function() {
@@ -569,6 +803,29 @@ test("toXML creates one mergeCell for a cell with both colSpan and rowSpan set",
 
     equal(dom.find("mergeCell").length, 1);
     equal(dom.find("mergeCell").attr("ref"), "A1:B2");
+});
+
+test("toXML drops cells overlapping with a colspan", function() {
+    var worksheet = Worksheet([
+        { cells: [{ colSpan: 3, value: 1 }, { index: 2, value: 2 }] }
+    ]);
+
+    var dom = $(worksheet.toXML());
+
+    var cells = dom.find("c");
+    equal(cells.length, 3);
+    equal(cells.find("v").length, 1);
+});
+
+test("toXML drops cells overlapping with a rowspan", function() {
+    var worksheet = Worksheet([
+        { cells: [{ rowSpan: 3 }] },
+        { cells: [{ }]}
+    ]);
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("c").length, 3);
 });
 
 test("toXML creates 'autoFilter' element when the filter option is set", function() {
@@ -624,7 +881,8 @@ test("toXML offsets cells if first has merged rows", function() {
         } ]
     });
 
-    var dom = $(worksheet.toXML());
+    var xml = worksheet.toXML();
+    var dom = $(xml);
     var cell1 = dom.find("row:eq(1) > c:eq(0)");
     var cell2 = dom.find("row:eq(1) > c:eq(1)");
     var cell3 = dom.find("row:eq(1) > c:eq(2)");
@@ -683,6 +941,7 @@ test("toXML offsets cells if second cell is merged in 3 rows", function() {
 
     equal(mergeCell.eq(0).attr("ref"), "B1:B3");
 });
+
 
 test("toXML renders third level cells after second cell is merged in 2 rows", function() {
     var worksheet = Worksheet({
@@ -945,6 +1204,17 @@ test("toXML outputs empty data cells for continues cells with rowSpan", function
 
     equal(cells.eq(4).attr("r"), "E4")
     equal(cells.eq(4).find("v").length, 1);
+});
+
+test("toXML has no side effects", function() {
+    var worksheet = Worksheet({
+        rows: [{
+            cells: [{ colSpan: 4, rowSpan: 2 },
+                    { colSpan: 1, rowSpan: 1 }]
+        }]
+    });
+
+    equal(worksheet.toXML(), worksheet.toXML());
 });
 
 }());

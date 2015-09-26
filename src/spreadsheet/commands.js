@@ -510,6 +510,14 @@
         }
     });
 
+    kendo.spreadsheet.SaveAsCommand = Command.extend({
+        exec: function() {
+            this.options.workbook.saveAsExcel({
+                fileName: this.options.fileName
+            });
+        }
+    });
+
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

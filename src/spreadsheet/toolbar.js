@@ -9,6 +9,7 @@
 
     var defaultTools = {
         home: [
+            "excelExport",
             [ "cut", "copy", "paste" ],
             [ "bold", "italic", "underline" ],
             "backgroundColor", "textColor",
@@ -34,6 +35,7 @@
 
     var toolDefaults = {
         //home tab
+        excelExport:           { type: "dialog", dialogName: "excelExport",        overflow: "never",         text: "",        iconClass: "xlsa" },
         bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
         italic:                { type: "button", command: "PropertyChangeCommand", property: "italic",        value: true,     iconClass: "italic", togglable: true },
         underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
@@ -65,7 +67,7 @@
 
         //data tab
         sort:                  { type: "sort", iconClass: "sort-desc" },
-        validation:           { type: "dialog", dialogName: "validation", iconClass: "exception", overflow: "never" }
+        validation:            { type: "dialog", dialogName: "validation", iconClass: "exception", overflow: "never" }
     };
 
     var SpreadsheetToolBar = ToolBar.extend({
@@ -169,32 +171,33 @@
             resizable: true,
             tools: defaultTools,
             messages: {
-                bold: "Bold",
-                italic: "Italic",
-                underline: "Underline",
+                addColumnLeft: "Add column left",
+                addColumnRight: "Add column right",
+                addRowAbove: "Add row above",
+                addRowBelow: "Add row below",
                 alignment: "Alignment",
-                merge: "Merge cells",
+                backgroundColor: "Background",
+                bold: "Bold",
+                borders: "Borders",
+                copy: "Copy",
+                cut: "Cut",
+                deleteColumn: "Delete column",
+                deleteRow: "Delete row",
+                excelExport: "Export to Excel...",
                 filter: "Filter",
+                fontFamily: "Font",
+                fontSize: "Font size",
                 format: "Custom format...",
                 formatDecreaseDecimal: "Decrease decimal",
                 formatIncreaseDecimal: "Increase decimal",
-                textWrap: "Wrap text",
-                fontFamily: "Font",
-                fontSize: "Font size",
-                borders: "Borders",
-                textColor: "Text Color",
-                backgroundColor: "Background",
-                cut: "Cut",
-                copy: "Copy",
+                italic: "Italic",
+                merge: "Merge cells",
                 paste: "Paste",
-                addColumnLeft: "Add column left",
-                addColumnRight: "Add column right",
-                addRowBelow: "Add row below",
-                addRowAbove: "Add row above",
-                deleteColumn: "Delete column",
-                deleteRow: "Delete row",
                 sortAsc: "Sort ascending",
                 sortDesc: "Sort descending",
+                textColor: "Text Color",
+                textWrap: "Wrap text",
+                underline: "Underline",
                 validation: "Data validation..."
             }
         },

@@ -710,7 +710,7 @@
 
     test("Sorts range ascending", function() {
         var command = sortCommand({ sheet: false, asc: true });
-        
+
         sheet.range("A1:B3").values([
             [ 3, "a" ],
             [ 2, "b" ],
@@ -737,7 +737,7 @@
 
     test("Sorts range descending", function() {
         var command = sortCommand({ sheet: false, asc: false });
-        
+
         sheet.range("A1:B3").values([
             [ 2, "a" ],
             [ 3, "b" ],
@@ -764,7 +764,7 @@
 
     test("Sorts sheet ascending", function() {
         var command = sortCommand({ sheet: true, asc: true });
-        
+
         sheet.range("A1:B3").values([
             [ 3, "a" ],
             [ 2, "b" ],
@@ -791,7 +791,7 @@
 
     test("Sorts sheet descending", function() {
         var command = sortCommand({ sheet: true, asc: false });
-        
+
         sheet.range("A1:B3").values([
             [ 1, "a" ],
             [ 2, "b" ],
@@ -894,5 +894,23 @@
         deepEqual(filter.filter, "value");
         deepEqual(filter.values, [ 1 ]);
     });
+
+    module("Spreadsheet SaveAsCommand", moduleOptions);
+
+    var SaveAsCommand = $.proxy(command, this, kendo.spreadsheet.SaveAsCommand);
+
+    test("Saves workbook with specified name", function() {
+        var command = SaveAsCommand({
+            workbook: {
+                saveAsExcel: function(e) {
+                    equal(e.fileName, "Foo.xlsx");
+                }
+            },
+            fileName: "Foo.xlsx"
+        });
+
+        command.exec();
+    });
+
 
 })();
