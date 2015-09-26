@@ -1,4 +1,4 @@
-@{ Func<string,bool> UrlMatches = (query) => Request.Url.PathAndQuery.Contains(query); }
+@{ Func<string,bool> UrlMatches = (query) => new System.Text.RegularExpressions.Regex(query).Match(Request.Url.PathAndQuery).Length > 0; }
 @{ Func<string,bool,IHtmlString> ConditionalResource = (resource, condition) => {
     if (condition) {
         if (resource.EndsWith(".css")) {
@@ -24,7 +24,7 @@
     }
 
     <script src="js/jquery.min.js"></script>@(
-    ConditionalResource("js/jszip.min.js", UrlMatches("export")))@(
+    ConditionalResource("js/jszip.min.js", UrlMatches("(export|spreadsheet)")))@(
     ConditionalResource("js/angular.min.js", UrlMatches("angular")))
     <script src="js/kendo.all.min.js"></script>@(
     ConditionalResource("js/kendo.timezones.min.js", UrlMatches("scheduler")))
