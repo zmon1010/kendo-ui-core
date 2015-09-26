@@ -1417,7 +1417,7 @@
 
     /* -----[ date/time functions ]----- */
 
-    test("EDATE, EOMONTH", function(){
+    tzTest("Sofia", "EDATE, EOMONTH", function(){
         var ss = new Spreadsheet();
         ss.fill({
             A1: "2008-01-31",
@@ -1455,7 +1455,7 @@
         });
     });
 
-    test("WORKDAY", function(){
+    tzTest("Sofia", "WORKDAY", function(){
         var ss = new Spreadsheet();
         ss.fill({
             B1: "2010-12-01",
@@ -1598,7 +1598,7 @@
         });
     });
 
-    test("DATE, TIME and friends", function(){
+    tzTest("Sofia", "DATE, TIME and friends", function(){
         var ss = new Spreadsheet();
         ss.fill({
             A1  : "=now()",
