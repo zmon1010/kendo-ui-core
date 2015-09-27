@@ -313,12 +313,13 @@
 
         _tokenContext: function() {
             var point = this.getPos();
+            var value = this.value();
 
-            if (!point || !point.collapsed) {
+            if (!value || !point || !point.collapsed) {
                 return null;
             }
 
-            var tokens = kendo.spreadsheet.calc.tokenize(this.value());
+            var tokens = kendo.spreadsheet.calc.tokenize(value);
             var tok;
 
             for (var i = 0; i < tokens.length; ++i) {
