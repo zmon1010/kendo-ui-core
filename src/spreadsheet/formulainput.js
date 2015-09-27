@@ -59,6 +59,7 @@
             }
 
             this._highlightedRefs = [];
+            this._staticTokens = [];
 
             this._formulaSource();
 
@@ -207,15 +208,15 @@
             var value = this.value();
             var begin = this._startIdx(value, pos.begin);
             var end = this._endIdx(value, pos.end);
+
             if (value.charAt(end) != "(") {
                 completion += "(";
             }
-            value = value.substr(0, begin) + completion + value.substr(end);
-            this.value(value);
 
-            this.scale();
             this.popup.close();
+            this.value(value.substr(0, begin) + completion + value.substr(end));
             this.setPos(begin + completion.length);
+            this.scale();
             this._sync();
         },
 
@@ -259,7 +260,6 @@
 
                 if (!value || !this.formulaSource.view().length) {
                     popup.close();
-
                 } else {
                     popup[popup.visible() ? "position" : "open"]();
                     this.list.focusFirst();
@@ -403,13 +403,23 @@
         },
 
         canInsertRef: function(isKeyboardAction) {
-            if (isKeyboardAction) {
-                return null;
+            var result = this._canInsertRef(isKeyboardAction);
+            var token = result && result.token;
+            var idx;
+
+            if (isKeyboardAction && token) {
+                for (idx = 0; idx < this._staticTokens.length; idx++) {
+                    if (isEqualToken(token, this._staticTokens[idx])) {
+                        return null;
+                    }
+                }
             }
-            return this._canInsertRef();
+
+            return result;
         },
 
-        _canInsertRef: function() {
+        _canInsertRef: function(isKeyboardAction) {
+            var strictMode = isKeyboardAction;
             var point = this.getPos();
             var tokens, tok;
 
@@ -463,15 +473,21 @@
                     }
                     return null;
                 }
-                if (left.type == "startexp") {
-                    return { token: left, end: point.end };
-                }
-                if (/^(?:ref|op|punc)$/.test(left.type)) {
-                    return { token: left, end: point.end };
-                }
-                if (/^(?:punc|op)$/.test(left.type)) {
-                    return (/^[,;({]$/.test(left.value) ?
-                            { token: left, end: point.end } : null);
+                if (strictMode) {
+                    if (left.type == "op" && /^(?:punc|op)$/.test(right.type)) {
+                        return { token: left, end: point.end };
+                    }
+                } else {
+                    if (left.type == "startexp") {
+                        return { token: left, end: point.end };
+                    }
+                    if (/^(?:ref|op|punc)$/.test(left.type)) { //this checks for op and punc
+                        return { token: left, end: point.end };
+                    }
+                    if (/^(?:punc|op)$/.test(left.type)) { //this checks for op and punc
+                        return (/^[,;({]$/.test(left.value) ?
+                                { token: left, end: point.end } : null);
+                    }
                 }
                 return false;
             }
@@ -549,9 +565,14 @@
         },
 
         _syntaxHighlight: function() {
-            var value = this.value();
             var pos = this.getPos();
+            var value = this.value();
+            var refClasses = kendo.spreadsheet.Pane.classNames.series;
             var highlightedRefs = [];
+            var refIndex = 0;
+            var parens = [];
+            var tokens = [];
+            var activeToken;
 
             if (pos && !pos.collapsed) {
                 // Backward selection (hold shift, move right to left)
@@ -570,10 +591,7 @@
                 // also make sure the completion popup goes away
                 this.popup.close();
             } else {
-                var tokens = kendo.spreadsheet.calc.tokenize(value);
-                var refClasses = kendo.spreadsheet.Pane.classNames.series;
-                var refIndex = 0;
-                var parens = [];
+                tokens = kendo.spreadsheet.calc.tokenize(value);
                 tokens.forEach(function(tok){
                     tok.active = false;
                     tok.cls = [ "k-syntax-" + tok.type ];
@@ -606,6 +624,7 @@
                     if (pos && touches(tok, pos)) {
                         tok.cls.push("k-syntax-at-point");
                         tok.active = true;
+                        activeToken = tok;
                     }
                     if (tok.type == "func" && !knownFunction(tok.value) && (!pos || !touches(tok, pos))) {
                         tok.cls.push("k-syntax-error");
@@ -624,7 +643,24 @@
                 this.setPos(pos.begin, pos.end);
             }
 
+            if (activeToken && /^(?:startexp|op|punc)$/.test(activeToken.type)) {
+                this._setStaticTokens(tokens);
+            }
+
             this._highlightedRefs = highlightedRefs;
+        },
+
+        _setStaticTokens: function(tokens) {
+            var idx, tok;
+
+            this._staticTokens = [];
+
+            for (idx = 0; idx < tokens.length; idx++) {
+                tok = tokens[idx];
+                if (/^(?:num|str|bool|sym|ref)$/.test(tok.type)) {
+                    this._staticTokens.push(tok);
+                }
+            }
         },
 
         destroy: function() {
@@ -663,6 +699,18 @@
 
     function knownFunction(name) {
         return kendo.spreadsheet.calc.runtime.FUNCS[name.toLowerCase()];
+    }
+
+    function isEqualToken(tok1, tok2) {
+        if (!tok1 || !tok2) {
+            return false;
+        }
+
+        if (tok1.type == "ref" && tok2.type == "ref" && tok1.ref.eq(tok2.ref)) {
+            return true;
+        }
+
+        return tok1.value === tok2.value;
     }
 
     kendo.spreadsheet.FormulaInput = FormulaInput;

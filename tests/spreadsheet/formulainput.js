@@ -206,14 +206,64 @@
         ok(!formulaInput.canInsertRef());
     });
 
-    // test("canRef method doesn't replace origin value token", function() {
-    //     createFormulaInput();
+    test("canRef method in strict mode doesn't replace origin value token", function() {
+        createFormulaInput();
 
-    //     formulaInput.value("=SUM(A1:B1, C1:C2, SUM(D1:D2))");
-    //     formulaInput.setPos(5);
+        formulaInput.value("=SUM(A1:B1, C1:C2, SUM(D1:D2))");
+        formulaInput.setPos(5);
 
-    //     ok(!formulaInput.canInsertRef());
-    // });
+         ok(!formulaInput.canInsertRef(true));
+    });
+
+    test("canRef method in strict mode doesn't allow insertion between '=' and 'func'", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(A1:B1, C1:C2, SUM(D1:D2))");
+        formulaInput.setPos(1);
+
+         ok(!formulaInput.canInsertRef(true));
+    });
+
+    test("canRef method in strict mode allows insertion after punc", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(");
+        formulaInput.setPos(5);
+
+         ok(formulaInput.canInsertRef(true));
+    });
+
+    test("canRef method in strict mode allows insertion b/n ',' and ')'", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(,)");
+        formulaInput.setPos(6);
+
+         ok(formulaInput.canInsertRef(true));
+    });
+
+    test("canRef method in strict mode doesn't allow insertion b/n '(' and ')'", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM()");
+        formulaInput.setPos(5);
+
+         ok(!formulaInput.canInsertRef(true));
+    });
+
+    asyncTest("canRef method in strict mode doesn't allow replace of typed range", function() {
+        createFormulaInput();
+
+        formulaInput.value("=SUM(A1,");
+        formulaInput.setPos(8);
+        formulaInput.element.trigger("keydown");
+
+        setTimeout(function() {
+            start();
+            formulaInput.setPos(7); //move back to range
+            ok(!formulaInput.canInsertRef(true));
+        });
+    });
 
     test("ref method inserts passed ref address", 2, function() {
         createFormulaInput();
