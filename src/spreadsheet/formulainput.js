@@ -37,12 +37,6 @@
     };
 
     var PRIVATE_FORMULA_CHECK = /[a-z0-9]$/i;
-    var FORMULA_START_SYMBOLS = {
-        "=": true,
-        "(": true,
-        ",": true,
-        " ": true
-    };
 
     var FormulaInput = Widget.extend({
         init: function(element, options) {
@@ -200,24 +194,26 @@
         },
 
         _formulaListChange: function() {
-            var pos = this.getPos();
-            if (!pos || this._mute) {
+            var tokenCtx = this._tokenContext();
+
+            if (!tokenCtx || this._mute) {
                 return;
             }
-            var completion = this.list.value()[0];
-            var value = this.value();
-            var begin = this._startIdx(value, pos.begin);
-            var end = this._endIdx(value, pos.end);
 
-            if (value.charAt(end) != "(") {
+            var activeToken = tokenCtx.token;
+            var completion = this.list.value()[0];
+            var ctx = {
+                replace: true,
+                token: activeToken,
+                end: activeToken.end
+            };
+
+            if (!tokenCtx.nextToken || tokenCtx.nextToken.value != "(") {
                 completion += "(";
             }
 
+            this._replaceAt(ctx, completion);
             this.popup.close();
-            this.value(value.substr(0, begin) + completion + value.substr(end));
-            this.setPos(begin + completion.length);
-            this.scale();
-            this._sync();
         },
 
         _popup: function() {
@@ -250,11 +246,11 @@
         },
 
         _keyup: function() {
-            var value;
+            var token, value;
             var popup = this.popup;
 
             if (this._isFormula() && !this._navigated) {
-                value = this._searchValue();
+                value = ((this._tokenContext() || {}).token || {}).value;
 
                 this.filter(value);
 
@@ -274,26 +270,6 @@
 
         _input: function() {
             this._syntaxHighlight();
-        },
-
-        _startIdx: function(value, idx) {
-            while (idx > 0) {
-                if (FORMULA_START_SYMBOLS[value[idx - 1]]) {
-                    break;
-                }
-                idx--;
-            }
-            return idx;
-        },
-
-        _endIdx: function(value, idx) {
-            while (idx < value.length) {
-                if (FORMULA_START_SYMBOLS[value[idx]]) {
-                    break;
-                }
-                idx++;
-            }
-            return idx;
         },
 
         _focus: function() {
@@ -335,13 +311,23 @@
             return pressed;
         },
 
-        _searchValue: function() {
-            var value = this.value();
-            var pos = this.getPos();
-            if (!pos || !pos.collapsed) {
-                return;
+        _tokenContext: function() {
+            var point = this.getPos();
+
+            if (!point || !point.collapsed) {
+                return null;
             }
-            return value.substr(this._startIdx(value, pos.begin), this._endIdx(value, pos.begin) - 1);
+
+            var tokens = kendo.spreadsheet.calc.tokenize(this.value());
+
+            for (var i = 0; i < tokens.length; ++i) {
+                tok = tokens[i];
+                if (atPoint(tok, point) && /^(?:str|sym|func)$/.test(tok.type)) {
+                    return { token: tok, nextToken: tokens[i + 1] };
+                }
+            }
+
+            return null;
         },
 
         _sync: function() {
@@ -432,7 +418,7 @@
 
                 for (var i = 0; i < tokens.length; ++i) {
                     tok = tokens[i];
-                    if (atPoint(tok)) {
+                    if (atPoint(tok, point)) {
                         return canReplace(tok);
                     }
                     if (afterPoint(tok)) {
@@ -444,9 +430,6 @@
 
             return null;
 
-            function atPoint(tok) {
-                return tok.begin <= point.begin && tok.end >= point.end;
-            }
             function afterPoint(tok) {
                 return tok.begin > point.begin;
             }
@@ -496,20 +479,23 @@
         refAtPoint: function(ref) {
             var x = this._canInsertRef();
             if (x) {
-                ref = ref.simplify().toString();
-                var value = this.value();
-                var tok = x.token;
-                var rest = value.substr(x.end);
-                value = value.substr(0, x.replace ? tok.begin : x.end) + ref;
-                var point = value.length;
-                value += rest;
-                this._value(value);
-                this.setPos(point);
-                this.scale();
-
-                this._syntaxHighlight();
-                this._sync();
+                this._replaceAt(x, ref.simplify().toString());
             }
+        },
+
+        _replaceAt: function(ctx, newValue) {
+            var value = this.value();
+            var tok = ctx.token;
+            var rest = value.substr(ctx.end);
+            value = value.substr(0, ctx.replace ? tok.begin : ctx.end) + newValue;
+            var point = value.length;
+            value += rest;
+            this._value(value);
+            this.setPos(point);
+            this.scale();
+
+            this._syntaxHighlight();
+            this._sync();
         },
 
         resize: function(rectangle) {
@@ -677,6 +663,10 @@
             Widget.fn.destroy.call(this);
         }
     });
+
+    function atPoint(tok, point) {
+        return tok.begin <= point.begin && tok.end >= point.end;
+    }
 
     function isOpenParen(ch) {
         return ch == "(" || ch == "[" || ch == "{";

@@ -444,6 +444,51 @@
         equal(formulaInput.args("filter")[0], "s");
     });
 
+    test("filter list if after '*' symbol", 2, function() {
+        createFormulaInput();
+
+        element.focus();
+        element.text("=*s");
+        formulaInput.end();
+
+        stub(formulaInput, { filter: formulaInput.filter });
+
+        element.trigger("keyup");
+
+        equal(formulaInput.calls("filter"), 1);
+        equal(formulaInput.args("filter")[0], "s");
+    });
+
+    test("filter list if after '/' symbol", 2, function() {
+        createFormulaInput();
+
+        element.focus();
+        element.text("=/s");
+        formulaInput.end();
+
+        stub(formulaInput, { filter: formulaInput.filter });
+
+        element.trigger("keyup");
+
+        equal(formulaInput.calls("filter"), 1);
+        equal(formulaInput.args("filter")[0], "s");
+    });
+
+    test("filter list if after '*' and space", 2, function() {
+        createFormulaInput();
+
+        element.focus();
+        element.text("= A1 * s * SUM(");
+        formulaInput.setPos(8);
+
+        stub(formulaInput, { filter: formulaInput.filter });
+
+        element.trigger("keyup");
+
+        equal(formulaInput.calls("filter"), 1);
+        equal(formulaInput.args("filter")[0], "s");
+    });
+
     test("show result when caret is in the middle of node", 2, function() {
         createFormulaInput();
 
@@ -787,6 +832,24 @@
         });
 
         equal(element.text(), "=SUM(");
+    });
+
+    test("replace formula value on enter if in middle", 1, function() {
+        createFormulaInput();
+
+        filterInput("sm", "=SM(");
+        formulaInput.setPos(2);
+
+        var list = formulaInput.list;
+
+        list.focusFirst();
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.ENTER
+        });
+
+        equal(element.text(), "=SMALL(");
     });
 
     test("autocomplete formula on TAB", 1, function() {
