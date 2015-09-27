@@ -324,7 +324,7 @@
 
             for (var i = 0; i < tokens.length; ++i) {
                 tok = tokens[i];
-                if (atPoint(tok, point) && /^(?:str|sym|func)$/.test(tok.type)) {
+                if (touches(tok, point) && /^(?:str|sym|func)$/.test(tok.type)) {
                     return { token: tok, nextToken: tokens[i + 1] };
                 }
             }
@@ -420,7 +420,7 @@
 
                 for (var i = 0; i < tokens.length; ++i) {
                     tok = tokens[i];
-                    if (atPoint(tok, point)) {
+                    if (touches(tok, point)) {
                         return canReplace(tok);
                     }
                     if (afterPoint(tok)) {
@@ -665,10 +665,6 @@
             Widget.fn.destroy.call(this);
         }
     });
-
-    function atPoint(tok, point) {
-        return tok.begin <= point.begin && tok.end >= point.end;
-    }
 
     function isOpenParen(ch) {
         return ch == "(" || ch == "[" || ch == "{";
