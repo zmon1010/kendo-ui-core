@@ -243,8 +243,8 @@ var STYLES = kendo.template(
          '# } else { #' +
          '<color theme="1" />' +
          '# } #' +
-         '# if (font.fontName) { #' +
-         '<name val="${font.fontName}" />' +
+         '# if (font.fontFamily) { #' +
+         '<name val="${font.fontFamily}" />' +
          '<family val="2" />' +
          '# } else { #' +
          '<name val="Calibri" />' +
@@ -288,17 +288,17 @@ var STYLES = kendo.template(
        '# if (style.numFmtId) { #' +
           ' numFmtId="${style.numFmtId}" applyNumberFormat="1"' +
        '# } #' +
-       '# if (style.hAlign || style.vAlign || style.wrap) { #' +
+       '# if (style.textAlign || style.verticalAlign || style.wrap) { #' +
        ' applyAlignment="1"' +
        '# } #' +
        '>' +
-       '# if (style.hAlign || style.vAlign || style.wrap) { #' +
+       '# if (style.textAlign || style.verticalAlign || style.wrap) { #' +
        '<alignment' +
-       '# if (style.hAlign) { #' +
-       ' horizontal="${style.hAlign}"' +
+       '# if (style.textAlign) { #' +
+       ' horizontal="${style.textAlign}"' +
        '# } #' +
-       '# if (style.vAlign) { #' +
-       ' vertical="${style.vAlign}"' +
+       '# if (style.verticalAlign) { #' +
+       ' vertical="${style.verticalAlign}"' +
        '# } #' +
        '# if (style.wrap) { #' +
        ' wrapText="1"' +
@@ -472,11 +472,11 @@ var Worksheet = kendo.Class.extend({
             background: data.background,
             italic: data.italic,
             underline: data.underline,
-            fontName: data.fontName,
+            fontFamily: data.fontFamily || data.fontName,
             fontSize: data.fontSize,
             format: data.format,
-            hAlign: data.hAlign,
-            vAlign: data.vAlign,
+            textAlign: data.textAlign || data.hAlign,
+            verticalAlign: data.verticalAlign || data.vAlign,
             wrap: data.wrap
         };
 
@@ -675,7 +675,7 @@ var Workbook = kendo.Class.extend({
         var styles = $.map(this._styles, $.parseJSON);
 
         var hasFont = function(style) {
-            return style.underline || style.bold || style.italic || style.color || style.fontName || style.fontSize;
+            return style.underline || style.bold || style.italic || style.color || style.fontFamily || style.fontSize;
         };
 
         var fonts = $.map(styles, function(style) {
@@ -716,8 +716,8 @@ var Workbook = kendo.Class.extend({
                   result.fillId = $.inArray(style, fills) + 2;
               }
 
-              result.hAlign = style.hAlign;
-              result.vAlign = style.vAlign;
+              result.textAlign = style.textAlign;
+              result.verticalAlign = style.verticalAlign;
               result.wrap = style.wrap;
 
               if (style.format) {

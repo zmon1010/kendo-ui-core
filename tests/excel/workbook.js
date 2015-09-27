@@ -270,11 +270,27 @@ test("toDataUrl stores underline style as 'u' element", function() {
     equal(dom.find("font > u").length, 1);
 });
 
-test("toDataUrl stores the fontName option as the 'val' attribute of the 'name' element", function() {
+test("toDataUrl stores the fontName (deprecated) option as the 'val' attribute of the 'name' element", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ {
            rows: [
                { cells: [ { fontName: "Arial", value: "foo" } ] }
+           ]
+        } ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("font:last name").attr("val"), "Arial");
+});
+
+test("toDataUrl stores the fontFamily option as the 'val' attribute of the 'name' element", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+           rows: [
+               { cells: [ { fontFamily: "Arial", value: "foo" } ] }
            ]
         } ]
     });
@@ -592,11 +608,27 @@ test("toDataUrl sets the rgb attribute of the 'fgColor' element when background 
     equal(dom.find("fills > fill:last > patternFill > fgColor").attr("rgb"), "FFFF0000");
 });
 
-test("toDataUrl sets 'applyAlignment' attribute to '1' if hAlign is set", function() {
+test("toDataUrl sets 'applyAlignment' attribute to '1' if hAlign (deprecated) is set", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ {
            rows: [
                { cells: [ { hAlign: "center", value: "foo" } ] }
+           ]
+        } ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("cellXfs > xf").last().attr("applyAlignment"), 1);
+});
+
+test("toDataUrl sets 'applyAlignment' attribute to '1' if textAlign is set", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+           rows: [
+               { cells: [ { textAlign: "center", value: "foo" } ] }
            ]
         } ]
     });
@@ -624,7 +656,7 @@ test("toDataUrl sets 'wrapText' attribute to '1' if wrap is set", function() {
     equal(dom.find("cellXfs > xf:last > alignment").attr("wrapText"), 1);
 });
 
-test("toDataUrl sets 'applyAlignment' attribute to '1' if vAlign is set", function() {
+test("toDataUrl sets 'applyAlignment' attribute to '1' if vAlign (deprecated) is set", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ {
            rows: [
@@ -640,7 +672,23 @@ test("toDataUrl sets 'applyAlignment' attribute to '1' if vAlign is set", functi
     equal(dom.find("cellXfs > xf").last().attr("applyAlignment"), 1);
 });
 
-test("toDataUrl creates 'alignment' element and sets its 'horizontal' attribute if hAlign is set", function() {
+test("toDataUrl sets 'applyAlignment' attribute to '1' if verticalAlign is set", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+           rows: [
+               { cells: [ { verticalAlign: "middle", value: "foo" } ] }
+           ]
+        } ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("cellXfs > xf").last().attr("applyAlignment"), 1);
+});
+
+test("toDataUrl creates 'alignment' element and sets its 'horizontal' attribute if hAlign (deprecated) is set", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ {
            rows: [
@@ -656,11 +704,43 @@ test("toDataUrl creates 'alignment' element and sets its 'horizontal' attribute 
     equal(dom.find("cellXfs > xf:last > alignment").attr("horizontal"), "center");
 });
 
-test("toDataUrl creates 'alignment' element and sets its 'vertical' attribute if vAlign is set", function() {
+test("toDataUrl creates 'alignment' element and sets its 'horizontal' attribute if textAlign is set", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+           rows: [
+               { cells: [ { textAlign: "center", value: "foo" } ] }
+           ]
+        } ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("cellXfs > xf:last > alignment").attr("horizontal"), "center");
+});
+
+test("toDataUrl creates 'alignment' element and sets its 'vertical' attribute if vAlign (deprecated) is set", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ {
            rows: [
                { cells: [ { vAlign: "center", value: "foo" } ] }
+           ]
+        } ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("cellXfs > xf:last > alignment").attr("vertical"), "center");
+});
+
+test("toDataUrl creates 'alignment' element and sets its 'vertical' attribute if verticalAlign is set", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+           rows: [
+               { cells: [ { verticalAlign: "center", value: "foo" } ] }
            ]
         } ]
     });
