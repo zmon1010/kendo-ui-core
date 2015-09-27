@@ -246,8 +246,8 @@
         },
 
         _keyup: function() {
-            var token, value;
             var popup = this.popup;
+            var value;
 
             if (this._isFormula() && !this._navigated) {
                 value = ((this._tokenContext() || {}).token || {}).value;
@@ -319,6 +319,7 @@
             }
 
             var tokens = kendo.spreadsheet.calc.tokenize(this.value());
+            var tok;
 
             for (var i = 0; i < tokens.length; ++i) {
                 tok = tokens[i];
