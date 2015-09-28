@@ -26,6 +26,17 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the excelExport event.</param>
+        public SpreadsheetEventBuilder ExcelExport(string handler)
+        {
+            Handler("excelExport", handler);
+
+            return this;
+        }
+        
         //<< Handlers
     }
 }
