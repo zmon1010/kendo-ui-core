@@ -2752,6 +2752,116 @@ var __meta__ = { // jshint ignore:line
             return range;
         },
 
+        totalRange: function() {
+            return {
+                min: 0,
+                max: this.options.categories.length
+            };
+        },
+
+        rangeIndices: function() {
+            var options = this.options;
+            var categories = options.categories;
+            var categoryLimits = this._categoryRange(options.srcCategories || categories);
+            var min = options.min || toDate(categoryLimits.min);
+            var max = options.max || toDate(categoryLimits.max);
+            var length = categories.length - 1;
+            var minIdx = 0, maxIdx = 0;
+
+            if (categories.length) {
+                var rangeSize = dateDiff(last(categories), categories[0]) || 1;
+                minIdx = (dateDiff(min, categories[0]) / rangeSize) * length;
+                maxIdx = length - (dateDiff(last(categories), max) / rangeSize) * length;
+
+                if ((!(options.justified || options.roundToBaseUnit) && (maxIdx != length))
+                    ) {
+                    maxIdx--;
+                }
+
+                if (options.roundToBaseUnit) {
+                    minIdx = math.floor(minIdx);
+                    maxIdx = math.floor(maxIdx);
+                }
+
+            }
+
+            return { min: minIdx, max: maxIdx };
+        },
+
+        panRange: function(from, to) {
+            var range = this._categoryRange(this.options.srcCategories);
+            var options = this.options;
+            var baseUnit = options.baseUnit;
+            var baseUnitStep = options.baseUnitStep || 1;
+            var weekStartDay = options.weekStartDay;
+            var min = toTime(addDuration(range.min, 0, baseUnit, weekStartDay));
+            var max = toTime(addDuration(range.max, options.justified || options.roundToBaseUnit ? 0 : baseUnitStep, baseUnit, weekStartDay));
+            return this.limitRange(from, to, min, max);
+        },
+
+        pan: function(delta) {
+            var axis = this,
+                options = axis.options,
+                baseUnit = options.baseUnit,
+                lineBox = axis.lineBox(),
+                size = options.vertical ? lineBox.height() : lineBox.width(),
+                range = axis.range(),
+                scale = size / (range.max - range.min),
+                offset = round(delta / scale, DEFAULT_PRECISION),
+                panRange,
+                from,
+                to;
+
+            if (range.min && range.max) {
+                from = addTicks(options.min || range.min, offset);
+                to = addTicks(options.max || range.max, offset);
+
+                panRange = this.panRange(from, to);
+                if (panRange) {
+                    panRange.baseUnit = baseUnit;
+                    panRange.baseUnitStep = options.baseUnitStep || 1;
+                }
+            }
+
+            return panRange;
+        },
+
+        pointsRange: function(start, end) {
+            var pointsRange = CategoryAxis.fn.pointsRange.call(this, start, end, true);
+            var categories = this.options.categories;
+            var length = categories.length - 1;
+            var rangeSize = dateDiff(last(categories), categories[0]);
+
+            var min = addTicks(categories[0], (pointsRange.min / length) * rangeSize);
+            var max = addTicks(categories[0], (pointsRange.max / length) * rangeSize);
+
+            return {
+                min: min,
+                max: max
+            };
+        },
+
+        zoomRange: function(delta) {
+            var options = this.options;
+            var range = this._categoryRange(this.options.categories);
+            var totalRange = this._categoryRange(this.options.srcCategories);
+            var baseUnit = options.baseUnit;
+            var baseUnitStep = options.baseUnitStep || 1;
+            var weekStartDay = options.weekStartDay;
+            var min = addDuration(toDate(options.min || range.min), delta * baseUnitStep, baseUnit, weekStartDay);
+            var max = addDuration(toDate(options.max || range.max), -delta * baseUnitStep, baseUnit, weekStartDay);
+            var minRange = TIME_PER_UNIT[baseUnit] * baseUnitStep;
+            min = toDate(limitValue(min, totalRange.min, totalRange.max));
+            max = toDate(limitValue(max, totalRange.min, totalRange.max));
+
+            if (dateDiff(max, min) > minRange) {
+                return {
+                    min: addDuration(min, 0, baseUnit, weekStartDay),
+                    max: addDuration(max, 0, baseUnit, weekStartDay)
+                };
+            }
+        },
+
         range: function(options) {
             options = options || this.options;
 
@@ -2761,18 +2871,33 @@ var __meta__ = { // jshint ignore:line
                 baseUnitStep = options.baseUnitStep || 1,
                 min = toTime(options.min),
                 max = toTime(options.max),
-                categoryLimits = this._categoryRange(categories);
+                categoryLimits = this._categoryRange(categories),
+                totalLimits = this._categoryRange(options.srcCategories || categories);
 
             var minCategory = toTime(categoryLimits.min),
                 maxCategory = toTime(categoryLimits.max);
 
-            if (options.roundToBaseUnit) {
-                return { min: addDuration(min || minCategory, 0, baseUnit, options.weekStartDay),
-                         max: addDuration(max || maxCategory, baseUnitStep, baseUnit, options.weekStartDay) };
-            } else {
-                return { min: toDate(min || minCategory),
-                         max: toDate(max || this._srcMaxDate || maxCategory) };
+            var rangeMin = addDuration(min || minCategory, 0, baseUnit, options.weekStartDay);
+            var rangeMax = addDuration(max || maxCategory, baseUnitStep, baseUnit, options.weekStartDay);
+
+            if (options.outOfRangePoints) {
+                if (totalLimits.min < rangeMin) {
+                    rangeMin = addDuration(rangeMin, -baseUnitStep, baseUnit, options.weekStartDay);
+                }
+
+                if (rangeMax <= totalLimits.max) {
+                    rangeMax = addDuration(rangeMax, baseUnitStep, baseUnit, options.weekStartDay);
+                }
             }
+
+            if (options.limitRange) {
+                rangeMax = limitValue(rangeMax, totalLimits.min, addDuration(totalLimits.max, baseUnitStep, baseUnit, options.weekStartDay));
+            }
+
+            return {
+                min: toDate(rangeMin),
+                max: toDate(rangeMax)
+            };
         },
 
         autoBaseUnit: function(options) {
@@ -2838,45 +2963,6 @@ var __meta__ = { // jshint ignore:line
             return lineSize / timeRange;
         },
 
-        getTickPositions: function(count) {
-            var axis = this,
-                options = axis.options,
-                categories = options.categories,
-                positions = [];
-
-            if (options.roundToBaseUnit || categories.length === 0) {
-                positions = CategoryAxis.fn.getTickPositions.call(axis, count);
-            } else {
-                var vertical = options.vertical,
-                    reverse = options.reverse,
-                    lineBox = axis.lineBox(),
-                    startTime = categories[0].getTime(),
-                    collapse = valueOrDefault(options._collapse, options.justified),
-                    divisions = categories.length - (collapse ? 1 : 0),
-                    scale = axis._timeScale(),
-                    dir = (vertical ? -1 : 1) * (reverse ? -1 : 1),
-                    startEdge = dir === 1 ? 1 : 2,
-                    endEdge = dir === 1 ? 2 : 1,
-                    startPos = lineBox[(vertical ? Y : X) + startEdge],
-                    endPos = lineBox[(vertical ? Y : X) + endEdge],
-                    pos = startPos,
-                    i,
-                    timePos;
-
-                for (i = 0; i < divisions; i++) {
-                    timePos = categories[i] - startTime;
-                    pos = startPos + timePos * scale * dir;
-                    positions.push(round(pos, COORD_PRECISION));
-                }
-
-                if (last(positions) !== endPos) {
-                    positions.push(endPos);
-                }
-            }
-
-            return positions;
-        },
-
         groupCategories: function(options) {
             var axis = this,
                 categories = options.categories,
@@ -2895,14 +2981,6 @@ var __meta__ = { // jshint ignore:line
                 nextDate = addDuration(date, baseUnitStep, baseUnit, options.weekStartDay);
                 if (nextDate > maxCategory && !options.max) {
                     break;
-                }
-            }
-
-            if (!options.roundToBaseUnit && !dateEquals(last(groups), max)) {
-                if (max < nextDate && options._collapse !== false) {
-                    this._srcMaxDate = max;
-                } else {
-                    groups.push(max);
                 }
             }
 
@@ -2934,19 +3012,19 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        categoryIndex: function(value, range) {
+        categoryIndex: function(value, range, limit) {
             var axis = this,
                 options = axis.options,
                 categories = options.categories,
-                equalsRoundedMax,
                 index;
 
             value = toDate(value);
             range = range || axis.range();
-            equalsRoundedMax = options.roundToBaseUnit && dateEquals(range.max, value);
-            if (value && (value > range.max || equalsRoundedMax)) {
+            if (limit && value && options.roundToBaseUnit && value >= range.max) {
                 return categories.length;
-            } else if (!value || value < range.min) {
+            }
+
+            if (!value || value < range.min || value >= range.max) {
                 return -1;
             }
 
@@ -2955,18 +3033,18 @@ var __meta__ = { // jshint ignore:line
             return index;
         },
 
-        getSlot: function(a, b) {
+        getSlot: function(a, b, limit) {
             var axis = this;
 
             if (typeof a === OBJECT) {
-                a = axis.categoryIndex(a);
+                a = axis.categoryIndex(a, null, limit);
             }
 
             if (typeof b === OBJECT) {
-                b = axis.categoryIndex(b);
+                b = axis.categoryIndex(b, null, limit);
             }
 
-            return CategoryAxis.fn.getSlot.call(axis, a, b);
+            return CategoryAxis.fn.getSlot.call(axis, a, b, limit);
         }
     });
 

@@ -367,7 +367,7 @@
                 ]
             });
 
-            equal(dateAxis.categoryIndex(new Date("2012/02/04")), 3);
+            equal(dateAxis.categoryIndex(new Date("2012/02/04"), null, true), 3);
         });
 
         // ------------------------------------------------------------
@@ -681,7 +681,7 @@
             });
 
             arrayClose(dateAxis.getMajorTickPositions(),
-                [0, 88, 321, 555, 789, 799], 1);
+                [88, 321, 555, 789], 1);
         });
 
         test("Major ticks are not affected when start/end time match base unit", function() {
@@ -693,7 +693,7 @@
             });
 
             arrayClose(dateAxis.getMajorTickPositions(),
-                [0, 200, 400, 600, 800], 1);
+                [0, 160, 320, 480, 640, 799], 1);
         });
 
         test("Does not fail with no categories", 0, function() {
@@ -740,18 +740,6 @@
             deepEqual(kendo.util.last(dateAxis.options.categories), new Date("2013/03/03"));
         });
 
-        test("Last category label is hidden if it equals the range end", function() {
-            createDateCategoryAxis({
-                categories: [
-                    new Date("2013/01/27"), new Date("2013/02/17")
-                ],
-                roundToBaseUnit: false,
-                baseUnit: "weeks"
-            });
-
-            equal(dateAxis.labels.length, 3);
-        });
-
         // ------------------------------------------------------------
         module("Date Category Axis / No Rounding / Justified");
 
@@ -765,7 +753,7 @@
             });
 
             arrayClose(dateAxis.getMajorTickPositions(),
-                [0, 88.778, 325.519, 562.259, 799] , 1);
+                [75, 275, 474, 674] , 1);
         });
 
         test("Major ticks are not affected when start/end time match base unit", function() {
@@ -793,20 +781,6 @@
             equal(dateAxis.labels[0].text, "2/2");
         });
 
-        test("Last category is not stretched when max is set to range end", function() {
-            createDateCategoryAxis({
-                categories: [
-                    new Date("2013/01/27"), new Date("2013/02/16")
-                ],
-                baseUnit: "weeks",
-                roundToBaseUnit: false,
-                justified: true,
-                max: new Date("2013/02/16")
-            });
-
-            equal(dateAxis.getMajorTickPositions()[1], 399.5);
-        });
-
         // ------------------------------------------------------------
         module("Date Category Axis / No Rounding / Reversed");
 
@@ -820,7 +794,7 @@
             });
 
             arrayClose(dateAxis.getMajorTickPositions(),
-                [799, 711, 477, 243, 10, 0], 1);
+                [711, 477, 243, 10], 1);
         });
 
         // ------------------------------------------------------------
@@ -1383,7 +1357,7 @@
 
         test("Returns correct first partial slot", function() {
             sameBox(dateAxis.getSlot(0),
-                    new Box2D(0, 0, 88, 0),
+                    new Box2D(-146, 0, 88, 0),
                     TOLERANCE);
         });
 
@@ -1401,7 +1375,7 @@
 
         test("Returns correct last partial slot", function() {
             sameBox(dateAxis.getSlot(4),
-                    new Box2D(789, 0, 799, 0),
+                    new Box2D(789, 0, 1023, 0),
                     TOLERANCE);
         });
 
@@ -1420,26 +1394,26 @@
 
         test("Returns correct first partial slot", function() {
             sameBox(dateAxis.getSlot(0),
-                    new Box2D(0, 0, 0, 0),
+                    new Box2D(-146, 0, -146, 0),
                     TOLERANCE);
         });
 
         test("Returns correct first full slot", function() {
             sameBox(dateAxis.getSlot(1),
-                    new Box2D(88.778, 0, 88.778, 0),
+                    new Box2D(88, 0, 88, 0),
                     TOLERANCE);
         });
 
         test("Returns correct last full slot", function() {
             sameBox(dateAxis.getSlot(3),
-                    new Box2D(562.259, 0, 562.259, 0),
+                    new Box2D(555, 0, 555, 0),
                     TOLERANCE);
         });
 
         test("Returns correct last partial slot", function() {
             var lineBox = dateAxis.lineBox();
             sameBox(dateAxis.getSlot(4),
-                    new Box2D(lineBox.x2, 0, lineBox.x2, 0),
+                    new Box2D(789, 0, 789, 0),
                     TOLERANCE);
         });
 
@@ -1488,12 +1462,12 @@
 
         test("Returns correct first partial category (left edge)", function() {
             deepEqual(dateAxis.getCategory(new Point2D(0, 0)),
-                   new Date("2012/02/01 15:00:00"));
+                   new Date("2012/02/01 00:00:00"));
         });
 
         test("Returns correct first partial category (right edge)", function() {
             deepEqual(dateAxis.getCategory(new Point2D(87, 0)),
-                   new Date("2012/02/01 15:00:00"));
+                   new Date("2012/02/01 00:00:00"));
         });
 
         test("Returns correct first full slot (left edge)", function() {
@@ -1541,12 +1515,12 @@
 
         test("Returns correct first partial category (left edge)", function() {
             deepEqual(dateAxis.getCategory(new Point2D(14, 0)),
-                   new Date("2012/02/01 15:00:00"));
+                   new Date("2012/02/02 00:00:00"));
         });
 
         test("Returns correct first partial category (right edge)", function() {
             deepEqual(dateAxis.getCategory(new Point2D(14, 0)),
-                   new Date("2012/02/01 15:00:00"));
+                   new Date("2012/02/02 00:00:00"));
         });
 
         test("Returns correct first full slot (left edge)", function() {
