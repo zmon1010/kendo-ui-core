@@ -224,7 +224,7 @@
                 var element = kendo.dom.element;
                 var classNames = SheetsBar.classNames;
                 var childrenElements = [element("ul", {
-                    style: { marginLeft: "50px" },
+                    style: { paddingLeft: "50px" },
                     className: classNames.sheetsBarKReset
                 }, sheetElements)];
 
