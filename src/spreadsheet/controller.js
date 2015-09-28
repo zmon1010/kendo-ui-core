@@ -565,8 +565,7 @@
                     }
                 } else {
                     //workaround for IE's lack of access to the HTML clipboard data
-                    var table = this.clipboardElement.find("table.kendo-clipboard").detach();
-                    this.clipboardElement.empty().append(table);
+                    this._workbook._view.clipboardContents.render([]);
                     setTimeout(function() {
                         this.clipboard.external({html: this.clipboardElement.html(), plain: window.clipboardData.getData("Text")});
                         this._execute({
