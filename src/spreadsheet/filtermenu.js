@@ -55,7 +55,7 @@
                 this._icon.toggleClass(FilterMenu.classNames.iconExpand, show)
                           .toggleClass(FilterMenu.classNames.iconCollapse, !show);
 
-                this.options.expanded = show;
+                this.options.expanded = !show;
             },
             _toggle: function() {
                 var show = this.visible();
