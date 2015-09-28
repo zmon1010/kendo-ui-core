@@ -87,7 +87,7 @@
                         '<option value="">None</option>' +
                         '#for(var type in operators){#'+
                             '#for(var op in operators[type]){#' +
-                                '<option value="#=op#">#=operators[type][op]#</option>' +
+                                '<option value="#=type#-#=op#">#=operators[type][op]#</option>' +
                             '#}#'+
                         '#}#'+
                     '</select>'+
@@ -100,7 +100,7 @@
                         '<option value="">None</option>' +
                         '#for(var type in operators){#'+
                             '#for(var op in operators[type]){#' +
-                                '<option value="#=op#">#=operators[type][op]#</option>' +
+                                '<option value="#=type#-#=op#">#=operators[type][op]#</option>' +
                             '#}#'+
                         '#}#' +
                     '</select>'+
@@ -149,6 +149,44 @@
 
                 var node = e.sender.dataItem(e.node);
                 node.set("checked", !node.checked);
+            },
+            validateCriteria: function(criteria) {
+                return criteria.filter(function(item) {
+                    var type = item.operator.split("-")[0];
+
+                    if (type === "number") {
+                        return !!kendo.parseFloat(item.value);
+                    } else if (type === "date") {
+                        return !!kendo.parseDate(item.value);
+                    } else if (type === "string") {
+                        return !!item.value.toString();
+                    } else {
+                        return false;
+                    }
+                });
+            },
+            normalizeCriteria: function(criteria) {
+                return criteria.map(function(item) {
+                    item.type = item.operator.split("-")[0];
+                    item.operator = item.operator.split("-")[1];
+
+                    if (item.type === "number") {
+                        item.value = kendo.parseFloat(item.value);
+                    } else if (item.type === "date") {
+                        item.value = kendo.parseDate(item.value);
+                    } else {
+                        item.value = item.value.toString();
+                    }
+
+                    return item;
+                });
+            },
+            buildCustomFilter: function() {
+                var customFilter = this.customFilter.toJSON();
+                customFilter.criteria = this.validateCriteria(customFilter.criteria);
+                customFilter.criteria = this.normalizeCriteria(customFilter.criteria);
+
+                return customFilter;
             }
         });
 
@@ -261,10 +299,7 @@
                         options.valueFilter = valueFilter;
                     }
                 } else if (this.viewModel.active === "custom") {
-                    customFilter = this.viewModel.customFilter.toJSON();
-                    customFilter.criteria = customFilter.criteria.filter(function(item) {
-                        return item.operator && item.value;
-                    });
+                    customFilter = this.viewModel.buildCustomFilter();
 
                     if (customFilter.criteria.length) {
                         options.customFilter = customFilter;
