@@ -1,0 +1,19 @@
+:options:
+    - :name: sheets.rows.cells.textAlign
+      :description: Specifies the text alignment in the cell
+      :type: String
+      :enum_type: SpreadsheetTextAlign
+      :values:
+          - left
+          - right
+          - center
+          - justify
+
+    - :name: sheets.rows.cells.verticalAlign
+      :description: Specifies the text vertical alignment in the cell
+      :type: String
+      :enum_type: SpreadsheetVerticalAlign
+      :values:
+          - top
+          - bottom
+          - middle

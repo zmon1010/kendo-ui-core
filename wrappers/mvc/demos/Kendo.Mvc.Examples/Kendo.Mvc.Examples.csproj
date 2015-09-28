@@ -973,10 +973,7 @@
     <Content Include="Areas\aspx\Views\responsive_panel\index.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\signalr.aspx" />
-    <Content Include="Areas\aspx\Views\scheduler\timeline.aspx" />
-    <Content Include="Areas\aspx\Views\spreadsheet\index.aspx" />
-    <Content Include="Areas\aspx\Views\spreadsheet\server_side_import_export.aspx" />
-    <Content Include="Areas\aspx\Views\spreadsheet\server_side_pdf_export.aspx" />
+    <Content Include="Areas\aspx\Views\scheduler\timeline.aspx" />    
     <Content Include="Areas\aspx\Views\styling\checkboxes.aspx" />
     <Content Include="Areas\aspx\Views\styling\radios.aspx" />
     <Content Include="Areas\aspx\Views\tabstrip\scrollable_tabs.aspx" />

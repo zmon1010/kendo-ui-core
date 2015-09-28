@@ -121,17 +121,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value">The value that configures the textalign.</param>
-        public SpreadsheetSheetRowCellBuilder TextAlign(string value)
-        {
-            container.TextAlign = value;
-
-            return this;
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="value">The value that configures the underline.</param>
         public SpreadsheetSheetRowCellBuilder Underline(bool value)
         {
@@ -143,21 +132,32 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value">The value that configures the verticalalign.</param>
-        public SpreadsheetSheetRowCellBuilder VerticalAlign(string value)
+        /// <param name="value">The value that configures the wrap.</param>
+        public SpreadsheetSheetRowCellBuilder Wrap(bool value)
         {
-            container.VerticalAlign = value;
+            container.Wrap = value;
 
             return this;
         }
         
         /// <summary>
-        /// 
+        /// Specifies the text alignment in the cell
         /// </summary>
-        /// <param name="value">The value that configures the wrap.</param>
-        public SpreadsheetSheetRowCellBuilder Wrap(bool value)
+        /// <param name="value">The value that configures the textalign.</param>
+        public SpreadsheetSheetRowCellBuilder TextAlign(SpreadsheetTextAlign value)
         {
-            container.Wrap = value;
+            container.TextAlign = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Specifies the text vertical alignment in the cell
+        /// </summary>
+        /// <param name="value">The value that configures the verticalalign.</param>
+        public SpreadsheetSheetRowCellBuilder VerticalAlign(SpreadsheetVerticalAlign value)
+        {
+            container.VerticalAlign = value;
 
             return this;
         }

@@ -2620,4 +2620,4 @@
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetSortSettingsColumnBuilder.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetEventBuilder.cs" />
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Include="UI\Spreadsheet\SpreadsheetTextAlign.cs" /></ItemGroup><ItemGroup><Compile Include="UI\Spreadsheet\SpreadsheetVerticalAlign.cs" /></ItemGroup></Project>

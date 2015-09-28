@@ -42,13 +42,13 @@ namespace Kendo.Mvc.UI
         
         public int? Index { get; set; }
         
-        public string TextAlign { get; set; }
-        
         public bool? Underline { get; set; }
         
-        public string VerticalAlign { get; set; }
-        
         public bool? Wrap { get; set; }
+        
+        public SpreadsheetTextAlign? TextAlign { get; set; }
+        
+        public SpreadsheetVerticalAlign? VerticalAlign { get; set; }
         
         //<< Fields
 
@@ -111,24 +111,24 @@ namespace Kendo.Mvc.UI
                 json["index"] = Index;
             }
                 
-            if (TextAlign.HasValue())
-            {
-                json["textAlign"] = TextAlign;
-            }
-            
             if (Underline.HasValue)
             {
                 json["underline"] = Underline;
             }
                 
-            if (VerticalAlign.HasValue())
-            {
-                json["verticalAlign"] = VerticalAlign;
-            }
-            
             if (Wrap.HasValue)
             {
                 json["wrap"] = Wrap;
+            }
+                
+            if (TextAlign.HasValue)
+            {
+                json["textAlign"] = TextAlign;
+            }
+                
+            if (VerticalAlign.HasValue)
+            {
+                json["verticalAlign"] = VerticalAlign;
             }
                 
         //<< Serialization

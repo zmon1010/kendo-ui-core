@@ -29,7 +29,7 @@
                         .Value("My Company")
                         .FontSize(25)
                         .Background("rgb(142,196,65)")
-                        .TextAlign("center")
+                        .TextAlign(SpreadsheetTextAlign.Center)
                         .Color("white");
                 });
                 
@@ -38,45 +38,45 @@
                     cells.Add()
                         .Value("ID")
                         .Background("rgb(212,223,50)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Product")
                         .Background("rgb(212,223,50)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Quantity")
                         .Background("rgb(212,223,50)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Price")
                         .Background("rgb(212,223,50)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Tax")
                         .Background("rgb(212,223,50)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Amount")
                         .Background("rgb(212,223,50)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
                 });
                 
                 rows.Add().Cells(cells =>
                 {
                     cells.Add()
                         .Value(216321)                     
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add().Value("Calzone");
 
                     cells.Add()
                         .Value(1)                       
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(12.39)
@@ -96,7 +96,7 @@
                     cells.Add()
                         .Value(546897)        
                         .Background("rgb(234,240,186)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Margarita")        
@@ -105,7 +105,7 @@
                     cells.Add()
                         .Value(2)
                         .Background("rgb(234,240,186)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(8.79)
@@ -127,13 +127,13 @@
                 {
                     cells.Add()
                         .Value(456231)                       
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add().Value("Pollo Formaggio");
 
                     cells.Add()
                         .Value(1)                       
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(13.99)                     
@@ -153,7 +153,7 @@
                     cells.Add()
                         .Value(455873)
                         .Background("rgb(234,240,186)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Greek Salad")
@@ -162,7 +162,7 @@
                     cells.Add()
                         .Value(1)
                         .Background("rgb(234,240,186)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(9.49)
@@ -184,13 +184,13 @@
                 {
                     cells.Add()
                         .Value(456892)
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add().Value("Spinach and Blue Cheese");
 
                     cells.Add()
                         .Value(3)
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(11.49)
@@ -210,7 +210,7 @@
                     cells.Add()
                         .Value(546564)
                         .Background("rgb(234,240,186)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Rigoletto")
@@ -219,7 +219,7 @@
                     cells.Add()
                         .Value(1)
                         .Background("rgb(234,240,186)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(10.99)
@@ -241,13 +241,13 @@
                 {
                     cells.Add()
                         .Value(789455)
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add().Value("Creme Brulee");
 
                     cells.Add()
                         .Value(5)
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(6.99)
@@ -267,7 +267,7 @@
                     cells.Add()
                         .Value(123002)
                         .Background("rgb(234,240,186)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Radeberger Beer")
@@ -276,7 +276,7 @@
                     cells.Add()
                         .Value(4)
                         .Background("rgb(234,240,186)")
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(4.99)
@@ -298,13 +298,13 @@
                 {
                     cells.Add()
                         .Value(564896)
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add().Value("Budweiser Beer");
 
                     cells.Add()
                         .Value(3)
-                        .TextAlign("center");
+                        .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(4.49)
@@ -335,7 +335,7 @@
 
                     cells.Add()
                         .Background("rgb(212,223,50)")
-                        .TextAlign("right");
+                        .TextAlign(SpreadsheetTextAlign.Right);
 
                     cells.Add()
                         .Background("rgb(212,223,50)")
@@ -356,7 +356,7 @@
                     cells.Add()
                         .Value("Total Amount")                        
                         .Index(2)
-                        .TextAlign("right")
+                        .TextAlign(SpreadsheetTextAlign.Right)
                         .Color("white")
                         .FontSize(20)
                         .Background("rgb(142,196,65)");
