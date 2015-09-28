@@ -2301,11 +2301,10 @@ var __meta__ = { // jshint ignore:line
             var categories = (options.categories || []).slice(0);
             options.categories = categories;
 
-
-            if (defined(options.min) && defined(options.max) && categories.length) {
+            if (options.limitCategories && (defined(options.min) || defined(options.max)) && categories.length) {
                 options.srcCategories = options.categories;
-                var min = math.floor(options.min);
-                var max = math.ceil(options.max) + 1;
+                var min = defined(options.min) ? math.floor(options.min) : 0;
+                var max = defined(options.max) ? math.ceil(options.max) + 1 : categories.length;
 
                 if (options.outOfRangePoints) {
                     if (min - 1 >= 0) {
@@ -2338,21 +2337,27 @@ var __meta__ = { // jshint ignore:line
 
         rangeIndices: function() {
             var options = this.options;
-            var min = this.outOfRangeMin + (defined(options.min) ? options.min % 1 : 0);
-            var length = (options.categories.length || 1) - 1;
-            var max = (defined(options.max) && options.max % 1 !== 0 ? length -  (1 - options.max % 1) : length) - this.outOfRangeMax;
+            var range;
+            if (options.limitCategories) {
+                var length = (options.categories.length || 1) - 1;
+                var min = this.outOfRangeMin + (defined(options.min) ? options.min % 1 : 0);
+                var max = (defined(options.max) && options.max % 1 !== 0 ? length -  (1 - options.max % 1) : length) - this.outOfRangeMax;
+                range = {
+                    min: min,
+                    max: max
+                };
+            } else {
+                range = this.totalRangeIndices();
+            }
 
-            return {
-                min: min,
-                max: max
-            };
+            return range;
         },
 
         totalRangeIndices: function() {
             var options = this.options;
             return {
                 min: isNumber(options.min) ? options.min : 0,
-                max: isNumber(options.max) ? options.max : (options.categories.length || 1) - 1
+                max: isNumber(options.max) ? options.max : ((options.srcCategories || options.categories).length || 1) - 1
             };
         },
 
@@ -2619,7 +2624,7 @@ var __meta__ = { // jshint ignore:line
             var range = this.totalRangeIndices();
             var min = range.min;
             var max = range.max;
-            var start = math.floor(min) - this.outOfRangeMin;
+            var start = options.limitCategories ? math.floor(min) - this.outOfRangeMin : 0;
             var skip;
 
             if (!justified) {
@@ -10271,6 +10276,20 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        aggregatedAxis: function(categoryAxisName, categoryAxisIndex) {
+            var plotArea = this,
+                series = plotArea.series,
+                seriesIx,
+                seriesAxis;
+
+            for (seriesIx = 0; seriesIx < series.length; seriesIx++) {
+                seriesAxis = series[seriesIx].categoryAxis || "";
+                if ((seriesAxis === categoryAxisName || (!seriesAxis && categoryAxisIndex === 0)) && series[seriesIx].categoryField) {
+                    return true;
+                }
+            }
+        },
+
         axisRequiresOutOfRangePoints: function(categoryAxisName, categoryAxisIndex) {
             var plotArea = this,
                 contineousSeries = filterSeriesByType(plotArea.series, [LINE, VERTICAL_LINE, AREA, VERTICAL_AREA]),
@@ -10334,6 +10353,7 @@ var __meta__ = { // jshint ignore:line
                     if (isDateAxis(axisOptions, categories[0])) {
                         categoryAxis = new DateCategoryAxis(axisOptions);
                     } else {
+                        axisOptions.limitCategories = plotArea.aggregatedAxis(name, i);
                         categoryAxis = new CategoryAxis(axisOptions);
                     }
 
