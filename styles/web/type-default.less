@@ -2612,3 +2612,15 @@ html .km-pane-wrapper .km-widget,
 }
 
 @import "themes/spreadsheet.less";
+
+.k-spreadsheet {
+    .k-widget {
+        &[data-property='fontSize'] { width: 60px; }
+        &[data-property='format'] { width: 100px; }
+        &[data-property='fontFamily'] { width: 130px; }
+    }
+
+    .k-spreadsheet-sheets-remove {
+        margin: .5em .5em .5em -.5em;
+    }
+}

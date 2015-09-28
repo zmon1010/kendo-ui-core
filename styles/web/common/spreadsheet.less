@@ -1,4 +1,4 @@
-@first-tool-offset: .2em;
+@scheduler-first-tool-offset: .3em;
 .force-font() {
     font-size: 12px;
     font-family: Arial, Verdana, sans-serif;
@@ -135,7 +135,7 @@
         line-height: 1.7em;
 
         .k-tabstrip-items {
-            padding: @first-tool-offset 0 0;
+            padding: @scheduler-first-tool-offset 0 0;
         }
     }
 
@@ -145,7 +145,7 @@
         z-index: 1;
         top: 0;
         left: 0;
-        padding: @first-tool-offset @first-tool-offset 0;
+        padding: @scheduler-first-tool-offset @scheduler-first-tool-offset 0;
 
         .k-button {
             padding: .3em;
@@ -478,7 +478,7 @@
 
         .k-overflow-anchor + * {
             border-left-style: none;
-            margin-left: @first-tool-offset;
+            margin-left: @scheduler-first-tool-offset;
         }
     }
 
@@ -493,6 +493,12 @@
         background-image: none;
     }
 
+    > .k-widget {
+        &[data-property='fontSize'] { width: 75px; }
+        &[data-property='format'] { width: 100px; }
+        &[data-property='fontFamily'] { width: 130px; }
+    }
+
     > .k-combobox .k-state-default:not(.k-state-hover):not(.k-state-active) .k-input {
         background-color: transparent;
         box-shadow: none;
@@ -503,7 +509,7 @@
     }
 
     .k-separator {
-        margin: 0 1px;
+        margin: 0 3px;
         width: 0;
         overflow: hidden;
         height: 1.8em;
@@ -555,17 +561,13 @@
     position: absolute;
     bottom: .2em;
     left: .4em;
+    z-index: 1;
 
     border-color: transparent;
     background-color: transparent;
 }
 
-.k-spreadsheet-sheets-items {
-    margin-left: 2.7em;
-}
-
 .k-tabstrip-bottom .k-spreadsheet-sheets-remove {
-    margin: .5em .5em .5em -.5em;
     padding: 0;
 }
 

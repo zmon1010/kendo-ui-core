@@ -223,7 +223,10 @@
             _createSheetsWrapper: function(sheetElements, renderScrollButtons) {
                 var element = kendo.dom.element;
                 var classNames = SheetsBar.classNames;
-                var childrenElements = [element("ul", { className: classNames.sheetsBarKReset }, sheetElements)];
+                var childrenElements = [element("ul", {
+                    style: { marginLeft: "50px" },
+                    className: classNames.sheetsBarKReset
+                }, sheetElements)];
 
                 if (renderScrollButtons) {
                     var baseButtonClass = classNames.sheetsBarKButton + EMPTYCHAR + classNames.sheetsBarKButtonBare + EMPTYCHAR;
