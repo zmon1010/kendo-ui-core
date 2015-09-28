@@ -87,9 +87,8 @@
             });
         },
         _addSeparators: function(element) {
-            var groups = this.element.children(".k-widget, .k-button, .k-button-group");
+            var groups = element.children(".k-widget, .k-button, .k-button-group");
 
-            console.log(groups.length, groups.slice(1).length);
             groups.slice(1).before("<span class='k-separator' />");
         },
         _expandTools: function(tools) {
