@@ -706,34 +706,30 @@
                     this.reset();
                 }
 
-                if (e.field == "hintMessage" && !this._mute) {
+                if (e.field === "comparer") {
+                    this.setHintMessageTemplate();
+                }
+
+                if ((e.field == "hintMessage" || e.field == "hintTitle") && !this._mute) {
                     this.shouldBuild = false;
                 }
 
-                if ((e.field == "from" || e.field == "to" || e.field == "hintMessageTemplate") && this.shouldBuild) {
-                    this.buildMessage();
+                if ((e.field == "from" || e.field == "to" || e.field == "hintMessageTemplate" || e.field == "type") && this.shouldBuild) {
+                    this.buildMessages();
                 }
-
-
             }).bind(this));
-
-            this._init();
-        },
-        buildMessage: function() {
-            this._mute = true;
-            this.set("hintMessage", kendo.format(this.get("hintMessageTemplate"), this.get("from"), this.get("to")));
-            this._mute = false;
-        },
-        _init: function() {
-            this.number = {};
-            this.text = {};
-            this.date = {};
-            this.custom = {};
 
             this.reset();
         },
+        buildMessages: function() {
+            this._mute = true;
+            this.set("hintTitle", kendo.format(this.hintTitleTemplate, this.type));
+            this.set("hintMessage", kendo.format(this.hintMessageTemplate, this.from, this.to));
+            this._mute = false;
+        },
         reset: function() {
-            this.set("comparer", "greaterThan");
+            this.setComparers();
+            this.set("comparer", this.comparers[0].type);
             this.set("from", null);
             this.set("to", null);
 
@@ -741,11 +737,33 @@
 
             this.shouldBuild = true;
 
-               var dataType = this.criterion !== "custom" ? this.criterion : "";
+            this.hintTitleTemplate = this.defaultHintTitle;
+            this.buildMessages();
+        },
+        //TODO: refactor
+        setComparers: function() {
+            var all = this.defaultComparers;
+            var comparers = [];
 
-               this.set("hintMessageTemplate", kendo.format(this.hintMessage, dataType, this.comparerMessages[this.comparer]));
-               this.hintTitleTemplate = kendo.format(this.hintTitle, this.type);
+            if (this.criterion === "text") {
+                var text_comparers = ["equalTo", "notEqualTo"];
+                for (var idx = 0; idx < all.length; idx++) {
+                    if (text_comparers[0] == all[idx].type) {
+                        comparers.push(all[idx]);
+                        text_comparers.shift();
+                    }
+                }
+            } else {
+                comparers = all.slice();
+            }
 
+            this.set("comparers", comparers);
+        },
+        setHintMessageTemplate: function() {
+           //TODO: clear hintMessageTemplate and hintMessage when 'custom'
+           if (this.criterion !== "custom") {
+               this.set("hintMessageTemplate", kendo.format(this.defaultHintMessage, this.criterion, this.comparerMessages[this.comparer]));
+           }
         },
         isAny: function() {
             return this.get("criterion") === "any";
@@ -764,6 +782,9 @@
         },
         showRemove: function() {
             return this.get("hasValidation");
+        },
+        showTo: function() {
+            return this.get("comparer") == "between" || this.get("comparer") == "notBetween";
         },
         update: function(validation) {
             this.set("hasValidation", !!validation);
@@ -814,8 +835,6 @@
     var ValidationDialog = SpreadsheetDialog.extend({
         init: function(options) {
             SpreadsheetDialog.fn.init.call(this, options);
-
-
         },
         options: {
             width: 420,
@@ -840,20 +859,20 @@
                 { type: "equalTo", name: "equal to" },
                 { type: "notEqualTo", name: "not equal to" },
                 { type: "greaterThanOrEqualTo", name: "greater than or equal to" },
-                { type: "lessThanOrEqualTo", name: "less than or equal to" },
-                { type: "custom", name: "custom" }
+                { type: "lessThanOrEqualTo", name: "less than or equal to" }
             ],
             comparerMessages: {
                 greaterThan: "greater than {0}",
                 lessThan: "less than {0}",
-                between: "between {0} and {to}",
-                notBetween: "not between {0} and {to}",
+                between: "between {0} and {1}",
+                notBetween: "not between {0} and {1}",
                 equalTo: "equal to {0}",
                 notEqualTo: "not equal to {0}",
                 greaterThanOrEqualTo: "greater than or equal to {0}",
                 lessThanOrEqualTo: "less than or equal to {0}",
                 custom: "that satisfies the formula: {0}"
             },
+            //TODO: use simple template and build the proper Labels and input placeholders dynamically!!!
             template:
                 '<div class="k-edit-form-container">' +
                     '<div class="k-edit-label"><label>Criteria:</label></div>' +
@@ -876,9 +895,11 @@
                         '<div class="k-edit-field">' +
                             '<input placeholder="e.g. 10" class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>Max:</label></div>' +
-                        '<div class="k-edit-field">' +
-                            '<input placeholder="e.g. 100" class="k-textbox" data-bind="value: to" />' +
+                        '<div data-bind="visible: showTo">' +
+                            '<div class="k-edit-label"><label>Max:</label></div>' +
+                            '<div class="k-edit-field">' +
+                                '<input placeholder="e.g. 100" class="k-textbox" data-bind="value: to" />' +
+                            '</div>' +
                         '</div>' +
                     '</div>' +
 
@@ -908,9 +929,11 @@
                         '<div class="k-edit-field">' +
                             '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>End:</label></div>' +
-                        '<div class="k-edit-field">' +
-                            '<input class="k-textbox" data-bind="value: to" />' +
+                        '<div data-bind="visible: showTo">' +
+                            '<div class="k-edit-label"><label>End:</label></div>' +
+                            '<div class="k-edit-field">' +
+                                '<input class="k-textbox" data-bind="value: to" />' +
+                            '</div>' +
                         '</div>' +
                     '</div>' +
 
@@ -965,9 +988,9 @@
 
             this.viewModel = new ValidationViewModel({
                 type: options.type,
-                hintMessage: options.hintMessage,
-                hintTitle: options.hintTitle,
-                comparers: options.comparers.slice(0),
+                defaultHintMessage: options.hintMessage,
+                defaultHintTitle: options.hintTitle,
+                defaultComparers: options.comparers.slice(0),
                 comparerMessages: options.comparerMessages,
                 criteria: options.criteria.slice(0),
                 criterion: options.criterion,
