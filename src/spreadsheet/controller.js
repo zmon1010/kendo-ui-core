@@ -156,6 +156,10 @@
             }
         },
 
+        _activeTooltip: function() {
+            return this._workbook.activeSheet().activeCell().simplify().toString();
+        },
+
         onContextMenuSelect: function(e) {
                 var action = $(e.item).data("action");
                 var command;
@@ -334,7 +338,10 @@
                     }
 
                     this.editor
-                        .activate({ rect: this.view.activeCellRectangle() })
+                        .activate({
+                            rect: this.view.activeCellRectangle(),
+                            tooltip: this._activeTooltip()
+                        })
                         .focus();
 
                 } else {
@@ -533,7 +540,10 @@
             }
 
             this.editor
-                .activate({ rect: this.view.activeCellRectangle() })
+                .activate({
+                    rect: this.view.activeCellRectangle(),
+                    tooltip: this._activeTooltip()
+                })
                 .focus();
 
             this.onEditorUpdate();
@@ -731,7 +741,11 @@
         },
 
         onEditorBarFocus: function() {
-            this.editor.activate({ rect: this.view.activeCellRectangle() });
+            this.editor
+                .activate({
+                    rect: this.view.activeCellRectangle(),
+                    tooltip: this._activeTooltip()
+                });
         },
 
         onEditorCellFocus: function() {

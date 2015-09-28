@@ -30,6 +30,13 @@
         ok(element.hasClass("k-spreadsheet-formula-input"));
     });
 
+    test("renders tooltip element", function() {
+        createFormulaInput();
+
+        equal(formulaInput._cellTooltip[0], QUnit.fixture.find(".k-tooltip")[0]);
+        ok(!formulaInput._cellTooltip.is(":visible"));
+    });
+
     test("value sets input value", function() {
         createFormulaInput();
 
@@ -56,6 +63,20 @@
 
         equal(element.css("top"), "50px");
         equal(element.css("left"), "30px");
+    });
+
+    test("position method sets top and left of the tooltip", function() {
+        createFormulaInput();
+
+        formulaInput.position({
+            top: 50,
+            left: 30
+        });
+
+        var resultTop = 50 - formulaInput._cellTooltip.height() - 10;
+
+        equal(formulaInput._cellTooltip.css("top"), resultTop + "px");
+        equal(formulaInput._cellTooltip.css("left"), "30px");
     });
 
     test("resize method sets width and height of the element", function() {
@@ -326,6 +347,22 @@
     //     equal(formulaInput.value(), "=SUM(B1");
     //     equal(formulaInput.getPos().begin, 7);
     // });
+
+    test("tooltip method updates text of the tooltip element", function() {
+        createFormulaInput();
+
+        formulaInput.tooltip("test");
+
+        equal(formulaInput._cellTooltip.text(), "test");
+    });
+
+    test("toggleTooltip method toggles tooltip element", function() {
+        createFormulaInput();
+
+        formulaInput.toggleTooltip(true);
+
+        ok(formulaInput._cellTooltip.is(":visible"));
+    });
 
     module("Spreadsheet searching", {
         setup: function() {

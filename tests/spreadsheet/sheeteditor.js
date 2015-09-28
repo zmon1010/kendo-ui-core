@@ -48,6 +48,20 @@
         equal(editor.cellInput.args("resize")[0], rect);
     });
 
+    test("activate method calls cell formulaInput tooltip method", 2, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+
+        stub(editor.cellInput, {
+            tooltip: editor.cellInput.tooltip
+        });
+
+        editor.activate({ rect: rect, tooltip: "B2" });
+
+        equal(editor.cellInput.calls("tooltip"), 1);
+        equal(editor.cellInput.args("tooltip")[0], "B2");
+    });
+
     test("focus method focuses cell formulaInput", 1, function() {
         var editor = createEditor();
 
@@ -109,18 +123,36 @@
         equal(barInput.html(), value);
     });
 
-    test("position method calls cell formulaInput position method", 2, function() {
+    test("toggleTooltip method shows formulainput tooltip", 2, function() {
         var editor = createEditor();
         var rect = { top: 0, left: 0 };
 
         stub(editor.cellInput, {
-            position: editor.cellInput.position
+            toggleTooltip: editor.cellInput.toggleTooltip
         });
 
-        editor.position(rect);
+        editor.activate({ rect: rect, tooltip: "A1" });
 
-        equal(editor.cellInput.calls("position"), 1);
-        equal(editor.cellInput.args("position")[0], rect);
+        editor.toggleTooltip({ top: 10, left: 0 });
+
+        equal(editor.cellInput.calls("toggleTooltip"), 1);
+        equal(editor.cellInput.args("toggleTooltip")[0], true);
+    });
+
+    test("toggleTooltip method hides formulainput tooltip", 1, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+
+        editor.activate({ rect: rect, tooltip: "A1" });
+        editor.toggleTooltip({ top: 10, left: 0 });
+
+        stub(editor.cellInput, {
+            toggleTooltip: editor.cellInput.toggleTooltip
+        });
+
+        editor.toggleTooltip(rect);
+
+        equal(editor.cellInput.args("toggleTooltip")[0], false);
     });
 
     test("scale method calls cell formulaInput scale method", 1, function() {

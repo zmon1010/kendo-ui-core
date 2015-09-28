@@ -45,9 +45,11 @@
 
         activate: function(options) {
             this._active = true;
+            this._rect = options.rect;
 
-            this.position(options.rect);
+            this.cellInput.position(options.rect);
             this.cellInput.resize(options.rect);
+            this.cellInput.tooltip(options.tooltip);
 
             this.trigger("activate");
 
@@ -62,6 +64,7 @@
             }
 
             this._active = false;
+            this._rect = null;
 
             cellInput.hide();
 
@@ -119,8 +122,8 @@
             this.cellInput.scale();
         },
 
-        position: function(rect) {
-            this.cellInput.position(rect);
+        toggleTooltip: function(rect) {
+            this.cellInput.toggleTooltip(notEqual(this._rect, rect));
         },
 
         value: function(value) {
@@ -138,6 +141,10 @@
             this.cellInput.value(value);
         }
     });
+
+    function notEqual(oldRect, newRect) {
+        return oldRect && (oldRect.top !== newRect.top || oldRect.left !== newRect.left);
+    }
 
     kendo.spreadsheet.SheetEditor = SheetEditor;
 })(kendo);

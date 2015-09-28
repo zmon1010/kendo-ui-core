@@ -61,6 +61,8 @@
 
             this._popup();
 
+            this._tooltip();
+
             element
                 .on("keydown", this._keydown.bind(this))
                 .on("keyup", this._keyup.bind(this))
@@ -349,6 +351,18 @@
             this._span = $("<span/>").css(computedStyles).insertAfter(this.element);
         },
 
+        _tooltip: function() {
+            this._cellTooltip = $('<div class="k-widget k-tooltip" style="position:absolute; display:none">A1</div>').insertAfter(this.element);
+        },
+
+        tooltip: function(value) {
+            this._cellTooltip.text(value);
+        },
+
+        toggleTooltip: function(show) {
+            this._cellTooltip.toggle(show);
+        },
+
         isActive: function() {
             return this.element.is(":focus");
         },
@@ -371,6 +385,7 @@
 
         hide: function() {
             this.element.hide();
+            this._cellTooltip.hide();
         },
 
         show: function() {
@@ -388,6 +403,22 @@
                     "top": rectangle.top + "px",
                     "left": rectangle.left + "px"
                 });
+
+            this._cellTooltip.css({
+                "top": (rectangle.top - this._cellTooltip.height() - 10) + "px",
+                "left": rectangle.left
+            });
+        },
+
+        resize: function(rectangle) {
+            if (!rectangle) {
+                return;
+            }
+
+            this.element.css({
+                width: rectangle.width + 1,
+                height: rectangle.height + 1
+            });
         },
 
         canInsertRef: function(isKeyboardAction) {
@@ -498,17 +529,6 @@
 
             this._syntaxHighlight();
             this._sync();
-        },
-
-        resize: function(rectangle) {
-            if (!rectangle) {
-                return;
-            }
-
-            this.element.css({
-                width: rectangle.width + 1,
-                height: rectangle.height + 1
-            });
         },
 
         syncWith: function(formulaInput) {
@@ -658,6 +678,9 @@
 
             clearTimeout(this._focusTimeout);
             clearTimeout(this._keyDownTimeout);
+
+            this._cellTooltip = null;
+            this._span = null;
 
             this.popup.destroy();
             this.popup = null;

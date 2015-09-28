@@ -679,9 +679,7 @@
             this.tree.render(merged);
 
             if (this.editor.isActive()) {
-                if (!this.editor.canInsertRef(false)) {
-                    this.editor.position(this.activeCellRectangle());
-                }
+                this.editor.toggleTooltip(this.activeCellRectangle());
             } else if (!sheet.selectionInProgress() && !sheet.resizingInProgress() && !sheet._edit()) {
                 this.renderClipboardContents();
             }
