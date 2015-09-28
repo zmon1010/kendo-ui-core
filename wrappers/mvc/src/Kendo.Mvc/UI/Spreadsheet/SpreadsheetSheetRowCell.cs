@@ -13,6 +13,13 @@ namespace Kendo.Mvc.UI
             //>> Initialization
         
         //<< Initialization
+            BorderBottom = new SpreadsheetBorderStyle();
+
+            BorderLeft = new SpreadsheetBorderStyle();
+
+            BorderRight = new SpreadsheetBorderStyle();
+
+            BorderTop = new SpreadsheetBorderStyle();
         }
 
         //>> Fields
@@ -46,6 +53,14 @@ namespace Kendo.Mvc.UI
         //<< Fields
 
         public object Value { get; set; }
+
+        public SpreadsheetBorderStyle BorderBottom { get; set; }
+
+        public SpreadsheetBorderStyle BorderLeft { get; set; }
+
+        public SpreadsheetBorderStyle BorderTop { get; set; }
+
+        public SpreadsheetBorderStyle BorderRight { get; set; }
 
         protected override void Serialize(IDictionary<string, object> json)
         {
@@ -121,6 +136,30 @@ namespace Kendo.Mvc.UI
             if (Value != null)
             {
                 json["value"] = Value;
+            }
+
+            var borderBottom = BorderBottom.ToJson();
+            if (borderBottom.Any())
+            {
+                json["borderBottom"] = borderBottom;
+            }
+
+            var borderTop = BorderTop.ToJson();
+            if (borderTop.Any())
+            {
+                json["borderTop"] = borderTop;
+            }
+
+            var borderLeft = BorderLeft.ToJson();
+            if (borderLeft.Any())
+            {
+                json["borderLeft"] = borderLeft;
+            }
+
+            var borderRight = BorderRight.ToJson();
+            if (borderRight.Any())
+            {
+                json["borderRight"] = borderRight;
             }
         }
     }

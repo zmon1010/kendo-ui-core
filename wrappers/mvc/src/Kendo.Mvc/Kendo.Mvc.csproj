@@ -1647,7 +1647,9 @@
     <Compile Include="UI\Splitter\Splitter.cs" />
     <Compile Include="UI\Splitter\SplitterPane.cs" />
     <Compile Include="UI\NumericTextBox\Html\NumericTextBoxHtmlBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetBorderStyleBuilder.cs" />
     <Compile Include="UI\Spreadsheet\Html\SpreadsheetHtmlBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\SpreadsheetBorderStyle.cs" />
     <Compile Include="UI\StockChart\ChartNavigator.cs" />
     <Compile Include="UI\StockChart\ChartRange.cs" />
     <Compile Include="UI\StockChart\Fluent\ChartNavigatorHintBuilder.cs" />

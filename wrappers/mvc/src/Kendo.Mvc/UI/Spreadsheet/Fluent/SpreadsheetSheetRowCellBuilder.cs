@@ -174,6 +174,50 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Configure bottom border.
+        /// </summary>
+        /// <param name="action">The value that configures the border.</param>        
+        public SpreadsheetSheetRowCellBuilder BorderBottom(Action<SpreadsheetBorderStyleBuilder> action)
+        {
+            action(new SpreadsheetBorderStyleBuilder(container.BorderBottom));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Configure top border.
+        /// </summary>
+        /// <param name="action">The value that configures the border.</param>        
+        public SpreadsheetSheetRowCellBuilder BorderTop(Action<SpreadsheetBorderStyleBuilder> action)
+        {
+            action(new SpreadsheetBorderStyleBuilder(container.BorderTop));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Configure left border.
+        /// </summary>
+        /// <param name="action">The value that configures the border.</param>        
+        public SpreadsheetSheetRowCellBuilder BorderLeft(Action<SpreadsheetBorderStyleBuilder> action)
+        {
+            action(new SpreadsheetBorderStyleBuilder(container.BorderLeft));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Configure right border.
+        /// </summary>
+        /// <param name="action">The value that configures the border.</param>        
+        public SpreadsheetSheetRowCellBuilder BorderRight(Action<SpreadsheetBorderStyleBuilder> action)
+        {
+            action(new SpreadsheetBorderStyleBuilder(container.BorderRight));
+
+            return this;
+        }
     }
 }
 
