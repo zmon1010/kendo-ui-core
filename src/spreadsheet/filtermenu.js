@@ -247,20 +247,25 @@
                     column: this.options.column
                 };
 
-                //value filter
-                this.viewModel.valuesChange({ sender: this.valuesTreeView });
-                var valueFilter = this.viewModel.valueFilter.toJSON();
+                var valueFilter;
+                var customFilter;
 
-                if (valueFilter.values && valueFilter.values.length) {
-                    options.valueFilter = valueFilter;
-                }
+                if (activeContainer.hasClass(FilterMenu.classNames.filterByValue)) {
+                    this.viewModel.valuesChange({ sender: this.valuesTreeView });
+                    valueFilter = this.viewModel.valueFilter.toJSON();
 
-                //custom filter
-                var customFilter = this.viewModel.customFilter.toJSON();
-                var criteria = customFilter.criteria;
+                    if (valueFilter.values && valueFilter.values.length) {
+                        options.valueFilter = valueFilter;
+                    }
+                } else if (activeContainer.hasClass(FilterMenu.classNames.filterByCondition)) {
+                    customFilter = this.viewModel.customFilter.toJSON();
+                    customFilter.criteria = customFilter.criteria.filter(function(item) {
+                        return item.operator && item.value;
+                    });
 
-                if ((criteria[0].operator && criteria[0].value) || (criteria[1].operator && criteria[1].value)) {
-                    options.customFilter = customFilter;
+                    if (customFilter.criteria.length) {
+                        options.customFilter = customFilter;
+                    }
                 }
 
                 this.action({ command: "ApplyFilterCommand", options: options });

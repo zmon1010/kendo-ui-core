@@ -402,9 +402,7 @@
 
             if (this.options.valueFilter) {
                 filter = new kendo.spreadsheet.ValueFilter(this.options.valueFilter);
-            }
-
-            if (this.options.customFilter) {
+            } else if (this.options.customFilter) {
                 filter = new kendo.spreadsheet.CustomFilter(this.options.customFilter);
             }
 
