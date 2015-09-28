@@ -967,6 +967,10 @@
             this.contentElements.each(function(idx, element) {
                 this._toolbar($(element), tabs[idx].id, options.toolbarOptions[tabs[idx].id]);
             }.bind(this));
+
+            this.one("activate", function() { //force resize of the tabstrip after TabStrip tab is opened
+                this.toolbars[this.options.dataSource[0].id].resize();
+            });
         },
 
         events: kendo.ui.TabStrip.fn.events.concat([ "action", "dialog" ]),
