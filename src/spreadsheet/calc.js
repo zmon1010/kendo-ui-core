@@ -670,7 +670,14 @@
             // its value will depend on its location, hence we need different objects.  Still, using
             // this cache is a good idea because we'll reuse the same refs array, handler and
             // printer instead of allocating new ones (and we skip compiling it).
-            return FORMULA_CACHE[hash].clone(exp.sheet, exp.row, exp.col);
+            var clone = FORMULA_CACHE[hash].clone(exp.sheet, exp.row, exp.col);
+
+            // XXX: we can't really share the references between formulas in different sheets; in
+            // the usual case case when the sheet is implicit, we'll refer to the wrong data in the
+            // cloned formula.
+            clone.refs = exp.refs;
+
+            return clone;
         }
         var code = js(toCPS(exp.ast, function(ret){
             return {
