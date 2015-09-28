@@ -3108,6 +3108,9 @@ var __meta__ = { // jshint ignore:line
             options.minorUnit = options.minorUnit || majorUnit / 5;
             options.majorUnit = majorUnit;
 
+            this.totalMin = toTime(floorDate(toTime(seriesMin) - 1, baseUnit));
+            this.totalMax = toTime(ceilDate(toTime(seriesMax) + 1, baseUnit));
+
             return options;
         },
 
@@ -3210,7 +3213,7 @@ var __meta__ = { // jshint ignore:line
             return unit;
         },
 
-        translateRange: function(delta) {
+        translateRange: function(delta, exact) {
             var axis = this,
                 options = axis.options,
                 baseUnit = options.baseUnit,
@@ -3223,9 +3226,14 @@ var __meta__ = { // jshint ignore:line
                 from = addTicks(options.min, offset),
                 to = addTicks(options.max, offset);
 
+            if (!exact) {
+                from = addDuration(from, 0, baseUnit, weekStartDay);
+                to = addDuration(to, 0, baseUnit, weekStartDay);
+            }
+
             return {
-                min: addDuration(from, 0, baseUnit, weekStartDay),
-                max: addDuration(to, 0, baseUnit, weekStartDay)
+                min: from,
+                max: to
             };
         },
 
@@ -3257,6 +3265,40 @@ var __meta__ = { // jshint ignore:line
             var range = this.range();
 
             return dateComparer(value, range.min) >= 0 && dateComparer(value, range.max) <= 0;
+        },
+
+        pan: function(delta) {
+            var range = this.translateRange(delta, true);
+            var limittedRange = this.limitRange(toTime(range.min), toTime(range.max), this.totalMin, this.totalMax);
+
+            if (limittedRange) {
+                return {
+                    min: toDate(limittedRange.min),
+                    max: toDate(limittedRange.max)
+                };
+            }
+        },
+
+        pointsRange: function(start, end) {
+            var startValue = this.getValue(start);
+            var endValue = this.getValue(end);
+            var min = math.min(startValue, endValue);
+            var max = math.max(startValue, endValue);
+
+            return {
+                min: toDate(min),
+                max: toDate(max)
+            };
+        },
+
+        zoomRange: function(delta) {
+            var range = this.scaleRange(delta);
+            var min = toDate(limitValue(toTime(range.min), this.totalMin, this.totalMax));
+            var max = toDate(limitValue(toTime(range.max), this.totalMin, this.totalMax));
+            return {
+                min: min,
+                max: max
+            };
         }
     });
 
