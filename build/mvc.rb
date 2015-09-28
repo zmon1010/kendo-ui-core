@@ -105,6 +105,7 @@ MVC_DEMOS = FileList[MVC_DEMOS_ROOT + '**/*']
                         .sub('demos/mvc/content', MVC_DEMOS_ROOT + 'Content')
                 )
                 .include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll')
+                .include(FileList[SPREADSHEET_REDIST_NET45].pathmap(MVC_DEMOS_ROOT + 'bin/%f'))
                 .exclude('**/*.winjs.*')
                 .exclude('**/System*.dll')
                 .exclude('**/*.csproj')
@@ -277,6 +278,15 @@ if PLATFORM =~ /linux|darwin/
         FileList[MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll']
     ].each do |file|
         file_copy :to => file, :from => file.sub('wrappers/mvc', "dist/binaries")
+    end
+
+    tree :to => 'wrappers/mvc/demos/Kendo.Mvc.Examples/bin/',
+         :from => FileList[SPREADSHEET_REDIST_NET40].pathmap('dist/binaries/Kendo.Mvc.Examples/bin/%f'),
+         :root => 'dist/binaries/Kendo.Mvc.Examples/bin'
+
+    FileList[SPREADSHEET_REDIST_NET40].pathmap('%f').each do |file|
+        file_copy :to => "wrappers/mvc/demos/Kendo.Mvc.Examples/bin/#{file}",
+                  :from => "dist/binaries/demos/Kendo.Mvc.Examples/bin/#{file}"
     end
 
     MVC6_REDIST.each do |file|
@@ -466,6 +476,9 @@ def patch_solution t
 
     #Remove the Kendo.Mvc.Tests project
     sln.sub!(/\s*Project.*?=\s*"Kendo\.Mvc\.Tests"((.|\r|\n)*?)EndProject/, '')
+
+    #Remove the Kendo.Mvc.Tests project
+    sln.sub!(/\s*Project.*?=\s*"Telerik\.Web\.Spreadsheet"((.|\r|\n)*?)EndProject/, '')
 
     #Fix the path to Kendo.Mvc.Examples
     sln.sub!('src\\', '')
