@@ -288,8 +288,8 @@
 
         filterMenu.bind("action", function(e) {
             equal(e.command, "ApplyFilterCommand");
-            ok(e.options.values.length, 1);
-            ok(e.options.values[0], "A1");
+            ok(e.options.valueFilter.values.length, 1);
+            ok(e.options.valueFilter.values[0], "A1");
             var range = e.options.operatingRange;
             ok(range instanceof kendo.spreadsheet.Range);
             ok(indludesValue(range, "A1"));
@@ -305,6 +305,12 @@
         });
 
         filterMenu.apply();
+    });
+
+    test("gets the active container", function() {
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        ok(filterMenu._activeContainer().hasClass("k-spreadsheet-value-filter"));
     });
 
     test("apply triggers command on passed column", function() {

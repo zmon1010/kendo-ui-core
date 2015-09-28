@@ -45,7 +45,7 @@
             },
             events: [ "toggle" ],
             visible: function() {
-                return this._container.is(":visible");
+                return this.options.expanded;
             },
             toggle: function(show) {
                 var animation = kendo.fx(this._container).expand("vertical");
@@ -54,6 +54,8 @@
 
                 this._icon.toggleClass(FilterMenu.classNames.iconExpand, show)
                           .toggleClass(FilterMenu.classNames.iconCollapse, !show);
+
+                this.options.expanded = show;
             },
             _toggle: function() {
                 var show = this.visible();
@@ -238,12 +240,7 @@
             },
 
             apply: function() {
-                this.element
-                    .find("[data-role=details]")
-                    .filter(function(index, element) {
-                        return $(element).data("kendoDetails").visible();
-                    })
-                    .hasClass(FilterMenu.classNames.filterByCondition);
+                var activeContainer = this._activeContainer();
 
                 var options = {
                     operatingRange: this.options.range,
@@ -407,6 +404,14 @@
 
             _actionButtons: function() {
                 this._appendTemplate(FilterMenu.templates.actionButtons, FilterMenu.classNames.actionButtons, false);
+            },
+
+            _activeContainer: function() {
+                return this.element
+                            .find("[data-role=details]")
+                            .filter(function(index, element) {
+                                return $(element).data("kendoDetails").visible();
+                            });
             }
         });
 
