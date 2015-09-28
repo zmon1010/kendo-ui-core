@@ -1753,6 +1753,13 @@ var __meta__ = { // jshint ignore:line
         // abstract labelsCount(): Number
         // abstract createAxisLabel(index, options): AxisLabel
 
+        labelsRange: function() {
+            return {
+                min: this.options.labels.skip,
+                max: this.labelsCount()
+            };
+        },
+
         createLabels: function() {
             var axis = this,
                 options = axis.options,
@@ -1770,7 +1777,7 @@ var __meta__ = { // jshint ignore:line
             axis.labels = [];
 
             if (labelOptions.visible) {
-                var labelsCount = axis.labelsCount(),
+                var range = axis.labelsRange(),
                     rotation = labelOptions.rotation,
                     label,
                     i;
@@ -1785,7 +1792,7 @@ var __meta__ = { // jshint ignore:line
                     options.autoRotateLabels = true;
                 }
 
-                for (i = labelOptions.skip; i < labelsCount; i += step) {
+                for (i = range.min; i < range.max; i += step) {
                     label = axis.createAxisLabel(i, labelOptions);
                     if (label) {
                         axis.append(label);
@@ -2128,6 +2135,14 @@ var __meta__ = { // jshint ignore:line
             axis.arrangeNotes();
         },
 
+        getLabelsTickPositions: function() {
+            return this.getMajorTickPositions();
+        },
+
+        labelTickIndex: function(label) {
+            return label.index;
+        },
+
         arrangeLabels: function() {
             var axis = this,
                 options = axis.options,
@@ -2136,13 +2151,13 @@ var __meta__ = { // jshint ignore:line
                 vertical = options.vertical,
                 lineBox = axis.lineBox(),
                 mirror = options.labels.mirror,
-                tickPositions = axis.getMajorTickPositions(),
+                tickPositions = axis.getLabelsTickPositions(),
                 labelOffset = axis.getActualTickSize()  + options.margin,
                 labelBox, labelY, i;
 
             for (i = 0; i < labels.length; i++) {
                 var label = labels[i],
-                    tickIx = label.index,
+                    tickIx = axis.labelTickIndex(label),
                     labelSize = vertical ? label.box.height() : label.box.width(),
                     labelPos = tickPositions[tickIx] - (labelSize / 2),
                     firstTickPosition, nextTickPosition, middle, labelX;
@@ -2307,10 +2322,36 @@ var __meta__ = { // jshint ignore:line
 
         contentBox: function() {
             var box = this.box.clone();
-            if (this.labels.length) {
-                box.wrap(this.labels[0].box).wrap(last(this.labels).box);
+            var labels = this.labels;
+            if (labels.length) {
+                if (labels[0].options.visible) {
+                    box.wrap(labels[0].box);
+                }
+                if (last(labels).options.visible) {
+                    box.wrap(last(labels).box);
+                }
             }
             return box;
+        },
+
+        limitRange: function(from, to, min, max) {
+            var options = this.options;
+            var rangeSize = to - from;
+
+            if (from < min && (!defined(options.min) || min < options.min)) {
+                from = min;
+                to = from + rangeSize;
+            } else if (max < to && (!defined(options.max) || options.max < max)) {
+                to = max;
+                from = to - rangeSize;
+            }
+
+            if (from >= min && max >= to) {
+                return {
+                    min: from,
+                    max: to
+                };
+            }
         }
     });
 
@@ -2742,6 +2783,10 @@ var __meta__ = { // jshint ignore:line
             autoOptions.min = floor(autoMin, majorUnit);
             autoOptions.max = ceil(autoMax, majorUnit);
 
+            this.totalMin = defined(options.min) ? math.min(autoOptions.min, options.min) : autoOptions.min;
+            this.totalMax = defined(options.max) ? math.max(autoOptions.max, options.max) : autoOptions.max;
+            this.totalMajorUnit = majorUnit;
+
             if (options) {
                 userSetLimits = defined(options.min) || defined(options.max);
                 if (userSetLimits) {
@@ -2999,6 +3044,39 @@ var __meta__ = { // jshint ignore:line
         shouldRenderNote: function(value) {
             var range = this.range();
             return range.min <= value && value <= range.max;
+        },
+
+        pan: function(delta) {
+            var range = this.translateRange(delta);
+            return this.limitRange(range.min, range.max, this.totalMin, this.totalMax);
+        },
+
+        pointsRange: function(start, end) {
+            var startValue = this.getValue(start);
+            var endValue = this.getValue(end);
+            var min = math.min(startValue, endValue);
+            var max = math.max(startValue, endValue);
+
+            return {
+                min: min,
+                max: max
+            };
+        },
+
+        zoomRange: function(delta) {
+            var newRange = this.scaleRange(delta);
+            var totalMax = this.totalMax;
+            var totalMin = this.totalMin;
+            var min = util.limitValue(newRange.min, totalMin, totalMax);
+            var max = util.limitValue(newRange.max, totalMin, totalMax);
+            var optionsRange = this.options.max - this.options.min;
+
+            if (optionsRange < this.totalMajorUnit || max - min >= this.totalMajorUnit) {
+                return {
+                    min: min,
+                    max: max
+                };
+            }
         }
     });
 

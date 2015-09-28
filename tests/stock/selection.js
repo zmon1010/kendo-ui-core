@@ -100,7 +100,7 @@
                 }
             });
 
-            deepEqual(sOpts.max, new Date("2012/01/10 00:00"));
+            deepEqual(sOpts.max, new Date("2012/01/10 02:00"));
         });
 
         test("selection extends to axis max for non-justified series", function() {
@@ -114,39 +114,6 @@
             });
 
             deepEqual(sOpts.max, new Date("2012/01/10 02:00"));
-        });
-
-        test("last category is not collapsed", function() {
-            setup({
-                navigator: {
-                    categoryAxis: {
-                        categories: [
-                            new Date("2012/01/01 00:00"),
-                            new Date("2012/01/03 23:00")
-                        ]
-                    }
-                }
-            });
-
-            var labelAxis = chart._plotArea.namedCategoryAxes["_navigator_labels"];
-            var ticks = labelAxis.getTickPositions();
-            close(ticks[2], 419, 2);
-        });
-
-        test("last category is not collapsed (months)", function() {
-            setup({
-                navigator: {
-                    categoryAxis: {
-                        categories: [
-                            new Date("2012/02/01 00:00"),
-                            new Date("2013/01/31 00:00")
-                        ]
-                    }
-                }
-            });
-
-            var labelAxis = chart._plotArea.namedCategoryAxes["_navigator_labels"];
-            deepEqual(kendo.util.last(labelAxis.options.categories), new Date("2013/01/31 00:00"));
         });
 
         // ------------------------------------------------------------
