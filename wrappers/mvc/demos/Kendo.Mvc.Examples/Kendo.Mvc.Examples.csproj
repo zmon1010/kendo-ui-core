@@ -204,6 +204,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\Spreadsheet\Server_Side_Import_ExportController.cs" />
     <Compile Include="Controllers\Spreadsheet\Server_Side_Pdf_ExportController.cs" />
     <Compile Include="Controllers\Spreadsheet\IndexController.cs" />
     <Compile Include="Controllers\TabStrip\Scrollable_TabsController.cs" />
@@ -3317,6 +3318,7 @@
     <Content Include="Areas\razor\Views\gantt\task_template.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\index.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\server_side_pdf_export.cshtml" />
+    <Content Include="Areas\razor\Views\spreadsheet\server_side_import_export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
