@@ -2871,6 +2871,14 @@ var __meta__ = { // jshint ignore:line
             return this.limitRange(from, to, min, max);
         },
 
+        datesRange: function() {
+            var range = this._categoryRange(this.options.srcCategories);
+            return {
+                min: toDate(range.min),
+                max: toDate(range.max)
+            };
+        },
+
         pan: function(delta) {
             var axis = this,
                 options = axis.options,
