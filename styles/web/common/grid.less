@@ -1011,13 +1011,15 @@ html .k-grid-edit-row .k-tooltip
         .k-pager-numbers.k-state-expanded,
         .k-grid .k-pager-numbers.k-state-expanded {
             transform: translatey(-100%);
+            -webkit-transform: translatey(-100%);
         }
 
 
         .km-pane-wrapper .k-pager-numbers,
-        .km-pane-wrapper .k-grid .k-pager-numbers
-        {
-            left: 5.8em;
+        .km-pane-wrapper .k-grid .k-pager-numbers {
+            left: 50%;
+            transform: translate(-50%, -100%);
+            -webkit-transform: translate(-50%, -100%);
         }
         
         .km-pane-wrapper .k-pager-numbers .k-link,
@@ -1029,16 +1031,14 @@ html .k-grid-edit-row .k-tooltip
         }
         
         .k-rtl .k-pager-numbers,
-        .k-rtl .k-grid .k-pager-numbers
-        {
+        .k-rtl .k-grid .k-pager-numbers {
             left: auto;
             right: 4.8em;
             width: 4.5em
         }
 
         .k-rtl .km-pane-wrapper .k-pager-numbers,
-        .k-rtl .km-pane-wrapper .k-grid .k-pager-numbers
-        {
+        .k-rtl .km-pane-wrapper .k-grid .k-pager-numbers {
             right: 5.8em;
         }
         
@@ -1049,8 +1049,9 @@ html .k-grid-edit-row .k-tooltip
         }
 
         .k-pager-numbers.k-state-expanded .k-current-page,
-        .k-grid .k-pager-number.k-state-expandeds .k-current-page {
+        .k-grid .k-pager-number.k-state-expanded .k-current-page {
             transform: translatey(100%);
+            -webkit-transform: translatey(100%);
         }
         
         .k-pager-numbers li:not(.k-current-page) {
