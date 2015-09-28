@@ -10092,6 +10092,22 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        axisRequiresOutOfRangePoints: function(categoryAxisName, categoryAxisIndex) {
+            var plotArea = this,
+                contineousSeries = filterSeriesByType(plotArea.series, [LINE, VERTICAL_LINE, AREA, VERTICAL_AREA]),
+                seriesIx,
+                line,
+                seriesAxis;
+
+            for (seriesIx = 0; seriesIx < contineousSeries.length; seriesIx++) {
+                seriesAxis = contineousSeries[seriesIx].categoryAxis || "";
+                line = contineousSeries[seriesIx].line;
+                if ((seriesAxis === categoryAxisName || (!seriesAxis && categoryAxisIndex === 0)) && (!line || line.style !== STEP)) {
+                    return true;
+                }
+            }
+        },
+
         createCategoryAxesLabels: function() {
             var axes = this.axes;
             for (var i = 0; i < axes.length; i++) {
@@ -10130,7 +10146,10 @@ var __meta__ = { // jshint ignore:line
 
                     if (plotArea.axisRequiresRounding(name, i)) {
                         axisOptions.justified = false;
-                        axisOptions.roundToBaseUnit = true;
+                    }
+
+                    if (plotArea.axisRequiresOutOfRangePoints(name, i)) {
+                        axisOptions.outOfRangePoints = true;
                     }
 
                     if (isDateAxis(axisOptions, categories[0])) {

@@ -514,62 +514,6 @@
             equal(plotArea.categoryAxis.options.roundToBaseUnit, false);
         });
 
-        test("categoryAxis roundToBaseUnit is set to true with bar series", function() {
-            var plotArea = new dataviz.CategoricalPlotArea([{
-                    type: "bar",
-                    data: [100]
-                }], {
-                categoryAxis: {
-                    categories: ["A", "B"],
-                    roundToBaseUnit: false
-                }
-            });
-
-            equal(plotArea.categoryAxis.options.roundToBaseUnit, true);
-        });
-
-        test("categoryAxis roundToBaseUnit is set to true with column series", function() {
-            var plotArea = new dataviz.CategoricalPlotArea([{
-                    type: "column",
-                    data: [100]
-                }], {
-                categoryAxis: {
-                    categories: ["A", "B"],
-                    roundToBaseUnit: false
-                }
-            });
-
-            equal(plotArea.categoryAxis.options.roundToBaseUnit, true);
-        });
-
-        test("categoryAxis roundToBaseUnit is set to true with OHLC series", function() {
-            var plotArea = new dataviz.CategoricalPlotArea([{
-                    type: "ohlc",
-                    data: [100]
-                }], {
-                categoryAxis: {
-                    categories: ["A", "B"],
-                    roundToBaseUnit: false
-                }
-            });
-
-            equal(plotArea.categoryAxis.options.roundToBaseUnit, true);
-        });
-
-        test("categoryAxis roundToBaseUnit is set to true with candlestick series", function() {
-            var plotArea = new dataviz.CategoricalPlotArea([{
-                    type: "candlestick",
-                    data: [100]
-                }], {
-                categoryAxis: {
-                    categories: ["A", "B"],
-                    roundToBaseUnit: false
-                }
-            });
-
-            equal(plotArea.categoryAxis.options.roundToBaseUnit, true);
-        });
-
         test("categoryAxis roundToBaseUnit is not altered with bar series on other axis", function() {
             var plotArea = new dataviz.CategoricalPlotArea([{
                     type: "line",
