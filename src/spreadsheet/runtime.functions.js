@@ -1158,7 +1158,7 @@
         var values = [];
         function fetchValues(args) {
             if (args instanceof Ref) {
-                self.ss.getRefCells(args, true).forEach(function(cell){
+                self.getRefCells(args, true).forEach(function(cell){
                     var value = cell.value;
                     if ((options & opt_ignore_hidden_rows) && cell.hidden) {
                         return;
@@ -1201,7 +1201,7 @@
                 fetchValues(args[0]);
                 var k = args[1];
                 if (k instanceof CellRef) {
-                    k = self.ss.getData(k);
+                    k = self.getRefData(k);
                 }
                 if (typeof k != "number") {
                     return callback(new CalcError("VALUE"));
@@ -1370,7 +1370,7 @@
     ]);
 
     defineFunction("formulatext", function(ref){
-        var cell = this.ss.getRefCells(ref)[0]; // XXX: overkill, but oh well.
+        var cell = this.getRefCells(ref)[0]; // XXX: overkill, but oh well.
         if (!cell.formula) {
             return new CalcError("N/A");
         }

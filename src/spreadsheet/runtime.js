@@ -51,7 +51,7 @@
             var self = this;
             if (val instanceof Ref) {
                 self.resolveCells([ val ], function(){
-                    val = self.ss.getData(val);
+                    val = self.getRefData(val);
                     if (Array.isArray(val)) {
                         // got a Range, we should return a single value
                         val = val[0];
@@ -78,7 +78,7 @@
                 for (var i = 0; i < a.length; ++i) {
                     var x = a[i];
                     if (x instanceof Ref) {
-                        add(context.ss.getRefCells(x));
+                        add(context.getRefCells(x));
                     }
                     if (Array.isArray(x)) {
                         // make sure we resolve cells in literal matrices
@@ -119,7 +119,7 @@
             for (var i = 0; i < a.length; ++i) {
                 var val = a[i];
                 if (val instanceof Ref) {
-                    val = this.ss.getData(val);
+                    val = this.getRefData(val);
                     ret = ret.concat(val);
                 } else if (Array.isArray(val)) {
                     ret = ret.concat(this.cellValues(val));
@@ -137,7 +137,7 @@
 
         force: function(val) {
             if (val instanceof Ref) {
-                return this.ss.getData(val);
+                return this.getRefData(val);
             }
             return val;
         },
@@ -152,7 +152,7 @@
 
         bool: function(val) {
             if (val instanceof Ref) {
-                val = this.ss.getData(val);
+                val = this.getRefData(val);
             }
             if (typeof val == "string") {
                 return val.toLowerCase() == "true";
@@ -174,7 +174,7 @@
             if (range instanceof RangeRef) {
                 var tl = range.topLeft;
                 var top = tl.row, left = tl.col;
-                var cells = self.ss.getRefCells(range);
+                var cells = self.getRefCells(range);
                 var m = new Matrix(self);
                 if (isFinite(range.width())) {
                     m.width = range.width();
@@ -203,7 +203,7 @@
                     line.forEach(function(el){
                         var isRange = el instanceof RangeRef;
                         if (el instanceof Ref && !isRange) {
-                            el = self.ss.getData(el);
+                            el = self.getRefData(el);
                         }
                         if (isRange || Array.isArray(el)) {
                             el = self.asMatrix(el);
@@ -222,6 +222,14 @@
                 });
                 return m;
             }
+        },
+
+        getRefCells: function(refs, hiddenInfo) {
+            return this.ss.getRefCells(refs, hiddenInfo);
+        },
+
+        getRefData: function(ref) {
+            return this.ss.getData(ref);
         }
     });
 
@@ -242,7 +250,7 @@
         get: function(row, col) {
             var line = this.data[row];
             var val = line ? line[col] : null;
-            return val instanceof Ref ? this.context.ss.getData(val) : val;
+            return val instanceof Ref ? this.context.getRefData(val) : val;
         },
         set: function(row, col, data) {
             var line = this.data[row];
@@ -1339,7 +1347,7 @@
 
     defineFunction("isblank", function(val){
         if (val instanceof CellRef) {
-            val = this.ss.getData(val);
+            val = this.getRefData(val);
             return val == null;
         }
         return false;
