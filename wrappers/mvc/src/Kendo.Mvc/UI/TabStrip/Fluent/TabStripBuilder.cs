@@ -293,7 +293,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Sets the tabs' position.
+        /// Sets the tabs' position. The default value is Top. Using fade animation is highly recommended with any of the non-default tab position settings.
         /// </summary>
         /// <param name="value">The position.</param>
         /// <example>
