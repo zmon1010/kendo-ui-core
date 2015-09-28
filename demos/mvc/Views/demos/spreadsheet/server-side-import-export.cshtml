@@ -29,6 +29,11 @@
             $("#spreadsheet").kendoSpreadsheet();
             var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
 
+            $.getJSON("@Url.Content("~/content/web/spreadsheet/prices.json")")
+                .done(function (sheets) {
+                    spreadsheet.fromJSON({ sheets: sheets });
+                });            
+
             var ALLOWED_EXTENSIONS = [".xlsx", ".csv", ".txt", ".json"];
 
             $("#upload").kendoUpload({

@@ -23,6 +23,7 @@
     <div class="demo-section k-content wide">
         @(Html.Kendo().Spreadsheet()
             .Name("spreadsheet")
+            .BindTo((IEnumerable<SpreadsheetSheet>)ViewBag.Sheets)
         )
     </div>
    

@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.UI;
+using Newtonsoft.Json;
 using Telerik.Web.Spreadsheet;
 
 namespace Kendo.Mvc.Examples.Controllers
@@ -9,6 +12,10 @@ namespace Kendo.Mvc.Examples.Controllers
     {
         public ActionResult Server_Side_Import_Export()
         {
+            var path = Server.MapPath("~/Content/web/spreadsheet/prices.json");
+
+            ViewBag.Sheets = JsonConvert.DeserializeObject<IEnumerable<SpreadsheetSheet>>(System.IO.File.ReadAllText(path));
+
             return View();
         }
 

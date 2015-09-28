@@ -122,6 +122,13 @@ namespace Kendo.Mvc.UI.Fluent
         
         //<< Fields
 
+        public SpreadsheetBuilder BindTo(IEnumerable<SpreadsheetSheet> value)
+        {
+            container.Sheets.Clear();
+            container.Sheets.AddRange(value);
+
+            return this;
+        }
 
         
         /// <summary>
