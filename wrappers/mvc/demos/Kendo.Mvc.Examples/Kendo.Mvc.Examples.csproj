@@ -204,6 +204,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\Spreadsheet\Server_Side_Pdf_ExportController.cs" />
     <Compile Include="Controllers\Spreadsheet\IndexController.cs" />
     <Compile Include="Controllers\TabStrip\Scrollable_TabsController.cs" />
     <Compile Include="Controllers\ToolBar\Keyboard_NavigationController.cs" />
@@ -722,6 +723,8 @@
     <Compile Include="Models\OrgChartShape.cs">
       <DependentUpon>Sample.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PrintMargins.cs" />
+    <Compile Include="Models\PrintOptions.cs" />
     <Compile Include="Models\Scheduler\MeetingSignalRViewModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryService.cs" />
@@ -3313,6 +3316,7 @@
     <Content Include="Areas\razor\Views\gantt\column_resizing.cshtml" />
     <Content Include="Areas\razor\Views\gantt\task_template.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\index.cshtml" />
+    <Content Include="Areas\razor\Views\spreadsheet\server_side_pdf_export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
@@ -3732,6 +3736,22 @@
       <Project>{d697e6a6-319f-44fa-a757-443415ff43bb}</Project>
       <Name>Telerik.Web.Spreadsheet</Name>
     </ProjectReference>
+    <Reference Include="Telerik.Windows.Documents.Core, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Fixed, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Fixed.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
     <ProjectReference Include="..\..\src\Kendo.Mvc\Kendo.Mvc.csproj">
       <Project>{a7f7c110-d7f0-49b7-8dda-fd2d1cc6f3b1}</Project>
       <Name>Kendo.Mvc</Name>
