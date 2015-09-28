@@ -592,6 +592,31 @@
         }
     );
 
+    ngTest("Grid inline editable template with frozen columns", 1, function() {
+        angular.module("kendo.tests").controller("mine2", function($scope) {
+            $scope.options = {
+                dataSource: new kendo.data.DataSource({
+                    data: fixtureData
+                }),
+                columns: [
+                    { field: "text", locked: true },
+                    { field: "id", editor: "{{dataItem.text}}/{{dataItem.id}}" },
+                    { command: "edit" }
+                ],
+                editable: "inline"
+            };
+        });
+
+        $("<div ng-controller=mine2><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+
+    }, function() {
+        var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
+
+        grid.editRow(grid.tbody.find("tr:first"));
+        var el = grid.tbody.find("tr:first td:first");
+
+        equal(el.text(), "Foo/1");
+    });
 
     ngTest("Grid popup editable template", 1, function() {
         angular.module("kendo.tests").controller("mine2", function($scope) {
