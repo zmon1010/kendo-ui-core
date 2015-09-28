@@ -65,7 +65,8 @@ module CodeGen::MVC::Wrappers
         'tabstrip.items.text',
         'tabstrip.items.url',
         'splitview.panes.id',
-        'treelist.filterable'
+        'treelist.filterable',
+        'spreadsheet.sheets.filter.columns'
     ]
 
     FLUENT_SKIP_LIST = [

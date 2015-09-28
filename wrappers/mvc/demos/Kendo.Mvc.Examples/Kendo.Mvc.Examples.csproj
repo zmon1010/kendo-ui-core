@@ -204,6 +204,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\Spreadsheet\Sorting_FilteringController.cs" />
     <Compile Include="Controllers\Spreadsheet\Server_Side_Import_ExportController.cs" />
     <Compile Include="Controllers\Spreadsheet\Server_Side_Pdf_ExportController.cs" />
     <Compile Include="Controllers\Spreadsheet\EventsController.cs" />
@@ -1380,6 +1381,10 @@
     <Content Include="Areas\aspx\Views\globalization\index.aspx" />
     <Content Include="Areas\aspx\Views\validator\index.aspx" />
     <Content Include="Areas\aspx\Views\spreadsheet\events.aspx" />
+    <Content Include="Areas\aspx\Views\spreadsheet\index.aspx" />
+    <Content Include="Areas\aspx\Views\spreadsheet\server_side_import_export.aspx" />
+    <Content Include="Areas\aspx\Views\spreadsheet\server_side_pdf_export.aspx" />
+    <Content Include="Areas\aspx\Views\spreadsheet\sorting_filtering.aspx" />
     <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />
@@ -3325,6 +3330,7 @@
     <Content Include="Areas\razor\Views\spreadsheet\server_side_pdf_export.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\server_side_import_export.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\events.cshtml" />
+    <Content Include="Areas\razor\Views\spreadsheet\sorting_filtering.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

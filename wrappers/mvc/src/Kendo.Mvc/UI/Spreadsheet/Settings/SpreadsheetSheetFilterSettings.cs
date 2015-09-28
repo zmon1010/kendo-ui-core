@@ -33,17 +33,15 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
-            var columns = Columns.ToJson();
-            if (columns.Any())
-            {
-                json["columns"] = columns;
-            }
             if (Ref.HasValue())
             {
                 json["ref"] = Ref;
             }
             
-        //<< Serialization
+        //<< Serialization            
+
+            json["columns"] = Columns.ToJson();
+            
         }
     }
 }
