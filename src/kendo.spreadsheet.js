@@ -84,15 +84,13 @@
 
                 this._bindWorkbookEvents();
 
-                this._resize();
-
                 this._view.workbook(this._workbook);
 
                 this.refresh();
             },
 
             _resize: function() {
-                this._view._resize();
+                this.refresh({ layout: true });
             },
 
             _workbookChange: function(e) {
