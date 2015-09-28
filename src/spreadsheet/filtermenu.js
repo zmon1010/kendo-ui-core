@@ -31,7 +31,8 @@
                 this._summary = this.element.find("." + FilterMenu.classNames.detailsSummary)
                     .on("click", this._toggle.bind(this));
 
-                this._icon = $("<span />", { "class": FilterMenu.classNames.icon + " " + FilterMenu.classNames.iconCollapse })
+                var iconClass = options.expanded ? FilterMenu.classNames.iconCollapse : FilterMenu.classNames.iconExpand;
+                this._icon = $("<span />", { "class": FilterMenu.classNames.icon + " " + iconClass })
                     .prependTo(this._summary);
 
                 this._container = kendo.wrap(this._summary.next(), true);
