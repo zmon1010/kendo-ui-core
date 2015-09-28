@@ -2762,7 +2762,10 @@
           },
           "meta": {
               "kendo-ui": "This demo shows the integration with the DataSource component that Kendo UI Spreadsheet provides"
-          }
+          },
+          "packages": [
+              "!mvc"
+          ]
       },
       {
           "text": "Events",
