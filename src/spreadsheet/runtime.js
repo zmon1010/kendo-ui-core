@@ -483,7 +483,17 @@
             this.pending = false;
         },
         clone: function(sheet, row, col) {
-            return new Formula(this.refs, this.handler, this.print, sheet, row, col);
+            var lcsheet = sheet.toLowerCase();
+            var refs = this.refs;
+            if (lcsheet != this.sheet.toLowerCase()) {
+                refs = refs.map(function(ref){
+                    if (!ref.hasSheet() && ref.sheet.toLowerCase() != lcsheet) {
+                        ref = ref.clone().setSheet(sheet);
+                    }
+                    return ref;
+                });
+            }
+            return new Formula(refs, this.handler, this.print, sheet, row, col);
         },
         resolve: function(val) {
             this.pending = false;
