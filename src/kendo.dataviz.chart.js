@@ -427,7 +427,9 @@ var __meta__ = { // jshint ignore:line
             title: {},
             xAxis: {},
             yAxis: {},
-            panes: [{}]
+            panes: [{}],
+            pannable: false,
+            zoomable: false
         },
 
         refresh: function() {
@@ -576,6 +578,9 @@ var __meta__ = { // jshint ignore:line
             chart._tooltip = chart._createTooltip();
             chart._highlight = new Highlight(view);
             chart._setupSelection();
+            chart._createPannable();
+            chart._createZoomSelection();
+            chart._createMousewheelZoom();
 
             if (!chart._hasDataSource || chart._hasData || !chart.options.autoBind) {
                 chart.trigger(RENDER);
@@ -591,6 +596,29 @@ var __meta__ = { // jshint ignore:line
                 options = chart.options;
 
             return chart._plotArea instanceof CategoricalPlotArea && options.tooltip.shared;
+        },
+
+        _createPannable: function() {
+            var options = this.options;
+            if (options.pannable !== false) {
+                this._pannable = new Pannable(this._plotArea, options.pannable);
+            }
+        },
+
+        _createZoomSelection: function() {
+            var zoomable = this.options.zoomable;
+            var selection = (zoomable || {}).selection;
+            if (zoomable !== false && selection !== false) {
+                this._zoomSelection = new ZoomSelection(this, selection);
+            }
+        },
+
+        _createMousewheelZoom: function() {
+            var zoomable = this.options.zoomable;
+            var mousewheel = (zoomable || {}).mousewheel;
+            if (zoomable !== false && mousewheel !== false) {
+                this._mousewheelZoom = new MousewheelZoom(this._plotArea, mousewheel);
+            }
         },
 
         _createTooltip: function() {
@@ -775,16 +803,31 @@ var __meta__ = { // jshint ignore:line
             if (defined(events[DRAG_START] || events[DRAG] || events[DRAG_END])) {
                 chart._startNavigation(e, DRAG_START);
             }
+
+            if (chart._pannable) {
+                chart._pannable.start(e);
+            }
+
+            if (chart._zoomSelection) {
+                chart._zoomSelection.start(e);
+            }
         },
 
         _move: function(e) {
             var chart = this,
                 state = chart._navState,
+                pannable = chart._pannable,
                 axes,
                 ranges = {},
                 i, currentAxis, axisName, axis, delta;
 
-            if (state) {
+            if (pannable) {
+                e.preventDefault();
+                ranges = pannable.move(e);
+                if (ranges && !chart.trigger(DRAG, { axisRanges: ranges, originalEvent: e})) {
+                    pannable.pan();
+                }
+            } else if (state) {
                 e.preventDefault();
 
                 axes = state.axes;
@@ -809,10 +852,25 @@ var __meta__ = { // jshint ignore:line
                    originalEvent: e
                 });
             }
+
+            if (chart._zoomSelection) {
+                chart._zoomSelection.move(e);
+            }
         },
 
         _end: function(e) {
             this._endNavigation(e, DRAG_END);
+
+            if (this._zoomSelection) {
+                var ranges = this._zoomSelection.end(e);
+                if (ranges && !this.trigger(ZOOM, { axisRanges: ranges, originalEvent: e })) {
+                    this._zoomSelection.zoom();
+                }
+            }
+
+            if (this._pannable) {
+                this._pannable.end(e);
+            }
         },
 
         _mousewheel: function(e) {
@@ -826,42 +884,52 @@ var __meta__ = { // jshint ignore:line
                 i,
                 currentAxis,
                 axisName,
-                ranges = {};
+                ranges = {},
+                mousewheelZoom = chart._mousewheelZoom;
 
-            if (!state) {
-                prevented = chart._startNavigation(origEvent, ZOOM_START);
-                if (!prevented) {
-                    state = chart._navState;
+            if (mousewheelZoom) {
+                e.preventDefault();
+                ranges = mousewheelZoom.updateRanges(delta);
+                if (ranges && !chart.trigger(ZOOM, { delta: delta, axisRanges: ranges, originalEvent: e })) {
+                    mousewheelZoom.zoom();
                 }
-            }
 
-            if (state) {
-                totalDelta = state.totalDelta || delta;
-                state.totalDelta = totalDelta + delta;
-
-                axes = chart._navState.axes;
-
-                for (i = 0; i < axes.length; i++) {
-                    currentAxis = axes[i];
-                    axisName = currentAxis.options.name;
-                    if (axisName) {
-                        ranges[axisName] = currentAxis.scaleRange(-totalDelta);
+            } else {
+                if (!state) {
+                    prevented = chart._startNavigation(origEvent, ZOOM_START);
+                    if (!prevented) {
+                        state = chart._navState;
                     }
                 }
 
-                chart.trigger(ZOOM, {
-                    delta: delta,
-                    axisRanges: ranges,
-                    originalEvent: e
-                });
+                if (state) {
+                    totalDelta = state.totalDelta || delta;
+                    state.totalDelta = totalDelta + delta;
 
-                if (chart._mwTimeout) {
-                    clearTimeout(chart._mwTimeout);
+                    axes = chart._navState.axes;
+
+                    for (i = 0; i < axes.length; i++) {
+                        currentAxis = axes[i];
+                        axisName = currentAxis.options.name;
+                        if (axisName) {
+                            ranges[axisName] = currentAxis.scaleRange(-totalDelta);
+                        }
+                    }
+
+                    chart.trigger(ZOOM, {
+                        delta: delta,
+                        axisRanges: ranges,
+                        originalEvent: e
+                    });
+
+                    if (chart._mwTimeout) {
+                        clearTimeout(chart._mwTimeout);
+                    }
+
+                    chart._mwTimeout = setTimeout(function() {
+                        chart._endNavigation(e, ZOOM_END);
+                    }, MOUSEWHEEL_DELAY);
                 }
-
-                chart._mwTimeout = setTimeout(function() {
-                    chart._endNavigation(e, ZOOM_END);
-                }, MOUSEWHEEL_DELAY);
             }
         },
 
@@ -1504,6 +1572,10 @@ var __meta__ = { // jshint ignore:line
 
             if (chart._highlight) {
                 chart._highlight.destroy();
+            }
+
+            if (chart._zoomSelection) {
+                chart._zoomSelection.destroy();
             }
         }
     });
@@ -10359,6 +10431,11 @@ var __meta__ = { // jshint ignore:line
                     return currentPane;
                 }
             }
+        },
+
+        updateAxisOptions: function(axis, options) {
+            var axesOptions = axis instanceof CategoryAxis ? [].concat(this.options.categoryAxis) : [].concat(this.options.valueAxis);
+            deepExtend(axesOptions[axis.axisIndex], options);
         }
     });
 
@@ -10658,6 +10735,13 @@ var __meta__ = { // jshint ignore:line
                     y: singleItemOrArray(yValues)
                 });
             }
+        },
+
+        updateAxisOptions: function(axis, options) {
+            var vertical = axis.options.vertical;
+            var index = indexOf(axis, [].concat(vertical ? this.axisY : this.axisX));
+            var axisOptions = ([].concat(vertical ? this.options.yAxis : this.options.xAxis))[index];
+            deepExtend(axisOptions, options);
         }
     });
 
@@ -12043,6 +12127,279 @@ var __meta__ = { // jshint ignore:line
         }
     });
 
+    var Pannable = Class.extend({
+        init: function(plotArea, options) {
+            this.plotArea = plotArea;
+            this.options = deepExtend({}, this.options, options);
+        },
+
+        options: {
+            key: "none",
+            lock: "none"
+        },
+
+        start: function(e) {
+            this._active = acceptKey(e.event, this.options.key);
+        },
+
+        move: function(e) {
+            if (this._active) {
+                var axisRanges = this.axisRanges = this._panAxes(e, X).concat(this._panAxes(e, Y));
+                if (axisRanges.length) {
+                    this.axisRanges = axisRanges;
+                    return toChartAxisRanges(axisRanges);
+                }
+            }
+        },
+
+        end: function() {
+            this._active = false;
+        },
+
+        pan: function() {
+            var plotArea = this.plotArea;
+            var axisRanges = this.axisRanges;
+            var range;
+            if (axisRanges.length) {
+                for (var idx = 0; idx < axisRanges.length; idx++) {
+                    range = axisRanges[idx];
+                    plotArea.updateAxisOptions(range.axis, range.range);
+                }
+                plotArea.redraw(plotArea.panes);
+            }
+        },
+
+        _panAxes: function(e, position) {
+            var plotArea = this.plotArea;
+            var delta = -e[position].delta;
+            var lock = (this.options.lock  || "").toLowerCase();
+            var updatedAxes = [];
+
+            if (delta !== 0 && (lock || "").toLowerCase() != position) {
+                var axes = plotArea.axes;
+                var axis;
+                var range;
+                for (var idx = 0; idx < axes.length; idx++) {
+                    axis = axes[idx];
+
+                    if (position == X && !axis.options.vertical || position == Y && axis.options.vertical) {
+                        range = axis.pan(delta);
+
+                        if (range) {
+                            range.limitRange = true;
+                            updatedAxes.push({
+                                axis: axis,
+                                range: range
+                            });
+                        }
+                    }
+                }
+            }
+
+            return updatedAxes;
+        }
+    });
+
+    var ZoomSelection = Class.extend({
+        init: function(chart, options) {
+            this.chart = chart;
+            this.options = deepExtend({}, this.options, options);
+            this._marquee = $("<div class='k-marquee'><div class='k-marquee-color'></div></div>");
+        },
+
+        options: {
+            key: "shift",
+            lock: "none"
+        },
+
+        start: function(e) {
+            if (acceptKey(e.event, this.options.key)) {
+                var chart = this.chart;
+
+                var point = chart._toModelCoordinates(e.x.client, e.y.client);
+                var zoomPane = this._zoomPane = chart._plotArea.paneByPoint(point);
+                if (zoomPane) {
+                    var clipBox = zoomPane.clipBox().clone();
+                    var elementOffset = this._elementOffset();
+
+                    clipBox.translate(elementOffset.left, elementOffset.top);
+                    this._zoomPaneClipBox = clipBox;
+
+                    this._marquee
+                        .appendTo(document.body)
+                        .css({
+                            left: e.x.client + 1,
+                            top: e.y.client + 1,
+                            width: 0,
+                            height: 0
+                        });
+                }
+            }
+        },
+
+        _elementOffset: function() {
+            var chartElement = this.chart.element;
+
+            var chartOffset = chartElement.offset();
+            return {
+                left: parseInt(chartElement.css("paddingTop"), 10) + chartOffset.left,
+                top: parseInt(chartElement.css("paddingLeft"), 10) + chartOffset.top
+            };
+        },
+
+        move: function(e) {
+            var zoomPane = this._zoomPane;
+            if (zoomPane) {
+                var selectionPosition = this._selectionPosition(e);
+                this._marquee.css(selectionPosition);
+            }
+        },
+
+        end: function(e) {
+            var zoomPane = this._zoomPane;
+            if (zoomPane) {
+                var elementOffset = this._elementOffset();
+                var selectionPosition = this._selectionPosition(e);
+                selectionPosition.left-= elementOffset.left;
+                selectionPosition.top-= elementOffset.top;
+
+                var start = { x: selectionPosition.left, y: selectionPosition.top };
+                var end = { x: selectionPosition.left + selectionPosition.width, y: selectionPosition.top + selectionPosition.height};
+                this._updateAxisRanges(start, end);
+
+                this._marquee.remove();
+                delete this._zoomPane;
+
+                return toChartAxisRanges(this.axisRanges);
+            }
+        },
+
+        zoom: function() {
+            var axisRanges = this.axisRanges;
+            if (axisRanges && axisRanges.length) {
+                var plotArea = this.chart._plotArea;
+                var axisRange;
+                for (var idx = 0; idx < axisRanges.length; idx++) {
+                    axisRange = axisRanges[idx];
+                    plotArea.updateAxisOptions(axisRange.axis, axisRange.range);
+                }
+                plotArea.redraw(plotArea.panes);
+            }
+        },
+
+        destroy: function() {
+            this._marquee.remove();
+            delete this._marquee;
+        },
+
+        _updateAxisRanges: function(start, end) {
+            var lock = (this.options.lock  || "").toLowerCase();
+            var axisRanges = [];
+
+            var axes = this._zoomPane.axes;
+            var axis, vertical;
+            for (var idx = 0; idx < axes.length; idx++) {
+                axis = axes[idx];
+                vertical = axis.options.vertical;
+                if (!(lock == X && !vertical) && !(lock === Y && vertical)) {
+                    var range = axis.pointsRange(start, end);
+                    axisRanges.push({
+                        axis: axis,
+                        range: range
+                    });
+                }
+            }
+
+            this.axisRanges = axisRanges;
+        },
+
+        _selectionPosition:  function(e) {
+            var lock = (this.options.lock  || "").toLowerCase();
+            var left = math.min(e.x.startLocation, e.x.location);
+            var top = math.min(e.y.startLocation, e.y.location);
+            var width = math.abs(e.x.initialDelta);
+            var height = math.abs(e.y.initialDelta);
+
+            var clipBox = this._zoomPaneClipBox;
+
+            if (lock == X) {
+                left =  clipBox.x1;
+                width = clipBox.width();
+            }
+            if (lock == Y) {
+                top =  clipBox.y1;
+                height = clipBox.height();
+            }
+
+            if (e.x.location > clipBox.x2) {
+                width = clipBox.x2 - e.x.startLocation;
+            }
+
+            if (e.x.location < clipBox.x1) {
+                width = e.x.startLocation - clipBox.x1;
+            }
+
+            if (e.y.location > clipBox.y2) {
+                height = clipBox.y2 - e.y.startLocation;
+            }
+
+            if (e.y.location < clipBox.y1) {
+                height = e.y.startLocation - clipBox.y1;
+            }
+
+            return {
+                left: math.max(left, clipBox.x1),
+                top: math.max(top, clipBox.y1),
+                width: width,
+                height: height
+            };
+        }
+    });
+
+    var MousewheelZoom = Class.extend({
+        init: function(plotArea, options) {
+            this.plotArea = plotArea;
+            this.options = deepExtend({}, this.options, options);
+        },
+
+        updateRanges: function(delta) {
+            var lock = (this.options.lock  || "").toLowerCase();
+            var axisRanges = [];
+
+            var axes = this.plotArea.axes;
+            var axis, vertical;
+            for (var idx = 0; idx < axes.length; idx++) {
+                axis = axes[idx];
+                vertical = axis.options.vertical;
+                if (!(lock == X && !vertical) && !(lock === Y && vertical)) {
+                    var range = axis.zoomRange(-delta);
+                    if (range) {
+                        axisRanges.push({
+                            axis: axis,
+                            range: range
+                        });
+                    }
+                }
+            }
+
+            this.axisRanges = axisRanges;
+            return toChartAxisRanges(axisRanges);
+        },
+
+        zoom: function() {
+            var axisRanges = this.axisRanges;
+            if (axisRanges && axisRanges.length) {
+                var plotArea = this.plotArea;
+                var axisRange;
+                for (var idx = 0; idx < axisRanges.length; idx++) {
+                    axisRange = axisRanges[idx];
+                    plotArea.updateAxisOptions(axisRange.axis, axisRange.range);
+                }
+                plotArea.redraw(plotArea.panes);
+            }
+        }
+    });
+
     var SeriesAggregator = function(series, binder, defaultAggregates) {
         var sa = this,
             canonicalFields = binder.canonicalFields(series),
@@ -12887,6 +13244,27 @@ var __meta__ = { // jshint ignore:line
 
     function hasValue(value) {
         return defined(value) && value !== null;
+    }
+
+    function toChartAxisRanges(axisRanges) {
+        var ranges = {};
+        var axisRange;
+        for (var idx = 0; idx < axisRanges.length; idx++) {
+            axisRange = axisRanges[idx];
+            if (axisRange.axis.options.name) {
+                ranges[axisRange.axis.options.name] = {
+                    min: axisRange.range.min,
+                    max: axisRange.range.max
+                };
+            }
+        }
+        return ranges;
+    }
+
+    function acceptKey(e, mouseKey) {
+        var key = (mouseKey || "").toLowerCase();
+        var accept = (key == "none" && !(e.ctrlKey || e.shiftKey || e.altKey)) || e[key + "Key"];
+        return accept;
     }
 
     // Exports ================================================================
