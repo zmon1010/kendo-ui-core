@@ -29,18 +29,27 @@
                 this.element.addClass(FilterMenu.classNames.details);
 
                 this._summary = this.element.find("." + FilterMenu.classNames.detailsSummary)
-                    .on("click", this.toggle.bind(this));
+                    .on("click", this._toggle.bind(this));
 
                 this._icon = $("<span />", { "class": FilterMenu.classNames.icon + " " + FilterMenu.classNames.iconCollapse })
                     .prependTo(this._summary);
 
                 this._container = kendo.wrap(this._summary.next(), true);
+
+                if (!options.expanded) {
+                    this._container.hide();
+                }
             },
             options: {
                 name: "Details"
             },
-            toggle: function() {
+            events: [ "toggle" ],
+            _toggle: function() {
                 var show = this._container.is(":visible");
+                this.toggle(show);
+                this.trigger("toggle", { show: show });
+            },
+            toggle: function(show) {
                 var animation = kendo.fx(this._container).expand("vertical");
 
                 animation.stop()[show ? "reverse" : "play"]();
@@ -339,7 +348,7 @@
                 }).data("kendoMenu");
             },
 
-            _appendTemplate: function(template, details) {
+            _appendTemplate: function(template, details, expanded) {
                 var compiledTemplate = kendo.template(template);
                 var wrapper = $("<div />").html(compiledTemplate({
                     messages: this.options.messages,
@@ -350,7 +359,7 @@
                 this.element.append(wrapper);
 
                 if (details) {
-                    details = new Details(wrapper); // jshint ignore:line
+                    details = new Details(wrapper, { expanded: expanded, toggle: this._detailToggle.bind(this) }); // jshint ignore:line
                 }
 
                 kendo.bind(wrapper, this.viewModel);
@@ -358,12 +367,20 @@
                 return wrapper;
             },
 
+            _detailToggle: function(e) {
+                this.element
+                    .find("[data-role=details]")
+                    .not(e.sender.element)
+                    .data("kendoDetails")
+                    .toggle(!e.show);
+            },
+
             _filterByCondition: function() {
-                this._appendTemplate(FilterMenu.templates.filterByCondition, true);
+                this._appendTemplate(FilterMenu.templates.filterByCondition, true, false);
             },
 
             _filterByValue: function() {
-                var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue, true);
+                var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue, true, true);
 
                 this.valuesTreeView = wrapper.find("[data-role=treeview]").data("kendoTreeView");
 
