@@ -397,9 +397,15 @@
             var range = this.range();
             var sheet = range.sheet();
             var column = this.column();
-            var filter = new kendo.spreadsheet.ValueFilter({
-                values: this.options.values
-            });
+            var filter;
+
+            if (this.options.valueFilter) {
+                filter = new kendo.spreadsheet.ValueFilter(this.options.valueFilter);
+            }
+
+            if (this.options.customFilter) {
+                filter = new kendo.spreadsheet.CustomFilter(this.options.customFilter);
+            }
 
             this._state = sheet.filter().columns.filter(function(c) {
                 return c.index == column;

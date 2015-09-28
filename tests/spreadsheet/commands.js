@@ -822,7 +822,7 @@
 
     test("exec applies value filter on range", function() {
         var command = applyFilterCommand({
-            values: [ 1 ]
+            valueFilter: { values: [ 1 ] }
         });
         var range = sheet.range("A1:B2").filter(true);
 
@@ -842,10 +842,39 @@
         deepEqual(filter.values, [ 1 ]);
     });
 
+    test("exec applies custom filter on range", function() {
+        var command = applyFilterCommand({
+            customFilter: {
+                logic: "and",
+                criteria: [
+                    { operator: "eq", value: 1 },
+                    { operator: "eq", value: 2 }
+                ]
+            }
+        });
+
+        var range = sheet.range("A1:B2").filter(true);
+
+        command.range(range);
+        command.exec();
+
+        ok(range.hasFilter());
+
+        var column = sheet.filter().columns[0];
+
+        equal(column.index, 0);
+        ok(column.filter instanceof kendo.spreadsheet.CustomFilter);
+
+        var filter = column.filter.toJSON();
+
+        equal(filter.logic, "and");
+        deepEqual(filter.criteria, [ { operator: "eq", value: 1 }, { operator: "eq", value: 2 } ]);
+    });
+
     test("exec applies filter on passed column", function() {
         var command = applyFilterCommand({
             column: 1,
-            values: [ 1 ]
+            valueFilter: { values: [ 1 ] }
         });
         var range = sheet.range("A1:B3").filter(true);
 
@@ -860,7 +889,7 @@
     test("undo clears filter", function() {
         var command = applyFilterCommand({
             column: 1,
-            values: [ 1 ]
+            valueFilter: { values: [ 1 ] }
         });
 
         var range = sheet.range("A1:B3").filter(true);
@@ -874,8 +903,8 @@
     });
 
     test("undo restores previous filter", function() {
-        var first = applyFilterCommand({ column: 1, values: [ 1 ] });
-        var second = applyFilterCommand({ column: 1, values: [ 2 ] });
+        var first = applyFilterCommand({ column: 1, valueFilter: { values: [ 1 ] } });
+        var second = applyFilterCommand({ column: 1, valueFilter: { values: [ 2 ] } });
 
         var range = sheet.range("A1:B3").filter(true);
 

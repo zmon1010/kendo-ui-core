@@ -44,10 +44,8 @@
                 name: "Details"
             },
             events: [ "toggle" ],
-            _toggle: function() {
-                var show = this._container.is(":visible");
-                this.toggle(show);
-                this.trigger("toggle", { show: show });
+            visible: function() {
+                return this._container.is(":visible");
             },
             toggle: function(show) {
                 var animation = kendo.fx(this._container).expand("vertical");
@@ -56,6 +54,11 @@
 
                 this._icon.toggleClass(FilterMenu.classNames.iconExpand, show)
                           .toggleClass(FilterMenu.classNames.iconCollapse, !show);
+            },
+            _toggle: function() {
+                var show = this.visible();
+                this.toggle(show);
+                this.trigger("toggle", { show: show });
             }
         });
 
@@ -171,7 +174,6 @@
                 this._filterByCondition();
                 this._filterByValue();
                 this._actionButtons();
-
             },
 
             options: {
@@ -236,16 +238,32 @@
             },
 
             apply: function() {
-                this.viewModel.valuesChange({ sender: this.valuesTreeView });
+                this.element
+                    .find("[data-role=details]")
+                    .filter(function(index, element) {
+                        return $(element).data("kendoDetails").visible();
+                    })
+                    .hasClass(FilterMenu.classNames.filterByCondition);
 
                 var options = {
                     operatingRange: this.options.range,
                     column: this.options.column
                 };
-                var values = this.viewModel.valueFilter.values;
 
-                if (values && values.length) {
-                    options.values = values;
+                //value filter
+                this.viewModel.valuesChange({ sender: this.valuesTreeView });
+                var valueFilter = this.viewModel.valueFilter.toJSON();
+
+                if (valueFilter.values && valueFilter.values.length) {
+                    options.valueFilter = valueFilter;
+                }
+
+                //custom filter
+                var customFilter = this.viewModel.customFilter.toJSON();
+                var criteria = customFilter.criteria;
+
+                if ((criteria[0].operator && criteria[0].value) || (criteria[1].operator && criteria[1].value)) {
+                    options.customFilter = customFilter;
                 }
 
                 this.action({ command: "ApplyFilterCommand", options: options });
@@ -348,9 +366,9 @@
                 }).data("kendoMenu");
             },
 
-            _appendTemplate: function(template, details, expanded) {
+            _appendTemplate: function(template, className, details, expanded) {
                 var compiledTemplate = kendo.template(template);
-                var wrapper = $("<div />").html(compiledTemplate({
+                var wrapper = $("<div class='" + className + "'/>").html(compiledTemplate({
                     messages: this.options.messages,
                     operators: this.options.operators,
                     ns: kendo.ns
@@ -376,11 +394,11 @@
             },
 
             _filterByCondition: function() {
-                this._appendTemplate(FilterMenu.templates.filterByCondition, true, false);
+                this._appendTemplate(FilterMenu.templates.filterByCondition, FilterMenu.classNames.filterByCondition, true, false);
             },
 
             _filterByValue: function() {
-                var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue, true, true);
+                var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue, FilterMenu.classNames.filterByValue, true, true);
 
                 this.valuesTreeView = wrapper.find("[data-role=treeview]").data("kendoTreeView");
 
@@ -388,7 +406,7 @@
             },
 
             _actionButtons: function() {
-                this._appendTemplate(FilterMenu.templates.actionButtons, false);
+                this._appendTemplate(FilterMenu.templates.actionButtons, FilterMenu.classNames.actionButtons, false);
             }
         });
 
