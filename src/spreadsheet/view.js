@@ -109,10 +109,14 @@
 
         if (cell.borderRight) {
             style.borderRight = cellBorder(cell.borderRight);
+        } else if (cell.background) {
+            style.borderRightColor = cell.background;
         }
 
         if (cell.borderBottom) {
             style.borderBottom = cellBorder(cell.borderBottom);
+        } else if (cell.background) {
+            style.borderBottomColor = cell.background;
         }
 
         var data = cell.value, type = typeof data;
@@ -145,6 +149,8 @@
             if (sibling && border) {
                 sibling.attr.style.borderRight = border;
             }
+        } else if (cell.background) {
+            style.borderLeftColor = cell.background;
         }
 
         if (cell.borderTop) {
@@ -153,6 +159,8 @@
             if (sibling && border) {
                 sibling.attr.style.borderBottom = border;
             }
+        } else if (cell.background) {
+            style.borderTopColor = cell.background;
         }
 
         return td;

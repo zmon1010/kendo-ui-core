@@ -44,6 +44,15 @@
         equal(element.find(".k-spreadsheet-data td")[0].style.borderBottomStyle, "");
     });
 
+    test("renders border color on cells with background and no border", function() {
+        sheet.fromJSON(singleCell({ background: "rgb(255, 0, 0)" }));
+
+        equal(element.find(".k-spreadsheet-data td").css("borderBottomColor"), "rgb(255, 0, 0)");
+        equal(element.find(".k-spreadsheet-data td").css("borderRightColor"), "rgb(255, 0, 0)");
+        equal(element.find(".k-spreadsheet-data td").css("borderLeftColor"), "rgb(255, 0, 0)");
+        equal(element.find(".k-spreadsheet-data td").css("borderTopColor"), "rgb(255, 0, 0)");
+    });
+
     test("borderLeft renders right border on previous cell", function() {
         sheet.fromJSON({ rows: [
             { cells: [
