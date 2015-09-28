@@ -1647,6 +1647,7 @@
     <Compile Include="UI\Splitter\Splitter.cs" />
     <Compile Include="UI\Splitter\SplitterPane.cs" />
     <Compile Include="UI\NumericTextBox\Html\NumericTextBoxHtmlBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Html\SpreadsheetHtmlBuilder.cs" />
     <Compile Include="UI\StockChart\ChartNavigator.cs" />
     <Compile Include="UI\StockChart\ChartRange.cs" />
     <Compile Include="UI\StockChart\Fluent\ChartNavigatorHintBuilder.cs" />
@@ -2589,5 +2590,32 @@
     <Compile Include="UI\Diagram\Fluent\DiagramEditableDragSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramEditableDragSnapSettings.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramEditableDragSnapSettingsBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Spreadsheet\Spreadsheet.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetFactory.cs" />
+    <Compile Include="UI\Spreadsheet\SpreadsheetSheet.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetColumnFactory.cs" />
+    <Compile Include="UI\Spreadsheet\SpreadsheetSheetColumn.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetColumnBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Settings\SpreadsheetSheetFilterSettings.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetFilterSettingsBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetFilterSettingsColumnFactory.cs" />
+    <Compile Include="UI\Spreadsheet\SpreadsheetSheetFilterSettingsColumn.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetFilterSettingsColumnBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetRowFactory.cs" />
+    <Compile Include="UI\Spreadsheet\SpreadsheetSheetRow.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetRowBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetRowCellFactory.cs" />
+    <Compile Include="UI\Spreadsheet\SpreadsheetSheetRowCell.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetRowCellBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Settings\SpreadsheetSheetSortSettings.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetSortSettingsBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetSortSettingsColumnFactory.cs" />
+    <Compile Include="UI\Spreadsheet\SpreadsheetSheetSortSettingsColumn.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetSortSettingsColumnBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetEventBuilder.cs" />
   </ItemGroup>
 </Project>
