@@ -1,7 +1,8 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 
 @(Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
-    .Events(events => events.Render("onRender"))
+    .Events(events => events.Render("onRender").ExcelExport("onExcelExport"))
     .Sheets(sheets =>
     {
         sheets.Add()
