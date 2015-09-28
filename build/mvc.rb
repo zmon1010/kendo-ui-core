@@ -445,6 +445,9 @@ def patch_examples_solution(t, vs)
     #Remove the Kendo.Mvc.Tests project
     sln.sub!(/\s*Project.*?=\s*"Kendo\.Mvc\.Tests"((.|\r|\n)*?)EndProject/, '')
 
+    #Remove the Telerik.Web.Spreadsheet project
+    sln.sub!(/\s*Project.*?=\s*"Telerik\.Web\.Spreadsheet"((.|\r|\n)*?)EndProject/, '')
+
     #Fix the path to Kendo.Mvc.Examples
     sln.sub!('demos\\', '')
 
@@ -478,7 +481,7 @@ def patch_solution t
     sln.sub!(/\s*Project.*?=\s*"Kendo\.Mvc\.Tests"((.|\r|\n)*?)EndProject/, '')
 
     #Remove the Kendo.Mvc.Tests project
-    sln.sub!(/\s*Project.*?=\s*"Telerik\.Web\.Spreadsheet"((.|\r|\n)*?)EndProject/, '')
+    sln.sub!('..\\..\\dpl\\', '..\\')
 
     #Fix the path to Kendo.Mvc.Examples
     sln.sub!('src\\', '')
