@@ -280,6 +280,23 @@
         ok(gantt.list.calls("_startEditHandler"));
     });
 
+    test("enter stopPropagation upon keyup", function() {
+        var content = gantt.list.content;
+        var eventInfo = {
+            type: "keyup",
+            ctrlKey: false,
+            altKey: false
+        };
+        var event = $.Event(eventInfo);
+
+        focusTable();
+        stub(gantt.list, "_startEditHandler");
+        keyDown(content.find("table"), keys.ENTER);
+        content.find("table").trigger(event);
+
+        ok(event.isPropagationStopped());
+    });
+
     test("enter trigger sort on header", 1, function() {
         var content = gantt.list.content;
         var header = gantt.list.header;

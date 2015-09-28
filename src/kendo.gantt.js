@@ -3143,8 +3143,10 @@ var __meta__ = { // jshint ignore:line
                                 if (that.options.editable) {
                                     that._cachedCurrent = that.current;
                                     that.list._startEditHandler(that.current);
-                                    /* Stop the event propagation so that the list widget won't close its editor immediately */
-                                    e.stopPropagation();
+                                    $(this).one("keyup", function(e) {
+                                        /* Stop the event propagation so that the list widget won't close its editor immediately */
+                                        e.stopPropagation();
+                                    });
                                 }
                             } else {
                                 /* Sort */
