@@ -655,7 +655,7 @@ var Workbook = kendo.Class.extend({
             definedNames: $.map(this._sheets, function(sheet, index) {
                 var options = sheet.options;
                 var filter = options.filter;
-                if (filter) {
+                if (filter && typeof filter.from !== "undefined" && typeof filter.to !== "undefined") {
                     return {
                         localSheetId: index,
                         name: (options.title || "Sheet" + (index + 1)),

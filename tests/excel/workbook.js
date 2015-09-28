@@ -123,6 +123,38 @@ test("toDataUrl creates definedName for columns with two letters", function() {
     equal(dom.find("definedNames > definedName").eq(0).text(), "Sheet1!$A$1:$AA$1");
 });
 
+test("toDataUrl ignores filters with no from parameter", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [
+            {
+                columns: [ {}, {} , {}],
+                filter: { to: 26 }
+            }
+        ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["workbook.xml"]);
+    equal(dom.find("definedNames > definedName").length, 0);
+});
+
+test("toDataUrl ignores filters with no to parameter", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [
+            {
+                columns: [ {}, {} , {}],
+                filter: { from: 1 }
+            }
+        ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["workbook.xml"]);
+    equal(dom.find("definedNames > definedName").length, 0);
+});
+
 test("toDataUrl sets the name of the sheet element to the title option", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ { title: "foo"} ]
