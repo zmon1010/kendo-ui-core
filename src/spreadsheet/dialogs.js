@@ -992,5 +992,19 @@
 
     kendo.spreadsheet.dialogs.register("useKeyboard", UseKeyboardDialog);
 
+    var UnsupportedSelectionDialog = MessageDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+        },
+        options: {
+            template: "That action cannot be performed on multiple selection." +
+                '<div class="k-action-buttons">' +
+                    "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
+                "</div>"
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("unsupportedSelection", UnsupportedSelectionDialog);
+
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
