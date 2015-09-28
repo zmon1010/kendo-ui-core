@@ -163,6 +163,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         //<< Fields
+
+        /// <summary>
+        /// Configures the value for the cell
+        /// </summary>
+        /// <param name="value">The cell value.</param>
+        public SpreadsheetSheetRowCellBuilder Value(object value)
+        {
+            container.Value = value;
+
+            return this;
+        }
     }
 }
 

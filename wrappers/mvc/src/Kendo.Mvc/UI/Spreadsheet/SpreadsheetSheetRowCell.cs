@@ -45,6 +45,8 @@ namespace Kendo.Mvc.UI
         
         //<< Fields
 
+        public object Value { get; set; }
+
         protected override void Serialize(IDictionary<string, object> json)
         {
             //>> Serialization
@@ -115,6 +117,11 @@ namespace Kendo.Mvc.UI
             }
                 
         //<< Serialization
+
+            if (Value != null)
+            {
+                json["value"] = Value;
+            }
         }
     }
 }
