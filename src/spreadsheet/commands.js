@@ -277,22 +277,27 @@
             this._state = this._range.getState();
         },
         exec: function() {
-            if(this._clipboard.canPaste()) {
-                this.getState();
-                this._clipboard.paste();
-
-                var sheet = this._workbook.activeSheet();
-                var range = sheet.range(this._clipboard.pasteRef());
-                range.forEachRow(function(row) {
-                    var height = 0;
-                    row.forEachCell(function(row, col, cell) {
-                        if(cell.fontSize > height){
-                            height = cell.fontSize;
-                        }
-                    });
-                    sheet.rowHeight(row.topLeft().row, height + 10); //TODO: remove magic number
-                });
+            var status = this._clipboard.canPaste();
+            if(!status.canPaste) {
+                if(status.reason) {
+                    this._workbook._view.openDialog("useKeyboard");
+                }
+                return;
             }
+            this.getState();
+            this._clipboard.paste();
+
+            var sheet = this._workbook.activeSheet();
+            var range = sheet.range(this._clipboard.pasteRef());
+            range.forEachRow(function(row) {
+                var height = 0;
+                row.forEachCell(function(row, col, cell) {
+                    if(cell.fontSize > height){
+                        height = cell.fontSize;
+                    }
+                });
+                sheet.rowHeight(row.topLeft().row, height + 10); //TODO: remove magic number
+            });
         }
     });
 

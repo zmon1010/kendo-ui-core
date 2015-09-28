@@ -553,6 +553,7 @@
         onPaste: function(e) {
             var html = "";
             var plain = "";
+            this.clipboard.menuInvoked = false;
             if(e) {
                 if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
                     e.preventDefault();
@@ -574,7 +575,6 @@
                             options: { workbook: this.view._workbook }
                         });
                     }.bind(this));
-
                     return;
                 }
 
@@ -584,8 +584,7 @@
                     document.execCommand('paste');
                     return;
                 } else {
-                    this.view.openDialog("useKeyboard");
-                    return;
+                    this.clipboard.menuInvoked = true;
                 }
             }
 

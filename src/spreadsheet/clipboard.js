@@ -13,6 +13,7 @@
             this.origin = kendo.spreadsheet.NULLREF;
             this.iframe = document.createElement("iframe");
             this.iframe.className = "k-spreadsheet-clipboard-paste";
+            this.menuInvoked = false;
             this._external = {};
             this._uid = kendo.guid();
             document.body.appendChild(this.iframe);
@@ -32,10 +33,16 @@
         canPaste: function() {
             var sheet = this.workbook.activeSheet();
             var ref = this.pasteRef();
-            if(ref === kendo.spreadsheet.NULLREF) {
-                return this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
+            var status = {canPaste: true, reason: 0};
+            if(this.menuInvoked) {
+                return {canPaste: false, reason: 1};
             }
-            return ref.eq(sheet.unionWithMerged(ref));
+            if(ref === kendo.spreadsheet.NULLREF) {
+                status.canPaste = this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
+                return status;
+            }
+            status.canPaste = ref.eq(sheet.unionWithMerged(ref));
+            return status;
         },
 
         copy: function() {

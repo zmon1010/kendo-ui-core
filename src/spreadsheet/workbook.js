@@ -6,12 +6,12 @@
     var $ = kendo.jQuery;
 
     var Workbook = kendo.Observable.extend({
-        init: function(options) {
-
+        init: function(view, options) {
             kendo.Observable.fn.init.call(this);
 
             this.options = options;
 
+            this._view = view;
             this._sheets = [];
 
             this._sheetsSearchCache = {};

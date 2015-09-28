@@ -1,4 +1,5 @@
 (function() {
+    var view;
     var workbook;
     var sheet;
     var clipboard;
@@ -7,7 +8,9 @@
 
     module("Clipboard API", {
         setup: function() {
-            workbook = new kendo.spreadsheet.Workbook(defaults);
+            var element = $("<div>").appendTo(QUnit.fixture);
+            view = new kendo.spreadsheet.View(element);
+            workbook = new kendo.spreadsheet.Workbook(view, defaults);
             sheet = workbook.activeSheet();
             clipboard = workbook.clipboard();
             range = sheet.range(0, 0);
@@ -52,7 +55,7 @@
         sheet.range("D1:F1").merge();
         sheet.range("C1").select();
 
-        ok(!clipboard.canPaste())
+        ok(!clipboard.canPaste().canPaste)
     });
 
     test("canPaste returns true if no merged cells are affected", function() {
@@ -61,7 +64,7 @@
 
         sheet.range("C1").select();
 
-        ok(clipboard.canPaste());
+        ok(clipboard.canPaste().canPaste);
     });
 
     test("canPaste returns false if pasting into larger merged cell", function() {
@@ -70,7 +73,7 @@
 
         sheet.range("D1:G1").merge().select();
 
-        ok(!clipboard.canPaste());
+        ok(!clipboard.canPaste().canPaste);
     });
 
     test("parse returns font-size as integer", function() {
