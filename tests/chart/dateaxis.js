@@ -778,7 +778,8 @@
                 justified: true
             });
 
-            equal(dateAxis.labels[0].text, "2/2");
+            equal(dateAxis.labels[0].text, "2/1");
+            equal(dateAxis.labels[0].options.visible, false);
         });
 
         // ------------------------------------------------------------

@@ -44,8 +44,9 @@
 </head>
 <body>
 <div style="height:200px;"></div>
-<div style="width:3000px;">
-<div style="width: 1600px; display:inline-block; white-space:nowrap"></div><div id="chart" style="height: 700px;width: 1200px;display:inline-block;white-space:nowrap"></div>
+
+<!--<div style="width: 1600px; display:inline-block; white-space:nowrap"></div>-->
+<div id="chart" style="height: 700px;width: 1200px;display:inline-block;white-space:nowrap"></div>
 </div>
 <div id="scatterchart" style="height: 700px;"></div>
 <script>
@@ -61,12 +62,12 @@ function getCursorPosition(e) {
 
 var data = [];
 var categories = [];
-for (var idx = 0; idx < 20; idx++) {
+for (var idx = 0; idx < 10000; idx++) {
     data.push({
-        value: (idx  + 1)* 2,
+        value: idx,
         date: idx
     });
-    categories.push(2000 + idx);
+    // categories.push(2000 + idx);
 }
 // data[0] = 1;
 // data[5] = -30;
@@ -169,7 +170,7 @@ kendo.dataviz.ui.Chart.fn._selectionBox =  function(e) {
     return position;
 };
 
-
+var start = new Date().getTime();
 
 	$("#chart").kendoChart({
         render: function(e) {
@@ -201,7 +202,6 @@ kendo.dataviz.ui.Chart.fn._selectionBox =  function(e) {
         },
 
         drag: function(e) {
-            console.log(e);
             if (this._zoomPane) {
                 // var selectionBox = this._selectionBox(e);
 
@@ -267,7 +267,7 @@ kendo.dataviz.ui.Chart.fn._selectionBox =  function(e) {
         seriesDefaults: {
              type: "line"
         },
-        dataSource: stats,
+        dataSource: data,
       series: [
       {
         field: "value",
@@ -288,23 +288,33 @@ kendo.dataviz.ui.Chart.fn._selectionBox =  function(e) {
             }
         },
         categoryAxis: {
-            name: "category",
+                        // categories: [
+                    // new Date("2012/02/01 15:00:00"), new Date("2012/02/05 01:00:00")
+                // ],
+                // roundToBaseUnit: false,
+                // justified: true
+            // justified: false,
+            // name: "category",
                 // categories: categories,
-                // min: 15,
-                // max: 19,
+                min: 10.5,
+                max: 15.5,
+                labels: {
+                    skip: 1,
+                    step: 3
+                },
                 // justified: true
                 // labels: {
                     // template: "#debugger;#"
                 // }
-            baseUnit: "days",
-            roundToBaseUnit: false,
-            justified: true,
+            // baseUnit: "days",
+            // roundToBaseUnit: false,
+            // justified: true,
             //baseUnitStep: 2,
             // labels: {
                 // format: "MM/dd HH:mm"
             // },
-            min: new Date("2011/12/31 10:00"),
-            max: new Date("2012/01/04 10:00")
+            // min: new Date("2011/12/31 10:00"),
+            // max: new Date("2012/01/04 10:00")
            // axisCrossingValues: [1000]
         },
         tooltip: {
@@ -320,7 +330,7 @@ kendo.dataviz.ui.Chart.fn._selectionBox =  function(e) {
         }
 
     });
-    
+    console.log(new Date().getTime() - start);
   // var stocksDataSource = new kendo.data.DataSource({
             // transport: {
                 // read: {

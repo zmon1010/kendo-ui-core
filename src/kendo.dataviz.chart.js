@@ -2283,13 +2283,42 @@ var __meta__ = { // jshint ignore:line
     var CategoryAxis = Axis.extend({
         init: function(options) {
             var axis = this;
+            options = options || {};
+
+            this._initFields();
+            this._initCategories(options);
 
             Axis.fn.init.call(axis, options);
+        },
 
-            options = axis.options;
-            options.categories = options.categories.slice(0);
+        _initFields: function() {
+            this._ticks = {};
+            this.outOfRangeMin = 0;
+            this.outOfRangeMax = 0;
+        },
 
-            axis._ticks = {};
+        _initCategories: function(options) {
+            var categories = (options.categories || []).slice(0);
+            options.categories = categories;
+
+
+            if (defined(options.min) && defined(options.max) && categories.length) {
+                options.srcCategories = options.categories;
+                var min = math.floor(options.min);
+                var max = math.ceil(options.max) + 1;
+
+                if (options.outOfRangePoints) {
+                    if (min - 1 >= 0) {
+                        min--;
+                        this.outOfRangeMin = 1;
+                    }
+                    if (max + 1 < options.srcCategories.length) {
+                        max++;
+                        this.outOfRangeMax = 1;
+                    }
+                }
+                options.categories = options.categories.slice(min, max);
+            }
         },
 
         options: {
@@ -2309,6 +2338,18 @@ var __meta__ = { // jshint ignore:line
 
         rangeIndices: function() {
             var options = this.options;
+            var min = this.outOfRangeMin + (defined(options.min) ? options.min % 1 : 0);
+            var length = (options.categories.length || 1) - 1;
+            var max = (defined(options.max) && options.max % 1 !== 0 ? length -  (1 - options.max % 1) : length) - this.outOfRangeMax;
+
+            return {
+                min: min,
+                max: max
+            };
+        },
+
+        totalRangeIndices: function() {
+            var options = this.options;
             return {
                 min: isNumber(options.min) ? options.min : 0,
                 max: isNumber(options.max) ? options.max : (options.categories.length || 1) - 1
@@ -2321,7 +2362,7 @@ var __meta__ = { // jshint ignore:line
         },
 
 		totalRange: function() {
-			return { min: 0, max: this.options.categories.length };
+			return { min: 0, max: (this.options.srcCategories || this.options.categories).length };
 		},
 
 		getScale: function() {
@@ -2538,7 +2579,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         zoomRange: function(rate) {
-            var rangeIndices = this.rangeIndices();
+            var rangeIndices = this.totalRangeIndices();
             var totalRange = this.totalRange();
             var totalMax = totalRange.max - 1;
             var totalMin = totalRange.min;
@@ -2575,9 +2616,10 @@ var __meta__ = { // jshint ignore:line
             var options = this.options;
             var labelOptions = options.labels;
             var justified = options.justified;
-            var range = this.rangeIndices();
+            var range = this.totalRangeIndices();
             var min = range.min;
             var max = range.max;
+            var start = math.floor(min) - this.outOfRangeMin;
             var skip;
 
             if (!justified) {
@@ -2595,8 +2637,8 @@ var __meta__ = { // jshint ignore:line
             }
 
             return {
-                min: skip,
-                max: options.categories.length ? max + 1 : 0
+                min: skip - start,
+                max: (options.categories.length ? max + 1 : 0) - start
             };
         },
 
@@ -2617,7 +2659,7 @@ var __meta__ = { // jshint ignore:line
         },
 
 		pan: function(delta) {
-            var range = this.rangeIndices(),
+            var range = this.totalRangeIndices(),
                 scale = this.getScale(),
                 offset = round(delta / scale, DEFAULT_PRECISION),
                 totalRange = this.totalRange(),
@@ -2634,7 +2676,7 @@ var __meta__ = { // jshint ignore:line
                 justified = options.justified,
                 valueAxis = options.vertical ? Y : X,
                 lineBox = axis.lineBox(),
-                range = axis.rangeIndices(),
+                range = axis.totalRangeIndices(),
                 scale = this.getScale(),
                 lineStart = lineBox[valueAxis + (reverse ? 2 : 1)];
 
@@ -2688,7 +2730,9 @@ var __meta__ = { // jshint ignore:line
                 options.baseUnit = options.baseUnit || DAYS;
             }
 
-            CategoryAxis.fn.init.call(axis, options);
+            this._initFields();
+
+            Axis.fn.init.call(axis, options);
         },
 
         options: {
@@ -2858,6 +2902,19 @@ var __meta__ = { // jshint ignore:line
             }
 
             return { min: minIdx, max: maxIdx };
+        },
+
+        labelsRange: function() {
+            var options = this.options;
+            var labelOptions = options.labels;
+            var range = this.rangeIndices();
+            var min = math.floor(range.min);
+            var max = math.ceil(range.max);
+
+            return {
+                min: min + labelOptions.skip,
+                max: options.categories.length ? max + 1 : 0
+            };
         },
 
         panRange: function(from, to) {
