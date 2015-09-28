@@ -637,6 +637,10 @@
             }
         },
 
+        activeCellSelection: function() {
+            return new Range(this._grid.normalize(this.activeCell()), this);
+        },
+
         selection: function() {
             return new Range(this._grid.normalize(this._selectionState().selection), this);
         },

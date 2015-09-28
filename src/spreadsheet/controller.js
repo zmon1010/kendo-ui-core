@@ -706,6 +706,7 @@
             this._execute({
                 command: "EditCommand",
                 options: {
+                    editActiveCell: true,
                     value: e.value
                 }
             });

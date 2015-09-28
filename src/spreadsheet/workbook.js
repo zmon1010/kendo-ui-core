@@ -68,11 +68,15 @@
         execute: function(options) {
             var commandOptions = $.extend({ workbook: this }, options.options);
             var command = new kendo.spreadsheet[options.command](commandOptions);
+            var sheet = this.activeSheet();
 
             if (commandOptions.operatingRange) {
                 command.range(commandOptions.operatingRange);
+                command.range(sheet.selection());
+            } else if (commandOptions.editActiveCell) {
+                command.range(sheet.activeCellSelection());
             } else {
-                command.range(this._sheet.selection());
+                command.range(sheet.selection());
             }
 
             var result = command.exec();

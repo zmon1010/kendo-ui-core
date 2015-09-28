@@ -511,6 +511,13 @@
         ok(sheet.range("C:C").validation().messageTemplate.indexOf("less than") > 0);
     });
 
+    test("activeCellSelection returns a Range containing only activeCell", function() {
+        sheet.select("A1:A3", true);
+
+        var range = sheet.activeCellSelection();
+
+        ok(range._ref.eq(sheet.activeCell()));
+    });
 
     module("Sheet trimming", {
         setup: function() {

@@ -283,5 +283,20 @@
         strictEqual(sheet.dataSourceBinder.dataSource, dataSource);
     });
 
+    test("execute sets activeCellSelection to command range if in edit mode", function() {
+        stub(workbook.activeSheet(), {
+            activeCellSelection: workbook.activeSheet().activeCellSelection
+        });
+
+        workbook.execute({
+            command: "EditCommand",
+            options: {
+                value: "",
+                editActiveCell: true
+            }
+        });
+
+        equal(workbook.activeSheet().calls("activeCellSelection"), 1);
+    });
 
 })();
