@@ -132,6 +132,15 @@
         equal(filterMenu.options.column, 1);
     });
 
+    test("createFilterMenu reuses filter menu if opened twice", function() {
+        sheet.range("A1:B3").filter(true);
+
+        var view = spreadsheet._view;
+        var filterMenu = view.createFilterMenu(1);
+
+        equal(view.createFilterMenu(1), filterMenu);
+    });
+
     test("do not render clipboard content if in edit mode", function() {
         var view = spreadsheet._view;
 

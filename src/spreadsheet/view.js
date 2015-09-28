@@ -541,7 +541,7 @@
         },
 
         createFilterMenu: function(column) {
-            if (this._filterMenuColumn == column) {
+            if (this._filterMenu && this._filterMenu.options.column == column) {
                 return this._filterMenu;
             }
 
