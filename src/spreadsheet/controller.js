@@ -584,7 +584,7 @@
                     document.execCommand('paste');
                     return;
                 } else {
-                    window.alert("todo: add dialog \n use ctrl+v instead");
+                    this.view.openDialog("useKeyboard");
                     return;
                 }
             }

@@ -974,5 +974,23 @@
     });
     kendo.spreadsheet.dialogs.register("excelExport", ExcelExportDialog);
 
+    var UseKeyboardDialog = MessageDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+        },
+        options: {
+            title: "Copying and pasting",
+            template: "These actions cannot be invoked through the menu. Please use the keyboard shortcuts instead:" +
+                "<div>Ctrl+C for copy</div>" +
+                "<div>Ctrl+X for cut</div>" +
+                "<div>Ctrl+V for paste</div>" +
+                '<div class="k-action-buttons">' +
+                    "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
+                "</div>"
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("useKeyboard", UseKeyboardDialog);
+
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
