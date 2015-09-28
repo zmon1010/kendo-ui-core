@@ -1,5 +1,9 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
 <div id="example">
-@(Html.Kendo().Spreadsheet()
+<%:Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
     .HtmlAttributes(new { style = "width:100%" })
     .Sheets(sheets =>
@@ -365,5 +369,6 @@
                 });
             });
     })
-)
+%>
 </div>
+</asp:Content>
