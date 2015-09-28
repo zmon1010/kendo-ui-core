@@ -10,13 +10,14 @@
         setup: function() {
             var element = $("<div>").appendTo(QUnit.fixture);
             view = new kendo.spreadsheet.View(element);
-            workbook = new kendo.spreadsheet.Workbook(view, defaults);
+            workbook = new kendo.spreadsheet.Workbook(defaults, view);
             sheet = workbook.activeSheet();
             clipboard = workbook.clipboard();
             range = sheet.range(0, 0);
         },
         teardown: function() {
             sheet.unbind();
+            view.destroy();
             workbook.destroy();
             kendo.destroy(QUnit.fixture);
             QUnit.fixture.empty();

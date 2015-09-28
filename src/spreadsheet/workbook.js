@@ -6,7 +6,7 @@
     var $ = kendo.jQuery;
 
     var Workbook = kendo.Observable.extend({
-        init: function(view, options) {
+        init: function(options, view) {
             kendo.Observable.fn.init.call(this);
 
             this.options = options;

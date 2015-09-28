@@ -76,7 +76,7 @@
                     toolbar: this.options.toolbar
                 });
 
-                this._workbook = new Workbook(this._view, this.options);
+                this._workbook = new Workbook(this.options, this._view);
 
                 this._controller = new Controller(this._view, this._workbook);
 
