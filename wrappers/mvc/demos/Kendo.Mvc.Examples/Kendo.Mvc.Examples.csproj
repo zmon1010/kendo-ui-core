@@ -206,6 +206,7 @@
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\Spreadsheet\Server_Side_Import_ExportController.cs" />
     <Compile Include="Controllers\Spreadsheet\Server_Side_Pdf_ExportController.cs" />
+    <Compile Include="Controllers\Spreadsheet\EventsController.cs" />
     <Compile Include="Controllers\Spreadsheet\IndexController.cs" />
     <Compile Include="Controllers\TabStrip\Scrollable_TabsController.cs" />
     <Compile Include="Controllers\ToolBar\Keyboard_NavigationController.cs" />
@@ -3319,6 +3320,7 @@
     <Content Include="Areas\razor\Views\spreadsheet\index.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\server_side_pdf_export.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\server_side_import_export.cshtml" />
+    <Content Include="Areas\razor\Views\spreadsheet\events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
