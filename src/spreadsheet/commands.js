@@ -278,8 +278,9 @@
         },
         exec: function() {
             var status = this._clipboard.canPaste();
+            this._clipboard.menuInvoked = true;
             if(!status.canPaste) {
-                if(status.reason) {
+                if(status.menuInvoked) {
                     this._workbook._view.openDialog("useKeyboard");
                 }
                 return;
@@ -304,13 +305,22 @@
     kendo.spreadsheet.CopyCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
+            this._workbook = options.workbook;
             this._clipboard = options.workbook.clipboard();
         },
         undo: $.noop,
         exec: function() {
-            if(this._clipboard.canCopy()) {
-                this._clipboard.copy();
+            var status = this._clipboard.canCopy();
+            this._clipboard.menuInvoked = true;
+            if(!status.canCopy) {
+                if(status.menuInvoked) {
+                    this._workbook._view.openDialog("useKeyboard");
+                } else if(status.multiSelection) {
+                    this._workbook._view.openDialog("unsupportedSelection");
+                }
+                return;
             }
+            this._clipboard.copy();
         }
     });
 

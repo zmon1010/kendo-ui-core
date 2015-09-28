@@ -725,8 +725,10 @@
             var grid = sheet._grid;
 
             var selection = sheet.select();
-            if(!this._workbook.clipboard().canCopy()) {
+            var status = this._workbook.clipboard().canCopy();
+            if(status.canCopy === false && status.multiSelection) {
                 this.clipboardContents.render([]);
+                this.selectClipBoardContents();
                 return;
             }
 

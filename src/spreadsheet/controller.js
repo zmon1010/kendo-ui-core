@@ -553,7 +553,7 @@
         onPaste: function(e) {
             var html = "";
             var plain = "";
-            this.clipboard.menuInvoked = false;
+            this.clipboard.menuInvoked = (e === undefined);
             if(e) {
                 if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
                     e.preventDefault();
@@ -574,6 +574,7 @@
                             command: "PasteCommand",
                             options: { workbook: this.view._workbook }
                         });
+                        this.clipboard.menuInvoked = true;
                     }.bind(this));
                     return;
                 }
@@ -596,7 +597,8 @@
 
         },
 
-        onCopy: function() {
+        onCopy: function(e) {
+            this.clipboard.menuInvoked = (e === undefined);
             this._execute({
                 command: "CopyCommand",
                 options: { workbook: this.view._workbook }

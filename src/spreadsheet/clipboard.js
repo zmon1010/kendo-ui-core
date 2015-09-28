@@ -13,35 +13,42 @@
             this.origin = kendo.spreadsheet.NULLREF;
             this.iframe = document.createElement("iframe");
             this.iframe.className = "k-spreadsheet-clipboard-paste";
-            this.menuInvoked = false;
+            this.menuInvoked = true;
             this._external = {};
             this._uid = kendo.guid();
             document.body.appendChild(this.iframe);
         },
 
         canCopy: function() {
+            var status = {canCopy: true};
             var selection = this.workbook.activeSheet().select();
             if (selection === kendo.spreadsheet.NULLREF) {
-                return false;
+                status.canCopy = false;
             }
             if (selection instanceof kendo.spreadsheet.UnionRef) {
-                return false;
+                status.canCopy = false;
+                status.multiSelection = true;
             }
-            return true;
+            if(this.menuInvoked) {
+                status.canCopy = false;
+                status.menuInvoked = true;
+            }
+            return status;
         },
 
         canPaste: function() {
             var sheet = this.workbook.activeSheet();
             var ref = this.pasteRef();
-            var status = {canPaste: true, reason: 0};
-            if(this.menuInvoked) {
-                return {canPaste: false, reason: 1};
-            }
+            var status = {canPaste: true};
             if(ref === kendo.spreadsheet.NULLREF) {
                 status.canPaste = this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
-                return status;
+            } else {
+                status.canPaste = ref.eq(sheet.unionWithMerged(ref));
             }
-            status.canPaste = ref.eq(sheet.unionWithMerged(ref));
+            if(this.menuInvoked) {
+                status.canPaste = false;
+                status.menuInvoked = true;
+            }
             return status;
         },
 

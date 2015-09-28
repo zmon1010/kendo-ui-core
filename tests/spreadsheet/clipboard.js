@@ -28,6 +28,7 @@
         sheet.range("A1").value("test").select();
         clipboard.copy();
         sheet.range("B1").select();
+        clipboard.menuInvoked = false;
         clipboard.paste();
 
         equal(sheet.range("B1").value(), "test");
@@ -37,6 +38,7 @@
         sheet.range("A1:C1").value("test").select();
         clipboard.copy();
         sheet.range("I1:J1").select();
+        clipboard.menuInvoked = false;
         clipboard.paste();
 
         equal(sheet.range("J1").value(), "test");
@@ -46,7 +48,7 @@
         sheet.range("A1:C1,B2").select();
         clipboard.copy();
 
-        ok(!clipboard.canCopy())
+        ok(!clipboard.canCopy().canCopy)
     });
 
     test("canPaste returns false if merged cells are partially overlapped", function() {
@@ -55,7 +57,7 @@
 
         sheet.range("D1:F1").merge();
         sheet.range("C1").select();
-
+        clipboard.menuInvoked = false;
         ok(!clipboard.canPaste().canPaste)
     });
 
@@ -64,7 +66,7 @@
         clipboard.copy();
 
         sheet.range("C1").select();
-
+        clipboard.menuInvoked = false;
         ok(clipboard.canPaste().canPaste);
     });
 
@@ -73,7 +75,7 @@
         clipboard.copy();
 
         sheet.range("D1:G1").merge().select();
-
+        clipboard.menuInvoked = false;
         ok(!clipboard.canPaste().canPaste);
     });
 
