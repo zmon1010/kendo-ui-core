@@ -1553,7 +1553,7 @@ div.k-filebrowser-dropzone em
     border-radius: @main-border-radius 0 0 @main-border-radius;
 }
 
-.k-toolbar .k-button-group {
+.k-toolbar:not(.k-spreadsheet-toolbar) .k-button-group {
     .k-button {
         border-left-color: transparent;
     }
@@ -1564,7 +1564,7 @@ div.k-filebrowser-dropzone em
 
     .k-button:focus {
         border-left-color: @button-focused-border-color;
-    }    
+    }
 }
 
 .k-group-start.k-group-end.k-tool

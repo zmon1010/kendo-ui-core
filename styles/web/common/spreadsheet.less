@@ -132,6 +132,11 @@
 
     .k-tabstrip-wrapper {
         position: relative;
+        line-height: 1.7em;
+
+        .k-tabstrip-items {
+            padding: @first-tool-offset 0 0;
+        }
     }
 
     .k-spreadsheet-quick-access-toolbar {
@@ -140,7 +145,12 @@
         z-index: 1;
         top: 0;
         left: 0;
-        padding: .3em @first-tool-offset 0;
+        padding: @first-tool-offset @first-tool-offset 0;
+
+        .k-button {
+            padding: .3em;
+            line-height: 1.4em;
+        }
     }
 
     .k-merged-cells-wrapper,
@@ -439,8 +449,6 @@
 
 .k-spreadsheet-quick-access-toolbar .k-button {
     border-color: transparent;
-    border-left-width: 1px;
-    border-left-style: solid;
     background-color: transparent;
 }
 
@@ -481,8 +489,6 @@
     > .k-widget .k-state-default:not(.k-state-hover):not(.k-state-active) {
         margin: 0;
         border-color: transparent;
-        border-left-width: 1px;
-        border-left-style: solid;
         background-color: transparent;
         background-image: none;
     }
@@ -494,6 +500,15 @@
 
     > .k-widget .k-state-default:not(.k-state-hover):not(.k-state-active) .k-select {
         border-color: transparent;
+    }
+
+    .k-separator {
+        margin: 0;
+        width: 0;
+        overflow: hidden;
+        height: 1.8em;
+        vertical-align: middle;
+        display: inline-block;
     }
 }
 

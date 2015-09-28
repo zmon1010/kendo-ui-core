@@ -79,10 +79,18 @@
 
             this.element.addClass("k-spreadsheet-toolbar");
 
+            this._addSeparators(this.element);
+
             this.bind({
                 click: handleClick,
                 toggle: handleClick
             });
+        },
+        _addSeparators: function(element) {
+            var groups = this.element.children(".k-widget, .k-button, .k-button-group");
+
+            console.log(groups.length, groups.slice(1).length);
+            groups.slice(1).before("<span class='k-separator' />");
         },
         _expandTools: function(tools) {
             var messages = this.options.messages;
@@ -860,13 +868,15 @@
             var instance = e.sender;
             var dataItem = instance.dataItem();
 
-            this.toolbar.action({
-                command: "SortCommand",
-                options: {
-                    asc: dataItem.asc,
-                    sheet: dataItem.sheet
-                }
-            });
+            if (dataItem) {
+                this.toolbar.action({
+                    command: "SortCommand",
+                    options: {
+                        asc: dataItem.asc,
+                        sheet: dataItem.sheet
+                    }
+                });
+            }
         },
         value: $.noop
     });
