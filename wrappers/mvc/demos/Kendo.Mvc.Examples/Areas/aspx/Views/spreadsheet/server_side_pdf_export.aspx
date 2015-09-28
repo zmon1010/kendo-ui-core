@@ -3,6 +3,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+
 <div id="configurator" class="box wide">
     <form action="<%=Url.Action("SaveAsPDF", "Spreadsheet")%>" method="POST">
         <input type="hidden" id="data" name="data" />

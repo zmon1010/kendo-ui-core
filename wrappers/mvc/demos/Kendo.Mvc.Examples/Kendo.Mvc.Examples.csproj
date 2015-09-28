@@ -973,6 +973,9 @@
     <Content Include="Areas\aspx\Views\scheduler\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\signalr.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\timeline.aspx" />
+    <Content Include="Areas\aspx\Views\spreadsheet\index.aspx" />
+    <Content Include="Areas\aspx\Views\spreadsheet\server_side_import_export.aspx" />
+    <Content Include="Areas\aspx\Views\spreadsheet\server_side_pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\styling\checkboxes.aspx" />
     <Content Include="Areas\aspx\Views\styling\radios.aspx" />
     <Content Include="Areas\aspx\Views\tabstrip\scrollable_tabs.aspx" />
@@ -1376,6 +1379,7 @@
     <Content Include="Areas\aspx\Views\pdf_export\index.aspx" />
     <Content Include="Areas\aspx\Views\globalization\index.aspx" />
     <Content Include="Areas\aspx\Views\validator\index.aspx" />
+    <Content Include="Areas\aspx\Views\spreadsheet\events.aspx" />
     <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />

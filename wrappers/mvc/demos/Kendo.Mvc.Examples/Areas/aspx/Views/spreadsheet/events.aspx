@@ -4,10 +4,9 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 
-<div id="example">
-<%:Html.Kendo().Spreadsheet()
+<%: Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
-    .HtmlAttributes(new { style = "width:100%" })
+    .Events(events => events.Render("onRender").ExcelExport("onExcelExport"))
     .Sheets(sheets =>
     {
         sheets.Add()
@@ -33,7 +32,7 @@
                         .TextAlign("center")
                         .Color("white");
                 });
-
+                
                 rows.Add().Height(25).Cells(cells =>
                 {
                     cells.Add()
@@ -66,17 +65,17 @@
                         .Background("rgb(212,223,50)")
                         .TextAlign("center");
                 });
-
+                
                 rows.Add().Cells(cells =>
                 {
                     cells.Add()
-                        .Value(216321)
+                        .Value(216321)                     
                         .TextAlign("center");
 
                     cells.Add().Value("Calzone");
 
                     cells.Add()
-                        .Value(1)
+                        .Value(1)                       
                         .TextAlign("center");
 
                     cells.Add()
@@ -91,16 +90,16 @@
                         .Formula("C3*D3+E3")
                         .Format("$#,##0.00");
                 });
-
+                
                 rows.Add().Cells(cells =>
                 {
                     cells.Add()
-                        .Value(546897)
+                        .Value(546897)        
                         .Background("rgb(234,240,186)")
                         .TextAlign("center");
 
                     cells.Add()
-                        .Value("Margarita")
+                        .Value("Margarita")        
                         .Background("rgb(234,240,186)");
 
                     cells.Add()
@@ -123,24 +122,24 @@
                         .Formula("C4*D4+E4")
                         .Format("$#,##0.00");
                 });
-
+                
                 rows.Add().Cells(cells =>
                 {
                     cells.Add()
-                        .Value(456231)
+                        .Value(456231)                       
                         .TextAlign("center");
 
                     cells.Add().Value("Pollo Formaggio");
 
                     cells.Add()
-                        .Value(1)
+                        .Value(1)                       
                         .TextAlign("center");
 
                     cells.Add()
-                        .Value(13.99)
+                        .Value(13.99)                     
                         .Format("$#,##0.00");
 
-                    cells.Add()
+                    cells.Add()                        
                         .Formula("C5*D5*0.2")
                         .Format("$#,##0.00");
 
@@ -148,7 +147,7 @@
                         .Formula("C5*D5+E5")
                         .Format("$#,##0.00");
                 });
-
+                
                 rows.Add().Cells(cells =>
                 {
                     cells.Add()
@@ -355,7 +354,7 @@
                         .Background("rgb(142,196,65)");
 
                     cells.Add()
-                        .Value("Total Amount")
+                        .Value("Total Amount")                        
                         .Index(2)
                         .TextAlign("right")
                         .Color("white")
@@ -372,5 +371,27 @@
             });
     })
 %>
+
+ <div class="demo-section">
+    <h3 class="title">Console log</h3>
+    <div class="console"></div>
 </div>
+<style>
+    
+    .demo-section {
+        width: 600px;
+    }    
+        
+</style>
+
+<script>
+    function onRender(arg) {
+        kendoConsole.log("Spreadsheet is rendered");
+    }
+
+    function onExcelExport(arg) {
+        kendoConsole.log("Spreadsheet is exported to Excel");
+    }
+</script>
+
 </asp:Content>
