@@ -330,7 +330,7 @@
         {
             if (!DataAnnotationAttributes.ContainsKey(property.PropertyName)) 
             {
-                var isLast = property.Equals(props.Last());
+                var isLast = property.Equals(properties.Last());
                 result += RenderSchemaTypes(property, isLast);
             }
         }
