@@ -699,38 +699,53 @@
 
     var ValidationViewModel = kendo.spreadsheet.ValidationCellsViewModel = ObservableObject.extend({
         init: function(options) {
-            //TODO: on init apply default messages from  the validation object.
-
             ObservableObject.fn.init.call(this, options);
 
             this.bind("change", (function(e) {
                 if (e.field === "criterion") {
-                    this.clear();
+                    this.reset();
                 }
+
+                if (e.field == "hintMessage" && !this._mute) {
+                    this.shouldBuild = false;
+                }
+
+                if ((e.field == "from" || e.field == "to" || e.field == "hintMessageTemplate") && this.shouldBuild) {
+                    this.buildMessage();
+                }
+
+
             }).bind(this));
 
             this._init();
+        },
+        buildMessage: function() {
+            this._mute = true;
+            this.set("hintMessage", kendo.format(this.get("hintMessageTemplate"), this.get("from"), this.get("to")));
+            this._mute = false;
         },
         _init: function() {
             this.number = {};
             this.text = {};
             this.date = {};
             this.custom = {};
-            this.clear();
+
+            this.reset();
         },
-        clear: function() {
-            this.set("number.comparer", "greaterThan");
-            this.set("number.from", null);
-            this.set("number.to", null);
+        reset: function() {
+            this.set("comparer", "greaterThan");
+            this.set("from", null);
+            this.set("to", null);
 
-            this.set("text.comparer", "greaterThan");
-            this.set("text.from", null);
+            this.set("useCustomMessages", false);
 
-            this.set("date.comparer", "greaterThan");
-            this.set("date.from", null);
-            this.set("date.to", null);
+            this.shouldBuild = true;
 
-            this.set("custom.from", null);
+               var dataType = this.criterion !== "custom" ? this.criterion : "";
+
+               this.set("hintMessageTemplate", kendo.format(this.hintMessage, dataType, this.comparerMessages[this.comparer]));
+               this.hintTitleTemplate = kendo.format(this.hintTitle, this.type);
+
         },
         isAny: function() {
             return this.get("criterion") === "any";
@@ -750,52 +765,66 @@
         showRemove: function() {
             return this.get("hasValidation");
         },
-        reset: function() {
-            this.set("criterion", "any");
-        },
         update: function(validation) {
             this.set("hasValidation", !!validation);
 
             if (validation) {
-                var context = this[validation.dataType || "text"];
-
-                context.comparer = validation.comparerType;
-                context.from = validation.from;
-                context.to = validation.to;
-
-                this.criterion = validation.dataType;
-                this.type = validation.type;
+                this.fromValidationObject(validation);
             }
+        },
+        fromValidationObject: function(validation) {
+            //extract to fromValidation object?
+            this.comparer = validation.comparerType;
+            this.from = validation.from;
+            this.to = validation.to;
+
+            if (validation.messageTemplate || validation.titleTemplate) {
+                this.hintMessage = validation.messageTemplate;
+                this.hintTitle = validation.titleTemplate;
+                this.useCustomMessages = true;
+            } else {
+                this.useCustomMessages = false;
+            }
+
+            this.criterion = validation.dataType;
+            this.type = validation.type;
+
+            console.log("FROMVALIDATION", this);
         },
         toValidationObject: function() { //TODO: build proper validation object here
             var criterion = this.criterion;
-            var context = this[criterion];
 
-            if (!context) {
-                return null;
-            }
-
-            return {
+            var options = {
                 type: this.type,
                 dataType: criterion !== "custom" ? criterion : "",
-                comparerType: context.comparer,
-                from: context.from,
-                to: context.to
+                comparerType: comparer.type,
+                from: from,
+                to: to
             };
+
+            if (this.useCustomMessages) {
+                options.messageTemplate = this.hintMessage;
+                options.titleTemplate = this.hintTitle;
+            }
+
+            return options;
         }
     });
 
     var ValidationDialog = SpreadsheetDialog.extend({
         init: function(options) {
             SpreadsheetDialog.fn.init.call(this, options);
+
+
         },
         options: {
             width: 420,
             title: "Data Validation",
             criterion: "any",
             type: "reject",
-            hintMessage: "Please enter message.",
-            hintTitle: "Please enter title.",
+            hintMessage: "Please enter a valid {0} value {1}.",
+            hintTitle: "Validation {0}",
+            useCustomMessages: false,
             criteria: [
                 { type: "any", name: "Any value" },
                 { type: "number", name: "Number" },
@@ -811,8 +840,20 @@
                 { type: "equalTo", name: "equal to" },
                 { type: "notEqualTo", name: "not equal to" },
                 { type: "greaterThanOrEqualTo", name: "greater than or equal to" },
-                { type: "lessThanOrEqualTo", name: "less than or equal to" }
+                { type: "lessThanOrEqualTo", name: "less than or equal to" },
+                { type: "custom", name: "custom" }
             ],
+            comparerMessages: {
+                greaterThan: "greater than {0}",
+                lessThan: "less than {0}",
+                between: "between {0} and {to}",
+                notBetween: "not between {0} and {to}",
+                equalTo: "equal to {0}",
+                notEqualTo: "not equal to {0}",
+                greaterThanOrEqualTo: "greater than or equal to {0}",
+                lessThanOrEqualTo: "less than or equal to {0}",
+                custom: "that satisfies the formula: {0}"
+            },
             template:
                 '<div class="k-edit-form-container">' +
                     '<div class="k-edit-label"><label>Criteria:</label></div>' +
@@ -824,59 +865,59 @@
                     '</div>' +
 
                     '<div data-bind="visible: isNumber">' +
-                        '<div class="k-edit-label"><label>Data:</label></div>' +
+                        '<div class="k-edit-label"><label>Comparer:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
-                                'data-bind="value: number.comparer, source: comparers" />' +
+                                'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
                         '<div class="k-edit-label"><label>Min:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input placeholder="e.g. 10" class="k-textbox" data-bind="value: number.from" />' +
+                            '<input placeholder="e.g. 10" class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                         '<div class="k-edit-label"><label>Max:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input placeholder="e.g. 100" class="k-textbox" data-bind="value: number.to" />' +
+                            '<input placeholder="e.g. 100" class="k-textbox" data-bind="value: to" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isText">' +
-                        '<div class="k-edit-label"><label>Data:</label></div>' +
+                        '<div class="k-edit-label"><label>Comparer:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
-                                'data-bind="value: text.comparer, source: comparers" />' +
+                                'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
                         '<div class="k-edit-label"><label>Value:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input class="k-textbox" data-bind="value: text.from" />' +
+                            '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isDate">' +
-                        '<div class="k-edit-label"><label>Data:</label></div>' +
+                        '<div class="k-edit-label"><label>Comparer:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
-                                'data-bind="value: text.comparer, source: comparers" />' +
+                                'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
                         '<div class="k-edit-label"><label>Start:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input class="k-textbox" data-bind="value: date.from" />' +
+                            '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                         '<div class="k-edit-label"><label>End:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input class="k-textbox" data-bind="value: date.to" />' +
+                            '<input class="k-textbox" data-bind="value: to" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isCustom">' +
                         '<div class="k-edit-label"><label>Value:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input class="k-textbox" data-bind="value: custom.from" />' +
+                            '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                     '</div>' +
 
@@ -893,13 +934,21 @@
                     '</div>' +
 
                     '<div data-bind="invisible: isAny">' +
-                        '<div class="k-edit-label"><label>Hint title:</label></div>' +
+                        '<div class="k-edit-label"><label>Show hint:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input class="k-textbox" placeholder="Type title" data-bind="value: hintTitle" />' +
+                            '<input type="checkbox" name="useCustomMessages" id="useCustomMessages" class="k-checkbox" data-bind="checked: useCustomMessages" />' +
+                            '<label class="k-checkbox-label" for="useCustomMessages"></label>' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>Hint message:</label></div>' +
-                        '<div class="k-edit-field">' +
-                            '<input class="k-textbox" placeholder="Type message" data-bind="value: hintMessage" />' +
+
+                        '<div data-bind="visible: useCustomMessages">' +
+                            '<div class="k-edit-label"><label>Hint title:</label></div>' +
+                            '<div class="k-edit-field">' +
+                                '<input class="k-textbox" placeholder="Type title" data-bind="value: hintTitle" />' +
+                            '</div>' +
+                            '<div class="k-edit-label"><label>Hint message:</label></div>' +
+                            '<div class="k-edit-field">' +
+                                '<input class="k-textbox" placeholder="Type message" data-bind="value: hintMessage" />' +
+                            '</div>' +
                         '</div>' +
                     '</div>' +
 
@@ -919,6 +968,7 @@
                 hintMessage: options.hintMessage,
                 hintTitle: options.hintTitle,
                 comparers: options.comparers.slice(0),
+                comparerMessages: options.comparerMessages,
                 criteria: options.criteria.slice(0),
                 criterion: options.criterion,
                 apply: this.apply.bind(this),
@@ -945,7 +995,7 @@
             });
         },
         remove: function() {
-            this.viewModel.reset();
+            this.viewModel.set("criterion", "any");
             this.apply();
         }
     });
