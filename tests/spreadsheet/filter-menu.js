@@ -310,7 +310,26 @@
     test("gets the active container", function() {
         filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
 
-        ok(filterMenu._activeContainer().hasClass("k-spreadsheet-value-filter"));
+        ok(filterMenu.viewModel.active, "value");
+    });
+
+    test("gets existing filters", function() {
+        sheet.range("A1:B3").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.CustomFilter({
+                logic: "and",
+                criteria: [
+                    { operator: "contains", value: "foo" }
+                ]
+            })
+        });
+
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        var criteria = filterMenu.viewModel.customFilter.criteria;
+
+        equal(criteria[0].operator, "contains");
+        equal(criteria[0].value, "foo");
     });
 
     test("apply triggers command on passed column", function() {

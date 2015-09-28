@@ -158,6 +158,7 @@
                 Widget.call(this, element, options);
 
                 this.viewModel = new FilterMenuViewModel({
+                    active: "value",
                     customFilter: {
                         logic: "and",
                         criteria: [
@@ -172,6 +173,7 @@
                     apply: this.apply.bind(this)
                 });
 
+                this._setExistingFilter();
                 this._popup();
                 this._sort();
                 this._filterByCondition();
@@ -241,7 +243,7 @@
             },
 
             apply: function() {
-                var activeContainer = this._activeContainer();
+                this._active();
 
                 var options = {
                     operatingRange: this.options.range,
@@ -251,14 +253,14 @@
                 var valueFilter;
                 var customFilter;
 
-                if (activeContainer.hasClass(FilterMenu.classNames.filterByValue)) {
+                if (this.viewModel.active === "value") {
                     this.viewModel.valuesChange({ sender: this.valuesTreeView });
                     valueFilter = this.viewModel.valueFilter.toJSON();
 
                     if (valueFilter.values && valueFilter.values.length) {
                         options.valueFilter = valueFilter;
                     }
-                } else if (activeContainer.hasClass(FilterMenu.classNames.filterByCondition)) {
+                } else if (this.viewModel.active === "custom") {
                     customFilter = this.viewModel.customFilter.toJSON();
                     customFilter.criteria = customFilter.criteria.filter(function(item) {
                         return item.operator && item.value;
@@ -337,6 +339,26 @@
                 }];
             },
 
+            _setExistingFilter: function() {
+                var column = this.options.column;
+                var sheet = this.options.range.sheet();
+                var filterObject = sheet.filter();
+
+                if (filterObject) {
+                    filterObject = filterObject.columns.filter(function(item) {
+                        return item.index === column;
+                    })[0];
+                }
+
+                var serializedFilter;
+
+                if (filterObject) {
+                    serializedFilter = filterObject.filter.toJSON();
+                    this.viewModel.set("active", serializedFilter.filter);
+                    this.viewModel.set(serializedFilter.filter + "Filter", serializedFilter);
+                }
+            },
+
             _popup: function() {
                 this.popup = this.element.kendoPopup().data("kendoPopup");
             },
@@ -397,11 +419,13 @@
             },
 
             _filterByCondition: function() {
-                this._appendTemplate(FilterMenu.templates.filterByCondition, FilterMenu.classNames.filterByCondition, true, false);
+                var isExpanded = this.viewModel.active === "custom";
+                this._appendTemplate(FilterMenu.templates.filterByCondition, FilterMenu.classNames.filterByCondition, true, isExpanded);
             },
 
             _filterByValue: function() {
-                var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue, FilterMenu.classNames.filterByValue, true, true);
+                var isExpanded = this.viewModel.active === "value";
+                var wrapper = this._appendTemplate(FilterMenu.templates.filterByValue, FilterMenu.classNames.filterByValue, true, isExpanded);
 
                 this.valuesTreeView = wrapper.find("[data-role=treeview]").data("kendoTreeView");
 
@@ -412,12 +436,16 @@
                 this._appendTemplate(FilterMenu.templates.actionButtons, FilterMenu.classNames.actionButtons, false);
             },
 
-            _activeContainer: function() {
-                return this.element
-                            .find("[data-role=details]")
-                            .filter(function(index, element) {
-                                return $(element).data("kendoDetails").visible();
-                            });
+            _active: function() {
+                var activeContainer = this.element.find("[data-role=details]").filter(function(index, element) {
+                    return $(element).data("kendoDetails").visible();
+                });
+
+                if (activeContainer.hasClass(FilterMenu.classNames.filterByValue)) {
+                    this.viewModel.set("active", "value");
+                } else if (activeContainer.hasClass(FilterMenu.classNames.filterByCondition)) {
+                    this.viewModel.set("active", "custom");
+                }
             }
         });
 
