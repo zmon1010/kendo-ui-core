@@ -229,7 +229,7 @@
         return String.Concat(Enumerable.Repeat("\t", count));
     }
 
-    private string RenderSchemaFields(KeyValuePair<string, Dictionary<string, string>> model, bool isLast)
+    private string RenderSchemaDataAnnotations(KeyValuePair<string, Dictionary<string, string>> model, bool isLast)
     {
             bool distinctValidators = GetDistinctValidation(model.Value).Count > 0 ? true : false;
             var newLine = Environment.NewLine;
@@ -248,6 +248,36 @@
             result +=  isLast? "}" : "}," + Environment.NewLine;
 
             return result;
+    }
+
+    private string RenderSchemaTypes(PropertyMetadata model, bool isLast)
+    {
+        string newLine = Environment.NewLine;
+        string result = "";
+        string fieldType = GetFieldType(model.TypeName);
+        
+        result += GetTabs(6) + model.PropertyName + ": { type: \"" + fieldType + "\"";
+        result +=  isLast? "}" : "}," + Environment.NewLine;
+        return result;
+    }
+
+    private string GetFieldType(string type)
+    {
+        switch (type)
+        {
+            case "System.DateTime":
+                return "date";
+                break;
+            case "System.String":
+                return "string";
+                break;
+            case "System.Boolean":
+                return "boolean";
+                break;
+            default:
+                return "number";
+                break;
+        }
     }
 
     public Dictionary<string, string> GetDistinctValidation(Dictionary<string, string> models)
@@ -287,18 +317,30 @@
 
     private void RenderFields(string primaryKey)
     {
-        var newLine = Environment.NewLine;
+        string newLine = Environment.NewLine;
         string tabs = GetTabs(5);
-        string result = "," + newLine + tabs + "fields: {" + newLine;
-
+        string result = "," + newLine + tabs + "fields: {" + newLine;            
+        var properties = ModelMetadata.Properties
+        .Where(prop => prop.Scaffold && !prop.IsPrimaryKey && !prop.IsForeignKey && !prop.IsAssociation)
+        .ToList();
+                
         DataAnnotationAttributes.Remove(primaryKey);
+
+        foreach (var property in properties)
+        {
+            if (!DataAnnotationAttributes.ContainsKey(property.PropertyName)) 
+            {
+                var isLast = property.Equals(props.Last());
+                result += RenderSchemaTypes(property, isLast);
+            }
+        }
 
         foreach (var model in DataAnnotationAttributes)
         {
             if (!(model.Value.ContainsKey("scaffold") && model.Value["scaffold"] == "false"))
             {
                 var isLast = model.Equals(DataAnnotationAttributes.Last());
-                result += RenderSchemaFields(model, isLast);
+                result += RenderSchemaDataAnnotations(model, isLast);
             }
 
         }
