@@ -337,17 +337,6 @@
         equal(formulaInput.value(), "=SUM(sum");
     });
 
-    // test("ref method does nothing if try to replace initial value token", 2, function() {
-    //     createFormulaInput();
-
-    //     formulaInput.value("=SUM(B1");
-    //     formulaInput.end();
-    //     formulaInput.refAtPoint(A1);
-
-    //     equal(formulaInput.value(), "=SUM(B1");
-    //     equal(formulaInput.getPos().begin, 7);
-    // });
-
     test("tooltip method updates text of the tooltip element", function() {
         createFormulaInput();
 

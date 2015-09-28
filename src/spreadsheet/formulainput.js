@@ -426,7 +426,7 @@
             var token = result && result.token;
             var idx;
 
-            if (isKeyboardAction && token) {
+            if (token) {
                 for (idx = 0; idx < this._staticTokens.length; idx++) {
                     if (isEqualToken(token, this._staticTokens[idx])) {
                         return null;
@@ -717,11 +717,11 @@
             return false;
         }
 
-        if (tok1.type == "ref" && tok2.type == "ref" && tok1.ref.eq(tok2.ref)) {
-            return true;
+        if (tok1.type == "ref" && tok2.type == "ref") {
+            return tok1.ref.eq(tok2.ref);
+        } else {
+            return tok1.value === tok2.value;
         }
-
-        return tok1.value === tok2.value;
     }
 
     kendo.spreadsheet.FormulaInput = FormulaInput;
