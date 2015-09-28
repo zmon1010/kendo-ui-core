@@ -2783,6 +2783,10 @@ var __meta__ = { // jshint ignore:line
             autoOptions.min = floor(autoMin, majorUnit);
             autoOptions.max = ceil(autoMax, majorUnit);
 
+            this.totalMin = defined(options.min) ? math.min(autoOptions.min, options.min) : autoOptions.min;
+            this.totalMax = defined(options.max) ? math.max(autoOptions.max, options.max) : autoOptions.max;
+            this.totalMajorUnit = majorUnit;
+
             if (options) {
                 userSetLimits = defined(options.min) || defined(options.max);
                 if (userSetLimits) {
@@ -3040,6 +3044,39 @@ var __meta__ = { // jshint ignore:line
         shouldRenderNote: function(value) {
             var range = this.range();
             return range.min <= value && value <= range.max;
+        },
+
+        pan: function(delta) {
+            var range = this.translateRange(delta);
+            return this.limitRange(range.min, range.max, this.totalMin, this.totalMax);
+        },
+
+        pointsRange: function(start, end) {
+            var startValue = this.getValue(start);
+            var endValue = this.getValue(end);
+            var min = math.min(startValue, endValue);
+            var max = math.max(startValue, endValue);
+
+            return {
+                min: min,
+                max: max
+            };
+        },
+
+        zoomRange: function(delta) {
+            var newRange = this.scaleRange(delta);
+            var totalMax = this.totalMax;
+            var totalMin = this.totalMin;
+            var min = util.limitValue(newRange.min, totalMin, totalMax);
+            var max = util.limitValue(newRange.max, totalMin, totalMax);
+            var optionsRange = this.options.max - this.options.min;
+
+            if (optionsRange < this.totalMajorUnit || max - min >= this.totalMajorUnit) {
+                return {
+                    min: min,
+                    max: max
+                };
+            }
         }
     });
 
