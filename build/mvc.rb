@@ -395,11 +395,14 @@ def patch_examples_csproj(t, vs)
     # remove AfterBuild target
     csproj.sub!(/\s*<Target Name="AfterBuild"((.|\r|\n)*?)\/Target>/, '')
 
-    # remove project reference
-    csproj.sub!(/\s*<ProjectReference((.|\r|\n)*?)\/ProjectReference>/, '')
+    # remove project references
+    csproj.gsub!(/\s*<ProjectReference((.|\r|\n)*?)\/ProjectReference>/, '')
 
-    # add reference to Kendo dll
+    # add reference to Kendo.Mvc
     csproj.sub!(/(\s*)(<Reference.*?\/>)/i, '\1\2\1<Reference Include="Kendo.Mvc" />')
+
+    # add reference to Telerik.Web.Spreadsheet
+    csproj.sub!(/(\s*)(<Reference.*?\/>)/i, '\1\2\1<Reference Include="Telerik.Web.Spreadsheet" />')
 
     # fix the path to the nuget packages
     csproj.gsub!('..\\..\\packages', '..\\packages')
