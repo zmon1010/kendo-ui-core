@@ -28,7 +28,7 @@
     <script src="../../src/geometry/main.js"></script>
     <script src="../../src/drawing/core.js"></script>
     <script src="../../src/drawing/mixins.js"></script>
-    <script src="../../src/drawing/text-metrics.js"></script>
+    <script src="../../src/util/text-metrics.js"></script>
     <script src="../../src/drawing/shapes.js"></script>
     <script src="../../src/drawing/animation.js"></script>
     <script src="../../src/drawing/parser.js"></script>
@@ -59,12 +59,11 @@ var data = [];
 var categories = [];
 for (var idx = 0; idx < 20; idx++) {
     data.push({
-        value: Math.floor(Math.random()* 100) + 1
+        value: idx
     });
     categories.push(2000 + idx);
 }
-data[0] = 1;
-data[5] = -30;
+
 var lock = {
     x: false,
     y: false
@@ -245,16 +244,15 @@ kendo.dataviz.ui.Chart.fn.updateAxes  = function(pos, cursor) {
             // categoryField: "date"
         }],
         valueAxis: {
-            type: "log",
             labels: {
                // format: "{0:n}%"
             },
-            minorTicks: {
-                visible: true
-            },
-            minorGridLines:{
-                visible: true
-            }
+            // minorTicks: {
+                // visible: true
+            // },
+            // minorGridLines:{
+                // visible: true
+            // }
             // line: {
                 // visible: true
             // }
@@ -270,8 +268,8 @@ kendo.dataviz.ui.Chart.fn.updateAxes  = function(pos, cursor) {
             // min: new Date("2011/12/23 10:00"),
             // max: new Date("2011/12/27 10:00")
             categories: categories,
-            min: 0.5,
-            max: 5.5
+            min: 1,
+            max: 2.5
             // axisCrossingValues: [3]
         },
         tooltip: {

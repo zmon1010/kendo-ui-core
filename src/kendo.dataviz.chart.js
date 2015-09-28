@@ -2235,35 +2235,102 @@ var __meta__ = { // jshint ignore:line
             justified: false
         },
 
-        range: function() {
-            return { min: 0, max: this.options.categories.length };
+        rangeIndices: function() {
+            var options = this.options;
+            return {
+                min: isNumber(options.min) ? options.min : 0,
+                max: isNumber(options.max) ? options.max : (options.categories.length || 1) - 1
+            };
         },
 
-        getTickPositions: function(itemsCount) {
+        range: function() {
+            var options = this.options;
+            return { min: isNumber(options.min) ? options.min : 0, max: isNumber(options.max) ? options.max : options.categories.length };
+        },
+
+		totalRange: function() {
+			return { min: 0, max: this.options.categories.length };
+		},
+
+		getScale: function() {
+			var range = this.rangeIndices();
+            var min = range.min;
+            var max = range.max + (this.options.justified ? 0 : 1);
+			var lineBox = this.lineBox();
+            var size = this.options.vertical ? lineBox.height() : lineBox.width();
+			var scale = size / ((max - min) || 1);
+
+			return scale * (this.options.reverse ? -1 : 1);
+		},
+
+        getTickPositions: function(stepSize) {
             var axis = this,
                 options = axis.options,
                 vertical = options.vertical,
-                justified = options.justified,
                 lineBox = axis.lineBox(),
-                size = vertical ? lineBox.height() : lineBox.width(),
-                intervals = itemsCount - (justified ? 1 : 0),
-                step = size / intervals,
-                dim = vertical ? Y : X,
-                pos = lineBox[dim + 1],
-                positions = [],
-                i;
+                reverse = options.reverse,
+                scale = axis.getScale(),
+                range = axis.rangeIndices(),
+                min = range.min,
+                max = range.max + (options.justified ? 0 : 1),
+                current = min % 1 !== 0 ? math.floor(min / 1) + stepSize : min,
+                pos = lineBox[(vertical ? Y : X) + (reverse ? 2 : 1)],
+                positions = [];
 
-            for (i = 0; i < itemsCount; i++) {
-                positions.push(round(pos, COORD_PRECISION));
-                pos += step;
+            while(current <= max) {
+                positions.push(pos + round(scale * (current - min), COORD_PRECISION));
+                current+= stepSize;
             }
 
-            if (!justified) {
-                positions.push(lineBox[dim + 2]);
-            }
-
-            return options.reverse ? positions.reverse() : positions;
+            return positions;
         },
+
+        getLabelsTickPositions: function() {
+            var tickPositions = this.getMajorTickPositions().slice(0);
+            var range = this.rangeIndices();
+            var scale = this.getScale();
+
+			if (range.min % 1 !== 0) {
+				tickPositions.unshift(tickPositions[0] - scale);
+			}
+			if (range.max % 1 !== 0) {
+				tickPositions.push(last(tickPositions) + scale);
+			}
+
+            return tickPositions;
+        },
+
+        labelTickIndex: function(label) {
+            var index = label.index;
+            var range = this.rangeIndices();
+            if (range.min > 0) {
+                index = index - math.floor(range.min);
+            }
+            return index;
+        },
+
+        arrangeLabels: function() {
+            Axis.fn.arrangeLabels.call(this);
+            this.hideOutOfRangeLabels();
+        },
+
+		hideOutOfRangeLabels: function() {
+			var box = this.box,
+				labels = this.labels,
+				valueAxis = this.options.vertical ? Y : X,
+				start = box[valueAxis + 1],
+				end = box[valueAxis + 2],
+				firstLabel = labels[0],
+				lastLabel = last(labels);
+			if (labels.length) {
+				if (firstLabel.box[valueAxis + 1] > end || firstLabel.box[valueAxis + 2] < start) {
+					firstLabel.options.visible = false;
+				}
+				if (lastLabel.box[valueAxis + 1] > end || lastLabel.box[valueAxis + 2] < start) {
+					lastLabel.options.visible = false;
+				}
+			}
+		},
 
         getMajorTickPositions: function() {
             return this.getTicks().majorTicks;
@@ -2277,62 +2344,59 @@ var __meta__ = { // jshint ignore:line
             var axis = this,
                 cache = axis._ticks,
                 options = axis.options,
-                count = options.categories.length,
+                range = axis.rangeIndices(),
                 reverse = options.reverse,
                 justified = options.justified,
                 lineBox = axis.lineBox(),
                 hash;
 
-            hash = lineBox.getHash() + count + reverse + justified;
+            hash = lineBox.getHash() + range.min + "," + range.max + reverse + justified;
             if (cache._hash !== hash) {
                 cache._hash = hash;
-                cache.majorTicks = axis.getTickPositions(count);
-                cache.minorTicks = axis.getTickPositions(count * 2);
+                cache.majorTicks = axis.getTickPositions(1);
+                cache.minorTicks = axis.getTickPositions(0.5);
             }
 
             return cache;
         },
 
-        getSlot: function(from, to) {
+        getSlot: function(from, to, limit) {
             var axis = this,
                 options = axis.options,
-                majorTicks = axis.getTicks().majorTicks,
                 reverse = options.reverse,
                 justified = options.justified,
                 valueAxis = options.vertical ? Y : X,
                 lineBox = axis.lineBox(),
+                totalRange = axis.totalRange(),
+				range = axis.rangeIndices(),
+				min = range.min,
+				scale = this.getScale(),
                 lineStart = lineBox[valueAxis + (reverse ? 2 : 1)],
-                lineEnd = lineBox[valueAxis + (reverse ? 1 : 2)],
                 slotBox = lineBox.clone(),
-                intervals = math.max(1, majorTicks.length - (justified ? 0 : 1)),
                 p1,
-                p2,
-                slotSize;
+                p2;
 
             var singleSlot = !defined(to);
 
             from = valueOrDefault(from, 0);
             to = valueOrDefault(to, from);
-            from = limitValue(from, 0, intervals);
-            to = limitValue(to - 1, from, intervals);
+            from = limitValue(from, totalRange.min, totalRange.max || 1);
+            to = limitValue(to - 1, from, totalRange.max || 1);
+
             // Fixes transient bug caused by iOS 6.0 JIT
             // (one can never be too sure)
             to = math.max(from, to);
 
-            p1 = from === 0 ? lineStart : (majorTicks[from] || lineEnd);
-            p2 = justified ? p1 : majorTicks[to];
-            slotSize = to - from;
-
-            if (slotSize > 0 || (from === to)) {
-                p2 = majorTicks[to + 1] || lineEnd;
-            }
+            p1 = lineStart + (from - min) * scale;
+            p2 = lineStart + (to + 1 - min) * scale;
 
             if (singleSlot && justified) {
-                if (from === intervals) {
-                    p1 = p2;
-                } else {
-                    p2 = p1;
-                }
+                p2 = p1;
+            }
+
+            if (limit) {
+                p1 = limitValue(p1, lineBox[valueAxis + 1], lineBox[valueAxis + 2]);
+                p2 = limitValue(p2, lineBox[valueAxis + 1], lineBox[valueAxis + 2]);
             }
 
             slotBox[valueAxis + 1] = reverse ? p2 : p1;
@@ -2345,52 +2409,32 @@ var __meta__ = { // jshint ignore:line
             var axis = this,
                 options = axis.options,
                 reverse = options.reverse,
-                vertical = options.vertical,
-                valueAxis = vertical ? Y : X,
+                justified = options.justified,
+                valueAxis = options.vertical ? Y : X,
                 lineBox = axis.lineBox(),
+                range = axis.rangeIndices(),
+                startValue = reverse ? range.max + (justified ? 0 : 1) : range.min,
+                scale = this.getScale(),
                 lineStart = lineBox[valueAxis + 1],
                 lineEnd = lineBox[valueAxis + 2],
-                pos = point[valueAxis],
-                majorTicks = axis.getMajorTickPositions(),
-                diff = MAX_VALUE,
-                tickPos, nextTickPos, i, categoryIx;
-
+                pos = point[valueAxis];
             if (pos < lineStart || pos > lineEnd) {
                 return null;
             }
 
-            for (i = 0; i < majorTicks.length; i++) {
-                tickPos = majorTicks[i];
-                nextTickPos = majorTicks[i + 1];
+            var size = pos - lineStart;
+            var value = size / scale;
 
-                if (!defined(nextTickPos)) {
-                    nextTickPos = reverse ? lineStart : lineEnd;
-                }
+            value = startValue + value;
+            var diff = value % 1;
 
-                if (reverse) {
-                    tickPos = nextTickPos;
-                    nextTickPos = majorTicks[i];
-                }
-
-                if (options.justified) {
-                    if (pos === nextTickPos) {
-                        categoryIx = math.max(0, vertical ? majorTicks.length - i - 1 : i + 1);
-                        break;
-                    }
-
-                    if (math.abs(pos - tickPos) < diff) {
-                        diff = pos - tickPos;
-                        categoryIx = i;
-                    }
-                } else {
-                    if (pos >= tickPos && pos <= nextTickPos) {
-                        categoryIx = i;
-                        break;
-                    }
-                }
+            if (justified) {
+                value = math.round(value);
+            } else if (diff === 0 && value > 0) {
+                value--;
             }
 
-            return categoryIx;
+            return math.floor(value);
         },
 
         getCategory: function(point) {
@@ -2421,6 +2465,22 @@ var __meta__ = { // jshint ignore:line
             };
         },
 
+        zoomRange: function(rate) {
+            var rangeIndices = this.rangeIndices();
+            var totalRange = this.totalRange();
+            var totalMax = totalRange.max - 1;
+            var totalMin = totalRange.min;
+            var min = limitValue(rangeIndices.min + rate, totalMin, totalMax);
+            var max = limitValue(rangeIndices.max - rate, totalMin, totalMax);
+
+            if (max - min >= 0) {
+                return {
+                    min: min,
+                    max: max
+                };
+            }
+        },
+
         scaleRange: function(scale) {
             var axis = this,
                 options = axis.options,
@@ -2434,7 +2494,38 @@ var __meta__ = { // jshint ignore:line
         },
 
         labelsCount: function() {
-            return this.options.categories.length;
+            var labelsRange = this.labelsRange();
+
+            return labelsRange.max - labelsRange.min;
+        },
+
+        labelsRange: function() {
+            var options = this.options;
+            var labelOptions = options.labels;
+            var justified = options.justified;
+            var range = this.rangeIndices();
+            var min = range.min;
+            var max = range.max;
+            var skip;
+
+            if (!justified) {
+                min =  math.floor(min);
+                max = math.ceil(max);
+            } else {
+                min =  math.ceil(min);
+                max = math.floor(max);
+            }
+
+            if (min > labelOptions.skip) {
+                skip = labelOptions.skip + labelOptions.step * math.ceil((min - labelOptions.skip) / labelOptions.step);
+            } else {
+                skip = labelOptions.skip;
+            }
+
+            return {
+                min: skip,
+                max: options.categories.length ? max + 1 : 0
+            };
         },
 
         createAxisLabel: function(index, labelOptions) {
@@ -2451,6 +2542,45 @@ var __meta__ = { // jshint ignore:line
             var categories = this.options.categories;
 
             return categories.length && (categories.length > value && value >= 0);
+        },
+
+		pan: function(delta) {
+            var range = this.rangeIndices(),
+                scale = this.getScale(),
+                offset = round(delta / scale, DEFAULT_PRECISION),
+                totalRange = this.totalRange(),
+                min = range.min + offset,
+                max = range.max + offset;
+
+            return this.limitRange(min, max, totalRange.min, totalRange.max - 1);
+		},
+
+        pointsRange: function(start, end, exact) {
+            var axis = this,
+                options = axis.options,
+                reverse = options.reverse,
+                justified = options.justified,
+                valueAxis = options.vertical ? Y : X,
+                lineBox = axis.lineBox(),
+                range = axis.rangeIndices(),
+                scale = this.getScale(),
+                lineStart = lineBox[valueAxis + (reverse ? 2 : 1)];
+
+            var diffStart = start[valueAxis] - lineStart;
+            var diffEnd = end[valueAxis] - lineStart;
+
+            var min = range.min + diffStart / scale;
+            var max = range.min + diffEnd / scale;
+            min = math.min(min, max);
+            max =  math.max(min, max);
+            if (!exact && !justified) {
+                max--;
+            }
+
+            return {
+                min: min,
+                max: max
+            };
         }
     });
 

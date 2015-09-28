@@ -313,7 +313,7 @@
                 minorTicks: { visible: true }
             });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [0.5, 266.5, 533.5, 799.5], TOLERANCE);
+                 [0.5, 400.5, 799.5], TOLERANCE);
         });
 
         test("minor ticks are distributed horizontally in reverse", function() {
@@ -335,7 +335,7 @@
             });
 
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [799.5, 533.5, 266.5, 0.5], TOLERANCE);
+                 [799.5, 400.5, 0.5], TOLERANCE);
         });
 
         test("minor ticks can be disabled", function() {
@@ -549,7 +549,7 @@
             });
 
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().y; }),
-                [0.5, 200, 399.5, 599.5], TOLERANCE);
+                [0.5, 300.5, 599.5], TOLERANCE);
         });
 
         test("line width 0 remove all ticks", function() {
@@ -805,18 +805,25 @@
             equal(categoryAxis.range().max, 3);
         });
 
-        test("from value can't be lower than 0", function() {
-            var slot = categoryAxis.getSlot(-1);
+        test("from value can't be lower than 0 if limited", function() {
+            var slot = categoryAxis.getSlot(-1, -1, true);
             equal(slot.x1, 0);
         });
 
-        test("caps from value to categories count", function() {
-            var slot = categoryAxis.getSlot(1000);
+        test("caps from value to categories count if limited", function() {
+            var slot = categoryAxis.getSlot(1000, 1000, true);
             equal(slot.x1, lineBox.x2);
         });
 
-        test("to value equals from value when not set", function() {
-            var slot = categoryAxis.getSlot(1000);
+        test("to value equals from value when not set (justified)", function() {
+            createCategoryAxis({ justified: true });
+            var slot = categoryAxis.getSlot(2);
+            equal(slot.x2, slot.x1);
+        });
+
+        test("to value equals from value when not set (justified)", function() {
+            createCategoryAxis({ justified: true });
+            var slot = categoryAxis.getSlot(2);
             equal(slot.x2, lineBox.x2);
         });
 
@@ -827,7 +834,7 @@
 
         test("positions last slot at line end (no categories)", function() {
             createCategoryAxis({ categories: []});
-            var slot = categoryAxis.getSlot(Number.MAX_VALUE);
+            var slot = categoryAxis.getSlot(Number.MAX_VALUE, Number.MAX_VALUE, true);
             arrayClose([slot.x1, slot.x2], [lineBox.x2, lineBox.x2], TOLERANCE);
         });
 
@@ -938,7 +945,7 @@
 
         test("positions last slot at line end (no categories)", function() {
             createCategoryAxis({ vertical: true, categories: []});
-            var slot = categoryAxis.getSlot(Number.MAX_VALUE);
+            var slot = categoryAxis.getSlot(Number.MAX_VALUE, Number.MAX_VALUE, true);
             arrayClose([slot.y1, slot.y2], [lineBox.y2, lineBox.y2], TOLERANCE);
         });
 
