@@ -2739,7 +2739,17 @@
           },
           "packages": [
               "!offline"
-          ]
+          ],
+          "sources": {
+              "kendo-ui": [{
+                  "name": "Sheets settings",
+                  "url": "~/content/web/spreadsheet/prices.json"
+              }],
+              "aspnet-mvc": [{
+                  "name": "Sheets settings",
+                  "url": "~/content/web/spreadsheet/prices.json"
+              }]
+          }
       },
       {
           "text": "Server Export to PDF",
