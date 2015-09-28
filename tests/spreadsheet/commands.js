@@ -598,6 +598,75 @@
         equal(sheet._mergedCells.length, 1);
     });
 
+    var FreezePanesCommand = kendo.spreadsheet.FreezePanesCommand;
+
+    function freezePanesCommand(value, range) {
+        var command = new FreezePanesCommand({ value: value });
+        command.range(sheet.range(range));
+        return command;
+    }
+
+    module("SpreadSheet FreezePanesCommand", moduleOptions);
+
+    test("command freeze panes freezes all cols and rows above topLeft corner of the range", function() {
+        var command = freezePanesCommand("panes", "B2:C3");
+        command.exec();
+
+        var frozenRows = sheet.frozenRows();
+        var frozenColumns = sheet.frozenColumns();
+
+        equal(frozenRows, 1);
+        equal(frozenColumns, 1);
+    });
+
+    test("command freeze rows freezes all rows above topLeft corner of the range", function() {
+        var command = freezePanesCommand("rows", "B2:C3");
+        command.exec();
+
+        var frozenRows = sheet.frozenRows();
+        var frozenColumns = sheet.frozenColumns();
+
+        equal(frozenRows, 1);
+        equal(frozenColumns, 0);
+    });
+
+    test("command freeze cols freezes all cols left from topLeft corner of the range", function() {
+        var command = freezePanesCommand("columns", "B2:C3");
+        command.exec();
+
+        var frozenRows = sheet.frozenRows();
+        var frozenColumns = sheet.frozenColumns();
+
+        equal(frozenRows, 0);
+        equal(frozenColumns, 1);
+    });
+
+    test("command unfreeze unfreezes all cols and rows", function() {
+        sheet.frozenColumns(1).frozenRows(1);
+        var command = freezePanesCommand("unfreeze", "B2:C3");
+        command.exec();
+
+        var frozenRows = sheet.frozenRows();
+        var frozenColumns = sheet.frozenColumns();
+
+        equal(frozenRows, 0);
+        equal(frozenColumns, 0);
+    });
+
+    test("commands 'freeze rows' and 'freeeze cols' stacks", function() {
+        var command1 = freezePanesCommand("rows", "B2:C3");
+        command1.exec();
+
+        var command2 = freezePanesCommand("columns", "B2:C3");
+        command2.exec();
+
+        var frozenRows = sheet.frozenRows();
+        var frozenColumns = sheet.frozenColumns();
+
+        equal(frozenRows, 1);
+        equal(frozenColumns, 1);
+    });
+
     module("SpreadSheet AdjustDecimals", moduleOptions);
 
     var adjustDecimalsCommand = $.proxy(command, this, kendo.spreadsheet.AdjustDecimalsCommand);

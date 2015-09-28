@@ -266,6 +266,46 @@
         }
     });
 
+    kendo.spreadsheet.FreezePanesCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._type = options.value;
+        },
+        exec: function() {
+            this.getState();
+            this._topLeft = this.range().topLeft();
+            this[this._type]();
+        },
+        getState: function() {
+            this._state = this.range().sheet().getState();
+        },
+        undo: function() {
+            this.range().sheet().setState(this._state);
+        },
+        panes: function() {
+            var topLeft = this._topLeft;
+            var sheet = this.range().sheet();
+
+            sheet.frozenColumns(topLeft.col).frozenRows(topLeft.row);
+        },
+        rows: function() {
+            var topLeft = this._topLeft;
+            var sheet = this.range().sheet();
+
+            sheet.frozenRows(topLeft.row);
+        },
+        columns: function() {
+            var topLeft = this._topLeft;
+            var sheet = this.range().sheet();
+
+            sheet.frozenColumns(topLeft.col);
+        },
+        unfreeze: function() {
+            var sheet = this.range().sheet();
+            sheet.frozenRows(0).frozenColumns(0);
+        }
+    });
+
     kendo.spreadsheet.PasteCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);

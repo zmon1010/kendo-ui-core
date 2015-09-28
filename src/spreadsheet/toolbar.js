@@ -20,6 +20,7 @@
             [ "formatDecreaseDecimal", "formatIncreaseDecimal" ],
             "format",
             "merge",
+            "freeze",
             "filter"
         ],
         insert: [
@@ -54,6 +55,7 @@
         fontSize:              { type: "fontSize",    property: "fontSize",   iconClass: "font-size" },
         format:                { type: "format",      property: "format",     iconClass: "format-number" },
         merge:                 { type: "merge",                               iconClass: "merge-cells" },
+        freeze:                { type: "freeze",                              iconClass: "freeze-panes" },
         borders:               { type: "borders",                             iconClass: "all-borders" },
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
 
@@ -199,6 +201,7 @@
                 formatIncreaseDecimal: "Increase decimal",
                 italic: "Italic",
                 merge: "Merge cells",
+                freeze: "Freeze panes",
                 paste: "Paste",
                 sortAsc: "Sort ascending",
                 sortDesc: "Sort descending",
@@ -834,6 +837,61 @@
     });
 
     kendo.toolbar.registerComponent("merge", MergeTool, MergeButton);
+
+    var FreezeTool = PopupTool.extend({
+        init: function(options, toolbar) {
+            PopupTool.fn.init.call(this, options, toolbar);
+
+            this._commandPalette();
+            this.popup.element.on("click", ".k-button", function(e) {
+                this._action($(e.currentTarget));
+            }.bind(this));
+
+            this.element.data({
+                type: "freeze",
+                freeze: this,
+                instance: this
+            });
+        },
+        buttons: [
+            { value: "panes",    iconClass: "freeze-panes" },
+            { value: "rows",      iconClass: "freeze-row" },
+            { value: "columns",   iconClass: "freeze-col" },
+            { value: "unfreeze", iconClass: "normal-layout" }
+        ],
+        destroy: function() {
+            this.popup.element.off();
+            PopupTool.fn.destroy.call(this);
+        },
+        _commandPalette: function() {
+            var element = $("<div />").appendTo(this.popup.element);
+            this.buttons.forEach(function(options) {
+                var title = options.value === "unfreeze" ? "Unfreeze panes" : "Freeze " + options.value;
+                var button = "<a title='" + title + "' data-value='" + options.value + "' class='k-button k-button-icontext'>" +
+                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + title +
+                             "</a>";
+                element.append(button);
+            });
+        },
+        _action: function(button) {
+            var value = button.attr("data-value");
+
+            this.toolbar.action({
+                command: "FreezePanesCommand",
+                options: {
+                    value: value
+                }
+            });
+        }
+    });
+
+    var FreezeButton = OverflowDialogButton.extend({
+        _click: function() {
+            this.toolbar.dialog({ name: "freeze" });
+        }
+    });
+
+    kendo.toolbar.registerComponent("freeze", FreezeTool, FreezeButton);
 
     var Sort = DropDownTool.extend({
         _revertTitle: function(e) {

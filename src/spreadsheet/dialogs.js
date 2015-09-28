@@ -649,6 +649,54 @@
 
     kendo.spreadsheet.dialogs.register("merge", MergeDialog);
 
+    var FreezeDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+
+            this._list();
+        },
+        options: {
+            title: "Freeze panes",
+            template: "<ul class='k-list k-reset'></ul>",
+            buttons: [
+                { value: "panes",    iconClass: "freeze-panes" },
+                { value: "rows",      iconClass: "freeze-row" },
+                { value: "columns",   iconClass: "freeze-col" },
+                { value: "unfreeze", iconClass: "normal-layout" }
+            ]
+        },
+        _list: function() {
+            var ul = this.dialog().element.find("ul");
+
+            this.list = new kendo.ui.StaticList(ul, {
+                dataSource: new kendo.data.DataSource({ data: this.options.buttons }),
+                template: function(data) {
+                    var title = data.value === "unfreeze" ? "Unfreeze panes" : "Freeze " + data.value;
+
+                    return "<a title='" + title + "' data-value=" + data.value + ">" +
+                                "<span class='k-icon k-font-icon k-i-" + data.iconClass + "'></span>" + title +
+                           "</a>";
+                },
+                change: this.apply.bind(this)
+            });
+
+            this.list.dataSource.fetch();
+        },
+        apply: function(e) {
+            var dataItem = e.sender.value()[0];
+            SpreadsheetDialog.fn.apply.call(this);
+
+            this.trigger("action", {
+                command: "FreezePanesCommand",
+                options: {
+                    value: dataItem.value
+                }
+            });
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("freeze", FreezeDialog);
+
     var ValidationViewModel = kendo.spreadsheet.ValidationCellsViewModel = ObservableObject.extend({
         init: function(options) {
             //TODO: on init apply default messages from  the validation object.
