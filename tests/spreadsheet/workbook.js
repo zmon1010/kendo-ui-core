@@ -299,4 +299,23 @@
         equal(workbook.activeSheet().calls("activeCellSelection"), 1);
     });
 
+    test("execute sets command range to operatingRange, if set", function() {
+        var sheet = workbook.insertSheet({ rows: 4, columns: 4 });
+
+        sheet.range("A1:B2").values([ [ 1, 2 ], [ 3, 4 ] ]).filter(true);
+
+        workbook.execute({
+            command: "ApplyFilterCommand",
+            options: {
+                operatingRange: sheet.range("A1:B2"),
+                valueFilter: {
+                    values: [ 1 ]
+                }
+            }
+        });
+
+        var stack = workbook.undoRedoStack.stack;
+        equal(stack[stack.length-1].range()._ref.toString(), "A1:B2");
+    });
+
 })();

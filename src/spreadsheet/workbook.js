@@ -72,7 +72,6 @@
 
             if (commandOptions.operatingRange) {
                 command.range(commandOptions.operatingRange);
-                command.range(sheet.selection());
             } else if (commandOptions.editActiveCell) {
                 command.range(sheet.activeCellSelection());
             } else {
