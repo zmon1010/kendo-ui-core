@@ -45,10 +45,8 @@
                     this.value = false;
                 }
             } else {
-                //TODO: MAKE WORKS FOR OTHER TYPES, DIFF THAN DATE:
-                var type = valueFormat ? spreadsheet.formatting.type(valueToCompare, valueFormat) : "";
-
-                this.value = type == this.dataType || this.dataType == "custom" ? comparer(valueToCompare, this.from.value,  toValue) : "type error";
+                //TODO: TYPE CHECK IS REQUIRED ONLY FOR DATE TYPE WHEN SPECIAL COMPARER (ISDATE) IS USED
+                this.value = comparer(valueToCompare, this.from.value,  toValue);
             }
 
             return this.value;

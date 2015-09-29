@@ -765,7 +765,6 @@
             this.set("comparers", comparers);
         },
         setHintMessageTemplate: function() {
-           //TODO: clear hintMessageTemplate and hintMessage when 'custom'
            if (this.criterion !== "custom") {
                this.set("hintMessageTemplate", kendo.format(this.defaultHintMessage, this.criterion, this.comparerMessages[this.comparer]));
            } else {
