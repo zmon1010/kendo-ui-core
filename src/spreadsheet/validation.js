@@ -27,13 +27,13 @@
         }
 
 
-        var comparer = validation.dataType == "custom" ? exports.validationComparers["custom"] : exports.validationComparers[validation.comparerType];
+        var comparer = validation.dataType == "custom" ? exports.validationComparers.custom : exports.validationComparers[validation.comparerType];
 
         if (!comparer) {
             throw kendo.format("'{0}' comparer is not implemented.", validation.comparerType);
         }
 
-        validationHandler = function (valueToCompare, valueFormat) {
+        validationHandler = function (valueToCompare) { //add 'valueFormat' arg when add isDate comparer
             var toValue = this.to && this.to.value ? this.to.value : undefined;
 
             if ( this.dataType == "custom") {
