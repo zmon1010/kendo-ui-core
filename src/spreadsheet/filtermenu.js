@@ -173,6 +173,10 @@
                 customFilter.criteria = this.normalizeCriteria(customFilter.criteria);
 
                 return customFilter;
+            },
+            reset: function() {
+                this.set("customFilter", { logic: "and", criteria: [ { operator: null, value: null } ] });
+                this.set("valueFilter", { values: [] });
             }
         });
 
@@ -199,20 +203,11 @@
                 this.viewModel = new FilterMenuViewModel({
                     active: "value",
                     operators: flattern(this.options.operators),
-                    customFilter: {
-                        logic: "and",
-                        criteria: [
-                            { operator: null, value: null }
-                        ]
-                    },
-                    valueFilter: {
-                        values: []
-                    },
                     clear: this.clear.bind(this),
                     apply: this.apply.bind(this)
                 });
 
-                this._setExistingFilter();
+                this._setFilter();
                 this._popup();
                 this._sort();
                 this._filterByCondition();
@@ -289,6 +284,7 @@
                         column: this.options.column
                     }
                 });
+                this.viewModel.reset();
                 this.close();
             },
 
@@ -386,10 +382,14 @@
                 }];
             },
 
-            _setExistingFilter: function() {
+            _setFilter: function() {
                 var column = this.options.column;
                 var sheet = this.options.range.sheet();
                 var filterObject = sheet.filter();
+                var serializedFilter;
+                var criterion;
+                var type;
+                var operator;
 
                 if (filterObject) {
                     filterObject = filterObject.columns.filter(function(item) {
@@ -397,41 +397,41 @@
                     })[0];
                 }
 
-                var serializedFilter;
-                var criterion;
-                var type;
-                var operator;
-
                 if (filterObject) {
                     serializedFilter = filterObject.filter.toJSON();
-                    criterion = serializedFilter.criteria.pop();
 
-                    if (typeof criterion.operator === "string") {
-                        type = criterion.value instanceof Date ? "date" : typeof criterion.value;
-                        operator = criterion.operator;
-                        serializedFilter.criteria.push({
-                            operator: {
-                                text: this.options.operators[type][operator],
-                                type: type,
-                                value: operator,
-                                unique: type + "_" + operator
-                            },
-                            value: criterion.value
-                        });
-                    } else {
-                        serializedFilter.criteria.push({
-                            operator: {
-                                text: this.options.operators[criterion.type][criterion.operator],
-                                type: criterion.type,
-                                value: criterion.operator,
-                                unique: criterion.type + "_" + criterion.operator
-                            },
-                            value: criterion.value
-                        });
+                    if (serializedFilter.filter === "custom") {
+                        criterion = serializedFilter.criteria.pop();
+
+                        if (typeof criterion.operator === "string") {
+                            type = criterion.value instanceof Date ? "date" : typeof criterion.value;
+                            operator = criterion.operator;
+                            serializedFilter.criteria.push({
+                                operator: {
+                                    text: this.options.operators[type][operator],
+                                    type: type,
+                                    value: operator,
+                                    unique: type + "_" + operator
+                                },
+                                value: criterion.value
+                            });
+                        } else {
+                            serializedFilter.criteria.push({
+                                operator: {
+                                    text: this.options.operators[criterion.type][criterion.operator],
+                                    type: criterion.type,
+                                    value: criterion.operator,
+                                    unique: criterion.type + "_" + criterion.operator
+                                },
+                                value: criterion.value
+                            });
+                        }
                     }
 
                     this.viewModel.set("active", serializedFilter.filter);
                     this.viewModel.set(serializedFilter.filter + "Filter", serializedFilter);
+                } else {
+                    this.viewModel.reset();
                 }
             },
 
