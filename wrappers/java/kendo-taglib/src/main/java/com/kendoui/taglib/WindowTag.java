@@ -214,6 +214,14 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("resizable", value);
     }
 
+    public boolean getScrollable() {
+        return (Boolean)getProperty("scrollable");
+    }
+
+    public void setScrollable(boolean value) {
+        setProperty("scrollable", value);
+    }
+
     public java.lang.Object getTitle() {
         return (java.lang.Object)getProperty("title");
     }

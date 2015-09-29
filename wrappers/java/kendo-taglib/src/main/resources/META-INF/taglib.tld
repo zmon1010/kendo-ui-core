@@ -12194,7 +12194,7 @@ odata version 4 and "signalr".</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the data source makes a remote service request.The event handler function context (available via the this keyword) will be set to the data source instance.</description>
+            <description>Fired when the data source makes a remote service request.The event handler function context (available via the this keyword) will be set to the data source instance.It is possible to prevent the remote request. To achieve this, execute e.preventDefault() in the handler function.</description>
             <name>requestStart</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -12804,7 +12804,7 @@ callbacks which will handle push notifications (data pushed from the server).</d
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the data source makes a remote service request.The event handler function context (available via the this keyword) will be set to the data source instance.</description>
+        <description>Fired when the data source makes a remote service request.The event handler function context (available via the this keyword) will be set to the data source instance.It is possible to prevent the remote request. To achieve this, execute e.preventDefault() in the handler function.</description>
         <name>dataSource-requestStart</name>
         <tag-class>com.kendoui.taglib.datasource.RequestStartFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -18205,7 +18205,7 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "POST".
 Refer to the jQuery.ajax documentation for further info.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18262,7 +18262,7 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "POST".
 Refer to the jQuery.ajax documentation for further info.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18319,7 +18319,7 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "POST".
 Refer to the jQuery.ajax documentation for further info.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18660,7 +18660,7 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "POST".
 Refer to the jQuery.ajax documentation for further info.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18717,7 +18717,7 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "POST".
 Refer to the jQuery.ajax documentation for further info.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18774,7 +18774,7 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "POST".
 Refer to the jQuery.ajax documentation for further info.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
@@ -20723,7 +20723,8 @@ The grid uses same layout for both phone and tablet.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.</description>
+            <description>If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
+Multi-level headers allow reordering only in same level.</description>
             <name>reorderable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -21315,7 +21316,7 @@ If the dataSource options is missing the options of the Grid's dataSource will b
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Specifies the AutoComplete filter option. Possible values are same as the one for the AutoComplete filter option- "startswidht", "endswith", "contains".</description>
+            <description>Specifies the AutoComplete filter option. Possible values are same as the one for the AutoComplete filter option- "startswith", "endswith", "contains".</description>
             <name>suggestionOperator</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -21986,6 +21987,14 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <name>pageSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the pager will display a drop-down which allows the user to pick a page size.
+By default the page size drop-down is not displayed.Can be set to an array of predefined page sizes to override the default list.
+A special all value is supported. It sets the page size to the total number of records.If a pageSize setting is provided for the data source then this value will be selected initially.</description>
+            <name>pageSizes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>If set to true the pager will display buttons for going to the first, previous, next and last pages. By default those buttons are displayed.</description>
@@ -23213,6 +23222,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <name>pageSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Displayes a list with predefined page sizes. An array of values to be displayed can be provided.</description>
+            <name>pageSizes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>Defines if buttons for navigating to the first, last, previous and next pages will be shown.</description>
@@ -33787,6 +33802,656 @@ and is about to render it.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>Spreadsheet</description>
+        <name>spreadsheet</name>
+        <tag-class>com.kendoui.taglib.SpreadsheetTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The name of the currently active sheet.Must match one of the (sheet names)[#configuration-sheets.name] exactly.</description>
+            <name>activeSheet</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The default column width in pixels.</description>
+            <name>columnWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The number of columns in the document.</description>
+            <name>columns</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The height of the header row in pixels.</description>
+            <name>headerHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The width of the header column in pixels.</description>
+            <name>headerWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The default row height in pixels.</description>
+            <name>rowHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The number of rows in the document.</description>
+            <name>rows</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>A boolean value indicating if the toolbar should be displayed.</description>
+            <name>toolbar</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Triggered after the widget has completed rendering.</description>
+            <name>render</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user clicks the "Export to Excel" toolbar button.</description>
+            <name>excelExport</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Configures the Kendo UI Spreadsheet Excel export settings.</description>
+        <name>spreadsheet-excel</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.ExcelTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Specifies the file name of the exported Excel file.</description>
+            <name>fileName</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.</description>
+            <name>forceProxy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
+Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="&lt;fileName.xslx&gt;".</description>
+            <name>proxyURL</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>An array defining the document sheets and their content.</description>
+        <name>spreadsheet-sheets</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>An array defining the document sheets and their content.</description>
+        <name>spreadsheet-sheet</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The active cell in the sheet, e.g. "A1".</description>
+            <name>activeCell</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The data source instance for this sheet.See Bind to Data Source.</description>
+            <name>dataSource</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type></type>
+        </attribute>
+        <attribute>
+            <description>The number of frozen columns in this sheet.</description>
+            <name>frozenColumns</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The number of frozen rows in this sheet.</description>
+            <name>frozenRows</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>An array of merged cell ranges, e.g. "B1:D2".</description>
+            <name>mergedCells</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The name of the sheet.</description>
+            <name>name</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The selected range in the sheet, e.g. "A1:B10".</description>
+            <name>selection</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>An array defining the columns in this sheet and their content.</description>
+        <name>spreadsheet-sheet-columns</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetColumnsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>An array defining the columns in this sheet and their content.</description>
+        <name>spreadsheet-sheet-column</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetColumnTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>The zero-based index of the column. Required to ensure correct positioning.</description>
+            <name>index</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The width of the column in pixels. Defaults to columnWidth.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+    </tag>
+
+
+    <tag>
+        <description>Defines the filtering criteria for this sheet, if any.</description>
+        <name>spreadsheet-sheet-filter</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetFilterTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The active range for the filter, e.g. "B1:D8".</description>
+            <name>ref</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>An array defining the filter configuration of individual columns.</description>
+        <name>spreadsheet-sheet-filter-columns</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetFilterColumnsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>An array defining the filter configuration of individual columns.</description>
+        <name>spreadsheet-sheet-filter-column</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetFilterColumnTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The filter to apply to this column.The supported filters are:
+  * value - filters based on unique values
+  * custom - applies custom filtering criteria
+  * top - filters the top or bottom records
+  * dynamic - filters based on dynamic criteria</description>
+            <name>filter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The index of the column relative to the filter range.</description>
+            <name>index</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The logical operator to apply to filter criteria.Possible values are and, or.</description>
+            <name>logic</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The filter sub-type, if any.Applicable types according to the main filter.
+* top
+    * topNumber
+    * topPercent
+    * bottomNumber
+    * bottomPercent
+* dynamic
+    * aboveAverage
+    * belowAverage
+    * tomorrow
+    * today
+    * yesterday
+    * nextWeek
+    * thisWeek
+    * lastWeek
+    * nextMonth
+    * thisMonth
+    * lastMonth
+    * nextQuarter
+    * thisQuarter
+    * lastQuarter
+    * nextYear
+    * thisYear
+    * lastYear
+    * yearToDate</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The filter value for filters that require a single value, e.g. "top".</description>
+            <name>value</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>An array of filter criteria for custom filters.</description>
+        <name>spreadsheet-sheet-filter-column-criteria</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetFilterColumnCriteriaTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>An array of filter criteria for custom filters.</description>
+        <name>spreadsheet-sheet-filter-column-criteriaItem</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetFilterColumnCriteriaItemTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>The criterion operator type.Supported types vary based on the inferred column data type (inferred):
+* Text
+    * contains - the text contains the value
+    * doesnotcontain - text does not contain the value
+    * startswith - text starts with the value
+    * endswith - text ends with the value
+* Date
+    * eq -  date is the same as the value
+    * neq - date is not the same as the value
+    * lt -  date is before the value
+    * gt -  date is after the value
+* Number
+    * eq - is equal to the value
+    * neq - is not equal to the value
+    * gte - is greater than or equal to the value
+    * gt - is greater than the value
+    * lte - is less than or equal to the value
+    * lt - is less than the value</description>
+            <name>operator</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The value for the criteria operator.</description>
+            <name>value</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+
+
+    <tag>
+        <description>The row data for this sheet.</description>
+        <name>spreadsheet-sheet-rows</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetRowsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>The row data for this sheet.</description>
+        <name>spreadsheet-sheet-row</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetRowTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The row height in pixels. Defaults to rowHeight.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The absolute row index. Required to ensure correct positioning.</description>
+            <name>index</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>The cells for this row.</description>
+        <name>spreadsheet-sheet-row-cells</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetRowCellsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>The cells for this row.</description>
+        <name>spreadsheet-sheet-row-cell</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetRowCellTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The background color of the cell.Many standard CSS formats are supported, but the canonical form is "#ccff00".</description>
+            <name>background</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the cell font to bold, if set to true.</description>
+            <name>bold</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The font color of the cell.Many standard CSS formats are supported, but the canonical form is "#ccff00".</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font family for the cell.</description>
+            <name>fontFamily</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font size of the cell in pixels.</description>
+            <name>fontSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The format of the cell text.See Create or delete a custom number format on MS Office.</description>
+            <name>format</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The cell formula without the leading equals sign, e.g. A1 * 10.</description>
+            <name>formula</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The zero-based index of the cell. Required to ensure correct positioning.</description>
+            <name>index</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Sets the cell font to italic, if set to true.</description>
+            <name>italic</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text alignment in the cell</description>
+            <name>textAlign</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the cell font to underline, if set to true.</description>
+            <name>underline</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The cell value.</description>
+            <name>value</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text vertical alignment in the cell</description>
+            <name>verticalAlign</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Will wrap the cell content if set to true.</description>
+            <name>wrap</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>The style information for the bottom border of the cell.</description>
+        <name>spreadsheet-sheet-row-cell-borderBottom</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetRowCellBorderBottomTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom border color of the cell.Many standard CSS formats are supported, but the canonical form is "#ccff00".</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The width of the border in pixels.</description>
+            <name>size</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The style information for the left border of the cell.</description>
+        <name>spreadsheet-sheet-row-cell-borderLeft</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetRowCellBorderLeftTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The left border color of the cell.Many standard CSS formats are supported, but the canonical form is "#ccff00".</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The width of the border in pixels.</description>
+            <name>size</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The style information for the right border of the cell.</description>
+        <name>spreadsheet-sheet-row-cell-borderRight</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetRowCellBorderRightTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The right border color of the cell.Many standard CSS formats are supported, but the canonical form is "#ccff00".</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The width of the border in pixels.</description>
+            <name>size</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The style information for the top border of the cell.</description>
+        <name>spreadsheet-sheet-row-cell-borderTop</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetRowCellBorderTopTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The top border color of the cell.Many standard CSS formats are supported, but the canonical form is "#ccff00".</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The width of the border in pixels.</description>
+            <name>size</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The validation rule applied to the cell.</description>
+        <name>spreadsheet-sheet-row-cell-validation</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetRowCellValidationTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Specifies whether to allow nulls.</description>
+            <name>allowNulls</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the comparer type used to validate the cell value, e.g. "greaterThan", "between" and etc.</description>
+            <name>comparerType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the data type of the cell value.</description>
+            <name>dataType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a formula or value used for the comparison process. Used as only if comparer type does not require second argument.</description>
+            <name>from</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hint message that will be displayed if value is invalid.</description>
+            <name>messageTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hint title that will be displayed if value is invalid.</description>
+            <name>titleTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a formula or value used for the comparison process. Will be used if comparer type requies second argument.</description>
+            <name>to</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+
+    <tag>
+        <description>Defines the sort criteria for the sheet.</description>
+        <name>spreadsheet-sheet-sort</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetSortTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The sorted range, e.g. "A1:D5".</description>
+            <name>ref</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Specifies the sort options for individual columns.</description>
+        <name>spreadsheet-sheet-sort-columns</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetSortColumnsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the sort options for individual columns.</description>
+        <name>spreadsheet-sheet-sort-column</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SheetSortColumnTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>Indicates if the data in the cell should be sorted ascending (true) or descending or (false).</description>
+            <name>ascending</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The index of the column within the sheet.For example, column C will have index 2.</description>
+            <name>index</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+    </tag>
+
+
+
+
+
+    <tag>
+        <description>Triggered after the widget has completed rendering.</description>
+        <name>spreadsheet-render</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.RenderFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user clicks the "Export to Excel" toolbar button.</description>
+        <name>spreadsheet-excelExport</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.ExcelExportFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>StockChart</description>
         <name>stockChart</name>
         <tag-class>com.kendoui.taglib.StockChartTag</tag-class>
@@ -42064,7 +42729,7 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the treelist will display a scrollbar when the total row height (or width) exceeds the treelist height (or width). By default scrolling is enabled.Can be set to a JavaScript object which represents the scrolling configuration.</description>
+            <description>If set to true the TreeList will display a scrollbar when the total row height (or width) exceeds the TreeList height (or width). By default scrolling is enabled.Scrolling renders separate tables for the header and data area. For accessibility-conscious applications, disable scrolling.</description>
             <name>scrollable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -43996,6 +44661,12 @@ Note that this does not constrain the window dragging within the given element.<
         <attribute>
             <description>Enables (true) or disables (false) the ability for users to resize a Window.</description>
             <name>resizable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Enables (true) or disables (false) the ability for users to scroll the window contents.</description>
+            <name>scrollable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
