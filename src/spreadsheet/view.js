@@ -139,7 +139,7 @@
             }
         }
 
-        var td = table.addCell(row, data, style);
+        var td = table.addCell(row, data, style, null, cell.validation);
 
         var border, sibling;
 
@@ -198,7 +198,7 @@
             this.trs.push(tr);
         },
 
-        addCell: function(rowIndex, text, style, className) {
+        addCell: function(rowIndex, text, style, className, validation) {
             if (text === null || text === undefined) {
                 text = "";
             }
@@ -206,7 +206,18 @@
                 text = kendo.dom.text(text);
             }
 
-            var td = kendo.dom.element("td", { style: style, className: className }, [ text ]);
+            var children = [ text ];
+            var properties = { style: style, className: className };
+
+            if (validation && !validation.valid) {
+                children.push(kendo.dom.element("span", { className: "k-dirty" }));
+
+                properties.className = (className || "") + (className ? " " : "") + "k-dirty-cell";
+                properties.title = validation._getOptions().messageTemplate;
+            }
+
+            var td = kendo.dom.element("td", properties, children);
+
             this.trs[rowIndex].children.push(td);
             return td;
         },

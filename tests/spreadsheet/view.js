@@ -95,6 +95,45 @@
         ok(true);
     });
 
+    test("add 'k-dirty-cell' of first cell when value is not valid", function() {
+        var cell = singleCell({
+            borderTop: { size: "1px", color: "rgb(255, 0 0)" },
+            validation: { from: "10", comparerType: "equalTo", messageTemplate: "Enter valid value!" }
+        });
+        sheet.fromJSON(cell);
+
+        var topCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
+
+        ok(topCell.hasClass("k-dirty-cell"));
+    });
+
+    test("add 'k-dirty' element to invalid cell", function() {
+        var cell = singleCell({
+            borderTop: { size: "1px", color: "rgb(255, 0 0)" },
+            validation: { from: "10", comparerType: "equalTo", messageTemplate: "Enter valid value!" }
+        });
+        sheet.fromJSON(cell);
+
+        var topCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
+        var flagSpan = topCell.children(".k-dirty");
+
+        equal(flagSpan.length, 1);
+        ok(flagSpan[0].nodeName, "SPAN");
+    });
+
+    test("add cell title if element is not valid", function() {
+        var title = "Enter valid value!";
+        var cell = singleCell({
+            borderTop: { size: "1px", color: "rgb(255, 0 0)" },
+            validation: { from: "10", comparerType: "equalTo", messageTemplate: title }
+        });
+        sheet.fromJSON(cell);
+
+        var topCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
+
+        equal(topCell.attr("title"), title);
+    });
+
     test("renders tabstrip", function() {
         ok(spreadsheet._view.tabstrip instanceof kendo.ui.TabStrip);
         ok($(".k-tabstrip").length);
