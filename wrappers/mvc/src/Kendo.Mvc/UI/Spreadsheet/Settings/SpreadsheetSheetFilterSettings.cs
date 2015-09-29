@@ -40,7 +40,11 @@ namespace Kendo.Mvc.UI
             
         //<< Serialization            
 
-            json["columns"] = Columns.ToJson();
+            // serlialize columns only when there is Ref
+            if (Ref.HasValue())
+            {
+                json["columns"] = Columns.ToJson();
+            }
             
         }
     }
