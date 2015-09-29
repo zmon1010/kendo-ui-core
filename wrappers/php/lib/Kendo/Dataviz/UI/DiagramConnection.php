@@ -42,6 +42,15 @@ class DiagramConnection extends \Kendo\SerializableObject {
     }
 
     /**
+    * Specifies the name of the source shape connector that should be used by default.
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\DiagramConnection
+    */
+    public function fromConnector($value) {
+        return $this->setProperty('fromConnector', $value);
+    }
+
+    /**
     * Defines the hover configuration.
     * @param \Kendo\Dataviz\UI\DiagramConnectionHover|array $value
     * @return \Kendo\Dataviz\UI\DiagramConnection
@@ -96,7 +105,16 @@ class DiagramConnection extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies the connection type. The supported values are "polyline" and "cascading".
+    * Specifies the name of the target shape connector that should be used by default.
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\DiagramConnection
+    */
+    public function toConnector($value) {
+        return $this->setProperty('toConnector', $value);
+    }
+
+    /**
+    * The connection type.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramConnection
     */

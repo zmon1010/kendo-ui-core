@@ -73,6 +73,15 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
+    * Specifies if the chart can be panned.
+    * @param boolean|\Kendo\Dataviz\UI\ChartPannable|array $value
+    * @return \Kendo\Dataviz\UI\Chart
+    */
+    public function pannable($value) {
+        return $this->setProperty('pannable', $value);
+    }
+
+    /**
     * Configures the export settings for the saveAsPDF method.
     * @param \Kendo\Dataviz\UI\ChartPdf|array $value
     * @return \Kendo\Dataviz\UI\Chart
@@ -188,6 +197,15 @@ If it is not supported by the browser, the Chart will switch to the first availa
     */
     public function addYAxisItem($value) {
         return $this->add('yAxis', func_get_args());
+    }
+
+    /**
+    * Specifies if the chart can be zoomed.
+    * @param boolean|\Kendo\Dataviz\UI\ChartZoomable|array $value
+    * @return \Kendo\Dataviz\UI\Chart
+    */
+    public function zoomable($value) {
+        return $this->setProperty('zoomable', $value);
     }
 
     /**
