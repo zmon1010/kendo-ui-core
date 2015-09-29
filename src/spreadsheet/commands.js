@@ -416,6 +416,26 @@
         }
     });
 
+    kendo.spreadsheet.ToolbarCutCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._workbook = options.workbook;
+            this._clipboard = options.workbook.clipboard();
+        },
+        exec: function() {
+            if(kendo.support.browser.msie && kendo.support.browser.version >= 10) {
+                var clipboard = this._workbook._view.clipboard;
+                var textarea = document.createElement('textarea');
+                $(textarea).val(clipboard.html()).appendTo(document.body).focus().select();
+                document.execCommand('cut');
+                clipboard.trigger("cut");
+                $(textarea).remove();
+            } else {
+                this._workbook._view.openDialog("useKeyboard");
+            }
+        }
+    });
+
     kendo.spreadsheet.FilterCommand = Command.extend({
         undo: function() {
             this.range().filter(this._state);

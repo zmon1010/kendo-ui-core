@@ -165,13 +165,13 @@
                 var command;
                 switch(action) {
                     case "cut":
-                        this.onCut();
+                        command = { command: "ToolbarCutCommand", options: { workbook: this._workbook } };
                         break;
                     case "copy":
-                        this.onCopy();
+                        command = { command: "ToolbarCopyCommand", options: { workbook: this._workbook } };
                         break;
                     case "paste":
-                        this.onPaste();
+                        command = { command: "ToolbarPasteCommand", options: { workbook: this._workbook } };
                         break;
                     case "unmerge":
                         command = { command: "MergeCellCommand", options: { value: "unmerge" } };
@@ -549,7 +549,15 @@
             this.onEditorUpdate();
         },
 
-        onCut: function() {
+        onCut: function(e) {
+            if(e){
+                var table = this.clipboardElement.find("table.kendo-clipboard-"+ this.clipboard._uid).detach();
+                this.clipboardElement.append(table.clone(false));
+                setTimeout(function() {
+                    this.clipboardElement.empty().append(table);
+                }.bind(this));
+            }
+
             this._execute({
                 command: "CutCommand",
                 options: { workbook: this.view._workbook }
