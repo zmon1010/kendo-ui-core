@@ -321,8 +321,8 @@
             this._clipboard.menuInvoked = true;
             if(!status.canPaste) {
                 if(status.menuInvoked) {
-                    this._workbook._view.openDialog("useKeyboard");
-                }
+                        this._workbook._view.openDialog("useKeyboard");
+                    }
                 return;
             }
             this.getState();
@@ -361,6 +361,22 @@
                 return;
             }
             this._clipboard.copy();
+        }
+    });
+
+    kendo.spreadsheet.ToolbarPasteCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._workbook = options.workbook;
+            this._clipboard = options.workbook.clipboard();
+        },
+        exec: function() {
+            if(kendo.support.browser.msie) {
+                this._workbook._view.clipboard.focus().select();
+                document.execCommand('paste');
+            } else {
+                this._workbook._view.openDialog("useKeyboard");
+            }
         }
     });
 

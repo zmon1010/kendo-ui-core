@@ -45,7 +45,7 @@
         textWrap:              { type: "button", command: "TextWrapCommand",       property: "wrap",          value: true,     iconClass: "text-wrap", togglable: true },
         cut:                   { type: "button", command: "CutCommand",                                                        iconClass: "cut" },
         copy:                  { type: "button", command: "CopyCommand",                                                       iconClass: "copy" },
-        paste:                 { type: "button", command: "PasteCommand",                                                      iconClass: "paste" },
+        paste:                 { type: "button", command: "ToolbarPasteCommand",                                               iconClass: "paste" },
         filter:                { type: "button", command: "FilterCommand",         property: "hasFilter",                      iconClass: "filter", togglable: true },
         separator:             { type: "separator" },
         alignment:             { type: "alignment",                           iconClass: "justify-left" },

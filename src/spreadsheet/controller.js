@@ -575,9 +575,11 @@
                     }
                 } else {
                     //workaround for IE's lack of access to the HTML clipboard data
-                    this._workbook._view.clipboardContents.render([]);
+                    var table = this.clipboardElement.find("table.kendo-clipboard-"+ this.clipboard._uid).detach();
+                    this.clipboardElement.empty();
                     setTimeout(function() {
                         this.clipboard.external({html: this.clipboardElement.html(), plain: window.clipboardData.getData("Text")});
+                        this.clipboardElement.empty().append(table);
                         this._execute({
                             command: "PasteCommand",
                             options: { workbook: this.view._workbook }
