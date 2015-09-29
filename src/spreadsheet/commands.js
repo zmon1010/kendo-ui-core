@@ -331,13 +331,18 @@
             var sheet = this._workbook.activeSheet();
             var range = sheet.range(this._clipboard.pasteRef());
             range.forEachRow(function(row) {
-                var height = 0;
+                var maxHeight = row.sheet().rowHeight(row.topLeft().row);
                 row.forEachCell(function(row, col, cell) {
-                    if(cell.fontSize > height){
-                        height = cell.fontSize;
+                    var width = sheet.columnWidth(col);
+                    if(cell.wrap) {
+                        maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width));
+                    } else if(isFinite(cell.fontSize)) {
+                        maxHeight = Math.max(maxHeight, cell.fontSize + 10);
+                    } else {
+                        maxHeight = Math.max(maxHeight, 20); //default height
                     }
                 });
-                sheet.rowHeight(row.topLeft().row, height + 10); //TODO: remove magic number
+                sheet.rowHeight(row.topLeft().row, maxHeight);
             });
         }
     });
