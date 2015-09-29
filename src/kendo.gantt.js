@@ -1729,7 +1729,9 @@ var __meta__ = { // jshint ignore:line
 
                     that.saveAsPDF();
                 })
-                .on(CLICK + NS, toggleSelector, function() {
+                .on(CLICK + NS, toggleSelector, function(e) {
+                    e.preventDefault();
+
                     if (treelist.is(":visible")) {
                         treelist.css({
                             "display": "none",
