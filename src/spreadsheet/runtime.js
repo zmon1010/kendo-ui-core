@@ -355,9 +355,19 @@
             }
             return m;
         },
+        adds: function(b, s) {
+            var a = this, m = new Matrix(a.context);
+            var sign = s ? -1 : 1;
+            for (var row = 0; row < a.height; ++row) {
+                for (var col = 0; col < a.width; ++col) {
+                    var x = a.get(row, col),
+                        y = b.get(row, col);
+                    m.set(row, col, x + sign * y);
+                }
+            }
+            return m;
+        },
         determinant: function() {
-            // have to thank my father for this function.
-            // http://docere.ro/o-aplicatie-pentru-browser-cu-determinanti-si-sisteme-liniare/
             var a = this.clone().data;
             var n = a.length;
             var d = 1, C, L, i, k;
@@ -1019,7 +1029,8 @@
                     if (code.resolve) {console.log(code.resolve.toString());}
                     if (code.check) {console.log(code.check.toString());}
                 }
-                FUNCS[name] = makeSyncFunction(func, code.resolve, code.check, code.arrayArgs);
+                var f = FUNCS[name] = makeSyncFunction(func, code.resolve, code.check, code.arrayArgs);
+                f.kendoSpreadsheetArgs = args;
                 return this;
             },
             argsAsync: function(args, log) {
@@ -1030,7 +1041,8 @@
                     if (code.resolve) {console.log(code.resolve.toString());}
                     if (code.check) {console.log(code.check.toString());}
                 }
-                FUNCS[name] = makeAsyncFunction(func, code.resolve, code.check, code.arrayArgs);
+                var f = FUNCS[name] = makeAsyncFunction(func, code.resolve, code.check, code.arrayArgs);
+                f.kendoSpreadsheetArgs = args;
                 return this;
             }
         };
@@ -1220,7 +1232,15 @@
 
     exports.defineFunction = defineFunction;
     exports.defineAlias = function(alias, name) {
-        FUNCS[alias] = FUNCS[name];
+        var orig = FUNCS[name];
+        if (!orig) {
+            throw new Error("Function " + name + " is not yet defined");
+        }
+        if (!orig.kendoSpreadsheetAliases) {
+            orig.kendoSpreadsheetAliases = [ name ];
+        }
+        orig.kendoSpreadsheetAliases.push(alias);
+        FUNCS[alias] = orig;
     };
     exports.FUNCS = FUNCS;
 

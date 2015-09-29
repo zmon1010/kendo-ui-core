@@ -16,6 +16,7 @@
     var runtime = calc.runtime;
     var defineFunction = runtime.defineFunction;
     var CalcError = runtime.CalcError;
+    var Matrix = runtime.Matrix;
 
     /* -----[ Spreadsheet API ]----- */
 
@@ -321,6 +322,20 @@
         [ "?", [ "and",
                  [ "assert", "$known_x.length == $known_y.length", "N/A" ],
                  [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ] ]
+    ]);
+
+    defineFunction("LINEST", linest).args([
+        [ "known_y", [ "collect", "number", 1 ] ],
+        [ "known_x", [ "collect", "number", 1 ] ],
+        [ "const", [ "or", "logical", [ "null", true ] ] ],
+        [ "stats", [ "or", "logical", [ "null", false ] ] ]
+    ]);
+
+    defineFunction("LOGEST", logest).args([
+        [ "known_y", [ "collect", "number", 1 ] ],
+        [ "known_x", [ "collect", "number", 1 ] ],
+        [ "const", [ "or", "logical", [ "null", true ] ] ],
+        [ "stats", [ "or", "logical", [ "null", false ] ] ]
     ]);
 
     /* -----[ definitions ]----- */
@@ -891,6 +906,106 @@
         }
         var b = s1/s2, a = my - b*mx;
         return a + b*x;
+    }
+
+    function _mat_mean(Mat) { // returns the mean value of a Matrix(n, 1)
+        var n = Mat.height, sum = 0;
+        for (var i=0; i < n; i++) {
+            sum += Mat.data[i][0];
+        }
+        return sum/n;
+    }
+
+    function _mat_devsq(Mat, mean) { // returns the sum of squares of deviations for a Matrix(n, 1)
+        var n = Mat.height, sq = 0;
+        for (var i=0; i < n; i++) {
+            var x = Mat.data[i][0] - mean;
+            sq += x*x;
+        }
+        return sq;
+    }
+
+    function _def_known(dim) { // returns [[1,2,3,...,dim]]
+        var tmp = [];
+        for (var i=1; i <= dim; i++) {
+            tmp.push(i);
+        }
+        return [tmp];
+    }
+
+    function linest(known_Y, known_X, _const, stats) { // LINEST(known_y's, [known_x's], [const], [stats])
+        // known_Y is an JS-array of numbers; known-X is an JS-array of JS_arrays of numbers.
+        var n = known_Y.length;
+        if (known_X.length > 0) {
+            known_X = [ known_X ];
+        } else {
+            known_X = _def_known(n); // Excel: "If known_x's is omitted, it is assumed to be the array {1,2,3,...}"
+        }
+        var k = known_X.length;
+        var i;
+
+        var Y = new Matrix(this), X = new Matrix(this);
+        Y.data = [known_Y];
+        Y.width = n; Y.height = 1;
+        Y = Y.transpose();
+        X.data = known_X;
+        X.width = n; X.height = k;
+        X = X.transpose();
+
+        if (_const) { // adding 1's column is unnecessary when _const==false (meaning that y_intercept==0)
+            for (i=0; i < n; i++) { // add a 1's first column
+                X.data[i].unshift(1);
+            }
+            X.width ++;
+        }
+
+        var Xt = X.transpose();
+        var B = Xt.multiply(X).inverse().multiply(Xt).multiply(Y); // the last square estimate of the coefficients
+        var line_1 = [];
+        for (i = B.height-1; i >= 0; i--) {
+            line_1.push(B.data[i][0]); // regression coefficients ('slopes') and the y_intercept
+        }
+        if (!_const) {
+            line_1.push(0); // display 0 for y_intercept, when _const==false
+        }
+        if (!stats) {
+            return [ line_1 ]; // don't display statistics about the regression, when stats==false
+        }
+
+        var Y1 = X.multiply(B); // the predicted Y values
+        var y_y1 = Y.adds(Y1, true); // the errors of the predictions (= Y - Y1)
+        var mp = !_const? 0 : _mat_mean(Y1);
+        var SSreg = _mat_devsq(Y1, mp); // The regression sum of squares
+        var me = !_const? 0 : _mat_mean(y_y1);
+        var SSresid = _mat_devsq(y_y1, me); // The residual sum of squares
+        var line_5 = [];
+        line_5.push(SSreg, SSresid);
+        var R2 = SSreg / (SSreg + SSresid); // The coefficient of determination
+        var degfre = Y.height - X.width; // The degrees of freedom
+        var err_est = Math.sqrt(SSresid / degfre); // The standard error for the y estimate
+        var line_3 = [];
+        line_3.push(R2, err_est);
+        var F_sta = !_const ? (R2/X.width)/((1-R2)/(degfre)) : (SSreg/(X.width-1))/(SSresid/degfre); // The F statistic
+        var line_4 = [];
+        line_4.push(F_sta, degfre);
+        var SCP = Xt.multiply(X).inverse();
+        var line_2 = [];
+        for (i=SCP.height-1; i >= 0; i--) { // The standard errors (of coefficients an y-intercept)
+            line_2.push(Math.sqrt(SCP.data[i][i]*SSresid/degfre));
+        }
+        return [line_1, line_2, line_3, line_4, line_5];
+    }
+
+    function logest(Y_, X_, _const, stats) { // LOGEST(known_y's, [known_x's], [const], [stats])
+        var i, n;
+        for (i = 0, n = Y_.length; i < n; i++) {
+            Y_[i] = Math.log(Y_[i]);
+        }
+        var result = linest(Y_, X_, _const, stats);
+        for (i = 0, n = result[0].length; i < n; i++) {
+            result[0][i] = Math.exp(result[0][i]);
+        }
+        return result;
     }
 
     /*
