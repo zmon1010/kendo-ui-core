@@ -979,11 +979,11 @@
 
         _compileValidation: function(row, col, validation) {
             if (validation.from) {
-                validation.from = validation.from.replace(/^=/, "");
+                validation.from = (validation.from + "").replace(/^=/, "");
             }
 
             if (validation.to) {
-                validation.to = validation.from.replace(/^=/, "");
+                validation.to = (validation.from + "").replace(/^=/, "");
             }
 
             return kendo.spreadsheet.validation.compile(this._name, row, col, validation);
@@ -1028,10 +1028,7 @@
                 value = this._copyValuesInRange(topLeft, bottomRight, value, "formula");
 
             } else if (value && name == "validation") {
-                if (typeof value.from == "string" || typeof value.to == "string" ) {
-                    value = this._compileValidation(topLeft.row, topLeft.col, value);
-                }
-
+                value = this._compileValidation(topLeft.row, topLeft.col, value);
                 value = this._copyValuesInRange(topLeft, bottomRight, value, "validation");
 
             } else {
