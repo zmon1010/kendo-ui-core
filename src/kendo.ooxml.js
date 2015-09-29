@@ -90,8 +90,10 @@ var WORKBOOK = kendo.template(
   '</bookViews>' +
   '<sheets>' +
   '# for (var idx = 0; idx < sheets.length; idx++) { #' +
-      '# if (sheets[idx].options.title) { #' +
-      '<sheet name="${sheets[idx].options.title}" sheetId="${idx+1}" r:id="rId${idx+1}" />' +
+      '# var options = sheets[idx].options; #' +
+      '# var name = options.name || options.title #' +
+      '# if (name) { #' +
+      '<sheet name="${name}" sheetId="${idx+1}" r:id="rId${idx+1}" />' +
       '# } else { #' +
       '<sheet name="Sheet${idx+1}" sheetId="${idx+1}" r:id="rId${idx+1}" />' +
       '# } #' +
@@ -658,7 +660,7 @@ var Workbook = kendo.Class.extend({
                 if (filter && typeof filter.from !== "undefined" && typeof filter.to !== "undefined") {
                     return {
                         localSheetId: index,
-                        name: (options.title || "Sheet" + (index + 1)),
+                        name: (options.name || options.title || "Sheet" + (index + 1)),
                         from: $ref(filterRowIndex(options), filter.from),
                         to: $ref(filterRowIndex(options), filter.to)
                     };

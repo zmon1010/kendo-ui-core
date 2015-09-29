@@ -86,7 +86,12 @@ test("toDataUrl creates definedName for every sheet with autoFilter", function()
 
             },
             {
-                title: "Foo",
+                title: "Foo", // Deprecated
+                columns: [ {}, {} , {}],
+                filter: { from: 1, to: 2 }
+            },
+            {
+                name: "Bar",
                 columns: [ {}, {} , {}],
                 filter: { from: 1, to: 2 }
             }
@@ -96,12 +101,14 @@ test("toDataUrl creates definedName for every sheet with autoFilter", function()
     workbook.toDataURL();
 
     var dom = $(JSZip.prototype.files["workbook.xml"]);
-    equal(dom.find("definedNames > definedName").length, 2);
+    equal(dom.find("definedNames > definedName").length, 3);
     equal(dom.find("definedNames > definedName").attr("name"), "_xlnm._FilterDatabase");
     equal(dom.find("definedNames > definedName").eq(0).attr("localSheetId"), "0");
     equal(dom.find("definedNames > definedName").eq(0).text(), "Sheet1!$A$1:$B$1");
     equal(dom.find("definedNames > definedName").eq(1).attr("localSheetId"), "2");
     equal(dom.find("definedNames > definedName").eq(1).text(), "Foo!$B$1:$C$1");
+    equal(dom.find("definedNames > definedName").eq(2).attr("localSheetId"), "3");
+    equal(dom.find("definedNames > definedName").eq(2).text(), "Bar!$B$1:$C$1");
 });
 
 test("toDataUrl creates definedName for columns with two letters", function() {
@@ -155,9 +162,20 @@ test("toDataUrl ignores filters with no to parameter", function() {
     equal(dom.find("definedNames > definedName").length, 0);
 });
 
-test("toDataUrl sets the name of the sheet element to the title option", function() {
+test("toDataUrl sets the name of the sheet element to the title (deprecated) option", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ { title: "foo"} ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["workbook.xml"]);
+    equal(dom.find("> sheets > sheet").attr("name"), "foo");
+});
+
+test("toDataUrl sets the name of the sheet element to the name option", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ { name: "foo"} ]
     });
 
     workbook.toDataURL();
