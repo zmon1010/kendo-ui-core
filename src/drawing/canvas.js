@@ -244,8 +244,10 @@
             this.canvas = canvas;
             this.ctx = canvas.getContext("2d");
 
-            this.invalidate = kendo.throttle(
-                $.proxy(this._invalidate, this),
+            var invalidateHandler = $.proxy(this._invalidate, this);
+            this.invalidate = kendo.throttle(function() {
+                    kendo.animationFrame(invalidateHandler);
+                },
                 FRAME_DELAY
             );
         },
@@ -260,7 +262,6 @@
             if (!this.ctx) {
                 return;
             }
-
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.renderTo(this.ctx);
         }

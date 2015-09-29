@@ -125,17 +125,25 @@
             }
         });
 
-        test("throttles invalidate", function() {
+        test("throttles invalidate", 1, function() {
             createRoot(mockContext({
                 clearRect: function() {
                     ok(true);
                 }
             }));
 
-            root.invalidate();
-            root.invalidate();
+            var animationFrame = kendo.animationFrame;
+            try {
+                kendo.animationFrame = function(callback) {
+                    callback();
+                };
 
-            root.destroy();
+                root.invalidate();
+                root.invalidate();
+            } finally {
+                kendo.animationFrame = animationFrame;
+                root.destroy();
+            };
         });
 
         asyncTest("makes a tail call to invalidate", function() {
