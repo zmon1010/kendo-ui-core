@@ -1,13 +1,16 @@
-@pane-border-color: darken(@base, 20%);
-@spreadsheet-header-border: @pane-border-color;
+@spreadsheet-header-border: @spreadsheet-pane-border;
+@spreadsheet-header-background: @base;
+@spreadsheet-pane-border: darken(@base, 20%);
 @spreadsheet-cell-border: darken(@base, 10%);
+@spreadsheet-selection-background: fadeout(@selected-background, 80%);
+@spreadsheet-selection-border: @selected-background;
 
 .k-spreadsheet-top-corner,
 .k-spreadsheet-row-header td,
 .k-spreadsheet-column-header td {
-    background-color: @base;
+    background-color: @spreadsheet-header-background;
     background-image: none;
-    color: contrast(@base);
+    color: contrast(@spreadsheet-header-background);
     border-color: @spreadsheet-header-border;
 }
 
@@ -20,7 +23,7 @@
 }
 
 .k-spreadsheet-pane {
-    border-color: @pane-border-color;
+    border-color: @spreadsheet-pane-border;
 
     td {
         border-color: @spreadsheet-cell-border;
@@ -35,9 +38,6 @@
         background-color: @background;
     }
 }
-
-@spreadsheet-selection-background: fadeout(@selected-background, 80%);
-@spreadsheet-selection-border: @selected-background;
 
 .k-selection-partial,
 .k-selection-full {
@@ -102,14 +102,14 @@
 .k-spreadsheet {
     > .k-spreadsheet-formula-bar  {
         background-color: @background;
-        border-color: @base @base @spreadsheet-header-border;
+        border-color: @spreadsheet-header-background @spreadsheet-header-background @spreadsheet-header-border;
 
         &:before {
             border-color: @spreadsheet-header-border;
         }
 
         &:after {
-            border-color: @base;
+            border-color: @spreadsheet-header-background;
         }
     }
 

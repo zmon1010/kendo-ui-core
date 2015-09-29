@@ -3495,3 +3495,18 @@ input.k-textbox:focus {
 }
 
 @import "themes/spreadsheet.less";
+
+@spreadsheet-cell-border: #c8c8c8;
+@spreadsheet-selection-background: fadeout(@base, 80%);
+@spreadsheet-selection-border: @base;
+@spreadsheet-header-background: @background;
+@spreadsheet-header-border: #dadada;
+@spreadsheet-pane-border: #c8c8c8;
+
+.k-spreadsheet-sheets-bar {
+    background-color: #f4f4f4;
+
+    .k-item, .k-item.k-state-active {
+        border-color: @spreadsheet-header-border;
+    }
+}
