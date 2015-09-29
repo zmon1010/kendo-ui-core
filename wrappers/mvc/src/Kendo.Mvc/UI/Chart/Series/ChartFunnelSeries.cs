@@ -210,6 +210,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the series visual handler.
+        /// </summary>
+        /// <value>
+        /// The series visual handler.
+        /// </value>
+        public ClientHandlerDescriptor Visual
+        {
+            get;
+            set;
+        }
+
         private void Initialize()
         {
             Labels = new ChartFunnelLabels();

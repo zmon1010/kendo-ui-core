@@ -169,7 +169,7 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
-        /// Gets or series visual handler.
+        /// Gets or sets series visual handler.
         /// </summary>
         /// <value>
         /// The series visual handler.

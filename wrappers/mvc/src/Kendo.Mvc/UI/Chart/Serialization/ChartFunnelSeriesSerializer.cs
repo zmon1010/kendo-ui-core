@@ -29,7 +29,8 @@ namespace Kendo.Mvc.UI
                 .Add("colorField", series.ColorMember, () => series.ColorMember != null)
                 .Add("visibleInLegendField", series.VisibleInLegendMember, () => series.VisibleInLegendMember != null)
                 .Add("data", series.Data, () => { return series.Data != null; })
-                .Add("border", series.Border.CreateSerializer().Serialize(), ShouldSerializeBorder);
+                .Add("border", series.Border.CreateSerializer().Serialize(), ShouldSerializeBorder)
+                .Add("visual", series.Visual, () => series.Visual != null);
 
 
             var labelsData = series.Labels.CreateSerializer().Serialize();

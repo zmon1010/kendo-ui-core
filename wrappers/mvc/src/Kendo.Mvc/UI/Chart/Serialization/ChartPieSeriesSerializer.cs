@@ -28,7 +28,8 @@ namespace Kendo.Mvc.UI
                 .Add("data", series.Data, () => { return series.Data != null; })
                 .Add("padding", series.Padding, () => series.Padding.HasValue)
                 .Add("border", series.Border.CreateSerializer().Serialize(), ShouldSerializeBorder)
-                .Add("startAngle", series.StartAngle, () => series.StartAngle.HasValue);
+                .Add("startAngle", series.StartAngle, () => series.StartAngle.HasValue)
+                .Add("visual", series.Visual, () => series.Visual != null);
 
             if (series.Overlay != null)
             {

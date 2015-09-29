@@ -73,5 +73,17 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the series visual handler.
+        /// </summary>
+        /// <value>
+        /// The series visual handler.
+        /// </value>
+        ClientHandlerDescriptor Visual
+        {
+            get;
+            set;
+        }
     }
 }
