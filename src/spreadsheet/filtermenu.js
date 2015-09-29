@@ -101,7 +101,7 @@
             actionButtons:
                 "<div class='" + classNames.actionButtons + "'>" +
                     "<button data-#=ns#bind='click: apply' class='k-button k-primary'>#=messages.apply#</button>" +
-                    "<button data-#=ns#bind='click: close' class='k-button'>#=messages.cancel#</button>" +
+                    "<button data-#=ns#bind='click: clear' class='k-button'>#=messages.clear#</button>" +
                 "</div>"
         };
 
@@ -209,7 +209,7 @@
                     valueFilter: {
                         values: []
                     },
-                    close: this.close.bind(this),
+                    clear: this.clear.bind(this),
                     apply: this.apply.bind(this)
                 });
 
@@ -232,7 +232,7 @@
                     filterByCondition: "Filter by condition",
                     apply: "Apply",
                     search: "Search",
-                    cancel: "Cancel",
+                    clear: "Clear",
                     blanks: "(Blanks)",
                     operatorNone: "None",
                     and: "AND",
@@ -281,6 +281,16 @@
 
             close: function() {
                 this.popup.close();
+            },
+
+            clear: function() {
+                this.action({
+                    command: "ClearFilterCommand",
+                    options: {
+                        column: this.options.column
+                    }
+                });
+                this.close();
             },
 
             apply: function() {

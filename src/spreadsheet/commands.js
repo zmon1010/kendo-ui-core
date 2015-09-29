@@ -455,7 +455,7 @@
         }
     });
 
-    kendo.spreadsheet.ApplyFilterCommand = Command.extend({
+    var ApplyFilterCommand = kendo.spreadsheet.ApplyFilterCommand = Command.extend({
         column: function() {
             return this.options.column || 0;
         },
@@ -468,11 +468,19 @@
                 this.range().filter(this._state);
             }
         },
+        getState: function() {
+            var sheet = this.range().sheet();
+            var currentFilter = sheet.filter();
+
+            if (currentFilter) {
+                this._state = currentFilter.columns.filter(function(c) {
+                    return c.index == this.column();
+                }.bind(this));
+            }
+        },
         exec: function() {
             var range = this.range();
-            var sheet = range.sheet();
             var column = this.column();
-            var currentFilter = sheet.filter();
             var filter;
 
             if (this.options.valueFilter) {
@@ -481,11 +489,7 @@
                 filter = new kendo.spreadsheet.CustomFilter(this.options.customFilter);
             }
 
-            if (currentFilter) {
-                this._state = currentFilter.columns.filter(function(c) {
-                    return c.index == column;
-                });
-            }
+            this.getState();
 
             range.clearFilter(column);
 
@@ -493,6 +497,16 @@
                 column: column,
                 filter: filter
             });
+        }
+    });
+
+    kendo.spreadsheet.ClearFilterCommand = ApplyFilterCommand.extend({
+        exec: function() {
+            var range = this.range();
+            var column = this.column();
+
+            this.getState();
+            range.clearFilter(column);
         }
     });
 

@@ -993,6 +993,55 @@
         deepEqual(filter.values, [ 1 ]);
     });
 
+    module("SpreadSheet ClearFilterCommand", moduleOptions);
+
+    var clearFilterCommand = $.proxy(command, this, kendo.spreadsheet.ClearFilterCommand);
+
+    test("clear filter command clears filter of a column", function() {
+        //apply filter
+        var filterCommand = applyFilterCommand({
+            column: 1,
+            valueFilter: { values: [ 1 ] }
+        });
+
+        var range = sheet.range("A1:B3").filter(true);
+
+        filterCommand.range(range);
+        filterCommand.exec();
+
+        //clear filter
+        var clearCommand = clearFilterCommand({ column: 1 });
+
+        clearCommand.range(range);
+        clearCommand.exec();
+
+        var columns = sheet.filter().columns;
+        equal(columns.length, 0);
+    });
+
+    test("clear filter command undo restores previous filter", function() {
+        //apply filter
+        var filterCommand = applyFilterCommand({
+            column: 1,
+            valueFilter: { values: [ 1 ] }
+        });
+
+        var range = sheet.range("A1:B3").filter(true);
+
+        filterCommand.range(range);
+        filterCommand.exec();
+
+        //clear filter
+        var clearCommand = clearFilterCommand({ column: 1 });
+
+        clearCommand.range(range);
+        clearCommand.exec();
+        clearCommand.undo();
+
+        var columns = sheet.filter().columns;
+        equal(columns.length, 1);
+    });
+
     module("Spreadsheet SaveAsCommand", moduleOptions);
 
     var SaveAsCommand = $.proxy(command, this, kendo.spreadsheet.SaveAsCommand);

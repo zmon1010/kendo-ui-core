@@ -307,6 +307,16 @@
         filterMenu.apply();
     });
 
+    test("clear of filtered items triggers ClearFilterCommand on complete range", function() {
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        filterMenu.bind("action", function(e) {
+            equal(e.command, "ClearFilterCommand");
+        });
+
+        filterMenu.clear();
+    });
+
     test("gets the active container", function() {
         filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
 
@@ -342,6 +352,18 @@
         filterMenu.options.column = 1;
 
         filterMenu.apply();
+    });
+
+    test("clear triggers command on passed column", function() {
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"] ]);
+
+        filterMenu.bind("action", function(e) {
+            equal(e.options.column, 1);
+        });
+
+        filterMenu.options.column = 1;
+
+        filterMenu.clear();
     });
 
     var viewModel;
