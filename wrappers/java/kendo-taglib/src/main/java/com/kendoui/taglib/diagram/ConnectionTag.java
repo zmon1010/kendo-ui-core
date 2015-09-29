@@ -115,6 +115,14 @@ public class ConnectionTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("from", value);
     }
 
+    public java.lang.String getFromConnector() {
+        return (java.lang.String)getProperty("fromConnector");
+    }
+
+    public void setFromConnector(java.lang.String value) {
+        setProperty("fromConnector", value);
+    }
+
     public java.lang.String getStartCap() {
         return (java.lang.String)getProperty("startCap");
     }
@@ -129,6 +137,14 @@ public class ConnectionTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
     public void setTo(java.lang.Object value) {
         setProperty("to", value);
+    }
+
+    public java.lang.String getToConnector() {
+        return (java.lang.String)getProperty("toConnector");
+    }
+
+    public void setToConnector(java.lang.String value) {
+        setProperty("toConnector", value);
     }
 
     public java.lang.String getType() {

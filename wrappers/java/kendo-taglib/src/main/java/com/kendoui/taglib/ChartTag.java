@@ -68,6 +68,10 @@ public class ChartTag extends WidgetTag /* interfaces */implements DataBoundWidg
 
     }
 
+    public void setPannable(com.kendoui.taglib.chart.PannableTag value) {
+        setProperty("pannable", value);
+    }
+
     public void setPdf(com.kendoui.taglib.chart.PdfTag value) {
         setProperty("pdf", value);
     }
@@ -110,6 +114,10 @@ public class ChartTag extends WidgetTag /* interfaces */implements DataBoundWidg
 
         setProperty("yAxis", value.yAxis());
 
+    }
+
+    public void setZoomable(com.kendoui.taglib.chart.ZoomableTag value) {
+        setProperty("zoomable", value);
     }
 
     public void setAxisLabelClick(AxisLabelClickFunctionTag value) {
@@ -200,6 +208,14 @@ public class ChartTag extends WidgetTag /* interfaces */implements DataBoundWidg
         setProperty("dataSource", dataSource);
     }
 
+    public boolean getPannable() {
+        return (Boolean)getProperty("pannable");
+    }
+
+    public void setPannable(boolean value) {
+        setProperty("pannable", value);
+    }
+
     public java.lang.String getRenderAs() {
         return (java.lang.String)getProperty("renderAs");
     }
@@ -238,6 +254,14 @@ public class ChartTag extends WidgetTag /* interfaces */implements DataBoundWidg
 
     public void setTransitions(boolean value) {
         setProperty("transitions", value);
+    }
+
+    public boolean getZoomable() {
+        return (Boolean)getProperty("zoomable");
+    }
+
+    public void setZoomable(boolean value) {
+        setProperty("zoomable", value);
     }
 
     public String getAxisLabelClick() {

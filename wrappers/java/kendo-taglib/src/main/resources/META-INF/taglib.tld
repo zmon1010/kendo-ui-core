@@ -697,6 +697,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>Specifies if the chart can be panned.</description>
+            <name>pannable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Sets the preferred rendering engine.
 If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:</description>
             <name>renderAs</name>
@@ -724,6 +730,12 @@ If it is not supported by the browser, the Chart will switch to the first availa
         <attribute>
             <description>If set to true the chart will play animations when displaying the series. By default animations are enabled.</description>
             <name>transitions</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the chart can be zoomed.</description>
+            <name>zoomable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -3114,6 +3126,29 @@ Axis that don't have specified pane are placed in the top (default) pane.Series 
 
 
     <tag>
+        <description>Specifies if the chart can be panned.</description>
+        <name>chart-pannable</name>
+        <tag-class>com.kendoui.taglib.chart.PannableTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Specifies the key that should be pressed to activate panning. The supported values are:</description>
+            <name>key</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies an axis that should not be panned. The supported values are none, x and y.</description>
+            <name>lock</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>Configures the export settings for the saveAsPDF method.</description>
         <name>chart-pdf</name>
         <tag-class>com.kendoui.taglib.chart.PdfTag</tag-class>
@@ -3716,7 +3751,7 @@ or series name (for other available series types) in the legend.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A function that can be used to create a custom visual for the points. Applicable for bar, column, rangeBar, rangeColumn and waterfall series. The available argument fields are:</description>
+            <description>A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are:</description>
             <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -5665,7 +5700,7 @@ The function return value is displayed instead of the individual points.The supp
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>A function that can be used to create a custom visual for the points. Applicable for bar, column, rangeBar, rangeColumn and waterfall series. The available argument fields are:</description>
+        <description>A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are:</description>
         <name>chart-seriesItem-visual</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -11057,6 +11092,67 @@ body of the chart.</description>
 
 
     <tag>
+        <description>Specifies if the chart can be zoomed.</description>
+        <name>chart-zoomable</name>
+        <tag-class>com.kendoui.taglib.chart.ZoomableTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Specifies if the chart can be zoomed using the mouse wheel.</description>
+            <name>mousewheel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the chart can be zoomed using selection.</description>
+            <name>selection</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Specifies if the chart can be zoomed using the mouse wheel.</description>
+        <name>chart-zoomable-mousewheel</name>
+        <tag-class>com.kendoui.taglib.chart.ZoomableMousewheelTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Specifies an axis that should not be zoomed. The supported values are none, x and y.</description>
+            <name>lock</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Specifies if the chart can be zoomed using selection.</description>
+        <name>chart-zoomable-selection</name>
+        <tag-class>com.kendoui.taglib.chart.ZoomableSelectionTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Specifies a keyboard key that should be pressed to activate the selection. The supported values are:</description>
+            <name>key</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies an axis that should not be zoomed. The supported values are none, x and y.</description>
+            <name>lock</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+
+    <tag>
         <description>Fired when the user clicks an axis label.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>chart-axisLabelClick</name>
         <tag-class>com.kendoui.taglib.chart.AxisLabelClickFunctionTag</tag-class>
@@ -13317,6 +13413,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Specifies the name of the source shape connector that should be used by default.</description>
+            <name>fromConnector</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Specifies if the connection can be selected.</description>
             <name>selectable</name>
             <rtexprvalue>true</rtexprvalue>
@@ -13325,6 +13427,12 @@ data source is fired. By default the widget will bind to the data source specifi
         <attribute>
             <description>The connection start cap configuration or type name.</description>
             <name>startCap</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the name of the target shape connector that should be used by default.</description>
+            <name>toConnector</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -13355,6 +13463,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>A function returning a visual element to render for the content of a connection.</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -13363,6 +13477,12 @@ data source is fired. By default the widget will bind to the data source specifi
         <description>The template which renders the labels.The fields which can be used in the template are:</description>
         <name>diagram-connectionDefaults-content-template</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsContentTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>A function returning a visual element to render for the content of a connection.</description>
+        <name>diagram-connectionDefaults-content-visual</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsContentVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -14019,6 +14139,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>Specifies the name of the source shape connector that should be used by default.</description>
+            <name>fromConnector</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The connection start cap configuration or type name.</description>
             <name>startCap</name>
             <rtexprvalue>true</rtexprvalue>
@@ -14029,6 +14155,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <name>to</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the name of the target shape connector that should be used by default.</description>
+            <name>toConnector</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>The connection type.</description>
@@ -14056,6 +14188,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>A function returning a visual element to render for the content of the connection.</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -14064,6 +14202,12 @@ data source is fired. By default the widget will bind to the data source specifi
         <description>The template which renders the labels.The fields which can be used in the template are:</description>
         <name>diagram-connection-content-template</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionContentTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>A function returning a visual element to render for the content of the connection.</description>
+        <name>diagram-connection-content-visual</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionContentVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

@@ -3,7 +3,7 @@ package com.kendoui.taglib.diagram;
 
 
 import com.kendoui.taglib.BaseTag;
-
+import com.kendoui.taglib.json.Function;
 
 
 
@@ -55,6 +55,10 @@ public class ConnectionDefaultsContentTag extends  BaseTag  /* interfaces */ /* 
         setEvent("template", value.getBody());
     }
 
+    public void setVisual(ConnectionDefaultsContentVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public java.lang.String getTemplate() {
         return (java.lang.String)getProperty("template");
     }
@@ -69,6 +73,18 @@ public class ConnectionDefaultsContentTag extends  BaseTag  /* interfaces */ /* 
 
     public void setText(java.lang.String value) {
         setProperty("text", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
 //<< Attributes

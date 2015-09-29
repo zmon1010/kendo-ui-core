@@ -97,6 +97,14 @@ public class ConnectionDefaultsTag extends  BaseTag  /* interfaces */ /* interfa
         setProperty("endCap", value);
     }
 
+    public java.lang.String getFromConnector() {
+        return (java.lang.String)getProperty("fromConnector");
+    }
+
+    public void setFromConnector(java.lang.String value) {
+        setProperty("fromConnector", value);
+    }
+
     public boolean getSelectable() {
         return (Boolean)getProperty("selectable");
     }
@@ -111,6 +119,14 @@ public class ConnectionDefaultsTag extends  BaseTag  /* interfaces */ /* interfa
 
     public void setStartCap(java.lang.String value) {
         setProperty("startCap", value);
+    }
+
+    public java.lang.String getToConnector() {
+        return (java.lang.String)getProperty("toConnector");
+    }
+
+    public void setToConnector(java.lang.String value) {
+        setProperty("toConnector", value);
     }
 
     public java.lang.String getType() {
