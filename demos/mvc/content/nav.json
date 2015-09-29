@@ -7595,8 +7595,19 @@
       {
         "text": "Pan and zoom",
         "url": "bar-charts/pan-and-zoom",
+        "new": "true",
         "title": {
             "kendo-ui": "Pan and zoom in Bar charts | Kendo UI Bar Chart demo"
+        },
+        "meta": {
+            "kendo-ui": "Enable pan and zoom effect in Kendo UI Bar charts. This example demonstrates how to enable pan and zoom for your bar charts."
+        }
+      },
+      {
+        "text": "Custom pan and zoom",
+        "url": "bar-charts/custom-pan-and-zoom",
+        "title": {
+            "kendo-ui": "Custom Pan and zoom in Bar charts | Kendo UI Bar Chart demo"
         },
         "meta": {
             "kendo-ui": "Achieve pan and zoom effect in Kendo UI Bar charts. This example demonstrates how you can apply pan and zoom to your bar charts."
@@ -9867,11 +9878,22 @@
       {
         "text": "Pan and zoom",
         "url": "scatter-charts/pan-and-zoom",
+        "new": "true",
         "title": {
             "kendo-ui": "Pan and zoom in Kendo UI Scatter Charts"
         },
         "meta": {
-            "kendo-ui": "In this example we demonstrate pan and zoom effects in Kendo UI Scatter Charts. Look at the source code to learn how to filter the DataSource component."
+            "kendo-ui": "In this example we demonstrate how to enable pan and zoom effects in Kendo UI Scatter Charts."
+        }
+      },
+      {
+        "text": "Custom Pan and zoom",
+        "url": "scatter-charts/custom-pan-and-zoom",
+        "title": {
+            "kendo-ui": "Custom Pan and zoom in Kendo UI Scatter Charts"
+        },
+        "meta": {
+            "kendo-ui": "In this example we demonstrate how to implement pan and zoom effects in Kendo UI Scatter Charts. Look at the source code to learn how to filter the DataSource component."
         },
         "packages": [
           "!mvc"

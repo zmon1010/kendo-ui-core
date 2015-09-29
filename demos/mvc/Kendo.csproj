@@ -613,7 +613,7 @@
     <Content Include="Views\demos\bar-charts\logarithmic-axis.cshtml" />
     <Content Include="Views\demos\bar-charts\multiple-axes.cshtml" />
     <Content Include="Views\demos\bar-charts\mvvm.cshtml" />
-    <Content Include="Views\demos\bar-charts\pan-and-zoom.cshtml" />
+    <Content Include="Views\demos\bar-charts\custom-pan-and-zoom.cshtml" />
     <Content Include="Views\demos\bar-charts\plotbands.cshtml" />
     <Content Include="Views\demos\bar-charts\remote-data-binding.cshtml" />
     <Content Include="Views\demos\bar-charts\stacked-bar.cshtml" />
@@ -856,7 +856,7 @@
     <Content Include="Views\demos\scatter-charts\index.cshtml" />
     <Content Include="Views\demos\scatter-charts\multiple-axes.cshtml" />
     <Content Include="Views\demos\scatter-charts\mvvm.cshtml" />
-    <Content Include="Views\demos\scatter-charts\pan-and-zoom.cshtml" />
+    <Content Include="Views\demos\scatter-charts\custom-pan-and-zoom.cshtml" />
     <Content Include="Views\demos\scatter-charts\scatter-line.cshtml" />
     <Content Include="Views\demos\scatter-charts\smooth-scatter-line.cshtml" />
     <Content Include="Views\demos\scheduler\api.cshtml" />
@@ -1215,6 +1215,8 @@
     <Content Include="Views\demos\spreadsheet\index.cshtml" />
     <Content Include="Views\demos\spreadsheet\server-side-import-export.cshtml" />
     <Content Include="Views\demos\spreadsheet\server-side-pdf-export.cshtml" />
+    <Content Include="Views\demos\bar-charts\pan-and-zoom.cshtml" />
+    <Content Include="Views\demos\scatter-charts\pan-and-zoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
