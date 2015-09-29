@@ -323,7 +323,7 @@
         ok(filterMenu.viewModel.active, "value");
     });
 
-    test("gets existing filters", function() {
+    test("gets existing filters (string filter)", function() {
         sheet.range("A1:B3").filter({
             column: 0,
             filter: new kendo.spreadsheet.CustomFilter({
@@ -338,8 +338,52 @@
 
         var criteria = filterMenu.viewModel.customFilter.criteria;
 
-        equal(criteria[0].operator, "contains");
+        equal(criteria[0].operator.type, "string");
+        equal(criteria[0].operator.value, "contains");
+        equal(criteria[0].operator.unique, "string_contains");
         equal(criteria[0].value, "foo");
+    });
+
+    test("gets existing filters (number filter)", function() {
+        sheet.range("A1:B3").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.CustomFilter({
+                logic: "and",
+                criteria: [
+                    { operator: "eq", value: 11 }
+                ]
+            })
+        });
+
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        var criteria = filterMenu.viewModel.customFilter.criteria;
+
+        equal(criteria[0].operator.type, "number");
+        equal(criteria[0].operator.value, "eq");
+        equal(criteria[0].operator.unique, "number_eq");
+        equal(criteria[0].value, 11);
+    });
+
+    test("gets existing filters (date filter)", function() {
+        sheet.range("A1:B3").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.CustomFilter({
+                logic: "and",
+                criteria: [
+                    { operator: "eq", value: new Date()}
+                ]
+            })
+        });
+
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        var criteria = filterMenu.viewModel.customFilter.criteria;
+
+        equal(criteria[0].operator.type, "date");
+        equal(criteria[0].operator.value, "eq");
+        equal(criteria[0].operator.unique, "date_eq");
+        ok(criteria[0].value instanceof Date);
     });
 
     test("apply triggers command on passed column", function() {

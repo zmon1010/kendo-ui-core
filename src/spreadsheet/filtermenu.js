@@ -90,7 +90,7 @@
                         'data-option-label="#=messages.operatorNone#"' +
                         'data-height="auto"' +
                         'data-text-field="text"' +
-                        'data-value-field="value">'+
+                        'data-value-field="unique">'+
                     '</select>'+
                     '<input data-#=ns#bind="value: customFilter.criteria[0].value" class="k-textbox" />'+
                 "</div>",
@@ -183,6 +183,7 @@
                     result.push({
                         text: operators[type][operator],
                         value: operator,
+                        unique: type + "_" + operator,
                         type: type
                     });
                 }
@@ -201,7 +202,7 @@
                     customFilter: {
                         logic: "and",
                         criteria: [
-                            { operator: null, value: "" }
+                            { operator: null, value: null }
                         ]
                     },
                     valueFilter: {
@@ -397,9 +398,38 @@
                 }
 
                 var serializedFilter;
+                var criterion;
+                var type;
+                var operator;
 
                 if (filterObject) {
                     serializedFilter = filterObject.filter.toJSON();
+                    criterion = serializedFilter.criteria.pop();
+
+                    if (typeof criterion.operator === "string") {
+                        type = criterion.value instanceof Date ? "date" : typeof criterion.value;
+                        operator = criterion.operator;
+                        serializedFilter.criteria.push({
+                            operator: {
+                                text: this.options.operators[type][operator],
+                                type: type,
+                                value: operator,
+                                unique: type + "_" + operator
+                            },
+                            value: criterion.value
+                        });
+                    } else {
+                        serializedFilter.criteria.push({
+                            operator: {
+                                text: this.options.operators[criterion.type][criterion.operator],
+                                type: criterion.type,
+                                value: criterion.operator,
+                                unique: criterion.type + "_" + criterion.operator
+                            },
+                            value: criterion.value
+                        });
+                    }
+
                     this.viewModel.set("active", serializedFilter.filter);
                     this.viewModel.set(serializedFilter.filter + "Filter", serializedFilter);
                 }
