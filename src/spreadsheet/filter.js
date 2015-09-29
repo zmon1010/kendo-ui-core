@@ -134,7 +134,6 @@
             }
 
             if (valueType != criterionType) {
-
                 if (criterionType == "string") {
                     value = value + "";
                 }

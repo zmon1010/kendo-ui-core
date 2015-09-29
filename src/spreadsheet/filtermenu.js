@@ -83,13 +83,14 @@
             filterByCondition:
                 "<div class='" + classNames.detailsSummary + "'>#= messages.filterByCondition #</div>" +
                 "<div class='" + classNames.detailsContent + "'>" +
-                    '<select data-#=ns#bind="value: customFilter.criteria[0].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
-                        '<option value="">None</option>' +
-                        '#for(var type in operators){#'+
-                            '#for(var op in operators[type]){#' +
-                                '<option value="#=type#-#=op#">#=operators[type][op]#</option>' +
-                            '#}#'+
-                        '#}#'+
+                    '<select ' +
+                        'data-#=ns#role="dropdownlist"' +
+                        'data-#=ns#bind="value: customFilter.criteria[0].operator, source: operators"' +
+                        'data-value-primitive="false"' +
+                        'data-option-label="#=messages.operatorNone#"' +
+                        'data-height="auto"' +
+                        'data-text-field="text"' +
+                        'data-value-field="value">'+
                     '</select>'+
                     '<input data-#=ns#bind="value: customFilter.criteria[0].value" class="k-textbox" />'+
                 "</div>",
@@ -139,7 +140,7 @@
             },
             validateCriteria: function(criteria) {
                 return criteria.filter(function(item) {
-                    var type = item.operator.split("-")[0];
+                    var type = item.operator.type;
 
                     if (type === "number") {
                         return !!kendo.parseFloat(item.value);
@@ -154,8 +155,8 @@
             },
             normalizeCriteria: function(criteria) {
                 return criteria.map(function(item) {
-                    item.type = item.operator.split("-")[0];
-                    item.operator = item.operator.split("-")[1];
+                    item.type = item.operator.type;
+                    item.operator = item.operator.value;
 
                     if (item.type === "number") {
                         item.value = kendo.parseFloat(item.value);
@@ -177,6 +178,20 @@
             }
         });
 
+        function flattern(operators) {
+            var result = [];
+            for (var type in operators) {
+                for (var operator in operators[type]) {
+                    result.push({
+                        text: operators[type][operator],
+                        value: operator,
+                        type: type
+                    });
+                }
+            }
+            return result;
+        }
+
         var FilterMenu = Widget.extend({
             init: function(options) {
                 var element = $("<div />", { "class": FilterMenu.classNames.wrapper }).appendTo(document.body);
@@ -184,10 +199,11 @@
 
                 this.viewModel = new FilterMenuViewModel({
                     active: "value",
+                    operators: flattern(this.options.operators),
                     customFilter: {
                         logic: "and",
                         criteria: [
-                            { operator: "", value: "" }
+                            { operator: null, value: "" }
                         ]
                     },
                     valueFilter: {
@@ -218,6 +234,7 @@
                     search: "Search",
                     cancel: "Cancel",
                     blanks: "(Blanks)",
+                    operatorNone: "None",
                     and: "AND",
                     or: "OR"
                 },
@@ -416,7 +433,6 @@
                 var compiledTemplate = kendo.template(template);
                 var wrapper = $("<div class='" + className + "'/>").html(compiledTemplate({
                     messages: this.options.messages,
-                    operators: this.options.operators,
                     ns: kendo.ns
                 }));
 
