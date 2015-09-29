@@ -42,8 +42,11 @@
             var status = {canPaste: true};
             if(ref === kendo.spreadsheet.NULLREF) {
                 status.canPaste = this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
-            } else {
-                status.canPaste = ref.eq(sheet.unionWithMerged(ref));
+                return status;
+            }
+            if(!ref.eq(sheet.unionWithMerged(ref))) {
+                status.canPaste = false;
+                status.pasteOnMerged = true;
             }
             if(this.menuInvoked) {
                 status.canPaste = false;

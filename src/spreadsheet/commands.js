@@ -321,8 +321,12 @@
             this._clipboard.menuInvoked = true;
             if(!status.canPaste) {
                 if(status.menuInvoked) {
-                        this._workbook._view.openDialog("useKeyboard");
-                    }
+                    this._workbook._view.openDialog("useKeyboard");
+                    return;
+                }
+                if(status.pasteOnMerged) {
+                    this._workbook._view.openDialog("modifyMerged");
+                }
                 return;
             }
             this.getState();

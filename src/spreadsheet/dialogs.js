@@ -1022,6 +1022,20 @@
     });
     kendo.spreadsheet.dialogs.register("excelExport", ExcelExportDialog);
 
+    var ModifyMergedDialog = MessageDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+        },
+        options: {
+            template: "Cannot change part of a merged cell." +
+                '<div class="k-action-buttons">' +
+                    "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
+                "</div>"
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("modifyMerged", ModifyMergedDialog);
+
     var UseKeyboardDialog = MessageDialog.extend({
         init: function(options) {
             SpreadsheetDialog.fn.init.call(this, options);
