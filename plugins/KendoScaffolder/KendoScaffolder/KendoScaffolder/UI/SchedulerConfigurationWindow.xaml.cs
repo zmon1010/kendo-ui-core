@@ -241,7 +241,7 @@
             TextBox current = ((TextBox)sender);
             current.Text = "SchedulerController";
             current.Focus();
-            current.Select(0, 4);
+            current.Select(0, 9);
         }
 
         private void ViewName_Loaded(object sender, System.Windows.RoutedEventArgs e)
