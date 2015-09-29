@@ -52,6 +52,7 @@
         var Workbook = kendo.spreadsheet.Workbook;
         var Controller = kendo.spreadsheet.Controller;
         var View = kendo.spreadsheet.View;
+        var NS = ".kendoSpreadsheet";
 
         var ALL_REASONS = {
             recalc: true,
@@ -87,6 +88,9 @@
                 this._view.workbook(this._workbook);
 
                 this.refresh();
+
+                this._resizeHandler = function() { this.resize(); }.bind(this);
+                $(window).on("resize" + NS, this._resizeHandler);
             },
 
             _resize: function() {
@@ -212,6 +216,10 @@
                 this._workbook.destroy();
                 this._controller.destroy();
                 this._view.destroy();
+
+                if (this._resizeHandler) {
+                    $(window).off("resize" + NS, this._resizeHandler);
+                }
             },
 
             options: {
