@@ -499,7 +499,7 @@ test("toXML does not set the 's' attribute if style is not set", function() {
     equal(dom.find("c").attr("s"), null);
 });
 
-test("toXML creates a 'pane' element when the freezePane option is set", function() {
+test("toXML creates a 'pane' element when the freezePane option (legacy) is set", function() {
     var worksheet = Worksheet({
         freezePane: {
             colSplit: 1
@@ -511,7 +511,7 @@ test("toXML creates a 'pane' element when the freezePane option is set", functio
     equal(dom.find("pane").attr("topLeftCell"), "B1");
 });
 
-test("toXML sets the 'xSplit' attribute when the colSplit option is set", function() {
+test("toXML sets the 'xSplit' attribute when the colSplit option (legacy) is set", function() {
     var worksheet = Worksheet({
         freezePane: {
             colSplit: 2
@@ -522,11 +522,40 @@ test("toXML sets the 'xSplit' attribute when the colSplit option is set", functi
     equal(dom.find("pane").attr("xSplit"), 2);
 });
 
-test("toXML sets the 'ySplit' attribute when the rowSplit option is set", function() {
+test("toXML sets the 'ySplit' attribute when the rowSplit option (legacy) is set", function() {
     var worksheet = Worksheet({
         freezePane: {
             rowSplit: 2
         }
+    });
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("pane").attr("ySplit"), 2);
+    equal(dom.find("pane").attr("topLeftCell"), "A3");
+});
+
+test("toXML creates a 'pane' element when frozenColumns option is set", function() {
+    var worksheet = Worksheet({
+        frozenColumns: 1
+    });
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("pane").length, 1);
+    equal(dom.find("pane").attr("topLeftCell"), "B1");
+});
+
+test("toXML sets the 'xSplit' attribute when the frozenColumns option is set", function() {
+    var worksheet = Worksheet({
+        frozenColumns: 2
+    });
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("pane").attr("xSplit"), 2);
+});
+
+test("toXML sets the 'ySplit' attribute when the frozenRows option is set", function() {
+    var worksheet = Worksheet({
+        frozenRows: 2
     });
 
     var dom = $(worksheet.toXML());
@@ -839,7 +868,7 @@ test("toXML creates 'autoFilter' element when the filter option is set", functio
     equal(dom.find("autoFilter").attr("ref"), "B1:C1");
 });
 
-test("toXML creates 'autoFilter' element for the first row is freezePane rowSplit is zero", function() {
+test("toXML creates 'autoFilter' element for the first row if freezePane (legacy) rowSplit is zero", function() {
     var worksheet = Worksheet({
         freezePane: {
             rowSplit: 0
@@ -853,11 +882,35 @@ test("toXML creates 'autoFilter' element for the first row is freezePane rowSpli
     equal(dom.find("autoFilter").attr("ref"), "B1:C1");
 });
 
-test("toXML creates 'autoFilter' element for the last row of the freezed pane", function() {
+test("toXML creates 'autoFilter' element for the last row of the freezed pane (legacy)", function() {
     var worksheet = Worksheet({
         freezePane: {
             rowSplit: 3
         },
+        columns: [ {}, {}, {} ],
+        filter: { from: 1, to: 2 }
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("autoFilter").attr("ref"), "B3:C3");
+});
+
+test("toXML creates 'autoFilter' element for the first row if frozenRows is zero", function() {
+    var worksheet = Worksheet({
+        frozenRows: 0,
+        columns: [ {}, {}, {} ],
+        filter: { from: 1, to: 2 }
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("autoFilter").attr("ref"), "B1:C1");
+});
+
+test("toXML creates 'autoFilter' element for the last frozen row", function() {
+    var worksheet = Worksheet({
+        frozenRows: 3,
         columns: [ {}, {}, {} ],
         filter: { from: 1, to: 2 }
     });

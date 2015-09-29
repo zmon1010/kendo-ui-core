@@ -117,15 +117,15 @@ var WORKSHEET = kendo.template(
    '<dimension ref="A1" />' +
    '<sheetViews>' +
        '<sheetView #if(index==0) {# tabSelected="1" #}# workbookViewId="0">' +
-       '# if (freezePane) { #' +
+       '# if (frozenRows || frozenColumns) { #' +
        '<pane state="frozen"' +
-       '# if (freezePane.colSplit) { #' +
-       ' xSplit="${freezePane.colSplit}"' +
+       '# if (frozenColumns) { #' +
+       ' xSplit="${frozenColumns}"' +
        '# } #' +
-       '# if (freezePane.rowSplit) { #' +
-       ' ySplit="${freezePane.rowSplit}"' +
+       '# if (frozenRows) { #' +
+       ' ySplit="${frozenRows}"' +
        '# } #' +
-       ' topLeftCell="${String.fromCharCode(65 + (freezePane.colSplit || 0))}${(freezePane.rowSplit || 0)+1}"'+
+       ' topLeftCell="${String.fromCharCode(65 + (frozenColumns || 0))}${(frozenRows || 0)+1}"'+
        '/>' +
        '# } #' +
        '</sheetView>' +
@@ -329,7 +329,8 @@ function $ref(rowIndex, colIndex) {
 }
 
 function filterRowIndex(options) {
-    return ((options.freezePane || {}).rowSplit || 1) - 1;
+    var frozenRows = options.frozenRows || (options.freezePane || {}).rowSplit || 1;
+    return frozenRows - 1;
 }
 
 function toWidth(px) {
@@ -380,8 +381,10 @@ var Worksheet = kendo.Class.extend({
             };
         }
 
+        var freezePane = this.options.freezePane || {};
         return WORKSHEET({
-            freezePane: this.options.freezePane,
+            frozenColumns: this.options.frozenColumns || freezePane.colSplit,
+            frozenRows: this.options.frozenRows || freezePane.rowSplit,
             columns: this.options.columns,
             defaults: this.options.defaults || {},
             data: data,
