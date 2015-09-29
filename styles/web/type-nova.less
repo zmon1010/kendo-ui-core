@@ -1874,6 +1874,9 @@ html .km-pane-wrapper .km-widget,
 
 @import "themes/spreadsheet.less";
 
+@spreadsheet-selection-border: #26c6da;
+@spreadsheet-selection-background: fadeout(@spreadsheet-selection-border, 80%);
+
 @active-header-text: contrast(@accent);
 @inactive-header-text: contrast(@accent);
 
@@ -1930,7 +1933,9 @@ html .km-pane-wrapper .km-widget,
 
 .k-spreadsheet-toolbar {
     background: darken(@base, 4%);
+
     > .k-button {
-        line-height: 2em;
+        line-height: 1.9em;
+        border-color: transparent;
     }
 }

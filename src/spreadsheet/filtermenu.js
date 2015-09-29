@@ -99,10 +99,8 @@
                     "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>#=text#" +
                 "</li>",
             actionButtons:
-                "<div class='" + classNames.actionButtons + "'>" +
-                    "<button data-#=ns#bind='click: apply' class='k-button k-primary'>#=messages.apply#</button>" +
-                    "<button data-#=ns#bind='click: clear' class='k-button'>#=messages.clear#</button>" +
-                "</div>"
+                "<button data-#=ns#bind='click: apply' class='k-button k-primary'>#=messages.apply#</button>" +
+                "<button data-#=ns#bind='click: clear' class='k-button'>#=messages.clear#</button>" +
         };
 
         function distinctValues(values) {

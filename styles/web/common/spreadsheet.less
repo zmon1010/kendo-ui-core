@@ -1,4 +1,5 @@
-@scheduler-first-tool-offset: .3em;
+@spreadsheet-first-tool-offset: .3em;
+@spreadsheet-popup-button-padding: .3em 1.5em .3em .9em;
 .force-font() {
     font-size: 12px;
     font-family: Arial, Verdana, sans-serif;
@@ -135,7 +136,7 @@
         line-height: 1.7em;
 
         .k-tabstrip-items {
-            padding: @scheduler-first-tool-offset 0 0;
+            padding: @spreadsheet-first-tool-offset 0 0;
         }
     }
 
@@ -145,7 +146,7 @@
         z-index: 1;
         top: 0;
         left: 0;
-        padding: @scheduler-first-tool-offset @scheduler-first-tool-offset 0;
+        padding: @spreadsheet-first-tool-offset @spreadsheet-first-tool-offset 0;
 
         .k-button {
             padding: .3em;
@@ -350,7 +351,7 @@
         display: block;
         text-align: left;
         text-transform: initial;
-        padding: .3em .9em;
+        padding: @spreadsheet-popup-button-padding;
         border-width: 0;
         border-radius: 0;
     }
@@ -485,7 +486,7 @@
 
         .k-overflow-anchor + * {
             border-left-style: none;
-            margin-left: @scheduler-first-tool-offset;
+            margin-left: @spreadsheet-first-tool-offset;
         }
     }
 

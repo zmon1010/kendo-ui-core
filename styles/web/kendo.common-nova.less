@@ -11,6 +11,8 @@
 
 @import "common/all.less";
 
+@spreadsheet-popup-button-padding: .6em 1.2em .6em 1em;
+
 .k-button {
     line-height: 1.143em;
     padding: 10px 14px;
@@ -1627,4 +1629,14 @@ li.k-item.k-last.k-state-selected {
 
 .k-progressbar-vertical li.k-item.k-last {
     border-bottom-width: 1px;
+}
+
+// spreadsheet
+.k-spreadsheet-window .k-root-tabs {
+    margin: -1.333em -1.333em 0;
+    padding: 0;
+
+    .k-tabstrip-items {
+        padding: 0;
+    }
 }

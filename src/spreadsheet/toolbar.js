@@ -91,7 +91,7 @@
         _addSeparators: function(element) {
             var groups = element.children(".k-widget, .k-button, .k-button-group");
 
-            groups.slice(1).before("<span class='k-separator' />");
+            groups.slice(2).before("<span class='k-separator' />");
         },
         _expandTools: function(tools) {
             var messages = this.options.messages;
