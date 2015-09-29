@@ -10,24 +10,24 @@ namespace Kendo.Mvc.UI
     {
         public SpreadsheetSheetFilterSettings()
         {
+            Columns = new List<SpreadsheetSheetFilterSettingsColumn>();
+
             //>> Initialization
         
-            Columns = new List<SpreadsheetSheetFilterSettingsColumn>();
-                
         //<< Initialization
         }
 
         //>> Fields
         
+        public string Ref { get; set; }
+        
+        //<< Fields
+
         public List<SpreadsheetSheetFilterSettingsColumn> Columns
         {
             get;
             set;
         }
-        
-        public string Ref { get; set; }
-        
-        //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
         {

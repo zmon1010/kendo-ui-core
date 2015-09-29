@@ -65,8 +65,7 @@ module CodeGen::MVC::Wrappers
         'tabstrip.items.text',
         'tabstrip.items.url',
         'splitview.panes.id',
-        'treelist.filterable',
-        'spreadsheet.sheets.filter.columns'
+        'treelist.filterable'
     ]
 
     FLUENT_SKIP_LIST = [
@@ -140,7 +139,8 @@ module CodeGen::MVC::Wrappers
         'spreadsheet.sheets.rows.cells.borderbottom',
         'spreadsheet.sheets.rows.cells.borderright',
         'spreadsheet.sheets.rows.cells.borderleft',
-        'spreadsheet.sheets.rows.cells.value'
+        'spreadsheet.sheets.rows.cells.value',
+        'spreadsheet.sheets.filter.columns'
     ]
 
     CSPROJ = 'wrappers/mvc/src/Kendo.Mvc/Kendo.Mvc.csproj'
