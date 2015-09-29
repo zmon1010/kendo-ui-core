@@ -8,7 +8,7 @@
     var UnionRef = kendo.spreadsheet.UnionRef;
 
     var styles = [
-        "color", "fontFamily", "underline", "fontSize",
+        "color", "fontFamily", "underline",
         "italic", "bold", "textAlign",
         "verticalAlign", "background"
     ];
@@ -553,6 +553,27 @@
             }.bind(this));
 
             this._property("wrap", flag);
+
+            return this;
+        },
+
+        fontSize: function(size) {
+            if (size === undefined) {
+                return this._property("fontSize");
+            }
+
+            this.forEachRow(function(range) {
+                var maxHeight = range.sheet().rowHeight(range.topLeft().row);
+
+                range.forEachCell(function(row, col, cell) {
+                    var width = this._sheet.columnWidth(col);
+                    maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, size, cell.wrap));
+                });
+
+                range.sheet().rowHeight(range.topLeft().row, maxHeight);
+            }.bind(this));
+
+            this._property("fontSize", size);
 
             return this;
         }
