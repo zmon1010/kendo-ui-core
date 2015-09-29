@@ -16,7 +16,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Handlers
         
         /// <summary>
-        /// 
+        /// Triggered after the widget has completed rendering.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the render event.</param>
         public SpreadsheetEventBuilder Render(string handler)
@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// Fired when the user clicks the "Export to Excel" toolbar button.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the excelExport event.</param>
         public SpreadsheetEventBuilder ExcelExport(string handler)

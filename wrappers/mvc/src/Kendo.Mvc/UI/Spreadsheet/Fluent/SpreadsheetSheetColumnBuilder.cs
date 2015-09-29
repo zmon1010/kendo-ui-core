@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// 
+        /// The zero-based index of the column. Required to ensure correct positioning.
         /// </summary>
         /// <param name="value">The value that configures the index.</param>
         public SpreadsheetSheetColumnBuilder Index(int value)
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The width of the column in pixels. Defaults to columnWidth.
         /// </summary>
         /// <param name="value">The value that configures the width.</param>
         public SpreadsheetSheetColumnBuilder Width(double value)

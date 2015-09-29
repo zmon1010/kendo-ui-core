@@ -23,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The name of the currently active sheet.
+        /// The name of the currently active sheet.Must match one of the (sheet names)[#configuration-sheets.name] exactly.
         /// </summary>
         /// <param name="value">The value that configures the activesheet.</param>
         public SpreadsheetBuilder ActiveSheet(string value)
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The default column width in pixels.
         /// </summary>
         /// <param name="value">The value that configures the columnwidth.</param>
         public SpreadsheetBuilder ColumnWidth(double value)
@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The number of columns in the document.
         /// </summary>
         /// <param name="value">The value that configures the columns.</param>
         public SpreadsheetBuilder Columns(double value)
@@ -56,7 +56,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The height of the header row in pixels.
         /// </summary>
         /// <param name="value">The value that configures the headerheight.</param>
         public SpreadsheetBuilder HeaderHeight(double value)
@@ -67,7 +67,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The width of the header column in pixels.
         /// </summary>
         /// <param name="value">The value that configures the headerwidth.</param>
         public SpreadsheetBuilder HeaderWidth(double value)
@@ -78,7 +78,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The default row height in pixels.
         /// </summary>
         /// <param name="value">The value that configures the rowheight.</param>
         public SpreadsheetBuilder RowHeight(double value)
@@ -89,7 +89,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The number of rows in the document.
         /// </summary>
         /// <param name="value">The value that configures the rows.</param>
         public SpreadsheetBuilder Rows(double value)
@@ -100,7 +100,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// An array defining the document sheets and their content.
         /// </summary>
         /// <param name="configurator">The action that configures the sheets.</param>
         public SpreadsheetBuilder Sheets(Action<SpreadsheetSheetFactory> configurator)
@@ -110,7 +110,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// A boolean value indicating if the toolbar should be displayed.
         /// </summary>
         /// <param name="value">The value that configures the toolbar.</param>
         public SpreadsheetBuilder Toolbar(bool value)

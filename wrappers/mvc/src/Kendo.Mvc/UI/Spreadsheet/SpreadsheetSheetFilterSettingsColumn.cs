@@ -12,12 +12,18 @@ namespace Kendo.Mvc.UI
         {
             //>> Initialization
         
+            Criteria = new List<SpreadsheetSheetFilterSettingsColumnCriteria>();
+                
         //<< Initialization
         }
 
         //>> Fields
         
-        public string Criteria { get; set; }
+        public List<SpreadsheetSheetFilterSettingsColumnCriteria> Criteria
+        {
+            get;
+            set;
+        }
         
         public string Filter { get; set; }
         
@@ -37,11 +43,11 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
-            if (Criteria.HasValue())
+            var criteria = Criteria.ToJson();
+            if (criteria.Any())
             {
-                json["criteria"] = Criteria;
+                json["criteria"] = criteria;
             }
-            
             if (Filter.HasValue())
             {
                 json["filter"] = Filter;

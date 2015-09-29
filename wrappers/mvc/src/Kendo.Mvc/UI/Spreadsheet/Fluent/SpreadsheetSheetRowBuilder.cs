@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// 
+        /// The cells for this row.
         /// </summary>
         /// <param name="configurator">The action that configures the cells.</param>
         public SpreadsheetSheetRowBuilder Cells(Action<SpreadsheetSheetRowCellFactory> configurator)
@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The row height in pixels. Defaults to rowHeight.
         /// </summary>
         /// <param name="value">The value that configures the height.</param>
         public SpreadsheetSheetRowBuilder Height(double value)
@@ -41,7 +41,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The absolute row index. Required to ensure correct positioning.
         /// </summary>
         /// <param name="value">The value that configures the index.</param>
         public SpreadsheetSheetRowBuilder Index(int value)

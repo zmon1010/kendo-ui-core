@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// 
+        /// The background color of the cell.Many standard CSS formats are supported, but the canonical form is "#ccff00".
         /// </summary>
         /// <param name="value">The value that configures the background.</param>
         public SpreadsheetSheetRowCellBuilder Background(string value)
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The font color of the cell.Many standard CSS formats are supported, but the canonical form is "#ccff00".
         /// </summary>
         /// <param name="value">The value that configures the color.</param>
         public SpreadsheetSheetRowCellBuilder Color(string value)
@@ -42,7 +42,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The font family for the cell.
         /// </summary>
         /// <param name="value">The value that configures the fontfamily.</param>
         public SpreadsheetSheetRowCellBuilder FontFamily(string value)
@@ -53,7 +53,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The font size of the cell in pixels.
         /// </summary>
         /// <param name="value">The value that configures the fontsize.</param>
         public SpreadsheetSheetRowCellBuilder FontSize(double value)
@@ -64,7 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// Sets the cell font to italic, if set to true.
         /// </summary>
         /// <param name="value">The value that configures the italic.</param>
         public SpreadsheetSheetRowCellBuilder Italic(bool value)
@@ -75,7 +75,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// Sets the cell font to bold, if set to true.
         /// </summary>
         /// <param name="value">The value that configures the bold.</param>
         public SpreadsheetSheetRowCellBuilder Bold(bool value)
@@ -86,7 +86,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The format of the cell text.See Create or delete a custom number format on MS Office.
         /// </summary>
         /// <param name="value">The value that configures the format.</param>
         public SpreadsheetSheetRowCellBuilder Format(string value)
@@ -97,7 +97,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The cell formula without the leading equals sign, e.g. A1 * 10.
         /// </summary>
         /// <param name="value">The value that configures the formula.</param>
         public SpreadsheetSheetRowCellBuilder Formula(string value)
@@ -108,7 +108,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The zero-based index of the cell. Required to ensure correct positioning.
         /// </summary>
         /// <param name="value">The value that configures the index.</param>
         public SpreadsheetSheetRowCellBuilder Index(int value)
@@ -119,7 +119,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// Sets the cell font to underline, if set to true.
         /// </summary>
         /// <param name="value">The value that configures the underline.</param>
         public SpreadsheetSheetRowCellBuilder Underline(bool value)
@@ -130,7 +130,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// Will wrap the cell content if set to true.
         /// </summary>
         /// <param name="value">The value that configures the wrap.</param>
         public SpreadsheetSheetRowCellBuilder Wrap(bool value)

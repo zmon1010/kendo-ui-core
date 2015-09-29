@@ -42,7 +42,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// An array defining the columns in this sheet and their content.
         /// </summary>
         /// <param name="configurator">The action that configures the columns.</param>
         public SpreadsheetSheetBuilder Columns(Action<SpreadsheetSheetColumnFactory> configurator)
@@ -52,7 +52,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// Defines the filtering criteria for this sheet, if any.
         /// </summary>
         /// <param name="configurator">The action that configures the filter.</param>
         public SpreadsheetSheetBuilder Filter(Action<SpreadsheetSheetFilterSettingsBuilder> configurator)
@@ -62,7 +62,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The number of frozen columns in this sheet.
         /// </summary>
         /// <param name="value">The value that configures the frozencolumns.</param>
         public SpreadsheetSheetBuilder FrozenColumns(int value)
@@ -73,7 +73,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The number of frozen rows in this sheet.
         /// </summary>
         /// <param name="value">The value that configures the frozenrows.</param>
         public SpreadsheetSheetBuilder FrozenRows(int value)
@@ -84,7 +84,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// An array of merged cell ranges, e.g. "B1:D2".
         /// </summary>
         /// <param name="value">The value that configures the mergedcells.</param>
         public SpreadsheetSheetBuilder MergedCells(params string[] value)
@@ -95,7 +95,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The row data for this sheet.
         /// </summary>
         /// <param name="configurator">The action that configures the rows.</param>
         public SpreadsheetSheetBuilder Rows(Action<SpreadsheetSheetRowFactory> configurator)
@@ -116,7 +116,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// Defines the sort criteria for the sheet.
         /// </summary>
         /// <param name="configurator">The action that configures the sort.</param>
         public SpreadsheetSheetBuilder Sort(Action<SpreadsheetSheetSortSettingsBuilder> configurator)

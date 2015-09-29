@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// 
+        /// Specifies the sort options for individual columns.
         /// </summary>
         /// <param name="configurator">The action that configures the columns.</param>
         public SpreadsheetSheetSortSettingsBuilder Columns(Action<SpreadsheetSheetSortSettingsColumnFactory> configurator)
@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// 
+        /// The sorted range, e.g. "A1:D5".
         /// </summary>
         /// <param name="value">The value that configures the ref.</param>
         public SpreadsheetSheetSortSettingsBuilder Ref(string value)
