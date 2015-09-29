@@ -334,13 +334,7 @@
                 var maxHeight = row.sheet().rowHeight(row.topLeft().row);
                 row.forEachCell(function(row, col, cell) {
                     var width = sheet.columnWidth(col);
-                    if(cell.wrap) {
-                        maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width));
-                    } else if(isFinite(cell.fontSize)) {
-                        maxHeight = Math.max(maxHeight, cell.fontSize + 10);
-                    } else {
-                        maxHeight = Math.max(maxHeight, 20); //default height
-                    }
+                    maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, cell.fontSize, cell.wrap));
                 });
                 sheet.rowHeight(row.topLeft().row, maxHeight);
             });
