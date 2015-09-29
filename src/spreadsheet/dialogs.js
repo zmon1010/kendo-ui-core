@@ -702,6 +702,7 @@
             ObservableObject.fn.init.call(this, options);
 
             this.bind("change", (function(e) {
+
                 if (e.field === "criterion") {
                     this.reset();
                 }
@@ -794,21 +795,21 @@
             }
         },
         fromValidationObject: function(validation) {
-            //extract to fromValidation object?
             this.comparer = validation.comparerType;
             this.from = validation.from;
             this.to = validation.to;
+            this.criterion = validation.dataType;
+            this.type = validation.type;
 
             if (validation.messageTemplate || validation.titleTemplate) {
                 this.hintMessage = validation.messageTemplate;
                 this.hintTitle = validation.titleTemplate;
                 this.useCustomMessages = true;
+                this.setHintMessageTemplate();
+                this.buildMessages();
             } else {
                 this.useCustomMessages = false;
             }
-
-            this.criterion = validation.dataType;
-            this.type = validation.type;
         },
         toValidationObject: function() { //TODO: build proper validation object here
 
