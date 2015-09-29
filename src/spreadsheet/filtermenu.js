@@ -100,7 +100,7 @@
                 "</li>",
             actionButtons:
                 "<button data-#=ns#bind='click: apply' class='k-button k-primary'>#=messages.apply#</button>" +
-                "<button data-#=ns#bind='click: clear' class='k-button'>#=messages.clear#</button>" +
+                "<button data-#=ns#bind='click: clear' class='k-button'>#=messages.clear#</button>"
         };
 
         function distinctValues(values) {
