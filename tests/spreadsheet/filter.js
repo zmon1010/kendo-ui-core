@@ -411,6 +411,44 @@
         equal(filter.matches("bar"), true);
     });
 
+    function cell(value) {
+        return { value: value };
+    }
+
+    test("number contains string", function() {
+        filter = new CustomFilter({
+            criteria: [
+                { operator: "contains", value: "10" }
+            ]
+        });
+
+        equal(filter.matches(filter.value(cell(100))), true);
+        equal(filter.matches(filter.value(cell(200))), false);
+        equal(filter.matches(filter.value(cell(210))), true);
+    });
+
+    test("date contains string", function() {
+        filter = new CustomFilter({
+            criteria: [
+                { operator: "contains", value: "10" }
+            ]
+        });
+
+        equal(filter.matches(filter.value({ value: 1, format: "m/d/yyyy" })), false);
+        equal(filter.matches(filter.value({ value: 11, format: "m/d/yyyy" })), true);
+    });
+
+    test("formatted number contains string", function() {
+        filter = new CustomFilter({
+            criteria: [
+                { operator: "contains", value: "10" }
+            ]
+        });
+
+        equal(filter.matches(filter.value({ value: 2100, format: "$??.00" })), true);
+        equal(filter.matches(filter.value({ value: 2099, format: "$??.00" })), false);
+    });
+
     module("top filter");
 
     test("top number matches the top X values", function() {

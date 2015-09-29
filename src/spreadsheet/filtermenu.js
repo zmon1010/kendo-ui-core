@@ -92,19 +92,6 @@
                         '#}#'+
                     '</select>'+
                     '<input data-#=ns#bind="value: customFilter.criteria[0].value" class="k-textbox" />'+
-                    '<select class="k-filter-and" data-#=ns#bind="value: customFilter.logic" data-#=ns#role="dropdownlist">'+
-                        '<option value="and">#=messages.and#</option>'+
-                        '<option value="or">#=messages.or#</option>'+
-                    '</select>'+
-                    '<select data-#=ns#bind="value: customFilter.criteria[1].operator" data-height="auto" data-#=ns#role="dropdownlist">'+
-                        '<option value="">None</option>' +
-                        '#for(var type in operators){#'+
-                            '#for(var op in operators[type]){#' +
-                                '<option value="#=type#-#=op#">#=operators[type][op]#</option>' +
-                            '#}#'+
-                        '#}#' +
-                    '</select>'+
-                    '<input data-#=ns#bind="value: customFilter.criteria[1].value" class="' + classNames.textbox + '" />' +
                 "</div>",
             menuItem:
                 "<li data-command='#=command#' data-dir='#=dir#'>" +
@@ -200,7 +187,6 @@
                     customFilter: {
                         logic: "and",
                         criteria: [
-                            { operator: "", value: "" },
                             { operator: "", value: "" }
                         ]
                     },

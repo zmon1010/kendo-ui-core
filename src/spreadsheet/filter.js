@@ -121,6 +121,27 @@
 
             return this._matches(value);
         },
+        value: function(cell) {
+            var value = cell.value;
+            var criterionType = typeof this._criteria[0].value;
+            var valueType = typeof value;
+            var dom;
+
+            if (cell.format) {
+                valueType = kendo.spreadsheet.formatting.type(value, cell.format);
+                dom = kendo.spreadsheet.formatting.format(value, cell.format);
+                value = dom.children[0].nodeValue;
+            }
+
+            if (valueType != criterionType) {
+
+                if (criterionType == "string") {
+                    value = value + "";
+                }
+            }
+
+            return value;
+        },
         toJSON: function() {
             return {
                 filter: "custom",
