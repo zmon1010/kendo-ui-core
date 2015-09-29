@@ -22,7 +22,7 @@ namespace Telerik.Web.Spreadsheet
         public string Name { get; set; }
 
         /// <summary>
-        /// 
+        /// An array defining the columns in this sheet and their content.
         /// </summary>
         [DataMember(Name = "columns", EmitDefaultValue = false)]
         public List<Column> Columns
@@ -32,7 +32,7 @@ namespace Telerik.Web.Spreadsheet
         }
 
         /// <summary>
-        /// 
+        /// Defines the filtering criteria for this sheet, if any.
         /// </summary>
         [DataMember(Name = "filter", EmitDefaultValue = false)]
         public Filter Filter
@@ -42,19 +42,19 @@ namespace Telerik.Web.Spreadsheet
         }
 
         /// <summary>
-        /// 
+        /// The number of frozen columns in this sheet.
         /// </summary>
         [DataMember(Name = "frozenColumns", EmitDefaultValue = false)]
         public int? FrozenColumns { get; set; }
 
         /// <summary>
-        /// 
+        /// The number of frozen rows in this sheet.
         /// </summary>
         [DataMember(Name = "frozenRows", EmitDefaultValue = false)]
         public int? FrozenRows { get; set; }
 
         /// <summary>
-        /// 
+        /// The row data for this sheet.
         /// </summary>
         [DataMember(Name = "rows", EmitDefaultValue = false)]
         public List<Row> Rows
@@ -70,7 +70,7 @@ namespace Telerik.Web.Spreadsheet
         public string Selection { get; set; }
 
         /// <summary>
-        /// 
+        /// Defines the sort criteria for the sheet.
         /// </summary>
         [DataMember(Name = "sort", EmitDefaultValue = false)]
         public Sort Sort

@@ -10,13 +10,13 @@ namespace Telerik.Web.Spreadsheet
     public partial class Workbook
     {
         /// <summary>
-        /// The name of the currently active sheet.
+        /// The name of the currently active sheet.Must match one of the (sheet names)[#configuration-sheets.name] exactly.
         /// </summary>
         [DataMember(Name = "activeSheet", EmitDefaultValue = false)]
         public string ActiveSheet { get; set; }
 
         /// <summary>
-        /// 
+        /// An array defining the document sheets and their content.
         /// </summary>
         [DataMember(Name = "sheets", EmitDefaultValue = false)]
         public List<Worksheet> Sheets

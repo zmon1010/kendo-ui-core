@@ -261,6 +261,8 @@
     <Compile Include="Models\Sort.Generated.cs" />
     <Compile Include="Models\SortColumn.cs" />
     <Compile Include="Models\SortColumn.Generated.cs" />
+    <Compile Include="Models\Criteria.cs" />
+    <Compile Include="Models\Criteria.Generated.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Kendo.snk" />

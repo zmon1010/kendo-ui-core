@@ -10,7 +10,7 @@ namespace Telerik.Web.Spreadsheet
     public partial class Sort
     {
         /// <summary>
-        /// 
+        /// Specifies the sort options for individual columns.
         /// </summary>
         [DataMember(Name = "columns", EmitDefaultValue = false)]
         public List<SortColumn> Columns
@@ -20,7 +20,7 @@ namespace Telerik.Web.Spreadsheet
         }
 
         /// <summary>
-        /// 
+        /// The sorted range, e.g. "A1:D5".
         /// </summary>
         [DataMember(Name = "ref", EmitDefaultValue = false)]
         public string Ref { get; set; }
