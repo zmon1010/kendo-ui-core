@@ -15,7 +15,7 @@
                             height: 70,
                             cells: [
                                 {
-                                    index: 0, value: "My Company", fontSize: 32, background: "rgb(96,181,255)",
+                                    index: 0, value: "Invoice #52 - 06/23/2015", fontSize: 32, background: "rgb(96,181,255)",
                                     textAlign: "center", color: "white"
                                 }
                             ]
@@ -324,6 +324,7 @@
                             ]
                         },
                         {
+                            height: 25,
                             index: 13,
                             cells: [
                                 {
@@ -339,10 +340,10 @@
                                     background: "rgb(193,226,255)", color: "rgb(0,62,117)"
                                 },
                                 {
-                                    value: "Tip:", background: "rgb(193,226,255)", color: "rgb(0,62,117)", textAlign: "right"
+                                    value: "Tip:", background: "rgb(193,226,255)", color: "rgb(0,62,117)", textAlign: "right", verticalAlign: "bottom"
                                 },
                                 {
-                                    formula: "SUM(F3:F11)*0.1", background: "rgb(193,226,255)", color: "rgb(0,62,117)", format: "$#,##0.00"
+                                    formula: "SUM(F3:F11)*0.1", background: "rgb(193,226,255)", color: "rgb(0,62,117)", format: "$#,##0.00", bold: "true", verticalAlign: "bottom"
                                 },
                                 {
                                     background: "rgb(193,226,255)", color: "rgb(0,62,117)"
@@ -365,7 +366,7 @@
                                 },
                                 {
                                     index: 5, fontSize: 20, formula: "SUM(F3:F14)", background: "rgb(193,226,255)", color: "rgb(0,62,117)",
-                                    format: "$#,##0.00"
+                                    format: "$#,##0.00", bold: "true"
                                 },
                                 {
                                     index: 6, background: "rgb(193,226,255)", color: "rgb(0,62,117)"

@@ -18,9 +18,7 @@
             <input type="file" name="file" id="upload" />
         </div>
     </div>
-    <div class="demo-section k-content wide">
-        <div id="spreadsheet"></div>
-    </div>
+    <div id="spreadsheet" style="width: 100%;"></div>
     <style>
      .download { width: 260px; }
     </style>
@@ -29,7 +27,7 @@
             $("#spreadsheet").kendoSpreadsheet();
             var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
 
-            $.getJSON("@Url.Content("~/content/web/spreadsheet/prices.json")")
+            $.getJSON("@Url.Content("~/content/web/spreadsheet/products.json")")
                 .done(function (sheets) {
                     spreadsheet.fromJSON({ sheets: sheets });
                 });            
