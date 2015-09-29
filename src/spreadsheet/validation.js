@@ -27,7 +27,7 @@
         }
 
 
-        var comparer = validation.dataType == "custom" ? exports.validationComparers["q custom"] : exports.validationComparers[validation.comparerType];
+        var comparer = validation.dataType == "custom" ? exports.validationComparers["custom"] : exports.validationComparers[validation.comparerType];
 
         if (!comparer) {
             throw kendo.format("'{0}' comparer is not implemented.", validation.comparerType);

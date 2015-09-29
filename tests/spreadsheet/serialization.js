@@ -33,7 +33,8 @@
             from: "A2",
             to: "",
             comparerType: "greaterThan",
-            dataType: "date"
+            dataType: "date",
+            messageTemplate: "message"
         };
 
         sheet.range("A1").validation($.extend({}, validationOptions));
@@ -47,7 +48,7 @@
         equal(parsedJSON.to, validationOptions.to);
         equal(parsedJSON.dataType, validationOptions.dataType);
         equal(parsedJSON.comparerType, validationOptions.comparerType);
-        ok(parsedJSON.messageTemplate.indexOf("greater than") > 0);
+        equal(parsedJSON.messageTemplate, "message");
     });
 
     test("toJSON serializes the index of the row", function() {
@@ -670,8 +671,8 @@
             '"sheet":"Sheet1",' +
             '"tooltipMessageTemplate":"",' +
             '"tooltipTitleTemplate":"",' +
-            '"messageTemplate":"Please enter a valid #=dataType# value greater than #=from#.",' +
-            '"titleTemplate":"Validation #=type#"}');
+            '"messageTemplate":"Please enter a valid {0} value {1}.",' +
+            '"titleTemplate":"Validation {0}"}');
 
         sheet.fromJSON(singleCell({ validation: validationObject }));
 

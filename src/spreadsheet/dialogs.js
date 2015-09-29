@@ -705,6 +705,10 @@
 
                 if (e.field === "criterion") {
                     this.reset();
+
+                    if (this.criterion === "custom") {
+                        this.setHintMessageTemplate();
+                    }
                 }
 
                 if (e.field === "comparer") {
@@ -724,8 +728,8 @@
         },
         buildMessages: function() {
             this._mute = true;
-            this.set("hintTitle", kendo.format(this.hintTitleTemplate, this.type));
-            this.set("hintMessage", kendo.format(this.hintMessageTemplate, this.from, this.to));
+            this.set("hintTitle", this.hintTitleTemplate ? kendo.format(this.hintTitleTemplate, this.type) : "");
+            this.set("hintMessage", this.hintMessageTemplate ? kendo.format(this.hintMessageTemplate, this.from, this.to) : "");
             this._mute = false;
         },
         reset: function() {
@@ -764,6 +768,9 @@
            //TODO: clear hintMessageTemplate and hintMessage when 'custom'
            if (this.criterion !== "custom") {
                this.set("hintMessageTemplate", kendo.format(this.defaultHintMessage, this.criterion, this.comparerMessages[this.comparer]));
+           } else {
+               this.set("hintMessageTemplate", "");
+               this.set("hintMessage", "");
            }
         },
         isAny: function() {
@@ -811,11 +818,10 @@
                 this.useCustomMessages = false;
             }
         },
-        toValidationObject: function() { //TODO: build proper validation object here
-
+        toValidationObject: function() {
             var options = {
                 type: this.type,
-                dataType: this.criterion !== "custom" ? this.criterion : "",
+                dataType: this.criterion,
                 comparerType: this.comparer,
                 from: this.from,
                 to: this.to
