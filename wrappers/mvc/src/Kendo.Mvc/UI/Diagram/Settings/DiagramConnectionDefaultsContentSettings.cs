@@ -22,6 +22,8 @@ namespace Kendo.Mvc.UI
         public string TemplateId { get; set; }
         
         public string Text { get; set; }
+
+        public ClientHandlerDescriptor Visual { get; set; }
         
         //<< Fields
 
@@ -46,6 +48,11 @@ namespace Kendo.Mvc.UI
             if (Text.HasValue())
             {
                 json["text"] = Text;
+            }
+
+            if (Visual != null)
+            {
+                json["visual"] = Visual;
             }
             
         //<< Serialization

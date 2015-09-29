@@ -165,6 +165,28 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// The default source connector.
+        /// </summary>
+        /// <param name="value">The value that configures the default source connector.</param>
+        public DiagramConnectionBuilder<TShapeModel, TConnectionModel> FromConnector(string value)
+        {
+            container.FromConnector = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The default target connector.
+        /// </summary>
+        /// <param name="value">The value that configures the default target connector.</param>
+        public DiagramConnectionBuilder<TShapeModel, TConnectionModel> ToConnector(string value)
+        {
+            container.ToConnector = value;
+
+            return this;
+        }
         
         //<< Fields
     }

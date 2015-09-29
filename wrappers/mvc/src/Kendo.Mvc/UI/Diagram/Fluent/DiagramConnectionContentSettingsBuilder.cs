@@ -51,6 +51,34 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// The name of the function that will create the content visual.
+        /// </summary>
+        /// <param name="name">The function name.</param>
+        public DiagramConnectionContentSettingsBuilder<TShapeModel, TConnectionModel> Visual(string name)
+        {
+            container.Visual = new ClientHandlerDescriptor
+                {
+                    HandlerName = name
+                };
+
+            return this;
+        }
+
+        /// <summary>
+        /// The function that will create the content visual.
+        /// </summary>
+        /// <param name="function">The function.</param>
+        public DiagramConnectionContentSettingsBuilder<TShapeModel, TConnectionModel> Visual(Func<object, object> function)
+        {
+            container.Visual = new ClientHandlerDescriptor
+            {
+                TemplateDelegate = function
+            };
+
+            return this;
+        }
         
         //<< Fields
     }

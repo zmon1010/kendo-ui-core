@@ -98,6 +98,10 @@ namespace Kendo.Mvc.UI
         }
         
         public DiagramConnectionType? Type { get; set; }
+
+        public string FromConnector { get; set; }
+
+        public string ToConnector { get; set; }
         
         //<< Fields
 
@@ -161,6 +165,16 @@ namespace Kendo.Mvc.UI
             if (Type.HasValue)
             {
                 json["type"] = Type;
+            }
+
+            if (!string.IsNullOrEmpty(FromConnector))
+            {
+                json["fromConnector"] = FromConnector;
+            }
+
+            if (!string.IsNullOrEmpty(ToConnector))
+            {
+                json["toConnector"] = ToConnector;
             }
                 
         //<< Serialization
