@@ -1,26 +1,34 @@
 @pane-border-color: darken(@base, 20%);
-@cell-border-color: darken(@base, 10%);
+@spreadsheet-header-border: @pane-border-color;
+@spreadsheet-cell-border: darken(@base, 10%);
 
 .k-spreadsheet-top-corner,
 .k-spreadsheet-row-header td,
 .k-spreadsheet-column-header td {
     background-color: @base;
     background-image: none;
+    color: contrast(@base);
+    border-color: @spreadsheet-header-border;
 }
 
 .k-spreadsheet-top-corner {
-    border-color: @cell-border-color;
+    border-color: @spreadsheet-header-border;
 
     &:after {
-        border-color: transparent @cell-border-color @cell-border-color transparent;
+        border-color: transparent @spreadsheet-header-border @spreadsheet-header-border transparent;
     }
 }
 
 .k-spreadsheet-pane {
     border-color: @pane-border-color;
 
-    & td {
-        border-color: @cell-border-color;
+    td {
+        border-color: @spreadsheet-cell-border;
+    }
+
+    .k-spreadsheet-column-header td,
+    .k-spreadsheet-row-header td {
+        border-color: @spreadsheet-header-border;
     }
 
     .k-spreadsheet-merged-cell {
@@ -94,10 +102,10 @@
 .k-spreadsheet {
     > .k-spreadsheet-formula-bar  {
         background-color: @background;
-        border-color: @base @base @cell-border-color;
+        border-color: @base @base @spreadsheet-header-border;
 
         &:before {
-            border-color: @cell-border-color;
+            border-color: @spreadsheet-header-border;
         }
 
         &:after {
@@ -119,7 +127,7 @@
     border-radius: @border-radius;
     background-color: @background;
 
-    box-shadow: inset 0 0 0 1px @cell-border-color;
+    box-shadow: inset 0 0 0 1px @spreadsheet-cell-border;
 
     &.k-state-active {
         color: @selected-text-color;
