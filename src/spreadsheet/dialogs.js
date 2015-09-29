@@ -809,22 +809,19 @@
 
             this.criterion = validation.dataType;
             this.type = validation.type;
-
-            console.log("FROMVALIDATION", this);
         },
         toValidationObject: function() { //TODO: build proper validation object here
-            var criterion = this.criterion;
 
             var options = {
                 type: this.type,
-                dataType: criterion !== "custom" ? criterion : "",
-                comparerType: comparer.type,
-                from: from,
-                to: to
+                dataType: this.criterion !== "custom" ? this.criterion : "",
+                comparerType: this.comparer,
+                from: this.from,
+                to: this.to
             };
 
             if (this.useCustomMessages) {
-                options.messageTemplate = this.hintMessage;
+                options.messageTemplate = this.hintMessageTemplate;
                 options.titleTemplate = this.hintTitle;
             }
 
