@@ -9,27 +9,194 @@
 <script>
     $("#scheduler").kendoScheduler({
         height: 600,
+        editable: {
+            confirmation: true<#
+    if(!EditableCreate) {
+#>,
+            create: false<#
+    }
+    if(!EditableUpdate) {
+#>,
+            update: false<#
+    }
+    if(!EditableDestroy) {
+#>,
+            destroy: false<#
+    }
+    if(!EditableMove) {
+#>,
+            move: false<#
+    }
+    if(!EditableResize) {
+#>,
+            resize: false<#
+    }
+#>
+
+        },
+        selectable: <#= Selectable.ToString().ToLower() #>,
+<#
+    if(SchedulerViewTypes.Count > 0){
+#>
+        views: [<#
+    foreach (string view in SchedulerViewTypes)
+    {
+            bool isLast = view == SchedulerViewTypes[SchedulerViewTypes.Count - 1] ? true : false;
+#> "<#= LowerFirstLetter(view) #>"<#= !isLast ? "," : ""  #><#
+    }
+#> ],
+<#
+    }
+#>
+<#
+    if(PdfExport) {
+#>
+        pdf: {
+            fileName: "Kendo UI Scheduler Export.pdf",
+            proxyURL: "Pdf_Export_Save"
+        },
+        toolbar: ["pdf"],
+<#
+    }
+    if(SchedulerEvents.Count > 0)
+    {
+        foreach (string ev in SchedulerEvents)
+        {
+#>
+        <#= LowerFirstLetter(ev) #>: "on<#= ev #>",
+<#
+        }
+#><#
+    }
+#>
         dataSource: {
             type: "aspnetmvc-ajax",
             transport: {
+                stringifyDates: true,
                 read: {
                      url: "<#= entitySetName #>_Read"
+                }<#
+    if(EditableCreate || EditableResize || EditableMove) {
+#>
+,
+                create: { 
+                    url: "<#= entitySetName #>_Create"
+                }<#
+    }
+    if(EditableUpdate || EditableResize || EditableMove) {
+#>
+,
+                update: { 
+                    url: "<#= entitySetName #>_Update"
+                }<#
+    }
+    if(EditableDestroy || EditableResize || EditableMove) {
+#>
+,
+                destroy: {
+                    url: "<#= entitySetName #>_Destroy"
                 }
+<#
+    }
+#>
             },
             schema: {
                 data: "Data",
                 model: {
-                    id: "<#= PrimaryKeyName#>"<# RenderFields(PrimaryKeyName); #>
+                    id: "<#=LowerFirstLetter(PrimaryKeyName)#>"<# RenderFields(PrimaryKeyName); #>
                 }
             }
         }
     });
+
+<# if(SchedulerEvents.Count > 0){ #>
+<# foreach (string ev in SchedulerEvents)
+    { #>
+    function on<#= ev #>(e){
+        //Implement the event handler for <#= ev #>
+    }
+
+<# } #>
+<# } #>
 </script>
 
 <#+
     private string GetTabs(int count)
     {
         return String.Concat(Enumerable.Repeat("\t", count));
+    }
+
+    private string LowerFirstLetter(string name)
+    {
+        return Char.ToLowerInvariant(name[0]) + name.Substring(1);
+    }
+
+    private string RenderSchemaDataAnnotations(KeyValuePair<string, Dictionary<string, string>> model, bool isLast)
+    {
+            bool distinctValidators = GetDistinctValidation(model.Value).Count > 0 ? true : false;
+            var newLine = Environment.NewLine;
+            string result = "";
+            result += GetTabs(6) + "\"" + LowerFirstLetter(model.Key) + "\"" + ": {" + newLine;
+            result += GetTabs(7) + "type: " + "\"" + model.Value["type"] + "\"," + newLine;
+            result += GetTabs(7) + "from: " + "\"" + model.Key + "\"" + newLine;
+            result += distinctValidators ? "" : newLine;
+
+            if (distinctValidators)
+            {
+                result += "," + newLine + GetTabs(7) + "validation: {";
+                result += RenderValidationAttributes(model);
+                result += "}" + newLine;
+            }
+            result += GetTabs(6);
+            result += GetTabs(6) + (isLast ? "}" : "}," + Environment.NewLine);
+
+            return result;
+    }
+
+    private string RenderSchemaTypes(PropertyMetadata model, bool isLast)
+    {
+        string newLine = Environment.NewLine;
+        string result = "";
+        string fieldType = GetFieldType(model.TypeName);
+
+        result += GetTabs(6) + "\"" + LowerFirstLetter(model.PropertyName) + "\"" + ": {" + newLine;
+        result += GetTabs(7) + "type: " + "\"" + fieldType + "\"," + newLine;
+        result += GetTabs(7) + "from: " + "\"" + model.PropertyName + "\"" + newLine;
+
+        result +=  GetTabs(6) + (isLast ? "}" : "}," + Environment.NewLine);
+        return result;
+    }
+
+    private string GetFieldType(string type)
+    {
+        switch (type)
+        {
+            case "System.DateTime":
+                return "date";
+                break;
+            case "System.String":
+                return "string";
+                break;
+            case "System.Boolean":
+                return "boolean";
+                break;
+            default:
+                return "number";
+                break;
+        }
+    }
+
+    public Dictionary<string, string> GetDistinctValidation(Dictionary<string, string> models)
+    {
+        Dictionary<string, string> distinct = new Dictionary<string, string>();
+        foreach (var item in models)
+        {
+            if (item.Key == "pattern" || item.Key == "max" || item.Key == "required" || item.Key == "min")
+            {
+                distinct.Add(item.Key, item.Value);
+            }
+        }
+        return distinct;
     }
 
     private string RenderValidationAttributes(KeyValuePair<string, Dictionary<string, string>> model)
@@ -54,96 +221,35 @@
         return result;
     }
 
-    public Dictionary<string, string> GetDistinctValidation(Dictionary<string, string> models)
-    {
-        Dictionary<string, string> distinct = new Dictionary<string, string>();
-        foreach (var item in models)
-        {
-            if (item.Key == "pattern" || item.Key == "max" || item.Key == "required" || item.Key == "min")
-            {
-                distinct.Add(item.Key, item.Value);
-            }
-        }
-        return distinct;
-    }
-
-    private string LowerFirstLetter(string name)
-    {
-        return Char.ToLowerInvariant(name[0]) + name.Substring(1);
-    }
-
-    private string RenderSchemaFields(KeyValuePair<string, Dictionary<string, string>> model, bool isLast)
-    {
-            bool distinctValidators = GetDistinctValidation(model.Value).Count > 0 ? true : false;
-            var newLine = Environment.NewLine;
-            string result = "";
-            result += GetTabs(6) + "\"" + LowerFirstLetter(model.Key) + "\"" + ": {" + newLine;
-            result += GetTabs(7) + "type: " + "\"" + model.Value["type"] + "\"";
-            result += GetTabs(7) + "from: " + "\"" + model.Key + "\"";
-            result += distinctValidators ? "" : newLine;
-
-            if (distinctValidators)
-            {
-                result += "," + newLine + GetTabs(7) + "validation: {";
-                result += RenderValidationAttributes(model);
-                result += "}" + newLine;
-            }
-            result += GetTabs(6);
-            result +=  isLast? "}" : "}," + Environment.NewLine;
-
-            return result;
-    }
-
     private void RenderFields(string primaryKey)
     {
-        var newLine = Environment.NewLine;
+        string newLine = Environment.NewLine;
         string tabs = GetTabs(5);
         string result = "," + newLine + tabs + "fields: {" + newLine;
+        var properties = ModelMetadata.Properties
+        .Where(prop => prop.Scaffold && !prop.IsForeignKey && !prop.IsAssociation)
+        .ToList();
 
         DataAnnotationAttributes.Remove(primaryKey);
 
-        List<string> addedFields = new List<string>();
+        foreach (var property in properties)
+        {
+            if (!DataAnnotationAttributes.ContainsKey(property.PropertyName))
+            {
+                var isLast = property.Equals(properties.Last());
+                result += RenderSchemaTypes(property, isLast);
+            }
+        }
+
         foreach (var model in DataAnnotationAttributes)
         {
             if (!(model.Value.ContainsKey("scaffold") && model.Value["scaffold"] == "false"))
             {
                 var isLast = model.Equals(DataAnnotationAttributes.Last());
-                addedFields.Add(model.Key);
-                result += RenderSchemaFields(model, isLast);
+                result += RenderSchemaDataAnnotations(model, isLast);
             }
+
         }
-
-         List<KeyValuePair<string, string>> requiredFields = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("Title", "string"),
-                new KeyValuePair<string, string>("Start", "date"),
-                new KeyValuePair<string, string>("End", "date"),
-                new KeyValuePair<string, string>("StartTimezone", "string"),
-                new KeyValuePair<string, string>("EndTimezone", "string"),
-                new KeyValuePair<string, string>("Description", "string"),
-                new KeyValuePair<string, string>("IsAllDay", "boolean"),
-                new KeyValuePair<string, string>("RecurrenceRule", "string"),
-                new KeyValuePair<string, string>("RecurrenceException", "string"),
-                new KeyValuePair<string, string>("RecurrenceId", "")
-        };
-
-        bool isFirst = true;
-
-        foreach (KeyValuePair<string, string> field in requiredFields)
-        {
-            if(addedFields.FirstOrDefault(str => str.Contains(field.Key)) == null)
-            {
-                if (addedFields.Count != 0 && isFirst) {
-                    result += "," + newLine;
-                    isFirst = false;
-                }
-
-                result += GetTabs(6) + "\"" + LowerFirstLetter(field.Key) + "\"" + ": {" + newLine;
-                result += field.Value != "" ?  GetTabs(7) + "type: " + "\"" + field.Value + "\"," + newLine : "";
-                result += GetTabs(7) + "from: " + "\"" + field.Key + "\"" + newLine + GetTabs(6);
-                result +=  requiredFields[requiredFields.Count - 1].Key == field.Key ? "}" : "}," + newLine;
-            }
-        }
-
         result += newLine + tabs + "}";
 #>
 <#=result#>
