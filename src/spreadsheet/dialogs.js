@@ -802,10 +802,10 @@
             this.type = validation.type;
 
             if (validation.messageTemplate || validation.titleTemplate) {
+                this.hintMessageTemplate = validation.messageTemplate;
                 this.hintMessage = validation.messageTemplate;
                 this.hintTitle = validation.titleTemplate;
                 this.useCustomMessages = true;
-                this.setHintMessageTemplate();
                 this.buildMessages();
             } else {
                 this.useCustomMessages = false;
@@ -822,7 +822,7 @@
             };
 
             if (this.useCustomMessages) {
-                options.messageTemplate = this.hintMessageTemplate;
+                options.messageTemplate = this.shouldBuild ? this.hintMessageTemplate : this.hintMessage;
                 options.titleTemplate = this.hintTitle;
             }
 
