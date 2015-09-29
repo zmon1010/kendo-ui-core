@@ -546,7 +546,7 @@
 
                 range.forEachCell(function(row, col, cell) {
                     var width = this._sheet.columnWidth(col);
-                    maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width));
+                    maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, cell.fontSize, true));
                 });
 
                 range.sheet().rowHeight(range.topLeft().row, maxHeight);
@@ -580,8 +580,15 @@
                         'white-space: normal !important; word-break: break-all !important;" />'
                      )[0];
 
-    function getTextHeight(text, width) {
-        return kendo.util.measureText(text, { baselineMarkerSize: 0, width: width + "px" }, measureBox).height;
+    function getTextHeight(text, width, fontSize, wrap) {
+        var styles = { 
+            "baselineMarkerSize" : 0, 
+            "width" : width + "px",
+            "font-size" : (fontSize || 12) + "px",
+            "word-break" : (wrap === true) ? "break-all" : "normal"
+        };
+
+        return kendo.util.measureText(text, styles, measureBox).height;
     }
 
     kendo.spreadsheet.util = { getTextHeight: getTextHeight };
