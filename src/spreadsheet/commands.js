@@ -342,6 +342,21 @@
         }
     });
 
+    kendo.spreadsheet.ToolbarPasteCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._workbook = options.workbook;
+        },
+        exec: function() {
+            if(kendo.support.browser.msie && kendo.support.browser.version >= 10) {
+                this._workbook._view.clipboard.focus().select();
+                document.execCommand('paste');
+            } else {
+                this._workbook._view.openDialog("useKeyboard");
+            }
+        }
+    });
+
     kendo.spreadsheet.CopyCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
@@ -364,16 +379,21 @@
         }
     });
 
-    kendo.spreadsheet.ToolbarPasteCommand = Command.extend({
+    kendo.spreadsheet.ToolbarCopyCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
             this._workbook = options.workbook;
             this._clipboard = options.workbook.clipboard();
         },
+        undo: $.noop,
         exec: function() {
-            if(kendo.support.browser.msie) {
-                this._workbook._view.clipboard.focus().select();
-                document.execCommand('paste');
+            if(kendo.support.browser.msie && kendo.support.browser.version >= 10) {
+                var clipboard = this._workbook._view.clipboard;
+                var textarea = document.createElement('textarea');
+                $(textarea).val(clipboard.html()).appendTo(document.body).focus().select();
+                document.execCommand('copy');
+                clipboard.trigger("copy");
+                $(textarea).remove();
             } else {
                 this._workbook._view.openDialog("useKeyboard");
             }

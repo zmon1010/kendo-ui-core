@@ -44,7 +44,7 @@
         formatIncreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: +1,       iconClass: "increase-decimal" },
         textWrap:              { type: "button", command: "TextWrapCommand",       property: "wrap",          value: true,     iconClass: "text-wrap", togglable: true },
         cut:                   { type: "button", command: "CutCommand",                                                        iconClass: "cut" },
-        copy:                  { type: "button", command: "CopyCommand",                                                       iconClass: "copy" },
+        copy:                  { type: "button", command: "ToolbarCopyCommand",                                                iconClass: "copy" },
         paste:                 { type: "button", command: "ToolbarPasteCommand",                                               iconClass: "paste" },
         filter:                { type: "button", command: "FilterCommand",         property: "hasFilter",                      iconClass: "filter", togglable: true },
         separator:             { type: "separator" },

@@ -221,7 +221,12 @@
             if(this._external.html === undefined) {
                 return true;
             }
-            return $("<div/>").html(this._external.html).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
+            var internalHTML = $("<div/>").html(this._external.html).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
+            var internalPlain = $("<div/>").html(this._external.plain).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
+            if(internalHTML || internalPlain) {
+                return true;
+            }
+            return false;
         },
 
         _cellState: function(element) {
