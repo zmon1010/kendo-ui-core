@@ -11,20 +11,6 @@
     var calc = spreadsheet.calc;
     var Class = kendo.Class;
 
-    var VALIDATIONMESSAGE = "Please enter a valid #=dataType# value {0}.";
-    var VALIDATIONTITLE = "Validation #=type#";
-    var VALIDATIONCOMPARERS = {
-        greaterThan: { type: "greaterThan",  text: "greater than #=from#"},
-        lessThan: { type: "lessThan",  text: "less than #=from#"},
-        between: { type: "between",  text: "between #=from# and #=to#"},
-        equalTo: { type: "equalTo",  text: "equal to #=from#"},
-        notEqualTo: { type: "notEqualTo",  text: "not equal to #=from#"},
-        greaterThanOrEqualTo: { type: "greaterThanOrEqualTo",  text: "greater than or equal to #=from#"},
-        lessThanOrEqualTo: { type: "lessThanOrEqualTo",  text: "less than or equal to #=from#"},
-        notBetween: { type: "notBetween",  text: "not between #=from# and #=to#"},
-        custom: { type: "custom",  text: "that satisfies the formula: #=fromFormula#"}
-    };
-
     function compileValidation(sheet, row, col, validation) {
         var validationHandler;
 
@@ -40,23 +26,27 @@
             validation.to = calc.compile(calc.parseFormula(sheet, row, col, validation.to));
         }
 
-        var comparer = exports.validationComparers[validation.comparerType];
+
+        var comparer = validation.dataType == "custom" ? exports.validationComparers["custom"] : exports.validationComparers[validation.comparerType];
 
         if (!comparer) {
             throw kendo.format("'{0}' comparer is not implemented.", validation.comparerType);
         }
 
         validationHandler = function (valueToCompare, valueFormat) {
+            var toValue = this.to && this.to.value ? this.to.value : undefined;
 
-            if (this.allowNulls && valueToCompare === null) {
-                this.value = true;
+            if ( this.dataType == "custom") {
+                this.value = comparer(valueToCompare, this.from.value,  toValue);
+            } else if (valueToCompare === null) {
+                if (this.allowNulls) {
+                    this.value = true;
+                } else {
+                    this.value = false;
+                }
             } else {
-                //TODO: MAKE WORKS FOR OTHER TYPES, DIFF THAN DATE:
-                var type = valueFormat ? spreadsheet.formatting.type(valueToCompare, valueFormat) : "";
-
-                var toValue = this.to && this.to.value ? this.to.value : undefined;
-
-                this.value = !type || type == this.dataType ? comparer(valueToCompare, this.from.value,  toValue) : "type error";
+                //TODO: TYPE CHECK IS REQUIRED ONLY FOR DATE TYPE WHEN SPECIAL COMPARER (ISDATE) IS USED
+                this.value = comparer(valueToCompare, this.from.value,  toValue);
             }
 
             return this.value;
@@ -85,11 +75,21 @@
             this.row = options.row;
             this.col = options.col;
 
-            this.tooltipMessageTemplate = options.tooltipMessageTemplate ? options.tooltipMessageTemplate : "";
-            this.tooltipTitleTemplate = options.tooltipTitleTemplate ? options.tooltipTitleTemplate : "";
+            if (options.tooltipMessageTemplate) {
+                this.tooltipMessageTemplate = options.tooltipMessageTemplate;
+            }
 
-            this.messageTemplate = options.messageTemplate ? options.messageTemplate : this._validationMessage();
-            this.titleTemplate = options.titleTemplate ? options.titleTemplate : this._validationTitle();
+            if (options.tooltipTitleTemplate) {
+                this.tooltipTitleTemplate = options.tooltipTitleTemplate;
+            }
+
+            if (options.messageTemplate) {
+                this.messageTemplate = options.messageTemplate;
+            }
+
+            if (options.titleTemplate) {
+                this.titleTemplate = options.titleTemplate;
+            }
         },
 
         _setMessages: function() {
@@ -103,23 +103,21 @@
                 comparerType: this.comparerType
             };
 
-            if (this.tooltipMessageTemplate && this.tooltipTitleTemplate) {
-                this.tooltipMessage = kendo.template(this.tooltipMessageTemplate)(options);
+            if (this.tooltipTitleTemplate) {
                 this.tooltipTitle = kendo.template(this.tooltipTitleTemplate)(options);
             }
 
-            this.message = kendo.template(this.messageTemplate)(options);
-            this.title = kendo.template(this.titleTemplate)(options);
-        },
+            if (this.tooltipMessageTemplate) {
+                this.tooltipMessage = kendo.template(this.tooltipMessageTemplate)(options);
+            }
 
-        _validationTitle: function() {
-            return kendo.format(VALIDATIONTITLE);
-        },
+            if (this.titleTemplate) {
+                this.title = kendo.template(this.titleTemplate)(options);
+            }
 
-        _validationMessage: function() {
-            var validationTypeText = kendo.format(VALIDATIONCOMPARERS[this.comparerType].text);
-
-            return kendo.format(VALIDATIONMESSAGE, validationTypeText);
+            if (this.messageTemplate) {
+                this.message = kendo.template(this.messageTemplate)(options);
+            }
         },
 
         clone: function(sheet, row, col) {

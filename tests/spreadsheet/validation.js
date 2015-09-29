@@ -113,7 +113,7 @@
         equal(parsedOutput.type, "warning");
     });
 
-    test("validation default messages are set", function(){
+    test("validation no default messages are set", function(){
         var customOptions = {
             from: "A2",
             to: "A3",
@@ -127,32 +127,11 @@
         var validationCallback = function(result) {
             equal(f.tooltipTitle, undefined);
             equal(f.tooltipMessage, undefined);
-            equal(f.message, "Please enter a valid date value between 4 and 7.");
-            equal(f.title, "Validation reject");
+            equal(f.message, undefined);
+            equal(f.title, undefined);
         };
 
         f.exec(ss, 2, "m/d/yyyy", validationCallback);
-    });
-
-    test("validation default messages are set when custom comparer is used", function(){
-        var customOptions = {
-            from: "A2",
-            comparerType: "custom",
-            dataType: "date",
-            type: "reject",
-            allowNulls: false
-        };
-
-        var f = validation.compile(Sheet1, 0, 0, $.extend({}, customOptions));
-
-        var validationCallback = function(result) {
-            equal(f.tooltipTitle, undefined);
-            equal(f.tooltipMessage, undefined);
-            equal(f.message, "Please enter a valid date value that satisfies the formula: A2.");
-            equal(f.title, "Validation reject");
-        };
-
-        f.exec(ss, null, "m/d/yyyy", validationCallback);
     });
 
     test("validation adjust modify both the validation ref and the nested formulas", 5, function(){
@@ -415,11 +394,25 @@
 
         var f = validation.compile(Sheet1, 0, 0, {
             from: "ISODD(5)",
-            comparerType: "custom",
+            dataType: "custom",
             allowNulls: false
         });
 
-        f.exec(ss, null, "m/d/yyyy", validationCallback);
+        f.exec(ss, null, null, validationCallback);
+    });
+
+    test("validation compare null value with custom comparer correctly", function(){
+        var validationCallback = function(result) {
+            ok(!result);
+        };
+
+        var f = validation.compile(Sheet1, 0, 0, {
+            from: "ISODD(6)",
+            dataType: "custom",
+            allowNulls: true
+        });
+
+        f.exec(ss, null, null, validationCallback);
     });
 
 })();
