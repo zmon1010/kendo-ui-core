@@ -449,6 +449,41 @@
         equal(filter.matches(filter.value({ value: 2099, format: "$??.00" })), false);
     });
 
+    test("formatted number startswith string", function() {
+        filter = new CustomFilter({
+            criteria: [
+                { operator: "contains", value: "$" }
+            ]
+        });
+
+        equal(filter.matches(filter.value({ value: 2100, format: "$??.00" })), true);
+        equal(filter.matches(filter.value({ value: 2099 })), false);
+    });
+
+    test("number does not match string/date values", function() {
+        filter = new CustomFilter({
+            criteria: [
+                { operator: "eq", value: 10 }
+            ]
+        });
+
+        equal(filter.matches(filter.value(cell(10))), true);
+        equal(filter.matches(filter.value(cell("foo"))), false);
+        equal(filter.matches(filter.value({ value: 11, format: "m/d/yyyy" })), false);
+    });
+
+    test("date does not match string/number values", function() {
+        filter = new CustomFilter({
+            criteria: [
+                { operator: "eq", value: 11, format: "m/d/yyyy" }
+            ]
+        });
+
+        equal(filter.matches(filter.value(cell(10))), false);
+        equal(filter.matches(filter.value(cell("foo"))), false);
+        equal(filter.matches(filter.value({ value: 11, format: "m/d/yyyy" })), true);
+    });
+
     module("top filter");
 
     test("top number matches the top X values", function() {

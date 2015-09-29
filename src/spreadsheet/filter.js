@@ -123,20 +123,24 @@
         },
         value: function(cell) {
             var value = cell.value;
-            var criterionType = typeof this._criteria[0].value;
+            var criterionType = this._criteria[0].type || typeof this._criteria[0].value;
             var valueType = typeof value;
             var dom;
 
             if (cell.format) {
                 valueType = kendo.spreadsheet.formatting.type(value, cell.format);
-                dom = kendo.spreadsheet.formatting.format(value, cell.format);
-                value = dom.children[0].nodeValue;
             }
 
             if (valueType != criterionType) {
                 if (criterionType == "string") {
+                    if (cell.format) {
+                        dom = kendo.spreadsheet.formatting.format(value, cell.format);
+                        value = dom.children[0].nodeValue;
+                    }
                     value = value + "";
                 }
+            } else if (valueType == "date") {
+                value = kendo.spreadsheet.numberToDate(value);
             }
 
             return value;
