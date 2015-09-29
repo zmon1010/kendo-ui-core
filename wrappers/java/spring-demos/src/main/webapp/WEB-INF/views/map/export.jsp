@@ -46,7 +46,7 @@
 <script src="${chroma}"></script>
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
-<script src="${poko}"></script>
+<script src="${pako}"></script>
 
 <script>
 $(".export-pdf").click(function() {
