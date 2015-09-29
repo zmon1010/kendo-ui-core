@@ -1095,6 +1095,11 @@
             ok(imageNode.render().indexOf("xlink:href='Foo'") > -1);
         });
 
+        test("encodes source", function() {
+            imageNode.srcElement.src("Foo&Bar");
+            ok(imageNode.render().indexOf("xlink:href='Foo&amp;Bar'") > -1);
+        });
+
         test("renders transformation", function() {
             image.transform(g.transform(new Matrix(1,1,1,1,1,1)));
             ok(imageNode.render().indexOf("transform='matrix(1,1,1,1,1,1)'") > -1);

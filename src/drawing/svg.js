@@ -920,7 +920,8 @@
         },
 
         mapSource: function() {
-            return [["xlink:href", this.srcElement.src()]];
+            var src = kendo.htmlEncode(this.srcElement.src());
+            return [["xlink:href", src]];
         },
 
         renderSource: function() {
