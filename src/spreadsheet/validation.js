@@ -26,23 +26,29 @@
             validation.to = calc.compile(calc.parseFormula(sheet, row, col, validation.to));
         }
 
-        var comparer = exports.validationComparers[validation.comparerType];
+
+        var comparer = validation.dataType == "custom" ? exports.validationComparers["q custom"] : exports.validationComparers[validation.comparerType];
 
         if (!comparer) {
             throw kendo.format("'{0}' comparer is not implemented.", validation.comparerType);
         }
 
         validationHandler = function (valueToCompare, valueFormat) {
+            var toValue = this.to && this.to.value ? this.to.value : undefined;
 
-            if (this.allowNulls && valueToCompare === null) {
-                this.value = true;
+            if ( this.dataType == "custom") {
+                this.value = comparer(valueToCompare, this.from.value,  toValue);
+            } else if (valueToCompare === null) {
+                if (this.allowNulls) {
+                    this.value = true;
+                } else {
+                    this.value = false;
+                }
             } else {
                 //TODO: MAKE WORKS FOR OTHER TYPES, DIFF THAN DATE:
                 var type = valueFormat ? spreadsheet.formatting.type(valueToCompare, valueFormat) : "";
 
-                var toValue = this.to && this.to.value ? this.to.value : undefined;
-
-                this.value = !type || type == this.dataType ? comparer(valueToCompare, this.from.value,  toValue) : "type error";
+                this.value = type == this.dataType || this.dataType == "custom" ? comparer(valueToCompare, this.from.value,  toValue) : "type error";
             }
 
             return this.value;
