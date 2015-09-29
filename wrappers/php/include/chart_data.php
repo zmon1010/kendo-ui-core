@@ -726,4 +726,21 @@ function forecast_data() {
     );
 }
 
+function pan_and_zoom_data() {
+    $data = array();
+    for ($i = 0; $i < 100; $i++) {
+        $data[] = array('category' => 'C' . $i, 'value' => rand(0, 10));
+    }
+    return $data;
+}
+
+function sine_interval() {
+    $data = array();
+    $step = M_PI / 4;
+    for ($i = -50; $i < 50; $i++) {
+        $data[] = array('x' => $i, 'y' => sin($i));
+    }
+    return $data;
+}
+
 ?>
