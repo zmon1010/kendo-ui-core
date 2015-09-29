@@ -488,6 +488,14 @@
         ok(sheet._filter.columns[2].filter instanceof kendo.spreadsheet.TopFilter);
     });
 
+    test("fromJSON skips invalid filter state", function() {
+        sheet.fromJSON({
+            filter: { }
+        });
+
+        ok(!sheet._filter);
+    });
+
     // ------------------------------------------------------------
     module("Workbook serialization", {
         setup: function() {

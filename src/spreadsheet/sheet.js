@@ -912,15 +912,20 @@
                 }
 
                 if (json.filter) {
-                    this._filter = {
-                        ref: this._ref(json.filter.ref),
-                        columns: json.filter.columns.map(function(column) {
-                            return {
-                                index: column.index,
-                                filter: kendo.spreadsheet.Filter.create(column)
-                            };
-                        })
-                    };
+                    var ref = json.filter.ref;
+                    if (!ref) {
+                        kendo.logToConsole("Dropping filter for sheet '" + json.name + "' due to missing ref");
+                    } else {
+                        this._filter = {
+                            ref: this._ref(ref),
+                            columns: json.filter.columns.map(function(column) {
+                                return {
+                                    index: column.index,
+                                    filter: kendo.spreadsheet.Filter.create(column)
+                                };
+                            })
+                        };
+                    }
                 }
             });
         },
