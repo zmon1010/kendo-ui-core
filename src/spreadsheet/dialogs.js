@@ -818,6 +818,10 @@
             }
         },
         toValidationObject: function() {
+            if (this.criterion === "any") {
+                return null;
+            }
+
             var options = {
                 type: this.type,
                 dataType: this.criterion,
