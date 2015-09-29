@@ -9,12 +9,13 @@
           var val = Math.round(Math.random() * 10);
           data.push({
             category: "C" + i,
-            val: val
+            value: val
           });
-    }
+        }
 
         function createChart() {
             $("#chart").kendoChart({
+                renderAs: "canvas",
                 dataSource: {
                     data: data
                 },
@@ -27,7 +28,7 @@
                 },
                 series: [{
                     type: "column",
-                    field: "val",
+                    field: "value",
                     categoryField: "category"
                 }],
                 pannable: {

@@ -13,15 +13,15 @@
 
                 function createChart() {
                     $("#chart").kendoChart({
+                        renderAs: "canvas",
                         dataSource: {
                             data: data
                         },
                         xAxis: {
-                            name: "xAxis",
                             min: -2,
                             max: 2,
                             labels: {
-                                format: "{0:N1}"
+                                format: "{0:n1}"
                             }
                         },
                         yAxis: {

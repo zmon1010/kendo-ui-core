@@ -866,5 +866,38 @@ namespace Kendo.Mvc.Examples.Models
 
             };
         }
+
+        public static IList<ChartCategoryPoint> PanAndZoomData()
+        {
+            IList<ChartCategoryPoint> data = new List<ChartCategoryPoint>();
+            Random random = new Random(0);
+            for (var i = 0; i < 100; i++) 
+            {
+                var value = random.Next(0, 11);
+                data.Add( new ChartCategoryPoint
+                {
+                    Category = "C" + i,
+                    Value = value
+                });
+            }
+
+            return data;
+        }
+
+        public static IList<ChartScatterPoint> SineInterval(double min, double max)
+        {
+            IList<ChartScatterPoint> data = new List<ChartScatterPoint>();
+            var step = Math.PI / 4;
+            for (var i = min; i < max; i += step)
+            {
+                data.Add(new ChartScatterPoint
+                {
+                    X = i,
+                    Y = Math.Sin(i)
+                });
+            }
+
+            return data;
+        }
     }
 }

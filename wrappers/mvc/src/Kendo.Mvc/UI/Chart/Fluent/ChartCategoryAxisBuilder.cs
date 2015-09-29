@@ -262,5 +262,25 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the minimum value.
+        /// </summary>
+        public ChartCategoryAxisBuilder<TModel> Min(double value)
+        {
+            Axis.Min = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the maximum value.
+        /// </summary>
+        public ChartCategoryAxisBuilder<TModel> Max(double value)
+        {
+            Axis.Max = value;
+
+            return this;
+        }
     }
 }

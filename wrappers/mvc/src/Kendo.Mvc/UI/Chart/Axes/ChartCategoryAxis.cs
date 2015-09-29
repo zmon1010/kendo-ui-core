@@ -134,18 +134,18 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
-        /// Specifies the date category axis minimum (start) date.
+        /// Specifies the date category axis minimum value.
         /// </summary>
-        public DateTime? Min
+        public object Min
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Specifies the date category axis maximum (end) date.
+        /// Specifies the category axis maximum value.
         /// </summary>
-        public DateTime? Max
+        public object Max
         {
             get;
             set;

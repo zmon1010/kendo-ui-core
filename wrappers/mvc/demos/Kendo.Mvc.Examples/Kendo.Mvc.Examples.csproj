@@ -151,6 +151,7 @@
     <Compile Include="Areas\razor\RazorAreaRegistration.cs" />
     <Compile Include="Controllers\AutoComplete\VirtualizationController.cs" />
     <Compile Include="Controllers\AutoComplete\GroupingController.cs" />
+    <Compile Include="Controllers\Bar_Charts\Pan_And_ZoomController.cs" />
     <Compile Include="Controllers\Bar_Charts\VisualsController.cs" />
     <Compile Include="Controllers\Chart_Api\ExportController.cs" />
     <Compile Include="Controllers\Chart_Api\Pdf_ExportController.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\Scatter_Charts\Pan_And_ZoomController.cs" />
     <Compile Include="Controllers\Spreadsheet\Sorting_FilteringController.cs" />
     <Compile Include="Controllers\Spreadsheet\Server_Side_Import_ExportController.cs" />
     <Compile Include="Controllers\Spreadsheet\Server_Side_Pdf_ExportController.cs" />
@@ -702,6 +704,8 @@
       <DependentUpon>Sample.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryItem.cs" />
+    <Compile Include="Models\Chart\ChartCategoryPoint.cs" />
+    <Compile Include="Models\Chart\ChartScatterPoint.cs" />
     <Compile Include="Models\Diagram\DiagramConnectionService.cs" />
     <Compile Include="Models\Diagram\DiagramShapeService.cs">
       <SubType>Code</SubType>
@@ -885,6 +889,7 @@
     <Content Include="App_Data\Sample_log.ldf">
       <DependentUpon>Sample.mdf</DependentUpon>
     </Content>
+    <Content Include="Areas\aspx\Views\bar_charts\pan_and_zoom.aspx" />
     <Content Include="Areas\aspx\Views\bar_charts\visuals.aspx" />
     <Content Include="Areas\aspx\Views\chart_api\export.aspx" />
     <Content Include="Areas\aspx\Views\chart_api\pdf_export.aspx" />
@@ -971,9 +976,10 @@
     <Content Include="Areas\aspx\Views\radial_gauge\export.aspx" />
     <Content Include="Areas\aspx\Views\radial_gauge\multiple_pointers.aspx" />
     <Content Include="Areas\aspx\Views\responsive_panel\index.aspx" />
+    <Content Include="Areas\aspx\Views\scatter_charts\pan_and_zoom.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\signalr.aspx" />
-    <Content Include="Areas\aspx\Views\scheduler\timeline.aspx" />    
+    <Content Include="Areas\aspx\Views\scheduler\timeline.aspx" />
     <Content Include="Areas\aspx\Views\styling\checkboxes.aspx" />
     <Content Include="Areas\aspx\Views\styling\radios.aspx" />
     <Content Include="Areas\aspx\Views\tabstrip\scrollable_tabs.aspx" />
@@ -1382,6 +1388,7 @@
     <Content Include="Areas\aspx\Views\spreadsheet\server_side_import_export.aspx" />
     <Content Include="Areas\aspx\Views\spreadsheet\server_side_pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\spreadsheet\sorting_filtering.aspx" />
+    <Content Include="Areas\razor\Views\bar_charts\pan_and_zoom.cshtml" />
     <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />
@@ -3328,6 +3335,7 @@
     <Content Include="Areas\razor\Views\spreadsheet\server_side_import_export.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\events.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\sorting_filtering.cshtml" />
+    <Content Include="Areas\razor\Views\scatter_charts\pan_and_zoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

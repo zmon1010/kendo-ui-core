@@ -520,5 +520,59 @@ namespace Kendo.Mvc.UI.Fluent
             Component.Transitions = transitions;
             return this;
         }
+
+        /// <summary>
+        /// Enables or disabled panning. 
+        /// </summary
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Chart()
+        ///             .Name("Chart")
+        ///             .Pannable(true)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ChartBuilder<T> Pannable(bool enabled = true)
+        {
+            Component.Pannable.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
+        /// Configure the chart pannable options.
+        /// </summary>
+        public ChartBuilder<T> Pannable(Action<ChartPannableBuilder> configurator)
+        {
+            Component.Pannable.Enabled = true;
+            configurator(new ChartPannableBuilder(Component.Pannable));
+            return this;
+        }
+
+        /// <summary>
+        /// Enables or disabled zooming. 
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Chart()
+        ///             .Name("Chart")
+        ///             .Zoomable(true)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ChartBuilder<T> Zoomable(bool enabled = true)
+        {
+            Component.Zoomable.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
+        /// Configure the chart zoomable options.
+        /// </summary>
+        public ChartBuilder<T> Zoomable(Action<ChartZoomableBuilder> configurator)
+        {
+            Component.Zoomable.Enabled = true;
+            configurator(new ChartZoomableBuilder(Component.Zoomable));
+            return this;
+        }
     }
 }

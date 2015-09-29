@@ -34,7 +34,9 @@ namespace Kendo.Mvc.UI
             DataSource.Schema.Total = "";
             DataSource.Schema.Errors = "";
             DataSource.ModelType(typeof(T));
-            Pdf = new PDFSettings(); 
+            Pdf = new PDFSettings();
+            Pannable = new ChartPannable();
+            Zoomable = new ChartZoomable();
         }
 
         /// <summary>
@@ -257,6 +259,24 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        /// <summary>
+        /// Pannble settings
+        /// </summary>
+        public ChartPannable Pannable
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Zoomable settings
+        /// </summary>
+        public ChartZoomable Zoomable
+        {
+            get;
+            private set;
+        }
+
         protected virtual string WidgetName {
             get
             {
@@ -323,6 +343,9 @@ namespace Kendo.Mvc.UI
             {
                 options.Add("pdf", pdf);
             }
+
+            SerializePannable(options);
+            SerializeZoomable(options);
         }
 
         protected void SerializeData(string key, IDictionary<string, object> data, IDictionary<string, object> options)
@@ -453,6 +476,38 @@ namespace Kendo.Mvc.UI
                 if (shouldSerialize)
                 {
                     options.Add(key, serializedAxes);
+                }
+            }
+        }
+
+        private void SerializePannable(IDictionary<string, object> options)
+        {
+            if (Pannable.Enabled)
+            {
+                var pannable = Pannable.CreateSerializer().Serialize();
+                if (pannable.Any())
+                {
+                    options["pannable"] = pannable;
+                } 
+                else 
+                {
+                    options["pannable"] = true;
+                }
+            }
+        }
+
+        private void SerializeZoomable(IDictionary<string, object> options)
+        {
+            if (Zoomable.Enabled)
+            {
+                var zoomable = Zoomable.CreateSerializer().Serialize();
+                if (zoomable.Any())
+                {
+                    options["zoomable"] = zoomable;
+                }
+                else
+                {
+                    options["zoomable"] = true;
                 }
             }
         }

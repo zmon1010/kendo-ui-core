@@ -25,8 +25,6 @@ namespace Kendo.Mvc.UI
                 .Add("type", axis.Type.ToString().ToLower(), () => axis.Type != null)
                 .Add("field", axis.Member, () => axis.Categories == null && axis.Member != null)
                 .Add("axisCrossingValue", axis.AxisCrossingValues, () => axis.AxisCrossingValues.Count() > 0)
-                .Add("min", axis.Min.ToJavaScriptString(), () => axis.Min != null)
-                .Add("max", axis.Max.ToJavaScriptString(), () => axis.Max != null)
                 .Add("roundToBaseUnit", axis.RoundToBaseUnit, () => axis.RoundToBaseUnit.HasValue)
                 .Add("weekStartDay", (int?) axis.WeekStartDay, () => axis.WeekStartDay.HasValue)
                 .Add("justified", axis.Justified, () => axis.Justified.HasValue)
@@ -72,6 +70,9 @@ namespace Kendo.Mvc.UI
                 result.Add("notes", notes);
             }
 
+            SerializeRangeValue("min", axis.Min, result);
+            SerializeRangeValue("max", axis.Max, result);
+
             return result;
         }
 
@@ -91,6 +92,21 @@ namespace Kendo.Mvc.UI
             else
             {
                 return axis.Categories;
+            }
+        }
+
+        private void SerializeRangeValue(string field, object value, IDictionary<string, object> options)
+        {
+            if (value != null)
+            {
+                if (value is DateTime)
+	            {
+                    options[field] = ((DateTime)value).ToJavaScriptString();
+	            }
+                else
+	            {
+                    options[field] = value;
+	            }
             }
         }
     }
