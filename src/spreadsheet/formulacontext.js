@@ -138,7 +138,12 @@
             if (currentFormula !== f) {
                 // could have been deleted or modified in the mean time,
                 // if the formula was asynchronous.  ignore this result.
-                return false;
+                //
+                // XXX: if we return false here, validation won't work
+                // (since it really evaluates a formula that is not in
+                // the cell).  This is a temporary fix until we find a
+                // better solution.
+                return true;
             }
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
