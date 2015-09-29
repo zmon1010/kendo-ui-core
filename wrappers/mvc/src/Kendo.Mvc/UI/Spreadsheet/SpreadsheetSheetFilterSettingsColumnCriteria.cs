@@ -7,37 +7,22 @@ namespace Kendo.Mvc.UI
     using Kendo.Mvc.Extensions;
 
     public class SpreadsheetSheetFilterSettingsColumnCriteria : JsonObject
-    {
-        public SpreadsheetSheetFilterSettingsColumnCriteria()
-        {
-            //>> Initialization
-        
-        //<< Initialization
-        }
-
-        //>> Fields
-        
+    {        
         public string Operator { get; set; }
         
-        public string Value { get; set; }
-        
-        //<< Fields
+        public object Value { get; set; }     
 
         protected override void Serialize(IDictionary<string, object> json)
-        {
-            //>> Serialization
-        
+        {     
             if (Operator.HasValue())
             {
                 json["operator"] = Operator;
             }
             
-            if (Value.HasValue())
+            if (Value != null)
             {
                 json["value"] = Value;
-            }
-            
-        //<< Serialization
+            }                    
         }
     }
 }

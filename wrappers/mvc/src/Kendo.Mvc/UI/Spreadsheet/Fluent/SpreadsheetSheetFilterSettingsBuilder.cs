@@ -20,16 +20,6 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// An array defining the filter configuration of individual columns.
-        /// </summary>
-        /// <param name="configurator">The action that configures the columns.</param>
-        public SpreadsheetSheetFilterSettingsBuilder Columns(Action<SpreadsheetSheetFilterSettingsColumnFactory> configurator)
-        {
-            configurator(new SpreadsheetSheetFilterSettingsColumnFactory(container.Columns));
-            return this;
-        }
-        
-        /// <summary>
         /// The active range for the filter, e.g. "B1:D8".
         /// </summary>
         /// <param name="value">The value that configures the ref.</param>
@@ -41,6 +31,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         //<< Fields
+
+        /// <summary>
+        /// An array defining the filter configuration of individual columns.
+        /// </summary>
+        /// <param name="configurator">The action that configures the columns.</param>
+        public SpreadsheetSheetFilterSettingsBuilder Columns(Action<SpreadsheetSheetFilterSettingsColumnFactory> configurator)
+        {
+            configurator(new SpreadsheetSheetFilterSettingsColumnFactory(container.Columns));
+            return this;
+        }
     }
 }
 

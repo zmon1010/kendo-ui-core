@@ -8,9 +8,7 @@
             sheets.Add()
                 .Name("OrdersLog")
                 .MergedCells("A1:G1", "A2:F2")
-                .Filter(filter => {
-                    filter.Ref("A3:G49").Columns(columns => { });
-                })
+                .Filter(filter => filter.Ref("A3:G49"))
                 .Columns(columns =>
                 {
                     columns.Add().Width(80);

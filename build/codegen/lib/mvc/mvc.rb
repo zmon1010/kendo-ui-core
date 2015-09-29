@@ -72,7 +72,8 @@ module CodeGen::MVC::Wrappers
     FLUENT_SKIP_LIST = [
         'map.layers',
         'map.markers',
-        'map.markerdefaults'
+        'map.markerdefaults',
+        'spreadsheet.sheets.filter.columns'
     ]
 
     INITIALIZATION_SKIP_LIST = [

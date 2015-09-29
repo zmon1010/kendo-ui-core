@@ -11,13 +11,24 @@ namespace Kendo.Mvc.UI.Fluent
     public class SpreadsheetSheetFilterSettingsColumnCriteriaBuilder: IHideObjectMembers
     {
         private readonly SpreadsheetSheetFilterSettingsColumnCriteria container;
+        private static readonly Dictionary<SpreadsheetFilterOperator, string> operators = new Dictionary<SpreadsheetFilterOperator, string>
+        {
+            { SpreadsheetFilterOperator.Contains, "contains" },
+            { SpreadsheetFilterOperator.DoesNotContain, "doesnotcontain" },
+            { SpreadsheetFilterOperator.StartsWith, "startswith" },
+            { SpreadsheetFilterOperator.EndsWith, "endswith" },
+            { SpreadsheetFilterOperator.EqualTo, "eq" },
+            { SpreadsheetFilterOperator.NotEqualTo, "neq" },
+            { SpreadsheetFilterOperator.LowerThan, "lt" },
+            { SpreadsheetFilterOperator.GreaterThan, "gt" },
+            { SpreadsheetFilterOperator.GreaterThanOrEqualTo, "gte" },
+            { SpreadsheetFilterOperator.LowerThanOrEqualTo, "lte" }   
+        };
 
         public SpreadsheetSheetFilterSettingsColumnCriteriaBuilder(SpreadsheetSheetFilterSettingsColumnCriteria settings)
         {
             container = settings;
         }
-
-        //>> Fields
         
         /// <summary>
         /// The criterion operator type.Supported types vary based on the inferred column data type (inferred):
@@ -40,9 +51,9 @@ namespace Kendo.Mvc.UI.Fluent
 		///     * lt - is less than the value
         /// </summary>
         /// <param name="value">The value that configures the operator.</param>
-        public SpreadsheetSheetFilterSettingsColumnCriteriaBuilder Operator(string value)
+        public SpreadsheetSheetFilterSettingsColumnCriteriaBuilder Operator(SpreadsheetFilterOperator value)
         {
-            container.Operator = value;
+            container.Operator = operators[value];
 
             return this;
         }
@@ -57,8 +68,28 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
-        //<< Fields
+
+        /// <summary>
+        /// The value for the criteria operator.
+        /// </summary>
+        /// <param name="value">The value that configures the value.</param>
+        public SpreadsheetSheetFilterSettingsColumnCriteriaBuilder Value(DateTime value)
+        {
+            container.Value = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The value for the criteria operator.
+        /// </summary>
+        /// <param name="value">The value that configures the value.</param>
+        public SpreadsheetSheetFilterSettingsColumnCriteriaBuilder Value(double value)
+        {
+            container.Value = value;
+
+            return this;
+        }        
     }
 }
 
