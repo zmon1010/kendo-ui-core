@@ -802,11 +802,11 @@
             }
         },
         fromValidationObject: function(validation) {
-            this.comparer = validation.comparerType;
-            this.from = validation.from;
-            this.to = validation.to;
-            this.criterion = validation.dataType;
-            this.type = validation.type;
+            this.set("criterion", validation.dataType);
+            this.set("comparer", validation.comparerType);
+            this.set("from", validation.from);
+            this.set("to", validation.to);
+            this.set("type", validation.type);
 
             if (validation.messageTemplate || validation.titleTemplate) {
                 this.hintMessageTemplate = validation.messageTemplate;
