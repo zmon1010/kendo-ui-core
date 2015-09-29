@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Random;
 
 public class ChartDataRepository {
     public static List<BulletPoint> mmhgData() {
@@ -4058,6 +4059,29 @@ public class ChartDataRepository {
         result.add(new Forecast("cloudy", 17, "Friday"));
         result.add(new Forecast("sunny", 20, "Saturday"));
         result.add(new Forecast("sunny", 25, "Sunday"));
+
+        return result;
+    }
+    
+    public static List<ChartCategoryPoint> PanAndZoomData() {
+        List<ChartCategoryPoint> result = new ArrayList<ChartCategoryPoint>();
+        Random random = new Random();
+        for (int i = 0; i < 100; i++)
+        {
+            result.add(new ChartCategoryPoint("C" + i, random.nextInt(10)));
+        }
+
+        return result;
+    }
+    
+    public static List<ChartScatterPoint> SineInterval() {
+        List<ChartScatterPoint> result = new ArrayList<ChartScatterPoint>();
+
+        double step = java.lang.Math.PI / 4;
+        for (double i = -50; i < 50; i+= step)
+        {
+            result.add(new ChartScatterPoint(i, java.lang.Math.sin(i)));
+        }
 
         return result;
     }
