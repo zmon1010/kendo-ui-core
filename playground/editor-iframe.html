@@ -18,39 +18,13 @@
     <link rel="stylesheet" href="../dist/styles/web/kendo.default.css">
     <![endif]-->
 
-    <script src="../src/jquery.js"></script>
-    <script src="../src/kendo.core.js"></script>
-    <script src="../src/kendo.data.js"></script>
-    <script src="../src/kendo.userevents.js"></script>
-    <script src="../src/kendo.resizable.js"></script>
-    <script src="../src/kendo.draganddrop.js"></script>
-    <script src="../src/kendo.binder.js"></script>
-    <script src="../src/kendo.popup.js"></script>
-    <script src="../src/kendo.list.js"></script>
-    <script src="../src/kendo.dropdownlist.js"></script>
-    <script src="../src/kendo.combobox.js"></script>
-    <script src="../src/kendo.fx.js"></script>
-    <script src="../src/kendo.window.js"></script>
-
-    <!-- <script src="../src/kendo.editor.js"></script> -->
-
-    <script src="../src/editor/main.js"></script>
-    <script src="../src/editor/dom.js"></script>
-    <script src="../src/editor/serializer.js"></script>
-    <script src="../src/editor/range.js"></script>
-    <script src="../src/editor/system.js"></script>
-    <script src="../src/editor/inlineformat.js"></script>
-    <script src="../src/editor/formatblock.js"></script>
-    <script src="../src/editor/linebreak.js"></script>
-    <script src="../src/editor/lists.js"></script>
-    <script src="../src/editor/link.js"></script>
-    <script src="../src/editor/image.js"></script>
-    <script src="../src/editor/components.js"></script>
-    <script src="../src/editor/indent.js"></script>
-    <script src="../src/editor/viewhtml.js"></script>
-    <script src="../src/editor/formatting.js"></script>
-    <script src="../src/editor/toolbar.js"></script>
-    <script src="../src/editor/tables.js"></script>
+    <script src="loader.js"></script>
+    <script>
+        requireSync([
+            "../src/jquery.js",
+            "../src/kendo.editor.js",
+        ]);
+    </script>
 
     <style>
         html, body {
