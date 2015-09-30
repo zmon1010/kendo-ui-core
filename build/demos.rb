@@ -368,7 +368,7 @@ namespace :demos do
         rm_rf 'dist/demos'
     end
 
-    task :release => ['demos/mvc/bin/Kendo.dll', 'dist/binaries/demos/Kendo']
+    task :release => ['demos/mvc/bin/Kendo.dll', 'dist/binaries/demos/Kendo', 'dist/binaries/demos/Kendo/Kendo.dll']
 
     task :upload_to_cdn => [
         :js,
