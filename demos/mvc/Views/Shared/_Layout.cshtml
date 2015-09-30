@@ -29,8 +29,9 @@
     }
     <link href="@Url.Content("~/content/shared/styles/examples.css")" rel="stylesheet" />
     @{ bool isAngularJsExample = ViewBag.CurrentExample != null && (ViewBag.CurrentExample.Text.StartsWith("AngularJS") || ViewBag.CurrentExample.Url.Contains("angular")); }
+    @{ bool isAngular2JsExample = ViewBag.CurrentExample != null && ViewBag.CurrentExample.Url.Contains("angular2"); }
 
-    @if (ViewBag.CurrentExample != null && ViewBag.CurrentExample.Url.Contains("angular2")) {
+    @if (isAngular2JsExample) {
         <script src="https://github.jspm.io/jmcriffey/bower-traceur-runtime@0.0.91/traceur-runtime.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/systemjs/0.18.4/system.src.js"></script>
         <script type="text/javascript" charset="utf-8">
@@ -48,6 +49,10 @@
     {
         if (scriptName.Contains("angular") && !isAngularJsExample)
         {
+            continue;
+        }
+
+        if (scriptName.Contains("angular.js") && isAngular2JsExample) { // skip angular1 for angular2
             continue;
         }
 
