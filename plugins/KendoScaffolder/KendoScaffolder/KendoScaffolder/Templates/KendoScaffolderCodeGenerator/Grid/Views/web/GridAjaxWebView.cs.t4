@@ -321,7 +321,7 @@
         string tabs = GetTabs(5);
         string result = "," + newLine + tabs + "fields: {" + newLine;            
         var properties = ModelMetadata.Properties
-        .Where(prop => prop.Scaffold && !prop.IsPrimaryKey && !prop.IsForeignKey && !prop.IsAssociation)
+        .Where(prop => prop.Scaffold && !prop.IsForeignKey && !prop.IsAssociation)
         .ToList();
                 
         DataAnnotationAttributes.Remove(primaryKey);
