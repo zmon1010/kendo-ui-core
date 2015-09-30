@@ -3,15 +3,15 @@
 (function(f, define){
     define([], f);
 })(function(){
-    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
-        return;
-    }
-
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
     /* jshint eqnull:true, laxbreak:true */
 
     "use strict";
+
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
 
     var spreadsheet = kendo.spreadsheet;
     var Class = kendo.Class;

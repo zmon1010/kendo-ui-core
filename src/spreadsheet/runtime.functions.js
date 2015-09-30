@@ -3,11 +3,11 @@
 (function(f, define){
     define([ "./runtime", "../util/main" ], f);
 })(function(){
+    "use strict";
+
     if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
         return;
     }
-
-    "use strict";
 
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.

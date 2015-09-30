@@ -3,11 +3,11 @@
 })(function(){
 
 (function(kendo) {
+    'use strict';
+
     if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
         return;
     }
-
-    'use strict';
 
     var $ = kendo.jQuery;
 
