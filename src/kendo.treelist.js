@@ -96,6 +96,10 @@ var __meta__ = { // jshint ignore:line
     var COLUMNLOCK = "columnLock";
     var COLUMNUNLOCK = "columnUnlock";
     var PARENTIDFIELD = "parentId";
+    var DRAGSTART = "dragstart";
+    var DRAG = "drag";
+    var DROP = "drop";
+    var DRAGEND = "dragend";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -974,8 +978,17 @@ var __meta__ = { // jshint ignore:line
                 },
                 dragstart: proxy(function() {
                     this.wrapper.addClass("k-treelist-dragging");
+
+                    this.trigger(DRAGSTART);
                 }, this),
-                drop: proxy(function() {
+                drag: proxy(function() {
+                    this.trigger(DRAG);
+                }, this),
+                drop: proxy(function(e) {
+                    this.trigger(DROP, {
+                        setValid: e.setValid.bind(e)
+                    });
+
                     this.wrapper.removeClass("k-treelist-dragging");
                 }, this),
                 dragend: proxy(function(e) {
@@ -983,6 +996,11 @@ var __meta__ = { // jshint ignore:line
                     var src = this.dataItem(e.source);
 
                     src.set("parentId", dest ? dest.id : null);
+
+                    this.trigger(DRAGEND, {
+                        source: src,
+                        destination: dest
+                    });
                 }, this),
                 reorderable: false,
                 dropHintContainer: function(item) {
@@ -1349,6 +1367,10 @@ var __meta__ = { // jshint ignore:line
             DATABINDING,
             DATABOUND,
             CANCEL,
+            DRAGSTART,
+            DRAG,
+            DROP,
+            DRAGEND,
             FILTERMENUINIT,
             COLUMNHIDE,
             COLUMNSHOW,

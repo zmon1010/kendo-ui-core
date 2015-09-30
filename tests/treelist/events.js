@@ -227,4 +227,99 @@
 
         equal(handler.calls, 1);
     });
+
+    function moveRow(options) {
+        var sourceUid = instance.dataSource.get(options.row).uid;
+        var destinationUid = instance.dataSource.get(options.to).uid;
+        var sourceRow = dom.find("[" + kendo.attr("uid") + "=" + sourceUid + "]");
+        var destinationRow = dom.find("[" + kendo.attr("uid") + "=" + destinationUid + "]");
+        var startOffset = sourceRow.offset();
+        var endOffset = destinationRow.offset();
+
+        press(sourceRow, startOffset.left + 1, startOffset.top + 1);
+        move(destinationRow, endOffset.left + 1, endOffset.top + 1);
+        release(destinationRow, endOffset.left + 2, endOffset.top + 2);
+    }
+
+    function createDraggableTreeList(options) {
+        return createTreeList($.extend({
+            editable: { move: true },
+            dataSource: [
+                { id: 1, expanded: true, parentId: null },
+                { id: 2, parentId: 1 },
+                { id: 3, parentId: 1 }
+            ]
+        }, options));
+    }
+
+    test("triggers dragstart event", function() {
+        createDraggableTreeList({
+            dragstart: handler
+        });
+
+        moveRow({ row: 2, to: 3 });
+
+        equal(handler.calls, 1);
+    });
+
+    test("triggers drag event", function() {
+        createDraggableTreeList({
+            editable: { move: true },
+            dataSource: [
+                { id: 1, expanded: true, parentId: null },
+                { id: 2, parentId: 1 },
+                { id: 3, parentId: 1 }
+            ],
+            drag: handler
+        });
+
+        moveRow({ row: 2, to: 3 });
+
+        equal(handler.calls, 1);
+    });
+
+    test("triggers drop event", function() {
+        createDraggableTreeList({
+            editable: { move: true },
+            dataSource: [
+                { id: 1, expanded: true, parentId: null },
+                { id: 2, parentId: 1 },
+                { id: 3, parentId: 1 }
+            ],
+            drop: handler
+        });
+
+        moveRow({ row: 2, to: 3 });
+
+        equal(handler.calls, 1);
+    });
+
+    test("triggers dragend event", function() {
+        createDraggableTreeList({
+            editable: { move: true },
+            dataSource: [
+                { id: 1, expanded: true, parentId: null },
+                { id: 2, parentId: 1 },
+                { id: 3, parentId: 1 }
+            ],
+            dragend: handler
+        });
+
+        moveRow({ row: 2, to: 3 });
+
+        equal(handler.calls, 1);
+    });
+
+    test("new parentId is set in dragend", function() {
+        createDraggableTreeList({
+            dragend: function(e) {
+                ok(e.source instanceof kendo.data.TreeListModel);
+                ok(e.destination instanceof kendo.data.TreeListModel);
+                equal(e.source.parentId, 3);
+                equal(e.destination.id, 3);
+            }
+        });
+
+        moveRow({ row: 2, to: 3 });
+    });
 })();
