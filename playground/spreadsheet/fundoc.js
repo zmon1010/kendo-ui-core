@@ -231,7 +231,7 @@ function documentArgs(args, callback) {
 
     function docArgs(args) {
         var doc = "<ul>";
-        var constraints = [];
+        var constraints = "";
         args.forEach(function(arg){
             var info = docArg(arg);
             if (info) {
@@ -240,7 +240,8 @@ function documentArgs(args, callback) {
         });
         doc += "</ul>";
         if (constraints.length > 0) {
-            constraints = "<ul>" + constraints.join("") + "</ul>";
+            constraints = "<p>Additional constraints:</p>"
+                + "<ul>" + constraints + "</ul>";
         }
         return doc + constraints;
 
@@ -254,7 +255,7 @@ function documentArgs(args, callback) {
                 return "<li>At least once:" + docArgs(arg.slice(1)) + "</li>";
             } else if (name == "?") {
                 // arbitrary constraint
-                //constraints += docConstraint(arg[1]);
+                constraints += arg.slice(1).map(docConstraint).join("");
                 return "";
             } else {
                 // ordinary argument
@@ -262,9 +263,20 @@ function documentArgs(args, callback) {
             }
         }
 
+        function docConstraint(cond) {
+            return "<li>" + docType(cond) + "</li>";
+        }
+
+        function escape(str) {
+            return str.replace(/&/g, "&amp;")
+                .replace(/\x22/g, "&quot;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
+
         function literal(thing) {
             //return "<code>" + thing.toString().replace(/\$([a-z0-9_]+)/g, "<b>$1</b>") + "</code>";
-            return thing.toString().replace(/\$([a-z0-9_]+)/ig, "<b>$1</b>");
+            return escape(thing+"").replace(/\$([a-z0-9_]+)/ig, "<b>$1</b>");
         }
 
         function makeOr(list) {
