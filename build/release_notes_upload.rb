@@ -18,7 +18,7 @@ class TelerikReleaseNotesBot
         driver.find_element(:xpath, "//input[contains(@id,'username')]").send_keys SITE_LOGIN
         driver.find_element(:xpath, "//input[contains(@id,'password')]").send_keys SITE_DOWNLOAD_BUILDER_UPLOAD_PASS
         click_element(driver.find_element(:xpath, "//button[contains(@id,'LoginButton')]"))
-        
+
         @products = ["Kendo UI", "UI for ASP.NET MVC", "UI for JSP", "UI for PHP"]
 
     end
@@ -69,9 +69,9 @@ class TelerikReleaseNotesBot
     def execute_script(script)
       #output filename and code line number as part of the screenshot name
       caller_array = caller.first.split(":")
-      file_name = caller_array[1].split("/")[6] 
+      file_name = caller_array[1].split("/")[6]
       driver.execute_script(script)
-      rescue 
+      rescue
       screenshot("Script_Execution_Failed_In_" + file_name + "_line_" + caller_array[2])
     end
     def set_upload_path(element, path)
@@ -80,7 +80,7 @@ class TelerikReleaseNotesBot
       screenshot("Upload_Path_Setting_Failed_For_" + path)
     end
     def get_select(title)
-        element = driver.find_element(:xpath, "//label[text()='#{title}']/..//select")  
+        element = driver.find_element(:xpath, "//label[text()='#{title}']/..//select")
         select_element = Selenium::WebDriver::Support::Select.new(element)
         return select_element
     end
@@ -102,19 +102,19 @@ def set_path_and_upload()
         archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/DRY_RUN_BETA/changelogs"
       else
         archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/BETA/changelogs"
-      end    
+      end
     else
       #official release
       if SERVICE_PACK_NUMBER != nil
-        archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}/changelogs"
+        archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}/changelogs"
       else
-        archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR}/changelogs"
+        archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR}/#{VERSION.gsub('.', '_')}/changelogs"
       end
-    end 
+    end
 
     archive_path = File.join(RELEASE_ROOT, VERSION_YEAR.to_s, archive_folder_name)
 
-    upload_release_notes(bot, archive_path) 
+    upload_release_notes(bot, archive_path)
 end
 def upload_release_notes(bot, archive_path)
     if bot.products.size > 0
@@ -144,11 +144,11 @@ def upload_files_and_validate(bot, archive_path, productName)
       when "UI for PHP"
         full_path = File.expand_path(archive_path + "/telerik.ui.for.php.#{VERSION}.trial.xml", File.join(File.dirname(__FILE__), ".."))
     end
-    
+
     element = bot.driver.find_element(:xpath, "//input[contains(@id,'ReleaseNoteFileUploader')]")
     upload_id = element.attribute("id")
     upload_relnotes_file(bot, upload_id, full_path)
-    
+
     sleep(5)
 
     bot.click_element(bot.driver.find_element(:xpath, "//a[contains(@id,'ImportReleaseNotesButton')]"))
@@ -165,7 +165,7 @@ def set_fields_data(bot, productName)
       bot.execute_script("$('[id$=\"_TitleTb\"]').val('Q#{VERSION_Q} #{VERSION_YEAR} Beta')")
       #due to mandatory non-empty value requirement (form validation bug)
       bot.execute_script("$('[id$=\"_ProductMinorVersionTb\"]').val('11')")
-      bot.execute_script("$('[id$=\"_ReleaseTypeRadioButtons_2\"]').click()")  
+      bot.execute_script("$('[id$=\"_ReleaseTypeRadioButtons_2\"]').click()")
     else
     #official release notes
       if SERVICE_PACK_NUMBER != nil
@@ -178,8 +178,8 @@ def set_fields_data(bot, productName)
         bot.execute_script("$('[id$=\"_ProductMinorVersionTb\"]').val('11')")
         bot.execute_script("$('[id$=\"_ReleaseTypeRadioButtons_0\"]').click()")
       end
-    end 
-    bot.execute_script("$('[id$=\"_ReleaseVersionTb\"]').val('#{VERSION}')") 
+    end
+    bot.execute_script("$('[id$=\"_ReleaseVersionTb\"]').val('#{VERSION}')")
 
     date = DateTime.now.strftime('%d/%m/%Y')
     bot.execute_script("$find($telerik.$('[id$=\"_ReleaseDateDatePicker_dateInput\"]').attr('id')).set_value('#{date}')")
