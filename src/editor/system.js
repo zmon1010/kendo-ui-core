@@ -660,7 +660,7 @@ var Clipboard = Class.extend({
             return (/^image\//i).test(item.type);
         });
 
-        if (!images.length) {
+        if (!images || !images.length) {
             return;
         }
 
