@@ -126,7 +126,7 @@
             "@base":                constant(COLOR, ".ktb-var-base"),
             "@background":          constant(COLOR, ".ktb-var-background"),
 
-            "@border-radius":       constant("border-radius", ".k-button"),
+            "@border-radius":       constant("border-radius", ".ktb-var-border-radius"),
 
             "@normal-background":   constant(COLOR, ".ktb-var-normal-background"),
             "@normal-gradient":     gradientConstant(".ktb-var-normal-gradient"),
@@ -143,7 +143,14 @@
             "@error":               constant(COLOR, ".ktb-var-error"),
             "@warning":             constant(COLOR, ".ktb-var-warning"),
             "@success":             constant(COLOR, ".ktb-var-success"),
-            "@info":                constant(COLOR, ".ktb-var-info")
+            "@info":                constant(COLOR, ".ktb-var-info"),
+
+            "@series-a":            constant(COLOR, ".ktb-var-series-a"),
+            "@series-b":            constant(COLOR, ".ktb-var-series-b"),
+            "@series-c":            constant(COLOR, ".ktb-var-series-c"),
+            "@series-d":            constant(COLOR, ".ktb-var-series-d"),
+            "@series-e":            constant(COLOR, ".ktb-var-series-e"),
+            "@series-f":            constant(COLOR, ".ktb-var-series-f")
         },
         datavizConstants = {
             "chart.title.color":                          constant(COLOR),
@@ -191,6 +198,12 @@
                 "@warning":             "Warning",
                 "@success":             "Success",
                 "@info":                "Info",
+                "@series-a":            "Series A",
+                "@series-b":            "Series B",
+                "@series-c":            "Series C",
+                "@series-d":            "Series D",
+                "@series-e":            "Series E",
+                "@series-f":            "Series F",
                 "@texture":             "Texture"
             }
         },
