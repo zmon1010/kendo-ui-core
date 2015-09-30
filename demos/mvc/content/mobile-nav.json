@@ -152,7 +152,12 @@
         "meta": {
             "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Button Group. When the horizontal group button is active, its corresponding items are visualized on the screen.",
             "aspnet-mvc": "In this example you will see in action the basic functionality of Telerik Button Group helper for ASP.NET MVC."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "NavBar usage",
@@ -302,7 +307,12 @@
         "meta": {
             "kendo-ui": "This demo shows sample application scenario with Kendo UI Mobile Collapsible.",
             "aspnet-mvc": "In this example you will see sample application scenario of Telerik Collapsible helper for ASP.NET MVC."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Basic usage",
@@ -340,7 +350,12 @@
         "meta": {
             "kendo-ui": "This demo shows which form elements, added to a mobile view, are supported and styled in Kendo UI Mobile framework.",
             "aspnet-mvc": "This demo shows the basic functionality of Telerik ASP.NET MVC Mobile Forms control."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Checks and Radios",
@@ -353,7 +368,12 @@
         "meta": {
             "kendo-ui": "This demo illustrates how checkboxes and radio buttons are enabled in Kendo UI Mobile Application.",
             "aspnet-mvc": "This demo illustrates how checkboxes and radio buttons are enabled in ASP.NET MVC Mobile Application."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Form types",
@@ -365,7 +385,12 @@
         "meta": {
             "kendo-ui": "This demo shows how you can style the labels and form elements in a Kendo UI Mobile application to appear on separate rows.",
             "aspnet-mvc": "This demo shows how you can style the labels and form elements in a ASP.NET MVC Mobile application to appear on separate rows."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Basic usage",
@@ -598,7 +623,12 @@
         },
         "meta": {
             "kendo-ui": "This demo shows how the ToolBar web widget when used in a mobile app transforms in an ActionBar widget (Android inspired scenario)."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Basic usage",
@@ -622,7 +652,12 @@
         "meta": {
             "kendo-ui": "This demo shows how Kendo UI Mobile Scroller widget enables the touch-friendly kinetic content scrolling.",
             "aspnet-mvc": "This example demonstrates the basic functionality of ASP.NET MVC mobile Scroller control. View the source code and play with demos."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Pull to refresh",
@@ -634,7 +669,12 @@
         "meta": {
             "kendo-ui": "This example shows the option \"Pull to Refresh\" in Kendo UI Scroller. If the value is true, then the scroller will display a hint when user pulls the container beyond the top limit.",
             "aspnet-mvc": "Pull to refresh in ASP.NET MVC Mobile Scroller. If the value is true then the scroller will display a hint as the user pulls the container beyond the top limit."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Basic usage",
@@ -647,7 +687,12 @@
         "meta": {
             "kendo-ui": "This demo illustrates the intuitive scrolling on a touch device by using Kendo UI ScrollView widget in your HTML5 app.",
             "aspnet-mvc": "This demo illustrates the intuitive scrolling on a touch device by using ASP.NET MVC ScrollView control in your ASP.NET MVC app."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Data binding",
@@ -745,7 +790,12 @@
         "meta": {
             "kendo-ui": "This demo shows how Kendo UI Switch widget is used on apps for binary on/off or true/false (yes/no) data input.",
             "aspnet-mvc": "This demo shows how ASP.NET MVC Switch control is used on apps for binary on/off or true/false (yes/no) data input."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Events",
