@@ -4,6 +4,10 @@
 })(function(){
 
 (function(kendo) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
+
     var AxisManager = kendo.Class.extend({
         init: function(sheet) {
             this._sheet = sheet;

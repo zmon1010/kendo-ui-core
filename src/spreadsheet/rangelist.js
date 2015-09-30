@@ -3,6 +3,10 @@
 })(function(){
 
 (function(kendo) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
+
     var RangeTreeNode = kendo.Class.extend({
         init: function Node(level, value, left, right) {
             this.level = level;

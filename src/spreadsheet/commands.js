@@ -9,6 +9,10 @@
 })(function(){
 
 (function(kendo) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
+
     var $ = kendo.jQuery;
 
     var Command = kendo.spreadsheet.Command = kendo.Class.extend({

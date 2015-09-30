@@ -3,6 +3,9 @@
 (function(f, define){
     define([ "./calc", "../kendo.dom" ], f);
 })(function(){
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
 
     "use strict";
 

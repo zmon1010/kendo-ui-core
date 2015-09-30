@@ -1,6 +1,9 @@
 (function(f, define){
     define([ ], f);
 })(function() {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
 
     /* jshint eqnull:true */
 

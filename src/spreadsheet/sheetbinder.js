@@ -3,6 +3,9 @@
 })(function(){
 
 (function(kendo) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
 
     var SheetDataSourceBinder = kendo.Class.extend({
         init: function(options) {

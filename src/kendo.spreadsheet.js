@@ -46,6 +46,10 @@
     };
 
     (function(kendo, undefined) {
+        if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+            return;
+        }
+
         var $ = kendo.jQuery;
 
         var Widget = kendo.ui.Widget;

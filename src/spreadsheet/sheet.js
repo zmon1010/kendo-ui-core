@@ -3,6 +3,10 @@
 })(function(){
 
 (function(kendo) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
+
     var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
     var Range = kendo.spreadsheet.Range;

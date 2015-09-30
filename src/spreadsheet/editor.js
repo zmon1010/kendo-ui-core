@@ -3,6 +3,10 @@
 })(function(){
 
 (function(kendo) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
+
     var SheetEditor = kendo.Observable.extend({
         init: function(view) {
             kendo.Observable.fn.init.call(this);

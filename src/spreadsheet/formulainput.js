@@ -3,6 +3,9 @@
 })(function(){
 
 (function(kendo, window) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
 
     /* jshint eqnull:true */
     /* jshint latedef: nofunc */

@@ -3,6 +3,10 @@
 })(function(){
 
 (function(kendo) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
+
     var Sorter = kendo.Class.extend({
         init: function(grid, lists) {
             this._grid = grid;

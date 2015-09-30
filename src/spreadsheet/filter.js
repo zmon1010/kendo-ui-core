@@ -2,6 +2,10 @@
     define([ "../kendo.core", "../kendo.data" ], f);
 })(function(){
 (function(kendo) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
+
     /*jshint evil: true */
     var Filter = kendo.spreadsheet.Filter = kendo.Class.extend({
         prepare: function() {

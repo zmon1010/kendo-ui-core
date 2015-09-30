@@ -3,6 +3,10 @@
 })(function(){
 
 (function(kendo) {
+    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
+        return;
+    }
+
     var Axis = kendo.Class.extend({
         init: function(count, value) {
             this._value = value;
