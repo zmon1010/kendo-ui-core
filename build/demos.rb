@@ -222,6 +222,9 @@ else
          :from => 'demos/mvc/bin/*',
          :root => 'demos/mvc/bin'
 
+    file_copy :to => 'dist/binaries/demos/Kendo/Kendo.dll',
+              :from => 'demos/mvc/bin/Kendo.dll'
+
     tree :to => 'dist/binaries/demos/Kendo',
          :from => SPREADSHEET_REDIST_NET40,
          :root => SPREADSHEET_SRC_ROOT + '/bin/Release'
