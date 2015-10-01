@@ -156,7 +156,7 @@ function funcDescription(name, callback) {
         summary.find("span.Label").remove();
         summary.find("span").each(function(){
             var el = cheerio(this);
-            el.replaceWith(el.children());
+            el.replaceWith(el.html());
         });
         html = "<p>" + summary.html() + "</p>";
     }
@@ -258,6 +258,11 @@ function documentArgs(args, callback) {
                 constraints += arg.slice(1).map(docConstraint).join("");
                 return "";
             } else {
+                if (/^\*/.test(name)) {
+                    // argument supports array (see Excel array
+                    // formulas); let's not document as of now.
+                    name = name.substr(1);
+                }
                 // ordinary argument
                 return "<li><b>" + name + "</b>: " + docType(arg[1]) + "</li>";
             }
@@ -328,8 +333,8 @@ function documentArgs(args, callback) {
                     return "array of " + docType(type[1]);
                 }
             }
-            if (/^\*/.test(type)) {
-                type = type.substr(1);
+            if (/!$/.test(type)) {
+                type = type.substr(0, type.length - 1);
             }
             switch (type) {
               case "number":
@@ -368,6 +373,7 @@ function documentArgs(args, callback) {
               case "anyvalue":
               case "anything":
               case "force":
+              case "forced":
                 return "any value";
               case "blank":
                 return "blank cell";

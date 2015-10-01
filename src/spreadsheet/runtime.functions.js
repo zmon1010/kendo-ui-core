@@ -34,29 +34,29 @@
 
     [ "abs", "cos", "sin", "acos", "asin", "tan", "atan", "exp", "sqrt" ].forEach(function(name){
         defineFunction(name, Math[name]).args([
-            [ "n", "*number" ]
+            [ "*n", "number" ]
         ]);
     });
 
     defineFunction("ln", Math.log).args([
-        [ "n", "*number" ]
+        [ "*n", "number" ]
     ]);
 
     defineFunction("log", function(num, base){
         return Math.log(num) / Math.log(base);
     }).args([
-        [ "num", [ "and", "*number",
-                   [ "assert", "$num > 0", "NUM" ] ] ],
-        [ "base", [ "and", [ "or", "*number", [ "null", 10 ] ],
-                    [ "assert", "$base != 1", "DIV/0" ],
-                    [ "assert", "$base > 0", "NUM" ] ] ]
+        [ "*num", [ "and", "number",
+                    [ "assert", "$num > 0", "NUM" ] ] ],
+        [ "*base", [ "and", [ "or", "number", [ "null", 10 ] ],
+                     [ "assert", "$base != 1", "DIV/0" ],
+                     [ "assert", "$base > 0", "NUM" ] ] ]
     ]);
 
     defineFunction("log10", function(num){
         return Math.log(num) / Math.log(10);
     }).args([
-        [ "num", [ "and", "*number",
-                   [ "assert", "$num > 0", "NUM" ] ] ]
+        [ "*num", [ "and", "number",
+                    [ "assert", "$num > 0", "NUM" ] ] ]
     ]);
 
     defineFunction("pi", function(){
@@ -66,19 +66,19 @@
     defineFunction("sqrtpi", function(n){
         return Math.sqrt(n * Math.PI);
     }).args([
-        [ "num", "*number+" ]
+        [ "*num", "number+" ]
     ]);
 
     defineFunction("degrees", function(rad){
         return ((180 * rad) / Math.PI) % 360;
     }).args([
-        [ "radians", "*number" ]
+        [ "*radians", "number" ]
     ]);
 
     defineFunction("radians", function(deg){
         return Math.PI * deg / 180;
     }).args([
-        [ "degrees", "*number" ]
+        [ "*degrees", "number" ]
     ]);
 
     function _cosh(n){
@@ -86,14 +86,14 @@
     }
 
     defineFunction("cosh", _cosh).args([
-        [ "num", "*number" ]
+        [ "*num", "number" ]
     ]);
 
     defineFunction("acosh", function(n){
         return Math.log(n + Math.sqrt(n - 1) * Math.sqrt(n + 1));
     }).args([
-        [ "num", [ "and", "*number",
-                   [ "assert", "$num >= 1" ] ] ]
+        [ "*num", [ "and", "number",
+                    [ "assert", "$num >= 1" ] ] ]
     ]);
 
     function _sinh(n){
@@ -101,44 +101,44 @@
     }
 
     defineFunction("sinh", _sinh).args([
-        [ "num", "*number" ]
+        [ "*num", "number" ]
     ]);
 
     defineFunction("asinh", function(n){
         return Math.log(n + Math.sqrt(n * n + 1));
     }).args([
-        [ "num", "*number" ]
+        [ "*num", "number" ]
     ]);
 
     defineFunction("sec", function(n){
         return 1 / Math.cos(n);
     }).args([
-        [ "num", "*number" ]
+        [ "*num", "number" ]
     ]);
 
     defineFunction("sech", function(n){
         return 1 / _cosh(n);
     }).args([
-        [ "num", "*number" ]
+        [ "*num", "number" ]
     ]);
 
     defineFunction("csc", function(n){
         return 1 / Math.sin(n);
     }).args([
-        [ "num", "*number" ]
+        [ "*num", "number" ]
     ]);
 
     defineFunction("csch", function(n){
         return 1 / _sinh(n);
     }).args([
-        [ "num", "*number" ]
+        [ "*num", "number" ]
     ]);
 
     defineFunction("atan2", function(x, y){
         return Math.atan(y / x);
     }).args([
-        [ "x", "*divisor" ],
-        [ "y", "*number" ]
+        [ "*x", "divisor" ],
+        [ "*y", "number" ]
     ]);
 
     function _tanh(n) {
@@ -146,76 +146,76 @@
     }
 
     defineFunction("tanh", _tanh).args([
-        [ "num", "*number" ]
+        [ "*num", "number" ]
     ]);
 
     defineFunction("atanh", function(n){
         return Math.log(Math.sqrt(1 - n*n) / (1 - n));
     }).args([
-        [ "num", [ "and", "*number",
-                   [ "assert", "$num > -1 && $num < 1" ] ] ]
+        [ "*num", [ "and", "number",
+                    [ "assert", "$num > -1 && $num < 1" ] ] ]
     ]);
 
     defineFunction("cot", function(n){
         return 1 / Math.tan(n);
     }).args([
-        [ "num", "*divisor" ]
+        [ "*num", "divisor" ]
     ]);
 
     defineFunction("coth", function(n){
         return 1 / _tanh(n);
     }).args([
-        [ "num", "*divisor" ]
+        [ "*num", "divisor" ]
     ]);
 
     defineFunction("acot", function(n){
         return Math.PI / 2 - Math.atan(n);
     }).args([
-        [ "num", "*number" ]
+        [ "*num", "number" ]
     ]);
 
     defineFunction("acoth", function(n){
         return Math.log((n + 1) / (n - 1)) / 2;
     }).args([
-        [ "num", [ "and", "*number",
-                   [ "assert", "$num < -1 || $num > 1" ] ] ]
+        [ "*num", [ "and", "number",
+                    [ "assert", "$num < -1 || $num > 1" ] ] ]
     ]);
 
     defineFunction("power", function(a, b){
         return Math.pow(a, b);
     }).args([
-        [ "a", "*number" ],
-        [ "b", "*number" ]
+        [ "*a", "number" ],
+        [ "*b", "number" ]
     ]);
 
     defineFunction("mod", function(a, b){
         return a % b;
     }).args([
-        [ "a", "*number" ],
-        [ "b", "*divisor" ]
+        [ "*a", "number" ],
+        [ "*b", "divisor" ]
     ]);
 
     defineFunction("quotient", function(a, b){
         return Math.floor(a / b);
     }).args([
-        [ "a", "*number" ],
-        [ "b", "*divisor" ]
+        [ "*a", "number" ],
+        [ "*b", "divisor" ]
     ]);
 
     defineFunction("ceiling", function(num, s){
         return s ? s * Math.ceil(num / s) : 0;
     }).args([
-        [ "number", "*number" ],
-        [ "significance", [ "and", "*number",
-                            [ "assert", "$significance >= 0 || $number < 0" ] ] ]
+        [ "*number", "number" ],
+        [ "*significance", [ "and", "number",
+                             [ "assert", "$significance >= 0 || $number < 0" ] ] ]
     ]);
 
     defineFunction("ceiling.precise", function(num, s){
         s = Math.abs(s);
         return s ? s * Math.ceil(num / s) : 0;
     }).args([
-        [ "number", "*number" ],
-        [ "significance", [ "or", "*number", [ "null", 1 ] ] ]
+        [ "*number", "number" ],
+        [ "*significance", [ "or", "number", [ "null", 1 ] ] ]
     ]);
 
     defineAlias("iso.ceiling", "ceiling.precise");
@@ -235,25 +235,25 @@
         }
         return s ? s * Math.ceil(num / s) : 0;
     }).args([
-        [ "number", "*number" ],
-        [ "significance", [ "or", "*number", [ "null", "$number < 0 ? -1 : 1" ] ] ],
-        [ "mode", [ "or", "*logical", [ "null", 0 ] ] ]
+        [ "*number", "number" ],
+        [ "*significance", [ "or", "number", [ "null", "$number < 0 ? -1 : 1" ] ] ],
+        [ "*mode", [ "or", "logical", [ "null", 0 ] ] ]
     ]);
 
     defineFunction("floor", function(num, s){
         return s ? s * Math.floor(num / s) : 0;
     }).args([
-        [ "number", "*number" ],
-        [ "significance", [ "and", "*number",
-                            [ "assert", "$significance >= 0 || $number < 0" ] ] ]
+        [ "*number", "number" ],
+        [ "*significance", [ "and", "number",
+                             [ "assert", "$significance >= 0 || $number < 0" ] ] ]
     ]);
 
     defineFunction("floor.precise", function(num, s){
         s = Math.abs(s);
         return s ? s * Math.floor(num / s) : 0;
     }).args([
-        [ "number", "*number" ],
-        [ "significance", [ "or", "*number", [ "null", 1 ] ] ]
+        [ "*number", "number" ],
+        [ "*significance", [ "or", "number", [ "null", 1 ] ] ]
     ]);
 
     // XXX: check this
@@ -266,40 +266,40 @@
         }
         return s ? s * Math.floor(num / s) : 0;
     }).args([
-        [ "number", "*number" ],
-        [ "significance", [ "or", "*number", [ "null", "$number < 0 ? -1 : 1" ] ] ],
-        [ "mode", [ "or", "*logical", [ "null", 0 ] ] ]
+        [ "*number", "number" ],
+        [ "*significance", [ "or", "number", [ "null", "$number < 0 ? -1 : 1" ] ] ],
+        [ "*mode", [ "or", "logical", [ "null", 0 ] ] ]
     ]);
 
     defineFunction("int", Math.floor).args([
-        [ "number", "*number" ]
+        [ "*number", "number" ]
     ]);
 
     defineFunction("mround", function(num, mult){
         return mult ? mult * Math.round(num / mult) : 0;
     }).args([
-        [ "number", "*number" ],
-        [ "multiple", "*number" ]
+        [ "*number", "number" ],
+        [ "*multiple", "number" ]
     ]);
 
     defineFunction("even", function(num){
         var n = num < 0 ? Math.floor(num) : Math.ceil(num);
         return n % 2 ? n + (n < 0 ? -1 : 1) : n;
     }).args([
-        [ "number", "*number" ]
+        [ "*number", "number" ]
     ]);
 
     defineFunction("odd", function(num){
         var n = num < 0 ? Math.floor(num) : Math.ceil(num);
         return n % 2 ? n : n + (n < 0 ? -1 : 1);
     }).args([
-        [ "number", "*number" ]
+        [ "*number", "number" ]
     ]);
 
     defineFunction("sign", function(num){
         return num < 0 ? -1 : num > 0 ? 1 : 0;
     }).args([
-        [ "number", "*number" ]
+        [ "*number", "number" ]
     ]);
 
     function _gcd(a, b) {
@@ -512,13 +512,13 @@
     defineFunction("iseven", function(num){
         return num % 2 === 0;
     }).args([
-        [ "number", "*number" ]
+        [ "*number", "number" ]
     ]);
 
     defineFunction("isodd", function(num){
         return num % 2 !== 0;
     }).args([
-        [ "number", "*number" ]
+        [ "*number", "number" ]
     ]);
 
     defineFunction("n", function(val){
@@ -530,7 +530,7 @@
         }
         return 0;
     }).args([
-        [ "value", "*anyvalue" ]
+        [ "*value", "anyvalue" ]
     ]);
 
     defineFunction("na", function(){
@@ -626,12 +626,12 @@
         return count;
     }).args([
         [ "range", "matrix" ],
-        [ "criteria", "*anyvalue" ]
+        [ "*criteria", "anyvalue" ]
     ]);
 
     var ARGS_SUMIF = [
         [ "range", "matrix" ],
-        [ "criteria", "*anyvalue" ],
+        [ "*criteria", "anyvalue" ],
         [ "sumRange", [ "or",
                         [ "and", "matrix",
                           [ "assert", "$sumRange.width == $range.width" ],
@@ -695,7 +695,7 @@
             return handler(numbers, nth - 1);
         }).args([
             [ "array", "matrix" ],
-            [ "nth", "*number++" ]
+            [ "*nth", "number++" ]
         ]);
     });
 
@@ -1011,7 +1011,7 @@
     });
 
     defineFunction("fact", _fact).args([
-        [ "n", "*integer+" ]
+        [ "*n", "integer+" ]
     ]);
 
     defineFunction("factdouble", function(n){
@@ -1020,7 +1020,7 @@
         }
         return fact;
     }).args([
-        [ "n", "*integer+" ]
+        [ "*n", "integer+" ]
     ]);
 
     defineFunction("multinomial", function(numbers){
@@ -1046,17 +1046,17 @@
     });
 
     defineFunction("combin", _combinations).args([
-        [ "n", "*integer++" ],
-        [ "k", [ "and", "*integer+",
-                 [ "assert", "$k <= $n" ] ] ]
+        [ "*n", "integer++" ],
+        [ "*k", [ "and", "integer+",
+                  [ "assert", "$k <= $n" ] ] ]
     ]);
 
     defineFunction("combina", function(n, k){
         return _combinations(n + k - 1, n - 1);
     }).args([
-        [ "n", "*integer++" ],
-        [ "k", [ "and", "*integer++",
-                 [ "assert", "$k <= $n" ] ] ]
+        [ "*n", "integer++" ],
+        [ "*k", [ "and", "integer++",
+                  [ "assert", "$k <= $n" ] ] ]
     ]);
 
     /* -----[ Statistical functions ]----- */
@@ -1348,7 +1348,7 @@
             return arguments[index];
         }
     }).args([
-        [ "index", "*integer" ],
+        [ "*index", "integer" ],
         [ "+", [ "value", "anything" ] ]
     ]);
 
@@ -1504,10 +1504,10 @@
         return topLeft;
     }).args([
         [ "ref", "area" ],
-        [ "rows", "*integer" ],
-        [ "cols", "*integer" ],
-        [ "height", [ "or", "*integer++", [ "null", "$ref.height()" ]]],
-        [ "width", [ "or", "*integer++", [ "null", "$ref.width()" ]]]
+        [ "*rows", "integer" ],
+        [ "*cols", "integer" ],
+        [ "*height", [ "or", "integer++", [ "null", "$ref.height()" ]]],
+        [ "*width", [ "or", "integer++", [ "null", "$ref.width()" ]]]
     ]);
 
     defineFunction("row", function(ref){
@@ -1560,34 +1560,34 @@
     defineFunction("date", function(year, month, date){
         return packDate(year, month-1, date);
     }).args([
-        [ "year", "*integer" ],
-        [ "month", "*integer" ],
-        [ "date", "*integer" ]
+        [ "*year", "integer" ],
+        [ "*month", "integer" ],
+        [ "*date", "integer" ]
     ]);
 
     defineFunction("day", function(date){
         return unpackDate(date).date;
     }).args([
-        [ "date", "*date" ]
+        [ "*date", "date" ]
     ]);
 
     defineFunction("month", function(date){
         return unpackDate(date).month + 1;
     }).args([
-        [ "date", "*date" ]
+        [ "*date", "date" ]
     ]);
 
     defineFunction("year", function(date){
         return unpackDate(date).year;
     }).args([
-        [ "date", "*date" ]
+        [ "*date", "date" ]
     ]);
 
     defineFunction("weekday", function(date){
         // XXX: TODO type
         return unpackDate(date).day + 1;
     }).args([
-        [ "date", "*date" ]
+        [ "*date", "date" ]
     ]);
 
     // https://support.office.com/en-GB/article/WEEKNUM-function-e5c43a03-b4ab-426c-b411-b18c13c75340
@@ -1628,9 +1628,9 @@
         fw -= diff;
         return Math.ceil((date + 1 - fw) / 7);
     }).args([
-        [ "date", "*date" ],
-        [ "type", [ "or", [ "null", 1 ],
-                    [ "values", 1, 2, 11, 12, 13, 14, 15, 16, 17, 21 ] ] ]
+        [ "*date", "date" ],
+        [ "*type", [ "or", [ "null", 1 ],
+                     [ "values", 1, 2, 11, 12, 13, 14, 15, 16, 17, 21 ] ] ]
     ]);
 
     function weeksInYear(year) {
@@ -1654,7 +1654,7 @@
         }
         return wk;
     }).args([
-        [ "date", "*date" ]
+        [ "*date", "date" ]
     ]);
 
     defineFunction("now", function(){
@@ -1668,27 +1668,27 @@
     defineFunction("time", function(hh, mm, ss){
         return runtime.packTime(hh, mm, ss, 0);
     }).args([
-        [ "hours", "*integer" ],
-        [ "minutes", "*integer" ],
-        [ "seconds", "*integer" ]
+        [ "*hours", "integer" ],
+        [ "*minutes", "integer" ],
+        [ "*seconds", "integer" ]
     ]);
 
     defineFunction("hour", function(time){
         return runtime.unpackTime(time).hours;
     }).args([
-        [ "time", "*datetime" ]
+        [ "*time", "datetime" ]
     ]);
 
     defineFunction("minute", function(time){
         return runtime.unpackTime(time).minutes;
     }).args([
-        [ "time", "*datetime" ]
+        [ "*time", "datetime" ]
     ]);
 
     defineFunction("second", function(time){
         return runtime.unpackTime(time).seconds;
     }).args([
-        [ "time", "*datetime" ]
+        [ "*time", "datetime" ]
     ]);
 
     defineFunction("edate", function(base, months){
@@ -1702,8 +1702,8 @@
         d = Math.min(d.date, daysInMonth(y, m));
         return packDate(y, m, d);
     }).args([
-        [ "start_date", "*date" ],
-        [ "months", "*integer" ]
+        [ "*start_date", "date" ],
+        [ "*months", "integer" ]
     ]);
 
     defineFunction("eomonth", function(base, months){
@@ -1717,8 +1717,8 @@
         d = daysInMonth(y, m);
         return packDate(y, m, d);
     }).args([
-        [ "start_date", "*date" ],
-        [ "months", "*integer" ]
+        [ "*start_date", "date" ],
+        [ "*months", "integer" ]
     ]);
 
     defineFunction("workday", function(date, n, holidays){
@@ -1766,8 +1766,8 @@
     defineFunction("days", function(start, end){
         return end - start;
     }).args([
-        [ "start_date", "*date" ],
-        [ "end_date", "*date" ]
+        [ "*start_date", "date" ],
+        [ "*end_date", "date" ]
     ]);
 
     function _days_360(start, end, method) {
@@ -1805,9 +1805,9 @@
     }
 
     defineFunction("days360", _days_360).args([
-        [ "start_date", "*date" ],
-        [ "end_date", "*date" ],
-        [ "method", [ "or", "*logical", [ "null", "false" ] ] ]
+        [ "*start_date", "date" ],
+        [ "*end_date", "date" ],
+        [ "*method", [ "or", "logical", [ "null", "false" ] ] ]
     ]);
 
     defineFunction("yearfrac", function(start, end, method){
@@ -1824,9 +1824,9 @@
             return _days_360(start, end, true) / 360;
         }
     }).args([
-        [ "start_date", "*date" ],
-        [ "end_date", "*date" ],
-        [ "method", [ "or", [ "null", 0 ], [ "values", 0, 1, 2, 3, 4 ] ] ]
+        [ "*start_date", "date" ],
+        [ "*end_date", "date" ],
+        [ "*method", [ "or", [ "null", 0 ], [ "values", 0, 1, 2, 3, 4 ] ] ]
     ]);
 
     defineFunction("datevalue", function(text){
@@ -1836,7 +1836,7 @@
         }
         return new CalcError("VALUE");
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineFunction("timevalue", function(text){
@@ -1857,7 +1857,7 @@
         }
         return new CalcError("VALUE");
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     /* -----[ Matrix functions ]----- */
@@ -1930,14 +1930,14 @@
     defineFunction("roman", function(num){
         return util.arabicToRoman(num).toUpperCase();
     }).args([
-        [ "number", "*integer" ]
+        [ "*number", "integer" ]
     ]);
 
     defineFunction("arabic", function(rom){
         var num = util.romanToArabic(rom);
         return num == null ? new CalcError("VALUE") : num;
     }).args([
-        [ "roman", "*string" ]
+        [ "*roman", "string" ]
     ]);
 
     defineFunction("base", function(number, radix, minLen){
@@ -1947,9 +1947,9 @@
         }
         return str;
     }).args([
-        [ "number", "*integer" ],
-        [ "radix", [ "and", "*integer", [ "[between]", 2, 36 ] ] ],
-        [ "minLen", [ "or", "*integer+", [ "null", 0 ] ] ]
+        [ "*number", "integer" ],
+        [ "*radix", [ "and", "integer", [ "[between]", 2, 36 ] ] ],
+        [ "*minLen", [ "or", "integer+", [ "null", 0 ] ] ]
     ]);
 
     defineFunction("decimal", function(text, radix){
@@ -1968,8 +1968,8 @@
         }
         return val;
     }).args([
-        [ "text", "*string" ],
-        [ "radix", [ "and", "*integer", [ "[between]", 2, 36 ] ] ]
+        [ "*text", "string" ],
+        [ "*radix", [ "and", "integer", [ "[between]", 2, 36 ] ] ]
     ]);
 
     /* -----[ String functions ]----- */
@@ -1977,7 +1977,7 @@
     defineFunction("char", function(code){
         return String.fromCharCode(code);
     }).args([
-        [ "code", "*integer+" ]
+        [ "*code", "integer+" ]
     ]);
 
     // From XRegExp
@@ -1986,13 +1986,13 @@
     defineFunction("clean", function(text){
         return text.replace(RX_NON_PRINTABLE, "");
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineFunction("code", function(text){
         return text.charAt(0);
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineAlias("unichar", "char");
@@ -2006,7 +2006,7 @@
         return out;
     }).args([
         [ "+",
-          [ "text", "*string" ] ]
+          [ "*text", "string" ] ]
     ]);
 
     defineFunction("dollar", function(number, decimals){
@@ -2016,24 +2016,24 @@
         format = format.replace(/DECIMALS/g, dec);
         return spreadsheet.formatting.format(number, format).text();
     }).args([
-        [ "number", "*number" ],
-        [ "decimals", [ "or", "*integer++", [ "null", 2 ] ] ]
+        [ "*number", "number" ],
+        [ "*decimals", [ "or", "integer++", [ "null", 2 ] ] ]
     ]);
 
     defineFunction("exact", function(a, b){
         return a === b;
     }).args([
-        [ "text1", "*string" ],
-        [ "text2", "*string" ]
+        [ "*text1", "string" ],
+        [ "*text2", "string" ]
     ]);
 
     defineFunction("find", function(substring, string, start){
         var pos = string.indexOf(substring, start - 1);
         return pos < 0 ? new CalcError("VALUE") : pos + 1;
     }).args([
-        [ "substring", "*string" ],
-        [ "string", "*string" ],
-        [ "start", [ "or", "*integer++", [ "null", 1 ] ] ]
+        [ "*substring", "string" ],
+        [ "*string", "string" ],
+        [ "*start", [ "or", "integer++", [ "null", 1 ] ] ]
     ]);
 
     defineFunction("fixed", function(number, decimals, noCommas){
@@ -2043,67 +2043,67 @@
         format = format.replace(/DECIMALS/g, dec);
         return spreadsheet.formatting.format(number, format).text();
     }).args([
-        [ "number", "*number" ],
-        [ "decimals", [ "or", "*integer++", [ "null", 2 ] ] ],
-        [ "noCommas", [ "or", "*boolean", [ "null", false ] ] ]
+        [ "*number", "number" ],
+        [ "*decimals", [ "or", "integer++", [ "null", 2 ] ] ],
+        [ "*noCommas", [ "or", "boolean", [ "null", false ] ] ]
     ]);
 
     defineFunction("left", function(text, length){
         return text.substr(0, length);
     }).args([
-        [ "text", "*string" ],
-        [ "length", [ "or", "*integer+", [ "null", 1 ] ] ]
+        [ "*text", "string" ],
+        [ "*length", [ "or", "integer+", [ "null", 1 ] ] ]
     ]);
 
     defineFunction("right", function(text, length){
         return text.substr(-length);
     }).args([
-        [ "text", "*string" ],
-        [ "length", [ "or", "*integer+", [ "null", 1 ] ] ]
+        [ "*text", "string" ],
+        [ "*length", [ "or", "integer+", [ "null", 1 ] ] ]
     ]);
 
     defineFunction("len", function(text){
         return text.length;
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineFunction("lower", function(text){
         return text.toLowerCase();
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineFunction("upper", function(text){
         return text.toUpperCase();
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineFunction("ltrim", function(text){
         return text.replace(/^\s+/, "");
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineFunction("rtrim", function(text){
         return text.replace(/\s+$/, "");
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineFunction("trim", function(text){
         return text.replace(/^\s+|\s+$/, "");
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineFunction("mid", function(text, start, length){
         return text.substr(start - 1, length);
     }).args([
-        [ "text", "*string" ],
-        [ "start", "*integer++" ],
-        [ "length", "*integer+" ]
+        [ "*text", "string" ],
+        [ "*start", "integer++" ],
+        [ "*length", "integer+" ]
     ]);
 
     defineFunction("proper", function(text){
@@ -2111,16 +2111,16 @@
             return s.toUpperCase();
         });
     }).args([
-        [ "text", "*string" ]
+        [ "*text", "string" ]
     ]);
 
     defineFunction("replace", function(text, start, length, newText){
         return text.substr(0, --start) + newText + text.substr(start + length);
     }).args([
-        [ "text", "*string" ],
-        [ "start", "*integer++" ],
-        [ "length", "*integer+" ],
-        [ "newText", "*string" ]
+        [ "*text", "string" ],
+        [ "*start", "integer++" ],
+        [ "*length", "integer+" ],
+        [ "*newText", "string" ]
     ]);
 
     defineFunction("rept", function(text, number){
@@ -2128,17 +2128,17 @@
         while (number-- > 0) { out += text; }
         return out;
     }).args([
-        [ "text", "*string" ],
-        [ "number", "*integer+" ]
+        [ "*text", "string" ],
+        [ "*number", "integer+" ]
     ]);
 
     defineFunction("search", function(substring, string, start){
         var pos = string.toLowerCase().indexOf(substring.toLowerCase(), start - 1);
         return pos < 0 ? new CalcError("VALUE") : pos + 1;
     }).args([
-        [ "substring", "*string" ],
-        [ "string", "*string" ],
-        [ "start", [ "or", "*integer++", [ "null", 1 ] ] ]
+        [ "*substring", "string" ],
+        [ "*string", "string" ],
+        [ "*start", [ "or", "integer++", [ "null", 1 ] ] ]
     ]);
 
     defineFunction("substitute", function(text, oldText, newText, nth){
@@ -2159,23 +2159,23 @@
         }
         return text;
     }).args([
-        [ "text", "*string" ],
-        [ "oldText", "*string" ],
-        [ "newText", "*string" ],
-        [ "nth", [ "or", "*integer++", "null" ] ]
+        [ "*text", "string" ],
+        [ "*oldText", "string" ],
+        [ "*newText", "string" ],
+        [ "*nth", [ "or", "integer++", "null" ] ]
     ]);
 
     defineFunction("t", function(value){
         return typeof value == "string" ? value : "";
     }).args([
-        [ "value", "*anyvalue" ]
+        [ "*value", "anyvalue" ]
     ]);
 
     defineFunction("text", function(value, format){
         return spreadsheet.formatting.format(value, format).text();
     }).args([
-        [ "value", "*anyvalue" ],
-        [ "format", "*string" ]
+        [ "*value", "anyvalue" ],
+        [ "*format", "string" ]
     ]);
 
     defineFunction("value", function(value){
@@ -2190,7 +2190,7 @@
         value = parseFloat(value);
         return isNaN(value) ? new CalcError("VALUE") : value;
     }).args([
-        [ "value", "*anyvalue" ]
+        [ "*value", "anyvalue" ]
     ]);
 
     //// utils

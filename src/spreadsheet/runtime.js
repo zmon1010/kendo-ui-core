@@ -663,7 +663,7 @@
     // Lasciate ogni speranza, voi ch'entrate.
     //
     // XXX: document this function.
-    function compileArgumentChecks(args) {
+    function compileArgumentChecks(functionName, args) {
         var arrayArgs = "function arrayArgs(args) { var xargs = [], width = 0, height = 0, arrays = [], i = 0; ";
         var resolve = "function resolve(args, callback) { var toResolve = [], i = 0; ";
         var name, forced, main = "'use strict'; function check(args) { var xargs = [], i = 0, m, err = 'VALUE'; ", haveForced = false;
@@ -734,6 +734,10 @@
                 } else if (type == "rest") {
                     code += "xargs.push(args.slice(i)); i = args.length; ";
                 } else {
+                    if ((canBeArrayArg = /^\*/.test(name))) {
+                        hasArrayArgs = true;
+                        name = name.substr(1);
+                    }
                     code += "var $" + name + " = args[i++]; ";
                     var allowError = false;
                     if (/!$/.test(type)) {
@@ -760,7 +764,6 @@
         }
 
         function typeCheck(type, allowError) {
-            canBeArrayArg = false;
             forced = false;
             var ret = "if (!(" + cond(type) + ")) { ";
             if (forced && !allowError) {
@@ -821,10 +824,6 @@
                     return "!(" + cond(type[1]) + ")";
                 }
                 throw new Error("Unknown array type condition: " + type[0]);
-            }
-            if (/^\*/.test(type)) {
-                canBeArrayArg = hasArrayArgs = true;
-                type = type.substr(1);
             }
             if (type == "number") {
                 return "(typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean')";
@@ -1028,7 +1027,7 @@
         FUNCS[name] = func;
         return {
             args: function(args, log) {
-                var code = compileArgumentChecks(args);
+                var code = compileArgumentChecks(name, args);
                 // XXX: DEBUG
                 if (log) {
                     if (code.arrayArgs) {console.log(code.arrayArgs.toString());}
@@ -1040,7 +1039,7 @@
                 return this;
             },
             argsAsync: function(args, log) {
-                var code = compileArgumentChecks(args);
+                var code = compileArgumentChecks(name, args);
                 // XXX: DEBUG
                 if (log) {
                     if (code.arrayArgs) {console.log(code.arrayArgs.toString());}
@@ -1253,13 +1252,13 @@
     /* -----[ Excel operators ]----- */
 
     var ARGS_NUMERIC = [
-        [ "a", "*number" ],
-        [ "b", "*number" ]
+        [ "*a", "number" ],
+        [ "*b", "number" ]
     ];
 
     var ARGS_ANYVALUE = [
-        [ "a", "*anyvalue" ],
-        [ "b", "*anyvalue" ]
+        [ "*a", "anyvalue" ],
+        [ "*b", "anyvalue" ]
     ];
 
     defineFunction("binary+", function(a, b){
@@ -1277,8 +1276,8 @@
     defineFunction("binary/", function(a, b){
         return a / b;
     }).args([
-        [ "a", "*number" ],
-        [ "b", "*divisor" ]
+        [ "*a", "number" ],
+        [ "*b", "divisor" ]
     ]);
 
     defineFunction("binary^", function(a, b){
@@ -1290,8 +1289,8 @@
         if (b == null) { b = ""; }
         return "" + a + b;
     }).args([
-        [ "a", [ "or", "*number", "*string", "*boolean", "*null" ] ],
-        [ "b", [ "or", "*number", "*string", "*boolean", "*null" ] ]
+        [ "*a", [ "or", "number", "string", "boolean", "null" ] ],
+        [ "*b", [ "or", "number", "string", "boolean", "null" ] ]
     ]);
 
     defineFunction("binary=", function(a, b){
@@ -1321,19 +1320,19 @@
     defineFunction("unary+", function(a){
         return a;
     }).args([
-        [ "a", "*number" ]
+        [ "*a", "number" ]
     ]);
 
     defineFunction("unary-", function(a){
         return -a;
     }).args([
-        [ "a", "*number" ]
+        [ "*a", "number" ]
     ]);
 
     defineFunction("unary%", function(a){
         return a / 100;
     }).args([
-        [ "a", "*number" ]
+        [ "*a", "number" ]
     ]);
 
     // range operator
@@ -1366,7 +1365,7 @@
     defineFunction("not", function(a){
         return !this.bool(a);
     }).args([
-        [ "a", "*anyvalue" ]
+        [ "*a", "anyvalue" ]
     ]);
 
     /* -----[ the IS* functions ]----- */
@@ -1378,56 +1377,56 @@
         }
         return false;
     }).args([
-        [ "value", "*anything!" ]
+        [ "*value", "anything!" ]
     ]);
 
     defineFunction("iserror", function(val){
         return val instanceof CalcError;
     }).args([
-        [ "value", "*forced!" ]
+        [ "*value", "forced!" ]
     ]);
 
     defineFunction("iserr", function(val){
         return val instanceof CalcError && val.code != "N/A";
     }).args([
-        [ "value", "*forced!" ]
+        [ "*value", "forced!" ]
     ]);
 
     defineFunction("isna", function(val){
         return val instanceof CalcError && val.code == "N/A";
     }).args([
-        [ "value", "*forced!" ]
+        [ "*value", "forced!" ]
     ]);
 
     defineFunction("islogical", function(val){
         return typeof val == "boolean";
     }).args([
-        [ "value", "*forced!" ]
+        [ "*value", "forced!" ]
     ]);
 
     defineFunction("isnontext", function(val){
         return typeof val != "string";
     }).args([
-        [ "value", "*forced!" ]
+        [ "*value", "forced!" ]
     ]);
 
     defineFunction("istext", function(val){
         return typeof val == "string";
     }).args([
-        [ "value", "*forced!" ]
+        [ "*value", "forced!" ]
     ]);
 
     defineFunction("isnumber", function(val){
         return typeof val == "number";
     }).args([
-        [ "value", "*forced!" ]
+        [ "*value", "forced!" ]
     ]);
 
     defineFunction("isref", function(val){
         // apparently should return true only for cell and range
         return val instanceof CellRef || val instanceof RangeRef;
     }).args([
-        [ "value", "*anything!" ]
+        [ "*value", "anything!" ]
     ]);
 
     /// utils
