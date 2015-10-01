@@ -42779,6 +42779,26 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>dragstart</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>drag</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>dragend</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>drop</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the user edits or creates a data item.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>edit</name>
             <rtexprvalue>true</rtexprvalue>
@@ -43638,6 +43658,30 @@ This class can be used to get a reference to the button (after TreeList initiali
         <description>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>treeList-dataBound</name>
         <tag-class>com.kendoui.taglib.treelist.DataBoundFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-dragstart</name>
+        <tag-class>com.kendoui.taglib.treelist.DragstartFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-drag</name>
+        <tag-class>com.kendoui.taglib.treelist.DragFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-dragend</name>
+        <tag-class>com.kendoui.taglib.treelist.DragendFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-drop</name>
+        <tag-class>com.kendoui.taglib.treelist.DropFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

@@ -135,6 +135,22 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
         setEvent("dataBound", value.getBody());
     }
 
+    public void setDrag(DragFunctionTag value) {
+        setEvent("drag", value.getBody());
+    }
+
+    public void setDragend(DragendFunctionTag value) {
+        setEvent("dragend", value.getBody());
+    }
+
+    public void setDragstart(DragstartFunctionTag value) {
+        setEvent("dragstart", value.getBody());
+    }
+
+    public void setDrop(DropFunctionTag value) {
+        setEvent("drop", value.getBody());
+    }
+
     public void setEdit(EditFunctionTag value) {
         setEvent("edit", value.getBody());
     }
@@ -397,6 +413,54 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setDataBound(String value) {
         setProperty("dataBound", new Function(value));
+    }
+
+    public String getDrag() {
+        Function property = ((Function)getProperty("drag"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDrag(String value) {
+        setProperty("drag", new Function(value));
+    }
+
+    public String getDragend() {
+        Function property = ((Function)getProperty("dragend"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDragend(String value) {
+        setProperty("dragend", new Function(value));
+    }
+
+    public String getDragstart() {
+        Function property = ((Function)getProperty("dragstart"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDragstart(String value) {
+        setProperty("dragstart", new Function(value));
+    }
+
+    public String getDrop() {
+        Function property = ((Function)getProperty("drop"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDrop(String value) {
+        setProperty("drop", new Function(value));
     }
 
     public String getEdit() {
