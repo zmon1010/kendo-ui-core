@@ -1216,7 +1216,7 @@ namespace :build do
         task :tests => ["tests:Production", "vsdoc:production:test"]
 
         desc 'Update the /production build machine web site'
-        task :demos => [ 'demos:staging', 'download_builder:staging' ] do
+        task :demos => [ :get_binaries, 'demos:staging', 'download_builder:staging' ] do
             sync "dist/demos/staging/", "#{WEB_ROOT}/production/"
         end
 
