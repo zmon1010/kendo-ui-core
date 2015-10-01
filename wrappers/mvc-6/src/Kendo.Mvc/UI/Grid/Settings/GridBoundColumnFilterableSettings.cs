@@ -48,7 +48,16 @@ namespace Kendo.Mvc.UI
 				json["cell"] = cellSettings;
 			}
 
-			if (Multi)
+            if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url))
+            {
+                json["dataSource"] = DataSource.ToJson();
+            }
+            else if (DataSource.Data != null)
+            {
+                json["dataSource"] = DataSource.Data;
+            }            
+
+            if (Multi)
 			{
 				json["multi"] = Multi;
 			}
