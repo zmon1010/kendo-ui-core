@@ -845,13 +845,13 @@
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" >= 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "integer+") {
-                return "(((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" >= 0 ? true : ((err = 'NUM'), false))) ? ($"+name+" |= 0, true) : false)";
+                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && (($"+name+" |= 0) >= 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "number++") {
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" > 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "integer++") {
-                return "(((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" > 0) ? true : ((err = 'NUM'), false)) ? ($"+name+" |= 0, true) : false)";
+                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && (($"+name+" |= 0 ) > 0) ? true : ((err = 'NUM'), false))";
             }
             if (type == "string") {
                 return "(typeof " + force() + " == 'string')";

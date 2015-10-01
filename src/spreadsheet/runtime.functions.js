@@ -45,18 +45,15 @@
     defineFunction("log", function(num, base){
         return Math.log(num) / Math.log(base);
     }).args([
-        [ "*num", [ "and", "number",
-                    [ "assert", "$num > 0", "NUM" ] ] ],
-        [ "*base", [ "and", [ "or", "number", [ "null", 10 ] ],
-                     [ "assert", "$base != 1", "DIV/0" ],
-                     [ "assert", "$base > 0", "NUM" ] ] ]
+        [ "*num", "number++" ],
+        [ "*base", [ "or", "number++", [ "null", 10 ] ] ],
+        [ "?", [ "assert", "$base != 1", "DIV/0" ] ]
     ]);
 
     defineFunction("log10", function(num){
         return Math.log(num) / Math.log(10);
     }).args([
-        [ "*num", [ "and", "number",
-                    [ "assert", "$num > 0", "NUM" ] ] ]
+        [ "*num", "number++" ]
     ]);
 
     defineFunction("pi", function(){
@@ -92,8 +89,8 @@
     defineFunction("acosh", function(n){
         return Math.log(n + Math.sqrt(n - 1) * Math.sqrt(n + 1));
     }).args([
-        [ "*num", [ "and", "number",
-                    [ "assert", "$num >= 1" ] ] ]
+        [ "*num", "number" ],
+        [ "?", [ "assert", "$num >= 1" ] ]
     ]);
 
     function _sinh(n){
@@ -152,8 +149,7 @@
     defineFunction("atanh", function(n){
         return Math.log(Math.sqrt(1 - n*n) / (1 - n));
     }).args([
-        [ "*num", [ "and", "number",
-                    [ "assert", "$num > -1 && $num < 1" ] ] ]
+        [ "*num", [ "and", "number", [ "(between)", -1, 1 ] ] ]
     ]);
 
     defineFunction("cot", function(n){
@@ -177,8 +173,7 @@
     defineFunction("acoth", function(n){
         return Math.log((n + 1) / (n - 1)) / 2;
     }).args([
-        [ "*num", [ "and", "number",
-                    [ "assert", "$num < -1 || $num > 1" ] ] ]
+        [ "*num", [ "and", "number", [ "not", [ "[between]", -1, 1 ] ] ] ]
     ]);
 
     defineFunction("power", function(a, b){
@@ -206,8 +201,8 @@
         return s ? s * Math.ceil(num / s) : 0;
     }).args([
         [ "*number", "number" ],
-        [ "*significance", [ "and", "number",
-                             [ "assert", "$significance >= 0 || $number < 0" ] ] ]
+        [ "*significance", "number" ],
+        [ "?", [ "assert", "$significance >= 0 || $number < 0" ] ]
     ]);
 
     defineFunction("ceiling.precise", function(num, s){
@@ -244,8 +239,8 @@
         return s ? s * Math.floor(num / s) : 0;
     }).args([
         [ "*number", "number" ],
-        [ "*significance", [ "and", "number",
-                             [ "assert", "$significance >= 0 || $number < 0" ] ] ]
+        [ "*significance", "number" ],
+        [ "?", [ "assert", "$significance >= 0 || $number < 0" ] ]
     ]);
 
     defineFunction("floor.precise", function(num, s){
@@ -845,8 +840,7 @@
         return sum / (n - discard * 2);
     }).args([
         [ "numbers", [ "collect", "number", 1 ] ],
-        [ "percent", [ "and", "number",
-                       [ "assert", "$percent >= 0 && $percent < 1", "NUM" ] ] ],
+        [ "percent", [ "and", "number", [ "[between)", 0, 1 ] ] ],
         [ "?", [ "assert", "$numbers.length > 0", "NUM" ] ]
     ]);
 
@@ -948,9 +942,7 @@
     var ARGS_PERCENTRANK = [
         [ "array", [ "collect", "number", 1 ] ],
         [ "x", "number" ],
-        [ "significance", [ "or", [ "null", 3 ],
-                            [ "and", "integer",
-                              [ "assert", "$significance >= 1", "NUM" ] ] ] ],
+        [ "significance", [ "or", [ "null", 3 ], "integer++" ] ],
         [ "?", [ "assert", "$array.length > 0", "NUM" ] ]
     ];
 
@@ -1047,16 +1039,14 @@
 
     defineFunction("combin", _combinations).args([
         [ "*n", "integer++" ],
-        [ "*k", [ "and", "integer+",
-                  [ "assert", "$k <= $n" ] ] ]
+        [ "*k", [ "and", "integer", [ "[between]", 0, "$n" ] ] ]
     ]);
 
     defineFunction("combina", function(n, k){
         return _combinations(n + k - 1, n - 1);
     }).args([
         [ "*n", "integer++" ],
-        [ "*k", [ "and", "integer++",
-                  [ "assert", "$k <= $n" ] ] ]
+        [ "*k", [ "and", "integer", [ "[between]", 1, "$n" ] ] ]
     ]);
 
     /* -----[ Statistical functions ]----- */
