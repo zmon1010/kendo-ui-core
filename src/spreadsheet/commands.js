@@ -72,19 +72,29 @@
             PropertyChangeCommand.fn.init.call(this, options);
         },
         exec: function() {
+            var range = this.range();
+            var value = this._value;
+            this.getState();
             try {
-                return PropertyChangeCommand.fn.exec.apply(this, arguments);
-            } catch(ex) {
-                if (ex instanceof kendo.spreadsheet.calc.ParseError) {
-                    // XXX: error handling.  We should ask the user
-                    // whether to accept the formula as text (prepend
-                    // '), or re-edit.  ex.pos+1 will be the index of
-                    // the character where the error occurred.
-                    window.alert(ex);
-                    // store as string for now
-                    this.range().input("'" + this._value);
+                range.input(value);
+            } catch(ex1) {
+                if (ex1 instanceof kendo.spreadsheet.calc.ParseError) {
+                    // it's a formula. maybe a closing paren fixes it?
+                    try {
+                        range.input(value + ")");
+                    } catch(ex2) {
+                        if (ex2 instanceof kendo.spreadsheet.calc.ParseError) {
+                            // XXX: error handling.  We should ask the user
+                            // whether to accept the formula as text (prepend
+                            // '), or re-edit.  ex.pos+1 will be the index of
+                            // the character where the error occurred.
+                            window.alert(ex2);
+                            // store as string for now
+                            range.input("'" + value);
+                        }
+                    }
                 } else {
-                    throw ex;
+                    throw ex1;
                 }
             }
         }
