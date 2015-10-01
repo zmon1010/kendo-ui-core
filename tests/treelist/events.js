@@ -313,10 +313,43 @@
     test("new parentId is set in dragend", function() {
         createDraggableTreeList({
             dragend: function(e) {
-                ok(e.source instanceof kendo.data.TreeListModel);
-                ok(e.destination instanceof kendo.data.TreeListModel);
                 equal(e.source.parentId, 3);
                 equal(e.destination.id, 3);
+            }
+        });
+
+        moveRow({ row: 2, to: 3 });
+    });
+
+    test("dragstart provides model instead of node", function() {
+        createDraggableTreeList({
+            dragstart: function(e) {
+                ok(e.source instanceof kendo.data.TreeListModel);
+                equal(e.source.id, 2);
+            }
+        });
+
+        moveRow({ row: 2, to: 3 });
+    });
+
+    test("drop event provides model", function() {
+        createDraggableTreeList({
+            drop: function(e) {
+                ok(e.source instanceof kendo.data.TreeListModel);
+                ok(e.destination instanceof kendo.data.TreeListModel);
+                equal(e.source.id, 2);
+                equal(e.destination.id, 3);
+            }
+        });
+
+        moveRow({ row: 2, to: 3 });
+    });
+
+    test("drag provides source as model", function() {
+        createDraggableTreeList({
+            drag: function(e) {
+                ok(e.source instanceof kendo.data.TreeListModel);
+                equal(e.source.id, 2);
             }
         });
 

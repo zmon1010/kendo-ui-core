@@ -976,18 +976,23 @@ var __meta__ = { // jshint ignore:line
                     var tr = target.closest("tr");
                     return { item: tr, content: tr };
                 },
-                dragstart: proxy(function() {
+                dragstart: proxy(function(source) {
                     this.wrapper.addClass("k-treelist-dragging");
 
-                    this.trigger(DRAGSTART);
+                    var model = this.dataItem(source);
+
+                    this.trigger(DRAGSTART, { source: model });
                 }, this),
-                drag: proxy(function() {
-                    this.trigger(DRAG);
+                drag: proxy(function(e) {
+                    e.source = this.dataItem(e.source);
+
+                    this.trigger(DRAG, e);
                 }, this),
                 drop: proxy(function(e) {
-                    this.trigger(DROP, {
-                        setValid: e.setValid.bind(e)
-                    });
+                    e.source = this.dataItem(e.source);
+                    e.destination = this.dataItem(e.destination);
+
+                    this.trigger(DROP, e);
 
                     this.wrapper.removeClass("k-treelist-dragging");
                 }, this),
@@ -997,10 +1002,10 @@ var __meta__ = { // jshint ignore:line
 
                     src.set("parentId", dest ? dest.id : null);
 
-                    this.trigger(DRAGEND, {
-                        source: src,
-                        destination: dest
-                    });
+                    e.source = src;
+                    e.destination = dest;
+
+                    this.trigger(DRAGEND, e);
                 }, this),
                 reorderable: false,
                 dropHintContainer: function(item) {
@@ -2842,7 +2847,7 @@ var __meta__ = { // jshint ignore:line
         _insertAt: function(model, index) {
             model = this.dataSource.insert(index, model);
 
-            var row = this.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
+            var row = this.itemFor(model);
 
             this.editRow(row);
         },
@@ -2886,7 +2891,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _createEditor: function(model) {
-            var row = this.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
+            var row = this.itemFor(model);
 
             row = row.add(this._relatedRow(row));
 
