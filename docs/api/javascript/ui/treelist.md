@@ -3369,6 +3369,38 @@ This method expands the row.
         treeList.expand(row);
     </script>
 
+### itemFor
+
+Returns the rendered HTML element for a given model.
+
+#### Parameters
+
+##### model `kendo.data.TreeListModel|Object`
+
+A model from the DataSource, or the id of a model in the DataSource.
+
+#### Returns
+`jQuery` the row that corresponds to the model
+
+#### Example - get row from model
+
+    <div id="treeList"></div>
+    <script>
+        $("#treeList").kendoTreeList({
+          columns: [
+            { field: "name" },
+            { field: "age" }
+          ],
+          dataSource: [
+              { id: 1, name: "Jane Doe", age: 30 },
+              { id: 2, name: "John Doe", age: 33 }
+          ]
+        });
+        var treeList = $("#treeList").data("kendoTreeList");
+        var jane = treeList.dataSource.get(1);
+        var row = treeList.itemFor(jane);
+    </script>
+
 ### refresh
 
 Renders all table rows using the current data items.

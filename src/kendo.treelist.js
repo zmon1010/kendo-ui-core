@@ -1012,6 +1012,14 @@ var __meta__ = { // jshint ignore:line
             });
         },
 
+        itemFor: function(model) {
+            if (typeof model == "number") {
+                model = this.dataSource.get(model);
+            }
+
+            return this.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
+        },
+
         _scrollable: function() {
             if (this.options.scrollable) {
                 var scrollables = this.thead.closest(".k-grid-header-wrap");
