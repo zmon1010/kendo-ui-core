@@ -345,11 +345,39 @@
         moveRow({ row: 2, to: 3 });
     });
 
-    test("drag provides source as model", function() {
+    test("drag provides source as model, target as jQuery", function() {
         createDraggableTreeList({
             drag: function(e) {
                 ok(e.source instanceof kendo.data.TreeListModel);
                 equal(e.source.id, 2);
+
+                ok(e.target instanceof jQuery);
+            }
+        });
+
+        moveRow({ row: 2, to: 3 });
+    });
+
+    test("dragstart can be prevented", 0, function() {
+        createDraggableTreeList({
+            dragstart: function(e) {
+                e.preventDefault();
+            },
+            drag: function(e) {
+                ok(false);
+            }
+        });
+
+        moveRow({ row: 2, to: 3 });
+    });
+
+    test("drop can be prevented", 0, function() {
+        createDraggableTreeList({
+            drop: function(e) {
+                e.preventDefault();
+            },
+            dragend: function(e) {
+                ok(false);
             }
         });
 

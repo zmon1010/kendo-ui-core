@@ -981,7 +981,7 @@ var __meta__ = { // jshint ignore:line
 
                     var model = this.dataItem(source);
 
-                    this.trigger(DRAGSTART, { source: model });
+                    return this.trigger(DRAGSTART, { source: model });
                 }, this),
                 drag: proxy(function(e) {
                     e.source = this.dataItem(e.source);
@@ -992,9 +992,9 @@ var __meta__ = { // jshint ignore:line
                     e.source = this.dataItem(e.source);
                     e.destination = this.dataItem(e.destination);
 
-                    this.trigger(DROP, e);
-
                     this.wrapper.removeClass("k-treelist-dragging");
+
+                    return this.trigger(DROP, e);
                 }, this),
                 dragend: proxy(function(e) {
                     var dest = this.dataItem(e.destination);
