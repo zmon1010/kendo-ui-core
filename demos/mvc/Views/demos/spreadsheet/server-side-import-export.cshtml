@@ -24,7 +24,13 @@
     </style>
     <script>
         $(function() {
-            $("#spreadsheet").kendoSpreadsheet();
+            $("#spreadsheet").kendoSpreadsheet({
+                excel: {
+                    // Required to enable Excel Export in some browsers
+                    proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+                }
+            });
+
             var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
 
             $.getJSON("@Url.Content("~/content/web/spreadsheet/products.json")")

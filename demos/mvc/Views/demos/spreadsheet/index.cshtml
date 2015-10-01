@@ -3,6 +3,10 @@
     <script>
     $(function() {
         $("#spreadsheet").kendoSpreadsheet({
+            excel: {                
+                // Required to enable Excel Export in some browsers
+                proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+            },
             sheets: [
                 {
                     name: "Food Order",

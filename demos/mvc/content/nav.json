@@ -2684,7 +2684,7 @@
     "text": "Spreadsheet",
     "name": "spreadsheet",
     "pro": "true",
-    "new": "true",
+    "beta": "true",
     "api": "web/spreadsheet",
     "documentation": {
        "kendo-ui": "getting-started/web/spreadsheet/overview",
