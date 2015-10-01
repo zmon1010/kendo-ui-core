@@ -317,7 +317,7 @@
 
             element.closest(".k-animation-container").addClass("k-overflow-wrapper");
 
-            element.attr(TABINDEX, tabIndex || 0).focus()
+            element.attr(TABINDEX, tabIndex || 0)
                 .find(focusable).first().focus();
 
             if (!tabIndex && tabIndex !== 0) {
