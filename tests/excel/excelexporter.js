@@ -731,4 +731,28 @@ test("keeps loaded TreeListDataSource items", function() {
     });
 });
 
+test("keeps custom TreeListDataSource parentId", function() {
+    dataSource = new kendo.data.TreeListDataSource({
+        transport: {
+            read: function(options) {
+                options.success([ { id: 1, Parent: 0, hasChildren: true } ]);
+            }
+        },
+        schema: {
+            model: {
+                parentId: "Parent",
+                fields: {
+                    Parent: { defaultValue: 0, type: "number" }
+                }
+            }
+        }
+    });
+
+    dataSource.read();
+
+    testWorkbook({ columns: [ { field: "id" } ], dataSource: dataSource }, function(book) {
+        equal(book.sheets[0].rows.length, 2);
+    });
+});
+
 }());

@@ -243,7 +243,6 @@ var __meta__ = { // jshint ignore:line
 
         var parentId = options.parentId || PARENTIDFIELD;
 
-        delete options.parentId;
         options.parentIdField = parentId;
 
         var model = Model.define(base, options);
