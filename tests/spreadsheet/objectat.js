@@ -102,4 +102,28 @@
         ok(grid.rows.contains(rows, rows));
         ok(grid.columns.contains(columns, columns));
     });
+
+    test("filter icon returns filtericon", function() {
+        sheet.range("A1").filter(true);
+
+        var result = view.objectAt(32+64-10, 16+10);// rowheader + right of column
+        equal(result.type, "filtericon");
+    });
+
+    test("cell with no filter returns cell", function() {
+        sheet.range("A1").filter(false);
+
+        var result = view.objectAt(32+64-10, 16+10);// rowheader + right of column
+        equal(result.type, "cell");
+    });
+
+    test("filter icon in frozen pane", function() {
+        sheet.frozenRows(1);
+        sheet.frozenColumns(1);
+
+        sheet.range("B2").filter(true);
+
+        var result = view.objectAt(32+64*2-10, 16+20+10);// headers + one row/col
+        equal(result.type, "filtericon");
+    });
 })();

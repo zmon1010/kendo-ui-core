@@ -30,6 +30,11 @@
             return new Rectangle(this.left, this.top, this.width + width, this.height + height);
         },
 
+        intersects: function(x, y) {
+            return this.left < x && x < this.left + this.width
+                && this.top < y && y < this.top + this.height;
+        },
+
         toDiv: function(className) {
             return kendo.dom.element("div", {
                 className: className,

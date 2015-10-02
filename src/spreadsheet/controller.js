@@ -148,8 +148,6 @@
                 this.tabstrip.bind("action", this.onCommandRequest.bind(this));
                 this.tabstrip.bind("dialog", this.onDialogRequest.bind(this));
             }
-
-            $(this.view.container).on("click", ".k-spreadsheet-filter", this.onFilterHeaderClick.bind(this));
         },
 
         _execute: function(command) {
@@ -394,6 +392,12 @@
             var sheet = this._workbook.activeSheet();
             if (object.type === "columnresizehandle" || object.type === "rowresizehandle") {
                 sheet.startResizing({ x: object.x, y: object.y });
+                event.preventDefault();
+                return;
+            }
+
+            if (object.type === "filtericon") {
+                this.openFilterMenu(event.target);
                 event.preventDefault();
                 return;
             }
@@ -721,6 +725,16 @@
             this._scrollInterval = null;
         },
 
+        openFilterMenu: function(target) {
+            var button = $(target).closest(".k-spreadsheet-filter");
+            var filterMenu = this.view.createFilterMenu(button.data("column"));
+
+            filterMenu.bind("action", this.onCommandRequest.bind(this));
+            filterMenu.bind("action", filterMenu.close.bind(filterMenu));
+
+            filterMenu.openFor(target);
+        },
+
 ////////////////////////////////////////////////////////////////////
 
         onEditorChange: function(e) {
@@ -813,16 +827,6 @@
         },
 
 ////////////////////////////////////////////////////////////////////
-
-        onFilterHeaderClick: function(e) {
-            var target = $(e.currentTarget);
-            var filterMenu = this.view.createFilterMenu(target.data("column"));
-
-            filterMenu.bind("action", this.onCommandRequest.bind(this));
-            filterMenu.bind("action", filterMenu.close.bind(filterMenu));
-
-            filterMenu.openFor(target);
-        },
 
         onCommandRequest: function(e) {
             if (e.command) {

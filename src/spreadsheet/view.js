@@ -445,6 +445,20 @@
             return bottom - handleWidth <= y && y <= bottom + handleWidth;
         },
 
+        isFilterIcon: function(x, y, pane, ref) {
+            var result = false;
+
+            x -= this._sheet._grid._headerWidth;
+            y -= this._sheet._grid._headerHeight;
+
+            this._sheet.forEachFilterHeader(ref, function(ref) {
+                var rect = this._rectangle(pane, ref);
+                result = result || pane.filterIconRect(rect).intersects(x, y);
+            }.bind(this));
+
+            return result;
+        },
+
         objectAt: function(x, y) {
             var grid = this._sheet._grid;
 
@@ -463,7 +477,9 @@
                 var type = "cell";
                 var ref = new CellRef(row, column);
 
-                if (x < grid._headerWidth) {
+                if (this.isFilterIcon(x, y, pane, ref)) {
+                    type = "filtericon";
+                } else if (x < grid._headerWidth) {
                     ref = new CellRef(row, -Infinity);
                     type = this.isRowResizer(y, pane, ref) ? "rowresizehandle" : "rowheader";
                 } else if (y < grid._headerHeight) {
@@ -1019,6 +1035,17 @@
             });
         },
 
+        filterIconRect: function(rect) {
+            var BUTTON_SIZE = 16;
+            var BUTTON_OFFSET = 3;
+
+            return new kendo.spreadsheet.Rectangle(
+                rect.right - BUTTON_SIZE - BUTTON_OFFSET,
+                rect.top + BUTTON_OFFSET,
+                BUTTON_SIZE, BUTTON_SIZE
+            );
+        },
+
         renderFilterHeaders: function() {
             var sheet = this._sheet;
             var filterIcons = [];
@@ -1032,11 +1059,10 @@
                 });
             }
 
-            function filterButton(classNames, rect, index) {
-                var BUTTON_SIZE = 16;
+            function filterButton(classNames, position, index) {
                 var style = {
-                    left: rect.left + rect.width - BUTTON_SIZE - 3 + "px",
-                    top: rect.top + (rect.height - BUTTON_SIZE) / 2 + "px"
+                    left: position.left + "px",
+                    top: position.top + "px"
                 };
                 var filtered = filter && filter.columns.some(function(c) {
                     return c.index === index;
@@ -1058,7 +1084,8 @@
 
             sheet.forEachFilterHeader(this._currentView.ref, function(ref) {
                 var rect = this._rectangle(ref);
-                var button = filterButton(classNames, rect, index);
+                var position = this.filterIconRect(rect);
+                var button = filterButton(classNames, position, index);
                 index++;
 
                 filterIcons.push(button);
