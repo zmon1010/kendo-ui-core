@@ -184,6 +184,7 @@
             Widget.fn.init.call(that, element, options);
 
             that.options = deepExtend({}, that.options, options);
+            that.options.tools = that.options.tools.slice();
 
             element = that.element;
             domElement = element[0];
