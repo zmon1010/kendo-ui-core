@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class TreeListEditableSettings<T> where T : class 
     {
+        public bool? Move { get; set; }
+
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
@@ -26,6 +28,11 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            if (Move.HasValue)
+            {
+                settings["move"] = Move;
+            }
 
             if (TemplateId.HasValue())
             {
