@@ -31,8 +31,8 @@
         },
 
         intersects: function(x, y) {
-            return this.left < x && x < this.left + this.width
-                && this.top < y && y < this.top + this.height;
+            return this.left < x && x < this.left + this.width &&
+                   this.top < y && y < this.top + this.height;
         },
 
         toDiv: function(className) {
