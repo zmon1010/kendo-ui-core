@@ -15,6 +15,15 @@ class TreeListEditable extends \Kendo\SerializableObject {
     }
 
     /**
+    * Enables drag&drop UI of rows between parents.
+    * @param boolean $value
+    * @return \Kendo\UI\TreeListEditable
+    */
+    public function move($value) {
+        return $this->setProperty('move', $value);
+    }
+
+    /**
     * Sets the template option of the TreeListEditable.
     * The template which renders the popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know
 which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.

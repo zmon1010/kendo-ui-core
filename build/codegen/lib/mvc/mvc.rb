@@ -135,6 +135,7 @@ module CodeGen::MVC::Wrappers
         'diagram.datasource',
         'diagram.connectionsdatasource',
         'treemap.datasource',
+        'spreadsheet.sheets.datasource',
         'spreadsheet.sheets.rows.cells.bordertop',
         'spreadsheet.sheets.rows.cells.borderbottom',
         'spreadsheet.sheets.rows.cells.borderright',

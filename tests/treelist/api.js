@@ -335,4 +335,26 @@
 
         equal(footerRow.css("display"), "none");
     });
+
+    test("itemFor returns row for model", function() {
+        createTreeList();
+
+        var uid = kendo.attr("uid");
+        var first = instance.dataSource.get(1);
+        var second = instance.dataSource.get(2);
+
+        equal(instance.itemFor(first).attr(uid), first.uid);
+        equal(instance.itemFor(second).attr(uid), second.uid);
+    });
+
+    test("itemFor returns row for model id", function() {
+        createTreeList();
+
+        var uid = kendo.attr("uid");
+        var first = instance.dataSource.get(1);
+        var second = instance.dataSource.get(2);
+
+        equal(instance.itemFor(1).attr(uid), first.uid);
+        equal(instance.itemFor(2).attr(uid), second.uid);
+    });
 })()

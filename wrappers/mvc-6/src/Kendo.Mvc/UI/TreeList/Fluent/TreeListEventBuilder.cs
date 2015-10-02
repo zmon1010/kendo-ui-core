@@ -124,6 +124,94 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the dragstart event.</param>
+        public TreeListEventBuilder DragStart(string handler)
+        {
+            Handler("dragstart", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public TreeListEventBuilder DragStart(Func<object, object> handler)
+        {
+            Handler("dragstart", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the drag event.</param>
+        public TreeListEventBuilder Drag(string handler)
+        {
+            Handler("drag", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public TreeListEventBuilder Drag(Func<object, object> handler)
+        {
+            Handler("drag", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the dragend event.</param>
+        public TreeListEventBuilder DragEnd(string handler)
+        {
+            Handler("dragend", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public TreeListEventBuilder DragEnd(Func<object, object> handler)
+        {
+            Handler("dragend", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the drop event.</param>
+        public TreeListEventBuilder Drop(string handler)
+        {
+            Handler("drop", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public TreeListEventBuilder Drop(Func<object, object> handler)
+        {
+            Handler("drop", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fired when the user edits or creates a data item.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the edit event.</param>
@@ -339,6 +427,28 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListEventBuilder ColumnReorder(Func<object, object> handler)
         {
             Handler("columnReorder", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the columnResize event.</param>
+        public TreeListEventBuilder ColumnResize(string handler)
+        {
+            Handler("columnResize", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public TreeListEventBuilder ColumnResize(Func<object, object> handler)
+        {
+            Handler("columnResize", handler);
 
             return this;
         }

@@ -119,7 +119,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
     }
 
     /**
-    * If set to true the treelist will display a scrollbar when the total row height (or width) exceeds the treelist height (or width). By default scrolling is enabled.Can be set to a JavaScript object which represents the scrolling configuration.
+    * If set to true the TreeList will display a scrollbar when the total row height (or width) exceeds the TreeList height (or width). By default scrolling is enabled.Scrolling renders separate tables for the header and data area. For accessibility-conscious applications, disable scrolling.
     * @param boolean| $value
     * @return \Kendo\UI\TreeList
     */
@@ -222,6 +222,62 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
         }
 
         return $this->setProperty('dataBound', $value);
+    }
+
+    /**
+    * Sets the dragstart event of the TreeList.
+    * Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\TreeList
+    */
+    public function dragstart($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('dragstart', $value);
+    }
+
+    /**
+    * Sets the drag event of the TreeList.
+    * Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\TreeList
+    */
+    public function drag($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('drag', $value);
+    }
+
+    /**
+    * Sets the dragend event of the TreeList.
+    * Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\TreeList
+    */
+    public function dragend($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('dragend', $value);
+    }
+
+    /**
+    * Sets the drop event of the TreeList.
+    * Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\TreeList
+    */
+    public function drop($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('drop', $value);
     }
 
     /**
@@ -362,6 +418,20 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
         }
 
         return $this->setProperty('columnReorder', $value);
+    }
+
+    /**
+    * Sets the columnResize event of the TreeList.
+    * Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\TreeList
+    */
+    public function columnResize($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('columnResize', $value);
     }
 
     /**
