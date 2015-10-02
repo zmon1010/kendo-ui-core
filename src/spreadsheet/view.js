@@ -626,7 +626,10 @@
 
         showError: function(options) {
             var errorMessages = this.options.messages.errors;
-            this.openDialog("message", { title: "Error", text: errorMessages[options.reason] });
+            this.openDialog("message", {
+                title : options.title || "Error",
+                text  : options.reason ? errorMessages[options.reason] : options.body
+            });
         },
 
         destroy: function() {

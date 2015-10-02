@@ -18,6 +18,7 @@
     var Command = kendo.spreadsheet.Command = kendo.Class.extend({
         init: function(options) {
             this.options = options;
+            this._workbook = options.workbook;
             this._property = options && options.property;
             this._state = {};
         },
@@ -88,7 +89,10 @@
                             // whether to accept the formula as text (prepend
                             // '), or re-edit.  ex.pos+1 will be the index of
                             // the character where the error occurred.
-                            window.alert(ex2);
+                            this._workbook._view.showError({
+                                title : "Error in formula",
+                                body  : ex1+""
+                            });
                             // store as string for now
                             range.input("'" + value);
                         }
@@ -323,7 +327,6 @@
     kendo.spreadsheet.PasteCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
-            this._workbook = options.workbook;
             this._clipboard = this._workbook.clipboard();
         },
         getState: function() {
@@ -360,10 +363,6 @@
     });
 
     kendo.spreadsheet.ToolbarPasteCommand = Command.extend({
-        init: function(options) {
-            Command.fn.init.call(this, options);
-            this._workbook = options.workbook;
-        },
         exec: function() {
             if(kendo.support.browser.msie && kendo.support.browser.version >= 10) {
                 this._workbook._view.clipboard.focus().select();
@@ -377,7 +376,6 @@
     kendo.spreadsheet.CopyCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
-            this._workbook = options.workbook;
             this._clipboard = options.workbook.clipboard();
         },
         undo: $.noop,
@@ -399,7 +397,6 @@
     kendo.spreadsheet.ToolbarCopyCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
-            this._workbook = options.workbook;
             this._clipboard = options.workbook.clipboard();
         },
         undo: $.noop,
@@ -433,7 +430,6 @@
     kendo.spreadsheet.ToolbarCutCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
-            this._workbook = options.workbook;
             this._clipboard = options.workbook.clipboard();
         },
         exec: function() {

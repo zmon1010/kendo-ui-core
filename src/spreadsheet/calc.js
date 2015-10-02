@@ -925,7 +925,7 @@
             return peek() === "";
         }
         function croak(msg) {
-            throw new ParseError(msg + " (pos " + col + ")", pos);
+            throw new ParseError(msg, pos);
         }
         function skip(ch) {
             if (typeof ch == "string") {
