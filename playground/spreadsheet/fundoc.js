@@ -25,6 +25,11 @@ function load() {
     ];
     var kendo = {
         spreadsheet: {},
+        support: {
+            browser: {
+                
+            }
+        },
         Class: {
             extend: function() {}
         },
