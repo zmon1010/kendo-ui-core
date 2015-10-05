@@ -979,9 +979,8 @@
     }).args([
         [ "array1", [ "collect", "number", 1 ] ],
         [ "array2", [ "collect", "number", 1 ] ],
-        [ "?", [ "and",
-                 [ "assert", "$array1.length == $array2.length", "N/A" ],
-                 [ "assert", "$array1.length > 0", "DIV/0" ] ] ]
+        [ "?", [ "assert", "$array1.length == $array2.length", "N/A" ] ],
+        [ "?", [ "assert", "$array1.length > 0", "DIV/0" ] ]
     ]);
 
     defineFunction("covariance.s", function(x, y){
@@ -989,9 +988,8 @@
     }).args([
         [ "array1", [ "collect", "number", 1 ] ],
         [ "array2", [ "collect", "number", 1 ] ],
-        [ "?", [ "and",
-                 [ "assert", "$array1.length == $array2.length", "N/A" ],
-                 [ "assert", "$array1.length > 1", "DIV/0" ] ] ]
+        [ "?", [ "assert", "$array1.length == $array2.length", "N/A" ] ],
+        [ "?", [ "assert", "$array1.length > 1", "DIV/0" ] ]
     ]);
 
     defineAlias("covar", "covariance.p");

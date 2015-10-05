@@ -86,10 +86,9 @@
         [ "beta", "number++" ],
         [ "A", [ "or", "number", [ "null", 0 ] ] ],
         [ "B", [ "or", "number", [ "null", 1 ] ] ],
-        [ "?", [ "and",
-                 [ "assert", "$x >= $A", "NUM" ],
-                 [ "assert", "$x <= $B", "NUM" ],
-                 [ "assert", "$A < $B", "NUM" ] ] ]
+        [ "?", [ "assert", "$x >= $A", "NUM" ] ],
+        [ "?", [ "assert", "$x <= $B", "NUM" ] ],
+        [ "?", [ "assert", "$A < $B", "NUM" ] ]
     ]);
 
     defineFunction("BETA.DIST", BETA_DIST).args([
@@ -99,10 +98,9 @@
         [ "cumulative", "logical" ],
         [ "A", [ "or", "number", [ "null", 0 ] ] ],
         [ "B", [ "or", "number", [ "null", 1 ] ] ],
-        [ "?", [ "and",
-                 [ "assert", "$x >= $A", "NUM" ],
-                 [ "assert", "$x <= $B", "NUM" ],
-                 [ "assert", "$A < $B", "NUM" ] ] ]
+        [ "?", [ "assert", "$x >= $A", "NUM" ] ],
+        [ "?", [ "assert", "$x <= $B", "NUM" ] ],
+        [ "?", [ "assert", "$A < $B", "NUM" ] ]
     ]);
 
     defineFunction("BETA.INV", BETA_INV).args([
@@ -139,9 +137,8 @@
     }).args([
         [ "actual_range", "matrix" ],
         [ "expected_range", "matrix" ],
-        [ "?", [ "and",
-                 [ "assert", "$actual_range.width == $expected_range.width" ],
-                 [ "assert", "$actual_range.height == $expected_range.height" ] ] ]
+        [ "?", [ "assert", "$actual_range.width == $expected_range.width" ] ],
+        [ "?", [ "assert", "$actual_range.height == $expected_range.height" ] ]
     ]);
 
     defineFunction("EXPON.DIST", expon).args([
@@ -184,9 +181,8 @@
     defineFunction("F.TEST", Ftest).args([
         [ "array1", [ "collect", "number", 1 ] ],
         [ "array2", [ "collect", "number", 1 ] ],
-        [ "?", [ "and",
-                 [ "assert", "$array1.length >= 2", "DIV/0" ],
-                 [ "assert", "$array2.length >= 2", "DIV/0" ] ] ]
+        [ "?", [ "assert", "$array1.length >= 2", "DIV/0" ] ],
+        [ "?", [ "assert", "$array2.length >= 2", "DIV/0" ] ]
     ]);
 
     defineFunction("FISHER", fisher).args([
@@ -228,10 +224,9 @@
         [ "array2", [ "collect", "number", 1 ] ],
         [ "tails", [ "and", "integer", [ "values", 1, 2 ] ] ],
         [ "type", [ "and", "integer", [ "values", 1, 2, 3 ] ] ],
-        [ "?", [ "and",
-                 [ "assert", "$type != 1 || $array1.length == $array2.length", "N/A" ],
-                 [ "assert", "$array1.length >= 2", "DIV/0" ],
-                 [ "assert", "$array2.length >= 2", "DIV/0" ] ] ]
+        [ "?", [ "assert", "$type != 1 || $array1.length == $array2.length", "N/A" ] ],
+        [ "?", [ "assert", "$array1.length >= 2", "DIV/0" ] ],
+        [ "?", [ "assert", "$array2.length >= 2", "DIV/0" ] ]
     ]);
 
     defineFunction("CONFIDENCE.T", confidence_t).args([
@@ -273,58 +268,51 @@
         [ "prob_range", [ "collect", "number", 1 ] ],
         [ "lower_limit", "number" ],
         [ "upper_limit", [ "or", "number", [ "null", "$lower_limit" ] ] ],
-        [ "?", [ "and",
-                 [ "assert", "$prob_range.length == $x_range.length", "N/A" ] ] ]
+        [ "?", [ "assert", "$prob_range.length == $x_range.length", "N/A" ] ]
     ]);
 
     defineFunction("SLOPE", slope).args([
         [ "known_y", [ "collect", "number", 1 ] ],
         [ "known_x", [ "collect", "number", 1 ] ],
-        [ "?", [ "and",
-                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
-                 [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ] ]
+        [ "?", [ "assert", "$known_x.length == $known_y.length", "N/A" ] ],
+        [ "?", [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ]
     ]);
 
     defineFunction("INTERCEPT", intercept).args([
         [ "known_y", [ "collect", "number", 1 ] ],
         [ "known_x", [ "collect", "number", 1 ] ],
-        [ "?", [ "and",
-                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
-                 [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ] ]
+        [ "?", [ "assert", "$known_x.length == $known_y.length", "N/A" ] ],
+        [ "?", [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ]
     ]);
 
     defineFunction("PEARSON", pearson).args([
         [ "array1", [ "collect", "number", 1 ] ],
         [ "array2", [ "collect", "number", 1 ] ],
-        [ "?", [ "and",
-                 [ "assert", "$array2.length == $array1.length", "N/A" ],
-                 [ "assert", "$array2.length > 0 && $array1.length > 0", "N/A" ] ] ]
+        [ "?", [ "assert", "$array2.length == $array1.length", "N/A" ] ],
+        [ "?", [ "assert", "$array2.length > 0 && $array1.length > 0", "N/A" ] ]
     ]);
 
     defineFunction("RSQ", rsq).args([
         [ "known_y", [ "collect", "number", 1 ] ],
         [ "known_x", [ "collect", "number", 1 ] ],
-        [ "?", [ "and",
-                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
-                 [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ],
-                 [ "assert", "$known_x.length != 1 && $known_y.length != 1", "N/A" ] ] ]
+        [ "?", [ "assert", "$known_x.length == $known_y.length", "N/A" ] ],
+        [ "?", [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ],
+        [ "?", [ "assert", "$known_x.length != 1 && $known_y.length != 1", "N/A" ] ]
     ]);
 
     defineFunction("STEYX", steyx).args([
         [ "known_y", [ "collect", "number", 1 ] ],
         [ "known_x", [ "collect", "number", 1 ] ],
-        [ "?", [ "and",
-                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
-                 [ "assert", "$known_x.length >= 3 && $known_y.length >= 3", "DIV/0" ] ] ]
+        [ "?", [ "assert", "$known_x.length == $known_y.length", "N/A" ] ],
+        [ "?", [ "assert", "$known_x.length >= 3 && $known_y.length >= 3", "DIV/0" ] ]
     ]);
 
     defineFunction("FORECAST", forecast).args([
         [ "x", "number" ],
         [ "known_y", [ "collect", "number", 1 ] ],
         [ "known_x", [ "collect", "number", 1 ] ],
-        [ "?", [ "and",
-                 [ "assert", "$known_x.length == $known_y.length", "N/A" ],
-                 [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ] ]
+        [ "?", [ "assert", "$known_x.length == $known_y.length", "N/A" ] ],
+        [ "?", [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ]
     ]);
 
     defineFunction("LINEST", linest).args([

@@ -29,7 +29,7 @@ function load() {
         spreadsheet: {},
         support: {
             browser: {
-                
+
             }
         },
         Class: {
@@ -357,7 +357,7 @@ function documentArgs(args, callback) {
               case "integer++":
                 return "non-zero pozitive integer";
               case "date":
-                return "date (integer serial number)";
+                return "date (serial number)";
               case "datetime":
                 return "date/time (serial number)";
               case "divisor":
