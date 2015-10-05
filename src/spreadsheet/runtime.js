@@ -67,6 +67,9 @@
         },
 
         _resolve: function(val) {
+            if (val === undefined) {
+                val = null;
+            }
             var f = this.formula;
             f.value = val;
             if (this.ss.onFormula(f) && this.callback) {
