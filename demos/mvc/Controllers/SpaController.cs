@@ -23,6 +23,7 @@ namespace Kendo.Controllers
 #else
             ViewBag.Debug = false;
 #endif
+            SetTheme();
             return View("~/Views/demos/spa/Aeroviewr.cshtml");
         }
 

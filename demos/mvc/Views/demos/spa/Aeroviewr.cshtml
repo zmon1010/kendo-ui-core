@@ -21,7 +21,7 @@
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 
         @foreach (string styleName in Kendo.Models.StyleGroups.All) {
-            <link href="@Url.Style(styleName)" rel="@(styleName.ToLowerInvariant().EndsWith("less") ? "stylesheet/less" : "stylesheet")" />
+        @Html.StyleLink(styleName, (string)ViewBag.Theme, (string)ViewBag.CommonFile)
         }
 
         @if (ViewBag.Debug) {
