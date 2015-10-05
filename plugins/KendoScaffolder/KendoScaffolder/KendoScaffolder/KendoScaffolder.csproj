@@ -170,6 +170,9 @@
     <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\razor\GridWebApiView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\web\GridWebApiWebView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\web\GridAjaxWebView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

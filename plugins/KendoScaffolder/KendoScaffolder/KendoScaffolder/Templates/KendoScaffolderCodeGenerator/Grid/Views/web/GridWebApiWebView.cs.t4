@@ -1,0 +1,367 @@
+﻿<#@ template language="C#" HostSpecific="True" debug="true" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="..\ImportsGridView.include.t4" #>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+    var batchEditMode = "InCell";
+    var newLine = Environment.NewLine;
+#>
+@* Important! Register the following route if it's not existing in the RouteTable
+config.Routes.MapHttpRoute(
+    name: "DefaultApi",
+    routeTemplate: "api/{controller}/{id}",
+    defaults: new { id = RouteParameter.Optional }
+);
+*@
+
+<div id="grid"></div>
+<script>
+    $("#grid").kendoGrid({
+        height: 400,
+        columns: [
+<#
+    var properties = ModelMetadata.Properties
+        .Where(prop => prop.Scaffold && !prop.IsPrimaryKey && !prop.IsForeignKey && !prop.IsAssociation)
+        .ToList();
+    for (int i = 0; i < properties.Count; i++) {
+        var propertyName = properties[i].PropertyName;
+        var isLast = i == properties.Count - 1;
+#>
+<#
+        if (UseViewModel) {
+            foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) {
+                if(child.Name.Equals(propertyName)) {
+#>
+<#
+                    var rendered = false;
+                    if (DataAnnotationAttributes.ContainsKey(propertyName))
+                    {
+                        Dictionary<string, string> attribute = DataAnnotationAttributes[propertyName];
+                        var annotations = DataAnnotationAttributes[propertyName];
+                        var scaffoldable = annotations.ContainsKey("scaffold") && annotations["scaffold"] == "false" ? false : true;
+                        rendered = scaffoldable ? false : true;
+
+                        if (annotations.ContainsKey("Name") && scaffoldable)
+                        {
+                            var item = annotations["Name"];
+                            RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, item);
+                            rendered = true;
+                        }
+                    }
+                    if (!rendered) {
+                        RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, "");
+                    }
+#>
+<#
+                      break;
+                }
+            }
+        }  else {
+#>
+<#
+            RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, "");
+#>
+<#
+        }
+    }
+#>
+<#
+    if(Editable && (EditableCreate || EditableUpdate || EditableDestroy)) {
+#>
+            {command: [<# if (EditMode != batchEditMode && (EditableCreate||EditableUpdate)) { #> "edit" <# } #><#= EditMode != batchEditMode && (EditableCreate||EditableUpdate) && EditableDestroy ? ", " : ""#><# if (EditableDestroy) { #>"destroy"<# } #>], width: 180 }
+<#
+    }
+#>
+        ],
+<#
+    if(EditableCreate || ExcelExport || PdfExport) {
+#>
+        toolbar: <#RenderToolbarOptions();#>
+<#
+    }
+#>
+        dataSource: {
+            type: "webapi", <#=Editable ? EditMode.Equals(batchEditMode) ? "" + newLine + "\t\t\tbatch:true," : "" : "" #>
+            transport: {
+                read: {
+                     url: "/api/<#= entitySetName #>"
+                }<# RenderCRUDOptions(entitySetName, ControllerRootName); #>
+            schema: {
+                data: "Data",
+                total: "Total", 
+                errors: "Errors",
+                model: {
+                    id: "<#= PrimaryKeyName#>"<# RenderFields(PrimaryKeyName); #>
+                }
+            },
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            serverGrouping: true,
+            serverAggregates: true,
+        },
+<#
+    if(ColumnMenu) {
+#>
+        columnMenu: true,
+<#
+    }
+    if(Editable) {
+#>
+        editable: "<#= EditMode.ToLower() #>",
+<#
+    }
+    if(Pageable) {
+#>
+        pageable: true,
+<#
+    }
+    if(Navigatable) {
+#>
+        navigatable: true,
+<#
+    }
+    if(Selectable) {
+#>
+        selectable: "<#=SelectionMode.ToString().ToLower() #> <#=SelectionType.ToString().ToLower() #>",
+<#
+    }
+    if(Sortable) {
+#>
+        sortable: {
+            mode: "<#=SortMode.ToString() == "MultipleColumn" ? "multiple" : "single"#>"<#=!AllowUnsort ? "," + newLine + "\t\t\tallowUnsort: false" : "" #>
+        },
+<#
+    }
+    if (Filterable) {
+#>
+        filterable: <#= FilterMode.ToString() == "Row" ? "{ " + newLine + "\t\t\tmode: \"row\""+ newLine +"\t\t}," : "true," #>
+<#
+    }
+    if (GridEvents.Count > 0) {
+        for (int i = 0; i < GridEvents.Count; i++) {
+        RenderEvents(GridEvents[i], i == properties.Count - 1);
+#><#
+        }
+    }
+#>
+        scrollable: <#= !Scrollable ? "false" : "true"#>
+    })
+
+<#
+    foreach(string ev in GridEvents) {
+        RenderEventHandlers(ev);
+    }
+#>
+</script>
+<#+
+    private void RenderColumn(string field, bool isLast, string title)
+    {
+#>
+            {field: "<#= field#>"<#= title.Length > 0 ?", title: \"" + title +"\"" : "" #>}<#= isLast ? "" : "," #>
+<#+
+  }
+#>
+<#+
+    private void RenderEvents(string ev, bool isLast)
+    {
+#>
+        <#= Char.ToLowerInvariant(ev[0]) + ev.Substring(1) #>: on<#= ev #>,
+<#+
+    }
+#>
+<#+
+    private void RenderEventHandlers(string ev)
+    {
+#>
+    function on<#= ev #>(e){
+        //Implement the event handler for <#= Char.ToLowerInvariant(ev[0]) + ev.Substring(1) #>
+    }
+
+<#+
+    }
+#>
+<#+
+    private void RenderToolbarOptions()
+    {
+        string result = "[";
+        string[] toolbarOperations = new string[] {
+            EditableCreate ? "\"create\"" : "",
+            Editable && EditMode.Equals("InCell") ? "\"save\"" : "",
+            ExcelExport ? "\"excel\"" : "",
+            PdfExport ? "\"pdf\"" : ""
+        };
+        toolbarOperations =  toolbarOperations.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+        for (int i = 0; i < toolbarOperations.Length; i++) {
+            if (i == toolbarOperations.Length - 1){
+                result += toolbarOperations[i];
+            } else {
+                result += toolbarOperations[i] + ", ";
+            }
+        }
+        result += "],";
+#>
+<#=result#>
+<#+
+    }
+#>
+
+<#+
+    private void RenderCRUDOptions(string EntitySetName, string ControllerRootName)
+    {
+        var newLine = Environment.NewLine;
+        string result = "";
+
+        if (EditableCreate || EditableDestroy || EditableUpdate)
+        {
+            result += ", " + newLine;
+        }
+
+        string[] transportOptions = new string[] {
+            EditableCreate ? "create" : "",
+            EditableUpdate ? "update" : "",
+            EditableDestroy ? "destroy" : "",
+        };
+        transportOptions =  transportOptions.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+        for (int i = 0; i < transportOptions.Length; i++) {
+            var operation = transportOptions[i].Substring(0, 1).ToUpper() + transportOptions[i].Substring(1);
+            result += GetTabs(4) + transportOptions[i] + ": { " + newLine + GetTabs(5) +"url: \"" + EntitySetName + "_" + operation + "\""+ newLine + GetTabs(4) + "}";
+            if (i != transportOptions.Length - 1){
+                result += "," + newLine;
+            }
+        }
+        result += newLine + GetTabs(3) + "},";
+#>
+<#=result#>
+<#+
+    }
+#>
+
+<#+
+    private string GetTabs(int count)
+    {
+        return String.Concat(Enumerable.Repeat("\t", count));
+    }
+
+    private string RenderSchemaDataAnnotations(KeyValuePair<string, Dictionary<string, string>> model, bool isLast)
+    {
+            bool distinctValidators = GetDistinctValidation(model.Value).Count > 0 ? true : false;
+            var newLine = Environment.NewLine;
+            string result = "";
+            result += GetTabs(6) + "\"" + model.Key + "\"" + ": {" + newLine;
+            result += GetTabs(7) + "type: " + "\"" + model.Value["type"] + "\"";
+            result += distinctValidators ? "" : newLine;
+
+            if (distinctValidators)
+            {
+                result += "," + newLine + GetTabs(7) + "validation: {";
+                result += RenderValidationAttributes(model);
+                result += "}" + newLine;
+            }
+            result += GetTabs(6);
+            result +=  isLast? "}" : "}," + Environment.NewLine;
+
+            return result;
+    }
+
+    private string RenderSchemaTypes(PropertyMetadata model, bool isLast)
+    {
+        string newLine = Environment.NewLine;
+        string result = "";
+        string fieldType = GetFieldType(model.TypeName);
+        
+        result += GetTabs(6) + model.PropertyName + ": { type: \"" + fieldType + "\"";
+        result +=  isLast? "}" : "}," + Environment.NewLine;
+        return result;
+    }
+
+    private string GetFieldType(string type)
+    {
+        switch (type)
+        {
+            case "System.DateTime":
+                return "date";
+                break;
+            case "System.String":
+                return "string";
+                break;
+            case "System.Boolean":
+                return "boolean";
+                break;
+            default:
+                return "number";
+                break;
+        }
+    }
+
+    public Dictionary<string, string> GetDistinctValidation(Dictionary<string, string> models)
+    {
+        Dictionary<string, string> distinct = new Dictionary<string, string>();
+        foreach (var item in models)
+        {
+            if (item.Key == "pattern" || item.Key == "max" || item.Key == "required" || item.Key == "min")
+            {
+                distinct.Add(item.Key, item.Value);
+            }
+        }
+        return distinct;
+    }
+
+    private string RenderValidationAttributes(KeyValuePair<string, Dictionary<string, string>> model)
+    {
+        string result = "";
+        Dictionary<string,string> distincValues = GetDistinctValidation(model.Value);
+
+        foreach (var item in distincValues)
+        {
+            var isLast = item.Equals(distincValues.Last());
+
+            if (item.Key == "pattern")
+            {
+                result += item.Key + ": \"" + item.Value + "\"";
+            } else
+            {
+                result += item.Key + ": " + item.Value;
+            }
+
+            result += isLast ? "" : ", ";
+        }
+        return result;
+    }
+
+    private void RenderFields(string primaryKey)
+    {
+        string newLine = Environment.NewLine;
+        string tabs = GetTabs(5);
+        string result = "," + newLine + tabs + "fields: {" + newLine;            
+        var properties = ModelMetadata.Properties
+        .Where(prop => prop.Scaffold && !prop.IsForeignKey && !prop.IsAssociation)
+        .ToList();
+                
+        DataAnnotationAttributes.Remove(primaryKey);
+
+        foreach (var property in properties)
+        {
+            if (!DataAnnotationAttributes.ContainsKey(property.PropertyName)) 
+            {
+                var isLast = property.Equals(properties.Last());
+                result += RenderSchemaTypes(property, isLast);
+            }
+        }
+
+        foreach (var model in DataAnnotationAttributes)
+        {
+            if (!(model.Value.ContainsKey("scaffold") && model.Value["scaffold"] == "false"))
+            {
+                var isLast = model.Equals(DataAnnotationAttributes.Last());
+                result += RenderSchemaDataAnnotations(model, isLast);
+            }
+
+        }
+        result += newLine + tabs + "}";
+#>
+<#=result#>
+<#+
+    }
+#>
