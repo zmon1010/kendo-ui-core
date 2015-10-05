@@ -3,8 +3,8 @@ require 'erb'
 THEME_BUILDER_BUILDFILE = 'build/theme_builder.rb'
 THEME_FILES = FileList[
     'styles/web/type-*.less',
-    'styles/web/common/mixins.less',
-    'styles/web/themes/type.less'
+    'styles/web/common/*.less',
+    'styles/web/themes/*.less'
 ]
 THEME_BUILDER_FILES = [
     'themebuilder/scripts/less.js',
