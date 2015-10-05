@@ -315,19 +315,28 @@
         [ "?", [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ]
     ]);
 
-    defineFunction("LINEST", linest).args([
+    defineFunction("LINEST", resultAsMatrix(linest)).args([
         [ "known_y", [ "collect", "number", 1 ] ],
         [ "known_x", [ "collect", "number", 1 ] ],
         [ "const", [ "or", "logical", [ "null", true ] ] ],
         [ "stats", [ "or", "logical", [ "null", false ] ] ]
     ]);
 
-    defineFunction("LOGEST", logest).args([
+    defineFunction("LOGEST", resultAsMatrix(logest)).args([
         [ "known_y", [ "collect", "number", 1 ] ],
         [ "known_x", [ "collect", "number", 1 ] ],
         [ "const", [ "or", "logical", [ "null", true ] ] ],
         [ "stats", [ "or", "logical", [ "null", false ] ] ]
     ]);
+
+    /* -----[ utils ]----- */
+
+    function resultAsMatrix(f) {
+        return function() {
+            var a = f.apply(this, arguments);
+            return this.asMatrix(a);
+        };
+    }
 
     /* -----[ definitions ]----- */
 
