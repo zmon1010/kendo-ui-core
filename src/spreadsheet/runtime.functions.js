@@ -173,7 +173,10 @@
     defineFunction("acoth", function(n){
         return Math.log((n + 1) / (n - 1)) / 2;
     }).args([
-        [ "*num", [ "and", "number", [ "not", [ "[between]", -1, 1 ] ] ] ]
+        [ "*num", "number" ],
+        [ "?", [ "or",
+                 [ "assert", "$num < -1"],
+                 [ "assert", "$num > 1" ] ] ]
     ]);
 
     defineFunction("power", function(a, b){

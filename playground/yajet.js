@@ -657,7 +657,7 @@ function YAJET(yajet_args){
                         ret.code = code;
                         return ret;
                 } catch(ex) {
-                        window.console && console.log("%s", code);
+                        console.error("%s", code);
                         ex.yajetCode = code;
                         throw ex;
                 }

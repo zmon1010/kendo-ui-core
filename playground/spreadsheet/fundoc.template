@@ -1,7 +1,7 @@
-### _FNAME_
+### $functionName
 
-_SHORTDESC_
+$functionSummary
+$(WHEN (functionArgs)
+##### Arguments
 
-#### Arguments
-
-_ARGS_
+$functionArgs $)

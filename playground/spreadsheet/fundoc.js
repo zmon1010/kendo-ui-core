@@ -6,6 +6,8 @@ var $ = require("cheerio");
 // var http = require("http");
 var cheerio = require("cheerio");
 var upndown = require("upndown");
+var yajet = require("../yajet.js");
+yajet = new yajet({ with_scope: true });
 
 var OpenFormula = (function(){
     var html = fs.readFileSync(FILER("OpenFormula.html"), "utf8");
@@ -46,7 +48,7 @@ function load() {
     return kendo.spreadsheet.calc.runtime.FUNCS;
 }
 
-var TEMPLATE = fs.readFileSync(FILER("fundoc.template"), "utf8");
+var TEMPLATE = yajet.compile(fs.readFileSync(FILER("fundoc.template"), "utf8"));
 
 var FUNCS = load();
 var FNAMES = Object.keys(FUNCS).sort(alpha).filter(function(funcName){
@@ -102,11 +104,11 @@ function alpha(a, b) {
 }
 
 function template(x) {
-    var str = TEMPLATE;
-    str = str.replace(/_FNAME_/g, x.fname);
-    str = str.replace(/_SHORTDESC_/g, x.shortdesc);
-    str = str.replace(/_ARGS_/g, x.args);
-    return str;
+    return TEMPLATE({
+        functionName: x.fname,
+        functionSummary: x.shortdesc,
+        functionArgs: x.args
+    });
 }
 
 // function funcDescription(name, callback) {
