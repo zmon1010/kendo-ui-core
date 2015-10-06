@@ -199,20 +199,37 @@
             Object.keys(hash).forEach(function(cell){
                 var val = self.$(cell);
                 var expected = hash[cell];
-                if (expected instanceof APPROX) {
-                    if (typeof val != "number") {
-                        val = parseFloat(val);
-                    }
-                    ok(Math.abs(val - expected.val) < expected.eps);
-                    if (!(Math.abs(val - expected.val) < expected.eps)) {
-                        console.log(val, expected.val);
-                    }
-                } else {
-                    equal(val, expected);
-                }
+                EQ(val, expected);
             });
         }
     });
+
+    function EQ(val, expected) {
+        if (expected instanceof runtime.Matrix) {
+            expected = expected.data;
+        }
+        if (val instanceof runtime.Matrix) {
+            val = val.data;
+        }
+        if (Array.isArray(val) && Array.isArray(expected)) {
+            equal(val.length, expected.length);
+            val.forEach(function(val, i){
+                EQ(val, expected[i]);
+            });
+            return;
+        }
+        if (expected instanceof APPROX) {
+            if (typeof val != "number") {
+                val = parseFloat(val);
+            }
+            ok(Math.abs(val - expected.val) < expected.eps);
+            if (!(Math.abs(val - expected.val) < expected.eps)) {
+                console.log(val, expected.val);
+            }
+        } else {
+            equal(val, expected);
+        }
+    }
 
     function APPROX(val, eps) {
         if (!(this instanceof APPROX)) {
@@ -237,17 +254,23 @@
             if (Object.prototype.hasOwnProperty.call(hash, i)) {
                 var cell = "A" + (row++);
                 data[cell] = i;
-                var val = hash[i];
-                if (typeof val == "number") {
-                    val = APPROX(val);
-                }
-                expect[cell] = val;
+                expect[cell] = value(hash[i]);
             }
         }
         ss.fill(data);
         ss.recalculate(function(){
             ss.expectEqual(expect);
         });
+
+        function value(x) {
+            if (typeof x == "number") {
+                return APPROX(x);
+            }
+            if (Array.isArray(x)) {
+                return x.map(value);
+            }
+            return x;
+        }
     }
 
     // test async function
@@ -742,7 +765,7 @@
                 A4: 2,
                 A5: "#N/A!",
                 A6: "#N/A!",
-                A7: '[[2],[9],[3]]',
+                A7: [[2],[9],[3]],
             });
         });
     });
@@ -836,7 +859,7 @@
         });
         ss.recalculate(function(){
             ss.expectEqual({
-                A1: "[[2,6],[14,4]]" // ends up like this through stringification
+                A1: [[2,6],[14,4]]
             });
         });
     });
@@ -1932,6 +1955,44 @@
     test("FORECAST", function(){
         calcTest({
             "=forecast(30, {6,7,9,15,21}, {20,28,31,38,40})": 10.607253
+        });
+    });
+
+    test("LINEST", function(){
+        // the tests from https://support.office.com/en-us/article/LINEST-function-84d7d0d9-6e50-4101-977a-fa7abf772b6d
+        calcTest({
+            "=linest({1;9;5;7}, {0;4;2;3}, , FALSE)": [[ 2, 1 ]],
+
+            "=SUM(LINEST({ 3100; 4500; 4400; 5400; 7500; 8100 }, { 1; 2; 3; 4; 5; 6 }) * {9, 1})": 11000,
+
+            "\
+=INDEX(linest(\
+  { 142000; 144000; 151000; 150000; 139000; 169000; 126000; 142900; 163000; 169000; 149000 }, \
+  { \
+    2310, 2, 2, 20;     \
+    2333, 2, 2, 12;     \
+    2356, 3, 1.5, 33;   \
+    2379, 3, 2, 43;     \
+    2402, 2, 3, 53;     \
+    2425, 4, 2, 23;     \
+    2448, 2, 1.5, 99;   \
+    2471, 2, 2, 34;     \
+    2494, 3, 3, 23;     \
+    2517, 4, 4, 55;     \
+    2540, 2, 3, 22      \
+  }, \
+TRUE, TRUE),, 1)": [[ -234.2371645 ],
+                    [ 13.26801148 ],
+                    [ 0.996747993 ],
+                    [ 459.7536742 ],
+                    [ 1732393319.229 ]]
+        });
+    });
+
+    test("LOGEST", function(){
+        calcTest({
+            "=LOGEST({ 33100; 47300; 69000; 102000; 150000; 220000 }, { 11; 12; 13; 14; 15; 16 }, true, false)"
+            : [[ 1.4633, 495.3048 ]]
         });
     });
 

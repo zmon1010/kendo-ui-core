@@ -19,7 +19,6 @@
     var runtime = calc.runtime;
     var defineFunction = runtime.defineFunction;
     var CalcError = runtime.CalcError;
-    var Matrix = runtime.Matrix;
 
     /* -----[ Spreadsheet API ]----- */
 
@@ -315,28 +314,28 @@
         [ "?", [ "assert", "$known_x.length > 0 && $known_y.length > 0", "N/A" ] ]
     ]);
 
-    defineFunction("LINEST", resultAsMatrix(linest)).args([
-        [ "known_y", [ "collect", "number", 1 ] ],
-        [ "known_x", [ "collect", "number", 1 ] ],
+    defineFunction("LINEST", linest).args([
+        [ "known_y", "matrix" ],
+        [ "known_x", [ "or", "matrix", "null" ] ],
         [ "const", [ "or", "logical", [ "null", true ] ] ],
         [ "stats", [ "or", "logical", [ "null", false ] ] ]
     ]);
 
-    defineFunction("LOGEST", resultAsMatrix(logest)).args([
-        [ "known_y", [ "collect", "number", 1 ] ],
-        [ "known_x", [ "collect", "number", 1 ] ],
+    defineFunction("LOGEST", logest).args([
+        [ "known_y", "matrix" ],
+        [ "known_x", [ "or", "matrix", "null" ] ],
         [ "const", [ "or", "logical", [ "null", true ] ] ],
         [ "stats", [ "or", "logical", [ "null", false ] ] ]
     ]);
 
     /* -----[ utils ]----- */
 
-    function resultAsMatrix(f) {
-        return function() {
-            var a = f.apply(this, arguments);
-            return this.asMatrix(a);
-        };
-    }
+    // function resultAsMatrix(f) {
+    //     return function() {
+    //         var a = f.apply(this, arguments);
+    //         return this.asMatrix(a);
+    //     };
+    // }
 
     /* -----[ definitions ]----- */
 
@@ -925,38 +924,20 @@
         return sq;
     }
 
-    function _def_known(dim) { // returns [[1,2,3,...,dim]]
-        var tmp = [];
-        for (var i=1; i <= dim; i++) {
-            tmp.push(i);
+    function linest(Y, X, konst, stats) { // LINEST(known_y's, [known_x's], [const], [stats])
+        var i = 0;
+
+        if (!X) {
+            // if not passed, X should default to array {1, 2, 3, ...} (same size as Y)
+            X = Y.map(function(){ return ++i; });
         }
-        return [tmp];
-    }
 
-    function linest(known_Y, known_X, _const, stats) { // LINEST(known_y's, [known_x's], [const], [stats])
-        // known_Y is an JS-array of numbers; known-X is an JS-array of JS_arrays of numbers.
-        var n = known_Y.length;
-        if (known_X.length > 0) {
-            known_X = [ known_X ];
-        } else {
-            known_X = _def_known(n); // Excel: "If known_x's is omitted, it is assumed to be the array {1,2,3,...}"
-        }
-        var k = known_X.length;
-        var i;
-
-        var Y = new Matrix(this), X = new Matrix(this);
-        Y.data = [known_Y];
-        Y.width = n; Y.height = 1;
-        Y = Y.transpose();
-        X.data = known_X;
-        X.width = n; X.height = k;
-        X = X.transpose();
-
-        if (_const) { // adding 1's column is unnecessary when _const==false (meaning that y_intercept==0)
-            for (i=0; i < n; i++) { // add a 1's first column
-                X.data[i].unshift(1);
-            }
-            X.width ++;
+        if (konst) { // adding 1's column is unnecessary when _const==false (meaning that y_intercept==0)
+            X = X.clone();
+            X.eachRow(function(row){
+                X.data[row].unshift(1);
+            });
+            ++X.width;
         }
 
         var Xt = X.transpose();
@@ -965,18 +946,18 @@
         for (i = B.height-1; i >= 0; i--) {
             line_1.push(B.data[i][0]); // regression coefficients ('slopes') and the y_intercept
         }
-        if (!_const) {
+        if (!konst) {
             line_1.push(0); // display 0 for y_intercept, when _const==false
         }
         if (!stats) {
-            return [ line_1 ]; // don't display statistics about the regression, when stats==false
+            return this.asMatrix([ line_1 ]); // don't display statistics about the regression, when stats==false
         }
 
         var Y1 = X.multiply(B); // the predicted Y values
         var y_y1 = Y.adds(Y1, true); // the errors of the predictions (= Y - Y1)
-        var mp = !_const? 0 : _mat_mean(Y1);
+        var mp = !konst? 0 : _mat_mean(Y1);
         var SSreg = _mat_devsq(Y1, mp); // The regression sum of squares
-        var me = !_const? 0 : _mat_mean(y_y1);
+        var me = !konst? 0 : _mat_mean(y_y1);
         var SSresid = _mat_devsq(y_y1, me); // The residual sum of squares
         var line_5 = [];
         line_5.push(SSreg, SSresid);
@@ -985,7 +966,7 @@
         var err_est = Math.sqrt(SSresid / degfre); // The standard error for the y estimate
         var line_3 = [];
         line_3.push(R2, err_est);
-        var F_sta = !_const ? (R2/X.width)/((1-R2)/(degfre)) : (SSreg/(X.width-1))/(SSresid/degfre); // The F statistic
+        var F_sta = !konst ? (R2/X.width)/((1-R2)/(degfre)) : (SSreg/(X.width-1))/(SSresid/degfre); // The F statistic
         var line_4 = [];
         line_4.push(F_sta, degfre);
         var SCP = Xt.multiply(X).inverse();
@@ -993,19 +974,11 @@
         for (i=SCP.height-1; i >= 0; i--) { // The standard errors (of coefficients an y-intercept)
             line_2.push(Math.sqrt(SCP.data[i][i]*SSresid/degfre));
         }
-        return [line_1, line_2, line_3, line_4, line_5];
+        return this.asMatrix([line_1, line_2, line_3, line_4, line_5]);
     }
 
-    function logest(Y_, X_, _const, stats) { // LOGEST(known_y's, [known_x's], [const], [stats])
-        var i, n;
-        for (i = 0, n = Y_.length; i < n; i++) {
-            Y_[i] = Math.log(Y_[i]);
-        }
-        var result = linest(Y_, X_, _const, stats);
-        for (i = 0, n = result[0].length; i < n; i++) {
-            result[0][i] = Math.exp(result[0][i]);
-        }
-        return result;
+    function logest(Y, X, konst, stats) { // LOGEST(known_y's, [known_x's], [const], [stats])
+        return linest.call(this, Y.map(Math.log), X, konst, stats).map(Math.exp);
     }
 
     /*
