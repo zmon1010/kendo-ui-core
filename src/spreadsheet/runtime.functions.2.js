@@ -328,6 +328,20 @@
         [ "stats", [ "or", "logical", [ "null", false ] ] ]
     ]);
 
+    defineFunction("TREND", trend).args([
+        [ "known_y", "matrix" ],
+        [ "known_x", [ "or", "matrix", "null" ] ],
+        [ "new_x", [ "or", "matrix", "null" ] ],
+        [ "const", [ "or", "logical", [ "null", true ] ] ]
+    ]);
+
+    defineFunction("GROWTH", growth).args([
+        [ "known_y", "matrix" ],
+        [ "known_x", [ "or", "matrix", "null" ] ],
+        [ "new_x", [ "or", "matrix", "null" ] ],
+        [ "const", [ "or", "logical", [ "null", true ] ] ]
+    ]);
+
     /* -----[ utils ]----- */
 
     // function resultAsMatrix(f) {
@@ -932,7 +946,7 @@
             X = Y.map(function(){ return ++i; });
         }
 
-        if (konst) { // adding 1's column is unnecessary when _const==false (meaning that y_intercept==0)
+        if (konst) { // adding 1's column is unnecessary when const==false (meaning that y_intercept==0)
             X = X.clone();
             X.eachRow(function(row){
                 X.data[row].unshift(1);
@@ -947,7 +961,7 @@
             line_1.push(B.data[i][0]); // regression coefficients ('slopes') and the y_intercept
         }
         if (!konst) {
-            line_1.push(0); // display 0 for y_intercept, when _const==false
+            line_1.push(0); // display 0 for y_intercept, when const==false
         }
         if (!stats) {
             return this.asMatrix([ line_1 ]); // don't display statistics about the regression, when stats==false
@@ -979,6 +993,44 @@
 
     function logest(Y, X, konst, stats) { // LOGEST(known_y's, [known_x's], [const], [stats])
         return linest.call(this, Y.map(Math.log), X, konst, stats).map(Math.exp);
+    }
+
+    function trend(Y, X, W, konst) { // TREND(known_y's, [known_x's], [new_x's], [const])
+        var i = 0;
+
+        if (!X) {
+            // if not passed, X should default to array {1, 2, 3, ...} (same size as Y)
+            X = Y.map(function(){ return ++i; });
+        }
+
+        if (konst) { // adding 1's column is unnecessary when const==false (meaning that y_intercept==0)
+            X = X.clone();
+            X.eachRow(function(row){
+                X.data[row].unshift(1);
+            });
+            ++X.width;
+        }
+
+        var Xt = X.transpose();
+        var B = Xt.multiply(X).inverse().multiply(Xt).multiply(Y); // the last square estimate of the coefficients
+
+        if (!W) {
+            W = X;
+        } else {
+            if (konst) { // for non-zero y_intercept
+                W = W.clone();
+                W.eachRow(function(row){
+                    W.data[row].unshift(1);
+                });
+                ++W.width;
+            }
+        }
+        return W.multiply(B); // the predicted Y values for the W values
+    }
+
+    function growth(Y, X, new_X, konst) { // GROWTH(known_y's, [known_x's], [new_x's], [const])
+        // = EXP(TREND(LN(Y_), X_, new_X, const))
+        return trend.call(this, Y.map(Math.log), X, new_X, konst).map(Math.exp);
     }
 
     /*
