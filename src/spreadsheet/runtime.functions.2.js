@@ -342,6 +342,90 @@
         [ "const", [ "or", "logical", [ "null", true ] ] ]
     ]);
 
+    defineFunction("FV", FV).args([
+        [ "rate", "number" ],
+        [ "nper", "number" ],
+        [ "pmt", [ "or", "number", [ "null", 0 ] ] ],
+        [ "pv", [ "or", "number", [ "null", 0 ] ] ],
+        [ "type", [ "or", [ "values", 0, 1 ], [ "null", 0 ] ] ],
+        [ "?", [ "assert", "$pmt || $pv" ] ]
+    ]);
+
+    defineFunction("PV", PV).args([
+        [ "rate", "number" ],
+        [ "nper", "number" ],
+        [ "pmt", [ "or", "number", [ "null", 0 ] ] ],
+        [ "fv", [ "or", "number", [ "null", 0 ] ] ],
+        [ "type", [ "or", [ "values", 0, 1 ], [ "null", 0 ] ] ],
+        [ "?", [ "assert", "$pmt || $fv" ] ]
+    ]);
+
+    defineFunction("PMT", PMT).args([
+        [ "rate", "number" ],
+        [ "nper", "number" ],
+        [ "pmt", "number" ],
+        [ "fv", [ "or", "number", [ "null", 0 ] ] ],
+        [ "type", [ "or", [ "values", 0, 1 ], [ "null", 0 ] ] ]
+    ]);
+
+    defineFunction("NPER", NPER).args([
+        [ "rate", "number" ],
+        [ "pmt", "number" ],
+        [ "pv", "number" ],
+        [ "fv", [ "or", "number", [ "null", 0 ] ] ],
+        [ "type", [ "or", [ "values", 0, 1 ], [ "null", 0 ] ] ]
+    ]);
+
+    defineFunction("RATE", RATE).args([
+        [ "nper", "number" ],
+        [ "pmt", [ "or", "number", [ "null", 0 ] ] ],
+        [ "pv", "number" ],
+        [ "fv", [ "or", "number", [ "null", 0 ] ] ],
+        [ "type", [ "or", [ "values", 0, 1 ], [ "null", 0 ] ] ],
+        [ "guess", [ "or", "number++", [ "null", 0.01 ] ] ],
+        [ "?", [ "assert", "$pmt || $fv" ] ]
+    ]);
+
+    defineFunction("IPMT", IPMT).args([
+        [ "rate", "number" ],
+        [ "per", "number++" ],
+        [ "nper", "number++" ],
+        [ "pv", "number" ],
+        [ "fv", [ "or", "number", [ "null", 0 ] ] ],
+        [ "type", [ "or", [ "values", 0, 1 ], [ "null", 0 ] ] ],
+        [ "?", [ "assert", "$per >= 1 && $per <= $nper" ] ]
+    ]);
+
+    defineFunction("PPMT", PPMT).args([
+        [ "rate", "number" ],
+        [ "per", "number++" ],
+        [ "nper", "number++" ],
+        [ "pv", "number" ],
+        [ "fv", [ "or", "number", [ "null", 0 ] ] ],
+        [ "type", [ "or", [ "values", 0, 1 ], [ "null", 0 ] ] ],
+        [ "?", [ "assert", "$per >= 1 && $per <= $nper" ] ]
+    ]);
+
+    defineFunction("CUMPRINC", CUMPRINC).args([
+        [ "rate", "number++" ],
+        [ "nper", "number++" ],
+        [ "pv", "number++" ],
+        [ "start_period", "number++" ],
+        [ "end_period", "number++" ],
+        [ "type", [ "or", [ "values", 0, 1 ], [ "null", 0 ] ] ],
+        [ "?", [ "assert", "$end_period >= $start_period", "NUM" ] ]
+    ]);
+
+    defineFunction("CUMIPMT", CUMIPMT).args([
+        [ "rate", "number++" ],
+        [ "nper", "number++" ],
+        [ "pv", "number++" ],
+        [ "start_period", "number++" ],
+        [ "end_period", "number++" ],
+        [ "type", [ "or", [ "values", 0, 1 ], [ "null", 0 ] ] ],
+        [ "?", [ "assert", "$end_period >= $start_period", "NUM" ] ]
+    ]);
+
     /* -----[ utils ]----- */
 
     // function resultAsMatrix(f) {
@@ -351,7 +435,7 @@
     //     };
     // }
 
-    /* -----[ definitions ]----- */
+    /* -----[ definitions: statistical functions ]----- */
 
     var MAX_IT = 300,     // Maximum allowed number of iterations
         EPS = 2.2204e-16, // Relative accuracy; 1-3*(4/3-1) = 2.220446049250313e-16
@@ -1041,5 +1125,136 @@
 
       [2] https://en.wikibooks.org/wiki/Statistics/Numerical_Methods/Numerics_in_Excel
     */
+
+    /* -----[ financial functions ]----- */
+
+    //// FV (final or future value) ////
+
+    /* I initially invest £1000 in a saving scheme and then at the end of each month I invest an
+       extra £50. If the interest rate is 0.5% per month and I continue this process for two year,
+       how much will my saving be worth: =FV(0.005, 24, -50, -1000, 0)
+    */
+    function FV(rate, nper, pmt, pv, type) { // FV(rate,nper,pmt,[pv],[type])
+        var pvif = Math.pow(1+rate, nper);
+        var fvifa = rate ? (pvif - 1) / rate : nper;
+        return -(pv*pvif + pmt*fvifa*(1 + rate*type));
+    }
+
+    //// PV (present value of investment) ////
+
+    /* If I wish to accumulate £5000 in four years time by depositing £75 per month in a fixed
+       rate account with interest rate of 0.4% per month, what initial investment must I also
+       make: =PV(0.004, 4*12, -75, 5000, 0)
+    */
+    // XXX: consider type
+    function PV(rate, nper, pmt, fv/*, type*/) { // PV(rate, nper, pmt, [fv], [type])
+        var pvif = Math.pow(1+rate, nper);
+        return -(fv + pmt*(pvif - 1)/rate)/pvif;
+    }
+
+    //// PMT monthly payments (principal part PPMT + interest part IPMT) ////
+
+    /* How much will the monthly repayments be if I borrow £100,000 over 20 years with an
+       effective monthly interest rate is 0.5%: =PMT(0.005, 12*20, 100000, 0, 0)
+    */
+    // XXX: consider type
+    function PMT(rate, nper, pv, fv/*, type*/) { // PMT(rate, nper, pv, [fv], [type])
+        var pvif = Math.pow(1+rate, nper);
+        return -rate*(fv + pv*pvif)/(pvif - 1);
+    }
+
+    //// NPER (number of periods for an investment) ////
+
+    /* How long would it take me to pay off a loan of £10,000 at a rate of 0.5% per month if I
+       can afford to pay £100 per month: =NPER(0.5%, -100, 10000, 0, 0)
+    */
+    function NPER(rate, pmt, pv, fv, type) { // NPER(rate,pmt,pv,[fv],[type])
+        if (!rate) {
+            return -(fv + pv) / pmt; // pmt != zero
+        }
+        var pr = pmt*(1 + rate*type)/rate;
+        return Math.log((pr - fv)/(pr + pv)) / Math.log(1 + rate);
+    }
+
+    //// RATE (the interest rate per period of an annuity) ////
+    /* I borrow £1000 over 1 year making payments of £100 per month at the end of each
+       month. What is the monthly interest rate: =RATE(12, −100, 1000, 0, 0, 0)
+    */
+    function RATE (nper, pmt, pv, fv, type, guess) { // RATE(nper, pmt, pv, [fv], [type], [guess])
+        var MAX_ITERATIONS = 128;
+        var PRECISION = 1.0e-8;
+        var y, y0, y1, x0, x1 = 0, f = 0, i = 0;
+        var rate = guess;
+        if (Math.abs(rate) < PRECISION) {
+            y = pv * (1 + nper * rate) + pmt * (1 + rate * type) * nper + fv;
+        } else {
+            f = Math.exp(nper * Math.log(1 + rate));
+            y = pv * f + pmt * (1 / rate + type) * (f - 1) + fv;
+        }
+        y0 = pv + pmt * nper + fv;
+        y1 = pv * f + pmt * (1 / rate + type) * (f - 1) + fv;
+        i = x0 = 0.0; // find root by Newton secant method
+        x1 = rate;
+        while ((Math.abs(y0 - y1) > PRECISION) && (i < MAX_ITERATIONS)) {
+            rate = (y1 * x0 - y0 * x1) / (y1 - y0);
+            x0 = x1;
+            x1 = rate;
+            if (Math.abs(rate) < PRECISION) {
+                y = pv * (1 + nper * rate) + pmt * (1 + rate * type) * nper + fv;
+            } else {
+                f = Math.exp(nper * Math.log(1 + rate));
+                y = pv * f + pmt * (1 / rate + type) * (f - 1) + fv;
+            }
+            y0 = y1;
+            y1 = y;
+            i++;
+        }
+        return rate;
+    }
+
+    //// IPMT (interest part of a loan or investment) ////
+    function IPMT(rate, per, nper, pv, fv, type) { // IPMT(rate, per, nper, pv, [fv], [type])
+        var pmt = PMT(rate, nper, pv, fv, type);
+        var ow = Math.pow(1+rate, per-1);
+        var ipmt = -(pv*ow*rate + pmt*(ow-1));
+        return type ? ipmt/(1 + rate) : ipmt;
+    }
+
+    //// PPMT (principal part of a loan) ////
+    function PPMT(rate, per, nper, pv, fv, type) { // PPMT(rate, per, nper, pv, [fv], [type])
+        var pmt = PMT(rate, nper, pv, fv, type);
+        return pmt - IPMT(rate, per, nper, pv, fv, type);
+    }
+
+    //// CUMPRINC (cumulative principal paid) ////
+    /* The amount financed is $200,000 at an interest rate of 7.25% for 30 years. How much is the
+     * amount of principal and the amount of interest paid in the first year: CUMPRINC(0.0725/12,
+     * 12*30, 200000, 1, 12, 0) and CUMIPMT(0.0725/12, 12*30, 200000, 1, 12, 0).
+     */
+    function CUMPRINC(rate, nper, pv, start, end, type) { // CUMPRINC(rate, nper, pv, start_period, end_period, type)
+        if (type) {  // start >= 1 (as in Excel), but if pay at beginning of the period (type==1),
+            start--; // then periods must be counted from Zero (decreasing given start and end parameters)
+            end--;
+        }
+        var tn = Math.pow(1 + rate, nper),
+            ts = Math.pow(1 + rate, start-1),
+            te = Math.pow(1 + rate, end);
+
+        var monthlyPayment = rate * pv * tn / (tn - 1);
+        var remainingBalanceAtStart = ts * pv - ((ts - 1) / rate) * monthlyPayment;
+        var remainingBalanceAtEnd = te * pv - ((te - 1) / rate) * monthlyPayment;
+
+        return remainingBalanceAtEnd - remainingBalanceAtStart;
+    }
+
+    //// CUMIPMT (cumulative  interest paid) ////
+    // XXX: result differs from Excel =CUMIPMT(7.25%/12, 12*30, 200000, 1, 12, 1)
+    function CUMIPMT(rate, nper, pv, start, end, type) { // CUMIPMT(rate, nper, pv, start_period, end_period, type)
+        var cip = 0;
+        for(var i=start; i<=end; i++) {
+            cip += IPMT(rate, i, nper, pv, 0, type);
+        }
+        return cip;
+    }
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
