@@ -4907,7 +4907,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (!that.content.is(".k-grid-content, .k-virtual-scrollable-wrap")) {
-                    that.content = that.table.wrap('<div class="k-grid-content" />').parent();
+                    that.content = that.table.wrap('<div class="k-grid-content k-auto-scrollable" />').parent();
                 }
                 if (hasVirtualScroll) {
                     that.virtualScrollable = new VirtualScrollable(that.content, {
