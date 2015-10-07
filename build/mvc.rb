@@ -484,8 +484,8 @@ def patch_solution t
     #Remove the Kendo.Mvc.Tests project
     sln.sub!(/\s*Project.*?=\s*"Kendo\.Mvc\.Tests"((.|\r|\n)*?)EndProject/, '')
 
-    #Remove the Kendo.Mvc.Tests project
-    sln.sub!('..\\..\\dpl\\', '..\\')
+    #Update the location of the Telerik.Web.Spreadsheet project
+    sln.sub!('..\\..\\dpl\\', '..\\Telerik.Web.Spreadsheet\\')
 
     #Fix the path to Kendo.Mvc.Examples
     sln.sub!('src\\', '')
