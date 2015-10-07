@@ -561,6 +561,16 @@
 
         currentSelectionRange: function() {
             var selectionState = this._selectionState();
+            return selectionState.selection.rangeAt(selectionState.selectionRangeIndex).toRangeRef();
+        },
+
+        currentOriginalSelectionRange: function() {
+            var selectionState = this._selectionState();
+            return selectionState.originalSelection.rangeAt(selectionState.selectionRangeIndex).toRangeRef();
+        },
+
+        currentNavigationRange: function() {
+            var selectionState = this._selectionState();
 
             if (this.singleCellSelection()) {
                 return this._sheetRef;
@@ -569,34 +579,30 @@
             }
         },
 
-        currentOriginalSelectionRange: function() {
-            var selectionState = this._selectionState();
-            return selectionState.originalSelection.rangeAt(selectionState.selectionRangeIndex).toRangeRef();
-        },
-
-        nextSelectionRange: function() {
+        nextNavigationRange: function() {
             var selectionState = this._selectionState();
 
             if (!this.singleCellSelection()) {
                 selectionState.selectionRangeIndex = selectionState.selection.nextRangeIndex(selectionState.selectionRangeIndex);
             }
 
-            return this.currentSelectionRange();
+            return this.currentNavigationRange();
         },
 
-        selectionRangeIndex: function() {
-            return this._selectionState().selectionRangeIndex;
-        },
-
-        previousSelectionRange: function() {
+        previousNavigationRange: function() {
             var selectionState = this._selectionState();
 
             if (!this.singleCellSelection()) {
                 selectionState.selectionRangeIndex = selectionState.selection.previousRangeIndex(selectionState.selectionRangeIndex);
             }
 
-            return this.currentSelectionRange();
+            return this.currentNavigationRange();
         },
+
+        selectionRangeIndex: function() {
+            return this._selectionState().selectionRangeIndex;
+        },
+
 
         unionWithMerged: function(ref) {
             var mergedCells = this._mergedCells;

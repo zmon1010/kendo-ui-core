@@ -12,13 +12,13 @@
     function selectionEqual(ref) {
         ref = kendo.spreadsheet.calc.parseReference(ref);
         var selection = sheet.select();
-        ok(selection.eq(ref), "selection " + ref.print() + " expected, was " + selection.print());
+        ok(selection.eq(ref), "selection " + ref.toString() + " expected, was " + selection.toString());
     }
 
     function activeCellEqual(ref) {
         ref = kendo.spreadsheet.calc.parseReference(ref);
         var cell = sheet.activeCell();
-        ok(cell.eq(ref), "active cell " + ref.print() + " expected, was " + cell.print());
+        ok(cell.eq(ref), "active cell " + ref.toString() + " expected, was " + cell.toString());
     }
 
     module("entry navigation", {
@@ -442,6 +442,13 @@
         selectionEqual('A2:C3');
         navigator.modifySelection('expand-right');
         selectionEqual('A2:D3');
+    });
+
+    test("expands and beyond merged cells (right)", function() {
+        sheet.range('B2:C2').merge();
+        sheet.range('A3').select();
+        navigator.modifySelection('expand-right');
+        selectionEqual('A3:B3');
     });
 
     test("expands and shrinks over merged cells", function() {

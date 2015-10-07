@@ -146,7 +146,7 @@
             var columns = sheet._grid._columns;
 
             var originalSelection = sheet.currentOriginalSelectionRange();
-            var selection = sheet.currentSelectionRange();
+            var selection = sheet.select().toRangeRef();
             var activeCell = sheet.activeCell();
 
             var topLeft = originalSelection.topLeft.clone();
@@ -326,7 +326,7 @@
             var row = cell.row;
             var column = cell.col;
 
-            var selection = sheet.currentSelectionRange();
+            var selection = sheet.currentNavigationRange();
             var selTopLeft = selection.topLeft;
             var selBottomRight = selection.bottomRight;
 
@@ -341,7 +341,7 @@
                 switch (direction) {
                     case "next":
                         if (selBottomRight.eq(current)) {
-                            selection = sheet.nextSelectionRange();
+                            selection = sheet.nextNavigationRange();
                             row = selection.topLeft.row;
                             column = selection.topLeft.col;
                         } else {
@@ -354,7 +354,7 @@
                         break;
                     case "previous":
                         if (selTopLeft.eq(current)) {
-                            selection = sheet.previousSelectionRange();
+                            selection = sheet.previousNavigationRange();
                             row = selection.bottomRight.row;
                             column = selection.bottomRight.col;
                         } else {
@@ -367,7 +367,7 @@
                         break;
                     case "lower":
                         if (selBottomRight.eq(current)) {
-                            selection = sheet.nextSelectionRange();
+                            selection = sheet.nextNavigationRange();
                             row = selection.topLeft.row;
                             column = selection.topLeft.col;
                         } else {
@@ -380,7 +380,7 @@
                         break;
                     case "upper":
                         if (selTopLeft.eq(current)) {
-                            selection = sheet.previousSelectionRange();
+                            selection = sheet.previousNavigationRange();
                             row = selection.bottomRight.row;
                             column = selection.bottomRight.col;
                         } else {
