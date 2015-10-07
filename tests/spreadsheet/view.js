@@ -211,4 +211,10 @@
         equal(activeBottom.length, 1);
         equal(activeBottom.index(), 0);
     });
+
+    test("renders one filter header on merged cell", function() {
+        sheet.range("A1:B3").merge().filter(true);
+
+        equal(element.find(".k-spreadsheet-filter").length, 1);
+    });
 })();

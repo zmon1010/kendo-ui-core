@@ -432,11 +432,34 @@
             }
 
             if (this._filter) {
+                var refs = [];
+
+                // get refs of all columns
                 this._filter.ref.forEachColumn(function(columnRef) {
                     if (selectAll || columnRef.intersects(ref)) {
-                        callback(columnRef.topLeft);
+                        refs.push(columnRef.topLeft);
                     }
                 });
+
+                // filter out merged references
+                this._mergedCells.forEach(function(merged) {
+                    refs = refs.map(function(ref) {
+                        if (merged.intersects(ref)) {
+                            return merged;
+                        }
+
+                        return ref;
+                    });
+                });
+
+                // use only unique refs
+                refs.reduce(function unique(result, element) {
+                    if (result.indexOf(element) < 0) {
+                        result.push(element);
+                    }
+
+                    return result;
+                }, []).forEach(callback);
             }
         },
 
