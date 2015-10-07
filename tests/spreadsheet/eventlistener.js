@@ -91,9 +91,20 @@
             ok(true);
         });
 
-        element.triggerMouseDown();
-        element.triggerMouseMove();
-        element.triggerMouseUp();
+        element.triggerMouseDown({ pageX: 1, pageY: 1 });
+        element.triggerMouseMove({ pageX: 10, pageY: 10});
+        element.triggerMouseUp({ pageX: 10, pageY: 10 });
+    });
+
+
+    test("handles does not handle hit mouse drags", 0, function() {
+        listener.on("mousedrag", function() {
+            ok(false);
+        });
+
+        element.triggerMouseDown({ pageX: 1, pageY: 1 });
+        element.triggerMouseMove({ pageX: 1, pageY: 1 });
+        element.triggerMouseUp({ pageX: 1, pageY: 1 });
     });
 
     test("recognizes dblclick", 1, function() {

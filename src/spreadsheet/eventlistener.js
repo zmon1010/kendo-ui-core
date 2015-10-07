@@ -59,7 +59,8 @@
 
             this.keyDownProxy = this.keyDown.bind(this);
             this.mouseProxy = this.mouse.bind(this);
-            this._mousePressed = false;
+            this.threshold = 5;
+            this._pressLocation = null;
 
             target.on("keydown", this.keyDownProxy);
             target.on("contextmenu mousedown cut copy paste scroll wheel click dblclick focus", this.mouseProxy);
@@ -93,18 +94,24 @@
                 if (rightClick) {
                    type = "rightmousedown";
                 } else {
-                    this._mousePressed = true;
+                    this._pressLocation = { x: e.pageX, y: e.pageY };
                 }
             }
 
             if (type === "mouseup") {
                 if (!rightClick) {
-                    this._mousePressed = false;
+                    this._pressLocation = null;
                 }
             }
 
-            if (type === "mousemove" && this._mousePressed) {
-                type = "mousedrag";
+            if (type === "mousemove" && this._pressLocation) {
+                var dx = this._pressLocation.x - e.pageX;
+                var dy = this._pressLocation.y - e.pageY;
+                var distance = Math.sqrt(dx*dx + dy*dy);
+
+                if (distance > this.threshold) {
+                    type = "mousedrag";
+                }
             }
 
             this.handleEvent(e, type);
