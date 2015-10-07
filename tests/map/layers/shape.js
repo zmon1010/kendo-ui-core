@@ -195,6 +195,20 @@
         equal(layer._data.length, 2);
     });
 
+    test("sets the dataSource configuration", function() {
+        layer.setDataSource({
+            data: [{
+                "type": "LineString",
+                "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]
+            }, {
+                "type": "LineString",
+                "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]
+            }]
+        });
+
+        equal(layer._data.length, 2);
+    });
+
     // ------------------------------------------------------------
     module("Shape Layer / API", {
         setup: function() {

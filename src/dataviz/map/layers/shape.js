@@ -67,7 +67,7 @@
                 this.dataSource.unbind("change", this._dataChange);
             }
 
-            this.dataSource = dataSource;
+            this.dataSource = kendo.data.DataSource.create(dataSource);
             this.dataSource.bind("change", this._dataChange);
 
             if (this.options.autoBind) {

@@ -485,6 +485,17 @@
             equal(layer.items.length, 1);
         });
 
+        test("sets the dataSource configuration", function() {
+            layer.setDataSource({
+                data: [{
+                    latlng: [10, 10],
+                    text: "Foo"
+                }]
+            });
+
+            equal(layer.items.length, 1);
+        });
+
         test("binds location", function() {
             ok(new Location(10, 10).equals(marker.location()));
         });
