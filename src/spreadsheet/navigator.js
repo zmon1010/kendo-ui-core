@@ -157,7 +157,6 @@
             this.colEdge.boundary(selection.topLeft.row, selection.bottomRight.row);
             this.rowEdge.boundary(selection.topLeft.col, selection.bottomRight.col);
 
-            debugger;
             switch (direction) {
                 case "expand-left": // <| |
                     topLeft.col = this.colEdge.prevLeft(topLeft.col);
