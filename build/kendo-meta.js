@@ -392,7 +392,7 @@ function fileNamesToAMDDeps(files, min) {
 };
 
 function replaceInString(str, replacements) {
-    replacements = U2.mergeSort(replacements, function(a, b){
+    replacements.sort(function(a, b){
         return a.begin - b.begin;
     });
     for (var i = replacements.length; --i >= 0;) {
