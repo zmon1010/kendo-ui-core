@@ -700,4 +700,17 @@
         equal(view.element.find(".k-event").length, 1);
     });
 
+    tzTest("Brazil", "Hourly method honours DST", function() {
+        var view = setup({ date: new Date("2015/10/1") });
+
+        view.render([
+            new kendo.data.SchedulerEvent({ start: new Date("2015/10/19"), end: new Date("2015/10/19"), isAllDay: true, title: "event" })
+        ]);
+
+        var offset = view.element.find(".k-event").eq(0).offset();
+        var slot = view._slotByPosition(offset.left, offset.top);
+
+        equal($(slot.element).find(".k-nav-day").text(), 19);
+    });
+
 })();
