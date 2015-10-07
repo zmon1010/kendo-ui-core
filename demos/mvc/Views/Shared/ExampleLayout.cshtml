@@ -57,6 +57,10 @@
                 {
                     if (example.ShouldInclude(navProduct))
                     {
+                        if (!string.IsNullOrEmpty(example.Group))
+                        {
+                        <li><span class="group">@example.Group</span></li>
+                        }
                         <li>@Html.ExampleLink(example)</li>
                     }
                 }

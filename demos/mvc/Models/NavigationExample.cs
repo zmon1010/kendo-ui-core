@@ -12,5 +12,6 @@ namespace Kendo.Models
         public bool External { get; set; }
         public bool DisableInMobile { get; set; }
         public bool Mobile { get; set; }
+        public string Group { get; set; }
     }
 }
