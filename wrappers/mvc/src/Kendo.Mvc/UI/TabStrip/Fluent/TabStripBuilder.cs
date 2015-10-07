@@ -365,16 +365,15 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-    }
-}
+        /// <summary>
+        /// Sets the selected tab of the widget
+        /// </summary>
+        /// <param name="value">String value corresponding to DataTextField property</param>
+        public TabStripBuilder Value(string value)
+        {
+            Component.Value = value;
 
-namespace Kendo.Mvc.UI
-{
-    public enum TabStripTabPosition
-    {
-        Top,
-        Left,
-        Right,
-        Bottom
+            return this;
+        }
     }
 }

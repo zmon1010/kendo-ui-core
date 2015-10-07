@@ -32,6 +32,12 @@ namespace Kendo.Mvc.UI
             Scrollable = new TabStripScrollableSettings();
         }
 
+        public string Value 
+        { 
+            get; 
+            set; 
+        }
+
         public PopupAnimation Animation
         {
             get;
@@ -134,6 +140,11 @@ namespace Kendo.Mvc.UI
             if (TabPosition != TabStripTabPosition.Top)
             {
                 options["tabPosition"] = TabPosition.ToString().ToLower();
+            }
+
+            if (!string.IsNullOrEmpty(Value))
+            {
+                options["value"] = Value;
             }
 
             var scrollSettings = Scrollable.ToJson();
