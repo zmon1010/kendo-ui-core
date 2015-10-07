@@ -24,7 +24,7 @@
                 sheet = this.workbook.sheetByName(ref.sheet);
                 if (!sheet) {
                     return [{
-                        value: new kendo.spreadsheet.calc.runtime.CalcError("SHEET")
+                        value: new kendo.spreadsheet.calc.runtime.CalcError("REF")
                     }];
                 }
                 formula = sheet.formula(ref);
@@ -58,7 +58,7 @@
 
                 if (i < 0 || n < 0) {
                     return [{
-                        value: new kendo.spreadsheet.calc.runtime.CalcError("SHEET")
+                        value: new kendo.spreadsheet.calc.runtime.CalcError("REF")
                     }];
                 }
 
