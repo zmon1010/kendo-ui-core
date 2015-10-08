@@ -38,6 +38,11 @@ var __meta__ = { // jshint ignore:line
         name: "PDF export",
         description: "Export the scheduler events as PDF",
         depends: [ "pdf", "drawing" ]
+    }, {
+        id: "scheduler-timezones",
+        name: "Timezones",
+        description: "Allow selecting timezones different than Etc/UTC",
+        depends: [ "timezones" ]
     } ]
 };
 
