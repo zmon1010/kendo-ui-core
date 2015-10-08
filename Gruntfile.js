@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-debug-task');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-shell');
     grunt.loadTasks('build/grunt/tasks');
 
     // support different test sets for public|private repo
@@ -223,14 +223,6 @@ module.exports = function(grunt) {
                     src: "kendo.timezones.js" ,
                     dest: '<%= kendo.options.jsDestDir %>/'
                 }]
-            },
-            css_assets: {
-                files: [{
-                    expand: true,
-                    cwd: "styles",
-                    src: ["**/*.less", "**/*.woff", "**/*.ttf", "**/*.eot", "**/*.png", "**/*.gif", "**/*.css", "**/*.svg", "**/LICENSE", "**/LICENSE.txt" ],
-                    dest: '<%= kendo.options.stylesDestDir %>/'
-                }]
             }
         },
 
@@ -280,25 +272,12 @@ module.exports = function(grunt) {
             }
         },
 
-        less: {
+        shell: {
             options: {
-                destDir: "<%= kendo.options.destDir %>",
-                autoprefixer: {
-                    browsers: ([
-                        "Explorer >= 7",
-                        "Chrome >= 21",
-                        "Firefox ESR",
-                        "Opera >= 15",
-                        "Android >= 2.3",
-                        "Safari >= 6.2.6",
-                        "ExplorerMobile >= 10",
-                        "iOS >= 6",
-                        "BlackBerry >= 10"
-                    ]).join(",")
-                }
+                stderr: false
             },
-            compile: {
-                src: [ "styles/**/kendo*.less" ]
+            gulpStyles: {
+                command: 'node_modules/gulp/bin/gulp.js styles'
             }
         },
 
@@ -316,7 +295,7 @@ module.exports = function(grunt) {
     // Default task(s).
     grunt.registerTask('default', ['karma:unit']);
     grunt.registerTask('tests', [ 'styles', 'karma:unit' ]);
-    grunt.registerTask('styles', [ 'copy:css_assets', 'less' ]);
+    grunt.registerTask('styles', [ 'shell:gulpStyles' ]);
     grunt.registerTask('all', [ 'kendo', 'download_builder', 'copy:jquery', 'copy:angular', 'copy:jszip', 'copy:pako', 'copy:timezones' ]);
     grunt.registerTask('build', [ 'kendo', 'copy:jquery', 'copy:angular', 'copy:pako', 'styles', 'license' ]);
     grunt.registerTask('download_builder_tests', ['download_builder', 'karma:download_builder']);
