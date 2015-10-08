@@ -2055,7 +2055,7 @@ a.footer-links:hover,
     line-height: 13px;
     color: #2d3e50;
     display: block;
-    padding: 0.5em 0 0.5em 3.7em
+    padding: 0.5em 0 0.5em 3.7em;
     transition: all .2s ease;
 }
 #example-nav li .group {
@@ -2064,7 +2064,7 @@ a.footer-links:hover,
     line-height: 13px;
     color: #2d3e50;
     display: block;
-    padding: 1em 0 0.25em 3.7em;
+    padding: 1.5em 0 0.25em 3.7em;
     transition: all .2s ease;
 }
 
