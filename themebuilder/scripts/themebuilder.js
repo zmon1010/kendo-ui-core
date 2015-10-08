@@ -215,6 +215,7 @@
                 options = options || {};
                 this.constants = options.constants || {};
                 this.files = {};
+                this.less = options.less;
 
                 ObservableObject.fn.init.call(this);
             },
@@ -246,7 +247,7 @@
                         }
                     }
                 } else {
-                    this._updateStyleSheet(themeContent, targetDocument);
+                    this.updateStyleSheet(themeContent, targetDocument);
 
                     this.infer(targetDocument);
                 }
@@ -358,11 +359,10 @@
 
             _generateTheme: function(callback) {
                 var constants = this.serialize();
-                var less = this._resolveFiles(constants);
+                var lessCode = this._resolveFiles(constants);
 
-                (new window.less.Parser()).parse(
-                    less,
-                    function (err, tree) {
+                this.less.render(lessCode,
+                    function (err, output) {
                         var console = window.console;
 
                         if (err && console) {
@@ -370,7 +370,7 @@
                         }
 
                         try {
-                            callback(constants, tree.toCSS());
+                            callback(constants, output.css);
                         } catch(e) {
                             console.error(e.message);
                         }
@@ -378,7 +378,7 @@
                 );
             },
 
-            _updateStyleSheet: function(cssText, targetDocument) {
+            updateStyleSheet: function(cssText, targetDocument) {
                 this.clear(targetDocument);
 
                 var style = targetDocument.createElement("style");
@@ -397,7 +397,7 @@
                 var that = this;
 
                 this._generateTheme(function(_, cssText) {
-                    that._updateStyleSheet(cssText, targetDocument);
+                    that.updateStyleSheet(cssText, targetDocument);
                 });
             },
 

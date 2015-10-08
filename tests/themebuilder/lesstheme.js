@@ -19,12 +19,13 @@
 
     function createConstants(constants) {
         return new LessTheme({
+            less: window.less,
             constants: constants
         });
     }
 
     function updateCssAndInfer(constants, css, doc) {
-        constants._updateStyleSheet(css, doc);
+        constants.updateStyleSheet(css, doc);
         constants.infer(doc);
     }
 
@@ -127,7 +128,7 @@
             "@bar": constant(".k-widget", "border-color")
         });
 
-        constants._updateStyleSheet(
+        constants.updateStyleSheet(
             ".k-widget { background-color: #f11f11; border-color: #f00f00; }", doc
         );
 
@@ -142,7 +143,7 @@
             "@foo": constant(".k-widget", "border-radius")
         });
 
-        constants._updateStyleSheet(".k-widget { border-radius: 3px; }", doc);
+        constants.updateStyleSheet(".k-widget { border-radius: 3px; }", doc);
 
         constants.infer(doc);
 

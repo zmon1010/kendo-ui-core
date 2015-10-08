@@ -21,7 +21,7 @@
     });
 
     function updateStyleSheet(cssText, doc) {
-        LessTheme.prototype._updateStyleSheet(cssText, doc);
+        LessTheme.prototype.updateStyleSheet(cssText, doc);
     }
 
     sandboxed_test("updateStyleSheet() adds CSS to document", function(wnd, doc, $) {
@@ -46,6 +46,7 @@
 
     sandboxed_test("render() renders color picker for box-shadow-color properties", function(wnd, doc, $) {
         var constants = new LessTheme({
+                less: window.less,
                 constants: {
                     "@foo-color": constant(".k-widget", "box-shadow")
                 }
@@ -65,6 +66,7 @@
     sandboxed_test("value of box-shadow color picker gets processed as color", function(wnd, doc, $) {
 
         var constants = new LessTheme({
+                less: window.less,
                 constants: {
                     "@foo-color": constant(".k-widget", "box-shadow")
                 }
@@ -93,21 +95,21 @@
     });
 
     sandboxed_test("LessTheme are inferred on init", function(wnd, doc, $) {
-        var constants = new LessTheme(),
-            inferred = false;
+        var constants = new LessTheme({
+            less: window.less
+        });
 
-        constants.infer = function() {
-            inferred = true;
-        };
+        constants.infer = spy();
 
         var themebuilder = new ThemeBuilder({ webConstants: constants }, doc);
 
-        ok(inferred);
+        equal(constants.infer.calls, 1);
     });
 
     sandboxed_test("_propertyChange updates constant", function(wnd, doc, $) {
         var color = "#b4d455",
             constants = new LessTheme({
+                less: window.less,
                 constants: {
                     "@foo": constant(".k-widget", "background-color")
                 }
@@ -129,6 +131,7 @@
         var color = "#b4d455",
             themebuilder = new ThemeBuilder({
                 webConstants: new LessTheme({
+                    less: window.less,
                     constants: {
                         "@foo": constant(".k-widget", "background-color")
                     }
