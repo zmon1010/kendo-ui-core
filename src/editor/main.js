@@ -395,6 +395,7 @@
                     ".k-table td{min-width:1px;padding:.2em .3em;}" +
                     ".k-table,.k-table td{outline:0;border: 1px dotted #ccc;}" +
                     ".k-table p{margin:0;padding:0;}" +
+                    "k\\:script{display:none;}" +
                 "</style>" +
                 domainScript +
                 "<script>(function(d,c){d[c]('header'),d[c]('article'),d[c]('nav'),d[c]('section'),d[c]('footer');})(document, 'createElement');</script>" +

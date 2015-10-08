@@ -138,6 +138,11 @@ test('script tag not executed', function() {
     ok(undefined === window.answer);
 });
 
+test('script tag content is not visible', function () {
+    editor.value('<script id="script42">var answer=42;<\/script>');
+    ok(!$(editor.body).find("#script42").is(":visible"));
+});
+
 test('br moz dirty removed', function() {
     editor.value('<br _moz_dirty="">');
     equal(editor.value(), '');
