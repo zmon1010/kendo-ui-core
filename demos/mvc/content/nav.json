@@ -1644,6 +1644,42 @@
         ]
       },
       {
+        "text": "MVVM",
+        "url": "grid/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Grid"
+        },
+        "meta": {
+            "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI Grid"
+        },
+        "description": {
+           "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI grid to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel instance </strong>(with <strong>kendo.observable</strong> call) which wraps the grid data source, and instantiate the grid, its attributes and binding definition using<strong> data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the grid, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter of the documentation</a>. </p>"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "grid/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Grid"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support for Kendo UI Grid"
+        },
+        "description": {
+           "kendo-ui": "<p>The Kendo UI grid features inherent integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p>&nbsp;angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our grid for apps which could benefit from such integrations. Further, you can specify the grid options as a field in the $scope and then associate them via the options attribute of the grid Angular definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use the Kendo UI grid with AngularJS you can gather from <a href=\"http://docs.telerik.com/kendo-ui/AngularJS/the-grid-widget\" target=\"_blank\">this help resource</a>.</p>"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
         "text": "Binding to local data",
         "url": "grid/local-data-binding",
         "title": {
@@ -1696,59 +1732,6 @@
         ]
       },
       {
-          "text": "Export to Excel",
-          "url": "grid/excel-export",
-          "title": {
-              "kendo-ui": "Exporting to MS Excel"
-          },
-          "meta": {
-              "kendo-ui": "Export Kendo UI grid as Microsoft Excel file"
-          },
-          "group": "Exporting",
-          "description": {
-             "kendo-ui": "<p>When using grid, it is often useful and important to export your data to MS Excel in order to make it accessible offline, share it with your colleagues, etc. </p><p>The Kendo UI grid provides client Excel export functionality (server-agnostic) which can be directly utilized to serve the purpose to share data in the aforementioned ways. To enable it, include the corresponding command to the grid toolbar and configure the export settings accordingly. Alternatively, you can trigger Excel export by invoking the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsExcel\">saveAsExcel</a> method from the client API of the grid. <br /><br />Additionally, you have the option to customize the rows/columns and cells of the exported file by intercepting the excelExport event. More information on this topic can be found in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/excel-export\">following documentation article</a>.</p>",
-			 "aspnet-mvc": "<p>This example shows how to enable the Export to Excel functionality of the Telerik MVC Grid extension.<br /> You have to include the Excel toolbar command .ToolBar(tools =&gt; <strong>tools.Excel()</strong>) as well as to specify the <strong>FileName</strong> export setting. </p> <p>Alternatively, you could force the Excel export by invoking the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsExcel\" target=\"_blank\">saveAsExcel</a> method from the Client-side API of the component. <br /> <br /> Yet another useful option is the ability to customize the grid&rsquo;s rows/columns and cells of the exported file by intercepting the <strong>excelExport</strong> event. You can find more information in the <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/grid/excel-export\">following help article</a>.</p>"
-           },
-          "packages": [
-              "!offline"
-          ]
-      },
-      {
-          "text": "Export to PDF",
-          "url": "grid/pdf-export",
-          "title": {
-              "kendo-ui": "Exporting to PDF"
-          },
-          "meta": {
-              "kendo-ui": "Export Kendo UI grid as PDF file"
-          },
-          "description": {
-             "kendo-ui": "<p>When using grids, you may need to export your data to PDF in order to make it accessible on-the-go, share it with your boss or peers, etc. </p><p>The Kendo UI grid provides client Pdf export functionality (server-agnostic) which is powered by the underlying Drawing API engine of the Kendo UI framework. To enable it, include the corresponding command to the grid toolbar and configure the pdf export settings in par with your preferences. For instance, you can specify to export all pages, margins, paper size, font, etc. To initiate export programmatically, you can call the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsPDF\">saveAsPdf</a> method from the client API. <br /><br />Furthermore, you have the ability to customize the look and feel of the exported grid table by wiring the pdfExport event of the grid. More information on the Pdf export feature of the widget is available in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/print-export#exporting\">following help topic</a>.</p>",
-			 "aspnet-mvc": "<p>Nowadays, the PDF format is very popular and widely used to present documents in a manner independent of application software, hardware and operating systems. This demo demonstrates how to export the Telerik MVC Grid contents to PDF.</p> <p>The approach is very straight-forward - to export the grid content to PDF include the corresponding command to the grid toolbar&nbsp;.ToolBar(tools =&gt; <strong>tools.Pdf()</strong>) and configure the PDF export setting. For instance, you can specify the file name and whether to export all pages, margins, paper size, font, etc. To initiate export programmatically, you can call the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsPDF\">saveAsPdf</a> method from the client-side API. <br /> <br /> Additionally, you can customize the appearance of the exported grid table by attaching to the <strong>pdfExport</strong> event. Visit the <a href=\"http://demos.telerik.com/aspnet-ajax/editor/examples/overview/%5C%27http:/docs.telerik.com/kendo-ui/web/grid/print-export#exporting%5C%27\" target=\"_blank\">following help article</a> to learn exactly how to do that.</p>"
-           },
-          "packages": [
-              "!offline"
-          ]
-      },
-      {
-        "text": "Working Offline",
-        "url": "grid/offline",
-        "title": {
-            "kendo-ui": "Working Offline"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how the Kendo UI Grid can work with offline data"
-        },
-         "description": {
-             "kendo-ui": "<p>In various scenarios users would like to keep interacting with their web app, modify data and store changes even when there's no internet connection available. Further, they would want to sync their changes with the server once the connection is restored and they are back online.</p> <p>With the power of the Kendo UI DataSource, this offline data storage and sync capability comes as built-in functionality for people making use of its features. This demo illustrates how you can edit, create or delete records in the grid while being offline, persist these changes while disconnected and the sync them when you are online again. This is done by the DataSource component which is the mediator between the grid and the underlying data. </p> <p>&nbsp;Important configuration setting for the DataSource when working with offline data is its <strong>offlineStorage </strong>option (by default <strong>localStorage </strong>is used) and utilizing its <strong>online </strong>and <strong>offlineData </strong>methods. Custom offline storage is also supported.</p> <p>More information on the offline data support of the data source is available in <a href=\" http://docs.telerik.com/kendo-ui/framework/datasource/offline\" target=\"=_blank\">this help article.</a></p>"
-          },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
         "text": "Binding to SignalR",
         "url": "grid/signalr",
         "title": {
@@ -1761,7 +1744,7 @@
         },
          "description": {
              "kendo-ui": "<p>There are situations when you would like to perform real-time updates for all users which start a session with your web app. <br /> <br /> This is when you can utilize SignalR and the Kendo UI DataSource. The latter supports signalr dialect by setting its <strong>type </strong>attribute and<strong> transport-&gt;signalr </strong>configuration.&nbsp; In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time on every page refresh, also known under the term long polling.</p> <p>This is especially useful for web applications which require high-frequency updates, for instance chat apps, real-time gaming, etc. More on the SignalR support of the Kendo UI DataSource can be found <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.signalr\" target=\"_blank\">in this section of the docs.</a></p>",
-			 "aspnet-mvc": "<p>This demo shows how the Telerik ASP.NET MVC Grid can be bound to a <a href=\"http://signalr.net/\">SignalR</a> Hub for real-time push notifications. This is useful for web applications (chat, gaming and other aps) which require high-frequency updates where you usually want to perform grid updates in real-time on all connected clients.</p> <p>To configure the SignalR binding, set the <strong>SignalR</strong> and <strong>Transport</strong> settings in the Grid&rsquo;s DataSource configuration.&nbsp; In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time.</p> <p>You can find more information in this article: <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/grid/how-to/grid-bound-to-signalr\" target=\"_blank\">Binding Grid widget to <strong>SignalR</strong> Hub</a>.</p>"
+       "aspnet-mvc": "<p>This demo shows how the Telerik ASP.NET MVC Grid can be bound to a <a href=\"http://signalr.net/\">SignalR</a> Hub for real-time push notifications. This is useful for web applications (chat, gaming and other aps) which require high-frequency updates where you usually want to perform grid updates in real-time on all connected clients.</p> <p>To configure the SignalR binding, set the <strong>SignalR</strong> and <strong>Transport</strong> settings in the Grid&rsquo;s DataSource configuration.&nbsp; In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time.</p> <p>You can find more information in this article: <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/grid/how-to/grid-bound-to-signalr\" target=\"_blank\">Binding Grid widget to <strong>SignalR</strong> Hub</a>.</p>"
          },
         "packages": [
           "!jsp",
@@ -1780,6 +1763,24 @@
          "description": {
              "kendo-ui": "<p>There are situations when you would like to perform real-time updates for all users which start a session with your web app. <br /> <br /> This is when you can utilize WebSockets and the Kendo UI DataSource. The latter supports WebSockets by setting <strong>transport-&gt;push/read/update/destroy/create</strong> methods configuration for handling data requests in this way.&nbsp; In this way you tell the data source to use web sockets for transmitting and operating with data in real time on every page refresh, also known under the term long polling.</p> <p>This is especially useful for web applications which require high-frequency updates, for instance chat apps, real-time gaming, etc. More on the WebSockets support of the Kendo UI Data Source can be found <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.push\" target=\"_blank\">in this section of the docs.</a></p>"
          },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "Working Offline",
+        "url": "grid/offline",
+        "title": {
+            "kendo-ui": "Working Offline"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how the Kendo UI Grid can work with offline data"
+        },
+         "description": {
+             "kendo-ui": "<p>In various scenarios users would like to keep interacting with their web app, modify data and store changes even when there's no internet connection available. Further, they would want to sync their changes with the server once the connection is restored and they are back online.</p> <p>With the power of the Kendo UI DataSource, this offline data storage and sync capability comes as built-in functionality for people making use of its features. This demo illustrates how you can edit, create or delete records in the grid while being offline, persist these changes while disconnected and the sync them when you are online again. This is done by the DataSource component which is the mediator between the grid and the underlying data. </p> <p>&nbsp;Important configuration setting for the DataSource when working with offline data is its <strong>offlineStorage </strong>option (by default <strong>localStorage </strong>is used) and utilizing its <strong>online </strong>and <strong>offlineData </strong>methods. Custom offline storage is also supported.</p> <p>More information on the offline data support of the data source is available in <a href=\" http://docs.telerik.com/kendo-ui/framework/datasource/offline\" target=\"=_blank\">this help article.</a></p>"
+          },
         "packages": [
           "!mvc",
           "!jsp",
@@ -1827,6 +1828,55 @@
         "packages": [
           "mvc-offline"
         ]
+      },
+      {
+          "text": "Export to Excel",
+          "url": "grid/excel-export",
+          "title": {
+              "kendo-ui": "Exporting to MS Excel"
+          },
+          "meta": {
+              "kendo-ui": "Export Kendo UI grid as Microsoft Excel file"
+          },
+          "group": "Exporting",
+          "description": {
+             "kendo-ui": "<p>When using grid, it is often useful and important to export your data to MS Excel in order to make it accessible offline, share it with your colleagues, etc. </p><p>The Kendo UI grid provides client Excel export functionality (server-agnostic) which can be directly utilized to serve the purpose to share data in the aforementioned ways. To enable it, include the corresponding command to the grid toolbar and configure the export settings accordingly. Alternatively, you can trigger Excel export by invoking the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsExcel\">saveAsExcel</a> method from the client API of the grid. <br /><br />Additionally, you have the option to customize the rows/columns and cells of the exported file by intercepting the excelExport event. More information on this topic can be found in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/excel-export\">following documentation article</a>.</p>",
+			 "aspnet-mvc": "<p>This example shows how to enable the Export to Excel functionality of the Telerik MVC Grid extension.<br /> You have to include the Excel toolbar command .ToolBar(tools =&gt; <strong>tools.Excel()</strong>) as well as to specify the <strong>FileName</strong> export setting. </p> <p>Alternatively, you could force the Excel export by invoking the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsExcel\" target=\"_blank\">saveAsExcel</a> method from the Client-side API of the component. <br /> <br /> Yet another useful option is the ability to customize the grid&rsquo;s rows/columns and cells of the exported file by intercepting the <strong>excelExport</strong> event. You can find more information in the <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/grid/excel-export\">following help article</a>.</p>"
+           },
+          "packages": [
+              "!offline"
+          ]
+      },
+      {
+          "text": "Export to PDF",
+          "url": "grid/pdf-export",
+          "title": {
+              "kendo-ui": "Exporting to PDF"
+          },
+          "meta": {
+              "kendo-ui": "Export Kendo UI grid as PDF file"
+          },
+          "description": {
+             "kendo-ui": "<p>When using grids, you may need to export your data to PDF in order to make it accessible on-the-go, share it with your boss or peers, etc. </p><p>The Kendo UI grid provides client Pdf export functionality (server-agnostic) which is powered by the underlying Drawing API engine of the Kendo UI framework. To enable it, include the corresponding command to the grid toolbar and configure the pdf export settings in par with your preferences. For instance, you can specify to export all pages, margins, paper size, font, etc. To initiate export programmatically, you can call the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsPDF\">saveAsPdf</a> method from the client API. <br /><br />Furthermore, you have the ability to customize the look and feel of the exported grid table by wiring the pdfExport event of the grid. More information on the Pdf export feature of the widget is available in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/print-export#exporting\">following help topic</a>.</p>",
+			 "aspnet-mvc": "<p>Nowadays, the PDF format is very popular and widely used to present documents in a manner independent of application software, hardware and operating systems. This demo demonstrates how to export the Telerik MVC Grid contents to PDF.</p> <p>The approach is very straight-forward - to export the grid content to PDF include the corresponding command to the grid toolbar&nbsp;.ToolBar(tools =&gt; <strong>tools.Pdf()</strong>) and configure the PDF export setting. For instance, you can specify the file name and whether to export all pages, margins, paper size, font, etc. To initiate export programmatically, you can call the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid.html#methods-saveAsPDF\">saveAsPdf</a> method from the client-side API. <br /> <br /> Additionally, you can customize the appearance of the exported grid table by attaching to the <strong>pdfExport</strong> event. Visit the <a href=\"http://demos.telerik.com/aspnet-ajax/editor/examples/overview/%5C%27http:/docs.telerik.com/kendo-ui/web/grid/print-export#exporting%5C%27\" target=\"_blank\">following help article</a> to learn exactly how to do that.</p>"
+           },
+          "packages": [
+              "!offline"
+          ]
+      },
+      {
+        "text": "Copy to Excel",
+        "url": "grid/copy-to-excel",
+        "title": {
+            "kendo-ui": "Copy to Excel in Kendo UI Grid | Kendo UI Web Demo"
+        },
+        "meta": {
+            "kendo-ui": "In this example we will learn how to enable the allowCopy option of Kendo UI Grid component to allow copying data to Excel."
+        },
+         "description": {
+           "kendo-ui": "<p>Having used to the copy-paste functionality available in MS Excel, many users would want to copy grid cell content from web apps and paste in Excel, or some other place for further review, or just to duplicate it.</p> <p>With the Kendo UI grid this is built-in functionality which is supported by setting two properties: <strong>selectable-&gt;multi cell</strong> and <strong>allowCopy-&gt;true</strong>. As simple as that, your users will be able to utilize copy and paste between across their apps, using the browser clipboard for this purpose \"behind the scenes\". </p>",
+       "aspnet-mvc": "<p>Having used to the copy-paste functionality available in MS Excel, many users would want to copy grid cell content from web apps and paste in Excel, or some other place for further review, or just to duplicate it.</p> <p>With the Telerik Grid HTML helper this built-in functionality is supported by setting two configuration settings: <strong>Selectable</strong> -&gt; GridSelectionMode.Multiple and <strong>AllowCopy</strong>(true). As simple as that, your users will be able to utilize copy and paste between the browser and their apps.</p>"
+         }
       },
       {
         "text": "Batch editing",
@@ -1927,13 +1977,6 @@
          }
       },
       {
-        "text": "Paging",
-        "url": "grid/paging",
-        "packages": [
-          "mvc-offline"
-        ]
-      },
-      {
         "text": "Virtualization of local data",
         "url": "grid/virtualization-local-data",
         "title": {
@@ -1967,6 +2010,130 @@
         }
       },
       {
+        "text": "Frozen columns",
+        "url": "grid/frozen-columns",
+        "title": {
+            "kendo-ui": "Static columns of Kendo UI Grid control | Kendo UI Web demo",
+            "aspnet-mvc": "Frozen columns demo in Telerik ASP.NET MVC Grid "
+        },
+        "meta": {
+            "kendo-ui": "This demo shows locked columns feature of KendoGrid control.",
+            "aspnet-mvc": "Play with the demo for frozen columns functionality of Telerik ASP.NET MVC Grid."
+        },
+        "description": {
+          "kendo-ui": "<p>There are apps which require to display grids with large number of columns on limited screen estates, and making a small subset of them static when scrolling the rest horizontally to bring them in the viewable area. The concept of pinned columns is mostly known from MS Excel, and many users would like to utilize it in web context as well.</p> <p>The Kendo UI grid widget supports static/frozen columns by a single configuration setting. Simply set the <strong>locked</strong> attribute of the corresponding column to true, and this will bring the column in the locked columns group positioned on the left in the grid. Here locked columns are OrderID and ShipName, while the rest of the columns can be scrolled horizontally. </p>",
+      "aspnet-mvc": "<p>There are scenarios in which you might be required to display a large number of grid columns on limited screen space, and making a small subset of them static when scrolling the rest horizontally to bring them in the viewable area. The concept of frozen columns is well known from MS Excel, and many users would like to utilize it in a web environment too.</p> <p>The Telerik ASP.NET Grid widget for MVC supports static/frozen columns by a single configuration setting. Simply set the <strong>Locked</strong> boolean setting of the corresponding column to true, and this will bring the column in the locked columns group positioned on the left in the grid. Here the locked columns are Order ID and Ship Name, while the rest of the columns can be scrolled horizontally.</p>"
+        }
+      },
+    {
+        "text": "Filter row",
+        "url": "grid/filter-row",
+        "title": {
+            "kendo-ui": "Filter row in Kendo UI Grid | Kendo UI Web Demo"
+        },
+        "meta": {
+            "kendo-ui": "In this example we will learn how to enable the filter row of Kendo UI Grid component."
+        },
+        "group": "Filtering",
+         "description": {
+           "kendo-ui": "<p>With the Kendo UI grid you can enable filter row in its header by setting the grid's <strong>filterable-&gt;mode</strong> property to <strong>row</strong>. Thus based on the data type of the underlying columns data the grid will render textboxes for string values, numeric inputs or date pickers for filtering in the column headers, as illustrated in this example.</p> <p>Additionally, you can specify default filter operator to be applied when the user enters value in the filter textbox and presses Enter or Tab via the keyboard. This can be done using the <strong>filterable-&gt;cell-&gt;operator </strong>attribute of the corresponding column, as demonstrated for the ShipName and Freight columns here.</p> <p>More information on the filtering grid configuration can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-filterable\">this documentation section</a>.</p> <p>&nbsp;</p>",
+       "aspnet-mvc": "<p>You can see in this demo how you can enable filter row in the header by setting the grid's <strong>Filterable</strong>-&gt;<strong>Mode</strong> property to <strong>Row</strong>: .Filterable(ftb =&gt; ftb.Mode(GridFilterMode.Row))<br /> <br /> Therefore based on the data type of the underlying columns data<span>,</span> the grid will render textboxes for string values, numeric inputs or date pickers for filtering in the column headers.</p> <p>Additionally, you can specify a default filter operator to be applied when the user enters value in the filter textbox and tap Tab or Enter. This can be done using the <strong>Filterable</strong>-&gt;<strong>Cell</strong>-&gt;<strong>Operator</strong> attribute of the corresponding column, as shown for the Ship Name and Freight columns.</p>"
+         }
+      },
+      {
+        "text": "Filter Multi Checkboxes",
+        "url": "grid/filter-multi-checkboxes",
+        "title": {
+            "kendo-ui": "Filter multi-check in Kendo UI Grid | Kendo UI Web Demo"
+        },
+        "meta": {
+            "kendo-ui": "In this example we will learn how to enable the filter multi-check of Kendo UI Grid component."
+        },
+         "description": {
+           "kendo-ui": "<p>You can enable filtering via checkbox list in the Kendo UI grid filter menu by specifying <strong>filterable-&gt;multi=true</strong> setting for the relevant grid columns you would like to use such a filter for. </p> <p>Furthermore, you have the ability to combine this filter with itemTemplate definition as it is done with the Country column in the second grid in this demo. Thus you can customize the items with checkboxes that will be visualized and available for selection to the end user. </p> <p>More information on the filtering grid configuration can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-filterable\">this documentation section</a>.</p> <p>&nbsp;</p>",
+       "aspnet-mvc": "<p>You can enable checkbox list filtering in the filter menu of the Grid HtmlHelper by specifying<span> </span><strong>Columns</strong> -&gt; <strong>Filterable -&gt; Multi(true) </strong>setting for the relevant grid columns.</p> <p>In addition, you could customize the checkbox filter menu by combining the filter with <strong>ItemTemplate</strong> definition as it is done with the Country column in the bottom grid.</p>"
+         }
+      },
+      {
+        "text": "Filter menu customization",
+        "url": "grid/filter-menu-customization",
+        "title": {
+            "kendo-ui": "Filter menu customization in Kendo UI Grid | Kendo UI Web Demo",
+            "aspnet-mvc": "Filter menu customization in MVC Grid | UI for ASP.NET MVC Demo"
+        },
+        "meta": {
+            "kendo-ui": "In this example we will learn how to customize the filter menu of Kendo UI Grid component.",
+            "aspnet-mvc": "In this example you will learn how to customize the filter menu of Telerik ASP.NET MVC Grid component."
+        },
+         "description": {
+           "kendo-ui": "<p>In this sample we showcase how you can apply common settings for the Kendo UI grid filter menu configuration, and customize its UI on a per column basis. This is straight-forward and easy using the exposed API for the column menu.</p> <p>First we specify a single filter criterion using the <strong>filterable-&gt;extra=false</strong> setting, and limit the filter operators for string columns to <strong>starts with, equal and not equal </strong>only. Then we define built-in date picker UI to filter the datetime column in the grid, and instantiate Kendo UI AutoComplete and DropDownList for the Title and City columns, respectively. <br /> <br /> To create the dropdown filters, we assign javascript functions to the <strong>filterable-&gt;ui </strong>attributes of the corresponding columns.</p>",
+       "aspnet-mvc": "<p>You can see in this demo how to apply common settings for the MVC grid filter menu configuration, and customize its user interface. <br /> <br /> To begin we should specify a single filter criterion using the Filterable-&gt;Extra(false) setting, and limit the filter operators for string columns to &ldquo;Starts with&rdquo;, &ldquo;Is equal to&rdquo; and &ldquo;Is not equal to&rdquo;. After that we define built-in DatePicker to filter the Birth Date column, and instantiate Kendo UI AutoComplete and DropDownList for the Title and City columns, respectively.</p> <p>To create the dropdown filters, we assign JavaScript functions to the Filterable-&gt;UI attributes of the corresponding columns.</p>"
+         }
+      },
+      {
+        "text": "Sorting",
+        "url": "grid/sorting",
+        "title": {
+            "kendo-ui": "Demo for the sorting functionality of Kendo UI Grid control",
+            "aspnet-mvc": "Sorting in Telerik ASP.NET MVC Grid"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates how to sort the data in KendoGrid. Use the demo source code to look into the logic of the grid sorting and implement it easily in your app.",
+            "aspnet-mvc": "This demo shows how to sort data in Telerik ASP.NET MVC Grid. Use the demo source code to look into the logic of grid sorting and easily implement it in your app."
+        },
+        "group": "Functionality",
+         "description": {
+           "kendo-ui": "<p>This example demonstrates how to enable sorting for the Kendo UI grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>sortable </strong>grid attribute. Supported sorting modes are single and multiple.</p> <p>Check the relevant <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-sortable\" target=\"_blank\">sorting API section</a> for more details.</p>",
+       "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p>"
+         }
+      },
+      {
+        "text": "Selection",
+        "url": "grid/selection",
+        "title": {
+            "kendo-ui": "Example of selection modes for KendoGrid component",
+            "aspnet-mvc": "Multiple row and cell selection in Telerik Grid for ASP.NET MVC"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates different selection modes, supported by KendoGrid. Review the available selection options and apply the functionality to KendoGrid in your app.",
+            "aspnet-mvc": "This demo illustrates how you can use Telerik ASP.NET MVC grid with multiple row or cell selection enabled."
+        },
+         "description": {
+           "kendo-ui": "<p>There are situations when you would like to enable the end user to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The Kendo UI grid supports selection by specifying its configuration via its selectable attribute. Accepted values are:</p> <ul> <li>true (enables row selection)</li> <li>row</li> <li>cell</li> <li>multiple, row</li> <li>multiple, cell</li> </ul> <p>Further details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-selectable\" target=\"_blank\">selectable API section</a> of the docs.</p>",
+       "aspnet-mvc": "<p>There are situations when you&rsquo;d like to enable your users to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The MVC Grid supports selection by specifying its configuration through its <strong>Selectable</strong> -&gt; <strong>Mode</strong> and <strong>Type</strong> attributes. <br /> <br /> The accepted values for Mode are <strong>Single</strong><strong> </strong>and<strong> Multiple</strong>, while these for Type are <strong>Cell</strong> and <strong>Row</strong>.</p> <p>More details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridSelectionSettingsBuilder#methods-Mode%28Kendo.Mvc.UI.GridSelectionMode%29\">documentation</a>.</p>"
+         }
+      },
+      {
+        "text": "Aggregates",
+        "url": "grid/aggregates",
+        "title": {
+            "kendo-ui": "Aggregating option demo for KendoGrid jQuery control",
+            "aspnet-mvc": "Aggregating option demo for Telerik ASP.NET MVC Grid"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates the aggregate option for KendoGrid. Use demo source code to enable the grid to calculate aggregated values.",
+            "aspnet-mvc": "This example demonstrates the aggregate option for Telerik ASP.NET MVC Grid. Use demo source code to enable the grid to calculate aggregated values."
+        },
+         "description": {
+            "kendo-ui": "<p>Oftentimes when displaying numbers in the grid, users would like to be able to see the results from aggregate calculations at the bottom of the grid groups or columns. </p><p>This is a no-brainer with the Kendo UI grid since it has support for the mostly used aggregate functions. All you need to do is specify the pertinent aggregate function name via the<strong> columns-&gt;aggregates </strong>attributes of the grid, and the <strong>group </strong>and <strong>aggregate </strong>fields of its data source instance. Review the code snippets in the demo for further details.</p>",
+      "aspnet-mvc": "<p>In some situations when displaying numbers in the grid, users would like to be able to see the results from aggregate calculations at the bottom of the grid groups or columns.</p> <p>This is a easy with the MVC grid since it offers built-in support for the most popular aggregate functions: <strong>Average</strong>, <strong>Count</strong>, <strong>Sum</strong>, <strong>Min</strong>, <strong>Max</strong> and <strong>Count</strong>. All you need to do is define the aggregates via the Columns-&gt; ClientFooterTemplate and ClientGroupFooterTemplate templates, and the Group and Aggregate fields of its DataSource instance.</p>"
+         }
+      },
+      {
+        "text": "Server aggregates",
+        "url": "grid/serveraggregates",
+        "packages": [
+          "mvc-offline"
+        ]
+      },
+      {
+        "text": "Paging",
+        "url": "grid/paging",
+        "packages": [
+          "mvc-offline"
+        ]
+      },
+      {
         "text": "Hierarchy",
         "url": "grid/hierarchy",
         "title": {
@@ -1977,10 +2144,9 @@
             "kendo-ui": "This demo illustrates the hierarchical data grid feature of Kendo UI Grid widget. Try the demo source code to play with the grid in your web app.",
             "aspnet-mvc": "This demo illustrates the hierarchical data grid feature of the Telerik ASP.NET MVC Grid component. Try the demo source code to play with the grid in your web app."
         },
-        "group": "Functionality",
          "description": {
           "kendo-ui": "<p>There are projects which require to display table data in hierarchical-like fashion, in order to visualize relations between parent and child records. <br /> <br /> This is where the Kendo UI grid hierarchy feature comes into play. To implement hierarchy with the grid widget, you need to wire its <strong>detailInit </strong>event and filter the records in the child table based on the parent key field value. Note that the <strong>e.data.[keyFieldValue]</strong> argument holds the actual key value from the parent record.</p> <p>Additional info about the detailInit event args is available in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#events-detailInit\">API docs</a>. </p>",
-		  "aspnet-mvc": "<p>There are projects which require to display table data in hierarchical-like fashion, in order to visualize relations between parent and child records. <br /> <br /> This is where the Telerik MVC grid hierarchy feature comes in handy. To implement hierarchy with the grid widget, you need to:</p> <ul> <li>Set the <strong>ClientDetailTemplateId</strong> setting which specifies the id of the script element containing the client-side detail template of the grid</li> <li>Define the script tag content that will be shown when the user expands the grid rows</li> </ul>"
+      "aspnet-mvc": "<p>There are projects which require to display table data in hierarchical-like fashion, in order to visualize relations between parent and child records. <br /> <br /> This is where the Telerik MVC grid hierarchy feature comes in handy. To implement hierarchy with the grid widget, you need to:</p> <ul> <li>Set the <strong>ClientDetailTemplateId</strong> setting which specifies the id of the script element containing the client-side detail template of the grid</li> <li>Define the script tag content that will be shown when the user expands the grid rows</li> </ul>"
         }
       },
       {
@@ -1991,28 +2157,18 @@
         ]
       },
       {
-        "text": "Detail template",
-        "url": "grid/detailtemplate",
+        "text": "Persist state",
+        "url": "grid/persist-state",
         "title": {
-            "kendo-ui": "Detail template demo in Kendo UI Grid control",
-            "aspnet-mvc": "Detail Template for Telerik ASP.NET MVC Grid"
+            "kendo-ui": "KendoGrid Persist State API Demo"
         },
         "meta": {
-            "kendo-ui": "This example shows how records in the data grid widget can be presented with a detailed template.",
-            "aspnet-mvc": "This example shows how records in the Telerik ASP.NET MVC Grid component can be presented with a detailed template."
+            "kendo-ui": "This demo shows how setOptions and getOptions methods can manipulate the state of Kendo UI Grid widget."
         },
-        "group": "Templates",
-        "description": {
-          "kendo-ui": "<p>This example demonstrates how you can utilize the detail template feature of the Kendo UI grid when implementing hierarchical table presentation. The key steps here are to:</p> <ul> <li> specify <strong>detailTemplate</strong> definition for the grid</li> <li>intercept its <strong>detailInit </strong>event in order to populate the details for the expanded item </li> </ul> <p>In the scenario presented above we inject a tabstrip widget with two tabs in the detail template - the first holding the orders of the pertinent employee, and the second containing the contact information of that employee. The orders are populated inside the detailInit event handler applying filter by EmployeeID of the expanded grid row.</p>",
-		  "aspnet-mvc": "<p>This example demonstrates how you can utilize the detail template feature of the MVC grid component when implementing hierarchical table presentation. The key steps here are to:</p> <ul> <li>Set the <strong>ClientDetailTemplateId</strong> setting which specifies the id of the script element containing the client-side detail template of the grid</li> <li>Define the script tag content that will be shown when the user expands the grid rows</li> </ul> <p>In this example we inject a TabStrip HtmlHelper extension with two tabs in the detail template - the first contains the orders of the relevant employee, and the second one holds his/her contact information.</p>"
-        }
-      },
-      {
-        "text": "Server detail template",
-        "url": "grid/serverdetails",
-        "packages": [
-          "mvc-offline"
-        ]
+         "description": {
+           "kendo-ui": "<p>A common requirement for web apps is to save the user customization and settings when interacting with your app, and then restore them once he/she logs back at some point in the future. </p> <p>The Kendo UI grid exposes the capability to save and restore settings that were previously applied to its structure using the <strong>getOptions </strong>and <strong>setOptions </strong>methods from its API. These methods allow you to serialize the grid current state, when needed, and then recover it at certain point in time. In this particular example we use localStorage key/value pair to save and load grid settings. </p> <p>Further info on the setOptions and getOptions methods is available in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#methods-setOptions\">this API section</a>. </p>",
+       "aspnet-mvc": "<p>A common scenario is to save the user customization and settings when interacting with your app, and then restore them once he/she logs back at some point in the future.</p> <p>The Telerik MVC component provided the ability to save and restore changes that were previously applied to its structure, using its <strong>getOptions</strong> and <strong>setOptions</strong> client-side methods. You can use these methods to store settings like grouping, paging, sorting, filtering<span> </span>and when needed to restore them. To demonstrate this functionality, we use <strong>localStorage</strong> key/value pair to save and load the grid state.</p> <p>More detail on the setOptions and getOptions methods is available in <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#methods-setOptions\">this API section</a>.</p>"
+         }
       },
       {
         "text": "Toolbar template",
@@ -2038,151 +2194,51 @@
         ]
       },
       {
-        "text": "Custom command",
-        "url": "grid/custom-command",
+        "text": "Row template",
+        "url": "grid/rowtemplate",
         "title": {
-            "kendo-ui": "Custom commands demo for Kendo UI Grid widget",
-            "aspnet-mvc": "Custom command demo in Telerik ASP.NET MVC Grid"
+            "kendo-ui": "Changing row template in Kendo UI Grid widget",
+            "aspnet-mvc": "Row Template for Telerik ASP.NET MVC Grid"
         },
         "meta": {
-            "kendo-ui": "This demo demonstrates the functionality to apply custom commands to KendoGrid. Look at the source code to find how to set the text attribute and command name for the grid component.",
-            "aspnet-mvc": "This example illustrates the custom command of Telerik ASP.NET MVC Grid extension."
+            "kendo-ui": "This sample shows how to change the style and concert of row cells with KendoGrid Row templates.",
+            "aspnet-mvc": "This sample shows how to change the style and concert of row cells with Telrik ASP.NET MVC Grid Row templates."
         },
-        "group": "Columns",
-         "description": {
-           "kendo-ui": "<p>This sample represents how you can implement custom command handling for records in the Kendo UI grid.&nbsp; <br /> <br /> For this purpose you need to include a command column in the grid which will render a button in the column cells that triggers the command. Through the column definition you can specify the text for the button and wire its click event to a JavaScript function, which receives the corresponding grid data item as an argument. Then in this function definition you can handle the command.</p> <p>In this demo we use Window widget instance to display details about the chosen row (Person) in the grid.</p> More information about handling custom commands can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.command\">this section</a> of the docs.",
-		   "aspnet-mvc": "<p>The demonstrated solution in this example shows how to implement a custom command handling for records in the MVC Grid extension. </p> <p>To do it you need to include a command column in the grid which will render a button in the column cells that triggers the command. Through the column definition you can specify the text for the button and wire its click event to a JavaScript function (Command -&gt; Custom -&gt; Click), which receives the corresponding grid data item as an argument. Then in this function definition you can handle the command.</p> <p>In this demo we use Window widget instance to display details about the chosen row in the grid.</p>"
-         }
+        "description": {
+          "kendo-ui": "<p>The Kendo UI grid allows flexible customization of its rows in terms of layout and appearance by exposing row template feature for this purpose.</p> <p>In this example we present how you can specify your own custom layout for the rows in the grid using images and property bindings from its underlying data source. The templates are defined via script tags with ids associated with rendered html table row elements in the grid.<br /> <br /> Note that the row and altrow templates are instantiated by calling the <strong>kendo.template </strong>method and assigning the returned value to the <strong>rowTemplate </strong>and <strong>altRowTemplate </strong>attributes of the grid instance. </p>",
+      "aspnet-mvc": "<p>The Telerik MVC grid allows flexible customization of its rows in terms of layout and appearance by exposing row template feature for this purpose.</p> <p>In this example we present how you can specify your own custom layout for the rows in the grid using images and property bindings from its underlying data source. <br /> <br /> To do that you need to define a template column as shown below:</p> <p>columns.Template(e =&gt; { }).ClientTemplate(\" \"). Title(\"Picture\");</p> <p>and after that using the <strong>ClientRowTemplate</strong> and <strong>ClientAltRowTemplate</strong> settings to set the custom client-side row and alt-row templates. Note that both templates should contain table row HTML elements.</p>"
+        }
       },
       {
-        "text": "Aggregates",
-        "url": "grid/aggregates",
+        "text": "Detail template",
+        "url": "grid/detailtemplate",
         "title": {
-            "kendo-ui": "Aggregating option demo for KendoGrid jQuery control",
-            "aspnet-mvc": "Aggregating option demo for Telerik ASP.NET MVC Grid"
+            "kendo-ui": "Detail template demo in Kendo UI Grid control",
+            "aspnet-mvc": "Detail Template for Telerik ASP.NET MVC Grid"
         },
         "meta": {
-            "kendo-ui": "This example demonstrates the aggregate option for KendoGrid. Use demo source code to enable the grid to calculate aggregated values.",
-            "aspnet-mvc": "This example demonstrates the aggregate option for Telerik ASP.NET MVC Grid. Use demo source code to enable the grid to calculate aggregated values."
+            "kendo-ui": "This example shows how records in the data grid widget can be presented with a detailed template.",
+            "aspnet-mvc": "This example shows how records in the Telerik ASP.NET MVC Grid component can be presented with a detailed template."
         },
-         "description": {
-            "kendo-ui": "<p>Oftentimes when displaying numbers in the grid, users would like to be able to see the results from aggregate calculations at the bottom of the grid groups or columns. </p><p>This is a no-brainer with the Kendo UI grid since it has support for the mostly used aggregate functions. All you need to do is specify the pertinent aggregate function name via the<strong> columns-&gt;aggregates </strong>attributes of the grid, and the <strong>group </strong>and <strong>aggregate </strong>fields of its data source instance. Review the code snippets in the demo for further details.</p>",
-			"aspnet-mvc": "<p>In some situations when displaying numbers in the grid, users would like to be able to see the results from aggregate calculations at the bottom of the grid groups or columns.</p> <p>This is a easy with the MVC grid since it offers built-in support for the most popular aggregate functions: <strong>Average</strong>, <strong>Count</strong>, <strong>Sum</strong>, <strong>Min</strong>, <strong>Max</strong> and <strong>Count</strong>. All you need to do is define the aggregates via the Columns-&gt; ClientFooterTemplate and ClientGroupFooterTemplate templates, and the Group and Aggregate fields of its DataSource instance.</p>"
-         }
+        "group": "Templates",
+        "description": {
+          "kendo-ui": "<p>This example demonstrates how you can utilize the detail template feature of the Kendo UI grid when implementing hierarchical table presentation. The key steps here are to:</p> <ul> <li> specify <strong>detailTemplate</strong> definition for the grid</li> <li>intercept its <strong>detailInit </strong>event in order to populate the details for the expanded item </li> </ul> <p>In the scenario presented above we inject a tabstrip widget with two tabs in the detail template - the first holding the orders of the pertinent employee, and the second containing the contact information of that employee. The orders are populated inside the detailInit event handler applying filter by EmployeeID of the expanded grid row.</p>",
+      "aspnet-mvc": "<p>This example demonstrates how you can utilize the detail template feature of the MVC grid component when implementing hierarchical table presentation. The key steps here are to:</p> <ul> <li>Set the <strong>ClientDetailTemplateId</strong> setting which specifies the id of the script element containing the client-side detail template of the grid</li> <li>Define the script tag content that will be shown when the user expands the grid rows</li> </ul> <p>In this example we inject a TabStrip HtmlHelper extension with two tabs in the detail template - the first contains the orders of the relevant employee, and the second one holds his/her contact information.</p>"
+        }
       },
       {
-        "text": "Filter menu customization",
-        "url": "grid/filter-menu-customization",
-        "title": {
-            "kendo-ui": "Filter menu customization in Kendo UI Grid | Kendo UI Web Demo",
-            "aspnet-mvc": "Filter menu customization in MVC Grid | UI for ASP.NET MVC Demo"
-        },
-        "meta": {
-            "kendo-ui": "In this example we will learn how to customize the filter menu of Kendo UI Grid component.",
-            "aspnet-mvc": "In this example you will learn how to customize the filter menu of Telerik ASP.NET MVC Grid component."
-        },
-         "description": {
-           "kendo-ui": "<p>In this sample we showcase how you can apply common settings for the Kendo UI grid filter menu configuration, and customize its UI on a per column basis. This is straight-forward and easy using the exposed API for the column menu.</p> <p>First we specify a single filter criterion using the <strong>filterable-&gt;extra=false</strong> setting, and limit the filter operators for string columns to <strong>starts with, equal and not equal </strong>only. Then we define built-in date picker UI to filter the datetime column in the grid, and instantiate Kendo UI AutoComplete and DropDownList for the Title and City columns, respectively. <br /> <br /> To create the dropdown filters, we assign javascript functions to the <strong>filterable-&gt;ui </strong>attributes of the corresponding columns.</p>",
-		   "aspnet-mvc": "<p>You can see in this demo how to apply common settings for the MVC grid filter menu configuration, and customize its user interface. <br /> <br /> To begin we should specify a single filter criterion using the Filterable-&gt;Extra(false) setting, and limit the filter operators for string columns to &ldquo;Starts with&rdquo;, &ldquo;Is equal to&rdquo; and &ldquo;Is not equal to&rdquo;. After that we define built-in DatePicker to filter the Birth Date column, and instantiate Kendo UI AutoComplete and DropDownList for the Title and City columns, respectively.</p> <p>To create the dropdown filters, we assign JavaScript functions to the Filterable-&gt;UI attributes of the corresponding columns.</p>"
-         }
-      },
-    {
-        "text": "Filter row",
-        "url": "grid/filter-row",
-        "title": {
-            "kendo-ui": "Filter row in Kendo UI Grid | Kendo UI Web Demo"
-        },
-        "meta": {
-            "kendo-ui": "In this example we will learn how to enable the filter row of Kendo UI Grid component."
-        },
-         "description": {
-           "kendo-ui": "<p>With the Kendo UI grid you can enable filter row in its header by setting the grid's <strong>filterable-&gt;mode</strong> property to <strong>row</strong>. Thus based on the data type of the underlying columns data the grid will render textboxes for string values, numeric inputs or date pickers for filtering in the column headers, as illustrated in this example.</p> <p>Additionally, you can specify default filter operator to be applied when the user enters value in the filter textbox and presses Enter or Tab via the keyboard. This can be done using the <strong>filterable-&gt;cell-&gt;operator </strong>attribute of the corresponding column, as demonstrated for the ShipName and Freight columns here.</p> <p>More information on the filtering grid configuration can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-filterable\">this documentation section</a>.</p> <p>&nbsp;</p>",
-		   "aspnet-mvc": "<p>You can see in this demo how you can enable filter row in the header by setting the grid's <strong>Filterable</strong>-&gt;<strong>Mode</strong> property to <strong>Row</strong>: .Filterable(ftb =&gt; ftb.Mode(GridFilterMode.Row))<br /> <br /> Therefore based on the data type of the underlying columns data<span>,</span> the grid will render textboxes for string values, numeric inputs or date pickers for filtering in the column headers.</p> <p>Additionally, you can specify a default filter operator to be applied when the user enters value in the filter textbox and tap Tab or Enter. This can be done using the <strong>Filterable</strong>-&gt;<strong>Cell</strong>-&gt;<strong>Operator</strong> attribute of the corresponding column, as shown for the Ship Name and Freight columns.</p>"
-         }
-      },
-      {
-        "text": "Filter Multi Checkboxes",
-        "url": "grid/filter-multi-checkboxes",
-        "title": {
-            "kendo-ui": "Filter multi-check in Kendo UI Grid | Kendo UI Web Demo"
-        },
-        "meta": {
-            "kendo-ui": "In this example we will learn how to enable the filter multi-check of Kendo UI Grid component."
-        },
-         "description": {
-           "kendo-ui": "<p>You can enable filtering via checkbox list in the Kendo UI grid filter menu by specifying <strong>filterable-&gt;multi=true</strong> setting for the relevant grid columns you would like to use such a filter for. </p> <p>Furthermore, you have the ability to combine this filter with itemTemplate definition as it is done with the Country column in the second grid in this demo. Thus you can customize the items with checkboxes that will be visualized and available for selection to the end user. </p> <p>More information on the filtering grid configuration can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-filterable\">this documentation section</a>.</p> <p>&nbsp;</p>",
-		   "aspnet-mvc": "<p>You can enable checkbox list filtering in the filter menu of the Grid HtmlHelper by specifying<span> </span><strong>Columns</strong> -&gt; <strong>Filterable -&gt; Multi(true) </strong>setting for the relevant grid columns.</p> <p>In addition, you could customize the checkbox filter menu by combining the filter with <strong>ItemTemplate</strong> definition as it is done with the Country column in the bottom grid.</p>"
-         }
-      },
-      {
-        "text": "Copy to Excel",
-        "url": "grid/copy-to-excel",
-        "title": {
-            "kendo-ui": "Copy to Excel in Kendo UI Grid | Kendo UI Web Demo"
-        },
-        "meta": {
-            "kendo-ui": "In this example we will learn how to enable the allowCopy option of Kendo UI Grid component to allow copying data to Excel."
-        },
-         "description": {
-           "kendo-ui": "<p>Having used to the copy-paste functionality available in MS Excel, many users would want to copy grid cell content from web apps and paste in Excel, or some other place for further review, or just to duplicate it.</p> <p>With the Kendo UI grid this is built-in functionality which is supported by setting two properties: <strong>selectable-&gt;multi cell</strong> and <strong>allowCopy-&gt;true</strong>. As simple as that, your users will be able to utilize copy and paste between across their apps, using the browser clipboard for this purpose \"behind the scenes\". </p>",
-		   "aspnet-mvc": "<p>Having used to the copy-paste functionality available in MS Excel, many users would want to copy grid cell content from web apps and paste in Excel, or some other place for further review, or just to duplicate it.</p> <p>With the Telerik Grid HTML helper this built-in functionality is supported by setting two configuration settings: <strong>Selectable</strong> -&gt; GridSelectionMode.Multiple and <strong>AllowCopy</strong>(true). As simple as that, your users will be able to utilize copy and paste between the browser and their apps.</p>"
-         }
-      },
-      {
-        "text": "Server aggregates",
-        "url": "grid/serveraggregates",
+        "text": "Server detail template",
+        "url": "grid/serverdetails",
         "packages": [
           "mvc-offline"
         ]
       },
       {
-        "text": "Sorting",
-        "url": "grid/sorting",
-        "title": {
-            "kendo-ui": "Demo for the sorting functionality of Kendo UI Grid control",
-            "aspnet-mvc": "Sorting in Telerik ASP.NET MVC Grid"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how to sort the data in KendoGrid. Use the demo source code to look into the logic of the grid sorting and implement it easily in your app.",
-            "aspnet-mvc": "This demo shows how to sort data in Telerik ASP.NET MVC Grid. Use the demo source code to look into the logic of grid sorting and easily implement it in your app."
-        },
-         "description": {
-           "kendo-ui": "<p>This example demonstrates how to enable sorting for the Kendo UI grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>sortable </strong>grid attribute. Supported sorting modes are single and multiple.</p> <p>Check the relevant <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-sortable\" target=\"_blank\">sorting API section</a> for more details.</p>",
-		   "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p>"
-         }
-      },
-      {
-        "text": "Selection",
-        "url": "grid/selection",
-        "title": {
-            "kendo-ui": "Example of selection modes for KendoGrid component",
-            "aspnet-mvc": "Multiple row and cell selection in Telerik Grid for ASP.NET MVC"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates different selection modes, supported by KendoGrid. Review the available selection options and apply the functionality to KendoGrid in your app.",
-            "aspnet-mvc": "This demo illustrates how you can use Telerik ASP.NET MVC grid with multiple row or cell selection enabled."
-        },
-         "description": {
-           "kendo-ui": "<p>There are situations when you would like to enable the end user to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The Kendo UI grid supports selection by specifying its configuration via its selectable attribute. Accepted values are:</p> <ul> <li>true (enables row selection)</li> <li>row</li> <li>cell</li> <li>multiple, row</li> <li>multiple, cell</li> </ul> <p>Further details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-selectable\" target=\"_blank\">selectable API section</a> of the docs.</p>",
-		   "aspnet-mvc": "<p>There are situations when you&rsquo;d like to enable your users to select rows or cells in the grid table, and process data from them or make calculations based on this selection. The MVC Grid supports selection by specifying its configuration through its <strong>Selectable</strong> -&gt; <strong>Mode</strong> and <strong>Type</strong> attributes. <br /> <br /> The accepted values for Mode are <strong>Single</strong><strong> </strong>and<strong> Multiple</strong>, while these for Type are <strong>Cell</strong> and <strong>Row</strong>.</p> <p>More details are available in the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridSelectionSettingsBuilder#methods-Mode%28Kendo.Mvc.UI.GridSelectionMode%29\">documentation</a>.</p>"
-         }
-      },
-      {
-        "text": "ForeignKey column",
-        "url": "grid/foreignkeycolumn",
-        "title": {
-            "kendo-ui": "Foreign Key Column demo in KendoGrid jQuery control",
-            "aspnet-mvc": "Foreign Key Column demo in Telerik ASP.NET MVC Grid"
-        },
-        "meta": {
-            "kendo-ui": "This example shows the foreign key column functionality to cross-reference tables in KendoGrid component.",
-            "aspnet-mvc": "This example shows the foreign key column functionality to cross-reference tables in the Telerik ASP.NET MVC Grid component."
-        },
-        "group": "Columns",
-         "description": {
-           "kendo-ui": "<p>In this demo we showcase how to implement foreign key column in the Kendo UI grid, hosting dropdown list editor for data editing. </p> <p>The column in question is defined via a key field (CategoryID). Through the column definition you set the key field as <strong>Field </strong>attribute, and the <strong>values </strong>attribute points to the source data for the items displayed in the dropdown list editor of that column. The editor items should have matching values of the same type as the key field (CategoryID in this case).</p> <p>See the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.values\">relevant API section</a> of the docs for more info.</p>",
-		   "aspnet-mvc": "<p>In this example you can see how to implement foreign key column in the Telerik MVC grid, holding DropDownList editor for data editing. The ForeignKey column definition is shown below:<br /> <br /> <span>columns.ForeignKey(p =&gt; p.CategoryID, (System.Collections.IEnumerable)ViewData[\"categories\"], \"CategoryID\", \"CategoryName\").Title(\"Category\").Width(150);</span></p> <p > Here is the definition for the DropDownList user control:</p> <p>&lt;%@ Control Language=\"C#\" Inherits=\"System.Web.Mvc.ViewUserControl&lt;object&gt;\" %&gt;<br /> &lt;%= Html.Kendo().DropDownListFor(m =&gt; m)<span>&nbsp;&nbsp;&nbsp; </span><br /> <span>&nbsp;&nbsp;&nbsp; </span>.BindTo((SelectList)ViewData[ViewData.TemplateInfo.GetFullHtmlFieldName(\"\") + \"_Data\"])<br /> %&gt;</p>"
-         }
+        "text": "Server row template",
+        "url": "grid/serverrowtemplate",
+        "packages": [
+          "mvc-offline"
+        ]
       },
       {
         "text": "Multi-column headers",
@@ -2193,6 +2249,7 @@
         "meta": {
             "kendo-ui": "This demo shows multiple column headers feature of KendoGrid control."
         },
+        "group": "Columns",
          "description": {
            "kendo-ui": "<p>The Kendo UI grid supports multi-column headers by specifying column groups which incorporate inner column structures. Here the Contact Info and Location columns have nested columns, depicted via an array of column definitions. </p> <p>Operations like sorting and filtering are supported on each column level, regardless of the chosen multi-header pattern.</p>",
 		   "aspnet-mvc": "<p>The Telerik MVC Grid extension supports multi-column headers by specifying column groups which incorporate inner-column structures. In this demo, you can see the Contact Info and Location columns have nested columns, defined trough the Columns -&gt; Group -&gt; Columns scheme. In addition, operations like sorting and filtering are supported on each column level, regardless of the chosen multi-header pattern.</p>"
@@ -2247,22 +2304,6 @@
          }
       },
       {
-        "text": "Frozen columns",
-        "url": "grid/frozen-columns",
-        "title": {
-            "kendo-ui": "Static columns of Kendo UI Grid control | Kendo UI Web demo",
-            "aspnet-mvc": "Frozen columns demo in Telerik ASP.NET MVC Grid "
-        },
-        "meta": {
-            "kendo-ui": "This demo shows locked columns feature of KendoGrid control.",
-            "aspnet-mvc": "Play with the demo for frozen columns functionality of Telerik ASP.NET MVC Grid."
-        },
-        "description": {
-          "kendo-ui": "<p>There are apps which require to display grids with large number of columns on limited screen estates, and making a small subset of them static when scrolling the rest horizontally to bring them in the viewable area. The concept of pinned columns is mostly known from MS Excel, and many users would like to utilize it in web context as well.</p> <p>The Kendo UI grid widget supports static/frozen columns by a single configuration setting. Simply set the <strong>locked</strong> attribute of the corresponding column to true, and this will bring the column in the locked columns group positioned on the left in the grid. Here locked columns are OrderID and ShipName, while the rest of the columns can be scrolled horizontally. </p>",
-		  "aspnet-mvc": "<p>There are scenarios in which you might be required to display a large number of grid columns on limited screen space, and making a small subset of them static when scrolling the rest horizontally to bring them in the viewable area. The concept of frozen columns is well known from MS Excel, and many users would like to utilize it in a web environment too.</p> <p>The Telerik ASP.NET Grid widget for MVC supports static/frozen columns by a single configuration setting. Simply set the <strong>Locked</strong> boolean setting of the corresponding column to true, and this will bring the column in the locked columns group positioned on the left in the grid. Here the locked columns are Order ID and Ship Name, while the rest of the columns can be scrolled horizontally.</p>"
-        }
-      },
-      {
         "text": "Column Settings",
         "url": "grid/columnsettings",
         "packages": [
@@ -2270,27 +2311,37 @@
         ]
       },
       {
-        "text": "Row template",
-        "url": "grid/rowtemplate",
+        "text": "ForeignKey column",
+        "url": "grid/foreignkeycolumn",
         "title": {
-            "kendo-ui": "Changing row template in Kendo UI Grid widget",
-            "aspnet-mvc": "Row Template for Telerik ASP.NET MVC Grid"
+            "kendo-ui": "Foreign Key Column demo in KendoGrid jQuery control",
+            "aspnet-mvc": "Foreign Key Column demo in Telerik ASP.NET MVC Grid"
         },
         "meta": {
-            "kendo-ui": "This sample shows how to change the style and concert of row cells with KendoGrid Row templates.",
-            "aspnet-mvc": "This sample shows how to change the style and concert of row cells with Telrik ASP.NET MVC Grid Row templates."
+            "kendo-ui": "This example shows the foreign key column functionality to cross-reference tables in KendoGrid component.",
+            "aspnet-mvc": "This example shows the foreign key column functionality to cross-reference tables in the Telerik ASP.NET MVC Grid component."
         },
-        "description": {
-          "kendo-ui": "<p>The Kendo UI grid allows flexible customization of its rows in terms of layout and appearance by exposing row template feature for this purpose.</p> <p>In this example we present how you can specify your own custom layout for the rows in the grid using images and property bindings from its underlying data source. The templates are defined via script tags with ids associated with rendered html table row elements in the grid.<br /> <br /> Note that the row and altrow templates are instantiated by calling the <strong>kendo.template </strong>method and assigning the returned value to the <strong>rowTemplate </strong>and <strong>altRowTemplate </strong>attributes of the grid instance. </p>",
-		  "aspnet-mvc": "<p>The Telerik MVC grid allows flexible customization of its rows in terms of layout and appearance by exposing row template feature for this purpose.</p> <p>In this example we present how you can specify your own custom layout for the rows in the grid using images and property bindings from its underlying data source. <br /> <br /> To do that you need to define a template column as shown below:</p> <p>columns.Template(e =&gt; { }).ClientTemplate(\" \"). Title(\"Picture\");</p> <p>and after that using the <strong>ClientRowTemplate</strong> and <strong>ClientAltRowTemplate</strong> settings to set the custom client-side row and alt-row templates. Note that both templates should contain table row HTML elements.</p>"
-        }
+        "group": "Columns",
+         "description": {
+           "kendo-ui": "<p>In this demo we showcase how to implement foreign key column in the Kendo UI grid, hosting dropdown list editor for data editing. </p> <p>The column in question is defined via a key field (CategoryID). Through the column definition you set the key field as <strong>Field </strong>attribute, and the <strong>values </strong>attribute points to the source data for the items displayed in the dropdown list editor of that column. The editor items should have matching values of the same type as the key field (CategoryID in this case).</p> <p>See the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.values\">relevant API section</a> of the docs for more info.</p>",
+           "aspnet-mvc": "<p>In this example you can see how to implement foreign key column in the Telerik MVC grid, holding DropDownList editor for data editing. The ForeignKey column definition is shown below:<br /> <br /> <span>columns.ForeignKey(p =&gt; p.CategoryID, (System.Collections.IEnumerable)ViewData[\"categories\"], \"CategoryID\", \"CategoryName\").Title(\"Category\").Width(150);</span></p> <p > Here is the definition for the DropDownList user control:</p> <p>&lt;%@ Control Language=\"C#\" Inherits=\"System.Web.Mvc.ViewUserControl&lt;object&gt;\" %&gt;<br /> &lt;%= Html.Kendo().DropDownListFor(m =&gt; m)<span>&nbsp;&nbsp;&nbsp; </span><br /> <span>&nbsp;&nbsp;&nbsp; </span>.BindTo((SelectList)ViewData[ViewData.TemplateInfo.GetFullHtmlFieldName(\"\") + \"_Data\"])<br /> %&gt;</p>"
+         }
       },
       {
-        "text": "Server row template",
-        "url": "grid/serverrowtemplate",
-        "packages": [
-          "mvc-offline"
-        ]
+        "text": "Custom command",
+        "url": "grid/custom-command",
+        "title": {
+            "kendo-ui": "Custom commands demo for Kendo UI Grid widget",
+            "aspnet-mvc": "Custom command demo in Telerik ASP.NET MVC Grid"
+        },
+        "meta": {
+            "kendo-ui": "This demo demonstrates the functionality to apply custom commands to KendoGrid. Look at the source code to find how to set the text attribute and command name for the grid component.",
+            "aspnet-mvc": "This example illustrates the custom command of Telerik ASP.NET MVC Grid extension."
+        },
+         "description": {
+           "kendo-ui": "<p>This sample represents how you can implement custom command handling for records in the Kendo UI grid.&nbsp; <br /> <br /> For this purpose you need to include a command column in the grid which will render a button in the column cells that triggers the command. Through the column definition you can specify the text for the button and wire its click event to a JavaScript function, which receives the corresponding grid data item as an argument. Then in this function definition you can handle the command.</p> <p>In this demo we use Window widget instance to display details about the chosen row (Person) in the grid.</p> More information about handling custom commands can be found in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.command\">this section</a> of the docs.",
+       "aspnet-mvc": "<p>The demonstrated solution in this example shows how to implement a custom command handling for records in the MVC Grid extension. </p> <p>To do it you need to include a command column in the grid which will render a button in the column cells that triggers the command. Through the column definition you can specify the text for the button and wire its click event to a JavaScript function (Command -&gt; Custom -&gt; Click), which receives the corresponding grid data item as an argument. Then in this function definition you can handle the command.</p> <p>In this demo we use Window widget instance to display details about the chosen row in the grid.</p>"
+         }
       },
       {
         "text": "Events",
@@ -2323,20 +2374,6 @@
          "description": {
            "kendo-ui": "<p>The Kendo UI grid exposes rich API and events which provide easy configuration or extension points for custom functionality on top of the built-in features. </p> <p>In this sample we demonstrate how you can collect numeric value entered by the user and use this value to select or expand/collapse grid rows using the select, expandGroup and collapseGroup methods of the widget. </p> <p>Find more info about the supported grid events by clicking the API Reference button below.</p>",
 		   "aspnet-mvc": "<p>Telerik MVC Grid exposes rich client-side API and events, which provide easy configuration or extension points for custom functionality on top of the built-in features.</p> <p>The example shows how you can get a reference to the grid&rsquo;s client object, collect numeric value entered by the user and use this value to select or expand/collapse grid rows using the <strong>select</strong>, <strong>expandGroup</strong> and <strong>collapseGroup</strong> client methods of the grid.</p> <p>You can find more information about the available grid&rsquo;s client-side API <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/ui/grid\">here</a>.</p>"
-         }
-      },
-       {
-        "text": "Persist state",
-        "url": "grid/persist-state",
-        "title": {
-            "kendo-ui": "KendoGrid Persist State API Demo"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how setOptions and getOptions methods can manipulate the state of Kendo UI Grid widget."
-        },
-         "description": {
-           "kendo-ui": "<p>A common requirement for web apps is to save the user customization and settings when interacting with your app, and then restore them once he/she logs back at some point in the future. </p> <p>The Kendo UI grid exposes the capability to save and restore settings that were previously applied to its structure using the <strong>getOptions </strong>and <strong>setOptions </strong>methods from its API. These methods allow you to serialize the grid current state, when needed, and then recover it at certain point in time. In this particular example we use localStorage key/value pair to save and load grid settings. </p> <p>Further info on the setOptions and getOptions methods is available in <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#methods-setOptions\">this API section</a>. </p>",
-		   "aspnet-mvc": "<p>A common scenario is to save the user customization and settings when interacting with your app, and then restore them once he/she logs back at some point in the future.</p> <p>The Telerik MVC component provided the ability to save and restore changes that were previously applied to its structure, using its <strong>getOptions</strong> and <strong>setOptions</strong> client-side methods. You can use these methods to store settings like grouping, paging, sorting, filtering<span> </span>and when needed to restore them. To demonstrate this functionality, we use <strong>localStorage</strong> key/value pair to save and load the grid state.</p> <p>More detail on the setOptions and getOptions methods is available in <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#methods-setOptions\">this API section</a>.</p>"
          }
       },
       {
@@ -2396,42 +2433,6 @@
            "kendo-ui": "<p>This demo illustrates the keyboard support of the Kendo UI grid widget, which provides quick access to available grid features without the need to interact with mouse. Furthermore, applications which must cover accessibility standards for people with disabilities can directly benefit from it. </p> <p>You can focus the grid using the <strong>ALT + W</strong> key combination, and then use the keyboard key shortcuts visualized above to interact with the widget. </p> <p>Further details about the keyboard support of the Kendo UI grid widgets can be found in the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/accessibility/keyboard-support\">Accessibility section</a> of the documentation.</p>",
 		   "aspnet-mvc": "<p>This demo illustrates the keyboard support of Telerik Grid for MVC, which provides quick access to available grid&rsquo;s features without the need of using a mouse. This is very practical for apps that should cover the accessibility standards for people with disabilities. </p> <p>You can focus the grid using the <strong>ALT + W</strong> key combination, which will allow you to directly interact with the grid functionality through the provided keyboard shortcuts visualized above.</p> <p>Further details about the Keyboard, Section 508 and WAI-ARIA support of Telerik UI for ASP.NET MVC extensions can be found in the <a href=\"http://docs.telerik.com/kendo-ui/accessibility/accessibility-overview\">Accessibility Overview section</a> of the documentation.</p>"
          }
-      },
-      {
-        "text": "MVVM",
-        "url": "grid/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Grid"
-        },
-        "meta": {
-            "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI Grid"
-        },
-        "description": {
-           "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI grid to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel instance </strong>(with <strong>kendo.observable</strong> call) which wraps the grid data source, and instantiate the grid, its attributes and binding definition using<strong> data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the grid, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter of the documentation</a>. </p>"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "url": "grid/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Grid"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Grid"
-        },
-        "description": {
-           "kendo-ui": "<p>The Kendo UI grid features inherent integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p>&nbsp;angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our grid for apps which could benefit from such integrations. Further, you can specify the grid options as a field in the $scope and then associate them via the options attribute of the grid Angular definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use the Kendo UI grid with AngularJS you can gather from <a href=\"http://docs.telerik.com/kendo-ui/AngularJS/the-grid-widget\" target=\"_blank\">this help resource</a>.</p>"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
       }
     ],
     "category": "Data Management"
