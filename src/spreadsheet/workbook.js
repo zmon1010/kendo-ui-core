@@ -243,6 +243,13 @@
 
             this._sheetsSearchCache = {};
 
+            // update references
+            this._sheets.forEach(function(sheet){
+                sheet._forFormulas(function(formula){
+                    formula.renameSheet(oldSheetName, newSheetName);
+                });
+            });
+
             sheet.name(newSheetName);
 
             this.trigger("change", { sheetSelection: true });

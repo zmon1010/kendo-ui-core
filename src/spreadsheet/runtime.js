@@ -569,6 +569,18 @@
             this.pending = false;
             delete this.value;
         },
+        renameSheet: function(oldSheetName, newSheetName) {
+            oldSheetName = oldSheetName.toLowerCase();
+            this.absrefs = null;
+            if (this.sheet.toLowerCase() == oldSheetName) {
+                this.sheet = newSheetName;
+            }
+            this.refs.forEach(function(ref){
+                if (ref.sheet.toLowerCase() == oldSheetName) {
+                    ref.sheet = newSheetName;
+                }
+            });
+        },
         adjust: function(affectedSheet, operation, start, delta) {
             affectedSheet = affectedSheet.toLowerCase();
             var formulaRow = this.row;
