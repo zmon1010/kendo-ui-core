@@ -329,9 +329,17 @@
             return this.clear({ formatOnly: true });
         },
 
+        isSortable: function() {
+            return !(this._ref instanceof UnionRef || this._ref === kendo.spreadsheet.NULLREF);
+        },
+
         sort: function(spec) {
             if (this._ref instanceof UnionRef) {
                 throw new Error("Unsupported for multiple ranges.");
+            }
+
+            if (this._ref === kendo.spreadsheet.NULLREF) {
+                throw new Error("Unsupported for NULLREF.");
             }
 
             if (spec === undefined) {
@@ -352,6 +360,10 @@
             }));
 
             return this;
+        },
+
+        isFilterable: function() {
+            return !(this._ref instanceof UnionRef);
         },
 
         filter: function(spec) {

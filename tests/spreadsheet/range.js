@@ -855,4 +855,9 @@
         equal(sheet.range("B1").value(), null);
         equal(sheet.range("B2").value(), "B2");
     });
+
+    test("isSortable returns false for null ref", function() {
+        ok(sheet.range("A1").isSortable());
+        ok(!sheet.range("A1").resize({ top: 1 }).isSortable());
+    });
 })();

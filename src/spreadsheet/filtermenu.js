@@ -466,7 +466,11 @@
                             operatingRange: range
                         };
 
-                        this.action({ command: "SortCommand", options: options });
+                        if (range.isSortable()) {
+                            this.action({ command: "SortCommand", options: options });
+                        } else {
+                            this.close();
+                        }
                     }.bind(this)
                 }).data("kendoMenu");
             },

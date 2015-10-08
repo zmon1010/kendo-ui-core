@@ -88,6 +88,9 @@
         isCell: function() {
             return false;
         },
+        toColumn: function() {
+            return this;
+        },
 
         // UnionRef overrides these, to access its subranges.
         first: function() {
@@ -323,9 +326,6 @@
             return this;
         },
         bottomRow: function() {
-            return this;
-        },
-        toColumn: function() {
             return this;
         },
         forEachRow: function(callback) {

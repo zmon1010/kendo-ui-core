@@ -1128,7 +1128,7 @@
 
                 columns.forEach(function(column) {
                     // do not filter header row
-                    var columnRef = ref.toColumn(column.index).resize({ top: 1 });
+                    var columnRef = ref.resize({ top: 1 }).toColumn(column.index);
 
                     var cells = [];
 

@@ -261,6 +261,18 @@
         });
     });
 
+    test("does not trigger sort on a NullRef", 0, function() {
+        filterMenu = createWithValues([ ["A1"] ], "A1");
+
+        filterMenu.bind("action", function(e) {
+            ok(false);
+        });
+
+        filterMenu.menu.trigger("select", {
+            item: filterMenu.menu.element.find(".k-item[data-dir=asc]")
+        });
+    });
+
     function indludesValue(range, value) {
         var values = range.values();
         values = [].concat.apply([], values);
