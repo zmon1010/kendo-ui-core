@@ -1414,6 +1414,7 @@ var __meta__ = { // jshint ignore:line
             if (that.options.autoBind) {
                 that.dataSource.fetch();
             } else {
+                that._group = that._groups() > 0;
                 that._footer();
             }
 
@@ -6543,6 +6544,8 @@ var __meta__ = { // jshint ignore:line
 
             that._reorderable();
 
+            that._updateHeader(that._groups());
+
             if (that.groupable) {
                 that._attachGroupable();
             }
@@ -6631,6 +6634,16 @@ var __meta__ = { // jshint ignore:line
 
         _isLocked: function() {
             return this.lockedHeader != null;
+        },
+
+        _updateHeaderCols: function() {
+            var table = this.thead.parent().add(this.table);
+
+            if (this._isLocked()) {
+                normalizeCols(table, visibleLeafColumns(visibleNonLockedColumns(this.columns)), this._hasDetails(), 0);
+            } else {
+                normalizeCols(table, visibleLeafColumns(visibleColumns(this.columns)), this._hasDetails(), 0);
+            }
         },
 
         _updateCols: function(table) {

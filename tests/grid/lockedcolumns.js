@@ -183,7 +183,11 @@
                 { field: "foo", locked: true },
                 { field: "bar", locked: false },
                 { field: "baz", locked: true }
-            ]
+            ],
+            dataSource: {
+                data: data,
+                group: { field: "foo" }
+            }
         });
 
         var lockedTH = grid.element.find(".k-grid-header-locked th");

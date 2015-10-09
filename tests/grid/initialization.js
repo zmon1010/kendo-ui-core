@@ -303,10 +303,40 @@
         equal(grid.thead.find("th").length, 1);
         equal(grid.thead.find("th").text(), "bar");
     });
+
     test("autoBind false does not populate grid", function() {
         var grid = new Grid(table, { autoBind: false, dataSource: [ { foo: "foo", bar: "bar" } ]});
 
         ok(grid.element.find("tbody > tr").length == 0);
+    });
+
+    test("row template does not have group cells when initial grouping is removed and autobind is false", function() {
+        var grid = new Grid(table, {
+            autoBind: false,
+            columns: [ "foo", "bar" ],
+            dataSource: {
+                group: { field: "foo" },
+                data: [ { foo: "foo", bar: "bar" } ]
+            }
+        });
+
+        grid.dataSource.query({ group: [] });
+
+        equal(grid.wrapper.find(".k-group-cell").length, 0);
+    });
+
+    test("correct number of header col element are created with initial grouping and autobind is false", function() {
+        var grid = new Grid(table, {
+            autoBind: false,
+            columns: [ "foo", "bar" ],
+            dataSource: {
+                group: { field: "foo" },
+                data: [ { foo: "foo", bar: "bar" } ]
+            }
+        });
+
+        equal(grid.thead.find("th.k-group-cell").length, 1);
+        equal(grid.thead.parent().find("col.k-group-col").length, 1);
     });
 
     test("th css class is set", function() {
