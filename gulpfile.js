@@ -59,37 +59,45 @@ var lessToCss = lazypipe()
     .pipe(less, { relativeUrls: true, plugins: [new autoprefix({ browsers: browsers }) ] })
     .pipe(replace, /\.\.\/mobile\//g, ''); // temp hack for the discrepancy between source and generated "source"
 
+var resumeOnErrors = lazypipe()
+    .pipe(plumber, {
+        errorHandler: function (err) {
+            console.log(err);
+            this.emit('end');
+        }
+    });
+
+var cacheLessDependencies = lazypipe()
+    .pipe(cache, 'less')
+    .pipe(progeny, {
+        regexp: /^\s*@import\s*(?:\(\w+\)\s*)?['"]([^'"]+)['"]/
+    })
+
 gulp.task("build-skin", ["css-assets"], function() {
     var lessLogger = logger({ after: 'LESS complete!', extname: '.css', showChange: true });
     var mapLogger = logger({ after: 'map complete!', extname: '.css.map', showChange: true });
 
     return gulp.src(argv.s.replace(/mobile|web/, "**"))
+        .pipe(resumeOnErrors())
+        .pipe(cacheLessDependencies())
         .pipe(sourcemaps.init())
         .pipe(lessLogger)
         .pipe(lessToCss())
         .pipe(mapLogger)
         .pipe(sourcemaps.write("maps", { sourceRoot: "../../../../styles" }))
         .pipe(gulp.dest('dist/styles'))
-        .pipe(browserSync.stream());
+        .pipe(browserSync.stream({ match: '**/*.css' }));
 });
 
 gulp.task("watch-skin", [ "build-skin" ], function() {
-    browserSync.init({ proxy: "localhost" });
+    browserSync.init({ proxy: "localhost", open: false });
     return gulp.watch("styles/**/*.less", [ "build-skin" ]);
 });
 
 gulp.task("dev-less",function() {
     return gulp.src("styles/**/*.less")
-        .pipe(plumber({
-            errorHandler: function (err) {
-                console.log(err);
-                this.emit('end');
-            }
-        }))
-        .pipe(cache('less'))
-        .pipe(progeny({
-            regexp: /^\s*@import\s*(?:\(\w+\)\s*)?['"]([^'"]+)['"]/
-        }))
+        .pipe(resumeOnErrors())
+        .pipe(cacheLessDependencies())
         .pipe(filter(['**/kendo.*.less']))
         .pipe(sourcemaps.init())
         .pipe(lessToCss())
