@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./deploy $1 root@kendobuild
+./deploy $1 root@kendobuild-slave1
+./deploy $1 root@kendobuild-slave2
