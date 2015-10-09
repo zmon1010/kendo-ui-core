@@ -190,6 +190,9 @@ var __meta__ = { // jshint ignore:line
                     element: that.input,
                     dataSource: that.suggestDataSource
                 });
+
+                that._angularItems("compile");
+
             } else if (type == STRING) {
                 input.attr(kendo.attr("role"), "autocomplete")
                         .attr(kendo.attr("text-field"), options.dataTextField || options.field)
@@ -392,10 +395,29 @@ var __meta__ = { // jshint ignore:line
             this.viewModel.set("value", null);
         },
 
+        _angularItems: function(action) {
+            var elements = this.wrapper.closest("th").get();
+            var column = this.options.column;
+
+            this.angular(action, function() {
+                return {
+                    elements: elements,
+                    data: [{ column: column }]
+                };
+            });
+        },
+
         destroy: function() {
             var that = this;
 
             that.filterModel = null;
+
+            that._angularItems("cleanup");
+
+            if (that._refreshHandler) {
+                that.dataSource.bind(CHANGE, that._refreshHandler);
+                that._refreshHandler = null;
+            }
 
             Widget.fn.destroy.call(that);
 

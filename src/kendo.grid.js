@@ -5563,6 +5563,8 @@ var __meta__ = { // jshint ignore:line
                return;
             }
 
+            var settings;
+            var $angular = that.options.$angular;
             var columns = leafColumns(that.columns),
                 filterable = that.options.filterable,
                 rowheader = that.thead.find(".k-filter-row");
@@ -5606,24 +5608,32 @@ var __meta__ = { // jshint ignore:line
                         operators =  col.filterable.operators;
                     }
 
+                    settings = {
+                        column: col,
+                        dataSource: that.dataSource,
+                        suggestDataSource: suggestDataSource,
+                        customDataSource: customDataSource,
+                        field: field,
+                        messages: messages,
+                        values: col.values,
+                        template: cellOptions.template,
+                        delay: cellOptions.delay,
+                        inputWidth: cellOptions.inputWidth,
+                        suggestionOperator: cellOptions.suggestionOperator,
+                        minLength: cellOptions.minLength,
+                        dataTextField: cellOptions.dataTextField,
+                        operator: cellOptions.operator,
+                        operators: operators,
+                        showOperators: cellOptions.showOperators
+                    };
+
+                    if ($angular) {
+                        settings.$angular = $angular;
+                    }
+
                     $("<span/>").attr(kendo.attr("field"), field)
-                        .kendoFilterCell({
-                            dataSource: that.dataSource,
-                            suggestDataSource: suggestDataSource,
-                            customDataSource: customDataSource,
-                            field: field,
-                            messages: messages,
-                            values: col.values,
-                            template: cellOptions.template,
-                            delay: cellOptions.delay,
-                            inputWidth: cellOptions.inputWidth,
-                            suggestionOperator: cellOptions.suggestionOperator,
-                            minLength: cellOptions.minLength,
-                            dataTextField: cellOptions.dataTextField,
-                            operator: cellOptions.operator,
-                            operators: operators,
-                            showOperators: cellOptions.showOperators
-                        }).appendTo(th);
+                        .appendTo(th)
+                        .kendoFilterCell(settings);
                 } else {
                     th.html("&nbsp;");
                 }
