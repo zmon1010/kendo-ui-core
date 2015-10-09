@@ -51,7 +51,7 @@ var minCssLogger = logger({
 });
 
 gulp.task("css-assets", function() {
-    return gulp.src("styles/**/*.{less,woff,ttf,png,gif,css,svg}").
+    return gulp.src("styles/**/*.{less,woff,ttf,eot,png,gif,css,svg,txt}").
         pipe(gulp.dest("dist/styles"));
 });
 
