@@ -8,11 +8,7 @@
         <link rel="stylesheet" href="@Url.Content("~/content/mobile/apps/sushi/css/style.css")">
 
         @foreach (string styleName in Kendo.Models.StyleGroups.Mobile) {
-            <link href="@Url.Style(styleName)" rel="@(styleName.ToLowerInvariant().EndsWith("less") ? "stylesheet/less" : "stylesheet")" />
-        }
-
-        @if (ViewBag.Debug) {
-            <script src="@Url.Content("~/content/shared/js/less.js")"></script>
+            <link href="@Url.Style(styleName)" rel="stylesheet" />
         }
 
         @foreach (string scriptName in Kendo.Models.ScriptGroups.All) {
@@ -151,7 +147,7 @@
             class="km-small"
             data-bind="click: addToCart"
             data-item-id="#:id#">#:kendo.toString(price, "c")#</a>
-        
+
     </script>
 
     <script id="cartItemTemplate" type="text/x-kendo-template">

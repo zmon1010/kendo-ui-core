@@ -413,7 +413,6 @@
     <Content Include="content\shared\js\example-datasources.js" />
     <Content Include="content\shared\js\handlebars.min.js" />
     <Content Include="content\shared\js\mobile-examples.js" />
-    <Content Include="content\shared\js\less.js" />
     <Content Include="content\shared\js\orders.js" />
     <Content Include="content\shared\js\people.js" />
     <Content Include="content\shared\js\prettify.js" />

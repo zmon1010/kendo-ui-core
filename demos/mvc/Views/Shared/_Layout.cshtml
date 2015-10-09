@@ -14,20 +14,6 @@
     @Html.StyleLink(styleName, (string)ViewBag.Theme, (string)ViewBag.CommonFile)
     }
 
-    @if (ViewBag.Debug)
-    {
-    <!--[if gt IE 8]>-->
-    <script>
-        less = {
-            env: "development",
-            relativeUrls: true,
-            logLevel: 1
-        };
-    </script>
-    <script src="@Url.Content("~/src/npm-less/less.js")"></script>
-    <script>less.refresh();</script>
-    <!--<![endif]-->
-    }
     <link href="@Url.Content("~/content/shared/styles/examples.css")" rel="stylesheet" />
     @{ bool isAngularJsExample = ViewBag.CurrentExample != null && (ViewBag.CurrentExample.Text.StartsWith("AngularJS") || ViewBag.CurrentExample.Url.Contains("angular")); }
     @{ bool isAngular2JsExample = ViewBag.CurrentExample != null && ViewBag.CurrentExample.Url.Contains("angular2"); }

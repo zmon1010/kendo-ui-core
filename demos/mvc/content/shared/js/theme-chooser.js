@@ -41,7 +41,7 @@
                 duration: 300
             }
         },
-        skinRegex = /kendo\.[\w\-]+(\.min)?\.(less|css)/i;
+        skinRegex = /kendo\.[\w\-]+(\.min)?\.css/i;
 
     var Details = kendo.ui.Widget.extend({
         init: function(element, options) {
@@ -196,13 +196,13 @@
         getCommonUrl: function (common) {
             var currentCommonUrl = ThemeChooser.getCurrentCommonLink().attr("href");
 
-            return currentCommonUrl.replace(skinRegex, "kendo." + common + "$1.$2");
+            return currentCommonUrl.replace(skinRegex, "kendo." + common + "$1.css");
         },
 
         getThemeUrl: function (themeName) {
             var currentThemeUrl = ThemeChooser.getCurrentThemeLink().attr("href");
 
-            return currentThemeUrl.replace(skinRegex, "kendo." + themeName + "$1.$2");
+            return currentThemeUrl.replace(skinRegex, "kendo." + themeName + "$1.css");
         },
 
         replaceCommon: function(commonName) {
@@ -215,20 +215,8 @@
 
         updateLink: function(link, url) {
             var exampleElement = $("#example");
-            var less = window.less;
-            var isLess = /\.less$/.test(link.attr("href"));
 
             link.eq(0).attr("href", url);
-
-            if (isLess) {
-                $("head style[id^='less']").remove();
-
-                less.sheets = $("head link[href$='.less']").map(function () {
-                    return this;
-                });
-
-                less.refresh(true);
-            }
 
             if (exampleElement.length) {
                 exampleElement[0].style.cssText = exampleElement[0].style.cssText;

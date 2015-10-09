@@ -9,10 +9,10 @@ namespace Kendo.Models
         public static readonly IList<string> All = new string[]
         {
 #if DEBUG
-            "web/kendo.CURRENT_COMMON.less",
+            "web/kendo.CURRENT_COMMON.css",
             "web/kendo.rtl.css",
-            "web/kendo.CURRENT_THEME.less",
-            "web/kendo.CURRENT_THEME.mobile.less"
+            "web/kendo.CURRENT_THEME.css",
+            "web/kendo.CURRENT_THEME.mobile.css"
 #else
             "kendo.CURRENT_COMMON.min.css",
             "kendo.rtl.min.css",
@@ -24,9 +24,9 @@ namespace Kendo.Models
         public static readonly IList<string> Metro = new string[]
         {
 #if DEBUG
-            "web/kendo.common.less",
+            "web/kendo.common.css",
             "web/kendo.rtl.css",
-            "web/kendo.metro.less"
+            "web/kendo.metro.css"
 #else
             "kendo.common.min.css",
             "kendo.rtl.min.css",
@@ -37,8 +37,8 @@ namespace Kendo.Models
         public static readonly IList<string> Simulator = new string[]
         {
 #if DEBUG
-            "web/kendo.common.less",
-            "web/kendo.metroblack.less"
+            "web/kendo.common.css",
+            "web/kendo.metroblack.css"
 #else
             "kendo.common.min.css",
             "kendo.metroblack.min.css"
@@ -48,9 +48,9 @@ namespace Kendo.Models
         public static readonly IList<string> Mobile = new string[]
         {
 #if DEBUG
-            "web/kendo.common-nova.less",
-            "web/kendo.nova.less",
-            "mobile/kendo.mobile.nova.less"
+            "web/kendo.common-nova.css",
+            "web/kendo.nova.css",
+            "mobile/kendo.mobile.nova.css"
 #else
             "kendo.common-nova.min.css",
             "kendo.nova.min.css",
@@ -61,8 +61,8 @@ namespace Kendo.Models
         public static readonly IList<string> Bootstrap = new string[]
         {
 #if DEBUG
-            "web/kendo.common-bootstrap.less",
-            "web/kendo.bootstrap.less"
+            "web/kendo.common-bootstrap.css",
+            "web/kendo.bootstrap.css"
 #else
             "kendo.common-bootstrap.min.css",
             "kendo.bootstrap.min.css"
@@ -72,9 +72,9 @@ namespace Kendo.Models
         public static readonly IList<string> MobileThemeBuilder = new string[]
         {
 #if DEBUG
-            "web/kendo.common.less",
-            "web/kendo.default.less",
-            "mobile/kendo.mobile.all.less",
+            "web/kendo.common.css",
+            "web/kendo.default.css",
+            "mobile/kendo.mobile.all.css",
 #else
             "kendo.common.min.css",
             "kendo.default.min.css",

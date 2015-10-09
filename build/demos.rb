@@ -349,6 +349,7 @@ namespace :demos do
 
     desc('Build debug demo site')
     task :debug => 'demos/mvc/Kendo.csproj' do |t|
+        sh "node node_modules/gulp/bin/gulp.js build-skin"
 
         File.open('demos/mvc/content/all-scripts.txt', 'w') do |file|
             file.write "jquery.js\n"

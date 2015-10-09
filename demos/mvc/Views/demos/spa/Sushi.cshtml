@@ -11,11 +11,7 @@
         <link rel="stylesheet" href="@Url.Content("~/content/spa/websushi/css/style.css")" />
 
         @foreach (string styleName in Kendo.Models.StyleGroups.Metro) {
-            <link href="@Url.Style(styleName)" rel="@(styleName.ToLowerInvariant().EndsWith("less") ? "stylesheet/less" : "stylesheet")" />
-        }
-
-        @if (ViewBag.Debug) {
-            <script src="@Url.Content("~/content/shared/js/less.js")"></script>
+            <link href="@Url.Style(styleName)" rel="stylesheet" />
         }
 
         <script>

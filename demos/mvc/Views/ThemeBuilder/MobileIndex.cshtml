@@ -9,9 +9,7 @@
     @foreach (string styleName in ViewBag.styles) {
     @Html.StyleLink(styleName, (string)ViewBag.Theme, (string)ViewBag.CommonFile)
     }
-    @if (ViewBag.Debug) {
-    <script src="@Url.Content("~/content/shared/js/less.js")"></script>
-    } else {
+    @if (!ViewBag.Debug) {
     @Html.Partial("GoogleAnalytics")
     }
     @foreach (string scriptName in @ViewBag.scripts)

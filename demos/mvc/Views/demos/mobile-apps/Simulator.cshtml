@@ -9,7 +9,7 @@
     <meta content="Play with Kendo UI mobile simulator and quickly test out Kendo UI in different mobile devices." name="description" />
 
     @foreach (string styleName in Kendo.Models.StyleGroups.Simulator) {
-    <link href="@Url.Style(styleName)" rel="@(styleName.ToLowerInvariant().EndsWith("less") ? "stylesheet/less" : "stylesheet")" />
+    <link href="@Url.Style(styleName)" rel="stylesheet" />
     }
 
     <link rel="stylesheet" href="@Url.Content("~/content/integration/simulator/devices/ipad/styles.css")" />
@@ -17,9 +17,6 @@
 
     @foreach (string scriptName in Kendo.Models.ScriptGroups.All) {
     <script src="@Url.Script(scriptName)"></script>
-    }
-    @if (ViewBag.Debug) {
-    <script src="@Url.Content("~/content/shared/js/less.js")"></script>
     }
     <script>
         if (kendo.support.mobileOS) {

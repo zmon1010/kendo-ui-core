@@ -34,7 +34,7 @@ namespace Kendo.Controllers
             new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
                 { "npm-less", Path.Combine("node_modules", "less", "dist") },
                 { "js", "src" },
-                { "styles", "styles" }
+                { "styles", "dist/styles" }
             };
 
         public ActionResult StaticContent(string path)
