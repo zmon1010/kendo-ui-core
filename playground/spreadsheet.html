@@ -4,20 +4,12 @@
     <script src="loader.js"></script>
     <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 
-    <link rel="stylesheet/less" href="../styles/web/kendo.common.less">
-    <link rel="stylesheet/less" href="../styles/web/kendo.silver.less">
-    <script>
-        less = {
-            logLevel: 1,
-            relativeUrls: true,
-            env: "development"
-        };
-    </script>
-    <script src="../demos/mvc/content/shared/js/less.js"></script>
-    <script src="../src/jszip.min.js"></script>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css">
+    <link rel="stylesheet" href="../dist/styles/web/kendo.flat.css">
 
     <script>
         requireSync([
+            "../src/jszip.min.js",
             "../src/jquery.js",
             "../src/kendo.dom.js",
             "../src/cultures/kendo.culture.bg-BG.js",
