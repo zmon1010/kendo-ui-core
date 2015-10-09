@@ -71,15 +71,21 @@ var cacheLessDependencies = lazypipe()
     .pipe(cache, 'less')
     .pipe(progeny, {
         regexp: /^\s*@import\s*(?:\(\w+\)\s*)?['"]([^'"]+)['"]/
-    })
+    });
 
 gulp.task("build-skin", ["css-assets"], function() {
     var lessLogger = logger({ after: 'LESS complete!', extname: '.css', showChange: true });
     var mapLogger = logger({ after: 'map complete!', extname: '.css.map', showChange: true });
 
-    return gulp.src(argv.s.replace(/mobile|web/, "**"))
+    var allFiles = "styles/**/*.less";
+    var filesToBuild = argv.s || allFiles;
+
+    return gulp.src(allFiles)
         .pipe(resumeOnErrors())
         .pipe(cacheLessDependencies())
+        .pipe(filter([
+            filesToBuild.replace(/(styles|mobile|web)/, "**")
+        ]))
         .pipe(sourcemaps.init())
         .pipe(lessLogger)
         .pipe(lessToCss())
@@ -87,22 +93,6 @@ gulp.task("build-skin", ["css-assets"], function() {
         .pipe(sourcemaps.write("maps", { sourceRoot: "../../../../styles" }))
         .pipe(gulp.dest('dist/styles'))
         .pipe(browserSync.stream({ match: '**/*.css' }));
-});
-
-gulp.task("watch-skin", [ "build-skin" ], function() {
-    browserSync.init({ proxy: "localhost", open: false });
-    return gulp.watch("styles/**/*.less", [ "build-skin" ]);
-});
-
-gulp.task("dev-less",function() {
-    return gulp.src("styles/**/*.less")
-        .pipe(resumeOnErrors())
-        .pipe(cacheLessDependencies())
-        .pipe(filter(['**/kendo.*.less']))
-        .pipe(sourcemaps.init())
-        .pipe(lessToCss())
-        .pipe(sourcemaps.write("maps", { sourceRoot: "../../../../styles" }))
-        .pipe(gulp.dest('dist/styles'));
 });
 
 gulp.task("less",function() {
@@ -123,6 +113,7 @@ gulp.task("less",function() {
 
 gulp.task("styles", [ "less", "css-assets" ]);
 
-gulp.task("watch-styles", [ "dev-less", "css-assets" ], function() {
-    return gulp.watch("styles/**/*.less", [ "dev-less" ]);
+gulp.task("watch-styles", [ "build-skin", "css-assets" ], function() {
+    browserSync.init({ proxy: "localhost", open: false });
+    return gulp.watch("styles/**/*.less", [ "build-skin" ]);
 });
