@@ -78,7 +78,7 @@ gulp.task("build-skin", ["css-assets"], function() {
     var mapLogger = logger({ after: 'map complete!', extname: '.css.map', showChange: true });
 
     var allFiles = "styles/**/*.less";
-    var filesToBuild = argv.s || allFiles;
+    var filesToBuild = argv.s || 'styles/**/kendo.*.less';
 
     return gulp.src(allFiles)
         .pipe(resumeOnErrors())
