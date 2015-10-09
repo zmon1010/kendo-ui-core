@@ -169,7 +169,7 @@
         ok(ds !== grid.dataSource);
     });
 
-    test("setOptions sets the new Options and persists the current", function() {
+    test("setOptions sets the new Options of the DataSource", function() {
         var grid = setup({
             dataSource: {
                 sort: [{
@@ -285,25 +285,6 @@
         grid.setOptions({ sortable: true })
         equal(grid.wrapper.parents(kendo.roleSelector("pane")).length, 1);
         equal(grid.wrapper.parents(kendo.roleSelector("view")).length, 1);
-    });
-
-    test("even when new DS instance is passed it gets options from it and preserves older one", function() {
-
-        var grid = setup({
-            dataSource: {
-                pageSize: 22
-            }
-        });
-
-        grid.setOptions({
-            dataSource: new kendo.data.DataSource({
-                data: [{ foo: "faz" }],
-                pageSize: 33
-            })
-        });
-
-        equal(grid.dataSource.pageSize(), 33);
-        equal(grid.dataSource.at(0).foo, "faz")
     });
 
     /*
