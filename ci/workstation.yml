@@ -8,6 +8,7 @@
   sudo: yes
   tasks:
     - include: a/java.yml
+    - include: a/mono.yml
     - name: Install PHP
       apt: name={{item}} state=latest
       with_items:

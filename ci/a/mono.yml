@@ -1,0 +1,15 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: Add xamarin key
+  apt_key: keyserver=hkp://keyserver.ubuntu.com:80 id=3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+- name: Add xamarin repo
+  apt_repository: repo='deb http://download.mono-project.com/repo/debian wheezy main'
+- name: 'Add something necessary for 13.04'
+  apt_repository: repo='deb http://download.mono-project.com/repo/debian wheezy-apache24-compat main'
+- name: Install mono packages
+  apt: name={{item}} state=latest
+  with_items:
+    - mono-complete
+    - mono-xsp4
+    - mono-xbuild
+    - nuget
