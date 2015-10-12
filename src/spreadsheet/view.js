@@ -20,7 +20,8 @@
         cellEditor: "k-spreadsheet-cell-editor",
         barEditor: "k-spreadsheet-editor",
         topCorner: "k-spreadsheet-top-corner",
-        filterHeadersWrapper: "k-filter-headers",
+        filterHeadersWrapper: "k-filter-wrapper",
+        filterRange: "k-filter-range",
         filterButton: "k-spreadsheet-filter",
         filterButtonActive: "k-state-active",
         icon: "k-icon k-font-icon",
@@ -1042,13 +1043,14 @@
             return new kendo.spreadsheet.Rectangle(
                 rect.right - BUTTON_SIZE - BUTTON_OFFSET,
                 rect.top + BUTTON_OFFSET,
-                BUTTON_SIZE, BUTTON_SIZE
+                BUTTON_SIZE,
+                BUTTON_SIZE
             );
         },
 
         renderFilterHeaders: function() {
             var sheet = this._sheet;
-            var filterIcons = [];
+            var children = [];
             var classNames = View.classNames;
             var index = 0;
             var filter = sheet.filter();
@@ -1082,16 +1084,22 @@
                 return button;
             }
 
+            if (filter) {
+                this._addDiv(children, filter.ref, classNames.filterRange);
+            }
+
             sheet.forEachFilterHeader(this._currentView.ref, function(ref) {
                 var rect = this._rectangle(ref);
                 var position = this.filterIconRect(rect);
                 var button = filterButton(classNames, position, index);
                 index++;
 
-                filterIcons.push(button);
+                children.push(button);
             }.bind(this));
 
-            return kendo.dom.element("div", { className: classNames.filterHeadersWrapper }, filterIcons);
+            return kendo.dom.element("div", {
+                className: classNames.filterHeadersWrapper
+            }, children);
 
         },
 

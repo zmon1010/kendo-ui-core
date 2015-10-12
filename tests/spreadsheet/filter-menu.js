@@ -30,6 +30,12 @@
         return ref;
     }
 
+    function filterButtons(pane) {
+        return pane.renderFilterHeaders().children.filter(function(node) {
+            return /k-spreadsheet-filter/.test(node.attr.className);
+        });
+    }
+
     test("renders in top filtered cell", function() {
         var pane = createPane(0, 0);
 
@@ -42,9 +48,7 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        var filterHeaders = pane.renderFilterHeaders().children;
-
-        equal(filterHeaders.length, 1);
+        equal(filterButtons(pane).length, 1);
     });
 
     test("renders icons for each column", function() {
@@ -59,9 +63,7 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        var filterHeaders = pane.renderFilterHeaders().children;
-
-        equal(filterHeaders.length, 3);
+        equal(filterButtons(pane).length, 3);
     });
 
     test("does not render filter buttons if no filter is set", function() {
@@ -69,32 +71,25 @@
 
         pane._currentView = DUMMY_VIEW;
 
-        var filterHeaders = pane.renderFilterHeaders().children;
-
-        equal(filterHeaders.length, 0);
+        equal(filterButtons(pane).length, 0);
     });
 
-    /*
-
-    test("adds k-state-active to headers with applied filtering", function() {
+    test("adds k-state-active to buttons with applied filtering", function() {
         var pane = createPane(0, 0);
 
-        var valueFilter = new kendo.spreadsheet.ValueFilter({ values: [3] });
-
-        sheet.range("A1:B5").filter([
-            { column: 0, filter: valueFilter },
-            { column: 1, filter: valueFilter }
-        ]);
+        sheet.range("A2:B5").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.ValueFilter({
+                values: [3]
+            })
+        });
 
         pane._currentView = DUMMY_VIEW;
 
-        var filterHeaders = pane.renderFilterHeaders().children;
+        var buttons = filterButtons(pane);
 
-        ok(filterHeaders[0].attr.className.indexOf("k-state-active") >= 0);
-        ok(filterHeaders[1].attr.className.indexOf("k-state-active") >= 0);
+        ok(buttons[0].attr.className.indexOf("k-state-active") >= 0);
     });
-
-    */
 
     var defaults = kendo.ui.Spreadsheet.prototype.options;
     var range;
