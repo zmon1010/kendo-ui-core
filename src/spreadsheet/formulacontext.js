@@ -141,12 +141,7 @@
             if (currentFormula !== f) {
                 // could have been deleted or modified in the mean time,
                 // if the formula was asynchronous.  ignore this result.
-                //
-                // XXX: if we return false here, validation won't work
-                // (since it really evaluates a formula that is not in
-                // the cell).  This is a temporary fix until we find a
-                // better solution.
-                return true;
+                return false;
             }
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
@@ -161,6 +156,13 @@
         }
     });
 
+    var ValidationFormulaContext = FormulaContext.extend({
+        onFormula: function() {
+            return true;
+        }
+    });
+
     spreadsheet.FormulaContext = FormulaContext;
+    spreadsheet.ValidationFormulaContext = ValidationFormulaContext;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

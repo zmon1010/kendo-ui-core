@@ -34,6 +34,7 @@
             this.undoRedoStack.bind(["undo", "redo"], this._onUndoRedo.bind(this));
 
             this._context = new kendo.spreadsheet.FormulaContext(this);
+            this._validationContext = new kendo.spreadsheet.ValidationFormulaContext(this);
 
             this.fromJSON(this.options);
         },
@@ -108,6 +109,7 @@
                 this.resetFormulas();
                 this.resetValidations();
                 this._sheet.recalc(this._context);
+                this._sheet.revalidate(this._validationContext);
             }
         },
 

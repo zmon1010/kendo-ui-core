@@ -987,16 +987,17 @@
         },
 
         recalc: function(context) {
-            var self = this;
             this._forFormulas(function(formula){
                 formula.exec(context);
             });
+        },
 
-            this._forValidations(function(validation){
-                var cellRef = new CellRef(validation.row, validation.col);
+        revalidate: function(context) {
+            var self = this;
+            this._forValidations(function(formula){
+                var cellRef = new CellRef(formula.row, formula.col);
                 var ref =  new RangeRef(cellRef, cellRef);
-
-                validation.exec(context, self._get(ref, "value"), self._get(ref, "format"));
+                formula.exec(context, self._get(ref, "value"), self._get(ref, "format"));
             });
         },
 
