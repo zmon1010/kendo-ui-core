@@ -367,7 +367,7 @@
         },
 
         isActive: function() {
-            return this.element.is(":focus");
+            return this.element[0] === kendo._activeElement();
         },
 
         filter: function(value) {

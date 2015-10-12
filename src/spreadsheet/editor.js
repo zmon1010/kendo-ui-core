@@ -37,10 +37,11 @@
 
         activeEditor: function() {
             var editor = null;
+            var activeElement = kendo._activeElement();
 
-            if (this.barElement().is(":focus")) {
+            if (this.barElement()[0] === activeElement) {
                 editor = this.barInput;
-            } else if (this.cellElement().is(":focus")) {
+            } else if (this.cellElement()[0] === activeElement) {
                 editor = this.cellInput;
             }
 

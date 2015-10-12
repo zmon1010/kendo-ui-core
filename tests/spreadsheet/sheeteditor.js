@@ -68,7 +68,7 @@
         editor.activate({ rect: { rect: { top: 0, left: 0 } } });
         editor.focus();
 
-        ok(editor.cellInput.element.is(":focus"));
+        equal(editor.cellInput.element[0], document.activeElement);
     });
 
     test("focus method places the caret to the end", 2, function() {
