@@ -127,6 +127,18 @@
             set;
         }
 
+        public string SlotTemplate
+        {
+            get;
+            set;
+        }
+
+        public string SlotTemplateId
+        {
+            get;
+            set;
+        }
+
         protected override void Serialize(IDictionary<string, object> json)
         {
             base.Serialize(json);
@@ -223,6 +235,16 @@
             if (!string.IsNullOrEmpty(MajorTimeHeaderTemplateId))
             {
                 json["majorTimeHeaderTemplate"] = new ClientHandlerDescriptor { HandlerName = String.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, MajorTimeHeaderTemplateId) };
+            }
+
+            if (!string.IsNullOrEmpty(SlotTemplate))
+            {
+                json["slotTemplate"] = SlotTemplate;
+            }
+
+            if (!string.IsNullOrEmpty(SlotTemplateId))
+            {
+                json["slotTemplate"] = new ClientHandlerDescriptor { HandlerName = String.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, SlotTemplateId) };
             }
         }
     }
