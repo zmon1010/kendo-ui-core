@@ -57,6 +57,10 @@ module CodeGen::TypeScript
         'files' => 'UploadFile[]'
     }
 
+    DIAGRAM_EVENT_OVERRIDES = {
+        'item' => 'any'
+    }
+
     DECLARATION_OVERRIDES = {
         'UploadCancelEvent' => UPLOAD_EVENT_OVERRIDES,
         'UploadErrorEvent' => UPLOAD_EVENT_OVERRIDES,
@@ -64,7 +68,10 @@ module CodeGen::TypeScript
         'UploadRemoveEvent' => UPLOAD_EVENT_OVERRIDES,
         'UploadSelectEvent' => UPLOAD_EVENT_OVERRIDES,
         'UploadSuccessEvent' => UPLOAD_EVENT_OVERRIDES,
-        'UploadUploadEvent' => UPLOAD_EVENT_OVERRIDES
+        'UploadUploadEvent' => UPLOAD_EVENT_OVERRIDES,
+        'DiagramClickEvent' => DIAGRAM_EVENT_OVERRIDES,
+        'DiagramMouseEnterEvent' => DIAGRAM_EVENT_OVERRIDES,
+        'DiagramMouseLeaveEvent' => DIAGRAM_EVENT_OVERRIDES
     }
 
     RESULT_OVERRIDES = {
