@@ -181,10 +181,11 @@ var __meta__ = { // jshint ignore:line
     kendo.ui.scheduler = {};
 
     var ResourceView = kendo.Class.extend({
-        init: function(index) {
+        init: function(index, isRtl) {
             this._index = index;
             this._timeSlotCollections = [];
             this._daySlotCollections = [];
+            this._isRtl = isRtl;
         },
 
         addTimeSlotCollection: function(startDate, endDate) {
@@ -220,23 +221,33 @@ var __meta__ = { // jshint ignore:line
         },
 
         _slotByPosition: function(x, y, collections) {
-           var browser = kendo.support.browser;
-
            for (var collectionIndex = 0; collectionIndex < collections.length; collectionIndex++) {
                var collection = collections[collectionIndex];
 
                for (var slotIndex = 0; slotIndex < collection.count(); slotIndex++) {
                    var slot = collection.at(slotIndex);
                    var width = slot.offsetWidth;
-                   var height = slot.clientHeight;
+                   var height = slot.offsetHeight;
 
-                   if (browser.msie) {
-                       height = slot.clientHeight - 1; //border
-                       width = slot.clientWidth;
+                   var horizontalEnd = slot.offsetLeft + width;
+                   var verticalEnd =  slot.offsetTop + height;
+
+                   var nextSlot =  collection.at(slotIndex+1);
+
+                   if (nextSlot) {
+                       if (nextSlot.offsetLeft != slot.offsetLeft) {
+                           if (this._isRtl) {
+                               horizontalEnd = slot.offsetLeft + (slot.offsetLeft - nextSlot.offsetLeft);
+                           } else {
+                               horizontalEnd = nextSlot.offsetLeft;
+                           }
+                       } else {
+                           verticalEnd = nextSlot.offsetTop;
+                       }
                    }
 
-                   if (x >= slot.offsetLeft && x < slot.offsetLeft + width &&
-                       y >= slot.offsetTop && y <= slot.offsetTop + height) {
+                   if (x >= slot.offsetLeft && x < horizontalEnd &&
+                       y >= slot.offsetTop && y < verticalEnd) {
                        return slot;
                    }
                }
@@ -874,6 +885,7 @@ var __meta__ = { // jshint ignore:line
             this.offsetHeight = element.offsetHeight;
             this.offsetTop = element.offsetTop;
             this.offsetLeft = element.offsetLeft;
+
             this.start = start;
             this.end = end;
             this.element = element;
@@ -916,6 +928,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         refresh: function() {
+
             var element = this.element;
 
             this.clientWidth = element.clientWidth;
@@ -1071,7 +1084,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _addResourceView: function() {
-            var resourceView = new ResourceView(this.groups.length);
+            var resourceView = new ResourceView(this.groups.length, this._isRtl);
 
             this.groups.push(resourceView);
 
