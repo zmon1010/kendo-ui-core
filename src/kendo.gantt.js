@@ -1381,7 +1381,7 @@ var __meta__ = { // jshint ignore:line
     });
 
     var Gantt = Widget.extend({
-        init: function(element, options) {
+        init: function(element, options, events) {
             if (isArray(options)) {
                 options = { dataSource: options };
             }
@@ -1401,6 +1401,10 @@ var __meta__ = { // jshint ignore:line
             };
 
             Widget.fn.init.call(this, element, options);
+
+            if (events) {
+                this._events = events;
+            }
 
             this._wrapper();
 
@@ -1596,6 +1600,26 @@ var __meta__ = { // jshint ignore:line
 
             this.toolbar = null;
             this.footer = null;
+        },
+
+        setOptions: function(options) {
+            var newOptions = kendo.deepExtend({}, this.options, options);
+
+            var events = this._events;
+
+            if (!options.dataSource) { newOptions.dataSource = this.dataSource; }
+            if (!options.dependencies) { newOptions.dependencies = this.dependencies; }
+            if (!options.resources) { newOptions.resources = { dataSource: this.resources.dataSource }; }
+            if (!options.assignments) { newOptions.assignments = { dataSource: this.assignments.dataSource }; }
+
+
+            this.destroy();
+            this.element.empty();
+            this.options = null;
+
+            this.init(this.element, newOptions, events);
+
+            Widget.fn._setEvents.call(this, newOptions);
         },
 
         _attachEvents: function() {
