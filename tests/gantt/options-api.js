@@ -152,6 +152,59 @@
         equal(gantt.options.messages.views.week, "Week");
     });
 
+    test("setOptions preserves user selected view when no options for views are passed", function() {
+        var gantt = setup();
+
+        gantt.view("week");
+
+        ok(gantt.view().name === "week");
+
+        gantt.setOptions({ editable: false });
+
+        ok(gantt.view().name === "week");
+    });
+
+    test("setOptions preserves user selected view when no options for views are passed and views are initialized with strings", function() {
+        var gantt = setup({ views: ["day", "week"]});
+
+        ok(gantt.view().name === "day");
+
+        gantt.view("week");
+
+        ok(gantt.view().name === "week");
+
+        gantt.setOptions({ editable: false });
+
+        ok(gantt.view().name === "week");
+    });
+
+    test("setOptions preserves user selected view when no options for views are passed and views are initialized with objects", function() {
+        var gantt = setup({ views: [
+                { type: "day", selected: true },
+                { type: "week" }
+            ]});
+
+        ok(gantt.view().name === "day");
+
+        gantt.view("week");
+
+        ok(gantt.view().name === "week");
+
+        gantt.setOptions({ editable: false });
+
+        ok(gantt.view().name === "week");
+    });
+
+    test("setOptions sets the new views when passed", function() {
+        var gantt = setup();
+
+        ok(gantt.view().name === "day");
+
+        gantt.setOptions({ views: ["week"] });
+
+        ok(gantt.view().name === "week");
+    });
+
     test("preserves initial set events", function() {
         var invoked = 0;
         var gantt = setup({

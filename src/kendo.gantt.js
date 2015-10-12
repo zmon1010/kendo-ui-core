@@ -1410,6 +1410,10 @@ var __meta__ = { // jshint ignore:line
 
             this._resources();
 
+            if (!this.options.views || !this.options.views.length) {
+                this.options.views = ["day", "week", "month"];
+            }
+
             this._timeline();
 
             this._toolbar();
@@ -1606,6 +1610,27 @@ var __meta__ = { // jshint ignore:line
             var newOptions = kendo.deepExtend({}, this.options, options);
 
             var events = this._events;
+
+            if (!options.views) {
+                var selectedView = this.view().name;
+
+                newOptions.views = $.map(this.options.views, function(view) {
+                    var isSettings = isPlainObject(view);
+                    var name = isSettings ? ((typeof view.type !== "string") ? view.title : view.type) : view;
+
+                    if (selectedView === name) {
+                        if (isSettings) {
+                            view.selected = true;
+                        } else {
+                            view = { type: name, selected: true };
+                        }
+                    } else if (isSettings) {
+                        view.selected = false;
+                    }
+
+                    return view;
+                });
+            }
 
             if (!options.dataSource) { newOptions.dataSource = this.dataSource; }
             if (!options.dependencies) { newOptions.dependencies = this.dependencies; }
