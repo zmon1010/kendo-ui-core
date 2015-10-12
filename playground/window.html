@@ -2,40 +2,33 @@
 <html>
     <head>
         <title>window</title>
-        <script src="../src/jquery.js"></script>
-        <script src="../src/kendo.core.js"></script>
-        <script src="../src/kendo.fx.js"></script>
-        <script src="../src/kendo.userevents.js"></script>
-        <script src="../src/kendo.draganddrop.js"></script>
-        <script src="../src/kendo.popup.js"></script>
-        <script src="../src/kendo.data.js"></script>
-        <script src="../src/kendo.binder.js"></script>
-        <script src="../src/kendo.list.js"></script>
-        <script src="../src/kendo.dropdownlist.js"></script>
-        <script src="../src/kendo.window.js"></script>
-        <link href="../styles/web/kendo.common.css" rel="stylesheet"/>
-        <link href="../styles/web/kendo.blueopal.less" rel="stylesheet/less"/>
-        <script src="../demos/mvc/content/shared/js/less.js"></script>
+
+        <link href="../dist/styles/web/kendo.common.css" rel="stylesheet"/>
+        <link href="../dist/styles/web/kendo.blueopal.css" rel="stylesheet"/>
+
+        <script src="loader.js"></script>
+        <script>
+            requireSync([
+                "../src/jquery.js",
+                "../src/kendo.fx.js",
+                "../src/kendo.window.js"
+            ]);
+        </script>
     </head>
     <body>
-        <button onclick='leak()'>Destroy 50 windows</button>
-
         <script>
-            function leak() {
-                for (var i = 0; i < 1; i++) {
-                    $("<div id='foo'><input><button></button><a href=''>foo</a></div>").kendoWindow({
-                        position: { left: 200 },
-                        content: "complex.html",
-                        animation: false,
-                        draggable: false,
-                        resizable: false,
-                        deactivate: function() {
-                            this.destroy();
-                        }
-                    }).data("kendoWindow").open();
+            $("<div />").appendTo("body").kendoWindow({
+                title: "Foo",
+                animation: {
+                    close: false
+                },
+                activate: function() {
+                    setTimeout(this.close.bind(this), 1000);
+                },
+                deactivate: function() {
+                    setTimeout(this.open.bind(this), 1000);
                 }
-            }
-
+            });
         </script>
     </body>
 </html>
