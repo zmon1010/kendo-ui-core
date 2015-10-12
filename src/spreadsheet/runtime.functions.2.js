@@ -1168,17 +1168,17 @@
         var MAX_IT = max_it || 20, // maximum number of iterations
             EPS = eps || 1E-7; // accuracy
         var root = guess;
-        for(var j=1; j <= MAX_IT; j++) {
+        for (var j = 1; j <= MAX_IT; j++) {
             var f_d = func(root),
                 f = f_d[0], // the value of the function
                 df = f_d[1]; // the value of the derivative
             var dx = f / df;
             root -= dx;
-            if(Math.abs(dx) < EPS) {
+            if (Math.abs(dx) < EPS) {
                 return root;
             }
         }
-        throw new Error("MAX_IT exceeded"); // this theoretical case could be removed here
+        return new CalcError("NUM");
     }
 
 
