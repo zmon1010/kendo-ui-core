@@ -44,7 +44,7 @@
             }
 
             $.fn.tap = function(info) {
-                return this.press(10, 10).release(10, 10);
+                return this.trigger("click", { pageX: 10, pageY: 10});
             }
 
         },

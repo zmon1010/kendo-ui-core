@@ -365,7 +365,7 @@
             }
         });
 
-        browser.list.find("li[data-type=d]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=d]"));
 
         ok(!browser.value());
     });
@@ -378,7 +378,7 @@
             }
         });
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
 
         equal(browser.value(), "foo/File1");
     });
@@ -391,7 +391,7 @@
             }
         });
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
 
         equal(browser.value(), "foo/File1");
     });
@@ -399,7 +399,7 @@
     test("clicking on folder enables the delete button", 2, function() {
         var browser = setup({ transport: { destroy: "foo" } });
 
-        browser.list.find("li[data-type=d]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=d]"));
 
         ok(browser.toolbar.find("button:has(span.k-delete)").length);
         ok(!browser.toolbar.find("button:has(span.k-delete)").hasClass("k-state-disabled"));
@@ -409,7 +409,7 @@
     test("clicking on file enables the delete button", 1, function() {
         var browser = setup();
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
 
         ok(!browser.toolbar.find("button:has(span.k-delete)").hasClass("k-state-disabled"));
     });
@@ -417,7 +417,7 @@
     test("rebinding disables the delete button", function() {
         var browser = setup({ transport: { destroy: "foo" } });
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
         browser.dataSource.read();
 
         ok(browser.toolbar.find("button:has(span.k-delete)").hasClass("k-state-disabled"))
@@ -428,7 +428,7 @@
 
         browser.path("bar");
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"))
 
         equal(browser.value(), "bar/File1");
     });
@@ -466,7 +466,7 @@
 
         browser._showMessage = function() { return true};// suppress the alert for poping
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
 
         browser.toolbar.find(".k-delete").click();
 
@@ -486,7 +486,7 @@
 
         browser._showMessage = function() { return true};// suppress the alert for poping
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
 
         browser.toolbar.find(".k-delete").click();
     });
@@ -506,7 +506,7 @@
             remove = stub(browser.list.data("kendoListView"), "remove"),
             showMessage = stub(browser, { _showMessage: function() { return true; } });
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
         browser.toolbar.find(".k-delete").click();
 
         ok(remove.calls("remove"));
@@ -520,7 +520,7 @@
             remove = stub(browser.list.data("kendoListView"), "remove"),
             showMessage = stub(browser, { _showMessage: function() { return false; } });
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
         browser.toolbar.find(".k-delete").click();
 
         ok(!remove.calls("remove"));
@@ -669,7 +669,7 @@
             }
         });
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
 
         equal(browser.value(), "foo/File1");
     });
@@ -681,7 +681,7 @@
             }
         },[{ name: "fileName#.jpg", type: "f" }]);
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
 
         equal(browser.value(), "foo/fileName%23.jpg");
     });
@@ -693,7 +693,7 @@
             }
         });
 
-        browser.list.find("li[data-type=f]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=f]"));
 
         equal(browser.value(), "foo?path=File1");
     });
@@ -707,7 +707,7 @@
 
         browser._showMessage = function() { return true};// suppress the alert for poping
 
-        browser.list.find("li[data-type=d]").mousedown().mouseup();
+        clickAt(browser.list.find("li[data-type=d]"));
         browser.toolbar.find(".k-delete").click();
     });
 

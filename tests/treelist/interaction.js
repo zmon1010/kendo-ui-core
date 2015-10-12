@@ -597,7 +597,7 @@
         });
 
         var row = instance.content.find("tr:first");
-        tap(row);
+        clickAt(row);
 
         ok(row.hasClass("k-state-selected"));
     });
@@ -608,7 +608,7 @@
         });
 
         var row = instance.content.find("tr:first");
-        tap(row);
+        clickAt(row);
 
         ok(!row.hasClass("k-state-selected"));
     });
@@ -619,7 +619,7 @@
         });
 
         var cell = instance.content.find("td:first");
-        tap(cell);
+        clickAt(cell);
 
         ok(cell.hasClass("k-state-selected"));
     });
@@ -632,7 +632,7 @@
 
         var footer = instance.content.find("tr.k-footer-template");
 
-        tap(footer);
+        clickAt(footer);
 
         ok(!footer.hasClass("k-state-selected"));
     });
@@ -645,7 +645,7 @@
 
         var footerCells = instance.content.find(".k-footer-template td");
 
-        tap(footerCells.eq(0));
+        clickAt(footerCells.eq(0));
 
         ok(!footerCells.hasClass("k-state-selected"));
     });

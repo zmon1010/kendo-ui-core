@@ -122,7 +122,7 @@
             equal(e.options.value, true);
         });
 
-        tap($(".k-i-bold"));
+        clickAt($(".k-i-bold"));
     });
 
     test("bold toggle off triggers action event with value null", 1, function() {
@@ -134,7 +134,7 @@
             equal(e.options.value, null);
         });
 
-        tap($(".k-i-bold"));
+        clickAt($(".k-i-bold"));
     });
 
     test("mergeCell click triggers action event with correct value", 1, function() {

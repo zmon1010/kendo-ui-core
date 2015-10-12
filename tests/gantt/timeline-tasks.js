@@ -291,7 +291,7 @@
 
         stub(timeline.view(), "_createTaskTooltip");
 
-        tap(taskElement);
+        clickAt(taskElement);
 
         equal(timeline.view().calls("_createTaskTooltip"), 1);
 
@@ -332,13 +332,13 @@
 
         stub(timeline.view(), "_removeTaskTooltip");
 
-        tap(taskElement);
+        clickAt(taskElement);
 
         equal(timeline.view().calls("_removeTaskTooltip"), 0);
 
         setTimeout(function() {
             start();
-            tap(taskElement);
+            clickAt(taskElement);
             equal(timeline.view().calls("_removeTaskTooltip"), 1);
         }, 1);
 
@@ -359,8 +359,8 @@
 
         stub(timeline.view(), "_removeTaskTooltip");
 
-        tap(taskElement);
-        tap(taskElement);
+        clickAt(taskElement);
+        clickAt(taskElement);
 
         equal(timeline.view().calls("_removeTaskTooltip"), 1);
 
@@ -483,7 +483,7 @@
         });
 
         timeline._render([task]);
-        
+
         taskElement = timeline.view().content.find(".k-task-single");
 
         equal(taskElement.attr("data-uid"), task.uid);
@@ -1098,7 +1098,7 @@
         summaryElement = timeline.wrapper.find(".k-task-summary");
         summaryCompleteElement = timeline.wrapper.find(".k-task-summary-complete");
         summarySlot = timeline.view()._timeSlots()[2];
-        
+
         equal(summaryElement.width(), summarySlot.offsetWidth);
         equal(summaryCompleteElement.width(), summarySlot.offsetWidth);
     });

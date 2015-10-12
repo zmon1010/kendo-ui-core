@@ -304,14 +304,14 @@
     test("clicking on cell selects it", function() {
         var grid = setup({ selectable: "cell" }),
             cell = grid.table.find("tbody tr:eq(1)").find("td").first();
-        cell.mousedown().mouseup();
+        clickAt(cell);
         ok(cell.hasClass("k-state-selected"));
     });
 
     test("clicking on cell selects the row if row selection is enabled", function() {
         var grid = setup({ selectable: true }),
             cell = grid.table.find("tbody tr:eq(1)").find("td").first();
-        cell.mousedown().mouseup();
+        clickAt(cell);
         ok(cell.parent().hasClass("k-state-selected"));
     });
 
@@ -324,7 +324,7 @@
                 }
             }),
             cell = grid.table.find("tbody tr:eq(1)").find("td").first();
-        cell.mousedown().mouseup();
+        clickAt(cell);
         ok(triggered);
     });
 
@@ -394,7 +394,7 @@
                 selectable: true
             }),
             cell = grid.table.find("tbody tr:eq(1)").find("td").first();
-        cell.mousedown().mouseup();
+        clickAt(cell);
         grid.clearSelection();
 
         ok(!cell.parent().hasClass("k-state-selected"));
@@ -408,7 +408,7 @@
         grid.dataSource.group({ field: "foo" });
 
         var cell = grid.table.find("tbody tr:eq(1)").find("td").last();
-        cell.mousedown().mouseup();
+        clickAt(cell);
 
         grid.collapseGroup(grid.table.find(".k-grouping-row:first"));
 
@@ -425,7 +425,7 @@
         grid.dataSource.group({ field: "foo" });
 
         var cell = grid.table.find("tbody tr:eq(1)").find("td").last();
-        cell.mousedown().mouseup();
+        clickAt(cell);
 
         grid.collapseGroup(grid.table.find(".k-grouping-row:first"));
 
@@ -569,7 +569,7 @@
     test("group item is not focused when group icon is clicked", function() {
         var grid = setup({selectable: true, columns: [ { field: "foo", groupFooterTemplate: "foo" }] });
         grid.dataSource.group({ field: "foo" });
-        grid.element.find(".k-grouping-row:first a.k-icon").mousedown().mouseup();
+        clickAt(grid.element.find(".k-grouping-row:first a.k-icon"));
 
         ok(!grid.element.find(".k-state-focused").length);
     });
@@ -577,7 +577,7 @@
     test("group footer row is not selected when clicked", function() {
         var grid = setup({selectable: true, columns: [ { field: "foo", groupFooterTemplate: "foo" }] });
         grid.dataSource.group({ field: "foo" });
-        grid.element.find(".k-group-footer:first").mousedown().mouseup();
+        clickAt(grid.element.find(".k-group-footer:first"));
 
         ok(!grid.element.find(".k-state-selected").length)
     });
@@ -585,7 +585,7 @@
     test("group footer row is not selected when clicked and selection mode is cell", function() {
         var grid = setup({selectable: "cell", columns: [ { field: "foo", groupFooterTemplate: "foo" }] });
         grid.dataSource.group({ field: "foo" });
-        grid.element.find(".k-group-footer:first > td:last").mousedown().mouseup();
+        clickAt(grid.element.find(".k-group-footer:first > td:last"));
 
         ok(!grid.element.find(".k-state-selected").length)
     });
@@ -593,7 +593,7 @@
     test("detail cell is not focused", function() {
         var grid = setup({ detailTemplate: "<input class='foo' />" });
         grid.expandRow(div.find(".k-master-row:first"));
-        grid.table.find(".foo").focus().mousedown();
+        clickAt(grid.table.find(".foo"));
 
         ok(!div.find(".k-detail-cell").hasClass("k-state-focused"));
     });
