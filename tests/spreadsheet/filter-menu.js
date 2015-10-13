@@ -13,12 +13,16 @@
     var DUMMY_VIEW = { ref: rangeRef(0,0, 100, 100), top: 0, left: 0 };
 
     function createPane(row, column, rowCount, columnCount) {
-        return new Pane(sheet, sheet._grid.pane({
+        var pane = new Pane(sheet, sheet._grid.pane({
             row: row,
             column: column,
             rowCount: rowCount,
             columnCount: columnCount
         }));
+
+        pane._currentView = DUMMY_VIEW;
+
+        return pane;
     }
 
     function rangeRef(topLeftRow, topLeftCol, bottomRightRow, bottomRightCol) {
@@ -46,8 +50,6 @@
             })
         });
 
-        pane._currentView = DUMMY_VIEW;
-
         equal(filterButtons(pane).length, 1);
     });
 
@@ -61,15 +63,11 @@
             })
         });
 
-        pane._currentView = DUMMY_VIEW;
-
         equal(filterButtons(pane).length, 3);
     });
 
     test("does not render filter buttons if no filter is set", function() {
         var pane = createPane(0, 0);
-
-        pane._currentView = DUMMY_VIEW;
 
         equal(filterButtons(pane).length, 0);
     });
@@ -83,8 +81,6 @@
                 values: [3]
             })
         });
-
-        pane._currentView = DUMMY_VIEW;
 
         var buttons = filterButtons(pane);
 

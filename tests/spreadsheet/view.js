@@ -20,37 +20,41 @@
         return { rows: [ { cells: [ cell ] } ] };
     }
 
+    function firstDataCell(element) {
+        return element.find(".k-spreadsheet-data td").eq(0);
+    }
+
     test("renders border color", function() {
         sheet.fromJSON(singleCell({ borderRight: { color: "rgb(255, 0, 0)" } }));
 
-        equal(element.find(".k-spreadsheet-data td").css("borderRightColor"), "rgb(255, 0, 0)");
+        equal(firstDataCell(element).css("borderRightColor"), "rgb(255, 0, 0)");
     });
 
     test("renders border size", function() {
         sheet.fromJSON(singleCell({ borderBottom: { size: "2px" } }));
 
-        equal(element.find(".k-spreadsheet-data td").css("borderBottomWidth"), "2px");
+        equal(firstDataCell(element)[0].style.borderBottomWidth, "2px");
     });
 
     test("renders fontSize", function() {
         sheet.fromJSON(singleCell({ fontSize: 8 }));
 
-        equal(element.find(".k-spreadsheet-data td").css("fontSize"), "8px");
+        equal(firstDataCell(element).css("fontSize"), "8px");
     });
 
     test("does not render null border", function() {
         sheet.fromJSON(singleCell({ borderBottom: null }));
 
-        equal(element.find(".k-spreadsheet-data td")[0].style.borderBottomStyle, "");
+        equal(firstDataCell(element)[0].style.borderBottomStyle, "");
     });
 
     test("renders border color on cells with background and no border", function() {
         sheet.fromJSON(singleCell({ background: "rgb(255, 0, 0)" }));
 
-        equal(element.find(".k-spreadsheet-data td").css("borderBottomColor"), "rgb(255, 0, 0)");
-        equal(element.find(".k-spreadsheet-data td").css("borderRightColor"), "rgb(255, 0, 0)");
-        equal(element.find(".k-spreadsheet-data td").css("borderLeftColor"), "rgb(255, 0, 0)");
-        equal(element.find(".k-spreadsheet-data td").css("borderTopColor"), "rgb(255, 0, 0)");
+        equal(firstDataCell(element).css("borderBottomColor"), "rgb(255, 0, 0)");
+        equal(firstDataCell(element).css("borderRightColor"), "rgb(255, 0, 0)");
+        equal(firstDataCell(element).css("borderLeftColor"), "rgb(255, 0, 0)");
+        equal(firstDataCell(element).css("borderTopColor"), "rgb(255, 0, 0)");
     });
 
     test("borderLeft renders right border on previous cell", function() {
@@ -64,7 +68,7 @@
         var leftCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
         var rightCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(1)");
 
-        equal(leftCell.css("borderRightWidth"), "3px");
+        equal(leftCell[0].style.borderRightWidth, "3px");
     });
 
     test("borderLeft of first cell can be set", function() {
@@ -86,7 +90,7 @@
         var topCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
         var bottomCell = element.find(".k-spreadsheet-data tr:eq(1) td:eq(1)");
 
-        equal(topCell.css("borderBottomWidth"), "3px");
+        equal(topCell[0].style.borderBottomWidth, "3px");
     });
 
     test("borderTop of first cell can be set", function() {
