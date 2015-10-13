@@ -15,5 +15,7 @@
         int ToX { get; set; }
         string Text { get; set; }
         string Type { get; set; }
+        string FromConnector { get; set; }
+        string ToConnector { get; set; }
     }
 }

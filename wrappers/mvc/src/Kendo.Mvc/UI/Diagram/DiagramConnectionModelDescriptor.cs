@@ -19,6 +19,8 @@
         public string ToY { get; set; }
         public string Type { get; set; }
         public string Text { get; set; }
+        public string FromConnector { get; set; }
+        public string ToConnector { get; set; }
 
         protected override void Serialize(IDictionary<string, object> json)
         {
@@ -82,6 +84,16 @@
                 else if (Text.HasValue() && currentMember == Text)
                 {
                     fields["text"] = field;
+                    field["from"] = currentMember;
+                }
+                else if (FromConnector.HasValue() && currentMember == FromConnector)
+                {
+                    fields["fromConnector"] = field;
+                    field["from"] = currentMember;
+                }
+                else if (ToConnector.HasValue() && currentMember == ToConnector)
+                {
+                    fields["toConnector"] = field;
                     field["from"] = currentMember;
                 }
                 else

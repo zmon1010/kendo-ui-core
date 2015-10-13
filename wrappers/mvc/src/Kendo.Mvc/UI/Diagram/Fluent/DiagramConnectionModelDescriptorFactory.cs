@@ -170,5 +170,43 @@
         {
             shapeModel.Text = fieldName;
         }
+
+        /// <summary>
+        /// Specify the member used for the source connector name.
+        /// </summary>
+        /// <typeparam name="TValue">Type of the field</typeparam>
+        /// <param name="expression">Member access expression which describes the member</param>
+        public void FromConnector<TValue>(Expression<Func<TModel, TValue>> expression)
+        {
+            shapeModel.FromConnector = expression.MemberWithoutInstance();
+        }
+
+        /// <summary>
+        /// Specify the member used for the source connector name.
+        /// </summary>
+        /// <param name="fieldName">The member name.</param>
+        public void FromConnector(string fieldName)
+        {
+            shapeModel.FromConnector = fieldName;
+        }
+
+        /// <summary>
+        /// Specify the member used for the target connector name.
+        /// </summary>
+        /// <typeparam name="TValue">Type of the field</typeparam>
+        /// <param name="expression">Member access expression which describes the member</param>
+        public void ToConnector<TValue>(Expression<Func<TModel, TValue>> expression)
+        {
+            shapeModel.ToConnector = expression.MemberWithoutInstance();
+        }
+
+        /// <summary>
+        /// Specify the member used for the target connector name.
+        /// </summary>
+        /// <param name="fieldName">The member name.</param>
+        public void ToConnector(string fieldName)
+        {
+            shapeModel.ToConnector = fieldName;
+        }
     }
 }
