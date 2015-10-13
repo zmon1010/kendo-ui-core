@@ -83,6 +83,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Creates a <see cref="TreeList"/>
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().TreeList(Model)
+        ///             .Name("TreeList")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public virtual TreeListBuilder<T> TreeList<T>(IEnumerable<T> dataSource) where T : class
+        {
+            var builder = new TreeListBuilder<T>(new TreeList<T>(ViewContext, Initializer, UrlGenerator));
+
+            builder.Component.DataSource.Data = dataSource;
+
+            return builder;
+        }
+
+        /// <summary>
         /// Creates a new <see cref="Kendo.Mvc.UI.Grid{T}"/> bound to the specified data item type.
         /// </summary>
         /// <example>

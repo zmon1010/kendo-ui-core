@@ -292,6 +292,17 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Binds the grid to a list of objects
+        /// </summary>
+        /// <param name="dataSource">The data source.</param>        
+        public TreeListBuilder<T> BindTo(IEnumerable<T> dataSource)
+        {
+            Component.DataSource.Data = dataSource;
+
+            return this;
+        }        
         
         /// <summary>
         /// Configures the client-side events.

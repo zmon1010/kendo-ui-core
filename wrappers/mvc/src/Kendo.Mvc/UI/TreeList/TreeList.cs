@@ -27,7 +27,8 @@ namespace Kendo.Mvc.UI
                 ServerAggregates = true,
                 ServerFiltering = true,
                 ServerPaging = true,
-                ServerSorting = true
+                ServerSorting = true,
+                ServerGrouping = true
             };
             DataSource.Schema.Model = new TreeListModelDescriptor(typeof(T));
 
