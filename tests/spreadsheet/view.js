@@ -199,7 +199,7 @@
         equal(element.find(".k-spreadsheet-filter").length, 2);
     });
 
-    test("renders filted state of filter headers", function() {
+    test("renders filtered state of filter headers", function() {
         sheet.range("A1:B3").filter({
             column: 0,
             filter: new kendo.spreadsheet.ValueFilter({
@@ -209,7 +209,7 @@
 
         var activeBottom = element.find(".k-spreadsheet-filter.k-state-active");
         equal(activeBottom.length, 1);
-        equal(activeBottom.index(), 0);
+        equal(activeBottom.index(), 1);
     });
 
     test("renders one filter header on merged cell", function() {
