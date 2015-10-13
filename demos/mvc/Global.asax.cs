@@ -145,7 +145,7 @@ namespace Kendo
                 "Debug",
                 "src/{assetType}/{*file}",
                 new { controller = "Debug", action = "Resource" },
-                new { assetType = "(js|styles|npm-less)" }
+                new { assetType = "(js|styles)" }
             );
 
             routes.MapRoute(
