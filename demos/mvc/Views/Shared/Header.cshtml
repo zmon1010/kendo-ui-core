@@ -12,9 +12,9 @@
 <div id="header">
 
 @*    <div id="webinar-banner">
-        The new Kendo UI Release is out.
-        <a href="http://www.telerik.com/campaigns/kendo-ui/july-2015-release" data-gtm-event="yellow-strip, KendoUIQ22015Release, kendo-demos-page">Sign up for the Release Webinar</a>
-        to see the new bits in action.
+        Kendo UI turns four! Sign up for the celebratory webinar
+        <a href="http://www.telerik.com/campaigns/kendo-ui/september-2015-release">Happy Birthday to UI</a>
+        to see the freshly released bits in action.
         <span class="close"></span>
     </div>
 
@@ -22,26 +22,40 @@
 
         (function ($) {
             var banner = $("#webinar-banner");
-            var uniqueLocalStorageBannerKey = "KendoUIQ22015ReleaseWebinarBannerDisabled";
+            var bannerLink = banner.find("a");
+            var trackingAttribute = "data-gtm-event";
+            var uniqueLocalStorageBannerKey = "KendoUIQ32015ReleaseWebinarBannerDisabled";
             var showWebinarBanner = true;
+            var suites = {
+                // "suite": "trackingAttribute"
+                // comment out what's not necessary
+                "kendo-ui": "yellow-strip, KendoUIQ32015Release, kendo-demos-page",
+                "aspnet-mvc": "yellow-strip, KendoUIQ32015Release, mvc-demos-page",
+                "php-ui": "yellow-strip, KendoUIQ32015Release, php-demos-page",
+                "jsp-ui": "yellow-strip, KendoUIQ32015Release, jsp-demos-page"
+            };
 
-            if (location.href.indexOf("aspnet-mvc") < 0) {
-                try {
-                    showWebinarBanner = "1" !== localStorage.getItem(uniqueLocalStorageBannerKey);
-                } catch (e) {
-                }
-                if (showWebinarBanner) {
-                    banner.show().find(".close").click(function () {
-                        try {
-                            localStorage.setItem(uniqueLocalStorageBannerKey, 1);
-                            banner.animate({ marginTop: "-40px", height: 0 }, function () {
-                                banner.hide();
-                                $(window).resize();
-                            });
-                            return true;
-                        } catch (e) {
-                        }
-                    });
+            for (var j in suites) {
+                if (location.href.indexOf(j) > 0) {
+                    try {
+                        showWebinarBanner = "1" !== localStorage.getItem(uniqueLocalStorageBannerKey);
+                    } catch (e) {
+                    }
+                    if (showWebinarBanner) {
+                        bannerLink.attr(trackingAttribute, suites[j]);
+                        banner.show().find(".close").click(function () {
+                            try {
+                                localStorage.setItem(uniqueLocalStorageBannerKey, 1);
+                                banner.animate({ marginTop: "-40px", height: 0 }, function () {
+                                    banner.hide();
+                                    $(window).resize();
+                                });
+                                return true;
+                            } catch (e) {
+                            }
+                        });
+                    }
+                    break;
                 }
             }
         })($);
