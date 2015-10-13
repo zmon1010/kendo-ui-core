@@ -7,9 +7,12 @@
   remote_user: petyo
   sudo: yes
   tasks:
+    - include: a/google-chrome.yml
     - include: a/node.yml
     - include: a/java.yml
     - include: a/mono.yml
+    - apt: name=xvfb
+    - apt: name=xauth
     - name: Install PHP
       apt: name={{item}} state=latest
       with_items:

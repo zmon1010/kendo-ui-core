@@ -1,0 +1,5 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- apt_key: data="{{ lookup('file', 'a/google-chrome.pub') }}" # gross hack to avoid the HTTPS restriction
+- apt_repository: repo='deb http://dl.google.com/linux/chrome/deb/ stable main'
+- apt: name=google-chrome-stable state=latest
