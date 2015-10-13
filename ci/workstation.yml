@@ -1,12 +1,13 @@
 ---
 # vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
-- hosts: vm
+- hosts: all
   vars:
     php_process_user: www-data
     php_process_group: www-data
   remote_user: petyo
   sudo: yes
   tasks:
+    - include: a/node.yml
     - include: a/java.yml
     - include: a/mono.yml
     - name: Install PHP
@@ -22,7 +23,6 @@
       notify:
         - restart php5-fpm
     - service: name=php5-fpm state=started enabled=yes
-    - git: repo=https://github.com/erikw/tmux-powerline.git dest=/home/petyo/tmux-powerline
   handlers:
     - service: name=php5-fpm state=restarted
 

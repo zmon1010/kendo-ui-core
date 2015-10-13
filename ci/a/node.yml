@@ -1,0 +1,12 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- apt: name=apt-transport-https state=latest force=yes # necessary for the https below to work as expected
+- name: Add nodesource key
+  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+- name: Add nodesource repo
+  apt_repository: repo='deb https://deb.nodesource.com/node_4.x trusty main'
+  apt_repository: repo='deb-src https://deb.nodesource.com/node_4.x trusty main'
+- name: Install node packages
+  apt: name=nodejs state=latest
+- npm: name=grunt-cli global=yes
+- npm: name=gulp global=yes
