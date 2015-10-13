@@ -440,7 +440,9 @@
             },
 
             _popup: function() {
-                this.popup = this.element.kendoPopup().data("kendoPopup");
+                this.popup = this.element.kendoPopup({
+                    copyAnchorStyles: false
+                }).data("kendoPopup");
             },
 
             _sort: function() {
