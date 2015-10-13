@@ -59,7 +59,8 @@ LEGACY_MIN_CSS = FileList['wrappers/mvc/legacy-themes/*.css']
     .ext('min.css')
 
 rule '.min.css' => lambda { |target| target.sub('min.css', 'css') } do |t|
-    cssmin(t.source, t.name)
+    puts "Warning: #{t.name} not minified."
+    cp(t.source, t.name)
 end
 
 CLEAN.include(LEGACY_MIN_CSS)
