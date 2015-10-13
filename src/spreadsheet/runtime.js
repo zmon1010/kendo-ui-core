@@ -910,6 +910,21 @@
         }
     }
 
+    function withErrorHandling(obj, f, args) {
+        if (args instanceof CalcError) {
+            return args;
+        }
+        try {
+            return f.apply(obj, args);
+        } catch(ex) {
+            if (ex instanceof CalcError) {
+                return ex;
+            } else {
+                throw ex;
+            }
+        }
+    }
+
     function makeSyncFunction(handler, resolve, check, arrayArgs) {
         return function(callback, args) {
             function doit() {
@@ -929,40 +944,14 @@
                                     }
                                 }
                                 xargs = check.call(this, xargs);
-                                if (xargs instanceof CalcError) {
-                                    result.set(row, col, xargs);
-                                } else {
-                                    try {
-                                        result.set(row, col, handler.apply(this, xargs));
-                                    } catch(ex) {
-                                        if (ex instanceof CalcError) {
-                                            result.set(row, col, ex);
-                                        } else {
-                                            throw ex;
-                                        }
-                                    }
-                                }
+                                result.set(row, col, withErrorHandling(this, handler, xargs));
                             }
                         }
                         return callback(result);
                     }
                 }
                 var xargs = check.call(this, args);
-                if (xargs instanceof CalcError) {
-                    callback(xargs);
-                } else {
-                    var val;
-                    try {
-                        val = handler.apply(this, xargs);
-                    } catch(ex) {
-                        if (ex instanceof CalcError) {
-                            val = ex;
-                        } else {
-                            throw ex;
-                        }
-                    }
-                    callback(val);
-                }
+                callback(withErrorHandling(this, handler, xargs));
             }
             if (resolve) {
                 resolve.call(this, args, doit);
@@ -972,9 +961,6 @@
         };
     }
 
-    // XXX: the duplication here sucks.  the only difference vs the above function is that this one
-    // will insert the callback as first argument when calling the handler, and thus supports async
-    // handlers.
     function makeAsyncFunction(handler, resolve, check, arrayArgs) {
         return function(callback, args) {
             function doit() {
