@@ -21,7 +21,7 @@
     // Excel formula parser and compiler to JS.
     // some code adapted from http://lisperator.net/pltut/
 
-    var OPERATORS = {};
+    var OPERATORS = Object.create(null);
 
     var ParseError = kendo.Class.extend({
         init: function ParseError(message, pos) {
@@ -655,25 +655,26 @@
 
     var makeClosure = (function(cache){
         return function(code) {
-            if (Object.prototype.hasOwnProperty.call(cache, code)) {
-                return cache[code];
+            var f = cache[code];
+            if (!f) {
+                f = cache[code] = new Function("'use strict';return(" + code + ")")();
             }
-            cache[code] = new Function("'use strict';return(" + code + ")")();
-            return cache[code];
+            return f;
         };
-    })({});
+    })(Object.create(null));
 
-    var FORMULA_CACHE = {};
+    var FORMULA_CACHE = Object.create(null);
 
     function makeFormula(exp) {
         var printer = makePrinter(exp);
         var hash = printer.call(exp); // needs .refs
-        if (Object.prototype.hasOwnProperty.call(FORMULA_CACHE, hash)) {
+        var formula = FORMULA_CACHE[hash];
+        if (formula) {
             // we need to clone because formulas cache the result; even if the formula is the same,
             // its value will depend on its location, hence we need different objects.  Still, using
             // this cache is a good idea because we'll reuse the same refs array, handler and
             // printer instead of allocating new ones (and we skip compiling it).
-            return FORMULA_CACHE[hash].clone(exp.sheet, exp.row, exp.col);
+            return formula.clone(exp.sheet, exp.row, exp.col);
         }
         var code = js(toCPS(exp.ast, function(ret){
             return {
@@ -689,7 +690,7 @@
             "}"
         ].join(";\n");
 
-        var formula = new runtime.Formula(exp.refs, makeClosure(code), printer, exp.sheet, exp.row, exp.col);
+        formula = new runtime.Formula(exp.refs, makeClosure(code), printer, exp.sheet, exp.row, exp.col);
         FORMULA_CACHE[hash] = formula;
         return formula;
 

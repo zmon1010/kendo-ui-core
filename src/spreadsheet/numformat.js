@@ -501,20 +501,20 @@
         return code;
     }
 
-    var CACHE = {};
+    var CACHE = Object.create(null);
 
     function compile(format) {
-        if (Object.prototype.hasOwnProperty.call(CACHE, format)) {
-            return CACHE[format];
+        var f = CACHE[format];
+        if (!f) {
+            var tree = parse(format);
+            var code = tree.map(compileFormatPart).join("\n");
+            code = "return function(value, culture){ "
+                + "'use strict'; "
+                + "if (!culture) culture = kendo.culture(); "
+                + "var output = '', type = null, element = dom.element('span'); " + code + "; return element; };";
+            f = CACHE[format] = new Function("runtime", "dom", code)(runtime, kendo.dom);
         }
-        var tree = parse(format);
-        var code = tree.map(compileFormatPart).join("\n");
-        code = "return function(value, culture){ "
-            + "'use strict'; "
-            + "if (!culture) culture = kendo.culture(); "
-            + "var output = '', type = null, element = dom.element('span'); " + code + "; return element; };";
-        CACHE[format] = new Function("runtime", "dom", code)(runtime, kendo.dom);
-        return CACHE[format];
+        return f;
     }
 
     var runtime = {

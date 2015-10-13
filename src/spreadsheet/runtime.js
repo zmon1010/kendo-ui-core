@@ -150,8 +150,9 @@
 
         func: function(fname, callback, args) {
             fname = fname.toLowerCase();
-            if (Object.prototype.hasOwnProperty.call(FUNCS, fname)) {
-                return FUNCS[fname].call(this, callback, args);
+            var f = FUNCS[fname];
+            if (f) {
+                return f.call(this, callback, args);
             }
             callback(new CalcError("NAME"));
         },
@@ -633,43 +634,43 @@
     });
 
     // spreadsheet functions --------
-    var FUNCS = {
-        "if": function(callback, args) {
-            var self = this;
-            var co = args[0], th = args[1], el = args[2];
-            // XXX: I don't like this resolveCells here.  We should try to declare IF with
-            // defineFunction.
-            this.resolveCells([ co ], function(){
-                var comatrix = self.asMatrix(co);
-                if (comatrix) {
-                    // XXX: calling both branches in this case, since we'll typically need values from
-                    // both.  We could optimize and call them only when first needed, but oh well.
-                    th(function(th){
-                        el(function(el){
-                            var thmatrix = self.asMatrix(th);
-                            var elmatrix = self.asMatrix(el);
-                            callback(comatrix.map(function(val, row, col){
-                                if (self.bool(val)) {
-                                    return thmatrix ? thmatrix.get(row, col) : th;
-                                } else {
-                                    return elmatrix ? elmatrix.get(row, col) : el;
-                                }
-                            }));
-                        });
-                    });
-                } else {
-                    if (self.bool(co)) {
-                        th(callback);
-                    } else {
-                        el(callback);
-                    }
-                }
-            });
-        },
+    var FUNCS = Object.create(null);
 
-        "φ": function(callback) {
-            callback((1+Math.sqrt(5))/2);
-        }
+    FUNCS["if"] = function(callback, args) {
+        var self = this;
+        var co = args[0], th = args[1], el = args[2];
+        // XXX: I don't like this resolveCells here.  We should try to declare IF with
+        // defineFunction.
+        this.resolveCells([ co ], function(){
+            var comatrix = self.asMatrix(co);
+            if (comatrix) {
+                // XXX: calling both branches in this case, since we'll typically need values from
+                // both.  We could optimize and call them only when first needed, but oh well.
+                th(function(th){
+                    el(function(el){
+                        var thmatrix = self.asMatrix(th);
+                        var elmatrix = self.asMatrix(el);
+                        callback(comatrix.map(function(val, row, col){
+                            if (self.bool(val)) {
+                                return thmatrix ? thmatrix.get(row, col) : th;
+                            } else {
+                                return elmatrix ? elmatrix.get(row, col) : el;
+                            }
+                        }));
+                    });
+                });
+            } else {
+                if (self.bool(co)) {
+                    th(callback);
+                } else {
+                    el(callback);
+                }
+            }
+        });
+    };
+
+    FUNCS["φ"] = function(callback) {
+        callback((1+Math.sqrt(5))/2);
     };
 
     // Lasciate ogni speranza, voi ch'entrate.

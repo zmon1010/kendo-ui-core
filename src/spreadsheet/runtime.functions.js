@@ -2187,7 +2187,7 @@
     //// utils
 
     var parseCriteria = (function(){
-        var RXCACHE = {};
+        var RXCACHE = Object.create(null);
 
         function makeComparator(cmp, x) {
             if (typeof x == "string") {
@@ -2250,10 +2250,8 @@
             }
             if (/[?*]/.exec(cmp)) {
                 // has wildchars
-                var rx;
-                if (Object.prototype.hasOwnProperty.call(RXCACHE, cmp)) {
-                    rx = RXCACHE[cmp];
-                } else {
+                var rx = RXCACHE[cmp];
+                if (!rx) {
                     rx = cmp.replace(/(~\?|~\*|[\]({\+\.\|\^\$\\})\[]|[?*])/g, function(s){
                         switch (s) {
                           case "~?" : return "\\?";
