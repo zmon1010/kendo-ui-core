@@ -10,3 +10,4 @@
   apt: name=nodejs state=latest
 - npm: name=grunt-cli global=yes
 - npm: name=gulp global=yes
+- npm: name=jshint global=yes
