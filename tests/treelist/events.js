@@ -133,7 +133,7 @@
             change: handler
         });
 
-        tap(instance.content.find("tr:first"));
+        clickAt(instance.content.find("tr:first"));
 
         equal(handler.calls, 1);
     });
