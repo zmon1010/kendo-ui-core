@@ -948,4 +948,17 @@
 
         equal(filterMenu.form.find("[" + kendo.attr("role") + "=datetimepicker]:first").kendoDateTimePicker("value").getTime(), date.getTime());
     });
+
+    test("dataSource as options",  function() {
+        filterMenu = setup(dom, { dataSource: {} });
+
+        ok(filterMenu.dataSource instanceof DataSource);
+    });
+
+    test("DataSource instance is not changed",  function() {
+        filterMenu = setup(dom, { dataSource: dataSource });
+
+        strictEqual(filterMenu.dataSource, dataSource);
+    });
+
 })();

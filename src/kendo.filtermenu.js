@@ -255,7 +255,7 @@ var __meta__ = { // jshint ignore:line
 
             that.link = link || $();
 
-            that.dataSource = options.dataSource;
+            that.dataSource = DataSource.create(options.dataSource);
 
             that.field = options.field || element.attr(kendo.attr("field"));
 
