@@ -1,0 +1,7 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- apt: name='ruby1.9.3'
+- apt: name=bundler
+- apt: name=libxml2-dev
+- apt: name=libxslt1-dev
+- gem: name=rake version="0.9.2.2"

@@ -7,6 +7,7 @@
   remote_user: petyo
   sudo: yes
   tasks:
+    - include: a/ruby.yml
     - include: a/nginx.yml
     - include: a/google-chrome.yml
     - include: a/node.yml
