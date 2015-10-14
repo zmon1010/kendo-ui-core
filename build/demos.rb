@@ -301,10 +301,6 @@ tree :to => 'dist/demos/staging/content/cdn/styles',
      :from => MIN_CSS_RESOURCES,
      :root => ROOT_MAP['styles']
 
-tree :to => 'dist/demos/staging/content/cdn/styles/telerik',
-     :from => FileList['wrappers/mvc/legacy-themes/**/*'].include(LEGACY_MIN_CSS),
-     :root => 'wrappers/mvc/legacy-themes/'
-
 tree :to => 'dist/demos/staging/content/cdn/themebuilder',
      :from => FileList[THEME_BUILDER_RESOURCES]
                 .include('themebuilder/bootstrap.js')

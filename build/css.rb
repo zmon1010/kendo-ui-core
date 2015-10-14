@@ -52,15 +52,7 @@ APP_BUILDER_CORE_MIN_CSS  = FileList["#{DIST_STYLES_ROOT}mobile/kendo.mobile.all
 
 CLEAN.include('dist/styles')
 
-# Legacy themes support
-
-LEGACY_MIN_CSS = FileList['wrappers/mvc/legacy-themes/*.css']
-    .exclude('**/*.min.css')
-    .ext('min.css')
-
 rule '.min.css' => lambda { |target| target.sub('min.css', 'css') } do |t|
     puts "Warning: #{t.name} not minified."
     cp(t.source, t.name)
 end
-
-CLEAN.include(LEGACY_MIN_CSS)

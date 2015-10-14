@@ -66,8 +66,6 @@ ROOT_MAP = {
     'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => 'dpl/Telerik.Web.Spreadsheet/',
     'src/Telerik.Web.Spreadsheet/lib' => 'dpl/lib/',
     'apptemplates' => 'demos/apptemplates',
-    'wrappers/aspnetmvc/LegacyThemes' => 'wrappers/mvc/legacy-themes/',
-    'styles/telerik' => 'wrappers/mvc/legacy-themes/',
     'wrappers/aspnetmvc/EditorTemplates/ascx' => 'wrappers/mvc/demos/Kendo.Mvc.Examples/Views/Shared/EditorTemplates/',
     'wrappers/aspnetmvc/EditorTemplates/razor' => 'wrappers/mvc/demos/Kendo.Mvc.Examples/Views/Shared/EditorTemplates/',
     'wrappers/aspnetmvc/Binaries/Mvc3' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC3/',
@@ -176,8 +174,7 @@ MVC_BINARIES = {
 
 MVC_CONTENT = {
     'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
-    'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
-    'wrappers/aspnetmvc/LegacyThemes' => FileList['wrappers/mvc/legacy-themes/**/*'].include(LEGACY_MIN_CSS)
+    'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
 }.merge(MVC_BINARIES)
 
 {
@@ -593,8 +590,7 @@ bundle :name => 'aspnetmvc.hotfix.trial',
             'js' => TRIAL_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
-            'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
-            'wrappers/aspnetmvc/LegacyThemes' => FileList['wrappers/mvc/legacy-themes/**/*']
+            'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
        }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
        :post_build => ['mvc:copy_trials', 'spreadsheet:copy_trials'],
        :prerequisites => [
@@ -726,7 +722,6 @@ bundle :name => 'aspnetmvc.internal.commercial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
-            'wrappers/aspnetmvc/LegacyThemes' => FileList['wrappers/mvc/legacy-themes/**/*'],
             'src/js' => MVC_SRC_JS,
             'src/styles' => SRC_CSS,
             'src/Kendo.Mvc/packages' => FileList['wrappers/mvc/packages/**/*.*'],
@@ -785,8 +780,7 @@ bundle :name => 'aspnetmvc.hotfix.commercial',
             'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
-            'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
-            'wrappers/aspnetmvc/LegacyThemes' => FileList['wrappers/mvc/legacy-themes/**/*']
+            'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
        }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
        :prerequisites => [
            'mvc:assets',
@@ -802,8 +796,7 @@ bundle :name => 'cdn.commercial',
        :vsdoc_dest => 'js',
        :contents => {
            'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
-           'styles' => MIN_CSS_RESOURCES,
-           'styles/telerik' => FileList['wrappers/mvc/legacy-themes/**/*'].include(LEGACY_MIN_CSS)
+           'styles' => MIN_CSS_RESOURCES
        }
 
 WIN_JS_RESOURCES = WIN_MIN_JS + WIN_SRC_JS + WIN_SRC_CSS + WIN_MIN_CSS
