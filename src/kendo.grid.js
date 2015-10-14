@@ -2963,7 +2963,7 @@ var __meta__ = { // jshint ignore:line
             that.cancelRow();
 
             if (model) {
-
+                row = that.tbody.children("[" + kendo.attr("uid") + "=" + model.uid + "]");
                 that._attachModelChange(model);
 
                 if (mode === "popup") {

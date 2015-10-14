@@ -743,6 +743,20 @@
         equal(editable.options.fields[1].field, "name");
     });
 
+    test("editRow puts row in edit mode when there is new row in edit mode", function() {
+        var grid = setup({ columns: ["foo", "name"], editable: "inline" });
+        grid.addRow();
+
+        var row = table.find("tr").eq(1);
+        var uid = row.attr(kendo.attr("uid"));
+
+        grid.editRow(row);
+
+        var editRow = table.find(".k-grid-edit-row");
+
+        equal(editRow.attr(kendo.attr("uid")), uid);
+    });
+
     test("editRow sets the first editable cell in edit mode", function() {
         var grid = setup({
                 columns: ["foo", "name"],
