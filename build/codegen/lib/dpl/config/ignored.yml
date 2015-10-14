@@ -5,7 +5,10 @@
 - spreadsheet.headerWidth
 - spreadsheet.headerHeight
 - spreadsheet.toolbar
+- spreadsheet.excel
 - spreadsheet.sheets.rows.cells.borderLeft
 - spreadsheet.sheets.rows.cells.borderRight
 - spreadsheet.sheets.rows.cells.borderBottom
 - spreadsheet.sheets.rows.cells.borderTop
+- spreadsheet.sheets.rows.cells.validation
+- spreadsheet.sheets.dataSource
