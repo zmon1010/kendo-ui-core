@@ -13,3 +13,6 @@
     - mono-xsp4
     - mono-xbuild
     - nuget
+    - mono-fastcgi-server4
+- template: src=a/mono-fcgi.conf.j2 dest=/etc/init/mono-fcgi.conf owner=www-data group=www-data
+- service: name=mono-fcgi state=restarted
