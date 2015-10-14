@@ -1,0 +1,44 @@
+upstream mono {
+    server unix:/var/run/mono-fcgi.sock;
+}
+
+server {
+    listen   80;
+    server_name localhost;
+    autoindex on;
+    index  index.html index.htm index.php;
+    root /home/{{ ansible_env.SUDO_USER }};
+
+    expires -1;
+
+    location /kendo-ui {
+        alias /home/{{ ansible_env.SUDO_USER }}/kendo/docs/_site;
+        try_files $uri.html $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include        fastcgi_params;
+        fastcgi_pass   unix:/run/php-fpm.sock;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    }
+
+    location /demos/ {
+        rewrite ^/demos/src/js/(.*)$ /kendo/src/$1 last;
+        rewrite ^/demos/src/styles/(.*)$ /kendo/styles/$1 last;
+
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass   mono;
+        include        fastcgi_params;
+    }
+
+    location ~ /demos-(kendo-ui|php-ui|jsp-ui|aspnet-mvc) {
+        rewrite ^/demos-(kendo-ui|php-ui|jsp-ui|aspnet-mvc)/src/js/(.*)$ /kendo/src/$2 last;
+        rewrite ^/demos-(kendo-ui|php-ui|jsp-ui|aspnet-mvc)/src/styles/(.*)$ /kendo/styles/$2 last;
+
+        fastcgi_param  HTTP_X_KENDO $1;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass   mono;
+        include        fastcgi_params;
+    }
+}
