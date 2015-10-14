@@ -16,6 +16,24 @@
         return new Pane(sheet, sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
     }
 
+    test("correct columns are rendered when multiple subsequent columns are hidden", function() {
+        sheet.hideColumn(1);
+        sheet.hideColumn(2);
+
+        var pane = createPane(0, 0, 4, 4);
+        pane.refresh();
+
+        var header = pane.render(0, 0).children[6];
+
+        equal(header.children[1].children.length, 1);
+
+        var tr = header.children[1].children[0];
+
+        equal(tr.children.length, 2);
+        equal(tr.children[0].children[0].nodeValue, "A");
+        equal(tr.children[1].children[0].nodeValue, "D");
+    });
+
     test("doesn't render hidden columns", function() {
         sheet.range("C1:C1").value("foo");
         sheet.hideColumn(1);

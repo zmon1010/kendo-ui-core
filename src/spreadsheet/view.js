@@ -232,11 +232,13 @@
                 return tr.visible;
             });
 
+            var offset = 0;
             this.cols = this.cols.filter(function(col, ci) {
                 if (!col.visible) {
                     this.trs.forEach(function(tr) {
-                        tr.children.splice(ci, 1);
+                        tr.children.splice(ci - offset, 1);
                     });
+                    offset++;
                 }
 
                 return col.visible;
