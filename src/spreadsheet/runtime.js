@@ -1215,6 +1215,36 @@
         }
     }
 
+    function parseDate(str) {
+        // XXX: this is biased towards US style (when numeric, month must come first).
+        return kendo.parseDate(str, [
+            "MM/dd/yyyy",
+            "MM-dd-yyyy",
+            "MM/dd/yy",
+            "MM-dd-yy",
+            "MMMM dd yyyy",
+            "MMMM dd yy",
+            "MMM dd yyyy",
+            "MMM dd yy",
+            "dd MMMM yyyy",
+            "dd MMMM yy",
+            "dd MMM yyyy",
+            "dd MMM yy",
+            "MMMM dd, yyyy",
+            "MMMM dd, yy",
+            "MMM dd, yyyy",
+            "MMM dd, yy",
+            "MMMM dd",
+            "MMM dd",
+            "MMMM yyyy",
+            "MMM yyyy",
+            "dd MMMM",
+            "dd MMM",
+            "MM-dd",
+            "MM/dd"
+        ]) || kendo.parseDate(str);
+    }
+
     /* -----[ exports ]----- */
 
     exports.CalcError = CalcError;
@@ -1230,6 +1260,7 @@
     exports.daysInMonth = daysInMonth;
     exports.isLeapYear = isLeapYear;
     exports.daysInYear = daysInYear;
+    exports.parseDate = parseDate;
 
     spreadsheet.dateToNumber = dateToSerial;
     spreadsheet.numberToDate = serialToDate;

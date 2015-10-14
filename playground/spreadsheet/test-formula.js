@@ -558,6 +558,10 @@ false&&fillElements({
 
 fillElements({
     sheet1: {
+        E12: '=text(D12, "mmm-dd-yyyy")',
+        E13: '=text(D13, "mmm-dd-yyyy")',
+        E14: '=text(D14, "mmm-dd-yyyy")',
+
         A1: '=ASUM(1000, C:E)',
         A2: '=A1 * 2',
         B1: '=B2',

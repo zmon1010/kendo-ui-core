@@ -1015,7 +1015,7 @@
         if (input.toLowerCase() == "false") {
             return { type: "boolean", value: false };
         }
-        var date = kendo.parseDate(input);
+        var date = runtime.parseDate(input);
         if (date) {
             return { type: "date", value: runtime.dateToSerial(date) };
         }

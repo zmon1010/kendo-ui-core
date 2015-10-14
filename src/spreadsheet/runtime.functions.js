@@ -1821,7 +1821,7 @@
     ]);
 
     defineFunction("datevalue", function(text){
-        var date = kendo.parseDate(text);
+        var date = runtime.parseDate(text);
         if (date) {
             return runtime.dateToSerial(date);
         }
