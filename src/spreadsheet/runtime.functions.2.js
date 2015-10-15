@@ -461,6 +461,54 @@
         [ "?", [ "assert", "$values.length == $dates.length", "NUM" ] ]
     ]);
 
+    defineFunction("ISPMT", ISPMT).args([
+        [ "rate", "number" ],
+        [ "per", "number++" ],
+        [ "nper", "number++" ],
+        [ "pv", "number" ],
+        [ "?", [ "assert", "$per >= 1 && $per <= $nper" ] ]
+    ]);
+
+    defineFunction("DB", DB).args([
+        [ "cost", "number" ],
+        [ "salvage", "number" ],
+        [ "life", "number++" ],
+        [ "period", "number++" ],
+        [ "month", [ "or", "number", [ "null", 12 ] ] ]
+    ]);
+
+    defineFunction("DDB", DDB).args([
+        [ "cost", "number" ],
+        [ "salvage", "number" ],
+        [ "life", "number++" ],
+        [ "period", "number++" ],
+        [ "factor", [ "or", "number", [ "null", 2 ] ] ]
+    ]);
+
+    defineFunction("SLN", SLN).args([
+        [ "cost", "number" ],
+        [ "salvage", "number" ],
+        [ "life", "number++" ]
+    ]);
+
+    defineFunction("SYD", SYD).args([
+        [ "cost", "number" ],
+        [ "salvage", "number" ],
+        [ "life", "number++" ],
+        [ "per", "number++" ]
+    ]);
+
+    defineFunction("VDB", VDB).args([
+        [ "cost", "number+" ],
+        [ "salvage", "number+" ],
+        [ "life", "number++" ],
+        [ "start_period", "number+" ],
+        [ "end_period", "number+" ],
+        [ "factor", [ "or", "number+", [ "null", 2 ] ] ],
+        [ "no_switch", [ "or", "logical", [ "null", false ] ] ],
+        [ "?", [ "assert", "$end_period >= $start_period", "NUM" ] ]
+    ]);
+
     /* -----[ utils ]----- */
 
     // function resultAsMatrix(f) {
@@ -1348,6 +1396,127 @@
             return [npv, npv1];
         }
         return root_newton(xfd, guess); // , 100, 0.1);
+    }
+
+    //// ISPMT (Interest paid during a Specific Period of an investment) ////
+    function ISPMT(rate, per, nper, pv) { // ISPMT(rate, per, nper, pv)
+        var tmp = -pv*rate;
+        return tmp*(1 - per/nper);
+    }
+
+    //// DB (Declining Balance depreciation) ////
+    function DB(cost, salvage, life, period, month) { // DB(cost, salvage, life, period, [month])
+        var rate = 1 - Math.pow(salvage/cost, 1/life);
+        rate = Math.floor(rate*1000 + 0.5) / 1000; // rounded to three decimals
+        var db = cost * rate * month / 12;
+        if(period == 1) {
+            return db;
+        }
+        for(var i=1; i < life; i++) {
+            if(i == period - 1) {
+                return (cost - db) * rate;
+            }
+            db += (cost - db) * rate;
+        }
+        return (cost - db) * rate * (12 - month) / 12;
+    }
+
+    //// DDB (Double Declining Balance depreciation) ////
+    function DDB(cost, salvage, life, period, factor) { // DDB(cost, salvage, life, period, [factor])
+        var f = factor / life;
+        var prior = -cost * (Math.pow(1-f, period-1) - 1);
+        var dep = (cost - prior) * f;
+        /* Depreciation cannot exceed book value.  */
+        dep = Math.min(dep, Math.max(0, cost - prior - salvage));
+        return dep;
+    }
+
+    //// SLN (straight-line depreciation) ////
+    function SLN(cost, salvage, life) { // SLN(cost, salvage, life)
+        return (cost - salvage) / life;
+    }
+
+    //// SYD (Sum-of-Years' digits Depreciation) ////
+    function SYD(cost, salvage, life, per) { // SYD(cost, salvage, life, per)
+        return (cost - salvage) * (life - per + 1) * 2 / (life * (life + 1));
+    }
+
+    //// VDB (Variable Declining Balance) ////
+    //
+    // Code adapted from Gnumeric, which in turn took it from OpenOffice.  The original code is
+    // available under GNU Lesser General Public License (LGPL).
+    // https://github.com/GNOME/gnumeric/blob/master/plugins/fn-financial/sc-fin.c
+    function VDB (cost, salvage, life, start, end, factor, no_switch) {
+        var interest = factor >= life ? 1 : factor / life;
+
+        function _getGDA(value, period) {
+            var gda, oldValue, newValue;
+            if (interest == 1) {
+                oldValue = period == 1 ? value : 0;
+            } else {
+                oldValue = value * Math.pow(1 - interest, period - 1);
+            }
+            newValue = value * Math.pow(1 - interest, period);
+            gda = newValue < salvage ? oldValue - salvage : oldValue - newValue;
+            return gda < 0 ? 0 : gda;
+        }
+
+        function _interVDB(cost, life1, period) {
+            var remValue = cost - salvage;
+            var intEnd = Math.ceil(period);
+            var term, lia = 0, vdb = 0, nowLia = false;
+            for (var i = 1; i <= intEnd; i++) {
+                if (!nowLia) {
+                    var gda = _getGDA(cost, i);
+                    lia = remValue / (life1 - i + 1);
+                    if (lia > gda) {
+                        term = lia;
+                        nowLia = true;
+                    } else {
+                        term = gda;
+                        remValue -= gda;
+                    }
+                } else {
+                    term = lia;
+                }
+                if (i == intEnd) {
+                    term *= period + 1 - intEnd;
+                }
+                vdb += term;
+            }
+            return vdb;
+        }
+
+        var intStart = Math.floor(start), intEnd = Math.ceil(end);
+        var vdb = 0;
+        if (no_switch) {
+            for (var i = intStart + 1; i <= intEnd; i++) {
+                var term = _getGDA(cost, i);
+                if (i == intStart + 1) {
+                    term *= Math.min(end, intStart + 1) - start;
+                } else {
+                    if (i == intEnd) {
+                        term *= end + 1 - intEnd;
+                    }
+                }
+                vdb += term;
+            }
+        } else {
+            var life1 = life;
+            if (start != Math.floor(start)) {
+                if (factor > 1) {
+                    if (start >= life / 2) {
+                        var part = start - life / 2;
+                        start = life / 2;
+                        end -= part;
+                        life1 += 1;
+                    }
+                }
+            }
+            cost -= _interVDB(cost, life1, start);
+            vdb = _interVDB(cost, life - start, end - start);
+        }
+        return vdb;
     }
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
