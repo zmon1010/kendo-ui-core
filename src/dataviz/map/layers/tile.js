@@ -232,6 +232,7 @@
                 point: point,
                 offset: roundPoint(offset),
                 zoom: this._zoom,
+                size: this.options.tileSize,
                 subdomain: this.subdomainText(),
                 urlTemplate: this.options.urlTemplate,
                 errorUrlTemplate: this.options.errorUrlTemplate
@@ -275,6 +276,7 @@
 
         createElement: function() {
             this.element = $("<img style='position: absolute; display: block;' />")
+                            .css({ width: this.options.size, height: this.options.size })
                             .error(proxy(function(e) {
                                 if (this.errorUrl()) {
                                     e.target.setAttribute("src", this.errorUrl());

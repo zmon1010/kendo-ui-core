@@ -144,6 +144,22 @@
             ok(view.element.children().length === 16);
         });
 
+        test("sets tile size", function() {
+            view.render();
+            var img = view.element.children().eq(0);
+            equal(img.css("width"), "256px");
+            equal(img.css("height"), "256px");
+        });
+
+        test("sets custom tile size", function() {
+            createView({ tileSize: 512 });
+            view.render();
+
+            var img = view.element.children().eq(0);
+            equal(img.css("width"), "512px");
+            equal(img.css("height"), "512px");
+        });
+
         test("tileCount should calculate the matrix", function() {
             deepEqual(view.tileCount(), { x: 4, y: 4 });
         });
