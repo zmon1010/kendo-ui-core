@@ -232,6 +232,10 @@ module CodeGen::TypeScript
 
             declaration = "#{name}: #{type_script_type};"
 
+            if @owner.config_object?
+                declaration = "#{name}?: #{type_script_type};"
+            end
+
             if jsdoc
                 #indentation is important!
                 declaration = %{/**
