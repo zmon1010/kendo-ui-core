@@ -14,11 +14,15 @@ declare not_found=$(
         | awk '{ print $3 }'
 )
 
+declare statuscode=0
+
 # list pages that refer to broken links
 printf '%s\n' "$not_found" \
     | while read -r line; do
         # remove hostname
         line=$(echo "$line" | sed -r "s#[^/]*//[^/]*/kendo-ui##")
+
+        statuscode=1
 
         echo -e "\e[91mBroken link: $line\e[39m"
         echo "Found in:"
@@ -28,3 +32,5 @@ printf '%s\n' "$not_found" \
 
         echo ""
     done
+
+exit $statuscode

@@ -77,7 +77,7 @@
       <scriptOnlyIfFailure>true</scriptOnlyIfFailure>
     </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
     <hudson.tasks.BuildTrigger>
-      <childProjects>TZ-CI, jquery-CI, Firefox-CI, CI-DownloadBuilder</childProjects>
+      <childProjects>CI-Brazil-Time-Zones,CI-Multiple-jQuery,CI-Firefox,CI-Download-Builder</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

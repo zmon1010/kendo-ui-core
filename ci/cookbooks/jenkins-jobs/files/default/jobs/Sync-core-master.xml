@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>cherry pick commits from kendo-ui-core/production to kendo/production</description>
+  <description>cherry pick commits from kendo-ui-core/master to kendo/master</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.8">
@@ -19,14 +19,14 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>production</name>
+        <name>master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.LocalBranch>
-        <localBranch>remotes/core/core-production</localBranch>
+        <localBranch>remotes/core/core-master</localBranch>
       </hudson.plugins.git.extensions.impl.LocalBranch>
     </extensions>
   </scm>
@@ -53,24 +53,25 @@ if [ $(git remote | wc -l) -ne 2 ]; then
     INITIAL=true
 fi
 
-git fetch origin +refs/heads/production:private-production &amp;&gt;/dev/null
+git fetch origin +refs/heads/master:private-master &amp;&gt;/dev/null
 
 if [ -z &quot;$INITIAL&quot; ]; then
     PREVIOUS=$(git rev-parse previous)
 
-    if [ &quot;$PREVIOUS&quot; == $(git rev-parse core/production) ]; then
+    if [ &quot;$PREVIOUS&quot; == $(git rev-parse core/master) ]; then
         echo &quot;nothing to pick&quot;
         exit 0
     fi
 else
     echo &quot;Initial fetch, skipping cherry-pick&quot;
-    git tag -f previous core/production
+    git tag -f previous core/master
     exit 0
 fi
 
-git checkout private-production &amp;&gt;/dev/null
+git checkout private-master &amp;&gt;/dev/null
 
-for commit in `git rev-list --reverse --topo-order previous..core/production`;
+
+for commit in `git rev-list --reverse --topo-order previous..core/master`;
 do
     if [ `git cat-file -p $commit | grep ^parent | wc -l` -eq 1 ];
     then
@@ -86,14 +87,18 @@ do
     fi
 done
 
-git tag -f previous core/production
+git push origin private-master:master
 
-git push origin private-production:production</command>
+
+git tag -f previous core/master
+
+exit $CHERRY_PICK_RESULT
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>core-production-sync-status</childProjects>
+      <childProjects>Sync-Status-core-master</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

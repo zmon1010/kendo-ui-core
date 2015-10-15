@@ -55,7 +55,7 @@ H 6 * * 1-5</spec>
       <configs>
         <hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
           <configs class="empty-list"/>
-          <projects>stable-aspnetmvc-binaries</projects>
+          <projects>ASP.NET-MVC-Binaries</projects>
           <condition>ALWAYS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <block>
