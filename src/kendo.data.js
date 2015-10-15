@@ -1259,7 +1259,8 @@ var __meta__ = { // jshint ignore:line
         ge: "gte",
         notsubstringof: "doesnotcontain",
         isnull: "isnull",
-        isempty: "isempty"
+        isempty: "isempty",
+        isnotempty: "isnotempty"
     };
 
     function normalizeOperator(expression) {
