@@ -3,6 +3,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
     using System;
     using System.Linq.Expressions;
     using System.Reflection;
+    using Kendo.Mvc.Extensions;
 
     internal static class FilterOperatorExtensions
     {
@@ -16,6 +17,12 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
         /// <exception cref="InvalidOperationException"><c>InvalidOperationException</c>.</exception>
         internal static Expression CreateExpression(this FilterOperator filterOperator, Expression left, Expression right, bool liftMemberAccess)
         {
+            if ((filterOperator == FilterOperator.IsNotNull || filterOperator == FilterOperator.IsNull) &&
+                 left.Type.IsValueType && !left.Type.IsNullableType())
+            {
+                return filterOperator == FilterOperator.IsNotNull ? ExpressionConstants.TrueLiteral : ExpressionConstants.FalseLiteral;
+            } 
+
             switch (filterOperator)
             {
                 case FilterOperator.IsLessThan:
@@ -51,6 +58,17 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
                 case FilterOperator.IsContainedIn:
                     return GenerateIsContainedIn(left, right, liftMemberAccess);
 
+                case FilterOperator.IsEmpty:
+                    return GenerateIsEmpty(left);
+
+                case FilterOperator.IsNotEmpty:
+                    return GenerateIsNotEmpty(left);
+
+                case FilterOperator.IsNull:
+                    return GenerateIsNull(left);
+
+                case FilterOperator.IsNotNull:
+                    return GenerateIsNotNull(left);
             }
 
             throw new InvalidOperationException();
@@ -144,6 +162,26 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
         private static Expression GenerateEndsWith(Expression left, Expression right, bool liftMemberAccess)
         {
             return GenerateCaseInsensitiveStringMethodCall(StringEndsWithMethodInfo, left, right, liftMemberAccess);
+        }
+
+        private static Expression GenerateIsEmpty(Expression left)
+        {
+            return Expression.Equal(left, Expression.Constant(string.Empty));
+        }
+
+        private static Expression GenerateIsNotEmpty(Expression left)
+        {
+            return Expression.NotEqual(left, Expression.Constant(string.Empty));
+        }
+
+        private static Expression GenerateIsNull(Expression left)
+        {
+            return Expression.Equal(left, Expression.Constant(null));
+        }
+
+        private static Expression GenerateIsNotNull(Expression left)
+        {
+            return Expression.NotEqual(left, Expression.Constant(null));
         }
 
         private static Expression GenerateCaseInsensitiveStringMethodCall(MethodInfo methodInfo, Expression left, Expression right, bool liftMemberAccess)

@@ -80,6 +80,106 @@ namespace Kendo.Mvc.Tests.Data
         }
 
         [Fact]
+        public void Filter_string_is_empty()
+        {
+            IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = "" } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+            {
+                Member = "Name",
+                Operator = FilterOperator.IsEmpty
+            }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(1);
+            people.ElementAt(1).ShouldBeSameAs(filteredPeople.FirstOrDefault());
+        }
+
+        [Fact]
+        public void Filter_string_is_not_empty()
+        {
+            IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = "" } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+            {
+                Member = "Name",
+                Operator = FilterOperator.IsNotEmpty
+            }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(1);
+            people.ElementAt(0).ShouldBeSameAs(filteredPeople.FirstOrDefault());
+        }
+
+        [Fact]
+        public void Filter_string_is_not_null()
+        {
+            IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = null } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+            {
+                Member = "Name",
+                Operator = FilterOperator.IsNotNull
+            }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(1);
+            people.ElementAt(0).ShouldBeSameAs(filteredPeople.FirstOrDefault());
+        }
+
+        [Fact]
+        public void Filter_string_is_null()
+        {
+            IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = null } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+            {
+                Member = "Name",
+                Operator = FilterOperator.IsNull
+            }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(1);
+            people.ElementAt(1).ShouldBeSameAs(filteredPeople.FirstOrDefault());
+        }
+
+        [Fact]
+        public void Filter_number_is_null_on_non_null_values()
+        {
+            IEnumerable<Person> people = new[] { new Person { ID = 1 }, new Person { ID = 2 } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+            {
+                Member = "ID",
+                Operator = FilterOperator.IsNull
+            }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(0);
+        }
+
+        [Fact]
+        public void Filter_number_is_not_null_on_non_null_values()
+        {
+            IEnumerable<Person> people = new[] { new Person { ID = 1 }, new Person { ID = 2 } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+            {
+                Member = "ID",
+                Operator = FilterOperator.IsNotNull
+            }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(2);
+        }
+
+        [Fact]
         public void Sort_should_sort_the_data()
         {
             IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = "B" } };

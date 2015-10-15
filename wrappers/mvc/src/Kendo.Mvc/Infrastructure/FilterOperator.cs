@@ -48,6 +48,22 @@ namespace Kendo.Mvc
         /// <summary>
         /// Left operand must not contain the right one.
         /// </summary>
-        DoesNotContain
+        DoesNotContain,
+        /// <summary>
+        /// Operand is null.
+        /// </summary>
+        IsNull,
+        /// <summary>
+        /// Operand is not null.
+        /// </summary>
+        IsNotNull,
+        /// <summary>
+        /// Operand is empty.
+        /// </summary>
+        IsEmpty,
+        /// <summary>
+        /// Operand is not empty.
+        /// </summary>
+        IsNotEmpty
     }
 }
