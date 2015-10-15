@@ -628,7 +628,7 @@ var Clipboard = Class.extend({
 
         var reader = new FileReader();
 
-        if (!(blob instanceof window.File)) {
+        if (!(blob instanceof window.File) && blob.getAsFile) {
             blob = blob.getAsFile();
         }
 
