@@ -17,7 +17,7 @@ wget --spider -e robots=off --wait 1 -r -p $1 2>&1 \
             # remove hostname
             line=$(echo "$line" | sed -r "s#[^/]*//[^/]*/kendo-ui##")
 
-            if [ $line -n ]; then
+            if [ -z $line ]; then
                 continue
             fi
 
@@ -33,5 +33,5 @@ wget --spider -e robots=off --wait 1 -r -p $1 2>&1 \
             echo ""
         done
 
-        exit $has_broken
+        exit $has_broken_links
     }
