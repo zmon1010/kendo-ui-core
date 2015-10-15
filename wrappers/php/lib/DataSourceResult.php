@@ -49,7 +49,7 @@ class DataSourceResult {
     }
 
     private function page() {
-        return ' LIMIT :skip,:take';
+        return ' LIMIT :skip OFFSET :take';
     }
 
     private function group($data, $groups, $table, $request, $propertyNames) {
