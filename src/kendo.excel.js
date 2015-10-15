@@ -120,7 +120,7 @@ kendo.ExcelExporter = kendo.Class.extend({
         return $.extend({}, column, {
             value: value,
             values: values,
-            groupHeaderTemplate: kendo.template(column.groupHeaderTemplate || "${title}: ${value}"),
+            groupHeaderTemplate: kendo.template(column.groupHeaderTemplate || "#= title #: #= value #"),
             groupFooterTemplate: column.groupFooterTemplate ? kendo.template(column.groupFooterTemplate) : null,
             footerTemplate: column.footerTemplate ? kendo.template(column.footerTemplate) : null
         });

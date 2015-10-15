@@ -392,6 +392,21 @@ test("sets the value of the group cell to the group field and value", function()
     });
 });
 
+test("sets the value of the group cell to the unencoded group value", function() {
+    dataSource = new DataSource({
+       data: [
+           { foo: "foo & co", bar: "bar" },
+           { foo: "boo & co", bar: "baz" }
+       ],
+       group: { field: "foo" }
+    });
+
+    testWorkbook({ columns: [ { field: "foo" }, { field: "bar" } ], dataSource: dataSource }, function(book) {
+        equal(book.sheets[0].rows[1].cells[0].value, "foo: boo & co");
+        equal(book.sheets[0].rows[3].cells[0].value, "foo: foo & co");
+    });
+});
+
 test("uses the column title for the group cell value", function() {
     dataSource = new DataSource({
        data: [
