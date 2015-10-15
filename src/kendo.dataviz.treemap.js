@@ -14,6 +14,7 @@ var __meta__ = { // jshint ignore:line
     var math = Math,
 
         proxy = $.proxy,
+        isArray = $.isArray,
 
         kendo = window.kendo,
         Class = kendo.Class,
@@ -131,7 +132,7 @@ var __meta__ = { // jshint ignore:line
             var node = e.node;
             var items = e.items;
             var options = this.options;
-            var item, i, colors;
+            var item, i;
 
             if (!node) {
                 this.element.empty();
@@ -145,16 +146,12 @@ var __meta__ = { // jshint ignore:line
                 this._view.createRoot(item);
                 // Reference of the root
                 this._root = item;
+                this._colorIdx = 0;
             } else {
                 if (items.length) {
                     var root = this._getByUid(node.uid);
                     root.children = [];
-
-                    if (!defined(root.minColor) && !defined(root.maxColor)) {
-                        colors = options.colors || [];
-                    } else {
-                        colors = colorsByLength(root.minColor, root.maxColor, items.length) || [];
-                    }
+                    items = new kendo.data.Query(items)._sortForGrouping(options.valueField, "desc");
 
                     for (i = 0; i < items.length; i++) {
                         item = items[i];
@@ -164,22 +161,7 @@ var __meta__ = { // jshint ignore:line
                     var htmlSize = this._view.htmlSize(root);
                     this._layout.compute(root.children, root.coord, htmlSize);
 
-                    for (i = 0; i < root.children.length; i++) {
-                        item = root.children[i];
-                        if (!defined(item.color)) {
-                            if (typeof(colors[0]) === "string") {
-                                item.color = colors[i % colors.length];
-                            } else {
-                                var currentColors = colors[i % colors.length];
-                                if (currentColors) {
-                                    item.color = currentColors[0];
-                                    item.minColor = currentColors[0];
-                                    item.maxColor = currentColors[1];
-                                }
-                            }
-                        }
-                    }
-
+                    this._setColors(root.children);
                     this._view.render(root);
                 }
             }
@@ -192,6 +174,36 @@ var __meta__ = { // jshint ignore:line
                 this.trigger(DATA_BOUND, {
                     node: node
                 });
+            }
+        },
+
+        _setColors: function(items) {
+            var colors = this.options.colors;
+            var colorIdx = this._colorIdx;
+            var color = colors[colorIdx % colors.length];
+            var colorRange, item;
+            if (isArray(color)) {
+                colorRange = colorsByLength(color[0], color[1], items.length);
+            }
+
+            var leafNodes = false;
+            for (var i = 0; i < items.length; i++) {
+                item = items[i];
+
+                if (!defined(item.color)) {
+                    if (colorRange) {
+                        item.color = colorRange[i];
+                    } else {
+                        item.color = color;
+                    }
+                }
+                if (!item.dataItem.hasChildren) {
+                    leafNodes = true;
+                }
+            }
+
+            if (leafNodes) {
+                this._colorIdx++;
             }
         },
 
@@ -345,7 +357,6 @@ var __meta__ = { // jshint ignore:line
 
             var minimumSideValue = this.layoutHorizontal() ? coord.height : coord.width;
 
-            items = new kendo.data.Query(items)._sortForGrouping("value", "desc");
             var firstElement = [items[0]];
             var tail = items.slice(1);
             this.squarify(tail, firstElement, minimumSideValue, coord);
@@ -731,8 +742,6 @@ var __meta__ = { // jshint ignore:line
             for (i = 0; i < itemsArea.length; i++) {
                 items[i].area = parentArea * itemsArea[i] / totalArea;
             }
-
-            items = new kendo.data.Query(items)._sortForGrouping("value", "desc");
 
             this.sliceAndDice(items, coord);
         },
