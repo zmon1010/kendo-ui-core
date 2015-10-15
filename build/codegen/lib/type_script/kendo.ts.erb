@@ -1459,6 +1459,11 @@ declare module kendo.dataviz.map.layer {
     }
 }
 
+declare module kendo.drawing.pdf {
+    function saveAs(group: kendo.drawing.Group, fileName: string,
+                    proxyUrl?: string, callback?: Function): void;
+}
+
 % end
 % namespaces.keys.each do |key|
 declare module <%= key %> {
