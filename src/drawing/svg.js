@@ -19,7 +19,6 @@
         isTransparent = util.isTransparent,
         renderAttr = util.renderAttr,
         renderAllAttr = util.renderAllAttr,
-        renderSize = util.renderSize,
         renderTemplate = util.renderTemplate,
         inArray = $.inArray;
 
@@ -31,7 +30,6 @@
         NS = ".kendo",
         SOLID = "solid",
         SPACE = " ",
-        SQUARE = "square",
         SVG_NS = "http://www.w3.org/2000/svg",
         TRANSFORM = "transform",
         UNDEFINED = "undefined";
@@ -637,7 +635,7 @@
             "stroke.opacity": "stroke-opacity"
         },
 
-        content: function(value) {
+        content: function() {
             if (this.element) {
                 this.element.textContent = this.srcElement.content();
             }

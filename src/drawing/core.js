@@ -5,8 +5,7 @@
 (function ($) {
 
     // Imports ================================================================
-    var doc = document,
-        noop = $.noop,
+    var noop = $.noop,
         toString = Object.prototype.toString,
 
         kendo = window.kendo,

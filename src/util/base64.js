@@ -4,7 +4,7 @@
     ], f);
 })(function() {
 
-(function ($) {
+(function () {
     // Imports ================================================================
     var kendo = window.kendo,
         deepExtend = kendo.deepExtend,
@@ -79,7 +79,7 @@
         encodeUTF8: encodeUTF8
     });
 
-})(window.kendo.jQuery);
+})();
 
 return window.kendo;
 

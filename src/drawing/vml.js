@@ -27,7 +27,6 @@
         isTransparent = util.isTransparent,
         defined = util.defined,
         deg = util.deg,
-        renderTemplate = util.renderTemplate,
         round = util.round,
         valueOrDefault = util.valueOrDefault;
 
@@ -587,7 +586,6 @@
         mapLinearGradient: function(fill) {
             var start = fill.start();
             var end = fill.end();
-            var stops = fill.stops;
             var angle = util.deg(atan2(end.y - start.y, end.x - start.x));
 
             var attrs = [
@@ -604,7 +602,6 @@
         mapRadialGradient: function(fill) {
             var bbox = this.srcElement.rawBBox();
             var center = fill.center();
-            var stops = fill.stops;
             var focusx = (center.x - bbox.origin.x) / bbox.width();
             var focusy = (center.y - bbox.origin.y) / bbox.height();
             var attrs = [
@@ -681,7 +678,6 @@
             var transform = this.transform;
 
             var attrs = [],
-                a, b, c, d,
                 matrix = toMatrix(transform);
 
             if (matrix) {

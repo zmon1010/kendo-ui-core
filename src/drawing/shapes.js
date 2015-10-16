@@ -3,6 +3,7 @@
 })(function(){
 
 (function ($) {
+    /* jshint latedef: nofunc */
 
     // Imports ================================================================
     var kendo = window.kendo,
@@ -79,7 +80,6 @@
         parentTransform: function() {
             var element = this,
                 transformation,
-                matrix,
                 parentMatrix;
 
             while (element.parent) {
@@ -1154,7 +1154,7 @@
                 var scale = rect.size[sizeField] / groupBox.size[sizeField];
                 var scaledStart = groupBox.topLeft().scale(scale, scale);
                 var scaledSize = groupBox.size[groupsSizeField] * scale;
-                var newStart = alignStart(scaledSize, rect, options.alignContent, groupsAxis, groupsSizeField)
+                var newStart = alignStart(scaledSize, rect, options.alignContent, groupsAxis, groupsSizeField);
                 var transform = g.transform();
                 if (groupAxis === "x") {
                     transform.translate(rect.origin.x - scaledStart.x, newStart - scaledStart.y);
@@ -1480,7 +1480,7 @@
     }
 
     function alignElements(elements, rect, alignment, axis, sizeField) {
-        var bbox, start, point;
+        var bbox, point;
         alignment = alignment || "start";
 
         for (var idx = 0; idx < elements.length; idx++) {

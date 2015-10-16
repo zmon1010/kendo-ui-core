@@ -5,8 +5,7 @@
 (function ($) {
 
     // Imports ================================================================
-    var noop = $.noop,
-        doc = document,
+    var doc = document,
 
         kendo = window.kendo,
         deepExtend = kendo.deepExtend,
@@ -25,7 +24,6 @@
     var BUTT = "butt",
         DASH_ARRAYS = d.DASH_ARRAYS,
         FRAME_DELAY = 1000 / 60,
-        NONE = "none",
         SOLID = "solid";
 
     // Canvas Surface ==========================================================
@@ -493,7 +491,7 @@
                 img.crossOrigin = cors;
             }
 
-            var src = img.src = srcElement.src();
+            img.src = srcElement.src();
 
             if (img.complete) {
                 this.onLoad();

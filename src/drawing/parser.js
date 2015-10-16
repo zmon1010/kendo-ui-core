@@ -13,9 +13,7 @@
         deepExtend = kendo.deepExtend,
         trim = $.trim,
         util = kendo.util,
-        deg = util.deg,
-        last = util.last,
-        round = util.round;
+        last = util.last;
 
     var SEGMENT_REGEX = /([a-df-z]{1})([^a-df-z]*)(z)?/gi,
         SPLIT_REGEX = /[,\s]?([+\-]?(?:\d*\.\d+|\d+)(?:[eE][+\-]?\d+)?)/g,
@@ -24,7 +22,6 @@
 
     var PathParser = Class.extend({
         parse: function(str, options) {
-            var parser = this;
             var multiPath = new drawing.MultiPath(options);
             var position = new Point();
             var previousCommand;

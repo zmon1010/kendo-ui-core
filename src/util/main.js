@@ -4,25 +4,17 @@
     ], f);
 })(function() {
 
-(function ($) {
+(function () {
     // Imports ================================================================
     var math = Math,
         kendo = window.kendo,
-        deepExtend = kendo.deepExtend,
-        dataviz = kendo.dataviz;
+        deepExtend = kendo.deepExtend;
 
     // Constants
     var DEG_TO_RAD = math.PI / 180,
         MAX_NUM = Number.MAX_VALUE,
         MIN_NUM = -Number.MAX_VALUE,
-        UNDEFINED = "undefined",
-        inArray = $.inArray,
-        push = [].push,
-        pop = [].pop,
-        splice = [].splice,
-        shift = [].shift,
-        slice = [].slice,
-        unshift = [].unshift;
+        UNDEFINED = "undefined";
 
     // Generic utility functions ==============================================
     function defined(value) {
@@ -335,7 +327,7 @@
     kendo.drawing.util = kendo.util;
     kendo.dataviz.util = kendo.util;
 
-})(window.kendo.jQuery);
+})();
 
 return window.kendo;
 

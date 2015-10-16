@@ -2,7 +2,7 @@
     define([ "./core" ], f);
 })(function(){
 
-(function ($) {
+(function () {
 
     // Imports ================================================================
     var kendo = window.kendo,
@@ -88,6 +88,6 @@
         }
     });
 
-})(window.kendo.jQuery);
+})();
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

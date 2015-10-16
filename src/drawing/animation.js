@@ -2,10 +2,9 @@
     define([ "../geometry/main", "./core" ], f);
 })(function(){
 
-(function ($, Math) {
+(function ($) {
     // Imports ================================================================
-    var doc = document,
-        noop = $.noop,
+    var noop = $.noop,
 
         kendo = window.kendo,
         Class = kendo.Class,
@@ -124,6 +123,6 @@
         AnimationFactory: AnimationFactory
     });
 
-})(window.kendo.jQuery, Math);
+})(window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

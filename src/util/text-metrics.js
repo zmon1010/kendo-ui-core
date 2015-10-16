@@ -9,7 +9,6 @@
 
         kendo = window.kendo,
         Class = kendo.Class,
-        deepExtend = kendo.deepExtend,
 
         util = kendo.util,
         defined = util.defined;
