@@ -456,7 +456,8 @@
             }]);
             var point = chart.points[1];
             point.parent = {
-                appendVisual: $.noop
+                appendVisual: $.noop,
+                getRoot: $.noop
             };
             point.reflow(new dataviz.Box2D(0, 0, 100, 100));
             point.renderVisual();

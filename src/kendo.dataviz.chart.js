@@ -3683,6 +3683,7 @@ var __meta__ = { // jshint ignore:line
                         category: bar.category,
                         dataItem: bar.dataItem,
                         value: bar.value,
+                        sender: bar.getChart(),
                         series: bar.series,
                         percentage: bar.percentage,
                         runningTotal: bar.runningTotal,

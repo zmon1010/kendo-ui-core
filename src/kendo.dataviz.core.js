@@ -641,6 +641,13 @@ var __meta__ = { // jshint ignore:line
             return parent ? parent.getRoot() : null;
         },
 
+        getChart: function() {
+            var root = this.getRoot();
+            if (root) {
+                return root.chart;
+            }
+        },
+
         translateChildren: function(dx, dy) {
             var element = this,
                 children = element.children,
@@ -810,19 +817,24 @@ var __meta__ = { // jshint ignore:line
                         opacity: 0.2
                     }
                 };
+
                 if (customVisual) {
-                    highlight = that._highlight = customVisual(deepExtend(that.highlightVisualArgs(), {
-                        createVisual: function() {
-                            return that.createHighlight(highlightOptions);
-                        },
-                        series: that.series,
-                        dataItem: that.dataItem,
-                        category: that.category,
-                        value: that.value,
-                        percentage: that.percentage,
-                        runningTotal: that.runningTotal,
-                        total: that.total
-                    }));
+                    highlight = that._highlight = customVisual(
+                        $.extend(that.highlightVisualArgs(), {
+                            createVisual: function() {
+                                return that.createHighlight(highlightOptions);
+                            },
+                            sender: that.getChart(),
+                            series: that.series,
+                            dataItem: that.dataItem,
+                            category: that.category,
+                            value: that.value,
+                            percentage: that.percentage,
+                            runningTotal: that.runningTotal,
+                            total: that.total
+                        }
+                    ));
+
                     if (!highlight) {
                         return;
                     }
@@ -2551,6 +2563,7 @@ var __meta__ = { // jshint ignore:line
                     category: that.category,
                     value: that.value,
                     text: that.text,
+                    sender: that.getChart(),
                     series: that.series,
                     rect: that.targetBox.toRect(),
                     options: {
@@ -2698,6 +2711,7 @@ var __meta__ = { // jshint ignore:line
                 visual = customVisual({
                     value: pointData.value,
                     dataItem: pointData.dataItem,
+                    sender: that.getChart(),
                     series: pointData.series,
                     category: pointData.category,
                     rect: that.paddingBox.toRect(),

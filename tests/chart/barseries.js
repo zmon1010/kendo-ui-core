@@ -2218,6 +2218,11 @@
             bar.dataItem = { value: VALUE };
             bar.percentage = 0.5;
             bar.series = { name: SERIES_NAME };
+            bar.getRoot = function() {
+                return {
+                    chart: "chart"
+                };
+            };
             bar.owner = {
                 pane: {
                     clipBox: function(){
@@ -2528,6 +2533,14 @@
             createBar({
                 visual: function(e) {
                    ok(e.rect.equals(bar.box.toRect()));
+                }
+            });
+        });
+
+        test("passes chart as sender parameter", function() {
+            createBar({
+                visual: function(e) {
+                   equal(e.sender, "chart");
                 }
             });
         });

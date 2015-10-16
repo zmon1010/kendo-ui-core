@@ -438,8 +438,10 @@
                 chartElement.percentage = 0.5;
                 chartElement.runningTotal = 2;
                 chartElement.total = 3;
+                chartElement.getRoot = function() { return { chart: "chart" } };
                 chartElement.options.highlight.visual = function(e) {
                     equal(e.series, "foo");
+                    equal(e.sender, "chart");
                     equal(e.dataItem, "bar");
                     equal(e.category, "baz");
                     equal(e.value, 1);
@@ -3625,6 +3627,7 @@
                 });
                 legendItem.reflow(box);
                 legendItem.parent = {
+                    getRoot: $.noop,
                     appendVisual: function(visual) {
                         ok(false);
                     }
@@ -4326,6 +4329,12 @@
             box = new Box2D(0, 0, 10, 10);
             note.reflow(box);
 
+            note.getRoot = function() {
+                return {
+                    chart: "chart"
+                };
+            };
+
             note.renderVisual();
             visual = note.visual;
         }
@@ -4453,6 +4462,7 @@
                     equal(e.text, "foo");
                     equal(e.dataItem, "bar");
                     equal(e.category, "baz");
+                    equal(e.sender, "chart");
                     equal(e.series, "qux");
                 }
             });
