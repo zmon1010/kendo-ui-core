@@ -16,7 +16,7 @@ var plumber = require('gulp-plumber');
 var filter = require('gulp-filter');
 var sourcemaps = require('gulp-sourcemaps');
 
-var amdOptimize = require("gulp-amd-optimizer");
+var amdOptimize = require("amd-optimize");
 var concat = require("gulp-concat");
 var ignore = require('gulp-ignore');
 var foreach = require('gulp-foreach');
@@ -127,35 +127,41 @@ gulp.task("watch-styles", [ "build-skin", "css-assets" ], function() {
     return gulp.watch("styles/**/*.less", [ "build-skin" ]);
 });
 
-function constructGlobal(stream, file) {
+function gatherAmd(stream, file) {
+    var amdLogger = logger({
+        after: 'AMD resolve complete',
+        extname: '.js',
+        showChange: true
+    });
+
     var fileName = path.basename(file.path);
     var isBundle = fs.readFileSync(file.path).indexOf('"bundle all";') > -1;
+    var moduleId = fileName.match(/kendo\.(.+)\.js/)[1];
 
-    console.log(fileName, isBundle);
-
-    var gatherAMD = amdOptimize({ baseUrl: "src", exclude: [ "jquery" ] }, { umd: true });
+    var gatherAMD = amdOptimize(`kendo.${moduleId}`, {
+        baseUrl: "src",
+        exclude: [ "jquery" ]
+    });
 
     if (isBundle) {
-        return stream.pipe(gatherAMD)
-            .pipe(debug())
+        return stream
+            .pipe(gatherAMD)
+            .pipe(amdLogger)
             .pipe(concat(fileName));
 
     } else {
-        var moduleId = fileName.match(/kendo\.(.+)\.js/)[1];
+        var whitelist = [ "**/src/kendo." + moduleId + ".js", "**/src/" + moduleId + "/**/*.js", "**/util/**/*.js" ];
 
-        var moduleName = "kendo." + moduleId;
-
-        var whitelist = [ moduleName, "kendo/" + moduleId, "kendo/" + moduleId + "/*" ];
-
-        return stream.pipe(gatherAMD)
-        .pipe(ignore.include(whitelist))
-        .pipe(debug())
-        .pipe(concat(fileName));
+        return stream
+            .pipe(amdLogger)
+            .pipe(ignore.include(whitelist))
+            .pipe(gatherAMD)
+            .pipe(concat(fileName));
     }
 }
 
 gulp.task("scripts", function() {
-    gulp.src('src/kendo.all.js')
-        .pipe(foreach(constructGlobal))
+    return gulp.src('src/kendo.*.js')
+        .pipe(foreach(gatherAmd))
         .pipe(gulp.dest("dist/gulp-js"));
 });
