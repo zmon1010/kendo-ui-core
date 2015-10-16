@@ -1931,6 +1931,27 @@
             equal(plotArea.axes[0].options.dataItems[0].value, 300);
         });
 
+        test("Aggregated category axis data items are not overridden unless the series has point for the category", function() {
+            createPlotArea([{
+              type: "bar",
+              field: "value",
+              categoryField: "category",
+              data: [{category: 1, value: 1, foo: "bar"}, {category: 3, value: 1, foo: "qux"}]
+            }, {
+              type: "bar",
+              data: [{category: 2, value: 1, foo: "baz"}, {category: 3, value: 1, foo: "quux"}],
+              field: "value",
+              categoryField: "category"
+            }], {
+                categoryAxis: {
+                    categories: [1,2,3]
+                }
+            });
+
+            equal(plotArea.axes[0].options.dataItems[0].foo, "bar");
+            equal(plotArea.axes[0].options.dataItems[2].foo, "quux");
+        });
+
         // ------------------------------------------------------------
         module("Categorical PlotArea / Date series / Aggregates / max", {
             setup: moduleSetup,

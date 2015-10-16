@@ -9970,6 +9970,7 @@ var __meta__ = { // jshint ignore:line
                 range = categoryAxis.range(),
                 result = deepExtend({}, series),
                 aggregatorSeries = deepExtend({}, series),
+                dataItems = axisOptions.dataItems || [],
                 i, category, categoryIx,
                 data,
                 aggregator,
@@ -10003,9 +10004,12 @@ var __meta__ = { // jshint ignore:line
                 data[i] = aggregator.aggregatePoints(
                     srcPoints[i], categories[i]
                 );
+                if (srcPoints[i]) {
+                    dataItems[i] = data[i];
+                }
             }
 
-            categoryAxis.options.dataItems = data;
+            categoryAxis.options.dataItems = dataItems;
 
             return result;
         },
