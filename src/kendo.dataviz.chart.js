@@ -5226,6 +5226,7 @@ var __meta__ = { // jshint ignore:line
                     low: that.low,
                     high: that.high,
                     rect: that.box.toRect(),
+                    sender: that.getChart(),
                     options: {
                         endCaps: options.endCaps,
                         color: options.color,

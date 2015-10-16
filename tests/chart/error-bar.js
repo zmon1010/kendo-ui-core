@@ -1257,6 +1257,7 @@
             function createErrorBar(options) {
                 var targetBox = new Box(5,5,9, 9);
                 var rootElement = new dataviz.RootElement();
+                rootElement.chart = "chart";
                 errorBar = new CategoricalErrorBar(1, 2, true, categoricalChart, {}, $.extend({}, defaultOptions, options));
                 errorBar.reflow(targetBox);
                 rootElement.box = targetBox;
@@ -1292,6 +1293,14 @@
                  createErrorBar({
                     visual: function(e) {
                         equal(e.low, 1);
+                    }
+                });
+            });
+
+            test("passes the chart instance", function() {
+                 createErrorBar({
+                    visual: function(e) {
+                        equal(e.sender, "chart");
                     }
                 });
             });

@@ -1418,6 +1418,7 @@ var __meta__ = { // jshint ignore:line
             return {
                 text: textbox.content,
                 rect: targetBox.toRect(),
+                sender: this.getChart(),
                 options: textbox.visualOptions(),
                 createVisual: function() {
                     textbox._boxReflow = true;

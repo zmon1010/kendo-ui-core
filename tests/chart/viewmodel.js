@@ -1920,6 +1920,9 @@
 
             function renderTextBox(options,box) {
                 createTextBox(options);
+                textBox.getChart = function() {
+                    return "chart";
+                };
                 textBox.reflow(box || BOX);
                 textBox.renderVisual();
             }
@@ -1948,6 +1951,7 @@
                     }
                 });
 
+                textBox.getChart = $.noop;
                 textBox.parent = {
                     appendVisual: function(visual) {
                         ok(visual === customVisual);
@@ -1968,6 +1972,16 @@
                 renderTextBox({
                     visual: function(e) {
                         equal(e.text, TEXT);
+                    }
+                });
+            });
+
+            test("passes the chart instance", function() {
+                renderTextBox({
+                    visual: function(e) {
+                        if (e.sender) {
+                            equal(e.sender, "chart");
+                        }
                     }
                 });
             });
