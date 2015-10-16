@@ -26,8 +26,8 @@
         "./spreadsheet/runtime",
         "./spreadsheet/calc",
         "./spreadsheet/numformat",
-        "./spreadsheet/runtime.functions.js",
-        "./spreadsheet/runtime.functions.2.js",
+        "./spreadsheet/runtime.functions",
+        "./spreadsheet/runtime.functions.2",
         "./spreadsheet/toolbar",
         "./spreadsheet/dialogs",
         "./spreadsheet/sheetbinder",
@@ -255,4 +255,4 @@
         $.extend(true, Spreadsheet, { classNames: classNames });
     })(window.kendo);
 
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

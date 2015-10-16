@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../geometry/main", "./core" ], f);
+    define([ "./geometry", "./core" ], f);
 })(function(){
 
 (function ($) {
@@ -125,4 +125,4 @@
 
 })(window.kendo.jQuery);
 
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

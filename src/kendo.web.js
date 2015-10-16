@@ -8,8 +8,8 @@
         "./kendo.data.odata",
         "./kendo.data.xml",
         "./kendo.data",
-        "./kendo.ooxml.js",
-        "./kendo.excel.js",
+        "./kendo.ooxml",
+        "./kendo.excel",
         "./kendo.data.signalr",
         "./kendo.binder",
         "./kendo.drawing",
@@ -81,4 +81,4 @@
     ], f);
 })(function(){
     "bundle all";
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
