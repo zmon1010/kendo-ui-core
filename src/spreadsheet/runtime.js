@@ -1054,6 +1054,34 @@
 
     /* -----[ date calculations ]----- */
 
+    // Julian days algorithms from http://www.hermetic.ch/cal_stud/jdn.htm#comp
+
+    function dateToJulianDays(y, m, d) {
+        return ((1461 * (y + 4800 + ((m - 14) / 12 | 0))) / 4 | 0) +
+            ((367 * (m - 2 - 12 * ((m - 14) / 12 | 0))) / 12 | 0) -
+            ((3 * (((y + 4900 + ((m - 14) / 12 | 0)) / 100 | 0))) / 4 | 0) +
+            d - 32075;
+    }
+
+    function julianDaysToDate(jd) {
+        var l, n, j, i, m, d, y;
+        l = jd + 68569;
+        n = (4 * l) / 146097 | 0;
+        l = l - ((146097 * n + 3) / 4 | 0);
+        i = (4000 * (l + 1) / 1461001) | 0;
+        l = l - ((1461 * i) / 4 | 0) + 31;
+        j = (80 * l) / 2447 | 0;
+        d = l - ((2447 * j) / 80 | 0);
+        l = j / 11 | 0;
+        m = j + 2 - (12 * l);
+        y = 100 * (n - 49) + i + l;
+        return { year: y, month: m, date: d };
+    }
+
+    // This uses the Google Spreadsheet approach: treat 1899-12-31 as day 1, allowing to avoid
+    // implementing the "Leap Year Bug" yet still be Excel compatible for dates starting 1900-03-01.
+    var BASE_DATE = dateToJulianDays(1900, 1, -1);
+
     var DAYS_IN_MONTH = [ 31, 28, 31,
                           30, 31, 30,
                           31, 31, 30,
@@ -1086,15 +1114,22 @@
     }
 
     function unpackDate(serial) {
-        // This uses the Google Spreadsheet approach: treat 1899-12-31
-        // as day 1, allowing to avoid implementing the "Leap Year
-        // Bug" yet still be Excel compatible for dates starting
-        // 1900-03-01.
-        return _unpackDate(serial - 1);
+        var jd = (serial | 0) + BASE_DATE;
+        var d = julianDaysToDate(jd);
+        var year = d.year;
+        var month = d.month - 1;
+        var date = d.date;
+        return {
+            year  : year,
+            month : month,
+            date  : date,
+            day   : (jd + 1) % 7, // day of week
+            ord   : ORDINAL_ADD_DAYS[isLeapYear(year)][month] + date
+        };
     }
 
-    function packDate(date, month, year) {
-        return _packDate(date, month, year) + 1;
+    function packDate(year, month, date) {
+        return dateToJulianDays(year, month + 1, date) - BASE_DATE;
     }
 
     var MS_IN_MIN = 60 * 1000;
@@ -1125,75 +1160,6 @@
         var d = unpackDate(serial), t = unpackTime(serial);
         return new Date(d.year, d.month, d.date,
                         t.hours, t.minutes, t.seconds, t.milliseconds);
-    }
-
-    // Unpack date by assuming serial is number of days since
-    // 1900-01-01 (that being day 1).  Negative numbers are allowed
-    // and go backwards in time.
-    function _unpackDate(serial) {
-        serial |= 0;            // discard time part
-        var month, tmp;
-        var backwards = serial <= 0;
-        var year = 1900;
-        var day = serial % 7;   // 1900-01-01 was a Monday
-        if (backwards) {
-            serial = -serial;
-            year--;
-            day = (day + 7) % 7;
-        }
-
-        while (serial > (tmp = daysInYear(year))) {
-            serial -= tmp;
-            year += backwards ? -1 : 1;
-        }
-
-        if (backwards) {
-            month = 11;
-            while (serial >= (tmp = daysInMonth(year, month))) {
-                serial -= tmp;
-                month--;
-            }
-            serial = tmp - serial;
-        } else {
-            month = 0;
-            while (serial > (tmp = daysInMonth(year, month))) {
-                serial -= tmp;
-                month++;
-            }
-        }
-
-        return {
-            year  : year,
-            month : month,
-            date  : serial,
-            day   : day,
-            ord   : ORDINAL_ADD_DAYS[isLeapYear(year)][month] + serial
-        };
-    }
-
-    function _packDate(year, month, date) {
-        var serial = 0;
-        year += Math.floor(month / 12);
-        month %= 12;
-        if (month < 0) {
-            // no need to decrease year because e.g. Math.floor(-1/12) is -1, so
-            // it's already subtracted.
-            month += 12;
-        }
-        if (year >= 1900) {
-            for (var i = 1900; i < year; ++i) {
-                serial += daysInYear(i);
-            }
-        } else {
-            for (var i = 1899; i >= year; --i) {
-                serial -= daysInYear(i);
-            }
-        }
-        for (var i = 0; i < month; ++i) {
-            serial += daysInMonth(year, i);
-        }
-        serial += date;
-        return serial;
     }
 
     function packTime(hours, minutes, seconds, ms) {
