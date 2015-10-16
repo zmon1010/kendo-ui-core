@@ -4,7 +4,6 @@
 
 (function ($, undefined) {
     var kendo = window.kendo,
-        ui = kendo.ui,
         extend = $.extend,
         isFunction = $.isFunction;
 
@@ -19,7 +18,7 @@
                     fields: {
                         name: { field: "Name" },
                         size: { field: "Size" },
-                        type: { field: "EntryType", parse: function(value) {  return value == 0 ? "f" : "d" } }
+                        type: { field: "EntryType", parse: function(value) {  return value == 0 ? "f" : "d"; } } // jshint ignore:line, afraid to break something with strict equality
                     }
                 }
             }

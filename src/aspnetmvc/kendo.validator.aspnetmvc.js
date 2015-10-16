@@ -139,6 +139,7 @@
             return !(value === "" || !value);
         },
         number: function (input) {
+            /* jshint eqnull:true */
             return input.val() === "" || input.val() == null || kendo.parseFloat(input.val()) !== null;
         },
         regex: function (input, params) {
