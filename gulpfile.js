@@ -1,5 +1,7 @@
 /* jshint browser:false, node:true, esnext: true */
 
+var path = require('path');
+var fs = require('fs');
 var gulp = require('gulp');
 var debug = require('gulp-debug'); // jshint ignore:line
 var less = require('gulp-less');
@@ -13,6 +15,13 @@ var progeny = require('gulp-progeny');
 var plumber = require('gulp-plumber');
 var filter = require('gulp-filter');
 var sourcemaps = require('gulp-sourcemaps');
+
+var amdOptimize = require("gulp-amd-optimizer");
+var concat = require("gulp-concat");
+var ignore = require('gulp-ignore');
+var foreach = require('gulp-foreach');
+// var insert = require('gulp-insert');
+var replace = require('gulp-replace');
 
 var merge = require('merge2');
 var lazypipe = require('lazypipe');
@@ -116,4 +125,37 @@ gulp.task("styles", [ "less", "css-assets" ]);
 gulp.task("watch-styles", [ "build-skin", "css-assets" ], function() {
     browserSync.init({ proxy: "localhost", open: false });
     return gulp.watch("styles/**/*.less", [ "build-skin" ]);
+});
+
+function constructGlobal(stream, file) {
+    var fileName = path.basename(file.path);
+    var isBundle = fs.readFileSync(file.path).indexOf('"bundle all";') > -1;
+
+    console.log(fileName, isBundle);
+
+    var gatherAMD = amdOptimize({ baseUrl: "src", exclude: [ "jquery" ] }, { umd: true });
+
+    if (isBundle) {
+        return stream.pipe(gatherAMD)
+            .pipe(debug())
+            .pipe(concat(fileName));
+
+    } else {
+        var moduleId = fileName.match(/kendo\.(.+)\.js/)[1];
+
+        var moduleName = "kendo." + moduleId;
+
+        var whitelist = [ moduleName, "kendo/" + moduleId, "kendo/" + moduleId + "/*" ];
+
+        return stream.pipe(gatherAMD)
+        .pipe(ignore.include(whitelist))
+        .pipe(debug())
+        .pipe(concat(fileName));
+    }
+}
+
+gulp.task("scripts", function() {
+    gulp.src('src/kendo.all.js')
+        .pipe(foreach(constructGlobal))
+        .pipe(gulp.dest("dist/gulp-js"));
 });
