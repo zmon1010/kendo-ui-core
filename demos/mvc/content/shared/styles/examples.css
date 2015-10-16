@@ -720,18 +720,11 @@ div.submenu-box ol {
     transition-timing-function: ease;
 }
 
-.k-ie7 .tc-item,
 .k-ie8 .tc-item,
 .k-ie9 .tc-item
 {
     display: inline-block;
     width: 132px;
-}
-
-.k-ie7 .tc-column {
-    display: inline;
-    zoom: 1;
-    vertical-align: top;
 }
 
 .tc-item:hover
@@ -2139,13 +2132,6 @@ a.footer-links:hover,
 .try-kendo:hover {
     background-color: #013a5e;
     cursor: pointer;
-}
-
-/* Clear floats */
-.k-ie7 #header,
-.k-ie7 #codeStrip,
-.k-ie7 #overview-applications {
-    display: inline-block;
 }
 
 #header:after,
