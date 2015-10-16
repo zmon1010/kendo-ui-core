@@ -2918,6 +2918,9 @@ html.k-materialblack .demo-section.k-content {
 }
 
 @media screen and (max-width: 1023px) {
+  .hidden-on-narrow {
+      display: none !important;
+  }
   .responsive-message {
     display: block;
   }

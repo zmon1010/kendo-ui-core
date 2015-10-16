@@ -1,7 +1,7 @@
 <div id="example">
   <div ng-app="KendoDemo" ng-controller="MyCtrl">
-    <div kendo-pivot-configurator k-height="580" k-data-source="dataSource" id="configurator"></div>
-    <div kendo-pivot-grid k-options="options" id="pivotgrid"></div>
+    <div kendo-pivot-configurator k-height="580" k-data-source="dataSource" id="configurator" class="hidden-on-narrow"></div>
+    <div kendo-pivot-grid k-options="options" id="pivotgrid" class="hidden-on-narrow"></div>
     
     <div class="responsive-message"></div>
   </div>
@@ -39,20 +39,11 @@
 
 <style>
     #pivotgrid {
-        display: inline-block;
-        vertical-align: top;
         width: 70%;
     }
 
-    #configurator {
+    .hidden-on-narrow {
         display: inline-block;
         vertical-align: top;
-    }
-
-    @@media screen and (max-width: 1023px) {
-        #pivotgrid,
-        #configurator {
-            display: none;
-        }
     }
 </style>

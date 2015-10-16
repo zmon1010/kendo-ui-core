@@ -1,5 +1,5 @@
 <div id="example">
-    <div class="box wide">
+    <div class="box wide hidden-on-narrow">
         <div id="info" class="box-col"></div>
         <div class="box-col select-col">
             <h4>Surface type</h4>
@@ -10,7 +10,7 @@
             </ul>
         </div>
     </div>
-    <div id="surface-container">
+    <div id="surface-container" class="hidden-on-narrow">
         <div id="surface" style="width: 800px; height: 300px;"></div>
     </div>
     <div class="responsive-message"></div>
@@ -276,12 +276,6 @@
             width: 800px;
             height: 300px;
             padding: 20px;
-        }
-        @@media screen and (max-width: 1023px) {
-            #surface-container,
-            .box {
-                display: none;
-            }
         }
     </style>
 </div>

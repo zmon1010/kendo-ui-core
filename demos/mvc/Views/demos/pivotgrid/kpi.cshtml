@@ -1,6 +1,6 @@
 <div id="example">
-    <div id="configurator"></div>
-    <div id="pivotgrid"></div>
+    <div id="configurator" class="hidden-on-narrow"></div>
+    <div id="pivotgrid" class="hidden-on-narrow"></div>
     
     <div class="responsive-message"></div>
 
@@ -45,21 +45,12 @@
     </script>
     <style>
         #pivotgrid {
-            display: inline-block;
-            vertical-align: top;
             width: 70%;
         }
 
-        #configurator {
+        .hidden-on-narrow {
             display: inline-block;
             vertical-align: top;
-        }
-
-        @@media screen and (max-width: 1023px) {
-            #pivotgrid,
-            #configurator {
-                display: none;
-            }
         }
     </style>
 </div>

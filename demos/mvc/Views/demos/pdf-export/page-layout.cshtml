@@ -1,5 +1,5 @@
 ﻿<div id="example">
-    <div class="box wide">
+    <div class="box wide hidden-on-narrow">
         <div class="box-col">
             <h4>Select Page size</h4>
             <select id="paper" style="width: 100px;">
@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="page-container">
+    <div class="page-container hidden-on-narrow">
         <div class="pdf-page size-a4">
             <div class="pdf-header">
                 <span class="company-logo">
@@ -214,13 +214,6 @@
         }
         .signature {
             padding-top: .5in;
-        }
-        
-        @@media screen and (max-width: 1023px) {
-            .page-container,
-            .box {
-                display: none;
-            }
         }
     </style>
 
