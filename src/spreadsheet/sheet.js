@@ -133,6 +133,10 @@
             return this._property(this._columns.unhide.bind(this._columns), columnIndex, { layout: true });
         },
 
+        isHiddenColumn: function(columnIndex) {
+            return this._grid._columns.hidden(columnIndex);
+        },
+
         _copyRange: function(sourceRangeRef, targetRef) {
             var grid = this._grid;
             var rowCount = grid.rowCount;
@@ -363,6 +367,10 @@
 
         unhideRow: function(rowIndex) {
             return this._property(this._rows.unhide.bind(this._rows), rowIndex, { layout: true });
+        },
+
+        isHiddenRow: function(rowIndex) {
+            return this._grid._rows.hidden(rowIndex);
         },
 
         columnWidth: function(columnIndex, width) {
@@ -1177,7 +1185,7 @@
                     });
 
                     this._refreshFilter();
-                }, { layout: true });
+                }, { layout: true, filter: true });
             }
         },
 

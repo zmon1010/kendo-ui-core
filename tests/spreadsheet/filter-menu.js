@@ -211,6 +211,45 @@
         equal(values[2].dataType, "date");
     });
 
+    function rangeWithCustomFilter(ref, values, criteria) {
+        return sheet.range(ref).values(values).filter({
+            column: 0,
+            filter: new kendo.spreadsheet.CustomFilter({
+                logic: "and",
+                criteria: [ criteria ]
+            })
+        });
+    }
+
+    function rangeWithValuesFilter(ref, values, filter) {
+        return sheet.range(ref).values(values).filter({
+            column: 0,
+            filter: new kendo.spreadsheet.ValueFilter({
+                values: filter
+            })
+        });
+    }
+
+    test("values that does not match existing custom filter rules appear as unchecked", function() {
+        var filterMenuRange = rangeWithCustomFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], { operator: "contains", value: "B" });
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: filterMenuRange });
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values[0].checked, false);
+        equal(values[1].checked, true);
+        equal(values[2].checked, false);
+    });
+
+    test("values that does not match existing value filter rules appear as unchecked", function() {
+        var filterMenuRange = rangeWithValuesFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], ["A", "B"] );
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: filterMenuRange });
+        var values = filterMenu.getValues()[0].items;
+
+        equal(values[0].checked, true);
+        equal(values[1].checked, true);
+        equal(values[2].checked, false);
+    });
+
     module("filter menu: filter by condition", {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);

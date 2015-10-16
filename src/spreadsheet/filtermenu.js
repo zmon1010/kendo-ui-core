@@ -330,6 +330,7 @@
                 var messages = this.options.messages;
                 var column = this.options.column;
                 var columnRange = this.options.range.resize({ top: 1 }).column(column);
+                var sheet = this.options.range.sheet();
 
                 columnRange.forEachCell(function(row, col, cell) {
                     var formatter;
@@ -352,6 +353,8 @@
                     if (cell.dataType === "date") {
                         cell.value = kendo.spreadsheet.numberToDate(cell.value);
                     }
+
+                    cell.checked = !sheet.isHiddenRow(row);
 
                     values.push(cell);
                 });
