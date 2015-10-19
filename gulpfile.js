@@ -35,29 +35,59 @@ var File = require('vinyl');
 
 function cpUglify() {
   // creating a stream through which each file will pass
-  var stream = through(function(file, encoding, callback) {
-        console.log("uglifying", file.path);
+  var workers = 0;
 
-        var uglify = spawn(require.resolve("./uglify"), { stdin: "pipe" });
+  var queue = [];
+  var done;
 
-        uglify.on("close", function() {
-            console.log(file.path, "uglified");
-        })
+  function process(file, callback) {
+      workers ++;
 
-        file.pipe(uglify.stdin);
+      var uglify = spawn(require.resolve("./uglify"), { stdin: "pipe" });
 
-        this.push(new File({
-            cwd: file.cwd,
-            base: file.base,
-            path: file.path,
-            contents: uglify.stdout
-        }));
+      uglify.on("close", function() {
+          console.log(file.path, "uglified.");
+          workers --;
+          next();
+      });
 
-        callback();
+      file.pipe(uglify.stdin);
 
-    }, function(callback) {
-      console.log("uglify done");
+      stream.push(new File({
+          cwd: file.cwd,
+          base: file.base,
+          path: file.path,
+          contents: uglify.stdout
+      }));
+
       callback();
+  }
+
+  function push(file, callback) {
+    queue.push({ file: file, callback: callback});
+    console.log("queueing", file.path);
+    next();
+  }
+
+  function next() {
+    if (workers === 0 && done) {
+       console.log("Done!");
+       done();
+    }
+    else if (workers < 8) {
+        var task = queue.shift();
+        if (task) {
+            process(task.file, task.callback);
+        } else {
+            console.log("queue is empty, waiting for the workers to finish...");
+        }
+    }
+  }
+
+  var stream = through(function(file, encoding, callback) {
+        push(file, callback);
+    }, function(callback) {
+      done = callback;
     });
 
   // returning the file stream
