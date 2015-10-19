@@ -31,20 +31,22 @@ var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
 var workerFarm = require('worker-farm');
 
-var uglifyWorkers = workerFarm({ maxConcurrentWorkers: 10 }, require.resolve('./uglify'));
+var uglifyWorkers = workerFarm({ autoStart: true }, require.resolve('./uglify'));
 
 function cpUglify() {
   // creating a stream through which each file will pass
   var stream = through(function(file, encoding, callback) {
         var that = this;
-        console.log("Uglifying", file.path, "...");
-        uglifyWorkers(file.contents.toString(), function(err, result) {
-            file.contents = new Buffer( result );
+
+        console.log("uglifying", file.path);
+        uglifyWorkers(file, function(err, result) {
+            console.log(file.path, "uglifyied");
+            file.contents = new Buffer(result);
             that.push(file);
-            console.log(file.path, "uglified");
             callback();
         });
     }, function(callback) {
+      console.log("uglify done");
       workerFarm.end(uglifyWorkers);
       callback();
     });
@@ -177,11 +179,9 @@ function gatherAmd(stream, file) {
 }
 
 gulp.task("scripts", function() {
-    var uglifyLogger = logger({ after: 'uglify complete!', extname: '.min.js', showChange: true });
     var src = gulp.src('src/kendo.*.js').pipe(foreach(gatherAmd));
 
     var minSrc = src.pipe(clone())
-                    .pipe(uglifyLogger)
                     .pipe(cpUglify())
                     .pipe(rename({ suffix: ".min" }))
                     .pipe(gulp.dest("dist/gulp/js"));

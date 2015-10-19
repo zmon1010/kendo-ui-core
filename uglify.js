@@ -13,5 +13,5 @@ var mangle = {
 };
 
 module.exports = function (inp, callback) {
-    callback(null, uglify.minify(inp, { fromString: true, compress: compress, mangle: mangle }).code);
+    callback(null, uglify.minify(inp.stringContents, { fromString: true, compress: compress, mangle: mangle }).code);
 };
