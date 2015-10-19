@@ -177,6 +177,31 @@
         });
     });
 
+    asyncTest("avoidLinks is passed through", 1, function() {
+        pdfStubMethod(draw, "drawDOM", function(group, options) {
+            ok(options.avoidLinks);
+            return $.Deferred().resolve(new kendo.drawing.Group());
+        }, function() {
+            grid.options.pdf.avoidLinks = true;
+            return grid.saveAsPDF()
+                .fail(function(e) {
+                    ok(true);
+                });
+        });
+    });
+
+    asyncTest("avoidLinks is false by default", 1, function() {
+        pdfStubMethod(draw, "drawDOM", function(group, options) {
+            ok(!options.avoidLinks);
+            return $.Deferred().resolve(new kendo.drawing.Group());
+        }, function() {
+            return grid.saveAsPDF()
+                .fail(function(e) {
+                    ok(true);
+                });
+        });
+    });
+
     asyncTest("adds loading mask", 1, function() {
         pdfStubMethod(draw, "exportPDF", function(group) {
             equal($(".k-loading-pdf-mask", grid.wrapper).length, 1);
