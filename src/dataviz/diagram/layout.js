@@ -404,9 +404,7 @@
          * @returns {*}
          */
         mapConnection: function (connection) {
-            return this.edgeMap.first(function (edge) {
-                return contains(this.edgeMap.get(edge), connection);
-            });
+            return this.edgeMap.get(connection.id);
         },
 
         /**
@@ -415,13 +413,7 @@
          * @returns {*}
          */
         mapShape: function (shape) {
-            var keys = this.nodeMap.keys();
-            for (var i = 0, len = keys.length; i < len; i++) {
-                var key = keys[i];
-                if (contains(this.nodeMap.get(key), shape)) {
-                    return key;
-                }
-            }
+            return this.nodeMap.get(shape.id);
         },
 
         /**
@@ -629,7 +621,7 @@
                     node.isVirtual = false;
 
                     // the mapping will always contain singletons and the hyperTree will be null
-                    this.nodeMap.add(node, [shape]);
+                    this.nodeMap.add(shape.id, node);
                     this.nodes.push(node);
                 }
             }
@@ -698,7 +690,7 @@
                     }
                     var newEdge = new Link(sourceNode, sinkNode, conn.id, conn);
 
-                    this.edgeMap.add(newEdge, [conn]);
+                    this.edgeMap.add(conn.id, newEdge);
                     this.edges.push(newEdge);
                 }
                 else {

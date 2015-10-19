@@ -225,6 +225,7 @@
                     id: that.options.id,
                     autoSize: that.options.autoSize
                 });
+                that.id = that.options.id;
                 that._template();
             },
 
@@ -404,7 +405,6 @@
                 that.parentContainer = null;
                 that.isContainer = false;
                 that.isCollapsed = false;
-                that.id = that.visual.id;
 
                 if (options.hasOwnProperty("layout") && options.layout !== undefined) {
                     // pass the defined shape layout, it overtakes the default resizing
