@@ -954,14 +954,13 @@
                 that.path.fill(TRANSPARENT);
                 that.visual.append(that.path);
                 that._sourcePoint = that._targetPoint = new Point();
-                that.source(from);
-                that.target(to);
+                that._setSource(from);
+                that._setTarget(to);
                 that.content(that.options.content);
                 that.definers = [];
                 if (defined(options) && options.points) {
                     that.points(options.points);
                 }
-                that.refresh();
             },
 
             options: {
@@ -1080,61 +1079,58 @@
                 return this._resolvedSourceConnector ? this._resolvedSourceConnector.position() : this._sourcePoint;
             },
 
-            /**
-             * Gets or sets the Point where the source of the connection resides.
-             * @param source The source of this connection. Can be a Point, Shape, Connector.
-             * @param undoable Whether the change or assignment should be undoable.
-             */
+            _setSource: function(source) {
+                var shapeSource = source instanceof Shape;
+                var defaultConnector = this.options.fromConnector || AUTO;
+                if (shapeSource && !source.getConnector(defaultConnector)) {
+                    return;
+                }
+
+                if (source !== undefined) {
+                    this.from = source;
+                }
+
+                this._removeFromSourceConnector();
+
+                if (source === null) { // detach
+                    if (this.sourceConnector) {
+                        this._sourcePoint = (this._resolvedSourceConnector || this.sourceConnector).position();
+                        this._clearSourceConnector();
+                        this._setFromOptions(null, this._sourcePoint);
+                    }
+                } else if (source instanceof Connector) {
+                    dataItem = source.shape.dataItem;
+                    if (dataItem) {
+                        this._setFromOptions(dataItem.id);
+                    }
+                    this.sourceConnector = source;
+                    this.sourceConnector.connections.push(this);
+                } else if (source instanceof Point) {
+                    this._setFromOptions(null, source);
+                    this._sourcePoint = source;
+                    if (this.sourceConnector) {
+                        this._clearSourceConnector();
+                    }
+
+                } else if (shapeSource) {
+                    dataItem = source.dataItem;
+                    if (dataItem) {
+                        this._setFromOptions(dataItem.id);
+                    }
+
+                    this.sourceConnector = source.getConnector(defaultConnector);
+                    this.sourceConnector.connections.push(this);
+                }
+            },
+
             source: function (source, undoable) {
                 var dataItem;
                 if (isDefined(source)) {
-                    var shapeSource = source instanceof Shape;
-                    var defaultConnector = this.options.fromConnector || AUTO;
-                    if (shapeSource && !source.getConnector(defaultConnector)) {
-                        return;
-                    }
-
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, source));
                     }
-                    if (source !== undefined) {
-                        this.from = source;
-                    }
-
-                    this._removeFromSourceConnector();
-
-                    if (source === null) { // detach
-                        if (this.sourceConnector) {
-                            this._sourcePoint = this._resolvedSourceConnector.position();
-                            this._clearSourceConnector();
-                            this._setFromOptions(null, this._sourcePoint);
-                        }
-                    } else if (source instanceof Connector) {
-                        dataItem = source.shape.dataItem;
-                        if (dataItem) {
-                            this._setFromOptions(dataItem.id);
-                        }
-                        this.sourceConnector = source;
-                        this.sourceConnector.connections.push(this);
-                    } else if (source instanceof Point) {
-                        this._setFromOptions(null, source);
-                        this._sourcePoint = source;
-                        if (this.sourceConnector) {
-                            this._clearSourceConnector();
-                        }
-
-                    } else if (shapeSource) {
-                        dataItem = source.dataItem;
-                        if (dataItem) {
-                            this._setFromOptions(dataItem.id);
-                        }
-
-                        this.sourceConnector = source.getConnector(defaultConnector);
-                        this.sourceConnector.connections.push(this);
-                    }
-
+                    this._setSource(source);
                     this.refresh();
-
                 }
                 return this.sourceConnector ? this.sourceConnector : this._sourcePoint;
             },
@@ -1179,58 +1175,57 @@
             targetPoint: function () {
                 return this._resolvedTargetConnector ? this._resolvedTargetConnector.position() : this._targetPoint;
             },
-            /**
-             * Gets or sets the Point where the target of the connection resides.
-             * @param target The target of this connection. Can be a Point, Shape, Connector.
-             * @param undoable  Whether the change or assignment should be undoable.
-             */
+
+            _setTarget: function(target) {
+                var shapeTarget = target instanceof Shape;
+                var defaultConnector = this.options.toConnector || AUTO;
+
+                if (shapeTarget && !target.getConnector(defaultConnector)) {
+                    return;
+                }
+
+                if (target !== undefined) {
+                    this.to = target;
+                }
+
+                this._removeFromTargetConnector();
+
+                if (target === null) { // detach
+                    if (this.targetConnector) {
+                        this._targetPoint = (this._resolvedTargetConnector || this.targetConnector).position();
+                        this._clearTargetConnector();
+                        this._setToOptions(null, this._targetPoint);
+                    }
+                } else if (target instanceof Connector) {
+                    dataItem = target.shape.dataItem;
+                    if (dataItem) {
+                        this._setToOptions(dataItem.id);
+                    }
+                    this.targetConnector = target;
+                    this.targetConnector.connections.push(this);
+                } else if (target instanceof Point) {
+                    this._setToOptions(null, target);
+                    this._targetPoint = target;
+                    if (this.targetConnector) {
+                        this._clearTargetConnector();
+                    }
+                } else if (shapeTarget) {
+                    dataItem = target.dataItem;
+                    if (dataItem) {
+                        this._setToOptions(dataItem.id);
+                    }
+                    this.targetConnector = target.getConnector(defaultConnector);
+                    this.targetConnector.connections.push(this);
+                }
+            },
+
             target: function (target, undoable) {
                 var dataItem;
                 if (isDefined(target)) {
-                    var shapeTarget = target instanceof Shape;
-                    var defaultConnector = this.options.toConnector || AUTO;
-
-                    if (shapeTarget && !target.getConnector(defaultConnector)) {
-                        return;
-                    }
-
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, undefined, target));
                     }
-
-                    if (target !== undefined) {
-                        this.to = target;
-                    }
-
-                    this._removeFromTargetConnector();
-
-                    if (target === null) { // detach
-                        if (this.targetConnector) {
-                            this._targetPoint = this._resolvedTargetConnector.position();
-                            this._clearTargetConnector();
-                            this._setToOptions(null, this._targetPoint);
-                        }
-                    } else if (target instanceof Connector) {
-                        dataItem = target.shape.dataItem;
-                        if (dataItem) {
-                            this._setToOptions(dataItem.id);
-                        }
-                        this.targetConnector = target;
-                        this.targetConnector.connections.push(this);
-                    } else if (target instanceof Point) {
-                        this._setToOptions(null, target);
-                        this._targetPoint = target;
-                        if (this.targetConnector) {
-                            this._clearTargetConnector();
-                        }
-                    } else if (shapeTarget) {
-                        dataItem = target.dataItem;
-                        if (dataItem) {
-                            this._setToOptions(dataItem.id);
-                        }
-                        this.targetConnector = target.getConnector(defaultConnector);
-                        this.targetConnector.connections.push(this);
-                    }
+                    this._setTarget(target);
 
                     this.refresh();
                 }
@@ -1766,12 +1761,11 @@
             },
 
             _clearSourceConnector: function () {
-                Utils.remove(this.sourceConnector.connections, this);
                 this.sourceConnector = undefined;
                 this._resolvedSourceConnector = undefined;
             },
+
             _clearTargetConnector: function () {
-                Utils.remove(this.targetConnector.connections, this);
                 this.targetConnector = undefined;
                 this._resolvedTargetConnector = undefined;
             },

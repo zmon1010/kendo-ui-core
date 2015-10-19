@@ -1610,7 +1610,7 @@
             });
 
             test("redraw updates connection source with the new instance", function() {
-                var connection = new Connection(shape.getConnector("top"), new Point());
+                var connection = diagram.connect(shape.getConnector("top"), new Point());
                 shape.redraw({
                     connectors: [{name: "top"}]
                 });
@@ -1618,7 +1618,7 @@
             });
 
             test("redraw sets connection source to the source point if previous connector is not from the new connectors", function() {
-                var connection = new Connection(shape.getConnector("auto"), new Point());
+                var connection = diagram.connect(shape.getConnector("auto"), new Point());
                 shape.redraw({
                     connectors: [{name: "top"}]
                 });
@@ -1626,7 +1626,7 @@
             });
 
             test("redraw updates connection target with the new instance", function() {
-                var connection = new Connection(new Point(), shape.getConnector("top"));
+                var connection = diagram.connect(new Point(), shape.getConnector("top"));
                 shape.redraw({
                     connectors: [{name: "top"}]
                 });
@@ -1634,7 +1634,7 @@
             });
 
             test("redraw sets connection target to the target point if previous connector is not from the new connectors", function() {
-                var connection = new Connection(new Point(), shape.getConnector("auto"));
+                var connection = diagram.connect(new Point(), shape.getConnector("auto"));
                 shape.redraw({
                     connectors: [{name: "top"}]
                 });
@@ -1642,8 +1642,8 @@
             });
 
             test("redraw updates connection model", 2, function() {
-                var connectionSource = new Connection(shape.getConnector("auto"), new Point());
-                var connectionTarget = new Connection(new Point(), shape.getConnector("auto"));
+                var connectionSource = diagram.connect(shape.getConnector("auto"), new Point());
+                var connectionTarget = diagram.connect(new Point(), shape.getConnector("auto"));
                 connectionSource.updateModel = connectionTarget.updateModel = function() {
                     ok(true);
                 };
@@ -2139,6 +2139,7 @@
 
         function setupConnection(options) {
             connection = new Connection(new Point(10, 20), new Point(100, 100), options);
+            connection.refresh();
         }
 
         // ------------------------------------------------------------
@@ -2282,7 +2283,7 @@
                         text: "foo"
                     }
                 }, options));
-
+                connection.refresh();
                 var position = connection._contentVisual.position();
                 equal(position.x, expectedPosition.x);
                 equal(position.y, expectedPosition.y);
