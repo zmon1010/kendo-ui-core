@@ -143,7 +143,7 @@ class ChangeLog
     end
 
     def current_milestones(repo)
-        milestones_for(repo).select { |milestone| current_milestone_names.include? milestone.title }
+        milestones_for(repo).select { |milestone| current_milestone_names.include? milestone.title.downcase }
     end
 
     def milestone_issues(milestone)
@@ -199,7 +199,7 @@ class ChangeLog
             names.unshift self.class.milestone_name(year, q, "next")
        end
 
-       names
+       names.map &:downcase
     end
 
     class << self
