@@ -23,31 +23,40 @@ var foreach = require('gulp-foreach');
 // var insert = require('gulp-insert');
 var replace = require('gulp-replace');
 var through = require("through-gulp");
+var spawn = require("child_process").spawn;
 
 var merge = require('merge2');
 var lazypipe = require('lazypipe');
 var autoprefix = require('less-plugin-autoprefix');
 var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
-var workerFarm = require('worker-farm');
 
-var uglifyWorkers = workerFarm({ autoStart: true }, require.resolve('./uglify'));
+var File = require('vinyl');
 
 function cpUglify() {
   // creating a stream through which each file will pass
   var stream = through(function(file, encoding, callback) {
-        var that = this;
-
         console.log("uglifying", file.path);
-        uglifyWorkers(file, function(err, result) {
-            console.log(file.path, "uglifyied");
-            file.contents = new Buffer(result);
-            that.push(file);
-            callback();
-        });
+
+        var uglify = spawn(require.resolve("./uglify"), { stdin: "pipe" });
+
+        uglify.on("close", function() {
+            console.log(file.path, "uglified");
+        })
+
+        file.pipe(uglify.stdin);
+
+        this.push(new File({
+            cwd: file.cwd,
+            base: file.base,
+            path: file.path,
+            contents: uglify.stdout
+        }));
+
+        callback();
+
     }, function(callback) {
       console.log("uglify done");
-      workerFarm.end(uglifyWorkers);
       callback();
     });
 
