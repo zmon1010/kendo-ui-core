@@ -411,6 +411,7 @@ var __meta__ = { // jshint ignore:line
             var that = this;
 
             that.filterModel = null;
+            that.operatorDropDown = null;
 
             that._angularItems("cleanup");
 
@@ -418,6 +419,8 @@ var __meta__ = { // jshint ignore:line
                 that.dataSource.bind(CHANGE, that._refreshHandler);
                 that._refreshHandler = null;
             }
+
+            kendo.unbind(that.element);
 
             Widget.fn.destroy.call(that);
 
