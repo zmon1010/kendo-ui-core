@@ -5004,6 +5004,9 @@ The author of the PDF document.
     });
     </script>
 
+### pdf.avoidLinks `Boolean` *(default: false)*
+A flag indicating whether to produce actual hyperlinks in the exported PDF file.
+
 ### pdf.creator `String` *(default: "Kendo UI PDF Generator")*
 
 The creator of the PDF document.
