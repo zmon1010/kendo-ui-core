@@ -568,7 +568,9 @@
                     } else {
                         this._setBounds(value);
                         this._triggerBoundsChange();
-                        this.refreshConnections();
+                        if (!(this.diagram && this.diagram._layouting)) {
+                            this.refreshConnections();
+                        }
                     }
                 } else {
                     bounds = this._bounds;
@@ -3190,7 +3192,7 @@
              * @param options Layout-specific options.
              */
             layout: function (options) {
-                this.isLayouting = true;
+                this._layouting = true;
                 // TODO: raise layout event?
                 var type;
                 if(isUndefined(options)) {
@@ -3227,7 +3229,8 @@
                     var unit = new diagram.LayoutUndoUnit(initialState, finalState, options ? options.animate : null);
                     this.undoRedoService.add(unit);
                 }
-                this.isLayouting = false;
+                this._layouting = false;
+                this._redrawConnections();
             },
             /**
              * Gets a shape on the basis of its identifier.
@@ -3823,8 +3826,9 @@
 
                 if (this.options.layout) {
                     this.layout(this.options.layout);
+                } else {
+                    this._redrawConnections();
                 }
-                this._redrawConnections();
                 this.trigger("dataBound");
             },
 

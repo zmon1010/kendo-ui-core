@@ -1395,6 +1395,27 @@
                 equal(bounds.height, 200);
             });
 
+            test("shapes connections are refreshed after updating the bounds", function() {
+                shape = diagram.addShape({});
+                diagram.connect(shape, new Point());
+                shape.connections()[0].refresh = function() {
+                    ok(true);
+                };
+                shape.bounds(new Rect(100, 100, 200, 200));
+            });
+
+            test("shapes connections are refreshed only once during layout", 1, function() {
+                shape = diagram.addShape({});
+                var targetShape = diagram.addShape({});
+                diagram.connect(shape, targetShape);
+                shape.connections()[0].refresh = function() {
+                    ok(true);
+                };
+                diagram.layout({
+                    type: "tree"
+                });
+            });
+
             // ------------------------------------------------------------
             var shapeVisual;
 
@@ -1455,6 +1476,7 @@
                 equal(rotation.x, 150);
                 equal(rotation.y, 50);
             });
+
         })();
 
         // ------------------------------------------------------------
