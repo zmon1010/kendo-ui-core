@@ -30,6 +30,7 @@ var lazypipe = require('lazypipe');
 var autoprefix = require('less-plugin-autoprefix');
 var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
+var uglify = require("gulp-uglify");
 
 var File = require('vinyl');
 
@@ -46,7 +47,7 @@ function cpUglify() {
       var uglify = spawn(require.resolve("./uglify"), { stdin: "pipe" });
 
       uglify.on("close", function() {
-          console.log(file.path, "uglified.");
+          console.log(">>>", file.path);
           workers --;
           next();
       });
@@ -65,7 +66,7 @@ function cpUglify() {
 
   function push(file, callback) {
     queue.push({ file: file, callback: callback});
-    console.log("queueing", file.path);
+    console.log("<<<", file.path);
     next();
   }
 
@@ -74,12 +75,10 @@ function cpUglify() {
        console.log("Done!");
        done();
     }
-    else if (workers < 8) {
+    else if (workers < 10) {
         var task = queue.shift();
         if (task) {
             process(task.file, task.callback);
-        } else {
-            console.log("queue is empty, waiting for the workers to finish...");
         }
     }
   }
@@ -211,18 +210,41 @@ function gatherAmd(stream, file) {
         var whitelist = [ "**/src/kendo." + moduleId + ".js", "**/src/" + moduleId + "/**/*.js", "**/util/**/*.js" ];
 
         return stream
-            .pipe(ignore.include(whitelist))
             .pipe(gatherAMD)
+            .pipe(ignore.include(whitelist))
             .pipe(concat(fileName));
     }
 }
 
+var compress = {
+    unsafe       : true,
+    hoist_vars   : true,
+    warnings     : false,
+    pure_getters : true
+};
+
+var mangle = {
+    except: [ "define" ]
+};
+
 gulp.task("scripts", function() {
     var src = gulp.src('src/kendo.*.js').pipe(foreach(gatherAmd));
 
+    var uglifyLogger = logger({
+        after: 'uglify complete',
+        extname: '.min.js',
+        showChange: true
+    });
+
     var minSrc = src.pipe(clone())
-                    .pipe(cpUglify())
+                    .pipe(debug())
+                    .pipe(ignore.include(["**/src/kendo.*.js"]))
+                    .pipe(sourcemaps.init())
+                    .pipe(uglifyLogger)
+                    .pipe(uglify( { compress, mangle }))
                     .pipe(rename({ suffix: ".min" }))
+                    .pipe(logger({extname: '.map', showChange: true}))
+                    .pipe(sourcemaps.write("./", { sourceRoot: "../src/js" }))
                     .pipe(gulp.dest("dist/gulp/js"));
 
     return merge(src.pipe(gulp.dest("dist/gulp/src/js")), minSrc);
