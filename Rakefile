@@ -1154,6 +1154,15 @@ namespace :build do
 
         zip_bundles.push("#{ARCHIVE_ROOT}/AppBuilder/#{destination}/styles")
 
+        clean_task = "#{ARCHIVE_ROOT}/#{destination}"
+
+        task clean_task do
+            sh "find #{ARCHIVE_ROOT}/#{destination}/* -maxdepth 0 -type f -mtime +2 -exec rm {} \\;"
+            sh "find #{ARCHIVE_ROOT}/#{destination}/download-builder/* -maxdepth 0 -type f -not -newermt 'today 00:00' -exec rm {} \\;"
+        end
+
+        zip_bundles.push(clean_task)
+
         zip_bundles
     end
 
