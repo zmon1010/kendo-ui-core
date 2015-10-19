@@ -278,6 +278,14 @@
             this.width *= zoom;
             this.height *= zoom;
             return this;
+        },
+
+        overlaps: function(rect) {
+            var bottomRight = this.bottomRight();
+            var rectBottomRight = rect.bottomRight();
+            var overlaps = !(bottomRight.x < rect.x || bottomRight.y < rect.y ||
+                rectBottomRight.x < this.x || rectBottomRight.y < this.y);
+            return overlaps;
         }
     });
 

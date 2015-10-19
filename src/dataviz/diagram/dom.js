@@ -4804,15 +4804,14 @@
 
             _testRect: function(shape, rect) {
                 var angle = shape.rotate().angle;
-                return Intersect.rects(rect, shape.bounds(), -angle);
-            },
-
-            _overlaps: function(rect1, rect2) {
-                    var rect1BottomRight = rect1.bottomRight();
-                    var rect2BottomRight = rect2.bottomRight();
-                    var overlaps = !(rect1BottomRight.x < rect2.x || rect1BottomRight.y < rect2.y ||
-                        rect2BottomRight.x < rect1.x || rect2BottomRight.y < rect1.y);
-                    return overlaps;
+                var bounds = shape.bounds();
+                var hit;
+                if (!angle) {
+                    hit = bounds.overlaps(rect);
+                } else {
+                    hit = Intersect.rects(rect, bounds, -angle);
+                }
+                return hit;
             }
         });
 
@@ -4833,7 +4832,7 @@
             },
 
             overlapsBounds: function(rect) {
-                return this._overlaps(this.rect, rect);
+                return this.rect.overlaps(rect);
             },
 
             insert: function (shape, bounds) {
@@ -4917,8 +4916,9 @@
             ROOT_SIZE: 1000,
 
             init: function(diagram) {
-                diagram.bind(ITEMBOUNDSCHANGE, proxy(this._boundsChange, this));
-                diagram.bind(ITEMROTATE, proxy(this._boundsChange, this));
+                var boundsChangeHandler = proxy(this._boundsChange, this);
+                diagram.bind(ITEMBOUNDSCHANGE, boundsChangeHandler);
+                diagram.bind(ITEMROTATE, boundsChangeHandler);
                 this.initRoots();
             },
 
