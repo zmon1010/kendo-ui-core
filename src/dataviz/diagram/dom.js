@@ -1865,12 +1865,7 @@
 
                 that.pauseMouseHandlers = false;
 
-                that._createShapes();
-                that._createConnections();
-
-                if (that.options.layout) {
-                    that.layout(that.options.layout);
-                }
+                that._createOptionElements();
 
                 that.zoom(that.options.zoom);
 
@@ -2305,6 +2300,23 @@
                     deepExtend(that.options, {
                         editable: (themeOptions || {}).editable
                     });
+                }
+            },
+
+            _createOptionElements: function() {
+                var options = this.options;
+                var shapesLength = options.shapes.length;
+
+                if (shapesLength) {
+                    this._createShapes();
+                }
+
+                if (options.connections.length) {
+                    this._createConnections();
+                }
+
+                if (shapesLength && options.layout) {
+                    this.layout(options.layout);
                 }
             },
 
@@ -3508,7 +3520,8 @@
                     action = e.action,
                     items = e.items,
                     options = that.options,
-                    idx;
+                    idx,
+                    dataBound;
 
                 if (e.field) {
                     return;
@@ -3517,10 +3530,10 @@
                 if (action == "remove") {
                     this._removeDataItems(e.items, true);
                 } else {
-                    var triggerDataBound;
+
                     if ((!action || action === "itemloaded") && !this._bindingRoots) {
                         this._bindingRoots = true;
-                        triggerDataBound = true;
+                        dataBound = true;
                     }
 
                     if (!action && !node) {
@@ -3532,15 +3545,15 @@
                     for (idx = 0; idx < items.length; idx++) {
                         items[idx].load();
                     }
-
-                    if (triggerDataBound) {
-                        this.trigger("dataBound");
-                        this._bindingRoots = false;
-                    }
                 }
 
-                if (options.layout) {
+                if (options.layout && (dataBound || action == "remove" || action == "add")) {
                     that.layout(options.layout);
+                }
+
+                if (dataBound) {
+                    this.trigger("dataBound");
+                    this._bindingRoots = false;
                 }
             },
 
