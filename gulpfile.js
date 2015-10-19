@@ -22,12 +22,36 @@ var ignore = require('gulp-ignore');
 var foreach = require('gulp-foreach');
 // var insert = require('gulp-insert');
 var replace = require('gulp-replace');
+var through = require("through-gulp");
 
 var merge = require('merge2');
 var lazypipe = require('lazypipe');
 var autoprefix = require('less-plugin-autoprefix');
 var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
+var workerFarm = require('worker-farm');
+
+var uglifyWorkers = workerFarm({ maxConcurrentWorkers: 10 }, require.resolve('./uglify'));
+
+function cpUglify() {
+  // creating a stream through which each file will pass
+  var stream = through(function(file, encoding, callback) {
+        var that = this;
+        console.log("Uglifying", file.path, "...");
+        uglifyWorkers(file.contents.toString(), function(err, result) {
+            file.contents = new Buffer( result );
+            that.push(file);
+            console.log(file.path, "uglified");
+            callback();
+        });
+    }, function(callback) {
+      workerFarm.end(uglifyWorkers);
+      callback();
+    });
+
+  // returning the file stream
+  return stream;
+}
 
 var browsers = [
     "Explorer >= 7",
@@ -128,12 +152,6 @@ gulp.task("watch-styles", [ "build-skin", "css-assets" ], function() {
 });
 
 function gatherAmd(stream, file) {
-    var amdLogger = logger({
-        after: 'AMD resolve complete',
-        extname: '.js',
-        showChange: true
-    });
-
     var fileName = path.basename(file.path);
     var isBundle = fs.readFileSync(file.path).indexOf('"bundle all";') > -1;
     var moduleId = fileName.match(/kendo\.(.+)\.js/)[1];
@@ -146,14 +164,12 @@ function gatherAmd(stream, file) {
     if (isBundle) {
         return stream
             .pipe(gatherAMD)
-            .pipe(amdLogger)
             .pipe(concat(fileName));
 
     } else {
         var whitelist = [ "**/src/kendo." + moduleId + ".js", "**/src/" + moduleId + "/**/*.js", "**/util/**/*.js" ];
 
         return stream
-            .pipe(amdLogger)
             .pipe(ignore.include(whitelist))
             .pipe(gatherAMD)
             .pipe(concat(fileName));
@@ -161,7 +177,14 @@ function gatherAmd(stream, file) {
 }
 
 gulp.task("scripts", function() {
-    return gulp.src('src/kendo.*.js')
-        .pipe(foreach(gatherAmd))
-        .pipe(gulp.dest("dist/gulp-js"));
+    var uglifyLogger = logger({ after: 'uglify complete!', extname: '.min.js', showChange: true });
+    var src = gulp.src('src/kendo.*.js').pipe(foreach(gatherAmd));
+
+    var minSrc = src.pipe(clone())
+                    .pipe(uglifyLogger)
+                    .pipe(cpUglify())
+                    .pipe(rename({ suffix: ".min" }))
+                    .pipe(gulp.dest("dist/gulp/js"));
+
+    return merge(src.pipe(gulp.dest("dist/gulp/src/js")), minSrc);
 });
