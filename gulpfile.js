@@ -22,8 +22,6 @@ var ignore = require('gulp-ignore');
 var foreach = require('gulp-foreach');
 // var insert = require('gulp-insert');
 var replace = require('gulp-replace');
-var through = require("through-gulp");
-var spawn = require("child_process").spawn;
 
 var merge = require('merge2');
 var lazypipe = require('lazypipe');
@@ -31,67 +29,6 @@ var autoprefix = require('less-plugin-autoprefix');
 var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
 var uglify = require("gulp-uglify");
-
-var File = require('vinyl');
-
-function cpUglify() {
-  // creating a stream through which each file will pass
-  var workers = 0;
-
-  var queue = [];
-  var done;
-
-  function process(file, callback) {
-      workers ++;
-
-      var uglify = spawn(require.resolve("./uglify"), { stdin: "pipe" });
-
-      uglify.on("close", function() {
-          console.log(">>>", file.path);
-          workers --;
-          next();
-      });
-
-      file.pipe(uglify.stdin);
-
-      stream.push(new File({
-          cwd: file.cwd,
-          base: file.base,
-          path: file.path,
-          contents: uglify.stdout
-      }));
-
-      callback();
-  }
-
-  function push(file, callback) {
-    queue.push({ file: file, callback: callback});
-    console.log("<<<", file.path);
-    next();
-  }
-
-  function next() {
-    if (workers === 0 && done) {
-       console.log("Done!");
-       done();
-    }
-    else if (workers < 10) {
-        var task = queue.shift();
-        if (task) {
-            process(task.file, task.callback);
-        }
-    }
-  }
-
-  var stream = through(function(file, encoding, callback) {
-        push(file, callback);
-    }, function(callback) {
-      done = callback;
-    });
-
-  // returning the file stream
-  return stream;
-}
 
 var browsers = [
     "Explorer >= 7",
@@ -204,7 +141,7 @@ function gatherAmd(stream, file) {
     if (isBundle) {
         return stream
             .pipe(gatherAMD)
-            .pipe(concat(fileName));
+            .pipe(concat({ path: file.path }));
 
     } else {
         var whitelist = [ "**/src/kendo." + moduleId + ".js", "**/src/" + moduleId + "/**/*.js", "**/util/**/*.js" ];
@@ -237,7 +174,6 @@ gulp.task("scripts", function() {
     });
 
     var minSrc = src.pipe(clone())
-                    .pipe(debug())
                     .pipe(ignore.include(["**/src/kendo.*.js"]))
                     .pipe(sourcemaps.init())
                     .pipe(uglifyLogger)
