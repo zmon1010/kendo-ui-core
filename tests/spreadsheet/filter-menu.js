@@ -518,4 +518,18 @@
         equal(blanks, false);
     });
 
+    test("dates are converted back to numbers", function() {
+        viewModel.valuesChange({
+            sender: {
+                dataSource: valuesDataSource([
+                    { value: new Date("6/30/2014"), dataType: "date", checked: true },
+                    { value: new Date("8/22/2014"), dataType: "date", checked: false }
+                ])
+            }
+        });
+
+        var values = viewModel.valueFilter.values;
+        equal(values[0], kendo.spreadsheet.dateToNumber(new Date("6/30/2014")));
+    });
+
 })();

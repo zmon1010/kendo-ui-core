@@ -124,7 +124,9 @@
         var FilterMenuViewModel = kendo.spreadsheet.FilterMenuViewModel = kendo.data.ObservableObject.extend({
             valuesChange: function(e) {
                 var checked = function(item) { return item.checked && item.value; };
-                var value = function(item) { return item.value; };
+                var value = function(item) {
+                    return item.dataType === "date" ? kendo.spreadsheet.dateToNumber(item.value) : item.value;
+                };
                 var data = e.sender.dataSource.data();
                 var values = data[0].children.data().toJSON();
                 var blanks = values.filter(function(item) {
