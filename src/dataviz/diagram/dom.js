@@ -400,16 +400,7 @@
                 that.updateBounds();
                 that.content(that.content());
 
-                // TODO: Swa added for phase 2; included here already because the GraphAdapter takes it into account
                 that._createConnectors();
-                that.parentContainer = null;
-                that.isContainer = false;
-                that.isCollapsed = false;
-
-                if (options.hasOwnProperty("layout") && options.layout !== undefined) {
-                    // pass the defined shape layout, it overtakes the default resizing
-                    that.layout = options.layout.bind(options);
-                }
             },
 
             options: diagram.shapeDefaults(),
@@ -2558,39 +2549,34 @@
              * @param options. The options to be passed to the newly created Shape.
              * @returns The newly created shape.
              */
-            addShape: function(item, options) {
+            addShape: function(item, undoable) {
                 var shape,
                     shapeDefaults = this.options.shapeDefaults;
 
                 if (item instanceof Shape) {
-                    shapeDefaults = deepExtend({}, shapeDefaults, options);
-                    item.redraw(options);
                     shape = item;
                 } else if (!(item instanceof kendo.Class)) {
                     shapeDefaults = deepExtend({}, shapeDefaults, item || {});
-                    shape = new Shape(shapeDefaults);
+                    shape = new Shape(shapeDefaults, this);
                 } else {
                     return;
                 }
 
-                if (shapeDefaults.undoable) {
+                if (undoable !== false) {
                     this.undoRedoService.add(new diagram.AddShapeUnit(shape, this), false);
                 }
 
                 this.shapes.push(shape);
-                shape.diagram = this;
+                if (shape.diagram !== this) {
+                    this._shapesQuadTree.insert(shape);
+                    shape.diagram = this;
+                }
                 this.mainLayer.append(shape.visual);
-                this._shapesQuadTree.insert(shape);
 
                 this.trigger(CHANGE, {
                     added: [shape],
                     removed: []
                 });
-
-                // for shapes which have their own internal layout mechanism
-                if (shape.hasOwnProperty("layout")) {
-                    shape.layout(shape);
-                }
 
                 return shape;
             },
@@ -2612,7 +2598,7 @@
                         return shape;
                     }
                 } else if (!this.trigger("add", { shape: shape })) {
-                    return this.addShape(shape, { undoable: undoable });
+                    return this.addShape(shape, undoable);
                 }
             },
             /**
@@ -3473,7 +3459,7 @@
                 var options = deepExtend({}, this.options.shapeDefaults);
                 options.dataItem = dataItem;
                 shape = new Shape(options, this);
-                this.addShape(shape, { undoable: undoable !== false });
+                this.addShape(shape, undoable !== false);
                 this._dataMap[dataItem.id] = shape;
                 return shape;
             },
@@ -3874,7 +3860,7 @@
                     if (!dataItem.isNew()) {
                         if (shape) {
                             shape._setOptionsFromModel();
-                            diagram.addShape(shape, { undoable: inactiveItem.undoable });
+                            diagram.addShape(shape, inactiveItem.undoable);
                             diagram._dataMap[dataItem.id] = shape;
                         } else {
                             diagram._addDataItem(dataItem);
@@ -4934,8 +4920,8 @@
             _boundsChange: function(e) {
                 if (e.item._quadNode) {
                     e.item._quadNode.remove(e.item);
-                    this.insert(e.item);
                 }
+                this.insert(e.item);
             },
 
             insert: function(shape) {
