@@ -3296,6 +3296,8 @@ var __meta__ = { // jshint ignore:line
 
             return this._drawPDFShadow({
                 content: content
+            }, {
+                avoidLinks: this.options.pdf.avoidLinks
             });
         };
     }
