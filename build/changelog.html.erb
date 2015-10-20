@@ -44,6 +44,7 @@ def date
     Time.now.strftime("%B %d, %Y")
 end
 %>
+%if !standalone
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,6 +107,7 @@ end
     <base href="http://www.telerik.com/support/whats-new/kendo-ui-web/release-history">
 </head>
 <body>
+%end
     <div id="page">
         <h1 class="title">Release notes for Kendo UI v<%= VERSION %></h1>
 
@@ -142,5 +144,7 @@ end
 % end
 % end
     </div>
+% if !standalone
 </body>
 </html>
+% end

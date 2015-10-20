@@ -110,7 +110,7 @@ class ChangeLog
         end
     end
 
-    def render_changelog(template, suite_names, exclude)
+    def render_changelog(template, suite_names, exclude, standalone)
         exclude ||= []
         suites = @suites.select { |suite| suite_names.include? suite.key }
         template.result(binding)
@@ -220,13 +220,17 @@ class WriteChangeLogTask < Rake::FileTask
         CHANGELOG_TEMPLATE
     end
 
+    def standalone?
+        return true if name =~ /.txt$/
+    end
+
     def execute(args)
         ensure_path name
         File.open(name, 'w') { |file| file.write(contents(template(name))) }
     end
 
     def contents(render_template)
-        @contents ||= ChangeLog.instance.render_changelog(render_template, suites, exclude)
+        @contents ||= ChangeLog.instance.render_changelog(render_template, suites, exclude, standalone?)
     end
 
     def needed?

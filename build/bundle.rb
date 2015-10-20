@@ -165,6 +165,9 @@ def bundle(options)
     xml_changelog_path = "dist/bundles/#{name}.changelog.xml"
     write_changelog(xml_changelog_path, changelog_suites, options[:changelog_exclude])
 
+    txt_changelog_path = "dist/bundles/#{name}.changelog.txt"
+    write_changelog(txt_changelog_path, changelog_suites, options[:changelog_exclude])
+
     if options[:upload_as_internal_build]
         versioned_bundle_lib_archive_path = File.join(ARCHIVE_ROOT, 'LIB Archive', VERSION, versioned_bundle_name(name) + ".zip")
 

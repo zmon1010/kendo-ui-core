@@ -1166,21 +1166,26 @@ namespace :build do
         zip_bundles
     end
 
-    def xml_changelogs(destination)
+    def changelogs(destination)
         [
             'professional.trial',
             'aspnetmvc.trial',
             'php.trial',
             'jsp.trial'
         ].map do |bundle|
-            filename = versioned_bundle_name(bundle) + ".xml"
+            path = File.join(ARCHIVE_ROOT, destination, 'changelogs')
+            basename = versioned_bundle_name(bundle)
 
-            destination_file = File.join(ARCHIVE_ROOT, destination, 'changelogs', filename)
+            xml_file = File.join(path, basename, '.xml')
+            txt_file = File.join(path, basename, '.txt')
 
-            file_copy :to => destination_file,
+            file_copy :to => xml_file,
                       :from => "dist/bundles/#{bundle}.changelog.xml"
 
-            destination_file
+            file_copy :to => txt_file,
+                      :from => "dist/bundles/#{bundle}.changelog.txt"
+
+            [xml_file, txt_file]
         end
     end
 
@@ -1234,7 +1239,7 @@ namespace :build do
             'download_builder:bundle',
             zip_targets("Production"),
             nuget_targets("Production"),
-            xml_changelogs("Production"),
+            changelogs("Production"),
             changelog
         ].flatten
 
@@ -1323,7 +1328,7 @@ namespace :build do
             'download_builder:bundle',
             zip_targets("Stable"),
             nuget_targets("Stable"),
-            xml_changelogs("Stable")
+            changelogs("Stable")
         ].flatten
 
         task :generate_help => [ :get_binaries, 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.xml', 'generate:php:api', 'generate:jsp:api', 'generate:mvc:api' ]
