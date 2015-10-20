@@ -395,8 +395,7 @@
                 options = that.options;
                 that.connectors = [];
                 that.type = options.type;
-                that.shapeVisual = Shape.createShapeVisual(that.options);
-                that.visual.append(this.shapeVisual);
+                that.createShapeVisual();
                 that.updateBounds();
                 that.content(that.content());
 
@@ -448,8 +447,7 @@
                 this.visual.clear();
                 this._contentVisual = null;
                 this.options.dataItem = this.dataItem;
-                this.shapeVisual = Shape.createShapeVisual(this.options);
-                this.visual.append(this.shapeVisual);
+                this.createShapeVisual();
                 this.updateBounds();
             },
 
@@ -800,9 +798,7 @@
                     source: options.source,
                     hover: options.hover,
                     fill: options.fill,
-                    stroke: options.stroke,
-                    startCap: options.startCap,
-                    endCap: options.endCap
+                    stroke: options.stroke
                 };
             },
 
@@ -894,43 +890,39 @@
                 return {
                     shapeId: this.options.id
                 };
+            },
+
+            createShapeVisual: function() {
+                var options = this.options;
+                var visualOptions = this._visualOptions(options);
+                var visualTemplate = options.visual;
+                var type = (options.type + "").toLocaleLowerCase();
+                var shapeVisual;
+
+                visualOptions.width = options.width;
+                visualOptions.height = options.height;
+
+                if (isFunction(visualTemplate)) { // custom template
+                    shapeVisual = visualTemplate.call(this, options);
+                } else if (visualOptions.data) {
+                    shapeVisual = new Path(visualOptions);
+                    translateToOrigin(shapeVisual);
+                } else if (type == "rectangle"){
+                    shapeVisual = new Rectangle(visualOptions);
+                } else if (type == "circle") {
+                    shapeVisual = new Circle(visualOptions);
+                } else if (type == "text") {
+                    shapeVisual = new TextBlock(visualOptions);
+                } else if (type == "image") {
+                    shapeVisual = new Image(visualOptions);
+                } else {
+                    shapeVisual = new Path(visualOptions);
+                }
+
+                this.shapeVisual = shapeVisual;
+                this.visual.append(this.shapeVisual);
             }
         });
-
-        Shape.createShapeVisual = function(options) {
-            delete options.diagram; // avoid stackoverflow and reassign later on again
-            var shapeDefaults = deepExtend({}, options, { x: 0, y: 0 });
-            var visualTemplate = shapeDefaults.visual; // Shape visual should not have position in its parent group.
-            var type = (shapeDefaults.type + "").toLocaleLowerCase();
-            var shapeVisual;
-
-            if (isFunction(visualTemplate)) { // custom template
-                shapeVisual = visualTemplate.call(this, shapeDefaults);
-            } else if (shapeDefaults.path) {
-                shapeDefaults.data = shapeDefaults.path;
-                shapeVisual = new Path(shapeDefaults);
-                translateToOrigin(shapeVisual);
-            } else if (type == "rectangle"){
-                shapeVisual = new Rectangle(shapeDefaults);
-            } else if (type == "circle") {
-                shapeVisual = new Circle(shapeDefaults);
-            } else if (type == "text") {
-                shapeVisual = new TextBlock(shapeDefaults);
-            } else if (type == "image") {
-                shapeVisual = new Image(shapeDefaults);
-            } else {
-                shapeVisual = new Path(shapeDefaults);
-            }
-
-            return shapeVisual;
-        };
-
-        function translateToOrigin(visual) {
-            var bbox = visual.drawingContainer().clippedBBox(null);
-            if (bbox.origin.x !== 0 || bbox.origin.y !== 0) {
-                visual.position(-bbox.origin.x, -bbox.origin.y);
-            }
-        }
 
         /**
          * The visual link between two Shapes through the intermediate of Connectors.
@@ -5045,6 +5037,13 @@
                 if (elementOptions && !defined(elementOptions[field])) {
                     elementOptions[field] = mainOptions[field];
                 }
+            }
+        }
+
+        function translateToOrigin(visual) {
+            var bbox = visual.drawingContainer().clippedBBox(null);
+            if (bbox.origin.x !== 0 || bbox.origin.y !== 0) {
+                visual.position(-bbox.origin.x, -bbox.origin.y);
             }
         }
 

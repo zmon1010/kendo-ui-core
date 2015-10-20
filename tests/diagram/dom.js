@@ -1238,7 +1238,7 @@
             });
 
             equal(diagram.shapes.length, 1, "should have a single shape");
-            equal(diagram.shapes[0].shapeVisual.options.type, shape.options.type, "shape visual is same type as the shape itself");
+            ok(diagram.shapes[0].shapeVisual instanceof dataviz.diagram.Circle);
         });
 
         // ------------------------------------------------------------
@@ -1367,8 +1367,8 @@
                     y: 40
                 });
                 var visual = shape.shapeVisual;
-                equal(visual.options.x, 0);
-                equal(visual.options.y, 0);
+                equal(visual.options.x, undefined);
+                equal(visual.options.y, undefined);
             });
 
             test("inits width and height based on visual content", function() {
@@ -1584,9 +1584,7 @@
                     source: "bar",
                     hover: {fill: "fooHover"},
                     fill: {color: "fooColor"},
-                    stroke: {width: 3},
-                    startCap: "fooCap",
-                    endCap: "fooCap"
+                    stroke: {width: 3}
                 };
 
                 shape.shapeVisual.redraw = function(options) {
@@ -1594,8 +1592,6 @@
                     equal(options.source, visualOptions.source);
                     equal(options.hover.fill, visualOptions.hover.fill);
                     equal(options.fill.color, visualOptions.fill.color);
-                    equal(options.startCap, visualOptions.startCap);
-                    equal(options.endCap, visualOptions.endCap);
                 };
 
                 shape.redraw(visualOptions);
