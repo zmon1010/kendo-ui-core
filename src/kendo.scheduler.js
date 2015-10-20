@@ -3864,7 +3864,9 @@ var __meta__ = { // jshint ignore:line
             var scheduler = this;
             var promise = new $.Deferred();
 
-            this._drawPDFShadow()
+            this._drawPDFShadow({}, {
+                avoidLinks: this.options.pdf.avoidLinks
+            })
             .done(function(group) {
                 var args = {
                     page: group,
