@@ -6,7 +6,6 @@ var gulp = require('gulp');
 var debug = require('gulp-debug'); // jshint ignore:line
 var less = require('gulp-less');
 var logger = require('gulp-logger');
-var replace =  require('gulp-replace');
 var minifyCSS = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var clone = require('gulp-clone');
@@ -20,7 +19,7 @@ var amdOptimize = require("amd-optimize");
 var concat = require("gulp-concat");
 var ignore = require('gulp-ignore');
 var foreach = require('gulp-foreach');
-// var insert = require('gulp-insert');
+var insert = require('gulp-insert');
 var replace = require('gulp-replace');
 
 var merge = require('merge2');
@@ -41,6 +40,14 @@ var browsers = [
     "iOS >= 6",
     "BlackBerry >= 10"
 ].join(",");
+
+var licensePad = "/** \n @license\n ";
+
+for (var i = 0; i < 12; i++) {
+   licensePad += " \n";
+}
+
+licensePad += " */\n";
 
 var cleanCssOptions = {
     compatibility: 'ie7',
@@ -141,7 +148,7 @@ function gatherAmd(stream, file) {
     if (isBundle) {
         return stream
             .pipe(gatherAMD)
-            .pipe(concat({ path: file.path }));
+            .pipe(concat({ path: file.path, base: "src" }));
 
     } else {
         var whitelist = [ "**/src/kendo." + moduleId + ".js", "**/src/" + moduleId + "/**/*.js", "**/util/**/*.js" ];
@@ -165,7 +172,8 @@ var mangle = {
 };
 
 gulp.task("scripts", function() {
-    var src = gulp.src('src/kendo.*.js').pipe(foreach(gatherAmd));
+    var JS_DIST = "dist/gulp/js";
+
 
     var uglifyLogger = logger({
         after: 'uglify complete',
@@ -173,15 +181,24 @@ gulp.task("scripts", function() {
         showChange: true
     });
 
-    var minSrc = src.pipe(clone())
-                    .pipe(ignore.include(["**/src/kendo.*.js"]))
-                    .pipe(sourcemaps.init())
-                    .pipe(uglifyLogger)
-                    .pipe(uglify( { compress, mangle }))
-                    .pipe(rename({ suffix: ".min" }))
-                    .pipe(logger({extname: '.map', showChange: true}))
-                    .pipe(sourcemaps.write("./", { sourceRoot: "../src/js" }))
-                    .pipe(gulp.dest("dist/gulp/js"));
+    var src = gulp.src('src/kendo.*.js').pipe(foreach(gatherAmd));
 
-    return merge(src.pipe(gulp.dest("dist/gulp/src/js")), minSrc);
+    var cultures = gulp.src('src/cultures/kendo.culture.*.js', { base: 'src' });
+    var messages = gulp.src('src/messages/kendo.messages.*.js', { base: 'src' });
+    var gatheredSrc = src.pipe(clone()).pipe(ignore.include(["**/src/kendo.*.js"]));
+
+    var toMinify = merge(cultures, messages, gatheredSrc);
+
+    var minSrc = toMinify
+        .pipe(insert.prepend(licensePad))
+        .pipe(sourcemaps.init())
+        .pipe(uglifyLogger)
+        .pipe(uglify({ compress, mangle, preserveComments: "license" }))
+        .pipe(rename({ suffix: ".min" }))
+        .pipe(logger({extname: '.map', showChange: true}))
+        .pipe(sourcemaps.write("./", { sourceRoot: "../src/js" }))
+        .pipe(gulp.dest(JS_DIST));
+
+
+    return merge(src.pipe(gulp.dest(JS_DIST)), minSrc);
 });
