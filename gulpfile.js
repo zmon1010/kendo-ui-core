@@ -43,7 +43,7 @@ var browsers = [
 
 var licensePad = "/** \n @license\n ";
 
-for (var i = 0; i < 12; i++) {
+for (var i = 0; i < 22; i++) {
    licensePad += " \n";
 }
 
@@ -114,6 +114,7 @@ gulp.task("build-skin", ["css-assets"], function() {
 
 gulp.task("less",function() {
     var css = gulp.src("styles/**/kendo*.less")
+        .pipe(insert.prepend(licensePad))
         .pipe(sourcemaps.init())
         .pipe(lessLogger)
         .pipe(lessToCss());
