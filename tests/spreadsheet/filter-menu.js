@@ -472,12 +472,11 @@
     }
 
     test("values are updated upon checkbox check", function() {
-
         viewModel.valuesChange({
             sender: {
                 dataSource: valuesDataSource([
-                    { text: "1", dataType: "string", checked: true },
-                    { text: "2", dataType: "string", checked: false }
+                    { text: "1", value: "1", dataType: "string", checked: true },
+                    { text: "2", value: "2", dataType: "string", checked: false }
                 ])
             }
         });
@@ -489,7 +488,6 @@
     });
 
     test("cell value is passed to the value filter", function() {
-
         viewModel.valuesChange({
             sender: {
                 dataSource: valuesDataSource([
@@ -503,6 +501,21 @@
 
         equal(values.length, 1);
         strictEqual(values[0], 0.01);
+    });
+
+    test("blanks field is added to the value filter options", function() {
+        viewModel.valuesChange({
+            sender: {
+                dataSource: valuesDataSource([
+                    { dataType: "blank", checked: false },
+                    { value: 0.01, format: "0%", dataType: "string", checked: true },
+                    { value: 0.02, format: "0%", dataType: "string", checked: false }
+                ])
+            }
+        });
+
+        var blanks = viewModel.valueFilter.blanks;
+        equal(blanks, false);
     });
 
 })();
