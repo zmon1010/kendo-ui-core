@@ -53,6 +53,10 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "scheduler-messages";
     }
 
+    public void setEditable(com.kendoui.taglib.scheduler.MessagesEditableTag value) {
+        setProperty("editable", value);
+    }
+
     public void setEditor(com.kendoui.taglib.scheduler.MessagesEditorTag value) {
         setProperty("editor", value);
     }

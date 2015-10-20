@@ -13342,12 +13342,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the location or size of an item are changed.</description>
+            <description>Fired when the location or size of a shape are changed.</description>
             <name>itemBoundsChange</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when an item is rotated.</description>
+            <description>Fired when a shape is rotated.</description>
             <name>itemRotate</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -15606,6 +15606,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Specifies the start level when the subtype is tipOver.</description>
+            <name>tipOverTreeStartLevel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The layout type.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
@@ -17423,13 +17429,13 @@ See visual.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the location or size of an item are changed.</description>
+        <description>Fired when the location or size of a shape are changed.</description>
         <name>diagram-itemBoundsChange</name>
         <tag-class>com.kendoui.taglib.diagram.ItemBoundsChangeFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when an item is rotated.</description>
+        <description>Fired when a shape is rotated.</description>
         <name>diagram-itemRotate</name>
         <tag-class>com.kendoui.taglib.diagram.ItemRotateFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -19203,6 +19209,12 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>A flag indicating whether to produce actual hyperlinks in the exported PDF file.It's also possible to pass a CSS selector as argument. All matching links will be ignored.</description>
+            <name>avoidLinks</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The creator of the PDF document.</description>
             <name>creator</name>
             <rtexprvalue>true</rtexprvalue>
@@ -20183,6 +20195,12 @@ which field to update. The other option is to use MVVM bindings in order to bind
             <name>author</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A flag indicating whether to produce actual hyperlinks in the exported PDF file.It's also possible to pass a CSS selector as argument. All matching links will be ignored.</description>
+            <name>avoidLinks</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The creator of the PDF document.</description>
@@ -21360,7 +21378,13 @@ be disabled for this column. By default all columns are sortable if sorting is e
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>A JavaScript function which is used to compare the values - should return -1 if first argument is less than second one, 0 if both are the same or +1 if the first one is greater than second one.</description>
+            <description>A JavaScript function which is used to compare the values. It has the same signature as the compare function accepted by Array.sort.The basic function implementation is as follows (pseudo-code):
+```pseudo
+    function compare(a, b, descending) {
+      if (a is less than b by some ordering criterion) {
+        return -1;
+      }```One notable exception is that we also supply a third parameter that indicates the sort direction (true for descending).
+See How-to: Stable Sort in Chrome for more details on how this can be useful.</description>
             <name>compare</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -21370,7 +21394,13 @@ be disabled for this column. By default all columns are sortable if sorting is e
 
 
     <tag>
-        <description>A JavaScript function which is used to compare the values - should return -1 if first argument is less than second one, 0 if both are the same or +1 if the first one is greater than second one.</description>
+        <description>A JavaScript function which is used to compare the values. It has the same signature as the compare function accepted by Array.sort.The basic function implementation is as follows (pseudo-code):
+```pseudo
+    function compare(a, b, descending) {
+      if (a is less than b by some ordering criterion) {
+        return -1;
+      }```One notable exception is that we also supply a third parameter that indicates the sort direction (true for descending).
+See How-to: Stable Sort in Chrome for more details on how this can be useful.</description>
         <name>grid-column-sortable-compare</name>
         <tag-class>com.kendoui.taglib.grid.ColumnSortableCompareFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -22109,6 +22139,12 @@ A special all value is supported. It sets the page size to the total number of r
             <name>author</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A flag indicating whether to produce actual hyperlinks in the exported PDF file.It's also possible to pass a CSS selector as argument. All matching links will be ignored.</description>
+            <name>avoidLinks</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The creator of the PDF document.</description>
@@ -23580,6 +23616,12 @@ Cancelling the event will prevent the user action.</description>
         <tag-class>com.kendoui.taglib.map.LayerDefaultsTag</tag-class>
         <body-content>JSP</body-content>
 
+        <attribute>
+            <description>The size of the image tile in pixels.</description>
+            <name>tileSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
 
     </tag>
 
@@ -23592,6 +23634,12 @@ Cancelling the event will prevent the user action.</description>
         <attribute>
             <description>The attribution of all Bing (tm) layers.</description>
             <name>attribution</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The culture to be used for the bing map tiles.</description>
+            <name>culture</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -24027,6 +24075,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>The culture to be used for the bing map tiles.</description>
+            <name>culture</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The data source of the layer. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
 instance.</description>
             <name>dataSource</name>
@@ -24096,6 +24150,12 @@ Alternating between different subdomains allows more requests to be executed in 
             <name>symbol</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The size of the image tile in pixels.</description>
+            <name>tileSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
         </attribute>
         <attribute>
             <description>The data item field which contains the marker title.
@@ -26532,6 +26592,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>A flag indicating whether to produce actual hyperlinks in the exported PDF file.It's also possible to pass a CSS selector as argument. All matching links will be ignored.</description>
+            <name>avoidLinks</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The creator of the PDF document.</description>
             <name>creator</name>
             <rtexprvalue>true</rtexprvalue>
@@ -28291,6 +28357,22 @@ which field to update. The other option is to use MVVM bindings in order to bind
     </tag>
 
     <tag>
+        <description>The configuration of the scheduler editable messages. Use this option to customize or localize the scheduler editable messages.</description>
+        <name>scheduler-messages-editable</name>
+        <tag-class>com.kendoui.taglib.scheduler.MessagesEditableTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The text similar to "Are you sure you want to delete this event?" displayed in scheduler.</description>
+            <name>confirmation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
         <description>The configuration of the scheduler editor messages. Use this option to customize or localize the scheduler editor messages.</description>
         <name>scheduler-messages-editor</name>
         <tag-class>com.kendoui.taglib.scheduler.MessagesEditorTag</tag-class>
@@ -28765,6 +28847,12 @@ which field to update. The other option is to use MVVM bindings in order to bind
             <name>author</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A flag indicating whether to produce actual hyperlinks in the exported PDF file.It's also possible to pass a CSS selector as argument. All matching links will be ignored.</description>
+            <name>avoidLinks</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The creator of the PDF document.</description>
@@ -41695,6 +41783,12 @@ A fade animation is highly recommended with any of the non-default tab position 
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Specifies the selectd tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.</description>
+            <name>value</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Triggered after a tab is being made visible and its animation complete. Before Q2 2014 this event was invoked after tab show, but before the end of the animation. This event is triggered only for tabs with associated content.</description>
             <name>activate</name>
             <rtexprvalue>true</rtexprvalue>
@@ -42779,22 +42873,22 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.</description>
             <name>dragstart</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.</description>
             <name>drag</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.</description>
             <name>dragend</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.</description>
             <name>drop</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -43466,6 +43560,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>A flag indicating whether to produce actual hyperlinks in the exported PDF file.It's also possible to pass a CSS selector as argument. All matching links will be ignored.</description>
+            <name>avoidLinks</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The creator of the PDF document.</description>
             <name>creator</name>
             <rtexprvalue>true</rtexprvalue>
@@ -43661,25 +43761,25 @@ This class can be used to get a reference to the button (after TreeList initiali
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.</description>
         <name>treeList-dragstart</name>
         <tag-class>com.kendoui.taglib.treelist.DragstartFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.</description>
         <name>treeList-drag</name>
         <tag-class>com.kendoui.taglib.treelist.DragFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.</description>
         <name>treeList-dragend</name>
         <tag-class>com.kendoui.taglib.treelist.DragendFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.</description>
         <name>treeList-drop</name>
         <tag-class>com.kendoui.taglib.treelist.DropFunctionTag</tag-class>
         <body-content>JSP</body-content>

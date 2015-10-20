@@ -73,6 +73,14 @@ public class LayerDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
         setProperty("tile", value);
     }
 
+    public float getTileSize() {
+        return (Float)getProperty("tileSize");
+    }
+
+    public void setTileSize(float value) {
+        setProperty("tileSize", value);
+    }
+
 //<< Attributes
 
 }

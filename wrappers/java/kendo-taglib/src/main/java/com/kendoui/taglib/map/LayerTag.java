@@ -71,6 +71,14 @@ public class LayerTag extends BaseTag implements DataBoundWidget {
         setProperty("autoBind", value);
     }
 
+    public java.lang.String getCulture() {
+        return (java.lang.String)getProperty("culture");
+    }
+
+    public void setCulture(java.lang.String value) {
+        setProperty("culture", value);
+    }
+
     public void setDataSource(DataSourceTag dataSource) {
         setProperty("dataSource", dataSource);
     }
@@ -153,6 +161,14 @@ public class LayerTag extends BaseTag implements DataBoundWidget {
 
     public void setSymbol(java.lang.String value) {
         setProperty("symbol", value);
+    }
+
+    public float getTileSize() {
+        return (Float)getProperty("tileSize");
+    }
+
+    public void setTileSize(float value) {
+        setProperty("tileSize", value);
     }
 
     public java.lang.String getTitleField() {
