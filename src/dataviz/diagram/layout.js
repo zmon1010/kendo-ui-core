@@ -1949,13 +1949,11 @@
         },
         _prepare: function (graph) {
             var current = [], i, l, link;
-            for (l = 0; l < graph.links.length; l++) {
-                // of many dummies have been inserted to make things work
-                graph.links[l].depthOfDumminess = 0;
-            }
 
             // defines a mapping of a node to the layer index
             var layerMap = new Dictionary();
+            var layerCount = 0;
+            var targetLayer, next, target;
 
             Utils.forEach(graph.nodes, function (node) {
                 if (node.incoming.length === 0) {
@@ -1965,15 +1963,19 @@
             });
 
             while (current.length > 0) {
-                var next = current.shift();
+                next = current.shift();
                 for (i = 0; i < next.outgoing.length; i++) {
                     link = next.outgoing[i];
-                    var target = link.target;
+                    target = link.target;
 
                     if (layerMap.containsKey(target)) {
-                        layerMap.set(target, Math.max(layerMap.get(next) + 1, layerMap.get(target)));
+                        targetLayer = Math.max(layerMap.get(next) + 1, layerMap.get(target));
                     } else {
-                        layerMap.set(target, layerMap.get(next) + 1);
+                        targetLayer = layerMap.get(next) + 1;
+                    }
+                    layerMap.set(target, targetLayer);
+                    if (targetLayer > layerCount) {
+                        layerCount = targetLayer;
                     }
 
                     if (!contains(current, target)) {
@@ -1982,14 +1984,8 @@
                 }
             }
 
-            // the node count in the map defines how many layers w'll need
-            var layerCount = 0;
-            layerMap.forEachValue(function (nodecount) {
-                layerCount = Math.max(layerCount, nodecount);
-            });
+            var sortedNodes = layerMap.keys();
 
-            var sortedNodes = [];
-            Utils.addRange(sortedNodes, layerMap.keys());
             sortedNodes.sort(function (o1, o2) {
                 var o1layer = layerMap.get(o1);
                 var o2layer = layerMap.get(o2);
@@ -2015,24 +2011,33 @@
             }
 
             this.layers = [];
+            var layer;
             for (i = 0; i < layerCount + 1; i++) {
-                this.layers.push([]);
+                layer = [];
+                layer.linksTo = [];
+                this.layers.push(layer);
             }
 
             layerMap.forEach(function (node, layer) {
+                var connectedLayer;
                 node.layer = layer;
-                this.layers[layer].push(node);
+                layer = this.layers[layer];
+                layer.push(node);
+                for (var idx = 0; idx < node.links.length; idx++) {
+                    connectedLayer = layerMap.get(node.links[idx].target);
+                    layer.linksTo[connectedLayer] = layer.linksTo[connectedLayer] || [];
+                    layer.linksTo[connectedLayer].push(node.links[idx]);
+                }
             }, this);
 
             // set initial grid positions
             for (l = 0; l < this.layers.length; l++) {
-                var layer = this.layers[l];
+                layer = this.layers[l];
                 for (i = 0; i < layer.length; i++) {
                     layer[i].gridPosition = i;
                 }
             }
         },
-
         /**
          * Performs the layout of a single component.
          */
@@ -3123,7 +3128,7 @@
 
                 for (var l = 0; l < this.graph.links.length; l++) {
                     var link = this.graph.links[l];
-                    if (link.depthOfDumminess === 0) {
+                    if (!link.depthOfDumminess) {
                         continue;
                     }
 
@@ -3497,58 +3502,18 @@
         /// <param name="layerIndex2">Another layer index.</param>
         /// <returns></returns>
         countLinksCrossingBetweenTwoLayers: function (ulayer, dlayer) {
-            var i, crossings = 0;
+            var links = this.layers[ulayer].linksTo[dlayer];
+            var link1, link2, n11, n12, n21, n22, l1, l2;
+            var crossings = 0;
+            var length = links.length;
 
-            var upperLayer = new Set();
-            var temp1 = this.layers[ulayer];
-            for (i = 0; i < temp1.length; i++) {
-                upperLayer.add(temp1[i]);
-            }
+            for (l1 = 0; l1 < length; l1++) {
+                link1 = links[l1];
+                for (l2 = l1 + 1; l2 < length; l2++) {
 
-            var lowerLayer = new Set();
-            var temp2 = this.layers[dlayer];
-            for (i = 0; i < temp2.length; i++) {
-                lowerLayer.add(temp2[i]);
-            }
+                    link2 = links[l2];
 
-            // collect the links located between the layers
-            var dlinks = new Set();
-            var links = [];
-            var temp = [];
-
-            upperLayer.forEach(function (node) {
-                //throw "";
-                Utils.addRange(temp, node.incoming);
-                Utils.addRange(temp, node.outgoing);
-            });
-
-            for (var ti = 0; ti < temp.length; ti++) {
-                var link = temp[ti];
-
-                if (upperLayer.contains(link.source) &&
-                    lowerLayer.contains(link.target)) {
-                    dlinks.add(link);
-                    links.push(link);
-                }
-                else if (lowerLayer.contains(link.source) &&
-                    upperLayer.contains(link.target)) {
-                    links.push(link);
-                }
-            }
-
-            for (var l1 = 0; l1 < links.length; l1++) {
-                var link1 = links[l1];
-                for (var l2 = 0; l2 < links.length; l2++) {
-                    if (l1 === l2) {
-                        continue;
-                    }
-
-                    var link2 = links[l2];
-
-                    var n11, n12;
-                    var n21, n22;
-
-                    if (dlinks.contains(link1)) {
+                    if (link1.target.layer === dlayer) {
                         n11 = link1.source;
                         n12 = link1.target;
                     }
@@ -3557,7 +3522,7 @@
                         n12 = link1.source;
                     }
 
-                    if (dlinks.contains(link2)) {
+                    if (link2.target.layer === dlayer) {
                         n21 = link2.source;
                         n22 = link2.target;
                     }
@@ -3577,7 +3542,7 @@
                 }
             }
 
-            return crossings / 2;
+            return crossings;
         },
 
         calcBaryCenter: function (node) {
