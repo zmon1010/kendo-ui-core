@@ -1082,6 +1082,7 @@
             _setSource: function(source) {
                 var shapeSource = source instanceof Shape;
                 var defaultConnector = this.options.fromConnector || AUTO;
+                var dataItem;
                 if (shapeSource && !source.getConnector(defaultConnector)) {
                     return;
                 }
@@ -1124,7 +1125,6 @@
             },
 
             source: function (source, undoable) {
-                var dataItem;
                 if (isDefined(source)) {
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, source));
@@ -1179,6 +1179,7 @@
             _setTarget: function(target) {
                 var shapeTarget = target instanceof Shape;
                 var defaultConnector = this.options.toConnector || AUTO;
+                var dataItem;
 
                 if (shapeTarget && !target.getConnector(defaultConnector)) {
                     return;
@@ -1220,7 +1221,6 @@
             },
 
             target: function (target, undoable) {
-                var dataItem;
                 if (isDefined(target)) {
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, undefined, target));
