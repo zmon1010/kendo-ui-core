@@ -488,4 +488,21 @@
         strictEqual(values[0], "1");
     });
 
+    test("cell value is passed to the value filter", function() {
+
+        viewModel.valuesChange({
+            sender: {
+                dataSource: valuesDataSource([
+                    { value: 0.01, format: "0%", dataType: "string", checked: true },
+                    { value: 0.02, format: "0%", dataType: "string", checked: false }
+                ])
+            }
+        });
+
+        var values = viewModel.valueFilter.values;
+
+        equal(values.length, 1);
+        strictEqual(values[0], 0.01);
+    });
+
 })();
