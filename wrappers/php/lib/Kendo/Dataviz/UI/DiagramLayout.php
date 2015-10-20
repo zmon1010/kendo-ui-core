@@ -88,6 +88,15 @@ A diagram can have in general disconnected pieces, known as components, which ca
     }
 
     /**
+    * Specifies the start level when the subtype is tipOver.
+    * @param float $value
+    * @return \Kendo\Dataviz\UI\DiagramLayout
+    */
+    public function tipOverTreeStartLevel($value) {
+        return $this->setProperty('tipOverTreeStartLevel', $value);
+    }
+
+    /**
     * Defines the horizontal offset from a child with respect to its parent. This setting is specific to the tipOver tree layout.
     * @param float $value
     * @return \Kendo\Dataviz\UI\DiagramLayout

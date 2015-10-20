@@ -226,7 +226,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
 
     /**
     * Sets the dragstart event of the TreeList.
-    * Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user attempts to drag an item. If prevented, the item is not allowed to move.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\TreeList
     */
@@ -240,7 +240,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
 
     /**
     * Sets the drag event of the TreeList.
-    * Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired while the user drags and item. This event is triggered on every mouse move.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\TreeList
     */
@@ -254,7 +254,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
 
     /**
     * Sets the dragend event of the TreeList.
-    * Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user has finished dragging an item and the model has been updated.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\TreeList
     */
@@ -268,7 +268,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
 
     /**
     * Sets the drop event of the TreeList.
-    * Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user drops an item. If prevented, the source row will not be moved.The event handler function context (available via the this keyword) will be set to the widget instance.Available in builds 2015.3.1014 and later.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\TreeList
     */

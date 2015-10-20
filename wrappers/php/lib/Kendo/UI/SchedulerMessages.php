@@ -141,6 +141,15 @@ class SchedulerMessages extends \Kendo\SerializableObject {
     }
 
     /**
+    * The configuration of the scheduler editable messages. Use this option to customize or localize the scheduler editable messages.
+    * @param \Kendo\UI\SchedulerMessagesEditable|array $value
+    * @return \Kendo\UI\SchedulerMessages
+    */
+    public function editable($value) {
+        return $this->setProperty('editable', $value);
+    }
+
+    /**
     * The configuration of the scheduler editor messages. Use this option to customize or localize the scheduler editor messages.
     * @param \Kendo\UI\SchedulerMessagesEditor|array $value
     * @return \Kendo\UI\SchedulerMessages

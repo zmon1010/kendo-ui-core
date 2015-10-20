@@ -54,6 +54,15 @@ North-West lat, longitude, South-East latitude, longitude.If not specified, the 
     }
 
     /**
+    * The culture to be used for the bing map tiles.
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\MapLayer
+    */
+    public function culture($value) {
+        return $this->setProperty('culture', $value);
+    }
+
+    /**
     * The data item field which contains the marker (symbol) location.
 The field should be an array with two numbers - latitude and longitude in decimal degrees.Requires the dataSource option to be set.Only applicable to "marker" and "bubble" layers.
     * @param string $value
@@ -61,6 +70,15 @@ The field should be an array with two numbers - latitude and longitude in decima
     */
     public function locationField($value) {
         return $this->setProperty('locationField', $value);
+    }
+
+    /**
+    * The size of the image tile in pixels.
+    * @param float $value
+    * @return \Kendo\Dataviz\UI\MapLayer
+    */
+    public function tileSize($value) {
+        return $this->setProperty('tileSize', $value);
     }
 
     /**

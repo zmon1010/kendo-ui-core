@@ -15,6 +15,15 @@ class PivotGridPdf extends \Kendo\SerializableObject {
     }
 
     /**
+    * A flag indicating whether to produce actual hyperlinks in the exported PDF file.It's also possible to pass a CSS selector as argument. All matching links will be ignored.
+    * @param boolean|string $value
+    * @return \Kendo\UI\PivotGridPdf
+    */
+    public function avoidLinks($value) {
+        return $this->setProperty('avoidLinks', $value);
+    }
+
+    /**
     * The creator of the PDF document.
     * @param string $value
     * @return \Kendo\UI\PivotGridPdf

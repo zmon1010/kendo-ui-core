@@ -36,7 +36,7 @@ Refer to the jQuery.ajax documentation for further info.
     }
 
     /**
-    * The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".
+    * The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "POST".
 Refer to the jQuery.ajax documentation for further info.
     * @param string $value
     * @return \Kendo\UI\EditorFileBrowserTransportDestroy
