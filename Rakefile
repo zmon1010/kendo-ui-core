@@ -1176,8 +1176,8 @@ namespace :build do
             path = File.join(ARCHIVE_ROOT, destination, 'changelogs')
             basename = versioned_bundle_name(bundle)
 
-            xml_file = File.join(path, basename, '.xml')
-            txt_file = File.join(path, basename, '.txt')
+            xml_file = File.join(path, basename + '.xml')
+            txt_file = File.join(path, basename + '.txt')
 
             file_copy :to => xml_file,
                       :from => "dist/bundles/#{bundle}.changelog.xml"
