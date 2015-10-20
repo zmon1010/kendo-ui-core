@@ -34,7 +34,10 @@
         columns.Add().Field(e => e.Address);
     })
     .Toolbar(tools => tools.Pdf())
-    .Excel(excel => excel.FileName("Kendo UI TreeList Export.pdf").ProxyURL(Url.Action("Pdf_Export_Save")))
+    .Pdf(pdf => pdf
+        .FileName("Kendo UI TreeList Export.pdf")
+        .ProxyURL(Url.Action("Pdf_Export_Save"))
+    )
     .Filterable()
     .Sortable()
     .Scrollable(true)
