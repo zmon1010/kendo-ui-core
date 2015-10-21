@@ -1389,21 +1389,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Creates a <see cref="Diagram"/>
-        /// </summary>
-        /// <example>
-        /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().Diagram()
-        ///             .Name("Diagram")
-        /// %&gt;
-        /// </code>
-        /// </example>
-        public virtual DiagramBuilder<TShapeModel,TConnectionModel> Diagram<TShapeModel,TConnectionModel>() where TShapeModel : class  where TConnectionModel : class
-        {
-            return new DiagramBuilder<TShapeModel,TConnectionModel>(new Diagram<TShapeModel,TConnectionModel>(ViewContext, Initializer, UrlGenerator));
-        }
-        
-        /// <summary>
         /// Creates a <see cref="Editor"/>
         /// </summary>
         /// <example>
@@ -1552,6 +1537,23 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual DiagramBuilder<object, object> Diagram()
         {
             return new DiagramBuilder<object, object>(new Diagram<object, object>(ViewContext, Initializer, UrlGenerator));
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Diagram"/>
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Diagram()
+        ///             .Name("Diagram")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public virtual DiagramBuilder<TShapeModel, TConnectionModel> Diagram<TShapeModel, TConnectionModel>()
+            where TShapeModel : class
+            where TConnectionModel : class
+        {
+            return new DiagramBuilder<TShapeModel, TConnectionModel>(new Diagram<TShapeModel, TConnectionModel>(ViewContext, Initializer, UrlGenerator));
         }
 
         /// <summary>
