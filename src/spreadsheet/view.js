@@ -389,7 +389,7 @@
             }
 
             for (var name in options) {
-                if (options[name]) {
+                if (options[name] === true || options[name] instanceof Array) {
                     tabs.push({ id: name, text: name.charAt(0).toUpperCase() + name.substr(1), content: "" });
                 }
             }
