@@ -1,6 +1,5 @@
 /* jshint browser:false, node:true, esnext: true */
 
-var path = require('path');
 var fs = require('fs');
 var gulp = require('gulp');
 var debug = require('gulp-debug'); // jshint ignore:line
@@ -137,19 +136,17 @@ gulp.task("watch-styles", [ "build-skin", "css-assets" ], function() {
 });
 
 function gatherAmd(stream, file) {
-    var fileName = path.basename(file.path);
-    var isBundle = fs.readFileSync(file.path).indexOf('"bundle all";') > -1;
-    var moduleId = fileName.match(/kendo\.(.+)\.js/)[1];
+    var amdConcat = lazypipe().pipe(concat, { path: file.path, base: "src" });
 
-    var gatherAMD = amdOptimize(`kendo.${moduleId}`, {
-        baseUrl: "src",
-        exclude: [ "jquery" ]
-    });
+    var isBundle = fs.readFileSync(file.path).indexOf('"bundle all";') > -1;
+    var moduleId = file.path.match(/kendo\.(.+)\.js/)[1];
+
+    var gatherAMD = amdOptimize(`kendo.${moduleId}`, { baseUrl: "src", exclude: [ "jquery" ] });
 
     if (isBundle) {
         return stream
             .pipe(gatherAMD)
-            .pipe(concat({ path: file.path, base: "src" }));
+            .pipe(amdConcat());
 
     } else {
         var whitelist = [ "**/src/kendo." + moduleId + ".js", "**/src/" + moduleId + "/**/*.js", "**/util/**/*.js" ];
@@ -157,7 +154,7 @@ function gatherAmd(stream, file) {
         return stream
             .pipe(gatherAMD)
             .pipe(ignore.include(whitelist))
-            .pipe(concat(fileName));
+            .pipe(amdConcat());
     }
 }
 
@@ -172,9 +169,17 @@ var mangle = {
     except: [ "define" ]
 };
 
-gulp.task("scripts", function() {
-    var JS_DIST = "dist/gulp/js";
+// cloning those somehow fails, I think that it is due to the RTL symbols in the culture
+function cultures() {
+   return gulp.src('src/cultures/kendo.culture.*.js', { base: 'src' });
+}
 
+function messages() {
+   return gulp.src('src/messages/kendo.messages.*.js', { base: 'src' });
+}
+
+gulp.task("scripts", function() {
+    var JS_DIST = "dist-gulp/js";
 
     var uglifyLogger = logger({
         after: 'uglify complete',
@@ -184,11 +189,12 @@ gulp.task("scripts", function() {
 
     var src = gulp.src('src/kendo.*.js').pipe(foreach(gatherAmd));
 
-    var cultures = gulp.src('src/cultures/kendo.culture.*.js', { base: 'src' });
-    var messages = gulp.src('src/messages/kendo.messages.*.js', { base: 'src' });
-    var gatheredSrc = src.pipe(clone()).pipe(ignore.include(["**/src/kendo.*.js"]));
+    var thirdParty = gulp.src('src/{jquery,angular,pako,jszip}*.*');
 
-    var toMinify = merge(cultures, messages, gatheredSrc);
+    var gatheredSrc = src.pipe(clone())
+        .pipe(ignore.include(["**/src/kendo.**.js"]));
+
+    var toMinify = merge(cultures(), messages(), gatheredSrc);
 
     var minSrc = toMinify
         .pipe(insert.prepend(licensePad))
@@ -197,9 +203,15 @@ gulp.task("scripts", function() {
         .pipe(uglify({ compress, mangle, preserveComments: "license" }))
         .pipe(rename({ suffix: ".min" }))
         .pipe(logger({extname: '.map', showChange: true}))
-        .pipe(sourcemaps.write("./", { sourceRoot: "../src/js" }))
-        .pipe(gulp.dest(JS_DIST));
+        .pipe(sourcemaps.write("./", { sourceRoot: "../src/js" }));
 
-
-    return merge(src.pipe(gulp.dest(JS_DIST)), minSrc);
+        // the duplication below is due to something strange with merge2 and concat
+        // resulting in "cannot switch to old mode now" error
+    return merge(
+        cultures().pipe(gulp.dest(JS_DIST)),
+        messages().pipe(gulp.dest(JS_DIST)),
+        src.pipe(gulp.dest(JS_DIST)),
+        minSrc.pipe(gulp.dest(JS_DIST)),
+        thirdParty.pipe(gulp.dest(JS_DIST))
+    );
 });
