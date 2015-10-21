@@ -23,6 +23,8 @@ namespace Kendo.Mvc.UI
         
         public string Key { get; set; }
         
+        public string Culture { get; set; }
+        
         public MapLayersImagerySet? ImagerySet { get; set; }
         
         //<< Fields
@@ -44,6 +46,11 @@ namespace Kendo.Mvc.UI
             if (Key.HasValue())
             {
                 json["key"] = Key;
+            }
+            
+            if (Culture.HasValue())
+            {
+                json["culture"] = Culture;
             }
             
             if (ImagerySet.HasValue)

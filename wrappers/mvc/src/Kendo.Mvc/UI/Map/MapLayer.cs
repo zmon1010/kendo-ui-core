@@ -48,7 +48,11 @@ namespace Kendo.Mvc.UI
         
         public string Key { get; set; }
         
+        public string Culture { get; set; }
+        
         public string LocationField { get; set; }
+        
+        public double? TileSize { get; set; }
         
         public string TitleField { get; set; }
         
@@ -118,10 +122,15 @@ namespace Kendo.Mvc.UI
             {
                 json["extent"] = Extent;
             }
-	    
+            
             if (Key.HasValue())
             {
                 json["key"] = Key;
+            }
+            
+            if (Culture.HasValue())
+            {
+                json["culture"] = Culture;
             }
             
             if (LocationField.HasValue())
@@ -129,6 +138,11 @@ namespace Kendo.Mvc.UI
                 json["locationField"] = LocationField;
             }
             
+            if (TileSize.HasValue)
+            {
+                json["tileSize"] = TileSize;
+            }
+                
             if (TitleField.HasValue())
             {
                 json["titleField"] = TitleField;
@@ -154,7 +168,6 @@ namespace Kendo.Mvc.UI
             {
                 json["style"] = style;
             }
-                
             if (!string.IsNullOrEmpty(UrlTemplateId))
             {
                 json["urlTemplate"] = new ClientHandlerDescriptor {

@@ -54,7 +54,6 @@ namespace Kendo.Mvc.UI
             {
                 json["style"] = style;
             }
-                
         //<< Serialization
         }
     }

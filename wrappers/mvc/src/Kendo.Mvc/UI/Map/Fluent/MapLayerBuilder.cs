@@ -92,6 +92,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// The culture to be used for the bing map tiles.
+        /// </summary>
+        /// <param name="value">The value that configures the culture.</param>
+        public MapLayerBuilder Culture(string value)
+        {
+            container.Culture = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The data item field which contains the marker (symbol) location.
 		/// The field should be an array with two numbers - latitude and longitude in decimal degrees.Requires the dataSource option to be set.Only applicable to "marker" and "bubble" layers.
         /// </summary>
@@ -99,6 +110,17 @@ namespace Kendo.Mvc.UI.Fluent
         public MapLayerBuilder LocationField(string value)
         {
             container.LocationField = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The size of the image tile in pixels.
+        /// </summary>
+        /// <param name="value">The value that configures the tilesize.</param>
+        public MapLayerBuilder TileSize(double value)
+        {
+            container.TileSize = value;
 
             return this;
         }

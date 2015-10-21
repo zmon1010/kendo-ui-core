@@ -78,6 +78,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Configures the Kendo UI Spreadsheet Excel export settings.
+        /// </summary>
+        /// <param name="configurator">The action that configures the excel.</param>
+        public SpreadsheetBuilder Excel(Action<SpreadsheetExcelSettingsBuilder> configurator)
+        {
+            configurator(new SpreadsheetExcelSettingsBuilder(container.Excel));
+            return this;
+        }
+        
+        /// <summary>
         /// The default row height in pixels.
         /// </summary>
         /// <param name="value">The value that configures the rowheight.</param>

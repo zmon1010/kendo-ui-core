@@ -94,6 +94,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Determines if a button is visible or hidden. By default buttons are visible.
+        /// </summary>
+        /// <param name="value">The value that configures the hidden.</param>
+        public ToolBarItemBuilder Hidden(bool value)
+        {
+            container.Hidden = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.
         /// </summary>
         /// <param name="value">The value that configures the icon.</param>

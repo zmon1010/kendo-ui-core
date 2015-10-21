@@ -130,6 +130,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// The validation rule applied to the cell.
+        /// </summary>
+        /// <param name="configurator">The action that configures the validation.</param>
+        public SpreadsheetSheetRowCellBuilder Validation(Action<SpreadsheetSheetRowCellValidationSettingsBuilder> configurator)
+        {
+            configurator(new SpreadsheetSheetRowCellValidationSettingsBuilder(container.Validation));
+            return this;
+        }
+        
+        /// <summary>
         /// Will wrap the cell content if set to true.
         /// </summary>
         /// <param name="value">The value that configures the wrap.</param>

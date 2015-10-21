@@ -21,9 +21,9 @@ namespace Kendo.Mvc.UI.Tests.Map.Serialization
         }
 
         [Fact]
-        public void Serializes_false_if_attribution_settings_are_cleared()
+        public void Serializes_false_if_attribution_settings_are_disabled()
         {
-            settings.Attribution = null;
+            settings.Attribution.Enabled = false;
             settings.ToJson()["attribution"].ShouldEqual(false);
         }
     }

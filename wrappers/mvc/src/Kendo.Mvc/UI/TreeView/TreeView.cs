@@ -56,8 +56,6 @@ namespace Kendo.Mvc.UI
         
         public string DataSpriteCssClassField { get; set; }
         
-        public List<string> DataTextField { get; set; }
-        
         public string DataUrlField { get; set; }
         
         public TreeViewMessagesSettings Messages
@@ -67,6 +65,8 @@ namespace Kendo.Mvc.UI
         }
         
         //<< Fields
+        
+        public List<string> DataTextField { get; set; }
 
         public DataSource DataSource
         {
@@ -269,11 +269,6 @@ namespace Kendo.Mvc.UI
                 json["dataSpriteCssClassField"] = DataSpriteCssClassField;
             }
             
-            if (DataTextField.Any())
-            {
-                json["dataTextField"] = DataTextField;
-            }
-            
             if (DataUrlField.HasValue())
             {
                 json["dataUrlField"] = DataUrlField;
@@ -285,6 +280,11 @@ namespace Kendo.Mvc.UI
                 json["messages"] = messages;
             }
         //<< Serialization
+            
+            if (DataTextField.Any())
+            {
+                json["dataTextField"] = DataTextField;
+            }
 
             writer.Write(Initializer.Initialize(Selector, "TreeView", json));
 

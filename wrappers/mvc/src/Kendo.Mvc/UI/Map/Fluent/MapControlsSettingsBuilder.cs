@@ -19,15 +19,41 @@ namespace Kendo.Mvc.UI.Fluent
 
         //>> Fields
         
+
+        /// <summary>
+        /// Configures or disables the built-in attribution control.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the attribution option.</param>
+        public MapControlsSettingsBuilder Attribution(bool enabled)
+        {
+            container.Attribution.Enabled = enabled;
+            return this;
+        }
+
+        
         /// <summary>
         /// Configures or disables the built-in attribution control.
         /// </summary>
         /// <param name="configurator">The action that configures the attribution.</param>
         public MapControlsSettingsBuilder Attribution(Action<MapControlsAttributionSettingsBuilder> configurator)
         {
+            container.Attribution.Enabled = true;
+            
             configurator(new MapControlsAttributionSettingsBuilder(container.Attribution));
             return this;
         }
+        
+
+        /// <summary>
+        /// Configures or disables the built-in navigator control (directional pad).
+        /// </summary>
+        /// <param name="enabled">Enables or disables the navigator option.</param>
+        public MapControlsSettingsBuilder Navigator(bool enabled)
+        {
+            container.Navigator.Enabled = enabled;
+            return this;
+        }
+
         
         /// <summary>
         /// Configures or disables the built-in navigator control (directional pad).
@@ -35,9 +61,23 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The action that configures the navigator.</param>
         public MapControlsSettingsBuilder Navigator(Action<MapControlsNavigatorSettingsBuilder> configurator)
         {
+            container.Navigator.Enabled = true;
+            
             configurator(new MapControlsNavigatorSettingsBuilder(container.Navigator));
             return this;
         }
+        
+
+        /// <summary>
+        /// Configures or disables the built-in zoom control (+/- button).
+        /// </summary>
+        /// <param name="enabled">Enables or disables the zoom option.</param>
+        public MapControlsSettingsBuilder Zoom(bool enabled)
+        {
+            container.Zoom.Enabled = enabled;
+            return this;
+        }
+
         
         /// <summary>
         /// Configures or disables the built-in zoom control (+/- button).
@@ -45,53 +85,13 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The action that configures the zoom.</param>
         public MapControlsSettingsBuilder Zoom(Action<MapControlsZoomSettingsBuilder> configurator)
         {
+            container.Zoom.Enabled = true;
+            
             configurator(new MapControlsZoomSettingsBuilder(container.Zoom));
             return this;
         }
         
         //<< Fields
-
-        /// <summary>
-        /// Enables or disables the built-in attribution control.
-        /// </summary>
-        /// <param name="visible">A value indicating if the attribution control should be visible.</param>
-        public MapControlsSettingsBuilder Attribution(bool visible)
-        {
-            if (!visible)
-            {
-                container.Attribution = null;
-            }
-
-            return this;
-        }
-
-        /// <summary>
-        /// Enables or disables the built-in navigator control.
-        /// </summary>
-        /// <param name="visible">A value indicating if the navigator control should be visible.</param>
-        public MapControlsSettingsBuilder Navigator(bool visible)
-        {
-            if (!visible)
-            {
-                container.Navigator = null;
-            }
-
-            return this;
-        }
-
-        /// <summary>
-        /// Enables or disables the built-in zoom control.
-        /// </summary>
-        /// <param name="visible">A value indicating if the zoom control should be visible.</param>
-        public MapControlsSettingsBuilder Zoom(bool visible)
-        {
-            if (!visible)
-            {
-                container.Zoom = null;
-            }
-
-            return this;
-        }
     }
 }
 

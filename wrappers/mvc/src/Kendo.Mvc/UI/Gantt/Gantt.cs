@@ -35,19 +35,19 @@ namespace Kendo.Mvc.UI
 
             Columns = new List<GanttColumnBase<TTaskModel>>();
 
+            Assignments = new GanttAssignmentsSettings();
+
+            CurrentTimeMarker = new GanttCurrentTimeMarkerSettings();
+
+            Resources = new GanttResourcesSettings();
+
 //>> Initialization
         
-            Assignments = new GanttAssignmentsSettings();
-                
-            CurrentTimeMarker = new GanttCurrentTimeMarkerSettings();
-                
             Editable = new GanttEditableSettings();
                 
             Messages = new GanttMessagesSettings();
                 
             Pdf = new GanttPdfSettings();
-                
-            Resources = new GanttResourcesSettings();
                 
             Toolbar = new List<GanttToolbar>();
                 
@@ -76,24 +76,30 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-
-//>> Fields
-        
         public GanttAssignmentsSettings Assignments
         {
             get;
             set;
         }
-        
-        public bool? AutoBind { get; set; }
-        
-        public double? ColumnResizeHandleWidth { get; set; }
-        
+
         public GanttCurrentTimeMarkerSettings CurrentTimeMarker
         {
             get;
             set;
         }
+
+        public GanttResourcesSettings Resources
+        {
+            get;
+            set;
+        }
+
+
+//>> Fields
+        
+        public bool? AutoBind { get; set; }
+        
+        public double? ColumnResizeHandleWidth { get; set; }
         
         public GanttEditableSettings Editable
         {
@@ -161,12 +167,6 @@ namespace Kendo.Mvc.UI
             set;
         }
         
-        public GanttResourcesSettings Resources
-        {
-            get;
-            set;
-        }
-        
         public double? RowHeight { get; set; }
         
         //<< Fields
@@ -181,21 +181,10 @@ namespace Kendo.Mvc.UI
                 json["columns"] = columns;
             }
 
-//>> Serialization
-        
             var assignments = Assignments.ToJson();
             if (assignments.Any())
             {
                 json["assignments"] = assignments;
-            }
-            if (AutoBind.HasValue)
-            {
-                json["autoBind"] = AutoBind;
-            }
-                
-            if (ColumnResizeHandleWidth.HasValue)
-            {
-                json["columnResizeHandleWidth"] = ColumnResizeHandleWidth;
             }
 
             if (CurrentTimeMarker.Enabled == false)
@@ -211,6 +200,18 @@ namespace Kendo.Mvc.UI
                 }
             }
 
+//>> Serialization
+        
+            if (AutoBind.HasValue)
+            {
+                json["autoBind"] = AutoBind;
+            }
+                
+            if (ColumnResizeHandleWidth.HasValue)
+            {
+                json["columnResizeHandleWidth"] = ColumnResizeHandleWidth;
+            }
+                
             var editable = Editable.ToJson();
             if (editable.Any())
             {
@@ -323,17 +324,18 @@ namespace Kendo.Mvc.UI
             {
                 json["views"] = views;
             }
-            var resources = Resources.ToJson();
-            if (resources.Any())
-            {
-                json["resources"] = resources;
-            }
             if (RowHeight.HasValue)
             {
                 json["rowHeight"] = RowHeight;
             }
                 
         //<< Serialization
+
+            var resources = Resources.ToJson();
+            if (resources.Any())
+            {
+                json["resources"] = resources;
+            }
 
             ProcessDataSource(DataSource);
 

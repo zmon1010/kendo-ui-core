@@ -12,6 +12,8 @@ namespace Kendo.Mvc.UI
         {
             //>> Initialization
         
+            Validation = new SpreadsheetSheetRowCellValidationSettings();
+                
         //<< Initialization
             BorderBottom = new SpreadsheetBorderStyle();
 
@@ -43,6 +45,12 @@ namespace Kendo.Mvc.UI
         public int? Index { get; set; }
         
         public bool? Underline { get; set; }
+        
+        public SpreadsheetSheetRowCellValidationSettings Validation
+        {
+            get;
+            set;
+        }
         
         public bool? Wrap { get; set; }
         
@@ -116,6 +124,11 @@ namespace Kendo.Mvc.UI
                 json["underline"] = Underline;
             }
                 
+            var validation = Validation.ToJson();
+            if (validation.Any())
+            {
+                json["validation"] = validation;
+            }
             if (Wrap.HasValue)
             {
                 json["wrap"] = Wrap;

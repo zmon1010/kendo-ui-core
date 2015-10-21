@@ -112,7 +112,6 @@ namespace :generate do
             task :wrappers do
                 markdown = FileList[
                     'docs/api/javascript/dataviz/ui/map.md',
-                    'docs/api/javascript/dataviz/ui/diagram.md',
                     'docs/api/javascript/dataviz/ui/treemap.md',
                     'docs/api/javascript/ui/colorpicker.md',
                     'docs/api/javascript/ui/editor.md',

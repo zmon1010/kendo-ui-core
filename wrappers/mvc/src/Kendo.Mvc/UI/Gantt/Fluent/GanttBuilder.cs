@@ -85,8 +85,6 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-        //>> Fields
-        
         /// <summary>
         /// The configuration of the assignments of the gantt resources. An assignment is a one-to-one mapping between a gantt task and a gantt resource containing the number of units for which a resource is assigned to a task.
         /// </summary>
@@ -99,6 +97,39 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new GanttAssignmentsSettingsBuilder<TAssingmentModel>(container.Assignments, this.Component.ViewContext, this.Component.UrlGenerator));
             return this;
         }
+
+        /// <summary>
+        /// If set to false the "current time" marker of the Gantt would not be displayed.
+        /// </summary>
+        /// <param name="configurator">The action that configures the currenttimemarker.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> CurrentTimeMarker(Action<GanttCurrentTimeMarkerSettingsBuilder> configurator)
+        {
+            container.CurrentTimeMarker.Enabled = true;
+
+            configurator(new GanttCurrentTimeMarkerSettingsBuilder(container.CurrentTimeMarker));
+            return this;
+        }
+
+        /// <summary>
+        /// If set to false the user won't be able to create, modify or delete tasks and dependencies.
+        /// </summary>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Editable()
+        {
+            return Editable(true);
+        }
+
+        /// <summary>
+        /// The configuration of the gantt resource(s). A gantt resource is optional metadata that can be associated
+        /// with a gantt task.
+        /// </summary>
+        /// <param name="configurator">The action that configures the resources.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Resources(Action<GanttResourcesSettingsBuilder> configurator)
+        {
+            configurator(new GanttResourcesSettingsBuilder(container.Resources, this.Component.ViewContext, this.Component.UrlGenerator));
+            return this;
+        }
+
+        //>> Fields
         
         /// <summary>
         /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
@@ -113,33 +144,13 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// If set to false the user won't be able to create, modify or delete tasks and dependencies.
-        /// </summary>
-        public GanttBuilder<TTaskModel,TDependenciesModel> Editable()
-        {
-            return Editable(true);
-        }
-
-        /// <summary>
         /// Defines the width of the column resize handle in pixels. Apply a larger value for easier grasping.
         /// </summary>
-        /// <param name="value">The value that configures the columnResizeHandleWidth.</param>
-        public GanttBuilder<TTaskModel, TDependenciesModel> ColumnResizeHandleWidth(double value)
+        /// <param name="value">The value that configures the columnresizehandlewidth.</param>
+        public GanttBuilder<TTaskModel,TDependenciesModel> ColumnResizeHandleWidth(double value)
         {
             container.ColumnResizeHandleWidth = value;
 
-            return this;
-        }
-        
-        /// <summary>
-        /// If set to false the "current time" marker of the Gantt would not be displayed.
-        /// </summary>
-        /// <param name="configurator">The action that configures the currenttimemarker.</param>
-        public GanttBuilder<TTaskModel,TDependenciesModel> CurrentTimeMarker(Action<GanttCurrentTimeMarkerSettingsBuilder> configurator)
-        {
-            container.CurrentTimeMarker.Enabled = true;
-            
-            configurator(new GanttCurrentTimeMarkerSettingsBuilder(container.CurrentTimeMarker));
             return this;
         }
         
@@ -329,12 +340,12 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
         /// The template used to render the gantt tasks.The fields which can be used in the template are the task fields
         /// </summary>
         /// <param name="value">The value that configures the tasktemplate.</param>
-        public GanttBuilder<TTaskModel, TDependenciesModel> TaskTemplate(string value)
+        public GanttBuilder<TTaskModel,TDependenciesModel> TaskTemplate(string value)
         {
             container.TaskTemplate = value;
 
@@ -345,13 +356,13 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template used to render the gantt tasks.The fields which can be used in the template are the task fields
         /// </summary>
         /// <param name="value">The value that configures the tasktemplate.</param>
-        public GanttBuilder<TTaskModel, TDependenciesModel> TaskTemplateId(string value)
+        public GanttBuilder<TTaskModel,TDependenciesModel> TaskTemplateId(string value)
         {
             container.TaskTemplateId = value;
 
             return this;
         }
-
+        
         /// <summary>
         /// If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole Gantt Toolbar,
 		/// and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Gantt Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the Gantt Toolbar. Commands can be custom or built-in ("append", "pdf").The "append" command adds a new task to the gantt.The "pdf" command exports the gantt in PDF format.
@@ -385,27 +396,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The configuration of the gantt resource(s). A gantt resource is optional metadata that can be associated
-		/// with a gantt task.
-        /// </summary>
-        /// <param name="configurator">The action that configures the resources.</param>
-        public GanttBuilder<TTaskModel,TDependenciesModel> Resources(Action<GanttResourcesSettingsBuilder> configurator)
-        {
-            configurator(new GanttResourcesSettingsBuilder(container.Resources, this.Component.ViewContext, this.Component.UrlGenerator));
-            return this;
-        }
-
-        /// <summary>
         /// The height of the table rows. Numeric values are treated as pixels.
         /// </summary>
         /// <param name="value">The value that configures the rowheight.</param>
-        public GanttBuilder<TTaskModel, TDependenciesModel> RowHeight(double value)
+        public GanttBuilder<TTaskModel,TDependenciesModel> RowHeight(double value)
         {
             container.RowHeight = value;
 
             return this;
         }
-
+        
         //<< Fields
 
 

@@ -106,31 +106,26 @@ namespace Kendo.Mvc.UI
             {
                 json["controls"] = controls;
             }
-                
             var layerDefaults = LayerDefaults.ToJson();
             if (layerDefaults.Any())
             {
                 json["layerDefaults"] = layerDefaults;
             }
-                
             var layers = Layers.ToJson();
             if (layers.Any())
             {
                 json["layers"] = layers;
             }
-                
             var markerDefaults = MarkerDefaults.ToJson();
             if (markerDefaults.Any())
             {
                 json["markerDefaults"] = markerDefaults;
             }
-                
             var markers = Markers.ToJson();
             if (markers.Any())
             {
                 json["markers"] = markers;
             }
-                
             if (MinZoom.HasValue)
             {
                 json["minZoom"] = MinZoom;

@@ -53,6 +53,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// The culture to be used for the bing map tiles.
+        /// </summary>
+        /// <param name="value">The value that configures the culture.</param>
+        public MapLayerDefaultsBingSettingsBuilder Culture(string value)
+        {
+            container.Culture = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The bing map tile types. Possible options.
         /// </summary>
         /// <param name="value">The value that configures the imageryset.</param>

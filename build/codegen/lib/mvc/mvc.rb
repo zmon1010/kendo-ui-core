@@ -86,6 +86,7 @@ module CodeGen::MVC::Wrappers
     ]
 
     IGNORED = [
+        'collapsible.iconposition',
         'map.center',
         'map.controls.attribution.position',
         'map.controls.navigator.position',
@@ -105,15 +106,19 @@ module CodeGen::MVC::Wrappers
         'scrollview.bouncevelocitythreshold',
         'scrollview.datasource',
         'drawer.views',
+        'gantt.assignments',
+        'gantt.currenttimemarker',
         'gantt.datasource',
         'gantt.dependencies',
         'gantt.columns',
+        'gantt.resources',
         'treelist.datasource',
         'treelist.editable.window',
         'treelist.filterable.messages',
         'treeview.items',
         'treeview.autobind',
         'treeview.animation',
+        'treeview.datatextfield',
         'treeview.draganddrop',
         'treeview.loadondemand',
         'treeview.datasource',

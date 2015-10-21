@@ -599,18 +599,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Sets the field of the data item that provides the text content of the nodes.
-		/// If an array, each level uses the field that is at the same index in the array, or the last item in the array.
-        /// </summary>
-        /// <param name="value">The value that configures the datatextfield.</param>
-        public TreeViewBuilder DataTextField(params string[] value)
-        {
-            container.DataTextField.AddRange(value);
-
-            return this;
-        }
-        
-        /// <summary>
         /// Sets the field of the data item that provides the link URL of the nodes.
         /// </summary>
         /// <param name="value">The value that configures the dataurlfield.</param>
@@ -632,6 +620,18 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         //<< Fields
+        
+        /// <summary>
+        /// Sets the field of the data item that provides the text content of the nodes.
+		/// If an array, each level uses the field that is at the same index in the array, or the last item in the array.
+        /// </summary>
+        /// <param name="value">The value that configures the datatextfield.</param>
+        public TreeViewBuilder DataTextField(params string[] value)
+        {
+            container.DataTextField.AddRange(value);
+
+            return this;
+        }
 
     }
 }
