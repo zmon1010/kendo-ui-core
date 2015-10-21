@@ -3047,7 +3047,7 @@
                         p = newNode;
 
                         // add the new node and the new link to the graph
-                        this.graph.nodes.push(newNode);
+                        this.graph._addNode(newNode);
                         this.graph.addLink(newLink);
 
                         newNode.index = this.graph.nodes.length - 1;
@@ -3107,7 +3107,7 @@
                         p = newNode;
 
                         // add the new node and the new link to the graph
-                        this.graph.nodes.push(newNode);
+                        this.graph._addNode(newNode);
                         this.graph.addLink(newLink);
 
                         newNode.index = this.graph.nodes.length - 1;
