@@ -3513,6 +3513,8 @@ var __meta__ = { // jshint ignore:line
                     var request = metadata.expanded === undefined;
 
                     eventName = expanded ? COLLAPSEMEMBER : EXPANDMEMBER;
+                    eventArgs.childrenLoaded = metadata.maxChildren > metadata.children;
+
                     if (that.trigger(eventName, eventArgs)) {
                         return;
                     }
