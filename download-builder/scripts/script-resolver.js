@@ -25,7 +25,7 @@ ScriptResolver.prototype = {
                  );
             }
 
-            resolver._resolve(currentFeature);
+            resolver._resolve(currentFeature, component);
         });
 
         resolver._resolve(component);
@@ -41,7 +41,7 @@ ScriptResolver.prototype = {
         resolver.seen = [];
     },
 
-    _resolve: function(component) {
+    _resolve: function(component, parent) {
         var resolver = this,
             depends = component.depends || [],
             seen = resolver.seen,
@@ -70,19 +70,32 @@ ScriptResolver.prototype = {
                  );
             }
 
-            resolver._resolve(dependancy);
+            resolver._resolve(dependancy, parent);
         });
 
         var sources = component.defer ? resolver.deferred : resolver.inline;
-        resolver._register(sources, component.source);
+        var parentSource;
+        if (component.mixin && parent) {
+            parentSource = parent.source;
+        }
+
+        resolver._register(sources, component.source, parentSource);
         resolver._register(resolved, component.id);
 
         resolver.scripts = resolver.inline.concat(resolver.deferred);
     },
 
-    _register: function(registry, entry) {
+    _register: function(registry, entry, parentSource) {
         if (entry && !inArray(registry, entry)) {
-            registry.push(entry);
+            var pos = registry.length;
+            if (parentSource) {
+                var index = $.inArray(parentSource, registry);
+                if (index !== -1) {
+                    pos = index;
+                }
+            }
+
+            registry.splice(pos, 0, entry);
         }
     },
 

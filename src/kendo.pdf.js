@@ -7,6 +7,7 @@ var __meta__ = { // jshint ignore:line
     id: "pdf",
     name: "PDF export",
     description: "PDF Generation framework",
+    mixin: true,
     category: "framework",
     depends: [ "core", "drawing" ]
 };

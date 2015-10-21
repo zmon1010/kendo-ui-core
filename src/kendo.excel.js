@@ -7,6 +7,7 @@ var __meta__ = { // jshint ignore:line
     name: "Excel export",
     category: "framework",
     advanced: true,
+    mixin: true,
     depends: [ "data", "ooxml" ]
 };
 

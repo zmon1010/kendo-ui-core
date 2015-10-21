@@ -53,7 +53,7 @@
         deepEqual(resolver.scripts, [ "a.js", "b.js", "c.js" ]);
     });
 
-    test("depending features", function() {
+    test("depending features are included", function() {
         createResolver([{
             id: "a",
             source: "a.js",
@@ -69,6 +69,30 @@
         resolver.addComponent("a", [ "a-1" ]);
 
         deepEqual(resolver.scripts, [ "b.js", "a.js" ]);
+    });
+
+    test("mixins are included before components", function() {
+        createResolver([{
+            id: "a",
+            source: "a.js",
+            features: [{
+                id: "a-1",
+                depends: [ "b" ]
+            }]
+        }, {
+            id: "b",
+            mixin: true,
+            source: "b.js"
+        }, {
+            id: "c",
+            depends: [ "a" ],
+            source: "c.js"
+        }]);
+
+        resolver.addComponent("c");
+        resolver.addComponent("a", [ "a-1" ]);
+
+        deepEqual(resolver.scripts, [ "b.js", "a.js", "c.js" ]);
     });
 
     test("signals missing components", function() {
