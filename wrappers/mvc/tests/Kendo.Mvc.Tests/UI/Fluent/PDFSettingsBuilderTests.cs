@@ -30,6 +30,33 @@ namespace Kendo.Mvc.UI.Html.Tests
         }
 
         [Fact]
+        public void AvoidLinks_sets_avoidLinks()
+        {
+            builder.AvoidLinks();
+            pdf.AvoidLinks.ShouldEqual(true);
+        }
+
+        [Fact]
+        public void AvoidLinks_sets_avoidLinks_bool()
+        {
+            builder.AvoidLinks(true);
+            pdf.AvoidLinks.ShouldEqual(true);
+        }
+
+        [Fact]
+        public void AvoidLinks_sets_avoidLinks_string()
+        {
+            builder.AvoidLinks("a");
+            pdf.AvoidLinks.ShouldEqual("a");
+        }
+
+        [Fact]
+        public void AvoidLinks_returns_builder()
+        {
+            builder.AvoidLinks(true).ShouldEqual(builder);
+        }
+
+        [Fact]
         public void ProxyURL_sets_ProxyURL()
         {
             builder.ProxyURL("Foo");

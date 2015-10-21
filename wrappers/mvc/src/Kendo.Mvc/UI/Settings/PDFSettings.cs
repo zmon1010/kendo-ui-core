@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
 
         public string ProxyURL { get; set; }
 
+        public object AvoidLinks { get; set; }
+
         public string ProxyTarget { get; set; }
 
         public object PaperSize { get; set; }
@@ -44,6 +46,11 @@ namespace Kendo.Mvc.UI
             if (AllPages.HasValue)
             {
                 json["allPages"] = AllPages;
+            }
+
+            if (AvoidLinks != null)
+            {
+                json["avoidLinks"] = AvoidLinks;
             }
 
             if (ProxyURL.HasValue())
