@@ -86,6 +86,7 @@ module CodeGen::MVC::Wrappers
     ]
 
     IGNORED = [
+        'collapsible.iconposition',
         'map.center',
         'map.controls.attribution.position',
         'map.controls.navigator.position',
