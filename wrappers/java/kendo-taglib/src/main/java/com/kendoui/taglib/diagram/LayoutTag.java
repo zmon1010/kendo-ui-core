@@ -129,6 +129,14 @@ public class LayoutTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("subtype", value);
     }
 
+    public float getTipOverTreeStartLevel() {
+        return (Float)getProperty("tipOverTreeStartLevel");
+    }
+
+    public void setTipOverTreeStartLevel(float value) {
+        setProperty("tipOverTreeStartLevel", value);
+    }
+
     public java.lang.String getType() {
         return (java.lang.String)getProperty("type");
     }

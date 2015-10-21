@@ -46,6 +46,26 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Serializes_avoidLinks_bool()
+        {
+            pdf.AvoidLinks = true;
+            pdf.ToJson()["avoidLinks"].ShouldEqual(true);
+        }
+
+        [Fact]
+        public void Serializes_avoidLinks_string()
+        {
+            pdf.AvoidLinks = "a";
+            pdf.ToJson()["avoidLinks"].ShouldEqual("a");
+        }
+
+        [Fact]
+        public void Does_not_serialize_default_avoidLinks()
+        {
+            pdf.ToJson().ContainsKey("avoidLinks").ShouldBeFalse();
+        }
+
+        [Fact]
         public void Does_not_serialize_default_proxyURL()
         {
             pdf.ToJson().ContainsKey("proxyURL").ShouldBeFalse();

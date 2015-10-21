@@ -42,7 +42,7 @@ class GridColumnFilterableCell extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies the AutoComplete filter option. Possible values are same as the one for the AutoComplete filter option- "startswidht", "endswith", "contains".
+    * Specifies the AutoComplete filter option. Possible values are same as the one for the AutoComplete filter option- "startswith", "endswith", "contains".
     * @param string $value
     * @return \Kendo\UI\GridColumnFilterableCell
     */

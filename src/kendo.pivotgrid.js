@@ -5068,6 +5068,8 @@ var __meta__ = { // jshint ignore:line
         PivotGrid.fn._drawPDF = function() {
             return this._drawPDFShadow({
                 width: this.wrapper.width()
+            }, {
+                avoidLinks: this.options.pdf.avoidLinks
             });
         };
     }

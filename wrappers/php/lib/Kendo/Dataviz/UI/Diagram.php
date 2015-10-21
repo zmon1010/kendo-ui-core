@@ -303,7 +303,7 @@ data source is fired. By default the widget will bind to the data source specifi
 
     /**
     * Sets the itemBoundsChange event of the Diagram.
-    * Fired when the location or size of an item are changed.
+    * Fired when the location or size of a shape are changed.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Diagram
     */
@@ -317,7 +317,7 @@ data source is fired. By default the widget will bind to the data source specifi
 
     /**
     * Sets the itemRotate event of the Diagram.
-    * Fired when an item is rotated.
+    * Fired when a shape is rotated.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Diagram
     */

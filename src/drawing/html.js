@@ -84,7 +84,12 @@
                 element: element,
                 group: group
             };
-            nodeInfo._avoidLinks = options.avoidLinks;
+
+            if (options.avoidLinks === true) {
+                nodeInfo._avoidLinks = "a";
+            } else {
+                nodeInfo._avoidLinks = options.avoidLinks;
+            }
 
             $(element).addClass("k-pdf-export");
             renderElement(element, group);

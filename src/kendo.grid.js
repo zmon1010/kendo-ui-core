@@ -7571,6 +7571,8 @@ var __meta__ = { // jshint ignore:line
            function exportPage() {
                 grid._drawPDFShadow({
                     width: grid.wrapper.width()
+                }, {
+                    avoidLinks: grid.options.pdf.avoidLinks
                 })
                 .done(function(group) {
                     var pageNum = dataSource.page();

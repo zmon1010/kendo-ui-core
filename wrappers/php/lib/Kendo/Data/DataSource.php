@@ -229,7 +229,7 @@ odata version 4 and "signalr".
 
     /**
     * Sets the requestStart event of the DataSource.
-    * Fired when the data source makes a remote service request.The event handler function context (available via the this keyword) will be set to the data source instance.
+    * Fired when the data source makes a remote service request.The event handler function context (available via the this keyword) will be set to the data source instance.It is possible to prevent the remote request. To achieve this, execute e.preventDefault() in the handler function.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Data\DataSource
     */

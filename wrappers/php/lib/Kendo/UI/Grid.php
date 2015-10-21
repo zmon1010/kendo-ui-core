@@ -167,6 +167,7 @@ The grid uses same layout for both phone and tablet.
 
     /**
     * If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
+Multi-level headers allow reordering only in same level.
     * @param boolean $value
     * @return \Kendo\UI\Grid
     */

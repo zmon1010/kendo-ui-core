@@ -65,6 +65,14 @@ public class PdfTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("author", value);
     }
 
+    public java.lang.Object getAvoidLinks() {
+        return (java.lang.Object)getProperty("avoidLinks");
+    }
+
+    public void setAvoidLinks(java.lang.Object value) {
+        setProperty("avoidLinks", value);
+    }
+
     public java.lang.String getCreator() {
         return (java.lang.String)getProperty("creator");
     }

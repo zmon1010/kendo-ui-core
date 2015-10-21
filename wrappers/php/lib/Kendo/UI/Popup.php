@@ -19,7 +19,7 @@ class Popup extends \Kendo\UI\Widget {
 
     /**
     * Specifies the element that will be used as an anchor. The widget will open next to that element.
-    * @param  $value
+    * @param string| $value
     * @return \Kendo\UI\Popup
     */
     public function anchor($value) {
@@ -28,7 +28,7 @@ class Popup extends \Kendo\UI\Widget {
 
     /**
     * Which element the popup will be appended to.
-    * @param  $value
+    * @param string| $value
     * @return \Kendo\UI\Popup
     */
     public function appendTo($value) {

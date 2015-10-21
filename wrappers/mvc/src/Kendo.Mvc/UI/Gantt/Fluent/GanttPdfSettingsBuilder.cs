@@ -31,6 +31,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// A flag indicating whether to produce actual hyperlinks in the exported PDF file.It's also possible to pass a CSS selector as argument. All matching links will be ignored.
+        /// </summary>
+        /// <param name="value">The value that configures the avoidlinks.</param>
+        public GanttPdfSettingsBuilder AvoidLinks(bool value)
+        {
+            container.AvoidLinks = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The creator of the PDF document.
         /// </summary>
         /// <param name="value">The value that configures the creator.</param>
@@ -108,9 +119,8 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Specifies the paper size of the PDF document. Can be set to a predefined size, i.e. "A4", "A3" etc,
-		/// or an array of two Number-s specifying the width/height in points (1pt = 1/72in), or strings including unit, i.e. "10mm". Supported
-		/// units are "mm", "cm", "in" and "pt".  The default "auto" means paper size is determined by content.
+        /// Specifies the paper size of the PDF document.
+		/// The default "auto" means paper size is determined by content.Supported values:
         /// </summary>
         /// <param name="value">The value that configures the papersize.</param>
         public GanttPdfSettingsBuilder PaperSize(string value)

@@ -24,7 +24,7 @@ class GridPageable extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true the pager will display buttons for navigating to specific pages. By default those buttons are displayed.
+    * If set to true the pager will display buttons for navigating to specific pages. By default those buttons are displayed.Using pageable.numeric and pageable.input at the same time is not recommended.
     * @param boolean $value
     * @return \Kendo\UI\GridPageable
     */
@@ -42,7 +42,7 @@ class GridPageable extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true the pager will display an input element which allows the user to type a specific page number. By default the page input is not displayed.
+    * If set to true the pager will display an input element which allows the user to type a specific page number. By default the page input is not displayed.Using pageable.input and pageable.numeric at the same time is not recommended.
     * @param boolean $value
     * @return \Kendo\UI\GridPageable
     */

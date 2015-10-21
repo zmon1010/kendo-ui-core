@@ -28,6 +28,36 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Does not create clickable hyperlinks in the exported PDF file.
+        /// </summary>
+        public PDFSettingsBuilder AvoidLinks()
+        {
+            pdf.AvoidLinks = true;
+
+            return this;
+        }
+
+        /// <summary>
+        /// A flag indicating whether to produce clickable hyperlinks in the exported PDF file.
+        /// </summary>
+        public PDFSettingsBuilder AvoidLinks(bool avoidLinks)
+        {
+            pdf.AvoidLinks = avoidLinks;
+
+            return this;
+        }
+
+        /// <summary>
+        /// A CSS selector for the links to ignore. All matching links will not be clickable in the exported PDF file.
+        /// </summary>
+        public PDFSettingsBuilder AvoidLinks(string avoidLinks)
+        {
+            pdf.AvoidLinks = avoidLinks;
+
+            return this;
+        }
+
+        /// <summary>
         /// Turns the page in landscape orientation.
         /// </summary>
         public PDFSettingsBuilder Landscape()

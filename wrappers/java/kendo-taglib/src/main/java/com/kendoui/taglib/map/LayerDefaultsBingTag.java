@@ -59,6 +59,14 @@ public class LayerDefaultsBingTag extends  BaseTag  /* interfaces */ /* interfac
         setProperty("attribution", value);
     }
 
+    public java.lang.String getCulture() {
+        return (java.lang.String)getProperty("culture");
+    }
+
+    public void setCulture(java.lang.String value) {
+        setProperty("culture", value);
+    }
+
     public java.lang.String getImagerySet() {
         return (java.lang.String)getProperty("imagerySet");
     }

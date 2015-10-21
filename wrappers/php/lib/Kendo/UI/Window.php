@@ -155,6 +155,15 @@ Note that this does not constrain the window dragging within the given element.
     }
 
     /**
+    * Enables (true) or disables (false) the ability for users to scroll the window contents.
+    * @param boolean $value
+    * @return \Kendo\UI\Window
+    */
+    public function scrollable($value) {
+        return $this->setProperty('scrollable', $value);
+    }
+
+    /**
     * The text in the window title bar. If false, the window will be displayed without a title bar. Note that this will prevent the window from being dragged, and the window titlebar buttons will not be shown.
     * @param string|boolean $value
     * @return \Kendo\UI\Window

@@ -31,6 +31,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// A flag indicating whether to produce actual hyperlinks in the exported PDF file.It's also possible to pass a CSS selector as argument. All matching links will be ignored.
+        /// </summary>
+        /// <param name="value">The value that configures the avoidlinks.</param>
+        public TreeListPdfSettingsBuilder<T> AvoidLinks(bool value)
+        {
+            container.AvoidLinks = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The creator of the PDF document.
         /// </summary>
         /// <param name="value">The value that configures the creator.</param>
