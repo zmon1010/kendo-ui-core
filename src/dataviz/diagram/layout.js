@@ -2014,20 +2014,13 @@
             var layer;
             for (i = 0; i < layerCount + 1; i++) {
                 layer = [];
-                layer.linksTo = [];
+                layer.linksTo = {};
                 this.layers.push(layer);
             }
 
             layerMap.forEach(function (node, layer) {
-                var connectedLayer;
                 node.layer = layer;
-                layer = this.layers[layer];
-                layer.push(node);
-                for (var idx = 0; idx < node.links.length; idx++) {
-                    connectedLayer = layerMap.get(node.links[idx].target);
-                    layer.linksTo[connectedLayer] = layer.linksTo[connectedLayer] || [];
-                    layer.linksTo[connectedLayer].push(node.links[idx]);
-                }
+                this.layers[layer].push(node);
             }, this);
 
             // set initial grid positions
@@ -2985,6 +2978,13 @@
             this.nodeToLinkMap = new Dictionary();
 
             var layer, pos, newNode, node, r, newLink, i, l, links = this.graph.links.slice(0);
+            var layers = this.layers;
+
+            var addLinkBetweenLayers = function(upLayer, downLayer, link) {
+                layers[upLayer].linksTo[downLayer] = layers[upLayer].linksTo[downLayer] || [];
+                layers[upLayer].linksTo[downLayer].push(link);
+            };
+
             for (l = 0; l < links.length; l++) {
                 var link = links[l];
                 var o = link.source;
@@ -3006,15 +3006,15 @@
                         newNode.width = o.width / 100;
                         newNode.height = o.height / 100;
 
-                        layer = this.layers[i];
+                        layer = layers[i];
                         pos = (i - dLayer) * step + oPos;
                         if (pos > layer.length) {
                             pos = layer.length;
                         }
 
                         // check if origin and dest are both last
-                        if (oPos >= this.layers[oLayer].length - 1 &&
-                            dPos >= this.layers[dLayer].length - 1) {
+                        if (oPos >= layers[oLayer].length - 1 &&
+                            dPos >= layers[dLayer].length - 1) {
                             pos = layer.length;
                         }
 
@@ -3041,6 +3041,9 @@
 
                         newLink = new Link(p, newNode);
                         newLink.depthOfDumminess = 0;
+
+                        addLinkBetweenLayers(i - 1, i, newLink);
+
                         p = newNode;
 
                         // add the new node and the new link to the graph
@@ -3052,11 +3055,10 @@
                     }
 
                     // set the origin of the real arrow to the last dummy
+                    addLinkBetweenLayers(dLayer - 1, dLayer, newLink);
                     link.changeSource(p);
                     link.depthOfDumminess = oLayer - dLayer - 1;
-                }
-
-                if (oLayer - dLayer < -1) {
+                } else if (oLayer - dLayer < -1) {
                     for (i = oLayer + 1; i < dLayer; i++) {
                         newNode = new Node();
                         newNode.x = o.x;
@@ -3064,15 +3066,15 @@
                         newNode.width = o.width / 100;
                         newNode.height = o.height / 100;
 
-                        layer = this.layers[i];
+                        layer = layers[i];
                         pos = (i - oLayer) * step + oPos;
                         if (pos > layer.length) {
                             pos = layer.length;
                         }
 
                         // check if origin and dest are both last
-                        if (oPos >= this.layers[oLayer].length - 1 &&
-                            dPos >= this.layers[dLayer].length - 1) {
+                        if (oPos >= layers[oLayer].length - 1 &&
+                            dPos >= layers[dLayer].length - 1) {
                             pos = layer.length;
                         }
 
@@ -3100,6 +3102,8 @@
 
                         newLink = new Link(p, newNode);
                         newLink.depthOfDumminess = 0;
+                        addLinkBetweenLayers(i - 1, i, newLink);
+
                         p = newNode;
 
                         // add the new node and the new link to the graph
@@ -3109,10 +3113,13 @@
                         newNode.index = this.graph.nodes.length - 1;
                         this.mapVirtualNode(newNode, link);
                     }
+                    addLinkBetweenLayers(dLayer - 1, dLayer, link);
 
                     // Set the origin of the real arrow to the last dummy
                     link.changeSource(p);
                     link.depthOfDumminess = dLayer - oLayer - 1;
+                } else {
+                    addLinkBetweenLayers(oLayer, dLayer, link);
                 }
             }
         },
