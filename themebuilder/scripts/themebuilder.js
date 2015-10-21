@@ -752,7 +752,10 @@
                 this.themes.registerFile(file);
             },
             _propertyChange: function(e) {
-                this.themes.update(e.name, e.value);
+                this.change(e.name, e.value);
+            },
+            change: function(name, value) {
+                this.themes.update(name, value);
                 this.themes.apply(this.targetDocument);
             },
             _track: function() {

@@ -8,15 +8,12 @@
                 property: property,
                 values: values
             };
-        },
-        BGCOLOR = "background-color",
-        BORDERCOLOR = "border-color",
-        COLOR = "color";
+        };
 
     module("themebuilder integration", {
         teardown: function() {
             kendo.destroy($("#kendo-themebuilder"));
-            $("#kendo-themebuilder, head style[title='themebuilder']").remove();
+            $("#kendo-themebuilder, head style[title='themebuilder'], .foo").remove();
         }
     });
 
@@ -24,29 +21,29 @@
         LessTheme.prototype.updateStyleSheet(cssText, doc);
     }
 
-    sandboxed_test("updateStyleSheet() adds CSS to document", function(wnd, doc, $) {
-        updateStyleSheet(".foo { font-size: 8px; }", doc);
+    test("updateStyleSheet() adds CSS to document", function() {
+        updateStyleSheet(".foo { font-size: 8px; }", document);
 
-        var element = $("<span class='foo' />").appendTo(doc.body);
+        var element = $("<span class='foo' />").appendTo(document.body);
 
         equal(element.css("font-size"), "8px");
         equal($("style[title]").length, 1);
     });
 
-    sandboxed_test("updateStyleSheet() updates existing stylesheet", function(wnd, doc, $) {
-        updateStyleSheet(".foo { font-size: 8px; }", doc);
+    test("updateStyleSheet() updates existing stylesheet", function() {
+        updateStyleSheet(".foo { font-size: 8px; }", document);
 
-        updateStyleSheet("body { font-size: 10px; } .foo { color: #f00; }", doc);
+        updateStyleSheet("body { font-size: 10px; } .foo { color: #f00; }", document);
 
         var element = $("<span class='foo' />").appendTo("body");
 
         equal($("style[title]").length, 1);
-        equal($(".foo").css("font-size"), "10px");
+        equal(element.css("font-size"), "10px");
     });
 
-    sandboxed_test("render() renders color picker for box-shadow-color properties", function(wnd, doc, $) {
+    test("render() renders color picker for box-shadow-color properties", function() {
         var constants = new LessTheme({
-                less: window.less,
+                less: { render: $.noop },
                 constants: {
                     "@foo-color": constant(".k-widget", "box-shadow")
                 }
@@ -58,28 +55,28 @@
                         "@foo-color": "foo color"
                     }
                 }
-            }, doc);
+            }, document);
 
         equal(themeBuilder.element.find("span.ktb-colorinput").length, 1);
     });
 
-    sandboxed_test("value of box-shadow color picker gets processed as color", function(wnd, doc, $) {
+    test("value of box-shadow color picker gets processed as color", function() {
 
         var constants = new LessTheme({
-                less: window.less,
+                less: { render: $.noop },
                 constants: {
                     "@foo-color": constant(".k-widget", "box-shadow")
                 }
             });
 
-        updateStyleSheet(".k-widget { box-shadow: 1px 1px 1px #b4d455; }", doc);
+        updateStyleSheet(".k-widget { box-shadow: 1px 1px 1px #b4d455; }", document);
 
-        constants.infer(doc);
+        constants.infer(document);
 
         equal(constants.serialize(), "@foo-color: #b4d455;");
     });
 
-    sandboxed_test("value of box-shadow color picker with inset shadow", function(wnd, doc, $) {
+    test("value of box-shadow color picker with inset shadow", function() {
 
         var constants = new LessTheme({
                 constants: {
@@ -87,36 +84,36 @@
                 }
             });
 
-        updateStyleSheet(".k-widget { box-shadow: inset 1px 1px 1px #b4d455; }", doc);
+        updateStyleSheet(".k-widget { box-shadow: inset 1px 1px 1px #b4d455; }", document);
 
-        constants.infer(doc);
+        constants.infer(document);
 
         equal(constants.serialize(), "@foo-color: #b4d455;");
     });
 
-    sandboxed_test("LessTheme are inferred on init", function(wnd, doc, $) {
+    test("LessTheme are inferred on init", function() {
         var constants = new LessTheme({
-            less: window.less
+            less: { render: $.noop }
         });
 
         constants.infer = spy();
 
-        var themebuilder = new ThemeBuilder({ webConstants: constants }, doc);
+        var themebuilder = new ThemeBuilder({ webConstants: constants }, document);
 
         equal(constants.infer.calls, 1);
     });
 
-    sandboxed_test("_propertyChange updates constant", function(wnd, doc, $) {
+    test("_propertyChange updates constant", function() {
         var color = "#b4d455",
             constants = new LessTheme({
-                less: window.less,
+                less: { render: $.noop },
                 constants: {
                     "@foo": constant(".k-widget", "background-color")
                 }
             }),
             themebuilder = new ThemeBuilder({
                 webConstants: constants
-            }, doc);
+            }, document);
 
         themebuilder._propertyChange({
             value: color,
@@ -126,12 +123,11 @@
         equal(constants.constants["@foo"].value, color);
     });
 
-    sandboxed_test("changing input value triggers _propertyChange", function(wnd, doc, $) {
-        expect(2);
+    test("changing input value triggers _propertyChange", 2, function() {
         var color = "#b4d455",
             themebuilder = new ThemeBuilder({
                 webConstants: new LessTheme({
-                    less: window.less,
+                    less: { render: $.noop },
                     constants: {
                         "@foo": constant(".k-widget", "background-color")
                     }
@@ -141,7 +137,7 @@
                         "@foo": "foo color"
                     }
                 }
-            }, doc);
+            }, document);
 
         themebuilder._propertyChange = function(e) {
             equal(e.name, "@foo");
@@ -154,7 +150,7 @@
         colorInput.trigger("change");
     });
 
-    sandboxed_test("_propertyChange updates dataviz constant", function(wnd, doc, $) {
+    test("_propertyChange updates dataviz constant", function() {
         var color = "#b4d455",
             constants = new JsonConstants({
                 constants: {
@@ -163,7 +159,7 @@
             }),
             themebuilder = new ThemeBuilder({
                 datavizConstants: constants
-            }, doc);
+            }, document);
 
         constants.applyTheme = $.noop;
 
