@@ -107,6 +107,35 @@
         });
     });
 
+    test("layouts diagram once after binding all items", 1, function() {
+        var defaultLayout = kendo.dataviz.ui.Diagram.fn.layout;
+        try {
+            kendo.dataviz.ui.Diagram.fn.layout = function() {
+                ok(true);
+            };
+            diagram = createDiagram({
+                dataSource: {
+                    data: [{
+                        id: "1",
+                        items: [{
+                            id: "1.1"
+                        }]
+                    }],
+                    schema: {
+                        model: {
+                            children: "items"
+                        }
+                    }
+                },
+                layout: {
+                    type: "tree"
+                }
+            });
+        } finally {
+            kendo.dataviz.ui.Diagram.fn.layout = defaultLayout;
+        }
+    });
+
     asyncTest("triggers dataBound for each level if the children are loaded asynchronously", 2, function() {
         diagram = createDiagram({
             dataSource: {

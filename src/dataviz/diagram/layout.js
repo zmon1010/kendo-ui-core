@@ -404,9 +404,7 @@
          * @returns {*}
          */
         mapConnection: function (connection) {
-            return this.edgeMap.first(function (edge) {
-                return contains(this.edgeMap.get(edge), connection);
-            });
+            return this.edgeMap.get(connection.id);
         },
 
         /**
@@ -415,13 +413,7 @@
          * @returns {*}
          */
         mapShape: function (shape) {
-            var keys = this.nodeMap.keys();
-            for (var i = 0, len = keys.length; i < len; i++) {
-                var key = keys[i];
-                if (contains(this.nodeMap.get(key), shape)) {
-                    return key;
-                }
-            }
+            return this.nodeMap.get(shape.id);
         },
 
         /**
@@ -629,7 +621,7 @@
                     node.isVirtual = false;
 
                     // the mapping will always contain singletons and the hyperTree will be null
-                    this.nodeMap.add(node, [shape]);
+                    this.nodeMap.add(shape.id, node);
                     this.nodes.push(node);
                 }
             }
@@ -698,7 +690,7 @@
                     }
                     var newEdge = new Link(sourceNode, sinkNode, conn.id, conn);
 
-                    this.edgeMap.add(newEdge, [conn]);
+                    this.edgeMap.add(conn.id, newEdge);
                     this.edges.push(newEdge);
                 }
                 else {
@@ -1957,13 +1949,11 @@
         },
         _prepare: function (graph) {
             var current = [], i, l, link;
-            for (l = 0; l < graph.links.length; l++) {
-                // of many dummies have been inserted to make things work
-                graph.links[l].depthOfDumminess = 0;
-            }
 
             // defines a mapping of a node to the layer index
             var layerMap = new Dictionary();
+            var layerCount = 0;
+            var targetLayer, next, target;
 
             Utils.forEach(graph.nodes, function (node) {
                 if (node.incoming.length === 0) {
@@ -1973,15 +1963,19 @@
             });
 
             while (current.length > 0) {
-                var next = current.shift();
+                next = current.shift();
                 for (i = 0; i < next.outgoing.length; i++) {
                     link = next.outgoing[i];
-                    var target = link.target;
+                    target = link.target;
 
                     if (layerMap.containsKey(target)) {
-                        layerMap.set(target, Math.max(layerMap.get(next) + 1, layerMap.get(target)));
+                        targetLayer = Math.max(layerMap.get(next) + 1, layerMap.get(target));
                     } else {
-                        layerMap.set(target, layerMap.get(next) + 1);
+                        targetLayer = layerMap.get(next) + 1;
+                    }
+                    layerMap.set(target, targetLayer);
+                    if (targetLayer > layerCount) {
+                        layerCount = targetLayer;
                     }
 
                     if (!contains(current, target)) {
@@ -1990,14 +1984,8 @@
                 }
             }
 
-            // the node count in the map defines how many layers w'll need
-            var layerCount = 0;
-            layerMap.forEachValue(function (nodecount) {
-                layerCount = Math.max(layerCount, nodecount);
-            });
+            var sortedNodes = layerMap.keys();
 
-            var sortedNodes = [];
-            Utils.addRange(sortedNodes, layerMap.keys());
             sortedNodes.sort(function (o1, o2) {
                 var o1layer = layerMap.get(o1);
                 var o2layer = layerMap.get(o2);
@@ -2023,8 +2011,11 @@
             }
 
             this.layers = [];
+            var layer;
             for (i = 0; i < layerCount + 1; i++) {
-                this.layers.push([]);
+                layer = [];
+                layer.linksTo = {};
+                this.layers.push(layer);
             }
 
             layerMap.forEach(function (node, layer) {
@@ -2034,13 +2025,12 @@
 
             // set initial grid positions
             for (l = 0; l < this.layers.length; l++) {
-                var layer = this.layers[l];
+                layer = this.layers[l];
                 for (i = 0; i < layer.length; i++) {
                     layer[i].gridPosition = i;
                 }
             }
         },
-
         /**
          * Performs the layout of a single component.
          */
@@ -2988,6 +2978,13 @@
             this.nodeToLinkMap = new Dictionary();
 
             var layer, pos, newNode, node, r, newLink, i, l, links = this.graph.links.slice(0);
+            var layers = this.layers;
+
+            var addLinkBetweenLayers = function(upLayer, downLayer, link) {
+                layers[upLayer].linksTo[downLayer] = layers[upLayer].linksTo[downLayer] || [];
+                layers[upLayer].linksTo[downLayer].push(link);
+            };
+
             for (l = 0; l < links.length; l++) {
                 var link = links[l];
                 var o = link.source;
@@ -3009,15 +3006,15 @@
                         newNode.width = o.width / 100;
                         newNode.height = o.height / 100;
 
-                        layer = this.layers[i];
+                        layer = layers[i];
                         pos = (i - dLayer) * step + oPos;
                         if (pos > layer.length) {
                             pos = layer.length;
                         }
 
                         // check if origin and dest are both last
-                        if (oPos >= this.layers[oLayer].length - 1 &&
-                            dPos >= this.layers[dLayer].length - 1) {
+                        if (oPos >= layers[oLayer].length - 1 &&
+                            dPos >= layers[dLayer].length - 1) {
                             pos = layer.length;
                         }
 
@@ -3044,10 +3041,13 @@
 
                         newLink = new Link(p, newNode);
                         newLink.depthOfDumminess = 0;
+
+                        addLinkBetweenLayers(i - 1, i, newLink);
+
                         p = newNode;
 
                         // add the new node and the new link to the graph
-                        this.graph.nodes.push(newNode);
+                        this.graph._addNode(newNode);
                         this.graph.addLink(newLink);
 
                         newNode.index = this.graph.nodes.length - 1;
@@ -3055,11 +3055,10 @@
                     }
 
                     // set the origin of the real arrow to the last dummy
+                    addLinkBetweenLayers(dLayer - 1, dLayer, newLink);
                     link.changeSource(p);
                     link.depthOfDumminess = oLayer - dLayer - 1;
-                }
-
-                if (oLayer - dLayer < -1) {
+                } else if (oLayer - dLayer < -1) {
                     for (i = oLayer + 1; i < dLayer; i++) {
                         newNode = new Node();
                         newNode.x = o.x;
@@ -3067,15 +3066,15 @@
                         newNode.width = o.width / 100;
                         newNode.height = o.height / 100;
 
-                        layer = this.layers[i];
+                        layer = layers[i];
                         pos = (i - oLayer) * step + oPos;
                         if (pos > layer.length) {
                             pos = layer.length;
                         }
 
                         // check if origin and dest are both last
-                        if (oPos >= this.layers[oLayer].length - 1 &&
-                            dPos >= this.layers[dLayer].length - 1) {
+                        if (oPos >= layers[oLayer].length - 1 &&
+                            dPos >= layers[dLayer].length - 1) {
                             pos = layer.length;
                         }
 
@@ -3103,19 +3102,24 @@
 
                         newLink = new Link(p, newNode);
                         newLink.depthOfDumminess = 0;
+                        addLinkBetweenLayers(i - 1, i, newLink);
+
                         p = newNode;
 
                         // add the new node and the new link to the graph
-                        this.graph.nodes.push(newNode);
+                        this.graph._addNode(newNode);
                         this.graph.addLink(newLink);
 
                         newNode.index = this.graph.nodes.length - 1;
                         this.mapVirtualNode(newNode, link);
                     }
+                    addLinkBetweenLayers(dLayer - 1, dLayer, link);
 
                     // Set the origin of the real arrow to the last dummy
                     link.changeSource(p);
                     link.depthOfDumminess = dLayer - oLayer - 1;
+                } else {
+                    addLinkBetweenLayers(oLayer, dLayer, link);
                 }
             }
         },
@@ -3131,7 +3135,7 @@
 
                 for (var l = 0; l < this.graph.links.length; l++) {
                     var link = this.graph.links[l];
-                    if (link.depthOfDumminess === 0) {
+                    if (!link.depthOfDumminess) {
                         continue;
                     }
 
@@ -3505,58 +3509,18 @@
         /// <param name="layerIndex2">Another layer index.</param>
         /// <returns></returns>
         countLinksCrossingBetweenTwoLayers: function (ulayer, dlayer) {
-            var i, crossings = 0;
+            var links = this.layers[ulayer].linksTo[dlayer];
+            var link1, link2, n11, n12, n21, n22, l1, l2;
+            var crossings = 0;
+            var length = links.length;
 
-            var upperLayer = new Set();
-            var temp1 = this.layers[ulayer];
-            for (i = 0; i < temp1.length; i++) {
-                upperLayer.add(temp1[i]);
-            }
+            for (l1 = 0; l1 < length; l1++) {
+                link1 = links[l1];
+                for (l2 = l1 + 1; l2 < length; l2++) {
 
-            var lowerLayer = new Set();
-            var temp2 = this.layers[dlayer];
-            for (i = 0; i < temp2.length; i++) {
-                lowerLayer.add(temp2[i]);
-            }
+                    link2 = links[l2];
 
-            // collect the links located between the layers
-            var dlinks = new Set();
-            var links = [];
-            var temp = [];
-
-            upperLayer.forEach(function (node) {
-                //throw "";
-                Utils.addRange(temp, node.incoming);
-                Utils.addRange(temp, node.outgoing);
-            });
-
-            for (var ti = 0; ti < temp.length; ti++) {
-                var link = temp[ti];
-
-                if (upperLayer.contains(link.source) &&
-                    lowerLayer.contains(link.target)) {
-                    dlinks.add(link);
-                    links.push(link);
-                }
-                else if (lowerLayer.contains(link.source) &&
-                    upperLayer.contains(link.target)) {
-                    links.push(link);
-                }
-            }
-
-            for (var l1 = 0; l1 < links.length; l1++) {
-                var link1 = links[l1];
-                for (var l2 = 0; l2 < links.length; l2++) {
-                    if (l1 === l2) {
-                        continue;
-                    }
-
-                    var link2 = links[l2];
-
-                    var n11, n12;
-                    var n21, n22;
-
-                    if (dlinks.contains(link1)) {
+                    if (link1.target.layer === dlayer) {
                         n11 = link1.source;
                         n12 = link1.target;
                     }
@@ -3565,7 +3529,7 @@
                         n12 = link1.source;
                     }
 
-                    if (dlinks.contains(link2)) {
+                    if (link2.target.layer === dlayer) {
                         n21 = link2.source;
                         n22 = link2.target;
                     }
@@ -3585,7 +3549,7 @@
                 }
             }
 
-            return crossings / 2;
+            return crossings;
         },
 
         calcBaryCenter: function (node) {

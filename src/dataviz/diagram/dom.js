@@ -225,6 +225,7 @@
                     id: that.options.id,
                     autoSize: that.options.autoSize
                 });
+                that.id = that.options.id;
                 that._template();
             },
 
@@ -394,22 +395,11 @@
                 options = that.options;
                 that.connectors = [];
                 that.type = options.type;
-                that.shapeVisual = Shape.createShapeVisual(that.options);
-                that.visual.append(this.shapeVisual);
+                that.createShapeVisual();
                 that.updateBounds();
                 that.content(that.content());
 
-                // TODO: Swa added for phase 2; included here already because the GraphAdapter takes it into account
                 that._createConnectors();
-                that.parentContainer = null;
-                that.isContainer = false;
-                that.isCollapsed = false;
-                that.id = that.visual.id;
-
-                if (options.hasOwnProperty("layout") && options.layout !== undefined) {
-                    // pass the defined shape layout, it overtakes the default resizing
-                    that.layout = options.layout.bind(options);
-                }
             },
 
             options: diagram.shapeDefaults(),
@@ -457,8 +447,7 @@
                 this.visual.clear();
                 this._contentVisual = null;
                 this.options.dataItem = this.dataItem;
-                this.shapeVisual = Shape.createShapeVisual(this.options);
-                this.visual.append(this.shapeVisual);
+                this.createShapeVisual();
                 this.updateBounds();
             },
 
@@ -568,7 +557,9 @@
                     } else {
                         this._setBounds(value);
                         this._triggerBoundsChange();
-                        this.refreshConnections();
+                        if (!(this.diagram && this.diagram._layouting)) {
+                            this.refreshConnections();
+                        }
                     }
                 } else {
                     bounds = this._bounds;
@@ -807,9 +798,7 @@
                     source: options.source,
                     hover: options.hover,
                     fill: options.fill,
-                    stroke: options.stroke,
-                    startCap: options.startCap,
-                    endCap: options.endCap
+                    stroke: options.stroke
                 };
             },
 
@@ -901,43 +890,39 @@
                 return {
                     shapeId: this.options.id
                 };
+            },
+
+            createShapeVisual: function() {
+                var options = this.options;
+                var visualOptions = this._visualOptions(options);
+                var visualTemplate = options.visual;
+                var type = (options.type + "").toLocaleLowerCase();
+                var shapeVisual;
+
+                visualOptions.width = options.width;
+                visualOptions.height = options.height;
+
+                if (isFunction(visualTemplate)) { // custom template
+                    shapeVisual = visualTemplate.call(this, options);
+                } else if (visualOptions.data) {
+                    shapeVisual = new Path(visualOptions);
+                    translateToOrigin(shapeVisual);
+                } else if (type == "rectangle"){
+                    shapeVisual = new Rectangle(visualOptions);
+                } else if (type == "circle") {
+                    shapeVisual = new Circle(visualOptions);
+                } else if (type == "text") {
+                    shapeVisual = new TextBlock(visualOptions);
+                } else if (type == "image") {
+                    shapeVisual = new Image(visualOptions);
+                } else {
+                    shapeVisual = new Path(visualOptions);
+                }
+
+                this.shapeVisual = shapeVisual;
+                this.visual.append(this.shapeVisual);
             }
         });
-
-        Shape.createShapeVisual = function(options) {
-            delete options.diagram; // avoid stackoverflow and reassign later on again
-            var shapeDefaults = deepExtend({}, options, { x: 0, y: 0 });
-            var visualTemplate = shapeDefaults.visual; // Shape visual should not have position in its parent group.
-            var type = (shapeDefaults.type + "").toLocaleLowerCase();
-            var shapeVisual;
-
-            if (isFunction(visualTemplate)) { // custom template
-                shapeVisual = visualTemplate.call(this, shapeDefaults);
-            } else if (shapeDefaults.path) {
-                shapeDefaults.data = shapeDefaults.path;
-                shapeVisual = new Path(shapeDefaults);
-                translateToOrigin(shapeVisual);
-            } else if (type == "rectangle"){
-                shapeVisual = new Rectangle(shapeDefaults);
-            } else if (type == "circle") {
-                shapeVisual = new Circle(shapeDefaults);
-            } else if (type == "text") {
-                shapeVisual = new TextBlock(shapeDefaults);
-            } else if (type == "image") {
-                shapeVisual = new Image(shapeDefaults);
-            } else {
-                shapeVisual = new Path(shapeDefaults);
-            }
-
-            return shapeVisual;
-        };
-
-        function translateToOrigin(visual) {
-            var bbox = visual.drawingContainer().clippedBBox(null);
-            if (bbox.origin.x !== 0 || bbox.origin.y !== 0) {
-                visual.position(-bbox.origin.x, -bbox.origin.y);
-            }
-        }
 
         /**
          * The visual link between two Shapes through the intermediate of Connectors.
@@ -952,14 +937,13 @@
                 that.path.fill(TRANSPARENT);
                 that.visual.append(that.path);
                 that._sourcePoint = that._targetPoint = new Point();
-                that.source(from);
-                that.target(to);
+                that._setSource(from);
+                that._setTarget(to);
                 that.content(that.options.content);
                 that.definers = [];
                 if (defined(options) && options.points) {
                     that.points(options.points);
                 }
-                that.refresh();
             },
 
             options: {
@@ -1078,61 +1062,58 @@
                 return this._resolvedSourceConnector ? this._resolvedSourceConnector.position() : this._sourcePoint;
             },
 
-            /**
-             * Gets or sets the Point where the source of the connection resides.
-             * @param source The source of this connection. Can be a Point, Shape, Connector.
-             * @param undoable Whether the change or assignment should be undoable.
-             */
-            source: function (source, undoable) {
+            _setSource: function(source) {
+                var shapeSource = source instanceof Shape;
+                var defaultConnector = this.options.fromConnector || AUTO;
                 var dataItem;
-                if (isDefined(source)) {
-                    var shapeSource = source instanceof Shape;
-                    var defaultConnector = this.options.fromConnector || AUTO;
-                    if (shapeSource && !source.getConnector(defaultConnector)) {
-                        return;
+                if (shapeSource && !source.getConnector(defaultConnector)) {
+                    return;
+                }
+
+                if (source !== undefined) {
+                    this.from = source;
+                }
+
+                this._removeFromSourceConnector();
+
+                if (source === null) { // detach
+                    if (this.sourceConnector) {
+                        this._sourcePoint = (this._resolvedSourceConnector || this.sourceConnector).position();
+                        this._clearSourceConnector();
+                        this._setFromOptions(null, this._sourcePoint);
+                    }
+                } else if (source instanceof Connector) {
+                    dataItem = source.shape.dataItem;
+                    if (dataItem) {
+                        this._setFromOptions(dataItem.id);
+                    }
+                    this.sourceConnector = source;
+                    this.sourceConnector.connections.push(this);
+                } else if (source instanceof Point) {
+                    this._setFromOptions(null, source);
+                    this._sourcePoint = source;
+                    if (this.sourceConnector) {
+                        this._clearSourceConnector();
                     }
 
+                } else if (shapeSource) {
+                    dataItem = source.dataItem;
+                    if (dataItem) {
+                        this._setFromOptions(dataItem.id);
+                    }
+
+                    this.sourceConnector = source.getConnector(defaultConnector);
+                    this.sourceConnector.connections.push(this);
+                }
+            },
+
+            source: function (source, undoable) {
+                if (isDefined(source)) {
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, source));
                     }
-                    if (source !== undefined) {
-                        this.from = source;
-                    }
-
-                    this._removeFromSourceConnector();
-
-                    if (source === null) { // detach
-                        if (this.sourceConnector) {
-                            this._sourcePoint = this._resolvedSourceConnector.position();
-                            this._clearSourceConnector();
-                            this._setFromOptions(null, this._sourcePoint);
-                        }
-                    } else if (source instanceof Connector) {
-                        dataItem = source.shape.dataItem;
-                        if (dataItem) {
-                            this._setFromOptions(dataItem.id);
-                        }
-                        this.sourceConnector = source;
-                        this.sourceConnector.connections.push(this);
-                    } else if (source instanceof Point) {
-                        this._setFromOptions(null, source);
-                        this._sourcePoint = source;
-                        if (this.sourceConnector) {
-                            this._clearSourceConnector();
-                        }
-
-                    } else if (shapeSource) {
-                        dataItem = source.dataItem;
-                        if (dataItem) {
-                            this._setFromOptions(dataItem.id);
-                        }
-
-                        this.sourceConnector = source.getConnector(defaultConnector);
-                        this.sourceConnector.connections.push(this);
-                    }
-
+                    this._setSource(source);
                     this.refresh();
-
                 }
                 return this.sourceConnector ? this.sourceConnector : this._sourcePoint;
             },
@@ -1177,58 +1158,57 @@
             targetPoint: function () {
                 return this._resolvedTargetConnector ? this._resolvedTargetConnector.position() : this._targetPoint;
             },
-            /**
-             * Gets or sets the Point where the target of the connection resides.
-             * @param target The target of this connection. Can be a Point, Shape, Connector.
-             * @param undoable  Whether the change or assignment should be undoable.
-             */
-            target: function (target, undoable) {
+
+            _setTarget: function(target) {
+                var shapeTarget = target instanceof Shape;
+                var defaultConnector = this.options.toConnector || AUTO;
                 var dataItem;
-                if (isDefined(target)) {
-                    var shapeTarget = target instanceof Shape;
-                    var defaultConnector = this.options.toConnector || AUTO;
 
-                    if (shapeTarget && !target.getConnector(defaultConnector)) {
-                        return;
+                if (shapeTarget && !target.getConnector(defaultConnector)) {
+                    return;
+                }
+
+                if (target !== undefined) {
+                    this.to = target;
+                }
+
+                this._removeFromTargetConnector();
+
+                if (target === null) { // detach
+                    if (this.targetConnector) {
+                        this._targetPoint = (this._resolvedTargetConnector || this.targetConnector).position();
+                        this._clearTargetConnector();
+                        this._setToOptions(null, this._targetPoint);
                     }
+                } else if (target instanceof Connector) {
+                    dataItem = target.shape.dataItem;
+                    if (dataItem) {
+                        this._setToOptions(dataItem.id);
+                    }
+                    this.targetConnector = target;
+                    this.targetConnector.connections.push(this);
+                } else if (target instanceof Point) {
+                    this._setToOptions(null, target);
+                    this._targetPoint = target;
+                    if (this.targetConnector) {
+                        this._clearTargetConnector();
+                    }
+                } else if (shapeTarget) {
+                    dataItem = target.dataItem;
+                    if (dataItem) {
+                        this._setToOptions(dataItem.id);
+                    }
+                    this.targetConnector = target.getConnector(defaultConnector);
+                    this.targetConnector.connections.push(this);
+                }
+            },
 
+            target: function (target, undoable) {
+                if (isDefined(target)) {
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, undefined, target));
                     }
-
-                    if (target !== undefined) {
-                        this.to = target;
-                    }
-
-                    this._removeFromTargetConnector();
-
-                    if (target === null) { // detach
-                        if (this.targetConnector) {
-                            this._targetPoint = this._resolvedTargetConnector.position();
-                            this._clearTargetConnector();
-                            this._setToOptions(null, this._targetPoint);
-                        }
-                    } else if (target instanceof Connector) {
-                        dataItem = target.shape.dataItem;
-                        if (dataItem) {
-                            this._setToOptions(dataItem.id);
-                        }
-                        this.targetConnector = target;
-                        this.targetConnector.connections.push(this);
-                    } else if (target instanceof Point) {
-                        this._setToOptions(null, target);
-                        this._targetPoint = target;
-                        if (this.targetConnector) {
-                            this._clearTargetConnector();
-                        }
-                    } else if (shapeTarget) {
-                        dataItem = target.dataItem;
-                        if (dataItem) {
-                            this._setToOptions(dataItem.id);
-                        }
-                        this.targetConnector = target.getConnector(defaultConnector);
-                        this.targetConnector.connections.push(this);
-                    }
+                    this._setTarget(target);
 
                     this.refresh();
                 }
@@ -1764,12 +1744,11 @@
             },
 
             _clearSourceConnector: function () {
-                Utils.remove(this.sourceConnector.connections, this);
                 this.sourceConnector = undefined;
                 this._resolvedSourceConnector = undefined;
             },
+
             _clearTargetConnector: function () {
-                Utils.remove(this.targetConnector.connections, this);
                 this.targetConnector = undefined;
                 this._resolvedTargetConnector = undefined;
             },
@@ -1863,12 +1842,7 @@
 
                 that.pauseMouseHandlers = false;
 
-                that._createShapes();
-                that._createConnections();
-
-                if (that.options.layout) {
-                    that.layout(that.options.layout);
-                }
+                that._createOptionElements();
 
                 that.zoom(that.options.zoom);
 
@@ -2306,6 +2280,23 @@
                 }
             },
 
+            _createOptionElements: function() {
+                var options = this.options;
+                var shapesLength = options.shapes.length;
+
+                if (shapesLength) {
+                    this._createShapes();
+                }
+
+                if (options.connections.length) {
+                    this._createConnections();
+                }
+
+                if (shapesLength && options.layout) {
+                    this.layout(options.layout);
+                }
+            },
+
             _createShapes: function() {
                 var that = this,
                     options = that.options,
@@ -2550,39 +2541,34 @@
              * @param options. The options to be passed to the newly created Shape.
              * @returns The newly created shape.
              */
-            addShape: function(item, options) {
+            addShape: function(item, undoable) {
                 var shape,
                     shapeDefaults = this.options.shapeDefaults;
 
                 if (item instanceof Shape) {
-                    shapeDefaults = deepExtend({}, shapeDefaults, options);
-                    item.redraw(options);
                     shape = item;
                 } else if (!(item instanceof kendo.Class)) {
                     shapeDefaults = deepExtend({}, shapeDefaults, item || {});
-                    shape = new Shape(shapeDefaults);
+                    shape = new Shape(shapeDefaults, this);
                 } else {
                     return;
                 }
 
-                if (shapeDefaults.undoable) {
+                if (undoable !== false) {
                     this.undoRedoService.add(new diagram.AddShapeUnit(shape, this), false);
                 }
 
                 this.shapes.push(shape);
-                shape.diagram = this;
+                if (shape.diagram !== this) {
+                    this._shapesQuadTree.insert(shape);
+                    shape.diagram = this;
+                }
                 this.mainLayer.append(shape.visual);
-                this._shapesQuadTree.insert(shape);
 
                 this.trigger(CHANGE, {
                     added: [shape],
                     removed: []
                 });
-
-                // for shapes which have their own internal layout mechanism
-                if (shape.hasOwnProperty("layout")) {
-                    shape.layout(shape);
-                }
 
                 return shape;
             },
@@ -2604,7 +2590,7 @@
                         return shape;
                     }
                 } else if (!this.trigger("add", { shape: shape })) {
-                    return this.addShape(shape, { undoable: undoable });
+                    return this.addShape(shape, undoable);
                 }
             },
             /**
@@ -3190,7 +3176,7 @@
              * @param options Layout-specific options.
              */
             layout: function (options) {
-                this.isLayouting = true;
+                this._layouting = true;
                 // TODO: raise layout event?
                 var type;
                 if(isUndefined(options)) {
@@ -3227,7 +3213,8 @@
                     var unit = new diagram.LayoutUndoUnit(initialState, finalState, options ? options.animate : null);
                     this.undoRedoService.add(unit);
                 }
-                this.isLayouting = false;
+                this._layouting = false;
+                this._redrawConnections();
             },
             /**
              * Gets a shape on the basis of its identifier.
@@ -3464,7 +3451,7 @@
                 var options = deepExtend({}, this.options.shapeDefaults);
                 options.dataItem = dataItem;
                 shape = new Shape(options, this);
-                this.addShape(shape, { undoable: undoable !== false });
+                this.addShape(shape, undoable !== false);
                 this._dataMap[dataItem.id] = shape;
                 return shape;
             },
@@ -3505,7 +3492,8 @@
                     action = e.action,
                     items = e.items,
                     options = that.options,
-                    idx;
+                    idx,
+                    dataBound;
 
                 if (e.field) {
                     return;
@@ -3514,10 +3502,10 @@
                 if (action == "remove") {
                     this._removeDataItems(e.items, true);
                 } else {
-                    var triggerDataBound;
+
                     if ((!action || action === "itemloaded") && !this._bindingRoots) {
                         this._bindingRoots = true;
-                        triggerDataBound = true;
+                        dataBound = true;
                     }
 
                     if (!action && !node) {
@@ -3529,15 +3517,15 @@
                     for (idx = 0; idx < items.length; idx++) {
                         items[idx].load();
                     }
-
-                    if (triggerDataBound) {
-                        this.trigger("dataBound");
-                        this._bindingRoots = false;
-                    }
                 }
 
-                if (options.layout) {
+                if (options.layout && (dataBound || action == "remove" || action == "add")) {
                     that.layout(options.layout);
+                }
+
+                if (dataBound) {
+                    this.trigger("dataBound");
+                    this._bindingRoots = false;
                 }
             },
 
@@ -3823,8 +3811,9 @@
 
                 if (this.options.layout) {
                     this.layout(this.options.layout);
+                } else {
+                    this._redrawConnections();
                 }
-                this._redrawConnections();
                 this.trigger("dataBound");
             },
 
@@ -3863,7 +3852,7 @@
                     if (!dataItem.isNew()) {
                         if (shape) {
                             shape._setOptionsFromModel();
-                            diagram.addShape(shape, { undoable: inactiveItem.undoable });
+                            diagram.addShape(shape, inactiveItem.undoable);
                             diagram._dataMap[dataItem.id] = shape;
                         } else {
                             diagram._addDataItem(dataItem);
@@ -4793,15 +4782,14 @@
 
             _testRect: function(shape, rect) {
                 var angle = shape.rotate().angle;
-                return Intersect.rects(rect, shape.bounds(), -angle);
-            },
-
-            _overlaps: function(rect1, rect2) {
-                    var rect1BottomRight = rect1.bottomRight();
-                    var rect2BottomRight = rect2.bottomRight();
-                    var overlaps = !(rect1BottomRight.x < rect2.x || rect1BottomRight.y < rect2.y ||
-                        rect2BottomRight.x < rect1.x || rect2BottomRight.y < rect1.y);
-                    return overlaps;
+                var bounds = shape.bounds();
+                var hit;
+                if (!angle) {
+                    hit = bounds.overlaps(rect);
+                } else {
+                    hit = Intersect.rects(rect, bounds, -angle);
+                }
+                return hit;
             }
         });
 
@@ -4822,7 +4810,7 @@
             },
 
             overlapsBounds: function(rect) {
-                return this._overlaps(this.rect, rect);
+                return this.rect.overlaps(rect);
             },
 
             insert: function (shape, bounds) {
@@ -4906,8 +4894,9 @@
             ROOT_SIZE: 1000,
 
             init: function(diagram) {
-                diagram.bind(ITEMBOUNDSCHANGE, proxy(this._boundsChange, this));
-                diagram.bind(ITEMROTATE, proxy(this._boundsChange, this));
+                var boundsChangeHandler = proxy(this._boundsChange, this);
+                diagram.bind(ITEMBOUNDSCHANGE, boundsChangeHandler);
+                diagram.bind(ITEMROTATE, boundsChangeHandler);
                 this.initRoots();
             },
 
@@ -4923,8 +4912,8 @@
             _boundsChange: function(e) {
                 if (e.item._quadNode) {
                     e.item._quadNode.remove(e.item);
-                    this.insert(e.item);
                 }
+                this.insert(e.item);
             },
 
             insert: function(shape) {
@@ -5048,6 +5037,13 @@
                 if (elementOptions && !defined(elementOptions[field])) {
                     elementOptions[field] = mainOptions[field];
                 }
+            }
+        }
+
+        function translateToOrigin(visual) {
+            var bbox = visual.drawingContainer().clippedBBox(null);
+            if (bbox.origin.x !== 0 || bbox.origin.y !== 0) {
+                visual.position(-bbox.origin.x, -bbox.origin.y);
             }
         }
 

@@ -278,6 +278,14 @@
             this.width *= zoom;
             this.height *= zoom;
             return this;
+        },
+
+        overlaps: function(rect) {
+            var bottomRight = this.bottomRight();
+            var rectBottomRight = rect.bottomRight();
+            var overlaps = !(bottomRight.x < rect.x || bottomRight.y < rect.y ||
+                rectBottomRight.x < this.x || rectBottomRight.y < this.y);
+            return overlaps;
         }
     });
 
@@ -1634,6 +1642,8 @@
              * @type {Array}
              */
             this.nodes = [];
+
+            this._nodeMap = new Dictionary();
             /**
              * The optional reference to the Diagram on which this Graph is based.
              * @type {null}
@@ -1838,7 +1848,7 @@
 
             var visited = [];
             var remaining = [];
-            tree.nodes.push(tree.root);
+            tree._addNode(tree.root);
             visited.push(root);
             remaining.push(root);
 
@@ -2080,21 +2090,9 @@
          * Gets the node with the specified Id or null if not part of this graph.
          */
         getNode: function (nodeOrId) {
-            if (Utils.isUndefined(nodeOrId)) {
-                throw "No identifier or Node specified.";
-            }
-            if (Utils.isString(nodeOrId)) {
-                return Utils.find(this.nodes, function (n) {
-                    return n.id == nodeOrId;
-                });
-            }
-            else {
-                if (this.hasNode(nodeOrId)) {
-                    return nodeOrId;
-                }
-                else {
-                    return null;
-                }
+            var id = nodeOrId.id || nodeOrId;
+            if (this._nodeMap.containsKey(id)) {
+                return this._nodeMap.get(id);
             }
         },
 
@@ -2102,17 +2100,18 @@
          * Returns whether the given node or node Id is part of this graph.
          */
         hasNode: function (nodeOrId) {
-            if (Utils.isString(nodeOrId)) {
-                return Utils.any(this.nodes, function (n) {
-                    return n.id === nodeOrId;
-                });
-            }
-            if (Utils.isObject(nodeOrId)) {
-                return Utils.any(this.nodes, function (n) {
-                    return n === nodeOrId;
-                });
-            }
-            throw "The identifier should be a Node or the Id (string) of a node.";
+            var id = nodeOrId.id || nodeOrId;
+            return this._nodeMap.containsKey(id);
+        },
+
+        _addNode: function(node) {
+            this.nodes.push(node);
+            this._nodeMap.add(node.id, node);
+        },
+
+        _removeNode: function(node) {
+            Utils.remove(this.nodes, node);
+            this._nodeMap.remove(node.id);
         },
 
         /**
@@ -2132,7 +2131,7 @@
                     var link = links[i];
                     this.removeLink(link);
                 }
-                Utils.remove(this.nodes, n);
+                this._removeNode(n);
             }
             else {
                 throw "The identifier should be a Node or the Id (string) of a node.";
@@ -2198,7 +2197,7 @@
             if (Utils.isDefined(owner)) {
                 newNode.owner = owner;
             }
-            this.nodes.push(newNode);
+            this._addNode(newNode);
             return newNode;
         },
 
@@ -2206,9 +2205,8 @@
          * Adds the given Node and its outgoing links.
          */
         addNodeAndOutgoings: function (node) {
-
-            if (!contains(this.nodes, node)) {
-                this.nodes.push(node);
+            if (!this.hasNode(node)) {
+                this._addNode(node);
             }
 
             var newLinks = node.outgoing;
@@ -2247,7 +2245,7 @@
             Utils.forEach(this.nodes, function (nOriginal) {
                 var nCopy = nOriginal.clone();
                 map.set(nOriginal, nCopy);
-                copy.nodes.push(nCopy);
+                copy._addNode(nCopy);
 
                 if (save) {
                     copy.nodeMap.set(nCopy, nOriginal);
@@ -2518,7 +2516,7 @@
                             source.removeLink(targetLink);
                             catalogEqualIntensity(source, intensityCatalog);
                         }
-                        Utils.remove(copy.nodes, target);
+                        copy._removeNode(target);
                         targetStack.unshift(target);
                     }
                 }
@@ -2537,7 +2535,7 @@
                             catalogEqualIntensity(target, intensityCatalog);
                         }
                         sourceStack.push(source);
-                        Utils.remove(copy.nodes, source);
+                        copy._removeNode(source);
                     }
                 }
 
@@ -2556,7 +2554,7 @@
                                 catalogEqualIntensity(u, intensityCatalog);
                             }
                             sourceStack.push(v);
-                            Utils.remove(copy.nodes, v);
+                            copy._removeNode(v);
                             break;
                         }
                     }

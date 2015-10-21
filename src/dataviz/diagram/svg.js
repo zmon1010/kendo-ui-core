@@ -133,6 +133,8 @@
         }
     });
 
+    Rotation.ZERO = new Rotation(0);
+
     Rotation.create = function (rotation) {
         return new Rotation(rotation.angle, rotation.x, rotation.y);
     };
@@ -312,7 +314,7 @@
                 this._transform.rotate = new Rotation(angle, center.x, center.y);
                 this._renderTransform();
             }
-            return this._transform.rotate || new Rotation(0);
+            return this._transform.rotate || Rotation.ZERO;
         },
 
         drawingContainer: function() {

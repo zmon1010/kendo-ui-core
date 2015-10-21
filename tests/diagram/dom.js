@@ -1238,7 +1238,7 @@
             });
 
             equal(diagram.shapes.length, 1, "should have a single shape");
-            equal(diagram.shapes[0].shapeVisual.options.type, shape.options.type, "shape visual is same type as the shape itself");
+            ok(diagram.shapes[0].shapeVisual instanceof dataviz.diagram.Circle);
         });
 
         // ------------------------------------------------------------
@@ -1367,8 +1367,8 @@
                     y: 40
                 });
                 var visual = shape.shapeVisual;
-                equal(visual.options.x, 0);
-                equal(visual.options.y, 0);
+                equal(visual.options.x, undefined);
+                equal(visual.options.y, undefined);
             });
 
             test("inits width and height based on visual content", function() {
@@ -1393,6 +1393,27 @@
                 bounds = shape.bounds();
                 equal(bounds.width, 150);
                 equal(bounds.height, 200);
+            });
+
+            test("shapes connections are refreshed after updating the bounds", function() {
+                shape = diagram.addShape({});
+                diagram.connect(shape, new Point());
+                shape.connections()[0].refresh = function() {
+                    ok(true);
+                };
+                shape.bounds(new Rect(100, 100, 200, 200));
+            });
+
+            test("shapes connections are refreshed only once during layout", 1, function() {
+                shape = diagram.addShape({});
+                var targetShape = diagram.addShape({});
+                diagram.connect(shape, targetShape);
+                shape.connections()[0].refresh = function() {
+                    ok(true);
+                };
+                diagram.layout({
+                    type: "tree"
+                });
             });
 
             // ------------------------------------------------------------
@@ -1455,6 +1476,7 @@
                 equal(rotation.x, 150);
                 equal(rotation.y, 50);
             });
+
         })();
 
         // ------------------------------------------------------------
@@ -1562,9 +1584,7 @@
                     source: "bar",
                     hover: {fill: "fooHover"},
                     fill: {color: "fooColor"},
-                    stroke: {width: 3},
-                    startCap: "fooCap",
-                    endCap: "fooCap"
+                    stroke: {width: 3}
                 };
 
                 shape.shapeVisual.redraw = function(options) {
@@ -1572,8 +1592,6 @@
                     equal(options.source, visualOptions.source);
                     equal(options.hover.fill, visualOptions.hover.fill);
                     equal(options.fill.color, visualOptions.fill.color);
-                    equal(options.startCap, visualOptions.startCap);
-                    equal(options.endCap, visualOptions.endCap);
                 };
 
                 shape.redraw(visualOptions);
@@ -1588,7 +1606,7 @@
             });
 
             test("redraw updates connection source with the new instance", function() {
-                var connection = new Connection(shape.getConnector("top"), new Point());
+                var connection = diagram.connect(shape.getConnector("top"), new Point());
                 shape.redraw({
                     connectors: [{name: "top"}]
                 });
@@ -1596,7 +1614,7 @@
             });
 
             test("redraw sets connection source to the source point if previous connector is not from the new connectors", function() {
-                var connection = new Connection(shape.getConnector("auto"), new Point());
+                var connection = diagram.connect(shape.getConnector("auto"), new Point());
                 shape.redraw({
                     connectors: [{name: "top"}]
                 });
@@ -1604,7 +1622,7 @@
             });
 
             test("redraw updates connection target with the new instance", function() {
-                var connection = new Connection(new Point(), shape.getConnector("top"));
+                var connection = diagram.connect(new Point(), shape.getConnector("top"));
                 shape.redraw({
                     connectors: [{name: "top"}]
                 });
@@ -1612,7 +1630,7 @@
             });
 
             test("redraw sets connection target to the target point if previous connector is not from the new connectors", function() {
-                var connection = new Connection(new Point(), shape.getConnector("auto"));
+                var connection = diagram.connect(new Point(), shape.getConnector("auto"));
                 shape.redraw({
                     connectors: [{name: "top"}]
                 });
@@ -1620,8 +1638,8 @@
             });
 
             test("redraw updates connection model", 2, function() {
-                var connectionSource = new Connection(shape.getConnector("auto"), new Point());
-                var connectionTarget = new Connection(new Point(), shape.getConnector("auto"));
+                var connectionSource = diagram.connect(shape.getConnector("auto"), new Point());
+                var connectionTarget = diagram.connect(new Point(), shape.getConnector("auto"));
                 connectionSource.updateModel = connectionTarget.updateModel = function() {
                     ok(true);
                 };
@@ -2117,6 +2135,7 @@
 
         function setupConnection(options) {
             connection = new Connection(new Point(10, 20), new Point(100, 100), options);
+            connection.refresh();
         }
 
         // ------------------------------------------------------------
@@ -2260,7 +2279,7 @@
                         text: "foo"
                     }
                 }, options));
-
+                connection.refresh();
                 var position = connection._contentVisual.position();
                 equal(position.x, expectedPosition.x);
                 equal(position.y, expectedPosition.y);

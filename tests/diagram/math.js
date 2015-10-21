@@ -273,11 +273,7 @@
         ok(!g.hasNode("A11"));
 
         var b7 = g.addNode("B7");
-        throws(function () {
-                g.getNode(77);
-            },
-            'Should throw an error since it is neither a Node nor an identifier.'
-        );
+
         ok(Utils.isEmpty(b7.links), "No links defined yet.");
         ok(Utils.isEmpty(b7.outgoing), "No links defined yet.");
         ok(Utils.isEmpty(b7.incoming), "No links defined yet.");
