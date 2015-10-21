@@ -7,6 +7,7 @@ var clone = require('gulp-clone');
 var plumber = require('gulp-plumber');
 var filter = require('gulp-filter');
 var sourcemaps = require('gulp-sourcemaps');
+var gulpIf = require('gulp-if');
 
 var ignore = require('gulp-ignore');
 
@@ -22,8 +23,9 @@ var gatherAmd = require('./build/gulp/gather-amd');
 var uglify = require('./build/gulp/uglify');
 
 gulp.task("css-assets", function() {
-    return gulp.src("styles/**/*.{less,woff,ttf,eot,png,gif,css,svg,txt}").
-        pipe(gulp.dest("dist/styles"));
+    return gulp.src("styles/**/*.{less,woff,ttf,eot,png,gif,css,svg,txt}")
+        .pipe(gulpIf((file) => file.path.match(/.less$/), license() ))
+        .pipe(gulp.dest("dist/styles"));
 });
 
 gulp.task("build-skin", ["css-assets"], function() {

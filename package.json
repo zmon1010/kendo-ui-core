@@ -61,7 +61,7 @@
        "gulp-ignore": "^1.2.1",
        "gulp-insert": "^0.5.0",
        "gulp-uglify": "^1.4.2",
-       "gulp-run": "^1.6.11",
+       "gulp-if": "^2.0.0",
        "worker-farm": "^1.3.1",
        "through-gulp": "^0.3.8",
        "vinyl": "^1.0.0",
