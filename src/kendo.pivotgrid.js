@@ -4284,6 +4284,7 @@ var __meta__ = { // jshint ignore:line
             metadata = this.metadata[path];
             if (!metadata) {
                 this.metadata[path] = metadata = createMetadata(Number(member.levelNum), memberIdx);
+                metadata.rootLevelNum = Number(this.rootTuple.members[memberIdx].levelNum);
             }
 
             this._indexes.push({
@@ -4471,8 +4472,8 @@ var __meta__ = { // jshint ignore:line
                     maxcolSpan = this[members[memberIdx].name];
                     cell = row.colSpan["dim" + memberIdx];
 
-                    if (cell && cell.levelNum < maxcolSpan) {
-                        cell.attr.colSpan = (maxcolSpan - cell.levelNum) + 1;
+                    if (cell && cell.colSpan < maxcolSpan) {
+                        cell.attr.colSpan = (maxcolSpan - cell.colSpan) + 1;
                     }
                 }
             }
@@ -4523,21 +4524,20 @@ var __meta__ = { // jshint ignore:line
             var children = member.children;
             var childrenLength = children.length;
 
-            var levelNum = Number(member.levelNum) + 1;
+            var levelNum = Number(member.levelNum);
             var rootName = this.rootTuple.members[memberIdx].name;
             var tuplePath = buildPath(tuple, memberIdx - 1).join("");
-
-            var parentName = tuplePath + (member.parentName || "");
+            var rootLevelNum = Number(this.rootTuple.members[memberIdx].levelNum);
+            var parentName = tuplePath + (rootLevelNum === levelNum ? "" : (member.parentName || ""));
             var row = map[parentName + "all"] || map[parentName];
-            var childRow;
-            var allRow;
+            var colSpan = levelNum + 1;
 
+            var cell, allCell;
+            var childRow, allRow;
             var metadata;
             var className;
-            var expandIconAttr;
             var cellChildren = [];
-            var allCell;
-            var cell;
+            var expandIconAttr;
             var idx;
 
             if (!row || row.hasChild) {
@@ -4565,7 +4565,8 @@ var __meta__ = { // jshint ignore:line
 
             metadata = this.metadata[path];
             if (!metadata) {
-                this.metadata[path] = metadata = createMetadata(levelNum - 1, memberIdx);
+                this.metadata[path] = metadata = createMetadata(levelNum, memberIdx);
+                metadata.rootLevelNum = rootLevelNum;
             }
 
             this._indexes.push({
@@ -4589,13 +4590,13 @@ var __meta__ = { // jshint ignore:line
 
             className = row.allCell && !childrenLength ? "k-grid-footer" : "";
             cell = this._cell(className, cellChildren, member);
-            cell.levelNum = levelNum;
+            cell.colSpan = colSpan;
 
             row.children.push(cell);
             row.colSpan["dim" + memberIdx] = cell;
 
-            if (!this[rootName] || this[rootName] < levelNum) {
-                this[rootName] = levelNum;
+            if (!this[rootName] || this[rootName] < colSpan) {
+                this[rootName] = colSpan;
             }
 
             if (childrenLength) {
@@ -4617,7 +4618,7 @@ var __meta__ = { // jshint ignore:line
                 metadata.children = row.rowSpan;
 
                 allCell = this._cell("k-grid-footer", [this._content(member, tuple)], member);
-                allCell.levelNum = levelNum;
+                allCell.colSpan = colSpan;
 
                 allRow = this._row([ allCell ]);
                 allRow.colSpan["dim" + memberIdx] = allCell;
@@ -4730,6 +4731,7 @@ var __meta__ = { // jshint ignore:line
             var idx = 0;
             var length = indexes.length;
             var measureIdx;
+            var index;
 
             var children;
             var skipChildren;
@@ -4760,12 +4762,17 @@ var __meta__ = { // jshint ignore:line
                     skipChildren = current.maxChildren;
                 }
 
-                if (current.parentMember && current.levelNum === 0) {
+                if (current.parentMember && current.levelNum === current.rootLevelNum) {
                     children = -1;
                 }
 
                 if (children > -1) {
                     for (measureIdx = 0; measureIdx < measuresLength; measureIdx++) {
+                        index = children + measureIdx;
+                        if (!current.children) {
+                            index += firstEmpty;
+                        }
+
                         result[children + firstEmpty + measureIdx] = {
                             children: children,
                             index: dataIdx,
