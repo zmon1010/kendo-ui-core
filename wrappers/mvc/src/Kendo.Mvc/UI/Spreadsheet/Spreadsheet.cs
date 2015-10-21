@@ -19,6 +19,8 @@ namespace Kendo.Mvc.UI
             this.urlGenerator = urlGenerator;
 //>> Initialization
         
+            Excel = new SpreadsheetExcelSettings();
+                
             Sheets = new List<SpreadsheetSheet>();
                 
         //<< Initialization
@@ -35,6 +37,12 @@ namespace Kendo.Mvc.UI
         public double? HeaderHeight { get; set; }
         
         public double? HeaderWidth { get; set; }
+        
+        public SpreadsheetExcelSettings Excel
+        {
+            get;
+            set;
+        }
         
         public double? RowHeight { get; set; }
         
@@ -81,6 +89,11 @@ namespace Kendo.Mvc.UI
                 json["headerWidth"] = HeaderWidth;
             }
                 
+            var excel = Excel.ToJson();
+            if (excel.Any())
+            {
+                json["excel"] = excel;
+            }
             if (RowHeight.HasValue)
             {
                 json["rowHeight"] = RowHeight;
