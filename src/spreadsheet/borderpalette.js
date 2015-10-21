@@ -26,7 +26,19 @@
             },
 
             options: {
-                name: "BorderPalette"
+                name: "BorderPalette",
+                messages: {
+                    allBorders: "All borders",
+                    insideBorders: "Inside borders",
+                    insideHorizontalBorders: "Inside horizontal borders",
+                    insideVerticalBorders: "Inside vertical borders",
+                    outsideBorders: "Outside borders",
+                    leftBorder: "Left border",
+                    topBorder: "Top border",
+                    rightBorder: "Right border",
+                    bottomBorder: "Bottom border",
+                    noBorders: "No border"
+                }
             },
 
             events: [
@@ -34,9 +46,10 @@
             ],
 
             _borderTypePalette: function() {
+                var messages = this.options.messages;
                 var buttons = BORDER_TYPES.map(function(type) {
-                    return '<a href="#" data-border-type="' + type + '" class="k-button k-button-icon">' +
-                                '<span class="k-sprite k-font-icon k-icon k-i-' + kendo.toHyphens(type) + '">' + type.replace(/([A-Z])/g, ' $1').toLowerCase() + '</span>' +
+                    return '<a title="' + messages[type] + '" href="#" data-border-type="' + type + '" class="k-button k-button-icon">' +
+                                '<span class="k-sprite k-font-icon k-icon k-i-' + kendo.toHyphens(type) + '"></span>' +
                            '</a>';
                 }).join("");
 
