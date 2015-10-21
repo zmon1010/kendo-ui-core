@@ -106,7 +106,6 @@ MVC_DEMOS = FileList[MVC_DEMOS_ROOT + '**/*']
                 )
                 .include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll')
                 .include(FileList[SPREADSHEET_REDIST_NET45].pathmap(MVC_DEMOS_ROOT + 'bin/%f'))
-                .exclude('**/*.winjs.*')
                 .exclude('**/System*.dll')
                 .exclude('**/*.csproj')
                 .exclude('**/*resources.dll')

@@ -18,7 +18,7 @@ def maps(list)
 end
 
 ASPNET_MVC = File.join(DIST_JS_ROOT, 'kendo.aspnetmvc.js')
-JS_BUNDLES = in_dist FileList[ 'kendo.web.js', 'kendo.dataviz.js', 'kendo.mobile.js', 'kendo.all.js', 'kendo.winjs.js', 'kendo.dataviz.mobile.js' ]
+JS_BUNDLES = in_dist FileList[ 'kendo.web.js', 'kendo.dataviz.js', 'kendo.mobile.js', 'kendo.all.js', 'kendo.dataviz.mobile.js' ]
 
 JQUERY = File.join(DIST_JS_ROOT, "jquery.min.js")
 JSZIP = File.join(DIST_JS_ROOT, "jszip.min.js")
@@ -56,9 +56,6 @@ TRIAL_MIN_JS_MAP = FileList[MVC_MIN_JS_MAP]
 
 CDN_MIN_JS = FileList[MVC_MIN_JS]
 CDN_MIN_JS_MAP = FileList[MVC_MIN_JS_MAP]
-
-WIN_MIN_JS = FileList[File.join(DIST_JS_ROOT, 'kendo.winjs.min.js')]
-WIN_SRC_JS = FileList[File.join(DIST_JS_ROOT, 'kendo.winjs.js')]
 
 APP_BUILDER_MIN_JS = FileList[File.join(DIST_JS_ROOT, 'kendo.dataviz.mobile.min.js')].include(JQUERY)
 APP_BUILDER_CORE_MIN_JS = FileList[File.join(DIST_JS_ROOT, 'kendo.mobile.min.js')].include(JQUERY)

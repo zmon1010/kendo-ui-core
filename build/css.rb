@@ -1,6 +1,6 @@
 LESS = FileList['styles/**/*.less']
 
-SRC_CSS = FileList['styles/**/*.*'].exclude('**/*.winjs.*').include(FileList['styles/**/kendo*.less'].ext('css')).sub('styles/', DIST_STYLES_ROOT).uniq
+SRC_CSS = FileList['styles/**/*.*'].include(FileList['styles/**/kendo*.less'].ext('css')).sub('styles/', DIST_STYLES_ROOT).uniq
 
 MIN_CSS = FileList['styles/**/kendo*.less']
     .include('styles/**/*.css')
@@ -12,7 +12,7 @@ MIN_CSS = FileList['styles/**/kendo*.less']
 MIN_CSS_RESOURCES = FileList[MIN_CSS + FileList['styles/**/*']
     .keep_if { |f| !File.directory?(f) }
     .sub('styles/', DIST_STYLES_ROOT)]
-    .exclude('**/*.less').exclude('**/*.winjs.*')
+    .exclude('**/*.less')
 
 WEB_MIN_CSS = FileList[MIN_CSS_RESOURCES].keep_if { |f| f =~ /styles\/web\// }
 WEB_SRC_CSS = FileList[SRC_CSS].keep_if { |f| f =~ /styles\/(web|common)\// }
@@ -42,9 +42,6 @@ CORE_SRC_CSS = FileList[SRC_CSS]
     .exclude("dist/styles/web/common/imagebrowser.less")
     .exclude("dist/styles/web/common/treeview.less")
     .exclude("dist/styles/web/common/upload.less")
-
-WIN_SRC_CSS = FileList["#{DIST_STYLES_ROOT}web/kendo.common.css"].include("#{DIST_STYLES_ROOT}dataviz/kendo.dataviz.css").include("#{DIST_STYLES_ROOT}web/kendo.rtl.css")
-WIN_MIN_CSS = FileList["#{DIST_STYLES_ROOT}web/kendo.winjs.min.css"]
 
 APP_BUILDER_MIN_RESOURCES = FileList[MOBILE_MIN_CSS].keep_if { |f| f =~ /styles\/mobile\/images\// }
 APP_BUILDER_MIN_CSS = FileList["#{DIST_STYLES_ROOT}mobile/kendo.dataviz.mobile.min.css"].include(APP_BUILDER_MIN_RESOURCES).include(DATAVIZ_MIN_CSS).exclude("#{DIST_STYLES_ROOT}dataviz/kendo.dataviz.min.css")

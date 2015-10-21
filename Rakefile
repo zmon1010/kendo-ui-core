@@ -799,14 +799,6 @@ bundle :name => 'cdn.commercial',
            'styles' => MIN_CSS_RESOURCES
        }
 
-WIN_JS_RESOURCES = WIN_MIN_JS + WIN_SRC_JS + WIN_SRC_CSS + WIN_MIN_CSS
-
-bundle :name => 'winjs.commercial',
-       :skip_grunt_build => true,
-       :contents => {
-            '.' => WIN_JS_RESOURCES
-       }
-
 bundle :name => 'appbuilder.professional',
        :skip_grunt_build => true,
        :license => 'src-license-appbuilder',
@@ -1050,7 +1042,6 @@ BUNDLES = [
     'jsp.trial',
     'php.commercial',
     'php.trial',
-    'winjs.commercial',
     'appbuilder.professional',
     'appbuilder.core',
     'core'
@@ -1125,12 +1116,6 @@ namespace :build do
                   :from => "dist/download-builder/kendo-config.js"
 
         zip_bundles.push(db_config_file, db_content)
-
-        tree :to => "#{ARCHIVE_ROOT}/WinJS/#{destination}",
-             :from => FileList[WIN_JS_RESOURCES].pathmap('dist/bundles/winjs.commercial/%f'),
-             :root => 'dist/bundles/winjs.commercial/'
-
-        zip_bundles.push("#{ARCHIVE_ROOT}/WinJS/#{destination}")
 
         tree :to => "#{ARCHIVE_ROOT}/AppBuilder/#{destination}/js",
              :from => FileList[APP_BUILDER_MIN_JS].pathmap('dist/bundles/appbuilder.professional/js/%f'),
