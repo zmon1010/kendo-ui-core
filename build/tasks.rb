@@ -5,6 +5,7 @@ README_DIR = 'resources'
 THIRD_PARTY_LEGAL_DIR = File.join('resources', 'legal', 'third-party')
 XVFB_RUN = "xvfb-run"
 GRUNT = File.join(Rake.application.original_dir, "node_modules", ".bin", "grunt")
+GULP = File.join(Rake.application.original_dir, "node_modules", ".bin", "gulp")
 GRUNT_XVFB = system("which", XVFB_RUN, :out => "/dev/null") ? [XVFB_RUN, "-a", GRUNT] : [GRUNT]
 METAJS = File.join(Rake.application.original_dir, "build", "kendo-meta.js");
 LESSC = File.join(Rake.application.original_dir, "build", "less-js", "bin", "lessc")
@@ -81,6 +82,10 @@ def grunt(*args)
     run_shell([GRUNT], args)
 end
 
+def gulp(*args)
+    run_shell([GULP], args)
+end
+
 def grunt_xvfb(*args)
     run_shell(GRUNT_XVFB, args)
 end
@@ -131,10 +136,20 @@ def file_copy(options)
 
             File.open(from, 'r:bom|utf-8') do |source|
                 contents = source.read
+                license_contents = File.read(license)
 
                 File.open(to, "w") do |file|
-                    file.write(File.read(license))
-                    contents.sub!("$KENDO_VERSION", VERSION)
+                    licenseRegExp = /\/\*\!.+@license\s+\*\//m
+                    placeholder = contents[licenseRegExp]
+
+                    unless placeholder
+                        raise "#{from} did not contain the expected license header"
+                    end
+
+                    diff = placeholder.lines.count - license_contents.lines.count
+                    license_contents.sub!("\n */", "\n *" * diff + "\n */")
+
+                    contents = contents.sub("$KENDO_VERSION", VERSION).sub(licenseRegExp, license_contents)
                     file.write(contents)
                 end
             end

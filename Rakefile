@@ -234,7 +234,8 @@ end
 desc('JavaScript')
 
 task :js do
-    grunt :all
+    # grunt :all
+    gulp :scripts
 end
 
 desc "Build less files in dist/styles"
