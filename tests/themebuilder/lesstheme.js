@@ -76,10 +76,10 @@
 
     test("infer() infers nested className selectors", function() {
         var constants = createConstants({
-            "@foo": constant(".k-widget .k-input", "font-size")
+            "@foo": constant(".bar .baz", "font-size")
         });
 
-        updateCssAndInfer(constants, ".k-widget { font-size: 8px; }\n.k-widget .k-input { font-size: 10px; }", document);
+        updateCssAndInfer(constants, ".bar { font-size: 8px; }\n.bar .baz { font-size: 10px; }", document);
 
         equal(constants.constants["@foo"].value, "10px");
     });
@@ -106,32 +106,32 @@
 
     test("infer() infers basic property value", function() {
         var constants = createConstants({
-            "@foo": constant(".k-widget", "font-size")
+            "@foo": constant(".bar", "font-size")
         });
 
-        updateCssAndInfer(constants, ".k-widget { font-size: 9px; }", document);
+        updateCssAndInfer(constants, ".bar { font-size: 9px; }", document);
 
         equal(constants.constants["@foo"].value, "9px");
     });
 
     test("infer() infers colors correctly", function() {
         var constants = createConstants({
-            "@foo": constant(".k-widget", "background-color")
+            "@foo": constant(".bar", "background-color")
         });
 
-        updateCssAndInfer(constants, ".k-widget { background-color: #f11f11; }", document);
+        updateCssAndInfer(constants, ".bar { background-color: #f11f11; }", document);
 
         equal(constants.constants["@foo"].value, "#f11f11");
     });
 
     test("infer() with multiple constants", function() {
         var constants = createConstants({
-            "@foo": constant(".k-widget", "background-color"),
-            "@bar": constant(".k-widget", "border-color")
+            "@foo": constant(".foo", "background-color"),
+            "@bar": constant(".foo", "border-color")
         });
 
         constants.updateStyleSheet(
-            ".k-widget { background-color: #f11f11; border-color: #f00f00; }", document
+            ".foo { background-color: #f11f11; border-color: #f00f00; }", document
         );
 
         constants.infer(document);
@@ -142,10 +142,10 @@
 
     test("infer() of border-radius", function() {
         var constants = createConstants({
-            "@foo": constant(".k-widget", "border-radius")
+            "@foo": constant(".foo", "border-radius")
         });
 
-        constants.updateStyleSheet(".k-widget { border-radius: 3px; }", document);
+        constants.updateStyleSheet(".foo { border-radius: 3px; }", document);
 
         constants.infer(document);
 
@@ -191,7 +191,7 @@
 
     test("source('less') returns less source", 1, function() {
         var constants = createConstants({
-            "@foo": extend(constant(".k-widget", "background-color"), { value: "#f00" })
+            "@foo": extend(constant(".bar", "background-color"), { value: "#f00" })
         });
 
         constants.source("less", function(source) {
