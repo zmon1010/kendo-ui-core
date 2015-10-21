@@ -47,6 +47,8 @@ namespace Kendo.Mvc.UI
             set;
         }
         
+        public double? TileSize { get; set; }
+        
         public MapLayerDefaultsTileSettings Tile
         {
             get;
@@ -70,17 +72,19 @@ namespace Kendo.Mvc.UI
             {
                 json["marker"] = marker;
             }
-                
             var shape = Shape.ToJson();
             if (shape.Any())
             {
                 json["shape"] = shape;
             }
-                
             var bubble = Bubble.ToJson();
             if (bubble.Any())
             {
                 json["bubble"] = bubble;
+            }
+            if (TileSize.HasValue)
+            {
+                json["tileSize"] = TileSize;
             }
                 
             var tile = Tile.ToJson();
@@ -88,13 +92,11 @@ namespace Kendo.Mvc.UI
             {
                 json["tile"] = tile;
             }
-                
             var bing = Bing.ToJson();
             if (bing.Any())
             {
                 json["bing"] = bing;
             }
-                
         //<< Serialization
         }
     }

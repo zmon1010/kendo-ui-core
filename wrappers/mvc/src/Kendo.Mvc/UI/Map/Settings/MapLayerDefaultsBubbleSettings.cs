@@ -70,7 +70,6 @@ namespace Kendo.Mvc.UI
             {
                 json["style"] = style;
             }
-                
         //<< Serialization
 
             if (SymbolHandler != null)

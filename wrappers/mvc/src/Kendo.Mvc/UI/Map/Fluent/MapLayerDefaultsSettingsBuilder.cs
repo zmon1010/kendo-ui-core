@@ -50,6 +50,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// The size of the image tile in pixels.
+        /// </summary>
+        /// <param name="value">The value that configures the tilesize.</param>
+        public MapLayerDefaultsSettingsBuilder TileSize(double value)
+        {
+            container.TileSize = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The default configuration for tile layers.
         /// </summary>
         /// <param name="configurator">The action that configures the tile.</param>

@@ -16,10 +16,10 @@ namespace Kendo.Mvc.UI.Tests.Map.Fluent
         }
 
         [Fact]
-        public void Clears_attribution_settings()
+        public void Disables_attribution_settings()
         {
             builder.Attribution(false);
-            settings.Attribution.ShouldBeNull();
+            settings.Attribution.Enabled.Equals(false);
         }
 
         [Fact]
@@ -30,10 +30,10 @@ namespace Kendo.Mvc.UI.Tests.Map.Fluent
         }
 
         [Fact]
-        public void Clears_navigator_settings()
+        public void Disables_navigator_settings()
         {
             builder.Navigator(false);
-            settings.Navigator.ShouldBeNull();
+            settings.Navigator.Enabled.Equals(false);
         }
 
         [Fact]
@@ -44,10 +44,10 @@ namespace Kendo.Mvc.UI.Tests.Map.Fluent
         }
 
         [Fact]
-        public void Clears_zoom_settings()
+        public void Disables_zoom_settings()
         {
             builder.Zoom(false);
-            settings.Zoom.ShouldBeNull();
+            settings.Zoom.Enabled.Equals(false);
         }
 
         [Fact]

@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI
             {
                 json["location"] = Location;
             }
-	    
+            
             if (Title.HasValue())
             {
                 json["title"] = Title;

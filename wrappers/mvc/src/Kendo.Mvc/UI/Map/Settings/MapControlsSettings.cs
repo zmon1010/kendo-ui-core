@@ -53,7 +53,7 @@ namespace Kendo.Mvc.UI
         
         //<< Serialization
 
-            if (Attribution != null)
+            if (Attribution.Enabled)
             {
                 var attribution = Attribution.ToJson();
                 if (attribution.Any())
@@ -66,7 +66,7 @@ namespace Kendo.Mvc.UI
                 json["attribution"] = false;
             }
 
-            if (Navigator != null)
+            if (Navigator.Enabled)
             {
                 var navigator = Navigator.ToJson();
                 if (navigator.Any())
@@ -79,7 +79,7 @@ namespace Kendo.Mvc.UI
                 json["navigator"] = false;
             }
 
-            if (Zoom != null)
+            if (Zoom.Enabled)
             {
                 var zoom = Zoom.ToJson();
                 if (zoom.Any())

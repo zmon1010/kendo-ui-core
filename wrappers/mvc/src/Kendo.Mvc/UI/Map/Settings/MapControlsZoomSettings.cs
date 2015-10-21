@@ -11,13 +11,16 @@ namespace Kendo.Mvc.UI
         {
             //>> Initialization
         
-        //<< Initialization            
+        //<< Initialization      
+
+            Enabled = true;      
         }
 
         //>> Fields
         
         //<< Fields
         public MapControlPosition? Position { get; set; }
+        public bool Enabled { get; set; }
 
         protected override void Serialize(IDictionary<string, object> json)
         {
