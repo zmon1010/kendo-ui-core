@@ -1744,8 +1744,12 @@ var __meta__ = { // jshint ignore:line
             return grep(this.columns, not(is("locked")));
         },
 
+        _templateColumns: function() {
+            return grep(this.columns, is("template"));
+        },
+
         _flushCache: function() {
-            if (this.options.$angular) {
+            if (this.options.$angular && this._templateColumns().length) {
                 this._contentTree.render([]);
                 if (this._hasLockedColumns) {
                     this._lockedContentTree.render([]);
