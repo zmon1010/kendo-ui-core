@@ -114,6 +114,7 @@ module CodeGen::MVC::Wrappers
         'treeview.items',
         'treeview.autobind',
         'treeview.animation',
+        'treeview.datatextfield',
         'treeview.draganddrop',
         'treeview.loadondemand',
         'treeview.datasource',
