@@ -13,6 +13,14 @@
     var messages = kendo.spreadsheet.messages.dialogs = {
         apply: "Apply",
         cancel: "Cancel",
+        formatCellsDialog: {
+            title: "Format",
+            categories: {
+                number: "Number",
+                currency: "Currency",
+                date: "Date"
+            }
+        },
         fontFamilyDialog: {
             title: "Font"
         },
@@ -247,12 +255,12 @@
             this._generateFormats();
         },
         options: {
-            title: "Format number",
+            title: messages.formatCellsDialog.title,
             className: "k-spreadsheet-format-cells",
             categories: [
-                { type: "number", name: "Number" },
-                { type: "currency", name: "Currency" },
-                { type: "date", name: "Date" }
+                { type: "number", name: messages.formatCellsDialog.categories.number },
+                { type: "currency", name: messages.formatCellsDialog.categories.currency },
+                { type: "date", name: messages.formatCellsDialog.categories.date }
             ],
             template:
                 "<div class='k-root-tabs' data-role='tabstrip' " +
@@ -279,8 +287,8 @@
                     "data-bind='source: formats, value: format' />" +
 
                 "<div class='k-action-buttons'>" +
-                    "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
-                    "<button class='k-button' data-bind='click: close'>Cancel</button>" +
+                    "<button class='k-button k-primary' data-bind='click: apply'>" + messages.apply + "</button>" +
+                    "<button class='k-button' data-bind='click: close'>" + messages.cancel + "</button>" +
                 "</div>"
         },
         _generateFormats: function() {
