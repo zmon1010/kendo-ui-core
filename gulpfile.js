@@ -104,7 +104,7 @@ gulp.task("scripts", function() {
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(logger({after: 'source map complete!', extname: '.map', showChange: true}))
-        .pipe(sourcemaps.write("./", { sourceRoot: "../src/js" }));
+        .pipe(sourcemaps.write("./"));
 
     // the duplication below is due to something strange with merge2 and concat
     // resulting in "cannot switch to old mode now" error

@@ -131,25 +131,33 @@ def file_copy(options)
     file to => prerequisites do |t|
         ensure_path to
 
+        version_marker = "$KENDO_VERSION"
+
         if license && subject_to_license?(to)
             $stderr.puts "cp #{from} #{to}" if VERBOSE
 
             File.open(from, 'r:bom|utf-8') do |source|
                 contents = source.read
-                license_contents = File.read(license)
+                license_contents = File.read(license).sub(version_marker, VERSION)
 
                 File.open(to, "w") do |file|
-                    licenseRegExp = /\/\*\!.+@license\s+\*\//m
+                    licenseRegExp = /\/\*\!\s+\*\//m
+                    padded_license = ""
+
                     placeholder = contents[licenseRegExp]
 
-                    unless placeholder
-                        raise "#{from} did not contain the expected license header"
+                    license_content_lines = license_contents.lines.to_a
+
+                    placeholder.lines.each_with_index do |line, index|
+                        license_line = license_content_lines[index]
+                        if license_line && index < license_content_lines.length - 1 # skip the last line which closes the comment
+                            padded_license += license_line.sub(/\n/, '').ljust(line.length, " ") + "\n"
+                        else
+                            padded_license += line
+                        end
                     end
 
-                    diff = placeholder.lines.count - license_contents.lines.count
-                    license_contents.sub!("\n */", "\n *" * diff + "\n */")
-
-                    contents = contents.sub("$KENDO_VERSION", VERSION).sub(licenseRegExp, license_contents)
+                    contents = contents.sub(licenseRegExp, padded_license).sub(version_marker, VERSION.ljust(version_marker.length))
                     file.write(contents)
                 end
             end

@@ -5,8 +5,7 @@ var lazypipe = require('lazypipe');
 
 var licensePad =
 `/*!
-@license
-${Array(22).join("\n")}
+${Array(22).join(Array(200).join(" ") + "\n")}
 */
 `;
 
