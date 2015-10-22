@@ -99,7 +99,7 @@
         headerTable.find("th span").click();
     });
 
-    test("expandMember arguments on column header expand", 2 , function() {
+    test("expandMember arguments on column header expand", 3 , function() {
         var tuples = [
             { members: [ { name: "level 0", levelNum: "0", hasChildren: true, children: [] }] }
         ];
@@ -108,6 +108,7 @@
             expandMember: function(e) {
                 equal(e.axis, "columns");
                 equal(e.path, "level 0");
+                equal(e.childrenLoaded, false);
             }
         });
 
@@ -131,6 +132,25 @@
         var button = headerTable.find("th span").click();
 
         ok(button.hasClass("k-i-arrow-e"));
+    });
+
+    test("expandMember childrenLoaded argument is true ", 1 , function() {
+        var tuples = [
+            { members: [ { name: "level 0", levelNum: "0", hasChildren: true, children: [] }] },
+            { members: [ { name: "level 1", parentName: "level 0", levelNum: "1", children: [] }] }
+        ];
+        var pivotgrid = createPivot({
+            dataSource: createDataSource(tuples)
+        });
+
+        var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
+        headerTable.find("th span").click();
+
+        pivotgrid.bind("expandMember", function(e) {
+            equal(e.childrenLoaded, true);
+        });
+
+        headerTable.find("th span").click();
     });
 
     test("collapseMember is triggered on column header collapse", 1 , function() {

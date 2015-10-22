@@ -4651,4 +4651,99 @@
 
         equal(cell.html(), "&nbsp;");
     });
+
+    test("PivotGrid renders columns content when root tuples are from 'level 1'", 12, function() {
+        var tuples = [
+            { members: [{ name: "dim 1", levelNum: "1", children: [], hasChildren: true }, { name: "dim 2", parentName: "dim", levelNum: "1", children: [], hasChildren: true }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [], hasChildren: true }, { name: "dim 2", parentName: "dim", levelNum: "1", children: [], hasChildren: true }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1.1", levelNum: "2",  parentName: "dim 1", children: [] }, { name: "dim 2", levelNum: "1", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1.1", levelNum: "2",  parentName: "dim 1", children: [] }, { name: "dim 2", levelNum: "1", children: [] }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.1", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.1", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.2", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.2", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.3", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.3", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.4", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.4", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 2" }] }
+        ];
+
+        var measures = ["measure 1", "measure 2"];
+
+        var data = [
+            { value: "1" }, { value: "2" },
+            { value: "3" }, { value: "4" },
+            { value: "5" }, { value: "6" },
+            { value: "7" }, { value: "8" },
+            { value: "9" }, { value: "10" },
+            { value: "11" }, { value: "12" }
+        ];
+
+        var pivotgrid = createPivot({
+            dataSource: createDataSource(tuples, data, measures)
+        });
+
+        var rows = pivotgrid.wrapper.find(".k-grid-content").find("tbody").find("tr");
+        var cells = rows.eq(0).find("td");
+
+        equal(cells.eq(0).text(), 3);
+        equal(cells.eq(1).text(), 4);
+        equal(cells.eq(2).text(), 5);
+        equal(cells.eq(3).text(), 6);
+        equal(cells.eq(4).text(), 7);
+        equal(cells.eq(5).text(), 8);
+        equal(cells.eq(6).text(), 9);
+        equal(cells.eq(7).text(), 10);
+        equal(cells.eq(8).text(), 11);
+        equal(cells.eq(9).text(), 12);
+        equal(cells.eq(10).text(), 1);
+        equal(cells.eq(11).text(), 2);
+    });
+
+    test("PivotGrid renders rows content when root tuples are from 'level 1'", 12, function() {
+        var tuples = [
+            { members: [{ name: "dim 1", levelNum: "1", children: [], hasChildren: true }, { name: "dim 2", levelNum: "1", parentName: "dim", children: [], hasChildren: true }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [], hasChildren: true }, { name: "dim 2", levelNum: "1", parentName: "dim", children: [], hasChildren: true }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1.1", levelNum: "2",  parentName: "dim 1", children: [] }, { name: "dim 2", levelNum: "1", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1.1", levelNum: "2",  parentName: "dim 1", children: [] }, { name: "dim 2", levelNum: "1", children: [] }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.1", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.1", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.2", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.2", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.3", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.3", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 2" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.4", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 1" }] },
+            { members: [{ name: "dim 1", levelNum: "1", children: [] }, { name: "dim 2.4", parentName: "dim 2", levelNum: "2", children: [] }, { name: "measure 2" }] }
+        ];
+
+        var measures = ["measure 1", "measure 2"];
+
+        var data = [
+            { value: "1" }, { value: "2" },
+            { value: "3" }, { value: "4" },
+            { value: "5" }, { value: "6" },
+            { value: "7" }, { value: "8" },
+            { value: "9" }, { value: "10" },
+            { value: "11" }, { value: "12" }
+        ];
+
+        var pivotgrid = createPivot({
+            dataSource: createDataSourceRows(tuples, data, measures)
+        });
+
+        var rows = pivotgrid.wrapper.find(".k-grid-content").find("tbody").find("tr");
+
+        equal(rows.find("td").eq(0).text(), 3);
+        equal(rows.find("td").eq(1).text(), 4);
+        equal(rows.find("td").eq(2).text(), 5);
+        equal(rows.find("td").eq(3).text(), 6);
+        equal(rows.find("td").eq(4).text(), 7);
+        equal(rows.find("td").eq(5).text(), 8);
+        equal(rows.find("td").eq(6).text(), 9);
+        equal(rows.find("td").eq(7).text(), 10);
+        equal(rows.find("td").eq(8).text(), 11);
+        equal(rows.find("td").eq(9).text(), 12);
+        equal(rows.find("td").eq(10).text(), 1);
+        equal(rows.find("td").eq(11).text(), 2);
+    });
 })();
