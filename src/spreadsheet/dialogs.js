@@ -13,6 +13,7 @@
     var messages = kendo.spreadsheet.messages.dialogs = {
         apply: "Apply",
         cancel: "Cancel",
+        remove: "Remove",
         formatCellsDialog: {
             title: "Format",
             categories: {
@@ -58,6 +59,58 @@
                 freezeRows: "Freeze rows",
                 freezeColumns: "Freeze columns",
                 unfreeze: "Unfreeze panes"
+            }
+        },
+        validationDialog: {
+            title: "Data Validation",
+            hintMessage: "Please enter a valid {0} value {1}.",
+            hintTitle: "Validation {0}",
+            criteria: {
+                any: "Any value",
+                number: "Number",
+                text: "Text",
+                date: "Date",
+                custom: "Custom Formula"
+            },
+            comparers: {
+                greaterThan: "greater than",
+                lessThan: "less than",
+                between: "between",
+                notBetween: "not between",
+                equalTo: "equal to",
+                notEqualTo: "not equal to",
+                greaterThanOrEqualTo: "greater than or equal to",
+                lessThanOrEqualTo: "less than or equal to"
+            },
+            comparerMessages: {
+                greaterThan: "greater than {0}",
+                lessThan: "less than {0}",
+                between: "between {0} and {1}",
+                notBetween: "not between {0} and {1}",
+                equalTo: "equal to {0}",
+                notEqualTo: "not equal to {0}",
+                greaterThanOrEqualTo: "greater than or equal to {0}",
+                lessThanOrEqualTo: "less than or equal to {0}",
+                custom: "that satisfies the formula: {0}"
+            },
+            labels: {
+                criteria: "Criteria",
+                comparer: "Comparer",
+                min: "Min",
+                max: "Max",
+                value: "Value",
+                start: "Start",
+                end: "End",
+                onInvalidData: "On invalid data",
+                rejectInput: "Reject input",
+                showWarning: "Show warning",
+                showHint: "Show hint",
+                hintTitle: "Hint title",
+                hintMessage: "Hint message"
+            },
+            placeholders: {
+                typeTitle: "Type title",
+                typeMessage: "Type message"
             }
         }
     };
@@ -893,11 +946,11 @@
         },
         options: {
             width: 420,
-            title: "Data Validation",
+            title: messages.validationDialog.title,
             criterion: "any",
             type: "reject",
-            hintMessage: "Please enter a valid {0} value {1}.",
-            hintTitle: "Validation {0}",
+            hintMessage: messages.validationDialog.hintMessage,
+            hintTitle: messages.validationDialog.hintTitle,
             useCustomMessages: false,
             criteria: [
                 { type: "any", name: "Any value" },
@@ -907,30 +960,19 @@
                 { type: "custom", name: "Custom Formula" }
             ],
             comparers: [
-                { type: "greaterThan", name: "greater than" },
-                { type: "lessThan", name: "less than" },
-                { type: "between", name: "between" },
-                { type: "notBetween", name: "not between" },
-                { type: "equalTo", name: "equal to" },
-                { type: "notEqualTo", name: "not equal to" },
-                { type: "greaterThanOrEqualTo", name: "greater than or equal to" },
-                { type: "lessThanOrEqualTo", name: "less than or equal to" }
+                { type: "greaterThan", name: messages.validationDialog.comparers.greaterThan },
+                { type: "lessThan",    name: messages.validationDialog.comparers.lessThan },
+                { type: "between",     name: messages.validationDialog.comparers.between },
+                { type: "notBetween",  name: messages.validationDialog.comparers.notBetween },
+                { type: "equalTo",     name: messages.validationDialog.comparers.equalTo },
+                { type: "notEqualTo",  name: messages.validationDialog.comparers.notEqualTo },
+                { type: "greaterThanOrEqualTo", name: messages.validationDialog.comparers.greaterThanOrEqualTo },
+                { type: "lessThanOrEqualTo",    name: messages.validationDialog.comparers.lessThanOrEqualTo }
             ],
-            comparerMessages: {
-                greaterThan: "greater than {0}",
-                lessThan: "less than {0}",
-                between: "between {0} and {1}",
-                notBetween: "not between {0} and {1}",
-                equalTo: "equal to {0}",
-                notEqualTo: "not equal to {0}",
-                greaterThanOrEqualTo: "greater than or equal to {0}",
-                lessThanOrEqualTo: "less than or equal to {0}",
-                custom: "that satisfies the formula: {0}"
-            },
-            //TODO: use simple template and build the proper Labels and input placeholders dynamically!!!
+            comparerMessages: messages.validationDialog.comparerMessages,
             template:
                 '<div class="k-edit-form-container">' +
-                    '<div class="k-edit-label"><label>Criteria:</label></div>' +
+                    '<div class="k-edit-label"><label>' + messages.validationDialog.labels.criteria + ':</label></div>' +
                     '<div class="k-edit-field">' +
                         '<select data-role="dropdownlist" ' +
                             'data-text-field="name" ' +
@@ -939,19 +981,19 @@
                     '</div>' +
 
                     '<div data-bind="visible: isNumber">' +
-                        '<div class="k-edit-label"><label>Comparer:</label></div>' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.comparer + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>Min:</label></div>' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.min + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input placeholder="e.g. 10" class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
-                            '<div class="k-edit-label"><label>Max:</label></div>' +
+                            '<div class="k-edit-label"><label>' + messages.validationDialog.labels.max + ':</label></div>' +
                             '<div class="k-edit-field">' +
                                 '<input placeholder="e.g. 100" class="k-textbox" data-bind="value: to" />' +
                             '</div>' +
@@ -959,33 +1001,33 @@
                     '</div>' +
 
                     '<div data-bind="visible: isText">' +
-                        '<div class="k-edit-label"><label>Comparer:</label></div>' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.comparer + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>Value:</label></div>' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.value + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isDate">' +
-                        '<div class="k-edit-label"><label>Comparer:</label></div>' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.comparer + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>Start:</label></div>' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.start + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
-                            '<div class="k-edit-label"><label>End:</label></div>' +
+                            '<div class="k-edit-label"><label>' + messages.validationDialog.labels.end + ':</label></div>' +
                             '<div class="k-edit-field">' +
                                 '<input class="k-textbox" data-bind="value: to" />' +
                             '</div>' +
@@ -993,47 +1035,47 @@
                     '</div>' +
 
                     '<div data-bind="visible: isCustom">' +
-                        '<div class="k-edit-label"><label>Value:</label></div>' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.value + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="invisible: isAny">' +
-                        '<div class="k-edit-label"><label>On invalid data:</label></div>' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.onInvalidData + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input type="radio" name="validationType" value="reject" data-bind="checked: type" />' +
-                            'Reject input' +
+                            messages.validationDialog.labels.rejectInput +
                         '</div>' +
                         '<div class="k-edit-field">' +
                             '<input type="radio" name="validationType" value="warning" data-bind="checked: type" />' +
-                            'Show warning' +
+                            messages.validationDialog.labels.showWarning +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="invisible: isAny">' +
-                        '<div class="k-edit-label"><label>Show hint:</label></div>' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.showHint + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input type="checkbox" name="useCustomMessages" id="useCustomMessages" class="k-checkbox" data-bind="checked: useCustomMessages" />' +
                             '<label class="k-checkbox-label" for="useCustomMessages"></label>' +
                         '</div>' +
 
                         '<div data-bind="visible: useCustomMessages">' +
-                            '<div class="k-edit-label"><label>Hint title:</label></div>' +
+                            '<div class="k-edit-label"><label>' + messages.validationDialog.labels.hintTitle + ':</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input class="k-textbox" placeholder="Type title" data-bind="value: hintTitle" />' +
+                                '<input class="k-textbox" placeholder="' + messages.validationDialog.placeholders.typeTitle + '" data-bind="value: hintTitle" />' +
                             '</div>' +
-                            '<div class="k-edit-label"><label>Hint message:</label></div>' +
+                            '<div class="k-edit-label"><label>' + messages.validationDialog.labels.hintMessage + ':</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input class="k-textbox" placeholder="Type message" data-bind="value: hintMessage" />' +
+                                '<input class="k-textbox" placeholder="' + messages.validationDialog.placeholders.typeMessage + '" data-bind="value: hintMessage" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
 
                     '<div class="k-action-buttons">' +
-                        '<button class="k-button" data-bind="visible: showRemove, click: remove">Remove</button>' +
-                        '<button class="k-button k-primary" data-bind="click: apply">Apply</button>' +
-                        '<button class="k-button" data-bind="click: close">Cancel</button>' +
+                        '<button class="k-button" data-bind="visible: showRemove, click: remove">' + messages.remove + '</button>' +
+                        '<button class="k-button k-primary" data-bind="click: apply">' + messages.apply + '</button>' +
+                        '<button class="k-button" data-bind="click: close">' + messages.cancel + '</button>' +
                     "</div>" +
                 "</div>"
         },
