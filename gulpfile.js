@@ -59,12 +59,12 @@ gulp.task("build-skin", ["css-assets"], function() {
 gulp.task("less",function() {
     var css = gulp.src("styles/**/kendo*.less")
         .pipe(license())
-        .pipe(sourcemaps.init())
         .pipe(cssUtils.fromLess());
 
     var minCss = css.pipe(clone())
+        .pipe(sourcemaps.init())
         .pipe(cssUtils.minify())
-        .pipe(sourcemaps.write("maps", { sourceRoot: "../../../styles" }));
+        .pipe(sourcemaps.write("./"));
 
     return merge(css, minCss)
         .pipe(gulp.dest('dist/styles'));
