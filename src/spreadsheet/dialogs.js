@@ -10,6 +10,50 @@
     var $ = kendo.jQuery;
     var ObservableObject = kendo.data.ObservableObject;
 
+    var messages = kendo.spreadsheet.messages.dialogs = {
+        apply: "Apply",
+        cancel: "Cancel",
+        fontFamilyDialog: {
+            title: "Font"
+        },
+        fontSizeDialog: {
+            title: "Font size"
+        },
+        bordersDialog: {
+            title: "Borders"
+        },
+        alignmentDialog: {
+            title: "Alignment",
+            buttons: {
+                justtifyLeft: "Align left",
+                justifyCenter: "Center",
+                justifyRight: "Align right",
+                justifyFull: "Justify",
+                alignTop: "Align top",
+                alignMiddle: "Align middle",
+                alignBottom: "Align bottom"
+            }
+        },
+        mergeDialog: {
+            title: "Merge cells",
+            buttons: {
+                mergeCells: "Merge all",
+                mergeHorizontally: "Merge horizontally",
+                mergeVertically: "Merge vertically",
+                unmerge: "Unmerge"
+            }
+        },
+        freezeDialog: {
+            title: "Freeze panes",
+            buttons: {
+                freezePanes: "Freeze panes",
+                freezeRows: "Freeze rows",
+                freezeColumns: "Freeze columns",
+                unfreeze: "Unfreeze panes"
+            }
+        }
+    };
+
     var registry = {};
     kendo.spreadsheet.dialogs = {
         register: function(name, dialogClass) {
@@ -371,7 +415,7 @@
             this._list();
         },
         options: {
-            title: "Font",
+            title: messages.fontFamilyDialog.title,
             template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
@@ -410,7 +454,7 @@
             this._list();
         },
         options: {
-            title: "Font Size",
+            title: messages.fontSizeDialog.title,
             template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
@@ -457,12 +501,12 @@
             kendo.bind(this.element.find(".k-action-buttons"), this.viewModel);
         },
         options: {
-            title: "Borders",
+            title: messages.bordersDialog.title,
             width: 177,
             template:   "<div></div>" +
                         "<div class='k-action-buttons'>" +
-                            "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
-                            "<button class='k-button' data-bind='click: close'>Cancel</button>" +
+                            "<button class='k-button k-primary' data-bind='click: apply'>" + messages.apply + "</button>" +
+                            "<button class='k-button' data-bind='click: close'>" + messages.cancel + "</button>" +
                         "</div>"
         },
         apply: function() {
@@ -516,8 +560,8 @@
             width: 177,
             template:   "<div></div>" +
                         "<div class='k-action-buttons'>" +
-                            "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
-                            "<button class='k-button' data-bind='click: close'>Cancel</button>" +
+                            "<button class='k-button k-primary' data-bind='click: apply'>" + messages.apply + "</button>" +
+                            "<button class='k-button' data-bind='click: close'>" + messages.cancel + "</button>" +
                         "</div>"
         },
         apply: function() {
@@ -566,13 +610,13 @@
             title: "Alignment",
             template: "<ul class='k-list k-reset'></ul>",
             buttons: [
-                { property: "textAlign",     value: "left",    iconClass: "justify-left" },
-                { property: "textAlign",     value: "center",  iconClass: "justify-center" },
-                { property: "textAlign",     value: "right",   iconClass: "justify-right" },
-                { property: "textAlign",     value: "justify", iconClass: "justify-full" },
-                { property: "verticalAlign", value: "top",     iconClass: "align-top" },
-                { property: "verticalAlign", value: "middle",  iconClass: "align-middle" },
-                { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom" }
+                { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: messages.alignmentDialog.buttons.justtifyLeft },
+                { property: "textAlign",     value: "center",  iconClass: "justify-center", text: messages.alignmentDialog.buttons.justifyCenter },
+                { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: messages.alignmentDialog.buttons.justifyRight },
+                { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: messages.alignmentDialog.buttons.justifyFull },
+                { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: messages.alignmentDialog.buttons.alignTop },
+                { property: "verticalAlign", value: "middle",  iconClass: "align-middle",   text: messages.alignmentDialog.buttons.alignMiddle },
+                { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: messages.alignmentDialog.buttons.alignBottom }
             ]
         },
         _list: function() {
@@ -580,9 +624,9 @@
 
             this.list = new kendo.ui.StaticList(ul, {
                 dataSource: new kendo.data.DataSource({ data: this.options.buttons }),
-                template: "<a title='Align #=value#' data-property='#=property#' data-value='#=value#'>" +
+                template: "<a title='#=text#' data-property='#=property#' data-value='#=value#'>" +
                                 "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>" +
-                                "Align #=value#" +
+                                "#=text#" +
                            "</a>",
                 change: this.apply.bind(this)
             });
@@ -612,13 +656,13 @@
             this._list();
         },
         options: {
-            title: "Merge cells",
+            title: messages.mergeDialog.title,
             template: "<ul class='k-list k-reset'></ul>",
             buttons: [
-                { value: "cells",        iconClass: "merge-cells" },
-                { value: "horizontally", iconClass: "merge-horizontally" },
-                { value: "vertically",   iconClass: "merge-vertically" },
-                { value: "unmerge",      iconClass: "normal-layout" }
+                { value: "cells",        iconClass: "merge-cells",        text: messages.mergeDialog.buttons.mergeCells },
+                { value: "horizontally", iconClass: "merge-horizontally", text: messages.mergeDialog.buttons.mergeHorizontally },
+                { value: "vertically",   iconClass: "merge-vertically",   text: messages.mergeDialog.buttons.mergeVertically },
+                { value: "unmerge",      iconClass: "normal-layout",      text: messages.mergeDialog.buttons.unmerge }
             ]
         },
         _list: function() {
@@ -626,13 +670,9 @@
 
             this.list = new kendo.ui.StaticList(ul, {
                 dataSource: new kendo.data.DataSource({ data: this.options.buttons }),
-                template: function(data) {
-                    var title = data.value === "unmerge" ? "Unmerge" : "Merge " + data.value;
-
-                    return "<a title='" + title + "' data-value=" + data.value + ">" +
-                                "<span class='k-icon k-font-icon k-i-" + data.iconClass + "'></span>" + title +
-                           "</a>";
-                },
+                template: "<a title='#=text#' data-value='#=value#'>" +
+                            "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>#=text#" +
+                          "</a>",
                 change: this.apply.bind(this)
             });
 
@@ -660,13 +700,13 @@
             this._list();
         },
         options: {
-            title: "Freeze panes",
+            title: messages.freezeDialog.title,
             template: "<ul class='k-list k-reset'></ul>",
             buttons: [
-                { value: "panes",    iconClass: "freeze-panes" },
-                { value: "rows",      iconClass: "freeze-row" },
-                { value: "columns",   iconClass: "freeze-col" },
-                { value: "unfreeze", iconClass: "normal-layout" }
+                { value: "panes",    iconClass: "freeze-panes",  text: messages.freezeDialog.buttons.freezePanes },
+                { value: "rows",     iconClass: "freeze-row",    text: messages.freezeDialog.buttons.freezeRows },
+                { value: "columns",  iconClass: "freeze-col",    text: messages.freezeDialog.buttons.freezeColumns },
+                { value: "unfreeze", iconClass: "normal-layout", text: messages.freezeDialog.buttons.unfreeze }
             ]
         },
         _list: function() {
@@ -674,13 +714,9 @@
 
             this.list = new kendo.ui.StaticList(ul, {
                 dataSource: new kendo.data.DataSource({ data: this.options.buttons }),
-                template: function(data) {
-                    var title = data.value === "unfreeze" ? "Unfreeze panes" : "Freeze " + data.value;
-
-                    return "<a title='" + title + "' data-value=" + data.value + ">" +
-                                "<span class='k-icon k-font-icon k-i-" + data.iconClass + "'></span>" + title +
-                           "</a>";
-                },
+                template: "<a title='#=text#' data-value='#=value#'>" +
+                            "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>#=text#" +
+                          "</a>",
                 change: this.apply.bind(this)
             });
 
