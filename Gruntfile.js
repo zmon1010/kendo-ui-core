@@ -183,77 +183,6 @@ module.exports = function(grunt) {
             }
         },
 
-        copy: {
-            jquery: {
-                files: [{
-                    expand: true,
-                    cwd: KENDO_SRC_DIR,
-                    src: [ "jquery.*" ],
-                    dest: '<%= kendo.options.jsDestDir %>/'
-                }]
-            },
-            angular: {
-                files: [{
-                    expand: true,
-                    cwd: KENDO_SRC_DIR,
-                    src: [ "angular.*" ],
-                    dest: '<%= kendo.options.jsDestDir %>/'
-                }]
-            },
-            jszip: {
-                files: [{
-                    expand: true,
-                    cwd: KENDO_SRC_DIR,
-                    src: [ "jszip.*" ],
-                    dest: '<%= kendo.options.jsDestDir %>/'
-                }]
-            },
-            pako: {
-                files: [{
-                    expand: true,
-                    cwd: KENDO_SRC_DIR,
-                    src: [ "pako*.*" ],
-                    dest: '<%= kendo.options.jsDestDir %>/'
-                }]
-            },
-            timezones: {
-                files: [{
-                    expand: true,
-                    cwd: KENDO_SRC_DIR,
-                    src: "kendo.timezones.js" ,
-                    dest: '<%= kendo.options.jsDestDir %>/'
-                }]
-            }
-        },
-
-        kendo: {
-            options: {
-                destDir: "dist",
-                jsDestDir: PATH.join("dist", "js"),
-                stylesDestDir: PATH.join("dist", "styles")
-            },
-            min: {
-                src: mainKendoFiles,
-                dest: "<%= kendo.options.jsDestDir %>",
-                ext: ".min.js"
-            },
-            full: {
-                src: mainKendoFiles,
-                dest: "<%= kendo.options.jsDestDir %>",
-                ext: ".js"
-            },
-            cultures: {
-                src: [ PATH.join(KENDO_SRC_DIR, "cultures/kendo.culture.*.js"),
-                       "!" + KENDO_SRC_DIR + "/cultures/kendo.culture.*.min.js" ],
-                dest: "<%= kendo.options.jsDestDir %>/cultures"
-            },
-            messages: {
-                src: [ PATH.join(KENDO_SRC_DIR, "messages/kendo.messages.*.js"),
-                       "!" + KENDO_SRC_DIR + "/messages/kendo.messages.*.min.js" ],
-                dest: "<%= kendo.options.jsDestDir %>/messages"
-            }
-        },
-
         download_builder: {
             min: {
                 src: mainKendoFiles,
@@ -277,7 +206,15 @@ module.exports = function(grunt) {
                 stderr: false
             },
             gulpStyles: {
-                command: 'node node_modules/gulp/bin/gulp.js styles'
+                command: 'node node_modules/.bin/gulp styles'
+            },
+            scripts: {
+                command: 'node node_modules/.bin/gulp scripts'
+            },
+            custom: {
+                command: function(components) {
+                    return 'node node_modules/.bin/gulp custom -c ' + components;
+                }
             }
         },
 
@@ -296,8 +233,17 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['karma:unit']);
     grunt.registerTask('tests', [ 'styles', 'karma:unit' ]);
     grunt.registerTask('styles', [ 'shell:gulpStyles' ]);
-    grunt.registerTask('all', [ 'kendo', 'download_builder', 'copy:jquery', 'copy:angular', 'copy:jszip', 'copy:pako', 'copy:timezones' ]);
-    grunt.registerTask('build', [ 'kendo', 'copy:jquery', 'copy:angular', 'copy:pako', 'styles', 'license' ]);
+    grunt.registerTask('kendo', [ 'shell:scripts' ]);
+    grunt.registerTask('custom', function() {
+        if (this.args.length === 0) {
+            grunt.log.writeln("No components specified for the custom task");
+        }
+        else {
+            grunt.task.run("shell:custom:" + this.args[0].trim());
+        }
+    });
+    grunt.registerTask('all', [ 'kendo', 'download_builder' ]);
+    grunt.registerTask('build', [ 'kendo', 'styles', 'license' ]);
     grunt.registerTask('download_builder_tests', ['download_builder', 'karma:download_builder']);
 
     grunt.registerTask('ci', [ "all", 'styles', 'karma:jenkins' ]);

@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var debug = require('gulp-debug'); // jshint ignore:line
 var logger = require('gulp-logger');
+var util = require('gulp-util');
 var clone = require('gulp-clone');
 var plumber = require('gulp-plumber');
 var filter = require('gulp-filter');
@@ -12,6 +13,7 @@ var gulpIf = require('gulp-if');
 var ignore = require('gulp-ignore');
 
 var merge = require('merge2');
+var concat = require('gulp-concat');
 var lazypipe = require('lazypipe');
 var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
@@ -90,10 +92,10 @@ function messages() {
         .pipe(license());
 }
 
-gulp.task("scripts", function() {
-    var toDist = lazypipe().pipe(gulp.dest,  "dist/js");
+var toDist = lazypipe().pipe(gulp.dest,  "dist/js");
 
-    var src = gulp.src('src/kendo.*.js').pipe(gatherAmd()).pipe(license());
+gulp.task("scripts", function() {
+    var src = gulp.src('src/kendo.*.js').pipe(gatherAmd.gather()).pipe(license());
 
     var thirdParty = gulp.src('src/{jquery,angular,pako,jszip}*.*');
 
@@ -115,4 +117,40 @@ gulp.task("scripts", function() {
         minSrc.pipe(toDist()),
         thirdParty.pipe(toDist())
     );
+});
+
+gulp.task("custom", function() {
+    var files = argv.c;
+
+    if (!files) {
+        throw new util.PluginError({
+            task: "custom",
+            plugin: "custom",
+            message: "please provide a list of the components to be included in the build with -c, separated with ','"
+        });
+    }
+
+    var included = [];
+    var src = gulp.src(`src/kendo.{${files}}.js`)
+                .pipe(gatherAmd.gatherCustom())
+                .pipe(filter(function(file) {
+                    if (included.indexOf(file.path) === -1) {
+                        included.push(file.path);
+                        return true;
+                    }  else {
+                        util.log("skipping ", file.path);
+                        return false;
+                    }
+                }))
+                .pipe(concat({path: 'src/kendo.custom.js', base: 'src'}))
+                .pipe(license());
+
+    var minSrc = src
+        .pipe(clone())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(logger({after: 'source map complete!', extname: '.map', showChange: true}))
+        .pipe(sourcemaps.write("./"));
+
+    return merge(src.pipe(toDist()), minSrc.pipe(toDist()));
 });

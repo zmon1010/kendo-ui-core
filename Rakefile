@@ -240,7 +240,7 @@ end
 
 desc "Build less files in dist/styles"
 task :less do
-    grunt :styles
+    gulp :styles
 end
 
 desc('Build all Kendo UI distributions')

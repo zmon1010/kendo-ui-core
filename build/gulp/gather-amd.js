@@ -21,7 +21,7 @@ function gatherAmd(stream, file) {
             .pipe(amdConcat());
 
     } else {
-        var whitelist = [ "**/src/kendo." + moduleId + ".js", "**/src/" + moduleId + "/**/*.js", "**/util/**/*.js" ];
+        var whitelist = [ `**/src/kendo.${moduleId}.js`, `**/src/${moduleId}/**/*.js`, "**/util/**/*.js" ];
 
         return stream
             .pipe(gatherAMD)
@@ -30,5 +30,14 @@ function gatherAmd(stream, file) {
     }
 }
 
-module.exports = lazypipe()
+function gatherCustomAmd(stream, file) {
+    var moduleId = file.path.match(/kendo\.(.+)\.js/)[1];
+
+    return stream.pipe(amdOptimize(`kendo.${moduleId}`, { baseUrl: "src", exclude: [ "jquery" ] }));
+}
+
+exports.gather = lazypipe()
     .pipe(foreach, gatherAmd);
+
+exports.gatherCustom = lazypipe()
+    .pipe(foreach, gatherCustomAmd);
