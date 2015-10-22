@@ -241,6 +241,7 @@
 
     window.themeBuilder = new kendo.ThemeBuilder({
         webConstants: new kendo.LessTheme({
+            less: window.less,
             constants: webConstants
         }),
         datavizConstants: new kendo.JsonConstants({
