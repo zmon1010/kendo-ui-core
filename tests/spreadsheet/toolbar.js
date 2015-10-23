@@ -145,13 +145,13 @@
         });
 
         sheet.select("A1:B2");
-        $("[title='Merge cells'][data-value=cells]").trigger("click");
+        $("[data-value=cells]").trigger("click");
     });
 
     test("mergeCells buttons have title attribute", function() {
         createWithTools([ "merge" ]);
 
-        equal($(".k-popup .k-button:not(.k-overflow-button)[title='Merge cells']").attr("data-value"), "cells");
+        equal($(".k-popup .k-button:not(.k-overflow-button)[title='Merge all']").attr("data-value"), "cells");
         equal($(".k-popup [title='Merge horizontally']").attr("data-value"), "horizontally");
         equal($(".k-popup [title='Merge vertically']").attr("data-value"), "vertically");
         equal($(".k-popup [title='Unmerge']").attr("data-value"), "unmerge");
