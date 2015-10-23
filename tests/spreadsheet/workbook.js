@@ -8,7 +8,9 @@
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
 
-            workbook = new kendo.spreadsheet.Workbook({});
+            var defaultOptions = kendo.ui.Spreadsheet.prototype.options;
+
+            workbook = new kendo.spreadsheet.Workbook(defaultOptions);
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -25,12 +27,6 @@
         workbook.insertSheet();
 
         equal(workbook.sheetByIndex(1).name(), "Sheet2");
-    });
-
-    test("insertSheet method insert sheet correctly to sheetsByIndex collection", function() {
-        workbook.insertSheet();
-
-        equal(workbook._sheets.length, 2);
     });
 
     test("insertSheet method insert sheet correctly to sheets dictionary", function() {
@@ -99,6 +95,20 @@
         });
 
         equal(workbook.sheetByName(sheetName).name(),sheetName);
+    });
+
+    test("insertSheet method support data option", function() {
+        var sheetName = "custom #$% __)1Name";
+
+        var data = { rows: [ { cells: [ { background: "red" }, { background: "green" } ] } ] };
+
+        workbook.insertSheet({
+            name: sheetName,
+            data: data
+        });
+
+        equal(workbook.sheetByName(sheetName).range("A1").background(), "red");
+        equal(workbook.sheetByName(sheetName).range("B1").background(), "green");
     });
 
     test("renameSheet method renames sheet correctly", function() {

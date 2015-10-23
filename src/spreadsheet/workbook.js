@@ -187,6 +187,10 @@
 
             sheets.splice(insertIndex, 0, sheet);
 
+            if (options.data) {
+                sheet.fromJSON(options.data);
+            }
+
             if (options.dataSource) {
                 sheet.setDataSource(options.dataSource);
             }
