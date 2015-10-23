@@ -245,3 +245,6 @@ sheet3.range("H13:H30").fillFrom("H10:H12").background("#c0ffee");
 
 sheet3.range("I10:I12").values([ ["Jan"], ["Feb"], [2] ]).background("yellow");
 sheet3.range("I13:I30").fillFrom("I10:I12").background("#c0ffee");
+
+sheet3.range("J10").value(new Date()).background("yellow");
+sheet3.range("J11:J30").fillFrom("J10").background("#c0ffee");
