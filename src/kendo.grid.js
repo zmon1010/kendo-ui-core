@@ -4743,7 +4743,7 @@ var __meta__ = { // jshint ignore:line
             if (that.editable) {
                 if ($.contains(editContainer[0], active[0])) {
                     if (browser.opera || oldIE) {
-                        active.change().triggerHandler("blur");
+                        active.blur().change().triggerHandler("blur");
                     } else {
                         active.blur();
                         if (isIE) {
