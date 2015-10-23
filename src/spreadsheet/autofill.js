@@ -101,7 +101,7 @@
             var f;
             if (type == "number") {
                 var values = getData(a);
-                if (values.length == 1 && begin > 0 || end < data.length) {
+                if (values.length == 1 && (begin > 0 || end < data.length)) {
                     values.push(values[0] + 1);
                 }
                 f = linearRegression(values);
