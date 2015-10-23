@@ -6,7 +6,6 @@ var PATH = require("path");
 module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-debug-task');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadTasks('build/grunt/tasks');
@@ -27,7 +26,6 @@ module.exports = function(grunt) {
     var browserOption = grunt.option('browser');
     var testsOption = grunt.option('tests');
     var jqueryOption = grunt.option('jquery');
-    var filesOption = grunt.option('files');
 
     var jquery = PATH.join(KENDO_SRC_DIR, 'jquery.js');
 
@@ -54,8 +52,6 @@ module.exports = function(grunt) {
         reporters.push('junit');
     }
 
-    var pkg = grunt.file.readJSON('package.json');
-
     // all files (including subfiles like editor/main.js etc.)
     var allKendoFiles = META.loadAll().map(addSrc);
 
@@ -66,10 +62,6 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        jshint: {
-            files: filesOption ? filesOption.split(",") : pkg.jshintFiles,
-            options: pkg.jshintConfig
-        },
         karma: {
             options: {
                 reportSlowerThan: 500,
@@ -211,6 +203,9 @@ module.exports = function(grunt) {
             scripts: {
                 command: 'node node_modules/.bin/gulp scripts'
             },
+            jshint: {
+                command: 'node node_modules/.bin/gulp jshint'
+            },
             custom: {
                 command: function(components) {
                     return 'node node_modules/.bin/gulp custom -c ' + components;
@@ -229,11 +224,16 @@ module.exports = function(grunt) {
 
     });
 
+
+    // migrated gulp tasks
+    grunt.registerTask('styles', [ 'shell:gulpStyles' ]);
+    grunt.registerTask('kendo',  [ 'shell:scripts' ]);
+    grunt.registerTask('jshint', [ 'shell:jshint' ]);
+
     // Default task(s).
     grunt.registerTask('default', ['karma:unit']);
     grunt.registerTask('tests', [ 'styles', 'karma:unit' ]);
-    grunt.registerTask('styles', [ 'shell:gulpStyles' ]);
-    grunt.registerTask('kendo', [ 'shell:scripts' ]);
+
     grunt.registerTask('custom', function() {
         if (this.args.length === 0) {
             grunt.log.writeln("No components specified for the custom task");

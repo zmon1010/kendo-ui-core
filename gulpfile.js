@@ -9,6 +9,7 @@ var plumber = require('gulp-plumber');
 var filter = require('gulp-filter');
 var sourcemaps = require('gulp-sourcemaps');
 var gulpIf = require('gulp-if');
+var jshint = require("gulp-jshint");
 
 var ignore = require('gulp-ignore');
 
@@ -153,4 +154,15 @@ gulp.task("custom", function() {
         .pipe(sourcemaps.write("./"));
 
     return merge(src.pipe(toDist()), minSrc.pipe(toDist()));
+});
+
+gulp.task("jshint", function() {
+    var packageJSON = require('./package');
+
+    return gulp.src(packageJSON.jshintFiles)
+        .pipe(jshint(packageJSON.jshintConfig))
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(jshint.reporter('fail'));
+
+    // console.log(files);
 });
