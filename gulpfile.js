@@ -24,6 +24,9 @@ var cssUtils = require('./build/gulp/css');
 var umdWrapToCore = require('./build/gulp/wrap-umd');
 var gatherAmd = require('./build/gulp/gather-amd');
 var uglify = require('./build/gulp/uglify');
+var requireDir = require('require-dir');
+
+requireDir('./build/gulp/tasks');
 
 gulp.task("css-assets", function() {
     return gulp.src("styles/**/*.{less,woff,ttf,eot,png,gif,css,svg,txt}")
