@@ -378,7 +378,7 @@
         init: function(options, toolbar) {
             this.element = $("<a href='#' class='k-button k-button-icon'>" +
                                 "<span class='" + options.spriteCssClass + "'>" +
-                                "</span><span class='k-font-icon k-icon k-i-arrow-s'></span>" +
+                                "</span><span class='k-icon k-i-arrow-s'></span>" +
                             "</a>");
 
             this.element
