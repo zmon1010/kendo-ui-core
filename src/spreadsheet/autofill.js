@@ -56,13 +56,6 @@
         return this;
     };
 
-    Range.prototype.fill = function(targetRange, ascending) {
-        if (typeof targetRange == "string") {
-            targetRange = this._sheet.range(targetRange);
-        }
-        return targetRange.fillFrom(this, ascending);
-    };
-
     // This is essentially the FORECAST function, see ./runtime.functions.2.js.
     // It receives an array of values, and returns a function that "predicts"
     // the value in cell N.

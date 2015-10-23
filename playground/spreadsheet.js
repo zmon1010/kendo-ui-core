@@ -222,34 +222,26 @@ sheet3.range("A13:A18").fillFrom("A12").background("#c0ffee");
 sheet3.range("F4:G4").values([[ "Mon", "Wed" ]]).background("yellow");
 sheet3.range("H4:L4").fillFrom("F4:G4").background("#c0ffee");
 
-sheet3.range("F5")
-    .values([[ "Sun" ]]).background("yellow")
-    .fill("G5:L5").background("#c0ffee");
+sheet3.range("F5").values([[ "Sun" ]]).background("yellow");
+sheet3.range("G5:L5").fillFrom("F5").background("#c0ffee");
 
-sheet3.range("F6")
-    .values([[ "Foo 1" ]]).background("yellow")
-    .fill("G6:L6").background("#c0ffee");
+sheet3.range("F6").values([[ "Foo 1" ]]).background("yellow");
+sheet3.range("G6:L6").fillFrom("F6").background("#c0ffee");
 
-sheet3.range("F7")
-    .values([[ "Foo 1.5" ]]).background("yellow")
-    .fill("G7:L7").background("#c0ffee");
+sheet3.range("F7").values([[ "Foo 1.5" ]]).background("yellow");
+sheet3.range("G7:L7").fillFrom("F7").background("#c0ffee");
 
-sheet3.range("F8:G8")
-    .values([[ "Foo 10", "Foo 8" ]]).background("yellow")
-    .fill("H8:L8").background("#c0ffee");
+sheet3.range("F8:G8").values([[ "Foo 10", "Foo 8" ]]).background("yellow");
+sheet3.range("H8:L8").fillFrom("F8:G8").background("#c0ffee");
 
-sheet3.range("F10:F13")
-    .values([[ 1 ], [ 4 ], [ "Bar 2" ], [ "Bar 2.5" ]]).background("yellow")
-    .fill("F14:F30").background("#c0ffee");
+sheet3.range("F10:F13").values([[ 1 ], [ 4 ], [ "Bar 2" ], [ "Bar 2.5" ]]).background("yellow");
+sheet3.range("F14:F30").fillFrom("F10:F13").background("#c0ffee");
 
-sheet3.range("G10:G11")
-    .values([ ["January"], ["June"] ]).background("yellow")
-    .fill("G12:G30").background("#c0ffee");
+sheet3.range("G10:G11").values([ ["January"], ["June"] ]).background("yellow")
+sheet3.range("G12:G30").fillFrom("G10:G11").background("#c0ffee");
 
-sheet3.range("H10:H12")
-    .values([ ["Jan"], [ "May" ], [ "Feb" ]]).background("yellow")
-    .fill("H13:H30").background("#c0ffee");
+sheet3.range("H10:H12").values([ ["Jan"], [ "May" ], [ "Feb" ]]).background("yellow");
+sheet3.range("H13:H30").fillFrom("H10:H12").background("#c0ffee");
 
-sheet3.range("I10:I12")
-    .values([ ["Jan"], ["Feb"], [2] ]).background("yellow")
-    .fill("I13:I30").background("#c0ffee");
+sheet3.range("I10:I12").values([ ["Jan"], ["Feb"], [2] ]).background("yellow");
+sheet3.range("I13:I30").fillFrom("I10:I12").background("#c0ffee");
