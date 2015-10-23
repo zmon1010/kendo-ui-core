@@ -85,7 +85,16 @@ namespace Kendo.Mvc.UI.Fluent
 
         /// <summary>
         /// Specify the filter mode - you can choose between having separate header row and the filter menu available by clicking the icon. Default is the filter menu.
-        /// </summary>        
+		/// Multiple filter modes can be set by combining the flags:
+        /// </summary>   
+		/// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Grid(Model)
+        ///             .Name("Grid")
+        ///             .Filterable(f => f.Mode(GridFilterMode.Row | GridFilterMode.Menu))
+        /// %&gt;
+        /// </code>
+        /// </example>		
         public TDataSourceBuilder Mode(GridFilterMode value)
         {
             settings.Mode = value;
