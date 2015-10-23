@@ -404,7 +404,7 @@
             if(kendo.support.browser.msie && kendo.support.browser.version >= 10) {
                 var clipboard = this._workbook._view.clipboard;
                 var textarea = document.createElement('textarea');
-                $(textarea).val(clipboard.html()).appendTo(document.body).focus().select();
+                $(textarea).addClass("k-spreadsheet-clipboard").val(clipboard.html()).appendTo(document.body).focus().select();
                 document.execCommand('copy');
                 clipboard.trigger("copy");
                 $(textarea).remove();
