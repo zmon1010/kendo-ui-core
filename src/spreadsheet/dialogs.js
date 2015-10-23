@@ -12,8 +12,10 @@
 
     var messages = kendo.spreadsheet.messages.dialogs = {
         apply: "Apply",
+        save: "Save",
         cancel: "Cancel",
         remove: "Remove",
+        okText: "OK",
         formatCellsDialog: {
             title: "Format",
             categories: {
@@ -112,6 +114,31 @@
                 typeTitle: "Type title",
                 typeMessage: "Type message"
             }
+        },
+        saveAsDialog: {
+            title: "Save As...",
+            labels: {
+                fileName: "File name",
+                saveAsType: "Save as type"
+            }
+        },
+        excelExportDialog: {
+            title: "Export to Excel..."
+        },
+        modifyMergedDialog: {
+            errorMessage: "Cannot change part of a merged cell."
+        },
+        useKeyboardDialog: {
+            title: "Copying and pasting",
+            errorMessage: "These actions cannot be invoked through the menu. Please use the keyboard shortcuts instead:",
+            labels: {
+                forCopy: "for copy",
+                forCut: "for cut",
+                forPaste: "for paste"
+            }
+        },
+        unsupportedSelectionDialog: {
+            errorMessage: "That action cannot be performed on multiple selection."
         }
     };
 
@@ -461,7 +488,7 @@
 
             kendo.bind(this.dialog().element, {
                 text: this.options.text,
-                okText: "OK",
+                okText: messages.okText,
                 close: this.close.bind(this)
             });
         }
@@ -1142,7 +1169,7 @@
             kendo.bind(this.dialog().element, this.viewModel);
         },
         options: {
-            title: "Save As...",
+            title: messages.saveAsDialog.title,
             name: "Workbook",
             extension: ".xlsx",
             editExtension: true,
@@ -1152,12 +1179,12 @@
             }],
             width: 350,
             template:
-                "<div class='k-edit-label'><label>File name:</label></div>" +
+                "<div class='k-edit-label'><label>" + messages.saveAsDialog.labels.fileName + ":</label></div>" +
                     "<div class='k-edit-field'>" +
                     "<input class='k-textbox' data-bind='value: name' />" +
                 "</div>" +
                 "<div data-bind='visible: editExtension'>" +
-                    "<div class='k-edit-label'><label>Save as type:</label></div>" +
+                    "<div class='k-edit-label'><label>" + messages.saveAsDialog.labels.saveAsType + ":</label></div>" +
                         "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-text-field='description' " +
@@ -1167,8 +1194,8 @@
                 "</div>" +
 
                 "<div class='k-action-buttons'>" +
-                    "<button class='k-button k-primary' data-bind='click: apply'>Save</button>" +
-                    "<button class='k-button' data-bind='click: close'>Cancel</button>" +
+                    "<button class='k-button k-primary' data-bind='click: apply'>" + messages.save + "</button>" +
+                    "<button class='k-button' data-bind='click: close'>" + messages.cancel + "</button>" +
                 "</div>"
         },
         apply: function() {
@@ -1186,7 +1213,7 @@
 
     var ExcelExportDialog = SaveAsDialog.extend({
         options: {
-            title: "Export to Excel...",
+            title: messages.excelExportDialog.title,
             editExtension: false
         }
     });
@@ -1197,7 +1224,7 @@
             SpreadsheetDialog.fn.init.call(this, options);
         },
         options: {
-            template: "Cannot change part of a merged cell." +
+            template: messages.modifyMergedDialog.errorMessage +
                 '<div class="k-action-buttons">' +
                     "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
                 "</div>"
@@ -1211,11 +1238,11 @@
             SpreadsheetDialog.fn.init.call(this, options);
         },
         options: {
-            title: "Copying and pasting",
-            template: "These actions cannot be invoked through the menu. Please use the keyboard shortcuts instead:" +
-                "<div>Ctrl+C for copy</div>" +
-                "<div>Ctrl+X for cut</div>" +
-                "<div>Ctrl+V for paste</div>" +
+            title: messages.useKeyboardDialog.title,
+            template: messages.useKeyboardDialog.errorMessage +
+                "<div>Ctrl+C " + messages.useKeyboardDialog.labels.forCopy + "</div>" +
+                "<div>Ctrl+X " + messages.useKeyboardDialog.labels.forCut + "</div>" +
+                "<div>Ctrl+V " + messages.useKeyboardDialog.labels.forPaste + "</div>" +
                 '<div class="k-action-buttons">' +
                     "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
                 "</div>"
@@ -1229,7 +1256,7 @@
             SpreadsheetDialog.fn.init.call(this, options);
         },
         options: {
-            template: "That action cannot be performed on multiple selection." +
+            template: messages.unsupportedSelectionDialog.errorMessage +
                 '<div class="k-action-buttons">' +
                     "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
                 "</div>"
