@@ -5,14 +5,14 @@
 })(function(){
     "use strict";
 
+    // jshint eqnull:true
+
     if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
         return;
     }
 
     var spreadsheet = kendo.spreadsheet;
     var Range = spreadsheet.Range;
-    var RangeRef = spreadsheet.RangeRef;
-    var CellRef = spreadsheet.CellRef;
     var runtime = spreadsheet.calc.runtime;
     var Formula = runtime.Formula;
 
@@ -98,9 +98,9 @@
         }
         var series = [];
         forEachSeries(data, function(begin, end, type, a){
-            var f;
+            var f, values;
             if (type == "number") {
-                var values = getData(a);
+                values = getData(a);
                 if (values.length == 1 && (begin > 0 || end < data.length)) {
                     values.push(values[0] + 1);
                 }
@@ -111,7 +111,7 @@
                 };
             } else if (Array.isArray(type)) {
                 if (a.length == 1) {
-                    f = function(N, i) {
+                    f = function(N) {
                         return type[(a[0].number + N) % type.length];
                     };
                 } else {
@@ -119,18 +119,18 @@
                     var diff = findStep(getData(a));
                     if (diff == null) {
                         // seemingly no pattern, just repeat those strings
-                        f = function(N, i) {
+                        f = function(N) {
                             return a[(N) % a.length].value;
                         };
                     } else {
-                        f = function(N, i) {
+                        f = function(N) {
                             var idx = a[0].number + diff * N;
                             return type[idx % type.length];
                         };
                     }
                 }
             } else if (type != "null") {
-                var values = getData(a);
+                values = getData(a);
                 if (values.length == 1) {
                     values.push(values[0] + 1);
                 }
@@ -156,7 +156,7 @@
     }
 
     function forEachSeries(data, f) {
-        var prev = null, start = 0, a = [], i = 0, type;
+        var prev = null, start = 0, a = [], type;
         for (var i = 0; i < data.length; ++i) {
             type = getType(data[i]);
             a.push(type);
@@ -191,6 +191,11 @@
         if (el == null) {
             return { type: "null" };
         }
+        if (el instanceof Formula) {
+            // XXX: handle formulas!
+        }
+        window.console.error(el);
+        throw new Error("Cannot fill data");
     }
 
     function stringLists() {
