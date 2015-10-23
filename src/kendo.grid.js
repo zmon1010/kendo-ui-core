@@ -4936,7 +4936,7 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     that.scrollables.unbind("scroll" + NS).bind("scroll" + NS, function (e) {
                         that.scrollables.not(e.currentTarget).scrollLeft(this.scrollLeft);
-                        if (that.lockedContent) {
+                        if (that.lockedContent && e.currentTarget == that.content[0]) {
                             that.lockedContent[0].scrollTop = this.scrollTop;
                         }
                     });
