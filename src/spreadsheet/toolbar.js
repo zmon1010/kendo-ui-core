@@ -11,6 +11,81 @@
 
     var ToolBar = kendo.ui.ToolBar;
 
+    var messages = kendo.spreadsheet.messages.toolbar = {
+        addColumnLeft: "Add column left",
+        addColumnRight: "Add column right",
+        addRowAbove: "Add row above",
+        addRowBelow: "Add row below",
+        alignment: "Alignment",
+        alignmentButtons: {
+            justtifyLeft: "Align left",
+            justifyCenter: "Center",
+            justifyRight: "Align right",
+            justifyFull: "Justify",
+            alignTop: "Align top",
+            alignMiddle: "Align middle",
+            alignBottom: "Align bottom"
+        },
+        backgroundColor: "Background",
+        bold: "Bold",
+        borders: "Borders",
+        copy: "Copy",
+        cut: "Cut",
+        deleteColumn: "Delete column",
+        deleteRow: "Delete row",
+        excelExport: "Export to Excel...",
+        filter: "Filter",
+        fontFamily: "Font",
+        fontSize: "Font size",
+        format: "Custom format...",
+        formatTypes: {
+            automatic: "Automatic",
+            number: "Number",
+            percent: "Percent",
+            financial: "Financial",
+            currency: "Currency",
+            date: "Date",
+            time: "Time",
+            dateTime: "Date time",
+            duration: "Duration",
+            moreFormats: "More formats..."
+        },
+        formatDecreaseDecimal: "Decrease decimal",
+        formatIncreaseDecimal: "Increase decimal",
+        freeze: "Freeze panes",
+        freezeButtons: {
+            freezePanes: "Freeze panes",
+            freezeRows: "Freeze rows",
+            freezeColumns: "Freeze columns",
+            unfreeze: "Unfreeze panes"
+        },
+        italic: "Italic",
+        merge: "Merge cells",
+        mergeButtons: {
+            mergeCells: "Merge all",
+            mergeHorizontally: "Merge horizontally",
+            mergeVertically: "Merge vertically",
+            unmerge: "Unmerge"
+        },
+        paste: "Paste",
+        quickAccess: {
+            redo: "Redo",
+            undo: "Undo"
+        },
+        sortAsc: "Sort ascending",
+        sortDesc: "Sort descending",
+        sortButtons: {
+            sortSheetAsc: "Sort sheet A to Z",
+            sortSheetDesc: "Sort sheet Z to A",
+            sortRangeAsc: "Sort range A to Z",
+            sortRangeDesc: "Sort range Z to A"
+        },
+        textColor: "Text Color",
+        textWrap: "Wrap text",
+        underline: "Underline",
+        validation: "Data validation..."
+    };
+
     var defaultTools = {
         home: [
             "excelExport",
@@ -183,37 +258,7 @@
             name: "SpreadsheetToolBar",
             resizable: true,
             tools: defaultTools,
-            messages: {
-                addColumnLeft: "Add column left",
-                addColumnRight: "Add column right",
-                addRowAbove: "Add row above",
-                addRowBelow: "Add row below",
-                alignment: "Alignment",
-                backgroundColor: "Background",
-                bold: "Bold",
-                borders: "Borders",
-                copy: "Copy",
-                cut: "Cut",
-                deleteColumn: "Delete column",
-                deleteRow: "Delete row",
-                excelExport: "Export to Excel...",
-                filter: "Filter",
-                fontFamily: "Font",
-                fontSize: "Font size",
-                format: "Custom format...",
-                formatDecreaseDecimal: "Decrease decimal",
-                formatIncreaseDecimal: "Increase decimal",
-                italic: "Italic",
-                merge: "Merge cells",
-                freeze: "Freeze panes",
-                paste: "Paste",
-                sortAsc: "Sort ascending",
-                sortDesc: "Sort descending",
-                textColor: "Text Color",
-                textWrap: "Wrap text",
-                underline: "Underline",
-                validation: "Data validation..."
-            }
+            messages: messages
         },
         action: function(args) {
             this.trigger("action", args);
@@ -642,16 +687,16 @@
                     "#: data.name #"
             });
             ddl.setDataSource([
-                { format: null, name: "Automatic" },
-                { format: "0", name: "Number", sample: "1,499.99" },
-                { format: "0.00%", name: "Percent", sample: "14.50%" },
-                { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: "Financial", sample: "(1,000.12)" },
-                { format: "$#,##0.00;[Red]$#,##0.00", name: "Currency", sample: "$1,499.99" },
-                { format: "m/d/yyyy", name: "Date", sample: "4/21/2012" },
-                { format: "h:mm:ss AM/PM", name: "Time", sample: "5:49:00 PM" },
-                { format: "m/d/yyyy h:mm", name: "Date time", sample: "4/21/2012 5:49:00" },
-                { format: "[h]:mm:ss", name: "Duration", sample: "168:05:00" },
-                { popup: "formatCells", name: "More formats..." }
+                { format: null, name: messages.formatTypes.automatic },
+                { format: "0", name: messages.formatTypes.number , sample: "1,499.99" },
+                { format: "0.00%", name: messages.formatTypes.percent , sample: "14.50%" },
+                { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: messages.formatTypes.financial , sample: "(1,000.12)" },
+                { format: "$#,##0.00;[Red]$#,##0.00", name: messages.formatTypes.currency , sample: "$1,499.99" },
+                { format: "m/d/yyyy", name: messages.formatTypes.date , sample: "4/21/2012" },
+                { format: "h:mm:ss AM/PM", name: messages.formatTypes.time , sample: "5:49:00 PM" },
+                { format: "m/d/yyyy h:mm", name: messages.formatTypes.dateTime , sample: "4/21/2012 5:49:00" },
+                { format: "[h]:mm:ss", name: messages.formatTypes.duration , sample: "168:05:00" },
+                { popup: "formatCells", name: messages.formatTypes.moreFormats }
             ]);
 
             this.element.data({
@@ -726,13 +771,13 @@
             });
         },
         buttons: [
-            { property: "textAlign",     value: "left",    iconClass: "justify-left" },
-            { property: "textAlign",     value: "center",  iconClass: "justify-center" },
-            { property: "textAlign",     value: "right",   iconClass: "justify-right" },
-            { property: "textAlign",     value: "justify", iconClass: "justify-full" },
-            { property: "verticalAlign", value: "top",     iconClass: "align-top" },
-            { property: "verticalAlign", value: "middle",  iconClass: "align-middle" },
-            { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom" }
+            { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: messages.alignmentButtons.justtifyLeft },
+            { property: "textAlign",     value: "center",  iconClass: "justify-center", text: messages.alignmentButtons.justifyCenter },
+            { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: messages.alignmentButtons.justifyRight },
+            { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: messages.alignmentButtons.justifyFull },
+            { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: messages.alignmentButtons.alignTop },
+            { property: "verticalAlign", value: "middle",  iconClass: "align-middle",   text: messages.alignmentButtons.alignMiddle },
+            { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: messages.alignmentButtons.alignBottom }
         ],
         destroy: function() {
             this.popup.element.off();
@@ -756,7 +801,7 @@
             var buttons = this.buttons;
             var element = $("<div />").appendTo(this.popup.element);
             buttons.forEach(function(options, index) {
-                var button = "<a title='Align " + options.value + "' data-property='" + options.property + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
+                var button = "<a title='" + options.text + "' data-property='" + options.property + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
                                 "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" +
                              "</a>";
                 if (index !== 0 && buttons[index - 1].property !== options.property) {
@@ -803,10 +848,10 @@
             });
         },
         buttons: [
-            { value: "cells",        iconClass: "merge-cells" },
-            { value: "horizontally", iconClass: "merge-horizontally" },
-            { value: "vertically",   iconClass: "merge-vertically" },
-            { value: "unmerge",      iconClass: "normal-layout" }
+            { value: "cells",        iconClass: "merge-cells",        text: messages.mergeButtons.mergeCells },
+            { value: "horizontally", iconClass: "merge-horizontally", text: messages.mergeButtons.mergeHorizontally },
+            { value: "vertically",   iconClass: "merge-vertically",   text: messages.mergeButtons.mergeVertically },
+            { value: "unmerge",      iconClass: "normal-layout",      text: messages.mergeButtons.unmerge }
         ],
         destroy: function() {
             this.popup.element.off();
@@ -815,9 +860,8 @@
         _commandPalette: function() {
             var element = $("<div />").appendTo(this.popup.element);
             this.buttons.forEach(function(options) {
-                var title = options.value === "unmerge" ? "Unmerge" : "Merge " + options.value;
-                var button = "<a title='" + title + "' data-value='" + options.value + "' class='k-button k-button-icontext'>" +
-                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + title +
+                var button = "<a title='" + options.text + "' data-value='" + options.value + "' class='k-button k-button-icontext'>" +
+                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + options.text +
                              "</a>";
                 element.append(button);
             });
@@ -858,10 +902,10 @@
             });
         },
         buttons: [
-            { value: "panes",    iconClass: "freeze-panes" },
-            { value: "rows",      iconClass: "freeze-row" },
-            { value: "columns",   iconClass: "freeze-col" },
-            { value: "unfreeze", iconClass: "normal-layout" }
+            { value: "panes",    iconClass: "freeze-panes",  text: messages.freezeButtons.freezePanes },
+            { value: "rows",     iconClass: "freeze-row",    text: messages.freezeButtons.freezeRows },
+            { value: "columns",  iconClass: "freeze-col",    text: messages.freezeButtons.freezeColumns },
+            { value: "unfreeze", iconClass: "normal-layout", text: messages.freezeButtons.unfreeze }
         ],
         destroy: function() {
             this.popup.element.off();
@@ -870,9 +914,8 @@
         _commandPalette: function() {
             var element = $("<div />").appendTo(this.popup.element);
             this.buttons.forEach(function(options) {
-                var title = options.value === "unfreeze" ? "Unfreeze panes" : "Freeze " + options.value;
-                var button = "<a title='" + title + "' data-value='" + options.value + "' class='k-button k-button-icontext'>" +
-                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + title +
+                var button = "<a title='" + options.text + "' data-value='" + options.value + "' class='k-button k-button-icontext'>" +
+                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + options.text +
                              "</a>";
                 element.append(button);
             });
@@ -914,10 +957,10 @@
                 dataValueField: "value"
             });
             ddl.setDataSource([
-                // { value: 1, sheet: true, asc: true,  text: "Sort sheet A to Z",  iconClass: "sort-asc" },
-                // { value: 2, sheet: true, asc: false, text: "Sort sheet Z to A", iconClass: "sort-desc" },
-                { value: 1, sheet: false, asc: true,  text: "Sort range A to Z",  iconClass: "sort-asc" },
-                { value: 2, sheet: false, asc: false, text: "Sort range Z to A", iconClass: "sort-desc" }
+                // { value: 1, sheet: true, asc: true,  text: messages.sortButtons.sortSheetAsc,  iconClass: "sort-asc" },
+                // { value: 2, sheet: true, asc: false, text: messages.sortButtons.sortSheetDesc,  , iconClass: "sort-desc" },
+                { value: 1, sheet: false, asc: true,  text: messages.sortButtons.sortRangeAsc, iconClass: "sort-asc" },
+                { value: 2, sheet: false, asc: false, text: messages.sortButtons.sortRangeDesc, iconClass: "sort-desc" }
             ]);
 
             this.element.data({
@@ -1006,10 +1049,10 @@
 
         _quickAccessButtons: function() {
             var buttons = [
-                { title: "Undo", iconClass: "undo-large", action: "undo" },
-                { title: "Redo", iconClass: "redo-large", action: "redo" }
+                { title: messages.quickAccess.undo, iconClass: "undo-large", action: "undo" },
+                { title: messages.quickAccess.redo, iconClass: "redo-large", action: "redo" }
             ];
-            var buttonTemplate = kendo.template("<a href='\\#' title='#= title #' class='k-button k-button-icon'><span class='k-icon k-font-icon k-i-#=iconClass#'></span></a>");
+            var buttonTemplate = kendo.template("<a href='\\#' title='#= title #' data-action='#= action #' class='k-button k-button-icon'><span class='k-icon k-font-icon k-i-#=iconClass#'></span></a>");
 
             this.quickAccessToolBar = $("<div />", {
                 "class": "k-spreadsheet-quick-access-toolbar",
