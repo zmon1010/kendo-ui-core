@@ -1,7 +1,8 @@
-﻿using System;
-using Kendo.Mvc.UI;
-using Microsoft.AspNet.Mvc;
+﻿using Kendo.Mvc.UI;
 using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNet.Mvc.ViewFeatures;
+using System.Threading;
+using System;
 
 namespace Kendo.Mvc.Extensions
 {
@@ -20,13 +21,12 @@ namespace Kendo.Mvc.Extensions
 
             object valueFromViewData = name.HasValue() ? viewData.Eval(name) : null;
 
-            if (name.HasValue() && viewData.ModelState.TryGetValue(name, out state) && (state.Value != null))
+            if (name.HasValue() && viewData.ModelState.TryGetValue(name, out state) && (state.RawValue != null))
             {
-                formattedValue = state.Value.AttemptedValue;
-                //TODO
-                //if (viewData.ModelState.IsValidField(name))
+                formattedValue = state.AttemptedValue;
+                if (viewData.ModelState.GetFieldValidationState(name) == ModelValidationState.Valid)
                 {
-                    formattedValue = format.FormatWith(state.Value.ConvertTo(typeof(T), state.Value.Culture));
+                    formattedValue = format.FormatWith(Convert.ChangeType(state.RawValue, typeof(T)));
                 }
             }
             else if (value != null)

@@ -1,16 +1,15 @@
 namespace Kendo.Mvc.UI
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Linq.Expressions;
-	using System.Reflection;
-	using Extensions;
-	using Microsoft.AspNet.Mvc;
-	using Microsoft.AspNet.Mvc.ModelBinding;
-	using Microsoft.AspNet.Mvc.Rendering.Expressions;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
+    using Extensions;
+    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNet.Mvc.ViewFeatures;
 
-	public class GridColumnGenerator<T> where T : class
+    public class GridColumnGenerator<T> where T : class
     {
         private readonly Grid<T> grid;
 

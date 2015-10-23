@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
     using Kendo.Mvc.Extensions;
 
     /// <summary>

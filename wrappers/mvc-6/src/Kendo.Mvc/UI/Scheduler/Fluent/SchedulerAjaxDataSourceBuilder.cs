@@ -1,8 +1,7 @@
 ﻿namespace Kendo.Mvc.UI.Fluent
 {
     using System;
-    using System.ComponentModel;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
 
     public class SchedulerAjaxDataSourceBuilder<TModel> : FilterableAjaxDataSourceBuilder<TModel, SchedulerAjaxDataSourceBuilder<TModel>>
          where TModel : class

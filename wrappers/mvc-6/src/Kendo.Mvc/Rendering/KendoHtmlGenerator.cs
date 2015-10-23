@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.Rendering.Expressions;
-using Microsoft.Framework.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc.ModelBinding.Validation;
+using Microsoft.AspNet.Mvc.Infrastructure;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace Kendo.Mvc.Rendering
 {
@@ -213,9 +213,9 @@ namespace Kendo.Mvc.Rendering
         private static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)
         {
             ModelState modelState;
-            if (viewContext.ViewData.ModelState.TryGetValue(key, out modelState) && modelState.Value != null)
+            if (viewContext.ViewData.ModelState.TryGetValue(key, out modelState) && modelState.RawValue != null)
             {
-                return modelState.Value.ConvertTo(destinationType, culture: null);
+                return Convert.ChangeType(modelState.RawValue, destinationType);
             }
 
             return null;

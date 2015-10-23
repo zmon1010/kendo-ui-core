@@ -35,12 +35,12 @@
         {
             if (!error.ErrorMessage.HasValue())
             {
-                if (modelState.Value == null)
+                if (modelState.RawValue == null)
                 {
                     return error.ErrorMessage;
                 }
 
-                return Exceptions.ValueNotValidForProperty.FormatWith(modelState.Value.AttemptedValue);
+                return Exceptions.ValueNotValidForProperty.FormatWith(modelState.AttemptedValue);
             }
 
             return error.ErrorMessage;

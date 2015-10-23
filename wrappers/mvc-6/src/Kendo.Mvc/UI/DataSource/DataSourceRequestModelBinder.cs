@@ -12,48 +12,43 @@ namespace Kendo.Mvc.UI
         {
             var request = new DataSourceRequest();
 
-
-            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Sort, (string sort) =>
+            TryGetValue(bindingContext, DataSourceRequestUrlParameters.Sort, (string sort) =>
                 request.Sorts = DataSourceDescriptorSerializer.Deserialize<SortDescriptor>(sort)
             );
 
-            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Page, (int currentPage) => request.Page = currentPage);
+            TryGetValue(bindingContext, DataSourceRequestUrlParameters.Page, (int currentPage) => request.Page = currentPage);
 
-            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.PageSize, (int pageSize) => request.PageSize = pageSize);
+            TryGetValue(bindingContext, DataSourceRequestUrlParameters.PageSize, (int pageSize) => request.PageSize = pageSize);
 
-            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Filter, (string filter) =>
+            TryGetValue(bindingContext, DataSourceRequestUrlParameters.Filter, (string filter) =>
                 request.Filters = FilterDescriptorFactory.Create(filter)
             );
 
-            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Group, (string group) =>
+            TryGetValue(bindingContext, DataSourceRequestUrlParameters.Group, (string group) =>
                 request.Groups = DataSourceDescriptorSerializer.Deserialize<GroupDescriptor>(group)
             );
 
-            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Aggregates, (string aggregates) =>
+            TryGetValue(bindingContext, DataSourceRequestUrlParameters.Aggregates, (string aggregates) =>
                 request.Aggregates = DataSourceDescriptorSerializer.Deserialize<AggregateDescriptor>(aggregates)
             );
 
             bindingContext.Model = request;
 
-            return new ModelBindingResult(request, bindingContext.ModelName, isModelSet: true);
+            return await ModelBindingResult.SuccessAsync(bindingContext.ModelName, request);
         }
 
-        private Task TryGetValue<T>(ModelBindingContext bindingContext, string key, Action<T> action)
+        private void TryGetValue<T>(ModelBindingContext bindingContext, string key, Action<T> action)
         {
             if (bindingContext.ModelMetadata.BinderModelName.HasValue())
             {
                 key = bindingContext.ModelName + "-" + key;
             }
 
-            return bindingContext.ValueProvider
-                .GetValueAsync(key)
-                .ContinueWith(result => {
-                    var value = result.Result;
-                    if (value != null)
-                    {
-                        action((T)value.ConvertTo(typeof(T)));
-                    }
-                });
+            var value = bindingContext.ValueProvider.GetValue(key);
+            if (value != null)
+            {
+                action((T)value.ConvertTo(typeof(T)));
+            }
         }
     }
 }

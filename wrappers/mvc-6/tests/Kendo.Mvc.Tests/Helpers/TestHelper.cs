@@ -8,6 +8,10 @@ using Microsoft.AspNet.Routing;
 using Moq;
 using Microsoft.AspNet.Mvc.ViewComponents;
 using Microsoft.AspNet.Http.Internal;
+using Microsoft.AspNet.Mvc.Infrastructure;
+using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.AspNet.Mvc.ViewEngines;
+using Microsoft.AspNet.Mvc.Abstractions;
 
 namespace Kendo.Mvc.Tests
 {

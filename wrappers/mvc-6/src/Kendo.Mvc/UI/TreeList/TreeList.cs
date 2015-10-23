@@ -1,9 +1,9 @@
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Infrastructure;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
 using System;
 using System.Collections.Generic;
 using System.IO;

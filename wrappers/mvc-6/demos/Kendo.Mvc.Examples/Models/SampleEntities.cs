@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.SqlServer.Extensions;
+using System.IO;
 
 namespace Kendo.Mvc.Examples.Models
 {
@@ -36,7 +36,11 @@ namespace Kendo.Mvc.Examples.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Sample.mdf;Integrated Security=True;");
+            // Should be a better way to obtain the webroot path here
+            var dataDirectory = Path.Combine(Startup.WebRootPath, "App_Data");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;AttachDbFilename=" + dataDirectory + @"\Sample.mdf;Integrated Security=True;");
+
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,7 +48,7 @@ namespace Kendo.Mvc.Examples.Models
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToSqlServerTable("Categories");
-                entity.Key(e => e.CategoryID);
+                entity.HasKey(e => e.CategoryID);
                 
                 entity.Property(e => e.CategoryID)
                       .UseSqlServerIdentityColumn();
@@ -52,24 +56,24 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<CustomerCustomerDemo>(entity =>
             {
-                entity.Key(e => new { e.CustomerID, e.CustomerTypeID });
+                entity.HasKey(e => new { e.CustomerID, e.CustomerTypeID });
             });
             
             modelBuilder.Entity<CustomerDemographic>(entity =>
             {
                 entity.ToSqlServerTable("CustomerDemographics");
-                entity.Key(e => e.CustomerTypeID);
+                entity.HasKey(e => e.CustomerTypeID);
             });
             
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.ToSqlServerTable("Customers");
-                entity.Key(e => e.CustomerID);
+                entity.HasKey(e => e.CustomerID);
             });
             
             modelBuilder.Entity<EmployeeDirectory>(entity =>
             {
-                entity.Key(e => e.EmployeeID);
+                entity.HasKey(e => e.EmployeeID);
                 
                 entity.Property(e => e.EmployeeID)
                     .UseSqlServerIdentityColumn();
@@ -79,7 +83,7 @@ namespace Kendo.Mvc.Examples.Models
             {
                 entity.ToSqlServerTable("Employees");
 
-                entity.Key(e => e.EmployeeID);
+                entity.HasKey(e => e.EmployeeID);
                 
                 entity.Property(e => e.EmployeeID)
                     .UseSqlServerIdentityColumn();
@@ -87,7 +91,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<EmployeeTerritories>(entity =>
             {
-                entity.Key(e => new { e.EmployeeID, e.TerritoryID });
+                entity.HasKey(e => new { e.EmployeeID, e.TerritoryID });
             });
             
             modelBuilder.Entity<GanttDependency>(entity =>
@@ -149,14 +153,14 @@ namespace Kendo.Mvc.Examples.Models
             modelBuilder.Entity<MeetingAttendee>(entity =>
             {
                 entity.ToSqlServerTable("MeetingAttendees");
-                entity.Key(e => new { e.MeetingID, e.AttendeeID });
+                entity.HasKey(e => new { e.MeetingID, e.AttendeeID });
             });
             
             modelBuilder.Entity<Meeting>(entity =>
             {
                 entity.ToSqlServerTable("Meetings");
 
-                entity.Key(e => e.MeetingID);
+                entity.HasKey(e => e.MeetingID);
                 
                 entity.Property(e => e.MeetingID)
                     .UseSqlServerIdentityColumn();
@@ -164,7 +168,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Order_Detail>(entity =>
             {
-                entity.Key(e => new { e.OrderID, e.ProductID });
+                entity.HasKey(e => new { e.OrderID, e.ProductID });
                 
                 entity.ToSqlServerTable("Order Details");
                 
@@ -184,7 +188,7 @@ namespace Kendo.Mvc.Examples.Models
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.ToSqlServerTable("Orders");
-                entity.Key(e => e.OrderID);
+                entity.HasKey(e => e.OrderID);
                 
                 entity.Property(e => e.OrderID)
                     .UseSqlServerIdentityColumn();
@@ -216,7 +220,7 @@ namespace Kendo.Mvc.Examples.Models
             {
                 entity.ToSqlServerTable("Products");
 
-                entity.Key(e => e.ProductID);
+                entity.HasKey(e => e.ProductID);
                 
                 entity.Property(e => e.ProductID)
                     .UseSqlServerIdentityColumn();
@@ -247,7 +251,7 @@ namespace Kendo.Mvc.Examples.Models
             modelBuilder.Entity<Shipper>(entity =>
             {
                 entity.ToSqlServerTable("Shippers");
-                entity.Key(e => e.ShipperID);
+                entity.HasKey(e => e.ShipperID);
                 
                 entity.Property(e => e.ShipperID)
                     .UseSqlServerIdentityColumn();
@@ -274,7 +278,7 @@ namespace Kendo.Mvc.Examples.Models
             modelBuilder.Entity<Supplier>(entity =>
             {
                 entity.ToSqlServerTable("Suppliers");
-                entity.Key(e => e.SupplierID);
+                entity.HasKey(e => e.SupplierID);
                 
                 entity.Property(e => e.SupplierID)
                     .UseSqlServerIdentityColumn();
@@ -284,7 +288,7 @@ namespace Kendo.Mvc.Examples.Models
             {
                 entity.ToSqlServerTable("Tasks");
 
-                entity.Key(e => e.TaskID);
+                entity.HasKey(e => e.TaskID);
                 
                 entity.Property(e => e.TaskID)
                     .UseSqlServerIdentityColumn();
@@ -294,7 +298,7 @@ namespace Kendo.Mvc.Examples.Models
             {
                 entity.ToSqlServerTable("Territories");
 
-                entity.Key(e => e.TerritoryID);
+                entity.HasKey(e => e.TerritoryID);
             });
             
             modelBuilder.Entity<UrbanArea>(entity =>
@@ -337,74 +341,73 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<CustomerCustomerDemo>(entity =>
             {
-                entity.Reference<Customer>(d => d.Customer).InverseCollection(p => p.CustomerCustomerDemo).ForeignKey(d => d.CustomerID);
-                
-                entity.Reference<CustomerDemographic>(d => d.CustomerType).InverseCollection(p => p.CustomerCustomerDemo).ForeignKey(d => d.CustomerTypeID);
+                entity.HasOne(d => d.Customer).WithMany(p => p.CustomerCustomerDemo).ForeignKey(d => d.CustomerID);                
+                entity.HasOne(d => d.CustomerType).WithMany(p => p.CustomerCustomerDemo).ForeignKey(d => d.CustomerTypeID);
             });
             
             modelBuilder.Entity<EmployeeDirectory>(entity =>
             {
-                entity.Reference<EmployeeDirectory>(d => d.EmployeeDirectory2).InverseReference().ForeignKey<EmployeeDirectory>(d => d.ReportsTo);
+                entity.HasOne(d => d.EmployeeDirectory2).WithOne().ForeignKey<EmployeeDirectory>(d => d.ReportsTo);
             });
             
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.Reference<Employee>(d => d.ReportsToNavigation).InverseReference().ForeignKey<Employee>(d => d.ReportsTo);
+                entity.HasOne(d => d.ReportsToNavigation).WithOne().ForeignKey<Employee>(d => d.ReportsTo);
             });
             
             modelBuilder.Entity<EmployeeTerritories>(entity =>
             {
-                entity.Reference<Employee>(d => d.Employee).InverseCollection(p => p.EmployeeTerritories).ForeignKey(d => d.EmployeeID);
+                entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeTerritories).ForeignKey(d => d.EmployeeID);
                 
-                entity.Reference<Territory>(d => d.Territory).InverseCollection(p => p.EmployeeTerritories).ForeignKey(d => d.TerritoryID);
+                entity.HasOne(d => d.Territory).WithMany(p => p.EmployeeTerritories).ForeignKey(d => d.TerritoryID);
             });
             
             modelBuilder.Entity<GanttTask>(entity =>
             {
-                entity.Reference<GanttTask>(d => d.Parent).InverseReference().ForeignKey<GanttTask>(d => d.ParentID);
+                entity.HasOne(d => d.Parent).WithOne().ForeignKey<GanttTask>(d => d.ParentID);
             });
             
             modelBuilder.Entity<MeetingAttendee>(entity =>
             {
-                entity.Reference<Meeting>(d => d.Meeting).InverseCollection(p => p.MeetingAttendees).ForeignKey(d => d.MeetingID);
+                entity.HasOne(d => d.Meeting).WithMany(p => p.MeetingAttendees).ForeignKey(d => d.MeetingID);
             });
             
             modelBuilder.Entity<Meeting>(entity =>
             {
-                entity.Reference<Meeting>(d => d.Recurrence).InverseReference().ForeignKey<Meeting>(d => d.RecurrenceID);
+                entity.HasOne(d => d.Recurrence).WithOne().ForeignKey<Meeting>(d => d.RecurrenceID);
             });
             
             modelBuilder.Entity<Order_Detail>(entity =>
             {
-                entity.Reference<Order>(d => d.Order).InverseCollection(p => p.Order_Details).ForeignKey(d => d.OrderID);
+                entity.HasOne(d => d.Order).WithMany(p => p.Order_Details).ForeignKey(d => d.OrderID);
                 
-                entity.Reference<Product>(d => d.Product).InverseCollection(p => p.Order_Details).ForeignKey(d => d.ProductID);
+                entity.HasOne(d => d.Product).WithMany(p => p.Order_Details).ForeignKey(d => d.ProductID);
             });
             
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Reference<Customer>(d => d.Customer).InverseCollection(p => p.Orders).ForeignKey(d => d.CustomerID);
+                entity.HasOne(d => d.Customer).WithMany(p => p.Orders).ForeignKey(d => d.CustomerID);
                 
-                entity.Reference<Employee>(d => d.Employee).InverseCollection(p => p.Orders).ForeignKey(d => d.EmployeeID);
+                entity.HasOne(d => d.Employee).WithMany(p => p.Orders).ForeignKey(d => d.EmployeeID);
                 
-                entity.Reference<Shipper>(d => d.ShipViaNavigation).InverseCollection(p => p.Orders).ForeignKey(d => d.ShipVia);
+                entity.HasOne(d => d.ShipViaNavigation).WithMany(p => p.Orders).ForeignKey(d => d.ShipVia);
             });
             
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.Reference<Category>(d => d.Category).InverseCollection(p => p.Products).ForeignKey(d => d.CategoryID);
+                entity.HasOne(d => d.Category).WithMany(p => p.Products).ForeignKey(d => d.CategoryID);
                 
-                entity.Reference<Supplier>(d => d.Supplier).InverseCollection(p => p.Products).ForeignKey(d => d.SupplierID);
+                entity.HasOne(d => d.Supplier).WithMany(p => p.Products).ForeignKey(d => d.SupplierID);
             });
             
             modelBuilder.Entity<Task>(entity =>
             {
-                entity.Reference<Task>(d => d.Recurrence).InverseReference().ForeignKey<Task>(d => d.RecurrenceID);
+                entity.HasOne(d => d.Recurrence).WithOne().ForeignKey<Task>(d => d.RecurrenceID);
             });
             
             modelBuilder.Entity<Territory>(entity =>
             {
-                entity.Reference<Region>(d => d.Region).InverseCollection(p => p.Territories).ForeignKey(d => d.RegionID);
+                entity.HasOne(d => d.Region).WithMany(p => p.Territories).ForeignKey(d => d.RegionID);
             });
         }
     }

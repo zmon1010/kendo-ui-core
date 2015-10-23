@@ -1,7 +1,7 @@
 ﻿namespace Kendo.Mvc.UI.Fluent
 {
     using System;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
 
     /// <summary>
     /// Defines the fluent interface for configuring the <see cref="PivotDataSource"/> component.

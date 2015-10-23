@@ -2,10 +2,12 @@
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Razor;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 using Microsoft.Framework.WebEncoders;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -17,7 +19,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Initializes a new instance of the WidgetBuilderBase class.
         /// </summary>
         /// <param name="component">The component.</param>
-        public WidgetBuilderBase(TViewComponent component) : base(null)
+        public WidgetBuilderBase(TViewComponent component) : base(async (writer) => await Task.Yield())
         {
             Component = component;
         }

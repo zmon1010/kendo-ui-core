@@ -34,9 +34,9 @@ namespace Kendo.Mvc.Extensions
         internal static object GetModelStateValue<T>(this IInputComponent<T> instance, string key, Type destinationType) where T : struct
         {
             ModelState modelState;
-            if (instance.ViewContext.ViewData.ModelState.TryGetValue(key, out modelState) && modelState.Value != null)
+            if (instance.ViewContext.ViewData.ModelState.TryGetValue(key, out modelState) && modelState.RawValue != null)
             {
-                return modelState.Value.ConvertTo(destinationType, culture: null);
+                return Convert.ChangeType(modelState.RawValue, destinationType);
             }
 
             return null;

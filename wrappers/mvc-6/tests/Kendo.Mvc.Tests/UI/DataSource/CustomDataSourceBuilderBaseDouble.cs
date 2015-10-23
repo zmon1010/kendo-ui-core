@@ -1,9 +1,7 @@
 ﻿namespace Kendo.Mvc.UI.Fluent.Tests
 {
-    using Kendo.Mvc.Tests;
     using Kendo.Mvc.UI.Fluent;
-    using Microsoft.AspNet.Mvc;
-    using Xunit;
+    using Microsoft.AspNet.Mvc.Rendering;
 
     public class CustomDataSourceBuilderBaseDouble : CustomDataSourceBuilderBase<CustomDataSourceBuilderBaseDouble>
     {

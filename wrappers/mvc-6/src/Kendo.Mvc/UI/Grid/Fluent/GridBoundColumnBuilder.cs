@@ -2,14 +2,14 @@ namespace Kendo.Mvc.UI.Fluent
 {
 	using System;
 	using System.Net;
-	using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
 
 
-	/// <summary>
-	/// Defines the fluent interface for configuring bound columns
-	/// </summary>
-	/// <typeparam name="T">The type of the data item</typeparam>
-	public class GridBoundColumnBuilder<T> : GridColumnBuilderBase<IGridBoundColumn, GridBoundColumnBuilder<T>>
+    /// <summary>
+    /// Defines the fluent interface for configuring bound columns
+    /// </summary>
+    /// <typeparam name="T">The type of the data item</typeparam>
+    public class GridBoundColumnBuilder<T> : GridColumnBuilderBase<IGridBoundColumn, GridBoundColumnBuilder<T>>
         where T : class
     {
         private ViewContext viewContext;

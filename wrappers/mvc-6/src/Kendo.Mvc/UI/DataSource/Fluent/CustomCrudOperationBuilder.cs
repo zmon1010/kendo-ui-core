@@ -1,6 +1,6 @@
 ﻿namespace Kendo.Mvc.UI.Fluent
 {    
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
 
     public class CustomCrudOperationBuilder : CrudOperationBuilderBase<CustomCrudOperationBuilder>, IHideObjectMembers
     {

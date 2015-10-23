@@ -4,8 +4,10 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
-using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.WebEncoders;
+using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.AspNet.Mvc.ViewEngines;
+using Microsoft.AspNet.Mvc.Abstractions;
 
 namespace Kendo.Mvc.Extensions
 {

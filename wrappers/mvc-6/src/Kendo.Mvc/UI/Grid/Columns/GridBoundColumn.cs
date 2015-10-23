@@ -6,18 +6,16 @@ namespace Kendo.Mvc.UI
     using System.IO;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Reflection;
     using System.Text.RegularExpressions;
     using System.Threading;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Resources;
-    using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.ModelBinding;
     using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.AspNet.Mvc.Rendering.Expressions;
-    using Microsoft.AspNet.Routing;
     using Microsoft.Framework.WebEncoders;
     using System.Text;
+    using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
+    using Microsoft.AspNet.Mvc.ViewFeatures;
 
     public class GridBoundColumn<TModel, TValue> : GridColumnBase<TModel>, IGridBoundColumn/*, IGridTemplateColumn<TModel>*/ where TModel : class
     {
@@ -267,11 +265,11 @@ namespace Kendo.Mvc.UI
                     var obj = new Dictionary<string, object>();
 
                     var name = Enum.GetName(type, value);
-                    var member = type.GetMember(name).FirstOrDefault();
+                    var member = type.FindPropertyOrField(name);
 
                     if (member != null)
                     {
-                        var displayAttribute = member.GetCustomAttributes(typeof(DisplayAttribute), true)
+                        var displayAttribute = member.CustomAttributes
                             .OfType<DisplayAttribute>()
                             .FirstOrDefault();
 

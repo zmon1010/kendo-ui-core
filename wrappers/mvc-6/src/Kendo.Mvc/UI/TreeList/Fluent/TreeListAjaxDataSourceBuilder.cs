@@ -1,7 +1,7 @@
 ﻿namespace Kendo.Mvc.UI.Fluent
 {
-	using Microsoft.AspNet.Mvc;
-	using System;	
+    using Microsoft.AspNet.Mvc.Rendering;
+    using System;	
 
 	public class TreeListAjaxDataSourceBuilder<TModel> : AjaxDataSourceBuilderBase<TModel, TreeListAjaxDataSourceBuilder<TModel>>, IHideObjectMembers
         where TModel : class        

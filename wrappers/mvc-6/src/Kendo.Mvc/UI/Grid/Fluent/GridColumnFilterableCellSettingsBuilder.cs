@@ -2,9 +2,9 @@ namespace Kendo.Mvc.UI.Fluent
 {
 	using System;
 	using System.Collections;
-	using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
 
-	public class GridColumnFilterableCellSettingsBuilder : IHideObjectMembers        
+    public class GridColumnFilterableCellSettingsBuilder : IHideObjectMembers        
     {
         private readonly GridColumnFilterableCellSettings settings;
         private ViewContext viewContext;

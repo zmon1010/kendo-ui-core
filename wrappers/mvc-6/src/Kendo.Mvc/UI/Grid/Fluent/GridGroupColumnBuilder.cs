@@ -4,9 +4,9 @@
 	using System.Collections.Generic;	
 
 	using Extensions;
-	using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
 
-	public class GridColumnGroupBuilder<T> 
+    public class GridColumnGroupBuilder<T> 
         where T : class 
     {
         private IUrlGenerator urlGenerator;

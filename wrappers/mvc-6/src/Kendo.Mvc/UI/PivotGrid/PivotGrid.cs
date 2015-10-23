@@ -1,7 +1,6 @@
 using System.IO;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc.ModelBinding;
 
 namespace Kendo.Mvc.UI
 {

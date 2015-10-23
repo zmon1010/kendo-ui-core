@@ -4,8 +4,7 @@
     using Kendo.Mvc.Resources;
     using System;
     using System.Linq.Expressions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Rendering.Expressions;
+    using Microsoft.AspNet.Mvc.ViewFeatures;
 
     /// <summary>
     /// Creates resources for the <see cref="Scheduler{TModel}" /> class.

@@ -3,10 +3,14 @@
     "compilationOptions": {
         "warningsAsErrors": true
     },
+    "frameworks": {
+        "dnx451": {},
+        "dnxcore50": {}
+    },
     "dependencies": {
         "Kendo.Mvc": "1.0.0-*",
         "Moq": "4.2.1312.1622",
-        "xunit.runner.aspnet": "2.0.0-aspnet-beta7"
+        "xunit.runner.aspnet": "2.0.0-aspnet-beta8"
     },
     "commands": {
         "test": "xunit.runner.aspnet"

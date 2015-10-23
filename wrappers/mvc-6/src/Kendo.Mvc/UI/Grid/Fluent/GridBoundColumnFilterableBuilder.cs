@@ -1,14 +1,14 @@
 namespace Kendo.Mvc.UI.Fluent
 {
 	using System;
-	using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
 
 
-	/// <summary>
-	/// Defines the fluent interface for configuring bound columns filterable options
-	/// </summary>
-	/// <typeparam name="T">The type of the data item</typeparam>
-	public class GridBoundColumnFilterableBuilder : GridFilterableSettingsBuilderBase<GridBoundColumnFilterableBuilder>
+    /// <summary>
+    /// Defines the fluent interface for configuring bound columns filterable options
+    /// </summary>
+    /// <typeparam name="T">The type of the data item</typeparam>
+    public class GridBoundColumnFilterableBuilder : GridFilterableSettingsBuilderBase<GridBoundColumnFilterableBuilder>
     {
         private readonly GridBoundColumnFilterableSettings settings;
         private ViewContext viewContext;

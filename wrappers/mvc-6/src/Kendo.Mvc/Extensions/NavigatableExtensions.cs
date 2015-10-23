@@ -8,6 +8,7 @@ namespace Kendo.Mvc.UI
     using Extensions;
     using Kendo.Mvc.Resources;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
     using Microsoft.AspNet.Routing;
     using Microsoft.Framework.DependencyInjection;
 

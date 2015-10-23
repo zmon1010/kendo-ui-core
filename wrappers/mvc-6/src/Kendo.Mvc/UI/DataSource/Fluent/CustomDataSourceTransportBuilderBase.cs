@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Kendo.Mvc.Extensions;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
 
 
     /// <summary>

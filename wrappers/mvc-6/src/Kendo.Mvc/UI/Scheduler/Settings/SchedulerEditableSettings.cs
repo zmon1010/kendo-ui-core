@@ -2,9 +2,9 @@
 {
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Resources;
-    using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.ModelBinding;
     using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
     using System;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;

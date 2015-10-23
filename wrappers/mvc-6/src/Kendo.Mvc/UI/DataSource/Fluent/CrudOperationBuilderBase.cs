@@ -3,6 +3,7 @@
     using System;
     using System.Linq.Expressions;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Rendering;
     using Microsoft.AspNet.Routing;
 
     /// <summary>

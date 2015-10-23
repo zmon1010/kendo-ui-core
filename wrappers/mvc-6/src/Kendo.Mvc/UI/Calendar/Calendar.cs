@@ -1,10 +1,9 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Kendo.Mvc.Resources;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Kendo.Mvc.UI
 {

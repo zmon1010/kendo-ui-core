@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.Rendering.Expressions;
 using System.Globalization;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace Kendo.Mvc.UI
 {

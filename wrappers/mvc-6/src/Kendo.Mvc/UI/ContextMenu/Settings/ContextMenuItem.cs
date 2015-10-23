@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Kendo.Mvc.UI
 {
@@ -57,6 +59,11 @@ namespace Kendo.Mvc.UI
             //}
 
             return settings;
+        }
+
+        internal bool IsCurrent(ViewContext viewContext, IUrlGenerator urlGenerator)
+        {
+            throw new NotImplementedException();
         }
     }
 }
