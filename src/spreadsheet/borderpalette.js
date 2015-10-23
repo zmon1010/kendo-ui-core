@@ -10,6 +10,19 @@
         var $ = kendo.jQuery;
         var BORDER_TYPES = [ "allBorders", "insideBorders", "insideHorizontalBorders", "insideVerticalBorders", "outsideBorders", "leftBorder", "topBorder", "rightBorder", "bottomBorder", "noBorders" ];
 
+        var messages = kendo.spreadsheet.messages.borderPalette = {
+            allBorders: "All borders",
+            insideBorders: "Inside borders",
+            insideHorizontalBorders: "Inside horizontal borders",
+            insideVerticalBorders: "Inside vertical borders",
+            outsideBorders: "Outside borders",
+            leftBorder: "Left border",
+            topBorder: "Top border",
+            rightBorder: "Right border",
+            bottomBorder: "Bottom border",
+            noBorders: "No border"
+        };
+
         var BorderPalette = kendo.ui.Widget.extend({
             init: function(element, options) {
                 kendo.ui.Widget.call(this, element, options);
@@ -27,18 +40,7 @@
 
             options: {
                 name: "BorderPalette",
-                messages: {
-                    allBorders: "All borders",
-                    insideBorders: "Inside borders",
-                    insideHorizontalBorders: "Inside horizontal borders",
-                    insideVerticalBorders: "Inside vertical borders",
-                    outsideBorders: "Outside borders",
-                    leftBorder: "Left border",
-                    topBorder: "Top border",
-                    rightBorder: "Right border",
-                    bottomBorder: "Bottom border",
-                    noBorders: "No border"
-                }
+                messages: messages
             },
 
             events: [
