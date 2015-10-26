@@ -37,6 +37,39 @@
     }
 
     (function() {
+        module("rendering", {
+            setup: function() {
+                createBarcode({
+                    type: "code128",
+                    width: 200,
+                    height: 100,
+                    value: "FOO"
+                });
+            },
+
+            teardown: teardown
+        });
+
+        test("sets surface size", function() {
+            var size = barcode.surface.getSize();
+            equal(size.width, 200);
+            equal(size.height, 100);
+        });
+
+        test("updates surface size", function() {
+            barcode.setOptions({
+                width: 300,
+                height: 200,
+                value: "bar"
+            });
+            var size = barcode.surface.getSize();
+            equal(size.width, 300);
+            equal(size.height, 200);
+        });
+
+    })();
+
+    (function() {
         var background;
 
         module("rendering / background", {

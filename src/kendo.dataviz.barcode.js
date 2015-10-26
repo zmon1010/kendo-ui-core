@@ -1564,11 +1564,12 @@ var __meta__ = { // jshint ignore:line
 
         redraw: function () {
             var size = this._getSize();
-            this.surfaceWrap.css({
+
+            this.surface.clear();
+            this.surface.setSize({
                 width: size.width,
                 height: size.height
             });
-            this.surface.clear();
 
             this.createVisual();
             this.surface.draw(this.visual);
