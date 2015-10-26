@@ -79,7 +79,8 @@
                 this.element.addClass(Spreadsheet.classNames.wrapper);
 
                 this._view = new View(this.element, {
-                    toolbar: this.options.toolbar
+                    toolbar: this.options.toolbar,
+                    sheetsbar:this.options.sheetsbar
                 });
 
                 this._workbook = new Workbook(this.options, this._view);

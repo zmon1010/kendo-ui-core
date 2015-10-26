@@ -2,11 +2,15 @@
     var spreadsheet;
     var element;
 
+    function initSpreadsheet(element, options) {
+        spreadsheet = new kendo.ui.Spreadsheet(element, options);
+    }
+
     module("Spreadsheet API", {
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
 
-            spreadsheet = new kendo.ui.Spreadsheet(element);
+            spreadsheet = new kendo.ui.Spreadsheet(element, { ассад: "asdsad"});
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -176,5 +180,19 @@
             command: "foo",
             options: opts
         });
+    });
+
+    module("Spreadsheet options", {
+        setup: function() {
+            element = $("<div>").appendTo(QUnit.fixture);
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("activeSheet returns a sheet", function() {
+        initSpreadsheet(element, { sheetsbar: false });
+        ok(element.find('[data-role="sheetsbar"]').length == 0);
     });
 })();

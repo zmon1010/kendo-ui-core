@@ -118,6 +118,7 @@
             this.colHeaderContextMenu = view.colHeaderContextMenu;
             this.scroller = view.scroller;
             this.tabstrip = view.tabstrip;
+            this.sheetsbar = view.sheetsbar;
 
             this.editor = view.editor;
             this.editor.bind("change", this.onEditorChange.bind(this));
@@ -132,10 +133,12 @@
             this.barKeyListener = new kendo.spreadsheet.EventListener(this.editor.barElement(), this, FORMULABAR_EVENTS);
             this.inputKeyListener = new kendo.spreadsheet.EventListener(this.editor.cellElement(), this, FORMULAINPUT_EVENTS);
 
-            view.sheetsbar.bind("select", this.onSheetBarSelect.bind(this));
-            view.sheetsbar.bind("reorder", this.onSheetBarReorder.bind(this));
-            view.sheetsbar.bind("rename", this.onSheetBarRename.bind(this));
-            view.sheetsbar.bind("remove", this.onSheetBarRemove.bind(this));
+            if (this.sheetsbar) {
+                this.sheetsbar.bind("select", this.onSheetBarSelect.bind(this));
+                this.sheetsbar.bind("reorder", this.onSheetBarReorder.bind(this));
+                this.sheetsbar.bind("rename", this.onSheetBarRename.bind(this));
+                this.sheetsbar.bind("remove", this.onSheetBarRemove.bind(this));
+            }
 
             this.cellContextMenu.bind("select", this.onContextMenuSelect.bind(this));
             this.rowHeaderContextMenu.bind("select", this.onContextMenuSelect.bind(this));

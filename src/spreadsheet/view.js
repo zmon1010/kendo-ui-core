@@ -331,8 +331,8 @@
             this.clipboardContents = new kendo.dom.Tree(this.clipboard[0]);
 
             this.editor = new kendo.spreadsheet.SheetEditor(this);
-            this.sheetsbar = new kendo.spreadsheet.SheetsBar(element.find(DOT + classNames.sheetsBar), $.extend(true, this.options.sheetsbar));
 
+            this._sheetsbar();
 
             var contextMenuConfig = {
                 target: element,
@@ -384,6 +384,12 @@
             this.formulaInput = new kendo.spreadsheet.FormulaInput(editor, {
                 autoScale: true
             });
+        },
+
+        _sheetsbar: function() {
+            if (this.options.sheetsbar) {
+                this.sheetsbar = new kendo.spreadsheet.SheetsBar(this.element.find(DOT + View.classNames.sheetsBar), $.extend(true, {}, this.options.sheetsbar));
+            }
         },
 
         _tabstrip: function() {
@@ -540,13 +546,13 @@
                 this.tabstrip.refreshTools(sheet.range(sheet.activeCell()));
             }
 
-            if (reason.sheetSelection) {
+            if (reason.sheetSelection && this.sheetsbar) {
                 this.sheetsbar.renderSheets(this._workbook.sheets(), this._workbook.sheetIndex(this._sheet));
-                this._resize();
             }
 
-            //TODO: refresh sheets list on sheetSelection
+            this._resize();
 
+            //TODO: refresh sheets list on sheetSelection
             this.viewSize[0].style.height = sheet._grid.totalHeight() + "px";
             this.viewSize[0].style.width = sheet._grid.totalWidth() + "px";
 
