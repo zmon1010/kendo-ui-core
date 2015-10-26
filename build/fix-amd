@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+for file in src/**/*.js
+do
+    echo "fixing $file";
+    sed -i 's/(_, f){ f()/(a1, a2, a3){ (a3 || a2)()/g' $file
+done
