@@ -105,21 +105,6 @@ var flavours = {
         )
     },
 
-    download_builder: {
-        reporters: ['dots', 'junit'],
-        browsers: ['Chrome'],
-        singleRun: true,
-        reportSlowerThan: 5000,
-
-        files: [].concat(
-            jquery,
-            "download-builder/scripts/script-resolver.js",
-            { pattern: "dist/js/\*.js", included: false, served: true },
-            { pattern: "download-builder/config/kendo-config.json", included: false, served: true },
-            "tests/download-builder/\*.js"
-        )
-    },
-
     legacyUnit: {
         browsers: browserOption ? [ browserOption ] : [],
 

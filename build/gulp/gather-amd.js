@@ -6,6 +6,7 @@ var lazypipe = require('lazypipe');
 var foreach = require('gulp-foreach');
 var amdOptimize = require("amd-optimize");
 var ignore = require('gulp-ignore');
+var debug = require('gulp-debug'); // jshint ignore:line
 
 function gatherAmd(stream, file) {
     var amdConcat = lazypipe().pipe(concat, { path: file.path, base: "src" });
@@ -21,7 +22,7 @@ function gatherAmd(stream, file) {
             .pipe(amdConcat());
 
     } else {
-        var whitelist = [ `**/src/kendo.${moduleId}.js`, `**/src/${moduleId}/**/*.js`, "**/util/**/*.js" ];
+        var whitelist = [ `**/src/kendo.${moduleId}.js`, `**/src/${moduleId.replace('.', '/')}/**/*.js`, "**/{mixins,util}/**/*.js" ];
 
         return stream
             .pipe(gatherAMD)

@@ -1,6 +1,4 @@
 /* jshint browser:false, node:true, esnext:true */
-/* global KENDO_SRC_DIR */
-var META = require("./build/kendo-meta.js");
 var PATH = require("path");
 
 module.exports = function(grunt) {
@@ -8,33 +6,18 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadTasks('build/grunt/tasks');
 
-    function addSrc(f) {
-        return PATH.join(KENDO_SRC_DIR, f);
-    }
-
-    // files directly in src/
-    var mainKendoFiles = META.listKendoFiles().map(addSrc);
-
-    // Project configuration.
-
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-
-        download_builder: {
-            min: {
-                src: mainKendoFiles,
-                ext: ".min.js",
-                dest: PATH.join("dist", "download-builder", "content", "js")
-            },
-            config: {
-                src: mainKendoFiles,
-                dest: "download-builder/config/kendo-config.json"
-            }
-        },
 
         shell: {
             options: {
                 stderr: false
+            },
+            download_builder: {
+                command: 'node node_modules/.bin/gulp download-builder'
+            },
+            download_builder_tests: {
+                command: 'node node_modules/.bin/gulp download-builder-tests'
             },
             gulpStyles: {
                 command: 'node node_modules/.bin/gulp styles'
@@ -74,14 +57,12 @@ module.exports = function(grunt) {
     grunt.registerTask('styles', [ 'shell:gulpStyles' ]);
     grunt.registerTask('kendo',  [ 'shell:scripts' ]);
     grunt.registerTask('jshint', [ 'shell:jshint' ]);
+    grunt.registerTask('download_builder_tests', ['shell:download_builder_tests']);
+    grunt.registerTask('download_builder', ['shell:download_builder']);
 
     grunt.registerTask('karma', function() {
         grunt.task.run("shell:karma:" + this.args[0].trim());
     });
-
-    // Default task(s).
-    grunt.registerTask('default', ['karma:unit']);
-    grunt.registerTask('tests', [ 'styles', 'karma:unit' ]);
 
     grunt.registerTask('custom', function() {
         if (this.args.length === 0) {
@@ -91,9 +72,13 @@ module.exports = function(grunt) {
             grunt.task.run("shell:custom:" + this.args[0].trim());
         }
     });
+
+    // Default task(s).
+    grunt.registerTask('default', ['karma:unit']);
+    grunt.registerTask('tests', [ 'styles', 'karma:unit' ]);
+
     grunt.registerTask('all', [ 'kendo', 'download_builder' ]);
     grunt.registerTask('build', [ 'kendo', 'styles', 'license' ]);
-    grunt.registerTask('download_builder_tests', ['download_builder', 'karma:download_builder']);
 
     grunt.registerTask('ci', [ "all", 'styles', 'karma:jenkins' ]);
     grunt.registerTask("travis", [ 'jshint', 'build', 'karma:travis' ]);

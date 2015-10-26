@@ -1,6 +1,5 @@
 (function() {
-    var SOURCE_DIR = "/base/dist/js/";
-    var scriptCache = {};
+    var SOURCE_DIR = "/base/dist/download-builder/content/js/";
 
     // ------------------------------------------------------------
     function loadConfig(callback) {
@@ -9,8 +8,8 @@
             url: '/base/download-builder/config/kendo-config.json',
             dataType: 'json',
             success: function(data) {
-                components = data.components;
-                resolver = new ScriptResolver(components);
+                var components = data.components;
+                var resolver = new ScriptResolver(components);
 
                 callback(resolver, components);
             },
@@ -23,7 +22,13 @@
         source = source || "";
 
         if (scripts.length > 0) {
-            var src = SOURCE_DIR + scripts.shift().replace(".min", "");
+            var script = scripts.shift();
+            var src;
+            if (script == "jquery") {
+                src = "/base/src/jquery.js";
+            } else {
+                src = SOURCE_DIR + script;
+            }
             $.ajax({ url: src, dataType: "text", headers: { "X-QHint": true }})
                 .success(function(data) {
                     loadScripts(scripts, callback, error, source + data);
@@ -75,7 +80,7 @@
             var features = $.map(c.features || [], function(f) { return f.id; });
             resolver.addComponent(c.id, features);
 
-            var scripts = ["jquery.js", "angular.js"].concat(resolver.scripts);
+            var scripts = ['jquery'].concat(resolver.scripts);
             asyncTest(c.id + " (all features)", function() {
                 loadScripts(scripts,
                     function loaded(source) {
@@ -94,7 +99,7 @@
 
             resolver.addComponent(c.id, []);
 
-            var scripts = ["jquery.js", "angular.js"].concat(resolver.scripts);
+            var scripts = ['jquery'].concat(resolver.scripts);
             asyncTest(c.id + " (no features)", function() {
                 loadScripts(scripts,
                     function loaded(source) {
@@ -112,7 +117,7 @@
             resolver.reset();
             resolver.addComponent("dataviz.map", []);
 
-            var scripts = ["jquery.js", "angular.js"].concat(resolver.scripts);
+            var scripts = ['jquery'].concat(resolver.scripts);
             loadScripts(scripts,
                 function loaded(source) {
                     source += ";" +
