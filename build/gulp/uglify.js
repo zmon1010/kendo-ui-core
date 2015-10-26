@@ -16,6 +16,7 @@ var compress = {
 var mangle = {
     except: [ "define" ]
 };
+
 function renameModules(match) {
     return match.replace(/['"]([\w\.\/]+)?['"]/g, '"$1.min"');
 }

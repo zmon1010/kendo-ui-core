@@ -235,7 +235,7 @@ desc('JavaScript')
 
 task :js do
     # grunt :all
-    gulp :scripts
+    gulp :scripts, '--license-pad'
 end
 
 desc "Build less files in dist/styles"
