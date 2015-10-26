@@ -22,7 +22,7 @@
         }
         var n, src = srcRange._ref.toRangeRef();
         var dest = this._ref.toRangeRef();
-        var data = srcRange.values();
+        var data = srcRange._properties();
         var tr = src.width() == dest.width();
         if (tr) {
             data = transpose(data);
@@ -52,7 +52,7 @@
         if (tr) {
             fill = transpose(fill);
         }
-        this.values(fill);
+        this._properties(fill);
         return this;
     };
 
@@ -81,7 +81,7 @@
         };
     }
 
-    function findSeries(data) {
+    function findSeries(properties) {
         function findStep(a) {
             var diff = a[1] - a[0];
             for (var i = 2; i < a.length; ++i) {
@@ -97,15 +97,19 @@
             });
         }
         var series = [];
+        var data = properties.map(function(x){
+            return x.formula || x.value;
+        });
         forEachSeries(data, function(begin, end, type, a){
             var f, values;
             if (type == "number") {
                 values = getData(a);
-                if (values.length == 1 && (begin > 0 || end < data.length)) {
+                if (values.length == 1 && (begin > 0 || end < data.length || properties[begin].format)) {
                     values.push(values[0] + 1);
                 }
                 f = linearRegression(values);
-            } else if (type == "string") {
+            } else if (type == "string" || type == "formula") {
+                // formulas are simply copied over; the sheet will internally clone the objects
                 f = function(N, i) {
                     return data[i];
                 };
@@ -151,8 +155,23 @@
             var q = N / data.length | 0;
             var r = N % data.length;
             var n = q * s.len + r - s.begin;
-            return s.f(n, i);
+            var value = s.f(n, i);
+            var props = clone(properties[i]);
+            if (value instanceof Formula) {
+                props.formula = value;
+            } else {
+                props.value = value;
+            }
+            return props;
         };
+    }
+
+    function clone(obj) {
+        var copy = {};
+        Object.keys(obj || {}).forEach(function(key){
+            copy[key] = obj[key];
+        });
+        return copy;
     }
 
     function forEachSeries(data, f) {
@@ -192,7 +211,7 @@
             return { type: "null" };
         }
         if (el instanceof Formula) {
-            // XXX: handle formulas!
+            return { type: "formula" };
         }
         window.console.error(el);
         throw new Error("Cannot fill data");

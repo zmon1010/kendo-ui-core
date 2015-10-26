@@ -237,7 +237,7 @@ sheet3.range("H8:L8").fillFrom("F8:G8").background("#c0ffee");
 sheet3.range("F10:F13").values([[ 1 ], [ 4 ], [ "Bar 2" ], [ "Bar 2.5" ]]).background("yellow");
 sheet3.range("F14:F30").fillFrom("F10:F13").background("#c0ffee");
 
-sheet3.range("G10:G11").values([ ["January"], ["June"] ]).background("yellow")
+sheet3.range("G10:G11").values([ ["January"], ["June"] ]).background("yellow");
 sheet3.range("G12:G30").fillFrom("G10:G11").background("#c0ffee");
 
 sheet3.range("H10:H12").values([ ["Jan"], [ "May" ], [ "Feb" ]]).background("yellow");
@@ -248,3 +248,7 @@ sheet3.range("I13:I30").fillFrom("I10:I12").background("#c0ffee");
 
 sheet3.range("J10").value(new Date()).background("yellow");
 sheet3.range("J11:J30").fillFrom("J10").background("#c0ffee");
+
+sheet3.range("C5").formula("A5*B5").background("yellow").bold(true);
+sheet3.range("C6").formula("B6-A6").background("yellow").italic(true);
+sheet3.range("C7:C10").fillFrom("C5:C6").background("#c0ffee");

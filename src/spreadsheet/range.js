@@ -292,6 +292,62 @@
             }
         },
 
+        _properties: function(props) {
+            if (this._ref instanceof UnionRef) {
+                throw new Error("Unsupported for multiple ranges.");
+            }
+
+            if (this._ref === kendo.spreadsheet.NULLREF) {
+                if (props !== undefined) {
+                    throw new Error("Unsupported for NULLREF.");
+                } else {
+                    return [];
+                }
+            }
+
+            var ref = this._ref.toRangeRef();
+            var topLeftRow = ref.topLeft.row;
+            var topLeftCol = ref.topLeft.col;
+            var bottomRightRow = ref.bottomRight.row;
+            var bottomRightCol = ref.bottomRight.col;
+            var ci, ri;
+            var sheet = this._sheet;
+
+            if (props === undefined) {
+                props = new Array(ref.height());
+                sheet.forEach(ref, function(row, col, data){
+                    row -= topLeftRow;
+                    col -= topLeftCol;
+                    var line = props[row] || (props[row] = []);
+                    line[col] = data;
+                });
+                return props;
+            }
+            else {
+                var data;
+                ref = ref.clone();
+                var setProp = function(propName) {
+                    var propValue = data[propName];
+                    ref.topLeft.row = ref.bottomRight.row = ri;
+                    ref.topLeft.col = ref.bottomRight.col = ci;
+                    sheet._set(ref, propName, propValue);
+                };
+                for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
+                    for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
+                        var row = props[ri - topLeftRow];
+                        if (row) {
+                            data = row[ci - topLeftCol];
+                            if (data) {
+                                Object.keys(data).forEach(setProp);
+                            }
+                        }
+                    }
+                }
+                sheet.triggerChange({ recalc: true });
+                return this;
+            }
+        },
+
         clear: function(options) {
             var clearAll = !options || !Object.keys(options).length;
 
@@ -618,8 +674,8 @@
                      )[0];
 
     function getTextHeight(text, width, fontSize, wrap) {
-        var styles = { 
-            "baselineMarkerSize" : 0, 
+        var styles = {
+            "baselineMarkerSize" : 0,
             "width" : width + "px",
             "font-size" : (fontSize || 12) + "px",
             "word-break" : (wrap === true) ? "break-all" : "normal"
