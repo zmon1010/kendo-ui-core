@@ -297,7 +297,7 @@ COMPONENT_PROPERTIES = ERB.new(%{//>> Properties
 
             ensure_path(filename)
 
-            File.write(filename, component.to_php(filename))
+            File.write(filename, component.to_php(filename).dos())
         end
 
         def composite_options(options)
