@@ -18,7 +18,7 @@ the Slider.
     /**
     * Format string for the text of the tooltip. Note: The applied
 format will also influence the appearance of the Slider
-tick labels.
+tick labels.The slider widget supports precision of up-to 10 digits after the decimals point.
     * @param string $value
     * @return \Kendo\UI\SliderTooltip
     */
