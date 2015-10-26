@@ -97,7 +97,7 @@
                 var bbox = tmp.bbox;
                 group = tmp.root;
                 // var tmp, bbox;
-                
+
                 var paperSize = getOption("paperSize", getOption("paperSize", "auto"), options), addMargin = false;
                 if (paperSize == "auto") {
                     if (bbox) {
@@ -209,7 +209,8 @@
             Arc       : drawArc,
             Text      : drawText,
             Image     : drawImage,
-            Group     : drawGroup
+            Group     : drawGroup,
+            Rect      : drawRect
         }, element, page, pdf);
 
         page.restore();
@@ -518,6 +519,12 @@
         page.drawImage(url);
     }
 
+    function drawRect(element, page, pdf) {
+        var geometry = element.geometry();
+        page.rect(geometry.origin.x, geometry.origin.y, geometry.size.width, geometry.size.height);
+        maybeFillStroke(element, page, pdf);
+    }
+
     function exportPDF(group, options) {
         var defer = $.Deferred();
 
@@ -664,6 +671,12 @@
                             return change(null);
                         }
                         return el;
+                    },
+                    Rect: function(shape) {
+                        if (!visible(shape)) {
+                            return change(null);
+                        }
+                        return shape;
                     }
                 }, shape);
             });

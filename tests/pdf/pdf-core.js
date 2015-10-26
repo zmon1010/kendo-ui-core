@@ -210,6 +210,21 @@
         });
     });
 
+    test("[PDF] drawing.Rect", function(){
+        draw(function(add){
+            var rect = new drawing.Rect(new kendo.geometry.Rect([10, 20], [30, 40]), {
+                fill: { color: "#f00" },
+                stroke: { width: 2, color: "#00f" },
+            });
+            add(rect);
+        }, function(text){
+            commandsOK(text, "0 0 1 RG", "stroke color");
+            commandsOK(text, "2 w", "stroke width");
+            commandsOK(text, "1 0 0 rg", "fill color");
+            commandsOK(text, "10 20 30 40 re", "draws rect");
+        });
+    });
+
     // test("[PDF] drawing.Text", function(){
     //     draw(function(add){
     //         var pos = new geo.Point(10, 10);
