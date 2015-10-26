@@ -32,7 +32,8 @@
         "./spreadsheet/dialogs",
         "./spreadsheet/sheetbinder",
         "./spreadsheet/filtermenu",
-        "./spreadsheet/editor"
+        "./spreadsheet/editor",
+        "./spreadsheet/autofill"
     ], f);
 })(function(){
     var __meta__ = { // jshint ignore:line

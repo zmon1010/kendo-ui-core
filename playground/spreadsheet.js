@@ -200,3 +200,55 @@ sheet2.range("D7").input("=sum(sheet1!A:AX)");
 
 
 sheet.range("E2").input('=SUM(A1:C3, 100, B2, 200, D1, INDIRECT("A1:C3"))');
+
+
+
+
+
+// autofill
+
+var sheet3 = spreadsheet.sheetByName("Sheet3");
+sheet3.range("A1:B2").values([ [1, 3], [2, 6] ]).background("yellow");
+sheet3.range("A3:B10").fillFrom("A1:B2").background("#c0ffee");
+sheet3.range("C1:G2").fillFrom("A1:B2").background("#c0ffee");
+
+sheet3.range("D7:D12").values([ [1], [2], [3], [2], [3], [4] ]).background("yellow");
+sheet3.range("D4:D6").fillFrom("D7:D12").background("#c0ffee");
+sheet3.range("D13:D18").fillFrom("D7:D12").background("#c0ffee");
+
+sheet3.range("A12").value(2).background("yellow");
+sheet3.range("A13:A18").fillFrom("A12").background("#c0ffee");
+
+sheet3.range("F4:G4").values([[ "Mon", "Wed" ]]).background("yellow");
+sheet3.range("H4:L4").fillFrom("F4:G4").background("#c0ffee");
+
+sheet3.range("F5").values([[ "Sun" ]]).background("yellow");
+sheet3.range("G5:L5").fillFrom("F5").background("#c0ffee");
+
+sheet3.range("F6").values([[ "Foo 1" ]]).background("yellow");
+sheet3.range("G6:L6").fillFrom("F6").background("#c0ffee");
+
+sheet3.range("F7").values([[ "Foo 1.5" ]]).background("yellow");
+sheet3.range("G7:L7").fillFrom("F7").background("#c0ffee");
+
+sheet3.range("F8:G8").values([[ "Foo 10", "Foo 8" ]]).background("yellow");
+sheet3.range("H8:L8").fillFrom("F8:G8").background("#c0ffee");
+
+sheet3.range("F10:F13").values([[ 1 ], [ 4 ], [ "Bar 2" ], [ "Bar 2.5" ]]).background("yellow");
+sheet3.range("F14:F30").fillFrom("F10:F13").background("#c0ffee");
+
+sheet3.range("G10:G11").values([ ["January"], ["June"] ]).background("yellow");
+sheet3.range("G12:G30").fillFrom("G10:G11").background("#c0ffee");
+
+sheet3.range("H10:H12").values([ ["Jan"], [ "May" ], [ "Feb" ]]).background("yellow");
+sheet3.range("H13:H30").fillFrom("H10:H12").background("#c0ffee");
+
+sheet3.range("I10:I12").values([ ["Jan"], ["Feb"], [2] ]).background("yellow");
+sheet3.range("I13:I30").fillFrom("I10:I12").background("#c0ffee");
+
+sheet3.range("J10").value(new Date()).background("yellow");
+sheet3.range("J11:J30").fillFrom("J10").background("#c0ffee");
+
+sheet3.range("C5").formula("A5*B5").background("yellow").bold(true);
+sheet3.range("C6").formula("B6-A6").background("yellow").italic(true);
+sheet3.range("C7:C10").fillFrom("C5:C6").background("#c0ffee");

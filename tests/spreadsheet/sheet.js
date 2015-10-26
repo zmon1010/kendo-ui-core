@@ -580,4 +580,135 @@
        sheet.bind("change", success);
        sheet._setFormulaSelections([]);
     });
+
+    /* -----[ autofill ]----- */
+
+    test("autofill from single number", function(){
+        sheet.range("A1").value(1);
+        var values = sheet.range("A2:A4").fillFrom("A1").values();
+        deepEqual(values, [ [1], [1], [1] ]);
+    });
+
+    test("autofill simple progression", function(){
+        sheet.range("A1:B2").values([ [1, 3], [2, 6] ]);
+        var values1 = sheet.range("A3:B10").fillFrom("A1:B2").values();
+        var values2 = sheet.range("C1:G2").fillFrom("A1:B2").values();
+        deepEqual(values1, [
+            [ 3, 9 ],
+            [ 4, 12 ],
+            [ 5, 15 ],
+            [ 6, 18 ],
+            [ 7, 21 ],
+            [ 8, 24 ],
+            [ 9, 27 ],
+            [ 10, 30 ]
+        ]);
+        deepEqual(values2, [
+            [ 5, 7, 9, 11, 13 ],
+            [ 10, 14, 18, 22, 26 ]
+        ]);
+    });
+
+    test("autofill from single weekday name", function(){
+        sheet.range("F5").values([[ "Sun" ]]);
+        var values = sheet.range("G5:L5").fillFrom("F5").values();
+        deepEqual(values, [[ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]]);
+    });
+
+    test("autofill more weekday names", function(){
+        sheet.range("F4:G4").values([[ "Mon", "Wed" ]]);
+        var values = sheet.range("H4:L4").fillFrom("F4:G4").values();
+        deepEqual(values, [[ "Fri", "Sun", "Tue", "Thu", "Sat" ]]);
+    });
+
+    test("autofill from single string with number", function(){
+        sheet.range("F6").values([[ "Foo 1" ]]);
+        var values = sheet.range("G6:L6").fillFrom("F6").values();
+        deepEqual(values, [[ "Foo 2", "Foo 3", "Foo 4", "Foo 5", "Foo 6", "Foo 7" ]]);
+    });
+
+    test("autofill from single string with number with decimal part", function(){
+        sheet.range("F7").values([[ "Foo 1.5" ]]);
+        var values = sheet.range("G7:L7").fillFrom("F7").values();
+        deepEqual(values, [[ "Foo 1.6", "Foo 1.7", "Foo 1.8", "Foo 1.9", "Foo 1.10", "Foo 1.11" ]]);
+    });
+
+    test("autofill from multiple strings with numbers", function(){
+        sheet.range("F8:G8").values([[ "Foo 10", "Foo 8" ]]);
+        var values = sheet.range("H8:L8").fillFrom("F8:G8").values();
+        deepEqual(values, [[ "Foo 6", "Foo 4", "Foo 2", "Foo 0", "Foo -2" ]]);
+    });
+
+    test("autofill mixed series", function(){
+        sheet.range("F10:F13").values([[ 1 ], [ 4 ], [ "Bar 2" ], [ "Bar 2.5" ]]);
+        var values = sheet.range("F14:F25").fillFrom("F10:F13").values();
+        deepEqual(values, [
+            [  7 ], [ 10 ], [ "Bar 3" ], [ "Bar 2.6" ],
+            [ 13 ], [ 16 ], [ "Bar 4" ], [ "Bar 2.7" ],
+            [ 19 ], [ 22 ], [ "Bar 5" ], [ "Bar 2.8" ],
+        ]);
+    });
+
+    test("autofill month names", function(){
+        sheet.range("G10:G11").values([ ["January"], ["June"] ]);
+        var values = sheet.range("G12:G22").fillFrom("G10:G11").values();
+        deepEqual(values, [
+            [ "November" ],
+            [ "April" ],
+            [ "September" ],
+            [ "February" ],
+            [ "July" ],
+            [ "December" ],
+            [ "May" ],
+            [ "October" ],
+            [ "March" ],
+            [ "August" ],
+            [ "January" ]
+        ]);
+    });
+
+    test("autofill month names with no progression", function(){
+        sheet.range("H10:H12").values([ ["Jan"], [ "May" ], [ "Feb" ]]);
+        var values = sheet.range("H13:H22").fillFrom("H10:H12").values();
+        deepEqual(values, [
+            [ "Jan" ], [ "May" ], [ "Feb" ],
+            [ "Jan" ], [ "May" ], [ "Feb" ],
+            [ "Jan" ], [ "May" ], [ "Feb" ],
+            [ "Jan" ]
+        ]);
+    });
+
+    test("autofill mix month names and number", function(){
+        sheet.range("I10:I12").values([ ["Jan"], ["Feb"], [2] ]);
+        var values = sheet.range("I13:I30").fillFrom("I10:I12").values();
+        deepEqual(values, [
+            [ "Mar" ], [ "Apr" ], [ 3 ],
+            [ "May" ], [ "Jun" ], [ 4 ],
+            [ "Jul" ], [ "Aug" ], [ 5 ],
+            [ "Sep" ], [ "Oct" ], [ 6 ],
+            [ "Nov" ], [ "Dec" ], [ 7 ],
+            [ "Jan" ], [ "Feb" ], [ 8 ],
+        ]);
+    });
+
+    test("autofill date", function(){
+        var date = kendo.spreadsheet.calc.runtime.packDate(2015, 9, 26);
+        sheet.range("J10")
+            .value(date)
+            .format("yyyy-mm-dd");
+        var values = sheet.range("J11:J18").fillFrom("J10").values();
+        equal(date, 42303);
+        deepEqual(values, [
+            [ 42304 ],
+            [ 42305 ],
+            [ 42306 ],
+            [ 42307 ],
+            [ 42308 ],
+            [ 42309 ],
+            [ 42310 ],
+            [ 42311 ],
+        ]);
+        equal(sheet.range("J15").format(), "yyyy-mm-dd"); // keeps format
+    });
+
 })();
