@@ -204,9 +204,9 @@
         test("sets padding (single value)", function() {
             createTooltip({ padding: { top: 16 } });
             equal(element.css("padding-top"), "16px");
-            equal(element.css("padding-right"), "");
-            equal(element.css("padding-bottom"), "");
-            equal(element.css("padding-left"), "");
+            ok(element.css("padding-right") != "16px");
+            ok(element.css("padding-bottom") != "16px");
+            ok(element.css("padding-left") != "16");
         });
 
         test("sets opacity", function() {
