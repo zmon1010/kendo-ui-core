@@ -4,15 +4,13 @@
         resourceView;
 
     module("SchedulerView", {
-        setup: function(options) {
-            options = options ? options : {};
-            options = $.extend({
-                name: "SchedulerView"
-            }, options);
-
+        setup: function() {
             container = $('<div>');
-            view =  new kendo.ui.SchedulerView(container, options);
+            view =  new kendo.ui.SchedulerView(container, {
+                name: "SchedulerView"
+            });
             view.groups = [];
+
             resourceView =  view._addResourceView();
         },
         teardown: function() {
@@ -43,7 +41,6 @@
         collection.addTimeSlot(mockedElements[1], new Date(), new Date(), true);
         collection.addTimeSlot(mockedElements[2], new Date(), new Date(), true);
 
-
         //regular position
         ok(resourceView.timeSlotByPosition(23, 0));
         //position in gape between cell 1 and 2
@@ -52,7 +49,7 @@
         ok(resourceView.timeSlotByPosition(203.23, 0));
     });
 
-    test("slotByPosition works for verical slots when table cells have gaps between them", function() {
+    test("slotByPosition works for vertical slots when table cells have gaps between them", function() {
         //Required for IE and FF in some cases have gaps between cells reported
         //when using offsetLeft + offsetWidth -> offsetLeft
         //For more info: https://github.com/telerik/kendo/issues/4504
