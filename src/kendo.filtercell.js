@@ -384,7 +384,7 @@ var __meta__ = { // jshint ignore:line
         _createClearIcon: function() {
             var that = this;
 
-            $("<button type='button' class='k-button k-button-icon'/>")
+            $("<button type='button' class='k-button k-button-icon' title = " + that.options.messages.clear + "/>")
                 .attr(kendo.attr("bind"), "visible:operatorVisible")
                 .html("<span class='k-icon k-i-close'/>")
                 .click(proxy(that.clearFilter, that))
