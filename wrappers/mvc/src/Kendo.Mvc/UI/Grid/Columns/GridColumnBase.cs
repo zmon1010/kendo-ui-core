@@ -119,7 +119,7 @@ namespace Kendo.Mvc.UI
             {
                 var attributes = new Dictionary<string, object>();
 
-                HeaderHtmlAttributes.Each(attr =>
+                HeaderHtmlAttributes.Where(attr => attr.Value != null).Each(attr =>
                 {
                     attributes[HttpUtility.HtmlAttributeEncode(attr.Key)] = HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
                 });
