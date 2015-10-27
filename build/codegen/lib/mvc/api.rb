@@ -64,7 +64,7 @@ METHOD = ERB.new(%{
 ### <%= method_name %>
 <%= summary %>
 <% if owner.name.include?('EventBuilder') %>
-For additional information check the [<%= js_name %>](/api/<%= suite %>/<%= owner.js_name %>#events-<%= js_name %>) event documentation.
+For additional information check the [<%= js_name %> event](<%= js_api_link %>#events-<%= js_name %>) documentation.
 <% end %>
 <% if !parameters.empty? %>
 #### Parameters
@@ -90,14 +90,18 @@ For additional information check the [<%= js_name %>](/api/<%= suite %>/<%= owne
             name.gsub(/\(.*\)/, '').camelize
         end
 
+        def js_api_link
+            "/api/javascript/#{namespace}/#{owner.js_name}"
+        end
+
         def method_name
             name.gsub('|', ',').gsub(/</,'\\<').gsub(/>/, '\\>').gsub(/\((.*)\)/, '(\1)').sub(/(.*)T\d\(/, '\1(')
         end
 
-        def suite
-            return 'dataviz' if owner.name =~ /Chart|Gauge|Sparkline|StockChart|Map|Barcode|Diagram|LinearGauge|QRCode|RadialGauge|TreeMap/i
-            return 'framework' if owner.name.include?('DataSource')
-            'web'
+        def namespace
+            return 'dataviz/ui' if owner.name =~ /Chart|Gauge|Sparkline|StockChart|Map|Barcode|Diagram|LinearGauge|QRCode|RadialGauge|TreeMap/i
+            return 'data' if owner.name.include?('DataSource')
+            'ui'
         end
     end
 
