@@ -16,40 +16,51 @@
     var runtime = spreadsheet.calc.runtime;
     var Formula = runtime.Formula;
 
-    Range.prototype.fillFrom = function(srcRange, ascending) {
+    // `srcRange`: the range containing data that we wish to fill.  `direction`: 0↓, 1→, 2↑, 3←.  So
+    // when bit 0 is set we're doing horizontal filling, and when bit 1 is set we're doing it in
+    // reverse order.
+    Range.prototype.fillFrom = function(srcRange, direction) {
         if (typeof srcRange == "string") {
             srcRange = this._sheet.range(srcRange);
         }
         var n, src = srcRange._ref.toRangeRef();
         var dest = this._ref.toRangeRef();
         var data = srcRange._properties();
-        var tr = src.width() == dest.width();
-        if (tr) {
-            data = transpose(data);
-            if (ascending == null) {
-                ascending = dest.topLeft.row > src.topLeft.row;
+        if (direction == null) {
+            // try to determine based on ranges location/geometry
+            if (src.topLeft.col == dest.topLeft.col) {
+                // assume vertical filling
+                direction = src.topLeft.row < dest.topLeft.row ? 0 : 2;
+            } else if (src.topLeft.row == dest.topLeft.row) {
+                direction = src.topLeft.col < dest.topLeft.col ? 1 : 3;
+            } else {
+                throw new Error("Cannot determine fill direction");
             }
-            n = dest.height();
-        } else if (src.height() == dest.height()) {
-            if (ascending == null) {
-                ascending = dest.topLeft.col > src.topLeft.col;
-            }
-            n = dest.width();
-        } else {
-            throw new Error("Incompatible autoFill ranges");
         }
-        var fill = [];
+        var horizontal = direction & 1;
+        var descending = direction & 2;
+        if ((horizontal && src.height() != dest.height()) ||
+            (!horizontal && src.width() != dest.width())) {
+            throw new Error("Incompatible auto-fill ranges");
+        }
+        if (!horizontal) {
+            data = transpose(data);
+            n = dest.height();
+        } else {
+            n = dest.width();
+        }
+        var fill = new Array(data.length);
         for (var i = 0; i < data.length; ++i) {
             var s = data[i];
             var f = findSeries(s);
-            var a = fill[i] = [];
+            var a = fill[i] = new Array(n);
             for (var j = 0; j < n; ++j) {
-                var idx = ascending ? s.length + j : -j;
-                var srcIdx = ascending ? (j % s.length) : s.length - (j % s.length) - 1;
-                a[j] = f(idx, srcIdx);
+                var idx = descending ? -j - 1 : s.length + j;
+                var srcIdx = descending ? s.length - (j % s.length) - 1 : (j % s.length);
+                a[descending ? n - j - 1 : j] = f(idx, srcIdx);
             }
         }
-        if (tr) {
+        if (!horizontal) {
             fill = transpose(fill);
         }
         this._properties(fill);

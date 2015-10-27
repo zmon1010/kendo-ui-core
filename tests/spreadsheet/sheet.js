@@ -711,4 +711,12 @@
         equal(sheet.range("J15").format(), "yyyy-mm-dd"); // keeps format
     });
 
+    test("autofill in reverse order", function(){
+        sheet.range("A10:A12").values([ [2], [4], [6] ]);
+        var values = sheet.range("A1:A9").fillFrom("A10:A12").values();
+        deepEqual(values, [
+            [-16], [-14], [-12], [-10], [-8], [-6], [-4], [-2], [0]
+        ]);
+    });
+
 })();
