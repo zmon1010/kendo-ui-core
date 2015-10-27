@@ -589,7 +589,7 @@
                     var hasHTML = false;
                     var hasPlainText = false;
                     //Firefox uses DOMStringList, needs special handling
-                    if(e.originalEvent.clipboardData.types instanceof DOMStringList) {
+                    if(window.DOMStringList && e.originalEvent.clipboardData.types instanceof window.DOMStringList) {
                         hasHTML = e.originalEvent.clipboardData.types.contains("text/html");
                         hasPlainText = e.originalEvent.clipboardData.types.contains("text/plain");
                     } else {
