@@ -1069,14 +1069,17 @@
                     '</div>' +
 
                     '<div data-bind="invisible: isAny">' +
+                        '<div class="k-action-buttons"></div>' +
                         '<div class="k-edit-label"><label>' + messages.validationDialog.labels.onInvalidData + ':</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input type="radio" name="validationType" value="reject" data-bind="checked: type" />' +
-                            messages.validationDialog.labels.rejectInput +
-                        '</div>' +
-                        '<div class="k-edit-field">' +
-                            '<input type="radio" name="validationType" value="warning" data-bind="checked: type" />' +
-                            messages.validationDialog.labels.showWarning +
+                            '<input type="radio" id="validationTypeReject" name="validationType" value="reject" data-bind="checked: type" class="k-radio" />' +
+                            '<label for="validationTypeReject" class="k-radio-label">' +
+                                messages.validationDialog.labels.rejectInput +
+                            '</label> ' +
+                            '<input type="radio" id="validationTypeWarning" name="validationType" value="warning" data-bind="checked: type" class="k-radio" />' +
+                            '<label for="validationTypeWarning" class="k-radio-label">' +
+                                messages.validationDialog.labels.showWarning +
+                            '</label>' +
                         '</div>' +
                     '</div>' +
 
