@@ -586,18 +586,28 @@
             if(e) {
                 if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
                     e.preventDefault();
-                    if (/text\/html/.test(e.originalEvent.clipboardData.types)) {
+                    var hasHTML = false;
+                    var hasPlainText = false;
+                    //Firefox uses DOMStringList, needs special handling
+                    if(e.originalEvent.clipboardData.types instanceof DOMStringList) {
+                        hasHTML = e.originalEvent.clipboardData.types.contains("text/html");
+                        hasPlainText = e.originalEvent.clipboardData.types.contains("text/plain");
+                    } else {
+                        hasHTML = (/text\/html/.test(e.originalEvent.clipboardData.types));
+                        hasPlainText = (/text\/plain/.test(e.originalEvent.clipboardData.types));
+                    }
+                    if (hasHTML) {
                         html = e.originalEvent.clipboardData.getData('text/html');
                     }
-                    if (/text\/plain/.test(e.originalEvent.clipboardData.types)) {
-                        plain = e.originalEvent.clipboardData.getData('text/plain');
+                    if (hasPlainText) {
+                        plain = e.originalEvent.clipboardData.getData('text/plain').trim();
                     }
                 } else {
                     //workaround for IE's lack of access to the HTML clipboard data
                     var table = this.clipboardElement.find("table.kendo-clipboard-"+ this.clipboard._uid).detach();
                     this.clipboardElement.empty();
                     setTimeout(function() {
-                        this.clipboard.external({html: this.clipboardElement.html(), plain: window.clipboardData.getData("Text")});
+                        this.clipboard.external({html: this.clipboardElement.html(), plain: window.clipboardData.getData("Text").trim()});
                         this.clipboardElement.empty().append(table);
                         this._execute({
                             command: "PasteCommand",
@@ -607,7 +617,6 @@
                     }.bind(this));
                     return;
                 }
-
             } else {
                 if(kendo.support.browser.msie) {
                     this.clipboardElement.focus().select();
