@@ -4461,9 +4461,16 @@ var __meta__ = { // jshint ignore:line
             return true;
         },
 
-        _toggleCurrent: function(current) {
+        _toggleCurrent: function(current, editable) {
             var row = current.parent();
-            if (row.is(".k-master-row,.k-grouping-row")) {
+
+            if (row.is(".k-grouping-row")) {
+                row.find(".k-icon:first").click();
+
+                return true;
+            }
+
+            if (!editable && row.is(".k-master-row")) {
                 row.find(".k-icon:first").click();
 
                 return true;
@@ -4487,7 +4494,7 @@ var __meta__ = { // jshint ignore:line
                 return true;
             }
 
-            if (!editable && this._toggleCurrent(current)) {
+            if (this._toggleCurrent(current, editable)) {
                 return true;
             }
 

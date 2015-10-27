@@ -629,6 +629,42 @@
         equal(document.activeElement, $("#button")[0]);
     });
 
+    test("enter key on group header row collapse it", function() {
+        var grid = setup();
+        grid.dataSource.group({ field: "foo", dir: "asc" });
+
+        grid.table.focus().press(kendo.keys.ENTER);
+
+        ok(grid.table.find(".k-grouping-row").first().find(".k-i-expand").length);
+    });
+
+    test("enter key on collapsed group header row expands it", function() {
+        var grid = setup();
+        grid.dataSource.group({ field: "foo", dir: "asc" });
+
+        grid.table.focus().press(kendo.keys.ENTER).press(kendo.keys.ENTER);
+
+        ok(grid.table.find(".k-grouping-row").first().find(".k-i-collapse").length);
+    });
+
+    test("enter key on group header row collapse it (in editale grid)", function() {
+        var grid = setup({ editable: true });
+        grid.dataSource.group({ field: "foo", dir: "asc" });
+
+        grid.table.focus().press(kendo.keys.ENTER);
+
+        ok(grid.table.find(".k-grouping-row").first().find(".k-i-expand").length);
+    });
+
+    test("enter key on collapsed group header row expands it (in editale grid)", function() {
+        var grid = setup({ editable: true });
+        grid.dataSource.group({ field: "foo", dir: "asc" });
+
+        grid.table.focus().press(kendo.keys.ENTER).press(kendo.keys.ENTER);
+
+        ok(grid.table.find(".k-grouping-row").first().find(".k-i-collapse").length);
+    });
+
     test("enter key on master row expands it", function() {
         var grid = setup({ detailTemplate: "<input class='foo' />" });
         grid.table.focus().press(kendo.keys.ENTER);
