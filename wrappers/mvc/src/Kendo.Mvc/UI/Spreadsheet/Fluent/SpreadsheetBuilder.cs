@@ -120,6 +120,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// A boolean value indicating if the sheetsbar should be displayed.
+        /// </summary>
+        /// <param name="value">The value that configures the sheetsbar.</param>
+        public SpreadsheetBuilder Sheetsbar(bool value)
+        {
+            container.Sheetsbar = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// A boolean value indicating if the toolbar should be displayed.
         /// </summary>
         /// <param name="value">The value that configures the toolbar.</param>

@@ -121,6 +121,14 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("rows", value);
     }
 
+    public boolean getSheetsbar() {
+        return (Boolean)getProperty("sheetsbar");
+    }
+
+    public void setSheetsbar(boolean value) {
+        setProperty("sheetsbar", value);
+    }
+
     public boolean getToolbar() {
         return (Boolean)getProperty("toolbar");
     }

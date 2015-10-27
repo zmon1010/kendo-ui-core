@@ -33944,6 +33944,12 @@ and is about to render it.</description>
             <type>float</type>
         </attribute>
         <attribute>
+            <description>A boolean value indicating if the sheetsbar should be displayed.</description>
+            <name>sheetsbar</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>A boolean value indicating if the toolbar should be displayed.</description>
             <name>toolbar</name>
             <rtexprvalue>true</rtexprvalue>

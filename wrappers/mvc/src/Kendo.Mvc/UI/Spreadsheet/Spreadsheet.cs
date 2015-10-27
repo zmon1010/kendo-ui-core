@@ -54,6 +54,8 @@ namespace Kendo.Mvc.UI
             set;
         }
         
+        public bool? Sheetsbar { get; set; }
+        
         public bool? Toolbar { get; set; }
         
         //<< Fields
@@ -109,6 +111,11 @@ namespace Kendo.Mvc.UI
             {
                 json["sheets"] = sheets;
             }
+            if (Sheetsbar.HasValue)
+            {
+                json["sheetsbar"] = Sheetsbar;
+            }
+                
             if (Toolbar.HasValue)
             {
                 json["toolbar"] = Toolbar;

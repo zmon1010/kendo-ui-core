@@ -90,6 +90,15 @@ class Spreadsheet extends \Kendo\UI\Widget {
     }
 
     /**
+    * A boolean value indicating if the sheetsbar should be displayed.
+    * @param boolean $value
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function sheetsbar($value) {
+        return $this->setProperty('sheetsbar', $value);
+    }
+
+    /**
     * A boolean value indicating if the toolbar should be displayed.
     * @param boolean $value
     * @return \Kendo\UI\Spreadsheet
