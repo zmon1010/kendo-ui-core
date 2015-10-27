@@ -4,9 +4,8 @@ require 'zip'
 README_DIR = 'resources'
 THIRD_PARTY_LEGAL_DIR = File.join('resources', 'legal', 'third-party')
 XVFB_RUN = "xvfb-run"
-GRUNT = File.join(Rake.application.original_dir, "node_modules", ".bin", "grunt")
 GULP = File.join(Rake.application.original_dir, "node_modules", ".bin", "gulp")
-GRUNT_XVFB = system("which", XVFB_RUN, :out => "/dev/null") ? [XVFB_RUN, "-a", GRUNT] : [GRUNT]
+GULP_XVFB = system("which", XVFB_RUN, :out => "/dev/null") ? [XVFB_RUN, "-a", GULP] : [GULP]
 METAJS = File.join(Rake.application.original_dir, "build", "kendo-meta.js");
 LESSC = File.join(Rake.application.original_dir, "build", "less-js", "bin", "lessc")
 CSSMIN = File.join(Rake.application.original_dir, "node_modules", "cssmin", "bin", "cssmin")
@@ -78,16 +77,12 @@ def mvn(name, options)
     sh "#{cmd}-f #{name} #{options}", :verbose => VERBOSE
 end
 
-def grunt(*args)
-    run_shell([GRUNT], args)
-end
-
 def gulp(*args)
     run_shell([GULP], args)
 end
 
-def grunt_xvfb(*args)
-    run_shell(GRUNT_XVFB, args)
+def gulp_xvfb(*args)
+    run_shell(GULP_XVFB, args)
 end
 
 def run_shell(cmd, args)

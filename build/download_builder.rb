@@ -15,16 +15,11 @@ BUILDER_INDEX_TEMPLATE = ERB.new(File.read(File.join('download-builder', 'index.
 namespace :download_builder do
 
     task :sources => :less do
-        grunt "download_builder"
-        core = File.join(BUILDER_DEPLOY_PATH, 'content/js/kendo.core.min.js')
-
-        contents = File.read(core)
-        contents.sub!("$KENDO_VERSION", VERSION)
-        File.write(core, contents)
+        gulp "download_builder"
     end
 
-    task :tests => :js do
-        grunt_xvfb "download_builder_tests", "--junit-results=download_builder-test-results.xml", "--single-run=true"
+    task :tests do
+        gulp_xvfb "download_builder_tests", "--junit-results=download_builder-test-results.xml", "--single-run=true"
     end
 
     def download_builder_prerequisites(path, service_url)
@@ -56,7 +51,6 @@ namespace :download_builder do
         index_path = File.join(dist_path, 'index.html')
         task index_path do |t|
             File.open(index_path, 'w') do |file|
-                root = service_url
                 file.write BUILDER_INDEX_TEMPLATE.result(binding)
             end
         end
@@ -103,6 +97,6 @@ namespace :download_builder do
     desc "Upload download builder files on telerik.com"
     task :upload do
         upload_download_builder_files \
-    end  
+    end
 end
 

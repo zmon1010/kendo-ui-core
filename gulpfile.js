@@ -25,6 +25,7 @@ var umdWrapToCore = require('./build/gulp/wrap-umd');
 var gatherAmd = require('./build/gulp/gather-amd');
 var uglify = require('./build/gulp/uglify');
 var requireDir = require('require-dir');
+var runSequence = require('run-sequence');
 
 requireDir('./build/gulp/tasks');
 
@@ -168,4 +169,8 @@ gulp.task("jshint", function() {
         .pipe(jshint.reporter('fail'));
 
     // console.log(files);
+});
+
+gulp.task('ci', function(done) {
+  runSequence([ 'scripts', 'styles' ], 'karma-jenkins', done);
 });

@@ -23,20 +23,21 @@ namespace :tests do
     desc "Run tests in supported jQuery versions"
     task :jquery => DEPS do
         SUPPORTED_JQUERY_VERSIONS.each do |version|
-            grunt_xvfb "ci", "--junit-results=jquery-#{version}-test-results.xml", "--single-run=true", "--jquery=#{version}"
+            gulp_xvfb "ci", "--junit-results=jquery-#{version}-test-results.xml", "--single-run=true", "--jquery=#{version}"
         end
     end
 
     desc "Run tests in firefox"
     task :firefox => DEPS do
-        grunt_xvfb "ci", "--junit-results=firefox-test-results.xml", "--single-run=true", "--browser=Firefox"
+        gulp_xvfb "ci", "--junit-results=firefox-test-results.xml", "--single-run=true", "--browser=Firefox"
     end
 
     %w[CI Production TZ].each do |env|
         output = "#{env}-test-results.xml"
 
         file output => DEPS do |t|
-            grunt_xvfb "jshint", "ci", "--junit-results=#{output}", "--single-run=true"
+            gulp "jshint"
+            gulp_xvfb "ci", "--junit-results=#{output}", "--single-run=true"
         end
 
         desc "Run #{env} tests"

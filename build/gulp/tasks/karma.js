@@ -10,7 +10,7 @@ var meta = require("../../kendo-meta.js");
 var allKendoFiles = meta.loadAll().map((f) => path.join('src', f));
 
 // support different test sets for public|private repo
-var TESTS = require(glob.sync('../../grunt/test-paths-*.js', { cwd: __dirname })[0]);
+var TESTS = require(glob.sync('../../test-paths-*.js', { cwd: __dirname })[0]);
 
 var browserOption = argv.browser;
 var testsOption = argv.tests;
