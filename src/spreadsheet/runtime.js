@@ -1227,6 +1227,8 @@
 
     spreadsheet.dateToNumber = dateToSerial;
     spreadsheet.numberToDate = serialToDate;
+    spreadsheet.defineFunction = defineFunction;
+    spreadsheet.CalcError = CalcError;
 
     exports.defineFunction = defineFunction;
     exports.defineAlias = function(alias, name) {
