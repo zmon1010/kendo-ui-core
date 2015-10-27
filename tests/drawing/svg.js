@@ -994,7 +994,7 @@
 
         module("TextNode", {
             setup: function() {
-                text = new d.Text("Foo", new Point(10, 20), { font: "arial" });
+                text = new d.Text("Foo&Bar", new Point(10, 20), { font: "'serif'" });
                 text.measure = function() {
                     return {
                         width: 20, height: 10, baseline: 15
@@ -1009,16 +1009,11 @@
             contains(textNode.render(), "x='10' y='35'");
         });
 
-        test("renders content", function() {
-            contains(textNode.render(), "Foo");
+        test("renders encoded content", function() {
+            contains(textNode.render(), "Foo&amp;Bar");
         });
 
-        test("renders font", function() {
-            contains(textNode.render(), "font:arial;");
-        });
-
-        test("encodes entites in font name", function() {
-            text.options.set("font", "'serif'");
+        test("renders encoded font", function() {
             contains(textNode.render(), "font:&#39;serif&#39;;");
         });
 
@@ -1043,21 +1038,21 @@
             text.position().scale(2);
         });
 
-        test("optionsChange sets font", function() {
+        test("optionsChange does not encode font", function() {
             textNode.attr = function(name, value) {
                 if (name == "style") {
-                    equal(value, "font:foo;");
+                    equal(value, "font:'arial';");
                 }
             };
 
-            text.options.set("font", "foo");
+            text.options.set("font", "'arial'");
         });
 
-        test("optionsChange sets content", function() {
+        test("optionsChange does not encode content", function() {
             textNode.element = {};
 
-            text.content("Bar");
-            equal(textNode.element.textContent, "Bar");
+            text.content("Bar&Baz");
+            equal(textNode.element.textContent, "Bar&Baz");
         });
     })();
 
@@ -1070,7 +1065,7 @@
 
         module("ImageNode", {
             setup: function() {
-                image = new d.Image("Foo", new g.Rect(new g.Point(10, 20), [90, 80]));
+                image = new d.Image("Foo&Bar", new g.Rect(new g.Point(10, 20), [90, 80]));
                 imageNode = new svg.ImageNode(image);
             }
         });
@@ -1091,12 +1086,7 @@
             ok(imageNode.render().indexOf("height='80px'") > -1);
         });
 
-        test("renders source", function() {
-            ok(imageNode.render().indexOf("xlink:href='Foo'") > -1);
-        });
-
-        test("encodes source", function() {
-            imageNode.srcElement.src("Foo&Bar");
+        test("renders encoded source", function() {
             ok(imageNode.render().indexOf("xlink:href='Foo&amp;Bar'") > -1);
         });
 
@@ -1129,13 +1119,13 @@
             image.rect().setSize([80, 60]);
         });
 
-        test("optionsChange sets source", function() {
+        test("optionsChange does not encode source", function() {
             imageNode.attr = function(name, value) {
                 equal(name, "xlink:href");
-                equal(value, "Bar");
+                equal(value, "Bar&Baz");
             };
 
-            image.src("Bar");
+            image.src("Bar&Baz");
         });
     })();
 

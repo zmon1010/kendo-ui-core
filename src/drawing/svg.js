@@ -347,7 +347,7 @@
         },
 
         renderStyle: function() {
-            return renderAttr("style", util.renderStyle(this.mapStyle()));
+            return renderAttr("style", util.renderStyle(this.mapStyle(true)));
         },
 
         renderOpacity: function() {
@@ -850,11 +850,15 @@
             PathNode.fn.optionsChange.call(this, e);
         },
 
-        mapStyle: function() {
-            var style = PathNode.fn.mapStyle.call(this);
+        mapStyle: function(encode) {
+            var style = PathNode.fn.mapStyle.call(this, encode);
             var font = this.srcElement.options.font;
 
-            style.push(["font", kendo.htmlEncode(font)]);
+            if (encode) {
+                font = kendo.htmlEncode(font);
+            }
+
+            style.push(["font", font]);
 
             return style;
         },
@@ -865,14 +869,10 @@
             return pos.clone().setY(pos.y + size.baseline);
         },
 
-        content: function() {
+        renderContent: function() {
             var content = this.srcElement.content();
-
-            var options = this.root().options;
-            if (options && options.encodeText) {
-                content = decodeEntities(content);
-                content = kendo.htmlEncode(content);
-            }
+            content = decodeEntities(content);
+            content = kendo.htmlEncode(content);
 
             return content;
         },
@@ -883,7 +883,7 @@
             "#= d.renderStroke() # " +
             "#= d.renderTransform() # " +
             "#= d.renderDefinitions() # " +
-            "#= d.renderFill() #>#= d.content() #</text>"
+            "#= d.renderFill() #>#= d.renderContent() #</text>"
         )
     });
 
@@ -917,13 +917,18 @@
             return renderAllAttr(this.mapPosition());
         },
 
-        mapSource: function() {
-            var src = kendo.htmlEncode(this.srcElement.src());
+        mapSource: function(encode) {
+            var src = this.srcElement.src();
+
+            if (encode) {
+                src = kendo.htmlEncode(src);
+            }
+
             return [["xlink:href", src]];
         },
 
         renderSource: function() {
-            return renderAllAttr(this.mapSource());
+            return renderAllAttr(this.mapSource(true));
         },
 
         template: renderTemplate(
@@ -1150,7 +1155,7 @@
     }
 
     function exportGroup(group) {
-        var root = new RootNode({ encodeText: true });
+        var root = new RootNode();
 
         var bbox = group.clippedBBox();
         if (bbox) {
