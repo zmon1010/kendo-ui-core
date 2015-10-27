@@ -384,7 +384,7 @@
     });
 
     test("fromJSON loads borders", function() {
-        var border = { color: "#f00", size: "3px" };
+        var border = { color: "#f00", size: 3 };
 
         sheet.fromJSON(singleCell({ borderBottom: border }));
         deepEqual(sheet.range("A1").borderBottom(), border);

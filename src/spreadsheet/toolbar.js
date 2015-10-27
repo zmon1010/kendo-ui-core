@@ -736,7 +736,7 @@
                 command: "BorderChangeCommand",
                 options: {
                     border: e.type,
-                    style: { size: "1px", color: e.color }
+                    style: { size: 1, color: e.color }
                 }
             });
         }

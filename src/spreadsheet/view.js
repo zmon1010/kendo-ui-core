@@ -72,7 +72,7 @@
     function cellBorder(value) {
         return [
             "solid",
-            value.size || "1px",
+            (value.size || 1) + "px",
             value.color || "#000"
         ].join(" ");
     }

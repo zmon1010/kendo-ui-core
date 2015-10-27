@@ -329,7 +329,7 @@
 
         spreadsheet.activeSheet().select("A1:B2");
 
-        dialog.value({ type: "allBorders", style: { size: "1px", color: "#ff0000" } });
+        dialog.value({ type: "allBorders", style: { size: 1, color: "#ff0000" } });
         dialog.apply();
     });
 

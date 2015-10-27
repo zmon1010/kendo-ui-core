@@ -31,7 +31,7 @@
     });
 
     test("renders border size", function() {
-        sheet.fromJSON(singleCell({ borderBottom: { size: "2px" } }));
+        sheet.fromJSON(singleCell({ borderBottom: { size: 2 } }));
 
         equal(firstDataCell(element)[0].style.borderBottomWidth, "2px");
     });
@@ -61,7 +61,7 @@
         sheet.fromJSON({ rows: [
             { cells: [
                 { },
-                { borderLeft: { size: "3px" } }
+                { borderLeft: { size: 3 } }
             ] }
         ] });
 
@@ -71,7 +71,7 @@
     });
 
     test("borderLeft of first cell can be set", function() {
-        sheet.fromJSON(singleCell({ borderLeft: { size: "1px", color: "rgb(255, 0 0)" } }));
+        sheet.fromJSON(singleCell({ borderLeft: { size: 1, color: "rgb(255, 0 0)" } }));
 
         ok(true);
     });
@@ -82,7 +82,7 @@
                 { }
             ] },
             { cells: [
-                { borderTop: { size: "3px" } }
+                { borderTop: { size: 3 } }
             ] }
         ] });
 
@@ -92,14 +92,14 @@
     });
 
     test("borderTop of first cell can be set", function() {
-        sheet.fromJSON(singleCell({ borderTop: { size: "1px", color: "rgb(255, 0 0)" } }));
+        sheet.fromJSON(singleCell({ borderTop: { size: 1, color: "rgb(255, 0 0)" } }));
 
         ok(true);
     });
 
     test("add 'k-dirty-cell' of first cell when value is not valid", function() {
         var cell = singleCell({
-            borderTop: { size: "1px", color: "rgb(255, 0 0)" },
+            borderTop: { size: 1, color: "rgb(255, 0 0)" },
             validation: { from: "10", comparerType: "equalTo", messageTemplate: "Enter valid value!" }
         });
         sheet.fromJSON(cell);
@@ -111,7 +111,7 @@
 
     test("add 'k-dirty' element to invalid cell", function() {
         var cell = singleCell({
-            borderTop: { size: "1px", color: "rgb(255, 0 0)" },
+            borderTop: { size: 1, color: "rgb(255, 0 0)" },
             validation: { from: "10", comparerType: "equalTo", messageTemplate: "Enter valid value!" }
         });
         sheet.fromJSON(cell);
@@ -126,7 +126,7 @@
     test("add cell title if element is not valid", function() {
         var title = "Enter valid value!";
         var cell = singleCell({
-            borderTop: { size: "1px", color: "rgb(255, 0 0)" },
+            borderTop: { size: 1, color: "rgb(255, 0 0)" },
             validation: { from: "10", comparerType: "equalTo", messageTemplate: title }
         });
         sheet.fromJSON(cell);

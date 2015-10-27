@@ -121,7 +121,7 @@
     }
 
     test("allBorders command sets borders to all cells", function() {
-        var command = new BorderChangeCommand({ border: "allBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "allBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("A1:B2"));
 
         command.exec();
@@ -132,7 +132,7 @@
     });
 
     test("allBorders command sets borders to all cells (union range)", function() {
-        var command = new BorderChangeCommand({ border: "allBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "allBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2, C3"));
 
         command.exec();
@@ -143,16 +143,16 @@
     test("allBorders command triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true))
 
-        var command = new BorderChangeCommand({ border: "allBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "allBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2, C3"));
         command.exec();
     });
 
     test("allBorders command can be undone", function() {
-        var oldState = { size: "1px", color: "#0F0" };
+        var oldState = { size: 1, color: "#0F0" };
         sheet.range("B2:C2").borderTop(oldState);
 
-        var command = new BorderChangeCommand({ border: "allBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "allBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("A2:C2"));
 
         command.exec();
@@ -167,7 +167,7 @@
     });
 
     test("noBorders command clears all borders", function() {
-        var command = new BorderChangeCommand({ border: "allBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "allBorders", style: { size: 1, color: "#F00" } });
         var command = new BorderChangeCommand({ border: "noBorders", style: {} });
         command.range(sheet.range("A1:B2"));
 
@@ -187,7 +187,7 @@
     });
 
     test("noBorders command can be undone", function() {
-        var oldState = { size: "1px", color: "#0F0" };
+        var oldState = { size: 1, color: "#0F0" };
         sheet.range("B2:C2").borderTop(oldState);
 
         var command = new BorderChangeCommand({ border: "noBorders", style: {} });
@@ -204,7 +204,7 @@
     });
 
     test("borderLeft commands sets border only on the leftColumn", function() {
-        var command = new BorderChangeCommand({ border: "leftBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "leftBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B1:C2"));
 
         command.exec();
@@ -215,7 +215,7 @@
     });
 
     test("borderLeft commands sets border only on the leftColumn (union range)", function() {
-        var command = new BorderChangeCommand({ border: "leftBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "leftBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B1:B2, C2:C3"));
 
         command.exec();
@@ -230,16 +230,16 @@
     test("borderLeft command triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true))
 
-        var command = new BorderChangeCommand({ border: "leftBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "leftBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B1:B2, C2:C3"));
         command.exec();
     });
 
     test("borderLeft command can be undone", function() {
-        var oldState = { size: "1px", color: "#0F0" };
+        var oldState = { size: 1, color: "#0F0" };
         sheet.range("B2:C2").borderTop(oldState);
 
-        var command = new BorderChangeCommand({ border: "leftBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "leftBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2"));
 
         command.exec();
@@ -252,7 +252,7 @@
     });
 
     test("borderRight commands sets border only on the rightColumn", function() {
-        var command = new BorderChangeCommand({ border: "rightBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "rightBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("A1:B2"));
 
         command.exec();
@@ -263,7 +263,7 @@
     });
 
     test("borderRight commands sets border only on the rightColumn (union range)", function() {
-        var command = new BorderChangeCommand({ border: "rightBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "rightBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B1:B2,C2:C3"));
 
         command.exec();
@@ -278,13 +278,13 @@
     test("borderRight command triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true))
 
-        var command = new BorderChangeCommand({ border: "rightBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "rightBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B1:B2,C2:C3"));
         command.exec();
     });
 
     test("borderTop commands sets border only on the topRow", function() {
-        var command = new BorderChangeCommand({ border: "topBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "topBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("A2:B3"));
 
         command.exec();
@@ -295,7 +295,7 @@
     });
 
     test("borderTop commands sets border only on the topRow (union range)", function() {
-        var command = new BorderChangeCommand({ border: "topBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "topBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:B3, 3:3"));
 
         command.exec();
@@ -310,13 +310,13 @@
     test("borderTop command triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true))
 
-        var command = new BorderChangeCommand({ border: "topBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "topBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:B3, 3:3"));
         command.exec();
     });
 
     test("borderBottom commands sets border only on the bottomRow", function() {
-        var command = new BorderChangeCommand({ border: "bottomBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "bottomBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("A1:B2"));
 
         command.exec();
@@ -327,7 +327,7 @@
     });
 
     test("borderBottom commands sets border only on the bottomRow (union range)", function() {
-        var command = new BorderChangeCommand({ border: "bottomBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "bottomBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:B3, 2:2"));
 
         command.exec();
@@ -342,13 +342,13 @@
     test("borderBottom command triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true))
 
-        var command = new BorderChangeCommand({ border: "bottomBorder", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "bottomBorder", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:B3, 2:2"));
         command.exec();
     });
 
     test("outsideBorders commands sets borders around the selection", function() {
-        var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:C3"));
 
         command.exec();
@@ -361,16 +361,16 @@
     test("outsideBorders command triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true))
 
-        var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:C3"));
         command.exec();
     });
 
     test("outsideBorders command can be undone", function() {
-        var oldState = { size: "1px", color: "#0F0" };
+        var oldState = { size: 1, color: "#0F0" };
         sheet.range("B2:C2").borderTop(oldState);
 
-        var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("A2,C2"));
 
         command.exec();
@@ -384,7 +384,7 @@
     });
 
     test("insideBorders commands sets borders inside the selection", function() {
-        var command = new BorderChangeCommand({ border: "insideBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "insideBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:C3"));
 
         command.exec();
@@ -397,13 +397,13 @@
     test("insideBorders command triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true))
 
-        var command = new BorderChangeCommand({ border: "insideBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "insideBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:C3"));
         command.exec();
     });
 
     test("insideHorizontalBorders commands sets bottomBorder to each row of the selection except the last one", function() {
-        var command = new BorderChangeCommand({ border: "insideHorizontalBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "insideHorizontalBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:C3"));
 
         command.exec();
@@ -416,13 +416,13 @@
     test("insideHorizontalBorders command triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true))
 
-        var command = new BorderChangeCommand({ border: "insideHorizontalBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "insideHorizontalBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:C3"));
         command.exec();
     });
 
     test("insideVerticalBorders commands sets bottomRight to each column of the selection except the last one", function() {
-        var command = new BorderChangeCommand({ border: "insideVerticalBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "insideVerticalBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:C3"));
 
         command.exec();
@@ -435,16 +435,16 @@
     test("insideVerticalBorders command triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true))
 
-        var command = new BorderChangeCommand({ border: "insideVerticalBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "insideVerticalBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("B2:C3"));
         command.exec();
     });
 
     test("insideVerticalBorders command can be undone", function() {
-        var oldState = { size: "1px", color: "#0F0" };
+        var oldState = { size: 1, color: "#0F0" };
         sheet.range("B2").borderTop(oldState);
 
-        var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: "1px", color: "#F00" } });
+        var command = new BorderChangeCommand({ border: "outsideBorders", style: { size: 1, color: "#F00" } });
         command.range(sheet.range("A2,C2"));
 
         command.exec();
