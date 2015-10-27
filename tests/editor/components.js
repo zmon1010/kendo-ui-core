@@ -1,12 +1,10 @@
 (function(){
 
 var editor;
-var colorpicker;
 
 editor_module("editor components", {
     setup: function() {
         editor = $("#editor-fixture").data("kendoEditor");
-        colorpicker = $(editor.element).closest(".k-editor").find(".k-colorpicker:first").data("kendoColorPicker");
 
         $.fn.press = function(key, ctrl, shift) {
             return this.trigger( { type: "keydown", keyCode: key, ctrlKey: ctrl, shiftKey: shift } );
@@ -35,10 +33,6 @@ editor_module("editor components", {
             items: [{ text: "foo", value: "bar" }]
         }
     ]
-});
-
-test('colorpicker value returns black when no value has been selected', function() {
-    equal(colorpicker.value(), '#000000');
 });
 
 var componentType = kendo.support.browser.msie ? "kendoDropDownList" : "kendoComboBox";

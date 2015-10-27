@@ -31,25 +31,25 @@ test("editor uses defaultValue if encoded and has encoded value", function() {
 });
 
 test("color tools react to palette definition", function() {
-    var customColor = "#ff1ff1";
+    var palette = ["#ff1ff1"];
+
     setup("bar", {
         tools: [
-            { name: "foreColor", palette: [customColor] }
+            { name: "foreColor", palette: palette }
         ]
     });
 
     var colorpicker = $("[data-role=colorpicker]").eq(0);
 
     equal(colorpicker.length, 1);
-    deepEqual(colorpicker.data("kendoColorPicker").options.palette, [customColor]);
-    equal(colorpicker.data("kendoColorPicker").value(), customColor);
+    deepEqual(colorpicker.data("kendoColorPicker").options.palette, palette);
 });
 
 test("define global ColorTool palette", function() {
-    var customColor = "#ff1ff1";
+    var palette = ["#ff1ff1"];
 
     var defaultPalette = kendo.ui.editor.ColorTool.fn.options.palette;
-    kendo.ui.editor.ColorTool.fn.options.palette = [customColor];
+    kendo.ui.editor.ColorTool.fn.options.palette = palette;
 
     setup("baz", {
         tools: [ "foreColor", "backColor" ]
@@ -57,10 +57,8 @@ test("define global ColorTool palette", function() {
 
     var colorpickers = $("[data-role=colorpicker]");
 
-    deepEqual(colorpickers.eq(0).data("kendoColorPicker").options.palette, [customColor]);
-    equal(colorpickers.eq(0).data("kendoColorPicker").value(), customColor);
-    deepEqual(colorpickers.eq(1).data("kendoColorPicker").options.palette, [customColor]);
-    equal(colorpickers.eq(1).data("kendoColorPicker").value(), customColor);
+    deepEqual(colorpickers.eq(0).data("kendoColorPicker").options.palette, palette);
+    deepEqual(colorpickers.eq(1).data("kendoColorPicker").options.palette, palette);
 
     kendo.ui.editor.ColorTool.fn.options.palette = defaultPalette;
 });
