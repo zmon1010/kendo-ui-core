@@ -167,10 +167,10 @@ gulp.task("jshint", function() {
         .pipe(jshint(packageJSON.jshintConfig))
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(jshint.reporter('fail'));
-
-    // console.log(files);
 });
 
+gulp.task('build', [ 'scripts', 'styles' ]);
+
 gulp.task('ci', function(done) {
-  runSequence([ 'scripts', 'styles' ], 'karma-jenkins', done);
+  runSequence('build', 'karma-jenkins', done);
 });
