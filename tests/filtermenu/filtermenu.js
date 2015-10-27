@@ -178,6 +178,46 @@
         ok(dataSource.filter() == null);
     });
 
+    test("submitting the form does send filters with null value if isnotnull is selected", function() {
+        filterMenu = setup(dom.attr("data-kendo-field", "bar"), {
+            dataSource: dataSource
+        });
+
+        var dropdownlist = filterMenu.form.find("[data-kendo-role=dropdownlist]:first").getKendoDropDownList();
+        dropdownlist.value("isnotnull");
+        dropdownlist.trigger("change");
+
+        filterMenu.form.find("[data-kendo-role=numerictextbox]:first")
+            .val("").change();
+
+        filterMenu.form.submit();
+
+        var filter = dataSource.filter();
+
+        equal(filter.filters[0].operator, "isnotnull");
+        equal(filter.filters[0].value, null);
+    });
+
+    test("submitting the form does send filters with null value if isnull is selected", function() {
+        filterMenu = setup(dom.attr("data-kendo-field", "bar"), {
+            dataSource: dataSource
+        });
+
+        var dropdownlist = filterMenu.form.find("[data-kendo-role=dropdownlist]:first").getKendoDropDownList();
+        dropdownlist.value("isnull");
+        dropdownlist.trigger("change");
+
+        filterMenu.form.find("[data-kendo-role=numerictextbox]:first")
+            .val("").change();
+
+        filterMenu.form.submit();
+
+        var filter = dataSource.filter();
+
+        equal(filter.filters[0].operator, "isnull");
+        equal(filter.filters[0].value, null);
+    });
+
     test("submitting the form does not send the extra filterMenu if it is empty", function() {
         filterMenu = setup(dom, {
             dataSource: dataSource
@@ -188,6 +228,23 @@
 
         equal(dataSource.filter().filters.length, 1);
     });
+
+    test("submitting the form does send the extra filterMenu if it is empty but isnull is selected ", function() {
+        filterMenu = setup(dom, {
+            dataSource: dataSource
+        });
+
+        filterMenu.form.find("input[type=text]:first").val("bar").change();
+
+        var dropdownlist = filterMenu.form.find("[data-kendo-role=dropdownlist]:last").getKendoDropDownList();
+        dropdownlist.value("isnull");
+        dropdownlist.trigger("change");
+
+        filterMenu.form.submit();
+
+        equal(dataSource.filter().filters.length, 2);
+    });
+
 
     test("parses filterMenu value according to field type", function() {
         dom = $("<th data-kendo-field=bar />").appendTo(QUnit.fixture);
@@ -824,7 +881,7 @@
     test("operators are constrained if values are set", function() {
         filterMenu = setup(dom, {dataSource: dataSource, values: [ { value: 0, text: "foo" } ]});
 
-        equal(filterMenu.form.find("select:first").find("option").length, 2);
+        equal(filterMenu.form.find("select:first").find("option").length, 4);
     });
 
     test("filter value is selected from values", function() {

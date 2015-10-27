@@ -523,7 +523,9 @@ var __meta__ = { // jshint ignore:line
 
         _stripFilters: function(filters) {
            return $.grep(filters, function(filter) {
-                return filter.value !== "" && filter.value != null;
+               return (filter.value !== "" && filter.value != null) ||
+               (filter.operator === "isnull" || filter.operator === "isnotnull" ||
+                   filter.operator === "isempty" || filter.operator === "isnotempty");
             });
         },
 
@@ -668,7 +670,11 @@ var __meta__ = { // jshint ignore:line
                     startswith: "Starts with",
                     contains: "Contains",
                     doesnotcontain: "Does not contain",
-                    endswith: "Ends with"
+                    endswith: "Ends with",
+                    isnull: "Is null",
+                    isnotnull: "Is not null",
+                    isempty: "Is empty",
+                    isnotempty: "Is not empty"
                 },
                 number: {
                     eq: EQ,
@@ -676,7 +682,9 @@ var __meta__ = { // jshint ignore:line
                     gte: "Is greater than or equal to",
                     gt: "Is greater than",
                     lte: "Is less than or equal to",
-                    lt: "Is less than"
+                    lt: "Is less than",
+                    isnull: "Is null",
+                    isnotnull: "Is not null"
                 },
                 date: {
                     eq: EQ,
@@ -684,11 +692,15 @@ var __meta__ = { // jshint ignore:line
                     gte: "Is after or equal to",
                     gt: "Is after",
                     lte: "Is before or equal to",
-                    lt: "Is before"
+                    lt: "Is before",
+                    isnull: "Is null",
+                    isnotnull: "Is not null"
                 },
                 enums: {
                     eq: EQ,
-                    neq: NEQ
+                    neq: NEQ,
+                    isnull: "Is null",
+                    isnotnull: "Is not null"
                 }
             },
             messages: {
