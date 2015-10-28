@@ -26,6 +26,19 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Tests
         }
 
         [Fact]
+        public void Should_return_filter_descriptor_for_null_function()
+        {
+            FunctionNode functionNode = NullFunction();
+
+            functionNode.Accept(visitor);
+
+            FilterDescriptor result = (FilterDescriptor)visitor.Result;
+            Assert.Equal(FilterOperator.IsNull, result.Operator);
+            Assert.Equal("Name", result.Member);
+            Assert.Equal(null, result.Value);
+        }
+
+        [Fact]
         public void Should_return_filter_descriptor_for_function()
         {
             FunctionNode functionNode = StringFunction();
@@ -149,6 +162,26 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Tests
                     Value = DateTime.Now
                 }
             };
+        }
+
+        private FunctionNode NullFunction()
+        {
+            FunctionNode comparisonNode = new FunctionNode
+            {
+                FilterOperator = FilterOperator.IsNull,
+                Arguments = 
+                {
+					new PropertyNode
+                    {
+						Name = "Name"
+					},
+					new NullNode
+                    {
+						Value = null 
+					}
+                }
+            };
+            return comparisonNode;
         }
 
         private FunctionNode StringFunction()

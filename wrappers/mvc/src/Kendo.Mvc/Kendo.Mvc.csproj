@@ -296,6 +296,7 @@
     <Compile Include="Infrastructure\IDependencyInjectionContainer.cs" />
     <Compile Include="Infrastructure\ICache.cs" />
     <Compile Include="Infrastructure\Implementation\Expressions\MemberAccess\DynamicPropertyAccessExpressionBuilder.cs" />
+    <Compile Include="Infrastructure\Implementation\Filtering\Parsing\NullNode.cs" />
     <Compile Include="Infrastructure\Implementation\JavaScriptInitializer.cs" />
     <Compile Include="Infrastructure\Implementation\NoCache.cs" />
     <Compile Include="Infrastructure\Implementation\ResourceBase.cs" />

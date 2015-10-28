@@ -17,7 +17,11 @@ namespace Kendo.Mvc.Extensions
             { "contains", FilterOperator.Contains },
             { "notsubstringof", FilterOperator.DoesNotContain },
             { "endswith", FilterOperator.EndsWith },
-            { "doesnotcontain", FilterOperator.DoesNotContain }
+            { "doesnotcontain", FilterOperator.DoesNotContain },
+            { "isnotnull", FilterOperator.IsNotNull },
+            { "isnull", FilterOperator.IsNull },
+            { "isempty", FilterOperator.IsEmpty },
+            { "isnotempty", FilterOperator.IsNotEmpty }
         };
 
         private static readonly IDictionary<FilterOperator, string> operatorToToken = new Dictionary<FilterOperator, string>
@@ -31,7 +35,11 @@ namespace Kendo.Mvc.Extensions
             { FilterOperator.StartsWith, "startswith" },
             { FilterOperator.Contains, "contains" },
             { FilterOperator.DoesNotContain,"notsubstringof" },
-            { FilterOperator.EndsWith, "endswith" }
+            { FilterOperator.EndsWith, "endswith" },
+            { FilterOperator.IsNotNull, "isnotnull" },
+            { FilterOperator.IsNull, "isnull" },
+            { FilterOperator.IsEmpty, "isempty" },
+            { FilterOperator.IsNotEmpty, "isnotempty" }
         };
 
         public static FilterOperator ToFilterOperator(this FilterToken token)
