@@ -223,7 +223,7 @@
             }
 
             var children = [ text ];
-            var properties = { style: style, className: className };
+            var properties = { style: style, className: className || ""};
 
             if (validation && !validation.value) {
                 children.push(kendo.dom.element("span", { className: "k-dirty" }));
