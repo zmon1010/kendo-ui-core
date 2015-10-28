@@ -40,7 +40,6 @@ html .k-upload
 {
     position: relative;
     min-width: 7.167em;
-    overflow: hidden !important; /* important required by IE7 */
     direction: ltr;
 }
 
@@ -54,11 +53,10 @@ html .k-upload
 .k-upload-button input
 {
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
     z-index: 1;
     font: 170px monospace !important; /* critical for correct operation; larger values lead to ignoring or text layout problems in IE */
-    filter: alpha(opacity=0);
     opacity: 0;
     margin: 0;
     padding: 0;
