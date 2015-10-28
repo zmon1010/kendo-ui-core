@@ -559,7 +559,7 @@
         time: function(culture, t, part, length, ampm) {
             switch (part) {
               case "h":
-                var h = ampm ? t.hours % 12 : t.hours;
+                var h = ampm ? t.hours % 12 || 12 : t.hours;
                 switch (length) {
                   case 1: return h;
                   case 2: return padLeft(h, 2, "0");

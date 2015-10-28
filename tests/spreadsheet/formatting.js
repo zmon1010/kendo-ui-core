@@ -260,4 +260,10 @@
         htmlEqual(format(12345, kendo.getCulture("bg-BG")), "18.10.1933 г. 0:00 | as number: 12 345,00");
     });
 
+    test("time with am/pm outputs correctly hour 12 noon", function(){
+        var format = F.compile('d-mmm-yyyy hh:mm:ss am/pm');
+        var date = 30586.524988425925;
+        htmlEqual(format(date), "27-Sep-1983 12:35:59 pm");
+    });
+
 })();
