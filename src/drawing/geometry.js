@@ -4,11 +4,11 @@
     ], f);
 })(function() {
 
-(function ($) {
+(function() {
+    /* jshint latedef: nofunc */
     // Imports ================================================================
     var math = Math,
         pow = math.pow,
-        inArray = $.inArray,
 
         kendo = window.kendo,
         Class = kendo.Class,
@@ -170,7 +170,7 @@
         return new Point(minX, minY);
     };
 
-    Point.max = function(p0, p1) {
+    Point.max = function() {
         var maxX = util.MIN_NUM;
         var maxY = util.MIN_NUM;
 
@@ -468,7 +468,6 @@
         // TODO: Review, document
         curvePoints: function() {
             var startAngle = this.startAngle;
-            var endAngle = this.endAngle;
             var dir = this.anticlockwise ? -1 : 1;
             var curvePoints = [this.pointAt(startAngle)];
             var currentAngle = startAngle;
@@ -949,7 +948,7 @@
 
     kendo.dataviz.geometry = kendo.geometry;
 
-})(window.kendo.jQuery);
+})();
 
 return window.kendo;
 
