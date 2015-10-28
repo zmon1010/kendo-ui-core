@@ -1,10 +1,8 @@
 (function() {
     var Pane = kendo.spreadsheet.Pane;
     var Sheet = kendo.spreadsheet.Sheet;
-    var RangeRef = kendo.spreadsheet.RangeRef;
-    var CellRef = kendo.spreadsheet.CellRef;
-
     var addCell = kendo.spreadsheet.addCell;
+    var sheet;
 
     module("pane", {
         setup: function() {
@@ -14,6 +12,11 @@
 
     function createPane(row, column, rowCount, columnCount) {
         return new Pane(sheet, sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
+    }
+
+    function text(node) {
+        var children = node.children || [];
+        return node.nodeValue || children.map(text).join(" ");
     }
 
     test("correct columns are rendered when multiple subsequent columns are hidden", function() {
@@ -27,11 +30,11 @@
 
         equal(header.children[1].children.length, 1);
 
-        var tr = header.children[1].children[0];
+        var tds = header.children[1].children[0].children;
 
-        equal(tr.children.length, 2);
-        equal(tr.children[0].children[0].nodeValue, "A");
-        equal(tr.children[1].children[0].nodeValue, "D");
+        equal(tds.length, 2);
+        equal(text(tds[0]), "A");
+        equal(text(tds[1]), "D");
     });
 
     test("doesn't render hidden columns", function() {
@@ -39,23 +42,23 @@
         sheet.hideColumn(1);
 
         var pane = createPane(0, 0, 3, 3);
-        pane.refresh()
+        pane.refresh();
 
         var table = pane.render(0, 0).children[0];
 
         equal(table.children[0].children.length, 2);
 
-        var tr = table.children[1].children[0];
+        var tds = table.children[1].children[0].children;
 
-        equal(tr.children.length, 2);
-        equal(tr.children[1].children[0].nodeValue, "foo");
+        equal(tds.length, 2);
+        equal(text(tds[1]), "foo");
     });
 
     test("doesn't render hidden rows", function() {
         sheet.hideRow(1);
 
         var pane = createPane(0, 0, 3, 3);
-        pane.refresh()
+        pane.refresh();
 
         var table = pane.render(0, 0).children[0];
 
@@ -63,8 +66,6 @@
     });
 
     test("adds background color style to the cell", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { background: "red" });
@@ -74,8 +75,6 @@
     });
 
     test("adds fontColor style to the cell", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { color: "red" });
@@ -85,8 +84,6 @@
     });
 
     test("adds font-family style to the cell", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { fontFamily: "foo" });
@@ -96,8 +93,6 @@
     });
 
     test("adds text-decoration style to the cell", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { underline: true });
@@ -107,8 +102,6 @@
     });
 
     test("adds font-size style to the cell", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { fontSize: 12 });
@@ -118,8 +111,6 @@
     });
 
     test("adds font-style style to the cell", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { italic: true });
@@ -129,8 +120,6 @@
     });
 
     test("adds font-weight style to the cell", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { bold: true });
@@ -140,8 +129,6 @@
     });
 
     test("adds text-align  style to the cell", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { textAlign: "foo" });
@@ -151,8 +138,6 @@
     });
 
     test("adds vertical-align  style to the cell", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { verticalAlign: "foo" });
@@ -162,8 +147,6 @@
     });
 
     test("adds white-space nowrap style to the cell if wrap is false", function() {
-        var pane = createPane(0, 0, 3, 3);
-
         var table = stub({}, "addCell");
 
         addCell(table, {}, { wrap: false });
