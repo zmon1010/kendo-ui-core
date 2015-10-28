@@ -9,19 +9,12 @@ MIN_CSS = FileList['styles/**/kendo*.less']
     .sub('styles/', 'dist/styles/')
     .uniq
 
-MIN_CSS_RESOURCES = FileList[MIN_CSS + FileList['styles/**/*']
+MIN_CSS_MAP = FileList[MIN_CSS].ext('css.map')
+
+MIN_CSS_RESOURCES = FileList[MIN_CSS + MIN_CSS_MAP + FileList['styles/**/*']
     .keep_if { |f| !File.directory?(f) }
     .sub('styles/', DIST_STYLES_ROOT)]
     .exclude('**/*.less')
-
-WEB_MIN_CSS = FileList[MIN_CSS_RESOURCES].keep_if { |f| f =~ /styles\/web\// }
-WEB_SRC_CSS = FileList[SRC_CSS].keep_if { |f| f =~ /styles\/(web|common)\// }
-
-MOBILE_MIN_CSS = FileList[MIN_CSS_RESOURCES].keep_if { |f| f =~ /styles\/mobile\// }
-MOBILE_SRC_CSS = FileList[SRC_CSS].keep_if { |f| f =~ /styles\/(mobile|common)\// }
-
-DATAVIZ_MIN_CSS = FileList[MIN_CSS_RESOURCES].keep_if { |f| f =~ /styles\/dataviz\// }
-DATAVIZ_SRC_CSS = FileList[SRC_CSS].keep_if { |f| f =~ /styles\/dataviz\// }
 
 CORE_MIN_CSS_RESOURCES = FileList[MIN_CSS_RESOURCES]
     .exclude("dist/styles/kendo.common-bootstrap.min.css")
@@ -42,6 +35,9 @@ CORE_SRC_CSS = FileList[SRC_CSS]
     .exclude("dist/styles/web/common/imagebrowser.less")
     .exclude("dist/styles/web/common/treeview.less")
     .exclude("dist/styles/web/common/upload.less")
+
+MOBILE_MIN_CSS = FileList[MIN_CSS_RESOURCES].keep_if { |f| f =~ /styles\/mobile\// }
+DATAVIZ_MIN_CSS = FileList[MIN_CSS_RESOURCES].keep_if { |f| f =~ /styles\/dataviz\// }
 
 APP_BUILDER_MIN_RESOURCES = FileList[MOBILE_MIN_CSS].keep_if { |f| f =~ /styles\/mobile\/images\// }
 APP_BUILDER_MIN_CSS = FileList["#{DIST_STYLES_ROOT}mobile/kendo.dataviz.mobile.min.css"].include(APP_BUILDER_MIN_RESOURCES).include(DATAVIZ_MIN_CSS).exclude("#{DIST_STYLES_ROOT}dataviz/kendo.dataviz.min.css")

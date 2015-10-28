@@ -33,4 +33,4 @@
     kendo.spreadsheet.FormulaBar = FormulaBar;
     $.extend(true, FormulaBar, { classNames: classNames });
 })(window.kendo);
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

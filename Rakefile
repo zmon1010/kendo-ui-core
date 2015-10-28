@@ -234,12 +234,13 @@ end
 desc('JavaScript')
 
 task :js do
-    grunt :all
+    # grunt :all
+    gulp :scripts, '--license-pad'
 end
 
 desc "Build less files in dist/styles"
 task :less do
-    grunt :styles
+    gulp :styles, '--license-pad'
 end
 
 desc('Build all Kendo UI distributions')

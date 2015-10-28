@@ -30,30 +30,16 @@ def bundle(options)
     prerequisites = [:js, :less] + options[:prerequisites].to_a
 
     add_file = lambda do |to, from|
-        dest = File.join(path, to, from)
+        dest = File.join(path, to, File.basename(from))
         file_copy :from => from, :to => dest
         prerequisites.push(dest)
     end
 
     unless options[:skip_grunt_build]
-        add_file.call('src', 'package.json')
-        add_file.call('src', 'npm-shrinkwrap.json')
-
-        license_path = File.join(path, 'src/resources/legal/core-license.txt')
-        file_copy :from => File.join(legal_dir, "#{options[:license]}.txt"), :to => license_path
-
-        grunt_path = File.join(path, 'src/Gruntfile.js')
-        file_copy :from => 'build/Gruntfile.dist.js', :to => grunt_path
-
-        build_files = File.join(path, 'src/build')
-
-        tree :to => build_files,
-             :from => 'build/{grunt/**/*,less-js/**/*,kendo-meta.js}',
-             :root => 'build'
-
-        prerequisites.push(build_files)
-        prerequisites.push(license_path)
-        prerequisites.push(grunt_path)
+        add_file.call('src', 'build/dist-gulp/package.json')
+        add_file.call('src', 'build/dist-gulp/npm-shrinkwrap.json')
+        add_file.call('src', 'build/dist-gulp/gulpfile.js')
+        add_file.call('src/js/', 'src/jquery.js')
     end
 
     if options[:license]

@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ ], f);
+    define([ '../kendo.core' ], f);
 })(function() {
     if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
         return;
@@ -165,4 +165,4 @@
     spreadsheet.FormulaContext = FormulaContext;
     spreadsheet.ValidationFormulaContext = ValidationFormulaContext;
 
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

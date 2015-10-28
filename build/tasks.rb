@@ -4,8 +4,8 @@ require 'zip'
 README_DIR = 'resources'
 THIRD_PARTY_LEGAL_DIR = File.join('resources', 'legal', 'third-party')
 XVFB_RUN = "xvfb-run"
-GRUNT = File.join(Rake.application.original_dir, "node_modules", ".bin", "grunt")
-GRUNT_XVFB = system("which", XVFB_RUN, :out => "/dev/null") ? [XVFB_RUN, "-a", GRUNT] : [GRUNT]
+GULP = File.join(Rake.application.original_dir, "node_modules", ".bin", "gulp")
+GULP_XVFB = system("which", XVFB_RUN, :out => "/dev/null") ? [XVFB_RUN, "-a", GULP] : [GULP]
 METAJS = File.join(Rake.application.original_dir, "build", "kendo-meta.js");
 LESSC = File.join(Rake.application.original_dir, "build", "less-js", "bin", "lessc")
 CSSMIN = File.join(Rake.application.original_dir, "node_modules", "cssmin", "bin", "cssmin")
@@ -77,12 +77,12 @@ def mvn(name, options)
     sh "#{cmd}-f #{name} #{options}", :verbose => VERBOSE
 end
 
-def grunt(*args)
-    run_shell([GRUNT], args)
+def gulp(*args)
+    run_shell([GULP], args)
 end
 
-def grunt_xvfb(*args)
-    run_shell(GRUNT_XVFB, args)
+def gulp_xvfb(*args)
+    run_shell(GULP_XVFB, args)
 end
 
 def run_shell(cmd, args)
@@ -126,15 +126,33 @@ def file_copy(options)
     file to => prerequisites do |t|
         ensure_path to
 
+        version_marker = "$KENDO_VERSION"
+
         if license && subject_to_license?(to)
             $stderr.puts "cp #{from} #{to}" if VERBOSE
 
             File.open(from, 'r:bom|utf-8') do |source|
                 contents = source.read
+                license_contents = File.read(license).sub(version_marker, VERSION)
 
                 File.open(to, "w") do |file|
-                    file.write(File.read(license))
-                    contents.sub!("$KENDO_VERSION", VERSION)
+                    licenseRegExp = /\/\*\!\s+\*\//m
+                    padded_license = ""
+
+                    placeholder = contents[licenseRegExp]
+
+                    license_content_lines = license_contents.lines.to_a
+
+                    placeholder.lines.each_with_index do |line, index|
+                        license_line = license_content_lines[index]
+                        if license_line && index < license_content_lines.length - 1 # skip the last line which closes the comment
+                            padded_license += license_line.sub(/\n/, '').ljust(line.length, " ") + "\n"
+                        else
+                            padded_license += line
+                        end
+                    end
+
+                    contents = contents.sub(licenseRegExp, padded_license).sub(version_marker, VERSION.ljust(version_marker.length))
                     file.write(contents)
                 end
             end
