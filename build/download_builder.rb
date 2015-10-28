@@ -15,11 +15,11 @@ BUILDER_INDEX_TEMPLATE = ERB.new(File.read(File.join('download-builder', 'index.
 namespace :download_builder do
 
     task :sources => :less do
-        gulp "download_builder"
+        gulp "download-builder"
     end
 
     task :tests do
-        gulp_xvfb "download_builder_tests", "--junit-results=download_builder-test-results.xml", "--single-run=true"
+        gulp_xvfb "download-builder-tests", "--junit-results=download_builder-test-results.xml", "--single-run=true"
     end
 
     def download_builder_prerequisites(path, service_url)
