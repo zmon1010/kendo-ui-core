@@ -1182,6 +1182,51 @@
         ok(cell.hasClass("k-state-focused"));
         equal(grid.current()[0], cell[0]);
     });
+
+    test("navigate event is triggered", 1,  function() {
+        var grid = setup({
+            navigate: function() {
+                ok(true);
+            }
+        });
+
+        grid.table.focus();
+    });
+
+    test("navigate event is triggered with next cell as argument", 1,  function() {
+        var grid = setup({
+            navigate: function(e) {
+                equal(e.element[0], this.table.find("td")[0]);
+            }
+        });
+
+        grid.table.focus();
+    });
+
+    test("navigate event is not triggered for selecting same cell", 1,  function() {
+        var grid = setup({
+            navigate: function(e) {
+                equal(e.element[0], this.table.find("td")[0]);
+            }
+        });
+
+        grid.table.focus();
+        grid.table.focus();
+    });
+
+    test("navigate event is not triggered when using current method", 1,  function() {
+        var wasCalled = false;
+
+        var grid = setup({
+            navigate: function(e) {
+                wasCalled = true;
+            }
+        });
+
+        grid.current(grid.table.find("td").first());
+
+        ok(!wasCalled);
+    });
 })();
 
 /*

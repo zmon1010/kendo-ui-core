@@ -120,6 +120,7 @@ var __meta__ = { // jshint ignore:line
         COLUMNREORDER = "columnReorder",
         COLUMNLOCK = "columnLock",
         COLUMNUNLOCK = "columnUnlock",
+        NAVIGATE = "navigate",
         CLICK = "click",
         HEIGHT = "height",
         TABINDEX = "tabIndex",
@@ -1446,7 +1447,8 @@ var __meta__ = { // jshint ignore:line
            COLUMNSHOW,
            COLUMNHIDE,
            COLUMNLOCK,
-           COLUMNUNLOCK
+           COLUMNUNLOCK,
+           NAVIGATE
         ],
 
         setDataSource: function(dataSource) {
@@ -3027,7 +3029,7 @@ var __meta__ = { // jshint ignore:line
             that.cancelRow();
 
             if (navigatable) {
-                that.current(that.items().eq(currentIndex).children().filter(NAVCELL).first());
+                that._setCurrent(that.items().eq(currentIndex).children().filter(NAVCELL).first());
                 focusTable(that.table, true);
             }
         },
@@ -3140,7 +3142,7 @@ var __meta__ = { // jshint ignore:line
 
                             that.cancelRow();
                             if (that.options.navigatable) {
-                                that.current(that.items().eq(currentIndex).children().filter(NAVCELL).first());
+                                that._setCurrent(that.items().eq(currentIndex).children().filter(NAVCELL).first());
                                 focusTable(that.table, true);
                             }
                         }
@@ -4071,6 +4073,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         current: function(next) {
+            return this._setCurrent(next, true);
+        },
+
+        _setCurrent: function(next, preventTrigger) {
             var current = this._current;
             next = $(next);
 
@@ -4079,6 +4085,12 @@ var __meta__ = { // jshint ignore:line
                     this._updateCurrentAttr(current, next);
 
                     this._scrollCurrent();
+
+                    if (!preventTrigger) {
+                        this.trigger(NAVIGATE, {
+                            element: next
+                        });
+                    }
                 }
             }
 
@@ -4206,7 +4218,7 @@ var __meta__ = { // jshint ignore:line
             if (current && current.is(":visible")) {
                 current.addClass(FOCUSED);
             } else {
-                this.current(table.find(FIRSTNAVITEM));
+                this._setCurrent(table.find(FIRSTNAVITEM));
             }
 
             this._setTabIndex(table);
@@ -4307,7 +4319,7 @@ var __meta__ = { // jshint ignore:line
                     }
                 }
 
-                this.current(next);
+                this._setCurrent(next);
             }
 
             return true;
@@ -4335,7 +4347,7 @@ var __meta__ = { // jshint ignore:line
                     }
                 }
 
-                this.current(next);
+                this._setCurrent(next);
             }
 
             return true;
@@ -4356,7 +4368,7 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
-            this.current(next);
+            this._setCurrent(next);
 
             return true;
         },
@@ -4375,7 +4387,7 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
-            this.current(next);
+            this._setCurrent(next);
 
             return true;
         },
@@ -4448,7 +4460,7 @@ var __meta__ = { // jshint ignore:line
                 }
                 this.cancelRow();
                 if (currentIndex >= 0) {
-                    this.current(this.items().eq(currentIndex).children(NAVCELL).first());
+                    this._setCurrent(this.items().eq(currentIndex).children(NAVCELL).first());
                 }
             }
 
@@ -4775,9 +4787,9 @@ var __meta__ = { // jshint ignore:line
                     }
                 } else {
                     if (mode == "incell") {
-                        that.current(editContainer);
+                        that._setCurrent(editContainer);
                     } else {
-                        that.current(editContainer.children().filter(DATA_CELL).first());
+                        that._setCurrent(editContainer.children().filter(DATA_CELL).first());
                     }
                     focusable = editContainer.find(":kendoFocusable:first")[0];
                     if (focusable) {
@@ -4788,7 +4800,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (next) {
-                that.current(next);
+                that._setCurrent(next);
             }
 
             if (oldIE) {
@@ -7338,7 +7350,7 @@ var __meta__ = { // jshint ignore:line
             this._removeCurrent();
 
             if (isCurrentInHeader) {
-                this.current(this.thead.find("th:not(.k-group-cell)").eq(currentIndex));
+                this._setCurrent(this.thead.find("th:not(.k-group-cell)").eq(currentIndex));
             } else {
                 var rowIndex = 0;
                 if (this._rowVirtualIndex) {
@@ -7357,7 +7369,7 @@ var __meta__ = { // jshint ignore:line
                 var td = row.find(">td:not(.k-group-cell):not(.k-hierarchy-cell)")
                     .eq(currentIndex);
 
-                this.current(td);
+                this._setCurrent(td);
             }
 
             if (this._current) {
@@ -7760,7 +7772,7 @@ var __meta__ = { // jshint ignore:line
        }
 
        if (isInput && currentTarget.find(kendo.roleSelector("filtercell")).length) {
-           this.current(currentTarget);
+           this._setCurrent(currentTarget);
            return;
        }
 
@@ -7773,7 +7785,7 @@ var __meta__ = { // jshint ignore:line
        }
 
        if (this.options.navigatable) {
-           this.current(currentTarget);
+           this._setCurrent(currentTarget);
        }
 
        if (isHeader || !isInput) {
