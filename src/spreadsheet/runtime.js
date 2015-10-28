@@ -679,7 +679,7 @@
     function compileArgumentChecks(functionName, args) {
         var arrayArgs = "function arrayArgs(args) { var xargs = [], width = 0, height = 0, arrays = [], i = 0; ";
         var resolve = "function resolve(args, callback) { var toResolve = [], i = 0; ";
-        var name, forced, main = "'use strict'; function check(args) { var xargs = [], i = 0, m, err = 'VALUE'; ", haveForced = false;
+        var name, forced, main = "'use strict'; function check(args) { var stack = [], tmp, xargs = [], i = 0, m, err = 'VALUE'; ", haveForced = false;
         var canBeArrayArg = false, hasArrayArgs = false;
         main += args.map(comp).join("");
         main += "if (i < args.length) return new CalcError('N/A'); ";
@@ -705,17 +705,21 @@
             if (Array.isArray(name)) {
                 arrayArgs += "while (i < args.length) { ";
                 resolve += "while (i < args.length) { ";
+                code += "xargs.push(tmp = []); stack.push(xargs); xargs = tmp; ";
                 code += "while (i < args.length) { ";
                 code += x.map(comp).join("");
                 code += "} ";
+                code += "xargs = stack.pop(); ";
                 resolve += "} ";
                 arrayArgs += "} ";
             } else if (name == "+") {
                 arrayArgs += "while (i < args.length) { ";
                 resolve += "while (i < args.length) { ";
+                code += "xargs.push(tmp = []); stack.push(xargs); xargs = tmp; ";
                 code += "do { ";
                 code += x.slice(1).map(comp).join("");
                 code += "} while (i < args.length); ";
+                code += "xargs = stack.pop(); ";
                 resolve += "} ";
                 arrayArgs += "} ";
             } else if (name == "?") {

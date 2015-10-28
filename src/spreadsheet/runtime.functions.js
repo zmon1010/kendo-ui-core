@@ -349,8 +349,8 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
-    defineFunction("sumproduct", function() {
-        var sum = 0, a = arguments;
+    defineFunction("sumproduct", function(a) {
+        var sum = 0;
         a[0].each(function(p, row, col){
             if (typeof p == "number") {
                 for (var i = 1; i < a.length; ++i) {
@@ -484,7 +484,7 @@
         [ "values", [ "#collect", "anyvalue" ] ]
     ]);
 
-    defineFunction("countblank", function(){
+    defineFunction("countblank", function(a){
         var count = 0;
         function add(val) {
             if (val == null || val === "") {
@@ -501,7 +501,7 @@
                 }
             }
         }
-        loop(arguments);
+        loop(a);
         return count;
     }).args([
         [ "+", [ "args", [ "or", "matrix", "anyvalue" ] ] ]
@@ -571,9 +571,10 @@
           [ "c2", "anyvalue" ] ]
     ];
 
-    defineFunction("countifs", function(){
+    defineFunction("countifs", function(m1, c1, rest){
         var count = 0;
-        forIFS(arguments, function(){ count++; });
+        rest.unshift(m1, c1);
+        forIFS(rest, function(){ count++; });
         return count;
     }).args(ARGS_COUNTIFS);
 
@@ -581,15 +582,14 @@
         [ "range", "matrix" ]
     ].concat(ARGS_COUNTIFS);
 
-    defineFunction("sumifs", function(m){
+    defineFunction("sumifs", function(range, m1, c1, args){
         // hack: insert a predicate that filters out non-numeric
         // values; should also accept blank cells.  it's safe to
         // modify args.
-        var args = Array.prototype.slice.call(arguments);
-        args.splice(1, 0, numericPredicate);
+        args.unshift(range, numericPredicate, m1, c1);
         var sum = 0;
         forIFS(args, function(row, col){
-            var val = m.get(row, col);
+            var val = range.get(row, col);
             if (val) {
                 sum += val;
             }
@@ -598,12 +598,11 @@
     }).args(ARGS_SUMIFS);
 
     // similar to sumifs, but compute average of matching cells
-    defineFunction("averageifs", function(m){
-        var args = Array.prototype.slice.call(arguments);
-        args.splice(1, 0, numericPredicate);
+    defineFunction("averageifs", function(range, m1, c1, args){
+        args.unshift(range, numericPredicate, m1, c1);
         var sum = 0, count = 0;
         forIFS(args, function(row, col){
-            var val = m.get(row, col);
+            var val = range.get(row, col);
             if (val == null || val === "") {
                 val = 0;
             }
@@ -1332,11 +1331,11 @@
         [ "ref", "ref" ]
     ]);
 
-    defineFunction("choose", function(index){
-        if (index >= arguments.length) {
+    defineFunction("choose", function(index, args){
+        if (index > args.length) {
             return new CalcError("N/A");
         } else {
-            return arguments[index];
+            return args[index - 1];
         }
     }).args([
         [ "*index", "integer" ],
