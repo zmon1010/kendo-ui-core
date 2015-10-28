@@ -1,9 +1,9 @@
 namespace Kendo.Mvc.UI
-{    
+{
     public class GridScrollableSettings : JsonObject
-    {        
+    {
         public GridScrollableSettings()
-        {            
+        {
             Height = "200px";
         }
 
@@ -30,6 +30,11 @@ namespace Kendo.Mvc.UI
             if (Virtual)
             {
                 json["virtual"] = Virtual;
+            }
+
+            if (Height != null)
+            {
+                json["height"] = Height;
             }
         }
     }
