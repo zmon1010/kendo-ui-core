@@ -237,6 +237,10 @@
 
         getRefData: function(ref) {
             return this.ss.getData(ref);
+        },
+
+        workbook: function() {
+            return this.ss.workbook;
         }
     });
 
