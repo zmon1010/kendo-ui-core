@@ -223,15 +223,18 @@
             }
 
             var children = [ text ];
-            var properties = { style: style, className: className || ""};
+            var properties = { style: style };
 
             if (validation && !validation.value) {
                 children.push(kendo.dom.element("span", { className: "k-dirty" }));
 
-                properties.className = (className || "") + (className ? " " : "") + "k-dirty-cell";
+                className = (className || "") + (className ? " " : "") + "k-dirty-cell";
                 properties.title = validation._getOptions().messageTemplate;
             }
 
+            if (className) {
+                properties.className = className;
+            }
             var td = kendo.dom.element("td", properties, children);
 
             this.trs[rowIndex].children.push(td);
