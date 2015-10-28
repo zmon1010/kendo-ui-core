@@ -122,7 +122,7 @@ var flavours = {
 for (var flavour in flavours) {
     (function(flavour) {
         gulp.task('karma-' + flavour, function(done) {
-            new karma.Server(Object.assign(flavours[flavour], defaultOptions), done).start();
+            new karma.Server(Object.assign({}, defaultOptions, flavours[flavour]), done).start();
         });
     })(flavour);
 }
