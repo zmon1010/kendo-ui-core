@@ -25,5 +25,5 @@ function renameModules(match) {
 module.exports = lazypipe()
     .pipe(logger, { after: 'uglify complete', extname: '.min.js', showChange: true })
     .pipe(uglify, { compress, mangle, preserveComments: "license" })
-    .pipe(replace, /define\(.+?\]/g, renameModules)
+    .pipe(replace, /define\("[\w\.\/]+".+?\]/g, renameModules)
     .pipe(rename, { suffix: ".min" });

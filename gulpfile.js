@@ -174,3 +174,7 @@ gulp.task('build', [ 'scripts', 'styles' ]);
 gulp.task('ci', function(done) {
   runSequence('build', 'karma-jenkins', done);
 });
+
+gulp.task('travis', function(done) {
+  runSequence('jshint', 'build', 'karma-travis', done);
+});
