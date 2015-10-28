@@ -16,7 +16,9 @@ ${Array(22).join(Array(200).join(" ") + "\n")}
 `;
 } else {
     license = fs.readFileSync('resources/legal/core-license.txt').toString();
-    license = license.replace('<%= year %>', new Date().getFullYear());
+    license = license
+        .replace('<%= year %>', new Date().getFullYear())
+        .replace('/**', '/*!');
 }
 
 module.exports = lazypipe()
