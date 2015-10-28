@@ -651,6 +651,8 @@
                 modal: true, resizable: false, draggable: true,
                 animation: false
             },
+            imageBrowser: null,
+            fileBrowser: null,
             fontName: [
                 { text: "Arial", value: "Arial,Helvetica,sans-serif" },
                 { text: "Courier New", value: "'Courier New',Courier,monospace" },

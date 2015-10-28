@@ -124,4 +124,20 @@ test("serialization options can be set through data attribute", function() {
     equal(dom.data("kendoEditor").options.serialization.entities, false);
 });
 
+test("imageBrowser can be enabled through data attribute", function() {
+    dom.attr("data-image-browser", "{ messages: { dropFilesHere: 'Foo' } }");
+
+    kendo.bind(dom);
+
+    equal(dom.data("kendoEditor").options.imageBrowser.messages.dropFilesHere, "Foo");
+});
+
+test("fileBrowser can be enabled through data attribute", function() {
+    dom.attr("data-file-browser", "{ messages: { dropFilesHere: 'Foo' } }");
+
+    kendo.bind(dom);
+
+    equal(dom.data("kendoEditor").options.fileBrowser.messages.dropFilesHere, "Foo");
+});
+
 }());
