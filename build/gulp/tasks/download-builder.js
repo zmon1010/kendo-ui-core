@@ -61,6 +61,6 @@ var karmaOptions = {
     )
 };
 
-gulp.task('download-builder-tests', [ 'download-buidler-min', 'download-builder-config'], function(done) {
+gulp.task('download-builder-tests', [ 'download-builder-min', 'download-builder-config'], function(done) {
     new karma.Server(karmaOptions, done).start();
 });
