@@ -2870,6 +2870,8 @@ var __meta__ = { // jshint ignore:line
                 $('<span class="k-dirty"/>').prependTo(cell);
             }
 
+            that.trigger("itemChange", { item: tr, data: model, ns: ui });
+
             if (that.lockedContent) {
                 adjustRowHeight(tr.css("height", "")[0], that._relatedRow(tr).css("height", "")[0]);
             }

@@ -308,6 +308,28 @@
         kendo.bind(dom, {});
         ok(dom.data("kendoGrid").options.detailTemplate);
     });
+
+    test("cell template is rebound with incell editing", function() {
+        var dom = $("<div data-role='grid' data-editable='incell' data-bind='source:dataSource' data-columns='[{ \"field\": \"foo\", \"template\": \"<span data-bind=text:foo></span>\" } ]' />")
+            .appendTo(QUnit.fixture);
+
+        var observable = kendo.observable({
+            dataSource: new kendo.data.DataSource({ data: [ { foo: "foo", bar: "bar" } ] })
+        });
+
+        kendo.bind(dom, observable);
+
+        var grid = dom.data("kendoGrid");
+        var td = grid.items().first().children().first();
+
+        grid.editCell(td);
+        td.find("input").val("baz").trigger("change");
+        grid.closeCell();
+
+        td = grid.items().first().children().first();
+        equal(td.text(), "baz");
+    });
+
 })();
 
 
