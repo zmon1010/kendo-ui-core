@@ -199,7 +199,7 @@
                 offset += endSegment.value.value - (endOffset - (endIndex - endSegment.value.start) * endSegment.value.value);
             }
 
-            offset = -offset;
+            offset = Math.min(-offset, 0);
 
             return {
                 values: this.values.iterator(startIndex, endIndex),

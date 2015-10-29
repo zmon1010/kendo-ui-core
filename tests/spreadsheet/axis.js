@@ -28,8 +28,8 @@
     });
 
     test("returns the visual range (last page)", function() {
-        var visible = axis.visible(14000, 15100);
-        equal(visible.offset, 95);
+        var visible = axis.visible(14000, 15000);
+        equal(visible.offset, -5);
         equal(visible.values.start, 933);
         equal(visible.values.end, 999);
     });
