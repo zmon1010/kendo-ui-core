@@ -4,6 +4,8 @@ TESTS = FileList["tests/**/*"]
 DEPS = [MIN_JS.sub("dist/js", "src").sub("min.js", "js"), FileList['styles/**/*.*'], KENDO_CONFIG_FILE, TESTS].flatten
 SUPPORTED_JQUERY_VERSIONS = ["1.11.3", "2.1.4"]
 
+scripts_arg =  "--scripts='kendo.{all,aspnetmvc}.js'"
+styles_arg =  "--styles '{web/kendo.common.less,mobile/kendo.mobile.all.less,dataviz/kendo.dataviz.css,web/kendo.rtl.less}'"
 namespace :tests do
     task :java do
         mvn(POM, 'clean test')
@@ -23,13 +25,13 @@ namespace :tests do
     desc "Run tests in supported jQuery versions"
     task :jquery => DEPS do
         SUPPORTED_JQUERY_VERSIONS.each do |version|
-            gulp_xvfb "ci", "--junit-results=jquery-#{version}-test-results.xml", "--single-run=true", "--jquery=#{version}"
+            gulp_xvfb "ci", "--junit-results=jquery-#{version}-test-results.xml", "--single-run=true", "--jquery=#{version}", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
         end
     end
 
     desc "Run tests in firefox"
     task :firefox => DEPS do
-        gulp_xvfb "ci", "--junit-results=firefox-test-results.xml", "--single-run=true", "--browser=Firefox"
+        gulp_xvfb "ci", "--junit-results=firefox-test-results.xml", "--single-run=true", "--browser=Firefox", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
     end
 
     %w[CI Production TZ].each do |env|
@@ -37,7 +39,7 @@ namespace :tests do
 
         file output => DEPS do |t|
             gulp "jshint"
-            gulp_xvfb "ci", "--junit-results=#{output}", "--single-run=true"
+            gulp_xvfb "ci", "--junit-results=#{output}", "--single-run=true", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
         end
 
         desc "Run #{env} tests"
