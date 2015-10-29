@@ -1717,7 +1717,7 @@ var __meta__ = { // jshint ignore:line
             var options = this.options;
             var contents = nodeContents(node);
             var direction = expand ? "expand" : "collapse";
-            var loaded, empty;
+            var loaded;
 
             if (contents.data("animating")) {
                 return;
@@ -1727,9 +1727,8 @@ var __meta__ = { // jshint ignore:line
                 this._expanded(node, expand);
 
                 loaded = dataItem && dataItem.loaded();
-                empty = !contents.children().length;
 
-                if (expand && (!loaded || empty)) {
+                if (expand && !loaded) {
                     if (options.loadOnDemand) {
                         this._progress(node, true);
                     }

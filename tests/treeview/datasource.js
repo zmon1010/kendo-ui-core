@@ -5,6 +5,37 @@
 
     module("DataSource binding", TreeViewHelpers.noAnimationMoudle);
 
+    function controlledRead() {
+        var queue = [];
+
+        var read = function(options) {
+            var deferred = $.Deferred();
+
+            deferred.then(options.success, options.error);
+
+            queue.push(deferred);
+        };
+
+        read.resolve = function(value) {
+            if (!queue.length) {
+                throw new Error("Tried to resolve a request that hasn't been executed.");
+            }
+            queue.shift().resolve(value);
+            return read;
+        };
+
+        read.reject = function(value) {
+            queue.shift().reject(value);
+            return read;
+        };
+
+        read.queueLength = function() {
+            return queue.length;
+        };
+
+        return read;
+    }
+
     test("Initializing from JSON creates HierarchicalDataSource", function() {
         createTreeView([]);
 
@@ -413,13 +444,11 @@
 
         treeFromHtml("<ul><li>foo</li></ul>");
 
-        treeviewObject.dataItem(".k-item:first").load = function() {
-            called = true;
-        };
+        var first = treeviewObject.dataItem(".k-item:first");
 
         treeviewObject.append({ text: "bar" }, treeview.find(".k-item:first"));
 
-        ok(called);
+        ok(first.loaded());
     });
 
     test("appending nodes sets their expanded state", function() {
@@ -801,7 +830,7 @@
         ok(treeviewObject.dataItem(foo).hasChildren);
     });
 
-    test("appending to non-expanded items creates item appropriately", function() {
+    test("appending to collapsed item", function() {
         createTreeView({
             dataSource: new HierarchicalDataSource({
                 data: [
@@ -816,9 +845,11 @@
 
         treeviewObject.append({ text: "baz" }, foo);
 
-        equal(foo.find(".k-item").length, 2);
-        equal(treeviewObject.dataItem(foo.find(".k-item:first")).text, "bar");
-        equal(treeviewObject.dataItem(foo.find(".k-item:last")).text, "baz");
+        var items = foo.find(".k-item");
+
+        equal(items.length, 2);
+        equal(treeviewObject.text(items[0]), "bar");
+        equal(treeviewObject.text(items[1]), "baz");
     });
 
     test("pushUpdate updates root node", function() {
@@ -859,7 +890,7 @@
             dataSource: [
                 { id: 1, text: "foo", items: [
                     { id: 2, text: "bar" }
-                ] },
+                ] }
             ]
         });
 
@@ -887,24 +918,31 @@
         equal(dom.find("i.bar").length, 1);
     });
 
-    asyncTest("dataSource can be searched within dataBound handler", 1, function() {
+    test("dataSource can be searched within dataBound handler", 2, function() {
+        var read = controlledRead();
+
         createTreeView({
-            dataSource: {
-                transport: {
-                    read: function(options) {
-                        setTimeout(function() {
-                            options.success([ { id: 1, expanded: true, hasChildren: true } ]);
-                        }, 100);
-                    }
-                }
-            },
+            dataSource: { transport: { read: read } },
             dataBound: function() {
-                this.dataSource.get(2);
-
-                ok(true);
-
-                start();
+                ok(this.dataSource.get(1));
+                ok(!this.dataSource.get(2));
             }
         });
+
+        read.resolve([ { id: 1, expanded: true, hasChildren: true } ]);
+    });
+
+    test("appending to unloaded remote node calls read once", 1, function() {
+        var read = controlledRead();
+
+        createTreeView({ dataSource: { transport: { read: read } } });
+
+        read.resolve([ {id: 1, text: "foo", hasChildren: true} ]);
+
+        treeviewObject.append({ text: "bar", hasChildren: true }, $(".k-item:first"));
+
+        read.resolve([]);
+
+        equal(read.queueLength(), 0);
     });
 })();
