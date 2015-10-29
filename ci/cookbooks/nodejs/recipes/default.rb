@@ -1,7 +1,7 @@
 case node["platform"]
 when "windows"
     windows_package "Node.js" do
-        source "http://nodejs.org/dist/v0.10.13/node-v0.10.13-x86.msi"
+        source "https://nodejs.org/dist/v4.2.1/node-v4.2.1-x64.msi"
         action :install
     end
 else
