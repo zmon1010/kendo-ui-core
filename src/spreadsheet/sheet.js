@@ -934,8 +934,10 @@
                 }
 
                 if (json.activeCell) {
-                    this._viewSelection.activeCell =
-                        this._viewSelection.originalActiveCell = this._ref(json.activeCell);
+                    var activeCellRef = this._ref(json.activeCell);
+
+                    this._viewSelection.activeCell = activeCellRef.toRangeRef();
+                    this._viewSelection.originalActiveCell = activeCellRef;
                 }
 
 
