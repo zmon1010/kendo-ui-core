@@ -20,7 +20,7 @@ $transport = new \Kendo\Data\DataSourceTransport();
 
 $read = new \Kendo\Data\DataSourceTransportRead();
 
-$read->url('navigation.php')
+$read->url('keyboard-navigation.php')
      ->contentType('application/json')
      ->type('POST');
 

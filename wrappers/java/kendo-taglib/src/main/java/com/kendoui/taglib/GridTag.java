@@ -192,6 +192,10 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         setEvent("filterMenuInit", value.getBody());
     }
 
+    public void setNavigate(NavigateFunctionTag value) {
+        setEvent("navigate", value.getBody());
+    }
+
     public void setPdfExport(PdfExportFunctionTag value) {
         setEvent("pdfExport", value.getBody());
     }
@@ -582,6 +586,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setFilterMenuInit(String value) {
         setProperty("filterMenuInit", new Function(value));
+    }
+
+    public String getNavigate() {
+        Function property = ((Function)getProperty("navigate"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setNavigate(String value) {
+        setProperty("navigate", new Function(value));
     }
 
     public String getPdfExport() {

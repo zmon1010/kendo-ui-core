@@ -935,5 +935,51 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Navigate client-side event.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///           .Name("Grid")
+        ///           .Navigatable()
+        ///           .Events(events => events.Navigate(
+        ///                @&lt;text&gt;
+        ///                function(e) {
+        ///                    //event handling code
+        ///                }
+        ///                &lt;/text&gt;
+        ///           ))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Navigate(Func<object, object> handler)
+        {
+            Handler("navigate", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Navigate client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///            .Name("Grid")
+        ///            .Navigatable()
+        ///            .Events(events => events.Navigate("gridNavigate"))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Navigate(string handler)
+        {
+            Handler("navigate", handler);
+
+            return this;
+        }
     }
 }

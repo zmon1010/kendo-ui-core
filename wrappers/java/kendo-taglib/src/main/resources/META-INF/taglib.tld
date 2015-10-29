@@ -20890,6 +20890,12 @@ and the string value will be passed as an argument to a kendo.template() functio
             <name>columnUnlock</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <description>Fired when navigatable is enabled and the user change current item with either
+mouse or keyboard interaction.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>navigate</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
         <dynamic-attributes>true</dynamic-attributes>
     </tag>
 
@@ -22463,6 +22469,13 @@ This class can be used to obtain reference to the button after Grid initializati
         <description>Fired when the user unlock a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-columnUnlock</name>
         <tag-class>com.kendoui.taglib.grid.ColumnUnlockFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when navigatable is enabled and the user change current item with either
+mouse or keyboard interaction.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-navigate</name>
+        <tag-class>com.kendoui.taglib.grid.NavigateFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

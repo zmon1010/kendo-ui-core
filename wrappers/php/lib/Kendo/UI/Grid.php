@@ -581,6 +581,21 @@ its resize handle. In this case the column will assume the smallest possible wid
         return $this->setProperty('columnUnlock', $value);
     }
 
+    /**
+    * Sets the navigate event of the Grid.
+    * Fired when navigatable is enabled and the user change current item with either
+mouse or keyboard interaction.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Grid
+    */
+    public function navigate($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('navigate', $value);
+    }
+
 
 //<< Properties
 
