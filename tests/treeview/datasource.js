@@ -413,13 +413,11 @@
 
         treeFromHtml("<ul><li>foo</li></ul>");
 
-        treeviewObject.dataItem(".k-item:first").load = function() {
-            called = true;
-        };
+        var first = treeviewObject.dataItem(".k-item:first");
 
         treeviewObject.append({ text: "bar" }, treeview.find(".k-item:first"));
 
-        ok(called);
+        ok(first.loaded());
     });
 
     test("appending nodes sets their expanded state", function() {
@@ -801,7 +799,7 @@
         ok(treeviewObject.dataItem(foo).hasChildren);
     });
 
-    test("appending to non-expanded items creates item appropriately", function() {
+    test("appending to collapsed item", function() {
         createTreeView({
             dataSource: new HierarchicalDataSource({
                 data: [
@@ -816,9 +814,11 @@
 
         treeviewObject.append({ text: "baz" }, foo);
 
-        equal(foo.find(".k-item").length, 2);
-        equal(treeviewObject.dataItem(foo.find(".k-item:first")).text, "bar");
-        equal(treeviewObject.dataItem(foo.find(".k-item:last")).text, "baz");
+        var items = foo.find(".k-item");
+
+        equal(items.length, 2);
+        equal(treeviewObject.text(items[0]), "bar");
+        equal(treeviewObject.text(items[1]), "baz");
     });
 
     test("pushUpdate updates root node", function() {
@@ -906,5 +906,29 @@
                 start();
             }
         });
+    });
+
+    asyncTest("appending to unloaded remote node calls read once", 1, function() {
+        createTreeView({
+            dataSource: {
+                transport: {
+                    read: function(options) {
+                        if (options.data.id){
+                            setTimeout(function() {
+                                ok(true);
+
+                                options.success([]);
+                            });
+                        } else {
+                            options.success([{id: 1, text: "foo", hasChildren: true}]);
+                        }
+                    }
+                }
+            }
+        });
+
+        treeviewObject.append({ text: "bar", hasChildren: true }, $(".k-item:first"));
+
+        setTimeout(start, 100);
     });
 })();
