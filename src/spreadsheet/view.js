@@ -692,6 +692,9 @@
         },
 
         render: function() {
+            if (!this.element.is(":visible")) {
+                return;
+            }
             var sheet = this._sheet;
             var focus = sheet.focus();
 
