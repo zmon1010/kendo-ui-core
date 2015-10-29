@@ -346,8 +346,8 @@ namespace Kendo.Mvc.Examples.Models
             });
             
             modelBuilder.Entity<EmployeeDirectory>(entity =>
-            {
-                entity.HasOne(d => d.EmployeeDirectory2).WithOne().ForeignKey<EmployeeDirectory>(d => d.ReportsTo);
+            {                
+                entity.HasOne(d => d.EmployeeDirectory2).WithMany(p => p.EmployeeDirectory1).ForeignKey(d => d.ReportsTo);
             });
             
             modelBuilder.Entity<Employee>(entity =>
