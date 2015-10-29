@@ -2244,7 +2244,7 @@ var __meta__ = { // jshint ignore:line
 
             return kendoDomElement(
                 "button", {
-                    //"type": "button",
+                    "type": "button",
                     "data-command": name,
                     className: [ "k-button", "k-button-icontext", command.className ].join(" ")
                 }, icon.concat([ kendoTextElement(command.text || command.name) ])
