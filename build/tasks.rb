@@ -86,7 +86,7 @@ def gulp_xvfb(*args)
 end
 
 def run_shell(cmd, args)
-    sh *(cmd + args.map { |arg| arg.to_s })
+    sh(*(cmd + args.map { |arg| arg.to_s }))
 end
 
 def sync(source, dest)
@@ -137,22 +137,27 @@ def file_copy(options)
 
                 File.open(to, "w") do |file|
                     licenseRegExp = /\/\*\!\s+\*\//m
-                    padded_license = ""
 
                     placeholder = contents[licenseRegExp]
 
-                    license_content_lines = license_contents.lines.to_a
+                    if placeholder
+                        padded_license = ""
+                        license_content_lines = license_contents.lines.to_a
 
-                    placeholder.lines.each_with_index do |line, index|
-                        license_line = license_content_lines[index]
-                        if license_line && index < license_content_lines.length - 1 # skip the last line which closes the comment
-                            padded_license += license_line.sub(/\n/, '').ljust(line.length, " ") + "\n"
-                        else
-                            padded_license += line
+                        placeholder.lines.each_with_index do |line, index|
+                            license_line = license_content_lines[index]
+                            if license_line && index < license_content_lines.length - 1 # skip the last line which closes the comment
+                                padded_license += license_line.sub(/\n/, '').ljust(line.length, " ") + "\n"
+                            else
+                                padded_license += line
+                            end
                         end
+
+                        contents = contents.sub(licenseRegExp, padded_license).sub(version_marker, VERSION.ljust(version_marker.length))
+                    else
+                        puts "skipping license for #{to}"
                     end
 
-                    contents = contents.sub(licenseRegExp, padded_license).sub(version_marker, VERSION.ljust(version_marker.length))
                     file.write(contents)
                 end
             end
