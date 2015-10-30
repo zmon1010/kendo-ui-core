@@ -6314,7 +6314,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             lockedCols = lockedCols.add(cols.filter(".k-group-col"));
-            for (idx = 0, length = leafColumns(visibleLockedColumns(that.columns)).length; idx < length; idx++) {
+            for (idx = 0, length = visibleColumns(leafColumns(visibleLockedColumns(that.columns))).length; idx < length; idx++) {
                 lockedCols = lockedCols.add(cols.eq(idx + groups));
             }
 

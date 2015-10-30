@@ -29,6 +29,39 @@
         return new Grid(div, options);
     }
 
+    test("hiding nested column renders correct footer cols", function() {
+        var grid = setup({
+            columns: [
+                {
+                    title: "parent",
+                    locked: true,
+                    columns: [
+                        { field: "foo", hidden: true, width: 100 },
+                        { field: "foo", hidden: false, width: 200 }
+                    ]
+                },
+                {
+                    field: "bar",
+                    width: 300,
+                    footerTemplate: "footer template"
+                },
+                {
+                    field: "baz",
+                    width: 400
+                }
+            ]
+        });
+
+        var locked = grid.footer.find(".k-grid-footer-locked col");
+        var nonLocked = grid.footer.find(".k-grid-footer-wrap col");
+
+        equal(locked.length, 1);
+        equal(nonLocked.length, 2);
+        equal(locked[0].style.width, "200px");
+        equal(nonLocked[0].style.width, "300px");
+        equal(nonLocked[1].style.width, "400px");
+    });
+
     test("hide cols for column in not scrollable grid", function() {
         var grid = setup({ scrollable: false });
 
