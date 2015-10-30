@@ -96,31 +96,51 @@
         },
 
         _setMessages: function() {
-            var options = {
-                from: this.from ? this.from.value : "",
-                to: this.to ? this.to.value : "",
-                fromFormula: this.from ? this.from.toString() : "",
-                toFormula: this.from ? this.from.toString() : "",
-                dataType: this.dataType,
-                type: this.type,
-                comparerType: this.comparerType
-            };
+            var from = this.from ? this.from.value : "";
+            var to = this.to ? this.to.value : "";
+
+            this.title = "Default Title";
+            this.message = "Default message (you need customized one use the validation dialog to do so)";
 
             if (this.tooltipTitleTemplate) {
-                this.tooltipTitle = kendo.template(this.tooltipTitleTemplate)(options);
+                this.tooltipTitle = kendo.format(this.tooltipTitleTemplate, from, to);
             }
 
             if (this.tooltipMessageTemplate) {
-                this.tooltipMessage = kendo.template(this.tooltipMessageTemplate)(options);
+                this.tooltipMessage = kendo.format(this.tooltipMessageTemplate, from, to);
             }
 
             if (this.titleTemplate) {
-                this.title = kendo.template(this.titleTemplate)(options);
+                this.title = kendo.format(this.titleTemplate, from, to);
             }
 
             if (this.messageTemplate) {
-                this.message = kendo.template(this.messageTemplate)(options);
+                this.message = kendo.format(this.messageTemplate, from, to);
             }
+
+            //TEMPLATES ARE DROPPED FOR NOW, ONLY FORMAT IS SUPPORTED
+            //TODO: Add support for templates? In this case the validation UI should be modified to return template
+            //var options = {
+            //    from: this.from ? this.from.value : "",
+            //    to: this.to ? this.to.value : "",
+            //    fromFormula: this.from ? this.from.toString() : "",
+            //    toFormula: this.from ? this.from.toString() : "",
+            //    dataType: this.dataType,
+            //    type: this.type,
+            //    comparerType: this.comparerType
+            //};
+            //if (this.tooltipTitleTemplate) {
+            //    this.tooltipTitle = kendo.template(this.tooltipTitleTemplate)(options);
+            //}
+            //if (this.tooltipMessageTemplate) {
+            //    this.tooltipMessage = kendo.template(this.tooltipMessageTemplate)(options);
+            //}
+            //if (this.titleTemplate) {
+            //    this.title = kendo.template(this.titleTemplate)(options);
+            //}
+            //if (this.messageTemplate) {
+            //    this.message = kendo.template(this.messageTemplate)(options);
+            //}
         },
 
         clone: function(sheet, row, col) {

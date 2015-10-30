@@ -212,6 +212,42 @@
             return this._property("validation", value);
         },
 
+        isValid: function() {
+            var valid = true;
+
+            this.forEachCell(function(row, col, cell) {
+                var validation = cell["validation"];
+
+                if (validation && validation.value === false) {
+                    valid =  false;
+                }
+            });
+
+            return valid;
+        },
+
+        _getValidationState: function() {
+            var ref = this._ref.toRangeRef();
+            var topLeftRow = ref.topLeft.row;
+            var topLeftCol = ref.topLeft.col;
+            var bottomRightRow = ref.bottomRight.row;
+            var bottomRightCol = ref.bottomRight.col;
+            var ci, ri;
+
+            for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
+                for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
+                    var validation = this._sheet._validation(ri, ci);
+
+                    console.log(validation);
+                    if (validation && validation.type === "reject" && validation.value === false) {
+                        return validation;
+                    }
+                }
+            }
+
+            return false;
+        },
+
         merge: function() {
             this._ref = this._sheet._merge(this._ref);
             return this;
@@ -523,23 +559,22 @@
 
         getState: function(propertyName) {
             var state = {ref: this._ref.first()};
-            var properties = [propertyName];
+            var properties;
             if (!propertyName) {
                 properties = kendo.spreadsheet.ALL_PROPERTIES;
                 state.mergedCells = this.intersectingMerged();
-            }
-
-            if (propertyName === "border") {
+            } else if (propertyName === "input") {
+                properties = ["value", "formula"];
+            } else if (propertyName === "border") {
                 properties = ["borderLeft", "borderTop", "borderRight", "borderBottom"];
+            } else {
+                properties = [propertyName];
             }
 
             this.forEachCell(function(row, col, cell) {
                 var cellState = state[row + "," + col] = {};
 
                 properties.forEach(function(property) {
-                    if (property === "input") {
-                        property = "value";
-                    }
                     cellState[property] = cell[property] || null;
                 });
             });

@@ -72,17 +72,35 @@
             options.property = "input";
             PropertyChangeCommand.fn.init.call(this, options);
         },
+        rejectState: function(validationState) {
+            this.undo();
+
+            this._workbook._view.showError({
+                title: validationState.title,
+                body: validationState.message
+            });
+        },
         exec: function() {
             var range = this.range();
             var value = this._value;
             this.getState();
             try {
                 range.input(value);
+
+                var validationState = range._getValidationState();
+                if (validationState) {
+                   this.rejectState(validationState);
+                }
             } catch(ex1) {
                 if (ex1 instanceof kendo.spreadsheet.calc.ParseError) {
                     // it's a formula. maybe a closing paren fixes it?
                     try {
                         range.input(value + ")");
+
+                        var validationState = range._getValidationState();
+                        if (validationState) {
+                            this.rejectState(validationState);
+                        }
                     } catch(ex2) {
                         if (ex2 instanceof kendo.spreadsheet.calc.ParseError) {
                             // XXX: error handling.  We should ask the user

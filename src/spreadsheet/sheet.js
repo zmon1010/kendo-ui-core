@@ -269,8 +269,8 @@
 
         _forValidations: function(callback) {
             var props = this._properties;
-            props.get("validation").values().forEach(function(f){
-                callback.call(this, f.value);
+            props.get("validation").values().forEach(function(v){
+                callback.call(this, v.value);
             }, this);
         },
 
@@ -1089,10 +1089,10 @@
 
         revalidate: function(context) {
             var self = this;
-            this._forValidations(function(formula){
-                var cellRef = new CellRef(formula.row, formula.col);
+            this._forValidations(function(validation){
+                var cellRef = new CellRef(validation.row, validation.col);
                 var ref =  new RangeRef(cellRef, cellRef);
-                formula.exec(context, self._get(ref, "value"), self._get(ref, "format"));
+                validation.exec(context, self._get(ref, "value"), self._get(ref, "format"));
             });
         },
 
@@ -1104,6 +1104,12 @@
             } else {
                 return this._properties.get("value", index);
             }
+        },
+
+        _validation: function(row, col) {
+            var index = this._grid.index(row, col);
+
+            return this._properties.get("validation", index);
         },
 
         _compileValidation: function(row, col, validation) {
