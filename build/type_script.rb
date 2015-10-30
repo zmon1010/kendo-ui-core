@@ -117,9 +117,11 @@ module CodeGen::TypeScript
                 return overrides[name]
             end
 
-            return 'any' if @type.size > 1
-
-            CodeGen::TypeScript.type(@type[0])
+            if @type.kind_of? String
+                CodeGen::TypeScript.type[@type]
+            else
+                @type.map { |t| CodeGen::TypeScript.type(t) }.join("|")
+            end
         end
     end
 
@@ -573,9 +575,11 @@ module CodeGen::TypeScript
         include Options
 
         def type_script_type
-            return 'any' if @type.size > 1
-
-            CodeGen::TypeScript.type(@type[0])
+            if @type.kind_of? String
+                CodeGen::TypeScript.type(@type)
+            else
+                @type.map { |t| CodeGen::TypeScript.type(t) }.join("|")
+            end
         end
 
         def jsdoc=(value)
