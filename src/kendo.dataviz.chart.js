@@ -5785,13 +5785,12 @@ var __meta__ = { // jshint ignore:line
 
         _setChildrenAnimation: function(clipPath) {
             var points = this.animationPoints();
-            var point, pointVisual;
+            var point;
 
             for (var idx = 0; idx < points.length; idx++) {
                 point = points[idx];
-                pointVisual = point.visual;
-                if (pointVisual && defined(pointVisual.options.zIndex)) {
-                    pointVisual.clip(clipPath);
+                if (point && point.visual && defined(point.visual.options.zIndex)) {
+                    point.visual.clip(clipPath);
                 }
             }
         }
@@ -5886,19 +5885,12 @@ var __meta__ = { // jshint ignore:line
         },
 
         animationPoints: function() {
-            var series = this.seriesOptions;
-            var points = [];
-            var seriesPoints;
-            var pointsIdx, idx;
-            for (idx = 0; idx < series.length; idx++) {
-                if (series[idx].markers.visible) {
-                    seriesPoints = this.seriesPoints[idx];
-                    for (pointsIdx = 0; pointsIdx < seriesPoints.length; pointsIdx++) {
-                        points.push(seriesPoints[pointsIdx].marker);
-                    }
-                }
+            var points = this.points;
+            var result = [];
+            for (var idx = 0; idx < points.length; idx++) {
+                result.push((points[idx] || {}).marker);
             }
-            return points.concat(this._segments);
+            return result.concat(this._segments);
         }
     });
     deepExtend(LineChart.fn, LineChartMixin, ClipAnimationMixin);
@@ -6715,16 +6707,12 @@ var __meta__ = { // jshint ignore:line
         },
 
         animationPoints: function() {
-            var seriesPoints = this.points;
-            var points = [];
-            var idx;
-
-            for (idx = 0; idx < seriesPoints.length; idx++) {
-                if (seriesPoints[idx].marker) {
-                    points.push(seriesPoints[idx].marker);
-                }
+            var points = this.points;
+            var result = [];
+            for (var idx = 0; idx < points.length; idx++) {
+                result.push((points[idx] || {}).marker);
             }
-            return points;
+            return result;
         }
     });
 

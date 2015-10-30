@@ -636,7 +636,7 @@
                     data: [[0, 1]]
                 }, {
                     type: "scatter",
-                    data: [[1, 2]],
+                    data: [[1, 2], null],
                     zIndex: 1
                 }]
             });

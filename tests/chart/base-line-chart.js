@@ -143,7 +143,7 @@ function baseLineChartTests(seriesName, TChart) {
                 series: [{
                     data: [0, 1]
                 }, {
-                    data: [1, 2],
+                    data: [1, null, 2],
                     zIndex: 1,
                     markers: {
                         visible: true
@@ -151,12 +151,18 @@ function baseLineChartTests(seriesName, TChart) {
                 }]
             });
 
-            var points = chart.seriesPoints[1];
+            var points = chart.points;
             var clip;
             for (var idx = 0; idx < points.length; idx++) {
-                clip = points[idx].marker.visual.clip();
-                ok(clip);
-                ok(clip === chart.animation.element);
+                if (points[idx]) {
+                    clip = points[idx].marker.visual.clip();
+                    if (points[idx].options.zIndex) {
+                        ok(clip);
+                        ok(clip === chart.animation.element);
+                    } else {
+                        ok(!clip);
+                    }
+                }
             }
         });
 

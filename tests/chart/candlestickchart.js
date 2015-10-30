@@ -342,7 +342,7 @@
             setupCandlestickChart(plotArea, {
                 series: [{
                     type: "candlestick",
-                    data: [[3,4,1,2]],
+                    data: [[3,4,1,2], null],
                     zIndex: 1
                 }]
             });
