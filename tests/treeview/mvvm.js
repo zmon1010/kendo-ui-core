@@ -446,9 +446,9 @@
 
             var viewModel = kendo.observable({
                 items: kendo.observableHierarchy([
-                    { id: 1, name: "foo", items: [
-                        { id: 2, name: "bar", items: [
-                            { id: 3, name: "baz" }
+                    { id: 1, text: "foo", items: [
+                        { id: 2, text: "bar", items: [
+                            { id: 3, text: "baz" }
                         ] }
                     ] }
                 ])
@@ -459,6 +459,29 @@
             dom.data("kendoTreeView").expandTo(3);
 
             ok(true);
+        });
+
+        test("expandTo on collapsed hierarchy", function() {
+            var dom = $('<div data-role="treeview" data-bind="source: items" />').appendTo(QUnit.fixture);
+
+            var viewModel = kendo.observable({
+                items: kendo.observableHierarchy([
+                    { id: 1, text: "foo", items: [
+                        { id: 2, text: "bar", items: [
+                            { id: 3, text: "baz" }
+                        ] }
+                    ] }
+                ])
+            });
+
+            kendo.bind(dom, viewModel);
+
+            dom.data("kendoTreeView").expandTo(3);
+
+            var node = dom.find(".k-item .k-item .k-item");
+
+            equal(node.length, 1);
+            ok(node.is(":visible"));
         });
 
     })();

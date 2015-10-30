@@ -2064,11 +2064,11 @@ var __meta__ = { // jshint ignore:line
             tryExpand(node, complete, treeview);
         },
 
-        _parents: function(node) {
+        _parentIds: function(node) {
             var parent = node && node.parentNode();
             var parents = [];
             while (parent && parent.parentNode) {
-                parents.push(parent);
+                parents.unshift(parent.id);
                 parent = parent.parentNode();
             }
 
@@ -2080,11 +2080,9 @@ var __meta__ = { // jshint ignore:line
                 node = this.dataSource.get(node);
             }
 
-            var parents = this._parents(node);
+            var parents = this._parentIds(node);
 
-            for (var i = 0; i < parents.length; i++) {
-                parents[i].set("expanded", true);
-            }
+            this.expandPath(parents);
         },
 
         _renderItem: function (options) {
