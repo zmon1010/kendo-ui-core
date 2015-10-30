@@ -161,7 +161,7 @@
             }
         },
 
-        load: function(elements, pos, cors) {
+        loadElements: function(elements, pos, cors) {
             var node = this,
                 childNode,
                 srcElement,
@@ -184,8 +184,12 @@
                     node.append(childNode);
                 }
             }
+        },
 
-            node.invalidate();
+        load: function(elements, pos, cors) {
+            this.loadElements(elements, pos, cors);
+
+            this.invalidate();
         },
 
         setOpacity: function(ctx) {
@@ -254,6 +258,11 @@
             GroupNode.fn.destroy.call(this);
             this.canvas = null;
             this.ctx = null;
+        },
+
+        load: function(elements, pos, cors) {
+            this.loadElements(elements, pos, cors);
+            this._invalidate();
         },
 
         _invalidate: function() {

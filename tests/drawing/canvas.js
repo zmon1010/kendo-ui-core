@@ -161,6 +161,13 @@
             root.invalidate();
         });
 
+        test("load invalidates immediately", function() {
+            root._invalidate = function() {
+               equal(this.childNodes.length, 1);
+            };
+            root.load([new d.Group()]);
+        });
+
         test("destroy clears timeout", 0, function() {
             var firstRun = true;
             createRoot(mockContext({
