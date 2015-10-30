@@ -174,21 +174,7 @@
 @button-focused-shadow: none;
 @button-focused-active-shadow: none;
 @accent-color: @accent;
-@radio-border-color-before: darken(@background, 25%);
-@radio-background-color: @background;
-@radio-border-width-before: 2px;
-@radio-hover-border-color: @accent;
-@radio-hover-box-shadow: none;
-@radio-checked-border-color-before: @accent;
-@radio-checked-background-color-after: @accent;
-@radio-active-border-color-before: darken(@background, 25%);
-@radio-active-box-shadow: none;
-@radio-checked-active-border-color-before: @accent;
-@radio-checked-active-box-shadow: none;
-@radio-disabled-background-color-after: @background;
-@radio-disabled-color: darken(@background, 25%);
-@radio-disabled-box-shadow: none;
-@radio-disabled-background-color-before: @background;
+
 /* Kendo skin */
 
 @theme-name: ~"fiori";
@@ -2184,67 +2170,20 @@ html .km-pane-wrapper .km-widget,
 @checkbox-disabled-color: darken(@background, 27%);
 @checkbox-disabled-border-color: darken(@background, 25%);
 
-//Radio buttons
-.k-radio-label:before {  
-  border-color: @radio-border-color-before;
-  border-radius: 50%;
-  background-color: @radio-background-color;
-  border-width: @radio-border-width-before;
-}
+@import "themes/radiobutton.less";
 
-.k-radio-label:hover:before,
-.k-radio:checked + .k-radio-label:hover:before  {
-   border-color: @radio-hover-border-color;
-   box-shadow: @radio-hover-box-shadow;
-}
-
-.k-radio:checked + .k-radio-label:before {
-   border-color: @radio-checked-border-color-before;
-}
-
-.k-radio:checked + .k-radio-label:after {
-  background-color: @radio-checked-background-color-after;
-  border-radius: 50%; 
-}
-
-.k-radio-label:active:before {
-  box-shadow: @radio-active-box-shadow; 
-  border-radius: 50%;
-  border-color: @radio-active-border-color-before;
-}
+@radio-border-color: darken(@background, 25%);
+@radio-border-width: 2px;
+@radio-hover-border-color: @accent;
+@radio-active-border-color: darken(@background, 25%);
+@radio-active-box-shadow: none;
+@radio-disabled-color: darken(@background, 25%);
+@radio-disabled-border-color: #bfbfbf;
 
 .k-radio:checked + .k-radio-label:active:before {
-  box-shadow: @radio-checked-active-box-shadow; 
-  border-radius: 50%;
-  border-color: @radio-checked-active-border-color-before;
+    border-color: @radio-hover-border-color;
 }
 
-.k-radio:disabled + .k-radio-label {
-   color: @radio-disabled-color;
-}
-
-.k-radio:disabled + .k-radio-label:before {       
-   border-color: #bfbfbf;
-}
-
-.k-radio:disabled + .k-radio-label:active:before {
-  box-shadow: @radio-disabled-box-shadow;
-  background: @radio-disabled-background-color-before;
-}
-
-.k-radio:disabled + .k-radio-label:before {
-    background: @radio-disabled-background-color-after;
-}
-
-.k-radio:disabled + .k-radio-label:hover:after,
-.k-radio:disabled + .k-radio-label:hover:before {
-  box-shadow: @radio-disabled-box-shadow;
-}
-
-.k-radio:focus + .k-radio-label:before {
-  border-color: @radio-active-border-color-before;
-  box-shadow: @radio-active-box-shadow;
-}
 
 // Retina sprite
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
