@@ -4583,7 +4583,7 @@
                 this.wrapper.append(
                     $('<div class="k-edit-form-container"/>').append(formContent));
 
-                this.window = new kendo.ui.Window(this.wrapper, this.options.window);
+                this.window = new kendo.ui.Window(this.wrapper.appendTo(this.element), this.options.window);
                 this.window.bind("close", function(e) {
                     //The bellow line is required due to: draggable window in IE, change event will be triggered while the window is closing
                     if (e.userTriggered) {
