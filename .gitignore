@@ -29,3 +29,4 @@ src/.tern-port
 build/timezone-js
 ci
 playground
+.jekyll-metadata
