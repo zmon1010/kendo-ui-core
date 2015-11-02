@@ -1064,6 +1064,10 @@
                 this.action({ action: action });
             }.bind(this));
 
+            this.quickAccessAdjust();
+        },
+
+        quickAccessAdjust: function() {
             this.tabGroup.css("padding-left", this.quickAccessToolBar.outerWidth());
         },
 

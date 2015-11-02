@@ -221,4 +221,15 @@
 
         equal(element.find(".k-spreadsheet-filter").length, 1);
     });
+
+    test("refresh quickAccessButtons position", function() {
+        var tabstrip = spreadsheet._view.tabstrip;
+
+        stub(tabstrip, {
+            quickAccessAdjust: tabstrip.quickAccessAdjust
+        });
+
+        spreadsheet.refresh();
+        equal(tabstrip.calls("quickAccessAdjust"), 1);
+    });
 })();

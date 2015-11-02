@@ -370,6 +370,10 @@
                 this.element.height() -
                     (tabstripHeight + formulaBarHeight + sheetsBarHeight)
             );
+
+            if (this.tabstrip) {
+                this.tabstrip.quickAccessAdjust();
+            }
         },
 
         _chrome: function() {
