@@ -5,6 +5,7 @@
     var moduleOptions = {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(4, 4, defaults.rowHeight, defaults.columnWidth);
+            sheet.name("Sheet1");
         },
         teardown: function() {
             sheet.unbind();
@@ -103,6 +104,43 @@
         equal(sheet.range("A1").format(), null);
         equal(sheet.range("B1").format(), "mm-yy");
         equal(sheet.range("C1").format(), "mm-yy");
+    });
+
+    test("changes are undone if validation fails and it is of type reject", 2, function() {
+        sheet.range("A1").value(1);
+        sheet.range("A1").validation({
+            allowNulls: false,
+            comparerType: "lessThan",
+            dataType: "number",
+            from: "2",
+            type: "reject"
+        });
+
+
+        var c = new kendo.spreadsheet.EditCommand({ value: 3 });
+
+        //mock workbook view:
+        c._workbook = {
+            _view: {
+                showError: function() {
+                    ok(true);
+                }
+            }
+        };
+
+        c.range(sheet.range("A1:A2"));
+
+        //mock getValidation state:
+        c.range()._getValidationState = function() {
+           return {
+               value: false,
+               type: "reject"
+           };
+        };
+
+        c.exec();
+
+        equal(sheet.range("A1").value(), 1);
     });
 
     var BorderChangeCommand = kendo.spreadsheet.BorderChangeCommand;
