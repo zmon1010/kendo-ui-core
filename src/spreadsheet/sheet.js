@@ -670,6 +670,17 @@
             return this._selectionState().selectionRangeIndex;
         },
 
+        activeCell: function(ref) {
+            return this._selectionState().activeCell(ref);
+        },
+
+        originalActiveCell: function() {
+            return this._selectionState().originalActiveCell;
+        },
+
+        singleCellSelection: function() {
+            return this._selectionState().singleCellSelection();
+        },
 
         unionWithMerged: function(ref) {
             var mergedCells = this._mergedCells;
@@ -688,19 +699,11 @@
             return this.unionWithMerged(ref.topLeft.toRangeRef().union(trims));
         },
 
-        activeCell: function(ref) {
-            return this._selectionState().activeCell(ref);
-        },
-
         setActiveCell: function(ref) {
             ref = this.unionWithMerged(ref.toRangeRef());
             this.focus(ref);
             this.triggerChange({ activeCell: true, selection: true });
             return ref;
-        },
-
-        originalActiveCell: function() {
-            return this._selectionState().originalActiveCell;
         },
 
         focus: function(ref) {
@@ -719,10 +722,6 @@
 
         selection: function() {
             return new Range(this._grid.normalize(this._selectionState().selection), this);
-        },
-
-        singleCellSelection: function() {
-            return this._selectionState().singleCellSelection();
         },
 
         selectedHeaders: function() {
