@@ -21,6 +21,8 @@
             validation = JSON.parse(validation);
         }
 
+        //this is the place where the FROM should be marked as transpose.
+        //then the array should be flattered in exec
         if (validation.from) {
             validation.from = calc.compile(calc.parseFormula(sheet, row, col, validation.from));
         }
@@ -30,6 +32,7 @@
         }
 
 
+        //TODO: modify this line to get correct comparer for list validation
         var comparer = validation.dataType == "custom" ? exports.validationComparers.custom : exports.validationComparers[validation.comparerType];
 
         if (!comparer) {
@@ -39,8 +42,24 @@
         validationHandler = function (valueToCompare) { //add 'valueFormat' arg when add isDate comparer
             var toValue = this.to && this.to.value ? this.to.value : undefined;
 
-            if ( this.dataType == "custom") {
+            if (this.dataType == "custom") {
                 this.value = comparer(valueToCompare, this.from.value,  toValue);
+            } else if (this.dataType == "list") {
+                //handle list validation by tranposing the cube into array (flat it_
+                var cube = this.from.value.data;
+                var i;
+                var y;
+                var data = [];
+
+                for (i = 0; i < cube.length; i++ ) {
+                    var array = cube[i];
+                    for (y = 0; y < cube.length; y++ ) {
+                        data.push(array[y]);
+                    }
+                }
+
+                this.value = comparer(valueToCompare, data, toValue);
+
             } else if (valueToCompare === null) {
                 if (this.allowNulls) {
                     this.value = true;
@@ -150,6 +169,7 @@
             var self = this;
 
             var calculateFromCallBack = function() {
+
                 self.value = self.handler.call(self, compareValue, compareFormat);
                 self._setMessages();
                 if (callback) {
@@ -269,6 +289,10 @@
         },
 
         custom: function (valueToCompare, from) {
+            return from;
+        },
+
+        list: function (valueToCompare, data) {
             return from;
         }
     };
