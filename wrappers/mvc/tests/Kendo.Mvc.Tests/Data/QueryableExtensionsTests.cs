@@ -336,6 +336,57 @@ namespace Kendo.Mvc.Tests.Data
                        .First().Items.Cast<Person>().First().Name.ShouldEqual(people.First().ID.ToString());
         }
 
+        [Fact]
+        public void Shuold_filter_recursively()
+        {
+            var employees = CreateEmployeeTestData() as IQueryable<EmployeeViewModel>;
+
+            var request = new UI.DataSourceRequest()
+            {
+                Filters = new List<IFilterDescriptor>
+                {
+                    new FilterDescriptor { Member = "Name", Value = "Second Level", Operator = FilterOperator.IsEqualTo }
+                }
+            };
+
+            var result = employees.ToTreeDataSourceResult(request,
+                e => e.ID,
+                e => e.ParentID);
+
+            result.Data.AsQueryable().Count().ShouldEqual(2);                        
+        }
+
+        [Fact]
+        public void Shuold_calculate_aggregates_recursively()
+        {
+            var employees = CreateEmployeeTestData() as IQueryable<EmployeeViewModel>;
+
+            var descriptor = new AggregateDescriptor { Member = "Name" };
+            descriptor.Aggregates.Add(new CountFunction { SourceField = "Name" });
+
+            var request = new UI.DataSourceRequest()
+            {
+                Aggregates = new List<AggregateDescriptor>
+                {
+                    descriptor    
+                }
+            };
+
+            var result = employees.ToTreeDataSourceResult(request,
+                e => e.ID,
+                e => e.ParentID);
+
+
+            result.AggregateResults[""].ElementAt(0).Value.ShouldEqual(3);
+        }
+
+        private class EmployeeViewModel
+        {
+            public int ID { get; set; }
+            public int? ParentID { get; set; }
+            public string Name { get; set; }
+        }
+
         private class PersonViewModel
         {
             public int ID { get; set; }
@@ -352,6 +403,18 @@ namespace Kendo.Mvc.Tests.Data
             }
 
             return people.AsQueryable();
+        }
+
+        private IQueryable CreateEmployeeTestData()
+        {
+            var data = new List<EmployeeViewModel>
+            {
+                new EmployeeViewModel { ID = 1, ParentID = null, Name = "Root Level" },
+                new EmployeeViewModel { ID = 2, ParentID = 1, Name = "Second Level" },
+                new EmployeeViewModel { ID = 3, ParentID = 2, Name = "Third Level" }
+            };
+
+            return data.AsQueryable();
         }
     }
 }
