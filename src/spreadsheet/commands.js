@@ -364,7 +364,7 @@
 
     kendo.spreadsheet.ToolbarPasteCommand = Command.extend({
         exec: function() {
-            if(kendo.support.browser.msie && kendo.support.browser.version >= 10) {
+            if(kendo.support.clipboard.paste) {
                 this._workbook._view.clipboard.focus().select();
                 document.execCommand('paste');
             } else {
@@ -401,7 +401,7 @@
         },
         undo: $.noop,
         exec: function() {
-            if(kendo.support.browser.msie && kendo.support.browser.version >= 10) {
+            if(kendo.support.clipboard.copy) {
                 var clipboard = this._workbook._view.clipboard;
                 var textarea = document.createElement('textarea');
                 $(textarea).addClass("k-spreadsheet-clipboard").val(clipboard.html()).appendTo(document.body).focus().select();
@@ -433,11 +433,11 @@
             this._clipboard = options.workbook.clipboard();
         },
         exec: function() {
-            if(kendo.support.browser.msie && kendo.support.browser.version >= 10) {
+            if(kendo.support.clipboard.copy) {
                 var clipboard = this._workbook._view.clipboard;
                 var textarea = document.createElement('textarea');
                 $(textarea).val(clipboard.html()).appendTo(document.body).focus().select();
-                document.execCommand('cut');
+                document.execCommand('copy');
                 clipboard.trigger("cut");
                 $(textarea).remove();
             } else {
