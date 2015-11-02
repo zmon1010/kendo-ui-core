@@ -177,7 +177,7 @@ code, em {
     font-weight: bold;
     display: inline-block;
     padding-right: 30px;
-    background: transparent url(../images/arrow.png) 90% 50% no-repeat;
+    background: transparent url(../../images/arrow.png) 90% 50% no-repeat;
 }
 
 #markdown-toc .section > a:hover {
@@ -270,7 +270,7 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 h1 a:hover, h2 a:hover, h3 a:hover,
 h4 a:hover, h5 a:hover, h6 a:hover {
     text-decoration: none;
-    background: transparent url(../images/anchor.png) no-repeat 0 50%;
+    background: transparent url(../../images/anchor.png) no-repeat 0 50%;
 }
 
 h1 a.type-link, h1 a.type-link:hover,
@@ -649,7 +649,7 @@ footer p {
 }
 
 #page-search td.gsc-search-button {
-    background: transparent url(../images/search.png) no-repeat 50% 50%;
+    background: transparent url(../../images/search.png) no-repeat 50% 50%;
     cursor: pointer;
 }
 
@@ -693,7 +693,7 @@ footer p {
     display: inline-block;
     min-width: 24px;
     min-height: 24px;
-    background: url(../images/search-24.png) 0 0 no-repeat;
+    background: url(../../images/search-24.png) 0 0 no-repeat;
     display: none;
 }
 
@@ -783,7 +783,7 @@ footer p {
         width: 100%;
         margin-left: 0;
     }
-    
+
     #page-article article {
       margin-left: 2em;
       margin-right: 2em;

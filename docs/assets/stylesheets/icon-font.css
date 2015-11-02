@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'KendoUIGlyphs';
-	src:url('../fonts/KendoUIGlyphs.eot?q7802w');
-	src:url('../fonts/KendoUIGlyphs.eot?#iefixq7802w') format('embedded-opentype'),
-		url('../fonts/KendoUIGlyphs.ttf?q7802w') format('truetype'),
-		url('../fonts/KendoUIGlyphs.woff?q7802w') format('woff'),
-		url('../fonts/KendoUIGlyphs.svg?q7802w#KendoUIGlyphs') format('svg');
+	src:url('../../fonts/KendoUIGlyphs.eot?q7802w');
+	src:url('../../fonts/KendoUIGlyphs.eot?#iefixq7802w') format('embedded-opentype'),
+		url('../../fonts/KendoUIGlyphs.ttf?q7802w') format('truetype'),
+		url('../../fonts/KendoUIGlyphs.woff?q7802w') format('woff'),
+		url('../../fonts/KendoUIGlyphs.svg?q7802w#KendoUIGlyphs') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
