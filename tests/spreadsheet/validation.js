@@ -127,8 +127,27 @@
         var validationCallback = function(result) {
             equal(f.tooltipTitle, undefined);
             equal(f.tooltipMessage, undefined);
-            equal(f.message, undefined);
-            equal(f.title, undefined);
+            equal(f.message, "");
+            equal(f.title, "");
+        };
+
+        f.exec(ss, 2, "m/d/yyyy", validationCallback);
+    });
+
+    test("validation messages are formatted correctly", function(){
+        var customOptions = {
+            from: "A2",
+            to: "A3",
+            comparerType: "between",
+            dataType: "date",
+            type: "reject",
+            messageTemplate: "{0}{1}{2}{3}{4}{5}{6}{7}"
+        };
+
+        var f = validation.compile(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var validationCallback = function(result) {
+            equal(f.message, "47A2A3daterejectbetween");
         };
 
         f.exec(ss, 2, "m/d/yyyy", validationCallback);
