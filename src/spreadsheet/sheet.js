@@ -12,6 +12,88 @@
     var Range = kendo.spreadsheet.Range;
     var Color = kendo.Color;
 
+    var Selection = kendo.Class.extend({
+        init: function(sheet) {
+            this._sheet = sheet;
+            this.selection = kendo.spreadsheet.FIRSTREF.toRangeRef();
+            this.originalSelection = kendo.spreadsheet.FIRSTREF.toRangeRef();
+            this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
+            this.originalActiveCell = kendo.spreadsheet.FIRSTREF;
+        },
+
+        currentSelectionRange: function() {
+            return this.selection.rangeAt(this.selectionRangeIndex).toRangeRef();
+        },
+
+        currentOriginalNavigationRange: function() {
+            return this.originalSelection.rangeAt(this.selectionRangeIndex).toRangeRef();
+        },
+
+        currentNavigationRange: function() {
+            if (this.singleCellSelection()) {
+                return this._sheet._sheetRef;
+            } else {
+                return this.selection.rangeAt(this.selectionRangeIndex).toRangeRef();
+            }
+        },
+
+        nextNavigationRange: function() {
+            if (!this.singleCellSelection()) {
+                this.selectionRangeIndex = this.selection.nextRangeIndex(this.selectionRangeIndex);
+            }
+
+            return this.currentNavigationRange();
+        },
+
+        previousNavigationRange: function() {
+            if (!this.singleCellSelection()) {
+                this.selectionRangeIndex = this.selection.previousRangeIndex(this.selectionRangeIndex);
+            }
+
+            return this.currentNavigationRange();
+        },
+
+        activeCell: function(ref) {
+            if (ref) {
+                this.originalActiveCell = ref;
+                this._activeCell = this._sheet.setActiveCell(ref);
+            }
+
+            return this._activeCell;
+        },
+
+        select: function(ref, expanded, changeActiveCell) {
+            if (ref) {
+                if (ref.eq(this.originalSelection)) {
+                    return;
+                }
+
+                this.originalSelection = ref;
+
+                this.selection = expanded;
+
+                if (changeActiveCell !== false) {
+
+                    if (ref.isCell()) {
+                        this.activeCell(ref);
+                    } else {
+                        this.activeCell(this.selection.lastRange().first());
+                    }
+
+                    this.selectionRangeIndex = this.selection.size() - 1;
+                } else {
+                    this._sheet.triggerChange({ selection: true });
+                }
+            }
+
+            return this.selection;
+        },
+
+        singleCellSelection: function() {
+            return this._activeCell.eq(this.selection);
+        }
+    });
+
     var Sheet = kendo.Observable.extend({
         init: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth) {
             kendo.Observable.prototype.init.call(this);
@@ -30,19 +112,9 @@
             this._properties = new kendo.spreadsheet.PropertyBag(cellCount);
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, this._properties.sortable());
 
-            this._viewSelection = {
-                selection: kendo.spreadsheet.FIRSTREF.toRangeRef(),
-                originalSelection: kendo.spreadsheet.FIRSTREF.toRangeRef(),
-                activeCell: kendo.spreadsheet.FIRSTREF.toRangeRef(),
-                originalActiveCell: kendo.spreadsheet.FIRSTREF
-            };
+            this._viewSelection = new Selection(this);
 
-            this._editSelection = {
-                selection: kendo.spreadsheet.FIRSTREF.toRangeRef(),
-                originalSelection: kendo.spreadsheet.FIRSTREF.toRangeRef(),
-                activeCell: kendo.spreadsheet.FIRSTREF.toRangeRef(),
-                originalActiveCell: kendo.spreadsheet.FIRSTREF
-            };
+            this._editSelection = new Selection(this);
 
             this._formulaSelections = [];
         },
@@ -560,30 +632,14 @@
         select: function(ref, changeActiveCell) {
             var selectionState = this._selectionState();
 
+            var expandedRef;
+
             if (ref) {
                 ref = this._ref(ref);
-
-                if (ref.eq(selectionState.originalSelection)) {
-                    return;
-                }
-
-                selectionState.originalSelection = ref;
-
-                selectionState.selection = this._grid.isAxis(ref) ? ref : this.unionWithMerged(ref);
-
-                if (changeActiveCell !== false) {
-                    if (ref.isCell()) {
-                        this.activeCell(ref);
-                    } else {
-                        this.activeCell(selectionState.selection.lastRange().first());
-                    }
-                    selectionState.selectionRangeIndex = selectionState.selection.size() - 1;
-                } else {
-                    this.triggerChange({ selection: true });
-                }
+                expandedRef = this._grid.isAxis(ref) ? ref : this.unionWithMerged(ref);
             }
 
-            return selectionState.selection;
+            return selectionState.select(ref, expandedRef, changeActiveCell);
         },
 
         originalSelect: function() {
@@ -591,43 +647,23 @@
         },
 
         currentSelectionRange: function() {
-            var selectionState = this._selectionState();
-            return selectionState.selection.rangeAt(selectionState.selectionRangeIndex).toRangeRef();
+            return this._selectionState().currentSelectionRange();
         },
 
         currentOriginalSelectionRange: function() {
-            var selectionState = this._selectionState();
-            return selectionState.originalSelection.rangeAt(selectionState.selectionRangeIndex).toRangeRef();
+            return this._selectionState().currentOriginalNavigationRange();
         },
 
         currentNavigationRange: function() {
-            var selectionState = this._selectionState();
-
-            if (this.singleCellSelection()) {
-                return this._sheetRef;
-            } else {
-                return selectionState.selection.rangeAt(selectionState.selectionRangeIndex).toRangeRef();
-            }
+            return this._selectionState().currentNavigationRange();
         },
 
         nextNavigationRange: function() {
-            var selectionState = this._selectionState();
-
-            if (!this.singleCellSelection()) {
-                selectionState.selectionRangeIndex = selectionState.selection.nextRangeIndex(selectionState.selectionRangeIndex);
-            }
-
-            return this.currentNavigationRange();
+            return this._selectionState().nextNavigationRange();
         },
 
         previousNavigationRange: function() {
-            var selectionState = this._selectionState();
-
-            if (!this.singleCellSelection()) {
-                selectionState.selectionRangeIndex = selectionState.selection.previousRangeIndex(selectionState.selectionRangeIndex);
-            }
-
-            return this.currentNavigationRange();
+            return this._selectionState().previousNavigationRange();
         },
 
         selectionRangeIndex: function() {
@@ -653,15 +689,14 @@
         },
 
         activeCell: function(ref) {
-            var selectionState = this._selectionState();
-            if (ref) {
-                selectionState.originalActiveCell = ref;
-                selectionState.activeCell = this.unionWithMerged(ref.toRangeRef());
-                this.focus(selectionState.activeCell);
-                this.triggerChange({ activeCell: true, selection: true });
-            }
+            return this._selectionState().activeCell(ref);
+        },
 
-            return selectionState.activeCell;
+        setActiveCell: function(ref) {
+            ref = this.unionWithMerged(ref.toRangeRef());
+            this.focus(ref);
+            this.triggerChange({ activeCell: true, selection: true });
+            return ref;
         },
 
         originalActiveCell: function() {
@@ -687,8 +722,7 @@
         },
 
         singleCellSelection: function() {
-            var selectionState = this._selectionState();
-            return selectionState.activeCell.eq(selectionState.selection);
+            return this._selectionState().singleCellSelection();
         },
 
         selectedHeaders: function() {
@@ -756,7 +790,7 @@
             if (isInEdit) {
                 this._editSelection.selection = this._viewSelection.selection.clone();
                 this._editSelection.originalSelection = this._viewSelection.originalSelection.clone();
-                this._editSelection.activeCell = this._viewSelection.activeCell.clone();
+                this._editSelection._activeCell = this._viewSelection._activeCell.clone();
                 this._editSelection.originalActiveCell = this._viewSelection.originalActiveCell.clone();
             }
         },
@@ -767,7 +801,7 @@
         },
 
         _viewActiveCell: function() {
-            return this._viewSelection.activeCell.toRangeRef();
+            return this._viewSelection._activeCell.toRangeRef();
         },
 
         toJSON: function() {
@@ -841,7 +875,7 @@
                 rows: rows,
                 columns: columns,
                 selection: viewSelection.selection.toString(),
-                activeCell: viewSelection.activeCell.toString(),
+                activeCell: viewSelection.activeCell().toString(),
                 frozenRows: this.frozenRows(),
                 frozenColumns: this.frozenColumns(),
                 mergedCells: this._mergedCells.map(function(ref) {
@@ -936,7 +970,7 @@
                 if (json.activeCell) {
                     var activeCellRef = this._ref(json.activeCell);
 
-                    this._viewSelection.activeCell = activeCellRef.toRangeRef();
+                    this._viewSelection._activeCell = activeCellRef.toRangeRef();
                     this._viewSelection.originalActiveCell = activeCellRef;
                 }
 
@@ -1258,7 +1292,7 @@
                 var viewSelection = sheet._viewSelection;
 
                 viewSelection.selection = sheet.unionWithMerged(viewSelection.originalSelection);
-                viewSelection.activeCell = sheet.unionWithMerged(viewSelection.originalActiveCell);
+                viewSelection._activeCell = sheet.unionWithMerged(viewSelection.originalActiveCell);
             }, { activeCell: true, selection: true });
 
             return mergedRef;
