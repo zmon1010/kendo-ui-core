@@ -2073,7 +2073,7 @@
             },
 
             _editArgs: function() {
-                var result = { container: this.editor.element };
+                var result = { container: this.editor.wrapper };
                 result[this.editor.options.type] = this.editor.model;
                 return result;
             },

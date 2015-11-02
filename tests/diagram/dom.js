@@ -2966,6 +2966,42 @@
         equal(d.dataSource.data().length, 2);
     });
 
+    (function() {
+        module("Diagram / edit", {
+            setup: function () {
+                dataviz.diagram.PopupEditor.fn.options.window.animation = false;
+                d = setupEditableDiagram();
+            },
+            teardown: function() {
+                delete dataviz.diagram.PopupEditor.fn.options.window.animation;
+                d.destroy();
+            }
+        });
+
+        test("puts shape in edit mode", function () {
+            var shape = d.shapes[0];
+            d.edit(shape);
+            ok(d.editor);
+            ok(d.editor.options.model === shape.dataItem);
+        });
+
+        test("puts connection in edit mode", function () {
+            var connection = d.connections[0];
+            d.edit(connection);
+            ok(d.editor);
+            ok(d.editor.options.model === connection.dataItem);
+        });
+
+        test("triggers edit event", function () {
+            var shape = d.shapes[0];
+            d.bind("edit", function(e) {
+                ok(e.shape === shape.dataItem);
+                ok(e.container.is(d.editor.wrapper));
+            });
+            d.edit(shape);
+        });
+    })();
+
     // ------------------------------------------------------------
     module("Editing / Shape data source / createShape", {
         setup: function () {
