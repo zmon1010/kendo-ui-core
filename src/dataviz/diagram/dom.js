@@ -5056,7 +5056,8 @@
             DiagramToolBar: DiagramToolBar,
             QuadNode: QuadNode,
             QuadRoot: QuadRoot,
-            ShapesQuadTree: ShapesQuadTree
+            ShapesQuadTree: ShapesQuadTree,
+            PopupEditor: PopupEditor
         });
 })(window.kendo.jQuery);
 
