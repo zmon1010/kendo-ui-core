@@ -3588,7 +3588,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         exportImage: function(options) {
-            return draw.exportImage(this.exportVisual(), options);
+            return draw.exportImage(this.exportVisual(options), options);
         },
 
         exportPDF: function(options) {

@@ -587,8 +587,26 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        exportVisual: function() {
-            return this.surface.exportVisual();
+        exportVisual: function(options) {
+            var visual;
+            if (options && (options.width || options.height)) {
+                var chartArea = this.options.chartArea;
+                var originalChartArea = this._originalOptions.chartArea;
+
+                deepExtend(chartArea, options);
+
+                var model = this._getModel();
+
+                chartArea.width = originalChartArea.width;
+                chartArea.height = originalChartArea.height;
+
+                model.renderVisual();
+
+                visual = model.visual;
+            } else {
+                visual = this.surface.exportVisual();
+            }
+            return visual;
         },
 
         _sharedTooltip: function() {

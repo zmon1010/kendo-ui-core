@@ -466,6 +466,53 @@
             chart.imageDataURL();
             ok(oldSurface === chart.surface);
         });
+
+        test("exportVisual creates visual with the specified width and height", function() {
+            var visual = chart.exportVisual({
+                width: 300,
+                height: 300
+            });
+            var bbox = visual.bbox();
+            equal(bbox.size.width, 300);
+            equal(bbox.size.height, 300);
+        });
+
+        test("exportVisual return surface export visual if width and height are not specified", function() {
+            var visual = chart.exportVisual({
+                foo: "bar"
+            });
+            ok(visual === chart.surface.exportVisual());
+        });
+
+        test("exportVisual does not replace surface", function() {
+            var oldSurface = chart.surface;
+            chart.exportVisual({
+                width: 300,
+                height: 300
+            });
+            ok(oldSurface === chart.surface);
+        });
+
+        test("exportVisual does not replace model", function() {
+            var oldModel = chart._model;
+            chart.exportVisual({
+                width: 300,
+                height: 300
+            });
+            ok(oldModel === chart._model);
+        });
+
+        test("exportVisual does not change chartArea size", function() {
+            var chartArea = chart.options.chartArea;
+            var width = chartArea.width;
+            var height = chartArea.height;
+            chart.exportVisual({
+                width: 300,
+                height: 300
+            });
+            equal(chart.options.chartArea.width, width);
+            equal(chart.options.chartArea.height, height);
+        });
     })();
 
     (function() {
