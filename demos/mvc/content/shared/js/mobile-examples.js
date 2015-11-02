@@ -174,7 +174,8 @@ function disableInSourceCode(e) {
 window.app = new kendo.mobile.Application($(document.body), {
     layout: "examples",
     transition: "slide",
-    skin: "nova",
+    skin: "ios7",
+    platform: "ios",
     icon: {
         "" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',
         "72x72" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',
