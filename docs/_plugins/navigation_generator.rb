@@ -46,7 +46,7 @@ module Jekyll
                             item['position'] = mapping['position'] if mapping.has_key?('position')
                         end
 
-                        node << item
+                        node << item if item['text']
                     end
 
                     node = item['items']
