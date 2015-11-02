@@ -519,6 +519,21 @@
         ok(range._ref.eq(sheet.activeCell()));
     });
 
+    test("validation method sets from/to options correctly", 3, function() {
+        sheet.range("A1").validation({
+            from: "10",
+            to: "20",
+            comparerType: "between",
+            dataType: "number"
+        });
+
+        var validation = sheet.range("A1").validation();
+
+        equal(validation.comparerType, "between");
+        equal(validation.from, 10);
+        equal(validation.to, 20);
+    });
+
     module("Sheet trimming", {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,

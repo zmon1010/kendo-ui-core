@@ -1061,7 +1061,7 @@
             }
 
             if (validation.to) {
-                validation.to = (validation.from + "").replace(/^=/, "");
+                validation.to = (validation.to + "").replace(/^=/, "");
             }
 
             return kendo.spreadsheet.validation.compile(this._name, row, col, validation);
