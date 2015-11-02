@@ -2006,7 +2006,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _trs: function(options) {
-            var model, attr, className, hasChildren, childNodes, i, length, parentId;
+            var model, attr, className, hasChildren, childNodes, i, length;
             var rows = [];
             var level = options.level;
             var data = options.data;
@@ -2063,7 +2063,6 @@ var __meta__ = { // jshint ignore:line
                 if (hasChildren) {
                     rows = rows.concat(this._trs({
                         columns: columns,
-                        parentId: model.id,
                         aggregates: aggregates,
                         selected: options.selected,
                         visible: options.visible && !!model.expanded,
@@ -2074,11 +2073,9 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (this._hasFooterTemplate()) {
-                parentId = options.parentId || null;
-
                 attr = {
                     className: classNames.footerTemplate,
-                    "data-parentId": parentId
+                    "data-parentId": model.parentId
                 };
 
                 if (!options.visible) {
@@ -2086,7 +2083,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 rows.push(this._tds({
-                    model: aggregates[parentId],
+                    model: aggregates[model.parentId],
                     attr: attr,
                     level: level
                 }, columns, this._footerTd));

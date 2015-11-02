@@ -609,6 +609,34 @@
         equal(footerCells.eq(3).text(), "17", "Root footer template, sum foo");
     });
 
+    test("footer template is passed aggregate values for non nullable root value", function() {
+        createTreeList({
+            columns: [ { field: "id", footerTemplate: "#= count #" } ],
+            dataSource: {
+                data: [
+                    { id: 1, parentId: -1 },
+                    { id: 2, parentId: 1 }
+                ],
+                schema: {
+                    model: {
+                        fields: {
+                            parentId: { type: "number", defaultValue: -1 }
+                        }
+                    }
+                },
+                aggregate: [
+                    { field: "id", aggregate: "count" }
+                ]
+            }
+        });
+
+        var footers = instance.content.find("tr.k-footer-template");
+
+        equal(footers.length, 2);
+        equal(footers.first().find("td").last().text(), "1");
+        equal(footers.last().find("td").last().text(), "2");
+    });
+
     test("scrollable:false renders one table", function() {
         createTreeList({
             scrollable: false,
