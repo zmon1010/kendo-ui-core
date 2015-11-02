@@ -1,7 +1,7 @@
 // -*- fill-column: 100 -*-
 
 (function(f, define){
-    define(["kendo.core"], f);
+    define(["../kendo.core"], f);
 })(function(){
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
