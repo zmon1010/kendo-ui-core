@@ -212,20 +212,6 @@
             return this._property("validation", value);
         },
 
-        isValid: function() {
-            var valid = true;
-
-            this.forEachCell(function(row, col, cell) {
-                var validation = cell.validation;
-
-                if (validation && validation.value === false) {
-                    valid =  false;
-                }
-            });
-
-            return valid;
-        },
-
         _getValidationState: function() {
             var ref = this._ref.toRangeRef();
             var topLeftRow = ref.topLeft.row;
