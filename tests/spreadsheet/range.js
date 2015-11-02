@@ -696,6 +696,16 @@
         equal(range.borderLeft().color, "#f00");
     });
 
+    test("get state returns valid properties when property is input", function() {
+        sheet.range("A2").value(2);
+        range.formula("A2");
+
+        var state = range.getState("input");
+
+        ok(state["0,0"].value !== undefined);
+        ok(state["0,0"].formula !== undefined);
+    });
+
     test("get state returns an object that may be restored", function() {
         range.background("#f00");
 
