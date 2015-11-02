@@ -2083,8 +2083,8 @@
         },
         "group": "Functionality",
          "description": {
-           "kendo-ui": "<p>This example demonstrates how to enable sorting for the Kendo UI grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>sortable </strong>grid attribute. Supported sorting modes are single and multiple.</p> <p>Check the relevant <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-sortable\" target=\"_blank\">sorting API section</a> for more details.</p>",
-       "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p>"
+            "kendo-ui": "<p>This example demonstrates how to enable sorting for the Kendo UI grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>sortable </strong>grid attribute. Supported sorting modes are single and multiple.</p> <p>Check the relevant <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-sortable\" target=\"_blank\">sorting API section</a> for more details.</p>",
+            "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p>"
          }
       },
       {
@@ -6998,9 +6998,10 @@
             "aspnet-mvc": "ASP.NET MVC stacked area chart example"
         },
         "meta": {
-            "kendo-ui": "This demo shows how the stacked area is created with KendoChart. Learn how to visualize series that should be stacked in the chart.",
-            "aspnet-mvc": "Learn how to visualize series that should be stacked in an ASP.NET MVC chart."
-        }
+          "kendo-ui": "This demo shows how the stacked area is created with KendoChart. Learn how to visualize series that should be stacked in the chart.",
+          "aspnet-mvc": "Learn how to visualize series that should be stacked in an ASP.NET MVC chart."
+        },
+        "group": "Area Chart Types",
       },
       {
         "text": "100% Stacked area",
@@ -7046,9 +7047,10 @@
             "aspnet-mvc": "Date axis sample for ASP.NET MVC Area Charts"
         },
         "meta": {
-            "kendo-ui": "This demo shows how you can set specific base date units in your Kendo UI Area Chart to help you visualize a seasonal trend in your app.",
-            "aspnet-mvc": "This demo shows how you can set specific base date units in your ASP.NET MVC Area Chart to help you visualize a seasonal trend in your app."
-        }
+          "kendo-ui": "This demo shows how you can set specific base date units in your Kendo UI Area Chart to help you visualize a seasonal trend in your app.",
+          "aspnet-mvc": "This demo shows how you can set specific base date units in your ASP.NET MVC Area Chart to help you visualize a seasonal trend in your app."
+        },
+        "group": "Functionality",
       },
       {
         "text": "Logarithmic axis",
@@ -7095,9 +7097,10 @@
             "aspnet-mvc": "Example of ASP.NET MVC Area Chart bound to remote data"
         },
         "meta": {
-            "kendo-ui": "This demo shows how Kendo UI Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.",
-            "aspnet-mvc": "See how the ASP.NET MVC Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data."
+          "kendo-ui": "This demo shows how Kendo UI Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.",
+          "aspnet-mvc": "See how the ASP.NET MVC Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data."
         },
+        "group": "Data Binding",
         "requiresServer": "true"
       },
       {
