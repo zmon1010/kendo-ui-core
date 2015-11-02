@@ -216,7 +216,7 @@
             var valid = true;
 
             this.forEachCell(function(row, col, cell) {
-                var validation = cell["validation"];
+                var validation = cell.validation;
 
                 if (validation && validation.value === false) {
                     valid =  false;
@@ -238,7 +238,6 @@
                 for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
                     var validation = this._sheet._validation(ri, ci);
 
-                    console.log(validation);
                     if (validation && validation.type === "reject" && validation.value === false) {
                         return validation;
                     }
