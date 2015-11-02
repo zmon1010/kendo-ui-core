@@ -203,12 +203,12 @@ namespace Kendo.Mvc.UI
 
         private void InitializeShapeEditor(ViewContext viewContext, ViewDataDictionary viewData) 
         {
-            if (ShapeEditorHtml.HasValue())
+            if (ShapeTemplateName.HasValue())
             {
                 var popupSlashes = new Regex("(?<=data-val-regex-pattern=\")([^\"]*)", RegexOptions.Multiline);
                 var helper = new HtmlHelper<TShapeModel>(viewContext, new DiagramViewDataContainer<TShapeModel>(DefaultShapeDataItem(), viewData));
 
-                ShapeEditorHtml = helper.EditorForModel(ShapeEditorHtml).ToHtmlString();
+                ShapeEditorHtml = helper.EditorForModel(ShapeTemplateName).ToHtmlString();
 
                 ShapeEditorHtml = popupSlashes.Replace(ShapeEditorHtml, match =>
                 {

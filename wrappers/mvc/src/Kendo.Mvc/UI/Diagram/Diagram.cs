@@ -248,6 +248,7 @@ namespace Kendo.Mvc.UI
 
             if (Editable != null && Editable.Enabled)
             {
+                Editable.InitializeEditor(ViewContext, ViewData);
                 var editable = Editable.ToJson();
                 if (editable.Any())
                 {
