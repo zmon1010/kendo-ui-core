@@ -545,6 +545,35 @@
         equal(sheet.range("A3").validation(), null);
     });
 
+    test("getValidationState returns reject validation state correctly", function() {
+        sheet.range("A2")
+            .validation({
+                from: "A4",
+                to: "",
+                comparerType: "greaterThan",
+                dataType: "number",
+                type: "reject"
+            });
+
+        sheet.range("A1")
+            .validation({
+                from: "A4",
+                to: "",
+                comparerType: "greaterThan",
+                dataType: "number"
+            });
+
+        var state = sheet.range("A1").getState()["0,0"];
+        var state2 = sheet.range("A2").getState()["1,0"];
+
+
+        state.validation.value = false;
+        state2.validation.value = false;
+
+        ok(!sheet.range("A2:A5")._getValidationState().value);
+        ok(!sheet.range("A1")._getValidationState());
+    });
+
     test("formula `=A1` works", function() {
         var workbook = new kendo.spreadsheet.Workbook(defaults);
         var sheet = workbook.activeSheet();
