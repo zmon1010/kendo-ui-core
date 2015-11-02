@@ -3262,13 +3262,18 @@ var __meta__ = { // jshint ignore:line
             that.trigger(EDIT, { container: row, model: model });
         },
 
-        cancelRow: function() {
+        cancelRow: function(notify) {
             var that = this,
                 container = that._editContainer,
                 model;
 
             if (container) {
+
                 model = that._modelForContainer(container);
+
+                if (notify && that.trigger("cancel", { container: container, model: model })) {
+                    return;
+                }
 
                 that._destroyEditable();
 
@@ -4460,7 +4465,7 @@ var __meta__ = { // jshint ignore:line
                 if (active) {
                     active.blur();
                 }
-                this.cancelRow();
+                this.cancelRow(true);
                 if (currentIndex >= 0) {
                     this._setCurrent(this.items().eq(currentIndex).children(NAVCELL).first());
                 }

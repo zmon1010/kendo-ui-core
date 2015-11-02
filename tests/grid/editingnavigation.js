@@ -221,6 +221,27 @@
         ok(table.find("tr>td:first").hasClass("k-state-focused"));
     });
 
+    test("pressing escape key on edited cell triggers cancel event (incell edit mode)", function() {
+        var grid = setup({
+            cancel: function(e) {
+                equal(e.container[0], table.find("tr>td")[0]);
+            }
+        });
+
+        focusCell(grid).table.press(kendo.keys.ENTER).press(kendo.keys.ESC);
+    });
+
+    test("pressing escape key on edited cell triggers cancel event (inline edit mode)", function() {
+        var grid = setup({
+            editable: "inline",
+            cancel: function(e) {
+                equal(e.container[0], table.find("tr")[0]);
+            }
+        });
+
+        focusCell(grid).table.press(kendo.keys.ENTER).press(kendo.keys.ESC);
+    });
+
     test("pressing enter key edit the row in inline mode", function() {
         var grid = setup({ editable: "inline" });
 
