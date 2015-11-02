@@ -741,7 +741,7 @@
 
             if (this.editor.isActive()) {
                 this.editor.toggleTooltip(this.activeCellRectangle());
-            } else if (!sheet.selectionInProgress() && !sheet.resizingInProgress() && !sheet._edit()) {
+            } else if (!sheet.selectionInProgress() && !sheet.resizingInProgress() && !sheet.isInEditMode()) {
                 this.renderClipboardContents();
             }
         },
@@ -1148,7 +1148,7 @@
 
         },
 
-        _active: function() {
+        _activeFormulaSelection: function() {
             return this._sheet._formulaSelections.filter(function(sel) {
                 return sel.active;
             })[0];
@@ -1170,11 +1170,11 @@
                 !activeCell.move(1, 0).intersects(view.ref)
             );
 
-            if (sheet._edit()) {
-                var token = this._active();
+            if (sheet.isInEditMode()) {
+                var activeFormulaSelection = this._activeFormulaSelection();
 
-                if (token && token.type == "ref") {
-                    seriesColorClass = " " + token.seriesCls;
+                if (activeFormulaSelection && activeFormulaSelection.type == "ref") {
+                    seriesColorClass = " " + activeFormulaSelection.seriesCls;
                     className += seriesColorClass;
                 }
             }

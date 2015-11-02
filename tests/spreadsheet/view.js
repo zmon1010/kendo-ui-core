@@ -191,7 +191,7 @@
             renderClipboardContents: view.renderClipboardContents
         });
 
-        sheet._edit(true);
+        sheet.isInEditMode(true);
         view.render();
 
         equal(view.calls("renderClipboardContents"), 0);

@@ -780,7 +780,7 @@
             };
         },
 
-        _edit: function(isInEdit) {
+        isInEditMode: function(isInEdit) {
             if (isInEdit === undefined) {
                 return this._inEdit;
             }
