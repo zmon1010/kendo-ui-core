@@ -846,28 +846,6 @@
         }
     });
 
-    function orientedClass(classNames, defaultClass, left, top, right, bottom) {
-        var classes = [defaultClass];
-
-        if (top) {
-            classes.push(classNames.top);
-        }
-
-        if (right) {
-            classes.push(classNames.right);
-        }
-
-        if (bottom) {
-            classes.push(classNames.bottom);
-        }
-
-        if (left) {
-            classes.push(classNames.left);
-        }
-
-        return classes.join(" ");
-    }
-
     var paneClassNames = {
         rowHeader: "k-spreadsheet-row-header",
         columnHeader: "k-spreadsheet-column-header",
@@ -977,9 +955,19 @@
                 }
             }
 
+            var paneClasses = [classNames.pane];
+
+            if (grid.hasColumnHeader) {
+                paneClasses.push(classNames.top);
+            }
+
+            if (grid.hasRowHeader) {
+                paneClasses.push(classNames.left);
+            }
+
             return kendo.dom.element("div", {
                 style: grid.style,
-                className: orientedClass(classNames, classNames.pane, grid.hasRowHeader, grid.hasColumnHeader)
+                className: paneClasses.join(" ")
             }, children);
         },
 
@@ -1157,30 +1145,39 @@
         renderSelection: function() {
             var classNames = Pane.classNames;
             var selections = [];
-            var seriesColorClass = "";
+            var classes = [classNames.activeCell];
+            var seriesColorClass = [classNames.selection];
             var sheet = this._sheet;
-            var view = this._currentView;
+            var view = this._currentView.ref;
             var activeCell = sheet.activeCell().toRangeRef();
-            var className = orientedClass(
-                classNames,
-                classNames.activeCell,
-                !activeCell.move(0, -1).intersects(view.ref),
-                !activeCell.move(-1, 0).intersects(view.ref),
-                !activeCell.move(0, 1).intersects(view.ref),
-                !activeCell.move(1, 0).intersects(view.ref)
-            );
+
+            if (!activeCell.move(0, -1).intersects(view)) {
+                classes.push(classNames.top);
+            }
+
+            if (!activeCell.move(-1, 0).intersects(view)) {
+                classes.push(classNames.right);
+            }
+
+            if (!activeCell.move(0, 1).intersects(view)) {
+                classes.push(classNames.bottom);
+            }
+
+            if (!activeCell.move(1, 0).intersects(view)) {
+                classes.push(classNames.left);
+            }
 
             if (sheet.isInEditMode()) {
                 var activeFormulaSelection = this._activeFormulaSelection();
 
                 if (activeFormulaSelection && activeFormulaSelection.type == "ref") {
-                    seriesColorClass = " " + activeFormulaSelection.seriesCls;
-                    className += seriesColorClass;
+                    seriesColorClass.push(activeFormulaSelection.seriesCls);
+                    classes.push(activeFormulaSelection.seriesCls);
                 }
             }
 
             if (sheet.select().eq(activeCell)) {
-                className += " " + classNames.single;
+                classes.push(classNames.single);
             }
 
             sheet.select().forEach(function(ref) {
@@ -1188,10 +1185,10 @@
                     return;
                 }
 
-                this._addDiv(selections, ref, classNames.selection + seriesColorClass);
+                this._addDiv(selections, ref, seriesColorClass.join(" "));
             }.bind(this));
 
-            this._addTable(selections, activeCell, className);
+            this._addTable(selections, activeCell, classes.join(" "));
 
             return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);
         },
