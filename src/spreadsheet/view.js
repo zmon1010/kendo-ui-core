@@ -1169,54 +1169,57 @@
         renderSelection: function() {
             var classNames = Pane.classNames;
             var selections = [];
-            var classes = [classNames.activeCell];
-            var seriesColorClass = [classNames.selection];
+            var activeCellClasses = [classNames.activeCell];
+            var selectionClasses = [classNames.selection];
             var sheet = this._sheet;
             var view = this._currentView.ref;
             var activeCell = sheet.activeCell().toRangeRef();
+            var selection = sheet.select();
 
             if (!activeCell.move(0, -1).intersects(view)) {
-                classes.push(classNames.top);
+                activeCellClasses.push(classNames.top);
             }
 
             if (!activeCell.move(-1, 0).intersects(view)) {
-                classes.push(classNames.right);
+                activeCellClasses.push(classNames.right);
             }
 
             if (!activeCell.move(0, 1).intersects(view)) {
-                classes.push(classNames.bottom);
+                activeCellClasses.push(classNames.bottom);
             }
 
             if (!activeCell.move(1, 0).intersects(view)) {
-                classes.push(classNames.left);
+                activeCellClasses.push(classNames.left);
             }
 
             if (sheet.isInEditMode()) {
                 var activeFormulaSelection = this._activeFormulaSelection();
 
                 if (activeFormulaSelection && activeFormulaSelection.type == "ref") {
-                    seriesColorClass.push(activeFormulaSelection.seriesCls);
-                    classes.push(activeFormulaSelection.seriesCls);
+                    selectionClasses.push(activeFormulaSelection.seriesCls);
+                    activeCellClasses.push(activeFormulaSelection.seriesCls);
                 }
             }
 
-            if (sheet.select().eq(activeCell)) {
-                classes.push(classNames.single);
+            if (sheet.singleCellSelection()) {
+                activeCellClasses.push(classNames.single);
             }
 
-            var selection = sheet.select();
+            if (selection.size() === 1) {
+                selectionClasses.push("k-single-selection");
+            }
 
-            var singleRangeSelection = selection.size() === 1;
+            if (this._sheet.autoFillPunch()) {
+               selectionClasses.push("k-dim-auto-fill-handle");
+            }
 
             selection.forEach(function(ref) {
-                if (ref === kendo.spreadsheet.NULLREF) {
-                    return;
+                if (ref !== kendo.spreadsheet.NULLREF) {
+                    this._addDiv(selections, ref, selectionClasses.join(" "));
                 }
-
-                this._addDiv(selections, ref, seriesColorClass.join(" ") + (singleRangeSelection ? " k-single-selection" : ""));
             }.bind(this));
 
-            this._addTable(selections, activeCell, classes.join(" "));
+            this._addTable(selections, activeCell, activeCellClasses.join(" "));
 
             return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);
         },
@@ -1226,6 +1229,11 @@
 
             if (this._sheet.autoFillInProgress()) {
                 this._addDiv(autoFillRectangle, this._sheet.autoFillRef(), "k-auto-fill");
+                var punch = this._sheet.autoFillPunch();
+
+                if (punch) {
+                    this._addDiv(autoFillRectangle, punch, "k-auto-fill-punch");
+                }
             }
             return kendo.dom.element("div", { className: Pane.classNames.autoFillWrapper }, autoFillRectangle);
         },

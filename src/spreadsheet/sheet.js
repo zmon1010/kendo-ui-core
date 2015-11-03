@@ -582,13 +582,22 @@
             this.triggerChange({ selection: true });
         },
 
+        resizeAutoFill: function(ref) {
+            var selection = this.select();
+            var autoFillRef = this.autoFillCalculator().autoFillDest(selection, ref);
+
+            this._autoFillDest = autoFillRef;
+            this._autoFillPunch = this.navigator().punch(selection, autoFillRef);
+
+            this.triggerChange({ selection: true });
+        },
+
         autoFillRef: function() {
             return this._autoFillDest;
         },
 
-        resizeAutoFill: function(ref) {
-            this._autoFillDest = this.autoFillCalculator().autoFillDest(this.select(), ref);
-            this.triggerChange({ selection: true });
+        autoFillPunch: function() {
+            return this._autoFillPunch;
         },
 
         completeAutoFill: function() {
@@ -598,26 +607,9 @@
 
             this._autoFillInProgress = false;
 
-            /*
-            var corner = this._autoFillCorner;
-            var origin = this._autoFillOrigin;
-
-            var pivotCell = ref.row > origin.topLeft.row  || ref.col < origin.topLeft.col
-                ? origin.topLeft
-                : origin.bottomRight;
-
-            var autoFillRange = new RangeRef(this._autoFillOrigin.topLeft, this._autoFillCorner);
-
-            var direction;
-
-            if (corner.col === origin.col) { // vertical
-               if (corner.row > origin.row) {
-                   direction = 0;
-               } else if(corner.row > )
-            }
-
-            this.range(autoFillRange).fillFrom(this.range(this._autoFillOrigin));
-            */
+            this._autoFillDest = null;
+            this._autoFillPunch = null;
+            this._autoFillOrigin = null;
 
             this.triggerChange({ selection: true });
         },

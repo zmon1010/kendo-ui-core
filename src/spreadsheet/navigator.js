@@ -477,6 +477,29 @@
         updateCurrentSelectionRange: function(ref) {
             var sheet = this._sheet;
             sheet.select(sheet.originalSelect().replaceAt(sheet.selectionRangeIndex(), ref), false);
+        },
+
+        punch: function(selection, subset) {
+            var punch;
+            if (subset.topLeft.eq(selection.topLeft)) {
+                if (subset.bottomRight.row < selection.bottomRight.row) {
+                    var bottomRow = this.rowEdge.nextRight(subset.bottomRight.row);
+
+                    punch = new RangeRef(
+                        new CellRef(bottomRow, selection.topLeft.col),
+                        selection.bottomRight
+                    );
+                } else if (subset.bottomRight.col < selection.bottomRight.col) {
+                    var bottomCol = this.colEdge.nextRight(subset.bottomRight.col);
+
+                    punch = new RangeRef(
+                        new CellRef(selection.topLeft.row, bottomCol),
+                        selection.bottomRight
+                    );
+                }
+            }
+
+            return punch;
         }
     });
 
