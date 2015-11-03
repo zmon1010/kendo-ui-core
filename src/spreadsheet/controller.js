@@ -405,6 +405,12 @@
                 return;
             }
 
+            if (object.type === "autofill") {
+                sheet.startAutoFill();
+                event.preventDefault();
+                return;
+            }
+
             this._selectionMode = SELECTION_MODES[object.type];
             this.appendSelection = event.mod;
             this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
@@ -489,6 +495,11 @@
                 return;
             }
 
+            if (sheet.autoFillInProgress() && object.ref) {
+                sheet.resizeAutoFill(object.ref);
+                return;
+            }
+
             if (object.type === "outside") {
                 this.startAutoScroll(object);
                 return;
@@ -520,6 +531,7 @@
         onMouseUp: function(event) {
             var sheet = this._workbook.activeSheet();
             sheet.completeResizing();
+            sheet.completeAutoFill();
 
             this.navigator.completeSelection();
             this.stopAutoScroll();

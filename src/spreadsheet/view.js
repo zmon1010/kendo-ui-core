@@ -479,6 +479,21 @@
             return result;
         },
 
+        isAutoFill: function(x, y, pane) {
+            var selection = this._sheet.select();
+
+            if (selection.size > 1) {
+                return false;
+            }
+
+            x -= this._sheet._grid._headerWidth;
+            y -= this._sheet._grid._headerHeight;
+
+            var rectangle = this._rectangle(pane, selection);
+
+            return Math.abs(rectangle.right - x) < 8 && Math.abs(rectangle.bottom - y) < 8;
+        },
+
         objectAt: function(x, y) {
             var grid = this._sheet._grid;
 
@@ -497,7 +512,9 @@
                 var type = "cell";
                 var ref = new CellRef(row, column);
 
-                if (this.isFilterIcon(x, y, pane, ref)) {
+                if (this.isAutoFill(x, y, pane)) {
+                    type = "autofill";
+                } else if (this.isFilterIcon(x, y, pane, ref)) {
                     type = "filtericon";
                 } else if (x < grid._headerWidth) {
                     ref = new CellRef(row, -Infinity);
@@ -852,6 +869,7 @@
         activeCell: "k-spreadsheet-active-cell",
         selection: "k-spreadsheet-selection",
         selectionWrapper: "k-selection-wrapper",
+        autoFillWrapper: "k-auto-fill-wrapper",
         single: "k-single",
         top: "k-top",
         right: "k-right",
@@ -903,6 +921,8 @@
             children.push(this.renderMergedCells());
 
             children.push(this.renderSelection());
+
+            children.push(this.renderAutoFill());
 
             children.push(this.renderEditorSelection());
 
@@ -1176,17 +1196,30 @@
                 classes.push(classNames.single);
             }
 
-            sheet.select().forEach(function(ref) {
+            var selection = sheet.select();
+
+            var singleRangeSelection = selection.size() === 1;
+
+            selection.forEach(function(ref) {
                 if (ref === kendo.spreadsheet.NULLREF) {
                     return;
                 }
 
-                this._addDiv(selections, ref, seriesColorClass.join(" "));
+                this._addDiv(selections, ref, seriesColorClass.join(" ") + (singleRangeSelection ? " k-single-selection" : ""));
             }.bind(this));
 
             this._addTable(selections, activeCell, classes.join(" "));
 
             return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);
+        },
+
+        renderAutoFill: function() {
+            var autoFillRectangle = [];
+
+            if (this._sheet.autoFillInProgress()) {
+                this._addDiv(autoFillRectangle, this._sheet.autoFillRef(), "k-auto-fill");
+            }
+            return kendo.dom.element("div", { className: Pane.classNames.autoFillWrapper }, autoFillRectangle);
         },
 
         _addDiv: function(collection, ref, className) {

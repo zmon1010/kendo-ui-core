@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.color", "./runtime", "./validation", "./references"], f);
+    define([ "../kendo.core", "../kendo.color", "./runtime", "./validation", "./references", "./autofillcalculator"], f);
 })(function(){
 
 (function(kendo) {
@@ -56,7 +56,9 @@
         activeCell: function(ref) {
             if (ref) {
                 this.originalActiveCell = ref;
-                this._activeCell = this._sheet.setActiveCell(ref);
+                this._activeCell = this._sheet.unionWithMerged(ref.toRangeRef());
+                this._sheet.focus(ref);
+                this._sheet.triggerChange({ activeCell: true, selection: true });
             }
 
             return this._activeCell;
@@ -128,6 +130,13 @@
                  this._navigator = new kendo.spreadsheet.SheetNavigator(this);
             }
             return this._navigator;
+        },
+
+        autoFillCalculator: function() {
+            if(!this._autoFillCalculator) {
+                 this._autoFillCalculator = new kendo.spreadsheet.AutoFillCalculator(this._grid);
+            }
+            return this._autoFillCalculator;
         },
 
         axisManager: function() {
@@ -565,6 +574,58 @@
             this._resizeInProgress = true;
         },
 
+        startAutoFill: function() {
+            this._autoFillInProgress = true;
+            var selection = this.select();
+            this._autoFillOrigin = selection;
+            this._autoFillDest = selection;
+            this.triggerChange({ selection: true });
+        },
+
+        autoFillRef: function() {
+            return this._autoFillDest;
+        },
+
+        resizeAutoFill: function(ref) {
+            this._autoFillDest = this.autoFillCalculator().autoFillDest(this.select(), ref);
+            this.triggerChange({ selection: true });
+        },
+
+        completeAutoFill: function() {
+            if (!this._autoFillInProgress) {
+                return;
+            }
+
+            this._autoFillInProgress = false;
+
+            /*
+            var corner = this._autoFillCorner;
+            var origin = this._autoFillOrigin;
+
+            var pivotCell = ref.row > origin.topLeft.row  || ref.col < origin.topLeft.col
+                ? origin.topLeft
+                : origin.bottomRight;
+
+            var autoFillRange = new RangeRef(this._autoFillOrigin.topLeft, this._autoFillCorner);
+
+            var direction;
+
+            if (corner.col === origin.col) { // vertical
+               if (corner.row > origin.row) {
+                   direction = 0;
+               } else if(corner.row > )
+            }
+
+            this.range(autoFillRange).fillFrom(this.range(this._autoFillOrigin));
+            */
+
+            this.triggerChange({ selection: true });
+        },
+
+        autoFillInProgress: function() {
+            return this._autoFillInProgress;
+        },
+
         resizingInProgress: function() {
             return this._resizeInProgress;
         },
@@ -697,13 +758,6 @@
                 trims.push(grid.trim(ref, property.list));
             });
             return this.unionWithMerged(ref.topLeft.toRangeRef().union(trims));
-        },
-
-        setActiveCell: function(ref) {
-            ref = this.unionWithMerged(ref.toRangeRef());
-            this.focus(ref);
-            this.triggerChange({ activeCell: true, selection: true });
-            return ref;
         },
 
         focus: function(ref) {

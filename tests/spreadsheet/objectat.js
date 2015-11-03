@@ -126,4 +126,16 @@
         var result = view.objectAt(32+64*2-10, 16+20+10);// headers + one row/col
         equal(result.type, "filtericon");
     });
+
+    test("filter icon in frozen pane", function() {
+        sheet.range("A1:A3").select();
+
+        // 5 by 5 size
+
+        var Y = 20 + 20 * 3 - 5;
+        var X = 32 + 64  - 5;
+
+        var result = view.objectAt(X, Y);// headers + one row/col
+        equal(result.type, "autofill");
+    });
 })();
