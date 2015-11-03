@@ -750,7 +750,7 @@
 ////////////////////////////////////////////////////////////////////
 
         onEditorChange: function(e) {
-            this._workbook.activeSheet()._edit(false);
+            this._workbook.activeSheet().isInEditMode(false);
 
             this._execute({
                 command: "EditCommand",
@@ -766,13 +766,13 @@
             var sheet = workbook.activeSheet();
 
             sheet._setFormulaSelections(this.editor.highlightedRefs());
-            sheet._edit(true);
+            sheet.isInEditMode(true);
         },
 
         onEditorDeactivate: function() {
             var sheet = this._workbook.activeSheet();
 
-            sheet._edit(false);
+            sheet.isInEditMode(false);
             sheet._setFormulaSelections([]);
         },
 
