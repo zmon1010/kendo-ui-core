@@ -66,7 +66,6 @@
         ] });
 
         var leftCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
-        var rightCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(1)");
 
         equal(leftCell[0].style.borderRightWidth, "3px");
     });
@@ -88,7 +87,6 @@
         ] });
 
         var topCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
-        var bottomCell = element.find(".k-spreadsheet-data tr:eq(1) td:eq(1)");
 
         equal(topCell[0].style.borderBottomWidth, "3px");
     });
@@ -209,7 +207,7 @@
             filter: new kendo.spreadsheet.ValueFilter({
                 values: [ 1 ]
             })
-        })
+        });
 
         var activeBottom = element.find(".k-spreadsheet-filter.k-state-active");
         equal(activeBottom.length, 1);
