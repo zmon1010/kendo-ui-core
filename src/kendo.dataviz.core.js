@@ -2637,7 +2637,8 @@ var __meta__ = { // jshint ignore:line
                 dataItem: note.dataItem,
                 series: note.series,
                 value: note.value,
-                category: note.category
+                category: note.category,
+                visual: note.visual
             };
         }
     });

@@ -4507,5 +4507,14 @@
             });
         });
 
+        test("passes visual in event args", function() {
+            createNote({
+                visual: function() {
+                    return customVisual;
+                }
+            });
+            equal(note.eventArgs(new $.Event()).visual, customVisual);
+        });
+
     })();
 })();
