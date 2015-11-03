@@ -7344,7 +7344,9 @@ var __meta__ = { // jshint ignore:line
                 that.selectable.resetTouchEvents();
             }
 
-            that._angularItems("compile");
+            that._muteAngularRebind(function() {
+                that._angularItems("compile");
+            });
 
             that.trigger(DATABOUND);
        },
