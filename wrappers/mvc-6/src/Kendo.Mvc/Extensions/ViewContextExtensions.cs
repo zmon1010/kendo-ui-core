@@ -36,7 +36,7 @@ namespace Kendo.Mvc.Extensions
                 ValidationMessageElement = viewContext.ValidationMessageElement
             };
 
-            return new ViewContext(actionContext, viewContext.GetService<IView>(), viewDataDictionary, tempDataDictionary, new StringWriter(), options);
+            return new ViewContext(actionContext, viewContext.View, viewDataDictionary, tempDataDictionary, new StringWriter(), options);
 		}
 
 		public static HtmlHelper<T> CreateHtmlHelper<T>(this ViewContext viewContext)
