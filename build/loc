@@ -5,7 +5,7 @@ loc() {
     cat ${(P)${2}} | sed '/^\s*$/d' | wc -l
 }
 
-KENDO_SRC=(src/{kendo.*.js,{aspnetmvc,dataviz,drawing,editor,geometry,spreadsheet,mixins,pdf,util}/**/*.js} styles/**/*.less)
+KENDO_SRC=(src/{kendo.*.js,{aspnetmvc,dataviz,drawing,editor,spreadsheet,mixins,pdf,util}/**/*.js} styles/**/*.less)
 MVC_SRC=(wrappers/mvc/src/Kendo.Mvc/**/*.cs)
 JSP_SRC=(wrappers/java/kendo-taglib/**/*.java)
 PHP_SRC=(wrappers/php/lib/**/*.php)
