@@ -59,7 +59,11 @@ var ParagraphCommand = Command.extend({
             if (dom.isEmpty(focusNode)) {
                 range.setStartBefore(focusNode);
             } else {
-                range.selectNodeContents(focusNode);
+                if (dom.emptyNode(focusNode)) {
+                    focusNode.innerHTML = "\ufeff";
+                }
+
+                range.setStartBefore(focusNode.firstChild || focusNode);
             }
         }
     },

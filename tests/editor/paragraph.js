@@ -203,11 +203,6 @@ test('exec caret at end of content', function() {
     var command = createParagraphCommand(range);
     command.exec();
 
-    if (!kendo.support.browser.msie) {
-        var br = editor.body.lastChild.firstChild;
-        equal(br.nodeName.toLowerCase(), "br", "bogus br is present in non-ie browsers");
-    }
-
     equal(editor.value(), '<p>foo</p><p></p>');
 });
 
@@ -510,14 +505,6 @@ test("paragraph after formatted text leaves only one system line break", functio
     createParagraphCommand(range).exec();
 
     equal($("p:last .k-br", editor.body).length, 1);
-});
-
-test("paragraph in empty formatted paragraph leaves only one system line break", function() {
-    var range = createRangeFromText(editor, '<p><strong>||</strong></p>');
-
-    createParagraphCommand(range).exec();
-
-    equal($("strong:last .k-br", editor.body).length, 1);
 });
 
 }());
