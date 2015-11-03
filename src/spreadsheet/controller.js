@@ -495,11 +495,6 @@
                 return;
             }
 
-            if (sheet.autoFillInProgress() && object.ref) {
-                sheet.resizeAutoFill(object.ref);
-                return;
-            }
-
             if (object.type === "outside") {
                 this.startAutoScroll(object);
                 return;
@@ -701,7 +696,13 @@
         },
 
         extendSelection: function(object) {
-            this.navigator.extendSelection(object.ref, this._selectionMode, this.appendSelection);
+            var sheet = this._workbook.activeSheet();
+
+            if (sheet.autoFillInProgress()) {
+                sheet.resizeAutoFill(object.ref);
+            } else {
+                this.navigator.extendSelection(object.ref, this._selectionMode, this.appendSelection);
+            }
         },
 
         autoScroll: function() {

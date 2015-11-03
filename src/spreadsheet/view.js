@@ -489,6 +489,14 @@
             x -= this._sheet._grid._headerWidth;
             y -= this._sheet._grid._headerHeight;
 
+            if (!pane._grid.columns.frozen) {
+                x += this.scroller.scrollLeft;
+            }
+
+            if (!pane._grid.rows.frozen) {
+                y += this.scroller.scrollTop;
+            }
+
             var rectangle = this._rectangle(pane, selection);
 
             return Math.abs(rectangle.right - x) < 8 && Math.abs(rectangle.bottom - y) < 8;
