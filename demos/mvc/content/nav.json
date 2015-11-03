@@ -7001,7 +7001,7 @@
           "kendo-ui": "This demo shows how the stacked area is created with KendoChart. Learn how to visualize series that should be stacked in the chart.",
           "aspnet-mvc": "Learn how to visualize series that should be stacked in an ASP.NET MVC chart."
         },
-        "group": "Area Chart Types",
+        "group": "Area Chart Types"
       },
       {
         "text": "100% Stacked area",
@@ -7050,7 +7050,7 @@
           "kendo-ui": "This demo shows how you can set specific base date units in your Kendo UI Area Chart to help you visualize a seasonal trend in your app.",
           "aspnet-mvc": "This demo shows how you can set specific base date units in your ASP.NET MVC Area Chart to help you visualize a seasonal trend in your app."
         },
-        "group": "Functionality",
+        "group": "Functionality"
       },
       {
         "text": "Logarithmic axis",
