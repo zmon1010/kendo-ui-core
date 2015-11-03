@@ -98,6 +98,25 @@
         equal(parsedOutput.titleTemplate, customOptions.titleTemplate);
     });
 
+    test("validation toJSON works correctly with list validation", function(){
+        var customOptions = {
+            from: "A2:A4",
+            to: "",
+            comparerType: "",
+            dataType: "list",
+            type: "reject"
+        };
+
+        var f = validation.compile(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var parsedOutput = f.toJSON();
+
+        equal(parsedOutput.from, customOptions.from);
+        equal(parsedOutput.to, customOptions.to);
+        equal(parsedOutput.dataType, customOptions.dataType);
+        equal(parsedOutput.type, customOptions.type);
+    });
+
     test("validation type is set to warning by default", function(){
         var customOptions = {
             from: "A2",
@@ -440,8 +459,7 @@
         };
 
         var f = validation.compile(Sheet1, 0, 0, {
-            //TODO: REMOVE THE TRANSPOSE - IT SHOULD BE ADDED BY THE VALIDATION
-            from: "TRANSPOSE(B1:E2)",
+            from: "B1:E2",
             dataType: "list",
             allowNulls: false
         });
@@ -455,8 +473,7 @@
         };
 
         var f = validation.compile(Sheet1, 0, 0, {
-            //TODO: REMOVE THE TRANSPOSE - IT SHOULD BE ADDED BY THE VALIDATION
-            from: "TRANSPOSE(B1:E2)",
+            from: "B1:E2",
             dataType: "list",
             allowNulls: false
         });

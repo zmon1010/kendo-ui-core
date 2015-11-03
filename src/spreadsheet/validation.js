@@ -13,6 +13,7 @@
     spreadsheet.validation = exports;
     var calc = spreadsheet.calc;
     var Class = kendo.Class;
+    var TRANSPOSE_FORMAT = "TRANSPOSE({0})";
 
     function compileValidation(sheet, row, col, validation) {
         var validationHandler;
@@ -22,9 +23,11 @@
             validation = JSON.parse(validation);
         }
 
-        //this is the place where the FROM should be marked as transpose.
-        //then the array should be flattered in exec
         if (validation.from) {
+            if (validation.dataType === "list") {
+                validation.from = kendo.format(TRANSPOSE_FORMAT, validation.from);
+            }
+
             validation.from = calc.compile(calc.parseFormula(sheet, row, col, validation.from));
         }
 
@@ -242,6 +245,10 @@
 
             if (options.from) {
                 options.from = options.from.toString();
+
+                if (options.dataType === "list") {
+                    options.from = options.from.replace(/TRANSPOSE\(/, '').replace(/\)(?!.*\))/, '');
+                }
             }
 
             if (options.to) {
