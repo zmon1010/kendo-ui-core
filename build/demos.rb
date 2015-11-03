@@ -264,6 +264,10 @@ PHP = FileList['wrappers/php/**/*.php']
          :from => PRODUCTION_RESOURCES,
          :root => 'demos/mvc/'
 
+    tree :to => "dist/demos/#{flavor}/bin",
+         :from => SPREADSHEET_REDIST_NET40,
+         :root => SPREADSHEET_SRC_ROOT
+
     tree :to => "dist/demos/#{flavor}/src/php",
          :from => PHP,
          :root => 'wrappers/php/'
