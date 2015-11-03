@@ -11,7 +11,7 @@
 
     var ToolBar = kendo.ui.ToolBar;
 
-    var messages = kendo.spreadsheet.messages.toolbar = {
+    var MESSAGES = kendo.spreadsheet.messages.toolbar = {
         addColumnLeft: "Add column left",
         addColumnRight: "Add column right",
         addRowAbove: "Add row above",
@@ -173,8 +173,6 @@
             groups.slice(2).before("<span class='k-separator' />");
         },
         _expandTools: function(tools) {
-            var messages = this.options.messages;
-
             function expandTool(toolName) {
                 // expand string to object, add missing tool properties
                 var options = $.isPlainObject(toolName) ? toolName : toolDefaults[toolName] || {};
@@ -192,9 +190,9 @@
 
                 var tool = $.extend({
                     name: options.name || toolName,
-                    text: messages[options.name || toolName],
+                    text: MESSAGES[options.name || toolName],
                     spriteCssClass: spriteCssClass,
-                    attributes: { title: messages[options.name || toolName] }
+                    attributes: { title: MESSAGES[options.name || toolName] }
                 }, typeDefaults[type], options);
 
                 if (type == "splitButton") {
@@ -257,8 +255,7 @@
         options: {
             name: "SpreadsheetToolBar",
             resizable: true,
-            tools: defaultTools,
-            messages: messages
+            tools: defaultTools
         },
         action: function(args) {
             this.trigger("action", args);
@@ -687,16 +684,16 @@
                     "#: data.name #"
             });
             ddl.setDataSource([
-                { format: null, name: messages.formatTypes.automatic },
-                { format: "0", name: messages.formatTypes.number , sample: "1,499.99" },
-                { format: "0.00%", name: messages.formatTypes.percent , sample: "14.50%" },
-                { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: messages.formatTypes.financial , sample: "(1,000.12)" },
-                { format: "$#,##0.00;[Red]$#,##0.00", name: messages.formatTypes.currency , sample: "$1,499.99" },
-                { format: "m/d/yyyy", name: messages.formatTypes.date , sample: "4/21/2012" },
-                { format: "h:mm:ss AM/PM", name: messages.formatTypes.time , sample: "5:49:00 PM" },
-                { format: "m/d/yyyy h:mm", name: messages.formatTypes.dateTime , sample: "4/21/2012 5:49:00" },
-                { format: "[h]:mm:ss", name: messages.formatTypes.duration , sample: "168:05:00" },
-                { popup: "formatCells", name: messages.formatTypes.moreFormats }
+                { format: null, name: MESSAGES.formatTypes.automatic },
+                { format: "0", name: MESSAGES.formatTypes.number , sample: "1,499.99" },
+                { format: "0.00%", name: MESSAGES.formatTypes.percent , sample: "14.50%" },
+                { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: MESSAGES.formatTypes.financial , sample: "(1,000.12)" },
+                { format: "$#,##0.00;[Red]$#,##0.00", name: MESSAGES.formatTypes.currency , sample: "$1,499.99" },
+                { format: "m/d/yyyy", name: MESSAGES.formatTypes.date , sample: "4/21/2012" },
+                { format: "h:mm:ss AM/PM", name: MESSAGES.formatTypes.time , sample: "5:49:00 PM" },
+                { format: "m/d/yyyy h:mm", name: MESSAGES.formatTypes.dateTime , sample: "4/21/2012 5:49:00" },
+                { format: "[h]:mm:ss", name: MESSAGES.formatTypes.duration , sample: "168:05:00" },
+                { popup: "formatCells", name: MESSAGES.formatTypes.moreFormats }
             ]);
 
             this.element.data({
@@ -771,13 +768,13 @@
             });
         },
         buttons: [
-            { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: messages.alignmentButtons.justtifyLeft },
-            { property: "textAlign",     value: "center",  iconClass: "justify-center", text: messages.alignmentButtons.justifyCenter },
-            { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: messages.alignmentButtons.justifyRight },
-            { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: messages.alignmentButtons.justifyFull },
-            { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: messages.alignmentButtons.alignTop },
-            { property: "verticalAlign", value: "middle",  iconClass: "align-middle",   text: messages.alignmentButtons.alignMiddle },
-            { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: messages.alignmentButtons.alignBottom }
+            { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: MESSAGES.alignmentButtons.justtifyLeft },
+            { property: "textAlign",     value: "center",  iconClass: "justify-center", text: MESSAGES.alignmentButtons.justifyCenter },
+            { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: MESSAGES.alignmentButtons.justifyRight },
+            { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: MESSAGES.alignmentButtons.justifyFull },
+            { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: MESSAGES.alignmentButtons.alignTop },
+            { property: "verticalAlign", value: "middle",  iconClass: "align-middle",   text: MESSAGES.alignmentButtons.alignMiddle },
+            { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: MESSAGES.alignmentButtons.alignBottom }
         ],
         destroy: function() {
             this.popup.element.off();
@@ -848,10 +845,10 @@
             });
         },
         buttons: [
-            { value: "cells",        iconClass: "merge-cells",        text: messages.mergeButtons.mergeCells },
-            { value: "horizontally", iconClass: "merge-horizontally", text: messages.mergeButtons.mergeHorizontally },
-            { value: "vertically",   iconClass: "merge-vertically",   text: messages.mergeButtons.mergeVertically },
-            { value: "unmerge",      iconClass: "normal-layout",      text: messages.mergeButtons.unmerge }
+            { value: "cells",        iconClass: "merge-cells",        text: MESSAGES.mergeButtons.mergeCells },
+            { value: "horizontally", iconClass: "merge-horizontally", text: MESSAGES.mergeButtons.mergeHorizontally },
+            { value: "vertically",   iconClass: "merge-vertically",   text: MESSAGES.mergeButtons.mergeVertically },
+            { value: "unmerge",      iconClass: "normal-layout",      text: MESSAGES.mergeButtons.unmerge }
         ],
         destroy: function() {
             this.popup.element.off();
@@ -902,10 +899,10 @@
             });
         },
         buttons: [
-            { value: "panes",    iconClass: "freeze-panes",  text: messages.freezeButtons.freezePanes },
-            { value: "rows",     iconClass: "freeze-row",    text: messages.freezeButtons.freezeRows },
-            { value: "columns",  iconClass: "freeze-col",    text: messages.freezeButtons.freezeColumns },
-            { value: "unfreeze", iconClass: "normal-layout", text: messages.freezeButtons.unfreeze }
+            { value: "panes",    iconClass: "freeze-panes",  text: MESSAGES.freezeButtons.freezePanes },
+            { value: "rows",     iconClass: "freeze-row",    text: MESSAGES.freezeButtons.freezeRows },
+            { value: "columns",  iconClass: "freeze-col",    text: MESSAGES.freezeButtons.freezeColumns },
+            { value: "unfreeze", iconClass: "normal-layout", text: MESSAGES.freezeButtons.unfreeze }
         ],
         destroy: function() {
             this.popup.element.off();
@@ -957,10 +954,10 @@
                 dataValueField: "value"
             });
             ddl.setDataSource([
-                // { value: 1, sheet: true, asc: true,  text: messages.sortButtons.sortSheetAsc,  iconClass: "sort-asc" },
-                // { value: 2, sheet: true, asc: false, text: messages.sortButtons.sortSheetDesc,  , iconClass: "sort-desc" },
-                { value: 1, sheet: false, asc: true,  text: messages.sortButtons.sortRangeAsc, iconClass: "sort-asc" },
-                { value: 2, sheet: false, asc: false, text: messages.sortButtons.sortRangeDesc, iconClass: "sort-desc" }
+                // { value: 1, sheet: true, asc: true,  text: MESSAGES.sortButtons.sortSheetAsc,  iconClass: "sort-asc" },
+                // { value: 2, sheet: true, asc: false, text: MESSAGES.sortButtons.sortSheetDesc,  , iconClass: "sort-desc" },
+                { value: 1, sheet: false, asc: true,  text: MESSAGES.sortButtons.sortRangeAsc, iconClass: "sort-asc" },
+                { value: 2, sheet: false, asc: false, text: MESSAGES.sortButtons.sortRangeDesc, iconClass: "sort-desc" }
             ]);
 
             this.element.data({
@@ -1049,8 +1046,8 @@
 
         _quickAccessButtons: function() {
             var buttons = [
-                { title: messages.quickAccess.undo, iconClass: "undo-large", action: "undo" },
-                { title: messages.quickAccess.redo, iconClass: "redo-large", action: "redo" }
+                { title: MESSAGES.quickAccess.undo, iconClass: "undo-large", action: "undo" },
+                { title: MESSAGES.quickAccess.redo, iconClass: "redo-large", action: "redo" }
             ];
             var buttonTemplate = kendo.template("<a href='\\#' title='#= title #' data-action='#= action #' class='k-button k-button-icon'><span class='k-icon k-font-icon k-i-#=iconClass#'></span></a>");
 

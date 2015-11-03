@@ -69,6 +69,42 @@
             }
         });
 
+        var FILTERMENU_MESSAGES = kendo.spreadsheet.messages.filterMenu = {
+            sortAscending: "Sort range A to Z",
+            sortDescending: "Sort range Z to A",
+            filterByValue: "Filter by value",
+            filterByCondition: "Filter by condition",
+            apply: "Apply",
+            search: "Search",
+            clear: "Clear",
+            blanks: "(Blanks)",
+            operatorNone: "None",
+            and: "AND",
+            or: "OR",
+            operators: {
+                string: {
+                    contains: "Text contains",
+                    doesnotcontain: "Text does not contain",
+                    startswith: "Text starts with",
+                    endswith: "Text ends with"
+                },
+                date: {
+                    eq:  "Date is",
+                    neq: "Date is not",
+                    lt:  "Date is before",
+                    gt:  "Date is after"
+                },
+                number: {
+                    eq: "Is equal to",
+                    neq: "Is not equal to",
+                    gte: "Is greater than or equal to",
+                    gt: "Is greater than",
+                    lte: "Is less than or equal to",
+                    lt: "Is less than"
+                }
+            }
+        };
+
         var templates = {
             filterByValue:
                 "<div class='" + classNames.detailsSummary + "'>#= messages.filterByValue #</div>" +
@@ -192,11 +228,12 @@
         });
 
         function flattern(operators) {
+            var messages = FILTERMENU_MESSAGES.operators;
             var result = [];
             for (var type in operators) {
                 for (var operator in operators[type]) {
                     result.push({
-                        text: operators[type][operator],
+                        text: messages[type][operator],
                         value: operator,
                         unique: type + "_" + operator,
                         type: type
@@ -230,19 +267,6 @@
                 name: "FilterMenu",
                 column: 0,
                 range: null,
-                messages: {
-                    sortAscending: "Sort range A to Z",
-                    sortDescending: "Sort range Z to A",
-                    filterByValue: "Filter by value",
-                    filterByCondition: "Filter by condition",
-                    apply: "Apply",
-                    search: "Search",
-                    clear: "Clear",
-                    blanks: "(Blanks)",
-                    operatorNone: "None",
-                    and: "AND",
-                    or: "OR"
-                },
                 operators: {
                     string: {
                         contains: "Text contains",
@@ -334,7 +358,7 @@
 
             getValues: function() {
                 var values = [];
-                var messages = this.options.messages;
+                var messages = FILTERMENU_MESSAGES;
                 var column = this.options.column;
                 var columnRange = this.options.range.resize({ top: 1 }).column(column);
                 var sheet = this.options.range.sheet();
@@ -457,7 +481,7 @@
 
             _sort: function() {
                 var template = kendo.template(FilterMenu.templates.menuItem);
-                var messages = this.options.messages;
+                var messages = FILTERMENU_MESSAGES;
                 var items = [
                     { command: "sort", dir: "asc", text: messages.sortAscending, iconClass: "sort-asc" },
                     { command: "sort", dir: "desc", text: messages.sortDescending, iconClass: "sort-desc" }
@@ -490,7 +514,7 @@
             _appendTemplate: function(template, className, details, expanded) {
                 var compiledTemplate = kendo.template(template);
                 var wrapper = $("<div class='" + className + "'/>").html(compiledTemplate({
-                    messages: this.options.messages,
+                    messages: FILTERMENU_MESSAGES,
                     ns: kendo.ns
                 }));
 

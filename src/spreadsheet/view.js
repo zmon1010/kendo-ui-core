@@ -34,7 +34,7 @@
         colHeaderContextMenu: "k-spreadsheet-col-header-context-menu"
     };
 
-    var messages = kendo.spreadsheet.messages.view = {
+    var VIEW_MESAGES = kendo.spreadsheet.messages.view = {
         errors: {
             shiftingNonblankCells: "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet."
         },
@@ -357,10 +357,6 @@
             });
         },
 
-        options: {
-            messages: messages
-        },
-
         _resize: function() {
             var tabstripHeight = this.tabstrip ? this.tabstrip.element.outerHeight() : 0;
             var formulaBarHeight = this.formulaBar ? this.formulaBar.element.outerHeight() : 0;
@@ -400,7 +396,7 @@
         },
 
         _tabstrip: function() {
-            var messages = this.options.messages.tabs;
+            var messages = VIEW_MESAGES.tabs;
             var options = $.extend(true, { home: true, insert: true, data: true }, this.options.toolbar);
             var tabs = [];
 
@@ -665,7 +661,7 @@
         },
 
         showError: function(options) {
-            var errorMessages = this.options.messages.errors;
+            var errorMessages = VIEW_MESAGES.errors;
             this.openDialog("message", {
                 title : options.title || "Error",
                 text  : options.reason ? errorMessages[options.reason] : options.body

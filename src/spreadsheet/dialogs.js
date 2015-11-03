@@ -10,7 +10,7 @@
     var $ = kendo.jQuery;
     var ObservableObject = kendo.data.ObservableObject;
 
-    var messages = kendo.spreadsheet.messages.dialogs = {
+    var MESSAGES = kendo.spreadsheet.messages.dialogs = {
         apply: "Apply",
         save: "Save",
         cancel: "Cancel",
@@ -335,12 +335,12 @@
             this._generateFormats();
         },
         options: {
-            title: messages.formatCellsDialog.title,
+            title: MESSAGES.formatCellsDialog.title,
             className: "k-spreadsheet-format-cells",
             categories: [
-                { type: "number", name: messages.formatCellsDialog.categories.number },
-                { type: "currency", name: messages.formatCellsDialog.categories.currency },
-                { type: "date", name: messages.formatCellsDialog.categories.date }
+                { type: "number", name: MESSAGES.formatCellsDialog.categories.number },
+                { type: "currency", name: MESSAGES.formatCellsDialog.categories.currency },
+                { type: "date", name: MESSAGES.formatCellsDialog.categories.date }
             ],
             template:
                 "<div class='k-root-tabs' data-role='tabstrip' " +
@@ -367,8 +367,8 @@
                     "data-bind='source: formats, value: format' />" +
 
                 "<div class='k-action-buttons'>" +
-                    "<button class='k-button k-primary' data-bind='click: apply'>" + messages.apply + "</button>" +
-                    "<button class='k-button' data-bind='click: close'>" + messages.cancel + "</button>" +
+                    "<button class='k-button k-primary' data-bind='click: apply'>" + MESSAGES.apply + "</button>" +
+                    "<button class='k-button' data-bind='click: close'>" + MESSAGES.cancel + "</button>" +
                 "</div>"
         },
         _generateFormats: function() {
@@ -488,7 +488,7 @@
 
             kendo.bind(this.dialog().element, {
                 text: this.options.text,
-                okText: messages.okText,
+                okText: MESSAGES.okText,
                 close: this.close.bind(this)
             });
         }
@@ -503,7 +503,7 @@
             this._list();
         },
         options: {
-            title: messages.fontFamilyDialog.title,
+            title: MESSAGES.fontFamilyDialog.title,
             template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
@@ -542,7 +542,7 @@
             this._list();
         },
         options: {
-            title: messages.fontSizeDialog.title,
+            title: MESSAGES.fontSizeDialog.title,
             template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
@@ -589,12 +589,12 @@
             kendo.bind(this.element.find(".k-action-buttons"), this.viewModel);
         },
         options: {
-            title: messages.bordersDialog.title,
+            title: MESSAGES.bordersDialog.title,
             width: 177,
             template:   "<div></div>" +
                         "<div class='k-action-buttons'>" +
-                            "<button class='k-button k-primary' data-bind='click: apply'>" + messages.apply + "</button>" +
-                            "<button class='k-button' data-bind='click: close'>" + messages.cancel + "</button>" +
+                            "<button class='k-button k-primary' data-bind='click: apply'>" + MESSAGES.apply + "</button>" +
+                            "<button class='k-button' data-bind='click: close'>" + MESSAGES.cancel + "</button>" +
                         "</div>"
         },
         apply: function() {
@@ -648,8 +648,8 @@
             width: 177,
             template:   "<div></div>" +
                         "<div class='k-action-buttons'>" +
-                            "<button class='k-button k-primary' data-bind='click: apply'>" + messages.apply + "</button>" +
-                            "<button class='k-button' data-bind='click: close'>" + messages.cancel + "</button>" +
+                            "<button class='k-button k-primary' data-bind='click: apply'>" + MESSAGES.apply + "</button>" +
+                            "<button class='k-button' data-bind='click: close'>" + MESSAGES.cancel + "</button>" +
                         "</div>"
         },
         apply: function() {
@@ -698,13 +698,13 @@
             title: "Alignment",
             template: "<ul class='k-list k-reset'></ul>",
             buttons: [
-                { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: messages.alignmentDialog.buttons.justtifyLeft },
-                { property: "textAlign",     value: "center",  iconClass: "justify-center", text: messages.alignmentDialog.buttons.justifyCenter },
-                { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: messages.alignmentDialog.buttons.justifyRight },
-                { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: messages.alignmentDialog.buttons.justifyFull },
-                { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: messages.alignmentDialog.buttons.alignTop },
-                { property: "verticalAlign", value: "middle",  iconClass: "align-middle",   text: messages.alignmentDialog.buttons.alignMiddle },
-                { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: messages.alignmentDialog.buttons.alignBottom }
+                { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: MESSAGES.alignmentDialog.buttons.justtifyLeft },
+                { property: "textAlign",     value: "center",  iconClass: "justify-center", text: MESSAGES.alignmentDialog.buttons.justifyCenter },
+                { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: MESSAGES.alignmentDialog.buttons.justifyRight },
+                { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: MESSAGES.alignmentDialog.buttons.justifyFull },
+                { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: MESSAGES.alignmentDialog.buttons.alignTop },
+                { property: "verticalAlign", value: "middle",  iconClass: "align-middle",   text: MESSAGES.alignmentDialog.buttons.alignMiddle },
+                { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: MESSAGES.alignmentDialog.buttons.alignBottom }
             ]
         },
         _list: function() {
@@ -744,13 +744,13 @@
             this._list();
         },
         options: {
-            title: messages.mergeDialog.title,
+            title: MESSAGES.mergeDialog.title,
             template: "<ul class='k-list k-reset'></ul>",
             buttons: [
-                { value: "cells",        iconClass: "merge-cells",        text: messages.mergeDialog.buttons.mergeCells },
-                { value: "horizontally", iconClass: "merge-horizontally", text: messages.mergeDialog.buttons.mergeHorizontally },
-                { value: "vertically",   iconClass: "merge-vertically",   text: messages.mergeDialog.buttons.mergeVertically },
-                { value: "unmerge",      iconClass: "normal-layout",      text: messages.mergeDialog.buttons.unmerge }
+                { value: "cells",        iconClass: "merge-cells",        text: MESSAGES.mergeDialog.buttons.mergeCells },
+                { value: "horizontally", iconClass: "merge-horizontally", text: MESSAGES.mergeDialog.buttons.mergeHorizontally },
+                { value: "vertically",   iconClass: "merge-vertically",   text: MESSAGES.mergeDialog.buttons.mergeVertically },
+                { value: "unmerge",      iconClass: "normal-layout",      text: MESSAGES.mergeDialog.buttons.unmerge }
             ]
         },
         _list: function() {
@@ -788,13 +788,13 @@
             this._list();
         },
         options: {
-            title: messages.freezeDialog.title,
+            title: MESSAGES.freezeDialog.title,
             template: "<ul class='k-list k-reset'></ul>",
             buttons: [
-                { value: "panes",    iconClass: "freeze-panes",  text: messages.freezeDialog.buttons.freezePanes },
-                { value: "rows",     iconClass: "freeze-row",    text: messages.freezeDialog.buttons.freezeRows },
-                { value: "columns",  iconClass: "freeze-col",    text: messages.freezeDialog.buttons.freezeColumns },
-                { value: "unfreeze", iconClass: "normal-layout", text: messages.freezeDialog.buttons.unfreeze }
+                { value: "panes",    iconClass: "freeze-panes",  text: MESSAGES.freezeDialog.buttons.freezePanes },
+                { value: "rows",     iconClass: "freeze-row",    text: MESSAGES.freezeDialog.buttons.freezeRows },
+                { value: "columns",  iconClass: "freeze-col",    text: MESSAGES.freezeDialog.buttons.freezeColumns },
+                { value: "unfreeze", iconClass: "normal-layout", text: MESSAGES.freezeDialog.buttons.unfreeze }
             ]
         },
         _list: function() {
@@ -973,11 +973,11 @@
         },
         options: {
             width: 420,
-            title: messages.validationDialog.title,
+            title: MESSAGES.validationDialog.title,
             criterion: "any",
             type: "reject",
-            hintMessage: messages.validationDialog.hintMessage,
-            hintTitle: messages.validationDialog.hintTitle,
+            hintMessage: MESSAGES.validationDialog.hintMessage,
+            hintTitle: MESSAGES.validationDialog.hintTitle,
             useCustomMessages: false,
             criteria: [
                 { type: "any", name: "Any value" },
@@ -987,19 +987,19 @@
                 { type: "custom", name: "Custom Formula" }
             ],
             comparers: [
-                { type: "greaterThan", name: messages.validationDialog.comparers.greaterThan },
-                { type: "lessThan",    name: messages.validationDialog.comparers.lessThan },
-                { type: "between",     name: messages.validationDialog.comparers.between },
-                { type: "notBetween",  name: messages.validationDialog.comparers.notBetween },
-                { type: "equalTo",     name: messages.validationDialog.comparers.equalTo },
-                { type: "notEqualTo",  name: messages.validationDialog.comparers.notEqualTo },
-                { type: "greaterThanOrEqualTo", name: messages.validationDialog.comparers.greaterThanOrEqualTo },
-                { type: "lessThanOrEqualTo",    name: messages.validationDialog.comparers.lessThanOrEqualTo }
+                { type: "greaterThan", name: MESSAGES.validationDialog.comparers.greaterThan },
+                { type: "lessThan",    name: MESSAGES.validationDialog.comparers.lessThan },
+                { type: "between",     name: MESSAGES.validationDialog.comparers.between },
+                { type: "notBetween",  name: MESSAGES.validationDialog.comparers.notBetween },
+                { type: "equalTo",     name: MESSAGES.validationDialog.comparers.equalTo },
+                { type: "notEqualTo",  name: MESSAGES.validationDialog.comparers.notEqualTo },
+                { type: "greaterThanOrEqualTo", name: MESSAGES.validationDialog.comparers.greaterThanOrEqualTo },
+                { type: "lessThanOrEqualTo",    name: MESSAGES.validationDialog.comparers.lessThanOrEqualTo }
             ],
-            comparerMessages: messages.validationDialog.comparerMessages,
+            comparerMessages: MESSAGES.validationDialog.comparerMessages,
             template:
                 '<div class="k-edit-form-container">' +
-                    '<div class="k-edit-label"><label>' + messages.validationDialog.labels.criteria + ':</label></div>' +
+                    '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.criteria + ':</label></div>' +
                     '<div class="k-edit-field">' +
                         '<select data-role="dropdownlist" ' +
                             'data-text-field="name" ' +
@@ -1008,19 +1008,19 @@
                     '</div>' +
 
                     '<div data-bind="visible: isNumber">' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.comparer + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.comparer + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.min + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.min + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input placeholder="e.g. 10" class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
-                            '<div class="k-edit-label"><label>' + messages.validationDialog.labels.max + ':</label></div>' +
+                            '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.max + ':</label></div>' +
                             '<div class="k-edit-field">' +
                                 '<input placeholder="e.g. 100" class="k-textbox" data-bind="value: to" />' +
                             '</div>' +
@@ -1028,33 +1028,33 @@
                     '</div>' +
 
                     '<div data-bind="visible: isText">' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.comparer + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.comparer + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.value + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isDate">' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.comparer + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.comparer + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.start + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.start + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
-                            '<div class="k-edit-label"><label>' + messages.validationDialog.labels.end + ':</label></div>' +
+                            '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.end + ':</label></div>' +
                             '<div class="k-edit-field">' +
                                 '<input class="k-textbox" data-bind="value: to" />' +
                             '</div>' +
@@ -1062,7 +1062,7 @@
                     '</div>' +
 
                     '<div data-bind="visible: isCustom">' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.value + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
@@ -1070,42 +1070,42 @@
 
                     '<div data-bind="invisible: isAny">' +
                         '<div class="k-action-buttons"></div>' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.onInvalidData + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.onInvalidData + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input type="radio" id="validationTypeReject" name="validationType" value="reject" data-bind="checked: type" class="k-radio" />' +
                             '<label for="validationTypeReject" class="k-radio-label">' +
-                                messages.validationDialog.labels.rejectInput +
+                                 MESSAGES.validationDialog.labels.rejectInput +
                             '</label> ' +
                             '<input type="radio" id="validationTypeWarning" name="validationType" value="warning" data-bind="checked: type" class="k-radio" />' +
                             '<label for="validationTypeWarning" class="k-radio-label">' +
-                                messages.validationDialog.labels.showWarning +
+                                 MESSAGES.validationDialog.labels.showWarning +
                             '</label>' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="invisible: isAny">' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.showHint + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.showHint + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input type="checkbox" name="useCustomMessages" id="useCustomMessages" class="k-checkbox" data-bind="checked: useCustomMessages" />' +
                             '<label class="k-checkbox-label" for="useCustomMessages"></label>' +
                         '</div>' +
 
                         '<div data-bind="visible: useCustomMessages">' +
-                            '<div class="k-edit-label"><label>' + messages.validationDialog.labels.hintTitle + ':</label></div>' +
+                            '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.hintTitle + ':</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input class="k-textbox" placeholder="' + messages.validationDialog.placeholders.typeTitle + '" data-bind="value: hintTitle" />' +
+                                '<input class="k-textbox" placeholder="' + MESSAGES.validationDialog.placeholders.typeTitle + '" data-bind="value: hintTitle" />' +
                             '</div>' +
-                            '<div class="k-edit-label"><label>' + messages.validationDialog.labels.hintMessage + ':</label></div>' +
+                            '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.hintMessage + ':</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input class="k-textbox" placeholder="' + messages.validationDialog.placeholders.typeMessage + '" data-bind="value: hintMessage" />' +
+                                '<input class="k-textbox" placeholder="' + MESSAGES.validationDialog.placeholders.typeMessage + '" data-bind="value: hintMessage" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
 
                     '<div class="k-action-buttons">' +
-                        '<button class="k-button" data-bind="visible: showRemove, click: remove">' + messages.remove + '</button>' +
-                        '<button class="k-button k-primary" data-bind="click: apply">' + messages.apply + '</button>' +
-                        '<button class="k-button" data-bind="click: close">' + messages.cancel + '</button>' +
+                        '<button class="k-button" data-bind="visible: showRemove, click: remove">' + MESSAGES.remove + '</button>' +
+                        '<button class="k-button k-primary" data-bind="click: apply">' + MESSAGES.apply + '</button>' +
+                        '<button class="k-button" data-bind="click: close">' + MESSAGES.cancel + '</button>' +
                     "</div>" +
                 "</div>"
         },
@@ -1172,7 +1172,7 @@
             kendo.bind(this.dialog().element, this.viewModel);
         },
         options: {
-            title: messages.saveAsDialog.title,
+            title: MESSAGES.saveAsDialog.title,
             name: "Workbook",
             extension: ".xlsx",
             editExtension: true,
@@ -1182,12 +1182,12 @@
             }],
             width: 350,
             template:
-                "<div class='k-edit-label'><label>" + messages.saveAsDialog.labels.fileName + ":</label></div>" +
+                "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.fileName + ":</label></div>" +
                     "<div class='k-edit-field'>" +
                     "<input class='k-textbox' data-bind='value: name' />" +
                 "</div>" +
                 "<div data-bind='visible: editExtension'>" +
-                    "<div class='k-edit-label'><label>" + messages.saveAsDialog.labels.saveAsType + ":</label></div>" +
+                    "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.saveAsType + ":</label></div>" +
                         "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-text-field='description' " +
@@ -1197,8 +1197,8 @@
                 "</div>" +
 
                 "<div class='k-action-buttons'>" +
-                    "<button class='k-button k-primary' data-bind='click: apply'>" + messages.save + "</button>" +
-                    "<button class='k-button' data-bind='click: close'>" + messages.cancel + "</button>" +
+                    "<button class='k-button k-primary' data-bind='click: apply'>" + MESSAGES.save + "</button>" +
+                    "<button class='k-button' data-bind='click: close'>" + MESSAGES.cancel + "</button>" +
                 "</div>"
         },
         apply: function() {
@@ -1216,7 +1216,7 @@
 
     var ExcelExportDialog = SaveAsDialog.extend({
         options: {
-            title: messages.excelExportDialog.title,
+            title: MESSAGES.excelExportDialog.title,
             editExtension: false
         }
     });
@@ -1227,7 +1227,7 @@
             SpreadsheetDialog.fn.init.call(this, options);
         },
         options: {
-            template: messages.modifyMergedDialog.errorMessage +
+            template: MESSAGES.modifyMergedDialog.errorMessage +
                 '<div class="k-action-buttons">' +
                     "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
                 "</div>"
@@ -1241,11 +1241,11 @@
             SpreadsheetDialog.fn.init.call(this, options);
         },
         options: {
-            title: messages.useKeyboardDialog.title,
-            template: messages.useKeyboardDialog.errorMessage +
-                "<div>Ctrl+C " + messages.useKeyboardDialog.labels.forCopy + "</div>" +
-                "<div>Ctrl+X " + messages.useKeyboardDialog.labels.forCut + "</div>" +
-                "<div>Ctrl+V " + messages.useKeyboardDialog.labels.forPaste + "</div>" +
+            title: MESSAGES.useKeyboardDialog.title,
+            template: MESSAGES.useKeyboardDialog.errorMessage +
+                "<div>Ctrl+C " + MESSAGES.useKeyboardDialog.labels.forCopy + "</div>" +
+                "<div>Ctrl+X " + MESSAGES.useKeyboardDialog.labels.forCut + "</div>" +
+                "<div>Ctrl+V " + MESSAGES.useKeyboardDialog.labels.forPaste + "</div>" +
                 '<div class="k-action-buttons">' +
                     "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
                 "</div>"
@@ -1259,7 +1259,7 @@
             SpreadsheetDialog.fn.init.call(this, options);
         },
         options: {
-            template: messages.unsupportedSelectionDialog.errorMessage +
+            template: MESSAGES.unsupportedSelectionDialog.errorMessage +
                 '<div class="k-action-buttons">' +
                     "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
                 "</div>"

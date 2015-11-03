@@ -10,7 +10,7 @@
         var $ = kendo.jQuery;
         var BORDER_TYPES = [ "allBorders", "insideBorders", "insideHorizontalBorders", "insideVerticalBorders", "outsideBorders", "leftBorder", "topBorder", "rightBorder", "bottomBorder", "noBorders" ];
 
-        var messages = kendo.spreadsheet.messages.borderPalette = {
+        var BORDER_PALETTE_MESSAGES = kendo.spreadsheet.messages.borderPalette = {
             allBorders: "All borders",
             insideBorders: "Inside borders",
             insideHorizontalBorders: "Inside horizontal borders",
@@ -39,8 +39,7 @@
             },
 
             options: {
-                name: "BorderPalette",
-                messages: messages
+                name: "BorderPalette"
             },
 
             events: [
@@ -48,7 +47,7 @@
             ],
 
             _borderTypePalette: function() {
-                var messages = this.options.messages;
+                var messages = BORDER_PALETTE_MESSAGES;
                 var buttons = BORDER_TYPES.map(function(type) {
                     return '<a title="' + messages[type] + '" href="#" data-border-type="' + type + '" class="k-button k-button-icon">' +
                                 '<span class="k-sprite k-font-icon k-icon k-i-' + kendo.toHyphens(type) + '"></span>' +
