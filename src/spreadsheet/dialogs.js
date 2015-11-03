@@ -72,7 +72,8 @@
                 number: "Number",
                 text: "Text",
                 date: "Date",
-                custom: "Custom Formula"
+                custom: "Custom Formula",
+                list: "List"
             },
             comparers: {
                 greaterThan: "greater than",
@@ -834,7 +835,7 @@
                 if (e.field === "criterion") {
                     this.reset();
 
-                    if (this.criterion === "custom") {
+                    if (this.criterion === "custom" || this.criterion === "list") {
                         this.setHintMessageTemplate();
                     }
                 }
@@ -893,7 +894,7 @@
             this.set("comparers", comparers);
         },
         setHintMessageTemplate: function() {
-           if (this.criterion !== "custom") {
+           if (this.criterion !== "custom" && this.criterion !== "list") {
                this.set("hintMessageTemplate", kendo.format(this.defaultHintMessage, this.criterion, this.comparerMessages[this.comparer]));
            } else {
                this.set("hintMessageTemplate", "");
@@ -911,6 +912,9 @@
         },
         isDate: function() {
             return this.get("criterion") === "date";
+        },
+        isList: function() {
+            return this.get("criterion") === "list";
         },
         isCustom: function() {
             return this.get("criterion") === "custom";
@@ -984,7 +988,8 @@
                 { type: "number", name: "Number" },
                 { type: "text", name: "Text" },
                 { type: "date", name: "Date" },
-                { type: "custom", name: "Custom Formula" }
+                { type: "custom", name: "Custom Formula" },
+                { type: "list", name: "List" }
             ],
             comparers: [
                 { type: "greaterThan", name: MESSAGES.validationDialog.comparers.greaterThan },
@@ -1063,6 +1068,13 @@
 
                     '<div data-bind="visible: isCustom">' +
                         '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input class="k-textbox" data-bind="value: from" />' +
+                        '</div>' +
+                    '</div>' +
+
+                    '<div data-bind="visible: isList">' +
+                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.value + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
