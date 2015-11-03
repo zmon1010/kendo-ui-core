@@ -49,12 +49,12 @@ namespace Kendo.Models
         {
 #if DEBUG
             "web/kendo.common.css",
-            "web/kendo.default.css",
-            "mobile/kendo.mobile.ios.css"
+            "web/kendo.flat.css",
+            "mobile/kendo.mobile.flat.css"
 #else
             "kendo.common.min.css",
-            "kendo.default.min.css",
-            "kendo.mobile.ios.min.css"
+            "kendo.flat.min.css",
+            "kendo.mobile.flat.min.css"
 #endif
         };
 
