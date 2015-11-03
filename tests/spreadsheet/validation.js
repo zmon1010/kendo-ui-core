@@ -434,4 +434,33 @@
         f.exec(ss, null, null, validationCallback);
     });
 
+    test("validation compare list validation values correctly", 1, function(){
+        var validationCallback = function(result) {
+            ok(result);
+        };
+
+        var f = validation.compile(Sheet1, 0, 0, {
+            //TODO: REMOVE THE TRANSPOSE - IT SHOULD BE ADDED BY THE VALIDATION
+            from: "TRANSPOSE(B1:E2)",
+            dataType: "list",
+            allowNulls: false
+        });
+
+        f.exec(ss, 1, null, validationCallback);
+    });
+
+    test("validation compare list validation values correctly and returns false", 1, function(){
+        var validationCallback = function(result) {
+            ok(!result);
+        };
+
+        var f = validation.compile(Sheet1, 0, 0, {
+            //TODO: REMOVE THE TRANSPOSE - IT SHOULD BE ADDED BY THE VALIDATION
+            from: "TRANSPOSE(B1:E2)",
+            dataType: "list",
+            allowNulls: false
+        });
+
+        f.exec(ss, 100000000000, null, validationCallback);
+    });
 })();

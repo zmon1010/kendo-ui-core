@@ -16,6 +16,7 @@
 
     function compileValidation(sheet, row, col, validation) {
         var validationHandler;
+        var comparer;
 
         if (typeof validation === "string") {
             validation = JSON.parse(validation);
@@ -31,9 +32,13 @@
             validation.to = calc.compile(calc.parseFormula(sheet, row, col, validation.to));
         }
 
-
-        //TODO: modify this line to get correct comparer for list validation
-        var comparer = validation.dataType == "custom" ? exports.validationComparers.custom : exports.validationComparers[validation.comparerType];
+        if (validation.dataType == "custom") {
+            comparer = exports.validationComparers.custom;
+        } else if (validation.dataType == "list") {
+            comparer = exports.validationComparers.list;
+        } else {
+            comparer = exports.validationComparers[validation.comparerType];
+        }
 
         if (!comparer) {
             throw kendo.format("'{0}' comparer is not implemented.", validation.comparerType);
@@ -45,21 +50,9 @@
             if (this.dataType == "custom") {
                 this.value = comparer(valueToCompare, this.from.value,  toValue);
             } else if (this.dataType == "list") {
-                //handle list validation by tranposing the cube into array (flat it_
-                var cube = this.from.value.data;
-                var i;
-                var y;
-                var data = [];
-
-                for (i = 0; i < cube.length; i++ ) {
-                    var array = cube[i];
-                    for (y = 0; y < cube.length; y++ ) {
-                        data.push(array[y]);
-                    }
-                }
+                var data = this._getListData();
 
                 this.value = comparer(valueToCompare, data, toValue);
-
             } else if (valueToCompare === null) {
                 if (this.allowNulls) {
                     this.value = true;
@@ -146,6 +139,29 @@
             if (this.messageTemplate) {
                 this.message = this._formatMessages(this.messageTemplate);
             }
+        },
+
+        _getListData: function() {
+            if (!this.from.value || !this.from.value.data) {
+                return [];
+            }
+
+            var cube = this.from.value.data;
+            var i;
+            var y;
+            var data = [];
+
+            for (i = 0; i < cube.length; i++ ) {
+                var array = cube[i];
+
+                if (array) {
+                    for (y = 0; y < array.length; y++ ) {
+                        data.push(array[y]);
+                    }
+                }
+            }
+
+            return data;
         },
 
         clone: function(sheet, row, col) {
@@ -293,7 +309,7 @@
         },
 
         list: function (valueToCompare, data) {
-            return from;
+            return data.indexOf(valueToCompare) > -1;
         }
     };
 
