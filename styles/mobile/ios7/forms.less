@@ -394,6 +394,76 @@
     padding-left: 0;
 }
 
+/* Standalone Checkboxes and RadioButtons */
+.km-ios7 input.km-checkbox,
+.km-ios7 input.km-radio {
+    display: inline;
+    opacity: 0;
+    width: 0;
+    margin: 0;
+    height: 0;
+}
+
+.km-ios7 .km-checkbox-label,
+.km-ios7 .km-radio-label {
+    display: block;
+    position: relative;
+    vertical-align: middle;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    margin-left: .89em;
+}
+
+.km-ios7 .km-checkbox-label:before,
+.km-ios7 .km-checkbox-label:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: .7em;
+    width: 1em;
+    height: .9rem;
+    border: 0;
+}
+
+.km-ios7 input.km-checkbox:checked + .km-checkbox-label:after {
+    content: "\e227";
+    font-size: 1.2em;
+    line-height: 1em;
+    font-family: "Kendo UI";  
+}
+
+//Radio buttons
+.km-ios7 .km-radio-label {
+    position: relative;
+    padding-left: 2.5em;
+    vertical-align: middle;
+    line-height: 1.5em;  
+}
+
+.km-ios7 .km-radio-label:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 50%;
+}
+
+.km-ios7 input.km-radio:checked + .km-radio-label:after {
+    content: "";
+    width: 1.085rem;
+    height: 1.085rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-42%);
+    -webkit-transform: translateY(-42%);
+    left: 0.365rem;
+    border-radius: 50%;
+}
+
 .km-ios7 .km-icon-label.k-i-arrow-e:before { content: "\E000"; }
 .km-ios7 .km-icon-label.k-i-arrow-n:before { content: "\E001"; }
 .km-ios7 .km-icon-label.k-i-arrow-s:before { content: "\E002"; }

@@ -390,8 +390,22 @@
 
 .km-ios7 .k-list,
 .km-ios7 .k-slider,
-.km-ios7 .km-widget
+.km-ios7 .km-widget,
+.km-ios7 .km-checkbox-label:after
 {
     color: @ios7-active-background;
 }
 
+.km-ios7 .km-checkbox-label,
+.km-ios7 .km-radio-label {
+    color: @ios7-main-color;
+}
+
+.km-ios7 .km-radio-label:before {
+    border-color: darken(@ios7-second-color, 17%);
+}
+
+
+.km-ios7 .km-radio-label:after {
+    background-color: @ios7-active-background;
+}
