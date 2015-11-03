@@ -454,42 +454,42 @@ test("absolute background-image values are properly serialized", function() {
 
 test("strong / em tags can be converted to presentational", function() {
     editor.value("<strong>foo</strong><em>bar</em>");
-    editor.setOptions({ serialization: { semantic: false } })
+    editor.setOptions({ serialization: { semantic: false } });
 
     equal(editor.value(), "<b>foo</b><i>bar</i>");
 });
 
 test("underline span can be converted to presentational u", function() {
     editor.value('<span style="text-decoration:underline;">foo</span>');
-    editor.setOptions({ serialization: { semantic: false } })
+    editor.setOptions({ serialization: { semantic: false } });
 
     equal(editor.value(), "<u>foo</u>");
 });
 
 test("font properties from spans are converted to presentational font tags", function() {
     editor.value('<span style="color:#ff0000;font-family:verdana;font-size:x-large;">foo</span>');
-    editor.setOptions({ serialization: { semantic: false } })
+    editor.setOptions({ serialization: { semantic: false } });
 
     equal(editor.value(), '<font color="#ff0000" face="verdana" size="5">foo</font>');
 });
 
 test("span attributes are persisted when outputting presentational tags", function() {
     editor.value('<span class="red">foo</span>');
-    editor.setOptions({ serialization: { semantic: false } })
+    editor.setOptions({ serialization: { semantic: false } });
 
     equal(editor.value(), '<span class="red">foo</span>');
 });
 
 test("presentational span attributes are not duplicated", function() {
     editor.value('<span class="red" style="text-decoration: underline;">foo</span>');
-    editor.setOptions({ serialization: { semantic: false } })
+    editor.setOptions({ serialization: { semantic: false } });
 
     equal(editor.value(), '<span class="red"><u>foo</u></span>');
 });
 
 test("presentational tags are nested properly", function() {
     editor.value('<span style="text-decoration: underline;font-family: verdana; color: #f00" class="red">foo</span>');
-    editor.setOptions({ serialization: { semantic: false } })
+    editor.setOptions({ serialization: { semantic: false } });
 
     equal(editor.value(), '<span class="red"><u><font color="#ff0000" face="verdana">foo</font></u></span>');
 });
@@ -540,8 +540,8 @@ test("does not convert relative href/src URLs to absolute", function() {
 
 test("filling empty elements does not trigger errors", function() {
     var fixture = QUnit.fixture[0];
-    ok(Serializer.htmlToDom("<p><br></p>", fixture))
-    ok(Serializer.htmlToDom("<p><img></p>", fixture))
+    ok(Serializer.htmlToDom("<p><br></p>", fixture));
+    ok(Serializer.htmlToDom("<p><img></p>", fixture));
 });
 
 test("does not remove empty elements from content", function() {
@@ -596,6 +596,12 @@ test('presentational tags are persisted', function() {
     verifyCycle('<u>underline</u>', { semantic: false });
     verifyCycle('<font color="#ff0000" face="verdana" size="5">bold</font>', { semantic: false });
     verifyCycle('<script src="foo"><\/script>', { semantic: false, scripts: true });
+});
+
+test("list start attribute is serialized correctly", function() {
+    verifyCycle('<ol start="5"><li>foo</li></ol>');
+    equal(serializeCycle('<ol start="1"><li>foo</li></ol>'), "<ol><li>foo</li></ol>");
+    equal(serializeCycle('<ul start="2"><li>foo</li></ul>'), "<ul><li>foo</li></ul>");
 });
 
 }());

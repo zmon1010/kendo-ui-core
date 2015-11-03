@@ -370,7 +370,9 @@ var Serializer = {
                     specified = false;
                 } else if (name == 'altHtml') {
                     specified = false;
-                } else if (name == 'start' && (dom.is(node, "ul") || dom.is(node, "ol"))) {
+                } else if (name == 'start' && dom.is(node, "ul")) {
+                    specified = false;
+                } else if (name == 'start' && dom.is(node, "ol") && value == "1") {
                     specified = false;
                 } else if (name.indexOf('_moz') >= 0) {
                     specified = false;
