@@ -789,6 +789,7 @@
     <Compile Include="UI\ComboBox\Fluent\ComboBoxEventBuilder.cs" />
     <Compile Include="UI\ContextMenu\ContextMenuDirection.cs" />
     <Compile Include="UI\ContextMenu\ContextMenuOrientation.cs" />
+    <Compile Include="UI\DataSource\Fluent\DataSourceTreeListModelFieldDescriptorBuilder.cs" />
     <Compile Include="UI\DataSource\Fluent\DataSourceGroupDescriptorFactoryBase.cs" />
     <Compile Include="UI\DataSource\Fluent\ReadOnlyCustomDataSourceGroupDescriptorFactory.cs" />
     <Compile Include="UI\DataSource\TreeDataSourceResult.cs" />
@@ -2653,4 +2654,10 @@
     <Compile Include="UI\Spreadsheet\SpreadsheetSheetFilterSettingsColumnCriteria.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetFilterSettingsColumnCriteriaBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\Spreadsheet\Settings\SpreadsheetExcelSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetExcelSettingsBuilder.cs" /><Compile Include="UI\Spreadsheet\Settings\SpreadsheetSheetRowCellValidationSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetRowCellValidationSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Spreadsheet\Settings\SpreadsheetExcelSettings.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetExcelSettingsBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Settings\SpreadsheetSheetRowCellValidationSettings.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetRowCellValidationSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>
