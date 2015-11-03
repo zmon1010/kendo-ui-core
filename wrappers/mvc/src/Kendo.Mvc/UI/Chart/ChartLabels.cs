@@ -34,6 +34,15 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
+        /// Gets or sets the series visible function
+        /// </summary>
+        public ClientHandlerDescriptor VisibleHandler
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the label background.
         /// </summary>
         /// <value>

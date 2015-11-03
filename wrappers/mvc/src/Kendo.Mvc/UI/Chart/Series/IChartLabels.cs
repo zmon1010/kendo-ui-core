@@ -16,6 +16,11 @@ namespace Kendo.Mvc.UI
         bool? Visible { get; set; }
 
         /// <summary>
+        /// Gets or sets the series visible function
+        /// </summary>
+        ClientHandlerDescriptor VisibleHandler { get; set; }
+
+        /// <summary>
         /// Gets or sets the label background.
         /// </summary>
         string Background { get; set; }

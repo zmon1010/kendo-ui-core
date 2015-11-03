@@ -69,6 +69,68 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets the function used to set the labels visibility.
+        /// </summary>
+        /// <param name="visibleFunction">
+        ///     The JavaScript function that will be executed
+        ///     to retrieve the visible state of each label.
+        /// </param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Chart()
+        ///           .Name("Chart")
+        ///           .Series(series => series
+        ///               .Bar(s => s.Sales)
+        ///               .Labels(labels => labels
+        ///                   .VisibleHandler("labelVisible")
+        ///               );
+        ///           )
+        ///           .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public TBuilder VisibleHandler(string visibleFunction)
+        {
+            labels.VisibleHandler = new ClientHandlerDescriptor { HandlerName = visibleFunction };
+
+            return this as TBuilder;
+        }
+
+        /// <summary>
+        /// Sets the function used to set the labels visibility.
+        /// </summary>
+        /// <param name="visibleFunction">
+        ///     The JavaScript function that will be executed
+        ///     to retrieve the visible state of each label.
+        /// </param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Chart()
+        ///           .Name("Chart")
+        ///           .Series(series => series
+        ///               .Bar(s => s.Sales)
+        ///               .Labels(labels => labels
+        ///                   .VisibleHandler(
+        ///                        @&lt;text&gt;
+        ///                        function(point) {
+        ///                            return point.value > 5;
+        ///                        }
+        ///                        &lt;/text&gt;
+        ///                    )
+        ///               );
+        ///           )
+        ///           .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public TBuilder VisibleHandler(Func<object, object> visibleFunction)
+        {
+            labels.VisibleHandler = new ClientHandlerDescriptor { TemplateDelegate = visibleFunction };
+
+            return this as TBuilder;
+        }
+
+        /// <summary>
         /// Sets the labels background color
         /// </summary>
         /// <param name="background">The labels background color.</param>

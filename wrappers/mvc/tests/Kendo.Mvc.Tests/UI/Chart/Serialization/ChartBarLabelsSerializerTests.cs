@@ -67,6 +67,21 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Serializes_visible_handler()
+        {
+            barLabels.VisibleHandler = new ClientHandlerDescriptor { HandlerName = "visible" };
+            GetJson()["visible"].ShouldEqual(barLabels.VisibleHandler);
+        }
+
+        [Fact]
+        public void Serializes_visible_handler_instead_of_visible()
+        {
+            barLabels.Visible = true;
+            barLabels.VisibleHandler = new ClientHandlerDescriptor { HandlerName = "visible" };
+            GetJson()["visible"].ShouldEqual(barLabels.VisibleHandler);
+        }
+
+        [Fact]
         public void Does_not_serialize_default_visible()
         {
             GetJson().ContainsKey("visible").ShouldBeFalse();

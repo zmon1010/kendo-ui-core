@@ -9,11 +9,13 @@ namespace Kendo.Mvc.UI.Tests.Chart
     {
         private readonly ChartBarLabels labels;
         private readonly ChartBarLabelsBuilder builder;
+        private readonly Func<object, object> nullFunc;
 
         public ChartBarLabelsBuilderTests()
         {
             labels = new ChartBarLabels();
             builder = new ChartBarLabelsBuilder(labels);
+            nullFunc = (o) => null;
         }
 
         [Fact]
@@ -28,6 +30,25 @@ namespace Kendo.Mvc.UI.Tests.Chart
         {
             builder.Visible(false);
             labels.Visible.Value.ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Visible_handler_returns_builder()
+        {
+            builder.VisibleHandler("Foo").ShouldEqual(builder);
+        }
+
+        [Fact]
+        public void Visible_handler_sets_background_delegate()
+        {
+            builder.VisibleHandler(nullFunc);
+            labels.VisibleHandler.TemplateDelegate.ShouldEqual(nullFunc);
+        }
+
+        [Fact]
+        public void Visible_handler_delegate_returns_builder()
+        {
+            builder.VisibleHandler(nullFunc).ShouldEqual(builder);
         }
 
         [Fact]
