@@ -75,6 +75,10 @@
             var command = new kendo.spreadsheet[options.command](commandOptions);
             var sheet = this.activeSheet();
 
+            if (commandOptions.origin) {
+                command.origin(commandOptions.origin);
+            }
+
             if (commandOptions.operatingRange) {
                 command.range(commandOptions.operatingRange);
             } else if (commandOptions.editActiveCell) {

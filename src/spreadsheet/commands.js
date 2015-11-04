@@ -427,6 +427,19 @@
         }
     });
 
+    kendo.spreadsheet.AutoFillCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+        },
+        origin: function(origin) {
+            this._origin = origin;
+        },
+        exec: function() {
+            this.getState();
+            this._range.fillFrom(this._origin);
+        }
+    });
+
     kendo.spreadsheet.ToolbarCutCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);

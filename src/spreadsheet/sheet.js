@@ -667,10 +667,13 @@
                 var dest = this._autoFillDest;
 
                 if (this._autoFillPunch) { // we just clear data here
-                    this.range(this._autoFillPunch).clear({ contentsOnly: true });
+                    this._workbook.execute({
+                        command: "ClearContentCommand", options: { operatingRange: this.range(this._autoFillPunch) }
+                    });
                 } else {
-                    // we need clone here, because fillFrom modifies the range :)
-                    this.range(dest.clone()).fillFrom(this.range(this._autoFillOrigin));
+                    this._workbook.execute({
+                        command: "AutoFillCommand", options: { operatingRange: this.range(dest), origin: this.range(this._autoFillOrigin) }
+                    });
                 }
 
                 this._autoFillDest = null;
