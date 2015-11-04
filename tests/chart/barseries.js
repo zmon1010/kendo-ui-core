@@ -2271,6 +2271,15 @@
             sameLinePath(rect, dataviz.alignPathToPixel(draw.Path.fromRect(box.toRect())));
         });
 
+        test("width is rounded", function() {
+            var g = new kendo.drawing.Group();
+            bar.options.border = 0;
+            bar.box.x2 = 4.5;
+            bar.createRect(g);
+
+            equal(g.bbox().width(), 5);
+        });
+
         test("sets stroke line join to round if the path is aligned and the width / height is less than one", function() {
             bar.box = new Box2D(0, 0, 100, 0.9);
             bar.renderVisual();

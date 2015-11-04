@@ -3727,7 +3727,11 @@ var __meta__ = { // jshint ignore:line
             var options = this.options;
             var border = options.border;
             var strokeOpacity = defined(border.opacity) ? border.opacity : options.opacity;
-            var rect = this.rectVisual = draw.Path.fromRect(this.box.toRect(), {
+
+            var rect = this.box.toRect();
+            rect.size.width = Math.round(rect.size.width);
+
+            var path = this.rectVisual = draw.Path.fromRect(rect, {
                 fill: {
                     color: this.color,
                     opacity: options.opacity
@@ -3746,17 +3750,18 @@ var __meta__ = { // jshint ignore:line
             var size = options.vertical ? width : height;
 
             if (size > BAR_ALIGN_MIN_WIDTH) {
-                alignPathToPixel(rect);
-                //fixes lineJoin issue in firefox when the joined lines are parallel
+                alignPathToPixel(path);
+
+                // Fixes lineJoin issue in firefox when the joined lines are parallel
                 if (width < 1 || height < 1) {
-                    rect.options.stroke.lineJoin = "round";
+                    path.options.stroke.lineJoin = "round";
                 }
             }
 
-            visual.append(rect);
+            visual.append(path);
 
             if (hasGradientOverlay(options)) {
-                visual.append(this.createGradientOverlay(rect, {
+                visual.append(this.createGradientOverlay(path, {
                         baseColor: this.color
                     }, deepExtend({
                          end: !options.vertical ? [0, 1] : undefined
