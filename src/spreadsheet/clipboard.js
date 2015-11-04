@@ -45,7 +45,9 @@
             var ref = this.pasteRef();
             var status = {canPaste: true};
             if(ref === kendo.spreadsheet.NULLREF) {
-                status.canPaste = this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
+                var external = this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
+                status.pasteOnMerged = this.intersectsMerged();
+                status.canPaste = status.pasteOnMerged ? false : external;
                 return status;
             }
             if(!ref.eq(sheet.unionWithMerged(ref))) {
@@ -57,6 +59,15 @@
                 status.menuInvoked = true;
             }
             return status;
+        },
+
+        intersectsMerged: function() {
+            var rows = [];
+            var cols = [];
+            var state = this.parse(this._external);
+            this.origin = this.stateRangeRef(state);
+            var ref = this.pasteRef();
+            return !ref.eq(sheet.unionWithMerged(ref));
         },
 
         copy: function() {
@@ -81,41 +92,45 @@
             return this.origin.relative(rowDelta, colDelta, 3);
         },
 
+        stateRangeRef: function(state) {
+            var rows = [];
+            var cols = [];
+            for (var key in state) {
+                if (key === "mergedCells" || key === "ref") {
+                    continue;
+                }
+                var address = key.split(",");
+                rows.push(address[0]);
+                cols.push(address[1]);
+            }
+            var topLeft = new CellRef(Math.min.apply(null, rows), Math.min.apply(null, cols));
+            var bottomRight = new CellRef(Math.max.apply(null, rows), Math.max.apply(null, cols));
+            return new RangeRef(topLeft, bottomRight, 0);
+        },
+
         destroy: function() {
             document.body.removeChild(this.iframe);
         },
 
         paste: function() {
-            var content = {};
+            var state = {};
             var sheet = this.workbook.activeSheet();
             if(this._isInternal()) {
-                content = this.contents;
-            }else{
-                var rows = [];
-                var cols = [];
-                content = this.parse(this._external);
-                for (var key in content) {
-                    if(key === "mergedCells" || key === "ref") {
-                        continue;
-                    }
-                    var address = key.split(",");
-                    rows.push(address[0]);
-                    cols.push(address[1]);
-                }
-                var topLeft = new CellRef(Math.min.apply(null, rows), Math.min.apply(null, cols));
-                var bottomRight = new CellRef(Math.max.apply(null, rows), Math.max.apply(null, cols));
-                this.origin = new RangeRef(topLeft, bottomRight, 0);
+                state = this.contents;
+            } else {
+                state = this.parse(this._external);
+                this.origin = this.stateRangeRef(state);
             }
             var pasteRef = this.pasteRef();
-            sheet.range(pasteRef).clear().setState(content);
+            sheet.range(pasteRef).clear().setState(state);
             sheet.triggerChange({recalc: true});
 
         },
 
         external: function(data) {
-            if(data.html || data.plain){
+            if (data.html || data.plain) {
                 this._external = data;
-            }else{
+            } else {
                 return this._external;
             }
         },
