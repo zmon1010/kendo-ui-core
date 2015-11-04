@@ -1291,4 +1291,35 @@
 
         deepEqual(obj, { foo: { val: 1, bar: { } } });
     });
+
+    // ------------------------------------------------------------
+    (function() {
+        var alignPathToPixel = kendo.dataviz.alignPathToPixel;
+        var path;
+
+        module("alignPathToPixel", {
+            setup: function() {
+                path = new kendo.drawing.Path().moveTo(0, 0).lineTo(10, 10);
+            }
+        });
+
+        test("aligns path with default border", function() {
+            alignPathToPixel(path);
+            equal(path.segments[0].anchor().toString(), "0.5 0.5");
+        });
+
+        test("aligns path with odd-sized border", function() {
+            path.stroke("red", 1);
+
+            alignPathToPixel(path);
+            equal(path.segments[0].anchor().toString(), "0.5 0.5");
+        });
+
+        test("does not align path with even-sized border", function() {
+            path.stroke("red", 2);
+
+            alignPathToPixel(path);
+            equal(path.segments[0].anchor().toString(), "0 0");
+        });
+    })();
 })();

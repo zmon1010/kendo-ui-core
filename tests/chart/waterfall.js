@@ -367,16 +367,16 @@
         });
 
         test("connects point end to next point start", function() {
-            ok(polyline.segments[0].anchor().equals(new geom.Point(0.5, 0.5)));
-            ok(polyline.segments[1].anchor().equals(new geom.Point(30.5, 0.5)));
+            equal(polyline.segments[0].anchor().toString(), "0 0");
+            equal(polyline.segments[1].anchor().toString(), "30 0");
         });
 
         test("connects point end to next point start (negative values)", function() {
             segment.from.aboveAxis = segment.to.aboveAxis = false;
             segment.renderVisual();
             polyline = segment.visual.children[0];
-            ok(polyline.segments[0].anchor().equals(new geom.Point(0.5, 100.5)));
-            ok(polyline.segments[1].anchor().equals(new geom.Point(30.5, 100.5)));
+            equal(polyline.segments[0].anchor().toString(), "0 100");
+            equal(polyline.segments[1].anchor().toString(), "30 100");
         });
 
         test("renders open polyline", function() {
