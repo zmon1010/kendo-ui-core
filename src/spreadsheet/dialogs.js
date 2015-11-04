@@ -1074,7 +1074,7 @@
                     '</div>' +
 
                     '<div data-bind="visible: isList">' +
-                        '<div class="k-edit-label"><label>' + messages.validationDialog.labels.value + ':</label></div>' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input class="k-textbox" data-bind="value: from" />' +
                         '</div>' +
