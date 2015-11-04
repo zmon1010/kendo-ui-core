@@ -13,7 +13,7 @@ namespace Telerik.Web.Spreadsheet
         /// 
         /// </summary>
         [DataMember(Name = "size", EmitDefaultValue = false)]
-        public string Size { get; set; }
+        public double? Size { get; set; }
 
         /// <summary>
         /// 

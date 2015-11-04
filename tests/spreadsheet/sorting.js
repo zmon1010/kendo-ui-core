@@ -106,8 +106,8 @@
                          .textAlign("right")
                          .verticalAlign("top")
                          .wrap(false)
-                         .borderBottom({size: "3px", color: "green"})
-                         .borderRight({size: "3px", color: "green"})
+                         .borderBottom({size: 3, color: "green"})
+                         .borderRight({size: 3, color: "green"});
 
         sheet.range("A1:A2").sort();
 

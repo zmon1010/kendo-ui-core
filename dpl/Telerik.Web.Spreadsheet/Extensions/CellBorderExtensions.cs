@@ -19,7 +19,7 @@ namespace Telerik.Web.Spreadsheet
             return new BorderStyle
             {
                 Color = border.Color.GetActualValue(theme).ToHex(),
-                Size = border.Thickness.ToPixels()
+                Size = border.Thickness
             };
         }      
     }

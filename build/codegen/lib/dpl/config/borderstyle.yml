@@ -1,6 +1,6 @@
 :options:
     - :name: size
-      :type: String
+      :type: Number
 
     - :name: color
       :type: String

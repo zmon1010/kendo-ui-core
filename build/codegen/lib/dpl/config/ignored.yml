@@ -6,6 +6,7 @@
 - spreadsheet.headerHeight
 - spreadsheet.toolbar
 - spreadsheet.excel
+- spreadsheet.sheetsbar
 - spreadsheet.sheets.rows.cells.borderLeft
 - spreadsheet.sheets.rows.cells.borderRight
 - spreadsheet.sheets.rows.cells.borderBottom

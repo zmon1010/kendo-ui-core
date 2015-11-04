@@ -606,7 +606,7 @@
                 command: "BorderChangeCommand",
                 options: {
                     border: state.type,
-                    style: { size: "1px", color: state.color }
+                    style: { size: 1, color: state.color }
                 }
             });
         },

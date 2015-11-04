@@ -305,7 +305,7 @@
                     return;
                 }
                 borderObject[key] = {
-                    size: "1px",
+                    size: 1,
                     color: styles[key + "Color"]
                 };
             });
