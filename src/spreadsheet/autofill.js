@@ -36,6 +36,7 @@
             if (src.eq(dest)) {
                 return null; // nothing to do
             }
+            dest = dest.clone();
             if (src.topLeft.eq(dest.topLeft)) {
                 if (src.width() == dest.width()) {
                     dest.topLeft.row += src.height();
