@@ -22,7 +22,7 @@
     // `srcRange`: the range containing data that we wish to fill.  `direction`: 0↓, 1→, 2↑, 3←.  So
     // when bit 0 is set we're doing horizontal filling, and when bit 1 is set we're doing it in
     // reverse order.
-    Range.prototype.fillFrom = function(srcRange, direction) {
+    Range.prototype._previewFillFrom = function(srcRange, direction) {
         var destRange = this, sheet = destRange._sheet;
         if (typeof srcRange == "string") {
             srcRange = sheet.range(srcRange);
@@ -34,7 +34,7 @@
             // the UI will send e.g. C2:C8.fillFrom(C7:D8) (intersecting ranges).  this figures out
             // the actual destination range.
             if (src.eq(dest)) {
-                return destRange; // nothing to do
+                return null; // nothing to do
             }
             if (src.topLeft.eq(dest.topLeft)) {
                 if (src.width() == dest.width()) {
@@ -59,7 +59,7 @@
             } else {
                 throw new Error(MSG_INCOMPATIBLE);
             }
-            return sheet.range(dest).fillFrom(srcRange, direction);
+            return sheet.range(dest)._previewFillFrom(srcRange, direction);
         }
 
         if (direction == null) {
@@ -100,8 +100,13 @@
         if (!horizontal) {
             fill = transpose(fill);
         }
-        destRange._properties(fill);
-        return destRange;
+        return { props: fill, direction: direction, dest: destRange };
+    };
+
+    Range.prototype.fillFrom = function(srcRange, direction) {
+        var x = this._previewFillFrom(srcRange, direction);
+        x.dest._properties(x.props);
+        return x.dest;
     };
 
     // This is essentially the FORECAST function, see ./runtime.functions.2.js.
