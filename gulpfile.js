@@ -57,10 +57,10 @@ gulp.task("build-skin", ["css-assets"], function() {
         .pipe(filter([
             filesToBuild.replace(/(styles|mobile|web)/, "**")
         ]))
-        .pipe(sourcemaps.init())
+        .pipe(gulpIf(makeSourceMaps, sourcemaps.init()))
         .pipe(cssUtils.fromLess())
-        .pipe(mapLogger)
-        .pipe(sourcemaps.write("maps", { sourceRoot: "../../../../styles" }))
+        .pipe(gulpIf(makeSourceMaps, mapLogger))
+        .pipe(gulpIf(makeSourceMaps, sourcemaps.write("maps", { sourceRoot: "../../../../styles" })))
         .pipe(gulp.dest('dist/styles'))
         .pipe(browserSync.stream({ match: '**/*.css' }));
 });
