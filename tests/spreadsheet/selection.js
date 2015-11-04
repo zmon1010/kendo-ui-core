@@ -42,7 +42,7 @@
         equal(selections.length, 2);
         equal(table.attr.style.height, 1 + 2 * 10 + "px");
         equal(table.attr.style.width, 1 + 3 * 10 + "px");
-        equal(table.attr.className, "k-spreadsheet-selection");
+        equal(table.attr.className, "k-spreadsheet-selection k-single-selection");
     });
 
     test("selects the union", function() {
@@ -83,7 +83,7 @@
 
         equal(table.attr.style.height, 1 + 1 * 10 + "px");
         equal(table.attr.style.width, 1 + 1 * 10 + "px");
-        equal(table.attr.className, "k-spreadsheet-selection");
+        equal(table.attr.className, "k-spreadsheet-selection k-single-selection");
     });
 
     test("selects the union of range and cell", function() {
@@ -143,7 +143,7 @@
 
         equal(tableA1C3.attr.style.height, 1 + 3 * 10 + "px");
         equal(tableA1C3.attr.style.width, 1 + 3 * 10 + "px");
-        equal(tableA1C3.attr.className, "k-spreadsheet-selection");
+        equal(tableA1C3.attr.className, "k-spreadsheet-selection k-single-selection");
     });
 
     test("selection sets the FULL headers for range and cell", function() {

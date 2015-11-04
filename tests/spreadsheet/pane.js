@@ -26,7 +26,7 @@
         var pane = createPane(0, 0, 4, 4);
         pane.refresh();
 
-        var header = pane.render(0, 0).children[6];
+        var header = pane.render(0, 0).children[7];
 
         equal(header.children[1].children.length, 1);
 
