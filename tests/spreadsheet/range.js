@@ -509,7 +509,7 @@
         equal(sheet.range("A2").value(), null);
     });
 
-    test("clearContent clears the validation", function() {
+    test("clearContent keeps the validation", function() {
         var currentRange = sheet.range("B1").validation({
             from: "B4",
             to: "",
@@ -521,7 +521,10 @@
 
         currentRange.clearContent();
 
-        equal(sheet.range("B1").validation(), null);
+        var validation = sheet.range("B1").validation();
+
+        ok(validation);
+        equal(validation.comparerType, "greaterThan");
     });
 
     test("clear clears the validations", function() {

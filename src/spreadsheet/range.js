@@ -382,6 +382,9 @@
 
                 if (reason.recalc) {
                     this.formula(null);
+                }
+
+                if (clearAll) {
                     this.validation(null);
                 }
 
