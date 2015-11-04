@@ -1,7 +1,7 @@
 require 'tasks'
 
 TESTS = FileList["tests/**/*"]
-DEPS = [MIN_JS.sub("dist/js", "src").sub("min.js", "js"), FileList['styles/**/*.*'], KENDO_CONFIG_FILE, TESTS].flatten
+DEPS = [FileList["src/**/*.js"], FileList['styles/**/*.*'], KENDO_CONFIG_FILE, TESTS].flatten
 SUPPORTED_JQUERY_VERSIONS = ["1.11.3", "2.1.4"]
 
 scripts_arg =  "--scripts=kendo.{all,aspnetmvc}.js"
@@ -38,7 +38,7 @@ namespace :tests do
         output = "#{env}-test-results.xml"
 
         file output => DEPS do |t|
-            # gulp "jshint"
+            gulp "jshint"
             gulp_xvfb "ci", "--junit-results=#{output}", "--single-run=true", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
         end
 
