@@ -418,6 +418,7 @@
 
             if (mode === "autofill") {
                sheet.resizeAutoFill(ref);
+               return;
             }
             if (mode === "range") {
                 ref = grid.normalize(ref);

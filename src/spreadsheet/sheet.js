@@ -669,7 +669,8 @@
                 if (this._autoFillPunch) { // we just clear data here
                     this.range(this._autoFillPunch).clear({ contentsOnly: true });
                 } else {
-                    this.range(dest).fillFrom(this.range(this._autoFillOrigin));
+                    // we need clone here, because fillFrom modifies the range :)
+                    this.range(dest.clone()).fillFrom(this.range(this._autoFillOrigin));
                 }
 
                 this._autoFillDest = null;
