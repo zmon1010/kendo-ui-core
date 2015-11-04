@@ -75,7 +75,8 @@
        cell: "range",
        rowheader: "row",
        columnheader: "column",
-       topcorner: "sheet"
+       topcorner: "sheet",
+       autofill: "autofill"
     };
 
     function toActionSelector(selectors) {
@@ -405,12 +406,6 @@
                 return;
             }
 
-            if (object.type === "autofill") {
-                sheet.startAutoFill();
-                event.preventDefault();
-                return;
-            }
-
             this._selectionMode = SELECTION_MODES[object.type];
             this.appendSelection = event.mod;
             this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
@@ -526,7 +521,6 @@
         onMouseUp: function(event) {
             var sheet = this._workbook.activeSheet();
             sheet.completeResizing();
-            sheet.completeAutoFill();
 
             this.navigator.completeSelection();
             this.stopAutoScroll();
@@ -696,13 +690,7 @@
         },
 
         extendSelection: function(object) {
-            var sheet = this._workbook.activeSheet();
-
-            if (sheet.autoFillInProgress()) {
-                sheet.resizeAutoFill(object.ref);
-            } else {
-                this.navigator.extendSelection(object.ref, this._selectionMode, this.appendSelection);
-            }
+            this.navigator.extendSelection(object.ref, this._selectionMode, this.appendSelection);
         },
 
         autoScroll: function() {

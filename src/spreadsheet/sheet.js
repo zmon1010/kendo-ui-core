@@ -600,20 +600,6 @@
             return this._autoFillPunch;
         },
 
-        completeAutoFill: function() {
-            if (!this._autoFillInProgress) {
-                return;
-            }
-
-            this._autoFillInProgress = false;
-
-            this._autoFillDest = null;
-            this._autoFillPunch = null;
-            this._autoFillOrigin = null;
-
-            this.triggerChange({ selection: true });
-        },
-
         autoFillInProgress: function() {
             return this._autoFillInProgress;
         },
@@ -675,6 +661,22 @@
                 this._selectionInProgress = false;
                 this._resizeHintPosition = undefined;
                 this.trigger("change", { selection: true });
+            }
+            if (this._autoFillInProgress) {
+                this._autoFillInProgress = false;
+                var dest = this._autoFillDest;
+
+                if (this._autoFillPunch) { // we just clear data here
+                    this.range(this._autoFillPunch).clear({ contentsOnly: true });
+                } else {
+                    this.range(dest).fillFrom(this.range(this._autoFillOrigin));
+                }
+
+                this._autoFillDest = null;
+                this._autoFillPunch = null;
+                this._autoFillOrigin = null;
+
+                this.select(dest);
             }
         },
 

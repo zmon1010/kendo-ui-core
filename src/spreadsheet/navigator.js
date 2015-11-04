@@ -121,8 +121,12 @@
         },
 
         startSelection: function(ref, mode, addToExisting) {
-            this._sheet.startSelection();
-            this.select(ref, mode, addToExisting);
+            if (mode == "autofill") {
+                this._sheet.startAutoFill();
+            } else {
+                this._sheet.startSelection();
+                this.select(ref, mode, addToExisting);
+            }
         },
 
         completeSelection: function() {
@@ -412,10 +416,13 @@
             var sheet = this._sheet;
             var grid = sheet._grid;
 
+            if (mode === "autofill") {
+               sheet.resizeAutoFill(ref);
+            }
             if (mode === "range") {
                 ref = grid.normalize(ref);
             }
-            if (mode === "row") {
+            else if (mode === "row") {
                 ref = grid.rowRef(ref.row).bottomRight;
             } else if (mode === "column") {
                 ref = grid.colRef(ref.col).bottomRight;
