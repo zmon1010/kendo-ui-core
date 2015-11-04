@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Untitled</title>
+
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="./loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js"
+      ]);
+    </script>
+
+  <body>
+    <p>Issue <a href="https://github.com/telerik/kendo/issues/5037">#5037</a></p>
+    <input id="exportPdf" type="button" value="Export" />
+    <div id="surface">
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        // Debug
+        $('#exportPdf').click(function (e) {
+          e.preventDefault();
+          kendo.drawing.drawDOM($("#surface"))
+          .then(function (group) {
+            // Render the result as a PDF file
+            return kendo.drawing.exportPDF(group);
+          })
+          .done(function (data) {
+            // Save the PDF file
+            kendo.saveAs({
+              dataURI: data,
+              fileName: "foo.pdf"
+            });
+          });
+        });
+        // draw kendo text
+
+        var rect = new kendo.geometry.Rect(kendo.geometry.Point.create(0, 0), kendo.geometry.Size.create(150, 30));
+        var clipPath = kendo.drawing.Path.fromRect(rect);
+        var path = kendo.drawing.Path.fromRect(rect, {
+          fill: {
+            color: "red"
+          }
+        });
+
+        path.clip(clipPath);
+        path.transform(new kendo.geometry.Transformation().translate(30, 30));
+
+        var surface = kendo.drawing.Surface.create($("#surface"));
+        surface.draw(path);
+      });
+    </script>
+  </body>
+</html>
