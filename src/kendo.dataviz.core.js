@@ -4098,7 +4098,7 @@ var __meta__ = { // jshint ignore:line
         if (!kendo.support.vml) {
             var offset = 0.5;
             if (path.options.stroke && defined(path.options.stroke.width)) {
-                if(path.options.stroke.width % 2 == 0) {
+                if(path.options.stroke.width % 2 === 0) {
                     offset = 0;
                 }
             }
