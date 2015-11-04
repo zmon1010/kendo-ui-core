@@ -236,7 +236,7 @@ namespace Kendo.Mvc.UI
             }
         }
 
-        protected virtual void WriteDeferredScriptInitialization()
+        public virtual void WriteDeferredScriptInitialization()
         {
             var scripts = new StringWriter();
             WriteInitializationScript(scripts);

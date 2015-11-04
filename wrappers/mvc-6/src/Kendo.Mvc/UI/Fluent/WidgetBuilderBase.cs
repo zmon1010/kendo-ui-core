@@ -1,5 +1,4 @@
 ﻿using Kendo.Mvc.Resources;
-using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Razor;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
@@ -96,11 +95,13 @@ namespace Kendo.Mvc.UI.Fluent
         /// Suppress initialization script rendering. Note that this options should be used in conjunction with <see cref="WidgetFactory.DeferredScripts"/>
         /// </summary>        
         /// <returns></returns>
-        public virtual TBuilder Deferred(bool deferred = true)
+        public virtual DeferredWidgetBuilder<TViewComponent> Deferred(bool deferred = true)
         {
             Component.HasDeferredInitialization = deferred;
 
-            return this as TBuilder;
+            Component.WriteDeferredScriptInitialization();
+
+            return new DeferredWidgetBuilder<TViewComponent>(Component);
         }
 
         /// <summary>
