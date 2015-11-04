@@ -14,6 +14,8 @@
 @android-light-main-color: #222;
 @android-light-background-color: #fcfcfc;
 
+@error: #ef5350;
+
 /* Colors */
 
 .km-android,
@@ -723,3 +725,12 @@
     color: @android-active-background;
 }
 
+/* Nova theme features */
+.km-android-light .km-required:after {
+    color: @error;
+}
+
+.km-android-light .km-label-above,
+.km-android-light .km-icon-label {
+     color: fade(@android-light-main-color, 40%);
+}
