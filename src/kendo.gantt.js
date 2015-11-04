@@ -1634,8 +1634,8 @@ var __meta__ = { // jshint ignore:line
 
             if (!options.dataSource) { newOptions.dataSource = this.dataSource; }
             if (!options.dependencies) { newOptions.dependencies = this.dependencies; }
-            if (!options.resources) { newOptions.resources = this.resources }
-            if (!options.assignments) { newOptions.assignments = this.assignments }
+            if (!options.resources) { newOptions.resources = this.resources; }
+            if (!options.assignments) { newOptions.assignments = this.assignments; }
 
             this.destroy();
             this.element.empty();
