@@ -85,6 +85,9 @@
         map: function(callback, obj) {
             return callback.call(obj, this);
         },
+        intersects: function(ref) {
+            return this.intersect(ref) !== NULL;
+        },
         isCell: function() {
             return false;
         },
@@ -443,9 +446,6 @@
                 return ref.intersect(this);
             }
             throw new Error("Unknown reference");
-        },
-        intersects: function(ref) {
-            return this.intersect(ref) !== NULL;
         },
         simplify: function() {
             if (this.isCell()) {

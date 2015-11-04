@@ -16,16 +16,52 @@
     var runtime = spreadsheet.calc.runtime;
     var Formula = runtime.Formula;
 
+    var MSG_INCOMPATIBLE = "Incompatible ranges in fillFrom";
+    var MSG_NO_DIRECTION = "Cannot determine fill direction";
+
     // `srcRange`: the range containing data that we wish to fill.  `direction`: 0↓, 1→, 2↑, 3←.  So
     // when bit 0 is set we're doing horizontal filling, and when bit 1 is set we're doing it in
     // reverse order.
     Range.prototype.fillFrom = function(srcRange, direction) {
+        var destRange = this, sheet = destRange._sheet;
         if (typeof srcRange == "string") {
-            srcRange = this._sheet.range(srcRange);
+            srcRange = sheet.range(srcRange);
         }
-        var n, src = srcRange._ref.toRangeRef();
-        var dest = this._ref.toRangeRef();
-        var data = srcRange._properties();
+        var src = srcRange._ref.toRangeRef();
+        var dest = destRange._ref.toRangeRef();
+
+        if (src.intersects(dest)) {
+            // the UI will send e.g. C2:C8.fillFrom(C7:D8) (intersecting ranges).  this figures out
+            // the actual destination range.
+            if (src.eq(dest)) {
+                return destRange; // nothing to do
+            }
+            if (src.topLeft.eq(dest.topLeft)) {
+                if (src.width() == dest.width()) {
+                    dest.topLeft.row += src.height();
+                    direction = 0;
+                } else if (src.height() == dest.height()) {
+                    dest.topLeft.col += src.width();
+                    direction = 1;
+                } else {
+                    throw new Error(MSG_INCOMPATIBLE);
+                }
+            } else if (src.bottomRight.eq(dest.bottomRight)) {
+                if (src.width() == dest.width()) {
+                    dest.bottomRight.row -= src.height();
+                    direction = 2;
+                } else if (src.height() == dest.height()) {
+                    dest.bottomRight.col -= src.width();
+                    direction = 3;
+                } else {
+                    throw new Error(MSG_INCOMPATIBLE);
+                }
+            } else {
+                throw new Error(MSG_INCOMPATIBLE);
+            }
+            return sheet.range(dest).fillFrom(srcRange, direction);
+        }
+
         if (direction == null) {
             // try to determine based on ranges location/geometry
             if (src.topLeft.col == dest.topLeft.col) {
@@ -34,15 +70,16 @@
             } else if (src.topLeft.row == dest.topLeft.row) {
                 direction = src.topLeft.col < dest.topLeft.col ? 1 : 3;
             } else {
-                throw new Error("Cannot determine fill direction");
+                throw new Error(MSG_NO_DIRECTION);
             }
         }
         var horizontal = direction & 1;
         var descending = direction & 2;
         if ((horizontal && src.height() != dest.height()) ||
             (!horizontal && src.width() != dest.width())) {
-            throw new Error("Incompatible auto-fill ranges");
+            throw new Error(MSG_INCOMPATIBLE);
         }
+        var data = srcRange._properties(), n;
         if (!horizontal) {
             data = transpose(data);
             n = dest.height();
@@ -63,8 +100,8 @@
         if (!horizontal) {
             fill = transpose(fill);
         }
-        this._properties(fill);
-        return this;
+        destRange._properties(fill);
+        return destRange;
     };
 
     // This is essentially the FORECAST function, see ./runtime.functions.2.js.

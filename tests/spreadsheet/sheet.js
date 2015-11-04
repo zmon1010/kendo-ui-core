@@ -734,4 +734,24 @@
         ]);
     });
 
+    test("autofill overlapping ranges (vertical)", function(){
+        sheet.range("A9:A10").values([ [50], [51] ]);
+        var values = sheet.range("A1:A10").fillFrom("A9:A10").values();
+        deepEqual(values, [
+            [42], [43], [44], [45], [46], [47], [48], [49]
+        ]);
+        var values = sheet.range("A1:A10").fillFrom("A1:A2").values();
+        deepEqual(values, [
+            [44], [45], [46], [47], [48], [49], [50], [51]
+        ]);
+    });
+
+    test("autofill overlapping ranges (horizontal)", function(){
+        sheet.range("I1:J1").values([[ 50, 51 ]]);
+        var values = sheet.range("A1:J1").fillFrom("I1:J1").values();
+        deepEqual(values, [[ 42, 43, 44, 45, 46, 47, 48, 49 ]]);
+        var values = sheet.range("A1:J1").fillFrom("A1:B1").values();
+        deepEqual(values, [[ 44, 45, 46, 47, 48, 49, 50, 51 ]]);
+    });
+
 })();
