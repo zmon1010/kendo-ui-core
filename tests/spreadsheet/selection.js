@@ -279,4 +279,43 @@
         equal(colHeaderCells[1].attr.className, PARTIAL);
         equal(colHeaderCells[2].attr.className, FULL);
     });
+
+    test("top left selection is marked as such", function() {
+        var pane = createPane(0, 0, 100, 100);
+
+        pane._currentView = DUMMY_VIEW;
+
+        sheet.range("A1").select();
+
+        var selections = pane.renderSelection().children;
+        var activeCell = selections[1];
+
+        equal(activeCell.attr.className, "k-spreadsheet-active-cell k-left k-top k-single");
+    });
+
+    test("top left selection is marked as such", function() {
+        var pane = createPane(0, 0, 100, 100);
+
+        pane._currentView = DUMMY_VIEW;
+
+        sheet.range("A2").select();
+
+        var selections = pane.renderSelection().children;
+        var activeCell = selections[1];
+
+        equal(activeCell.attr.className, "k-spreadsheet-active-cell k-left k-single");
+    });
+
+    test("top left selection is marked as such", function() {
+        var pane = createPane(0, 0, 100, 100);
+
+        pane._currentView = DUMMY_VIEW;
+
+        sheet.range("A101").select();
+
+        var selections = pane.renderSelection().children;
+        var activeCell = selections[1];
+
+        equal(activeCell.attr.className, "k-spreadsheet-active-cell k-left k-bottom k-single");
+    });
 })();

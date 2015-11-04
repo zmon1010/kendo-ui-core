@@ -1177,19 +1177,19 @@
             var selection = sheet.select();
 
             if (!activeCell.move(0, -1).intersects(view)) {
-                activeCellClasses.push(classNames.top);
+                activeCellClasses.push(classNames.left);
             }
 
             if (!activeCell.move(-1, 0).intersects(view)) {
-                activeCellClasses.push(classNames.right);
+                activeCellClasses.push(classNames.top);
             }
 
             if (!activeCell.move(0, 1).intersects(view)) {
-                activeCellClasses.push(classNames.bottom);
+                activeCellClasses.push(classNames.right);
             }
 
             if (!activeCell.move(1, 0).intersects(view)) {
-                activeCellClasses.push(classNames.left);
+                activeCellClasses.push(classNames.bottom);
             }
 
             if (sheet.isInEditMode()) {
