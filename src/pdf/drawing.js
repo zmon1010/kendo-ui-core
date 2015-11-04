@@ -195,12 +195,13 @@
 
         setStrokeOptions(element, page, pdf);
         setFillOptions(element, page, pdf);
-        setClipping(element, page, pdf);
 
         if (transform) {
             var m = transform.matrix();
             page.transform(m.a, m.b, m.c, m.d, m.e, m.f);
         }
+
+        setClipping(element, page, pdf);
 
         dispatch({
             Path      : drawPath,
