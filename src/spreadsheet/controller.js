@@ -158,7 +158,11 @@
             var result = this._workbook.execute(command);
 
             if (result) {
-                this.view.showError(result);
+                if (result.reason === "error") {
+                    this.view.showError(result);
+                } else {
+                    this.view.openDialog(result.reason);
+                }
             }
         },
 

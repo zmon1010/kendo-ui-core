@@ -75,10 +75,11 @@
         rejectState: function(validationState) {
             this.undo();
 
-            this._workbook._view.showError({
+            return {
                 title: validationState.title,
-                body: validationState.message
-            });
+                body: validationState.message,
+                reason: "error"
+            };
         },
         exec: function() {
             var range = this.range();
@@ -89,7 +90,7 @@
 
                 var validationState = range._getValidationState();
                 if (validationState) {
-                   this.rejectState(validationState);
+                    return this.rejectState(validationState);
                 }
             } catch(ex1) {
                 if (ex1 instanceof kendo.spreadsheet.calc.ParseError) {
@@ -99,20 +100,17 @@
 
                         var validationState = range._getValidationState();
                         if (validationState) {
-                            this.rejectState(validationState);
+                            return this.rejectState(validationState);
                         }
                     } catch(ex2) {
                         if (ex2 instanceof kendo.spreadsheet.calc.ParseError) {
-                            // XXX: error handling.  We should ask the user
-                            // whether to accept the formula as text (prepend
-                            // '), or re-edit.  ex.pos+1 will be the index of
-                            // the character where the error occurred.
-                            this._workbook._view.showError({
-                                title : "Error in formula",
-                                body  : ex1+""
-                            });
-                            // store as string for now
                             range.input("'" + value);
+
+                            return {
+                                title : "Error in formula",
+                                body  : ex1+"",
+                                reason: "error"
+                            };
                         }
                     }
                 } else {
@@ -356,11 +354,10 @@
             this._clipboard.menuInvoked = true;
             if(!status.canPaste) {
                 if(status.menuInvoked) {
-                    this._workbook._view.openDialog("useKeyboard");
-                    return;
+                    return { reason: "useKeyboard" };
                 }
                 if(status.pasteOnMerged) {
-                    this._workbook._view.openDialog("modifyMerged");
+                    return { reason: "modifyMerged" };
                 }
                 return;
             }
@@ -384,9 +381,11 @@
         exec: function() {
             if(kendo.support.clipboard.paste) {
                 this._workbook._view.clipboard.focus().select();
+
+                //reason : focusclipbord
                 document.execCommand('paste');
             } else {
-                this._workbook._view.openDialog("useKeyboard");
+                return { reason: "useKeyboard" };
             }
         }
     });
@@ -402,9 +401,9 @@
             this._clipboard.menuInvoked = true;
             if(!status.canCopy) {
                 if(status.menuInvoked) {
-                    this._workbook._view.openDialog("useKeyboard");
+                    return { reason: "useKeyboard" };
                 } else if(status.multiSelection) {
-                    this._workbook._view.openDialog("unsupportedSelection");
+                    return { reason: "unsupportedSelection" };
                 }
                 return;
             }
@@ -427,7 +426,7 @@
                 clipboard.trigger("copy");
                 $(textarea).remove();
             } else {
-                this._workbook._view.openDialog("useKeyboard");
+                return { reason: "useKeyboard" };
             }
         }
     });
@@ -472,7 +471,7 @@
                 clipboard.trigger("cut");
                 $(textarea).remove();
             } else {
-                this._workbook._view.openDialog("useKeyboard");
+                return { reason: "useKeyboard" };
             }
         }
     });
@@ -665,7 +664,7 @@
             var sheet = this.range().sheet();
 
             if (!sheet.axisManager().canAddRow()) {
-                return { reason: "shiftingNonblankCells" };
+                return { reason: "error", type: "shiftingNonblankCells" };
             }
 
             this._state = sheet.getState();

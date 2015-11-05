@@ -89,11 +89,11 @@
 
             var result = command.exec();
 
-            if (!result) {
+            if (!result || result.reason !== "error") {
                 this.undoRedoStack.push(command);
-            } else {
-                return result;
             }
+
+            return result;
         },
 
         resetFormulas: function() {

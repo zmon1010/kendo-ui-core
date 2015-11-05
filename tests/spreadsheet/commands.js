@@ -106,7 +106,7 @@
         equal(sheet.range("C1").format(), "mm-yy");
     });
 
-    test("changes are undone if validation fails and it is of type reject", 2, function() {
+    test("changes are undone if validation fails and it is of type reject", function() {
         sheet.range("A1").value(1);
         sheet.range("A1").validation({
             allowNulls: false,
@@ -119,15 +119,6 @@
 
         var c = new kendo.spreadsheet.EditCommand({ value: 3 });
 
-        //mock workbook view:
-        c._workbook = {
-            _view: {
-                showError: function() {
-                    ok(true);
-                }
-            }
-        };
-
         c.range(sheet.range("A1:A2"));
 
         //mock getValidation state:
@@ -138,8 +129,9 @@
            };
         };
 
-        c.exec();
+        var result = c.exec();
 
+        equal(result.reason, "error");
         equal(sheet.range("A1").value(), 1);
     });
 

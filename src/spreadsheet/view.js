@@ -691,7 +691,7 @@
             var errorMessages = VIEW_MESAGES.errors;
             this.openDialog("message", {
                 title : options.title || "Error",
-                text  : options.reason ? errorMessages[options.reason] : options.body
+                text  : options.type ? errorMessages[options.type] : options.body
             });
         },
 
