@@ -125,7 +125,6 @@
         cut:                   { type: "button", command: "ToolbarCutCommand",                                                 iconClass: "cut" },
         copy:                  { type: "button", command: "ToolbarCopyCommand",                                                iconClass: "copy" },
         paste:                 { type: "button", command: "ToolbarPasteCommand",                                               iconClass: "paste" },
-        filter:                { type: "button", command: "FilterCommand",         property: "hasFilter",                      iconClass: "filter", togglable: true },
         separator:             { type: "separator" },
         alignment:             { type: "alignment",                           iconClass: "justify-left" },
         backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
@@ -133,6 +132,7 @@
         fontFamily:            { type: "fontFamily",  property: "fontFamily", iconClass: "text" },
         fontSize:              { type: "fontSize",    property: "fontSize",   iconClass: "font-size" },
         format:                { type: "format",      property: "format",     iconClass: "format-number" },
+        filter:                { type: "filter",      property: "hasFilter",  iconClass: "filter" },
         merge:                 { type: "merge",                               iconClass: "merge-cells" },
         freeze:                { type: "freeze",                              iconClass: "freeze-panes" },
         borders:               { type: "borders",                             iconClass: "all-borders" },
@@ -989,6 +989,45 @@
     });
 
     kendo.toolbar.registerComponent("sort", Sort, SortButton);
+
+    var Filter = kendo.toolbar.ToolBarButton.extend({
+        init: function(options, toolbar) {
+            options.showText = "overflow";
+            kendo.toolbar.ToolBarButton.fn.init.call(this, options, toolbar);
+
+            this.element.on("click", this._click.bind(this));
+
+            this.element.data({
+                type: "filter",
+                filter: this
+            });
+        },
+        _click: function() {
+            this.toolbar.action({ command: "FilterCommand" });
+        },
+        update: function(value) {
+            this.toggle(value);
+        }
+    });
+
+    var FilterButton = OverflowDialogButton.extend({
+        init: function(options, toolbar) {
+            OverflowDialogButton.fn.init.call(this, options, toolbar);
+
+            this.element.data({
+                type: "filter",
+                filter: this
+            });
+        },
+        _click: function() {
+            this.toolbar.action({ command: "FilterCommand" });
+        },
+        update: function(value) {
+            this.toggle(value);
+        }
+    });
+
+    kendo.toolbar.registerComponent("filter", Filter, FilterButton);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 
