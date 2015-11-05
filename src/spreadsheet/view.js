@@ -1202,23 +1202,53 @@
             var autoFillRectangle = [];
 
             if (this._sheet.autoFillInProgress()) {
-                this._addDiv(autoFillRectangle, this._sheet.autoFillRef(), "k-auto-fill");
+                var autoFillRef = this._sheet.autoFillRef();
                 var punch = this._sheet.autoFillPunch();
+                var direction = this._sheet._autoFillDirection;
 
-                if (punch) {
+                this._addDiv(autoFillRectangle, autoFillRef, "k-auto-fill");
+
+                if (punch) { // collapsing, add overlay
                     this._addDiv(autoFillRectangle, punch, "k-auto-fill-punch");
+                } else if (direction !== undefined) { // expanding - add hint
+                    var ref, cssClass;
+
+                    switch(direction) {
+                        case 0:
+                            ref = autoFillRef.bottomRight;
+                            cssClass = "k-auto-fill-br-hint";
+                            break;
+                        case 1:
+                            ref = autoFillRef.bottomRight;
+                            cssClass = "k-auto-fill-br-hint";
+                            break;
+                        case 2:
+                            ref = new CellRef(autoFillRef.topLeft.row, autoFillRef.bottomRight.col);
+                            cssClass = "k-auto-fill-tr-hint";
+                            break;
+                        case 3:
+                            ref = new CellRef(autoFillRef.bottomRight.row, autoFillRef.topLeft.col);
+                            cssClass = "k-auto-fill-bl-hint";
+                            break;
+                    }
+
+                    var hint = kendo.dom.element("span", { className: "k-tooltip" }, [ kendo.dom.text(this._sheet._autoFillHint) ]);
+
+                    this._addDiv(autoFillRectangle, ref, cssClass).children.push(hint);
                 }
             }
+
             return kendo.dom.element("div", { className: Pane.classNames.autoFillWrapper }, autoFillRectangle);
         },
 
         _addDiv: function(collection, ref, className) {
-            var view = this._currentView;
+            var view = this._currentView, div;
 
             if (view.ref.intersects(ref)) {
-                var div = this._rectangle(ref).resize(1, 1).toDiv(className);
+                div = this._rectangle(ref).resize(1, 1).toDiv(className);
                 collection.push(div);
             }
+            return div;
         },
 
         _addTable: function(collection, ref, className) {

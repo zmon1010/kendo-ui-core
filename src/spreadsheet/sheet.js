@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.color", "./runtime", "./validation", "./references", "./autofillcalculator"], f);
+    define([ "../kendo.core", "../kendo.color", "./runtime", "./validation", "./references" ], f);
 })(function(){
 
 (function(kendo) {
@@ -130,13 +130,6 @@
                  this._navigator = new kendo.spreadsheet.SheetNavigator(this);
             }
             return this._navigator;
-        },
-
-        autoFillCalculator: function() {
-            if(!this._autoFillCalculator) {
-                 this._autoFillCalculator = new kendo.spreadsheet.AutoFillCalculator(this._grid);
-            }
-            return this._autoFillCalculator;
         },
 
         axisManager: function() {
@@ -582,13 +575,11 @@
             this.triggerChange({ selection: true });
         },
 
-        resizeAutoFill: function(ref) {
-            var selection = this.select();
-            var autoFillRef = this.autoFillCalculator().autoFillDest(selection, ref);
-
-            this._autoFillDest = autoFillRef;
-            this._autoFillPunch = this.navigator().punch(selection, autoFillRef);
-
+        updateAutoFill: function(dest, punch, hint, direction) {
+            this._autoFillDest = dest;
+            this._autoFillPunch = punch;
+            this._autoFillHint = hint;
+            this._autoFillDirection = direction;
             this.triggerChange({ selection: true });
         },
 
@@ -665,15 +656,20 @@
             if (this._autoFillInProgress) {
                 this._autoFillInProgress = false;
                 var dest = this._autoFillDest;
+                var origin = this._autoFillOrigin;
 
                 if (this._autoFillPunch) { // we just clear data here
                     this._workbook.execute({
                         command: "ClearContentCommand", options: { operatingRange: this.range(this._autoFillPunch) }
                     });
                 } else {
-                    this._workbook.execute({
-                        command: "AutoFillCommand", options: { operatingRange: this.range(dest), origin: this.range(this._autoFillOrigin) }
-                    });
+                    if (!dest.eq(origin)) {
+                        this._workbook.execute({
+                            command: "AutoFillCommand", options: { operatingRange: this.range(dest), origin: this.range(origin) }
+                        });
+                    } else {
+                        this.triggerChange({ selection: true });
+                    }
                 }
 
                 this._autoFillDest = null;

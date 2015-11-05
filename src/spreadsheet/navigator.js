@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core" ], f);
+    define([ "../kendo.core",  "./autofillcalculator" ], f);
 })(function(){
 
 (function(kendo) {
@@ -52,6 +52,7 @@
         init: function(sheet) {
             this._sheet = sheet;
             this.columns = this._sheet._grid._columns;
+            this.autoFillCalculator = new kendo.spreadsheet.AutoFillCalculator(sheet._grid);
 
             this.colEdge = new EdgeNavigator("col", this._sheet._grid._columns, this.columnRange.bind(this), this.union.bind(this));
             this.rowEdge = new EdgeNavigator("row", this._sheet._grid._rows, this.rowRange.bind(this), this.union.bind(this));
@@ -417,7 +418,7 @@
             var grid = sheet._grid;
 
             if (mode === "autofill") {
-               sheet.resizeAutoFill(ref);
+               this.resizeAutoFill(ref);
                return;
             }
             if (mode === "range") {
@@ -444,6 +445,38 @@
             });
 
             return isMerged;
+        },
+
+        resizeAutoFill: function(ref) {
+            var sheet = this._sheet;
+            var selection = sheet.select();
+            var origin = sheet._autoFillOrigin;
+            var dest = this.autoFillCalculator.autoFillDest(selection, ref);
+
+            var punch = this.punch(selection, dest);
+            var hint, direction, row;
+
+            if (!punch) {
+                var preview = sheet.range(dest)._previewFillFrom(sheet.range(origin));
+
+                if (preview) {
+                    direction = preview.direction;
+                    var props = preview.props;
+
+                    if (direction === 0 || direction == 1) {
+                        row = props[props.length - 1];
+                        hint = row[row.length - 1].value;
+                    } else if (direction === 2) {
+                        row = props[0];
+                        hint = row[row.length - 1].value;
+                    } else if (direction === 3) {
+                        row = props[props.length - 1];
+                        hint = row[0].value;
+                    }
+                }
+            }
+
+            sheet.updateAutoFill(dest, punch, hint, direction);
         },
 
         determineDirection: function(action) {

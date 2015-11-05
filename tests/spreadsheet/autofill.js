@@ -1,9 +1,7 @@
 (function() {
     var sheet;
     var calculator;
-    var RangeRef = kendo.spreadsheet.RangeRef;
     var defaults = kendo.ui.Spreadsheet.prototype.options;
-    var CellRef = kendo.spreadsheet.CellRef;
 
     function getRef(ref) {
         return sheet._ref(ref);
@@ -18,7 +16,7 @@
     module("AutoFill destination", {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns, defaults.rowHeight, defaults.columnWidth);
-            calculator = sheet.autoFillCalculator();
+            calculator = new kendo.spreadsheet.AutoFillCalculator(sheet._grid);
         }
     });
 

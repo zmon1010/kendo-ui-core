@@ -81,7 +81,7 @@
                 }
             }
 
-            return new RangeRef(pivot, cornerResult);
+            return this._grid.normalize(new RangeRef(pivot, cornerResult));
         }
     });
 
