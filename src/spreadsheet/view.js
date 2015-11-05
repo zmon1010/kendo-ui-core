@@ -1155,17 +1155,11 @@
                     return;
                 }
 
-                this._addDiv(selections, ref, classNames.selectionHighlight + " " + range.seriesCls);
+                this._addDiv(selections, ref, classNames.selectionHighlight + " " + range.colorClass);
             }.bind(this));
 
             return kendo.dom.element("div", { className: classNames.selectionWrapper }, selections);
 
-        },
-
-        _activeFormulaSelection: function() {
-            return this._sheet._formulaSelections.filter(function(sel) {
-                return sel.active;
-            })[0];
         },
 
         renderSelection: function() {
@@ -1174,34 +1168,12 @@
             var activeCellClasses = [classNames.activeCell];
             var selectionClasses = [classNames.selection];
             var sheet = this._sheet;
-            var view = this._currentView.ref;
             var activeCell = sheet.activeCell().toRangeRef();
+            var activeFormulaColor = this._activeFormulaColor();
             var selection = sheet.select();
 
-            if (!activeCell.move(0, -1).intersects(view)) {
-                activeCellClasses.push(classNames.left);
-            }
-
-            if (!activeCell.move(-1, 0).intersects(view)) {
-                activeCellClasses.push(classNames.top);
-            }
-
-            if (!activeCell.move(0, 1).intersects(view)) {
-                activeCellClasses.push(classNames.right);
-            }
-
-            if (!activeCell.move(1, 0).intersects(view)) {
-                activeCellClasses.push(classNames.bottom);
-            }
-
-            if (sheet.isInEditMode()) {
-                var activeFormulaSelection = this._activeFormulaSelection();
-
-                if (activeFormulaSelection && activeFormulaSelection.type == "ref") {
-                    selectionClasses.push(activeFormulaSelection.seriesCls);
-                    activeCellClasses.push(activeFormulaSelection.seriesCls);
-                }
-            }
+            activeCellClasses = activeCellClasses.concat(activeFormulaColor, this._directionClasses(activeCell));
+            selectionClasses = selectionClasses.concat(activeFormulaColor);
 
             if (sheet.singleCellSelection()) {
                 activeCellClasses.push(classNames.single);
@@ -1265,6 +1237,45 @@
                     collection.push(table.toDomTree(rectangle.left, rectangle.top, className));
                 }.bind(this));
             }
+        },
+
+        _activeFormulaColor: function() {
+            var activeFormulaSelection;
+            var colorClasses = [];
+
+            if (this._sheet.isInEditMode()) {
+                activeFormulaSelection = this._sheet._formulaSelections.filter(function(sel) { return sel.active && sel.type == "ref"; })[0];
+
+                if (activeFormulaSelection) {
+                    colorClasses.push(activeFormulaSelection.colorClass);
+                }
+            }
+
+            return colorClasses;
+        },
+
+        _directionClasses: function(cell) {
+            var cellClasses = [];
+            var classNames = Pane.classNames;
+            var view = this._currentView.ref;
+
+            if (!cell.move(0, -1).intersects(view)) {
+                cellClasses.push(classNames.left);
+            }
+
+            if (!cell.move(-1, 0).intersects(view)) {
+                cellClasses.push(classNames.top);
+            }
+
+            if (!cell.move(0, 1).intersects(view)) {
+                cellClasses.push(classNames.right);
+            }
+
+            if (!cell.move(1, 0).intersects(view)) {
+                cellClasses.push(classNames.bottom);
+            }
+
+            return cellClasses;
         },
 
         _rectangle: function(ref) {

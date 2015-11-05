@@ -611,8 +611,8 @@
                     tok.cls = [ "k-syntax-" + tok.type ];
 
                     if (tok.type == "ref") {
-                        tok.seriesCls = refClasses[(refIndex++) % refClasses.length];
-                        tok.cls.push(tok.seriesCls);
+                        tok.colorClass = refClasses[(refIndex++) % refClasses.length];
+                        tok.cls.push(tok.colorClass);
                         highlightedRefs.push(tok);
                     }
                     if (pos && tok.type == "punc") {
