@@ -3,19 +3,23 @@ namespace Kendo.Mvc.UI
     using System.Collections.Generic;
     using System.Linq;
     using Extensions;
+    using System;
 
     public class GridToolBarSettings : JsonObject        
     {
-        public GridToolBarSettings()
+        public GridToolBarSettings(WidgetBase grid)
         {
-            Commands = new List<GridActionCommandBase>();             
+            Commands = new List<GridActionCommandBase>();
+            Component = grid;               
         }  
+
+        public WidgetBase Component { get; }
 
         public bool Enabled
         {
             get
             {
-				return Commands.Any() || ClientTemplate.HasValue();
+				return Commands.Any() || ClientTemplate.HasValue() || ClientTemplateId.HasValue();
             }
         }
 
@@ -31,7 +35,13 @@ namespace Kendo.Mvc.UI
 			set;
 		}
 
-		protected override void Serialize(IDictionary<string, object> json)
+        public string ClientTemplateId
+        {
+            get;
+            set;
+        }
+
+        protected override void Serialize(IDictionary<string, object> json)
 		{
 			var commands = new List<IDictionary<string, object>>();
 
@@ -49,6 +59,17 @@ namespace Kendo.Mvc.UI
 			{
 				json["template"] = ClientTemplate;
 			}
-		}
+
+            if (ClientTemplateId.HasValue())
+            {
+                var idPrefix = "#";
+                if (Component.IsInClientTemplate)
+                {
+                    idPrefix = "\\" + idPrefix;
+                }
+
+                json["template"] = new ClientHandlerDescriptor { HandlerName = $"kendo.template(jQuery('{idPrefix}{ClientTemplateId}').html())" };
+            }
+        }
     }
 }

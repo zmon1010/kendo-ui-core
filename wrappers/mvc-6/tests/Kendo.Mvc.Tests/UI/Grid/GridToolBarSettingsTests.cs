@@ -1,17 +1,18 @@
 namespace Kendo.Mvc.UI.Tests
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using Moq;
-	using Xunit;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Moq;
+    using Xunit;
+    using Mvc.Tests;
 
-	public class GridToolBarSettingsTests
+    public class GridToolBarSettingsTests
     {
         private readonly GridToolBarSettings toolBarSettings;
 
         public GridToolBarSettingsTests()
         {
-            toolBarSettings = new GridToolBarSettings();
+            toolBarSettings = new GridToolBarSettings(new Grid<object>(TestHelper.CreateViewContext()));
         }
 
         [Fact]
@@ -51,5 +52,19 @@ namespace Kendo.Mvc.UI.Tests
 			json.Count.ShouldEqual(1);
 			json.ContainsKey("template").ShouldBeTrue();
 		}
-	}
+
+        [Fact]
+        public void TemplateId_should_have_presents_over_template()
+        {
+            toolBarSettings.Commands.Add(new Mock<GridActionCommandBase>().Object);
+            toolBarSettings.ClientTemplate = "foo";
+            toolBarSettings.ClientTemplateId = "bar";
+            var json = toolBarSettings.ToJson();
+
+            json.Count.ShouldEqual(1);
+            json["template"].ShouldBeType<ClientHandlerDescriptor>();
+
+            ((ClientHandlerDescriptor)json["template"]).HandlerName.ShouldContain("bar");
+        }
+    }
 }

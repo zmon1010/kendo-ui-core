@@ -97,5 +97,13 @@ namespace Kendo.Mvc.UI.Fluent
 		{
 			settings.ClientTemplate = template;
 		}
-	}
+
+        /// <summary>
+		/// Sets the id of the script element which contains the client-side toolbar template of the grid.
+		/// </summary>		
+		public void ClientTemplateId(string template)
+        {
+            settings.ClientTemplateId = template;
+        }
+    }
 }

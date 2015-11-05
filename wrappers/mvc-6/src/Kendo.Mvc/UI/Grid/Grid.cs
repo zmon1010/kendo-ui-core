@@ -43,6 +43,8 @@ namespace Kendo.Mvc.UI
 			};
 
 			DataSource.ModelType(typeof(T));
+
+            ToolBar = new GridToolBarSettings(this);
         }
 
 		public ActionBindingContext ActionBindingContext
@@ -100,7 +102,7 @@ namespace Kendo.Mvc.UI
 
 		public GridEditableSettings<T> Editable { get; }
 
-		public GridToolBarSettings ToolBar { get; } = new GridToolBarSettings();
+        public GridToolBarSettings ToolBar { get; }
 
 		/// <summary>
 		/// Gets the selection configuration
