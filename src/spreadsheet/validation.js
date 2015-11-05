@@ -13,7 +13,13 @@
     spreadsheet.validation = exports;
     var calc = spreadsheet.calc;
     var Class = kendo.Class;
-    var TRANSPOSE_FORMAT = "TRANSPOSE({0})";
+    var TRANSPOSE_FORMAT = "_matrix({0})";
+
+    calc.runtime.defineFunction("_matrix", function(m){
+        return m;
+    }).args([
+        [ "m", "matrix" ]
+    ]);
 
     function compileValidation(sheet, row, col, validation) {
         var validationHandler;
@@ -247,7 +253,7 @@
                 options.from = options.from.toString();
 
                 if (options.dataType === "list") {
-                    options.from = options.from.replace(/TRANSPOSE\(/, '').replace(/\)(?!.*\))/, '');
+                    options.from = options.from.replace(/^_matrix\((.*)\)$/i, "$1");
                 }
             }
 

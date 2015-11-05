@@ -39,7 +39,7 @@
         32: 'spacebar'
     };
 
-    var PRIVATE_FORMULA_CHECK = /[a-z0-9]$/i;
+    var PRIVATE_FORMULA_CHECK = /(^_|[^a-z0-9]$)/i;
 
     var FormulaInput = Widget.extend({
         init: function(element, options) {
@@ -172,7 +172,7 @@
             var value;
 
             for (var key in kendo.spreadsheet.calc.runtime.FUNCS) {
-                if (PRIVATE_FORMULA_CHECK.test(key)) {
+                if (!PRIVATE_FORMULA_CHECK.test(key)) {
                     value = key.toUpperCase();
                     result.push({ value: value, text: value });
                 }
