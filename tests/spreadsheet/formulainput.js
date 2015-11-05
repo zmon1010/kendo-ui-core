@@ -371,8 +371,9 @@
 
         var data = source.data();
 
+        var PRIVATE_FORMULA_CHECK = /(^_|[^a-z0-9]$)/i;
         var funcs = Object.keys(kendo.spreadsheet.calc.runtime.FUNCS).filter(function(key){
-            return /[a-z0-9]$/i.test(key);
+            return !PRIVATE_FORMULA_CHECK.test(key);
         });
 
         equal(data.length, funcs.length);
