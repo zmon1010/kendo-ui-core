@@ -62,8 +62,7 @@
         },
 
         intersectsMerged: function() {
-            var rows = [];
-            var cols = [];
+            var sheet = this.workbook.activeSheet();
             var state = this.parse(this._external);
             this.origin = this.stateRangeRef(state);
             var ref = this.pasteRef();
