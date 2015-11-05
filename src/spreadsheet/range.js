@@ -173,15 +173,15 @@
                 value = this._get("value");
                 var format = this._get("format");
                 var formula = this._get("formula");
-                var type = !formula && value !== null && kendo.spreadsheet.formatting.type(value, format);
+                var type = format && !formula && kendo.spreadsheet.formatting.type(value, format);
 
                 if (formula) {
                     // it's a Formula object which stringifies to the
                     // formula as text (without the starting `=`).
                     value = "=" + formula;
-                } else if (format && type === "date") {
+                } else if (type === "date") {
                     value = kendo.toString(kendo.spreadsheet.numberToDate(value), kendo.culture().calendar.patterns.d);
-                } else if (format && type === "percent") {
+                } else if (type === "percent") {
                     value = (value * 100) + "%";
                 } else if (typeof value == "string" &&
                            (/^[=']/.test(value) ||
