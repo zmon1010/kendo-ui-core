@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Linq;
 
 namespace Telerik.Web.Spreadsheet
 {
@@ -101,5 +102,40 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "wrap", EmitDefaultValue = false)]
         public bool? Wrap { get; set; }
 
+
+        protected Dictionary<string, object> SerializeSettings()
+        {
+            var settings = new Dictionary<string, object>();
+
+            settings["background"] = Background;
+
+            settings["color"] = Color;
+
+            settings["fontFamily"] = FontFamily;
+
+            settings["fontSize"] = FontSize;
+
+            settings["italic"] = Italic;
+
+            settings["bold"] = Bold;
+
+            settings["format"] = Format;
+
+            settings["formula"] = Formula;
+
+            settings["index"] = Index;
+
+            settings["textAlign"] = TextAlign;
+
+            settings["underline"] = Underline;
+
+            settings["value"] = Value;
+
+            settings["verticalAlign"] = VerticalAlign;
+
+            settings["wrap"] = Wrap;
+
+            return settings;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Linq;
 
 namespace Telerik.Web.Spreadsheet
 {
@@ -87,5 +88,32 @@ namespace Telerik.Web.Spreadsheet
             set;
         }
 
+
+        protected Dictionary<string, object> SerializeSettings()
+        {
+            var settings = new Dictionary<string, object>();
+
+            if (Criteria != null)
+            {
+                settings["criteria"] = Criteria.Select(item => item.Serialize());
+            }
+
+            settings["filter"] = Filter;
+
+            settings["index"] = Index;
+
+            settings["logic"] = Logic;
+
+            settings["type"] = Type;
+
+            settings["value"] = Value;
+
+            if (Values != null)
+            {
+                settings["values"] = Values;
+            }
+
+            return settings;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Linq;
 
 namespace Telerik.Web.Spreadsheet
 {
@@ -89,5 +90,47 @@ namespace Telerik.Web.Spreadsheet
             set;
         }
 
+
+        protected Dictionary<string, object> SerializeSettings()
+        {
+            var settings = new Dictionary<string, object>();
+
+            settings["activeCell"] = ActiveCell;
+
+            settings["name"] = Name;
+
+            if (Columns != null)
+            {
+                settings["columns"] = Columns.Select(item => item.Serialize());
+            }
+
+            if (Filter != null)
+            {
+                settings["filter"] = Filter.Serialize();
+            }
+
+            settings["frozenColumns"] = FrozenColumns;
+
+            settings["frozenRows"] = FrozenRows;
+
+            if (Rows != null)
+            {
+                settings["rows"] = Rows.Select(item => item.Serialize());
+            }
+
+            settings["selection"] = Selection;
+
+            if (Sort != null)
+            {
+                settings["sort"] = Sort.Serialize();
+            }
+
+            if (MergedCells != null)
+            {
+                settings["mergedCells"] = MergedCells;
+            }
+
+            return settings;
+        }
     }
 }

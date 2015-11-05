@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Linq;
 
 namespace Telerik.Web.Spreadsheet
 {
@@ -25,5 +26,19 @@ namespace Telerik.Web.Spreadsheet
             set;
         }
 
+
+        protected Dictionary<string, object> SerializeSettings()
+        {
+            var settings = new Dictionary<string, object>();
+
+            settings["activeSheet"] = ActiveSheet;
+
+            if (Sheets != null)
+            {
+                settings["sheets"] = Sheets.Select(item => item.Serialize());
+            }
+
+            return settings;
+        }
     }
 }

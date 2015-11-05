@@ -25,6 +25,18 @@ namespace Telerik.Web.Spreadsheet
 
             return sheet;
         }
+
+        internal Dictionary<string, object> Serialize()
+        {
+            var settings = SerializeSettings();
+
+            return settings;
+        }
+
+        public static implicit operator Dictionary<string, object>(Workbook instance)
+        {
+            return instance.Serialize();
+        }  
     }
 }
 
