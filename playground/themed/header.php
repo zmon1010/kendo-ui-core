@@ -27,16 +27,7 @@
     <style>
         html,body { margin: 0; padding: 0; overflow: hidden; }
         body { font: 14px/1.5 Arial, Helvetica, sans-serif; }
-        #spreadsheet { width: 390px; height: 290px; }
     </style>
 </head>
 <body>
-    <div id='spreadsheet'></div>
-    <script>
-        var spread = $('#spreadsheet').kendoSpreadsheet({ rows: 4, columns: 4 }).getKendoSpreadsheet();
-        var sheet = spread.activeSheet();
 
-        sheet.range("A1").value(123);
-    </script>
-</body>
-</html

@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+    <script src="loader.js"></script>
+    <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <script>
+        requireSync([ "../src/jquery.js", ]);
+    </script>
+
+    <style>
+        body {
+            font: 14px/1.5 Arial, sans-serif;
+        }
+
+        div.container {
+            margin: 5px;
+            display: inline-block;
+        }
+
+        #themes > div {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        iframe {
+            width: 400px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div id="themes">
+            <h3>Types</h3>
+            <div><label><input type="checkbox" value="bootstrap"> Bootstrap</label></div>
+            <div><label><input type="checkbox" value="default"> Default</label></div>
+            <div><label><input type="checkbox" value="fiori"> Fiori</label></div>
+            <div><label><input type="checkbox" value="flat"> Flat</label></div>
+            <div><label><input type="checkbox" value="highcontrast"> HighContrast</label></div>
+            <div><label><input type="checkbox" value="material"> Material</label></div>
+            <div><label><input type="checkbox" value="metro"> Metro</label></div>
+            <div><label><input type="checkbox" value="nova"> Nova</label></div>
+            <div><label><input type="checkbox" value="office365"> Office365</label></div>
+        </div>
+
+        <select id="file">
+            <option selected value="themed/checkbox.php">Checkbox</option>
+            <option value="themed/spreadsheet.php">Spreadsheet</option>
+        </select>
+    </header>
+
+    <main>
+    <script>
+        var themesForType = {
+            "default": [ "black", "blueopal", "default", "moonlight", "silver", "uniform" ],
+            "bootstrap": [ "bootstrap" ],
+            "fiori": [ "fiori" ],
+            "flat": [ "flat" ],
+            "highcontrast": [ "highcontrast" ],
+            "material": [ "material", "materialblack" ],
+            "metro": [ "metro", "metroblack" ],
+            "nova": [ "nova" ],
+            "office365": [ "office365" ]
+        };
+
+        function withThemes(array, type) {
+            return array.concat(themesForType[type]);
+        }
+
+        function allThemes() {
+            return Object.keys(themesForType).reduce(withThemes, []);
+        }
+
+        function typeCheckboxes() {
+            var checkboxes = document.querySelectorAll("#themes [type=checkbox]");
+
+            return Array.prototype.slice.call(checkboxes);
+        }
+
+        function themes(checkboxes) {
+            return checkboxes
+                .filter(prop("checked"))
+                .map(prop("value"))
+                .reduce(withThemes, []);
+        }
+
+        function setSrc(src) {
+            return function(frame) {
+                frame.src = src + '?theme=' + frame.getAttribute("data-theme");
+                return frame;
+            };
+        }
+
+        function file() {
+            return document.getElementById("file").value;
+        }
+
+        document.getElementById("file").addEventListener("change", function() {
+            Array.prototype.slice.call(document.getElementsByTagName("iframe"))
+                .forEach(setSrc(file()));
+        });
+
+        var checkboxes = typeCheckboxes();
+
+        function previewFrame(theme) {
+            return document.querySelector("[data-theme=" + theme + "]");
+        }
+
+        function refresh() {
+            var selectedThemes = themes(checkboxes);
+
+            allThemes()
+                .filter(function(theme) {
+                    return selectedThemes.indexOf(theme) < 0;
+                })
+                .map(previewFrame)
+                .filter(Boolean)
+                .forEach(function(div) {
+                    div.parentNode.removeChild(div);
+                });
+
+            selectedThemes
+                .filter(not(previewFrame))
+                .map(function iframe(theme) {
+                    var frame = document.createElement("iframe");
+                    frame.setAttribute("frameborder", "0");
+                    frame.setAttribute("data-theme", theme);
+                    return frame;
+                })
+                .map(setSrc(file()))
+                .map(function div(frame) {
+                    var theme = frame.getAttribute("data-theme");
+
+                    var div = document.createElement("div");
+                    div.className = "container";
+                    div.setAttribute("data-theme", theme);
+
+                    var h4 = document.createElement("h4");
+                    h4.appendChild(document.createTextNode(theme));
+                    div.appendChild(h4);
+
+                    div.appendChild(frame);
+
+                    return div;
+                })
+                .forEach(function append(div) {
+                    document.body.appendChild(div);
+                });
+        }
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener("change", refresh, false);
+        });
+
+        document.addEventListener("DOMContentLoaded", refresh, false);
+
+        function not(f) {
+            return function(x) {
+                return !f(x);
+            };
+        }
+
+        function prop(property) {
+            return function(object) {
+                return object[property];
+            };
+        }
+
+    </script>
+
+    </main>
+</body>
+
+</html>
