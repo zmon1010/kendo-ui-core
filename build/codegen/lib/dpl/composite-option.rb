@@ -7,6 +7,8 @@ module CodeGen::DPL::Options
 
         DECLARATION = ERB.new(File.read("build/codegen/lib/dpl/templates/composite-option-declaration.erb"), 0, '%<>')
 
+        SERIALIZATION = ERB.new(File.read("build/codegen/lib/dpl/templates/composite-option-serialization.erb"), 0, '%<>')
+
         def csharp_class
             "#{csharp_name}"
         end
@@ -19,6 +21,9 @@ module CodeGen::DPL::Options
             DECLARATION.result(binding)
         end
 
+        def to_serialization
+            SERIALIZATION.result(binding)
+        end
     end
 
 end

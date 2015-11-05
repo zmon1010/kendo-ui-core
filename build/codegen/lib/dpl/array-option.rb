@@ -18,6 +18,8 @@ module CodeGen::DPL::Options
 
         DECLARATION = ERB.new(File.read("build/codegen/lib/dpl/templates/array-option-declaration.erb"), 0, '%<>')
 
+        SERIALIZATION = ERB.new(File.read("build/codegen/lib/dpl/templates/array-option-serialization.erb"), 0, '%<>')
+
         def item_class
             ArrayItem
         end
@@ -53,6 +55,9 @@ module CodeGen::DPL::Options
             DECLARATION.result(binding)
         end
 
+        def to_serialization
+            SERIALIZATION.result(binding)
+        end
     end
 
 end

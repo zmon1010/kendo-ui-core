@@ -7,6 +7,8 @@ module CodeGen::DPL::Options
 
         DECLARATION = ERB.new(File.read("build/codegen/lib/dpl/templates/option-declaration.erb"), 0, '%<>')
 
+        SERIALIZATION = ERB.new(File.read("build/codegen/lib/dpl/templates/option-serialization.erb"), 0, '%<>')
+
         def struct?
             STRUCT_TYPES.include?(csharp_type) || enum?
         end
@@ -23,6 +25,10 @@ module CodeGen::DPL::Options
 
         def to_declaration
             DECLARATION.result(binding)
+        end
+
+        def to_serialization
+            SERIALIZATION.result(binding)
         end
     end
 

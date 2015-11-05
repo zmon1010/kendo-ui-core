@@ -9,5 +9,12 @@ namespace Telerik.Web.Spreadsheet
     public partial class <%= csharp_class %>
     {
     }
+
+    internal Dictionary<string, object> Serialize()
+    {
+    var settings = SerializeSettings();
+
+    return settings;
+    }
 }
 
