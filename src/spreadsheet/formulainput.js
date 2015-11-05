@@ -441,6 +441,9 @@
         },
 
         _canInsertRef: function(isKeyboardAction) {
+            if (this.popup.visible()) {
+                return null;
+            }
             var strictMode = isKeyboardAction;
             var point = this.getPos();
             var tokens, tok;
