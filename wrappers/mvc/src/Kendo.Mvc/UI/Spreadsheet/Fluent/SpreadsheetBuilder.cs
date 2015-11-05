@@ -151,6 +151,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public SpreadsheetBuilder BindTo(Dictionary<string, object> workbook)
+        {
+            container.DplSettings = workbook;
+
+            return this;
+        }
+
         
         /// <summary>
         /// Configures the client-side events.
