@@ -451,6 +451,7 @@
                 code += "output += ','; ";
             }
             else if (tok.type == "percent") {
+                code += "type = 'percent'; ";
                 code += "output += culture.numberFormat.percent.symbol; ";
             }
             else if (tok.type == "str") {

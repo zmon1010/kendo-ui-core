@@ -998,6 +998,16 @@
                 value: input.substr(1)
             };
         }
+        if (/^[0-9.]+%$/.test(input)) {
+            var str = input.substr(0, input.length - 1);
+            var num = parseFloat(str);
+            if (!isNaN(num) && num == str) {
+                return {
+                    type: "percent",
+                    value: num / 100
+                };
+            }
+        }
         if (/^=/.test(input)) {
             input = input.substr(1);
             if (/\S/.test(input)) {

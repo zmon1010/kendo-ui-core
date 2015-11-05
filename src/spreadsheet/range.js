@@ -155,6 +155,8 @@
                         formula = kendo.spreadsheet.calc.compile(x);
                     } else if (x.type == "date") {
                         this.format(toExcelFormat(kendo.culture().calendar.patterns.d));
+                    } else if (x.type == "percent") {
+                        this.format(x.value*100 == (x.value*100|0) ? "0%" : "0.00%");
                     }
                     this.formula(formula);
                     if (!formula) {
@@ -171,13 +173,16 @@
                 value = this._get("value");
                 var format = this._get("format");
                 var formula = this._get("formula");
+                var type = !formula && value !== null && kendo.spreadsheet.formatting.type(value, format);
 
                 if (formula) {
                     // it's a Formula object which stringifies to the
                     // formula as text (without the starting `=`).
                     value = "=" + formula;
-                } else if (format && kendo.spreadsheet.formatting.type(value, format) === "date") {
+                } else if (format && type === "date") {
                     value = kendo.toString(kendo.spreadsheet.numberToDate(value), kendo.culture().calendar.patterns.d);
+                } else if (format && type === "percent") {
+                    value = (value * 100) + "%";
                 } else if (typeof value == "string" &&
                            (/^[=']/.test(value) ||
                             (/^(?:true|false)$/i).test(value) ||
@@ -687,7 +692,7 @@
 
     function looksLikeANumber(str) {
         // XXX: could do with just a regexp instead of calling parse.
-        return !(/^=/.test(str)) && kendo.spreadsheet.calc.parse(null, 0, 0, str).type == "number";
+        return !(/^=/.test(str)) && (/number|percent/).test(kendo.spreadsheet.calc.parse(null, 0, 0, str).type);
     }
 
     var measureBox = $('<div style="position: absolute !important; top: -4000px !important; height: auto !important;' +

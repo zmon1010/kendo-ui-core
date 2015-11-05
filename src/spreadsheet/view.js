@@ -145,13 +145,14 @@
 
         if (!style.textAlign) {
             switch (type) {
-               case "number":
-               case "date":
-                   style.textAlign = "right";
-               break;
-               case "boolean":
-                   style.textAlign = "center";
-               break;
+              case "number":
+              case "date":
+              case "percent":
+                style.textAlign = "right";
+                break;
+              case "boolean":
+                style.textAlign = "center";
+                break;
             }
         }
 
