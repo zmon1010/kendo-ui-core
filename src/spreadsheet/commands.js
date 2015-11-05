@@ -488,8 +488,10 @@
 
             if (range.hasFilter()) {
                 range.filter(false);
-            } else {
+            } else if (!range.intersectingMerged().length) {
                 range.filter(true);
+            } else {
+               return { reason: "filterRangeContainingMerges" };
             }
         }
     });

@@ -801,13 +801,25 @@
         ok(!range.hasFilter());
     });
 
-    test("can be undone", function() {
+    test("Can be undone", function() {
         var command = FilterCommand({});
         var range = sheet.range("A1:B2");
 
         command.exec();
         command.undo();
 
+        ok(!range.hasFilter());
+    });
+
+    test("Returns warning on attempt to create filter within a range containing merges", function() {
+        var command = FilterCommand({});
+        var range = sheet.range("A1:A3");
+
+        sheet.range("A1:B2").merge();
+
+        var result = command.exec();
+
+        equal(result.reason, "filterRangeContainingMerges");
         ok(!range.hasFilter());
     });
 

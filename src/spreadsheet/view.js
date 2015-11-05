@@ -36,7 +36,8 @@
 
     var VIEW_MESAGES = kendo.spreadsheet.messages.view = {
         errors: {
-            shiftingNonblankCells: "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet."
+            shiftingNonblankCells: "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet.",
+            filterRangeContainingMerges: "Cannot create a filter within a range containing merges"
         },
         tabs: {
             home: "Home",
