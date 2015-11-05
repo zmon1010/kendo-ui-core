@@ -685,7 +685,7 @@
             });
             ddl.setDataSource([
                 { format: null, name: MESSAGES.formatTypes.automatic },
-                { format: "0", name: MESSAGES.formatTypes.number , sample: "1,499.99" },
+                { format: "#,0.00", name: MESSAGES.formatTypes.number , sample: "1,499.99" },
                 { format: "0.00%", name: MESSAGES.formatTypes.percent , sample: "14.50%" },
                 { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: MESSAGES.formatTypes.financial , sample: "(1,000.12)" },
                 { format: "$#,##0.00;[Red]$#,##0.00", name: MESSAGES.formatTypes.currency , sample: "$1,499.99" },
