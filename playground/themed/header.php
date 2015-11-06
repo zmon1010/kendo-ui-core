@@ -25,7 +25,7 @@
     <script src='../../dist/js/kendo.web.js'></script>
 
     <style>
-        html,body { margin: 0; padding: 0; overflow: hidden; }
+        html,body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
         body { font: 14px/1.5 Arial, Helvetica, sans-serif; }
     </style>
 </head>

@@ -1,7 +1,7 @@
 <?php include("header.php") ?>
 
 <style>
-    #spreadsheet { width: 390px; height: 290px; }
+    #spreadsheet { width: auto; height: 100%; }
 </style>
 
 <div id='spreadsheet'></div>
