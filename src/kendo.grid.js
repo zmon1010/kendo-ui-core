@@ -1702,6 +1702,10 @@ var __meta__ = { // jshint ignore:line
                 result.dataSource.transport.dataSource = null;
             }
 
+            if (result.pageable && result.pageable.pageSize) {
+                result.pageable.pageSize = dataSource.pageSize();
+            }
+
             result.$angular = undefined;
 
             return result;

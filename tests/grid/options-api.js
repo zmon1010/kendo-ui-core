@@ -153,6 +153,26 @@
         equal(grid.columns[0].field, "bar");
     });
 
+    test("getOptions returns the current pageSize in the pageable options if the pageSize was set", function() {
+        var grid = setup({
+            pageable: {
+                pageSize: 5
+            }
+        });
+        grid.dataSource.pageSize(10);
+        var options = grid.getOptions();
+        equal(options.pageable.pageSize, 10);
+    });
+
+    test("getOptions does not set pageSize in the pageable options if pageSize was not set", function() {
+        var grid = setup({
+            pageable: { }
+        });
+        grid.dataSource.pageSize(10);
+        var options = grid.getOptions();
+        ok(options.pageable.pageSize === undefined);
+    });
+
     test("setOptions does not create new instance of the dataSource when no options for dataSource are passed", function() {
         var grid = setup({ });
 
