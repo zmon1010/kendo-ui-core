@@ -2859,6 +2859,11 @@ html.k-materialblack .demo-section.k-content {
 .box.demo-description p {
     line-height: 1.5em;
     max-width: 1000px;
+    padding-bottom: 1em;
+}
+
+.box.demo-description p:last-child {
+    padding-bottom: 0;
 }
 
 .box.demo-description ul,
