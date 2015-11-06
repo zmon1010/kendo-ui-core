@@ -993,4 +993,133 @@
         });
     })();
 
+(function() {
+        var TOLERANCE = 0.01;
+
+        function setupAxis(min, max) {
+            createAxis(1, 100, {
+                min: min,
+                max: max
+            });
+            axis.reflow(chartBox);
+        }
+
+        module("pan");
+
+        test("translates range positive delta", function() {
+            setupAxis(10, 20)
+            var range = axis.pan(10);
+            close(range.min, 9.88, TOLERANCE);
+            close(range.max, 19.76, TOLERANCE);
+        });
+
+        test("translates range negative delta", function() {
+            setupAxis(10, 20)
+            var range = axis.pan(-10);
+            close(range.min, 10.11, TOLERANCE);
+            close(range.max, 20.23, TOLERANCE);
+        });
+
+        test("returns no result if new range exceeds maximum", function() {
+            setupAxis(10, 100);
+            var range = axis.pan(-10);
+            ok(!range);
+        });
+
+        test("returns no result if new range exceeds minimum", function() {
+            setupAxis(1, 20);
+            var range = axis.pan(10);
+            ok(!range);
+        });
+
+    })();
+
+    (function() {
+        var TOLERANCE = 0.01;
+
+        module("pointsRange", {
+            setup: function() {
+                createAxis(1, 100, {});
+                axis.reflow(chartBox);
+            }
+        });
+
+        test("returns value range based on the passed points", function() {
+            var range = axis.pointsRange({ x: 100, y: 200}, {x: 100, y: 100});
+
+            close(range.min, 21.48, TOLERANCE);
+            close(range.max, 46.35, TOLERANCE);
+        });
+
+        test("the range min value is smaller than the max value if the start point value is bigger than the end point value", function() {
+            var range = axis.pointsRange({ x: 100, y: 100}, {x: 100, y: 200});
+
+            close(range.min, 21.48, TOLERANCE);
+            close(range.max, 46.35, TOLERANCE);
+        });
+
+    })();
+
+    (function() {
+        var TOLERANCE = 0.01;
+
+        function setupAxis(min, max) {
+            createAxis(1, 100000, {
+                min: min,
+                max: max
+            });
+            axis.reflow(chartBox);
+        }
+
+        module("zoomRange");
+
+        test("scales range positive delta", function() {
+            setupAxis(10, 10000);
+            var range = axis.zoomRange(1);
+            equal(range.min, 100);
+            equal(range.max, 1000);
+        });
+
+        test("scales range negative delta", function() {
+            setupAxis(100, 1000);
+            var range = axis.zoomRange(-1);
+            equal(range.min, 10);
+            equal(range.max, 10000);
+        });
+
+        test("scales range positive delta", function() {
+            setupAxis(10, 10000);
+            var range = axis.zoomRange(1);
+            equal(range.min, 100);
+            equal(range.max, 1000);
+        });
+
+        test("returns nothing if the range becomes smaller than a unit", function() {
+            setupAxis(10, 1500);
+            var range = axis.zoomRange(1);
+            ok(!range);
+        });
+
+        test("returns nothing if the current minimum and maximum value are equal to the total minumum and maximum", function() {
+            setupAxis(1, 100000);
+            var range = axis.zoomRange(-1);
+            ok(!range);
+        });
+
+        test("scales range if the current minimum is equal to the total minimum", function() {
+            setupAxis(1, 1000);
+            var range = axis.zoomRange(-1);
+            equal(range.min, 1);
+            equal(range.max, 10000);
+        });
+
+        test("scales range if the current maximum is equal to the total maximum", function() {
+            setupAxis(10, 100000);
+            var range = axis.zoomRange(-1);
+            equal(range.min, 1);
+            equal(range.max, 100000);
+        });
+
+    })();
+
 })();

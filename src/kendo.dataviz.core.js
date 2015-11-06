@@ -3398,34 +3398,27 @@ var __meta__ = { // jshint ignore:line
                 min = axisOptions.min,
                 max = axisOptions.max,
                 base = axisOptions.majorUnit,
-                logMaxRemainder;
+                autoMax = this._autoMax(seriesMax, base),
+                autoMin = this._autoMin(seriesMin, seriesMax, axisOptions);
 
             if (axisOptions.axisCrossingValue <= 0) {
                 axis._throwNegativeValuesError();
             }
 
             if (!defined(options.max)) {
-               logMaxRemainder =  round(log(max, base), DEFAULT_PRECISION) % 1;
-               if (max <= 0) {
-                   max = base;
-               } else if (logMaxRemainder !== 0 && (logMaxRemainder < 0.3 || logMaxRemainder > 0.9)) {
-                   max = math.pow(base, log(max, base) + 0.2);
-               } else {
-                   max = math.pow(base, math.ceil(log(max, base)));
-               }
+                max = autoMax;
             } else if (options.max <= 0) {
                 axis._throwNegativeValuesError();
             }
 
             if (!defined(options.min)) {
-               if (min <= 0) {
-                   min = max <= 1 ? math.pow(base, -2) : 1;
-               } else if (!options.narrowRange) {
-                   min = math.pow(base, math.floor(log(min, base)));
-               }
+               min = autoMin;
             } else if (options.min <= 0) {
                 axis._throwNegativeValuesError();
             }
+
+            this.totalMin = defined(options.min) ? math.min(autoMin, options.min) : autoMin;
+            this.totalMax = defined(options.max) ? math.max(autoMax, options.max) : autoMax;
 
             axis.logMin = round(log(min, base), DEFAULT_PRECISION);
             axis.logMax = round(log(max, base), DEFAULT_PRECISION);
@@ -3434,6 +3427,67 @@ var __meta__ = { // jshint ignore:line
             axisOptions.minorUnit = options.minorUnit || round(base - 1, DEFAULT_PRECISION);
 
             return axisOptions;
+        },
+
+        _autoMin: function(min, max, options) {
+            var autoMin = min;
+            var base = options.majorUnit;
+            if (min <= 0) {
+               autoMin = max <= 1 ? math.pow(base, -2) : 1;
+            } else if (!options.narrowRange) {
+               autoMin = math.pow(base, math.floor(log(min, base)));
+            }
+            return autoMin;
+        },
+
+        _autoMax: function(max, base) {
+           var logMaxRemainder = round(log(max, base), DEFAULT_PRECISION) % 1;
+           var autoMax;
+           if (max <= 0) {
+               autoMax = base;
+           } else if (logMaxRemainder !== 0 && (logMaxRemainder < 0.3 || logMaxRemainder > 0.9)) {
+               autoMax = math.pow(base, log(max, base) + 0.2);
+           } else {
+               autoMax = math.pow(base, math.ceil(log(max, base)));
+           }
+
+           return autoMax;
+        },
+
+        pan: function(delta) {
+            var range = this.translateRange(delta);
+            return this.limitRange(range.min, range.max, this.totalMin, this.totalMax, -delta);
+        },
+
+        pointsRange: function(start, end) {
+            var startValue = this.getValue(start);
+            var endValue = this.getValue(end);
+            var min = math.min(startValue, endValue);
+            var max = math.max(startValue, endValue);
+
+            return {
+                min: min,
+                max: max
+            };
+        },
+
+        zoomRange: function(delta) {
+            var options = this.options;
+            var newRange = this.scaleRange(delta);
+            var totalMax = this.totalMax;
+            var totalMin = this.totalMin;
+            var min = util.limitValue(newRange.min, totalMin, totalMax);
+            var max = util.limitValue(newRange.max, totalMin, totalMax);
+            var base = options.majorUnit;
+            var acceptOptionsRange = max > min && options.min && options.max && (round(log(options.max, base) - log(options.min, base), DEFAULT_PRECISION) < 1);
+            var acceptNewRange = !(options.min === totalMin && options.max === totalMax) && round(log(max, base) - log(min, base), DEFAULT_PRECISION) >= 1;
+
+            if (acceptOptionsRange || acceptNewRange) {
+                return {
+                    min: min,
+                    max: max
+                };
+            }
         },
 
         _minorIntervalOptions: function(power) {
