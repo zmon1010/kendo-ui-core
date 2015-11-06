@@ -209,7 +209,7 @@
         ok(new TreeListDataSource() instanceof kendo.data.DataSource);
     });
 
-    test("uses model of type TreeListModel", function(assert) {
+    test("uses model of type TreeListModel", function() {
         var ds = new TreeListDataSource({
             data: [ { id: 1 } ]
         });
@@ -1271,7 +1271,7 @@
         });
 
         ds.read();
-        var model = ds.add({ parentId: 1 });
+        ds.add({ parentId: 1 });
 
         equal(ds.rootNodes().length, 1);
         equal(ds.childNodes(ds.get(1)).length, 1);
