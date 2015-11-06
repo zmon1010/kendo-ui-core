@@ -46,7 +46,7 @@ THEME_FILES.each do |type|
 end
 
 def live_cdn_version
-    '2015.1.429'
+    '2015.3.930'
 end
 
 class PatchedBoostrapScriptTask < Rake::FileTask
