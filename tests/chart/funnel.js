@@ -801,17 +801,6 @@
             });
 
             clickChart(chart, segmentElement);
-        });
-
-        test("does not fire on subsequent tap", 1, function() {
-            createFunnelChart({
-                seriesHover: function() {
-                    ok(true);
-                }
-            });
-
-            clickChart(chart, segmentElement);
-        });
 
         test("fires when hovering segment labels", 1, function() {
             createFunnelChart({
