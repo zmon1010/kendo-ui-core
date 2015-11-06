@@ -112,13 +112,9 @@
         contentDiv = grid.wrapper.children("div.k-grid-content");
 
         contentDiv.scrollLeft(100);
+        contentDiv.trigger(new $.Event("scroll"));
 
-        stop();
-
-        window.setTimeout(function(){
-            equal(footerWrap.scrollLeft(), 100);
-            start();
-        }, 1);
+        equal(footerWrap.scrollLeft(), 100);
     });
 
     test("footer row scrolls together with the data area after group is applied", function() {
@@ -139,13 +135,9 @@
         contentDiv = grid.wrapper.children("div.k-grid-content");
 
         contentDiv.scrollLeft(100);
+        contentDiv.trigger(new $.Event("scroll"));
 
-        stop();
-
-        window.setTimeout(function(){
-            start();
-            equal(footerWrap.scrollLeft(), 100);
-        }, 1);
+        equal(footerWrap.scrollLeft(), 100);
     });
 
     test("footer cell is rendered for each column", function() {
