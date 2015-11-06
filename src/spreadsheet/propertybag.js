@@ -92,7 +92,8 @@
             { property: Property, name: "textAlign", value: null, sortable: true, serializable: true },
             { property: Property, name: "verticalAlign", value: null, sortable: true, serializable: true },
             { property: Property, name: "wrap", value: null, sortable: true, serializable: true },
-            { property: Property, name: "validation", value: null, sortable: false, serializable: true }
+            { property: Property, name: "validation", value: null, sortable: false, serializable: true },
+            { property: Property, name: "disabled", value: null, sortable: false, serializable: true }
         ],
 
         init: function(cellCount) {

@@ -157,7 +157,13 @@
             }
         }
 
-        var td = table.addCell(row, data, style, null, cell.validation);
+        var className = null;
+
+        if (cell.disabled) {
+            className = "k-state-disabled";
+        }
+
+        var td = table.addCell(row, data, style, className, cell.validation);
 
         var border, sibling;
 

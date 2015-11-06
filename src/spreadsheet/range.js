@@ -194,6 +194,10 @@
             }
         },
 
+        disabled: function(value) {
+            return this._property("disabled", value);
+        },
+
         format: function(value) {
             return this._property("format", value);
         },

@@ -345,10 +345,16 @@
                     event.preventDefault();
                 }
             } else {
+                var disabled = this._workbook.activeSheet().activeCellSelection().disabled();
+
                 if (action == "delete" || action == "backspace") {
+                    if (disabled) { return; }
+
                     this._execute({ command: "ClearContentCommand" });
                     event.preventDefault();
                 } else if (alphaNumRegExp.test(action) || action === ":edit") {
+                    if (disabled) { return; }
+
                     if (action !== ":edit") {
                         this.editor.value("");
                     }
@@ -560,8 +566,9 @@
 
         onDblClick: function(event) {
             var object = this.objectAt(event);
+            var disabled = this._workbook.activeSheet().activeCellSelection().disabled();
 
-            if (object.type !== "cell") {
+            if (object.type !== "cell" || disabled) {
                 return;
             }
 

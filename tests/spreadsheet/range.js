@@ -915,4 +915,10 @@
         ok(sheet.range("A1").isSortable());
         ok(!sheet.range("A1").resize({ top: 1 }).isSortable());
     });
+
+    test("disabled returns the disabled state of a range", function() {
+        range.disabled(true);
+
+        equal(range.disabled(), true);
+    });
 })();
