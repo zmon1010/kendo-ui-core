@@ -10,6 +10,7 @@
     }
 
     var $ = kendo.jQuery;
+    var alphaNumRegExp = /:alphanum$/;
 
     var ACTIONS = {
        "up": "up",
@@ -341,9 +342,8 @@
                 if (action == "delete" || action == "backspace") {
                     this._execute({ command: "ClearContentCommand" });
                     event.preventDefault();
-                }
-                else if (action === ":alphanum" || action === ":edit") {
-                    if (action === ":alphanum") {
+                } else if (alphaNumRegExp.test(action) || action === ":edit") {
+                    if (action !== ":edit") {
                         this.editor.value("");
                     }
 
@@ -353,7 +353,6 @@
                             tooltip: this._activeTooltip()
                         })
                         .focus();
-
                 } else {
                     this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
                     event.preventDefault();
