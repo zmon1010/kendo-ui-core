@@ -801,6 +801,7 @@
             });
 
             clickChart(chart, segmentElement);
+        });
 
         test("fires when hovering segment labels", 1, function() {
             createFunnelChart({
