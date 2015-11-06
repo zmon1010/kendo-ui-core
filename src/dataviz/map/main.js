@@ -546,7 +546,6 @@
             var x = scroller.dimensions.x;
             var y = scroller.dimensions.y;
             var scale = this._layerSize();
-            var maxScale = 20 * scale;
             var nw = this.extent().nw;
             var topLeft = this.locationToLayer(nw).round();
 
@@ -554,15 +553,16 @@
             scroller.reset();
             scroller.userEvents.cancel();
 
-            var maxZoom = this.options.maxZoom - this.zoom();
-            scroller.dimensions.maxScale = pow(2, maxZoom);
+            var zoom = this.zoom();
+            scroller.dimensions.forcedMinScale = pow(2, this.options.minZoom - zoom);
+            scroller.dimensions.maxScale = pow(2, this.options.maxZoom - zoom);
 
             var xBounds = { min: -topLeft.x, max: scale - topLeft.x };
             var yBounds = { min: -topLeft.y, max: scale - topLeft.y };
 
             if (this.options.wraparound) {
-                xBounds.min = -maxScale;
-                xBounds.max = maxScale;
+                xBounds.max = 20 * scale;
+                xBounds.min = -xBounds.max;
             }
 
             if (this.options.pannable === false) {

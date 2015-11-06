@@ -49,5 +49,15 @@
             var y = map.scroller.dimensions.y;
             equal(y._virtualMax - y._virtualMin, scale);
         });
+
+        test("minScale is set", function() {
+            createMap({ minZoom: 2, zoom: 4 });
+            equal(map.scroller.dimensions.forcedMinScale, 0.25);
+        });
+
+        test("maxScale is set", function() {
+            createMap({ maxZoom: 8, zoom: 4 });
+            equal(map.scroller.dimensions.maxScale, 16);
+        });
     })();
 })();

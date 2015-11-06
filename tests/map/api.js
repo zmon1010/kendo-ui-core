@@ -258,7 +258,7 @@
     test("eventToLocation maps event coordinates to location w/scroll", function() {
         map._navigatorPan({ x: 0, y: 100 });
         var loc = map.eventToLocation({ pageX: 150, pageY: 250 });
-        ok(loc.round().equals(new Location(48, -55)));
+        equal(loc.round().toString(), new Location(48, -55).toString());
     });
 
     test("eventToLocation maps jQuery event coordinates to location", function() {
