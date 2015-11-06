@@ -210,7 +210,7 @@ end
 CLEAN.include('dist/demos')
 
 if PLATFORM =~ /linux|darwin|bsd/
-    file 'demos/mvc/bin/Kendo.dll' => DEMOS_CS do |t|
+    file 'demos/mvc/bin/Kendo.dll' => ["spreadsheet:binaries"] do |t|
         sync 'dist/binaries/demos/Kendo/*', 'demos/mvc/bin'
     end
 else
