@@ -2234,6 +2234,11 @@ a.footer-links:hover,
     z-index: 3;
 }
 
+.k-ie8 #example-sidebar {
+    position: static;
+    height: 100%;
+}
+
 #main {
     float: none;
     width: auto;
@@ -2257,7 +2262,7 @@ a.footer-links:hover,
   text-decoration: none;
 }
 
-.k-ie7 #sidebar-toggle {
+.k-ie8 #sidebar-toggle {
     display: none;
 }
 
@@ -3076,7 +3081,7 @@ html.k-materialblack .demo-section.k-content {
     position: fixed;
     top: auto;
   }
-  
+
   #example-sidebar.k-rpanel-expanded {
     -webkit-box-shadow: 5px 0 15px 0 rgba(0,0,0,.15);
     -moz-box-shadow: 5px 0 15px 0 rgba(0,0,0,.15);
