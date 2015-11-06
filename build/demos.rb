@@ -241,6 +241,7 @@ PRODUCTION_RESOURCES = FileList['demos/mvc/**/*']
             .exclude('demos/mvc/Extensions/**/*')
             .exclude('demos/mvc/Properties/**/*')
             .include('demos/mvc/bin/Kendo.dll')
+            .include(FileList[SPREADSHEET_REDIST_NET40].pathmap("demos/mvc/bin/%f"))
 
 MVC_RAZOR_VIEWS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Areas/**/*.cshtml']
                     .exclude('**/Shared/**/*')
