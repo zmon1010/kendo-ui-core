@@ -7037,7 +7037,7 @@
         },
 		"description": {
             "kendo-ui": "",
-			"aspnet-mvc": ""
+			"aspnet-mvc": "<p>The Stepped Area chart is a form of area chart where each data point from the series is connected with vertical and horizontal lines to form a step-like progression. This type of area visualization is useful when you want to highlight the increase or decrease in values over time.</p> <p>You can configure a stepped area chart through the Series -&gt; Area -&gt; Line -&gt; Style(ChartLineStyle.<strong>Step</strong>) settings of the MVC Chart.</p>"
 		}		
       },
       {
@@ -7053,7 +7053,7 @@
         },
 		"description": {
             "kendo-ui": "",
-			"aspnet-mvc": ""
+			"aspnet-mvc": "<p>This demo shows how to configure smooth line (spline) style for the Telerik MVC Area Chart.</p> <p>A Spline chart is a form of line/area chart where each data point from the series is connected with a curved line, which represents a rough approximation of the missing data points.</p> <p>You can configure a smooth line area chart through the Series -&gt; Area -&gt; Line -&gt; Style(ChartAreaStyle.<strong>Smooth</strong>) settings of the ASP.NET MVC Chart.</p>"
 		}		
       },
       {
@@ -7069,7 +7069,7 @@
         },
 		"description": {
             "kendo-ui": "",
-			"aspnet-mvc": ""
+			"aspnet-mvc": "<p>You can scale the date axis of your ASP.NET MVC Area Chart to get a better visualization of the seasonal data in your app. This can be done by modifying:</p> <ul> <li>The base date unit of the x-axis through the CategoryAxis.BaseUnit property, which takes seconds, minutes, hours, days, week, months and years</li> <li>The default aggregates of the series through the Series.Aggregate property, which takes max, min, sum, avg and count.</li> </ul>"
 		},
         "group": "Functionality"
       },
@@ -7086,7 +7086,7 @@
         },
 		"description": {
             "kendo-ui": "",
-			"aspnet-mvc": ""
+			"aspnet-mvc": "<p>A logarithmic axis is a special numeric axis that transforms the actual values by using a logarithmic function with a particular base. A logarithmic axis is useful for displaying values that cover different orders of magnitude because it lets large values display together with small values in a more condensed scale than the default linear axis.</p> <p>This demo shows how you can use a logarithmic axis for the ASP.NET MVC Area Chart by setting the ValueAxis -&gt; Logarithmic() method. Тhe base of the logarithmic axis is defined by the interval between the major divisions, controlled by the МajorUnit property.</p>"
 		},
         "requiresServer": "true"
       },
@@ -7103,7 +7103,7 @@
         },
 		"description": {
             "kendo-ui": "",
-			"aspnet-mvc": ""
+			"aspnet-mvc": "<p>The Telerik ASP.NET MVC Area chart supports multiple axis. This helps you leverage the best charting performance and visualize data on any number axis to provide solid business reports for your users.</p> <p>The example above shows a hybrid car range report visualized through four value axes: <em>miles</em>, <em>km</em>, <em>miles per gallon</em> and <em>liters per 100km</em>. Note that each of them has unique name which is set through the <strong>ValueAxis.Title </strong>method. You can also set the <strong>CategoryAxis.AxisCrossingValue</strong> method to specify the alignment of the value axes.</p>"
 		}
       },
       {
