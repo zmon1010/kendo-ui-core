@@ -7002,6 +7002,10 @@
           "kendo-ui": "This demo shows how the stacked area is created with KendoChart. Learn how to visualize series that should be stacked in the chart.",
           "aspnet-mvc": "Learn how to visualize series that should be stacked in an ASP.NET MVC chart."
         },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": "<p>By default, the MVC Area Chart renders its series on top of one another. You have the ability to stack them atop one another instead, so that the data values at each x-value are summed. In an area chart, the value for each series will always be stacked relative to the preceding one.</p> <p>You can enable the stack feature through the SeriesDefaults -&gt; Area -&gt; Stack(true) setting.</p> <p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/kendo.mvc.ui.fluent/chartbuilder#methods-SeriesDefaults%28System.Action%3CKendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder%3CT%3E%3E%29\">SeriesDefaults option</a> in the documentation.</p>"
+		},
         "group": "Area Chart Types"
       },
       {
@@ -7014,7 +7018,11 @@
         "meta": {
             "kendo-ui": "This demo shows how a 100% stacked area chart is created with KendoChart. Learn how to visualize series that should be stacked to 100% in the chart.",
             "aspnet-mvc": "Learn how to visualize series that should be stacked to 100% in an ASP.NET MVC chart."
-        }
+        },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": "<p>The Area chart type supports 100% stacking, where the stacked series value are rescaled such that they add up to 100%.</p> <p>You can enable the 100% stack feature through the SeriesDefaults -&gt; Area -&gt; Stack(ChartStackType.Stack100) setting.</p> <p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/kendo.mvc.ui.fluent/chartbuilder#methods-SeriesDefaults%28System.Action%3CKendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder%3CT%3E%3E%29\">SeriesDefaults option</a> in the documentation.</p>"
+		}
       },
       {
         "text": "Stepped Area",
@@ -7026,7 +7034,11 @@
         "meta": {
             "kendo-ui": "This demo shows how to configure step line style for the Kendo UI Area Chart",
             "aspnet-mvc": "In this example we illustrate how stepped area can be configured for Telerik Area charts for ASP.NET MVC."
-        }
+        },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": ""
+		}		
       },
       {
         "text": "Smooth Area",
@@ -7038,7 +7050,11 @@
         "meta": {
             "kendo-ui": "This demo shows how to configure smooth line (spline) style for the Kendo UI Area Chart",
             "aspnet-mvc": "This demo shows how to configure smooth line (spline) style for the ASP.NET MVC Area Chart."
-        }
+        },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": ""
+		}		
       },
       {
         "text": "Date axis",
@@ -7051,6 +7067,10 @@
           "kendo-ui": "This demo shows how you can set specific base date units in your Kendo UI Area Chart to help you visualize a seasonal trend in your app.",
           "aspnet-mvc": "This demo shows how you can set specific base date units in your ASP.NET MVC Area Chart to help you visualize a seasonal trend in your app."
         },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": ""
+		},
         "group": "Functionality"
       },
       {
@@ -7064,6 +7084,10 @@
             "kendo-ui": "This demo shows how you can use a logarithmic axis for the Kendo UI Area Chart.",
             "aspnet-mvc": "This demo shows how you can use a logarithmic axis for the ASP.NET MVC Area Chart."
         },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": ""
+		},
         "requiresServer": "true"
       },
       {
@@ -7076,7 +7100,11 @@
         "meta": {
             "kendo-ui": "Ensure the best performance of HTML5 charting and visualize data on multiple axis with Kendo UI Area Charts  in order to provide solid business reports for end users.",
             "aspnet-mvc": "Leverage the best charting performance and visualize data on multiple axis with ASP.NET MVC Area Charts to provide solid business reports for end users."
-        }
+        },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": ""
+		}
       },
       {
         "text": "Error Bars",
@@ -7088,7 +7116,11 @@
         "meta": {
             "kendo-ui": "This demo shows how to use ErrorBars for Kendo UI Area Chart",
             "aspnet-mvc": "This demo shows how to use ErrorBars for ASP.NET MVC Area Chart"
-        }
+        },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": ""
+		}
       },
       {
         "text": "Binding to remote data",
@@ -7101,6 +7133,10 @@
           "kendo-ui": "This demo shows how Kendo UI Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.",
           "aspnet-mvc": "See how the ASP.NET MVC Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data."
         },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": ""
+		},
         "group": "Data Binding",
         "requiresServer": "true"
       },
@@ -7116,7 +7152,8 @@
             "aspnet-mvc": "This sample demonstrates how ASP.NET MVC Area Chart can use existing objects as data points."
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>"
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>",
+			"aspnet-mvc": ""
         }
       },
       {
@@ -7130,6 +7167,10 @@
             "kendo-ui": "With this example you will learn how to bind grouping data to Kendo UI Area Charts.",
             "aspnet-mvc": "With this example you will learn how to bind grouping data to ASP.NET MVC Area Charts."
         },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": ""
+		},
         "requiresServer": "true"
       },
       {
@@ -7217,7 +7258,11 @@
         "meta": {
             "kendo-ui": "This demo shows how some settings of Kendo UI chart widget can be changed in order to display the bar Chart as a Column chart.",
             "aspnet-mvc": "This demo shows how some settings of ASP.NET MVC chart can be changed in order to display the bar Chart as a Column chart."
-        }
+        },
+		"description": {
+            "kendo-ui": "",
+			"aspnet-mvc": ""
+		}
       },
       {
         "text": "Stacked bars",
