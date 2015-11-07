@@ -7119,7 +7119,7 @@
         },
 		"description": {
             "kendo-ui": "",
-			"aspnet-mvc": ""
+			"aspnet-mvc": "<p>This demo illustrates how you can use Error Bars for ASP.NET MVC Area Chart to show variability of data. The Error bars are specified as part of the Series chart setting and are offered by the following Series types: Area, Vertical Area, Column, Bar, Line, Vertical Line, Scatter and ScatterLine.</p> <p>The error bars support statistical calculations based on the series data. The supported types are <a href=\"http://en.wikipedia.org/wiki/Standard_error\">standard error</a>, <a href=\"http://en.wikipedia.org/wiki/Standard_deviation\">population standard deviation</a> and other. To specify that standard deviation, you should set \"stddev\" as in this demo, i.e. Series -&gt; Area -&gt; ErrorBars(errorBars =&gt; errorBars.Value(\"stddev\"))</p> <p>You can find more information in the following help article: <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/error-bars\">Error Bars</a>.</p>"
 		}
       },
       {
@@ -7135,7 +7135,7 @@
         },
 		"description": {
             "kendo-ui": "",
-			"aspnet-mvc": ""
+			"aspnet-mvc": "<p>The Telerik MVC Chart offers two ways of data-binding:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\" target=\"_blank\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\" target=\"_blank\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>For remote data binding you need to specify a remote endpoint or web service returning data in JSON/JSONP format and utilize the DataSource as a mediator between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>You can see in this demo how the ASP.NET MVC Area chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.</p> <p>You can find more information about the data-binding capabilities of the MVC chart in this <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">help article</a>.</p>"
 		},
         "group": "Data Binding",
         "requiresServer": "true"
@@ -7153,7 +7153,7 @@
         },
         "description": {
             "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() funtion. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>",
-			"aspnet-mvc": ""
+			"aspnet-mvc": "<p>The Telerik MVC Area chart can be instructed to display data from local data storage using its built-in data-binding capabilities. </p> <p>There are two ways to bind the chart:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>In this example you can see how to bind the chart using the server approach. You need to create an action method and pass the InternetUsers list located in the \\Models\\Chart\\ChartDataRepository.cs file as a model. After that you should configure the data bound fields for the Series (series =>{series.Area(model => model.Value)}) and Category Axis (axis => axis.Categories(model => model.Year)) Note that the view has to be strongly typed so that the chart is able to load its data.</p> <p>You can find additional information about how to utilize the data-binding capabilities of the MVC chart in <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">the Getting Started section</a> of the product documentation.</p> "
         }
       },
       {
@@ -7169,7 +7169,7 @@
         },
 		"description": {
             "kendo-ui": "",
-			"aspnet-mvc": ""
+			"aspnet-mvc": "<p>Telerik MVC charting extension can be integrated to a grouped data by <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource\"> Kendo UI DataSource</a>. To do, so you can follow the steps below:</p> <ol> <li>Bind the chart to a <a href=\"http://docs.telerik.com/kendo-ui/framework/datasource/overview\"> Kendo UI DataSource control</a>.</li> <li>Set the <a href=\"http://docs.telerik.com/kendo-ui/framework/datasource/basic-usage#working-with-grouped-data\">DataSource.group.field property</a> to the name (e.g., the &ldquo;Symbol&rdquo; field) of the column in the underlying data which will be the criteria for grouping the chart series items into series Group(group =&gt; group.Add(model =&gt; model.Symbol)</li> <li>Bind the Y values of the series to the corresponding data source field (e.g., the &ldquo;Close&rdquo; field): series.Area(model =&gt; model.Close)</li> <li>Bind the Category Axis to the corresponding field (e.g., the &ldquo;Date&rdquo; field): .Categories(model =&gt; model.Date)</li> </ol> <p><br /> This will result in as many series as the number of distinct values in the DataSource.group.field column (e.g., &ldquo;Symbol&rdquo;). &nbsp;Since the &ldquo;Symbol&rdquo; field in this example contains three distinct values (&ldquo;1. GOOG (close)&rdquo;, &ldquo;2. AAPL (close)&rdquo; and &ldquo;3. AMZN (close)&rdquo;) the chart will create three series as well.</p>"
 		},
         "requiresServer": "true"
       },
