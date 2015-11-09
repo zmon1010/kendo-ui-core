@@ -19,11 +19,15 @@
 <script>
   angular.module("KendoDemos", [ "kendo.directives" ])
         .controller("MyCtrl", function($scope){
+            $scope.startDate = new Date();
+            $scope.endDate = new Date();
+            $scope.maxEndDate = new Date();
+
             $scope.$watch("startDate", function(val){
               var maxEndDate = new Date(val);
               maxEndDate.setDate(maxEndDate.getDate() + 14);
               $scope.maxEndDate = maxEndDate;
               delete $scope.endDate;
-          });  
+          });
       })
 </script>
