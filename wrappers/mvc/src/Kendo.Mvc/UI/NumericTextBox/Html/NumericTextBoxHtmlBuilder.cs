@@ -6,7 +6,7 @@ namespace Kendo.Mvc.UI.Html
     using System.Web.Mvc;
     using System.Globalization;
 
-    public class NumericTextBoxHtmlBuilder<T> where T : struct 
+    public class NumericTextBoxHtmlBuilder<T> where T : struct
     {
         public NumericTextBoxHtmlBuilder(NumericTextBox<T> component)
         {
@@ -14,18 +14,18 @@ namespace Kendo.Mvc.UI.Html
         }
 
         public NumericTextBox<T> Component
-        { 
-            get; 
-            private set; 
+        {
+            get;
+            private set;
         }
 
         public IHtmlNode Build()
         {
-            Func<object, T?> converter = val => 
+            Func<object, T?> converter = val =>
             {
                 return ((T)Convert.ChangeType(val, typeof(T))).AsNullable();
             };
-            
+
             string value = Component.GetAttemptedValue();
             if (value == null)
             {
@@ -42,9 +42,9 @@ namespace Kendo.Mvc.UI.Html
                     value = string.Format(info, "{0}", result);
                 }
             }
-            
+
             return new HtmlElement("input", TagRenderMode.SelfClosing)
-                   .Attributes(new { name = Component.Name, id = Component.Id, type = "number" })
+                   .Attributes(new { name = Component.Name, id = Component.Id, type = "text" })
                    .ToggleAttribute("value", value, value.HasValue())
                    .Attributes(Component.GetUnobtrusiveValidationAttributes())
                    .ToggleAttribute("min", "{0}".FormatWith(Component.Min), Component.Min.HasValue)
