@@ -1,12 +1,13 @@
 <div id="example">
     <div id="configurator" class="hidden-on-narrow"></div>
     <div id="pivotgrid" class="hidden-on-narrow"></div>
-    
+
     <div class="responsive-message"></div>
-    
+
     <script>
         $(document).ready(function () {
             var pivotgrid = $("#pivotgrid").kendoPivotGrid({
+                filterable: true,
                 columnWidth: 120,
                 height: 570,
                 dataSource: {
@@ -35,6 +36,7 @@
 
             $("#configurator").kendoPivotConfigurator({
                 dataSource: pivotgrid.dataSource,
+                filterable: true,
                 height: 570
             });
         });
