@@ -102,11 +102,9 @@
     "jshintFiles": [
         "src/kendo*.js",
         "src/!(cultures)/**/*.js",
-        "tests/map/layers/helpers.js",
         "tests/**/test-helper.js",
         "tests/dataviz/drawing/*.js",
         "demos/mvc/content/nav.json",
-        "demos/mvc/content/shared/js/examples.js",
         "demos/mvc/content/shared/js/console.js",
         "demos/mvc/content/shared/js/theme-chooser.js",
         "themebuilder/bootstrap.js",

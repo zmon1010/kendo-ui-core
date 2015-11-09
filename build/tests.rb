@@ -3,6 +3,7 @@ require 'tasks'
 TESTS = FileList["tests/**/*"]
 DEPS = [FileList["src/**/*.js"], FileList['styles/**/*.*'], KENDO_CONFIG_FILE, TESTS].flatten
 SUPPORTED_JQUERY_VERSIONS = ["1.11.3", "2.1.4"]
+JSHINT_FILES = FileList[JSON.parse(File.read("package.json"))['jshintFiles']]
 
 scripts_arg =  "--scripts=kendo.{all,aspnetmvc}.js"
 styles_arg =  "--styles={web/kendo.common.less,mobile/kendo.mobile.all.less,dataviz/kendo.dataviz.less,web/kendo.rtl.less}"
@@ -34,16 +35,20 @@ namespace :tests do
         gulp_xvfb "ci", "--junit-results=firefox-test-results.xml", "--single-run=true", "--browser=Firefox", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
     end
 
+    desc "Run jshint"
+    task :jshint => JSHINT_FILES do
+        gulp "jshint"
+    end
+
     %w[CI Production TZ].each do |env|
         output = "#{env}-test-results.xml"
 
         file output => DEPS do |t|
-            gulp "jshint"
             gulp_xvfb "ci", "--junit-results=#{output}", "--single-run=true", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
         end
 
         desc "Run #{env} tests"
-        task env => [output, :java] do
+        task env => [:jshint, output, :java] do
             sh "touch #{output}"
         end
     end
