@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.popup", "../kendo.treeview" ], f);
+    define([ "../kendo.core", "../kendo.popup", "../kendo.treeview", "../kendo.numerictextbox", "../kendo.datepicker", "../kendo.datetimepicker" ], f);
 })(function(){
 
     (function(kendo) {
@@ -105,6 +105,52 @@
             }
         };
 
+        kendo.data.binders.spreadsheetFilterValue = kendo.data.Binder.extend({
+            init: function(element, bindings, options) {
+                kendo.data.Binder.fn.init.call(this, element, bindings, options);
+
+                this._change = $.proxy(this.change, this);
+                $(this.element).on("change", this._change);
+            },
+            refresh: function() {
+                var that = this,
+                    value = that.bindings.spreadsheetFilterValue.get(); //get the value from the View-Model
+
+                $(that.element).val(value instanceof Date ? "" : value);
+            },
+            change: function() {
+                var value = this.element.value;
+                this.bindings.spreadsheetFilterValue.set(value); //update the View-Model
+            }
+        });
+
+        kendo.data.binders.widget.spreadsheetFilterValue = kendo.data.Binder.extend({
+            init: function(widget, bindings, options) {
+                kendo.data.Binder.fn.init.call(this, widget.element[0], bindings, options);
+
+                this.widget = widget;
+                this._change = $.proxy(this.change, this);
+                this.widget.first("change", this._change);
+            },
+            refresh: function() {
+                var binding = this.bindings.spreadsheetFilterValue,
+                    value = binding.get(),
+                    type = $(this.widget.element).data("filterType");
+
+                if ((type === "date" && value instanceof Date) || (type === "number" && !isNaN(value))) {
+                    this.widget.value(value);
+                } else {
+                    this.widget.value(null);
+                }
+            },
+            change: function() {
+                var value = this.widget.value(),
+                    binding = this.bindings.spreadsheetFilterValue;
+
+                binding.set(value);
+            }
+        });
+
         var templates = {
             filterByValue:
                 "<div class='" + classNames.detailsSummary + "'>#= messages.filterByValue #</div>" +
@@ -123,16 +169,29 @@
             filterByCondition:
                 "<div class='" + classNames.detailsSummary + "'>#= messages.filterByCondition #</div>" +
                 "<div class='" + classNames.detailsContent + "'>" +
-                    '<select ' +
-                        'data-#=ns#role="dropdownlist"' +
-                        'data-#=ns#bind="value: customFilter.criteria[0].operator, source: operators"' +
-                        'data-value-primitive="false"' +
-                        'data-option-label="#=messages.operatorNone#"' +
-                        'data-height="auto"' +
-                        'data-text-field="text"' +
-                        'data-value-field="unique">'+
-                    '</select>'+
-                    '<input data-#=ns#bind="value: customFilter.criteria[0].value" class="k-textbox" />'+
+                    '<div>' +
+                        '<select ' +
+                            'data-#=ns#role="dropdownlist"' +
+                            'data-#=ns#bind="value: customFilter.criteria[0].operator, source: operators, events: { change: operatorChange } "' +
+                            'data-value-primitive="false"' +
+                            'data-option-label="#=messages.operatorNone#"' +
+                            'data-height="auto"' +
+                            'data-text-field="text"' +
+                            'data-value-field="unique">'+
+                        '</select>'+
+                    '</div>' +
+
+                    '<div data-#=ns#bind="visible: isString">' +
+                        '<input data-filter-type="string" data-#=ns#bind="spreadsheetFilterValue: customFilter.criteria[0].value" class="k-textbox" />'+
+                    '</div>' +
+
+                    '<div data-#=ns#bind="visible: isNumber">' +
+                        '<input data-filter-type="number" data-#=ns#role="numerictextbox" data-#=ns#bind="spreadsheetFilterValue: customFilter.criteria[0].value" />'+
+                    '</div>' +
+
+                    '<div data-#=ns#bind="visible: isDate">' +
+                        '<input data-filter-type="date" data-#=ns#role="datepicker" data-#=ns#bind="spreadsheetFilterValue: customFilter.criteria[0].value" />'+
+                    '</div>' +
                 "</div>",
             menuItem:
                 "<li data-command='#=command#' data-dir='#=dir#'>" +
@@ -224,6 +283,30 @@
             reset: function() {
                 this.set("customFilter", { logic: "and", criteria: [ { operator: null, value: null } ] });
                 this.set("valueFilter", { values: [] });
+            },
+            getOperatorType: function() {
+                var filter = this.customFilter,
+                    operator;
+
+                if (filter && filter.criteria.length) {
+                    operator = filter.criteria[0].operator;
+                    return operator !== null ? operator.type : undefined;
+                }
+            },
+            operatorChange: function(e) {
+                this.set("operatorType", e.sender.dataItem().type);
+            },
+            isNone: function() {
+                return this.get("operatorType") === undefined;
+            },
+            isString: function() {
+                return this.get("operatorType") === "string";
+            },
+            isNumber: function() {
+                return this.get("operatorType") === "number";
+            },
+            isDate: function() {
+                return this.get("operatorType") === "date";
             }
         });
 
@@ -468,6 +551,7 @@
 
                     this.viewModel.set("active", serializedFilter.filter);
                     this.viewModel.set(serializedFilter.filter + "Filter", serializedFilter);
+                    this.viewModel.set("operatorType", type);
                 } else {
                     this.viewModel.reset();
                 }

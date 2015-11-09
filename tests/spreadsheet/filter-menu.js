@@ -386,6 +386,23 @@
         equal(criteria[0].value, "foo");
     });
 
+    test("gets the filter type (string filter)", function() {
+        sheet.range("A1:B3").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.CustomFilter({
+                logic: "and",
+                criteria: [
+                    { operator: "contains", value: "foo" }
+                ]
+            })
+        });
+
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        var type = filterMenu.viewModel.getOperatorType();
+        equal(type, "string");
+    });
+
     test("gets existing filters (number filter)", function() {
         sheet.range("A1:B3").filter({
             column: 0,
@@ -407,6 +424,23 @@
         equal(criteria[0].value, 11);
     });
 
+    test("gets the filter type (number filter)", function() {
+        sheet.range("A1:B3").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.CustomFilter({
+                logic: "and",
+                criteria: [
+                    { operator: "eq", value: 11 }
+                ]
+            })
+        });
+
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        var type = filterMenu.viewModel.getOperatorType();
+        equal(type, "number");
+    });
+
     test("gets existing filters (date filter)", function() {
         sheet.range("A1:B3").filter({
             column: 0,
@@ -426,6 +460,23 @@
         equal(criteria[0].operator.value, "eq");
         equal(criteria[0].operator.unique, "date_eq");
         ok(criteria[0].value instanceof Date);
+    });
+
+    test("gets the filter type (date filter)", function() {
+        sheet.range("A1:B3").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.CustomFilter({
+                logic: "and",
+                criteria: [
+                    { operator: "eq", value: new Date()}
+                ]
+            })
+        });
+
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+
+        var type = filterMenu.viewModel.getOperatorType();
+        equal(type, "date")
     });
 
     test("apply triggers command on passed column", function() {
@@ -450,6 +501,34 @@
         filterMenu.options.column = 1;
 
         filterMenu.clear();
+    });
+
+    test("changes input widget based on operator type", function() {
+        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"] ]);
+
+        var conditionFilterContainer = filterMenu.element.find(".k-spreadsheet-condition-filter");
+        var dropdown = conditionFilterContainer.find("[data-role='dropdownlist']").data("kendoDropDownList");
+        var viewModel = filterMenu.viewModel;
+
+        ok(viewModel.isNone(), 1);
+
+        dropdown.select(1);//string_contains
+        dropdown.trigger("change");
+        ok(viewModel.isString(), 2);
+        ok(!viewModel.isNumber(), 3);
+        ok(!viewModel.isDate(), 4);
+
+        dropdown.select(5);//date_eq
+        dropdown.trigger("change");
+        ok(!viewModel.isString(), 5);
+        ok(!viewModel.isNumber(), 6);
+        ok(viewModel.isDate(), 7);
+
+        dropdown.select(9);//number_eq
+        dropdown.trigger("change");
+        ok(!viewModel.isString(), 8);
+        ok(viewModel.isNumber(), 9);
+        ok(!viewModel.isDate(), 0);
     });
 
     var viewModel;
