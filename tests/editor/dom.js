@@ -310,4 +310,12 @@ test("closestEditable works for same node", function() {
     equal(Dom.closestEditable(p[0], ["p"]), p[0]);
 });
 
+test("emptyNode returns true for node with no children", function() {
+    ok(Dom.emptyNode(document.createElement("div")));
+});
+
+test("emptyNode returns false for text node", function() {
+    ok(!Dom.emptyNode(document.createTextNode("foo")));
+});
+
 }());

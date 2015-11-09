@@ -308,7 +308,7 @@ var Dom = {
     },
 
     emptyNode: function(node) {
-        return !Dom.significantNodes(node.childNodes).length;
+        return node.nodeType == 1 && !Dom.significantNodes(node.childNodes).length;
     },
 
     name: function (node) {
