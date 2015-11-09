@@ -2083,13 +2083,8 @@
         },
         "group": "Functionality",
          "description": {
-<<<<<<< HEAD
             "kendo-ui": "<p>This example demonstrates how to enable sorting for the Kendo UI grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>sortable </strong>grid attribute. Supported sorting modes are single and multiple.</p> <p>Check the relevant <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-sortable\" target=\"_blank\">sorting API section</a> for more details.</p>",
             "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p>"
-=======
-           "kendo-ui": "<p>This example demonstrates how to enable sorting for the Kendo UI grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>sortable </strong>grid attribute. Supported sorting modes are single and multiple.</p> <p>Check the relevant <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-sortable\" target=\"_blank\">sorting API section</a> for more details.</p>",
-       "aspnet-mvc": "<p>You can learn in this sample how to enable sorting for the Telerik MVC grid. Since this functionality is built-in, all you have to do is to set the sorting configuration via the <strong>Sortable </strong>attribute. The supported sorting modes are single and multiple, which can be specified through the <strong>SortMode</strong> property.</p>"
->>>>>>> 3352cc1... grid demos grouping configuration applied/modified
          }
       },
       {
@@ -2186,10 +2181,7 @@
             "kendo-ui": "This Kendo UI Grid example shows how you can add custom toolbars to the grid and create toolbar templates.",
             "aspnet-mvc": "This Telerik ASP.NET MVC Grid example shows how you can add custom toolbars to the grid and create toolbar templates."
         },
-<<<<<<< HEAD
         "group": "Templates",
-=======
->>>>>>> 3352cc1... grid demos grouping configuration applied/modified
         "description": {
           "kendo-ui": "<p>The Kendo UI grid exposes the option to define a template for the content of its toolbar, which can vary based on your requirements or preferences. </p> <p>Here we present a sample implementation of a toolbar template incorporating a Kendo UI dropdown to list the records in the grid by category. The dropdown is populated with the list of categories and the filter is applied on its change event by invoking the <strong>grid.dataSource.filter(params) </strong>method from the API. <br /> <br /> Note that the toolbar template is instantiated by calling the <strong>kendo.template </strong>method and assigning the returned value to the <strong>toolbar </strong>attribute of the grid instance. </p>",
 		  "aspnet-mvc": "<p>The MVC grid component exposes an option to define a content template for its toolbar.</p> <p>Here you can see a sample implementation of a toolbar template incorporating a dropdownlist HtmlHelper to list the records in the grid by category. The combo is populated with the list of categories and the filter is applied on its change event by invoking the grid.dataSource.filter(params) method from the client-side API.</p> <p>Note that the toolbar template is instantiated by the ToolBar -&gt; Template method.</p>"
@@ -2229,10 +2221,6 @@
             "kendo-ui": "This example shows how records in the data grid widget can be presented with a detailed template.",
             "aspnet-mvc": "This example shows how records in the Telerik ASP.NET MVC Grid component can be presented with a detailed template."
         },
-<<<<<<< HEAD
-=======
-        "group": "Templates",
->>>>>>> 3352cc1... grid demos grouping configuration applied/modified
         "description": {
           "kendo-ui": "<p>This example demonstrates how you can utilize the detail template feature of the Kendo UI grid when implementing hierarchical table presentation. The key steps here are to:</p> <ul> <li> specify <strong>detailTemplate</strong> definition for the grid</li> <li>intercept its <strong>detailInit </strong>event in order to populate the details for the expanded item </li> </ul> <p>In the scenario presented above we inject a tabstrip widget with two tabs in the detail template - the first holding the orders of the pertinent employee, and the second containing the contact information of that employee. The orders are populated inside the detailInit event handler applying filter by EmployeeID of the expanded grid row.</p>",
       "aspnet-mvc": "<p>This example demonstrates how you can utilize the detail template feature of the MVC grid component when implementing hierarchical table presentation. The key steps here are to:</p> <ul> <li>Set the <strong>ClientDetailTemplateId</strong> setting which specifies the id of the script element containing the client-side detail template of the grid</li> <li>Define the script tag content that will be shown when the user expands the grid rows</li> </ul> <p>In this example we inject a TabStrip HtmlHelper extension with two tabs in the detail template - the first contains the orders of the relevant employee, and the second one holds his/her contact information.</p>"
@@ -2333,10 +2321,6 @@
             "kendo-ui": "This example shows the foreign key column functionality to cross-reference tables in KendoGrid component.",
             "aspnet-mvc": "This example shows the foreign key column functionality to cross-reference tables in the Telerik ASP.NET MVC Grid component."
         },
-<<<<<<< HEAD
-=======
-        "group": "Columns",
->>>>>>> 3352cc1... grid demos grouping configuration applied/modified
          "description": {
            "kendo-ui": "<p>In this demo we showcase how to implement foreign key column in the Kendo UI grid, hosting dropdown list editor for data editing. </p> <p>The column in question is defined via a key field (CategoryID). Through the column definition you set the key field as <strong>Field </strong>attribute, and the <strong>values </strong>attribute points to the source data for the items displayed in the dropdown list editor of that column. The editor items should have matching values of the same type as the key field (CategoryID in this case).</p> <p>See the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.values\">relevant API section</a> of the docs for more info.</p>",
            "aspnet-mvc": "<p>In this example you can see how to implement foreign key column in the Telerik MVC grid, holding DropDownList editor for data editing. The ForeignKey column definition is shown below:<br /> <br /> <span>columns.ForeignKey(p =&gt; p.CategoryID, (System.Collections.IEnumerable)ViewData[\"categories\"], \"CategoryID\", \"CategoryName\").Title(\"Category\").Width(150);</span></p> <p > Here is the definition for the DropDownList user control:</p> <p>&lt;%@ Control Language=\"C#\" Inherits=\"System.Web.Mvc.ViewUserControl&lt;object&gt;\" %&gt;<br /> &lt;%= Html.Kendo().DropDownListFor(m =&gt; m)<span>&nbsp;&nbsp;&nbsp; </span><br /> <span>&nbsp;&nbsp;&nbsp; </span>.BindTo((SelectList)ViewData[ViewData.TemplateInfo.GetFullHtmlFieldName(\"\") + \"_Data\"])<br /> %&gt;</p>"
