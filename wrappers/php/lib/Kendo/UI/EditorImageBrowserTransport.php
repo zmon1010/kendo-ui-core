@@ -7,7 +7,7 @@ class EditorImageBrowserTransport extends \Kendo\SerializableObject {
 
     /**
     * Options or URL for remote image retrieval.
-    * @param string|\Kendo\UI\EditorImageBrowserTransportRead|array $value
+    * @param string|\Kendo\JavaScriptFunction|\Kendo\UI\EditorImageBrowserTransportRead|array $value
     * @return \Kendo\UI\EditorImageBrowserTransport
     */
     public function read($value) {
