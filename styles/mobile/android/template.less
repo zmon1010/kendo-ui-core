@@ -731,8 +731,39 @@
 }
 
 .km-android-light .km-label-above,
-.km-android-light .km-icon-label {
+.km-android-light .km-icon-label,
+.km-android-light .km-radio-label:before,
+.km-android-light .km-radio-label:after,
+.km-android-light .km-checkbox-label:before,
+.km-android-light .km-checkbox-label:after {
     color: fade(@android-light-main-color, 40%);
+}
+
+.km-android-light .km-radio-label:after {
+    background-color: @android-active-background;
+}
+
+
+.km-android-light input.km-radio:checked + .km-radio-label:before {
+    //.box-shadow(inset 0 0 20px 1px @android-active-background;);
+}
+
+.km-android-light input.km-checkbox:checked + .km-checkbox-label:before {
+    border-color: @android-light-main-color;
+}
+
+.km-android-light input.km-checkbox:focus + .km-checkbox-label:before,
+.km-android-light input.km-checkbox:focus + .km-checkbox-label:before  {
+    .box-shadow(0 0 1px 2px @android-active-background);
+}
+
+.km-android-light input.km-checkbox:checked + .km-checkbox-label:after {
+    color: @android-active-background;
+}    
+
+.km-android-light input.km-radio:checked + .km-radio-label:after {
+    .box-shadow(0 0 16px 1px @android-active-background);
+    border-color: fade(@android-light-main-color, 40%);
 }
 
 .km-android-light .km-list fieldset legend {
