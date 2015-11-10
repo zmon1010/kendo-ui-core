@@ -1,7 +1,5 @@
 (function(){
 
-var IndentCommand = kendo.ui.editor.IndentCommand;
-
 var editor, textarea;
 
 module("editor initialization", {
