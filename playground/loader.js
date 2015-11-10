@@ -98,10 +98,20 @@
 
     var STACK = [];
 
+    function indexOf(x, array) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] == x) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     function execute(url) {
         var module = MODULES[url];
         if (!module.executed) {
-            var circular = STACK.indexOf(module) >= 0;
+            var circular = indexOf(module, STACK) >= 0;
             STACK.push(module);
             if (circular) {
                 console.error("Circular dependency:");

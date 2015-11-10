@@ -258,7 +258,7 @@
                 value = domElement.innerHTML;
             }
 
-            that.value(value);
+            that.value(value || kendo.ui.editor.emptyElementContent);
 
             $(document)
                 .on("mousedown", proxy(that._endTyping, that))

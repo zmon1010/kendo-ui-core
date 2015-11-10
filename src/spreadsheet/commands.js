@@ -490,7 +490,7 @@
             } else if (!range.intersectingMerged().length) {
                 range.filter(true);
             } else {
-               return { reason: "filterRangeContainingMerges" };
+               return { reason: "error", type: "filterRangeContainingMerges" };
             }
         }
     });
