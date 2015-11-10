@@ -174,11 +174,11 @@
 
         toolbar.one("action", function(e) {
             equal(e.options.property, "verticalAlign");
-            equal(e.options.value, "middle");
+            equal(e.options.value, "center");
         });
 
         sheet.select("A1:B2");
-        $("[data-property=verticalAlign][data-value=middle]").trigger("click");
+        $("[data-property=verticalAlign][data-value=center]").trigger("click");
     });
 
     test("custom tool", function() {

@@ -773,7 +773,7 @@
             { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: MESSAGES.alignmentButtons.justifyRight },
             { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: MESSAGES.alignmentButtons.justifyFull },
             { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: MESSAGES.alignmentButtons.alignTop },
-            { property: "verticalAlign", value: "middle",  iconClass: "align-middle",   text: MESSAGES.alignmentButtons.alignMiddle },
+            { property: "verticalAlign", value: "center",  iconClass: "align-middle",   text: MESSAGES.alignmentButtons.alignMiddle },
             { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: MESSAGES.alignmentButtons.alignBottom }
         ],
         destroy: function() {

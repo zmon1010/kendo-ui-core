@@ -106,7 +106,7 @@
         }
 
         if (cell.verticalAlign) {
-            style.verticalAlign = cell.verticalAlign;
+            style.verticalAlign = (cell.verticalAlign === "center") ? "middle" : cell.verticalAlign;
         }
 
         if (cell.bold) {

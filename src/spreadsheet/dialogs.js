@@ -704,7 +704,7 @@
                 { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: MESSAGES.alignmentDialog.buttons.justifyRight },
                 { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: MESSAGES.alignmentDialog.buttons.justifyFull },
                 { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: MESSAGES.alignmentDialog.buttons.alignTop },
-                { property: "verticalAlign", value: "middle",  iconClass: "align-middle",   text: MESSAGES.alignmentDialog.buttons.alignMiddle },
+                { property: "verticalAlign", value: "center",  iconClass: "align-middle",   text: MESSAGES.alignmentDialog.buttons.alignMiddle },
                 { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: MESSAGES.alignmentDialog.buttons.alignBottom }
             ]
         },
