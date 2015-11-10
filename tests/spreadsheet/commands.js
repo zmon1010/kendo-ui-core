@@ -811,7 +811,8 @@
 
         var result = command.exec();
 
-        equal(result.reason, "filterRangeContainingMerges");
+        equal(result.reason, "error");
+        equal(result.type, "filterRangeContainingMerges");
         ok(!range.hasFilter());
     });
 
