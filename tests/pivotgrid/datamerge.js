@@ -2951,4 +2951,164 @@
         equal(data[3].value, 25);
         equal(data[4].value, 10);
     });
+
+    test("children with missing ordinals and measure columns in between are normalized correctly", 9, function() {
+        var columns = {
+            tuples: [
+                { members: [ { name: "level 0", children: [], levelNum: "0" }, { name: "measure1", children: [] } ] },
+                { members: [ { name: "level 0", children: [], levelNum: "0" }, { name: "measure2", children: [] } ] },
+                { members: [ { name: "level 1-0", parentName: "level 0", children: [], levelNum: "1" }, { name: "measure2", children: [] } ] }
+            ]
+        };
+
+        //ordinal is 2, because one tuple is missing
+        var data = [ { value: 0, ordinal: 0 }, { value: 3, ordinal: 2 } ];
+
+        var dataSource = new PivotDataSource({
+            measures: ["measure1", "measure2"],
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: columns
+                        },
+                        data: data
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+
+        var data = dataSource.data();
+
+        equal(data.length, 4);
+        equal(data[0].value, 0);
+        equal(data[0].ordinal, 0);
+        equal(data[1].value, "");
+        equal(data[1].ordinal, 1);
+        equal(data[2].value, "");
+        equal(data[2].ordinal, 2);
+        equal(data[3].value, 3);
+        equal(data[3].ordinal, 3);
+    });
+
+    test("children with missing ordinals and measure columns in between are normalized correctly (rows)", 9, function() {
+        var rows = {
+            tuples: [
+                { members: [ { name: "level 0", children: [], levelNum: "0" }, { name: "measure1", children: [] } ] },
+                { members: [ { name: "level 0", children: [], levelNum: "0" }, { name: "measure2", children: [] } ] },
+                { members: [ { name: "level 1-0", parentName: "level 0", children: [], levelNum: "1" }, { name: "measure2", children: [] } ] }
+            ]
+        };
+
+        //ordinal is 2, because one tuple is missing
+        var data = [ { value: 0, ordinal: 0 }, { value: 3, ordinal: 2 } ];
+
+        var dataSource = new PivotDataSource({
+            measures: { axis: "rows", values: ["measure1", "measure2"] },
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            rows: rows
+                        },
+                        data: data
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+
+        var data = dataSource.data();
+
+        equal(data.length, 4);
+        equal(data[0].value, 0);
+        equal(data[0].ordinal, 0);
+        equal(data[1].value, "");
+        equal(data[1].ordinal, 1);
+        equal(data[2].value, "");
+        equal(data[2].ordinal, 2);
+        equal(data[3].value, 3);
+        equal(data[3].ordinal, 3);
+    });
+
+    test("children with missing measures and ordinals on multiple rows are normalized correctly", function() {
+        var columnTuples = [
+            {
+                tuples: [
+                    { members: [ { name: "dim 0 level 0", children: [] }, { name: "measure1", children: [] } ] },
+                    { members: [ { name: "dim 0 level 0", children: [] }, { name: "measure2", children: [] } ] },
+                    { members: [
+                        { name: "dim 0 level 1-1", parentName: "dim 0 level 0", children: [] }, { name: "measure1", children: [] }
+                    ] }
+                ]
+            }
+        ];
+
+        var rowTuples = [
+            {
+                tuples: [
+                    { members: [ { name: "dim 1 level 0", children: [] } ] },
+                    { members: [ { name: "dim 1 level 1-1", parentName: "dim 1 level 0", children: [] } ] },
+                    { members: [ { name: "dim 1 level 1-2", parentName: "dim 1 level 0", children: [] } ] }
+                ]
+            }
+        ];
+
+        var data = [
+            [
+                { value: "col 0, row 0", ordinal: 0 }, { value: "col 1, row 0", ordinal: 1 }, { value: "col 2, row 0", ordinal: 2 },
+                                                       { value: "col 1, row 1", ordinal: 4 },
+                                                       { value: "col 1, row 2", ordinal: 7 }
+            ]
+        ];
+
+        var dataSource = new PivotDataSource({
+            measures: { axis: "columns", values: ["measure1", "measure2"] },
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: columnTuples.shift(),
+                            rows: rowTuples.shift()
+                        },
+                        data: data.shift()
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+
+        var data = dataSource.data();
+        equal(data.length, 12);
+        equal(data[0].value, "col 0, row 0");
+        equal(data[1].value, "col 1, row 0");
+        equal(data[2].value, "col 2, row 0");
+        equal(data[3].value, "", "col 3, row 0 is not empty");
+
+        equal(data[4].value, "", "col 0, row 1 is not empty");
+        equal(data[5].value, "col 1, row 1");
+        equal(data[6].value, "", "col 2, row 1 is not empty");
+        equal(data[7].value, "", "col 3, row 1 is not empty");
+
+        equal(data[8].value, "", "col 0, row 2 is not empty");
+        equal(data[9].value, "col 1, row 2");
+        equal(data[10].value, "", "col 2, row 2 is not empty");
+        equal(data[11].value, "", "col 3, row 2 is not empty");
+    });
 })();

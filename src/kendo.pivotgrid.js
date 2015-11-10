@@ -1820,56 +1820,71 @@ var __meta__ = { // jshint ignore:line
             return indexes;
         },
 
+        _addMissingDataItems: function(result, metadata) {
+            while (metadata.rowIndexes[parseInt(result.length / metadata.columnsLength, 10)] !== undefined) {
+                for (var idx = 0; idx < metadata.columnsLength; idx++) {
+                    result = addEmptyDataItem(result);
+                }
+            }
+
+            while (metadata.columnIndexes[result.length % metadata.columnsLength] !== undefined) {
+                result = addEmptyDataItem(result);
+            }
+
+            return result;
+        },
+
+        _normalizeOrdinals: function(result, dataItem, metadata) {
+            var lastOrdinal = metadata.lastOrdinal;
+
+            if (!dataItem) {
+                return addEmptyDataItem(result);
+            }
+
+            if ((dataItem.ordinal - lastOrdinal) > 1) {
+                lastOrdinal += 1;
+
+                while (lastOrdinal < dataItem.ordinal && result.length < metadata.length) {
+                    result = this._addMissingDataItems(addEmptyDataItem(result), metadata);
+                    lastOrdinal += 1;
+                }
+            }
+
+            dataItem.ordinal = result.length;
+            result[result.length] = dataItem;
+
+            return result;
+        },
+
         _normalizeData: function(options) {
             var data = options.data;
-
-            var columnIndexes = options.columnIndexes || {};
-            var rowIndexes = options.rowIndexes || {};
-
-            var columnsLength = options.columnsLength || 1;
-            var length = columnsLength * (options.rowsLength || 1);
-
-            var idx = 0;
             var dataIdx = 0;
-            var lastOrdinal = 0;
-            var dataItem, i;
-            var result = new Array(length);
+            var dataItem;
+            var result = [];
+            var lastOrdinal;
+            var length;
+
+            options.lastOrdinal = 0;
+            options.columnIndexes = options.columnIndexes || {};
+            options.rowIndexes = options.rowIndexes || {};
+            options.columnsLength = options.columnsLength || 1;
+            options.rowsLength = options.rowsLength || 1;
+            options.length = options.columnsLength * options.rowsLength;
+            length = options.length;
 
             if (data.length === length) {
                 return data;
             }
 
-            for (; idx < length; idx++) {
-                while (rowIndexes[parseInt(idx / columnsLength, 10)] !== undefined) {
-                    for (i = 0; i < columnsLength; i++) {
-                        result[idx] = { value: "", fmtValue: "", ordinal: idx };
-                        idx += 1;
-                    }
-                }
-
-                while (columnIndexes[idx % columnsLength] !== undefined) {
-                    result[idx] = { value: "", fmtValue: "", ordinal: idx };
-                    idx += 1;
-                }
-
-                dataItem = data[dataIdx];
-
+            while(result.length < length) {
+                dataItem = data[dataIdx++];
                 if (dataItem) {
-                    if (dataItem.ordinal - lastOrdinal > 1) {
-                        lastOrdinal += 1;
-                        for (; lastOrdinal < dataItem.ordinal; lastOrdinal++) {
-                            result[idx] = { value: "", fmtValue: "", ordinal: idx };
-                            idx += 1;
-                        }
-                    }
-
                     lastOrdinal = dataItem.ordinal;
-                    dataItem.ordinal = idx;
-                    result[idx] = dataItem;
-                    dataIdx += 1;
-                } else {
-                    result[idx] = { value: "", fmtValue: "", ordinal: idx };
                 }
+
+                result = this._normalizeOrdinals(this._addMissingDataItems(result, options), dataItem, options);
+
+                options.lastOrdinal = lastOrdinal;
             }
 
             return result;
@@ -2055,6 +2070,11 @@ var __meta__ = { // jshint ignore:line
             return options;
         }
     });
+
+    function addEmptyDataItem(result) {
+        result[result.length] = { value: "", fmtValue: "", ordinal: result.length };
+        return result;
+    }
 
     function validateAxis(newAxis, axis, measures) {
         if (newAxis.tuples.length < membersCount(axis.tuples, measures)) {
