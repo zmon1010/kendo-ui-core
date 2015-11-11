@@ -318,8 +318,8 @@
 
 .km-ios7 .km-legend-button {
     display: block;
-    padding: 2.5em 1.61em .39em;
-    margin: -2.5em -1.61em -.39em;
+    //padding: 2.5em 1.61em .39em;
+    //margin: -2.5em -1.61em -.39em;
     text-transform: uppercase;
 }
 
@@ -462,6 +462,14 @@
     -webkit-transform: translateY(-42%);
     left: 0.365rem;
     border-radius: 50%;
+}
+
+.km-ios7 .km-listview-item-badge.km-badge,
+.km-ios7 .km-listview-link>.km-badge {
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    right: 2em;
 }
 
 .km-ios7 .km-icon-label.k-i-arrow-e:before { content: "\E000"; }
