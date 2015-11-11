@@ -356,7 +356,7 @@
             });
 
             // init sample widgets
-            var serviceBaseUrl = "http://demos.telerik.com/kendo-ui/service";
+            var serviceBaseUrl = "https://demos.telerik.com/kendo-ui/service";
 
             $("#menu").kendoMenu();
 
@@ -796,7 +796,7 @@
                 dataSource: {
                     type: "odata",
                     transport: {
-                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                        read: serviceBaseUrl + "/Northwind.svc/Orders"
                     },
                     serverPaging: true,
                     serverSorting: true,
