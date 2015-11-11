@@ -106,6 +106,14 @@ public class DatePickerTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("depth", value);
     }
 
+    public java.lang.Object getDisableDates() {
+        return (java.lang.Object)getProperty("disableDates");
+    }
+
+    public void setDisableDates(java.lang.Object value) {
+        setProperty("disableDates", value);
+    }
+
     public java.lang.String getFooter() {
         return (java.lang.String)getProperty("footer");
     }

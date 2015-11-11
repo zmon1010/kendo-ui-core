@@ -37,6 +37,15 @@ settings are available for the depth value:
     }
 
     /**
+    * An array or function that will be used to determine which dates to be disabled in the calendar.
+    * @param array|\Kendo\JavaScriptFunction $value
+    * @return \Kendo\UI\Calendar
+    */
+    public function disableDates($value) {
+        return $this->setProperty('disableDates', $value);
+    }
+
+    /**
     * The template which renders the footer. If false, the footer will not be rendered.
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\UI\Calendar

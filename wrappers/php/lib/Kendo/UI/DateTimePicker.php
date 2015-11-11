@@ -72,6 +72,15 @@ settings are available for the depth value:
     }
 
     /**
+    * An array or function that will be used to determine which dates to be disabled for selection by the widget.
+    * @param array|\Kendo\JavaScriptFunction $value
+    * @return \Kendo\UI\DateTimePicker
+    */
+    public function disableDates($value) {
+        return $this->setProperty('disableDates', $value);
+    }
+
+    /**
     * The template which renders the footer of the calendar. If false, the footer will not be rendered.
     * @param string $value
     * @return \Kendo\UI\DateTimePicker
