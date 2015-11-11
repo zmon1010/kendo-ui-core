@@ -19,6 +19,11 @@
     var runtime = calc.runtime;
     var defineFunction = runtime.defineFunction;
     var CalcError = runtime.CalcError;
+    var packDate = runtime.packDate;
+    var unpackDate = runtime.unpackDate;
+    var isLeapYear = runtime.isLeapYear;
+    var daysInMonth = runtime.daysInMonth;
+    var daysInYear = runtime.daysInYear;
 
     /* -----[ Spreadsheet API ]----- */
 
@@ -507,6 +512,37 @@
         [ "factor", [ "or", "number+", [ "null", 2 ] ] ],
         [ "no_switch", [ "or", "logical", [ "null", false ] ] ],
         [ "?", [ "assert", "$end_period >= $start_period", "NUM" ] ]
+    ]);
+
+    var COUPS_ARGS = [
+        [ "settlement", "date" ],
+        [ "maturity", "date" ],
+        [ "frequency", [ "and", "integer", [ "values", 1, 2, 4 ] ] ],
+        [ "basis", [ "or", [ "null", 0 ],
+                     [ "and", "integer", [ "values", 0, 1, 2, 3, 4 ] ] ] ],
+        [ "?", [ "assert", "$settlement < $maturity", "NUM" ] ]
+    ];
+
+    defineFunction("COUPDAYBS", COUPDAYBS).args(COUPS_ARGS);
+
+    defineFunction("COUPDAYS", COUPDAYS).args(COUPS_ARGS);
+
+    defineFunction("COUPDAYSNC", COUPDAYSNC).args(COUPS_ARGS);
+
+    defineFunction("COUPPCD", COUPPCD).args(COUPS_ARGS);
+
+    defineFunction("COUPNCD", COUPNCD).args(COUPS_ARGS);
+
+    defineFunction("COUPNUM", COUPNUM).args(COUPS_ARGS);
+
+    defineFunction("ACCRINTM", ACCRINTM).args([
+        [ "issue", "date" ],
+        [ "settlement", "date" ],
+        [ "rate", "number++" ],
+        [ "par", [ "or", [ "null", 1000 ], "number++" ] ],
+        [ "basis", [ "or", [ "null", 0 ],
+                     [ "and", "integer", [ "values", 0, 1, 2, 3, 4 ] ] ] ],
+        [ "?", [ "assert", "$issue < $settlement", "NUM" ] ]
     ]);
 
     /* -----[ utils ]----- */
@@ -1517,6 +1553,155 @@
             vdb = _interVDB(cost, life - start, end - start);
         }
         return vdb;
+    }
+
+    /*************************************************************************************/
+
+    /*   (from  http://beginnersinvest.about.com)
+         an investor agrees to loan money to a company or government in exchange for a predetermined interest rate for a pre-determined length of time.
+
+         If an investor wanted to buy a $25,000 Coca-Cola bond with a 30 year maturity and an 10% coupon, it would work like this: He would send in the $25,000 from his savings account and get a $25,000 engraved bond certificate in exchange. After 30 years, he would be able to get his whole $25,000 back from the Coca-Cola company (of course, he can always sell it before then if he needs the money).
+
+         Every year, he’s entitled to receive 10% interest on the money he lent, or $2,500. Since most companies in the United States pay interest semi-annually, he would likely have 60 coupons attached to his bond for $1,250 each.
+         Every June 30th and December 31st, the investor would go down, clip the proper coupon, send it in, and get their money.
+
+         Although the practice is now defunct, the terminology stuck and interest payments on bonds will forever be known as coupons.
+    */
+
+
+    // "Use EDATE to calculate maturity dates or due dates that fall on the same day of the month as the date of issue."
+    // See also: DATEDIF, DAY, DAYS, DAY360, EOMONTH (wich can be useful to determine limits of coupon periods)
+    function _edate(base, months) { // EDATE(start_date, months)
+        var d = unpackDate(base);
+        var m = d.month + months;
+        var y = d.year + Math.floor(m/12);
+        m %= 12;
+        if (m < 0) {
+            m += 12;
+        }
+        d = Math.min(d.date, daysInMonth(y, m));
+        return packDate(y, m, d);
+    }
+
+    function _toCoupDate(settlement, maturity, freq, next) { // Returns the coupon date next or previous, to settlement date.
+        // Independent of the 'basis' convention to count days (because here we have no need to count days).
+        var sett = unpackDate(settlement),
+            mat = unpackDate(maturity);
+        var months = 12 / freq,
+            periods = mat.year - sett.year;
+        if (periods > 0) {
+            periods = (periods - 1) * freq;
+        }
+        var result;
+        do {
+            periods++;
+            result = _edate(maturity, -periods*months);
+        } while (settlement < result);
+
+        if (next) {
+            periods--;
+            result = _edate(maturity, -periods*months);
+        }
+        return result;
+    }
+
+    function _daysBetween(from, to, basis) { // from < to
+        if (basis == 1 || basis == 2 || basis == 3) { // Actual/Actual || Actual/360 || Actual/365
+            return to - from;
+        }
+        var ymd1 = unpackDate(from),
+            ymd2 = unpackDate(to);
+        var y1 = ymd1.year, m1 = ymd1.month, d1 = ymd1.date,
+            y2 = ymd2.year, m2 = ymd2.month, d2 = ymd2.date;
+        switch(basis) {
+          case 4: // EU-30/360
+            if (d1 == 31) { d1 = 30; }
+            if (d2 == 31 && d1 == 30) { d2 = 30; }
+            break;
+          case 0: // US-30/360
+            /* falls through */
+          default:
+            if (d1==d2 && m1==m2 && y1==y2) { return 0; }
+            if (d1 == 31) { d1 = 30; }
+            if (d2 == 31) { d2 = 30; }
+            if(m1 == 1 && d1 == isLeapYear(y1) + 28) {
+                if(m2 == 1 && d2 == isLeapYear(y2) + 28) {
+                    d2 = 30;
+                }
+                d1 = 30;
+            }
+        }
+        return (y2 - y1)*360 + (m2 - m1)*30 + (d2 - d1);
+    }
+
+    //// COUPDAYBS (COUPon DAYs Beginning to Settlement) ////
+    /* returns the number of days from the beginning of the coupon period to the settlement date */
+    function COUPDAYBS(settlement, maturity, frequency, basis) { // COUPDAYBS(settlement, maturity, frequency, [basis])
+        var prev_coup = _toCoupDate(settlement, maturity, frequency, false);
+        return _daysBetween(prev_coup, settlement, basis);
+    }
+
+    //// COUPDAYS (COUPon DAYs containing Settlement) ////
+    /* Returns the number of days in the coupon period that contains the settlement date */
+    function COUPDAYS(settlement, maturity, frequency, basis) { // COUPDAYS(settlement, maturity, frequency, [basis])
+        if(basis == 1) {
+            var next = _toCoupDate(settlement, maturity, frequency, true);
+            var prev = _toCoupDate(settlement, maturity, frequency, false);
+            return _daysBetween(prev, next, 1);
+        }
+        if(basis == 3) {
+            return 365/frequency;
+        }
+        return 360/frequency;
+    }
+
+    //// COUPDAYSNC (COUPon DAYs Settlement to Next Coupon) ////
+    /* Returns the number of days from the settlement date to the next coupon date */
+    function COUPDAYSNC(settlement, maturity, frequency, basis) { // COUPDAYSNC(settlement, maturity, frequency, [basis])
+        var next = _toCoupDate(settlement, maturity, frequency, true);
+        return _daysBetween(settlement, next, basis);
+    }
+
+    //// COUPPCD (COUPon, Previous Coupon Date) ////
+    /* Returns the previous coupon date before the settlement date */
+    function COUPPCD(settlement, maturity, frequency/*, basis*/) { // COUPPCD(settlement, maturity, frequency, [basis])
+        // It is no need to count days, so 'basis' becomes an useless parameter.
+        return _toCoupDate(settlement, maturity, frequency, false);
+    }
+
+    //// COUPNCD (COUPon, Next Coupon Date) ////
+    /* Returns the next coupon date after the settlement date */
+    function COUPNCD(settlement, maturity, frequency/*, basis*/) { // COUPNCD(settlement, maturity, frequency, [basis])
+        // It is no need to count days, so 'basis' becomes an useless parameter.
+        return _toCoupDate(settlement, maturity, frequency, true);
+    }
+
+    //// COUPNUM (NUMber of COUPons) ////
+    /* Returns the number of coupons payable between the settlement date and maturity date */
+    function COUPNUM(settl, matur, freq/*, basis*/) { // COUPNUM(settlement, maturity, frequency, [basis])
+        // It is no need to count days, so 'basis' becomes an useless parameter.
+        var sett = unpackDate(settl),
+            mat = unpackDate(matur);
+        var months = 12*(mat.year - sett.year) + mat.month - sett.month;
+        //// DISCOUNT the last month if there are not enough days?
+        //    var res = _edate(matur, -months);
+        //    if(sett["date"] >= unpackDate(res)["date"]) {
+        //        months --; // an incomplete last month correspond to a qvasi-coupon period
+        //    }
+        return 1 + (months * freq / 12 | 0);
+    }
+
+    //// ACCRINTM(issue, settlement, rate, par, [basis]) ////
+    function ACCRINTM(issue, maturity, rate, par, basis) { // ACCRINTM(issue, settlement, rate, par, [basis])
+        var year_days = 360;
+        if (basis == 3) {
+            year_days = 365;
+        } else {
+            if (basis == 1) {
+                year_days = daysInYear(unpackDate(maturity).year);
+            }
+        }
+        return rate * par * _daysBetween(issue, maturity, basis) / year_days;
     }
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
