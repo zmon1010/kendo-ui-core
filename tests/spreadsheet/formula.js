@@ -205,6 +205,7 @@
     });
 
     function EQ(val, expected) {
+        var orig = val;
         if (expected instanceof runtime.Matrix) {
             expected = expected.data;
         }
@@ -222,7 +223,7 @@
             if (typeof val != "number") {
                 val = parseFloat(val);
             }
-            ok(Math.abs(val - expected.val) < expected.eps);
+            ok(Math.abs(val - expected.val) < expected.eps, "Expected: " + expected.val + ", got: " + orig);
             if (!(Math.abs(val - expected.val) < expected.eps)) {
                 console.log(val, expected.val);
             }
@@ -2191,6 +2192,53 @@ TRUE, TRUE),, 1)": [[ -234.2371645 ],
             "=VDB(2400, 300, 10*12, 6, 18, 2, false)": 396.31,
             "=VDB(2400, 300, 10*12, 6, 18, 1.5, false)": 311.81,
             "=VDB(2400, 300, 10, 0, 0.875, 1.5, false)": 315.00,
+        });
+    });
+
+    test("COUPDAYBS", function(){
+        calcTest({
+            "=COUPDAYBS(DATE(1998, 0, 25), DATE(1999, 10, 15), 2, 1)": 71,
+            "=COUPDAYBS(DATE(2011, 0, 25), DATE(2011, 10, 30), 2, 1)": 56,
+            "=COUPDAYBS(DATE(2011, 0, 25), DATE(2011, 10, 30), 2, 0)": 55,
+            "=COUPDAYBS(DATE(2011, 0, 25), DATE(2011, 10, 30), 2, 2)": 56,
+            "=COUPDAYBS(DATE(2011, 0, 25), DATE(2011, 10, 30), 2, 4)": 55
+        });
+    });
+
+    test("COUPDAYS", function(){
+        calcTest({
+            "=COUPDAYS(DATE(2011, 0, 25), DATE(2011, 10, 15), 2, 1)": 182,
+        });
+    });
+
+    test("COUPDAYSNC", function(){
+        calcTest({
+            "=COUPDAYSNC(DATE(2011, 0, 25), DATE(2011, 10, 15), 2, 1)": 111,
+        });
+    });
+
+    test("COUPPCD", function(){
+        calcTest({
+            "=COUPPCD(DATE(2011, 0, 25), DATE(2011, 10, 15), 2, 1)": runtime.packDate(2010, 9, 15)
+        });
+    });
+
+    test("COUPNCD", function(){
+        calcTest({
+            "=COUPNCD(DATE(2011, 0, 25), DATE(2011, 10, 15), 2, 1)": runtime.packDate(2011, 3, 15)
+        });
+    });
+
+    test("COUPNUM", function(){
+        calcTest({
+            "=COUPNUM(DATE(2007, 0, 25), DATE(2008, 10, 15), 2, 1)": 4,
+            "=COUPNUM(DATE(2002,10,29), DATE(2004,1,29), 4, 0)": 6,
+        });
+    });
+
+    test("ACCRINTM", function(){
+        calcTest({
+            "=ACCRINTM(39539, 39614, 0.1, 1000, 3)": 20.54794521,
         });
     });
 
