@@ -629,12 +629,11 @@
 
     kendo.spreadsheet.dialogs.register("borders", BordersDialog);
 
-    var ColorPickerDialog = SpreadsheetDialog.extend({
+    var ColorChooser = SpreadsheetDialog.extend({
         init: function(options) {
             SpreadsheetDialog.fn.init.call(this, options);
 
             this.element = this.dialog().element;
-            this._colorPalette();
             this.property = options.property;
             this.options.title = options.title;
 
@@ -646,7 +645,6 @@
             kendo.bind(this.element.find(".k-action-buttons"), this.viewModel);
         },
         options: {
-            width: 177,
             template:   "<div></div>" +
                         "<div class='k-action-buttons'>" +
                             "<button class='k-button k-primary' data-bind='click: apply'>" + MESSAGES.apply + "</button>" +
@@ -664,6 +662,21 @@
                 }
             });
         },
+        value: function(e) {
+            if (e === undefined) {
+                return this._value;
+            } else {
+                this._value = e.value;
+            }
+        }
+    });
+
+    var ColorPickerDialog = ColorChooser.extend({
+        init: function(options) {
+            options.width = 177;
+            ColorChooser.fn.init.call(this, options);
+            this._colorPalette();
+        },
         _colorPalette: function() {
             var element = this.dialog().element.find("div:first");
             this.colorPalette = element.kendoColorPalette({
@@ -677,17 +690,27 @@
                 ],
                 change: this.value.bind(this)
             }).data("kendoColorPalette");
-        },
-        value: function(e) {
-            if (e === undefined) {
-                return this._value;
-            } else {
-                this._value = e.value;
-            }
         }
     });
 
     kendo.spreadsheet.dialogs.register("colorPicker", ColorPickerDialog);
+
+    var CustomColorDialog = ColorChooser.extend({
+        init: function(options) {
+            options.width = 268;
+            ColorChooser.fn.init.call(this, options);
+            this.dialog().setOptions({ animation: false });
+            this.dialog().one("activate", this._colorPicker.bind(this));
+        },
+        _colorPicker: function() {
+            var element = this.dialog().element.find("div:first");
+            this.colorPicker = element.kendoFlatColorPicker({
+                change: this.value.bind(this)
+            }).data("kendoFlatColorPicker");
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("customColor", CustomColorDialog);
 
     var AlignmentDialog = SpreadsheetDialog.extend({
         init: function(options) {
