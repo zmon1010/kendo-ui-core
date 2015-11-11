@@ -309,5 +309,21 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        public CalendarBuilder DisableDates(IEnumerable<string> disableDates)
+        {
+            Component.DisableDates = disableDates;
+
+            return this;
+        }
+
+        public CalendarBuilder DisableDates(string handler)
+        {
+            var handlerDescription = new ClientHandlerDescriptor { HandlerName = handler };
+            
+            Component.DisableDatesHandler = handlerDescription;
+
+            return this;
+        }
     }
 }

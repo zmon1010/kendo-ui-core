@@ -90,6 +90,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public IEnumerable<string> DisableDates
+        {
+            get;
+            set;
+        }
+
+        public ClientHandlerDescriptor DisableDatesHandler 
+        { 
+            get; 
+            set; 
+        }
+
         public CalendarSelectionSettings SelectionSettings
         {
             get;
@@ -175,6 +187,15 @@ namespace Kendo.Mvc.UI
             if (url.HasValue())
             {
                 options["url"] = url;
+            }
+
+            if (DisableDates != null && DisableDates.Count() > 0)
+            {
+                options["disableDates"] = DisableDates;
+            }
+            else if (DisableDatesHandler != null)
+            {
+                options["disableDates"] = DisableDatesHandler;
             }
 
             writer.Write(Initializer.Initialize(Selector, "Calendar", options));
