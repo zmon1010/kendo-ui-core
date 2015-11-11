@@ -367,10 +367,23 @@
 
             var sheet = this._workbook.activeSheet();
             var range = sheet.range(this._clipboard.pasteRef());
+            var state = range.getState();
+            var mergedCells = [];
+            for(var i=0; i < state.mergedCells.length; i++) {
+                mergedCells.push(sheet.range(state.mergedCells[i]));
+            }
             range.forEachRow(function(row) {
                 var maxHeight = row.sheet().rowHeight(row.topLeft().row);
-                row.forEachCell(function(row, col, cell) {
-                    var width = sheet.columnWidth(col);
+                row.forEachCell(function(rowIndex, colIndex, cell) {
+                    var cellRange = sheet.range(rowIndex, colIndex);
+                    var totalWidth = 0;
+                    for(var i = 0; i < mergedCells.length; i++) {
+                        if(cellRange._ref.intersects(mergedCells[i]._ref)) {
+                            totalWidth += cell.width;
+                            break;
+                        }
+                    }
+                    var width = Math.max(sheet.columnWidth(colIndex), totalWidth);
                     maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, cell.fontSize, cell.wrap));
                 });
                 sheet.rowHeight(row.topLeft().row, maxHeight);
@@ -382,7 +395,6 @@
         exec: function() {
             if(kendo.support.clipboard.paste) {
                 this._workbook._view.clipboard.focus().select();
-
                 //reason : focusclipbord
                 document.execCommand('paste');
             } else {
