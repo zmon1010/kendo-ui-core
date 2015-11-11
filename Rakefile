@@ -13,7 +13,7 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), "build")
 $LOAD_PATH << File.join(File.dirname(__FILE__), "build", "codegen", "lib")
 $LOAD_PATH << File.join(File.dirname(__FILE__), "resources/product")
 
-CDN_ROOT = 'https://kendo.cdn.telerik.com/'
+CDN_ROOT = '//kendo.cdn.telerik.com/'
 KENDO_ORIGIN_HOST = 'kendoorigin'
 STAGING_CDN_ROOT = '//kendo.cdn.telerik.com/staging/'
 DIST_JS_ROOT = "dist/js"
