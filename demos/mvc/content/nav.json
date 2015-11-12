@@ -411,6 +411,18 @@
             "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to customize the content in your template."
         }
       },
+	  {
+        "text": "Disable dates",
+        "url": "calendar/disable-dates",
+        "title": {
+            "kendo-ui": "Disable dates in the Kendo UI Calendar widget | Kendo UI Web demos",
+            "aspnet-mvc": "Disable dates in the ASP.NET MVC Calendar | ASP.NET MVC demos"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how Kendo UI Calendar allows you to disable dates.",
+            "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to disable dates"
+        }
+      },
       {
         "text": "Events",
         "url": "calendar/events",
@@ -910,6 +922,18 @@
             "aspnet-mvc": "This sample shows how to access the events, attached to a date, as well as use ASP.NET MVC Date Picker to pick a date or change it manually from a dropdown calendar."
         }
       },
+	  {
+        "text": "Disable dates",
+        "url": "datepicker/disable-dates",
+        "title": {
+            "kendo-ui": "Disable dates in the Kendo UI DatePicker widget | Kendo UI Web demos",
+            "aspnet-mvc": "Disable dates in the ASP.NET MVC DatePicker | ASP.NET MVC demos"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how Kendo UI DatePicker allows you to disable dates.",
+            "aspnet-mvc": "This demo shows how ASP.NET MVC DatePicker allows you to disable dates"
+        }
+      },
       {
         "text": "API",
         "url": "datepicker/api",
@@ -1056,6 +1080,18 @@
         "meta": {
             "kendo-ui": "This example shows which events are triggered when you change the date and time in Kendo UI DateTimePicker component.",
             "aspnet-mvc": "This example shows which events are triggered when you change the date and time in ASP.NET MVC DateTimePicker component."
+        }
+      },
+	  {
+        "text": "Disable dates",
+        "url": "datetimepicker/disable-dates",
+        "title": {
+            "kendo-ui": "Disable dates in the Kendo UI DateTimePicker widget | Kendo UI Web demos",
+            "aspnet-mvc": "Disable dates in the ASP.NET MVC DateTimePicker | ASP.NET MVC demos"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how Kendo UI DateTimePicker allows you to disable dates.",
+            "aspnet-mvc": "This demo shows how ASP.NET MVC DateTImePicker allows you to disable dates"
         }
       },
       {
