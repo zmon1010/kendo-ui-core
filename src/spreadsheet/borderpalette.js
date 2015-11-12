@@ -20,7 +20,11 @@
             topBorder: "Top border",
             rightBorder: "Right border",
             bottomBorder: "Bottom border",
-            noBorders: "No border"
+            noBorders: "No border",
+            reset: "Reset color",
+            customColor: "Custom color...",
+            apply: "Apply",
+            cancel: "Cancel"
         };
 
         var BorderPalette = kendo.ui.Widget.extend({
@@ -33,9 +37,13 @@
                 this.element.addClass("k-spreadsheet-border-palette");
 
                 this._borderTypePalette();
+                this._resetButton();
                 this._borderColorPalette();
+                this._customColor();
 
                 this.element.on("click", ".k-spreadsheet-border-type-palette .k-button", this._click.bind(this));
+                this.element.on("click", ".k-reset-color", this.resetColor.bind(this));
+                this.element.on("click", ".k-custom-color", this.customColor.bind(this));
             },
 
             options: {
@@ -45,6 +53,15 @@
             events: [
                 "change"
             ],
+
+            resetColor: function() {
+                this.colorPalette.value(null);  
+                this.colorPalette.trigger("change", { value: null });  
+            },
+
+            customColor: function() {
+                this._dialog.open();
+            },
 
             _borderTypePalette: function() {
                 var messages = BORDER_PALETTE_MESSAGES;
@@ -62,6 +79,12 @@
                 element.appendTo(this.element);
             },
 
+            _resetButton: function() {
+                this.resetButton = $("<a class='k-button k-reset-color' href='#'>" +
+                                    "<span class='k-icon k-font-icon k-i-background'></span>" + BORDER_PALETTE_MESSAGES.reset +
+                                   "</a>").appendTo(this.element);
+            },
+
             _borderColorPalette: function() {
                 var element = $("<div />", {
                     "class": "k-spreadsheet-border-style-palette"
@@ -74,7 +97,8 @@
                         "#d8d8d8", "#595959", "#60b5ff", "#b3bcca", "#cbecb0", "#f6a1c9", "#fee29c", "#8be6ff", "#c7d0e9", "#94efe3",
                         "#bfbfbf", "#3f3f3f", "#007dea", "#8d9baf", "#b2e389", "#f272af", "#fed46b", "#51d9ff", "#aab8de", "#5fe7d5",
                         "#a5a5a5", "#262626", "#003e75", "#3a4453", "#5ea226", "#af0f5b", "#c58c00", "#0081a5", "#425ea9", "#138677",
-                        "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
+                        "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f",
+                        "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"
                     ],
                     value: this.color,
                     change: this._colorChange.bind(this)
@@ -83,6 +107,41 @@
                 element
                     .append(colorPalette.wrapper)
                     .appendTo(this.element);
+            },
+
+            _customColorPalette: function() {
+                var element = $("<div />", {
+                    "class": "k-spreadsheet-window",
+                    "html": "<div></div>" +
+                            "<div class='k-action-buttons'>" +
+                                "<button class='k-button k-primary' data-bind='click: apply'>" + BORDER_PALETTE_MESSAGES.apply + "</button>" +
+                                "<button class='k-button' data-bind='click: close'>" + BORDER_PALETTE_MESSAGES.cancel + "</button>" +
+                            "</div>"
+                });
+
+                this._dialog = element.appendTo(document.body).kendoWindow({
+                    animation: false,
+                    scrollable: false,
+                    resizable: false,
+                    maximizable: false,
+                    modal: true,
+                    visible: false,
+                    width: 268,
+                    open: function() {
+                        this.center();
+                    }
+                }).data("kendoWindow");
+
+                this._dialog.one("activate", function() {
+                    this.element.find("[data-role=flatcolorpicker]").data("kendoFlatColorPicker")._hueSlider.resize();
+                });
+
+                this._dialog.element.children().first().kendoFlatColorPicker();
+            },
+
+            _customColor: function() {
+                this.customColorButton = $("<a class='k-button k-custom-color' href='#'>" + BORDER_PALETTE_MESSAGES.customColor + "</a>").appendTo(this.element);
+                this._customColorPalette();
             },
 
             _colorChange: function(e) {

@@ -487,12 +487,12 @@
         init: function(options, toolbar) {
             PopupTool.fn.init.call(this, options, toolbar);
             this.popup.element.addClass("k-spreadsheet-colorpicker");
-            this._resetButton();
+            this._resetColorButton();
             this._colorPalette();
-            this._customColor();
+            this._customColorButton();
 
-            this._reset = $.proxy(this.reset, this);
-            this.resetButton.on("click", this._reset);
+            this._resetColor = $.proxy(this.resetColor, this);
+            this.resetButton.on("click", this._resetColor);
 
             this._customColorDialog = $.proxy(this.customColor, this);
             this.customButton.on("click", this._customColorDialog);
@@ -523,22 +523,22 @@
                 return this.colorPalette.value();
             }
         },
-        reset: function() {
+        resetColor: function() {
             this.colorPalette.value(null);
             this.colorPalette.trigger("change");
         },
         customColor: function() {
-            this.popup.close();
             this.toolbar.dialog({
                 name: "customColor",
                 options: {
                     title: this.options.property, property: this.options.property
                 }
             });
+            this.popup.close();
         },
-        _resetButton: function() {
-            this.resetButton = $("<a class='k-button' href='#'>" +
-                                    "<span class='k-icon k-font-icon k-i-background'></span>" + MESSAGES.colorPicker.reset +
+        _resetColorButton: function() {
+            this.resetButton = $("<a class='k-button k-reset-color' href='#'>" +
+                                    "<span class='k-icon k-font-icon k-i-color-reset'></span>" + MESSAGES.colorPicker.reset +
                                  "</a>").appendTo(this.popup.element);
         },
         _colorPalette: function() {
@@ -555,8 +555,8 @@
                 change: this._colorChange.bind(this)
             }).data("kendoColorPalette");
         },
-        _customColor: function() {
-            this.customButton = $("<a class='k-button' href='#'>" + MESSAGES.colorPicker.customColor + "</a>").appendTo(this.popup.element);
+        _customColorButton: function() {
+            this.customButton = $("<a class='k-button k-custom-color' href='#'>" + MESSAGES.colorPicker.customColor + "</a>").appendTo(this.popup.element);
         },
         _colorChange: function(e) {
             this.toolbar.action({
