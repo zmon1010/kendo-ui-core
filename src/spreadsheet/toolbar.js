@@ -538,7 +538,7 @@
         },
         _resetColorButton: function() {
             this.resetButton = $("<a class='k-button k-reset-color' href='#'>" +
-                                    "<span class='k-icon k-font-icon k-i-color-reset'></span>" + MESSAGES.colorPicker.reset +
+                                    "<span class='k-icon k-font-icon k-i-reset-color'></span>" + MESSAGES.colorPicker.reset +
                                  "</a>").appendTo(this.popup.element);
         },
         _colorPalette: function() {
