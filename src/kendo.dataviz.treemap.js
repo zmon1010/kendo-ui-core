@@ -82,6 +82,9 @@ var __meta__ = { // jshint ignore:line
             this.element
                 .on(MOUSEOVER_NS, proxy(this._mouseover, this))
                 .on(MOUSELEAVE_NS, proxy(this._mouseleave, this));
+
+            this._resizeHandler = proxy(this.resize, this, false);
+            kendo.onResize(this._resizeHandler);
         },
 
         _setLayout: function() {
@@ -289,6 +292,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             this._root = null;
+            kendo.unbindResize(this._resizeHandler);
 
             kendo.destroy(this.element);
         },
@@ -302,7 +306,35 @@ var __meta__ = { // jshint ignore:line
         },
 
         _resize: function() {
-            this.dataSource.fetch();
+            var root = this._root;
+            if (root) {
+                var element = this.element;
+                var rootElement = element.children();
+                root.coord.width = element.outerWidth();
+                root.coord.height = element.outerHeight();
+
+                rootElement.css({
+                    width: root.coord.width,
+                    height: root.coord.height
+                });
+
+                this._resizeItems(root, rootElement);
+            }
+        },
+
+        _resizeItems: function(root, element) {
+            if (root.children && root.children.length) {
+                var elements = element.children(".k-treemap-wrap").children();
+                var child, childElement;
+
+                this._layout.compute(root.children, root.coord, {text: this._view.titleSize(root, element)});
+                for (var idx = 0; idx < root.children.length; idx++) {
+                    child = root.children[idx];
+                    childElement = elements.filter("[" + kendo.attr("uid") + "='" + child.dataItem.uid + "']");
+                    this._view.setItemSize(child, childElement);
+                    this._resizeItems(child, childElement);
+                }
+            }
         },
 
         setOptions: function(options) {
@@ -547,6 +579,11 @@ var __meta__ = { // jshint ignore:line
             this.offset = 0;
         },
 
+        titleSize: function(item, element) {
+            var text = element.children(".k-treemap-title");
+            return text.height();
+        },
+
         htmlSize: function(root) {
             var rootElement = this._getByUid(root.dataItem.uid);
             var htmlSize = {
@@ -622,38 +659,47 @@ var __meta__ = { // jshint ignore:line
         },
 
         _createTile: function(item) {
-            var newCoord = {
-                width: item.coord.width,
-                height: item.coord.height,
-                left: item.coord.left,
-                top: item.coord.top
-            };
-
-            if (newCoord.left && this.offset) {
-                newCoord.width += this.offset * 2;
-            } else {
-                newCoord.width += this.offset;
-            }
-
-            if (newCoord.top) {
-                newCoord.height += this.offset * 2;
-            } else {
-                newCoord.height += this.offset;
-            }
-
-            var tile = $("<div class='k-treemap-tile'></div>")
-                .css({
-                    width: newCoord.width,
-                    height: newCoord.height,
-                    left: newCoord.left,
-                    top: newCoord.top
-                });
+            var tile = $("<div class='k-treemap-tile'></div>");
+            this.setItemSize(item, tile);
 
             if (defined(item.dataItem) && defined(item.dataItem.uid)) {
                 tile.attr(kendo.attr("uid"), item.dataItem.uid);
             }
 
             return tile;
+        },
+
+        _itemCoordinates: function(item) {
+            var coordinates = {
+                width: item.coord.width,
+                height: item.coord.height,
+                left: item.coord.left,
+                top: item.coord.top
+            };
+
+            if (coordinates.left && this.offset) {
+                coordinates.width += this.offset * 2;
+            } else {
+                coordinates.width += this.offset;
+            }
+
+            if (coordinates.top) {
+                coordinates.height += this.offset * 2;
+            } else {
+                coordinates.height += this.offset;
+            }
+
+            return coordinates;
+        },
+
+        setItemSize: function(item, element) {
+            var coordinates = this._itemCoordinates(item);
+            element.css({
+                width: coordinates.width,
+                height: coordinates.height,
+                left: coordinates.left,
+                top: coordinates.top
+            });
         },
 
         _getText: function(item) {
@@ -829,6 +875,16 @@ var __meta__ = { // jshint ignore:line
             }
 
             return htmlSize;
+        },
+
+        titleSize: function(item, element) {
+            var size;
+            if (item.vertical) {
+               size = element.children(".k-treemap-title").height();
+            } else {
+                size = element.children(".k-treemap-title-vertical").width();
+            }
+            return size;
         },
 
         _createTitle: function(item) {
