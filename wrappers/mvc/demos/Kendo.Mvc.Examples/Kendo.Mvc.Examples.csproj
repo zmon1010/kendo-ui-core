@@ -153,6 +153,7 @@
     <Compile Include="Controllers\AutoComplete\GroupingController.cs" />
     <Compile Include="Controllers\Bar_Charts\Pan_And_ZoomController.cs" />
     <Compile Include="Controllers\Bar_Charts\VisualsController.cs" />
+    <Compile Include="Controllers\Calendar\DisableDatesController.cs" />
     <Compile Include="Controllers\Chart_Api\ExportController.cs" />
     <Compile Include="Controllers\Chart_Api\Pdf_ExportController.cs" />
     <Compile Include="Controllers\Chart_Api\EventsController.cs" />
@@ -202,6 +203,8 @@
     <Compile Include="Controllers\Collapsible\NestedController.cs" />
     <Compile Include="Controllers\ComboBox\GroupingController.cs" />
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
+    <Compile Include="Controllers\DatePicker\DisableDatesController.cs" />
+    <Compile Include="Controllers\DateTimePicker\DisableDatesController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
@@ -891,6 +894,7 @@
     </Content>
     <Content Include="Areas\aspx\Views\bar_charts\pan_and_zoom.aspx" />
     <Content Include="Areas\aspx\Views\bar_charts\visuals.aspx" />
+    <Content Include="Areas\aspx\Views\calendar\disable_dates.aspx" />
     <Content Include="Areas\aspx\Views\chart_api\export.aspx" />
     <Content Include="Areas\aspx\Views\chart_api\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\chart_api\events.aspx" />
@@ -937,6 +941,8 @@
     <Content Include="Areas\aspx\Views\bullet_charts\remote_data_binding.aspx" />
     <Content Include="Areas\aspx\Views\combobox\grouping.aspx" />
     <Content Include="Areas\aspx\Views\combobox\virtualization.aspx" />
+    <Content Include="Areas\aspx\Views\datepicker\disable_dates.aspx" />
+    <Content Include="Areas\aspx\Views\datetimepicker\disable_dates.aspx" />
     <Content Include="Areas\aspx\Views\diagram\api.aspx" />
     <Content Include="Areas\aspx\Views\diagram\export.aspx" />
     <Content Include="Areas\aspx\Views\diagram\pdf_export.aspx" />
@@ -1389,6 +1395,7 @@
     <Content Include="Areas\aspx\Views\spreadsheet\server_side_pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\spreadsheet\sorting_filtering.aspx" />
     <Content Include="Areas\razor\Views\bar_charts\pan_and_zoom.cshtml" />
+    <Content Include="Areas\razor\Views\calendar\disable_dates.cshtml" />
     <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />
@@ -3336,6 +3343,8 @@
     <Content Include="Areas\razor\Views\spreadsheet\events.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\sorting_filtering.cshtml" />
     <Content Include="Areas\razor\Views\scatter_charts\pan_and_zoom.cshtml" />
+    <Content Include="Areas\razor\Views\datepicker\disable_dates.cshtml" />
+    <Content Include="Areas\razor\Views\datetimepicker\disable_dates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
