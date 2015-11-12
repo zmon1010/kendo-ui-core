@@ -604,4 +604,8 @@ test("list start attribute is serialized correctly", function() {
     equal(serializeCycle('<ul start="2"><li>foo</li></ul>'), "<ul><li>foo</li></ul>");
 });
 
+test("multiple script tags are persisted", function() {
+    verifyCycle('<script>var a;</script><script>var b;</script>', { scripts: true });
+});
+
 }());

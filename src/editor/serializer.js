@@ -33,7 +33,7 @@ var Serializer = {
 
         return html
             .replace(/<!\[CDATA\[(.*)?\]\]>/g, "<!--[CDATA[$1]]-->")
-            .replace(/<script([^>]*)>(.*)?<\/script>/ig, "<k:script$1>$2<\/k:script>")
+            .replace(/<(\/?)script([^>]*)>/ig, "<$1k:script$2>")
             .replace(/<img([^>]*)>/ig, function(match) {
                 return match.replace(onerrorRe, "");
             })
