@@ -83,6 +83,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public IEnumerable<string> DisableDates
+        {
+            get;
+            set;
+        }
+
+        public ClientHandlerDescriptor DisableDatesHandler
+        {
+            get;
+            set;
+        }
+
         public override void WriteInitializationScript(TextWriter writer)
         {
             var options = new Dictionary<string, object>(Events);
@@ -165,6 +177,15 @@ namespace Kendo.Mvc.UI
             if (Dates.Any())
             {
                 options["dates"] = Dates;
+            }
+
+            if (DisableDates != null && DisableDates.Count() > 0)
+            {
+                options["disableDates"] = DisableDates;
+            }
+            else if (DisableDatesHandler != null)
+            {
+                options["disableDates"] = DisableDatesHandler;
             }
 
             writer.Write(Initializer.Initialize(Selector, "DateTimePicker", options));

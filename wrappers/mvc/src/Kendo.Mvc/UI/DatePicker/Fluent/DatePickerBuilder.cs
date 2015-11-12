@@ -243,5 +243,43 @@ namespace Kendo.Mvc.UI.Fluent
             }
             return this;
         }
+
+        /// <summary>
+        /// Specifies the disabled dates in the DatePicker widget.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DatePicker()
+        ///             .Name("DatePicker")
+        ///             .DisableDates(new string [] {"mo", "tu"})
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public DatePickerBuilder DisableDates(IEnumerable<string> disableDates)
+        {
+            Component.DisableDates = disableDates;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the disabled dates in the DatePicker widget using a function.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DatePicker()
+        ///             .Name("DatePicker")
+        ///             .DisableDates("disableDates")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public DatePickerBuilder DisableDates(string handler)
+        {
+            var handlerDescription = new ClientHandlerDescriptor { HandlerName = handler };
+
+            Component.DisableDatesHandler = handlerDescription;
+
+            return this;
+        }
     }
 }
