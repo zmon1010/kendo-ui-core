@@ -1,4 +1,3 @@
-MVC_6_VERSION_SUFFIX = "-beta4"
 MVC_6_DEMOS_ROOT = 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/'
 MVC_6_DEMOS_WWWROOT = MVC_6_DEMOS_ROOT + 'wwwroot/'
 MVC_6_DEMOS_LIBROOT = MVC_6_DEMOS_WWWROOT + 'lib/kendo/'
@@ -55,9 +54,9 @@ def update_nuget_reference name
     return unless File.exists? name
 
     content = File.read(name)
-    content.gsub!(/"Kendo.Mvc": ".*"/, '"Kendo.Mvc": "' + VERSION + '"')
+    content.gsub!(/"Kendo.Mvc": ".*"/, '"Kendo.Mvc": "' + MVC6_VERSION + '"')
 
-    puts "Updating examples NuGet reference to #{VERSION}"
+    puts "Updating examples NuGet reference to #{MVC6_VERSION}"
 
     File.open(name, 'w') do |file|
         file.write content

@@ -38,12 +38,17 @@ MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
             .include(MVC6_SRC_ROOT + '**/*.snk')
             .include(MVC6_SRC_ROOT + '**/*.json')
 
-MVC6_REDIST = FileList["Kendo.Mvc.#{VERSION}.nupkg"]
-            .include("Kendo.Mvc.#{VERSION}.symbols.nupkg")
+MVC6_VERSION = "#{VERSION_YEAR}.#{VERSION_Q}.0-beta-#{VERSION_DATE}"
+
+# For the official release use:
+#MVC6_VERSION = VERSION
+
+MVC6_REDIST = FileList["Kendo.Mvc.#{MVC6_VERSION}.nupkg"]
+            .include("Kendo.Mvc.#{MVC6_VERSION}.symbols.nupkg")
             .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
 
-MVC6_NUGET = "#{MVC6_SRC_ROOT}bin/Release/Kendo.Mvc.#{VERSION}.nupkg"
-MVC6_NUGET_SYMBOLS = "#{MVC6_SRC_ROOT}bin/Release/Kendo.Mvc.#{VERSION}.symbols.nupkg"
+MVC6_NUGET = "#{MVC6_SRC_ROOT}bin/Release/Kendo.Mvc.#{MVC6_VERSION}.nupkg"
+MVC6_NUGET_SYMBOLS = "#{MVC6_SRC_ROOT}bin/Release/Kendo.Mvc.#{MVC6_VERSION}.symbols.nupkg"
 
 rule 'Kendo.Mvc.xml' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll'
 
@@ -122,9 +127,9 @@ class ProjectFileTask < Rake::FileTask
     def execute(args=nil)
         content = File.read(name)
 
-        content.gsub!(/"version": ".*"/, '"version": "' + VERSION + '"')
+        content.gsub!(/"version": ".*"/, '"version": "' + MVC6_VERSION + '"')
 
-        puts "Updating project version to #{VERSION}"
+        puts "Updating project version to #{MVC6_VERSION}"
 
         File.open(name, 'w') do |file|
             file.write content
@@ -132,7 +137,7 @@ class ProjectFileTask < Rake::FileTask
     end
 
     def needed?
-        super || !File.read(name).include?(VERSION)
+        super || !File.read(name).include?(MVC6_VERSION)
     end
 end
 

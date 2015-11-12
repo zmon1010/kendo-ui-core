@@ -12,8 +12,9 @@ month = '00' if month == 0
 VERSION_Q = version_data['release'].to_i
 VERSION_SERVICE_PACK = version_data['servicePack']
 SERVICE_PACK_NUMBER = version_data['servicePackNumber']
+VERSION_DATE = "#{month}#{now.day}"
 
-VERSION = ENV['VERSION'] || "#{VERSION_YEAR}.#{VERSION_Q}.#{month}#{now.day}"
+VERSION = ENV['VERSION'] || "#{VERSION_YEAR}.#{VERSION_Q}.#{VERSION_DATE}"
 
 CURRENT_COMMIT = `git rev-parse HEAD`.strip
 BETA = !!ENV['BETA']
