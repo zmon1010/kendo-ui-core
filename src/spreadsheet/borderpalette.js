@@ -55,8 +55,8 @@
             ],
 
             resetColor: function() {
-                this.colorPalette.value(null);  
-                this.colorPalette.trigger("change", { value: null });  
+                this.colorPalette.value(null);
+                this.colorPalette.trigger("change", { value: null });
             },
 
             customColor: function() {
@@ -159,6 +159,7 @@
 
             destroy: function() {
                 this.colorPalette.destroy();
+                this._dialog.destroy();
                 this.element.off("click");
             }
         });
