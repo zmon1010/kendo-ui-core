@@ -106,14 +106,12 @@
         });
 
         asyncTest("animates to scale 1", function() {
+            anim.options.duration = 0;
             anim.setup();
             anim.play();
 
-            setTimeout(function() {
-                ok(visual.transform().equals(geom.transform().scale(1, 1, center)));
-
-                start();
-            }, 100);
+            start();
+            ok(visual.transform().equals(geom.transform().scale(1, 1, center)));
         });
 
     })();
