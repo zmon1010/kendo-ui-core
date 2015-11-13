@@ -662,7 +662,7 @@ test("the transport is initialized when no options are passed", function (){
     ok(true);
 });
 
-test("group items are translated", function() {
+test("groups are translated", function() {
     var dataSource = new kendo.data.DataSource({
         "type":"aspnetmvc-ajax",
         "transport":{
@@ -685,6 +685,10 @@ test("group items are translated", function() {
         "filter":[
 
         ],
+        "aggregate": [{
+            "field": "Salary.Amount",
+            "aggregate": "sum"
+        }],
         "schema":{
             "data":"Data",
             "total":"Total",
@@ -727,6 +731,11 @@ test("group items are translated", function() {
                             }
                         }
                     ],
+                    "Aggregates":{
+                        "Salary.Amount": {
+                            "sum": 2000
+                        }
+                    },
                     "Key":2000
                 },
                 {
@@ -756,7 +765,121 @@ test("group items are translated", function() {
 
     dataSource.read();
 
-    equal(dataSource.data()[0].Salary, undefined);
+    var group = dataSource.data()[0];
+    equal(group.Salary, undefined, "Data item fields are not set on group");
+    equal(group.value, 2000, "Key");
+    equal(group.field, "Salary.Amount", "Member");
+    equal(group.aggregates["Salary.Amount"].sum, 2000, "Aggregate");
+});
+
+test("groups are translated (camel case)", function() {
+    var dataSource = new kendo.data.DataSource({
+        "type":"aspnetmvc-ajax",
+        "transport":{
+            "read":{
+                "url":"/Home/Read"
+            },
+            "prefix":""
+        },
+        "serverPaging":true,
+        "serverSorting":true,
+        "serverFiltering":true,
+        "serverGrouping":true,
+        "serverAggregates":true,
+        "group":[
+            {
+                "field":"Salary.Amount",
+                "dir":"asc"
+            }
+        ],
+        "filter":[
+
+        ],
+        "aggregate": [{
+            "field": "Salary.Amount",
+            "aggregate": "sum"
+        }],
+        "schema":{
+            "data":"Data",
+            "total":"Total",
+            "errors":"Errors",
+            "model":{
+                "id":"Id",
+                "fields":{
+                    "Id":{
+                        "type":"number"
+                    },
+                    "Name":{
+                        "type":"string"
+                    },
+                    "Salary":{
+                        "type":"object"
+                    },
+                    "Salary.Amount":{
+                        "type":"number"
+                    }
+                }
+            }
+        },
+        "data":{
+            "Data":[
+                {
+                    "aggregates":{
+
+                    },
+                    "hasSubgroups":false,
+                    "member":"Salary.Amount",
+                    "subgroups":[
+
+                    ],
+                    "items":[
+                        {
+                            "Id":1,
+                            "Name":"John Smith",
+                            "Salary":{
+                                "Amount":2000
+                            }
+                        }
+                    ],
+                    "aggregates":{
+                        "Salary.Amount": {
+                            "sum": 2000
+                        }
+                    },
+                    "key":2000
+                },
+                {
+                    "key":3000,
+                    "hasSubgroups":false,
+                    "member":"Salary.Amount",
+                    "items":[
+                        {
+                            "Id":2,
+                            "Name":"Jane Rottencrotch",
+                            "Salary":{
+                                "Amount":3000
+                            }
+                        }
+                    ],
+                    "aggregates":{
+
+                    },
+                    "subgroups":[
+
+                    ]
+                }
+            ],
+            "Total":2
+        }
+    });
+
+    dataSource.read();
+
+    var group = dataSource.data()[0];
+    equal(group.Salary, undefined, "Data item fields are not set on group");
+    equal(group.value, 2000, "Key");
+    equal(group.field, "Salary.Amount", "Member");
+    equal(group.aggregates["Salary.Amount"].sum, 2000, "Aggregate");
 });
 
 test("group items are translated if model is not defined", function() {
