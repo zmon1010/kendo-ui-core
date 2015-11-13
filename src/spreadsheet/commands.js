@@ -364,9 +364,24 @@
             }
             this.getState();
             this._clipboard.paste();
+            this._workbook.execute({
+                command: "AdjustRowHeightCommand",
+                options: {
+                    range: this._workbook.activeSheet().range(this._clipboard.pasteRef())
+                }
+            });
+        }
+    });
 
+    kendo.spreadsheet.AdjustRowHeightCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
             var sheet = this._workbook.activeSheet();
-            var range = sheet.range(this._clipboard.pasteRef());
+            this._workingRange = options.range || sheet.range(options.rowIndex);
+        },
+        exec: function() {
+            var sheet = this._workbook.activeSheet();
+            var range = this._workingRange;
             var state = range.getState();
             var mergedCells = [];
             for(var i=0; i < state.mergedCells.length; i++) {
@@ -386,7 +401,7 @@
                     var width = Math.max(sheet.columnWidth(colIndex), totalWidth);
                     maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, cell.fontSize, cell.wrap));
                 });
-                sheet.rowHeight(row.topLeft().row, maxHeight);
+                sheet.rowHeight(row.topLeft().row, Math.max(sheet.rowHeight(row.topLeft().row), maxHeight));
             });
         }
     });

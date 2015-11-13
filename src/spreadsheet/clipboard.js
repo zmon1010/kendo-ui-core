@@ -104,7 +104,7 @@
             }
             var topLeft = new CellRef(Math.min.apply(null, rows), Math.min.apply(null, cols));
             var bottomRight = new CellRef(Math.max.apply(null, rows), Math.max.apply(null, cols));
-            return new RangeRef(topLeft, bottomRight, 0);
+            return new RangeRef(topLeft, bottomRight);
         },
 
         destroy: function() {
