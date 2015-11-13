@@ -221,18 +221,11 @@ namespace Kendo.Mvc.UI
         {
             VerifySettings();
 
-            if (IsSelfInitialized)
-            {
-                if (HasDeferredInitialization)
-                {
-                    WriteDeferredScriptInitialization();
-                }
-                else
-                {
-                    writer.Write("<script>");
-                    WriteInitializationScript(writer);
-                    writer.Write("</script>");
-                }
+            if (IsSelfInitialized && !HasDeferredInitialization)
+            {                
+                writer.Write("<script>");
+                WriteInitializationScript(writer);
+                writer.Write("</script>");                
             }
         }
 
