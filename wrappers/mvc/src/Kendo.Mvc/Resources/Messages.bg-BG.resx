@@ -795,4 +795,10 @@
   <data name="Filter_NumberIsNull" xml:space="preserve">
     <value>Е null</value>
   </data>
+  <data name="Filter_DateIsNotNull" xml:space="preserve">
+    <value>Не е null</value>
+  </data>
+  <data name="Filter_DateIsNull" xml:space="preserve">
+    <value>Е null</value>
+  </data>
 </root>

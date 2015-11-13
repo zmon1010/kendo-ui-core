@@ -655,6 +655,24 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is not null.
+        /// </summary>
+        public static string Filter_DateIsNotNull {
+            get {
+                return ResourceManager.GetString("Filter_DateIsNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is null.
+        /// </summary>
+        public static string Filter_DateIsNull {
+            get {
+                return ResourceManager.GetString("Filter_DateIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is equal to.
         /// </summary>
         public static string Filter_EnumIsEqualTo {
