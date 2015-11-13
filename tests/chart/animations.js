@@ -62,13 +62,12 @@
                  [1, 0, 0, 0.5, 0, 10]);
         });
 
-        asyncTest("cleans up transformation", function() {
+        test("cleans up transformation", function() {
+            anim.options.duration = 0;
             anim.setup();
             anim.play();
-            setTimeout(function() {
-                equal(visual.transform(), null);
-                start();
-            }, 100);
+
+            equal(visual.transform(), null);
         });
 
     })();
@@ -105,12 +104,11 @@
             ok(visual.transform().equals(geom.transform().scale(0.5, 0.5, center)));
         });
 
-        asyncTest("animates to scale 1", function() {
+        test("animates to scale 1", function() {
             anim.options.duration = 0;
             anim.setup();
             anim.play();
 
-            start();
             ok(visual.transform().equals(geom.transform().scale(1, 1, center)));
         });
 
@@ -148,15 +146,12 @@
             ok(visual.transform().equals(geom.transform().scale(0.5, 0.5, center)));
         });
 
-        asyncTest("animates to scale 1", function() {
+        test("animates to scale 1", function() {
+            anim.options.duration = 0;
             anim.setup();
             anim.play();
 
-            setTimeout(function() {
-                ok(visual.transform().equals(geom.transform().scale(1, 1, center)));
-
-                start();
-            }, 100);
+            ok(visual.transform().equals(geom.transform().scale(1, 1, center)));
         });
 
     })();
@@ -195,15 +190,12 @@
             equal(visual.opacity(), 0.5 * OPACITY);
         });
 
-        asyncTest("animates opacity to initial opacity", function() {
+        test("animates opacity to initial opacity", function() {
+            anim.options.duration = 0;
             anim.setup();
             anim.play();
 
-            setTimeout(function() {
-                equal(visual.opacity(), OPACITY);
-
-                start();
-            }, 100);
+            equal(visual.opacity(), OPACITY);
         });
     })();
 
@@ -243,15 +235,12 @@
             sameLinePath(path, draw.Path.fromRect(box.toRect()));
         });
 
-        asyncTest("animates clip path to the size of the box", function() {
+        test("animates clip path to the size of the box", function() {
+            anim.options.duration = 0;
             anim.setup();
             anim.play();
 
-            setTimeout(function() {
-                sameLinePath(path, draw.Path.fromRect(box.toRect()));
-
-                start();
-            }, 100);
+            sameLinePath(path, draw.Path.fromRect(box.toRect()));
         });
 
     })();
