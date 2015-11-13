@@ -777,4 +777,16 @@
   <data name="Pager_AllPages" xml:space="preserve">
     <value>Всички</value>
   </data>
+  <data name="Filter_StringIsEmpty" xml:space="preserve">
+    <value>Е празно</value>
+  </data>
+  <data name="Filter_StringIsNotEmpty" xml:space="preserve">
+    <value>Не е празно</value>
+  </data>
+  <data name="Filter_StringIsNotNull" xml:space="preserve">
+    <value>Не е null</value>
+  </data>
+  <data name="Filter_StringIsNull" xml:space="preserve">
+    <value>Е null</value>
+  </data>
 </root>

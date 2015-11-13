@@ -817,6 +817,15 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is empty.
+        /// </summary>
+        public static string Filter_StringIsEmpty {
+            get {
+                return ResourceManager.GetString("Filter_StringIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is equal to.
         /// </summary>
         public static string Filter_StringIsEqualTo {
@@ -826,11 +835,38 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is not empty.
+        /// </summary>
+        public static string Filter_StringIsNotEmpty {
+            get {
+                return ResourceManager.GetString("Filter_StringIsNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is not equal to.
         /// </summary>
         public static string Filter_StringIsNotEqualTo {
             get {
                 return ResourceManager.GetString("Filter_StringIsNotEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is not null.
+        /// </summary>
+        public static string Filter_StringIsNotNull {
+            get {
+                return ResourceManager.GetString("Filter_StringIsNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is null.
+        /// </summary>
+        public static string Filter_StringIsNull {
+            get {
+                return ResourceManager.GetString("Filter_StringIsNull", resourceCulture);
             }
         }
         

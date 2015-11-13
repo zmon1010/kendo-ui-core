@@ -780,4 +780,16 @@
   <data name="Pager_AllPages" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="Filter_StringIsEmpty" xml:space="preserve">
+    <value>Is empty</value>
+  </data>
+  <data name="Filter_StringIsNotEmpty" xml:space="preserve">
+    <value>Is not empty</value>
+  </data>
+  <data name="Filter_StringIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_StringIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
 </root>

@@ -88,5 +88,49 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the text for IsNull operator filter menu item.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public StringOperatorsBuilder IsNull(string message)
+        {
+            strings.Operators["isnull"] = message;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the text for IsNotNull operator filter menu item.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public StringOperatorsBuilder IsNotNull(string message)
+        {
+            strings.Operators["isnotnull"] = message;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the text for IsEmpty operator filter menu item.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public StringOperatorsBuilder IsEmpty(string message)
+        {
+            strings.Operators["isempty"] = message;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the text for IsNotEmpty operator filter menu item.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public StringOperatorsBuilder IsNotEmpty(string message)
+        {
+            strings.Operators["isnotempty"] = message;
+
+            return this;
+        }
     }
 }
