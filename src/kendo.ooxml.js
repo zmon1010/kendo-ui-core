@@ -341,7 +341,7 @@ function toHeight(px) {
     return px * 0.75;
 }
 
-var DATE_EPOCH = kendo.timezone.remove(new Date(1900, 0, 0), "Etc/UTC");
+var DATE_EPOCH = new Date(1900, 0, 0);
 
 var Worksheet = kendo.Class.extend({
     init: function(options, sharedStrings, styles) {
@@ -505,7 +505,10 @@ var Worksheet = kendo.Class.extend({
             value = +value;
         } else if (value && value.getTime) {
             type = null;
-            value = (kendo.timezone.remove(value, "Etc/UTC") - DATE_EPOCH) / kendo.date.MS_PER_DAY + 1;
+
+            var offset = (value.getTimezoneOffset() - DATE_EPOCH.getTimezoneOffset()) * kendo.date.MS_PER_MINUTE;
+            value = (value - DATE_EPOCH - offset) / kendo.date.MS_PER_DAY + 1;
+
             if (!style.format) {
                 style.format = "mm-dd-yy";
             }

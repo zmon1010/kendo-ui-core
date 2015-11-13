@@ -264,6 +264,28 @@ test("toXML stores dates as offsets from epoch", function() {
     equal(dom.find("c > v").text(), "41275.5");
 });
 
+tzTest("Pacific", "toXML stores dates as offsets from epoch (PDT)", function() {
+    var date = new Date("2015/11/01");
+    var worksheet = Worksheet([
+        { cells: [{ value: date }] }
+    ]);
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("c > v").text(), "42309");
+});
+
+tzTest("Pacific", "toXML stores dates as offsets from epoch (PDT -> PST transition)", function() {
+    var date = new Date("2015/11/01 02:15:00");
+    var worksheet = Worksheet([
+        { cells: [{ value: date }] }
+    ]);
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("c > v").text(), "42309.09375");
+});
+
 test("toXML adds strings to sharedStrings", function() {
     var worksheet = Worksheet();
 
