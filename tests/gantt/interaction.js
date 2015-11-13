@@ -981,7 +981,6 @@
     });
 
     asyncTest("timeline scroll top scroll treelist", function () {
-        expect(1);
         var timelineContent = gantt.timeline.wrapper.find(".k-grid-content");
         var treelistContent = gantt.list.element.find(".k-grid-content");
 
@@ -990,7 +989,7 @@
         setTimeout(function () {
             equal(treelistContent.scrollTop(), timelineContent.scrollTop());
             start();
-        }, 2);
+        }, 50);
     });
 
     asyncTest("timeline scroll left scroll header", function () {
