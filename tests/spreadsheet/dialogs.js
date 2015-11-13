@@ -27,7 +27,7 @@
     test("opens formatCells dialog", function() {
         spreadsheet.openDialog("formatCells");
 
-        equal($(".k-window").length, 1);
+        equal($(".k-spreadsheet-format-cells").length, 1);
     });
 
     test("passes options to dialog", function() {
