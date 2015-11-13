@@ -468,6 +468,10 @@
                         cell.value = kendo.spreadsheet.numberToDate(cell.value);
                     }
 
+                    if (cell.hasOwnProperty("wrap")) {
+                        delete cell.wrap;
+                    }
+
                     cell.checked = !sheet.isHiddenRow(row);
 
                     values.push(cell);

@@ -149,6 +149,16 @@
         equal(values[1].text, "A1");
     });
 
+    test("wrap property is trimmed from values", function() {
+        range = sheet.range("A1:A4").values([ ["header"], ["A1"], ["A2"], ["A3"] ]).wrap(true);
+        filterMenu = new kendo.spreadsheet.FilterMenu({ range: range });
+
+        var values = filterMenu.getValues()[0].items;
+
+        ok(!values[0].hasOwnProperty("wrap"));
+        ok(!values[1].hasOwnProperty("wrap"));
+    });
+
     test("skips header row value", function() {
         filterMenu = createWithValues([ ["header"], ["A1"] ]);
 
