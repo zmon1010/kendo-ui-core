@@ -99,7 +99,10 @@ namespace Kendo.Mvc.UI.Fluent
         {
             Component.HasDeferredInitialization = deferred;
 
-            Component.WriteDeferredScriptInitialization();
+            if (Component.HasDeferredInitialization)
+            {
+                Component.WriteDeferredScriptInitialization();
+            }
 
             return new DeferredWidgetBuilder<TViewComponent>(Component);
         }
