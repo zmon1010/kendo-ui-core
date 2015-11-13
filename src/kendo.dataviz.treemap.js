@@ -138,6 +138,7 @@ var __meta__ = { // jshint ignore:line
             var item, i;
 
             if (!node) {
+                this._cleanItems();
                 this.element.empty();
                 item = this._wrapItem(items[0]);
                 this._layout.createRoot(
@@ -178,6 +179,13 @@ var __meta__ = { // jshint ignore:line
                     node: node
                 });
             }
+        },
+
+        _cleanItems: function() {
+            var that = this;
+            that.angular("cleanup", function() {
+               return { elements: that.element.find(".k-leaf div,.k-treemap-title,.k-treemap-title-vertical") };
+            });
         },
 
         _setColors: function(items) {
@@ -598,6 +606,8 @@ var __meta__ = { // jshint ignore:line
                     var title = this._createTitle(root);
                     rootElement.append(title);
 
+                    this._compile(title, root.dataItem);
+
                     htmlSize.text = title.height();
                 }
 
@@ -607,6 +617,15 @@ var __meta__ = { // jshint ignore:line
             }
 
             return htmlSize;
+        },
+
+        _compile: function(element, dataItem) {
+            this.treeMap.angular("compile", function(){
+                return {
+                    elements: element,
+                    data: [ { dataItem: dataItem } ]
+                };
+            });
         },
 
         _getByUid: function(uid) {
@@ -623,6 +642,9 @@ var __meta__ = { // jshint ignore:line
                     var leaf = children[i];
                     var htmlElement = this._createLeaf(leaf);
                     rootWrap.append(htmlElement);
+
+                    this._compile(htmlElement.children(), leaf.dataItem);
+
                     this.treeMap.trigger(ITEM_CREATED, {
                         element: htmlElement
                     });
@@ -633,6 +655,7 @@ var __meta__ = { // jshint ignore:line
         createRoot: function(root) {
             var htmlElement = this._createLeaf(root);
             this.element.append(htmlElement);
+            this._compile(htmlElement.children(), root.dataItem);
 
             this.treeMap.trigger(ITEM_CREATED, {
                 element: htmlElement
@@ -640,6 +663,12 @@ var __meta__ = { // jshint ignore:line
         },
 
         _clean: function(root) {
+            this.treeMap.angular("cleanup", function() {
+                return {
+                    elements: root.children(":not(.k-treemap-wrap)")
+                };
+            });
+
             root.css("background-color", "");
             root.removeClass("k-leaf");
             root.removeClass("k-inverse");
@@ -861,6 +890,7 @@ var __meta__ = { // jshint ignore:line
                 if (text) {
                     var title = this._createTitle(root);
                     rootElement.append(title);
+                    this._compile(title, root.dataItem);
 
                     if (root.vertical) {
                         htmlSize.text = title.height();
@@ -882,7 +912,7 @@ var __meta__ = { // jshint ignore:line
             if (item.vertical) {
                size = element.children(".k-treemap-title").height();
             } else {
-                size = element.children(".k-treemap-title-vertical").width();
+               size = element.children(".k-treemap-title-vertical").width();
             }
             return size;
         },
