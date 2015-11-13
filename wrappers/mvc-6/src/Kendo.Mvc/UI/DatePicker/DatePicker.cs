@@ -63,13 +63,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        protected override void WriteHtml(TextWriter writer)
+        public override void ProcessSettings()
         {
             if (string.IsNullOrEmpty(Format))
             {
                 Format = CultureInfo.DateTimeFormat.ShortDatePattern;
             }
 
+            base.ProcessSettings();
+        }
+
+        protected override void WriteHtml(TextWriter writer)
+        {        
             var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
             var tag = Generator.GenerateDateInput(ViewContext, metadata, Id, Name, Value, Format, HtmlAttributes);
 

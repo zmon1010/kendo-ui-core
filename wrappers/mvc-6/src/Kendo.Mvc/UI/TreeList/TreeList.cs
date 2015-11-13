@@ -46,18 +46,23 @@ namespace Kendo.Mvc.UI
 			private set;
 		}
 
-		protected override void WriteHtml(TextWriter writer)
+        public override void ProcessSettings()
         {
-			if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
-			{
-				ProcessDataSource();
-			}
+            if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
+            {
+                ProcessDataSource();
+            }
 
-			if (Editable.Enabled)
-			{
-				InitializeEditors();
-			}
+            if (Editable.Enabled)
+            {
+                InitializeEditors();
+            }
 
+
+            base.ProcessSettings();
+        }
+        protected override void WriteHtml(TextWriter writer)
+        {		
 			var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
 
             tag.WriteTo(writer, HtmlEncoder);

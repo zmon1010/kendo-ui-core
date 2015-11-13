@@ -153,31 +153,35 @@ namespace Kendo.Mvc.UI
 			set;
 		}
 
-		protected override void WriteHtml(TextWriter writer)
+        public override void ProcessSettings()
         {
-			if (!Columns.Any() && AutoGenerateColumns)
-			{
-				foreach (GridColumnBase<T> column in new GridColumnGenerator<T>(this).GetColumns())
-				{
-					Columns.Add(column);
-				}
-			}
+            if (!Columns.Any() && AutoGenerateColumns)
+            {
+                foreach (GridColumnBase<T> column in new GridColumnGenerator<T>(this).GetColumns())
+                {
+                    Columns.Add(column);
+                }
+            }
 
-			if (!HtmlAttributes.ContainsKey("id"))
-			{
-				HtmlAttributes["id"] = Id;
-			}
+            if (!HtmlAttributes.ContainsKey("id"))
+            {
+                HtmlAttributes["id"] = Id;
+            }
 
-			if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
-			{
-				ProcessDataSource();
-			}
+            if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
+            {
+                ProcessDataSource();
+            }
 
-			if (Editable.Enabled)
-			{
-				InitializeEditors();
-			}
+            if (Editable.Enabled)
+            {
+                InitializeEditors();
+            }
+            base.ProcessSettings();
+        }
 
+        protected override void WriteHtml(TextWriter writer)
+        {
 			var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
             tag.WriteTo(writer, HtmlEncoder);
 

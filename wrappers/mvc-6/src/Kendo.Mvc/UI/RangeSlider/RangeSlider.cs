@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
 
         public string RightDragHandleTitle { get; set; }
 
-        protected override void WriteHtml(TextWriter writer)
+        public override void ProcessSettings()
         {
             if (!SelectionStart.HasValue)
             {
@@ -42,6 +42,11 @@ namespace Kendo.Mvc.UI
                 }
             }
 
+            base.ProcessSettings();
+        }
+
+        protected override void WriteHtml(TextWriter writer)
+        {
             var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
             var wrapper = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
             wrapper.MergeAttributes(Generator.GetValidationAttributes(ViewContext, metadata, Name));

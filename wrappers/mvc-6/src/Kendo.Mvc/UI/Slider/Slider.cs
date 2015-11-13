@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
         {
         }
 
-        protected override void WriteHtml(TextWriter writer)
+        public override void ProcessSettings()
         {
             Func<object, T?> converter = val =>
             {
@@ -50,6 +50,11 @@ namespace Kendo.Mvc.UI
                 }
             }
 
+            base.ProcessSettings();
+        }
+
+        protected override void WriteHtml(TextWriter writer)
+        {
             var explorer = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
             var tag = Generator.GenerateRangeInput(ViewContext, explorer.Metadata, Id, Name, Value, HtmlAttributes);
 

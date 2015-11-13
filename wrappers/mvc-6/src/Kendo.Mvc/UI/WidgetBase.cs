@@ -149,7 +149,7 @@ namespace Kendo.Mvc.UI
         /// </summary>
         public void Render()
         {
-            WriteHtml(ViewContext.Writer);
+            RenderHtml(ViewContext.Writer);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Kendo.Mvc.UI
         {
             using (var output = new StringWriter())
             {
-                WriteHtml(output);
+                RenderHtml(output);
                 return output.ToString();
             }
         }
@@ -213,6 +213,16 @@ namespace Kendo.Mvc.UI
         /// </summary>
         /// <param name="writer">The writer.</param>
         public abstract void WriteInitializationScript(TextWriter writer);
+
+        public virtual void ProcessSettings()
+        {
+        }
+
+        protected virtual void RenderHtml(TextWriter writer)
+        {
+            ProcessSettings();
+            WriteHtml(writer);
+        }
 
         /// <summary>
         /// Writes the HTML.

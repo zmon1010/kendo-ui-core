@@ -101,6 +101,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             if (Component.HasDeferredInitialization)
             {
+                Component.ProcessSettings();
                 Component.WriteDeferredScriptInitialization();
             }
 
