@@ -97,8 +97,7 @@
                         "#d8d8d8", "#595959", "#60b5ff", "#b3bcca", "#cbecb0", "#f6a1c9", "#fee29c", "#8be6ff", "#c7d0e9", "#94efe3",
                         "#bfbfbf", "#3f3f3f", "#007dea", "#8d9baf", "#b2e389", "#f272af", "#fed46b", "#51d9ff", "#aab8de", "#5fe7d5",
                         "#a5a5a5", "#262626", "#003e75", "#3a4453", "#5ea226", "#af0f5b", "#c58c00", "#0081a5", "#425ea9", "#138677",
-                        "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f",
-                        "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"
+                        "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
                     ],
                     value: this.color,
                     change: this._colorChange.bind(this)
@@ -140,7 +139,9 @@
             },
 
             _customColor: function() {
-                this.customColorButton = $("<a class='k-button k-custom-color' href='#'>" + BORDER_PALETTE_MESSAGES.customColor + "</a>").appendTo(this.element);
+                this.customColorButton = $("<a class='k-button k-custom-color' href='#'>" +
+                                            "<span class='k-icon'></span>" + BORDER_PALETTE_MESSAGES.customColor +
+                                           "</a>").appendTo(this.element);
                 this._customColorPalette();
             },
 
