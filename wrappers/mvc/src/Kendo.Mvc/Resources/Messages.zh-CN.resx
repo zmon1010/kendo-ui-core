@@ -897,4 +897,10 @@
   <data name="Filter_StringIsNull" xml:space="preserve">
     <value>Is null</value>
   </data>
+  <data name="Filter_NumberIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_NumberIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
 </root>
