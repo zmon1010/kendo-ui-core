@@ -50,7 +50,7 @@ namespace Kendo.Models
 #if DEBUG
             "web/kendo.common.css",
             "web/kendo.flat.css",
-            "mobile/kendo.mobile.android.light.css"
+            "mobile/kendo.mobile.wp8.css"
 #else
             "kendo.common.min.css",
             "kendo.flat.min.css",
