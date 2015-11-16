@@ -9,7 +9,11 @@ class DataSourceResult {
         'doesnotcontain' => 'NOT LIKE',
         'contains' => 'LIKE',
         'startswith' => 'LIKE',
-        'endswith' => 'LIKE'
+        'endswith' => 'LIKE',
+        'isnull' => 'IS',
+        'isnotnull' => 'IS NOT',
+        'isempty' => '==',
+        'isnotempty' => '!='
     );
 
     private $operators = array(
@@ -18,7 +22,9 @@ class DataSourceResult {
         'gte' => '>=',
         'lt' => '<',
         'lte' => '<=',
-        'neq' => '!='
+        'neq' => '!=',
+        'isnull' => 'IS',
+        'isnotnull' => 'IS NOT'
     );
 
     private $aggregateFunctions = array(
@@ -276,6 +282,14 @@ class DataSourceResult {
                 $operator = $this->stringOperators[$filter->operator];
             } else {
                 $operator = $this->operators[$filter->operator];
+            }
+
+            if ($operator == "isnull" || $operator == "isnotnull") {
+                $value = 'NULL';
+            }
+
+            if ($operator == "isempty" || $operator == "isnotempty") {
+                $value = '';
             }
 
             return "$field $operator $value";
