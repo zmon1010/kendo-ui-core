@@ -266,4 +266,16 @@ test("paste method is pushed to undo/redo stack", function() {
     equal(editor.value(), "");
 });
 
+test("paste method does not require focus of inline editor", function() {
+    var editor = new kendo.ui.Editor("#inline");
+
+    editor.value("");
+
+    $("#editor").focus();
+
+    editor.paste("<p>foo</p>");
+
+    equal(editor.value(), "<p>foo</p>");
+});
+
 })();

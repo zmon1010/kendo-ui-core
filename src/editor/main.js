@@ -855,6 +855,8 @@
         },
 
         paste: function (html, options) {
+            this.focus();
+
             var command = new kendo.ui.editor.InsertHtmlCommand($.extend({
                 range: this.getRange(),
                 html: html
