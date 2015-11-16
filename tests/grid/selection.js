@@ -3,19 +3,24 @@
         DataSource = kendo.data.DataSource,
         div;
 
-    function setup(options) {
+    function setup(element, options) {
+        if (arguments.length !== 2) {
+            options = element;
+            element = div;
+        }
+
         options = $.extend(true, {
             columns: [ "foo", "bar" ],
             dataSource: [{foo: 1, bar: 1}, {foo: 2, bar:2}, {foo: 3, bar:3}],
             navigatable: true
         },
         options);
-        return new Grid(div, options);
+        return new Grid(element, options);
     }
 
     module("Grid selection and navigation", {
         setup: function() {
-            div = $("<div></div>").appendTo(QUnit.fixture);
+            div = $("<div />").appendTo(QUnit.fixture);
 
             $.fn.press = function(key, ctrl, shift, alt) {
                 return this.trigger( { type: "keydown", keyCode: key, ctrlKey: ctrl, shiftKey: shift, altKey: alt } );
@@ -469,6 +474,18 @@
         grid.select(firstRow);
 
         ok(firstRow.hasClass("k-state-selected"));
+    });
+
+    test("select with selector is scoped to current Grid table", function() {
+        var firstGrid = setup({
+                selectable: true
+            });
+
+        var selector = "tr:first";
+
+        firstGrid.select(selector);
+
+        ok(firstGrid.table.find(selector).hasClass("k-state-selected"), "first grid row is not marked as selected");
     });
 
     test("select clears previously selected items if single select", function() {

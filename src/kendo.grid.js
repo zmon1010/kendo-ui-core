@@ -3989,7 +3989,7 @@ var __meta__ = { // jshint ignore:line
             var that = this,
                 selectable = that.selectable;
 
-            items = $(items);
+            items = that.table.add(that.lockedTable).find(items);
             if(items.length) {
                 if(!selectable.options.multiple) {
                     selectable.clear();
