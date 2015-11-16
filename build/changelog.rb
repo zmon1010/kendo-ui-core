@@ -110,7 +110,7 @@ class ChangeLog
         end
     end
 
-    def render_changelog(template, suite_names, exclude, standalone)
+    def render_changelog(template, suite_names, exclude, standalone, product)
         exclude ||= []
         suites = @suites.select { |suite| suite_names.include? suite.key }
         template.result(binding)
@@ -212,7 +212,7 @@ end
 
 class WriteChangeLogTask < Rake::FileTask
     include Rake::DSL
-    attr_accessor :suites, :exclude
+    attr_accessor :suites, :exclude, :product
 
     def template(name)
         return CHANGELOG_XML_TEMPLATE if name =~ /.xml$/
@@ -230,7 +230,7 @@ class WriteChangeLogTask < Rake::FileTask
     end
 
     def contents(render_template)
-        @contents ||= ChangeLog.instance.render_changelog(render_template, suites, exclude, standalone?)
+        @contents ||= ChangeLog.instance.render_changelog(render_template, suites, exclude, standalone?, product)
     end
 
     def needed?
@@ -238,8 +238,9 @@ class WriteChangeLogTask < Rake::FileTask
     end
 end
 
-def write_changelog(path, suites, exclude = [])
+def write_changelog(path, suites, exclude = [], product = 'Kendo UI')
     task = WriteChangeLogTask.define_task(path)
     task.suites = suites
     task.exclude = exclude
+    task.product = product
 end

@@ -115,7 +115,8 @@ def bundle(options)
 
     if changelog_suites
         changelog_path = File.join(path, "changelog.html")
-        write_changelog(changelog_path, changelog_suites, options[:changelog_exclude])
+        write_changelog(changelog_path, changelog_suites,
+                        options[:changelog_exclude], options[:product])
         prerequisites.push(changelog_path)
     end
 
@@ -149,10 +150,12 @@ def bundle(options)
     task "bundles:#{name}" => "#{path}.zip"
 
     xml_changelog_path = "dist/bundles/#{name}.changelog.xml"
-    write_changelog(xml_changelog_path, changelog_suites, options[:changelog_exclude])
+    write_changelog(xml_changelog_path, changelog_suites,
+                    options[:changelog_exclude], options[:product])
 
     txt_changelog_path = "dist/bundles/#{name}.changelog.txt"
-    write_changelog(txt_changelog_path, changelog_suites, options[:changelog_exclude])
+    write_changelog(txt_changelog_path, changelog_suites,
+                    options[:changelog_exclude], options[:product])
 
     if options[:upload_as_internal_build]
         versioned_bundle_lib_archive_path = File.join(ARCHIVE_ROOT, 'LIB Archive', VERSION, versioned_bundle_name(name) + ".zip")

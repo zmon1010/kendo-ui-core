@@ -49,7 +49,7 @@ end
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Changelog for Kendo UI v<%= VERSION %> (<%= date %>)</title>
+    <title>Changelog for <%= product %> v<%= VERSION %> (<%= date %>)</title>
     <style>
         html, body {
             margin: 0;
@@ -109,7 +109,7 @@ end
 <body>
 %end
     <div id="page">
-        <h1 class="title">Release notes for Kendo UI v<%= VERSION %></h1>
+        <h1 class="title">Release notes for <%= product %> v<%= VERSION %></h1>
 
 % suites.each do |suite|
         <h1><%= encode(suite.title) %></h1>
