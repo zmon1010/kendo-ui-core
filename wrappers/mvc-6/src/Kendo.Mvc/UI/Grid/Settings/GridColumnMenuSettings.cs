@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
             var settings = SerializeSettings();
 
 			var messages = Messages.Serialize();
-			if (messages.Any())
+			if (messages.Any() && Enabled)
 			{
 				settings["messages"] = messages;
 			}
