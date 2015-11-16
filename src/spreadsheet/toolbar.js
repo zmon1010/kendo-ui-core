@@ -698,6 +698,18 @@
 
     kendo.toolbar.registerComponent("fontFamily", FontFamily, FontFamilyButton);
 
+    var defaultFormats = kendo.spreadsheet.formats = {
+        automatic: null,
+        number: "#,0.00",
+        percent: "0.00%",
+        financial: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)',
+        currency: "$#,##0.00;[Red]$#,##0.00",
+        date: "m/d/yyyy",
+        time: "h:mm:ss AM/PM",
+        dateTime: "m/d/yyyy h:mm",
+        duration: "[h]:mm:ss"
+    };
+
     var Format = DropDownTool.extend({
         _revertTitle: function(e) {
             e.sender.value("");
@@ -720,15 +732,15 @@
                     "#: data.name #"
             });
             ddl.setDataSource([
-                { format: null, name: MESSAGES.formatTypes.automatic },
-                { format: "#,0.00", name: MESSAGES.formatTypes.number , sample: "1,499.99" },
-                { format: "0.00%", name: MESSAGES.formatTypes.percent , sample: "14.50%" },
-                { format: '_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)', name: MESSAGES.formatTypes.financial , sample: "(1,000.12)" },
-                { format: "$#,##0.00;[Red]$#,##0.00", name: MESSAGES.formatTypes.currency , sample: "$1,499.99" },
-                { format: "m/d/yyyy", name: MESSAGES.formatTypes.date , sample: "4/21/2012" },
-                { format: "h:mm:ss AM/PM", name: MESSAGES.formatTypes.time , sample: "5:49:00 PM" },
-                { format: "m/d/yyyy h:mm", name: MESSAGES.formatTypes.dateTime , sample: "4/21/2012 5:49:00" },
-                { format: "[h]:mm:ss", name: MESSAGES.formatTypes.duration , sample: "168:05:00" },
+                { format: defaultFormats.automatic, name: MESSAGES.formatTypes.automatic },
+                { format: defaultFormats.number, name: MESSAGES.formatTypes.number , sample: "1,499.99" },
+                { format: defaultFormats.percent, name: MESSAGES.formatTypes.percent , sample: "14.50%" },
+                { format: defaultFormats.financial, name: MESSAGES.formatTypes.financial , sample: "(1,000.12)" },
+                { format: defaultFormats.currency, name: MESSAGES.formatTypes.currency , sample: "$1,499.99" },
+                { format: defaultFormats.date, name: MESSAGES.formatTypes.date , sample: "4/21/2012" },
+                { format: defaultFormats.time, name: MESSAGES.formatTypes.time , sample: "5:49:00 PM" },
+                { format: defaultFormats.dateTime, name: MESSAGES.formatTypes.dateTime , sample: "4/21/2012 5:49:00" },
+                { format: defaultFormats.duration, name: MESSAGES.formatTypes.duration , sample: "168:05:00" },
                 { popup: "formatCells", name: MESSAGES.formatTypes.moreFormats }
             ]);
 
