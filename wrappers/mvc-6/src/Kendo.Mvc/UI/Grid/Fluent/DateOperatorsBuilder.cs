@@ -88,5 +88,27 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the text for IsNull operator filter menu item.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public DateOperatorsBuilder IsNull(string message)
+        {
+            numbers.Operators["isnull"] = message;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the text for IsNotNull operator filter menu item.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public DateOperatorsBuilder IsNotNull(string message)
+        {
+            numbers.Operators["isnotnull"] = message;
+
+            return this;
+        }
     }
 }
