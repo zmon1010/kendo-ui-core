@@ -1234,7 +1234,10 @@
 
                     var hint = kendo.dom.element("span", { className: "k-tooltip" }, [ kendo.dom.text(this._sheet._autoFillHint) ]);
 
-                    this._addDiv(autoFillRectangle, ref, cssClass).children.push(hint);
+                    var rectangle = this._addDiv(autoFillRectangle, ref, cssClass);
+                    if (rectangle) {
+                        rectangle.children.push(hint);
+                    }
                 }
             }
 
