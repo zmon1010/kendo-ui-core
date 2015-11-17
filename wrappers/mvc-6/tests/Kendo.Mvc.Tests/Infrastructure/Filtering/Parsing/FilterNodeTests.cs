@@ -24,6 +24,16 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Tests
         }
 
         [Fact]
+        public void NullNode_should_accept_visitor()
+        {
+            visitor.Setup(v => v.Visit(It.IsAny<NullNode>())).Verifiable();
+
+            new NullNode().Accept(visitor.Object);
+
+            visitor.Verify();
+        }
+
+        [Fact]
         public void NumberNode_should_accept_visitor()
         {
             visitor.Setup(v => v.Visit(It.IsAny<NumberNode>())).Verifiable();

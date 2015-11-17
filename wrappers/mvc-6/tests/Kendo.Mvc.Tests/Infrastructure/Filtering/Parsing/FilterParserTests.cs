@@ -237,7 +237,89 @@ namespace Kendo.Mvc.Infrastructure.Tests
             Assert.Equal("name", ((PropertyNode)function.Arguments[0]).Name);
             Assert.Equal("a", ((StringNode)function.Arguments[1]).Value);
         }
-        
+
+
+        [Fact]
+        public void Should_parse_isnull_expression_for_number()
+        {
+            FunctionNode result = (FunctionNode)Parse("age~isnull~null");
+
+            Assert.Equal(FilterOperator.IsNull, result.FilterOperator);
+
+            PropertyNode property = (PropertyNode)result.Arguments[0];
+
+            Assert.Equal("age", property.Name);
+
+            NullNode number = (NullNode)result.Arguments[1];
+
+            Assert.Null(number.Value);
+        }
+
+        [Fact]
+        public void Should_parse_isnotempty_expression()
+        {
+            FunctionNode result = (FunctionNode)Parse("age~isnotempty~''");
+
+            Assert.Equal(FilterOperator.IsNotEmpty, result.FilterOperator);
+
+            PropertyNode property = (PropertyNode)result.Arguments[0];
+
+            Assert.Equal("age", property.Name);
+
+            StringNode number = (StringNode)result.Arguments[1];
+
+            Assert.Equal("", number.Value);
+        }
+
+        [Fact]
+        public void Should_parse_isempty_expression()
+        {
+            FunctionNode result = (FunctionNode)Parse("age~isempty~''");
+
+            Assert.Equal(FilterOperator.IsEmpty, result.FilterOperator);
+
+            PropertyNode property = (PropertyNode)result.Arguments[0];
+
+            Assert.Equal("age", property.Name);
+
+            StringNode number = (StringNode)result.Arguments[1];
+
+            Assert.Equal("", number.Value);
+        }
+
+        [Fact]
+        public void Should_parse_isnotnull_expression_for_string()
+        {
+            FunctionNode result = (FunctionNode)Parse("age~isnotnull~''");
+
+            Assert.Equal(FilterOperator.IsNotNull, result.FilterOperator);
+
+            PropertyNode property = (PropertyNode)result.Arguments[0];
+
+            Assert.Equal("age", property.Name);
+
+            StringNode number = (StringNode)result.Arguments[1];
+
+            Assert.Equal("", number.Value);
+        }
+
+        [Fact]
+        public void Should_parse_isnotnull_expression_for_number()
+        {
+            FunctionNode result = (FunctionNode)Parse("age~isnotnull~null");
+
+            Assert.Equal(FilterOperator.IsNotNull, result.FilterOperator);
+
+            PropertyNode property = (PropertyNode)result.Arguments[0];
+
+            Assert.Equal("age", property.Name);
+
+            NullNode number = (NullNode)result.Arguments[1];
+
+            Assert.Null(number.Value);
+        }
+
+
         private IFilterNode Parse(string input)
         {
             FilterParser parser = new FilterParser(input);
