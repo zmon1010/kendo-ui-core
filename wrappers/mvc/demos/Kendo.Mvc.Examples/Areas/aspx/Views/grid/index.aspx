@@ -2,7 +2,6 @@
 Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductViewModel>>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div id="clientsDb">
     <%: Html.Kendo().Grid<Kendo.Mvc.Examples.Models.CustomerViewModel>()
         .Name("grid")
         .Columns(columns =>
@@ -12,11 +11,11 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
                     style='background-image: url(../../content/web/Customers/#:data.CustomerID#.jpg);'></div>
                 <div class='customer-name'>#: ContactName #</div>")
               .Width(240);
-            columns.Bound(c => c.ContactTitle).Width(190);
+            columns.Bound(c => c.ContactTitle);
             columns.Bound(c => c.CompanyName);
-            columns.Bound(c => c.Country).Width(110);
+            columns.Bound(c => c.Country).Width(150);
         })
-        .HtmlAttributes(new { style = "height: 380px;" })
+        .HtmlAttributes(new { style = "height: 550px;" })
         .Scrollable()
         .Groupable()
         .Sortable()
@@ -27,19 +26,11 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
         .DataSource(dataSource => dataSource
             .Ajax()
             .Read(read => read.Action("Customers_Read", "Grid"))
+            .PageSize(20)
         )
      %>
-</div>
 
 <style>
-    #clientsDb {
-        width: 952px;
-        height: 396px;
-        margin: 20px auto 0;
-        padding: 51px 4px 0 4px;
-        background: url('<%=Url.Content("~/content/web/grid/clientsDb.png")%>') no-repeat 0 0;
-    }
-
     .customer-photo {
         display: inline-block;
         width: 32px;
