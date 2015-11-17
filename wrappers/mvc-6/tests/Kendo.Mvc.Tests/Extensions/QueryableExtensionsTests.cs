@@ -171,7 +171,7 @@ namespace Kendo.Mvc.Tests.Data
         public void Empty_group()
         {
             IQueryable people = CreateTestData();
-            IQueryable<Person> grouppedPeople = people.GroupBy(new GroupDescriptor[]{})
+            IQueryable<Person> grouppedPeople = people.GroupBy(new GroupDescriptor[] { })
                 .Cast<Person>();
             Assert.Equal(grouppedPeople.Count(), CreateTestData().Count());
         }
@@ -183,9 +183,9 @@ namespace Kendo.Mvc.Tests.Data
                                              {new Person {Name = "A"}, new Person {Name = "A"}, new Person {Name = "B"}};
             IQueryable queryablePeople = people.AsQueryable();
 
-            var groupDescriptor = new GroupDescriptor {Member = "Name", MemberType = typeof (string)};
+            var groupDescriptor = new GroupDescriptor { Member = "Name", MemberType = typeof(string) };
             groupDescriptor.AggregateFunctions.Add(new CountFunction());
-            var groupDescriptors = new[] {groupDescriptor};
+            var groupDescriptors = new[] { groupDescriptor };
 
             var result = queryablePeople.GroupBy(queryablePeople, groupDescriptors);
             var groups = result.Cast<AggregateFunctionsGroup>();
@@ -199,7 +199,7 @@ namespace Kendo.Mvc.Tests.Data
         [Fact]
         public void Should_calculate_group_aggregate_if_paged()
         {
-            IEnumerable<Person> people = new[]{ new Person { Name = "A" }, new Person { Name = "A" },new Person { Name = "B" }};
+            IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = "A" }, new Person { Name = "B" } };
 
             var queryablePeople = people.AsQueryable();
 
@@ -280,7 +280,7 @@ namespace Kendo.Mvc.Tests.Data
         public void Should_filter_a_list_of_dynamic_types_on_complex_property()
         {
             dynamic expando = new System.Dynamic.ExpandoObject();
-            expando.Foo = new Customer { Name = "Name1"};
+            expando.Foo = new Customer { Name = "Name1" };
             IEnumerable<object> enumerable = new[] { expando };
 
             var data = enumerable.AsQueryable().Where(new[] { new FilterDescriptor
@@ -318,7 +318,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var people = CreateTestData() as IQueryable<Person>;
 
-            var result = people.ToDataSourceResult(new UI.DataSourceRequest() { Page = 1, PageSize = 1, Groups = new [] { new GroupDescriptor { Member = "Name" } }  },
+            var result = people.ToDataSourceResult(new UI.DataSourceRequest() { Page = 1, PageSize = 1, Groups = new[] { new GroupDescriptor { Member = "Name" } } },
                 (person) => new Person { Name = person.ID.ToString() });
 
             result.Data.Cast<AggregateFunctionsGroup>().First().Items.Cast<Person>().First().Name.ShouldEqual(people.First().ID.ToString());
@@ -334,6 +334,106 @@ namespace Kendo.Mvc.Tests.Data
 
             result.Data.Cast<AggregateFunctionsGroup>().First().Items.Cast<AggregateFunctionsGroup>()
                        .First().Items.Cast<Person>().First().Name.ShouldEqual(people.First().ID.ToString());
+        }
+
+        [Fact]
+        public void Filter_string_is_empty()
+        {
+            IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = "" } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+           {
+               Member = "Name",
+               Operator = FilterOperator.IsEmpty
+           }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(1);
+            people.ElementAt(1).ShouldBeSameAs(filteredPeople.FirstOrDefault());
+        }
+
+        [Fact]
+        public void Filter_string_is_not_empty()
+        {
+            IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = "" } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+           {
+               Member = "Name",
+               Operator = FilterOperator.IsNotEmpty
+           }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(1);
+            people.ElementAt(0).ShouldBeSameAs(filteredPeople.FirstOrDefault());
+        }
+
+        [Fact]
+        public void Filter_string_is_not_null()
+        {
+            IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = null } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+           {
+               Member = "Name",
+               Operator = FilterOperator.IsNotNull
+           }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(1);
+            people.ElementAt(0).ShouldBeSameAs(filteredPeople.FirstOrDefault());
+        }
+
+        [Fact]
+        public void Filter_string_is_null()
+        {
+            IEnumerable<Person> people = new[] { new Person { Name = "A" }, new Person { Name = null } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+           {
+               Member = "Name",
+               Operator = FilterOperator.IsNull
+           }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(1);
+            people.ElementAt(1).ShouldBeSameAs(filteredPeople.FirstOrDefault());
+        }
+
+        [Fact]
+        public void Filter_number_is_null_on_non_null_values()
+        {
+            IEnumerable<Person> people = new[] { new Person { ID = 1 }, new Person { ID = 2 } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+           {
+               Member = "ID",
+               Operator = FilterOperator.IsNull
+           }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(0);
+        }
+
+        [Fact]
+        public void Filter_number_is_not_null_on_non_null_values()
+        {
+            IEnumerable<Person> people = new[] { new Person { ID = 1 }, new Person { ID = 2 } };
+
+            var quearyablePeople = people.AsQueryable();
+
+            var filteredPeople = quearyablePeople.Where(new[] { new FilterDescriptor
+           {
+               Member = "ID",
+               Operator = FilterOperator.IsNotNull
+           }}).Cast<Person>();
+
+            filteredPeople.Count().ShouldEqual(2);
         }
 
         private class PersonViewModel
