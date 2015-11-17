@@ -132,6 +132,7 @@ end
 require 'version'
 require 'timezone'
 require './build/zip'
+require './build/szip'
 require 'js'
 require 'css'
 require 'tasks'

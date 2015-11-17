@@ -145,9 +145,10 @@ def bundle(options)
     end
 
     zip "#{path}.zip" =>  prerequisites
+    szip "#{path}.7z" =>  prerequisites
 
     desc description(name)
-    task "bundles:#{name}" => "#{path}.zip"
+    task "bundles:#{name}" => ["#{path}.zip", "#{path}.7z"]
 
     xml_changelog_path = "dist/bundles/#{name}.changelog.xml"
     write_changelog(xml_changelog_path, changelog_suites,
