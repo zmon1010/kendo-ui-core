@@ -1092,8 +1092,12 @@ var RangeUtils = {
         }
     },
 
-    isStartOf: function(range, node) {
-        range = range.cloneRange();
+    isStartOf: function(originalRange, node) {
+        if (originalRange.startOffset !== 0) {
+            return false;
+        }
+
+        var range = originalRange.cloneRange();
 
         while (range.startOffset === 0 && range.startContainer != node) {
             var index = dom.findNodeIndex(range.startContainer);
@@ -1109,15 +1113,14 @@ var RangeUtils = {
         return range.startOffset === 0 && range.startContainer == node;
     },
 
-    isEndOf: function(range, node) {
-        range = range.cloneRange();
+    isEndOf: function(originalRange, node) {
+        var range = originalRange.cloneRange();
 
         range.collapse(false);
 
         var start = range.startContainer;
 
-        if (dom.isDataNode(start) &&
-            range.startOffset == dom.getNodeLength(start)) {
+        if (dom.isDataNode(start) && range.startOffset == dom.getNodeLength(start)) {
             range.setStart(start.parentNode, dom.findNodeIndex(start) + 1);
             range.collapse(true);
         }

@@ -239,17 +239,20 @@ var BackspaceHandler = Class.extend({
     },
     _handleBackspace: function(range) {
         var node = range.startContainer;
-        var i = range.startOffset;
         var li = dom.closestEditableOfType(node, ['li']);
         var block = dom.closestEditableOfType(node, 'p,h1,h2,h3,h4,h5,h6'.split(','));
 
         if (dom.isDataNode(node)) {
-            while (i >= 0 && node.nodeValue[i-1] == "\ufeff") {
-                node.deleteData(i-1, 1);
-                i--;
+            var offset = range.startOffset;
+            var text = node.nodeValue;
+            var count = 0;
+            while (offset-count >= 0 && text[offset-count-1] == "\ufeff") {
+                count++;
             }
 
-            range.setStart(node, Math.max(0, i));
+            node.deleteData(offset-count, count);
+
+            range.setStart(node, Math.max(0, offset-count));
             range.collapse(true);
 
             this.editor.selectRange(range);
