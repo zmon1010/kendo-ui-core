@@ -768,4 +768,43 @@
   <data name="Scheduler_DefaultRowText" xml:space="preserve">
     <value>Всички събития</value>
   </data>
+  <data name="Grid_Excel" xml:space="preserve">
+    <value>Експорт в Excel</value>
+  </data>
+  <data name="Grid_NoRecords" xml:space="preserve">
+    <value>Няма налични записи.</value>
+  </data>
+  <data name="Pager_AllPages" xml:space="preserve">
+    <value>Всички</value>
+  </data>
+  <data name="Filter_StringIsEmpty" xml:space="preserve">
+    <value>Е празно</value>
+  </data>
+  <data name="Filter_StringIsNotEmpty" xml:space="preserve">
+    <value>Не е празно</value>
+  </data>
+  <data name="Filter_StringIsNotNull" xml:space="preserve">
+    <value>Не е null</value>
+  </data>
+  <data name="Filter_StringIsNull" xml:space="preserve">
+    <value>Е null</value>
+  </data>
+  <data name="Filter_NumberIsNotNull" xml:space="preserve">
+    <value>Не е null</value>
+  </data>
+  <data name="Filter_NumberIsNull" xml:space="preserve">
+    <value>Е null</value>
+  </data>
+  <data name="Filter_DateIsNotNull" xml:space="preserve">
+    <value>Не е null</value>
+  </data>
+  <data name="Filter_DateIsNull" xml:space="preserve">
+    <value>Е null</value>
+  </data>
+  <data name="Filter_EnumIsNotNull" xml:space="preserve">
+    <value>Не е null</value>
+  </data>
+  <data name="Filter_EnumIsNull" xml:space="preserve">
+    <value>Е null</value>
+  </data>
 </root>
