@@ -764,6 +764,24 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is not null.
+        /// </summary>
+        public static string Filter_NumberIsNotNull {
+            get {
+                return ResourceManager.GetString("Filter_NumberIsNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is null.
+        /// </summary>
+        public static string Filter_NumberIsNull {
+            get {
+                return ResourceManager.GetString("Filter_NumberIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operator.
         /// </summary>
         public static string Filter_Operator {
