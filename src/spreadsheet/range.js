@@ -166,7 +166,7 @@
                         // present.
                         this.value(x.value);
                     }
-                }.bind(this), { recalc: true, value: value, ref: this._ref });
+                }.bind(this), { recalc: true, value: value, ref: this._ref, editorChange: this._sheet.isInEditMode() });
 
                 return this;
             } else {

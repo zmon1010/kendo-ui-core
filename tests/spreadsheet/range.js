@@ -711,6 +711,19 @@
         equal(handler.calls, 1);
     });
 
+    test("range.input call batch method with specific reason if editor is opened", 1, function() {
+        sheet.isInEditMode = function() {
+            return true;
+        };
+
+        sheet.batch = function(callback, options) {
+            ok(options.editorChange);
+        };
+
+        sheet.range("A1").input("bar");
+    });
+
+
     test("borderLeft on leftmost cell does not set right border", function() {
         range.borderLeft({ color: "#f00" });
 
