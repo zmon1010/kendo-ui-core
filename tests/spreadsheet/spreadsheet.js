@@ -27,6 +27,40 @@
         }).refresh();
     });
 
+    test("refresh does not trigger render method when editor is changed", 0, function() {
+        spreadsheet.bind("render", function() {
+            ok(true);
+        }).refresh({ editorChange: true });
+    });
+
+    test("refresh does call view render method when editor is changed", 0, function() {
+        spreadsheet._view.render = function() {
+            ok(true);
+        };
+
+        spreadsheet.refresh({ editorChange: true });
+    });
+
+    test("refresh does not set view and controller sheet when editor is changed", 0, function() {
+        spreadsheet._view.sheet = function() {
+            ok(true);
+        };
+
+        spreadsheet._controller.sheet = function() {
+            ok(true);
+        };
+
+        spreadsheet.refresh({ editorClose: true });
+    });
+
+    test("refresh does not refresh workbook when editor is changed", 0, function() {
+        spreadsheet._workbook.refresh = function() {
+            ok(true);
+        };
+
+        spreadsheet.refresh({ editorClose: true });
+    });
+
     test("renders when the active sheet changes", 1, function() {
         spreadsheet.bind("render", function() {
             ok(true);

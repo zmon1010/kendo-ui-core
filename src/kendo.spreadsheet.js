@@ -65,7 +65,9 @@
             activeCell: true,
             layout: true,
             sheetSelection: true,
-            resize: true
+            resize: true,
+            editorChange: false,
+            editorClose: false
         };
 
         var classNames = {
@@ -150,15 +152,21 @@
                     reason = ALL_REASONS;
                 }
 
-                this._view.sheet(this._workbook.activeSheet());
-                this._controller.sheet(this._workbook.activeSheet());
+                if (!reason.editorClose) {
+                    this._view.sheet(this._workbook.activeSheet());
+                    this._controller.sheet(this._workbook.activeSheet());
 
-                this._workbook.refresh(reason);
-                this._view.refresh(reason);
-                this._controller.refresh();
-                this._view.render();
+                    this._workbook.refresh(reason);
+                }
 
-                this.trigger("render");
+                if (!reason.editorChange) {
+                    this._view.refresh(reason);
+                    this._controller.refresh();
+
+                    this._view.render();
+                    this.trigger("render");
+                }
+
                 return this;
             },
 
