@@ -1786,6 +1786,10 @@
                 if (d2.date == 31) {
                     d2.date = 30;
                 }
+            } else {
+                if (d1.date == 30 && d2.date == 31) {
+                    d2.date = 30;
+                }
             }
         }
 
@@ -1793,6 +1797,8 @@
                 + 30 * (d2.month - d1.month)
                 + (d2.date - d1.date));
     }
+
+    runtime._days_360 = _days_360;
 
     defineFunction("days360", _days_360).args([
         [ "*start_date", "date" ],
