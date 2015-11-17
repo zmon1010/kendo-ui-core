@@ -12,7 +12,9 @@ namespace Kendo.Mvc.UI
             Operators = new Dictionary<string, string>()
             {
                 { "eq", Messages.Filter_EnumIsEqualTo },
-                { "neq", Messages.Filter_EnumIsNotEqualTo }               
+                { "neq", Messages.Filter_EnumIsNotEqualTo },                
+                { "isnull", Messages.Filter_EnumIsNull },
+                { "isnotnull", Messages.Filter_EnumIsNotNull }
             };
         }
 
@@ -35,6 +37,16 @@ namespace Kendo.Mvc.UI
                 dirty = true;
             }
 
+            if (Operators.ContainsKey("isnull") && Operators["isnull"] != DefaultIsNull)
+            {
+                dirty = true;
+            }
+
+            if (Operators.ContainsKey("isnotnull") && Operators["isnotnull"] != DefaultIsNotNull)
+            {
+                dirty = true;
+            }
+
             if (dirty)
             {
                 foreach (var keyValue in Operators)
@@ -46,9 +58,11 @@ namespace Kendo.Mvc.UI
 
         public IDictionary<string, string> Operators { get; private set; }
 
-        private const int DefaultDateOfFilters = 2;
+        private const int DefaultDateOfFilters = 4;
 
         private const string DefaultIsEqualTo = "Is equal to";
-        private const string DefaultIsNotEqualTo = "Is not equal to";        
+        private const string DefaultIsNotEqualTo = "Is not equal to";
+        private const string DefaultIsNull = "Is null";
+        private const string DefaultIsNotNull = "Is not null";
     }
 }
