@@ -1,4 +1,5 @@
 require 'erb'
+require 'nuget_upload'
 
 NUGETS = []
 
@@ -72,5 +73,13 @@ namespace :nuget do
 
     file NUGET_ZIPS[3] do |t|
         zip_bundle(t.name, mvc_packages(:trial => true))
+    end
+
+    desc "Upload NuGet packages to nuget.org"
+    task :upload do
+        upload_nuget "KendoUICore.#{VERSION}.nupkg"
+
+        # Only while MVC6 is in beta!
+        upload_nuget "Kendo.Mvc.#{VERSION}.nupkg"
     end
 end
