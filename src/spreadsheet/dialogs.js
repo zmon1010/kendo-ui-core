@@ -163,6 +163,9 @@
 
             this.options = $.extend(true, {}, this.options, options);
         },
+        events: [
+            "close"
+        ],
         dialog: function() {
             if (!this._dialog) {
                 this._dialog = $("<div class='k-spreadsheet-window k-action-window' />")
@@ -186,12 +189,18 @@
                         }.bind(this)
                     })
                     .data("kendoWindow");
+
+                this._dialog.bind("close", this._onDialogClose.bind(this));
             }
 
             return this._dialog;
         },
+        _onDialogClose: function() {
+            this.trigger("close");
+        },
         destroy: function() {
             if (this._dialog) {
+
                 this._dialog.destroy();
                 this._dialog = null;
             }
@@ -486,7 +495,6 @@
         },
         open: function() {
             SpreadsheetDialog.fn.open.call(this);
-
             kendo.bind(this.dialog().element, {
                 text: this.options.text,
                 okText: MESSAGES.okText,

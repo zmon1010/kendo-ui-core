@@ -42,6 +42,16 @@
         ok(dialog.close);
     });
 
+    test("close method triggers close event when dialog close animation is completed", function() {
+        var dialog = spreadsheet.openDialog("message", { text: "Foo" });
+
+        dialog.bind("close", function() {
+            ok(true);
+        });
+
+        dialog.close();
+    });
+
     var viewModel;
     var usCurrencyInfo = kendo.cultures["en-US"].numberFormat.currency;
     var bgCurrencyInfo = kendo.cultures["bg-BG"].numberFormat.currency;
