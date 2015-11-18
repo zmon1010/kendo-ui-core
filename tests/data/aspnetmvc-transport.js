@@ -216,6 +216,32 @@ test("Delete is using correct Http method", function() {
         equal(transport.options.destroy.type,"DELETE");
 });
 
+test("webapi transport serializes numbers with point as separator when using non default culture", function() {
+    var transport = new kendo.data.transports["webapi"]({});
+    var currentCulture = kendo.culture().name;
+    try {
+        kendo.culture("bg-BG");
+        var result = transport.parameterMap({foo: 1.1}, "update");
+
+        equal(result.foo, "1.1");
+    } finally {
+        kendo.culture(currentCulture);
+    }
+});
+
+test("webapi transport serializes dates using the en-US G pattern", function() {
+    var transport = new kendo.data.transports["webapi"]({});
+    var currentCulture = kendo.culture().name;
+    try {
+        kendo.culture("bg-BG");
+        var result = transport.parameterMap({foo: new Date(2000, 0, 20, 10, 10, 10)}, "update");
+
+        equal(result.foo, "1/20/2000 10:10:10 AM");
+    } finally {
+        kendo.culture(currentCulture);
+    }
+});
+
 test("data is loaded from the url if both data and url are set on the second request", 2, function() {
     var data = [{foo: "bar" }],
         transport = new Transport({
