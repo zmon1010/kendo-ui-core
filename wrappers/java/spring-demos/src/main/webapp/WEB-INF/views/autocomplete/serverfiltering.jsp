@@ -7,10 +7,10 @@
 <c:url value="/autocomplete/remote-data/read" var="readUrl" />
 
 <demo:header />
-    <div class="demo-section">
-        <h2>Products</h2>
+	<div class="demo-section k-content">
+	    <h4>Find a product</h4>
 
-        <kendo:autoComplete name="products" dataTextField="productName" filter="contains" minLength="3" style="width:250px">
+        <kendo:autoComplete name="products" dataTextField="productName" filter="contains" minLength="3" style="width:100%">
             <kendo:dataSource serverFiltering="true">
                 <kendo:dataSource-transport>
                    <kendo:dataSource-transport-read url="${readUrl}" type="POST" contentType="application/json"/>
@@ -26,17 +26,6 @@
                 </kendo:dataSource-schema>
             </kendo:dataSource>
         </kendo:autoComplete>
+        <div class="demo-hint">Hint: type "che"</div>
     </div>
-    <style>
-	   .demo-section {
-	       width: 250px;
-	       margin: 35px auto 50px;
-	       padding: 30px;
-	   }
-	   .demo-section h2 {
-	       text-transform: uppercase;
-	       font-size: 1.2em;
-	       margin-bottom: 10px;
-	   }
-	</style>
 <demo:footer />
