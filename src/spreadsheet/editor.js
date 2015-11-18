@@ -68,14 +68,16 @@
                 return;
             }
 
+            if (cellInput.value() != this._value) {
+                if (this.trigger("change", { value: cellInput.value() })) {
+                    return;
+                }
+            }
+
             this._active = false;
             this._rect = null;
 
             cellInput.hide();
-
-            if (cellInput.value() != this._value) {
-                this.trigger("change", { value: cellInput.value() });
-            }
 
             this.trigger("deactivate");
         },
