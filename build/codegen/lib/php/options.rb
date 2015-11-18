@@ -31,7 +31,10 @@ module CodeGen::PHP
      ]
 
     IGNORED = {
-        'transport' => ['signalr']
+        'transport' => ['signalr'],
+		'calendar' => ['disableDates'],
+		'datepicker' => ['disableDates'],
+		'datetimepicker' => ['disableDates']
     }
 
     def self.ignored?(component, option)
