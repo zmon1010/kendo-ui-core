@@ -10,6 +10,8 @@ using Microsoft.AspNet.Mvc.Rendering;
 using System.Text.RegularExpressions;
 using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
 using Microsoft.AspNet.Mvc.Infrastructure;
+using System.Text;
+using Microsoft.AspNet.Html.Abstractions;
 
 namespace Kendo.Mvc.UI
 {
@@ -299,14 +301,27 @@ namespace Kendo.Mvc.UI
 				foreignKeyData.Each(action => action(viewContext.ViewData, dataItem));
 			}
 
-			if (templateName.HasValue())
-			{
-				return htmlHelper.EditorForModel(templateName, additionalViewData).ToString();
-			}
+            IHtmlContent editorContent;
 
-			return htmlHelper.EditorForModel(additionalViewData).ToString();
+            if (templateName.HasValue())
+            {
+                editorContent = htmlHelper.EditorForModel(templateName, additionalViewData);
+            }
+            else
+            {
+                editorContent = htmlHelper.EditorForModel(additionalViewData);
+            }            
 
-		}
+            var sb = new StringBuilder();
+
+            using (var writer = new StringWriter(sb))
+            {
+                editorContent.WriteTo(writer, HtmlEncoder);
+            }
+
+            return sb.ToString();
+
+        }
 
 		private void InitializeEditors()
 		{
