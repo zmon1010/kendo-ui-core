@@ -446,12 +446,13 @@ var __meta__ = { // jshint ignore:line
                 view = that.dataSource.view(),
                 file = that._findFile(fileName);
 
-            if (file && !that._showMessage(kendo.format(that.options.messages.overwriteFile, fileName), "confirm")) {
-                return null;
-            }
-
             if (file) {
-                return file;
+                if (!that._showMessage(kendo.format(that.options.messages.overwriteFile, fileName), "confirm")) {
+                    return null;
+                } else {
+                    file._forceReload = true;
+                    return file;
+                }
             }
 
             for (idx = 0, length = view.length; idx < length; idx++) {

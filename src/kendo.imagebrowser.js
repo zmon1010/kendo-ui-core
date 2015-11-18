@@ -288,6 +288,10 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 thumbnailUrl = thumbnailUrl + urlJoin + "path=" + that.path() + encodeURIComponent(name);
+                if (dataItem._forceReload) {
+                    thumbnailUrl += "&_=" + new Date().getTime();
+                    delete dataItem._forceReload;
+                }
             }
 
             // IE8 will trigger the load event immediately when the src is assigned

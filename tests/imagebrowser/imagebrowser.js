@@ -660,6 +660,39 @@
         deepEqual(browser._createFile("foo"), model);
     });
 
+    test("createFile sets _forceReload model field", function() {
+        var browser = setup({}, [{ name: "foo", type: "f" }]);
+        browser._showMessage = function() { return true; };
+
+        var model = browser._createFile("foo");
+
+        equal(model._forceReload, true);
+    });
+
+    test("loadImage adds unique parameter to thumbnailUrl if _forceReload is true", function() {
+        var browser = setup({ transport: { thumbnailUrl: "foo" } }, [{ name: "foo", type: "f" }]);
+        browser._showMessage = function() { return true; };
+
+        var model = browser.dataSource.at(0);
+        model._forceReload = true;
+
+        browser._loadImage(browser._tiles.eq(0));
+        var url = browser._tiles.find("img").attr("src");
+
+        ok(/&_=\d+/.test(url));
+    });
+
+    test("loadImage deletes item _forceReload field", function() {
+        var browser = setup({ transport: { thumbnailUrl: "foo" } }, [{ name: "foo", type: "f" }]);
+        browser._showMessage = function() { return true; };
+
+        var model = browser.dataSource.at(0);
+        model._forceReload = true;
+
+        browser._loadImage(browser._tiles.eq(0));
+        ok(model._forceReload === undefined);
+    });
+
     test("value custom formating is applied", function() {
         var browser = setup({
             transport: {
