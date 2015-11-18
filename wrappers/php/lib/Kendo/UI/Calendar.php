@@ -6,6 +6,18 @@ class Calendar extends \Kendo\UI\Widget {
     protected function name() {
         return 'Calendar';
     }
+	
+    /**
+    * An array or function that will be used to determine which dates to be disabled in the calendar.
+    * @param array|\Kendo\JavaScriptFunction $value
+    * @return \Kendo\UI\Calendar
+    */
+    public function disableDates($value) {
+		if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+        return $this->setProperty('disableDates', $value);
+    }
 //>> Properties
 
     /**
@@ -34,15 +46,6 @@ settings are available for the depth value:
     */
     public function depth($value) {
         return $this->setProperty('depth', $value);
-    }
-
-    /**
-    * An array or function that will be used to determine which dates to be disabled in the calendar.
-    * @param array|\Kendo\JavaScriptFunction $value
-    * @return \Kendo\UI\Calendar
-    */
-    public function disableDates($value) {
-        return $this->setProperty('disableDates', $value);
     }
 
     /**

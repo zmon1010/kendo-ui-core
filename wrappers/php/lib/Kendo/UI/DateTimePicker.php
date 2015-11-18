@@ -10,6 +10,17 @@ class DateTimePicker extends \Kendo\UI\Widget {
     protected function createElement() {
         return new \Kendo\Html\Element('input', true);
     }
+	/**
+    * An array or function that will be used to determine which dates to be disabled in the widget.
+    * @param array|\Kendo\JavaScriptFunction $value
+    * @return \Kendo\UI\DateTimePicker
+    */
+    public function disableDates($value) {
+		if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+        return $this->setProperty('disableDates', $value);
+    }
 //>> Properties
 
     /**
@@ -69,15 +80,6 @@ settings are available for the depth value:
     */
     public function depth($value) {
         return $this->setProperty('depth', $value);
-    }
-
-    /**
-    * An array or function that will be used to determine which dates to be disabled for selection by the widget.
-    * @param array|\Kendo\JavaScriptFunction $value
-    * @return \Kendo\UI\DateTimePicker
-    */
-    public function disableDates($value) {
-        return $this->setProperty('disableDates', $value);
     }
 
     /**
