@@ -288,6 +288,12 @@ def release_build_file_copy(release_build, name, versioned_bundle_destination_pa
       :archive => versioned_bundle_archive_path,
       :vbd => versioned_bundle_name(name),
       :extension => ".zip"
+
+      build_path_and_copy \
+      :destination =>  versioned_bundle_destination_path,
+      :archive => versioned_bundle_archive_path,
+      :vbd => versioned_bundle_name(name),
+      :extension => ".7z"
     end
     if release_build_config[:msi]
       build_path_and_copy \
