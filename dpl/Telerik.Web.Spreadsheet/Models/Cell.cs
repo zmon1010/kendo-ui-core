@@ -36,6 +36,26 @@ namespace Telerik.Web.Spreadsheet
         {
             var settings = SerializeSettings();
 
+            if (BorderBottom != null)
+            {
+                settings["borderBottom"] = BorderBottom.Serialize();
+            }
+
+            if (BorderLeft != null)
+            {
+                settings["borderLeft"] = BorderLeft.Serialize();
+            }
+
+            if (BorderTop != null)
+            {
+                settings["borderTop"] = BorderTop.Serialize();
+            }
+
+            if (BorderRight != null)
+            {
+                settings["borderRight"] = BorderRight.Serialize();
+            }
+
             return settings;
         }
     }

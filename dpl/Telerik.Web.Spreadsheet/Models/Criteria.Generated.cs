@@ -44,9 +44,15 @@ namespace Telerik.Web.Spreadsheet
         {
             var settings = new Dictionary<string, object>();
 
-            settings["operator"] = Operator;
+            if (Operator != null)
+            {
+                settings["operator"] = Operator;
+            }
 
-            settings["value"] = Value;
+            if (Value != null)
+            {
+                settings["value"] = Value;
+            }
 
             return settings;
         }

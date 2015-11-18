@@ -36,7 +36,10 @@ namespace Telerik.Web.Spreadsheet
                 settings["columns"] = Columns.Select(item => item.Serialize());
             }
 
-            settings["ref"] = Ref;
+            if (Ref != null)
+            {
+                settings["ref"] = Ref;
+            }
 
             return settings;
         }

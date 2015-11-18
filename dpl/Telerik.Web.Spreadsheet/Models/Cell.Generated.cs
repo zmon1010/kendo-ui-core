@@ -107,33 +107,75 @@ namespace Telerik.Web.Spreadsheet
         {
             var settings = new Dictionary<string, object>();
 
-            settings["background"] = Background;
+            if (Background != null)
+            {
+                settings["background"] = Background;
+            }
 
-            settings["color"] = Color;
+            if (Color != null)
+            {
+                settings["color"] = Color;
+            }
 
-            settings["fontFamily"] = FontFamily;
+            if (FontFamily != null)
+            {
+                settings["fontFamily"] = FontFamily;
+            }
 
-            settings["fontSize"] = FontSize;
+            if (FontSize != null)
+            {
+                settings["fontSize"] = FontSize;
+            }
 
-            settings["italic"] = Italic;
+            if (Italic != null)
+            {
+                settings["italic"] = Italic;
+            }
 
-            settings["bold"] = Bold;
+            if (Bold != null)
+            {
+                settings["bold"] = Bold;
+            }
 
-            settings["format"] = Format;
+            if (Format != null)
+            {
+                settings["format"] = Format;
+            }
 
-            settings["formula"] = Formula;
+            if (Formula != null)
+            {
+                settings["formula"] = Formula;
+            }
 
-            settings["index"] = Index;
+            if (Index != null)
+            {
+                settings["index"] = Index;
+            }
 
-            settings["textAlign"] = TextAlign;
+            if (TextAlign != null)
+            {
+                settings["textAlign"] = TextAlign;
+            }
 
-            settings["underline"] = Underline;
+            if (Underline != null)
+            {
+                settings["underline"] = Underline;
+            }
 
-            settings["value"] = Value;
+            if (Value != null)
+            {
+                settings["value"] = Value;
+            }
 
-            settings["verticalAlign"] = VerticalAlign;
+            if (VerticalAlign != null)
+            {
+                settings["verticalAlign"] = VerticalAlign;
+            }
 
-            settings["wrap"] = Wrap;
+            if (Wrap != null)
+            {
+                settings["wrap"] = Wrap;
+            }
 
             return settings;
         }

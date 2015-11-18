@@ -27,9 +27,15 @@ namespace Telerik.Web.Spreadsheet
         {
             var settings = new Dictionary<string, object>();
 
-            settings["ascending"] = Ascending;
+            if (Ascending != null)
+            {
+                settings["ascending"] = Ascending;
+            }
 
-            settings["index"] = Index;
+            if (Index != null)
+            {
+                settings["index"] = Index;
+            }
 
             return settings;
         }

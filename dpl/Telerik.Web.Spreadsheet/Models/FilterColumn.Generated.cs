@@ -98,15 +98,30 @@ namespace Telerik.Web.Spreadsheet
                 settings["criteria"] = Criteria.Select(item => item.Serialize());
             }
 
-            settings["filter"] = Filter;
+            if (Filter != null)
+            {
+                settings["filter"] = Filter;
+            }
 
-            settings["index"] = Index;
+            if (Index != null)
+            {
+                settings["index"] = Index;
+            }
 
-            settings["logic"] = Logic;
+            if (Logic != null)
+            {
+                settings["logic"] = Logic;
+            }
 
-            settings["type"] = Type;
+            if (Type != null)
+            {
+                settings["type"] = Type;
+            }
 
-            settings["value"] = Value;
+            if (Value != null)
+            {
+                settings["value"] = Value;
+            }
 
             if (Values != null)
             {

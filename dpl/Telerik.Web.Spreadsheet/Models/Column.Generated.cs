@@ -27,9 +27,15 @@ namespace Telerik.Web.Spreadsheet
         {
             var settings = new Dictionary<string, object>();
 
-            settings["index"] = Index;
+            if (Index != null)
+            {
+                settings["index"] = Index;
+            }
 
-            settings["width"] = Width;
+            if (Width != null)
+            {
+                settings["width"] = Width;
+            }
 
             return settings;
         }

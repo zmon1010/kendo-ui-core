@@ -95,9 +95,15 @@ namespace Telerik.Web.Spreadsheet
         {
             var settings = new Dictionary<string, object>();
 
-            settings["activeCell"] = ActiveCell;
+            if (ActiveCell != null)
+            {
+                settings["activeCell"] = ActiveCell;
+            }
 
-            settings["name"] = Name;
+            if (Name != null)
+            {
+                settings["name"] = Name;
+            }
 
             if (Columns != null)
             {
@@ -109,16 +115,25 @@ namespace Telerik.Web.Spreadsheet
                 settings["filter"] = Filter.Serialize();
             }
 
-            settings["frozenColumns"] = FrozenColumns;
+            if (FrozenColumns != null)
+            {
+                settings["frozenColumns"] = FrozenColumns;
+            }
 
-            settings["frozenRows"] = FrozenRows;
+            if (FrozenRows != null)
+            {
+                settings["frozenRows"] = FrozenRows;
+            }
 
             if (Rows != null)
             {
                 settings["rows"] = Rows.Select(item => item.Serialize());
             }
 
-            settings["selection"] = Selection;
+            if (Selection != null)
+            {
+                settings["selection"] = Selection;
+            }
 
             if (Sort != null)
             {

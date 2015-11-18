@@ -42,9 +42,15 @@ namespace Telerik.Web.Spreadsheet
                 settings["cells"] = Cells.Select(item => item.Serialize());
             }
 
-            settings["height"] = Height;
+            if (Height != null)
+            {
+                settings["height"] = Height;
+            }
 
-            settings["index"] = Index;
+            if (Index != null)
+            {
+                settings["index"] = Index;
+            }
 
             return settings;
         }

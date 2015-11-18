@@ -31,7 +31,10 @@ namespace Telerik.Web.Spreadsheet
         {
             var settings = new Dictionary<string, object>();
 
-            settings["activeSheet"] = ActiveSheet;
+            if (ActiveSheet != null)
+            {
+                settings["activeSheet"] = ActiveSheet;
+            }
 
             if (Sheets != null)
             {
