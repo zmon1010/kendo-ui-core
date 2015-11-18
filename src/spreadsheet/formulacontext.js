@@ -22,7 +22,7 @@
             var sheet, formula, value, i;
             if (ref instanceof CellRef) {
                 sheet = this.workbook.sheetByName(ref.sheet);
-                if (!sheet) {
+                if (!sheet || !ref.valid()) {
                     return [{
                         value: new kendo.spreadsheet.calc.runtime.CalcError("REF")
                     }];
@@ -56,7 +56,7 @@
                     }
                 }
 
-                if (i < 0 || n < 0) {
+                if (i < 0 || n < 0 || !ref.valid()) {
                     return [{
                         value: new kendo.spreadsheet.calc.runtime.CalcError("REF")
                     }];

@@ -190,6 +190,10 @@
             sorted.sort(function(a,b) {
                 return a > b ? 1 : (a < b ? -1 : 0);
             }).forEach(callback);
+        },
+
+        valid: function() {
+            return false;
         }
     });
 
@@ -251,7 +255,7 @@
             return ref.intersect(this);
         },
         print: function(trow, tcol) {
-            var col = this.col, row = this.row, rel = this.rel;
+            var col = this.col, row = this.row, rel = this.rel, abs;
             if (trow == null) {
                 if (isFinite(col)) {
                     col = rel & 1 ? ("C[" + col + "]") : ("C" + (col + 1));
@@ -265,18 +269,8 @@
                 }
                 return row + col;
             } else {
-                if (rel & 1) {
-                    // relative col, add target
-                    col += tcol;
-                }
-                if (rel & 2) {
-                    // relative row, add target
-                    row += trow;
-                }
-                if ((isFinite(col) && col < 0) || (isFinite(row) && row < 0)) {
-                    return "#REF!";
-                }
-                return displayRef(this._hasSheet && this.sheet, row, col, rel);
+                abs = this.absolute(trow, tcol);
+                return abs.valid() ? displayRef(this._hasSheet && this.sheet, abs.row, abs.col, rel) : "#REF!";
             }
         },
         absolute: function(arow, acol) {
@@ -358,6 +352,13 @@
                 ref = ref.relative(trow, tcol, this.rel);
             }
             return ref;
+        },
+        valid: function() {
+            if (this.rel) {
+                throw new Error("valid() called on relative reference");
+            }
+            var col = this.col, row = this.row;
+            return !((isFinite(col) && col < 0) || (isFinite(row) && row < 0));
         }
     });
 
@@ -480,13 +481,17 @@
             return this;
         },
         print: function(trow, tcol) {
-            var ret = this.topLeft.print(trow, tcol)
-                + ":"
-                + this.bottomRight.print(trow, tcol);
-            if (this.hasSheet()) {
-                ret = this.sheet + "!" + ret;
+            var abs = this.absolute(trow, tcol);
+            if (abs.valid()) {
+                var ret = this.topLeft.print(trow, tcol)
+                    + ":"
+                    + this.bottomRight.print(trow, tcol);
+                if (this.hasSheet()) {
+                    ret = this.sheet + "!" + ret;
+                }
+                return ret;
             }
-            return ret;
+            return "#REF!";
         },
         absolute: function(arow, acol) {
             return new RangeRef(
@@ -685,6 +690,9 @@
             return new RangeRef(tl, tr)
                 .setSheet(this.sheet, this.hasSheet())
                 .simplify();
+        },
+        valid: function() {
+            return this.topLeft.valid() && this.bottomRight.valid();
         }
     });
 
@@ -828,6 +836,14 @@
             return this.refs.map(function(ref){
                 return ref.toString();
             }).join(", ");
+        },
+        valid: function() {
+            for (var i = this.refs.length; --i >= 0;) {
+                if (this.refs[i].valid()) {
+                    return false;
+                }
+            }
+            return true;
         }
     });
 

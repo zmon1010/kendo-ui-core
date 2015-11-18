@@ -124,4 +124,17 @@
         equal(sheet.range("C3").formula(), "sum(Sheet2!A1:C3)");
     });
 
+    test("a formula containing invalid refs produces #REF! error", function(){
+        sheet.range("A1:B2").values([
+            [ 3, 4 ],
+            [ 5, 6 ]
+        ]);
+        sheet.range("C3").formula("sum(A2:B2)");
+        sheet.range("C1:C2").fillFrom("C3");
+        var values = sheet.range("C1:C3").values();
+        ok(values[0][0] instanceof kendo.spreadsheet.CalcError && values[0][0] == "#REF!");
+        equal(values[1][0], 7);
+        equal(values[2][0], 11);
+    });
+
 })();
