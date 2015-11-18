@@ -155,16 +155,34 @@
             }
         },
 
-        _execute: function(command) {
-            var result = this._workbook.execute(command);
+        _execute: function(options) {
+            var result = this._workbook.execute(options);
+
+            if (options.command === "EditCommand" && !result) {
+                this._workbook.trigger("change", { editorClose: true });
+            }
 
             if (result) {
                 if (result.reason === "error") {
                     this.view.showError(result);
+
+                    //TODO: FOCUS THE EDITOR ON CLOSE OF DIALOG
+                    //var that = this;
+                    //var dialog = this.view.showError(result);
+                    //dialog.bind("close", function() {
+                    //    that.editor
+                    //        .activate({
+                    //            rect: that.view.activeCellRectangle(),
+                    //            tooltip: that._activeTooltip()
+                    //        }).focus();
+                    //    that.onEditorUpdate();
+                    //});
                 } else {
                     this.view.openDialog(result.reason);
                 }
             }
+
+            return result;
         },
 
         _activeTooltip: function() {
@@ -394,6 +412,11 @@
                 return;
             } else {
                 this.editor.deactivate();
+
+                if (this.editor.isActive()) {
+                    event.preventDefault();
+                    return;
+                }
             }
 
             var sheet = this._workbook.activeSheet();
@@ -756,13 +779,17 @@
         onEditorChange: function(e) {
             this._workbook.activeSheet().isInEditMode(false);
 
-            this._execute({
+            var result = this._execute({
                 command: "EditCommand",
                 options: {
                     editActiveCell: true,
                     value: e.value
                 }
             });
+
+            if (result && result.reason === "error") {
+                e.preventDefault();
+            }
         },
 
         onEditorActivate: function() {
@@ -809,9 +836,11 @@
             }
 
             this.editor.deactivate();
-            this.clipboardElement.focus();
 
-            this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
+            if (!this.editor.isActive()) {
+                this.clipboardElement.focus();
+                this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
+            }
         },
 
         onEditorAction: function(event, action) {

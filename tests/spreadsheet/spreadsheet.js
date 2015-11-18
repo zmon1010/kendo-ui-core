@@ -61,6 +61,108 @@
         spreadsheet.refresh({ editorClose: true });
     });
 
+    test("workbook change event is triggered when edit command execute returns no response", 1, function() {
+        spreadsheet._workbook.execute = function () {
+            return;
+        };
+
+        spreadsheet._workbook.bind("change", function(reason) {
+            ok(reason.editorClose);
+        });
+
+        spreadsheet._controller._execute({ command: "EditCommand" });
+    });
+
+    test("onEditorChange is prevented if model returns error", 1, function() {
+        spreadsheet._workbook.execute = function () {
+            return { reason: "error" };
+        };
+
+        var event = {
+            preventDefault: function () {
+                ok(true);
+            }
+        };
+
+        spreadsheet._controller.onEditorChange(event);
+    });
+
+    test("onMouseDown is prevented if editor is not deactivated", 1, function() {
+        spreadsheet._workbook.execute = function () {
+            return { reason: "error" };
+        };
+
+        spreadsheet._controller.editor.isActive = function() {
+            return true;
+        };
+
+        spreadsheet._controller.editor.deactivate = function() {
+            return;
+        };
+
+        spreadsheet._controller.objectAt = function() {
+            return {};
+        };
+
+        var event = {
+            preventDefault: function () {
+                ok(true);
+            }
+        };
+
+        spreadsheet._controller.onMouseDown(event);
+    });
+
+    test("onMouseDown is prevented if editor is not deactivated", 1, function() {
+        spreadsheet._controller.editor.isActive = function() {
+            return true;
+        };
+
+        spreadsheet._controller.editor.deactivate = function() {
+            return;
+        };
+
+        spreadsheet._controller.objectAt = function() {
+            return {};
+        };
+
+        var event = {
+            preventDefault: function () {
+                ok(true);
+            }
+        };
+
+        spreadsheet._controller.onMouseDown(event);
+    });
+
+    test("onEditorBlur prevent focus and navigation if editor is not deactivated", 0, function() {
+        spreadsheet._controller.editor.isFiltered = function() {
+            return false;
+        };
+
+        spreadsheet._controller.editor.isActive = function() {
+            return true;
+        };
+
+        spreadsheet._controller.editor.deactivate = function() {
+            return;
+        };
+
+        spreadsheet._controller.clipboardElement = {
+            focus: function() {
+                ok(true);
+            }
+        };
+
+        spreadsheet._controller.navigator = {
+            navigateInSelection: function() {
+                ok(true);
+            }
+        };
+
+        spreadsheet._controller.onEditorBlur();
+    });
+
     test("renders when the active sheet changes", 1, function() {
         spreadsheet.bind("render", function() {
             ok(true);
