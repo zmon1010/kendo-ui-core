@@ -33,7 +33,7 @@ echo $datepicker->render();
 			if (dates[i].getDate() == date.getDate() && 
 				dates[i].getMonth() == date.getMonth() &&
 				dates[i].getYear() == date.getYear()) {
-				return true
+				return true;
 			}
 		}
 	}
