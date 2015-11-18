@@ -5,9 +5,8 @@
 
 <c:url value="/resources/web/autocomplete/shipping.png" var="shippingImg"/>
 <demo:header />
-    <div id="shipping">      
-    
-		<label for="countries" class="info">Choose shipping countries:</label>
+    <div class="demo-section k-content">
+    <h4>Choose shipping countries:</h4>
 		   
 		<%
 		String[] countries = {
@@ -68,37 +67,12 @@
 		    </kendo:dataSource>
 		</kendo:autoComplete>
 	    
-		<div class="hint">Start typing the name of an European country</div>
+		<div class="demo-hint">Start typing the name of an European country</div>
 	    
     </div>
 	<style>
-		.info {
-			display: block;
-			line-height: 22px;
-			padding: 0 5px 5px 0;
-			color: #36558e;
-		}
-
-		#shipping {
-			width: 482px;
-			height: 152px;
-			padding: 110px 0 0 30px;
-			background: url('${shippingImg}') transparent no-repeat 0 0;
-			margin: 30px auto;
-		}
-
-		.k-autocomplete
-		{
-			width: 250px;
-			vertical-align: middle;
-		}
-
-		.hint {
-			line-height: 22px;
-			color: #aaa;
-			font-style: italic;
-			font-size: .9em;
-			color: #7496d4;
+		.k-autocomplete {
+			width: 100%;
 		}
 	</style>
 <demo:footer />
