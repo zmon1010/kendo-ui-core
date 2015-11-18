@@ -23499,13 +23499,13 @@ This event is typically used for cleanup by layer implementers.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when a marker has been displayed.</description>
+            <description>Fired when a marker has been displayed and has a DOM element assigned.</description>
             <name>markerActivate</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>Fired when a marker has been created and is about to be displayed.
-Cancelling the event will prevent the marker from being shown.</description>
+Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.</description>
             <name>markerCreated</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -24718,14 +24718,14 @@ This event is typically used for cleanup by layer implementers.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when a marker has been displayed.</description>
+        <description>Fired when a marker has been displayed and has a DOM element assigned.</description>
         <name>map-markerActivate</name>
         <tag-class>com.kendoui.taglib.map.MarkerActivateFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <description>Fired when a marker has been created and is about to be displayed.
-Cancelling the event will prevent the marker from being shown.</description>
+Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.</description>
         <name>map-markerCreated</name>
         <tag-class>com.kendoui.taglib.map.MarkerCreatedFunctionTag</tag-class>
         <body-content>JSP</body-content>

@@ -39,7 +39,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Fired when a marker has been displayed.
+        /// Fired when a marker has been displayed and has a DOM element assigned.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the markerActivate event.</param>
         public MapEventBuilder MarkerActivate(string handler)
@@ -51,7 +51,7 @@ namespace Kendo.Mvc.UI.Fluent
         
         /// <summary>
         /// Fired when a marker has been created and is about to be displayed.
-		/// Cancelling the event will prevent the marker from being shown.
+		/// Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the markerCreated event.</param>
         public MapEventBuilder MarkerCreated(string handler)

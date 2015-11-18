@@ -158,7 +158,7 @@ This event is typically used for cleanup by layer implementers.
 
     /**
     * Sets the markerActivate event of the Map.
-    * Fired when a marker has been displayed.
+    * Fired when a marker has been displayed and has a DOM element assigned.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Map
     */
@@ -173,7 +173,7 @@ This event is typically used for cleanup by layer implementers.
     /**
     * Sets the markerCreated event of the Map.
     * Fired when a marker has been created and is about to be displayed.
-Cancelling the event will prevent the marker from being shown.
+Cancelling the event will prevent the marker from being shown.Use markerActivate if you need to access the marker DOM element.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Map
     */
