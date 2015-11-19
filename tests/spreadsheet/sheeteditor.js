@@ -71,6 +71,18 @@
         equal(editor.cellInput.element[0], document.activeElement);
     });
 
+    test("editor keeps last active editor", 2, function() {
+        var editor = createEditor();
+        editor.activate({ rect: { rect: { top: 0, left: 0 } } });
+        editor.focus("cell");
+
+        equal(editor.lastActive, "cell");
+
+        editor.focus("bar");
+
+        equal(editor.lastActive, "bar");
+    });
+
     test("focus method places the caret to the end", 2, function() {
         var editor = createEditor();
         var cellInput = editor.cellInput;

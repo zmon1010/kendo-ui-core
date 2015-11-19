@@ -22,6 +22,9 @@
 
             this.barInput.bind("keyup", this._triggerUpdate.bind(this));
             this.cellInput.bind("keyup", this._triggerUpdate.bind(this));
+
+            this.barInput.bind("focus", this._focus.bind(this));
+            this.cellInput.bind("focus", this._focus.bind(this));
         },
 
         events: [
@@ -30,6 +33,10 @@
             "change",
             "update"
         ],
+
+        _focus: function(e) {
+            this.lastActive = e.sender == this.barInput ? "bar" : "cell";
+        },
 
         _triggerUpdate: function() {
             this.trigger("update", { value: this.value() });
@@ -88,6 +95,10 @@
 
         cellElement: function() {
             return this.cellInput.element;
+        },
+
+        focusLastActive: function () {
+            this.focus(this.lastActive);
         },
 
         focus: function(inputType) {
