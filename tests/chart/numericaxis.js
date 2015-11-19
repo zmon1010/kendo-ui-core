@@ -137,129 +137,134 @@
 
             equal(dataviz.autoMajorUnit(min, max), mu, "[" + min + ", " + max + "]");
         }
-   });
-
-   // -----------------------------------------------------------------
-   module("Automatic Axis Maximum", {
-       setup: moduleSetup
-   });
-
-    // min, max, expected axis minimum, expected axis maximum
-    var referenceAxisLimits = [
-        [0, 0, 0, 1],
-        [0, 0.5, 0, 0.5],
-        [0, 2, 0, 2],
-        [0, 5, 0, 5],
-        [0, 18, 0, 18],
-        [0, 20, 0, 20],
-        [0, 50, 0, 50],
-        [0, 200, 0, 200],
-        [0, 500, 0, 500],
-        [0, 1800, 0, 1800],
-
-        // Axis limits for close, positive values
-        [1, 1, 0, 1],
-        [1, 1.1, 0.95, 1.1],
-        [1000, 1000, 0, 1000],
-        [1000, 1050, 975, 1050],
-        [1000, 1100, 950, 1100],
-        [1000, 1200, 900, 1200]
-    ];
-
-    test("Axis maximum for positive values", function() {
-        for (var i = 0; i < referenceAxisLimits.length; i++) {
-            var d = referenceAxisLimits[i],
-                min = d[0],
-                max = d[1],
-                axisMax = d[3];
-
-            equal(numericAxis.autoAxisMax(min, max), axisMax, "[" + min + ", " + max + "]");
-        }
     });
 
-    test("Axis maximum for negative values", function() {
-        for (var i = 0; i < referenceAxisLimits.length; i++) {
-            var d = referenceAxisLimits[i];
+    (function() {
+        var TOLERANCE = 0.0000000001;
 
-            if (d[0] == 0 && d[1] == 0) {
-                // Skip the [0, 0] test
-                continue;
+       // -----------------------------------------------------------------
+       module("Automatic Axis Maximum", {
+           setup: moduleSetup
+       });
+
+        // min, max, expected axis minimum, expected axis maximum
+        var referenceAxisLimits = [
+            [0, 0, 0, 1],
+            [0, 0.5, 0, 0.5],
+            [0, 2, 0, 2],
+            [0, 5, 0, 5],
+            [0, 18, 0, 18],
+            [0, 20, 0, 20],
+            [0, 50, 0, 50],
+            [0, 200, 0, 200],
+            [0, 500, 0, 500],
+            [0, 1800, 0, 1800],
+
+            // Axis limits for close, positive values
+            [1.0000001, 1.0000002, 1.00000005, 1.0000002],
+            [1, 1, 0, 1],
+            [1, 1.1, 0.95, 1.1],
+            [1000, 1000, 0, 1000],
+            [1000, 1050, 975, 1050],
+            [1000, 1100, 950, 1100],
+            [1000, 1200, 900, 1200]
+        ];
+
+        test("Axis maximum for positive values", function() {
+            for (var i = 0; i < referenceAxisLimits.length; i++) {
+                var d = referenceAxisLimits[i],
+                    min = d[0],
+                    max = d[1],
+                    axisMax = d[3];
+
+                close(numericAxis.autoAxisMax(min, max), axisMax, TOLERANCE, "[" + min + ", " + max + "]");
             }
+        });
 
-            var min = -d[1],
-                max = -d[0],
-                axisMax = -d[2];
+        test("Axis maximum for negative values", function() {
+            for (var i = 0; i < referenceAxisLimits.length; i++) {
+                var d = referenceAxisLimits[i];
 
+                if (d[0] == 0 && d[1] == 0) {
+                    // Skip the [0, 0] test
+                    continue;
+                }
 
-            equal(numericAxis.autoAxisMax(min, max), axisMax, "[" + min + ", " + max + "]");
-        }
-    });
+                var min = -d[1],
+                    max = -d[0],
+                    axisMax = -d[2];
 
-    test("Axis maximum for mixed positive / negative values", function() {
-        for (var i = 0; i < referenceAxisLimits.length; i++) {
-            var d = referenceAxisLimits[i];
-
-            if (d[0] != 0 || d[1] == 0) {
-                // Skip the [0, 0] and [x, y] tests
-                continue;
+                close(numericAxis.autoAxisMax(min, max), axisMax, TOLERANCE, "[" + min + ", " + max + "]");
             }
+        });
 
-            var min = -d[1],
-                max = d[1],
-                axisMax = d[3];
+        test("Axis maximum for mixed positive / negative values", function() {
+            for (var i = 0; i < referenceAxisLimits.length; i++) {
+                var d = referenceAxisLimits[i];
 
-            equal(numericAxis.autoAxisMax(min, max), axisMax, "[" + min + ", " + max + "]");
-        }
-    });
+                if (d[0] != 0 || d[1] == 0) {
+                    // Skip the [0, 0] and [x, y] tests
+                    continue;
+                }
 
-    module("Automatic Axis Minimum", {
-        setup: moduleSetup
-    });
+                var min = -d[1],
+                    max = d[1],
+                    axisMax = d[3];
 
-    test("Axis minimum for positive values", function() {
-        for (var i = 0; i < referenceAxisLimits.length; i++) {
-            var d = referenceAxisLimits[i],
-                min = d[0],
-                max = d[1],
-                axisMin = d[2];
-
-            equal(numericAxis.autoAxisMin(min, max), axisMin, "[" + min + ", " + max + "]");
-        }
-    });
-
-    test("Axis minimum for negative values", function() {
-        for (var i = 0; i < referenceAxisLimits.length; i++) {
-            var d = referenceAxisLimits[i];
-
-            if (d[0] == 0 && d[1] == 0) {
-                // Skip the [0, 0] test
-                continue;
+                close(numericAxis.autoAxisMax(min, max), axisMax, TOLERANCE, "[" + min + ", " + max + "]");
             }
+        });
 
-            var min = -d[1],
-                max = -d[0],
-                axisMin = -d[3];
+        // -----------------------------------------------------------------
+        module("Automatic Axis Minimum", {
+            setup: moduleSetup
+        });
 
-            equal(numericAxis.autoAxisMin(min, max), axisMin, "[" + min + ", " + max + "]");
-        }
-    });
+        test("Axis minimum for positive values", function() {
+            for (var i = 0; i < referenceAxisLimits.length; i++) {
+                var d = referenceAxisLimits[i],
+                    min = d[0],
+                    max = d[1],
+                    axisMin = d[2];
 
-    test("Axis minimum for mixed positive/negative values", function() {
-        for (var i = 0; i < referenceAxisLimits.length; i++) {
-            var d = referenceAxisLimits[i];
-
-            if (d[0] != 0 || d[1] == 0) {
-                // Skip the [0, 0] and [x, y] tests
-                continue;
+                close(numericAxis.autoAxisMin(min, max), axisMin, TOLERANCE, "[" + min + ", " + max + "]");
             }
+        });
 
-            var min = -d[1],
-                max = d[1],
-                axisMin = -d[3];
+        test("Axis minimum for negative values", function() {
+            for (var i = 0; i < referenceAxisLimits.length; i++) {
+                var d = referenceAxisLimits[i];
 
-            equal(numericAxis.autoAxisMin(min, max), axisMin, "[" + min + ", " + max + "]");
-        }
-    });
+                if (d[0] == 0 && d[1] == 0) {
+                    // Skip the [0, 0] test
+                    continue;
+                }
+
+                var min = -d[1],
+                    max = -d[0],
+                    axisMin = -d[3];
+
+                close(numericAxis.autoAxisMin(min, max), axisMin, TOLERANCE, "[" + min + ", " + max + "]");
+            }
+        });
+
+        test("Axis minimum for mixed positive/negative values", function() {
+            for (var i = 0; i < referenceAxisLimits.length; i++) {
+                var d = referenceAxisLimits[i];
+
+                if (d[0] != 0 || d[1] == 0) {
+                    // Skip the [0, 0] and [x, y] tests
+                    continue;
+                }
+
+                var min = -d[1],
+                    max = d[1],
+                    axisMin = -d[3];
+
+                close(numericAxis.autoAxisMin(min, max), axisMin, TOLERANCE, "[" + min + ", " + max + "]");
+            }
+        });
+    })();
 
     (function() {
         // ------------------------------------------------------------
