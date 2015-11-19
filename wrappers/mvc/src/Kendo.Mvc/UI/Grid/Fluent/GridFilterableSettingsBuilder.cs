@@ -12,6 +12,9 @@ namespace Kendo.Mvc.UI.Fluent
         } 
     }
 
+    /// <summary>
+    /// Defines the base fluent interface for configuring the grid filterable settings.
+    /// </summary>
     public abstract class GridFilterableSettingsBuilderBase<TDataSourceBuilder> : IHideObjectMembers
         where TDataSourceBuilder : GridFilterableSettingsBuilderBase<TDataSourceBuilder>
     {
