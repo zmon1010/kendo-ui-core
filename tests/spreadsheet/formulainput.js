@@ -1051,4 +1051,14 @@
 
         formulaInput.element.trigger("keyup");
     });
+
+    test("trigger focus event on element focus", 1, function() {
+        createFormulaInput({
+            focus: function() {
+                ok(true);
+            }
+        });
+
+        formulaInput.element.trigger("focus");
+    });
 })();

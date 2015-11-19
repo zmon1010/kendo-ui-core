@@ -83,7 +83,8 @@
         },
 
         events: [
-            "keyup"
+            "keyup",
+            "focus"
         ],
 
         getPos: function() {
@@ -279,6 +280,7 @@
 
         _focus: function() {
             this._focusTimeout = setTimeout(this._syntaxHighlight.bind(this));
+            this.trigger("focus");
         },
 
         _move: function(key) {
