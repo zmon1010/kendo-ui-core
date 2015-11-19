@@ -62,6 +62,12 @@
         });
     });
 
+    test("opening error dialog focuses the button inside", 1, function() {
+        spreadsheet._view.showError({ text: "Foo"});
+
+        ok($(document.activeElement).is(".k-button"));
+    });
+
     var viewModel;
     var usCurrencyInfo = kendo.cultures["en-US"].numberFormat.currency;
     var bgCurrencyInfo = kendo.cultures["bg-BG"].numberFormat.currency;
