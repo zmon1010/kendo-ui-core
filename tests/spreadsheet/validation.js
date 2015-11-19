@@ -254,7 +254,7 @@
         equal(newFormula.allowNulls, true);
     });
 
-    test("validation allow null values when allowNulls is set to true", 1, function(){
+    test("validation allow null values when allowNulls is set to true", 2, function(){
         var validationCallback = function(result) {
             ok(result);
         };
@@ -268,6 +268,7 @@
         });
 
         f.exec(ss, null, "m/d/yyyy", validationCallback);
+        f.exec(ss, "", "m/d/yyyy", validationCallback);
     });
 
     test("validation does not allow null values by default", 1, function(){
@@ -407,7 +408,6 @@
         var validationCallback = function(result) {
             ok(result);
             if (firstExecute) {
-
                 firstExecute = false;
                 f.reset();
 

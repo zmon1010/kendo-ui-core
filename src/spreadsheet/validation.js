@@ -62,7 +62,7 @@
                 var data = this._getListData();
 
                 this.value = comparer(valueToCompare, data, toValue);
-            } else if (valueToCompare === null) {
+            } else if (valueToCompare === null || valueToCompare === "") {
                 if (this.allowNulls) {
                     this.value = true;
                 } else {
