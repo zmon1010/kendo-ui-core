@@ -109,7 +109,8 @@
                 showWarning: "Show warning",
                 showHint: "Show hint",
                 hintTitle: "Hint title",
-                hintMessage: "Hint message"
+                hintMessage: "Hint message",
+                ignoreBlank: "Ignore blank"
             },
             placeholders: {
                 typeTitle: "Type title",
@@ -974,6 +975,7 @@
             this.set("from", validation.from);
             this.set("to", validation.to);
             this.set("type", validation.type);
+            this.set("allowNulls", validation.ignoreBlank);
 
             if (validation.messageTemplate || validation.titleTemplate) {
                 this.hintMessageTemplate = validation.messageTemplate;
@@ -995,7 +997,8 @@
                 dataType: this.criterion,
                 comparerType: this.comparer,
                 from: this.from,
-                to: this.to
+                to: this.to,
+                allowNulls: this.ignoreBlank
             };
 
             if (this.useCustomMessages) {
@@ -1016,6 +1019,7 @@
             title: MESSAGES.validationDialog.title,
             criterion: "any",
             type: "reject",
+            ignoreBlank: true,
             hintMessage: MESSAGES.validationDialog.hintMessage,
             hintTitle: MESSAGES.validationDialog.hintTitle,
             useCustomMessages: false,
@@ -1117,6 +1121,14 @@
                     '</div>' +
 
                     '<div data-bind="invisible: isAny">' +
+                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.ignoreBlank + ':</label></div>' +
+                        '<div class="k-edit-field">' +
+                            '<input type="checkbox" name="ignoreBlank" id="ignoreBlank" class="k-checkbox" data-bind="checked: ignoreBlank"/>' +
+                            '<label class="k-checkbox-label" for="ignoreBlank"></label>' +
+                        '</div>' +
+                    '</div>' +
+
+                    '<div data-bind="invisible: isAny">' +
                         '<div class="k-action-buttons"></div>' +
                         '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.onInvalidData + ':</label></div>' +
                         '<div class="k-edit-field">' +
@@ -1169,6 +1181,7 @@
                 comparerMessages: options.comparerMessages,
                 criteria: options.criteria.slice(0),
                 criterion: options.criterion,
+                ignoreBlank: options.ignoreBlank,
                 apply: this.apply.bind(this),
                 close: this.close.bind(this),
                 remove: this.remove.bind(this)
