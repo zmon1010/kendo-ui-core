@@ -5,51 +5,9 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section">
-    <div class="column">
-        <div class="palette-wrapper">
-            <h3>WebSafe</h3>
-<?php
-    $websafe = new \Kendo\UI\ColorPalette('websafe');
-
-    $websafe->palette('websafe');
-
-    echo $websafe->render();
-?>
-        </div>
-    </div>
-
-    <div class="column">
-        <div class="palette-wrapper">
-            <h3>Basic</h3>
-<?php
-    $basic = new \Kendo\UI\ColorPalette('basic');
-
-    $basic->palette('basic');
-
-    echo $basic->render();
-?>
-        </div>
-
-        <br style="clear:both">
-
-        <div class="palette-wrapper">
-            <h3>Monochrome</h3>
-<?php
-    $monochrome = new \Kendo\UI\ColorPalette('monochrome');
-
-    $monochrome->palette(array(
-        '#000000', '#1a1a1a', '#333333', '#4d4d4d', '#666666', '#808080',
-        '#999999', '#b3b3b3', '#cccccc', '#e6e6e6', '#f2f2f2', '#ffffff'
-    ));
-
-    echo $monochrome->render();
-?>
-        </div>
-    </div>
-
-    <div class="palette-wrapper">
-        <h3>Office</h3>
+ <div class="box wide">
+        <div class="box-col">
+            <h4>Office</h4>
 <?php
     $office = new \Kendo\UI\ColorPalette('office');
 
@@ -67,8 +25,8 @@ require_once '../lib/Kendo/Autoload.php';
     </div>
 
 
-    <div class="palette-wrapper">
-        <h3>Apex</h3>
+    <div class="box-col">
+        <h4>Apex</h4>
 <?php
     $apex = new \Kendo\UI\ColorPalette('apex');
 
@@ -86,8 +44,8 @@ require_once '../lib/Kendo/Autoload.php';
     </div>
 
 
-    <div class="palette-wrapper">
-        <h3>Austin</h3>
+    <div class="box-col">
+        <h4>Austin</h4>
 <?php
     $austin = new \Kendo\UI\ColorPalette('austin');
 
@@ -105,8 +63,8 @@ require_once '../lib/Kendo/Autoload.php';
     </div>
 
 
-    <div class="palette-wrapper">
-        <h3>Clarity</h3>
+    <div class="box-col">
+        <h4>Clarity</h4>
 <?php
     $clarity = new \Kendo\UI\ColorPalette('clarity');
 
@@ -125,8 +83,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 
 
-    <div class="palette-wrapper">
-        <h3>SlipStream</h3>
+    <div class="box-col">
+        <h4>SlipStream</h4>
 <?php
     $slipstream = new \Kendo\UI\ColorPalette('slipstream');
 
@@ -145,8 +103,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 
 
-    <div class="palette-wrapper">
-        <h3>Metro</h3>
+    <div class="box-col">
+        <h4>Metro</h4>
 <?php
     $metro = new \Kendo\UI\ColorPalette('metro');
 
@@ -164,8 +122,8 @@ require_once '../lib/Kendo/Autoload.php';
     </div>
 
 
-    <div class="palette-wrapper">
-        <h3>Flow</h3>
+    <div class="box-col">
+        <h4>Flow</h4>
 <?php
     $flow = new \Kendo\UI\ColorPalette('flow');
 
@@ -183,8 +141,8 @@ require_once '../lib/Kendo/Autoload.php';
     </div>
 
 
-    <div class="palette-wrapper">
-        <h3>Hardcover</h3>
+   <div class="box-col">
+        <h4>Hardcover</h4>
 <?php
     $hardcover = new \Kendo\UI\ColorPalette('hardcover');
 
@@ -202,8 +160,8 @@ require_once '../lib/Kendo/Autoload.php';
     </div>
 
 
-    <div class="palette-wrapper">
-        <h3>Trek</h3>
+    <div class="box-col">
+        <h4>Trek</h4>
 <?php
     $trek = new \Kendo\UI\ColorPalette('trek');
 
@@ -220,8 +178,8 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
     </div>
 
-    <div class="palette-wrapper">
-        <h3>Verve</h3>
+    <div class="box-col">
+        <h4>Verve</h4>
 <?php
     $verve = new \Kendo\UI\ColorPalette('verve');
 
@@ -237,39 +195,46 @@ require_once '../lib/Kendo/Autoload.php';
     echo $verve->render();
 ?>
     </div>
-</div>
 
-<style>
-    .demo-section {
-        overflow: hidden;
-        padding: 40px 50px 15px;
-    }
+    <br style="clear:both">
 
-    .column {
-        display: inline-block;
-        vertical-align: top;
-    }
+    <div class="box-col">
+        <h4>WebSafe</h4>
+<?php
+    $websafe = new \Kendo\UI\ColorPalette('websafe');
 
-    .palette-wrapper {
-        margin-bottom: 25px;
-        float: left;
-        margin-right: 14px;
-    }
+    $websafe->palette('websafe');
 
-    .palette-wrapper h3 {
-        font-size: 11px;
-        text-transform: uppercase;
-        font-weight: normal;
-    }
+    echo $websafe->render();
+?>
+        </div>
+  
 
-    .column {
-        width: 310px;
-    }
+     <div class="box-col">
+        <h4>Basic</h4>
+<?php
+    $basic = new \Kendo\UI\ColorPalette('basic');
 
-    .column .palette-wrapper {
-        display: block;
-    }
-</style>
+    $basic->palette('basic');
+
+    echo $basic->render();
+?>
+        </div>
+
+       <div class="box-col">
+            <h4>Monochrome</h4>
+<?php
+    $monochrome = new \Kendo\UI\ColorPalette('monochrome');
+
+    $monochrome->palette(array(
+        '#000000', '#1a1a1a', '#333333', '#4d4d4d', '#666666', '#808080',
+        '#999999', '#b3b3b3', '#cccccc', '#e6e6e6', '#f2f2f2', '#ffffff'
+    ));
+
+    echo $monochrome->render();
+?>
+        </div>
+    </div>
 
 <?php require_once '../include/footer.php'; ?>
 
