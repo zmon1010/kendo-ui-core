@@ -3287,6 +3287,7 @@ var __meta__ = { // jshint ignore:line
         kendo.PDFMixin.extend(Gantt.fn);
 
         Gantt.fn._drawPDF = function() {
+            var ganttStyles = Gantt.styles;
             var listClass = "." + ganttStyles.list;
             var listWidth = this.wrapper.find(listClass).width();
 
