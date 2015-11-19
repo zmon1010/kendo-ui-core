@@ -4,51 +4,54 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+<div class="demo-section hidden-on-narrow k-content wide">
     <div id="background">
         <div class="column">
             <h3 class="title">Select Wall Paint</h3>
-            <%= Html.Kendo().ColorPalette()
-                .Name("palette")
-                .Columns(4)
-                .TileSize(s => s.Width(34).Height(19))
-                .Palette(new string[] {
-                    "#f0d0c9", "#e2a293", "#d4735e", "#65281a",
-                    "#eddfda", "#dcc0b6", "#cba092", "#7b4b3a",
-                    "#fcecd5", "#f9d9ab", "#f6c781", "#c87d0e",
-                    "#e1dca5", "#d0c974", "#a29a36", "#514d1b",
-                    "#c6d9f0", "#8db3e2", "#548dd4", "#17365d"
-                })
-                .Events(events => events.Change("preview"))
-            %>
-        </div>
+        <%= Html.Kendo().ColorPalette()
+            .Name("palette")
+            .Columns(4)
+            .TileSize(s => s.Width(34).Height(19))
+            .Palette(new string[] {
+                "#f0d0c9", "#e2a293", "#d4735e", "#65281a",
+                "#eddfda", "#dcc0b6", "#cba092", "#7b4b3a",
+                "#fcecd5", "#f9d9ab", "#f6c781", "#c87d0e",
+                "#e1dca5", "#d0c974", "#a29a36", "#514d1b",
+                "#c6d9f0", "#8db3e2", "#548dd4", "#17365d"
+            })
+            .Events(events => events.Change("preview"))
+        %>
+    </div>
 
         <div class="column">
             <h3 class="title">Choose Custom Color</h3>
-            <%= Html.Kendo().ColorPicker()
-                .Name("picker")
-                .Value("#ffffff")
-                .Events(events => events.Select("preview"))
-            %>
-        </div>
+        <%= Html.Kendo().ColorPicker()
+            .Name("picker")
+            .Value("#ffffff")
+            .Events(events => events.Select("preview"))
+        %>
+    </div>
     </div>
 </div>
+    
+<div class="responsive-message"></div>
 
 <script>
-    function preview(e) {
-        $("#background").css("background-color", e.value);
-    }
+function preview(e) {
+    $("#background").css("background-color", e.value);
+}
 </script>
 
 <style>
+
     .demo-section {
-        width: 600px;
         height: 600px;
+        width: 600px;
     }
 
     #background {
-        background-image: url(<%= Url.Content("~/content/web/colorpicker/interior-bg.png") %>);
-        background-color: transparent;
+        background: transparent url(../../content/web/colorpicker/interior-bg.png) no-repeat;
+        margin: 0 auto;
         width: 100%;
         height: 100%;
         overflow: hidden;

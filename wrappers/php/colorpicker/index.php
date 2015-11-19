@@ -5,10 +5,10 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section">
-    <div id="background">
-        <div class="column">
-            <h3 class="title">Select Wall Paint</h3>
+<div class="demo-section hidden-on-narrow k-content wide">
+        <div id="background">
+            <div class="column">
+                <h3 class="title">Select Wall Paint</h3>
 <?php
     $palette = new \Kendo\UI\ColorPalette('palette');
 
@@ -29,10 +29,10 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $palette->render();
 ?>
-        </div>
+          </div>
 
-        <div class="column">
-            <h3 class="title">Choose Custom Color</h3>
+            <div class="column">
+                <h3 class="title">Choose Custom Color</h3>
 <?php
     $picker = new \Kendo\UI\ColorPicker('picker');
 
@@ -42,9 +42,11 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $picker->render();
 ?>
+      </div>
         </div>
     </div>
-</div>
+    
+    <div class="responsive-message"></div> 
 
 
 <script>
@@ -61,37 +63,37 @@ require_once '../lib/Kendo/Autoload.php';
     }
 
     #background {
-        background-image: url(../content/web/colorpicker/interior-bg.png);
-        background-color: transparent;
+        background: transparent url(../content/web/colorpicker/interior-bg.png);
+        margin: 0 auto;
         width: 100%;
         height: 100%;
         overflow: hidden;
     }
 
-    .column {
-        margin-top: 384px;
-        float: left;
-        width: 300px;
-        text-align: center;
-    }
+     .column {
+            margin-top: 384px;
+            float: left;
+            width: 300px;
+            text-align: center;
+        }
 
-    .column .title {
-        color: #a3a3a3;
-        text-transform: uppercase;
-        font-size: 11px;
-        font-weight: normal;
-        padding: 41px 0 20px;
-    }
+        .column .title {
+            color: #a3a3a3;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: normal;
+            padding: 41px 0 20px;
+        }
 
-    #palette {
-        vertical-align: top;
-        display: inline-block;
-    }
+        #palette {
+            vertical-align: top;
+            display: inline-block;
+        }
 
-    .k-colorpicker {
-        vertical-align: top;
-        margin: 20px 0;
-    }
+        .k-colorpicker {
+            vertical-align: top;
+            margin: 20px 0;
+        }
 </style>
 
 <?php require_once '../include/footer.php'; ?>
