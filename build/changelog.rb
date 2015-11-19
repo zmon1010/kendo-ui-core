@@ -123,7 +123,10 @@ class ChangeLog
     end
 
     def api_for(repo_name)
-        Github.new :oauth_token => '39bacd99458f1a463b938854c2da9af6c929ed6a', :user => "telerik", :repo => repo_name
+        Github.new :oauth_token => '39bacd99458f1a463b938854c2da9af6c929ed6a',
+                   :user => "telerik",
+                   :repo => repo_name,
+                   :auto_pagination => true
     end
 
     def private_repo
@@ -147,41 +150,27 @@ class ChangeLog
     end
 
     def milestone_issues(milestone)
-        page = 1
-        issues = []
+        repo = repo_by(milestone)
 
-        begin
-            issues_page = page_issues(milestone, page)
-            issues += issues_page
-            page += 1
-        end while issues_page.length == 100
-
-        issues
+        $stderr.puts "Fetching issues from #{repo.repo} repo, #{milestone.title} (#{milestone.number})" if VERBOSE
+        issues = repo.issues.list(
+            :user => 'telerik',
+            :repo => repo.repo,
+            :state => "closed",
+            :milestone => milestone.number
+        ).to_a
     end
 
     def repo_by(milestone)
         milestone.url =~ /kendo-ui-core/ ? public_repo : private_repo
     end
 
-    def page_issues(milestone, page)
-        repo_type = milestone.url =~ /kendo-ui-core/ ? 'public' : 'private'
-        repo = repo_by(milestone)
-
-        $stderr.puts "Fetching issues from #{repo.repo} repo, #{milestone.title} (#{milestone.number}), page #{page}..." if VERBOSE
-
-        repo.issues.list_repo nil, nil,
-            :state => "closed",
-            :milestone => milestone.number,
-            :per_page => 100,
-            :page => page
-    end
-
     def milestones_for(repo)
         repo_milestones = repo.issues.milestones
 
         @milestones[repo] ||=
-            repo_milestones.list(nil, nil, :state => "open") +
-            repo_milestones.list(nil, nil, :state => "closed")
+            repo_milestones.list(:state => "open").to_a +
+            repo_milestones.list(:state => "closed").to_a
     end
 
     def current_milestone_names

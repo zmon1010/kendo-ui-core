@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 gem "rake"
-gem "github_api"
+gem "github_api", "~> 0.12"
 gem "kramdown"
 gem "nokogiri"
 gem "selenium-webdriver", "~> 2.38.0"
