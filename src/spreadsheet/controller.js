@@ -165,18 +165,6 @@
             if (result) {
                 if (result.reason === "error") {
                     this.view.showError(result);
-
-                    //TODO: FOCUS THE EDITOR ON CLOSE OF DIALOG
-                    //var that = this;
-                    //var dialog = this.view.showError(result);
-                    //dialog.bind("close", function() {
-                    //    that.editor
-                    //        .activate({
-                    //            rect: that.view.activeCellRectangle(),
-                    //            tooltip: that._activeTooltip()
-                    //        }).focus();
-                    //    that.onEditorUpdate();
-                    //});
                 } else {
                     this.view.openDialog(result.reason);
                 }

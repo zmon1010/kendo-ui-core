@@ -68,6 +68,16 @@
         ok($(document.activeElement).is(".k-button"));
     });
 
+    test("closing error dialog calls the editor focusLastActive method", 1, function() {
+        spreadsheet._view.showError({ text: "Foo"});
+
+        spreadsheet._view.editor.focusLastActive = function() {
+            ok(true);
+        };
+
+        $(".k-spreadsheet-message .k-button").trigger("click");
+    });
+
     var viewModel;
     var usCurrencyInfo = kendo.cultures["en-US"].numberFormat.currency;
     var bgCurrencyInfo = kendo.cultures["bg-BG"].numberFormat.currency;

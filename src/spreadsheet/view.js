@@ -689,12 +689,16 @@
 
         showError: function(options) {
             var errorMessages = VIEW_MESAGES.errors;
+
             this.openDialog("message", {
                 title : options.title || "Error",
                 text  : options.type ? errorMessages[options.type] : options.body,
                 activate: function() {
                     this.dialog().element.find(".k-button").focus();
-                }
+                },
+                close: function() {
+                    this.editor.focusLastActive();
+                }.bind(this)
             });
         },
 
