@@ -1084,7 +1084,7 @@ namespace :build do
         zip_bundles = []
 
         BUNDLES.each do |bundle|
-            ['.zip', '.7z'].each do |ext|
+            ['zip', '7z'].each do |ext|
                 latest_zip_filename = File.join(ARCHIVE_ROOT, destination, latest_bundle_name(bundle) + ext)
                 file_copy :to => latest_zip_filename,
                           :from => "dist/bundles/#{bundle}.#{ext}"
