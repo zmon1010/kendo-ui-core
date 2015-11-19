@@ -7,6 +7,8 @@
 
     var moduleOptions = {
         setup: function() {
+            kendo.effects.disable();
+
             element = $("<div>").appendTo(QUnit.fixture);
 
             spreadsheet = new kendo.ui.Spreadsheet(element, { rows: 3, columns: 3 });
@@ -14,6 +16,7 @@
             sheet = spreadsheet.activeSheet();
         },
         teardown: function() {
+            kendo.effects.enable();
             kendo.destroy(QUnit.fixture);
             QUnit.fixture.empty();
         }
@@ -50,6 +53,13 @@
         });
 
         dialog.close();
+    });
+
+    test("open method triggers activate event when dialog opening animation is completed", 1, function() {
+        spreadsheet.openDialog("message", { text: "Foo", activate: function() {
+                ok(true);
+            }
+        });
     });
 
     var viewModel;

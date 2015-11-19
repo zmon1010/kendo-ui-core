@@ -162,9 +162,12 @@
             kendo.Observable.fn.init.call(this, options);
 
             this.options = $.extend(true, {}, this.options, options);
+
+            this.bind(this.events, options);
         },
         events: [
-            "close"
+            "close",
+            "activate"
         ],
         dialog: function() {
             if (!this._dialog) {
@@ -183,14 +186,14 @@
                         open: function() {
                             this.center();
                         },
+                        close: this._onDialogClose.bind(this),
+                        activate: this._onDialogActivate.bind(this),
                         deactivate: function() {
                             this._dialog.destroy();
                             this._dialog = null;
                         }.bind(this)
                     })
                     .data("kendoWindow");
-
-                this._dialog.bind("close", this._onDialogClose.bind(this));
             }
 
             return this._dialog;
@@ -198,9 +201,11 @@
         _onDialogClose: function() {
             this.trigger("close");
         },
+        _onDialogActivate: function() {
+            this.trigger("activate");
+        },
         destroy: function() {
             if (this._dialog) {
-
                 this._dialog.destroy();
                 this._dialog = null;
             }
