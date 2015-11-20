@@ -5,14 +5,8 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="configuration k-widget k-header">
-    <span class="infoHead">Information</span>
-    <p>
-        Apply special style for the birthdays.
-    </p>
-</div>
-
-<div class="demo-section" style="width: 155px;">
+ <div class="demo-section k-content">
+    <h4>Birthday Calendar</h4>
     <%= Html.Kendo().DatePicker()
           .Name("datepicker")
           .Value(DateTime.Today)
@@ -22,6 +16,7 @@
                              "<div class=\"birthday\"></div>" +
                          "# } #" +
                          "#= data.value #")
+          .HtmlAttributes(new { style = "width: 100%" })
      %>
 </div>
 <script>
@@ -43,9 +38,9 @@
     };
 </script>
 
-<style>
+ <style>
     .birthday {
-        background: transparent url('/Content/web/calendar/cake.png') no-repeat 0 50%;
+        background: transparent url(../content/web/calendar/cake.png) no-repeat 0 50%;
         display: inline-block;
         width: 16px;
         height: 16px;
