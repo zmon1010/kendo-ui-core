@@ -10,8 +10,6 @@
         }
     });
 
-    var DUMMY_VIEW = { ref: rangeRef(0,0, 100, 100), top: 0, left: 0 };
-
     function createPane(row, column, rowCount, columnCount) {
         var pane = new Pane(sheet, sheet._grid.pane({
             row: row,
@@ -39,6 +37,8 @@
             return /k-spreadsheet-filter/.test(node.attr.className);
         });
     }
+
+    var DUMMY_VIEW = { ref: rangeRef(0,0, 100, 100), top: 0, left: 0 };
 
     test("renders in top filtered cell", function() {
         var pane = createPane(0, 0);
@@ -426,7 +426,7 @@
     test("does not trigger sort on a NullRef", 0, function() {
         filterMenu = createWithValues([ ["A1"] ], "A1");
 
-        filterMenu.bind("action", function(e) {
+        filterMenu.bind("action", function() {
             ok(false);
         });
 
@@ -608,7 +608,7 @@
         filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
 
         var type = filterMenu.viewModel.getOperatorType();
-        equal(type, "date")
+        equal(type, "date");
     });
 
     test("apply triggers command on passed column", function() {
