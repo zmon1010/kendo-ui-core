@@ -18,7 +18,10 @@ module CodeGen::Java
                   'layers.tooltip.content', 'layerDefaults.marker.tooltip.content'],
         'filteritem' => ['filters'],
         'transport' => ['signalr'],
-        'column' => ['values', 'columns']
+        'column' => ['values', 'columns'],
+		'calendar' => ['disableDates'],
+		'datepicker' => ['disableDates'],
+		'datetimepicker' => ['disableDates'],
     }
 
     def self.ignored?(component, option)
