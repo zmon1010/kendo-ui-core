@@ -25,6 +25,8 @@
 @ios-detail-active-shadow: ~"inset 0 0 0 .16rem #fff, 0 1px 3px rgba(0,0,0,.5), inset 0 0 0 1000px rgba(0,0,0,.2)";
 @transparent-color: rgba(0,0,0,0);
 
+@error: #f44336;
+
 .km-ios,
 .km-ios .km-listview-wrapper .km-filter-wrap
 {
@@ -787,4 +789,73 @@ html .km-ios .km-tabstrip .km-button:active:last-child
 .km-ios .km-collapsible-header .km-icon
 {
     color: #7f7f7f;
+}
+
+/* Nova theme features */
+.km-ios label.km-required:after {
+    color: @error;
+}
+
+.km-ios .km-label-above {
+    color: #7b7b7b;
+}
+
+.km-ios .km-list fieldset .km-inline-field {
+    border-color: @ios-list-border-color;
+}
+
+.km-ios .km-list fieldset legend {
+    color: #FFF;
+    text-shadow: 0 1px 1px rgba(100,100,100,.8);
+    border-top-color: rgba(255,255,255,.2);
+    border-bottom-color: rgba(0,0,0,0);
+    background-color: #94A3AE;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.3));
+    .box-shadow(0 -1px 0 #86929A);
+}
+
+.km-ios {
+    .km-list {
+        fieldset,
+        .km-icon-label,
+        .km-label-above {
+            input[type=password],
+            input[type=search], 
+            input[type=number], 
+            input[type=tel],
+            input[type=url],
+            input[type=email],
+            input[type=month],
+            input[type=color],
+            input[type=week], 
+            input[type=date], 
+            input[type=time], 
+            input[type=datetime], 
+            input[type=datetime-local], 
+            input[type=text]:not(.k-input), 
+            select:not([multiple]), 
+            .k-dropdown-wrap, 
+            textarea  {
+                color: darken(@ios-widget-color, 99%);
+            }
+        }
+
+    }
+}
+
+.km-ios .km-checkbox-label:before,
+.km-ios .km-checkbox-label:after {
+    color: #3E4E65;
+    //border-color: @flat-active-background;
+}
+
+.km-ios .km-radio-label:before {
+    border-color: @ios-list-border-color;
+    background-color: @ios-widget-color;
+}
+
+.km-ios .km-radio-label:after {
+    background-color: #44648f;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,.9), rgba(255,255,255,0));
+    border-color: @button-active-background-color;
 }
