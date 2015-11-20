@@ -4,21 +4,23 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section" style="width:470px">
-<label for="start">Start date:</label>
+<div class="demo-section k-content">
+   <h4>Start date:</h4>
 <%= Html.Kendo().DatePicker()
       .Name("start")
       .Value("10/10/2011")
       .Max("10/10/2012")
       .Events(e => e.Change("startChange"))
+      .HtmlAttributes(new { style = "width: 100%" })
 %>
 
-<label for="end" style="margin-left:3em">End date:</label>
+ <h4 style="margin-top: 2em">End date:</h4>
 <%= Html.Kendo().DatePicker()
       .Name("end")
       .Value("10/10/2012")
       .Min("10/10/2011")
       .Events(e => e.Change("endChange"))
+      .HtmlAttributes(new { style = "width: 100%" })
 %>
 </div>
 
@@ -45,26 +47,4 @@
         }
     }
 </script>
-
-<style>
-    #example .k-datepicker {
-        vertical-align: middle;
-    }
-
-    #example h3 {
-        clear: both;
-    }
-
-    #example .code-sample {
-        width: 60%;
-        float:left;
-        margin-bottom: 20px;
-    }
-
-    #example .output {
-        width: 24%;
-        margin-left: 4%;
-        float:left;
-    }
-</style>
 </asp:Content>

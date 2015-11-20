@@ -7,17 +7,19 @@ require_once '../include/header.php';
 <?php
 $start = new \Kendo\UI\DatePicker('start');
 $start->value('10/10/2011')
-      ->change('startChange');
+      ->change('startChange')
+      ->attr('style', 'width: 100%');
 
 $end = new \Kendo\UI\DatePicker('end');
 $end->value('10/10/2012')
-    ->change('endChange');
+    ->change('endChange')
+    ->attr('style', 'width: 100%');
 ?>
-<div class="demo-section" style="width:470px">
-    <label for="start">Start date:</label>
+ <div class="demo-section k-content">
+        <h4>Start date:</h4>
     <?= $start->render() ?>
 
-    <label for="end" style="margin-left:3em">End date:</label>
+     <h4 style="margin-top: 2em">End date:</h4>
     <?= $end->render() ?>
 </div>
 <script>
@@ -52,26 +54,5 @@ $end->value('10/10/2012')
     });
 
 </script>
-<style>
-    #example .k-datepicker {
-        vertical-align: middle;
-    }
-
-    #example h3 {
-        clear: both;
-    }
-
-    #example .code-sample {
-        width: 60%;
-        float:left;
-        margin-bottom: 20px;
-    }
-
-    #example .output {
-        width: 24%;
-        margin-left: 4%;
-        float:left;
-    }
-</style>
 
 <?php require_once '../include/footer.php'; ?>
