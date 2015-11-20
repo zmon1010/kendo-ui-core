@@ -42,7 +42,7 @@
         category: "web",
         description: "Spreadsheet component",
         depends: [ "core", "binder", "colorpicker", "combobox", "data", "dom", "dropdownlist",
-                  "menu", "ooxml", "popup", "sortable", "tabstrip", "toolbar", "treeview", "window" ],
+                  "menu", "ooxml", "popup", "sortable", "tabstrip", "toolbar", "treeview", "window", "validator" ],
         features: []
     };
 

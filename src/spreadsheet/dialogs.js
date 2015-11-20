@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.binder" ], f);
+    define([ "../kendo.core", "../kendo.binder", "../kendo.validator" ], f);
 })(function(){
 
 (function(kendo) {
@@ -944,6 +944,12 @@
         isNumber: function() {
             return this.get("criterion") === "number";
         },
+        showToForNumber: function() {
+            return this.showTo() && this.isNumber();
+        },
+        showToForDate: function() {
+            return this.showTo() && this.isDate();
+        },
         isText: function() {
             return this.get("criterion") === "text";
         },
@@ -1042,6 +1048,8 @@
                 { type: "lessThanOrEqualTo",    name: MESSAGES.validationDialog.comparers.lessThanOrEqualTo }
             ],
             comparerMessages: MESSAGES.validationDialog.comparerMessages,
+            errorTemplate: '<div class="k-widget k-tooltip k-tooltip-validation" style="margin:0.5em"><span class="k-icon k-warning"> </span>' +
+            '#=message#<div class="k-callout k-callout-n"></div></div>',
             template:
                 '<div class="k-edit-form-container">' +
                     '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.criteria + ':</label></div>' +
@@ -1062,12 +1070,12 @@
                         '</div>' +
                         '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.min + ':</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input placeholder="e.g. 10" class="k-textbox" data-bind="value: from" />' +
+                            '<input name="' + MESSAGES.validationDialog.labels.min + '" placeholder="e.g. 10" class="k-textbox" data-bind="value: from, enabled: isNumber" required="required" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
                             '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.max + ':</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input placeholder="e.g. 100" class="k-textbox" data-bind="value: to" />' +
+                                '<input name="' + MESSAGES.validationDialog.labels.max + '" placeholder="e.g. 100" class="k-textbox" data-bind="value: to, enabled: showToForNumber" required="required" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -1082,7 +1090,7 @@
                         '</div>' +
                         '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input class="k-textbox" data-bind="value: from" />' +
+                            '<input name="' + MESSAGES.validationDialog.labels.value + '" class="k-textbox" data-bind="value: from, enabled: isText" required="required" />' +
                         '</div>' +
                     '</div>' +
 
@@ -1096,12 +1104,12 @@
                         '</div>' +
                         '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.start + ':</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input class="k-textbox" data-bind="value: from" />' +
+                            '<input name="' + MESSAGES.validationDialog.labels.start + '" class="k-textbox" data-bind="value: from, enabled: isDate" required="required" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
                             '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.end + ':</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input class="k-textbox" data-bind="value: to" />' +
+                                '<input name="' + MESSAGES.validationDialog.labels.end + '" class="k-textbox" data-bind="value: to, enabled: showToForDate" required="required" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -1109,14 +1117,14 @@
                     '<div data-bind="visible: isCustom">' +
                         '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input class="k-textbox" data-bind="value: from" />' +
+                            '<input name="' + MESSAGES.validationDialog.labels.value + '" class="k-textbox" data-bind="value: from, enabled: isCustom" required="required" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isList">' +
                         '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input class="k-textbox" data-bind="value: from" />' +
+                            '<input name="' + MESSAGES.validationDialog.labels.value + '" class="k-textbox" data-bind="value: from, enabled: isList" required="required" />' +
                         '</div>' +
                     '</div>' +
 
@@ -1193,17 +1201,29 @@
 
             element = this.dialog().element;
 
+            if (this.validatable) {
+                this.validatable.destroy();
+            }
+
             kendo.bind(element, this.viewModel);
+
+            this.validatable = new kendo.ui.Validator(element.find(".k-edit-form-container"), {
+                validateOnBlur: false,
+                errorTemplate: this.options.errorTemplate || undefined
+            });
         },
         apply: function() {
-            SpreadsheetDialog.fn.apply.call(this);
 
-            this.trigger("action", {
-                command: "EditValidationCommand",
-                options: {
-                    value: this.viewModel.toValidationObject()
-                }
-            });
+            if (this.validatable.validate()) {
+                SpreadsheetDialog.fn.apply.call(this);
+
+                this.trigger("action", {
+                    command: "EditValidationCommand",
+                    options: {
+                        value: this.viewModel.toValidationObject()
+                    }
+                });
+            }
         },
         remove: function() {
             this.viewModel.set("criterion", "any");

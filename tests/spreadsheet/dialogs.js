@@ -513,4 +513,31 @@
         dialog.close();
     });
 
+    module("Validation dialog", {
+        setup: function() {
+            moduleOptions.setup();
+
+            dialog = spreadsheet.openDialog("validation");
+        },
+        teardown: moduleOptions.teardown
+    });
+
+    test("attach validator to the form", function() {
+        ok(dialog.dialog().element.find(".k-edit-form-container").data("kendoValidator"));
+    });
+
+    test("apply calls the validate method before closing the dialog", 2, function() {
+        dialog.bind("action", function() {
+            ok(true);
+        });
+
+        dialog.validatable.validate = function() {
+            ok(true);
+            return false;
+        };
+
+        dialog.apply();
+
+        ok(dialog.dialog().element.find(".k-edit-form-container").data("kendoValidator"));
+    });
 })();
