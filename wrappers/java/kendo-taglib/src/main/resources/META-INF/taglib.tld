@@ -584,6 +584,12 @@ settings are available for the depth value:</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>An array or function that will be used to determine which dates to be disabled in the calendar.</description>
+            <name>disableDates</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The template which renders the footer. If false, the footer will not be rendered.</description>
             <name>footer</name>
             <rtexprvalue>true</rtexprvalue>
@@ -12853,6 +12859,12 @@ settings are available for the depth value:</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>An array or function that will be used to determine which dates to be disabled for selection by the widget.</description>
+            <name>disableDates</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The template which renders the footer of the calendar. If false, the footer will not be rendered.</description>
             <name>footer</name>
             <rtexprvalue>true</rtexprvalue>
@@ -13047,6 +13059,12 @@ settings are available for the depth value:</description>
             <name>depth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>An array or function that will be used to determine which dates to be disabled for selection by the widget.</description>
+            <name>disableDates</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The template which renders the footer of the calendar. If false, the footer will not be rendered.</description>
