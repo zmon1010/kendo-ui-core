@@ -13047,7 +13047,8 @@ The following settings are available for the start value:</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies a list of dates, which will be passed to the month template of the DateView. All dates, which match the date portion of the selected date will be used to re-bind the TimeView.</description>
+            <description>Specifies a list of dates, which will be passed to the month template of the DateView.
+All dates, which match the date portion of the selected date will be used to re-bind the TimeView.</description>
             <name>dates</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
