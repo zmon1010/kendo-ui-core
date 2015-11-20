@@ -29,6 +29,21 @@ module CodeGen::Java::TLD
         def to_tld
             COMPONENT.result(binding)
         end
+
+        def ignored_list
+            result = {}
+
+            CodeGen::Java::IGNORED.each do |key, value|
+                if CodeGen::Java::TLD_IGNORED.keys.include?(key)
+                    result[key] = value.reject { |item| CodeGen::Java::TLD_IGNORED[key].include?(item) }
+                    next
+                end
+
+                result[key] = value
+            end
+
+            result
+        end
     end
 
     class Event < CodeGen::Java::Event

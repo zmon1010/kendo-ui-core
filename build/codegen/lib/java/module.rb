@@ -21,14 +21,14 @@ module CodeGen::Java
         'column' => ['values', 'columns'],
 		'calendar' => ['disableDates'],
 		'datepicker' => ['disableDates'],
-		'datetimepicker' => ['disableDates'],
+		'datetimepicker' => ['disableDates']
     }
 
-    def self.ignored?(component, option)
-        ignored = IGNORED[component.downcase]
-
-        ignored && ignored.any? { |ignore| option.start_with?(ignore) }
-    end
+    TLD_IGNORED = {
+		'calendar' => ['disableDates'],
+		'datepicker' => ['disableDates'],
+		'datetimepicker' => ['disableDates']
+    }
 
     module Options
 
@@ -46,9 +46,19 @@ module CodeGen::Java
         end
 
         def delete_ignored
-           @options.delete_if { |o| CodeGen::Java.ignored?(@name, o.name) }
+           @options.delete_if { |o| ignored?(@name, o.name) }
 
            composite_options.each { |o| o.delete_ignored }
+        end
+
+        def ignored_list
+            IGNORED
+        end
+
+        def ignored?(component, option)
+            ignored = ignored_list[component.downcase]
+
+            ignored && ignored.any? { |ignore| option.start_with?(ignore) }
         end
 
     end
