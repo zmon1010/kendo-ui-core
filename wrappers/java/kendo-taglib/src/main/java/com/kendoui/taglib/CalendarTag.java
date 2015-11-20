@@ -41,6 +41,18 @@ public class CalendarTag extends WidgetTag /* interfaces *//* interfaces */ {
 
         super.destroy();
     }
+    
+    public String getDisableDates() {
+        Function property = ((Function)getProperty("disableDates"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDisableDates(String value) {
+        setProperty("disableDates", new Function(value));
+    }
 
 //>> Attributes
 
@@ -82,14 +94,6 @@ public class CalendarTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setDepth(java.lang.String value) {
         setProperty("depth", value);
-    }
-
-    public java.lang.Object getDisableDates() {
-        return (java.lang.Object)getProperty("disableDates");
-    }
-
-    public void setDisableDates(java.lang.Object value) {
-        setProperty("disableDates", value);
     }
 
     public java.lang.String getFooter() {

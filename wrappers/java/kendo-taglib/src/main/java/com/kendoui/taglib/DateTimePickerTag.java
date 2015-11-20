@@ -3,11 +3,10 @@ package com.kendoui.taglib;
 
 
 import com.kendoui.taglib.datetimepicker.*;
-
-
 import com.kendoui.taglib.html.Element;
 import com.kendoui.taglib.html.Input;
 import com.kendoui.taglib.json.Function;
+
 
 
 import javax.servlet.jsp.JspException;
@@ -46,6 +45,18 @@ public class DateTimePickerTag extends WidgetTag /* interfaces *//* interfaces *
 //<< destroy
 
         super.destroy();
+    }
+    
+    public String getDisableDates() {
+        Function property = ((Function)getProperty("disableDates"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDisableDates(String value) {
+        setProperty("disableDates", new Function(value));
     }
 
 //>> Attributes
@@ -104,14 +115,6 @@ public class DateTimePickerTag extends WidgetTag /* interfaces *//* interfaces *
 
     public void setDepth(java.lang.String value) {
         setProperty("depth", value);
-    }
-
-    public java.lang.Object getDisableDates() {
-        return (java.lang.Object)getProperty("disableDates");
-    }
-
-    public void setDisableDates(java.lang.Object value) {
-        setProperty("disableDates", value);
     }
 
     public java.lang.String getFooter() {
