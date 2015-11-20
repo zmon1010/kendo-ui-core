@@ -47,7 +47,7 @@ namespace Kendo.Mvc.Examples.Models
         {
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.ToSqlServerTable("Categories");
+                entity.ForSqlServerToTable("Categories");
                 entity.HasKey(e => e.CategoryID);
                 
                 entity.Property(e => e.CategoryID)
@@ -61,13 +61,13 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<CustomerDemographic>(entity =>
             {
-                entity.ToSqlServerTable("CustomerDemographics");
+                entity.ForSqlServerToTable("CustomerDemographics");
                 entity.HasKey(e => e.CustomerTypeID);
             });
             
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.ToSqlServerTable("Customers");
+                entity.ForSqlServerToTable("Customers");
                 entity.HasKey(e => e.CustomerID);
             });
             
@@ -81,7 +81,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.ToSqlServerTable("Employees");
+                entity.ForSqlServerToTable("Employees");
 
                 entity.HasKey(e => e.EmployeeID);
                 
@@ -96,7 +96,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<GanttDependency>(entity =>
             {
-                entity.ToSqlServerTable("GanttDependencies");
+                entity.ForSqlServerToTable("GanttDependencies");
 
                 entity.Property(e => e.ID)
                     .UseSqlServerIdentityColumn();
@@ -104,7 +104,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<GanttResourceAssignment>(entity =>
             {
-                entity.ToSqlServerTable("GanttResourceAssignments");
+                entity.ForSqlServerToTable("GanttResourceAssignments");
 
                 entity.Property(e => e.ID)
                     .UseSqlServerIdentityColumn();
@@ -115,7 +115,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<GanttResource>(entity =>
             {
-                entity.ToSqlServerTable("GanttResources");
+                entity.ForSqlServerToTable("GanttResources");
 
                 entity.Property(e => e.ID)
                     .UseSqlServerIdentityColumn();
@@ -123,7 +123,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<GanttTask>(entity =>
             {
-                entity.ToSqlServerTable("GanttTasks");
+                entity.ForSqlServerToTable("GanttTasks");
 
                 entity.Property(e => e.ID)
                     .UseSqlServerIdentityColumn();
@@ -152,13 +152,13 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<MeetingAttendee>(entity =>
             {
-                entity.ToSqlServerTable("MeetingAttendees");
+                entity.ForSqlServerToTable("MeetingAttendees");
                 entity.HasKey(e => new { e.MeetingID, e.AttendeeID });
             });
             
             modelBuilder.Entity<Meeting>(entity =>
             {
-                entity.ToSqlServerTable("Meetings");
+                entity.ForSqlServerToTable("Meetings");
 
                 entity.HasKey(e => e.MeetingID);
                 
@@ -170,7 +170,7 @@ namespace Kendo.Mvc.Examples.Models
             {
                 entity.HasKey(e => new { e.OrderID, e.ProductID });
                 
-                entity.ToSqlServerTable("Order Details");
+                entity.ForSqlServerToTable("Order Details");
                 
                 entity.Property(e => e.Discount)
                     .Metadata.SqlServer().DefaultValue = 0D;
@@ -187,7 +187,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.ToSqlServerTable("Orders");
+                entity.ForSqlServerToTable("Orders");
                 entity.HasKey(e => e.OrderID);
                 
                 entity.Property(e => e.OrderID)
@@ -202,7 +202,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<OrgChartConnection>(entity =>
             {
-                entity.ToSqlServerTable("OrgChartConnections");
+                entity.ForSqlServerToTable("OrgChartConnections");
 
                 entity.Property(e => e.Id)
                     .UseSqlServerIdentityColumn();
@@ -210,7 +210,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<OrgChartShape>(entity =>
             {
-                entity.ToSqlServerTable("OrgChartShapes");
+                entity.ForSqlServerToTable("OrgChartShapes");
 
                 entity.Property(e => e.Id)
                     .UseSqlServerIdentityColumn();
@@ -218,7 +218,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.ToSqlServerTable("Products");
+                entity.ForSqlServerToTable("Products");
 
                 entity.HasKey(e => e.ProductID);
                 
@@ -250,7 +250,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Shipper>(entity =>
             {
-                entity.ToSqlServerTable("Shippers");
+                entity.ForSqlServerToTable("Shippers");
                 entity.HasKey(e => e.ShipperID);
                 
                 entity.Property(e => e.ShipperID)
@@ -277,7 +277,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Supplier>(entity =>
             {
-                entity.ToSqlServerTable("Suppliers");
+                entity.ForSqlServerToTable("Suppliers");
                 entity.HasKey(e => e.SupplierID);
                 
                 entity.Property(e => e.SupplierID)
@@ -286,7 +286,7 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Task>(entity =>
             {
-                entity.ToSqlServerTable("Tasks");
+                entity.ForSqlServerToTable("Tasks");
 
                 entity.HasKey(e => e.TaskID);
                 
@@ -296,14 +296,14 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<Territory>(entity =>
             {
-                entity.ToSqlServerTable("Territories");
+                entity.ForSqlServerToTable("Territories");
 
                 entity.HasKey(e => e.TerritoryID);
             });
             
             modelBuilder.Entity<UrbanArea>(entity =>
             {
-                entity.ToSqlServerTable("UrbanAreas");
+                entity.ForSqlServerToTable("UrbanAreas");
 
                 entity.Property(e => e.ID)
                     .UseSqlServerIdentityColumn();
@@ -341,73 +341,73 @@ namespace Kendo.Mvc.Examples.Models
             
             modelBuilder.Entity<CustomerCustomerDemo>(entity =>
             {
-                entity.HasOne(d => d.Customer).WithMany(p => p.CustomerCustomerDemo).ForeignKey(d => d.CustomerID);                
-                entity.HasOne(d => d.CustomerType).WithMany(p => p.CustomerCustomerDemo).ForeignKey(d => d.CustomerTypeID);
+                entity.HasOne(d => d.Customer).WithMany(p => p.CustomerCustomerDemo).HasForeignKey(d => d.CustomerID);                
+                entity.HasOne(d => d.CustomerType).WithMany(p => p.CustomerCustomerDemo).HasForeignKey(d => d.CustomerTypeID);
             });
             
             modelBuilder.Entity<EmployeeDirectory>(entity =>
             {                
-                entity.HasOne(d => d.EmployeeDirectory2).WithMany(p => p.EmployeeDirectory1).ForeignKey(d => d.ReportsTo);
+                entity.HasOne(d => d.EmployeeDirectory2).WithMany(p => p.EmployeeDirectory1).HasForeignKey(d => d.ReportsTo);
             });
             
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.HasOne(d => d.ReportsToNavigation).WithOne().ForeignKey<Employee>(d => d.ReportsTo);
+                entity.HasOne(d => d.ReportsToNavigation).WithOne().HasForeignKey<Employee>(d => d.ReportsTo);
             });
             
             modelBuilder.Entity<EmployeeTerritories>(entity =>
             {
-                entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeTerritories).ForeignKey(d => d.EmployeeID);
+                entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeTerritories).HasForeignKey(d => d.EmployeeID);
                 
-                entity.HasOne(d => d.Territory).WithMany(p => p.EmployeeTerritories).ForeignKey(d => d.TerritoryID);
+                entity.HasOne(d => d.Territory).WithMany(p => p.EmployeeTerritories).HasForeignKey(d => d.TerritoryID);
             });
             
             modelBuilder.Entity<GanttTask>(entity =>
             {
-                entity.HasOne(d => d.Parent).WithOne().ForeignKey<GanttTask>(d => d.ParentID);
+                entity.HasOne(d => d.Parent).WithOne().HasForeignKey<GanttTask>(d => d.ParentID);
             });
             
             modelBuilder.Entity<MeetingAttendee>(entity =>
             {
-                entity.HasOne(d => d.Meeting).WithMany(p => p.MeetingAttendees).ForeignKey(d => d.MeetingID);
+                entity.HasOne(d => d.Meeting).WithMany(p => p.MeetingAttendees).HasForeignKey(d => d.MeetingID);
             });
             
             modelBuilder.Entity<Meeting>(entity =>
             {
-                entity.HasOne(d => d.Recurrence).WithOne().ForeignKey<Meeting>(d => d.RecurrenceID);
+                entity.HasOne(d => d.Recurrence).WithOne().HasForeignKey<Meeting>(d => d.RecurrenceID);
             });
             
             modelBuilder.Entity<Order_Detail>(entity =>
             {
-                entity.HasOne(d => d.Order).WithMany(p => p.Order_Details).ForeignKey(d => d.OrderID);
+                entity.HasOne(d => d.Order).WithMany(p => p.Order_Details).HasForeignKey(d => d.OrderID);
                 
-                entity.HasOne(d => d.Product).WithMany(p => p.Order_Details).ForeignKey(d => d.ProductID);
+                entity.HasOne(d => d.Product).WithMany(p => p.Order_Details).HasForeignKey(d => d.ProductID);
             });
             
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.HasOne(d => d.Customer).WithMany(p => p.Orders).ForeignKey(d => d.CustomerID);
+                entity.HasOne(d => d.Customer).WithMany(p => p.Orders).HasForeignKey(d => d.CustomerID);
                 
-                entity.HasOne(d => d.Employee).WithMany(p => p.Orders).ForeignKey(d => d.EmployeeID);
+                entity.HasOne(d => d.Employee).WithMany(p => p.Orders).HasForeignKey(d => d.EmployeeID);
                 
-                entity.HasOne(d => d.ShipViaNavigation).WithMany(p => p.Orders).ForeignKey(d => d.ShipVia);
+                entity.HasOne(d => d.ShipViaNavigation).WithMany(p => p.Orders).HasForeignKey(d => d.ShipVia);
             });
             
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasOne(d => d.Category).WithMany(p => p.Products).ForeignKey(d => d.CategoryID);
+                entity.HasOne(d => d.Category).WithMany(p => p.Products).HasForeignKey(d => d.CategoryID);
                 
-                entity.HasOne(d => d.Supplier).WithMany(p => p.Products).ForeignKey(d => d.SupplierID);
+                entity.HasOne(d => d.Supplier).WithMany(p => p.Products).HasForeignKey(d => d.SupplierID);
             });
             
             modelBuilder.Entity<Task>(entity =>
             {
-                entity.HasOne(d => d.Recurrence).WithOne().ForeignKey<Task>(d => d.RecurrenceID);
+                entity.HasOne(d => d.Recurrence).WithOne().HasForeignKey<Task>(d => d.RecurrenceID);
             });
             
             modelBuilder.Entity<Territory>(entity =>
             {
-                entity.HasOne(d => d.Region).WithMany(p => p.Territories).ForeignKey(d => d.RegionID);
+                entity.HasOne(d => d.Region).WithMany(p => p.Territories).HasForeignKey(d => d.RegionID);
             });
         }
     }

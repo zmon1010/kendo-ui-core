@@ -10,7 +10,7 @@ namespace Kendo.Mvc.UI
     using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.Rendering;
     using Microsoft.AspNet.Routing;
-    using Microsoft.Framework.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection;
 
     public static class NavigatableExtensions
     {

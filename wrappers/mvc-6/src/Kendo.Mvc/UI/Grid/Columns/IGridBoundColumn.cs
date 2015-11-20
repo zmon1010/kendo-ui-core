@@ -4,7 +4,7 @@ namespace Kendo.Mvc.UI
     using System.Collections.Generic;
     using System.ComponentModel;
     using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.Framework.WebEncoders;
+    using Microsoft.Extensions.WebEncoders;
 
     public interface IGridBoundColumn : IGridColumn
     {

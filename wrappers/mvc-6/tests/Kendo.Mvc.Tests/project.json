@@ -6,11 +6,12 @@
     "frameworks": {
         "dnx451": {}        
     },
-    "dependencies": {
-        "Kendo.Mvc": "1.0.0-*",
-        "Moq": "4.2.1312.1622",
-        "xunit.runner.aspnet": "2.0.0-aspnet-beta8"
-    },
+  "dependencies": {
+    "Kendo.Mvc": "1.0.0-*",
+    "Microsoft.AspNet.Http": "1.0.0-rc1-final",
+    "Moq": "4.2.1312.1622",
+    "xunit.runner.aspnet": "2.0.0-aspnet-rc1-final"
+  },
     "commands": {
         "test": "xunit.runner.aspnet"
     }

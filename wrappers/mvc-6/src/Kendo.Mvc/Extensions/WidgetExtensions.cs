@@ -15,7 +15,7 @@ namespace Kendo.Mvc.Extensions
 
         public static string GetValue<T>(this IWidget instance, string name, T value, string format = "{0}")
         {
-            ModelState state;
+            ModelStateEntry state;
             string formattedValue = string.Empty;
             ViewDataDictionary viewData = instance.ViewContext.ViewData;
 

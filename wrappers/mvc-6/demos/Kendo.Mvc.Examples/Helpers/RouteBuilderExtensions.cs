@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Routing;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNet.Routing.Template;
 
 namespace Kendo.Mvc.Examples

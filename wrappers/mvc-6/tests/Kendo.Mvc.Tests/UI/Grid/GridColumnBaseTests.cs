@@ -4,7 +4,7 @@ namespace Kendo.Mvc.UI.Tests
     using Kendo.Mvc.Tests;
     using Moq;
     using Xunit;
-    using Microsoft.Framework.WebEncoders;
+    using Microsoft.Extensions.WebEncoders;
 
     public class GridColumnBaseTests
     {

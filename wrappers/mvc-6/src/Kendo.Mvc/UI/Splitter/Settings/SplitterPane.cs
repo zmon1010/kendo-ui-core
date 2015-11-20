@@ -5,7 +5,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
-using Microsoft.Framework.WebEncoders;
+using Microsoft.Extensions.WebEncoders;
 
 namespace Kendo.Mvc.UI
 {

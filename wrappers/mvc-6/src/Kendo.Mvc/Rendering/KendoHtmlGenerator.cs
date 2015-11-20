@@ -55,8 +55,8 @@ namespace Kendo.Mvc.Rendering
 
 			tagBuilder.MergeAttribute("value", attributeValue, true);
 
-			// If there are any errors for a named field, we add the CSS attribute.
-			ModelState modelState;
+            // If there are any errors for a named field, we add the CSS attribute.
+            ModelStateEntry modelState;
 			if (viewContext.ViewData.ModelState.TryGetValue(fullName, out modelState) && modelState.Errors.Count > 0)
 			{
 				tagBuilder.AddCssClass(HtmlHelper.ValidationInputCssClassName);
@@ -212,7 +212,7 @@ namespace Kendo.Mvc.Rendering
 
         private static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)
         {
-            ModelState modelState;
+            ModelStateEntry modelState;
             if (viewContext.ViewData.ModelState.TryGetValue(key, out modelState) && modelState.RawValue != null)
             {
                 return Convert.ChangeType(modelState.RawValue, destinationType);

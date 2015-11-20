@@ -1,5 +1,5 @@
 ﻿using Kendo.Mvc.Rendering;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 
 namespace Kendo.Mvc

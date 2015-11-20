@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI
 
             bindingContext.Model = request;
 
-            return await ModelBindingResult.SuccessAsync(bindingContext.ModelName, request);
+            return await ModelBindingResult.SuccessAsync(bindingContext.ModelName ?? string.Empty, request);
         }
 
         private void TryGetValue<T>(ModelBindingContext bindingContext, string key, Action<T> action)

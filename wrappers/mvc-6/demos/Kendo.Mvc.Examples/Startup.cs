@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Hosting;
-using Microsoft.Framework.Configuration;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Dnx.Runtime;
 using Kendo.Mvc.Examples.Models;
 using Microsoft.Data.Entity;
 using System.IO;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Kendo.Mvc.Examples
 {
@@ -36,7 +37,7 @@ namespace Kendo.Mvc.Examples
         {
             // Add Entity Framework services to the services container.
             services.AddEntityFramework()
-                .AddSqlServer()
+           //     .AddSqlServer()
                 .AddDbContext<SampleEntitiesDataContext>();
 
             // Add MVC services to the services container.
@@ -58,8 +59,7 @@ namespace Kendo.Mvc.Examples
             // Add the following to the request pipeline only in development environment.
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage(DatabaseErrorPageOptions.ShowAll);
+                app.UseDeveloperExceptionPage();                
             }
             else
             {

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Routing;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Kendo.Mvc.UI.Fluent

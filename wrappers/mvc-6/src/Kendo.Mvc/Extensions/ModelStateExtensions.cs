@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Kendo.Mvc.Resources;
+    using Kendo.Mvc.Resources;    
     using Microsoft.AspNet.Mvc.ModelBinding;
 
     public static class ModelStateExtensions
@@ -22,7 +22,7 @@
                              .ToDictionary(entry => entry.Key, entry => SerializeModelState(entry.Value));
         }
 
-        private static Dictionary<string, object> SerializeModelState(ModelState modelState)
+        private static Dictionary<string, object> SerializeModelState(ModelStateEntry modelState)
         {
             var result = new Dictionary<string, object>();
             result["errors"] = modelState.Errors
@@ -31,7 +31,7 @@
             return result;
         }
 
-        private static string GetErrorMessage(ModelError error, ModelState modelState)
+        private static string GetErrorMessage(ModelError error, ModelStateEntry modelState)
         {
             if (!error.ErrorMessage.HasValue())
             {

@@ -12,7 +12,7 @@ namespace Kendo.Mvc.UI
     using Kendo.Mvc.Resources;
     using Microsoft.AspNet.Mvc.ModelBinding;
     using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.Framework.WebEncoders;
+    using Microsoft.Extensions.WebEncoders;
     using System.Text;
     using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
     using Microsoft.AspNet.Mvc.ViewFeatures;

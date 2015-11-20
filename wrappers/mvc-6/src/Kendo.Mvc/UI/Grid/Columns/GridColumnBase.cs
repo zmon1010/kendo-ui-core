@@ -6,7 +6,7 @@ namespace Kendo.Mvc.UI
     using System.Net;
     using Infrastructure;
     using Kendo.Mvc.Extensions;
-    using Microsoft.Framework.WebEncoders;
+    using Microsoft.Extensions.WebEncoders;
 
 
     /// <summary>
