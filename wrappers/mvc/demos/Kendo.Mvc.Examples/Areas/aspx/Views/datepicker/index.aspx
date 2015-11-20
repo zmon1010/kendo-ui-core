@@ -4,36 +4,21 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div id="email-settings">
-    <div style="margin-top: -6px; margin-left: 180px">
+<<div class="demo-section k-content">
+        <h4>Show e-mails from:</h4>
         <%= Html.Kendo().DatePicker()
               .Name("datepicker")
               .Value("10/10/2011")
-              .HtmlAttributes(new { style = "width:150px" })
+              .HtmlAttributes(new { style = "width: 100%" })
         %>
-    </div>
-    <div style="margin-top: 59px; margin-left: 180px">
+    <h4 style="margin-top: 2em;">Add to archive mail from:</h4>
         <%= Html.Kendo().DatePicker()
               .Name("monthpicker")
               .Start(CalendarView.Year)
               .Depth(CalendarView.Year)
               .Format("MMMM yyyy")
               .Value("November 2011")
-              .HtmlAttributes(new { style = "width:150px" })
+              .HtmlAttributes(new { style = "width: 100%" })
         %>
-    </div>
 </div>
-<style>
-    #example h2 {
-        font-weight: normal;
-    }
-    #email-settings {
-        height: 135px;
-        width: 395px;
-        margin: 30px auto;
-        padding: 110px 0 0 30px;
-        background: url('/Content/web/datepicker/mailSettings.png') transparent no-repeat 0 0;
-    }
-    
-</style>
 </asp:Content>

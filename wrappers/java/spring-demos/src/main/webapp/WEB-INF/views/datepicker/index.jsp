@@ -5,27 +5,12 @@
 
 <demo:header />
 
-<div id="email-settings">
-    <div style="margin-top: -6px; margin-left: 180px">
-        <kendo:datePicker name="datepicker" value="${date}"></kendo:datePicker>
-    </div>
-    <div style="margin-top: 59px; margin-left: 180px">
-        <kendo:datePicker name="monthpicker" value="${month}" start="year" depth="year" format="MMMM yyyy">
+<div class="demo-section k-content">
+        <h4>Show e-mails from:</h4>
+        <kendo:datePicker name="datepicker" value="${date}" style="width:100%"></kendo:datePicker>
+		<h4 style="margin-top: 2em;">Add to archive mail from:</h4>
+        <kendo:datePicker name="monthpicker" value="${month}" start="year" depth="year" format="MMMM yyyy" style="width:100%">
         </kendo:datePicker>
-    </div>
 </div>
-<style>
-    #example h2 {
-        font-weight: normal;
-    }
-    #email-settings {
-        height: 135px;
-        width: 395px;
-        margin: 30px auto;
-        padding: 110px 0 0 30px;
-        background: url(<c:url value="/resources/web/datepicker/mailSettings.png" />) transparent no-repeat 0 0;
-    }
-    
-</style>
 
 <demo:footer />
