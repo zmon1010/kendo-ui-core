@@ -7,8 +7,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 
 
-<div class="demo-section">
-    <div class="box-col" style="width: 260px;">
+<div class="demo-section k-content">
+    <div class="box-col">
         <h4>FlatColorPicker:</h4>
 <?php
     $flatcolorpicker = new \Kendo\UI\FlatColorPicker('flatcolorpicker');

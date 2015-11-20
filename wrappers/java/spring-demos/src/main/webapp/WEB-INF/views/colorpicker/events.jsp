@@ -3,8 +3,8 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
 
-<div class="demo-section k-header">
-    <div class="box-col" style="width: 260px;">
+<div class="demo-section k-content">
+   	<div class="box-col">
 	<h4>FlatColorPicker:</h4>
 	<kendo:flatColorPicker name="flatcolorpicker"
 		change="flatChange">
