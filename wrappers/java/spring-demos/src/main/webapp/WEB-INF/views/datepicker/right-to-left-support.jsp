@@ -2,19 +2,11 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-<div class="demo-section">
+<div class="demo-section k-content">
     <div class="k-rtl">
-        <label for="datetimepicker">Choose date:</label>
-        <kendo:datePicker name="datepicker"></kendo:datePicker>
+        <h4>Choose date:</h4>
+        <kendo:datePicker name="datepicker" style="width: 100%;"></kendo:datePicker>
     </div>
-</div>    
-    <style>
-    	.demo-section {
-            width: 400px;
-            text-align: center;
-            margin: 50px auto;
-            padding-top: 50px;
-            padding-bottom: 50px;
-        }
-    </style>        
+</div>
+       
 <demo:footer />
