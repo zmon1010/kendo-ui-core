@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -106,30 +107,35 @@ public class DataSourceRequest {
         Object value = filter.getValue();
         boolean ignoreCase = filter.isIgnoreCase();
 
-        try {
-            Class<?> type = new PropertyDescriptor(field, clazz).getPropertyType();
-            if (type == double.class || type == Double.class) {
-                value = Double.parseDouble(value.toString());
-            } else if (type == float.class || type == Float.class) {
-                value = Float.parseFloat(value.toString());
-            } else if (type == long.class || type == Long.class) {
-                value = Long.parseLong(value.toString());
-            } else if (type == int.class || type == Integer.class) {
-                value = Integer.parseInt(value.toString());
-            } else if (type == short.class || type == Short.class) {
-                value = Short.parseShort(value.toString());
-            } else if (type == boolean.class || type == Boolean.class) {
-                value = Boolean.parseBoolean(value.toString());
-            } else if (type == Date.class){
-                SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" );
-                String input = value.toString();
-                value = df.parse(input);
+        String[] nullables = {"isnull", "isnotnull", "isempty", "isnotempty"};
+        
+        if (!Arrays.asList(nullables).contains(operator))
+        {            
+            try {
+                Class<?> type = new PropertyDescriptor(field, clazz).getPropertyType();
+                if (type == double.class || type == Double.class) {
+                    value = Double.parseDouble(value.toString());
+                } else if (type == float.class || type == Float.class) {
+                    value = Float.parseFloat(value.toString());
+                } else if (type == long.class || type == Long.class) {
+                    value = Long.parseLong(value.toString());
+                } else if (type == int.class || type == Integer.class) {
+                    value = Integer.parseInt(value.toString());
+                } else if (type == short.class || type == Short.class) {
+                    value = Short.parseShort(value.toString());
+                } else if (type == boolean.class || type == Boolean.class) {
+                    value = Boolean.parseBoolean(value.toString());
+                } else if (type == Date.class){
+                    SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" );
+                    String input = value.toString();
+                    value = df.parse(input);
+                }   
+            }catch (IntrospectionException e) {
+            }catch (NumberFormatException nfe) {
+            }catch (ParseException e) {
             }
-        }catch (IntrospectionException e) {
-        }catch (NumberFormatException nfe) {
-        }catch (ParseException e) {
         }
-
+        
         switch(operator) {
             case "eq":
                 if (value instanceof String) {
@@ -168,6 +174,18 @@ public class DataSourceRequest {
                 break;
             case "doesnotcontain":
                 junction.add(Restrictions.not(Restrictions.ilike(field, value.toString(), MatchMode.ANYWHERE)));
+                break;
+            case "isnull":
+                junction.add(Restrictions.isNull(field));
+                break;
+            case "isnotnull":
+                junction.add(Restrictions.isNotNull(field));
+                break;
+            case "isempty":
+                junction.add(Restrictions.eq(field, ""));
+                break;
+            case "isnotempty":
+                junction.add(Restrictions.not(Restrictions.eq(field, "")));                
                 break;
         }
 
