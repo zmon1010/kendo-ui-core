@@ -622,7 +622,31 @@ var Clipboard = Class.extend({
         });
     },
 
+    _removeBomNodes: function(range) {
+        var nodes = editorNS.RangeUtils.textNodes(range);
+
+        for (var i = 0; i < nodes.length; i++) {
+            nodes[i].nodeValue = dom.stripBom(nodes[i].nodeValue);
+        }
+    },
+
+    _onBeforeCopy: function(range) {
+        var marker = new Marker();
+        var caret = marker.add(range);
+
+        this._removeBomNodes(range);
+
+        marker.remove(range);
+
+        this.editor.selectRange(range);
+    },
+
+    oncopy: function() {
+        this._onBeforeCopy(this.editor.getRange());
+    },
+
     oncut: function() {
+        this._onBeforeCopy(this.editor.getRange());
         this._contentModification($.noop, $.noop);
     },
 

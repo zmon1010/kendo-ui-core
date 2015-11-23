@@ -579,7 +579,7 @@
                         editor.selectRange(range);
                     }
                 })
-                .on("cut" + NS + " paste" + NS, function (e) {
+                .on("cut" + NS + " copy" + NS + " paste" + NS, function (e) {
                     editor.clipboard["on" + e.type](e);
                 })
                 .on("focusin" + NS, function() {

@@ -32,6 +32,8 @@
 <body>
     <textarea id="editor">&lt;em&gt;foo&lt;/em&gt;</textarea>
 
+    <textarea rows=5 cols=20></textarea>
+
     <button>Alert HTML</button>
 
     <script>
@@ -49,6 +51,10 @@
         $("button").click(function(e) {
             e.preventDefault();
             alert($("#editor").data("kendoEditor").value());
+        });
+
+        $("textarea[rows]").on("change", function() {
+            console.log(this.value.replace(/\ufeff/gi, "BOM"));
         });
     </script>
 </body>
