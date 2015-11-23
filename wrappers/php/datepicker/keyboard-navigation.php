@@ -3,69 +3,74 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
-<div class="demo-section">
-   <h3>Select date:</h3>
+<div class="demo-section k-content"> 
+    <h4>Select date:</h4>
 <?php
 $datePicker = new \Kendo\UI\DatePicker('datepicker');
 
-$datePicker->attr('style', 'width: 200px')
+$datePicker->attr('style', 'width: 100%')
            ->attr('accesskey', 'w');
 
 echo $datePicker->render();
 ?>
 </div>
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign wider"><a target="_blank" href="http://en.wikipedia.org/wiki/Access_key">Access key</a></span>
-            +
-            <span class="key-button">w</span>
-        </span>
-        <span class="button-descr">
-            focuses the widget
-        </span>
-    </li>
-</ul>
-<h4>
-    Closed popup:
-</h4>
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider rightAlign">enter</span>
-        </span>
-        <span class="button-descr">
-            triggers change event
-        </span>
-    </li>
-   <li>
-        <span class="button-preview">
-            <span class="key-button">esc</span>
-        </span>
-        <span class="button-descr">
-            closes the popup
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">alt</span>
-            <span class="key-button wider leftAlign">down arrow</span>
-        </span>
-        <span class="button-descr">
-            opens the popup
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">alt</span>
-            <span class="key-button wider leftAlign">up arrow</span>
-        </span>
-        <span class="button-descr">
-            closes the popup
-        </span>
-    </li>
-</ul>
 
+<div class="box wide">
+<div class="box-col">
+    <h4>Focus:</h4>
+    <ul class="keyboard-legend">
+        <li>
+            <span class="button-preview">
+                <span class="key-button leftAlign wider"><a target="_blank" href="http://en.wikipedia.org/wiki/Access_key">Access key</a></span>
+                +
+                <span class="key-button">w</span>
+            </span>
+            <span class="button-descr">
+                focuses the widget
+            </span>
+        </li>
+    </ul>
+</div>
+<div class="box-col">
+    <h4>Closed popup:</h4>
+    <ul class="keyboard-legend">
+        <li>
+            <span class="button-preview">
+                <span class="key-button wider rightAlign">enter</span>
+            </span>
+            <span class="button-descr">
+                triggers change event
+            </span>
+        </li>
+       <li>
+            <span class="button-preview">
+                <span class="key-button">esc</span>
+            </span>
+            <span class="button-descr">
+                closes the popup
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">alt</span>
+                <span class="key-button wider leftAlign">down arrow</span>
+            </span>
+            <span class="button-descr">
+                opens the popup
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">alt</span>
+                <span class="key-button wider leftAlign">up arrow</span>
+            </span>
+            <span class="button-descr">
+                closes the popup
+            </span>
+        </li>
+    </ul>
+</div>
+<div class="box-col">
 <h4>
     Opened popup (date view):
 </h4>
@@ -163,16 +168,7 @@ echo $datePicker->render();
             views navigates to a lower view
         </span>
     </li>
-</ul>
-<style>
-    .demo-section
-    {
-        width: 204px;
-    }
-
-    #calendar-nav
-    {
-        padding-bottom: 40px;
-    }
-</style>
+    </ul>
+</div>
+</div>
 <?php require_once '../include/footer.php'; ?>
