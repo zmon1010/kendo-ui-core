@@ -10,6 +10,11 @@
     border-radius: 5em;
 }
 
+.km-ios .km-list .km-full-width-slider {
+    margin-top: 0.5em;
+    padding: 1.1em 0;
+}
+
 .km-ios .k-slider-vertical .k-draghandle
 {
     margin-left: -.3em;
@@ -34,6 +39,17 @@
 .km-ios .k-slider-horizontal .k-slider-selection
 {
     margin-left: 0;
+}
+
+.km-ios .km-full-width-slider .k-slider-track {
+    height: .44rem;
+    border-width: 1px;
+    border-radius: 5px;
+}
+
+.km-ios .km-full-width-slider .k-draghandle {
+    border-width: 1px;
+    border-style: solid;
 }
 
 /* Dialog */
@@ -159,6 +175,7 @@
     font-size: 0.87em;
     display: block;
     margin-top: -2px;
+    margin-left: .8em;
     padding-top: .92em;
     padding-bottom: 2.5em;
 }
@@ -200,7 +217,7 @@
     width: 100%;
     right: 0;
     padding-left: 0;
-    left: .89em;
+    left: 1.2em;
     transform: translateY(0);
     -webkit-transform: translateY(0);
     margin-top: -.375em;
@@ -271,7 +288,7 @@
 .km-ios .km-list fieldset > input[type=text]:not(.k-input),
 .km-ios .km-list fieldset > select:not([multiple]),
 .km-ios .km-list fieldset > .k-dropdown-wrap {
-    padding: 1.23em 0; 
+    padding: .73em 0; 
     margin-top: 0;
 }
 
@@ -306,11 +323,13 @@
 
 .km-ios .km-list fieldset legend {
     text-indent: 0;
+    font-size: 0.81em;
     margin: 0 -1.61em;
     font-weight: normal;
     border-bottom-width: 1px;
-    border-bottom-style: solid;
-    padding: 1.8em 1.61em .72em;
+    border-top-width: 1px;
+    border-style: solid;
+    padding: 2em 1.61em .5em;
     width: 100%;
     box-sizing: content-box;
 }

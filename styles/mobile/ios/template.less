@@ -805,13 +805,16 @@ html .km-ios .km-tabstrip .km-button:active:last-child
 }
 
 .km-ios .km-list fieldset legend {
-    color: #FFF;
-    text-shadow: 0 1px 1px rgba(100,100,100,.8);
-    border-top-color: rgba(255,255,255,.2);
+    color: #FFF;    
+    border-top-color: #86929A;
     border-bottom-color: rgba(0,0,0,0);
     background-color: #94A3AE;
     background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.3));
-    .box-shadow(0 -1px 0 #86929A);
+    .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.2));
+}
+
+.km-ios .km-legend-button {
+   text-shadow: 0 1px 1px rgba(100,100,100,.8); 
 }
 
 .km-ios {
@@ -841,6 +844,23 @@ html .km-ios .km-tabstrip .km-button:active:last-child
         }
 
     }
+}
+
+.km-ios .km-full-width-slider .k-slider-track {
+    border-color: @ios-list-border-color;
+    border-top-color: darken(@ios-list-border-color, 10%);
+    background: linear-gradient(to bottom, rgba(0,0,0,.3) 0%,rgb(255,255,255) 100%);
+}
+
+.km-ios .k-slider-horizontal .k-slider-selection {
+    background: linear-gradient(to bottom, darken(@button-background-color, 20%) 0%,lighten(@button-background-color, 20%) 100%);
+}
+
+.km-ios .k-slider.km-full-width-slider .k-draghandle,
+.km-ios .k-slider.km-full-width-slider .k-draghandle:hover {
+    border-color: @ios-list-border-color;
+    box-shadow: none;
+    background-image: linear-gradient(to bottom, #ccc, #fff);
 }
 
 .km-ios .km-checkbox-label:before,
