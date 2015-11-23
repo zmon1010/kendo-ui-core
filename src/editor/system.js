@@ -632,7 +632,7 @@ var Clipboard = Class.extend({
 
     _onBeforeCopy: function(range) {
         var marker = new Marker();
-        var caret = marker.add(range);
+        marker.add(range);
 
         this._removeBomNodes(range);
 
