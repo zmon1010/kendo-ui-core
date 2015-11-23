@@ -621,7 +621,8 @@ var __meta__ = { // jshint ignore:line
                 operator: "eq",
                 value: null
             };
-            var order = this._sort || {
+
+            var order = (this._sort && this._sort.length) ? this._sort : {
                 field: "orderId",
                 dir: "asc"
             };
