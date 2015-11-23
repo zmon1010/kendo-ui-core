@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI
             }
 
             var value = bindingContext.ValueProvider.GetValue(key);
-            if (value != null)
+            if (value != null && value.FirstValue != null)
             {
                 action((T)value.ConvertTo(typeof(T)));
             }
