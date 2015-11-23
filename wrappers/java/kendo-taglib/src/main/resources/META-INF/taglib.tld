@@ -21071,7 +21071,8 @@ The supported aggregates are "average", "count", "max", "min" and "sum".</descri
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The field to which the column is bound. The value of this field is displayed by the column during data binding.
+            <description>The field to which the column is bound. The value of this field is displayed in the column's cells during data binding.
+Only columns that are bound to a field can be sortable or filterable.
 The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.</description>
             <name>field</name>
             <rtexprvalue>true</rtexprvalue>
