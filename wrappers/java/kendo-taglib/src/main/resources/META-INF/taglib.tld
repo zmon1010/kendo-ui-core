@@ -25591,7 +25591,7 @@ top takes precedence over bottom and left takes precedence over right.</descript
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies the number precision. If not set precision defined by current culture is used.</description>
+            <description>Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used.Compare with the format property.</description>
             <name>decimals</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -25603,7 +25603,7 @@ top takes precedence over bottom and left takes precedence over right.</descript
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies the format of the number. Any valid number format is allowed.</description>
+            <description>Specifies the number format used when the widget is not focused. Any valid number format is allowed.Compare with the decimals property.</description>
             <name>format</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
