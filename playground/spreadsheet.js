@@ -201,6 +201,16 @@ sheet2.range("D7").input("=sum(sheet1!A:AX)");
 
 sheet.range("E2").input('=SUM(A1:C3, 100, B2, 200, D1, INDIRECT("A1:C3"))');
 
+sheet2.insertColumn(2);
+sheet2.hideColumn(2);
+sheet2.range("B4:D7")
+    .merge().value("FOO")
+    .background("yellow")
+    .borderLeft({ color: "red" })
+    .borderTop({ color: "red" })
+    .borderRight({ color: "red" })
+    .borderBottom({ color: "red" });
+sheet2.range("B9:D9").values([[ "A", "B", "C" ]]);
 
 
 
