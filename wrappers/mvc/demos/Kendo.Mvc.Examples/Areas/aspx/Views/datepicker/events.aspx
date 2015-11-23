@@ -4,20 +4,19 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section" style="width:155px">
-    <h3 class="title">Select date
-    </h3>
+<div class="demo-section k-content">
+    <h4>Select date</h4>
     <%= Html.Kendo().DatePicker()
           .Name("datepicker")
           .Events(e =>
           {
               e.Change("change").Open("open").Close("close");
           })
+         .HtmlAttributes(new { style = "width: 100%" })
     %>
 </div>
-<div class="demo-section">
-    <h3 class="title">Console log
-    </h3>
+<div class="box">                
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 <script>

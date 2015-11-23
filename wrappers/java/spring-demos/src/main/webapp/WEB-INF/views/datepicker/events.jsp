@@ -4,18 +4,15 @@
 
 <demo:header />
 
-<div class="demo-section" style="width:155px">
-    <h3 class="title">Select date
-    </h3>
-	<kendo:datePicker name="datepicker" change="change" open="open" close="close">
+	<div class="demo-section k-content">
+    <h4>Select date</h4>
+	<kendo:datePicker name="datepicker" change="change" open="open" close="close" style="width: 100%;">
 	</kendo:datePicker>
-</div>
-<div class="demo-section">
-    <h3 class="title">Console log
-    </h3>
-    <div class="console"></div>
-</div>
-
+ 	</div>
+ 	<div class="box">                
+        <h4>Console log</h4>
+        <div class="console"></div>
+	</div>
 <script>
     function open() {
         kendoConsole.log("Open");
