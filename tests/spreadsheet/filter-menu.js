@@ -104,6 +104,7 @@
         teardown: function() {
             if (filterMenu) {
                 filterMenu.destroy();
+                filterMenu = null;
             }
         }
     });
@@ -129,11 +130,12 @@
         equal(children[2].text, "A4");
     });
 
+    var controller = kendo.spreadsheet.FilterMenuController;
+
     test("gets only distinct values", function() {
         filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["aaa"] ]);
 
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(range, 0);
 
         equal(values.length, 2, "distinct values are loaded");
 
@@ -144,8 +146,7 @@
     test("gets empty values", function() {
         filterMenu = createWithValues([ ["header"], [], ["A1"] ]);
 
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(range, 0);
 
         equal(values[0].text, "(Blanks)");
         equal(values[1].text, "A1");
@@ -155,8 +156,7 @@
         range = sheet.range("A1:A4").values([ ["header"], ["A1"], ["A2"], ["A3"] ]).wrap(true);
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: range });
 
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(range, 0);
 
         ok(!values[0].hasOwnProperty("wrap"));
         ok(!values[1].hasOwnProperty("wrap"));
@@ -165,8 +165,7 @@
     test("skips header row value", function() {
         filterMenu = createWithValues([ ["header"], ["A1"] ]);
 
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(range, 0);
 
         equal(values[0].text, "(Blanks)");
         equal(values[1].text, "A1");
@@ -175,10 +174,9 @@
     test("recognizes number dataType", function() {
         sheet.range("A2").value(123);
 
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
+        var range = sheet.range("A1:A2");
 
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(range, 0);
 
         equal(values[0].dataType, "number");
     });
@@ -186,10 +184,9 @@
     test("recognizes date dataType", function() {
         sheet.range("A2").value(new Date(2015,1,1)).format("dd/mm/yyyy");
 
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
+        var range = sheet.range("A1:A2");
 
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(range, 0);
 
         equal(values[0].dataType, "date");
     });
@@ -197,19 +194,17 @@
     test("recognizes string dataType", function() {
         sheet.range("A2").value("A2");
 
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
+        var range = sheet.range("A1:A2");
 
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(range, 0);
 
         equal(values[0].dataType, "string");
     });
 
     test("recognizes blank dataType", function() {
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
+        var range = sheet.range("A1:A2");
 
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(range, 0);
 
         equal(values[0].dataType, "blank");
     });
@@ -220,123 +215,13 @@
         sheet.range("A3").value(123);
         sheet.range("A4");
 
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A4") });
+        var range = sheet.range("A1:A4");
 
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(range, 0);
 
         equal(values[0].dataType, "blank");
         equal(values[1].dataType, "number");
         equal(values[2].dataType, "date");
-    });
-
-    test("search in string values", function() {
-        filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["aaa"] ]);
-
-        filterMenu.getValues();
-
-        //simulate search
-        filterMenu.element.find("span.k-i-search").prev().val("bb").trigger("input");
-
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
-
-        equal(values[0].hidden, true);
-        equal(values[1].hidden, false);
-    });
-
-    test("search in number values", function() {
-        filterMenu = createWithValues([ ["header"], [1], [2], [1] ]);
-
-        filterMenu.getValues();
-
-        //simulate search
-        filterMenu.element.find("span.k-i-search").prev().val("2").trigger("input");
-
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
-
-        equal(values[0].hidden, true);
-        equal(values[1].hidden, false);
-    });
-
-    test("search in date values", function() {
-        filterMenu = createWithValues([ ["header"], [new Date("6/30/2014")], [new Date("8/28/2014")], [new Date("6/30/2014")] ]);
-
-        range = sheet.range("A2:A4").format("dd-MMM-yyyy");
-        filterMenu.getValues();
-
-        //simulate search
-        filterMenu.element.find("span.k-i-search").prev().val("aug").trigger("input");
-
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
-
-        equal(values[0].hidden, true);
-        equal(values[1].hidden, false);
-    });
-
-    test("automatically selects values that match the search criteria", function() {
-        filterMenu = createWithValues([ ["header"], [new Date("6/30/2014")], [new Date("8/28/2014")], [new Date("6/30/2014")] ]);
-
-        range = sheet.range("A2:A4").format("dd-MMM-yyyy");
-        filterMenu.getValues();
-
-        //simulate search
-        filterMenu.element.find("span.k-i-search").prev().val("aug").trigger("input");
-
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
-
-        equal(values[0].checked, false);
-        equal(values[1].checked, true);
-    });
-
-    test("displays appendToSearch checkbox", function() {
-        filterMenu = createWithValues([ ["header"], [new Date("6/30/2014")], [new Date("8/28/2014")], [new Date("6/30/2014")] ]);
-
-        range = sheet.range("A2:A4").format("dd-MMM-yyyy");
-        filterMenu.getValues();
-
-        //simulate search
-        filterMenu.element.find("span.k-i-search").prev().val("aug").trigger("input");
-        ok(filterMenu.viewModel.hasActiveSearch);
-
-        filterMenu.element.find("span.k-i-search").prev().val("").trigger("input");
-        ok(!filterMenu.viewModel.hasActiveSearch);
-    });
-
-    test("does not merge search result if appendToSearch: false", function() {
-        filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["ccc"] ]);
-
-        filterMenu.element.find("span.k-i-search").prev().val("bb").trigger("input");
-        filterMenu.viewModel.apply();
-
-        filterMenu.element.find("span.k-i-search").prev().val("aa").trigger("input");
-        filterMenu.viewModel.set("appendToSearch", false);
-
-        filterMenu.bind("action", function(e) {
-            equal(e.command, "ApplyFilterCommand");
-            equal(e.options.valueFilter.values.length, 1);
-            equal(e.options.valueFilter.values[0], "aaa");
-        });
-
-        filterMenu.viewModel.apply();
-    });
-
-    test("merges search result if appendToSearch: true", function() {
-        filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["ccc"] ]);
-
-        filterMenu.element.find("span.k-i-search").prev().val("bb").trigger("input");
-        filterMenu.viewModel.apply();
-
-        filterMenu.element.find("span.k-i-search").prev().val("aa").trigger("input");
-        filterMenu.viewModel.set("appendToSearch", true);
-
-        filterMenu.bind("action", function(e) {
-            equal(e.command, "ApplyFilterCommand");
-            equal(e.options.valueFilter.values.length, 2);
-            equal(e.options.valueFilter.values[0], "aaa");
-            equal(e.options.valueFilter.values[1], "bbb");
-        });
-
-        filterMenu.viewModel.apply();
     });
 
     function rangeWithCustomFilter(ref, values, criteria) {
@@ -361,9 +246,7 @@
     test("values that does not match existing custom filter rules appear as unchecked", function() {
         var filterMenuRange = rangeWithCustomFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], { operator: "contains", value: "B" });
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: filterMenuRange });
-
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(filterMenuRange, 0);
 
         equal(values[0].checked, false);
         equal(values[1].checked, true);
@@ -373,9 +256,7 @@
     test("values that does not match existing value filter rules appear as unchecked", function() {
         var filterMenuRange = rangeWithValuesFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], ["A", "B"] );
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: filterMenuRange });
-
-        filterMenu.getValues();
-        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+        var values = controller.values(filterMenuRange, 0);
 
         equal(values[0].checked, true);
         equal(values[1].checked, true);
@@ -683,14 +564,12 @@
     }
 
     test("values are updated upon checkbox check", function() {
-        viewModel.valuesChange({
-            sender: {
-                dataSource: valuesDataSource([
-                    { text: "1", value: "1", dataType: "string", checked: true },
-                    { text: "2", value: "2", dataType: "string", checked: false }
-                ])
-            }
-        });
+        viewModel.valuesDataSource = valuesDataSource([
+            { text: "1", value: "1", dataType: "string", checked: true },
+            { text: "2", value: "2", dataType: "string", checked: false }
+        ]);
+
+        viewModel.valuesChange();
 
         var values = viewModel.valueFilter.values;
 
@@ -699,14 +578,12 @@
     });
 
     test("cell value is passed to the value filter", function() {
-        viewModel.valuesChange({
-            sender: {
-                dataSource: valuesDataSource([
-                    { value: 0.01, format: "0%", dataType: "string", checked: true },
-                    { value: 0.02, format: "0%", dataType: "string", checked: false }
-                ])
-            }
-        });
+        viewModel.valuesDataSource = valuesDataSource([
+            { value: 0.01, format: "0%", dataType: "string", checked: true },
+            { value: 0.02, format: "0%", dataType: "string", checked: false }
+        ]);
+
+        viewModel.valuesChange();
 
         var values = viewModel.valueFilter.values;
 
@@ -715,32 +592,145 @@
     });
 
     test("blanks field is added to the value filter options", function() {
-        viewModel.valuesChange({
-            sender: {
-                dataSource: valuesDataSource([
-                    { dataType: "blank", checked: false },
-                    { value: 0.01, format: "0%", dataType: "string", checked: true },
-                    { value: 0.02, format: "0%", dataType: "string", checked: false }
-                ])
-            }
-        });
+        viewModel.valuesDataSource = valuesDataSource([
+            { dataType: "blank", checked: false },
+            { value: 0.01, format: "0%", dataType: "string", checked: true },
+            { value: 0.02, format: "0%", dataType: "string", checked: false }
+        ]);
+
+        viewModel.valuesChange();
 
         var blanks = viewModel.valueFilter.blanks;
         equal(blanks, false);
     });
 
     test("dates are converted back to numbers", function() {
-        viewModel.valuesChange({
-            sender: {
-                dataSource: valuesDataSource([
-                    { value: new Date("6/30/2014"), dataType: "date", checked: true },
-                    { value: new Date("8/22/2014"), dataType: "date", checked: false }
-                ])
-            }
-        });
+        viewModel.valuesDataSource = valuesDataSource([
+            { value: new Date("6/30/2014"), dataType: "date", checked: true },
+            { value: new Date("8/22/2014"), dataType: "date", checked: false }
+        ]);
+
+        viewModel.valuesChange();
 
         var values = viewModel.valueFilter.values;
         equal(values[0], kendo.spreadsheet.dateToNumber(new Date("6/30/2014")));
+    });
+
+    test("search in string values", function() {
+        viewModel.valuesDataSource = valuesDataSource([
+            { text: "aaa", dataType: "string" },
+            { text: "bbb", dataType: "string" },
+            { text: "aaa", dataType: "string" }
+        ]);
+
+        viewModel.filterValues("bb");
+
+        var values = viewModel.valuesDataSource.data()[0].items;
+
+        equal(values[0].hidden, true);
+        equal(values[1].hidden, false);
+    });
+
+    test("search in number values", function() {
+        viewModel.valuesDataSource = valuesDataSource([
+            { text: "1" },
+            { text: "2" },
+            { text: "1" }
+        ]);
+
+        viewModel.filterValues("2");
+
+        var values = viewModel.valuesDataSource.data()[0].items;
+
+        equal(values[0].hidden, true);
+        equal(values[1].hidden, false);
+    });
+
+    test("search in date values", function() {
+        viewModel.valuesDataSource = valuesDataSource([
+            { text: "30 Jun", value: new Date("6/30/2014"), dataType: "date" },
+            { text: "28 Aug", value: new Date("8/28/2014"), dataType: "date" },
+            { text: "30 Jun", value: new Date("6/30/2014"), dataType: "date" }
+        ]);
+
+        viewModel.filterValues("aug");
+
+        var values = viewModel.valuesDataSource.data()[0].items;
+
+        equal(values[0].hidden, true);
+        equal(values[1].hidden, false);
+    });
+
+    test("automatically selects values that match the search criteria", function() {
+        viewModel.valuesDataSource = valuesDataSource([
+            { text: "30 Jun", value: new Date("6/30/2014"), dataType: "date" },
+            { text: "28 Aug", value: new Date("8/28/2014"), dataType: "date" },
+            { text: "30 Jun", value: new Date("6/30/2014"), dataType: "date" }
+        ]);
+
+        viewModel.filterValues("aug");
+
+        var values = viewModel.valuesDataSource.data()[0].items;
+
+        equal(values[0].checked, false);
+        equal(values[1].checked, true);
+    });
+
+    test("displays appendToSearch checkbox", function() {
+        viewModel.valuesDataSource = valuesDataSource([
+            { text: "30 Jun", value: new Date("6/30/2014"), dataType: "date" },
+            { text: "28 Aug", value: new Date("8/28/2014"), dataType: "date" },
+            { text: "30 Jun", value: new Date("6/30/2014"), dataType: "date" }
+        ]);
+
+        viewModel.filterValues("aug");
+        ok(viewModel.hasActiveSearch);
+
+        viewModel.filterValues("");
+        ok(!viewModel.hasActiveSearch);
+    });
+
+    test("does not merge search result if appendToSearch: false", function() {
+        viewModel.valuesDataSource = valuesDataSource([
+            { text: "aaa", value: "aaa" },
+            { text: "bbb", value: "bbb" },
+            { text: "ccc", value: "ccc" }
+        ]);
+
+        viewModel.filterValues("bb");
+        viewModel.valuesChange();
+
+        viewModel.set("appendToSearch", false);
+
+        viewModel.filterValues("aa");
+        viewModel.valuesChange();
+
+        var valueFilter = viewModel.valueFilter;
+
+        equal(valueFilter.values.length, 1);
+        equal(valueFilter.values[0], "aaa");
+    });
+
+    test("merges search result if appendToSearch: true", function() {
+        viewModel.valuesDataSource = valuesDataSource([
+            { text: "aaa", value: "aaa" },
+            { text: "bbb", value: "bbb" },
+            { text: "ccc", value: "ccc" }
+        ]);
+
+        viewModel.filterValues("bb");
+        viewModel.valuesChange();
+
+        viewModel.set("appendToSearch", true);
+
+        viewModel.filterValues("aa");
+        viewModel.valuesChange();
+
+        var valueFilter = viewModel.valueFilter;
+
+        equal(valueFilter.values.length, 2);
+        equal(valueFilter.values[0], "aaa");
+        equal(valueFilter.values[1], "bbb");
     });
 
 })();

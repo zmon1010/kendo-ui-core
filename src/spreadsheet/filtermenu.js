@@ -258,6 +258,7 @@
 
         var FilterMenuViewModel = kendo.spreadsheet.FilterMenuViewModel = kendo.data.ObservableObject.extend({
             valuesChange: function(e) {
+                var dataSource = e ? e.sender.dataSource : this.valuesDataSource;
                 var checked = function(item) {
                     return item.checked && item.value;
                 };
@@ -267,7 +268,7 @@
                 var unique = function(value, index, array) {
                     return array.lastIndexOf(value) === index;
                 };
-                var data = e.sender.dataSource.data();
+                var data = dataSource.data();
                 var values = data[0].children.data().toJSON();
                 var blanks = values.filter(function(item) {
                     return item.dataType === "blank";
@@ -294,7 +295,7 @@
             hasActiveSearch: false,
             appendToSearch: false,
             filterValues: function(e) {
-                var query = $(e.target).val().toLowerCase();
+                var query = typeof e == "string" ? e : $(e.target).val().toLowerCase();
                 var dataSource = this.valuesDataSource;
 
                 this.set("hasActiveSearch", !!query);
@@ -389,6 +390,14 @@
         }
 
         var FilterMenuController = kendo.spreadsheet.FilterMenuController = {
+            valuesTree: function(range, column) {
+                return [{
+                    text: "All",
+                    expanded: true,
+                    checked: true,
+                    items: this.values(range, column)
+                }];
+            },
             values: function(range, column) {
                 var values = [];
                 var messages = FILTERMENU_MESSAGES;
@@ -448,12 +457,7 @@
                     return 0;
                 });
 
-                return [{
-                    text: "All",
-                    expanded: true,
-                    checked: true,
-                    items: values
-                }];
+                return values;
             },
 
             filter: function(column, sheet, operators) {
@@ -628,12 +632,13 @@
                 var column = this.options.column;
                 var sheet = this.options.range.sheet();
                 var operators = this.options.operators;
-                var filter = FilterMenuController.filter(column, sheet, operators);
+                var filterInfo = FilterMenuController.filter(column, sheet, operators);
+                var filterProps = filterInfo.filter;
 
-                if (filter) {
-                    this.viewModel.set("active", filter.serializedFilter.filter);
-                    this.viewModel.set(filter.serializedFilter.filter + "Filter", filter.serializedFilter);
-                    this.viewModel.set("operatorType", filter.type);
+                if (filterProps) {
+                    this.viewModel.set("active", filterProps.filter);
+                    this.viewModel.set(filterProps.filter + "Filter", filterProps);
+                    this.viewModel.set("operatorType", filterInfo.type);
                 } else {
                     this.viewModel.reset();
                 }
@@ -715,7 +720,7 @@
 
                 this.valuesTreeView = wrapper.find("[data-role=treeview]").data("kendoTreeView");
 
-                var values = FilterMenuController.values(this.options.range, this.options.column);
+                var values = FilterMenuController.valuesTree(this.options.range, this.options.column);
 
                 this.valuesTreeView.setDataSource(values);
             },
