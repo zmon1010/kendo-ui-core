@@ -176,13 +176,11 @@ var __meta__ = { // jshint ignore:line
     TreeView = kendo.ui.DataBoundWidget.extend({
         init: function (element, options) {
             var that = this,
-                dataInit,
                 inferred = false,
                 hasDataSource = options && !!options.dataSource,
                 list;
 
             if (isArray(options)) {
-                dataInit = true;
                 options = { dataSource: options };
             }
 
@@ -1878,7 +1876,7 @@ var __meta__ = { // jshint ignore:line
 
             nodeData = this._toObservableData(nodeData);
 
-            return callback.call(this, destDataSource, nodeData, loadPromise);
+            return callback.call(destTreeview, destDataSource, nodeData, loadPromise);
         },
 
         _toObservableData: function(node) {
@@ -1924,15 +1922,15 @@ var __meta__ = { // jshint ignore:line
         insertBefore: insertAction(0),
 
         append: function (nodeData, parentNode, success) {
-            var that = this,
-                group = that.root;
+            var group = this.root;
 
             if (parentNode) {
                 group = subGroup(parentNode);
             }
 
-            return that._dataSourceMove(nodeData, group, parentNode, function (dataSource, model, loadModel) {
+            return this._dataSourceMove(nodeData, group, parentNode, function (dataSource, model, loadModel) {
                 var inserted;
+                var that = this;
 
                 function add() {
                     if (parentNode) {
