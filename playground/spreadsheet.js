@@ -162,9 +162,13 @@ $("#filter").on("click", function() {
 });
 
 $("#pdf").on("click", function(){
-    kendo.drawing.drawDOM("#spreadsheet .k-spreadsheet-view").then(function(group){
-        group.options.set("pdf.margin", "1cm");
-        kendo.drawing.pdf.saveAs(group, "spreadsheet.pdf");
+    // kendo.drawing.drawDOM("#spreadsheet .k-spreadsheet-view").then(function(group){
+    //     group.options.set("pdf.margin", "1cm");
+    //     kendo.drawing.pdf.saveAs(group, "spreadsheet.pdf");
+    // });
+
+    spreadsheet.activeSheet().draw(function(group){
+        kendo.drawing.pdf.saveAs(group, "sheet.pdf");
     });
 });
 

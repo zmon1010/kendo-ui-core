@@ -1,11 +1,15 @@
 (function(f, define){
-    define([ "../kendo.drawing", "./sheet", "./range", "./references" ], f);
+    define([ "../kendo.drawing", "./sheet", "./range", "./references", "./numformat" ], f);
 })(function(){
 
     "use strict";
 
-    var SHEETREF = kendo.spreadsheet.SHEETREF;
-    var CellRef = kendo.spreadsheet.CellRef;
+    var spreadsheet = kendo.spreadsheet;
+    var SHEETREF = spreadsheet.SHEETREF;
+    var CellRef = spreadsheet.CellRef;
+    var drawing = kendo.drawing;
+    var formatting = spreadsheet.formatting;
+    var geo = kendo.geometry;
 
     /* jshint eqnull:true, laxbreak:true, shadow:true, -W054 */
     /* jshint latedef: nofunc */
@@ -36,13 +40,15 @@
         var prevWidth = 0;
         var topRow = null;
         var cells = [];
+        var boxWidth = 0, boxHeight = 0;
         sheet.forEach(range, function(row, col, cell){
             if (sheet.isHiddenColumn(col)) {
                 return;
             }
             var id = new CellRef(row, col).print();
             var isSecondary = mergedCells.secondary[id];
-            if (!isSecondary && shouldDrawCell(row, cell)) {
+            var isVisible = !isSecondary && shouldDrawCell(row, cell);
+            if (isVisible) {
                 cells.push(cell);
             }
             if (topRow == null) {
@@ -67,8 +73,14 @@
                 }
             }
 
-            cell.left = currentX;
-            cell.top = currentY;
+            if (isVisible) {
+                cell.left = currentX;
+                cell.top = currentY;
+                cell.right = currentX + cell.width;
+                cell.bottom = currentY + cell.height;
+                boxWidth = Math.max(boxWidth, cell.right);
+                boxHeight = Math.max(boxHeight, cell.bottom);
+            }
             currentY += height;
         });
 
@@ -82,12 +94,147 @@
                  cell.borderLeft != null);
         }
 
-        return cells;
+        return {
+            width  : boxWidth,
+            height : boxHeight,
+            cells  : cells.sort(normalOrder)
+        };
     }
 
-    kendo.spreadsheet.Sheet.prototype.print = function() {
-        var cells = makeCellLayout(this, SHEETREF, 800, 600);
-        console.log(cells);
+    function normalOrder(a, b) {
+        if (a.top < b.top) {
+            return -1;
+        } else if (a.top == b.top) {
+            if (a.left < b.left) {
+                return -1;
+            } else if (a.left == b.left) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } else {
+            return 1;
+        }
+    }
+
+    function drawLayout(layout, group, options) {
+        // options:
+        // - pageWidth
+        // - pageHeight
+        // - fitWidth?
+        // - center?
+        var ncols = Math.ceil(layout.width / options.pageWidth);
+        var nrows = Math.ceil(layout.height / options.pageHeight);
+
+        for (var i = 0; i < ncols; ++i) {
+            for (var j = 0; j < nrows; ++j) {
+                addPage(j, i);
+            }
+        }
+
+        function addPage(row, col) {
+            var left = col * options.pageWidth;
+            var right = left + options.pageWidth;
+            var top = row * options.pageHeight;
+            var bottom = top + options.pageHeight;
+            var cells = layout.cells.filter(function(cell){
+                return !(cell.right < left || cell.left > right ||
+                         cell.bottom < top || cell.top > bottom);
+            });
+            if (cells.length > 0) {
+                var page = new drawing.Group();
+                group.append(page);
+                page.clip(drawing.Path.fromRect(
+                    new geo.Rect([ 0, 0 ],
+                                 [ options.pageWidth, options.pageHeight ])));
+                var content = new drawing.Group();
+                page.append(content);
+                content.transform(geo.Matrix.translate(-left, -top));
+                cells.forEach(function(cell){
+                    drawCell(cell, content);
+                });
+            }
+        }
+    }
+
+    function drawCell(cell, group) {
+        var g = new drawing.Group();
+        group.append(g);
+        var rect = new geo.Rect([ cell.left, cell.top ],
+                                [ cell.width, cell.height ]);
+        if (cell.background) {
+            g.append(
+                new drawing.Rect(rect)
+                    .fill(cell.background)
+                    .stroke(null)
+            );
+        }
+        g.append(new drawing.Rect(rect, { stroke: { width: 0.01, color: "#888" } }));
+        if (cell.borderLeft) {
+            g.append(
+                new drawing.Path({ stroke: cell.borderLeft })
+                    .moveTo(cell.left, cell.top)
+                    .lineTo(cell.left, cell.bottom)
+                    .close()
+            );
+        }
+        if (cell.borderTop) {
+            g.append(
+                new drawing.Path({ stroke: cell.borderTop })
+                    .moveTo(cell.left, cell.top)
+                    .lineTo(cell.right, cell.top)
+                    .close()
+            );
+        }
+        if (cell.borderRight) {
+            g.append(
+                new drawing.Path({ stroke: cell.borderRight })
+                    .moveTo(cell.right, cell.top)
+                    .lineTo(cell.right, cell.bottom)
+                    .close()
+            );
+        }
+        if (cell.borderBottom) {
+            g.append(
+                new drawing.Path({ stroke: cell.borderBottom })
+                    .moveTo(cell.left, cell.bottom)
+                    .lineTo(cell.right, cell.bottom)
+                    .close()
+            );
+        }
+        var val = cell.value;
+        if (val != null) {
+            var clip = new drawing.Group();
+            clip.clip(drawing.Path.fromRect(rect));
+            g.append(clip);
+            var f;
+            if (cell.format) {
+                f = formatting.textAndColor(val, cell.format);
+                val = f.text;
+            } else {
+                val += "";
+            }
+            // XXX: missing alignment and wrapping
+            var tmp = new drawing.Text(val, [ cell.left, cell.top + 2 ]);
+            if (f && f.color) {
+                tmp.fill(f.color);
+            }
+            clip.append(tmp);
+        }
+    }
+
+    spreadsheet.Sheet.prototype.draw = function(callback) {
+        var layout = makeCellLayout(this, SHEETREF, 800, 600);
+        var group = new drawing.Group();
+        group.options.set("pdf", {
+            multiPage: true,
+            paperSize: [ 800, 600 ]
+        });
+        drawLayout(layout, group, {
+            pageWidth: 800,
+            pageHeight: 600
+        });
+        callback(group);
     };
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
