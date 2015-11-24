@@ -6,10 +6,10 @@
         "index": 0,
         "height": 40,
         "cells": [
-          { "value": "Product", "format": "", "background": "#00b050", "color": "#ffffff", "fontSize": 13, "bold": true, "textAlign": "center", "verticalAlign": "middle", "index": 0 },
-          { "value": "Unit Price", "format": "", "background": "#00b050", "color": "#ffffff", "fontSize": 13, "bold": true, "textAlign": "center", "verticalAlign": "middle", "index": 1 },
-          { "value": "Units in Stock", "format": "", "background": "#00b050", "color": "#ffffff", "fontSize": 13, "bold": true, "textAlign": "center", "verticalAlign": "middle", "index": 2 },
-          { "value": "Discontinued", "format": "", "background": "#00b050", "color": "#ffffff", "fontSize": 13, "bold": true, "textAlign": "center", "verticalAlign": "middle", "index": 3 }
+          { "value": "Product", "format": "", "background": "#00b050", "color": "#ffffff", "fontSize": 13, "bold": true, "textAlign": "center", "verticalAlign": "center", "index": 0 },
+          { "value": "Unit Price", "format": "", "background": "#00b050", "color": "#ffffff", "fontSize": 13, "bold": true, "textAlign": "center", "verticalAlign": "center", "index": 1 },
+          { "value": "Units in Stock", "format": "", "background": "#00b050", "color": "#ffffff", "fontSize": 13, "bold": true, "textAlign": "center", "verticalAlign": "center", "index": 2 },
+          { "value": "Discontinued", "format": "", "background": "#00b050", "color": "#ffffff", "fontSize": 13, "bold": true, "textAlign": "center", "verticalAlign": "center", "index": 3 }
         ]
       },
       {
