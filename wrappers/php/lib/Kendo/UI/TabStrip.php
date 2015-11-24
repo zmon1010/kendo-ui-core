@@ -124,6 +124,15 @@ user interactions. Setting this option to false will disable all animations.
     }
 
     /**
+    * Sets the data source of the TabStrip.
+    * @param array|\Kendo\Data\DataSource $value
+    * @return \Kendo\UI\TabStrip
+    */
+    public function dataSource($value) {
+        return $this->setProperty('dataSource', $value);
+    }
+
+    /**
     * Sets the field of the data item that provides the CSS class of the tab.
     * @param string $value
     * @return \Kendo\UI\TabStrip

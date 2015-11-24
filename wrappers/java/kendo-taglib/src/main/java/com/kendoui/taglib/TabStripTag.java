@@ -10,7 +10,7 @@ import com.kendoui.taglib.json.Function;
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
-public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements Items/* interfaces */ {
+public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements DataBoundWidget, Items/* interfaces */ {
 
     public TabStripTag() {
         super("TabStrip");
@@ -155,6 +155,10 @@ public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements I
 
     public void setDataImageUrlField(java.lang.String value) {
         setProperty("dataImageUrlField", value);
+    }
+
+    public void setDataSource(DataSourceTag dataSource) {
+        setProperty("dataSource", dataSource);
     }
 
     public java.lang.String getDataSpriteCssClass() {
