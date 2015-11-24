@@ -213,6 +213,12 @@
     }
 
     function getPaperOptions(getOption) {
+        if (typeof getOption != "function") {
+            var options = getOption;
+            getOption = function(key, def) {
+                return key in options ? options[key] : def;
+            };
+        }
         var paperSize = getOption("paperSize", PAPER_SIZE.a4);
         if (!paperSize) {
             return {};

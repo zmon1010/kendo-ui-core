@@ -138,8 +138,8 @@
             var top = row * options.pageHeight;
             var bottom = top + options.pageHeight;
             var cells = layout.cells.filter(function(cell){
-                return !(cell.right < left || cell.left > right ||
-                         cell.bottom < top || cell.top > bottom);
+                return !(cell.right <= left || cell.left > right ||
+                         cell.bottom <= top || cell.top > bottom);
             });
             if (cells.length > 0) {
                 var page = new drawing.Group();
@@ -215,7 +215,7 @@
                 val += "";
             }
             // XXX: missing alignment and wrapping
-            var tmp = new drawing.Text(val, [ cell.left, cell.top + 2 ]);
+            var tmp = new drawing.Text(val, [ cell.left + 2, cell.top + 2 ]);
             if (f && f.color) {
                 tmp.fill(f.color);
             }
@@ -223,16 +223,24 @@
         }
     }
 
-    spreadsheet.Sheet.prototype.draw = function(callback) {
-        var layout = makeCellLayout(this, SHEETREF, 800, 600);
+    spreadsheet.Sheet.prototype.draw = function(range, options, callback) {
+        var layout = makeCellLayout(this, this._ref(range), 800, 600);
         var group = new drawing.Group();
+        var paper = kendo.pdf.getPaperOptions(options);
         group.options.set("pdf", {
-            multiPage: true,
-            paperSize: [ 800, 600 ]
+            multiPage : true,
+            paperSize : paper.paperSize,
+            margin    : paper.margin
         });
+        var pageWidth = paper.paperSize[0];
+        var pageHeight = paper.paperSize[1];
+        if (paper.margin) {
+            pageWidth -= paper.margin.left - paper.margin.right;
+            pageHeight -= paper.margin.top - paper.margin.bottom;
+        }
         drawLayout(layout, group, {
-            pageWidth: 800,
-            pageHeight: 600
+            pageWidth: pageWidth,
+            pageHeight: pageHeight
         });
         callback(group);
     };

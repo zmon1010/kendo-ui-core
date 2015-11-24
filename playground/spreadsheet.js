@@ -167,7 +167,11 @@ $("#pdf").on("click", function(){
     //     kendo.drawing.pdf.saveAs(group, "spreadsheet.pdf");
     // });
 
-    spreadsheet.activeSheet().draw(function(group){
+    spreadsheet.activeSheet().draw(kendo.spreadsheet.SHEETREF, {
+        paperSize : "A4",
+        margin    : "1cm",
+        landscape : true
+    }, function(group){
         kendo.drawing.pdf.saveAs(group, "sheet.pdf");
     });
 });
