@@ -129,7 +129,6 @@
             var value = cell.value;
             var criterionType = this._criteria[0].type || typeof this._criteria[0].value;
             var valueType = typeof value;
-            var dom;
 
             if (cell.format) {
                 valueType = kendo.spreadsheet.formatting.type(value, cell.format);
@@ -138,8 +137,7 @@
             if (valueType != criterionType) {
                 if (criterionType == "string") {
                     if (cell.format) {
-                        dom = kendo.spreadsheet.formatting.format(value, cell.format);
-                        value = dom.children[0].nodeValue;
+                        value = kendo.spreadsheet.formatting.text(value, cell.format);
                     }
                     value = value + "";
                 }

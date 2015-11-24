@@ -3,7 +3,6 @@
     module("Custom number format");
 
     var spreadsheet = kendo.spreadsheet;
-    var F = spreadsheet.formatting;
 
     function htmlEqual(dom, html) {
         if (!/^<span/.test(html)) {
@@ -32,6 +31,16 @@
             }) + ">" + el.children.map(render).join("") + "</" + el.nodeName + ">";
         }
     }
+
+    var F = {
+        compile: function(fmt) {
+            return function(value, culture) {
+                return spreadsheet.formatting.format(value, fmt, culture);
+            };
+        },
+        type: spreadsheet.formatting.type,
+        adjustDecimals: spreadsheet.formatting.adjustDecimals
+    };
 
     test("simple format", function(){
         var format = F.compile("#.#");

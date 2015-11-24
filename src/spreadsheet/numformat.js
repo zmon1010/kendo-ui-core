@@ -15,6 +15,7 @@
     /* jshint latedef: nofunc */
 
     var calc = kendo.spreadsheet.calc;
+    var dom = kendo.dom;
 
     var RX_COLORS = /^\[(black|green|white|blue|magenta|yellow|cyan|red)\]/i;
     var RX_CONDITION = /^\[(<=|>=|<>|<|>|=)(-?[0-9.]+)\]/;
@@ -370,7 +371,7 @@
         }
 
         if (format.color) {
-            code += "element.attr.style = { color: " + JSON.stringify(format.color) + "}; ";
+            code += "result.color = " + JSON.stringify(format.color) + "; ";
         }
 
         function checkComma(a, b) {
@@ -462,9 +463,9 @@
                 code += "output += value; ";
             }
             else if (tok.type == "space") {
-                code += "element.children.push(dom.text(output)); ";
+                code += "if (output) result.body.push(output); ";
                 code += "output = ''; ";
-                code += "element.children.push(dom.element('span', { style: { visibility: 'hidden' }}, [ dom.text(" + JSON.stringify(tok.value) + ") ])); ";
+                code += "result.body.push({ type: 'space', value: " + JSON.stringify(tok.value) + " }); ";
             }
             else if (tok.type == "fill") {
                 code += "output += runtime.fill(" + JSON.stringify(tok.value) + "); ";
@@ -491,9 +492,9 @@
             }
         }
 
-        code += "element.children.push(dom.text(output)); ";
-        code += "element.__dataType = type; ";
-        code += "return element; ";
+        code += "if (output) result.body.push(output); ";
+        code += "result.type = type; ";
+        code += "return result; ";
 
         if (preamble) {
             code = preamble + code + "}";
@@ -509,11 +510,10 @@
         if (!f) {
             var tree = parse(format);
             var code = tree.map(compileFormatPart).join("\n");
-            code = "return function(value, culture){ "
-                + "'use strict'; "
+            code = "'use strict'; return function(value, culture){ "
                 + "if (!culture) culture = kendo.culture(); "
-                + "var output = '', type = null, element = dom.element('span'); " + code + "; return element; };";
-            f = CACHE[format] = new Function("runtime", "dom", code)(runtime, kendo.dom);
+                + "var output = '', type = null, result = { body: [] }; " + code + "; return result; };";
+            f = CACHE[format] = new Function("runtime", code)(runtime);
         }
         return f;
     }
@@ -522,11 +522,6 @@
 
         unpackDate: calc.runtime.unpackDate,
         unpackTime: calc.runtime.unpackTime,
-
-        space: function(str) {
-            return "<span style='visibility: hidden'>"
-                + kendo.htmlEncode(str) + "</span>";
-        },
 
         date: function(culture, d, part, length) {
             switch (part) {
@@ -710,14 +705,53 @@
 
     /* -----[ exports ]----- */
 
+    function text(f) {
+        var a = f.body;
+        var text = "";
+        for (var i = 0; i < a.length; ++i) {
+            var el = a[i];
+            if (typeof el == "string") {
+                text += el;
+            } else if (el.type == "space") {
+                text += " ";
+            }
+        }
+        return text;
+    }
+
     kendo.spreadsheet.formatting = {
         compile : compile,
         parse: parse,
         format: function(value, format, culture) {
-            return compile(format)(value, culture);
+            var f = compile(format)(value, culture);
+            var span = dom.element("span");
+            span.__dataType = f.type;
+            var a = f.body;
+            if (f.color) {
+                span.attr.style = { color: f.color };
+            }
+            for (var i = 0; i < a.length; ++i) {
+                var el = a[i];
+                if (typeof el == "string") {
+                    span.children.push(dom.text(el));
+                } else if (el.type == "space") {
+                    span.children.push(dom.element("span", {
+                        style: { visibility: "hidden" }
+                    }, [ dom.text(el.value) ]));
+                }
+            }
+            return span;
+        },
+        text: function(value, format, culture) {
+            var f = compile(format)(value, culture);
+            return text(f);
+        },
+        textAndColor: function(value, format, culture) {
+            var f = compile(format)(value, culture);
+            return { text: text(f), color: f.color };
         },
         type: function(value, format) {
-            return compile(format)(value).__dataType;
+            return compile(format)(value).type;
         },
         adjustDecimals: function(format, diff) {
             var ast = parse(format);
