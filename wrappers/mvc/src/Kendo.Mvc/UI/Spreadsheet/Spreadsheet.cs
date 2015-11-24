@@ -60,6 +60,8 @@ namespace Kendo.Mvc.UI
         
         //<< Fields
 
+        internal Dictionary<string, object> DplSettings { get; set; }
+
         public override void WriteInitializationScript(TextWriter writer)
         {
             var json = new Dictionary<string, object>(Events);
@@ -122,6 +124,11 @@ namespace Kendo.Mvc.UI
             }
                 
         //<< Serialization
+
+            if (DplSettings != null)
+            {
+                json.Merge(DplSettings);
+            }
 
             writer.Write(Initializer.Initialize(Selector, "Spreadsheet", json));
 

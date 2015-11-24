@@ -8,6 +8,12 @@ namespace Telerik.Web.Spreadsheet
     /// </summary>
     public partial class FilterColumn
     {
+        internal Dictionary<string, object> Serialize()
+        {
+            var settings = SerializeSettings();
+
+            return settings;
+        }
     }
 }
 

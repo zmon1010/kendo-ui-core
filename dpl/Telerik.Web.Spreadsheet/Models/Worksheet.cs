@@ -43,6 +43,13 @@ namespace Telerik.Web.Spreadsheet
 
             MergedCells = merged;
         }
+
+        internal Dictionary<string, object> Serialize()
+        {
+            var settings = SerializeSettings();
+
+            return settings;
+        }
     }
 }
 

@@ -30,6 +30,13 @@ namespace Telerik.Web.Spreadsheet
         {
             AddCells(new[] { cell });
         }
+
+        internal Dictionary<string, object> Serialize()
+        {
+            var settings = SerializeSettings();
+
+            return settings;
+        }
     }
 }
 

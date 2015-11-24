@@ -1,0 +1,9 @@
+            if (<%= key %> != null)
+            {
+<% if (primitive) %>
+                settings["<%= key.camelize %>"] = <%= key %>;
+<% else %>
+                settings["<%= key.camelize %>"] = <%= key %>.Select(item => item.Serialize());
+<% end %>
+            }
+

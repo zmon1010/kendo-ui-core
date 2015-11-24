@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Linq;
 
 namespace Telerik.Web.Spreadsheet
 {
@@ -101,5 +102,82 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "wrap", EmitDefaultValue = false)]
         public bool? Wrap { get; set; }
 
+
+        protected Dictionary<string, object> SerializeSettings()
+        {
+            var settings = new Dictionary<string, object>();
+
+            if (Background != null)
+            {
+                settings["background"] = Background;
+            }
+
+            if (Color != null)
+            {
+                settings["color"] = Color;
+            }
+
+            if (FontFamily != null)
+            {
+                settings["fontFamily"] = FontFamily;
+            }
+
+            if (FontSize != null)
+            {
+                settings["fontSize"] = FontSize;
+            }
+
+            if (Italic != null)
+            {
+                settings["italic"] = Italic;
+            }
+
+            if (Bold != null)
+            {
+                settings["bold"] = Bold;
+            }
+
+            if (Format != null)
+            {
+                settings["format"] = Format;
+            }
+
+            if (Formula != null)
+            {
+                settings["formula"] = Formula;
+            }
+
+            if (Index != null)
+            {
+                settings["index"] = Index;
+            }
+
+            if (TextAlign != null)
+            {
+                settings["textAlign"] = TextAlign;
+            }
+
+            if (Underline != null)
+            {
+                settings["underline"] = Underline;
+            }
+
+            if (Value != null)
+            {
+                settings["value"] = Value;
+            }
+
+            if (VerticalAlign != null)
+            {
+                settings["verticalAlign"] = VerticalAlign;
+            }
+
+            if (Wrap != null)
+            {
+                settings["wrap"] = Wrap;
+            }
+
+            return settings;
+        }
     }
 }

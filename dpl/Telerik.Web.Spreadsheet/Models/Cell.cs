@@ -31,6 +31,33 @@ namespace Telerik.Web.Spreadsheet
         /// </summary>
         [DataMember(Name = "borderRight", EmitDefaultValue = false)]
         public BorderStyle BorderRight { get; set; }
+
+        internal Dictionary<string, object> Serialize()
+        {
+            var settings = SerializeSettings();
+
+            if (BorderBottom != null)
+            {
+                settings["borderBottom"] = BorderBottom.Serialize();
+            }
+
+            if (BorderLeft != null)
+            {
+                settings["borderLeft"] = BorderLeft.Serialize();
+            }
+
+            if (BorderTop != null)
+            {
+                settings["borderTop"] = BorderTop.Serialize();
+            }
+
+            if (BorderRight != null)
+            {
+                settings["borderRight"] = BorderRight.Serialize();
+            }
+
+            return settings;
+        }
     }
 }
 
