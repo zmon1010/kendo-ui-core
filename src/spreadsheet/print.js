@@ -235,8 +235,8 @@
         var pageWidth = paper.paperSize[0];
         var pageHeight = paper.paperSize[1];
         if (paper.margin) {
-            pageWidth -= paper.margin.left - paper.margin.right;
-            pageHeight -= paper.margin.top - paper.margin.bottom;
+            pageWidth -= paper.margin.left + paper.margin.right;
+            pageHeight -= paper.margin.top + paper.margin.bottom;
         }
         drawLayout(layout, group, {
             pageWidth: pageWidth,
