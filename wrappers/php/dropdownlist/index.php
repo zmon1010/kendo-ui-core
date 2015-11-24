@@ -3,11 +3,10 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
-<div id="cap-view" class="k-header">
-    <h2>Customize your Kendo Cap</h2>
+<div id="cap-view" class="demo-section k-content">
+    <h4>Customize your Kendo Cap</h4>
     <div id="cap" class="black-cap"></div>
-    <div id="options">
-    <h3>Cap Color</h3>
+    <h4>Cap Color</h4>
 <?php
 $color = new \Kendo\UI\DropDownList('color');
 
@@ -19,20 +18,22 @@ $color->value(1)
           array('text' => 'Black', 'value' => 1),
           array('text' => 'Orange', 'value' => 2),
           array('text' => 'Grey', 'value' => 3)
-      ));
+      ))
+      ->attr('style', 'width: 100%');
 
 echo $color->render();
 ?>
-    <h3>Cap Size</h3>
+   <h4 style="margin-top: 2em;">Cap Size</h4>
 <?php
 $size = new \Kendo\UI\DropDownList('size');
 
 $size->index(0)
-     ->dataSource(array('S - 6 3/4"', 'M - 7 1/4"', 'L - 7 1/8"', 'XL - 7 5/8"'));
+     ->dataSource(array('S - 6 3/4"', 'M - 7 1/4"', 'L - 7 1/8"', 'XL - 7 5/8"'))
+     ->attr('style', 'width: 100%');
 
 echo $size->render();
 ?>
-    <button class="k-button" id="get">Customize</button>
+    <button class="k-button k-primary" id="get" style="margin-top: 2em; float: right;">Customize</button>
 </div>
 
 <script>
@@ -54,24 +55,10 @@ echo $size->render();
     });
 </script>
 <style>
-    #example h2 {
-        font-weight: normal;
-    }
-    #cap-view {
-        border-radius: 10px 10px 10px 10px;
-        border-style: solid;
-        border-width: 1px;
-        overflow: hidden;
-        width: 500px;
-        margin: 30px auto;
-        padding: 20px 20px 0 20px;
-        background-position: 0 -255px;
-    }
     #cap {
-        float: left;
         width: 242px;
         height: 225px;
-        margin: 30px 40px 30px 20px;
+        margin: 20px auto;
         background-image: url('../content/web/dropdownlist/cap.png');
         background-repeat: no-repeat;
         background-color: transparent;
@@ -84,17 +71,6 @@ echo $size->render();
     }
     .orange-cap {
         background-position: 0 -450px;
-    }
-    #options {
-        padding: 30px;
-    }
-    #options h3 {
-        font-size: 1em;
-        font-weight: bold;
-        margin: 25px 0 8px 0;
-    }
-    #get {
-        margin-top: 25px;
     }
 </style>
 <?php require_once '../include/footer.php'; ?>

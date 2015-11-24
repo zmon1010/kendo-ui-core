@@ -5,41 +5,26 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />
-    <div id="cap-view" class="k-header">
-    <h2>Customize your Kendo Cap</h2>
-    <div id="cap" class="black-cap"></div>
-    <div id="options">
-    <h3>Cap Color</h3>
-    <kendo:dropDownList name="color" dataTextField="text" dataValueField="value" change="change" value="1">
+    <div id="cap-view" class="demo-section k-content">
+	     <h4>Customize your Kendo Cap</h4>
+	     <div id="cap" class="black-cap"></div>
+	     <h4>Cap Color</h4>
+    <kendo:dropDownList name="color" dataTextField="text" dataValueField="value" change="change" value="1" style="width: 100%;">
         <kendo:dataSource data="${colors}"></kendo:dataSource>
     </kendo:dropDownList>  
 
-    <h3>Cap Size</h3>
-    <kendo:dropDownList name="size">
+    <h4 style="margin-top: 2em;">Cap Size</h4>
+    <kendo:dropDownList name="size" style="width: 100%;">
         <kendo:dataSource data="${sizes}"></kendo:dataSource>
     </kendo:dropDownList>  
     
-    <button class="k-button" id="get">Customize</button>
+ 		<button class="k-button k-primary" id="get" style="margin-top: 2em; float: right;">Customize</button>
     </div>
-</div>
 <style>
-    #example h2 {
-        font-weight: normal;
-    }
-    #cap-view {
-        border-radius: 10px 10px 10px 10px;
-        border-style: solid;
-        border-width: 1px;
-        overflow: hidden;
-        width: 500px;
-        margin: 30px auto;
-        padding: 20px 20px 0 20px;
-    }
     #cap {
-        float: left;
         width: 242px;
         height: 225px;
-        margin: 30px 40px 30px 20px;
+        margin: 20px auto;
         background-image: url(<c:url value="/resources/web/dropdownlist/cap.png"/>);
         background-repeat: no-repeat;
         background-color: transparent;
@@ -52,17 +37,6 @@
     }
     .orange-cap {
         background-position: 0 -450px;
-    }
-    #options {
-        padding: 30px;
-    }
-    #options h3 {
-        font-size: 1em;
-        font-weight: bold;
-        margin: 25px 0 8px 0;
-    }
-    #get {
-        margin-top: 25px;
     }
 </style>
 
