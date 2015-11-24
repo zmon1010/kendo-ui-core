@@ -1406,10 +1406,44 @@
             "aspnet-mvc": "Basic usage demo for ASP.NET MVC Editor"
 
         },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The Kendo UI Editor for ASP.NET MVC is a powerful WYSIWYG component, which allows you and your users to create rich text content in a familiar and user friendly way. It provides a variety of tools for creating, editing and formatting text, paragraphs, lists, images, tables, hyperlinks and other HTML elements. The component outputs identical HTML across all major browsers, follows accessibility standards and provides API for content manipulation and export to PDF.</p> <p>You can find additional information on how to use the Kendo UI MVC Grid in <a href=\"http://http/docs.telerik.com/KENDO-UI/aspnet-mvc/helpers/editor/overview\" target=\"_blank\">this section</a> of the product documentation.</p> <p><strong>Key Features</strong></p> <ul> <li>Intuitive UI for Rich Text Editing, Formatting and Styling</li> <li>UI for lists, tables, images and hyperlinks creation and formatting</li> <li>File attachment support</li> <li>Simple-to-Customize Look and Feel</li> <li>Ability to create and add custom buttons</li> <li>Rich API for maximum flexibility</li> <li>High performance</li> <li>Export to PDF</li> <li>Built-in themes</li> <li>Accessibility, keyboard navigation and RTL Support</li> <li>Rich cross-browser and mobile support</li> <li>Responsive HTML 5 Rendering</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/editor\">Editor for ASP.NET MVC</a></p>"
+        },
         "meta": {
             "kendo-ui": "This example of Kendo UI WYSIWYG editor component shows how you can implement this easy-to-use and beautiful editor in your web app.",
             "aspnet-mvc": "This demo shows how you can use Telerik editor extension in ASP.NET MVC."
         }
+      },
+      {
+        "text": "MVVM",
+        "url": "editor/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Editor"
+        },
+        "meta": {
+            "kendo-ui": "Events, value and visible MVVM binding support in Kendo UI Editor"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "editor/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Editor"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support for Kendo UI Editor"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Inline editing",
@@ -1417,6 +1451,11 @@
         "title": {
             "kendo-ui": "Inline editing functionality of Kendo UI WYSIWYG jQuery Editor",
             "aspnet-mvc": "Inline editing functionality of ASP.NET MVC WYSIWYG Editor"
+        },
+        "group": "Functionality",
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>This example shows how you can use the MVC Editor to edit parts of the page inline and at the same time to have an overview of the real layout and appearance.</p> <p>All you need to do to enable the inline editing is to set the .Tag(\"param\") setting, where the \"param\" parameter should be a valid <a href=\"https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_Editable\">contentEditable element</a> as the \"div\" used in this demo. If the Tag attribute is not set, the WYSIWYG editor will be rendered in its default TextArea mode.</p>"
         },
         "meta": {
             "kendo-ui": "This example shows how to use the Kendo UI Editor to edit parts of the page inline, allowing authors to see the page in its final state.",
@@ -1433,6 +1472,10 @@
         "meta": {
             "kendo-ui": "This example shows how you can easily customize some of Kendo UI Editor native tools. You can also create completely custom tools for the component.",
             "aspnet-mvc": "This example shows how you can easily customize some of ASP.NET MVC Editor native tools. You can also create completely custom tools for the component."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>This example shows how to customize some of the native Editor tools (font size, font name and block format) by modifying the tools' item collections, as well as how to create completely custom tools (Content Area Background Color and Insert a Horizontal Ruler).</p> <p>You can use the Add method of the FontName, FontSize and Formatting settings to modify the default font size, font name and formatblock options set.</p> <p>To add a new custom button on the toolbar: set the Tools -&gt; CustomButton:</p> <p>.CustomButton(cb =&gt; cb.Name(\"custom\").ToolTip(\"horizontal rule\").Exec(\"execFunction\"))</p> <p>Where the Exec param should be the name of a JavaScript function that will be fired when the custom button is clicked.</p> <p>If you want to create a custom dropdown with a label next to it, you can set the Tools -&gt; CustomTemplate and specify the HTML markup that will be rendered on the toolbar.</p>"
         }
       },
       {
@@ -1445,6 +1488,10 @@
         "meta": {
             "kendo-ui": "In this demo we will see how the sleek image browser is nicely implemented in Kendo UI Editor widget.",
             "aspnet-mvc": "In this demo we will see how the sleek image browser is nicely implemented in ASP.NET MVC Editor control."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>You can use the Insert Image and Insert File Browser managers to upload and insert Image and Hyperlink objects into the content area of the MVC Editor. Both dialogs consist of Address and Search fields, File Browser panel which shows the available files, File Upload, Create a New Folder and Delete features. In addition there is a file properties section with fields suitable for images: web address, alternate text, width and height as well as for hyperlinks: web address and title.</p> <p>You can configure the Image browser tool through the ImageBrowser configuration option and the Insert File browser through the FileBrowser one. You can find more information about the Image dialog in this Kendo UI documentation article: <a href=\"http://docs.telerik.com/kendo-ui/web/editor/imagebrowser\">Image Browser</a>.</p>"
         },
         "packages": [
           "online",
@@ -1473,6 +1520,10 @@
         "meta": {
             "kendo-ui": "This example illustrates the core HTML editing engine in Kendo UI Editor widget. Get familiar with all features of the component for any HTML5 website or web app.",
             "aspnet-mvc": "This example shows the core editing engine in ASP.NET MVC Editor control. Get familiar with all features of the component for any ASP.NET MVC website or web app."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>You can see in this demo the whole set of tools supported by the Telerik MVC Editor. You can easily add or hide each of them through the Tools collection option of the component:</p> <p>.Tools(tools =&gt; tools. Clear().Bold().Italic().Underline().Strikethrough()...FontName().FontSize().FontColor().BackColor().Print())</p> <p>If you remove the Clear() option, the default toolbar will be shown along with the specified by you buttons.</p>"
         }
       },
       {
@@ -1485,6 +1536,10 @@
         "meta": {
             "kendo-ui": "This example demonstrates the snippet feature of Kendo UI Editor. See how you can quickly insert HTML code snippet into web-based editor in your app.",
             "aspnet-mvc": "This example demonstrates the snippet feature of ASP.NET MVC Editor. See how you can quickly insert HTML code snippet into web-based editor in your app."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The snippets feature of the MVC Editor allows you to quickly insert predefined HTML code snippets in the content area.</p> <p>The snippet tool can insert plain text or HTML content which you can configure using the Tools -&gt; Snippets -&gt; Add(\"Snippet Item Name\", \"&lt;b&gt;My Snippet Content&lt;/b&gt;\") method.</p>"
         }
       },
       {
@@ -1497,6 +1552,26 @@
         "meta": {
             "kendo-ui": "This example shows how you can use Kendo UI Editor's style tool to customize the content of the widget with CSS classes.",
             "aspnet-mvc": "This example shows how you can use the ASP.NET MVC Editor style tool to customize the content of the control with CSS classes."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The demo presents you how to use the Editor's style tool, which provides the ability to customize the widget content by means of custom CSS classes and styling, and a CSS file registered in the Editor iframe document.</p> <p>You can register and import your own CSS file into the content area through the StyleSheets option:<br /> .StyleSheets(css =&gt; css.Add(Url.Content(\"~/PATH_TO_CSS_FILE/CSS_FILE.css\"))) </p> <p > Use the Tools -&gt; Formatting -&gt; Add(\"Dropdown Item Name\",\".CSS Class Name\") method to populate the Format dropdown with options. Note that the specified CSS class should exist in the CSS file imported in the content area through the StyleSheets -&gt; Add method.</p>"
+        }
+      },
+      {
+        "text": "PDF Export",
+        "url": "editor/pdf-export",
+        "title": {
+            "kendo-ui": "PDF export support in Kendo UI Editor",
+            "aspnet-mvc": "PDF export support in ASP.NET MVC Editor"
+        },
+        "meta": {
+            "kendo-ui": "With Kendo UI Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the PDF export support in the widget.",
+            "aspnet-mvc": "With ASP.NET MVC Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the PDF export support in the component."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>Nowadays, the PDF format is very popular and widely used to present documents in a manner independent of application software, hardware and operating systems. This demo demonstrates how to export the Telerik MVC Editor contents to PDF.</p> <p>The approach is very straight-forward - to export the content to PDF include the corresponding command to the editor&rsquo;s toolbar&nbsp;.Tools(tools =&gt; tools.Pdf()) and configure the export settings through the Pdf attribute. For instance, you can specify the file name and whether to export all pages, margins, paper size, font, etc.</p>"
         }
       },
       {
@@ -1509,6 +1584,11 @@
         "meta": {
             "kendo-ui": "This demo illustrates which events are fired when the editor is blurred, its content is changed or a command is executed.",
             "aspnet-mvc": "This demo illustrates which events are fired when the ASP.NET MVC editor is blurred, its content is changed or a command is executed."
+        },
+        "group": "API",
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>Telerik MVC Editor exposes rich API and events which provide easy configuration or extension points for customization on top of its built-in features.</p> <p>This particular demo shows how you can intercept the <strong>Change</strong>, <strong>Execute, Select </strong>and <strong>Paste </strong>events of the editor to output messages in the console when these events are raised. You can use these events for customizations or to execute custom logic, if necessary.</p>"
         }
       },
       {
@@ -1528,6 +1608,10 @@
         "meta": {
             "kendo-ui": "This examples show how the API of Kendo UI Editor works in action and how the content in the editor can be easily manipulated via the API.",
             "aspnet-mvc": "This examples show how the API of ASP.NET MVC Editor works in action and how the content in the editor can be easily manipulated via the API."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>Telerik MVC Editor exposes rich client-side API and events, which provide easy configuration or extension points for custom functionality on top of the built-in features.</p> <p>The example shows how you can get a reference to the editor&rsquo;s client-side object and obtain/replace its content using the provided <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/ui/editor#methods-value\">editor.value()</a> method.</p> <p>You can find more information about the available editor&rsquo;s client-side API <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/ui/editor\">here</a>.</p>"
         }
       },
       {
@@ -1539,6 +1623,7 @@
         "meta": {
             "kendo-ui": "With Kendo UI Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the localization support in the widget."
         },
+        "group": "Accessibility and Internationalization",
         "packages": [
           "!mvc",
           "!jsp",
@@ -1555,18 +1640,10 @@
         "meta": {
             "kendo-ui": "With Kendo UI Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the RTL support in the widget.",
             "aspnet-mvc": "With ASP.NET MVC Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the RTL support in the component."
-        }
-      },
-      {
-        "text": "PDF Export",
-        "url": "editor/pdf-export",
-        "title": {
-            "kendo-ui": "PDF export support in Kendo UI Editor",
-            "aspnet-mvc": "PDF export support in ASP.NET MVC Editor"
         },
-        "meta": {
-            "kendo-ui": "With Kendo UI Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the PDF export support in the widget.",
-            "aspnet-mvc": "With ASP.NET MVC Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the PDF export support in the component."
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The Telerik MVC Editor supports right-to-left languages and rendering. All you have to do is to register the <strong>kendo.rtl.min.css</strong> file (located at Kendo.Mvc.Examples\\Content\\web installation folder) and wrap the editor in a container element with <strong>k-rtl </strong>class set for it, as demonstrated in this example.</p> <p>More information on the right-to-left support of the components can be found in <a href=\"http://docs.telerik.com/kendo-ui/accessibility/supporting-rtl-languages\" target=\"_blank\">this topic</a>.</p>"
         }
       },
       {
@@ -1579,37 +1656,11 @@
         "meta": {
             "kendo-ui": "Kendo UI Editor is another widget that supports keyboard navigation. Check out the demo to learn how to implement it in your app.",
             "aspnet-mvc": "ASP.NET MVC Editor is another control that supports keyboard navigation. Check out the demo to learn how to implement it in your app."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>This demo illustrates the keyboard support of Telerik Editor for MVC, which provides access to the available editor&rsquo;s toolbar buttons without the need of using a mouse.</p> <p>Once the focus goes on the first toolbar button, you can focus the next one by pressing the Tab key. You can go back onto the previous tool by pressing Shift+Tab. To execute the command of the selected tool press the Enter key.</p> <p>Further details about the Keyboard, Section 508 and WAI-ARIA support of Telerik UI for ASP.NET MVC extensions can be found in the <a href=\"http://docs.telerik.com/kendo-ui/accessibility/accessibility-overview\">Accessibility Overview section</a> of the documentation.</p>"
         }
-      },
-      {
-        "text": "MVVM",
-        "url": "editor/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Editor"
-        },
-        "meta": {
-            "kendo-ui": "Events, value and visible MVVM binding support in Kendo UI Editor"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-{
-        "text": "AngularJS",
-        "url": "editor/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Editor"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Editor"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
       }
     ],
     "category": "Editors"
