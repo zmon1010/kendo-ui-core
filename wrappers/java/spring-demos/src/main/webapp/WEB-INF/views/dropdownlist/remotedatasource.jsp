@@ -7,10 +7,9 @@
 <c:url value="/dropdownlist/remote-data/read" var="readUrl" />
 
 <demo:header />
-    <div class="demo-section">
-        <h2>Products</h2>
-
-        <kendo:dropDownList name="products" dataTextField="productName" dataValueField="productId" style="width:250px">
+ <div class="demo-section k-content">
+        <h4>Products</h4>
+        <kendo:dropDownList name="products" dataTextField="productName" dataValueField="productId" style="width:100%">
             <kendo:dataSource>
                 <kendo:dataSource-transport>
                    <kendo:dataSource-transport-read url="${readUrl}" type="POST" contentType="application/json"/>
@@ -27,16 +26,4 @@
             </kendo:dataSource>
         </kendo:dropDownList>
     </div>
-    <style>
-        .demo-section {
-            width: 250px;
-            margin: 35px auto 50px;
-            padding: 30px;
-        }
-        .demo-section h2 {
-            text-transform: uppercase;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-    </style>
 <demo:footer />
