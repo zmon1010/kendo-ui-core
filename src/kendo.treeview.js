@@ -91,7 +91,7 @@ var __meta__ = { // jshint ignore:line
     };
 
     function checkboxes(node) {
-        return node.find("> div .k-checkbox [type=checkbox]");
+        return node.find("> div .k-checkbox-wrapper [type=checkbox]");
     }
 
     function insertAction(indexOffset) {
@@ -155,7 +155,7 @@ var __meta__ = { // jshint ignore:line
         }
 
         if (checkbox.length) {
-            $("<span class='k-checkbox' />").appendTo(wrapper).append(checkbox);
+            $("<span class='k-checkbox-wrapper' />").appendTo(wrapper).append(checkbox);
         }
 
         if (!innerWrapper.length) {
@@ -267,9 +267,9 @@ var __meta__ = { // jshint ignore:line
                 .on("keydown" + NS, proxy(that._keydown, that))
                 .on("focus" + NS, proxy(that._focus, that))
                 .on("blur" + NS, proxy(that._blur, that))
-                .on("mousedown" + NS, ".k-in,.k-checkbox :checkbox,.k-plus,.k-minus", proxy(that._mousedown, that))
-                .on("change" + NS, ".k-checkbox :checkbox", proxy(that._checkboxChange, that))
-                .on("click" + NS, ".k-checkbox :checkbox", proxy(that._checkboxClick, that))
+                .on("mousedown" + NS, ".k-in,.k-checkbox-wrapper :checkbox,.k-plus,.k-minus", proxy(that._mousedown, that))
+                .on("change" + NS, ".k-checkbox-wrapper :checkbox", proxy(that._checkboxChange, that))
+                .on("click" + NS, ".k-checkbox-wrapper :checkbox", proxy(that._checkboxClick, that))
                 .on("click" + NS, ".k-request-retry", proxy(that._retryRequest, that))
                 .on("click" + NS, function(e) {
                     if (!$(e.target).is(":kendoFocusable")) {
@@ -571,7 +571,7 @@ var __meta__ = { // jshint ignore:line
                         "# } #" +
 
                         "# if (data.treeview.checkboxes) { #" +
-                            "<span class='k-checkbox' role='presentation'>" +
+                            "<span class='k-checkbox-wrapper' role='presentation'>" +
                                 "#= data.treeview.checkboxes.template(data) #" +
                             "</span>" +
                         "# } #" +
@@ -865,7 +865,7 @@ var __meta__ = { // jshint ignore:line
 
             if (parentNode.length) {
                 this._setIndeterminate(parentNode);
-                checkbox = parentNode.children("div").find(".k-checkbox :checkbox");
+                checkbox = parentNode.children("div").find(".k-checkbox-wrapper :checkbox");
 
                 if (checkbox.prop(INDETERMINATE) === false) {
                     this.dataItem(parentNode).set(CHECKED, checkbox.prop(CHECKED));
@@ -1067,7 +1067,7 @@ var __meta__ = { // jshint ignore:line
                 target,
                 focused = that.current(),
                 expanded = that._expanded(focused),
-                checkbox = focused.find(".k-checkbox:first :checkbox"),
+                checkbox = focused.find(".k-checkbox-wrapper:first :checkbox"),
                 rtl = kendo.support.isRtl(that.element);
 
             if (e.target != e.currentTarget) {
@@ -1209,11 +1209,12 @@ var __meta__ = { // jshint ignore:line
             if (checkboxes) {
                 defaultTemplate = "<input type='checkbox' tabindex='-1' #= (item.enabled === false) ? 'disabled' : '' # #= item.checked ? 'checked' : '' #";
 
+
                 if (checkboxes.name) {
                     defaultTemplate += " name='" + checkboxes.name + "'";
                 }
 
-                defaultTemplate += " />";
+                defaultTemplate += " id='_#= item.uid #' class='k-checkbox' /><label for='_#= item.uid #' class='k-checkbox-label'></label>";
 
                 checkboxes = extend({
                     template: defaultTemplate
@@ -1360,7 +1361,7 @@ var __meta__ = { // jshint ignore:line
             var render = field != "expanded" && field != "checked";
 
             function setCheckedState(root, state) {
-                root.find(".k-checkbox :checkbox")
+                root.find(".k-checkbox-wrapper :checkbox")
                     .prop(CHECKED, state)
                     .data(INDETERMINATE, false)
                     .prop(INDETERMINATE, false);
@@ -1413,7 +1414,7 @@ var __meta__ = { // jshint ignore:line
                     } else if (field == "expanded") {
                         that._toggle(node, item, item[field]);
                     } else if (field == "enabled") {
-                        node.find(".k-checkbox :checkbox").prop("disabled", !item[field]);
+                        node.find(".k-checkbox-wrapper :checkbox").prop("disabled", !item[field]);
 
                         isCollapsed = !nodeContents(node).is(VISIBLE);
 
