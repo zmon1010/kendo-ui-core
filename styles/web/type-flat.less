@@ -2178,6 +2178,10 @@ html .km-pane-wrapper .km-widget,
 @checkbox-disabled-color: darken(@background, 24%);
 @checkbox-disabled-border-color: darken(@background, 20%);
 
+.k-checkbox:indeterminate + .k-checkbox-label:after {
+   border-color: @accent;
+}
+
 @import "themes/radiobutton.less";
 
 @radio-border-color: @accent;

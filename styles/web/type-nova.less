@@ -1304,6 +1304,10 @@ input.k-textbox:active {
 @checkbox-active-border-color: @accent;
 @checkbox-active-box-shadow: none;
 
+.k-checkbox:indeterminate + .k-checkbox-label:after {
+    border-radius: 0;
+}
+
 @import "themes/radiobutton.less";
 
 @radio-hover-border-color: darken(@base, 12%);

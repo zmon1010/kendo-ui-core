@@ -2179,6 +2179,17 @@ html .km-pane-wrapper .km-widget,
     box-shadow: 0 0 0 12px fadeout(@accent, 70%);
 }
 
+.k-checkbox:indeterminate + .k-checkbox-label:before {
+    border-color: @accent;
+}
+
+.k-checkbox:indeterminate + .k-checkbox-label:after {
+    background-color: @accent;
+    border-color: @accent;
+    z-index: 2;    
+    border: none;
+}
+
 @import "themes/radiobutton.less";
 
 @radio-border-color: lighten(@normal-text-color, 23%);
