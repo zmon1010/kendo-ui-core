@@ -1209,7 +1209,7 @@ var __meta__ = { // jshint ignore:line
             var defaultTemplate;
 
             if (checkboxes) {
-                defaultTemplate = "<input type='checkbox' #= (item.enabled === false) ? 'disabled' : '' # #= item.checked ? 'checked' : '' #";
+                defaultTemplate = "<input type='checkbox' tabindex='-1' #= (item.enabled === false) ? 'disabled' : '' # #= item.checked ? 'checked' : '' #";
 
                 if (checkboxes.name) {
                     defaultTemplate += " name='" + checkboxes.name + "'";
