@@ -8,7 +8,6 @@
     <h4>Products</h4>
     <%= Html.Kendo().DropDownList()
           .Name("products")
-          .HtmlAttributes(new { style = "width: 250px" })
           .DataTextField("ProductName")
           .DataValueField("ProductID")
           .DataSource(source => {
