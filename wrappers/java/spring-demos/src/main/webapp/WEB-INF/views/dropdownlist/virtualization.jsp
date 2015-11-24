@@ -9,7 +9,7 @@
 <demo:header />
      <div class="demo-section k-content">
         <h4>Search for shipping name</h4>
-        <kendo:dropDownList name="orders" dataTextField="shipName" dataValueField="orderID" filter="contains" style="width:100%" height="520"
+        <kendo:dropDownList name="orders" dataTextField="shipName" dataValueField="orderID" filter="contains" style="width:100%" height="290"
         					template='<span class="order-id">#= orderId #</span> #= shipName #, #= shipCountry #'>
             <kendo:dataSource pageSize="80" serverPaging="true" serverFiltering="true">
 	            <kendo:dataSource-transport>

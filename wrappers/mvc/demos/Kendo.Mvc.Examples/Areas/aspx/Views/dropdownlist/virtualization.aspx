@@ -14,7 +14,7 @@
           .MinLength(3)
           .HtmlAttributes(new { style = "width:100%" })
           .Template("#= OrderID # | For: #= ShipName #, #= ShipCountry #")
-          .Height(520)
+          .Height(290)
           .DataSource(source => {
               source.Custom()
                   .ServerFiltering(true)

@@ -73,7 +73,7 @@ $dropDownList->dataSource($dataSource)
          ->dataValueField('OrderID')
          ->filter('contains')
          ->virtual($virtual)
-         ->height(520)
+         ->height(290)
          ->template(<<<TEMPLATE
 <span class="order-id">#= OrderID #</span> #= ShipName #, #= ShipCountry #
 TEMPLATE
