@@ -66,7 +66,7 @@
 
             _colorPalette: function() {
                 var element = $("<div />", {
-                    "class": "k-spreadsheet-border-style-palette"
+                    "class": "k-spreadsheet-color-palette"
                 });
 
                 var colorPalette = this.colorPalette = $("<div />").kendoColorPalette({
@@ -80,6 +80,8 @@
                     ],
                     value: this.color,
                     change: function(e) {
+                        this.customColorButton.find(".k-icon").css("background-color", "transparent");
+                        this.flatColorPicker.value(null);
                         this._change(e.value);
                     }.bind(this)
                 }).data("kendoColorPalette");
@@ -121,6 +123,7 @@
                 var viewModel = kendo.observable({
                     apply: function() {
                         this.customColorButton.find(".k-icon").css("background-color", flatColorPicker.value());
+                        this.colorPalette.value(null);
                         this._change(flatColorPicker.value());
                         dialog.close();
                     }.bind(this),
