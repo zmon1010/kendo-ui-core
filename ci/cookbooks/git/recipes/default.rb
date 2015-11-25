@@ -1,7 +1,7 @@
 case node["platform"]
 when "windows"
-    windows_package "Git version 1.8.3-preview20130601" do
-        source "https://msysgit.googlecode.com/files/Git-1.8.3-preview20130601.exe"
+    windows_package "Git for Windows 2.6.3" do
+        source "https://github.com/git-for-windows/git/releases/download/v2.6.3.windows.1/Git-2.6.3-64-bit.exe"
         action :install
     end
 
