@@ -2,6 +2,7 @@
 
 var sharedStrings;
 var styles;
+var borders;
 
 module("Worksheet", {
   setup: function() {
@@ -11,6 +12,7 @@ module("Worksheet", {
         indexes: {}
      };
      styles = [];
+     borders = [];
   }
 });
 
@@ -21,7 +23,7 @@ function Worksheet(options) {
         options = { rows: options };
     }
 
-    return new kendo.ooxml.Worksheet(options, sharedStrings, styles);
+    return new kendo.ooxml.Worksheet(options, sharedStrings, styles, borders);
 }
 
 test("toXML creates a 'c' element for cells", function() {
@@ -519,6 +521,27 @@ test("toXML does not set the 's' attribute if style is not set", function() {
 
     var dom = $(worksheet.toXML());
     equal(dom.find("c").attr("s"), null);
+});
+
+test("toXML adds borders", function() {
+    var worksheet = Worksheet([
+        { cells: [ { borderLeft: { size: 1 }, value: "foo" } ] }
+    ]);
+
+    worksheet.toXML();
+
+    equal(borders.length, 1);
+});
+
+test("toXML reuses border styles", function() {
+    var worksheet = Worksheet([
+        { cells: [ { value: "foo" } ] },
+        { cells: [ { borderLeft: { size: 1 }, value: "foo" } ] },
+        { cells: [ { borderLeft: { size: 1 }, value: "foo" } ] }
+    ]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("row:last c:last").attr("s"), 1);
 });
 
 test("toXML creates a 'pane' element when the freezePane option (legacy) is set", function() {

@@ -270,8 +270,11 @@ var STYLES = kendo.template(
        '# } #' +
     '# } #' +
     '</fills>' +
-    '<borders count="1">' +
+    '<borders count="${borders.length+1}">' +
         '<border><left/><right/><top/><bottom/><diagonal/></border>' +
+        '# for (var bi = 0; bi < borders.length; bi++) { #' +
+            '#= kendo.ooxml.borderTemplate(borders[bi]) #' +
+        '# } #' +
     '</borders>' +
     '<cellStyleXfs count="1">' +
         '<xf borderId="0" fillId="0" fontId="0" />' +
@@ -292,6 +295,9 @@ var STYLES = kendo.template(
        '# } #' +
        '# if (style.textAlign || style.verticalAlign || style.wrap) { #' +
        ' applyAlignment="1"' +
+       '# } #' +
+       '# if (style.borderId) { #' +
+          ' borderId="${style.borderId}" applyBorder="1"' +
        '# } #' +
        '>' +
        '# if (style.textAlign || style.verticalAlign || style.wrap) { #' +
@@ -347,10 +353,11 @@ function toHeight(px) {
 var DATE_EPOCH = new Date(1900, 0, 0);
 
 var Worksheet = kendo.Class.extend({
-    init: function(options, sharedStrings, styles) {
+    init: function(options, sharedStrings, styles, borders) {
         this.options = options;
         this._strings = sharedStrings;
         this._styles = styles;
+        this._borders = borders;
     },
     toXML: function(index) {
         this._mergeCells = this.options.mergedCells || [];
@@ -467,12 +474,46 @@ var Worksheet = kendo.Class.extend({
         // There is one default style
         return index + 1;
     },
+    _lookupBorder: function(border) {
+        var json = kendo.stringify(border);
+        if (json == "{}") {
+            return;
+        }
+
+        var index = $.inArray(json, this._borders);
+        if (index < 0) {
+            index = this._borders.push(json) - 1;
+        }
+
+        // There is one default border
+        return index + 1;
+    },
     _cell: function(data, rowIndex, cellIndex) {
         if (!data) {
             return [];
         }
 
         var value = data.value;
+
+        var border = {};
+
+        if (data.borderLeft) {
+            border.left = data.borderLeft;
+        }
+
+        if (data.borderRight) {
+            border.right = data.borderRight;
+        }
+
+        if (data.borderTop) {
+            border.top = data.borderTop;
+        }
+
+        if (data.borderBottom) {
+            border.bottom = data.borderBottom;
+        }
+
+        border = this._lookupBorder(border);
 
         var style = {
             bold: data.bold,
@@ -485,7 +526,8 @@ var Worksheet = kendo.Class.extend({
             format: data.format,
             textAlign: data.textAlign || data.hAlign,
             verticalAlign: data.verticalAlign || data.vAlign,
-            wrap: data.wrap
+            wrap: data.wrap,
+            borderId: border
         };
 
         var columns = this.options.columns || [];
@@ -626,11 +668,12 @@ var Workbook = kendo.Class.extend({
             uniqueCount: 0
         };
         this._styles = [];
+        this._borders = [];
 
         this._sheets = $.map(this.options.sheets || [], $.proxy(function(options) {
             options.defaults = this.options;
 
-            return new Worksheet(options, this._strings, this._styles);
+            return new Worksheet(options, this._strings, this._styles, this._borders);
         }, this));
     },
     toDataURL: function() {
@@ -683,6 +726,8 @@ var Workbook = kendo.Class.extend({
             worksheets.file(kendo.format("sheet{0}.xml", idx+1), this._sheets[idx].toXML(idx));
         }
 
+        var borders = $.map(this._borders, $.parseJSON);
+
         var styles = $.map(this._styles, $.parseJSON);
 
         var hasFont = function(style) {
@@ -716,6 +761,7 @@ var Workbook = kendo.Class.extend({
            fonts: fonts,
            fills: fills,
            formats: formats,
+           borders: borders,
            styles: $.map(styles, function(style) {
               var result = {};
 
@@ -730,6 +776,7 @@ var Workbook = kendo.Class.extend({
               result.textAlign = style.textAlign;
               result.verticalAlign = style.verticalAlign;
               result.wrap = style.wrap;
+              result.borderId = style.borderId;
 
               if (style.format) {
                   if (defaultFormats[style.format] !== undefined) {
@@ -751,11 +798,47 @@ var Workbook = kendo.Class.extend({
     }
 });
 
+function borderStyle(width) {
+    var alias = "thin";
+
+    if (width === 2) {
+        alias = "medium";
+    } else if (width === 3) {
+        alias = "thick";
+    }
+
+    return alias;
+}
+
+function borderSideTemplate(name, style) {
+    var result = "";
+
+    if (style && style.size) {
+        result += "<" + name + " style=\"" + borderStyle(style.size) + "\">";
+        if (style.color) {
+            result += "<color rgb=\"" + convertColor(style.color) + "\"/>";
+        }
+        result += "</" + name + ">";
+    }
+
+    return result;
+}
+
+function borderTemplate(border) {
+    return "<border>" +
+       borderSideTemplate("left", border.left) +
+       borderSideTemplate("right", border.right) +
+       borderSideTemplate("top", border.top) +
+       borderSideTemplate("bottom", border.bottom) +
+   "</border>";
+}
+
 kendo.ooxml = {
     Workbook: Workbook,
     Worksheet: Worksheet,
     toWidth: toWidth,
-    toHeight: toHeight
+    toHeight: toHeight,
+    borderTemplate: borderTemplate
 };
 
 })(kendo.jQuery, kendo);

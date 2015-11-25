@@ -529,6 +529,143 @@ test("toDataUrl reuses fonts and styles", function() {
     equal(dom.find("fonts > font").length, 2);
 });
 
+test("toDataUrl stores borders", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+           rows: [
+               { cells: [ { borderRight: { size: 1 }, value: "foo" } ] }
+           ]
+        } ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("borders > border").length, 2);
+});
+
+test("toDataUrl stores border size", function() {
+    function assert(side, size, style) {
+        var cellStyle = { value: "foo" };
+        cellStyle["border" + side] = { size: size };
+
+        var workbook = new kendo.ooxml.Workbook({
+            sheets: [ {
+                rows: [{
+                    cells: [cellStyle]
+                }]
+            }]
+        });
+
+        workbook.toDataURL();
+
+        var dom = $(JSZip.prototype.files["styles.xml"]);
+        var border = dom.find("borders > border").last();
+        equal(border.find(side.toLowerCase()).attr("style"), style);
+    }
+
+    ["Left", "Right", "Top", "Bottom"].forEach(function(side) {
+        assert(side, 1, "thin");
+        assert(side, 2, "medium");
+        assert(side, 3, "thick");
+    });
+});
+
+test("toDataUrl stores border color", function() {
+    function assert(side, color, expected) {
+        var cellStyle = { value: "foo" };
+        cellStyle["border" + side] = { size: 1, color: "#ff0000" };
+
+        var workbook = new kendo.ooxml.Workbook({
+            sheets: [ {
+                rows: [{
+                    cells: [cellStyle]
+                }]
+            }]
+        });
+
+        workbook.toDataURL();
+
+        var dom = $(JSZip.prototype.files["styles.xml"]);
+        var border = dom.find("borders > border").last();
+        equal(border.find(side.toLowerCase() + " > color").attr("rgb"), expected);
+    }
+
+    ["Left", "Right", "Top", "Bottom"].forEach(function(side) {
+        assert(side, "red", "FFFF0000");
+    });
+});
+
+test("toDataUrl stores default borders", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+           rows: [
+               { cells: [ { value: "foo" } ] }
+           ]
+        } ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("borders > border").length, 1);
+});
+
+test("toDataUrl stores cell border index as 'borderId' attribute on the 'xf' element", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+           rows: [
+               { cells: [ { borderLeft: { size: 1 }, value: "foo" } ] }
+           ]
+        } ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("cellXfs > xf").last().attr("borderId"), 1);
+});
+
+test("toDataUrl sets 'applyBorder' attribute to '1' if bold is set", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+           rows: [
+               { cells: [ { borderLeft: { size: 1 }, value: "foo" } ] }
+           ]
+        } ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("cellXfs > xf").last().attr("applyBorder"), 1);
+});
+
+test("toDataUrl reuses border styles", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ {
+            rows: [{
+                cells: [{
+                    borderLeft: { size: 1 }, value: "foo"
+                }, {
+                    borderLeft: { size: 1 }, value: "bar"
+                }]
+            }]
+        }]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["styles.xml"]);
+
+    equal(dom.find("cellXfs > xf").length, 2);
+    equal(dom.find("borders > border").length, 2);
+});
+
 test("toDataUrl sets the rgb attribute of the 'color' element when color style is set", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ {
