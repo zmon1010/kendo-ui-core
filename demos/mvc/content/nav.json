@@ -2629,6 +2629,16 @@
           "meta": {
               "kendo-ui": "This example shows events which are triggered in Kendo UI Spreadsheet widget."
           }
+      },
+      {
+          "text": "Validation",
+          "url": "spreadsheet/validation",
+          "title": {
+            "kendo-ui": "Data validation in Kendo UI Spreadsheet widget"
+          },
+          "meta": {
+            "kendo-ui": "This example shows the data validation in Kendo UI Spreadsheet widget."
+          }
       }
     ],
     "category": "Data Management"
