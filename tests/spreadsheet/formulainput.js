@@ -353,6 +353,33 @@
         ok(formulaInput._cellTooltip.is(":visible"));
     });
 
+    test("disable the widget", function() {
+        createFormulaInput();
+
+        formulaInput.enable(false);
+
+        ok(element.hasClass("k-state-disabled"));
+        equal(element.attr("contenteditable"), "false");
+    });
+
+    test("enable the widget", function() {
+        createFormulaInput();
+
+        formulaInput.enable(false);
+        formulaInput.enable(true);
+
+        ok(!element.hasClass("k-state-disabled"));
+        equal(element.attr("contenteditable"), "true");
+    });
+
+    test("enable method returns current disable state", function() {
+        createFormulaInput();
+
+        formulaInput.enable(false);
+
+        equal(formulaInput.enable(), false);
+    });
+
     module("Spreadsheet searching", {
         setup: function() {
             element = $("<div />").appendTo(QUnit.fixture);
@@ -817,31 +844,12 @@
 
         var list = formulaInput.list;
 
-        list.focusFirst();
-
         element.trigger({
             type: "keydown",
             keyCode: kendo.keys.ENTER
         });
 
         equal(list.value(), "SUM");
-    });
-
-    test("if no focused item just close popup on 'enter'", 3, function() {
-        createFormulaInput();
-
-        filterInput("su", "=su");
-
-        var list = formulaInput.list;
-
-        element.trigger({
-            type: "keydown",
-            keyCode: kendo.keys.ENTER
-        });
-
-        equal(list.value(), "");
-        equal(element.text(), "=su");
-        ok(!formulaInput.popup.visible());
     });
 
     test("replace formula value on enter", 1, function() {
@@ -913,7 +921,7 @@
             keyCode: kendo.keys.DOWN
         });
 
-        equal(list.focus()[0], list.element.children().first()[0]);
+        equal(list.focus()[0], list.element.children().eq(1)[0]);
     });
 
     test("do not open popup on 'right' arrow", 1, function() {

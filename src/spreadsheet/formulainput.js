@@ -87,6 +87,15 @@
             "focus"
         ],
 
+        enable: function(enable) {
+            if (enable === undefined) {
+                return this.element.attr("contenteditable") === "false" ? false : true;
+            }
+
+            this.element.attr("contenteditable", enable)
+                        .toggleClass("k-state-disabled", !enable);
+        },
+
         getPos: function() {
             var div = this.element[0];
             var sel = window.getSelection();
