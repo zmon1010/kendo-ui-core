@@ -78,7 +78,7 @@
                 this._addAttribution();
 
                 if (this.element.css("display") !== "none") {
-                    this.reset();
+                    this._reset();
                 }
             }
         },
@@ -116,7 +116,6 @@
                 this.options.imagerySet = value;
                 this.map.attribution.clear();
                 this._fetchMetadata();
-                this._reset();
             } else {
                 return this.options.imagerySet;
             }

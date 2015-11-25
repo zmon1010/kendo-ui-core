@@ -101,6 +101,26 @@
                 map.trigger("pan");
             });
         });
+
+        test("sets view origin on map reset", function() {
+            createTileLayer();
+
+            stubMethod(TileView.fn, "viewOrigin", function(origin) {
+                equal(origin.toString(), "-180 50");
+            }, function() {
+                layer.reset();
+            });
+        });
+
+        test("does not set view origin on internal reset", 0, function() {
+            createTileLayer();
+
+            stubMethod(TileView.fn, "viewOrigin", function(origin) {
+                ok(false);
+            }, function() {
+                layer._reset();
+            });
+        });
     })();
 
     (function() {
@@ -124,7 +144,7 @@
                 se: new Point(2760, 1810)
             });
             // top left corner
-            view.basePoint = options.basePoint || new Point(1960, 1210);
+            view._viewOrigin = options.viewOrigin || new Point(1960, 1210);
             view.subdomainIndex = 0;
             view.zoom(4);
         }
@@ -208,14 +228,14 @@
         });
 
         test("createTile should return the correct offset", function() {
-            createView({ basePoint: new Point(10, 10), tileSize: 10 });
+            createView({ viewOrigin: new Point(10, 10), tileSize: 10 });
             view.zoom(3);
             var index = { x: -1, y: 0 };
             var offset = view.createTile(index).options.offset;
             equal(offset.x, -20);
             equal(offset.y, -10);
 
-            createView({ basePoint: new Point(10, 10), tileSize: 10 });
+            createView({ viewOrigin: new Point(10, 10), tileSize: 10 });
             view.zoom(3);
             var index = { x: 8, y: 0 };
             var offset = view.createTile(index).options.offset;

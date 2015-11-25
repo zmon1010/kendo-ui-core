@@ -46,6 +46,12 @@
             this._view = null;
         },
 
+        _beforeReset: function() {
+            var map = this.map;
+            var origin = map.locationToLayer(map.extent().nw).round();
+            this._view.viewOrigin(origin);
+        },
+
         _reset: function() {
             Layer.fn._reset.call(this);
             this._updateView();
@@ -130,6 +136,10 @@
             this._extent = extent;
         },
 
+        viewOrigin: function(origin) {
+            this._viewOrigin = origin;
+        },
+
         zoom: function(zoom) {
             this._zoom = zoom;
         },
@@ -187,7 +197,6 @@
         reset: function() {
             this.pool.reset();
             this.subdomainIndex = 0;
-            this.basePoint = this._extent.nw;
             this.render();
         },
 
@@ -223,8 +232,8 @@
         tileOptions: function(currentIndex) {
             var index = this.wrapIndex(currentIndex),
                 point = this.indexToPoint(currentIndex),
-                base = this.basePoint,
-                offset = point.clone().translate(-base.x, -base.y);
+                origin = this._viewOrigin,
+                offset = point.clone().translate(-origin.x, -origin.y);
 
             return {
                 index: index,

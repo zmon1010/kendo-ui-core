@@ -42,12 +42,11 @@
             ok(layer.element.parent().is("#scroll-element"));
         });
 
-        test("renders in initial element", function() {
+        test("resets layer on metadata", function() {
             var element = layer.element;
 
-            layer.reset = function() {
-                BingLayer.fn.reset.call(this);
-
+            layer._reset = function() {
+                BingLayer.fn._reset.call(this);
                 ok(layer._view.element.is(element));
             }
 
