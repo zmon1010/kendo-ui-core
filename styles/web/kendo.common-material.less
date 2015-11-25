@@ -1254,6 +1254,10 @@ div.editorToolbarWindow.k-window-content {
     border-width: 2px;
 }
 
+.k-checkbox + .k-checkbox-label:before {
+    z-index: 1;
+}
+
 .k-checkbox:indeterminate + .k-checkbox-label:after {
     width: 10px;
     height: 10px;
@@ -1262,6 +1266,7 @@ div.editorToolbarWindow.k-window-content {
     top: 4px;
     left: 4px;
     transform: none;
+    z-index: 2;
 }
 
 .k-radio:checked + .k-radio-label:after {
