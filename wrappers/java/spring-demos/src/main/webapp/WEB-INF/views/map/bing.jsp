@@ -8,7 +8,7 @@
     <kendo:map-layers>
         <!-- IMPORTANT: This key is locked to demos.telerik.com/kendo-ui -->
         <!-- Please replace with your own Bing Key -->
-        <kendo:map-layer type="bing" imagerySet="aerialWithLabels" key="AjQF548guEF8MWgEspVokNny7l_GULKsZ81tR-LvPK96Bm3REkCjNHs2aC_b7nvF" />
+        <kendo:map-layer type="bing" imagerySet="aerialWithLabels" key="AqaPuZWytKRUA8Nm5nqvXHWGL8BDCXvK8onCl2PkC581Zp3T_fYAQBiwIphJbRAK" />
     </kendo:map-layers>
 </kendo:map>
 

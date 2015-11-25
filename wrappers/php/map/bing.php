@@ -9,7 +9,7 @@ $layer->type("bing")
 
       // IMPORTANT: This key is locked to demos.telerik.com/kendo-ui
       // Please replace with your own Bing Key
-      ->key("AjQF548guEF8MWgEspVokNny7l_GULKsZ81tR-LvPK96Bm3REkCjNHs2aC_b7nvF");
+      ->key("AqaPuZWytKRUA8Nm5nqvXHWGL8BDCXvK8onCl2PkC581Zp3T_fYAQBiwIphJbRAK");
 
 $map = new \Kendo\Dataviz\UI\Map('map');
 $map->center(array(51.505, -0.09))
