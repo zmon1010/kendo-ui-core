@@ -258,5 +258,5 @@ sheet3.batch(function(){
     sheet3.range("C12:C16").fillFrom("c17:c19").background("#c0ffee");
 
     //disabled
-    sheet.range("A1:A3").disabled(true);
+    sheet.range("A1:A3").enable(false);
 });
