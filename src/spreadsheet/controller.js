@@ -345,7 +345,7 @@
                     event.preventDefault();
                 }
             } else {
-                var disabled = this._workbook.activeSheet().activeCellSelection().disabled();
+                var disabled = this._workbook.activeSheet().activeCellSelection().enable() === false;
 
                 if (action == "delete" || action == "backspace") {
                     if (disabled) { return; }
@@ -566,7 +566,7 @@
 
         onDblClick: function(event) {
             var object = this.objectAt(event);
-            var disabled = this._workbook.activeSheet().activeCellSelection().disabled();
+            var disabled = this._workbook.activeSheet().activeCellSelection().enable() === false;
 
             if (object.type !== "cell" || disabled) {
                 return;
