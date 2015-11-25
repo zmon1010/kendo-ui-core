@@ -35,7 +35,7 @@
         ok(colorChooser.flatColorPicker instanceof kendo.ui.FlatColorPicker);
     });
 
-    test("clicking the reset button resets the color", 3, function() {
+    test("clicking the reset button resets the color", 4, function() {
         colorChooser.bind("change", function(e) {
             equal(e.value, null);
         });
