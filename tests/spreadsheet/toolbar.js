@@ -235,9 +235,9 @@
 
         sheet.range("A1").background(color);
 
-        var colorPalette = $("[data-role=colorpalette]").data("kendoColorPalette");
+        var colorPicker = $("[data-property=background]").data("colorPicker");
 
-        equal(colorPalette.value(), color);
+        equal(colorPicker.colorChooser.value(), color);
     });
 
     test("refreshes font size state", function() {

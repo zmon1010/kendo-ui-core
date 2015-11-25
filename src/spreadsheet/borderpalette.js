@@ -59,6 +59,17 @@
                 this.customColorButton.off("click");
             },
 
+            value: function(value) {
+                if (value !== undefined) {
+                    this.color = value;
+                    this.customColorButton.find(".k-icon").css("background-color", this.color);
+                    this.colorPalette.value(null);
+                    this.flatColorPicker.value(this.color);
+                } else {
+                    return this.color;
+                }
+            },
+
             _change: function(value) {
                 this.color = value;
                 this.trigger("change", { value: value });

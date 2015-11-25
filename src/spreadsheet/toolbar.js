@@ -487,15 +487,10 @@
         init: function(options, toolbar) {
             PopupTool.fn.init.call(this, options, toolbar);
             this.popup.element.addClass("k-spreadsheet-colorpicker");
-            this._resetColorButton();
-            this._colorPalette();
-            this._customColorButton();
 
-            this._resetColor = $.proxy(this.resetColor, this);
-            this.resetButton.on("click", this._resetColor);
-
-            this._customColorDialog = $.proxy(this.customColor, this);
-            this.customButton.on("click", this._customColorDialog);
+            this.colorChooser = new kendo.spreadsheet.ColorChooser(this.popup.element, {
+                change: this._colorChange.bind(this)
+            });
 
             this.element.attr({
                 "data-property": options.property
@@ -508,55 +503,14 @@
             });
         },
         destroy: function() {
-            this.resetButton.off("click");
-            this.customButton.off("click");
-            this.colorPalette.destroy();
+            this.colorChooser.destroy();
             PopupTool.fn.destroy.call(this);
         },
         update: function(value) {
             this.value(value);
         },
         value: function(value) {
-            if (value !== undefined) {
-                this.colorPalette.value(value);
-            } else {
-                return this.colorPalette.value();
-            }
-        },
-        resetColor: function() {
-            this.colorPalette.value(null);
-            this.colorPalette.trigger("change");
-        },
-        customColor: function() {
-            this.toolbar.dialog({
-                name: "customColor",
-                options: {
-                    title: this.options.property, property: this.options.property
-                }
-            });
-            this.popup.close();
-        },
-        _resetColorButton: function() {
-            this.resetButton = $("<a class='k-button k-reset-color' href='#'>" +
-                                    "<span class='k-icon k-font-icon k-i-reset-color'></span>" + MESSAGES.colorPicker.reset +
-                                 "</a>").appendTo(this.popup.element);
-        },
-        _colorPalette: function() {
-            var element = $("<div />").appendTo(this.popup.element);
-            this.colorPalette = element.kendoColorPalette({
-                palette: [ //metro palette
-                    "#ffffff", "#000000", "#d6ecff", "#4e5b6f", "#7fd13b", "#ea157a", "#feb80a", "#00addc", "#738ac8", "#1ab39f",
-                    "#f2f2f2", "#7f7f7f", "#a7d6ff", "#d9dde4", "#e5f5d7", "#fad0e4", "#fef0cd", "#c5f2ff", "#e2e7f4", "#c9f7f1",
-                    "#d8d8d8", "#595959", "#60b5ff", "#b3bcca", "#cbecb0", "#f6a1c9", "#fee29c", "#8be6ff", "#c7d0e9", "#94efe3",
-                    "#bfbfbf", "#3f3f3f", "#007dea", "#8d9baf", "#b2e389", "#f272af", "#fed46b", "#51d9ff", "#aab8de", "#5fe7d5",
-                    "#a5a5a5", "#262626", "#003e75", "#3a4453", "#5ea226", "#af0f5b", "#c58c00", "#0081a5", "#425ea9", "#138677",
-                    "#7f7f7f", "#0c0c0c", "#00192e", "#272d37", "#3f6c19", "#750a3d", "#835d00", "#00566e", "#2c3f71", "#0c594f"
-                ],
-                change: this._colorChange.bind(this)
-            }).data("kendoColorPalette");
-        },
-        _customColorButton: function() {
-            this.customButton = $("<a class='k-button k-custom-color' href='#'>" + MESSAGES.colorPicker.customColor + "</a>").appendTo(this.popup.element);
+            this.colorChooser.value(value);
         },
         _colorChange: function(e) {
             this.toolbar.action({
