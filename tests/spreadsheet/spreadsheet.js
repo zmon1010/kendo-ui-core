@@ -61,6 +61,17 @@
         spreadsheet.refresh({ editorClose: true });
     });
 
+    test("refresh disables formulabar when active cell is disabled", 1, function() {
+        var range = spreadsheet.activeSheet().range("A1");
+
+        range.enable(false);
+        spreadsheet.activeSheet().activeCell(new kendo.spreadsheet.CellRef(0, 0));
+
+        spreadsheet.refresh();
+
+        equal(spreadsheet._view.editor.barInput.enable(), false);
+    });
+
     test("workbook change event is triggered when edit command execute returns no response", 1, function() {
         spreadsheet._workbook.execute = function () {
             return;

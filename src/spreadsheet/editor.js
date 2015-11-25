@@ -89,6 +89,10 @@
             this.trigger("deactivate");
         },
 
+        enable: function(enable) {
+            this.barInput.enable(enable);
+        },
+
         barElement: function() {
             return this.barInput.element;
         },

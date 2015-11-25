@@ -281,13 +281,16 @@
         },
 
         refresh: function() {
+            var editor = this.editor;
             var workbook = this._workbook;
+            var sheet = workbook.activeSheet();
 
             this._viewPortHeight = this.view.scroller.clientHeight;
             this.navigator.height(this._viewPortHeight);
 
-            if (!this.editor.isActive()) {
-                this.editor.value(workbook._inputForRef(workbook.activeSheet().activeCell()));
+            if (!editor.isActive()) {
+                editor.enable(sheet.activeCellSelection().enable() !== false);
+                editor.value(workbook._inputForRef(sheet.activeCell()));
             }
         },
 

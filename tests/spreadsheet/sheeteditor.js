@@ -440,4 +440,27 @@
 
         editor.barInput.trigger("keyup");
     });
+
+    test("enable method disables formulabar input", 1, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+
+        editor.activate({ rect: rect });
+
+        editor.enable(false);
+
+        equal(editor.barInput.enable(), false);
+    });
+
+    test("enable method enables formulabar input", 1, function() {
+        var editor = createEditor();
+        var rect = { top: 0, left: 0 };
+
+        editor.activate({ rect: rect });
+
+        editor.enable(false);
+        editor.enable(true);
+
+        equal(editor.barInput.enable(), true);
+    });
 })();
