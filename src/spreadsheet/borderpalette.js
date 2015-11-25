@@ -162,7 +162,7 @@
             resetColor: function() {
                 this.colorPalette.value(null);
                 this.flatColorPicker.value(null);
-                this.trigger("change", { value: null });
+                this._change(null);
             },
 
             customColor: function() {

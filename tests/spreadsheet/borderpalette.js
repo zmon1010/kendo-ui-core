@@ -44,6 +44,7 @@
 
         equal(colorChooser.colorPalette.value(), null);
         equal(colorChooser.flatColorPicker.value(), null);
+        equal(colorChooser.value(), null);
     });
 
     test("clicking the customColor button opens the dialog", 1, function() {
