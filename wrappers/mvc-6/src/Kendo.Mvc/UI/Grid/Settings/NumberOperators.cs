@@ -16,7 +16,9 @@ namespace Kendo.Mvc.UI
                 { "gte", Messages.Filter_NumberIsGreaterThanOrEqualTo },
                 { "gt", Messages.Filter_NumberIsGreaterThan },
                 { "lte", Messages.Filter_NumberIsLessThanOrEqualTo},
-                { "lt", Messages.Filter_NumberIsLessThan }
+                { "lt", Messages.Filter_NumberIsLessThan },
+                { "isnull", Messages.Filter_NumberIsNull },
+                { "isnotnull", Messages.Filter_NumberIsNotNull }
             };
         }
 
@@ -58,6 +60,16 @@ namespace Kendo.Mvc.UI
                 dirty = true;
             }
 
+            if (Operators.ContainsKey("isnull") && Operators["isnull"] != DefaultIsNull)
+            {
+                dirty = true;
+            }
+
+            if (Operators.ContainsKey("isnotnull") && Operators["isnotnull"] != DefaultIsNotNull)
+            {
+                dirty = true;
+            }
+
             if (dirty)
             {
                 foreach (var keyValue in Operators)
@@ -69,7 +81,7 @@ namespace Kendo.Mvc.UI
 
         public IDictionary<string, string> Operators { get; private set; }
 
-        private const int DefaultNumberOfFilters = 6;
+        private const int DefaultNumberOfFilters = 8;
 
         private const string DefaultIsEqualTo = "Is equal to";
         private const string DefaultIsNotEqualTo = "Is not equal to";
@@ -77,5 +89,7 @@ namespace Kendo.Mvc.UI
         private const string DefaultIsGreaterThan = "Is greater than";
         private const string DefaultIsLessThanOrEqualTo = "Is less than or equal to";
         private const string DefaultIsLessThan = "Is less than";
+        private const string DefaultIsNull = "Is null";
+        private const string DefaultIsNotNull = "Is not null";
     }
 }

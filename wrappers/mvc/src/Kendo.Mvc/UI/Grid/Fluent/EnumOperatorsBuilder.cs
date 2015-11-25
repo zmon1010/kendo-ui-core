@@ -42,6 +42,28 @@ namespace Kendo.Mvc.UI.Fluent
             enums.Operators["neq"] = message;
 
             return this;
-        }       
+        }
+
+        /// <summary>
+        /// Sets the text for IsNull operator filter menu item.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public EnumOperatorsBuilder IsNull(string message)
+        {
+            enums.Operators["isnull"] = message;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the text for IsNotNull operator filter menu item.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public EnumOperatorsBuilder IsNotNull(string message)
+        {
+            enums.Operators["isnotnull"] = message;
+
+            return this;
+        }
     }
 }

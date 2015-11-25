@@ -52,5 +52,25 @@ namespace Kendo.Mvc.UI.Fluent
 
             return CreateBuilder();
         }
+
+        /// <summary>
+        /// Includes only values which are equal to empty string.
+        /// </summary>
+        public DataSourceFilterCompositeBuilder<DataSourceFilterStringDescriptorBuilder> IsEmpty()
+        {
+            SetOperatorAndValue(FilterOperator.IsEmpty, string.Empty);
+
+            return CreateBuilder();
+        }
+
+        /// <summary>
+        /// Includes only values which are not equal to empty string.
+        /// </summary>
+        public DataSourceFilterCompositeBuilder<DataSourceFilterStringDescriptorBuilder> IsNotEmpty()
+        {
+            SetOperatorAndValue(FilterOperator.IsNotEmpty, string.Empty);
+
+            return CreateBuilder();
+        }
     }
 }

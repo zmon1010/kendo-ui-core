@@ -586,7 +586,7 @@
     <value>Jahr(e)</value>
   </data>
   <data name="Scheduler_Recurrence_EditRecurring" xml:space="preserve">
-    <value>Möchten Sie nur diesen Termin oder alle Wiederholungen löschen?</value>
+    <value>Möchten Sie nur diesen Termin oder alle Wiederholungen bearbeiten?</value>
   </data>
   <data name="Scheduler_Recurrence_EditWindowOccurrence" xml:space="preserve">
     <value>Aktuelles Ereignis bearbeiten</value>
@@ -643,7 +643,7 @@
     <value>Termin löschen</value>
   </data>
   <data name="Scheduler_ShowFullDay" xml:space="preserve">
-    <value>Zeigen ganztags</value>
+    <value>Ganzen Tag anzeigen</value>
   </data>
   <data name="Scheduler_ShowWorkDay" xml:space="preserve">
     <value>Zeigen Geschäftszeiten</value>
@@ -764,5 +764,44 @@
   </data>
   <data name="Scheduler_DefaultRowText" xml:space="preserve">
     <value>All events</value>
+  </data>
+  <data name="Grid_Excel" xml:space="preserve">
+    <value>Export nach Excel</value>
+  </data>
+  <data name="Grid_NoRecords" xml:space="preserve">
+    <value>Keine Aufzeichnungen zur Verfügung.</value>
+  </data>
+  <data name="Pager_AllPages" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Filter_StringIsEmpty" xml:space="preserve">
+    <value>Is empty</value>
+  </data>
+  <data name="Filter_StringIsNotEmpty" xml:space="preserve">
+    <value>Is not empty</value>
+  </data>
+  <data name="Filter_StringIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_StringIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="Filter_NumberIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_NumberIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="Filter_DateIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_DateIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="Filter_EnumIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_EnumIsNull" xml:space="preserve">
+    <value>Is null</value>
   </data>
 </root>

@@ -116,6 +116,11 @@ namespace Kendo.Mvc.Infrastructure.Implementation
                 return ParseStringExpression();
             }
 
+            if (Is(FilterTokenType.Null))
+            {
+                return ParseNullExpression();
+            }
+
             throw new FilterParserException("Expected primaryExpression");
         }
 
@@ -172,6 +177,16 @@ namespace Kendo.Mvc.Infrastructure.Implementation
                            First = firstArgument,
                            Second = secondArgument
                        };
+        }
+
+        private IFilterNode ParseNullExpression()
+        {
+            FilterToken stringToken = Expect(FilterTokenType.Null);
+
+            return new NullNode
+            {
+                Value = stringToken.Value
+            };
         }
 
         private IFilterNode ParseStringExpression()

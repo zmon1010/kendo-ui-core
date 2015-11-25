@@ -10,7 +10,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         private static readonly string[] ComparisonOperators = new[] { "eq", "neq", "lt", "lte", "gt", "gte" };
         private static readonly string[] LogicalOperators = new[] { "and", "or", "not" };
         private static readonly string[] Booleans = new[] { "true", "false" };
-        private static readonly string[] Functions = new[] { "contains", "endswith", "startswith", "notsubstringof", "doesnotcontain" };
+        private static readonly string[] Functions = new[] { "contains", "endswith", "startswith", "notsubstringof", "doesnotcontain", "isnull", "isnotnull", "isempty", "isnotempty" };
 
         private int currentCharacterIndex;
         private readonly string input;
@@ -120,6 +120,11 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             return new FilterToken { TokenType = FilterTokenType.DateTime, Value = result };
         }
 
+        private FilterToken Null(string result)
+        {
+            return new FilterToken { TokenType = FilterTokenType.Null, Value = null };
+        }
+
         private static FilterToken ComparisonOperator(string result)
         {
             return new FilterToken { TokenType = FilterTokenType.ComparisonOperator, Value = result };
@@ -175,6 +180,11 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             if (IsFunction(result))
             {
                 return Function(result);
+            }
+
+            if (result == "null")
+            {
+                return Null(result);
             }
 
             return Property(result);

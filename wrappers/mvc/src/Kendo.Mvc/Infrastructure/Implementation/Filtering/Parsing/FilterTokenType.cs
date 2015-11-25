@@ -14,6 +14,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         DateTime,
         LeftParenthesis,
         RightParenthesis,
-        Comma
+        Comma,
+        Null
     }
 }

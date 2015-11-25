@@ -22,6 +22,20 @@ namespace Kendo.Mvc.UI.Fluent
             return CreateBuilder();
         }
 
+        public TCompositeBuilder IsNull()
+        {
+            SetOperatorAndValue(FilterOperator.IsNull, null);
+
+            return CreateBuilder();
+        }
+
+        public TCompositeBuilder IsNotNull()
+        {
+            SetOperatorAndValue(FilterOperator.IsNotNull, null);
+
+            return CreateBuilder();
+        }
+
         protected TCompositeBuilder CreateBuilder()
         {
             return (TCompositeBuilder) Activator.CreateInstance(typeof(TCompositeBuilder), new object[] { Descriptor });

@@ -765,4 +765,40 @@
   <data name="Scheduler_DefaultRowText" xml:space="preserve">
     <value>All events</value>
   </data>
+  <data name="Grid_Excel" xml:space="preserve">
+    <value>Excel'e aktar</value>
+  </data>
+  <data name="Pager_AllPages" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Filter_StringIsEmpty" xml:space="preserve">
+    <value>Is empty</value>
+  </data>
+  <data name="Filter_StringIsNotEmpty" xml:space="preserve">
+    <value>Is not empty</value>
+  </data>
+  <data name="Filter_StringIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_StringIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="Filter_NumberIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_NumberIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="Filter_DateIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_DateIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="Filter_EnumIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_EnumIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
 </root>

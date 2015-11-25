@@ -679,7 +679,7 @@
     <value>Or</value>
   </data>
   <data name="Filter_StringDoesNotContain" xml:space="preserve">
-    <value>Does not contain</value>
+    <value>Indeholder ikke</value>
   </data>
   <data name="Upload_HeaderStatusUploaded" xml:space="preserve">
     <value>Done</value>
@@ -697,7 +697,7 @@
     <value>Lås</value>
   </data>
   <data name="Grid_Unlock" xml:space="preserve">
-    <value>Låse</value>
+    <value>Lås op</value>
   </data>
   <data name="Editor_ViewHtml" xml:space="preserve">
     <value>View HTML</value>
@@ -764,5 +764,41 @@
   </data>
   <data name="Scheduler_DefaultRowText" xml:space="preserve">
     <value>All events</value>
+  </data>
+  <data name="Grid_Excel" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="Pager_AllPages" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Filter_StringIsEmpty" xml:space="preserve">
+    <value>Is empty</value>
+  </data>
+  <data name="Filter_StringIsNotEmpty" xml:space="preserve">
+    <value>Is not empty</value>
+  </data>
+  <data name="Filter_StringIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_StringIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="Filter_NumberIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_NumberIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="Filter_DateIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_DateIsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="Filter_EnumIsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="Filter_EnumIsNull" xml:space="preserve">
+    <value>Is null</value>
   </data>
 </root>

@@ -21,7 +21,13 @@ var __meta__ = { // jshint ignore:line
         STRING = "string",
         EQ = "Is equal to",
         NEQ = "Is not equal to",
-        proxy = $.proxy;
+        proxy = $.proxy,
+        nonValueOperators = ["isnull", "isnotnull", "isempty", "isnotempty"];
+
+    function isNonValueFilter(filter) {
+        var operator = typeof filter === "string" ? filter : filter.operator;
+        return $.inArray(operator, nonValueOperators) > -1;
+    }
 
     function findFilterForField(filter, field) {
         var filters = [];
@@ -139,7 +145,7 @@ var __meta__ = { // jshint ignore:line
                 value: null,
                 operatorVisible: function() {
                     var val = this.get("value");
-                    return  val !== null && val !== undefined && val != "undefined";
+                    return  (val !== null && val !== undefined && val != "undefined") || (isNonValueFilter(this.get("operator")) && !that._clearInProgress && !that.manuallyUpdatingVM);
                 }
             });
             viewModel.bind(CHANGE, proxy(that.updateDsFilter, that));
@@ -316,7 +322,7 @@ var __meta__ = { // jshint ignore:line
             var that = this,
                 model = that.viewModel;
 
-            if (that.manuallyUpdatingVM || (e.field == "operator" && model.value === undefined)) {
+            if (that.manuallyUpdatingVM || (e.field == "operator" && model.value === undefined && !isNonValueFilter(model))) {
                 return;
             }
 
@@ -327,7 +333,7 @@ var __meta__ = { // jshint ignore:line
                 filters: []
             };
 
-            if (currentFilter.value !== undefined && currentFilter.value !== null) {
+            if ((currentFilter.value !== undefined && currentFilter.value !== null) || (isNonValueFilter(currentFilter) && !this._clearInProgress)) {
                 expression.filters.push(currentFilter);
             }
             var mergeResult = that._merge(expression);
@@ -355,7 +361,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             filters = $.grep(filters, function(filter) {
-                return filter.value !== "" && filter.value !== null;
+                return (filter.value !== "" && filter.value !== null) || isNonValueFilter(filter);
             });
 
             if (filters.length) {
@@ -392,7 +398,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         clearFilter: function() {
+            this._clearInProgress = true;
             this.viewModel.set("value", null);
+            this._clearInProgress = false;
         },
 
         _angularItems: function(action) {
@@ -460,7 +468,11 @@ var __meta__ = { // jshint ignore:line
                     startswith: "Starts with",
                     contains: "Contains",
                     doesnotcontain: "Does not contain",
-                    endswith: "Ends with"
+                    endswith: "Ends with",
+                    isnull: "Is null",
+                    isnotnull: "Is not null",
+                    isempty: "Is empty",
+                    isnotempty: "Is not empty"
                 },
                 number: {
                     eq: EQ,
@@ -468,7 +480,9 @@ var __meta__ = { // jshint ignore:line
                     gte: "Is greater than or equal to",
                     gt: "Is greater than",
                     lte: "Is less than or equal to",
-                    lt: "Is less than"
+                    lt: "Is less than",
+                    isnull: "Is null",
+                    isnotnull: "Is not null"
                 },
                 date: {
                     eq: EQ,
@@ -476,11 +490,15 @@ var __meta__ = { // jshint ignore:line
                     gte: "Is after or equal to",
                     gt: "Is after",
                     lte: "Is before or equal to",
-                    lt: "Is before"
+                    lt: "Is before",
+                    isnull: "Is null",
+                    isnotnull: "Is not null"
                 },
                 enums: {
                     eq: EQ,
-                    neq: NEQ
+                    neq: NEQ,
+                    isnull: "Is null",
+                    isnotnull: "Is not null"
                 }
             }
         }

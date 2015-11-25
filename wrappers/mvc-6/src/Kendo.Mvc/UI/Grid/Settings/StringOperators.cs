@@ -14,7 +14,12 @@ namespace Kendo.Mvc.UI
                 { "startswith", Messages.Filter_StringStartsWith },
                 { "endswith", Messages.Filter_StringEndsWith },
                 { "contains", Messages.Filter_StringContains },
-                { "doesnotcontain", Messages.Filter_StringDoesNotContain }
+                { "doesnotcontain", Messages.Filter_StringDoesNotContain },
+                { "isnull", Messages.Filter_StringIsNull },
+                { "isnotnull", Messages.Filter_StringIsNotNull },
+                { "isempty", Messages.Filter_StringIsEmpty },
+                { "isnotempty", Messages.Filter_StringIsNotEmpty }
+
             };
         }
 
@@ -24,8 +29,12 @@ namespace Kendo.Mvc.UI
         private const string DefaultEndsWith = "Ends with";
         private const string DefaultContains = "Contains";
         private const string DefaultDoesNotContain = "Does not contain";
+        private const string DefaultIsNull = "Is null";
+        private const string DefaultIsNotNull = "Is not null";
+        private const string DefaultIsEmpty = "Is empty";
+        private const string DefaultIsNotEmpty = "Is not empty";
 
-        private const int DefaultNumberOfFilters = 6;
+        private const int DefaultNumberOfFilters = 10;
 
         protected override void Serialize(IDictionary<string, object> json)
         {
@@ -62,6 +71,26 @@ namespace Kendo.Mvc.UI
             }
 
             if (Operators.ContainsKey("doesnotcontain") && Operators["doesnotcontain"] != DefaultDoesNotContain)
+            {
+                dirty = true;
+            }
+
+            if (Operators.ContainsKey("isnull") && Operators["isnull"] != DefaultIsNull)
+            {
+                dirty = true;
+            }
+
+            if (Operators.ContainsKey("isnotnull") && Operators["isnotnull"] != DefaultIsNotNull)
+            {
+                dirty = true;
+            }
+
+            if (Operators.ContainsKey("isempty") && Operators["isempty"] != DefaultIsEmpty)
+            {
+                dirty = true;
+            }
+
+            if (Operators.ContainsKey("isnotempty") && Operators["isnotempty"] != DefaultIsNotEmpty)
             {
                 dirty = true;
             }
