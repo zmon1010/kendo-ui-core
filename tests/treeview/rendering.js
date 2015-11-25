@@ -574,6 +574,6 @@
         var dom = $("<ul><li><input type='checkbox' />foo</li></ul>").appendTo(QUnit.fixture);
         dom.kendoTreeView();
 
-        ok(dom.find(".k-checkbox").next().is(".k-in"));
+        ok(dom.find(".k-checkbox-wrapper").next().is(".k-in"));
     });
 })();

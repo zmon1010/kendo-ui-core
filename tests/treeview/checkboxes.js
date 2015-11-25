@@ -147,7 +147,7 @@
             checkboxes: true
         });
 
-        var items = treeview.find("span.k-checkbox");
+        var items = treeview.find("span.k-checkbox-wrapper");
 
         equal(items.length, 1);
 

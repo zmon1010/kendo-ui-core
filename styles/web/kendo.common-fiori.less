@@ -984,14 +984,23 @@ span.k-tooltip
 @checkbox-tick-icon-content: "\2714";
 @checkbox-border-width: 2px;
 
+.k-checkbox:indeterminate + .k-checkbox-label:after {
+    width: 6px;
+    height: 6px;
+    margin-left: 0;
+    top: 4px;
+    left: 4px;
+    transform: none;
+}
+
 .k-radio:checked + .k-radio-label:after {
-  top: 5px; 
-  left: 5px
+   top: 5px; 
+   left: 5px;
 }
 
 .k-radio-label:before {
-  width: 16px;
-  height: 16px;
+   width: 16px;
+   height: 16px;
 }
 
 .k-dropzone .k-upload-status

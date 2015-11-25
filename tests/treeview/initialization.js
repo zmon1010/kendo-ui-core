@@ -81,7 +81,7 @@
                 '<ul class="k-group">' +
                     '<li class="k-item k-first k-last">' +
                         '<div class="k-top k-bot">' +
-                            '<span class="k-checkbox"><input type="checkbox" checked></span>' +
+                            '<span class="k-checkbox-wrapper"><input type="checkbox" checked></span>' +
                             '<span class="k-in">foo</span>' +
                         '</div>' +
                     '</li>' +
