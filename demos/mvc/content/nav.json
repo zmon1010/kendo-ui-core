@@ -2621,6 +2621,16 @@
           ]
       },
       {
+          "text": "Disabled cells",
+          "url": "spreadsheet/disabled-cells",
+          "title": {
+             "kendo-ui": "Disabled cells"
+          },
+          "meta": {
+              "kendo-ui": "This demo shows how to disable/enable editing in Kendo UI Spreadsheet provides for particular range"
+          }
+      },
+      {
           "text": "Events",
           "url": "spreadsheet/events",
           "title": {
@@ -7135,7 +7145,7 @@
 		"description": {
             "kendo-ui": "<p>The Stepped Area chart is a variation of area chart where each data point from the series is connected with vertical and horizontal lines to form a step-like progression. This type of area visualization is useful when you want to highlight the increase or decrease in values over time.</p> <p>You can configure a stepped area chart through the series-&gt; line-&gt; style = \"line\" settings of Kendo UI chart widget.</p>",
 			      "aspnet-mvc": "<p>The Stepped Area chart is a form of area chart where each data point from the series is connected with vertical and horizontal lines to form a step-like progression. This type of area visualization is useful when you want to highlight the increase or decrease in values over time.</p> <p>You can configure a stepped area chart through the Series -&gt; Area -&gt; Line -&gt; Style(ChartLineStyle.<strong>Step</strong>) settings of the MVC Chart.</p>"
-		}		
+		}
       },
       {
         "text": "Smooth Area",
@@ -7151,7 +7161,7 @@
 		"description": {
             "kendo-ui": "<p>This demo illustrates how to configure smooth line (spline) style for the Kendo UI area chart.</p> <p>A Spline chart is a form of line/area chart where each data point from the series is connected with a curved line, which represents a rough approximation of the missing data points.</p> <p>You can specify a smooth line area chart to be rendered through the series -&gt; line -&gt; style = \"smooth\" settings of the chart widget.</p>",
 			      "aspnet-mvc": "<p>This demo shows how to configure smooth line (spline) style for the Telerik MVC Area Chart.</p> <p>A Spline chart is a form of line/area chart where each data point from the series is connected with a curved line, which represents a rough approximation of the missing data points.</p> <p>You can configure a smooth line area chart through the Series -&gt; Area -&gt; Line -&gt; Style(ChartAreaStyle.<strong>Smooth</strong>) settings of the ASP.NET MVC Chart.</p>"
-		}		
+		}
       },
       {
         "text": "Date axis",
@@ -7299,7 +7309,7 @@
             "kendo-ui": "AngularJS directives support in Kendo UI Chart"
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>" 
+            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
        },
         "packages": [
           "!mvc",
@@ -7658,7 +7668,7 @@
             "kendo-ui": "AngularJS directives support in Kendo UI Chart"
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>" 
+            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
        },
         "packages": [
           "!mvc",
@@ -7860,7 +7870,7 @@
             "kendo-ui": "AngularJS directives support in Kendo UI Chart"
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>" 
+            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
        },
         "packages": [
           "!mvc",
@@ -7993,7 +8003,7 @@
             "kendo-ui": "AngularJS directives support in Kendo UI Chart"
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>" 
+            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
        },
         "packages": [
           "!mvc",
@@ -8109,7 +8119,7 @@
             "kendo-ui": "AngularJS directives support in Kendo UI Chart"
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>" 
+            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
        },
         "packages": [
           "!mvc",
@@ -8357,7 +8367,7 @@
             "kendo-ui": "AngularJS directives support in Kendo UI Chart"
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>" 
+            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
        },
         "packages": [
           "!mvc",
@@ -8495,7 +8505,7 @@
             "kendo-ui": "AngularJS directives support in Kendo UI Chart"
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>" 
+            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
        },
         "packages": [
           "!mvc",
@@ -9419,7 +9429,7 @@
         },
         "description": {
             "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI Pie chart to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel</strong> instance (with <strong>kendo.observable</strong> call) which wraps the pie chart data source, and instantiate the widget, its attributes and binding definition using <strong>data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the chart, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter</a> of the documentation.</p>"
-        }, 
+        },
         "packages": [
           "!mvc",
           "!jsp",
@@ -9438,7 +9448,7 @@
         },
         "description": {
             "kendo-ui": "<p>The Kendo UI Pie chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <strong>k-</strong> pie chart Angular attribute definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
-        }, 
+        },
         "packages": [
           "!mvc",
           "!jsp",
@@ -9849,7 +9859,7 @@
             "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI Chart"
         },
         "description": {
-            "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI Radar chart to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel</strong> instance (with <strong>kendo.observable</strong> call) which wraps the chart data source, and instantiate the widget, its attributes and binding definition using <strong>data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the chart, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter</a> of the documentation.</p>"    
+            "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI Radar chart to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel</strong> instance (with <strong>kendo.observable</strong> call) which wraps the chart data source, and instantiate the widget, its attributes and binding definition using <strong>data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the chart, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter</a> of the documentation.</p>"
         },
         "packages": [
           "!mvc",
@@ -9868,7 +9878,7 @@
             "kendo-ui": "AngularJS directives support in Kendo UI Chart"
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI Radar chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <strong>k-</strong> pie chart Angular attribute definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"   
+            "kendo-ui": "<p>The Kendo UI Radar chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <strong>k-</strong> pie chart Angular attribute definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
         },
         "packages": [
           "!mvc",
