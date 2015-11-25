@@ -194,8 +194,8 @@
             }
         },
 
-        disabled: function(value) {
-            return this._property("disabled", value);
+        enable: function(value) {
+            return this._property("enable", value);
         },
 
         format: function(value) {

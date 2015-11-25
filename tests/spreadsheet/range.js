@@ -916,9 +916,9 @@
         ok(!sheet.range("A1").resize({ top: 1 }).isSortable());
     });
 
-    test("disabled returns the disabled state of a range", function() {
-        range.disabled(true);
+    test("enable returns the disabled state of a range", function() {
+        range.enable(false);
 
-        equal(range.disabled(), true);
+        equal(range.enable(), false);
     });
 })();

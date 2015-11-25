@@ -159,7 +159,7 @@
 
         var className = null;
 
-        if (cell.disabled) {
+        if (cell.enable === false) {
             className = "k-state-disabled";
         }
 

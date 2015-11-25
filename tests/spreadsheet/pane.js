@@ -158,7 +158,7 @@
     test("adds 'k-state-disabled' classname to the cell", function() {
         var table = stub({}, "addCell");
 
-        addCell(table, {}, { disabled: true });
+        addCell(table, {}, { enable: false });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[3], "k-state-disabled");
