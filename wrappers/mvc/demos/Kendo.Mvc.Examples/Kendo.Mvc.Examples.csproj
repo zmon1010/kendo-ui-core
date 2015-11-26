@@ -209,6 +209,7 @@
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\Scatter_Charts\Pan_And_ZoomController.cs" />
+    <Compile Include="Controllers\Spreadsheet\Disabled_CellsController.cs" />
     <Compile Include="Controllers\Spreadsheet\Sorting_FilteringController.cs" />
     <Compile Include="Controllers\Spreadsheet\Server_Side_Import_ExportController.cs" />
     <Compile Include="Controllers\Spreadsheet\Server_Side_Pdf_ExportController.cs" />
@@ -1398,6 +1399,7 @@
     <Content Include="Areas\aspx\Views\spreadsheet\sorting_filtering.aspx" />
     <Content Include="Areas\razor\Views\bar_charts\pan_and_zoom.cshtml" />
     <Content Include="Areas\razor\Views\calendar\disable_dates.cshtml" />
+    <Content Include="Areas\aspx\Views\spreadsheet\disabled_cells.aspx" />
     <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />
@@ -3348,6 +3350,7 @@
     <Content Include="Areas\razor\Views\datepicker\disable_dates.cshtml" />
     <Content Include="Areas\razor\Views\datetimepicker\disable_dates.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\validation.cshtml" />
+    <Content Include="Areas\razor\Views\spreadsheet\disabled_cells.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
