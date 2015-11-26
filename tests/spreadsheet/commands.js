@@ -132,6 +132,7 @@
         var result = c.exec();
 
         equal(result.reason, "error");
+        equal(result.type, "validationError");
         equal(sheet.range("A1").value(), 1);
     });
 

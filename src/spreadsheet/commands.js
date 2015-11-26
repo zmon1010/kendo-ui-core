@@ -78,7 +78,8 @@
             return {
                 title: validationState.title,
                 body: validationState.message,
-                reason: "error"
+                reason: "error",
+                type: "validationError"
             };
         },
         exec: function() {

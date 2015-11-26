@@ -68,8 +68,20 @@
         ok($(document.activeElement).is(".k-button"));
     });
 
+    test("opening error dialog without text loads default text for type", 1, function() {
+        spreadsheet._view.showError({ type: "validationError"});
+
+        equal($(document.activeElement).closest(".k-spreadsheet-message").text(), "The value that you entered violates the validation rules set on the cell.OK");
+    });
+
+    test("opening error dialog with text loads it instead of default message for type", 1, function() {
+        spreadsheet._view.showError({ type: "validationError", body: "Custom message."});
+
+        equal($(document.activeElement).closest(".k-spreadsheet-message").text(), "Custom message.OK");
+    });
+
     test("closing error dialog calls the editor focusLastActive method", 1, function() {
-        spreadsheet._view.showError({ text: "Foo"});
+        spreadsheet._view.showError({ body: "Foo"});
 
         spreadsheet._view.editor.focusLastActive = function() {
             ok(true);

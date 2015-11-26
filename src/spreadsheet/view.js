@@ -37,7 +37,8 @@
     var VIEW_MESAGES = kendo.spreadsheet.messages.view = {
         errors: {
             shiftingNonblankCells: "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet.",
-            filterRangeContainingMerges: "Cannot create a filter within a range containing merges"
+            filterRangeContainingMerges: "Cannot create a filter within a range containing merges",
+            validationError: "The value that you entered violates the validation rules set on the cell."
         },
         tabs: {
             home: "Home",
@@ -698,7 +699,7 @@
 
             this.openDialog("message", {
                 title : options.title || "Error",
-                text  : options.type ? errorMessages[options.type] : options.body,
+                text  : options.body ? options.body : errorMessages[options.type],
                 activate: function() {
                     this.dialog().element.find(".k-button").focus();
                 },
