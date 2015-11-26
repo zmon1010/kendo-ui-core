@@ -50,7 +50,7 @@ namespace Kendo.Models
 #if DEBUG
             "web/kendo.common.css",
             "web/kendo.nova.css",
-            "mobile/kendo.mobile.ios.css"
+            "mobile/kendo.mobile.wp8.css"
 #else
             "kendo.common.min.css",
             "kendo.flat.min.css",
@@ -74,11 +74,11 @@ namespace Kendo.Models
 #if DEBUG
             "web/kendo.common-nova.css",
             "web/kendo.nova.css",
-            "mobile/kendo.mobile.ios.css",
+            "mobile/kendo.mobile.wp8.css",
 #else
             "kendo.common-nova.min.css",
             "kendo.nova.min.css",
-            "kendo.mobile.ios.nova.css",
+            "kendo.mobile.ios.wp8.css",
 #endif
         };
     }
