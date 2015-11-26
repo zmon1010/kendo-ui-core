@@ -9,21 +9,20 @@ require_once '../lib/Kendo/Autoload.php';
 <script src="../content/js/cultures/kendo.culture.fr-FR.min.js"></script>
 <script src="../content/js/cultures/kendo.culture.bg-BG.min.js"></script>
 
-<div id="product-view" class="k-header">
-    <div class="right">
-        <label for="culture">Choose culture:</label>
-        <input id="culture" value="en-US" />
-    </div>
-
-    <h2>Product promotion</h2>
+<div id="product-view" class="demo-section k-content">
     <ul id="fieldlist">
         <li>
+            <label for="culture">Choose culture:</label>
+            <input id="culture" value="en-US" style="width: 100%;" />
+    </li>
+    <li>
             <label for="initial">Initial price:</label>
             <?php
             $initial = new \Kendo\UI\MaskedTextBox('initial');
 
             $initial->mask('9,999.99 $');
             $initial->value('1234.56');
+            $initial->attr('style', 'width: 100%');
 
             echo $initial->render();
             ?>
@@ -31,46 +30,25 @@ require_once '../lib/Kendo/Autoload.php';
     </ul>
 </div>
 
-    <style>
-        #example h2 {
-            padding: 5px 0;
-            font-weight: normal;
-            border-bottom: 1px solid #999;
-        }
-        #product-view {
-            border-radius: 10px 10px 10px 10px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            width: 500px;
-            padding: 20px 20px 0 20px;
-            margin: 30px auto;
-            background-position: 0 -255px;
-        }
+<style>
+    #fieldlist {
+        margin: 0 0 -2em;
+        padding: 0;
+    }
 
-        .right
-        {
-            float:right;
-        }
+    #fieldlist li {
+        list-style: none;
+        padding-bottom: 2em;
+    }
 
-        #fieldlist
-        {
-            width: 100%;
-            float:left;
-            margin:0;
-            padding: 20px 0 20px 0;
-        }
-
-        #fieldlist li
-        {
-            list-style:none;
-            padding:5px 0;
-        }
-        #fieldlist label {
-            display: inline-block;
-            text-align: right;
-            margin-right: 5px;
-        }
+    #fieldlist label {
+        display: block;
+        padding-bottom: 1em;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: #444;
+    }
 
 </style>
 
