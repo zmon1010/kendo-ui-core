@@ -4,13 +4,12 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h2>View Order Details</h2>
-    <p>
-        <label for="categories">Catergories:</label>
+<div class="demo-section k-content">
+
+        <h4>Categories:</h4>
         <%= Html.Kendo().DropDownList()
               .Name("categories")
-              .HtmlAttributes(new { style = "width:300px" })
+              .HtmlAttributes(new { style = "width:100%" })
               .OptionLabel("Select category...")
               .DataTextField("CategoryName")
               .DataValueField("CategoryId")
@@ -20,12 +19,11 @@
                    });
               })
         %>
-    </p>
-    <p>
-        <label for="products">Products:</label>
+        <h4 style="margin-top: 2em;">Products:</h4>
+
         <%= Html.Kendo().DropDownList()
               .Name("products")
-              .HtmlAttributes(new { style = "width:300px" })
+              .HtmlAttributes(new { style = "width:100%" })
               .OptionLabel("Select product...")
               .DataTextField("ProductName")
               .DataValueField("ProductID")
@@ -48,12 +46,11 @@
                 };
             }
         </script>
-    </p>
-    <p>
-        <label for="orders">Orders:</label>
+        <h4 style="margin-top: 2em;">Orders:</h4>
+
         <%= Html.Kendo().DropDownList()
               .Name("orders")
-              .HtmlAttributes(new { style = "width:300px" })
+              .HtmlAttributes(new { style = "width:100%" })
               .OptionLabel("Select order...")
               .DataTextField("ShipCity")
               .DataValueField("OrderID")
@@ -76,8 +73,9 @@
                 };
             }
         </script>
-    </p>
+  <button class="k-button k-primary" id="get" style="margin-top: 2em; float: right;">View Order</button>
 </div>
+           
 <script>
     $(document).ready(function () {
         var categories = $("#categories").data("kendoDropDownList"),
@@ -94,24 +92,6 @@
     });
 </script>
 <style>
-    .demo-section {
-        width: 460px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 30px;
-    }
-    .demo-section label {
-        display: inline-block;
-        width: 120px;
-        padding-right: 5px;
-        text-align: right;
-    }
-    .demo-section .k-button {
-        margin: 20px 0 0 125px;
-    }
     .k-readonly
     {
         color: gray;

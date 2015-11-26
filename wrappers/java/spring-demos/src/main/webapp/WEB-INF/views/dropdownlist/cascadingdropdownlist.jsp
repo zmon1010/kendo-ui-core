@@ -9,13 +9,11 @@
 <c:url value="/dropdownlist/cascadingdropdownlist/orders" var="ordersUrl" />
 
 <demo:header />
-    <div class="demo-section">
-        <h2>View Order Details</h2>
-        <p>
-            <label for="categories">Categories:</label>
+   <div class="demo-section k-content">
 
+           <h4>Categories:</h4>
             <kendo:dropDownList name="categories" dataTextField="categoryName" dataValueField="categoryId"
-                            optionLabel="Select category...">
+                            optionLabel="Select category..." style="width: 100%;">
                 <kendo:dataSource>
                     <kendo:dataSource-transport>
                        <kendo:dataSource-transport-read url="${categoriesUrl}" type="POST" contentType="application/json"/>
@@ -27,12 +25,11 @@
                     </kendo:dataSource-schema>
                 </kendo:dataSource>
             </kendo:dropDownList>
-        </p>
-        <p>
-            <label for="products">Products:</label>
+            
+      		<h4 style="margin-top: 2em;">Products:</h4>
 
             <kendo:dropDownList name="products" dataTextField="productName" dataValueField="productId"
-                            optionLabel="Select product..." cascadeFrom="categories" autoBind="false">
+                            optionLabel="Select product..." cascadeFrom="categories" autoBind="false" style="width: 100%;">
                 <kendo:dataSource serverFiltering="true">
                     <kendo:dataSource-transport>
                        <kendo:dataSource-transport-read url="${productsUrl}" type="POST" contentType="application/json"/>
@@ -44,12 +41,11 @@
                     </kendo:dataSource-schema>
                 </kendo:dataSource>
             </kendo:dropDownList>
-        </p>
-        <p>
-            <label for="orders">Orders:</label>
+            
+        	<h4 style="margin-top: 2em;">Orders:</h4>
 
             <kendo:dropDownList name="orders" dataTextField="shipCity" dataValueField="orderId"
-                            optionLabel="Select order..." cascadeFrom="products" autoBind="false">
+                            optionLabel="Select order..." cascadeFrom="products" autoBind="false" style="width: 100%;">
                 <kendo:dataSource serverFiltering="true">
                     <kendo:dataSource-transport>
                        <kendo:dataSource-transport-read url="${ordersUrl}" type="POST" contentType="application/json"/>
@@ -59,9 +55,8 @@
                     </kendo:dataSource-transport>
                 </kendo:dataSource>
             </kendo:dropDownList>
-        </p>
-        <button class="k-button" id="get">View Order</button>
-    </div>
+       <button class="k-button k-primary" id="get" style="margin-top: 2em; float: right;">View Order</button>
+	 </div>
     <script>
         $(document).ready(function () {
             var categories = $("#categories").data("kendoDropDownList"),
@@ -77,28 +72,10 @@
             });
         });
     </script>
-    <style>
-        .demo-section {
-            width: 460px;
-            padding: 30px;
-        }
-        .demo-section h2 {
-            text-transform: uppercase;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
-        .demo-section label {
-            display: inline-block;
-            width: 120px;
-            padding-right: 5px;
-            text-align: right;
-        }
-        .demo-section .k-button {
-            margin: 20px 0 0 125px;
-        }
-        .k-readonly
-        {
-            color: gray;
-        }
-    </style>
+     <style>
+         .k-readonly
+         {
+             color: gray;
+         }
+     </style>
 <demo:footer />

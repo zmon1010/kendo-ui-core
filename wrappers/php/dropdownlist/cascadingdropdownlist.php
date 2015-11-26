@@ -49,23 +49,19 @@ $schema->data('data')
        ->total('total');
 
 ?>
-<div class="demo-section">
-<h2>View Order Details</h2>
-<p>
-    <label for="categories">Categories:</label>
+<div class="demo-section k-content">
+    <h4>Categories:</h4>
 <?php
 $categories = new \Kendo\UI\DropDownList('categories');
 $categories->dataSource(array('transport' => $transport, 'schema' => $schema, 'serverFiltering' => true))
            ->dataTextField('CategoryName')
            ->dataValueField('CategoryID')
-           ->attr('style', 'width: 300px')
+           ->attr('style', 'width: 100%')
            ->optionLabel('Select category ...');
 
 echo $categories->render();
 ?>
-</p>
-<p>
-    <label for="products">Products:</label>
+<h4 style="margin-top: 2em;">Products:</h4>
 <?php
 
 $read->url('cascadingdropdownlist.php?type=products');
@@ -77,14 +73,12 @@ $products->dataSource(array('transport' => $transport, 'schema' => $schema, 'ser
          ->cascadeFrom('categories')
          ->dataTextField('ProductName')
          ->dataValueField('ProductID')
-         ->attr('style', 'width: 300px')
+         ->attr('style', 'width: 100%')
          ->optionLabel('Select product ...');
 
 echo $products->render();
 ?>
-</p>
-<p>
-    <label for="orders">Orders:</label>
+<h4 style="margin-top: 2em;">Orders:</h4>
 <?php
 
 $read->url('cascadingdropdownlist.php?type=orders');
@@ -96,14 +90,13 @@ $products->dataSource(array('transport' => $transport, 'schema' => $schema, 'ser
          ->cascadeFrom('products')
          ->dataTextField('OrderID')
          ->dataValueField('OrderID')
-         ->attr('style', 'width: 300px')
+         ->attr('style', 'width: 100%')
          ->optionLabel('Select order ...');
 
 echo $products->render();
 ?>
-</p>
-<button class="k-button" id="get">View Order</button>
-</div>
+<button class="k-button k-primary" id="get" style="margin-top: 2em; float: right;">View Order</button>
+    </div>
 <script>
     $(document).ready(function () {
         var categories = $("#categories").data("kendoDropDownList"),
@@ -120,24 +113,6 @@ echo $products->render();
     });
 </script>
 <style>
-    .demo-section {
-        width: 460px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 30px;
-    }
-    .demo-section label {
-        display: inline-block;
-        width: 120px;
-        padding-right: 5px;
-        text-align: right;
-    }
-    .demo-section .k-button {
-        margin: 20px 0 0 125px;
-    }
     .k-readonly
     {
         color: gray;
