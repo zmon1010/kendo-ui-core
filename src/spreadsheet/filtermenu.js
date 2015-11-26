@@ -245,12 +245,13 @@
             validateCriteria: function(criteria) {
                 return criteria.filter(function(item) {
                     var type = item.operator.type;
+                    var value = item.value;
 
-                    if (type === "number") {
+                    if (value && type === "number") {
                         return !!kendo.parseFloat(item.value);
-                    } else if (type === "date") {
+                    } else if (value && type === "date") {
                         return !!kendo.parseDate(item.value);
-                    } else if (type === "string") {
+                    } else if (value && type === "string") {
                         return !!item.value.toString();
                     } else {
                         return false;
@@ -275,6 +276,7 @@
             },
             buildCustomFilter: function() {
                 var customFilter = this.customFilter.toJSON();
+
                 customFilter.criteria = this.validateCriteria(customFilter.criteria);
                 customFilter.criteria = this.normalizeCriteria(customFilter.criteria);
 
@@ -432,7 +434,9 @@
                     }
                 }
 
-                this.action({ command: "ApplyFilterCommand", options: options });
+                if (options.valueFilter || options.customFilter) {
+                    this.action({ command: "ApplyFilterCommand", options: options });
+                }
             },
 
             action: function(options) {
