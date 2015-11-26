@@ -21,7 +21,6 @@
         Layer = dataviz.map.layers.Layer,
 
         util = kendo.util,
-        objectKey = util.objectKey,
         round = util.round,
         renderSize = util.renderSize,
         limit = util.limitValue;
@@ -387,7 +386,15 @@
             var items = this._items;
             var tile;
 
-            var id = util.hashKey(objectKey(options) + objectKey(options.currentIndex));
+            // Build an unique token for the image
+            // This normally would be the URL, but we don't care about subdomains
+            var id = util.hashKey(
+                options.point.toString() +
+                options.offset.toString() +
+                options.zoom +
+                options.urlTemplate
+            );
+
             for (var i = 0; i < items.length; i++) {
                 if (items[i].id === id) {
                     tile = items[i];
