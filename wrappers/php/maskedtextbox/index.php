@@ -20,8 +20,7 @@ $postcode->value("W1N 1AC")
 
 ?>
 
- <div class="demo-section">
-    <h2>Mask Input </h2>
+<div class="demo-section k-content">
     <ul id="fieldlist">
         <li>
             <label for="phone_number">Phone number:</label>
@@ -43,35 +42,27 @@ $postcode->value("W1N 1AC")
 </div>
 
 <style>
-    .demo-section {
-        width: 300px;
-        margin: 35px auto 50px;
-        padding: 30px;
+    #fieldlist {
+        margin: 0 0 -2em;
+        padding: 0;
     }
 
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-
-    #fieldlist
-    {
-        margin:0;
-        padding:0;
-    }
-
-    #fieldlist li
-    {
-        list-style:none;
-        padding:10px 0;
+    #fieldlist li {
+        list-style: none;
+        padding-bottom: 2em;
     }
 
     #fieldlist label {
-        display: inline-block;
-        width: 130px;
-        margin-right: 5px;
-        text-align: right;
+        display: block;
+        padding-bottom: 1em;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: #444;
+    }
+
+    #fieldlist input {
+        width: 100%;
     }
 </style>
 

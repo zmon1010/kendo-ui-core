@@ -4,7 +4,7 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
  <div class="demo-section k-content">
-   h4>T-shirt Size</h4>
+   <h4>T-shirt Size</h4>
 <?php
 $dropDownList = new \Kendo\UI\DropDownList('select');
 
