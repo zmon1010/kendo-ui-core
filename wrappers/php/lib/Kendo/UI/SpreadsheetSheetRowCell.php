@@ -96,6 +96,15 @@ class SpreadsheetSheetRowCell extends \Kendo\SerializableObject {
     }
 
     /**
+    * Disables the cell, if set to false.
+    * @param boolean $value
+    * @return \Kendo\UI\SpreadsheetSheetRowCell
+    */
+    public function enable($value) {
+        return $this->setProperty('enable', $value);
+    }
+
+    /**
     * The format of the cell text.See Create or delete a custom number format on MS Office.
     * @param string $value
     * @return \Kendo\UI\SpreadsheetSheetRowCell
