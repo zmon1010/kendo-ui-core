@@ -4,8 +4,8 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h3>T-shirt Size</h3>
+ <div class="demo-section k-content">
+    <h4>T-shirt Size</h4>
     <%= Html.Kendo().DropDownList()
           .Name("size")          
           .HtmlAttributes(new { accessKey="w" })
@@ -16,10 +16,13 @@
               "Large",
               "X-Large",
               "2X-Large"
-          })          
+          })   
+         .HtmlAttributes(new { style = "width: 100%" })
     %>
-</div>
+ </div>
 
+<div class="box">
+<h4>Keyboard legend</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -31,12 +34,17 @@
             focuses the widget
         </span>
     </li>
-</ul>
-
-<ul class="keyboard-legend">
     <li>
         <span class="button-preview">
-            <span class="key-button wide leftAlign">up arrow</span>
+            <span class="key-button wider leftAlign">up arrow</span>
+        </span>
+        <span class="button-descr">
+            highlights previous item
+        </span>
+    </li>
+    <li>
+        <span class="button-preview">
+            <span class="key-button wider leftAlign">left arrow</span>
         </span>
         <span class="button-descr">
             highlights previous item
@@ -52,13 +60,37 @@
     </li>
     <li>
         <span class="button-preview">
+            <span class="key-button wider leftAlign">right arrow</span>
+        </span>
+        <span class="button-descr">
+            highlights next item
+        </span>
+    </li>
+    <li>
+        <span class="button-preview">
+            <span class="key-button">home</span>
+        </span>
+        <span class="button-descr">
+            selects first item in the list
+        </span>
+    </li>
+    <li>
+        <span class="button-preview">
+            <span class="key-button">end</span>
+        </span>
+        <span class="button-descr">
+            selects last item in the list
+        </span>
+    </li>
+    <li>
+        <span class="button-preview">
             <span class="key-button wider rightAlign">enter</span>
         </span>
         <span class="button-descr">
             selects highlighted item
         </span>
     </li>
-    <li>
+   <li>
         <span class="button-preview">
             <span class="key-button">esc</span>
         </span>
@@ -78,24 +110,12 @@
     <li>
         <span class="button-preview">
             <span class="key-button">alt</span>
-            <span class="key-button wide leftAlign">up arrow</span>
+            <span class="key-button wider leftAlign">up arrow</span>
         </span>
         <span class="button-descr">
             closes the popup
         </span>
     </li>
 </ul>
-
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
+</div>
 </asp:Content>

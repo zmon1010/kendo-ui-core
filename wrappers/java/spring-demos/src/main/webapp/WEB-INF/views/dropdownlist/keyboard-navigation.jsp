@@ -3,14 +3,16 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-	<div class="demo-section">
-		<h3>T-shirt Size</h3>
+ 	<div class="demo-section k-content">
+        <h4>T-shirt Size</h4>
 		<kendo:dropDownList name="sizes" filter="contains" accesskey="w"
-					dataTextField="text" dataValueField="value">
+					dataTextField="text" dataValueField="value" style="width: 100%;">
 	        <kendo:dataSource data="${sizes}"></kendo:dataSource>
 		</kendo:dropDownList>
-	</div>
+	 </div>
 
+	<div class="box">
+	<h4>Keyboard legend</h4>
 	<ul class="keyboard-legend">
 	    <li>
 	        <span class="button-preview">
@@ -22,9 +24,6 @@
 	            focuses the widget
 	        </span>
 	    </li>
-	</ul>
-
-	<ul class="keyboard-legend">
 	    <li>
 	        <span class="button-preview">
 	            <span class="key-button wider leftAlign">up arrow</span>
@@ -108,17 +107,5 @@
 	        </span>
 	    </li>
 	</ul>
-
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
+	</div>
 <demo:footer />
