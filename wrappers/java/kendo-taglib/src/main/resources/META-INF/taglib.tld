@@ -34311,6 +34311,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Disables the cell, if set to false.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The font family for the cell.</description>
             <name>fontFamily</name>
             <rtexprvalue>true</rtexprvalue>

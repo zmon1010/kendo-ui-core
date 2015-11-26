@@ -93,6 +93,14 @@ public class SheetRowCellTag extends  BaseTag  /* interfaces */ /* interfaces */
         setProperty("color", value);
     }
 
+    public boolean getEnable() {
+        return (Boolean)getProperty("enable");
+    }
+
+    public void setEnable(boolean value) {
+        setProperty("enable", value);
+    }
+
     public java.lang.String getFontFamily() {
         return (java.lang.String)getProperty("fontFamily");
     }
