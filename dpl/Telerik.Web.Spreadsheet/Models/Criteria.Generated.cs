@@ -40,6 +40,9 @@ namespace Telerik.Web.Spreadsheet
         public string Value { get; set; }
 
 
+        /// <summary>
+        /// Serialize current instance to Dictionary
+        /// </summary>
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
