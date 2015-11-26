@@ -4,10 +4,9 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-
-<div class="demo-section">
+<div class="demo-section k-content">
     <div class="k-rtl">
-        <h2>RTL DropDownList</h2>
+        <h4>RTL DropDownList</h4>
         <%= Html.Kendo().DropDownList()
                 .Name("dropdownlist")
                 .DataTextField("Text")
@@ -24,19 +23,8 @@
                         Text = "Item3", Value = "3"  
                     }
                 })
+               .HtmlAttributes(new { style = "width: 100%" })
         %>
     </div>
 </div>
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 </asp:Content>
