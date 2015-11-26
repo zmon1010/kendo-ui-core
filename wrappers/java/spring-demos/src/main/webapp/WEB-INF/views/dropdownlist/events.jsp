@@ -2,19 +2,18 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-	<div class="demo-section">
-        <h3 class="title">DropDownList</h3>
+ <div class="demo-section k-content">
+        <h4 class="title">DropDownList</h4>
         <kendo:dropDownList name="dropdownlist" open="onOpen" close="onClose" change="onChange" select="onSelect"
-            filtering="onFiltering" dataTextField="text" dataValueField="value" filter="startswith">
+            filtering="onFiltering" dataTextField="text" dataValueField="value" filter="startswith" style="width: 100%;">
             <kendo:dataSource data="${items}">
             </kendo:dataSource>
         </kendo:dropDownList>
+ 	</div>
+    <div class="box">                
+        <h4>Console log</h4>
+        <div class="console"></div>
     </div>
-
-	<div class="demo-section">
-	    <h3 class="title">Console log</h3>
-	    <div class="console"></div>
-	</div>
 
     <script>
         function onOpen() {
@@ -48,16 +47,4 @@
             }
         }
     </script>
-    <style>
-        .demo-section {
-            width: 500px;
-            text-align: center;
-        }
-        .demo-section .k-dropdown {
-            text-align: left;
-        }
-        .console {
-            margin: 0;
-        }
-    </style>
 <demo:footer />

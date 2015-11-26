@@ -4,8 +4,8 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h3 class="title">DropDownList</h3>
+ <div class="demo-section k-content">
+    <h4 class="title">DropDownList</h4>
     <%= Html.Kendo().DropDownList()
             .Name("dropdownlist")
             .DataTextField("Text")
@@ -27,10 +27,11 @@
             {
                 e.Change("onChange").Select("onSelect").Open("onOpen").Close("onClose").DataBound("onDataBound").Filtering("onFiltering");
             })
+           .HtmlAttributes(new { style = "width: 100%" })
     %>
-</div>
-<div class="demo-section">
-    <h3 class="title">Console log</h3>
+ </div>
+<div class="box">                
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 <script>
@@ -61,16 +62,4 @@
         }
     }
 </script>
-<style>
-    .demo-section {
-        width: 500px;
-        text-align: center;
-    }
-    .demo-section .k-dropdown {
-        text-align: left;
-    }
-    .console {
-        margin: 0;
-    }
-</style>
 </asp:Content>
