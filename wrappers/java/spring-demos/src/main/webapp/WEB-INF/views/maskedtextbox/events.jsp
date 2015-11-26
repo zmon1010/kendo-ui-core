@@ -4,11 +4,13 @@
 
 <demo:header />
 
-<div class="demo-section">
-    <kendo:maskedTextBox name="maskedtextbox" mask="(999) 000-0000" change="change"></kendo:maskedTextBox>
+<div class="demo-section k-content">
+    <h4>Enter phone number</h4>
+    <kendo:maskedTextBox name="maskedtextbox" mask="(999) 000-0000" change="change" style="width: 100%;"></kendo:maskedTextBox>
 </div>
-<div class="demo-section">
-    <h3 class="title">Console log</h3>
+
+<div class="box">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 
@@ -18,13 +20,4 @@
     }
 </script>
 
-<style>
-    .demo-section {
-        width: 500px;
-        text-align: center;
-    }
-    .console {
-        margin: 0;
-    }
-</style>
 <demo:footer />

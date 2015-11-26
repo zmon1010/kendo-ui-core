@@ -4,15 +4,18 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+ <div class="demo-section k-content">
+    <h4>Enter phone number</h4>
     <%= Html.Kendo().MaskedTextBox()
           .Name("maskedtextbox")
           .Mask("(999) 000-0000")
           .Events(events => events.Change("change"))
+          .HtmlAttributes(new { style = "width: 100%" })
     %>
-</div>            
-<div class="demo-section">
-    <h3 class="title">Console log</h3>
+</div>
+
+<div class="box">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 
@@ -22,13 +25,4 @@
     }
 </script>
 
-<style>
-    .demo-section {
-        width: 500px;
-        text-align: center;
-    }
-    .console {
-        margin: 0;
-    }
-</style>
 </asp:Content>
