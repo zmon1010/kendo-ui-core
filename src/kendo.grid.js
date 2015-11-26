@@ -6423,8 +6423,9 @@ var __meta__ = { // jshint ignore:line
                 this.lockedHeader = table.prependTo(container);
                 this.thead.find(".k-group-cell").remove();
 
-                this._syncLockedHeaderHeight();
+                return true;
             }
+            return false;
         },
 
         _removeLockedContainers: function() {
@@ -6553,15 +6554,16 @@ var __meta__ = { // jshint ignore:line
 
             that._columnMenu();
 
-            if (this.options.scrollable && lockedColumns(this.columns).length) {
+            var syncHeight;
+            var hasLockedColumns = this.options.scrollable && lockedColumns(this.columns).length;
 
-                that._appendLockedColumnHeader(that.thead.closest(".k-grid-header"));
+            if (hasLockedColumns) {
+
+                syncHeight = that._appendLockedColumnHeader(that.thead.closest(".k-grid-header"));
 
                 that._appendLockedColumnContent();
 
                 that.lockedContent.bind("DOMMouseScroll" + NS + " mousewheel" + NS, proxy(that._wheelScroll, that));
-
-                that._applyLockedContainersWidth();
             }
 
             that._updateColumnCellIndex();
@@ -6575,6 +6577,14 @@ var __meta__ = { // jshint ignore:line
             that._reorderable();
 
             that._updateHeader(that._groups());
+
+            if (hasLockedColumns) {
+                if (syncHeight) {
+                    that._syncLockedHeaderHeight();
+                }
+
+                that._applyLockedContainersWidth();
+            }
 
             if (that.groupable) {
                 that._attachGroupable();
