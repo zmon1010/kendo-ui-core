@@ -214,6 +214,7 @@
     <Compile Include="Controllers\Spreadsheet\Server_Side_Pdf_ExportController.cs" />
     <Compile Include="Controllers\Spreadsheet\EventsController.cs" />
     <Compile Include="Controllers\Spreadsheet\IndexController.cs" />
+    <Compile Include="Controllers\Spreadsheet\ValidationController.cs" />
     <Compile Include="Controllers\TabStrip\Scrollable_TabsController.cs" />
     <Compile Include="Controllers\ToolBar\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\TreeList\DragDropController.cs" />
@@ -986,6 +987,7 @@
     <Content Include="Areas\aspx\Views\scheduler\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\signalr.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\timeline.aspx" />
+    <Content Include="Areas\aspx\Views\spreadsheet\validation.aspx" />
     <Content Include="Areas\aspx\Views\styling\checkboxes.aspx" />
     <Content Include="Areas\aspx\Views\styling\radios.aspx" />
     <Content Include="Areas\aspx\Views\tabstrip\scrollable_tabs.aspx" />
@@ -3345,6 +3347,7 @@
     <Content Include="Areas\razor\Views\scatter_charts\pan_and_zoom.cshtml" />
     <Content Include="Areas\razor\Views\datepicker\disable_dates.cshtml" />
     <Content Include="Areas\razor\Views\datetimepicker\disable_dates.cshtml" />
+    <Content Include="Areas\razor\Views\spreadsheet\validation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
