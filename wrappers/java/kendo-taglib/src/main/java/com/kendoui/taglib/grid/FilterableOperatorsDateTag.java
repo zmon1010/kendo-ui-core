@@ -75,6 +75,22 @@ public class FilterableOperatorsDateTag extends  BaseTag  /* interfaces */ /* in
         setProperty("gte", value);
     }
 
+    public java.lang.String getIsnotnull() {
+        return (java.lang.String)getProperty("isnotnull");
+    }
+
+    public void setIsnotnull(java.lang.String value) {
+        setProperty("isnotnull", value);
+    }
+
+    public java.lang.String getIsnull() {
+        return (java.lang.String)getProperty("isnull");
+    }
+
+    public void setIsnull(java.lang.String value) {
+        setProperty("isnull", value);
+    }
+
     public java.lang.String getLt() {
         return (java.lang.String)getProperty("lt");
     }

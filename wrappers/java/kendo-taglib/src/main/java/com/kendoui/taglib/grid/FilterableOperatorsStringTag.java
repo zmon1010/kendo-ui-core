@@ -83,6 +83,38 @@ public class FilterableOperatorsStringTag extends  BaseTag  /* interfaces */ /* 
         setProperty("eq", value);
     }
 
+    public java.lang.String getIsempty() {
+        return (java.lang.String)getProperty("isempty");
+    }
+
+    public void setIsempty(java.lang.String value) {
+        setProperty("isempty", value);
+    }
+
+    public java.lang.String getIsnotempty() {
+        return (java.lang.String)getProperty("isnotempty");
+    }
+
+    public void setIsnotempty(java.lang.String value) {
+        setProperty("isnotempty", value);
+    }
+
+    public java.lang.String getIsnotnull() {
+        return (java.lang.String)getProperty("isnotnull");
+    }
+
+    public void setIsnotnull(java.lang.String value) {
+        setProperty("isnotnull", value);
+    }
+
+    public java.lang.String getIsnull() {
+        return (java.lang.String)getProperty("isnull");
+    }
+
+    public void setIsnull(java.lang.String value) {
+        setProperty("isnull", value);
+    }
+
     public java.lang.String getNeq() {
         return (java.lang.String)getProperty("neq");
     }

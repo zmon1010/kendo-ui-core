@@ -59,6 +59,22 @@ public class FilterableOperatorsEnumsTag extends  BaseTag  /* interfaces */ /* i
         setProperty("eq", value);
     }
 
+    public java.lang.String getIsnotnull() {
+        return (java.lang.String)getProperty("isnotnull");
+    }
+
+    public void setIsnotnull(java.lang.String value) {
+        setProperty("isnotnull", value);
+    }
+
+    public java.lang.String getIsnull() {
+        return (java.lang.String)getProperty("isnull");
+    }
+
+    public void setIsnull(java.lang.String value) {
+        setProperty("isnull", value);
+    }
+
     public java.lang.String getNeq() {
         return (java.lang.String)getProperty("neq");
     }

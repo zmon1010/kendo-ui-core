@@ -12266,8 +12266,8 @@ odata version 4 and "signalr".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The filter operator (comparison). The supported operators are: "eq" (equal to), "neq" (not equal to), "lt" (less than), "lte" (less than or equal to), "gt" (greater than), "gte" (greater than or equal to),
-"startswith", "endswith", "contains". The last three are supported only for string fields.</description>
+            <description>The filter operator (comparison). The supported operators are: "eq" (equal to), "neq" (not equal to), "isnull" (is equal to null), "isnotnull" (is not equal to null), "lt" (less than), "lte" (less than or equal to), "gt" (greater than), "gte" (greater than or equal to),
+"startswith", "endswith", "contains", "isempty", "isnotempty". The last five are supported only for string fields.</description>
             <name>operator</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -21733,6 +21733,18 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The text of the "isnotnull" filter operator.</description>
+            <name>isnotnull</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the "isnull" filter operator.</description>
+            <name>isnull</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The text of the "less than" filter operator.</description>
             <name>lt</name>
             <rtexprvalue>true</rtexprvalue>
@@ -21767,6 +21779,18 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The text of the "isnotnull" filter operator.</description>
+            <name>isnotnull</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the "isnull" filter operator.</description>
+            <name>isnull</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The text of the "not equal" filter operator.</description>
             <name>neq</name>
             <rtexprvalue>true</rtexprvalue>
@@ -21797,6 +21821,18 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         <attribute>
             <description>The text of the "greater than or equal" filter operator.</description>
             <name>gte</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the "isnotnull" filter operator.</description>
+            <name>isnotnull</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the "isnull" filter operator.</description>
+            <name>isnull</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -21849,6 +21885,30 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         <attribute>
             <description>The text of the "equal" filter operator.</description>
             <name>eq</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the "isempty" filter operator.</description>
+            <name>isempty</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the "isnotempty" filter operator.</description>
+            <name>isnotempty</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the "isnotnull" filter operator.</description>
+            <name>isnotnull</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the "isnull" filter operator.</description>
+            <name>isnull</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>

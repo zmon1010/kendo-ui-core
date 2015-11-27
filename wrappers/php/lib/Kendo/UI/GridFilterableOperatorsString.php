@@ -24,6 +24,42 @@ class GridFilterableOperatorsString extends \Kendo\SerializableObject {
     }
 
     /**
+    * The text of the "isnull" filter operator.
+    * @param string $value
+    * @return \Kendo\UI\GridFilterableOperatorsString
+    */
+    public function isnull($value) {
+        return $this->setProperty('isnull', $value);
+    }
+
+    /**
+    * The text of the "isnotnull" filter operator.
+    * @param string $value
+    * @return \Kendo\UI\GridFilterableOperatorsString
+    */
+    public function isnotnull($value) {
+        return $this->setProperty('isnotnull', $value);
+    }
+
+    /**
+    * The text of the "isempty" filter operator.
+    * @param string $value
+    * @return \Kendo\UI\GridFilterableOperatorsString
+    */
+    public function isempty($value) {
+        return $this->setProperty('isempty', $value);
+    }
+
+    /**
+    * The text of the "isnotempty" filter operator.
+    * @param string $value
+    * @return \Kendo\UI\GridFilterableOperatorsString
+    */
+    public function isnotempty($value) {
+        return $this->setProperty('isnotempty', $value);
+    }
+
+    /**
     * The text of the "starts with" filter operator.
     * @param string $value
     * @return \Kendo\UI\GridFilterableOperatorsString
