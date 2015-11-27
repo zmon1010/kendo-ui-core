@@ -76,6 +76,7 @@
             filterByCondition: "Filter by condition",
             apply: "Apply",
             search: "Search",
+            addToCurrent: "Add to current selection",
             clear: "Clear",
             blanks: "(Blanks)",
             operatorNone: "None",
@@ -159,6 +160,7 @@
                         "<input placeholder='#= messages.search #' data-#=ns#bind='events: { input: filterValues }' />" +
                         "<span class='k-icon k-font-icon k-i-search' />" +
                     "</div>" +
+                    "<div data-#=ns#bind='visible: hasActiveSearch'><label><input type='checkbox' data-#=ns#bind='checked: appendToSearch' /> #= messages.addToCurrent #</label></div>" +
                     "<div class='" + classNames.valuesTreeViewWrapper + "'>" +
                         "<div data-#=ns#role='treeview' " +
                             "data-#=ns#checkboxes='{ checkChildren: true }' "+
@@ -223,16 +225,14 @@
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var text = item.text.toLowerCase();
-                var itemVisible =
-                query === true // parent already matches
-                || query === "" // query is empty
-                || text.indexOf(query) >= 0; // item text matches query
+                var itemVisible = query === true || query === "" || text.indexOf(query) >= 0;
 
                 var anyVisibleChildren = filter(item.children, itemVisible || query); // pass true if parent matches
 
                 hasVisibleChildren = hasVisibleChildren || anyVisibleChildren || itemVisible;
 
                 item.hidden = !itemVisible && !anyVisibleChildren;
+                item.checked = !item.hidden;
             }
 
             if (data) {
@@ -243,11 +243,29 @@
             return hasVisibleChildren;
         }
 
+        function uncheckAll(dataSource) {
+            var data = dataSource instanceof kendo.data.HierarchicalDataSource && dataSource.data();
+
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                item.checked = false;
+
+                if (item.hasChildren) {
+                    uncheckAll(item.children);
+                }
+            }
+        }
+
         var FilterMenuViewModel = kendo.spreadsheet.FilterMenuViewModel = kendo.data.ObservableObject.extend({
             valuesChange: function(e) {
-                var checked = function(item) { return item.checked && item.value; };
+                var checked = function(item) {
+                    return item.checked && item.value;
+                };
                 var value = function(item) {
                     return item.dataType === "date" ? kendo.spreadsheet.dateToNumber(item.value) : item.value;
+                };
+                var unique = function(value, index, array) {
+                    return array.lastIndexOf(value) === index;
                 };
                 var data = e.sender.dataSource.data();
                 var values = data[0].children.data().toJSON();
@@ -257,6 +275,10 @@
 
                 blanks = blanks.length ? blanks[0].checked : false;
                 values = values.filter(checked).map(value);
+
+                if (this.appendToSearch && this.valueFilter && this.valueFilter.values.length) {
+                    values = values.concat(this.valueFilter.values.toJSON()).sort().filter(unique);
+                }
 
                 this.set("valueFilter", {
                     values: values,
@@ -269,10 +291,15 @@
                 var node = e.sender.dataItem(e.node);
                 node.set("checked", !node.checked);
             },
+            hasActiveSearch: false,
+            appendToSearch: false,
             filterValues: function(e) {
                 var query = $(e.target).val().toLowerCase();
-                var dataSource = $(".k-treeview").getKendoTreeView().dataSource;
+                var dataSource = this.valuesDataSource;
 
+                this.set("hasActiveSearch", !!query);
+
+                uncheckAll(dataSource);
                 filter(dataSource, query);
             },
             validateCriteria: function(criteria) {

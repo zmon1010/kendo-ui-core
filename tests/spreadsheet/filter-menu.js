@@ -258,6 +258,87 @@
         equal(values[1].hidden, false);
     });
 
+    test("search in date values", function() {
+        filterMenu = createWithValues([ ["header"], [new Date("6/30/2014")], [new Date("8/28/2014")], [new Date("6/30/2014")] ]);
+
+        range = sheet.range("A2:A4").format("dd-MMM-yyyy");
+        filterMenu.getValues();
+
+        //simulate search
+        filterMenu.element.find("span.k-i-search").prev().val("aug").trigger("input");
+
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+
+        equal(values[0].hidden, true);
+        equal(values[1].hidden, false);
+    });
+
+    test("automatically selects values that match the search criteria", function() {
+        filterMenu = createWithValues([ ["header"], [new Date("6/30/2014")], [new Date("8/28/2014")], [new Date("6/30/2014")] ]);
+
+        range = sheet.range("A2:A4").format("dd-MMM-yyyy");
+        filterMenu.getValues();
+
+        //simulate search
+        filterMenu.element.find("span.k-i-search").prev().val("aug").trigger("input");
+
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+
+        equal(values[0].checked, false);
+        equal(values[1].checked, true);
+    });
+
+    test("displays appendToSearch checkbox", function() {
+        filterMenu = createWithValues([ ["header"], [new Date("6/30/2014")], [new Date("8/28/2014")], [new Date("6/30/2014")] ]);
+
+        range = sheet.range("A2:A4").format("dd-MMM-yyyy");
+        filterMenu.getValues();
+
+        //simulate search
+        filterMenu.element.find("span.k-i-search").prev().val("aug").trigger("input");
+        ok(filterMenu.viewModel.hasActiveSearch);
+
+        filterMenu.element.find("span.k-i-search").prev().val("").trigger("input");
+        ok(!filterMenu.viewModel.hasActiveSearch);
+    });
+
+    test("does not merge search result if appendToSearch: false", function() {
+        filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["ccc"] ]);
+
+        filterMenu.element.find("span.k-i-search").prev().val("bb").trigger("input");
+        filterMenu.viewModel.apply();
+
+        filterMenu.element.find("span.k-i-search").prev().val("aa").trigger("input");
+        filterMenu.viewModel.set("appendToSearch", false);
+
+        filterMenu.bind("action", function(e) {
+            equal(e.command, "ApplyFilterCommand");
+            equal(e.options.valueFilter.values.length, 1);
+            equal(e.options.valueFilter.values[0], "aaa");
+        });
+
+        filterMenu.viewModel.apply();
+    });
+
+    test("merges search result if appendToSearch: true", function() {
+        filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["ccc"] ]);
+
+        filterMenu.element.find("span.k-i-search").prev().val("bb").trigger("input");
+        filterMenu.viewModel.apply();
+
+        filterMenu.element.find("span.k-i-search").prev().val("aa").trigger("input");
+        filterMenu.viewModel.set("appendToSearch", true);
+
+        filterMenu.bind("action", function(e) {
+            equal(e.command, "ApplyFilterCommand");
+            equal(e.options.valueFilter.values.length, 2);
+            equal(e.options.valueFilter.values[0], "aaa");
+            equal(e.options.valueFilter.values[1], "bbb");
+        });
+
+        filterMenu.viewModel.apply();
+    });
+
     function rangeWithCustomFilter(ref, values, criteria) {
         return sheet.range(ref).values(values).filter({
             column: 0,
