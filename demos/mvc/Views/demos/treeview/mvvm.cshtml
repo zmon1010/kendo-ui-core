@@ -70,7 +70,7 @@
             function removeFields(item) {
                 delete item.index;
 
-                if (item.items.length == 0) {
+                if (!item.items || !item.items.length) {
                     delete item.items;
                 } else {
                     item.items = $.map(item.items, removeFields);
