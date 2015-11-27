@@ -33,7 +33,7 @@ title: <%= name %>
 <% end %>
 })
 
-    class Component
+    class Component < CodeGen::Component
         attr_reader :full_name, :name, :methods, :properties, :fields, :type, :namespace, :summary
 
         def initialize(namespace, type, summary)
