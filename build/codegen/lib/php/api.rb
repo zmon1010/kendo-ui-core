@@ -373,7 +373,7 @@ EVENT_SECTION = ERB.new(%{
 
 <%= description %>
 
-For additional information check the [<%= name %>](/api/<%= suite %>/<%= owner.name.downcase %>#events-<%= name %>) event documentation.
+For additional information check the [<%= name %>](<%= owner.api_link %>#events-<%= name %>) event documentation.
 
 #### Returns
 `<%= owner.php_type %>`
