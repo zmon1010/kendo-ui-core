@@ -6,48 +6,83 @@ $numeric = new \Kendo\UI\NumericTextBox('numeric');
 $numeric->value(17)
         ->min(0)
         ->max(100)
-        ->step(1);
+        ->step(1)
+        ->attr('style', 'width: 100%');
 
 $currency = new \Kendo\UI\NumericTextBox('currency');
 $currency->format('c')
          ->value(30)
          ->min(0)
          ->max(100)
-         ->decimals(3);
+         ->decimals(3)
+         ->attr('style', 'width: 100%');
 
 $percentage = new \Kendo\UI\NumericTextBox('percentage');
 $percentage->format('p0')
            ->value(0.05)
            ->min(0)
            ->max(0.1)
-           ->step(0.01);
+           ->step(0.01)
+           ->attr('style', 'width: 100%');
 
 $custom = new \Kendo\UI\NumericTextBox('custom');
 $custom->format('#.00 kg')
-       ->value(2);
+       ->value(2)
+       ->attr('style', 'width: 100%');
 
 ?>
-<div id="add-product">
-    <div>
+<div id="add-product" class="demo-section k-content">
+    <p class="title">Add new product</p>
+    <ul id="fieldlist">
+        <li>
+            <label for="currency">Price:</label>
         <?= $currency->render() ?>
-    </div>
-    <div style="margin-top: 7px;">
+ </li>
+ <li>
+    <label for="percentage">Price Discount:</label>
         <?= $percentage->render() ?>
-    </div>
-    <div style="margin-top: 7px;">
+ </li>
+ <li>
+        <label for="custom">Weight:</label>
         <?= $custom->render() ?>
-    </div>
-    <div style="margin-top: 7px;">
+    </li>
+    <li>
+        <label for="numeric">Currently in stock:</label>
         <?= $numeric->render() ?>
-    </div>
+   </li>
+ </ul>
 </div>
-<style>
-    #add-product {
-        height: 181px;
-        width: 252px;
-        margin: 30px auto;
-        padding: 64px 0 0 143px;
-        background: url('../content/web/numerictextbox/addProduct.png') transparent no-repeat 0 0;
+ <style>
+    .demo-section {
+        padding: 0;
     }
+
+    #add-product .title {
+        font-size: 16px;
+        color: #fff;
+        background-color: #1e88e5;
+        padding: 20px 30px;
+        margin: 0;
+   }
+
+   #fieldlist {
+       margin: 0 0 -1.5em;
+       padding: 30px;
+   }
+
+   #fieldlist li {
+       list-style: none;
+       padding-bottom: 1.5em;
+   }
+
+   #fieldlist label {
+       display: block;
+       padding-bottom: .6em;
+       font-weight: bold;
+       text-transform: uppercase;
+       font-size: 12px;
+       color: #444;
+   }
+
 </style>
 <?php require_once '../include/footer.php'; ?>
