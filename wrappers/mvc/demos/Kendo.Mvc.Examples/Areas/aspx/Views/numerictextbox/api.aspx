@@ -4,25 +4,39 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="configuration k-widget k-header" style="width: 220px">
-    <span class="configHead">API Functions</span>
-    <ul class="options">
-        <li>
-            <button id="get" class="k-button">Get value</button>
-        </li>
-        <li>
-            <input id="value" value="10" style="float:none" />
-            <button id="set" class="k-button">Set value</button>
-        </li>
-        <li>
-            <button id="enable" class="k-button">Enable</button> or <button id="disable" class="k-button">Disable</button> or <button id="readonly" class="k-button">Readonly</button>
-        </li>
-    </ul>
-</div>
-<div class="demo-section">
+  <div class="demo-section k-content">
+      <h4>Set value</h4>
     <%= Html.Kendo().NumericTextBox()
         .Name("numerictextbox")
+        .HtmlAttributes(new { style = "width: 100%" })
     %>
+ </div>
+
+<div class="box wide">
+    <div class="box-col">
+        <h4>Get / Set Value</h4>
+        <ul class="options">
+            <li>
+                <button id="get" class="k-button">Get value</button> or <button id="focus" class="k-button">Focus</button>
+            </li>
+            <li>
+                <input id="value" value="10" style="float:none" />
+                <button id="set" class="k-button">Set value</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Enable / Disable</h4>
+        <ul class="options">
+            <li>
+                <button id="enable" class="k-button">Enable</button>
+                <button id="disable" class="k-button">Disable</button>
+            </li>
+            <li>
+                <button id="readonly" class="k-button">Readonly</button>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <script>
@@ -56,9 +70,4 @@
         });
     });
 </script>
-<style>
-    .demo-section{
-        width:150px;
-    }
-</style>
 </asp:Content>
