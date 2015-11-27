@@ -5,14 +5,16 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="demo-section">
-    <h2>Set Value</h2>
+<div class="demo-section k-content">
+     <h4>Set Value</h4>
     <%= Html.Kendo().NumericTextBox()
           .Name("numerictextbox")
-          .HtmlAttributes(new { accesskey = "w", style = "width: 250px" })
+          .HtmlAttributes(new { accesskey = "w", style = "width: 100%" })
     %>
-</div>
+ </div>
 
+<div class="box">
+<h4>Keyboard legend</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -24,9 +26,6 @@
             focuses the widget
         </span>
     </li>
-</ul>
-
-<ul class="keyboard-legend">
     <li>
         <span class="button-preview">
             <span class="key-button wide leftAlign">up arrow</span>
@@ -44,18 +43,6 @@
         </span>
     </li>
 </ul>
-
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
+</div>
 
 </asp:Content>

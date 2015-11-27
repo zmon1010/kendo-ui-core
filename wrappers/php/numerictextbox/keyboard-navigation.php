@@ -2,17 +2,20 @@
 require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
-<div class="demo-section">
-    <h2>Set Value</h2>
+<div class="demo-section k-content">
+    <h4>Set Value</h4>
 <?php
 $numeric = new \Kendo\UI\NumericTextBox('numerictextbox');
 
-$numeric->attr('style', 'width: 250px');
+$numeric->attr('style', 'width: 100%');
 $numeric->attr('accesskey', 'w');
 
 echo $numeric->render();
 ?>
-</div>
+ </div>
+
+<div class="box">
+<h4>Keyboard legend</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -24,8 +27,6 @@ echo $numeric->render();
             focuses the widget
         </span>
     </li>
-</ul>
-<ul class="keyboard-legend">
     <li>
         <span class="button-preview">
             <span class="key-button wide leftAlign">up arrow</span>
@@ -43,17 +44,6 @@ echo $numeric->render();
         </span>
     </li>
 </ul>
+</div>
 
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>
