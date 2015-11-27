@@ -499,7 +499,7 @@
                         formatter = kendo.spreadsheet.formatting.compile(cell.format);
                         cell.text = formatter(cell.value).text();
                     } else {
-                        cell.text = cell.value ? cell.value : messages.blanks;
+                        cell.text = cell.value ? cell.value.toString() : messages.blanks;
                     }
 
                     if (cell.dataType === "date") {

@@ -230,13 +230,27 @@
         equal(values[2].dataType, "date");
     });
 
-    test("filters the values", function() {
+    test("search in string values", function() {
         filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["aaa"] ]);
 
         filterMenu.getValues();
 
         //simulate search
         filterMenu.element.find("span.k-i-search").prev().val("bb").trigger("input");
+
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+
+        equal(values[0].hidden, true);
+        equal(values[1].hidden, false);
+    });
+
+    test("search in number values", function() {
+        filterMenu = createWithValues([ ["header"], [1], [2], [1] ]);
+
+        filterMenu.getValues();
+
+        //simulate search
+        filterMenu.element.find("span.k-i-search").prev().val("2").trigger("input");
 
         var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
