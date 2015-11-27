@@ -4,19 +4,6 @@
 
 <div id="example">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
-<script>
-    $("#toggle").click(function () {
-        var range = $("#spreadsheet").data("kendoSpreadsheet").activeSheet().range("C3:C11");
-        var enabled = range.enable();
-
-        if (enabled === null) {
-            enabled = true;
-        }
-
-        //Enable / disable specified range
-        range.enable(!enabled);
-    });
-</script>
 
 <div class="box wide">
     <div class="box-col">
@@ -28,6 +15,22 @@
     </ul>
     </div>
 </div>
+
+<script>
+$(function() {
+    $("#toggle").click(function () {
+        var range = $("#spreadsheet").data("kendoSpreadsheet").activeSheet().range("C3:C11");
+        var enabled = range.enable();
+
+        if (enabled === null) {
+            enabled = true;
+        }
+
+        //Enable / disable specified range
+        range.enable(!enabled);
+    });
+}):
+</script>
 
 <%:Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
