@@ -84,11 +84,11 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
         /// Disables the cell, if set to false.
         /// </summary>
-        /// <param name="value">The value that configures the disable state.</param>
+        /// <param name="value">The value that configures the enable.</param>
         public SpreadsheetSheetRowCellBuilder Enable(bool value)
         {
             container.Enable = value;
