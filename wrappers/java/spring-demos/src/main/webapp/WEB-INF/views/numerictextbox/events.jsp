@@ -4,11 +4,13 @@
 
 <demo:header />
 
-<div class="demo-section">
-	<kendo:numericTextBox name="numerictextbox" change="change" spin="spin"></kendo:numericTextBox>
+<div class="demo-section k-content">
+    <h4>Set value</h4>
+	<kendo:numericTextBox name="numerictextbox" change="change" spin="spin" style="width: 100%;"></kendo:numericTextBox>
 </div>
-<div class="demo-section">
-    <h3 class="title">Console log</h3>
+
+<div class="box">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 
@@ -22,13 +24,4 @@
     }
 </script>
 
-<style>
-    .demo-section {
-        width: 500px;
-        text-align: center;
-    }
-    .console {
-        margin: 0;
-    }
-</style>
 <demo:footer />
