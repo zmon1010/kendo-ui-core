@@ -155,14 +155,14 @@
             filterByValue:
                 "<div class='" + classNames.detailsSummary + "'>#= messages.filterByValue #</div>" +
                 "<div class='" + classNames.detailsContent + "'>" +
-                    //"<div class='k-textbox k-space-right'>" +
-                        //"<input placeholder='#= messages.search #' />" +
-                        //"<span class='k-icon k-font-icon k-i-search' />" +
-                    //"</div>" +
+                    "<div class='k-textbox k-space-right'>" +
+                        "<input placeholder='#= messages.search #' data-#=ns#bind='events: { input: filterValues }' />" +
+                        "<span class='k-icon k-font-icon k-i-search' />" +
+                    "</div>" +
                     "<div class='" + classNames.valuesTreeViewWrapper + "'>" +
                         "<div data-#=ns#role='treeview' " +
                             "data-#=ns#checkboxes='{ checkChildren: true }' "+
-                            "data-#=ns#bind='events: { check: valuesChange, select: valueSelect }' "+
+                            "data-#=ns#bind='source: valuesDataSource, events: { check: valuesChange, select: valueSelect }' "+
                             "/>" +
                     "</div>" +
                 "</div>",
@@ -216,6 +216,33 @@
             return result;
         }
 
+        function filter(dataSource, query) {
+            var hasVisibleChildren = false;
+            var data = dataSource instanceof kendo.data.HierarchicalDataSource && dataSource.data();
+
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                var text = item.text.toLowerCase();
+                var itemVisible =
+                query === true // parent already matches
+                || query === "" // query is empty
+                || text.indexOf(query) >= 0; // item text matches query
+
+                var anyVisibleChildren = filter(item.children, itemVisible || query); // pass true if parent matches
+
+                hasVisibleChildren = hasVisibleChildren || anyVisibleChildren || itemVisible;
+
+                item.hidden = !itemVisible && !anyVisibleChildren;
+            }
+
+            if (data) {
+                // re-apply filter on children
+                dataSource.filter({ field: "hidden", operator: "neq", value: true });
+            }
+
+            return hasVisibleChildren;
+        }
+
         var FilterMenuViewModel = kendo.spreadsheet.FilterMenuViewModel = kendo.data.ObservableObject.extend({
             valuesChange: function(e) {
                 var checked = function(item) { return item.checked && item.value; };
@@ -241,6 +268,12 @@
 
                 var node = e.sender.dataItem(e.node);
                 node.set("checked", !node.checked);
+            },
+            filterValues: function(e) {
+                var query = $(e.target).val().toLowerCase();
+                var dataSource = $(".k-treeview").getKendoTreeView().dataSource;
+
+                filter(dataSource, query);
             },
             validateCriteria: function(criteria) {
                 return criteria.filter(function(item) {
@@ -449,6 +482,7 @@
                 var column = this.options.column;
                 var columnRange = this.options.range.resize({ top: 1 }).column(column);
                 var sheet = this.options.range.sheet();
+                var dataSource;
 
                 columnRange.forEachCell(function(row, col, cell) {
                     var formatter;
@@ -503,12 +537,16 @@
                     return 0;
                 });
 
-                return [{
-                    text: "All",
-                    expanded: true,
-                    checked: true,
-                    items: values
-                }];
+                dataSource = new kendo.data.HierarchicalDataSource({
+                    data: [{
+                        text: "All",
+                        expanded: true,
+                        checked: true,
+                        items: values
+                    }]
+                });
+
+                this.viewModel.set("valuesDataSource", dataSource);
             },
 
             _setFilter: function() {
@@ -640,7 +678,7 @@
 
                 this.valuesTreeView = wrapper.find("[data-role=treeview]").data("kendoTreeView");
 
-                this.valuesTreeView.setDataSource(this.getValues());
+                this.getValues();
             },
 
             _actionButtons: function() {

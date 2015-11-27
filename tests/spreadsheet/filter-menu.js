@@ -132,7 +132,8 @@
     test("gets only distinct values", function() {
         filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["aaa"] ]);
 
-        var values = filterMenu.getValues()[0].items;
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values.length, 2, "distinct values are loaded");
 
@@ -143,7 +144,8 @@
     test("gets empty values", function() {
         filterMenu = createWithValues([ ["header"], [], ["A1"] ]);
 
-        var values = filterMenu.getValues()[0].items;
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values[0].text, "(Blanks)");
         equal(values[1].text, "A1");
@@ -153,7 +155,8 @@
         range = sheet.range("A1:A4").values([ ["header"], ["A1"], ["A2"], ["A3"] ]).wrap(true);
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: range });
 
-        var values = filterMenu.getValues()[0].items;
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         ok(!values[0].hasOwnProperty("wrap"));
         ok(!values[1].hasOwnProperty("wrap"));
@@ -162,7 +165,8 @@
     test("skips header row value", function() {
         filterMenu = createWithValues([ ["header"], ["A1"] ]);
 
-        var values = filterMenu.getValues()[0].items;
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values[0].text, "(Blanks)");
         equal(values[1].text, "A1");
@@ -173,7 +177,8 @@
 
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
 
-        var values = filterMenu.getValues()[0].items;
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values[0].dataType, "number");
     });
@@ -183,7 +188,8 @@
 
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
 
-        var values = filterMenu.getValues()[0].items;
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values[0].dataType, "date");
     });
@@ -193,7 +199,8 @@
 
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
 
-        var values = filterMenu.getValues()[0].items;
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values[0].dataType, "string");
     });
@@ -201,7 +208,8 @@
     test("recognizes blank dataType", function() {
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A2") });
 
-        var values = filterMenu.getValues()[0].items;
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values[0].dataType, "blank");
     });
@@ -214,11 +222,26 @@
 
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: sheet.range("A1:A4") });
 
-        var values = filterMenu.getValues()[0].items;
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values[0].dataType, "blank");
         equal(values[1].dataType, "number");
         equal(values[2].dataType, "date");
+    });
+
+    test("filters the values", function() {
+        filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["aaa"] ]);
+
+        filterMenu.getValues();
+
+        //simulate search
+        filterMenu.element.find("span.k-i-search").prev().val("bb").trigger("input");
+
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
+
+        equal(values[0].hidden, true);
+        equal(values[1].hidden, false);
     });
 
     function rangeWithCustomFilter(ref, values, criteria) {
@@ -243,7 +266,9 @@
     test("values that does not match existing custom filter rules appear as unchecked", function() {
         var filterMenuRange = rangeWithCustomFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], { operator: "contains", value: "B" });
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: filterMenuRange });
-        var values = filterMenu.getValues()[0].items;
+
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values[0].checked, false);
         equal(values[1].checked, true);
@@ -253,7 +278,9 @@
     test("values that does not match existing value filter rules appear as unchecked", function() {
         var filterMenuRange = rangeWithValuesFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], ["A", "B"] );
         filterMenu = new kendo.spreadsheet.FilterMenu({ range: filterMenuRange });
-        var values = filterMenu.getValues()[0].items;
+
+        filterMenu.getValues();
+        var values = filterMenu.viewModel.valuesDataSource.data()[0].items;
 
         equal(values[0].checked, true);
         equal(values[1].checked, true);
