@@ -2,21 +2,23 @@
 require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
-<div class="demo-section" style="width: 500px;">
-    <label for="start">Start time:</label>
+<div class="demo-section k-content">
+    <h4>Start time</h4>
 <?php
 $start = new \Kendo\UI\TimePicker('start');
 
 $start->value('8:00 AM')
-      ->change('startChange');
+      ->change('startChange')
+      ->attr('style', 'width: 100%');
 
 echo $start->render();
 ?>
-    <label for="end" style="margin-left:3em">End time:</label>
+    <h4 style="margin-top: 2em;">End time</h4>
 <?php
 $end = new \Kendo\UI\TimePicker('end');
 
 $end->value('8:30 AM');
+$end->attr('style', 'width: 100%');
 
 echo $end->render();
 ?>
@@ -53,26 +55,4 @@ echo $end->render();
     });
 </script>
 
-<style>
-    #example .k-timepicker {
-        vertical-align: middle;
-    }
-
-    #example h3 {
-        clear: both;
-    }
-
-    #example .code-sample {
-        width: 60%;
-        float:left;
-        margin-bottom: 20px;
-    }
-
-    #example .output {
-        width: 24%;
-        margin-left: 4%;
-        float:left;
-    }
-
-</style>
 <?php require_once '../include/footer.php'; ?>

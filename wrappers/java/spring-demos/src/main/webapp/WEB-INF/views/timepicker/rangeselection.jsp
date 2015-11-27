@@ -4,12 +4,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />
-<div class="demo-section" style="width:470px">
-    <label for="start">Start time:</label>
-	<kendo:timePicker name="start" value="${startValue}" min="${startMin}" max="${startMax}" change="startChange"></kendo:timePicker>
+  <div class="demo-section k-content">
+    <h4>Start time</h4>
+	<kendo:timePicker name="start" value="${startValue}" min="${startMin}" max="${startMax}" change="startChange" style="width: 100%;"></kendo:timePicker>
 	
-	<label for="end" style="margin-left:3em">End time:</label>
-	<kendo:timePicker name="end" value="${endValue}" min="${endMin}" max="${endMax}"></kendo:timePicker>
+	<h4 style="margin-top: 2em;">End time</h4>
+	<kendo:timePicker name="end" value="${endValue}" min="${endMin}" max="${endMax}" style="width: 100%;"></kendo:timePicker>
 </div>
 
 <script>
@@ -29,28 +29,5 @@
         }
     }
 </script>
-
-<style>
-    #example .k-timepicker {
-        vertical-align: middle;
-    }
-
-    #example h3 {
-        clear: both;
-    }
-
-    #example .code-sample {
-        width: 60%;
-        float:left;
-        margin-bottom: 20px;
-    }
-
-    #example .output {
-        width: 24%;
-        margin-left: 4%;
-        float:left;
-    }
-                
-</style>
 
 <demo:footer />
