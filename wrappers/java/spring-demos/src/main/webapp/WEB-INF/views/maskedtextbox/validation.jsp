@@ -4,22 +4,21 @@
 
 <demo:header />
 
-<div class="demo-section">
-    <form id="employeeForm" data-role="validator" novalidate="novalidate">
-        <h3>Employee</h3>
-        <ul>
-            <li>
-                <label for="FirstName">First Name:</label>
-                <input type="text" class="k-textbox" name="FirstName" id="FirstName" required="required" />
-            </li>
-            <li>
-                <label for="LastName">Last Name:</label>
-                <input type="text" class="k-textbox" name="LastName" id="LastName" required="required" />
-            </li>
-            <li>
-                <label for="PhoneNumber">Phone Number:</label>
+<div class="demo-section k-content">
+               <form id="employeeForm" data-role="validator" novalidate="novalidate">
+                   <ul id="fieldlist">
+                       <li>
+                           <label for="FirstName">First Name:</label>
+                           <input type="text" class="k-textbox" name="FirstName" id="FirstName" required="required" />
+                       </li>
+                       <li>
+                           <label for="LastName">Last Name:</label>
+                           <input type="text" class="k-textbox" name="LastName" id="LastName" required="required" />
+                       </li>
+                       <li>
+                           <label for="PhoneNumber">Phone Number:</label>
                 <kendo:maskedTextBox name="PhoneNumber" mask="(999) 000-0000" required="required" data-validmask-msg="Phone number is incomplete"></kendo:maskedTextBox>
-                <span data-for='PhoneNumber' class='k-invalid-msg'></span>
+              <span data-for='PhoneNumber' class='k-invalid-msg'></span>
             </li>
             <li class="actions">
                  <button type="button" data-role="button" data-sprite-css-class="k-icon k-i-tick" data-click='save'>Save</button>
@@ -60,35 +59,37 @@
 
 <style>
 
-    #employeeForm ul {
-        list-style-type: none;
-        margin: 0;
+    #fieldlist {
+        margin: 0 0 -2em;
         padding: 0;
     }
 
-    #employeeForm li {
-        margin-top: 10px;
+    #fieldlist li {
+        list-style: none;
+        padding-bottom: 2em;
     }
 
-    label {
-        display: inline-block;
-        padding-right: 3px;
-        width: 66px;
+    #fieldlist label {
+        display: block;
+        padding-bottom: 1em;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: #444;
+    }
+
+    #fieldlist input {
+        width: 100%;
     }
 
     span.k-tooltip {
-        margin-left: 6px;
+        margin-top: 5px;
+        line-height: 1.7em;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
     }
 
-    .demo-section {
-        padding: 30px;
-        width: 500px;
-    }
-
-    .actions {
-        padding-left: 72px;
-        padding-top: 10px;
-    }
 </style>
 
 <demo:footer />
