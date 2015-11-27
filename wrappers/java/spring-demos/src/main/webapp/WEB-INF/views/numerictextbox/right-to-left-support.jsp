@@ -4,22 +4,9 @@
 
 <demo:header />
 
-<div class="demo-section k-rtl">
-    <h2>Set Value</h2>
-    <kendo:numericTextBox name="numerictextbox"></kendo:numericTextBox>
+ <div class="demo-section k-content k-rtl">
+    <h4>Set Value</h4>
+    <kendo:numericTextBox name="numerictextbox" style="width: 100%;"></kendo:numericTextBox>
 </div>
-
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 
 <demo:footer />
