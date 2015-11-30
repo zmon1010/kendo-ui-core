@@ -21,7 +21,7 @@
     // available space would otherwise be left blank.
     //
     // It will be used for horizontal splitting too (will receive
-    // column widths and page width).
+    // column widths and page width, and produce a list of X coords).
     function distributeCoords(heights, pageHeight) {
         var curr = 0;
         var out = [];
@@ -66,7 +66,7 @@
 
     function doLayout(sheet, range, pageWidth, pageHeight) {
         // 1. obtain the list of cells that need to be printed, the
-        //    row heights and column widths.  Plage in each cell row,
+        //    row heights and column widths.  Place in each cell row,
         //    col (relative to range, i.e. first is 0,0), rowspan,
         //    colspan and merged.
         var cells = [];
