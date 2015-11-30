@@ -5,7 +5,6 @@
     "use strict";
 
     var spreadsheet = kendo.spreadsheet;
-    var SHEETREF = spreadsheet.SHEETREF;
     var CellRef = spreadsheet.CellRef;
     var drawing = kendo.drawing;
     var formatting = spreadsheet.formatting;
