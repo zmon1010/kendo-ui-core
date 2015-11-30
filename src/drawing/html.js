@@ -799,7 +799,7 @@
                   case 5:       // CSSFontFaceRule
                     var style  = r.style;
                     var family = splitProperty(getPropertyValue(style, "font-family"));
-                    var bold   = /^(400|bold)$/i.test(getPropertyValue(style, "font-weight"));
+                    var bold   = /^([56789]00|bold)$/i.test(getPropertyValue(style, "font-weight"));
                     var italic = "italic" == getPropertyValue(style, "font-style");
                     var src    = findFonts(r);
                     if (src.length > 0) {
