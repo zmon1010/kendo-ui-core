@@ -710,7 +710,8 @@
             "baselineMarkerSize" : 0,
             "width" : width + "px",
             "font-size" : (fontSize || 12) + "px",
-            "word-break" : (wrap === true) ? "break-all" : "normal"
+            "word-break" : (wrap === true) ? "break-all" : "normal",
+            "white-space" : (wrap === true) ? "normal" : "nowrap"
         };
 
         return kendo.util.measureText(text, styles, measureBox).height;
