@@ -588,6 +588,35 @@
         ], TOLERANCE);
     });
 
+    (function() {
+
+        module("dynamicSlope / zero values", {
+            setup: function() {
+                createFunnelChart({
+                    dynamicSlope:true,
+                    series: [{
+                        data: [7, 0, 1, 0, 0, 1]
+                    }]
+                });
+            },
+            teardown: function() {
+                destroyChart();
+            }
+        });
+
+        test("zero segment has max width", function() {
+            var points = chart.points[1].points;
+            equal(points[2].x, 800);
+            equal(points[3].x, 0);
+        });
+
+        test("zero segment has zero width if the next segment is also zero", function() {
+            var points = chart.points[3].points;
+            equal(points[2].x, 400);
+            equal(points[3].x, 400);
+        });
+    })();
+
     module("using label with template", {
         setup: function() {
             createFunnelChart({
