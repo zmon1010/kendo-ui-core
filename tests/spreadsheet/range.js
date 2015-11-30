@@ -17,6 +17,34 @@
         }
     });
 
+    test("reference parsing A1-style", function(){
+        var range = sheet.range("C5");
+        var ref = range._ref.toRangeRef();
+        equal(ref.topLeft.row, 4);
+        equal(ref.topLeft.col, 2);
+
+        var range = sheet.range("C5:B1");
+        var ref = range._ref.toRangeRef();
+        equal(ref.topLeft.row, 0);
+        equal(ref.topLeft.col, 1);
+        equal(ref.bottomRight.row, 4);
+        equal(ref.bottomRight.col, 2);
+    });
+
+    test("reference parsing R1C1-style", function(){
+        var range = sheet.range("R5C3");
+        var ref = range._ref.toRangeRef();
+        equal(ref.topLeft.row, 4);
+        equal(ref.topLeft.col, 2);
+
+        var range = sheet.range("R5C3:R1C2");
+        var ref = range._ref.toRangeRef();
+        equal(ref.topLeft.row, 0);
+        equal(ref.topLeft.col, 1);
+        equal(ref.bottomRight.row, 4);
+        equal(ref.bottomRight.col, 2);
+    });
+
     test("value sets the value of the range", function() {
         range.value("foo");
 

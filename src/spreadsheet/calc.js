@@ -75,10 +75,26 @@
             return new spreadsheet.UnionRef(name.split(/\s*,\s*/g).map(parseReference));
         }
         var m;
+        // Sheet!A1
         if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
             return new spreadsheet.CellRef(getrow(m[4]), getcol(m[3]), 0)
                 .setSheet(m[2], !!m[2]);
         }
+        // Sheet!R1C1
+        if ((m = /^(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+)$/i.exec(name))) {
+            return new spreadsheet.CellRef(getrow(m[3]), getrow(m[4]))
+                .setSheet(m[2], !!m[2]);
+        }
+        // Sheet1!R1C1:Sheet2!R2C2
+        if ((m = /^(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+):(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+)$/i.exec(name))) {
+            return new spreadsheet.RangeRef(
+                new spreadsheet.CellRef(getrow(m[3]), getrow(m[4]))
+                    .setSheet(m[2], !!m[2]),
+                new spreadsheet.CellRef(getrow(m[7]), getrow(m[8]))
+                    .setSheet(m[6], !!m[6])
+            ).setSheet(m[2], !!m[2]);
+        }
+        // Sheet!A1:B2, Sheet!$A$1:$B$2, Sheet1!A1:Sheet2:B2 etc.
         if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+):(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
             return new spreadsheet.RangeRef(
                 new spreadsheet.CellRef(getrow(m[4]), getcol(m[3]), 0)
@@ -87,6 +103,7 @@
                     .setSheet(m[6], !!m[6])
             ).setSheet(m[2], !!m[2]);
         }
+        // Sheet1!A:Sheet2!B
         if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+):(([A-Z0-9]+)!)?\$?([A-Z]+)$/i.exec(name))) {
             return new spreadsheet.RangeRef(
                 new spreadsheet.CellRef(-Infinity, getcol(m[3]), 0)
@@ -95,6 +112,7 @@
                     .setSheet(m[5], !!m[5])
             ).setSheet(m[2], !!m[2]);
         }
+        // Sheet1!5:Sheet2!6
         if ((m = /^(([A-Z0-9]+)!)?\$?([0-9]+):(([A-Z0-9]+)!)?\$?([0-9]+)$/i.exec(name))) {
             return new spreadsheet.RangeRef(
                 new spreadsheet.CellRef(getrow(m[3]), -Infinity, 0)
