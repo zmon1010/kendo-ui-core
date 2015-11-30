@@ -4,16 +4,14 @@
 
 <demo:header />
 
-<div class="demo-section" style="width:250px;text-align:center;">            
-    <h3 class="title">Select time
-    </h3>
-	<kendo:timePicker name="timepicker" change="change" open="open" close="close">
+ <div class="demo-section k-content">            
+    <h4>Select time</h4>
+	<kendo:timePicker name="timepicker" change="change" open="open" close="close" style="width: 100%;">
 	</kendo:timePicker>
-</div>
 
-<div class="demo-section">
-    <h3 class="title">Console log
-    </h3>
+</div>
+<div class="box">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 
@@ -31,6 +29,5 @@
         kendoConsole.log("Change :: " + kendo.toString(this.value(), 't'));
     }
 </script>
-<div class="console"></div>
 
 <demo:footer />

@@ -2,17 +2,22 @@
 require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
-<div class="demo-section" style="width: 250px;">
-    <label for="timepicker">Pick time:</label>
+ <div class="demo-section k-content">            
+    <h4>Select time</h4>
 <?php
 $timePicker = new \Kendo\UI\TimePicker('timepicker');
 
 $timePicker->change('onChange')
            ->close('onClose')
-           ->open('onOpen');
+           ->open('onOpen')
+           ->attr('style', 'width: 100%');
 
 echo $timePicker->render();
 ?>
+</div>
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
 </div>
 
 <script>
@@ -28,5 +33,4 @@ echo $timePicker->render();
         kendoConsole.log("Change :: " + kendo.toString(this.value(), 't'));
     }
 </script>
-<div class="console"></div>
 <?php require_once '../include/footer.php'; ?>
