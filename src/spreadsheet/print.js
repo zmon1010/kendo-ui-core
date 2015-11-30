@@ -271,12 +271,25 @@
                 val += "";
             }
             // XXX: missing alignment and wrapping
-            var tmp = new drawing.Text(val, [ cell.left + 2, cell.top + 2 ]);
-            if (f && f.color) {
-                tmp.fill(f.color);
-            }
+            var tmp = new drawing.Text(val, [ cell.left + 2, cell.top + 2 ], {
+                font: makeFontDef(cell),
+                fill: { color: f ? f.color : "#000" }
+            });
             clip.append(tmp);
         }
+    }
+
+    function makeFontDef(cell) {
+        var font = [];
+        if (cell.italic) {
+            font.push("italic");
+        }
+        if (cell.bold) {
+            font.push("bold");
+        }
+        font.push((cell.fontSize || 12) + "px");
+        font.push((cell.fontFamily || "Arial"));
+        return font.join(" ");
     }
 
     spreadsheet.Sheet.prototype.draw = function(range, options, callback) {
