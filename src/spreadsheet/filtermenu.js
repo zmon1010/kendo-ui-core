@@ -258,6 +258,7 @@
 
         var FilterMenuViewModel = kendo.spreadsheet.FilterMenuViewModel = kendo.data.ObservableObject.extend({
             valuesChange: function(e) {
+                var dataSource = e ? e.sender.dataSource : this.valuesDataSource;
                 var checked = function(item) {
                     return item.checked && item.value;
                 };
@@ -267,7 +268,7 @@
                 var unique = function(value, index, array) {
                     return array.lastIndexOf(value) === index;
                 };
-                var data = e.sender.dataSource.data();
+                var data = dataSource.data();
                 var values = data[0].children.data().toJSON();
                 var blanks = values.filter(function(item) {
                     return item.dataType === "blank";
@@ -294,7 +295,7 @@
             hasActiveSearch: false,
             appendToSearch: false,
             filterValues: function(e) {
-                var query = $(e.target).val().toLowerCase();
+                var query = typeof e == "string" ? e : $(e.target).val().toLowerCase();
                 var dataSource = this.valuesDataSource;
 
                 this.set("hasActiveSearch", !!query);
@@ -388,6 +389,130 @@
             return result;
         }
 
+        var FilterMenuController = kendo.spreadsheet.FilterMenuController = {
+            valuesTree: function(range, column) {
+                return [{
+                    text: "All",
+                    expanded: true,
+                    checked: true,
+                    items: this.values(range, column)
+                }];
+            },
+            values: function(range, column) {
+                var values = [];
+                var messages = FILTERMENU_MESSAGES;
+                var columnRange = range.resize({ top: 1 }).column(column);
+                var sheet = range.sheet();
+
+                columnRange.forEachCell(function(row, col, cell) {
+                    var formatter;
+
+                    if (cell.value === undefined) {
+                        cell.dataType = "blank";
+                    } else if (cell.format) {
+                        cell.dataType = kendo.spreadsheet.formatting.type(cell.value, cell.format);
+                    } else {
+                        cell.dataType = typeof cell.value;
+                    }
+
+                    if (cell.value !== null && cell.format) {
+                        formatter = kendo.spreadsheet.formatting.compile(cell.format);
+                        cell.text = formatter(cell.value).text();
+                    } else {
+                        cell.text = cell.value ? cell.value : messages.blanks;
+                    }
+
+                    if (cell.dataType === "date") {
+                        cell.value = kendo.spreadsheet.numberToDate(cell.value);
+                    }
+
+                    if (cell.hasOwnProperty("wrap")) {
+                        delete cell.wrap;
+                    }
+
+                    cell.checked = !sheet.isHiddenRow(row);
+
+                    values.push(cell);
+                });
+
+                values = distinctValues(values);
+
+                values.sort(function(a, b) {
+                    if (a.dataType === b.dataType) {
+                        return 0;
+                    }
+
+                    if (a.dataType === "blank" || b.dataType === "blank") {
+                        return a.dataType === "blank" ? -1 : 1;
+                    }
+
+                    if (a.dataType === "number" || b.dataType === "number") {
+                        return a.dataType === "number" ? -1 : 1;
+                    }
+
+                    if (a.dataType === "date" || b.dataType === "date") {
+                        return a.dataType === "date" ? -1 : 1;
+                    }
+
+                    return 0;
+                });
+
+                return values;
+            },
+
+            filter: function(column, sheet, operators) {
+                var allFilters = sheet.filter();
+                var columnFilters;
+                var json;
+                var criterion;
+                var type;
+                var operator;
+
+                if (allFilters) {
+                    columnFilters = allFilters.columns.filter(function(item) {
+                        return item.index === column;
+                    })[0];
+                }
+
+                if (columnFilters) {
+                    json = columnFilters.filter.toJSON();
+
+                    if (json.filter === "custom") {
+                        criterion = json.criteria.pop();
+
+                        if (typeof criterion.operator === "string") {
+                            type = criterion.value instanceof Date ? "date" : typeof criterion.value;
+                            operator = criterion.operator;
+                            json.criteria.push({
+                                operator: {
+                                    text: operators[type][operator],
+                                    type: type,
+                                    value: operator,
+                                    unique: type + "_" + operator
+                                },
+                                value: criterion.value
+                            });
+                        } else {
+                            json.criteria.push({
+                                operator: {
+                                    text: operators[criterion.type][criterion.operator],
+                                    type: criterion.type,
+                                    value: criterion.operator,
+                                    unique: criterion.type + "_" + criterion.operator
+                                },
+                                value: criterion.value
+                            });
+                        }
+                    }
+                }
+
+                return {
+                    filter: json,
+                    type: type
+                };
+            }
+        };
+
         var FilterMenu = Widget.extend({
             init: function(options) {
                 var element = $("<div />", { "class": FilterMenu.classNames.wrapper }).appendTo(document.body);
@@ -400,7 +525,7 @@
                     apply: this.apply.bind(this)
                 });
 
-                this._setFilter();
+                this._filterInit();
                 this._popup();
                 this._sort();
                 this._filterByCondition();
@@ -503,128 +628,17 @@
                 this.trigger("action", $.extend({ }, options));
             },
 
-            getValues: function() {
-                var values = [];
-                var messages = FILTERMENU_MESSAGES;
-                var column = this.options.column;
-                var columnRange = this.options.range.resize({ top: 1 }).column(column);
-                var sheet = this.options.range.sheet();
-                var dataSource;
-
-                columnRange.forEachCell(function(row, col, cell) {
-                    var formatter;
-
-                    if (cell.value === undefined) {
-                        cell.dataType = "blank";
-                    } else if (cell.format) {
-                        cell.dataType = kendo.spreadsheet.formatting.type(cell.value, cell.format);
-                    } else {
-                        cell.dataType = typeof cell.value;
-                    }
-
-                    if (cell.value !== null && cell.format) {
-                        formatter = kendo.spreadsheet.formatting.compile(cell.format);
-                        cell.text = formatter(cell.value).text();
-                    } else {
-                        cell.text = cell.value ? cell.value.toString() : messages.blanks;
-                    }
-
-                    if (cell.dataType === "date") {
-                        cell.value = kendo.spreadsheet.numberToDate(cell.value);
-                    }
-
-                    if (cell.hasOwnProperty("wrap")) {
-                        delete cell.wrap;
-                    }
-
-                    cell.checked = !sheet.isHiddenRow(row);
-
-                    values.push(cell);
-                });
-
-                values = distinctValues(values);
-
-                values.sort(function(a, b) {
-                    if (a.dataType === b.dataType) {
-                        return 0;
-                    }
-
-                    if (a.dataType === "blank" || b.dataType === "blank") {
-                        return a.dataType === "blank" ? -1 : 1;
-                    }
-
-                    if (a.dataType === "number" || b.dataType === "number") {
-                        return a.dataType === "number" ? -1 : 1;
-                    }
-
-                    if (a.dataType === "date" || b.dataType === "date") {
-                        return a.dataType === "date" ? -1 : 1;
-                    }
-
-                    return 0;
-                });
-
-                dataSource = new kendo.data.HierarchicalDataSource({
-                    data: [{
-                        text: "All",
-                        expanded: true,
-                        checked: true,
-                        items: values
-                    }]
-                });
-
-                this.viewModel.set("valuesDataSource", dataSource);
-            },
-
-            _setFilter: function() {
+            _filterInit: function() {
                 var column = this.options.column;
                 var sheet = this.options.range.sheet();
-                var filterObject = sheet.filter();
-                var serializedFilter;
-                var criterion;
-                var type;
-                var operator;
+                var operators = this.options.operators;
+                var filterInfo = FilterMenuController.filter(column, sheet, operators);
+                var filterProps = filterInfo.filter;
 
-                if (filterObject) {
-                    filterObject = filterObject.columns.filter(function(item) {
-                        return item.index === column;
-                    })[0];
-                }
-
-                if (filterObject) {
-                    serializedFilter = filterObject.filter.toJSON();
-
-                    if (serializedFilter.filter === "custom") {
-                        criterion = serializedFilter.criteria.pop();
-
-                        if (typeof criterion.operator === "string") {
-                            type = criterion.value instanceof Date ? "date" : typeof criterion.value;
-                            operator = criterion.operator;
-                            serializedFilter.criteria.push({
-                                operator: {
-                                    text: this.options.operators[type][operator],
-                                    type: type,
-                                    value: operator,
-                                    unique: type + "_" + operator
-                                },
-                                value: criterion.value
-                            });
-                        } else {
-                            serializedFilter.criteria.push({
-                                operator: {
-                                    text: this.options.operators[criterion.type][criterion.operator],
-                                    type: criterion.type,
-                                    value: criterion.operator,
-                                    unique: criterion.type + "_" + criterion.operator
-                                },
-                                value: criterion.value
-                            });
-                        }
-                    }
-
-                    this.viewModel.set("active", serializedFilter.filter);
-                    this.viewModel.set(serializedFilter.filter + "Filter", serializedFilter);
-                    this.viewModel.set("operatorType", type);
+                if (filterProps) {
+                    this.viewModel.set("active", filterProps.filter);
+                    this.viewModel.set(filterProps.filter + "Filter", filterProps);
+                    this.viewModel.set("operatorType", filterInfo.type);
                 } else {
                     this.viewModel.reset();
                 }
@@ -706,7 +720,9 @@
 
                 this.valuesTreeView = wrapper.find("[data-role=treeview]").data("kendoTreeView");
 
-                this.getValues();
+                var values = FilterMenuController.valuesTree(this.options.range, this.options.column);
+
+                this.valuesTreeView.setDataSource(values);
             },
 
             _actionButtons: function() {

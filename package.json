@@ -91,7 +91,7 @@
         "nonew": true,
         "globals": {
             "JSON": true,
-            "QUnit": true, "test": true, "asyncTest": true, "module": true, "start": true, "equal": true, "deepEqual": true, "ok": true, "stubMethod": true, "arrayClose": true, "contains": true,
+            "QUnit": true, "test": true, "asyncTest": true, "module": true, "start": true, "equal": true, "deepEqual": true, "ok": true, "stubMethod": true, "arrayClose": true, "contains": true, "strictEqual": true,
             "kendo": true,
             "define": true,
             "angular": true,
