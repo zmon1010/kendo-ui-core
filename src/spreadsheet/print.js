@@ -271,7 +271,7 @@
             }
             g.append(
                 new drawing.Rect(r2d2)
-                    .fill(cell.background || "#000")
+                    .fill(cell.background || "#fff")
                     .stroke(null)
             );
         }
