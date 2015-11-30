@@ -1040,6 +1040,9 @@
                     if (!ref) {
                         kendo.logToConsole("Dropping filter for sheet '" + json.name + "' due to missing ref");
                     } else {
+						if (json.filter.columns === undefined) {
+								json.filter.columns = [];
+						}
                         this._filter = {
                             ref: this._ref(ref),
                             columns: json.filter.columns.map(function(column) {
