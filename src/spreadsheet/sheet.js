@@ -1037,15 +1037,14 @@
 
                 if (json.filter) {
                     var ref = json.filter.ref;
+                    var columns = json.filter.columns  === undefined ? [] : json.filter.columns;
+
                     if (!ref) {
                         kendo.logToConsole("Dropping filter for sheet '" + json.name + "' due to missing ref");
                     } else {
-						if (json.filter.columns === undefined) {
-								json.filter.columns = [];
-						}
                         this._filter = {
                             ref: this._ref(ref),
-                            columns: json.filter.columns.map(function(column) {
+                            columns: columns.map(function(column) {
                                 return {
                                     index: column.index,
                                     filter: kendo.spreadsheet.Filter.create(column)
