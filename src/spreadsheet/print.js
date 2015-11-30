@@ -192,10 +192,21 @@
             var right = left + options.pageWidth;
             var top = row * options.pageHeight;
             var bottom = top + options.pageHeight;
+            var endbottom = 0, endright = 0;
+
+            // XXX: this can be optimized - discard cells that won't
+            // be used again, and don't walk cells that stand no
+            // chance to fit.
             var cells = layout.cells.filter(function(cell){
-                return !(cell.right <= left || cell.left >= right ||
-                         cell.bottom <= top || cell.top >= bottom);
+                if (cell.right <= left || cell.left >= right ||
+                    cell.bottom <= top || cell.top >= bottom) {
+                    return false;
+                }
+                endbottom = Math.max(cell.bottom, endbottom);
+                endright = Math.max(cell.right, endright);
+                return true;
             });
+
             if (cells.length > 0) {
                 var page = new drawing.Group();
                 group.append(page);
@@ -205,26 +216,65 @@
                 var content = new drawing.Group();
                 page.append(content);
                 content.transform(geo.Matrix.translate(-left, -top));
+
+                if (options.guidelines) {
+                    var prev = null;
+                    layout.xs.forEach(function(x){
+                        x = Math.min(x, endright);
+                        if (x !== prev && x >= left && x <= right) {
+                            prev = x;
+                            content.append(
+                                new drawing.Path()
+                                    .moveTo(x, top)
+                                    .lineTo(x, endbottom)
+                                    .close()
+                                    .stroke("#999", 0.2)
+                            );
+                        }
+                    });
+                    var prev = null;
+                    layout.ys.forEach(function(y){
+                        y = Math.min(y, endbottom);
+                        if (y !== prev && y >= top && y <= bottom) {
+                            prev = y;
+                            content.append(
+                                new drawing.Path()
+                                    .moveTo(left, y)
+                                    .lineTo(endright, y)
+                                    .close()
+                                    .stroke("#999", 0.2)
+                            );
+                        }
+                    });
+                }
+
                 cells.forEach(function(cell){
-                    drawCell(cell, content);
+                    drawCell(cell, content, options);
                 });
             }
         }
     }
 
-    function drawCell(cell, group) {
+    function drawCell(cell, group, options) {
         var g = new drawing.Group();
         group.append(g);
         var rect = new geo.Rect([ cell.left, cell.top ],
                                 [ cell.width, cell.height ]);
-        if (cell.background) {
+        if (cell.background || cell.merged) {
+            var r2d2 = rect;
+            if (options.guidelines) {
+                r2d2 = rect.clone();
+                r2d2.origin.x += 0.1;
+                r2d2.origin.y += 0.1;
+                r2d2.size.width -= 0.2;
+                r2d2.size.height -= 0.2;
+            }
             g.append(
-                new drawing.Rect(rect)
-                    .fill(cell.background)
+                new drawing.Rect(r2d2)
+                    .fill(cell.background || "#000")
                     .stroke(null)
             );
         }
-        g.append(new drawing.Rect(rect, { stroke: { width: 0.01, color: "#888" } }));
         if (cell.borderLeft) {
             g.append(
                 new drawing.Path({ stroke: cell.borderLeft })
@@ -307,8 +357,9 @@
         }
         var layout = doLayout(this, this._ref(range), pageWidth, pageHeight);
         drawLayout(layout, group, {
-            pageWidth: pageWidth,
-            pageHeight: pageHeight
+            pageWidth  : pageWidth,
+            pageHeight : pageHeight,
+            guidelines : options.guidelines != null ? options.guidelines : true
         });
         callback(group);
     };
