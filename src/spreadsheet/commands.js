@@ -506,7 +506,7 @@
             var sheet = range.sheet();
             var activeCell = sheet.activeCell();
             var col = activeCell.topLeft.col;
-            var ascending = this.options.asc;
+            var ascending = this.options.value === "asc" ? true : false;
 
             this._state = sheet.getState();
 

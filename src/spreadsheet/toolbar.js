@@ -956,10 +956,10 @@
                 dataValueField: "value"
             });
             ddl.setDataSource([
-                // { value: 1, sheet: true, asc: true,  text: MESSAGES.sortButtons.sortSheetAsc,  iconClass: "sort-asc" },
-                // { value: 2, sheet: true, asc: false, text: MESSAGES.sortButtons.sortSheetDesc,  , iconClass: "sort-desc" },
-                { value: 1, sheet: false, asc: true,  text: MESSAGES.sortButtons.sortRangeAsc, iconClass: "sort-asc" },
-                { value: 2, sheet: false, asc: false, text: MESSAGES.sortButtons.sortRangeDesc, iconClass: "sort-desc" }
+                // { value: "asc", sheet: true, asc: true,  text: MESSAGES.sortButtons.sortSheetAsc,  iconClass: "sort-asc" },
+                // { value: "desc", sheet: true, asc: false, text: MESSAGES.sortButtons.sortSheetDesc,  , iconClass: "sort-desc" },
+                { value: "asc", sheet: false, text: MESSAGES.sortButtons.sortRangeAsc, iconClass: "sort-asc" },
+                { value: "desc", sheet: false, text: MESSAGES.sortButtons.sortRangeDesc, iconClass: "sort-desc" }
             ]);
 
             this.element.data({
@@ -975,7 +975,7 @@
                 this.toolbar.action({
                     command: "SortCommand",
                     options: {
-                        asc: dataItem.asc,
+                        value: dataItem.value,
                         sheet: dataItem.sheet
                     }
                 });

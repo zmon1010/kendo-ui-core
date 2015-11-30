@@ -651,10 +651,10 @@
                 this.menu = ul.kendoMenu({
                     orientation: "vertical",
                     select: function(e) {
-                        var dir = $(e.item).data("dir") === "asc";
+                        var dir = $(e.item).data("dir");
                         var range = this.options.range.resize({ top: 1 });
                         var options = {
-                            asc: dir,
+                            value: dir,
                             sheet: false,
                             operatingRange: range
                         };

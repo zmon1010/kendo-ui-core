@@ -822,7 +822,7 @@
     var sortCommand = $.proxy(command, this, kendo.spreadsheet.SortCommand);
 
     test("Sorts range ascending", function() {
-        var command = sortCommand({ sheet: false, asc: true });
+        var command = sortCommand({ sheet: false, value: "asc" });
 
         sheet.range("A1:B3").values([
             [ 3, "a" ],
@@ -849,7 +849,7 @@
     });
 
     test("Sorts range descending", function() {
-        var command = sortCommand({ sheet: false, asc: false });
+        var command = sortCommand({ sheet: false, value: "desc" });
 
         sheet.range("A1:B3").values([
             [ 2, "a" ],
@@ -876,7 +876,7 @@
     });
 
     test("Sorts sheet ascending", function() {
-        var command = sortCommand({ sheet: true, asc: true });
+        var command = sortCommand({ sheet: true, value: "asc" });
 
         sheet.range("A1:B3").values([
             [ 3, "a" ],
@@ -903,7 +903,7 @@
     });
 
     test("Sorts sheet descending", function() {
-        var command = sortCommand({ sheet: true, asc: false });
+        var command = sortCommand({ sheet: true, value: "desc" });
 
         sheet.range("A1:B3").values([
             [ 1, "a" ],
