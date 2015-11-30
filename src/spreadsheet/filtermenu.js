@@ -160,7 +160,7 @@
                         "<input placeholder='#= messages.search #' data-#=ns#bind='events: { input: filterValues }' />" +
                         "<span class='k-icon k-font-icon k-i-search' />" +
                     "</div>" +
-                    "<div data-#=ns#bind='visible: hasActiveSearch'><label><input type='checkbox' data-#=ns#bind='checked: appendToSearch' /> #= messages.addToCurrent #</label></div>" +
+                    "<div data-#=ns#bind='visible: hasActiveSearch'><input class='k-checkbox' type='checkbox' data-#=ns#bind='checked: appendToSearch' id='_#=guid#' /><label class='k-checkbox-label' for='_#=guid#'>#= messages.addToCurrent #</label></div>" +
                     "<div class='" + classNames.valuesTreeViewWrapper + "'>" +
                         "<div data-#=ns#role='treeview' " +
                             "data-#=ns#checkboxes='{ checkChildren: true }' "+
@@ -672,6 +672,7 @@
                 var compiledTemplate = kendo.template(template);
                 var wrapper = $("<div class='" + className + "'/>").html(compiledTemplate({
                     messages: FILTERMENU_MESSAGES,
+                    guid: kendo.guid(),
                     ns: kendo.ns
                 }));
 
