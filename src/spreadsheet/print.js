@@ -14,6 +14,37 @@
     /* jshint eqnull:true, laxbreak:true, shadow:true, -W054 */
     /* jshint latedef: nofunc */
 
+    // This takes a list of row heights and the page height, and
+    // produces a list of Y coordinates for each row, such that rows
+    // are not truncated across pages.  However, the algorithm will
+    // decide to truncate a row in the event that more than 0.2 of the
+    // available space would otherwise be left blank.
+    //
+    // It will be used for horizontal splitting too (will receive
+    // column widths and page width).
+    function distributeCoords(heights, pageHeight) {
+        var curr = 0;
+        var out = [];
+        var threshold = 0.2 * pageHeight;
+        var bottom = pageHeight;
+        heights.forEach(function(h){
+            if (curr + h > bottom) {
+                if (bottom - curr < threshold) {
+                    // align to next page
+                    curr = pageHeight * Math.ceil(curr / pageHeight);
+                }
+                // update bottom anyway; don't just add pageHeight, as
+                // we might need multiple pages for the pathological
+                // case of one row higher than the page.
+                bottom += pageHeight * Math.ceil(h / pageHeight);
+            }
+            out.push(curr);
+            curr += h;
+        });
+        out.push(curr);
+        return out;
+    }
+
     function getMergedCells(sheet, range) {
         var grid = sheet._grid;
         var primary = {};
@@ -33,72 +64,97 @@
         return { primary: primary, secondary: secondary };
     }
 
-    function makeCellLayout(sheet, range) {
-        var mergedCells = getMergedCells(sheet, range);
-        var currentY = 0;
-        var currentX = 0;
-        var prevWidth = 0;
-        var topRow = null;
+    function doLayout(sheet, range, pageWidth, pageHeight) {
+        // 1. obtain the list of cells that need to be printed, the
+        //    row heights and column widths.  Plage in each cell row,
+        //    col (relative to range, i.e. first is 0,0), rowspan,
+        //    colspan and merged.
         var cells = [];
-        var boxWidth = 0, boxHeight = 0;
+        var rowHeights = [];
+        var colWidths = [];
+        var mergedCells = getMergedCells(sheet, range);
         sheet.forEach(range, function(row, col, cell){
-            if (sheet.isHiddenColumn(col)) {
+            var relrow = row - range.topLeft.row;
+            var relcol = col - range.topLeft.col;
+            if (!relcol) {
+                rowHeights.push(sheet.rowHeight(row));
+            }
+            if (!relrow) {
+                colWidths.push(sheet.columnWidth(col));
+            }
+            if (sheet.isHiddenColumn(col)
+                || sheet.isHiddenRow(row)
+                || !shouldDrawCell(cell)) {
                 return;
             }
             var id = new CellRef(row, col).print();
-            var isSecondary = mergedCells.secondary[id];
-            var isVisible = !isSecondary && shouldDrawCell(row, cell);
-            if (isVisible) {
-                cells.push(cell);
+            if (mergedCells.secondary[id]) {
+                return;
             }
-            if (topRow == null) {
-                topRow = row;
-            }
-            if (row == topRow) {
-                currentY = 0;
-                currentX += prevWidth;
-            }
-
-            prevWidth = cell.width = sheet.columnWidth(col);
-            var height = cell.height = sheet.rowHeight(row);
             var m = mergedCells.primary[id];
             if (m) {
-                var rowspan = m.height();
-                var colspan = m.width();
-                for (var i = 1; i < colspan; ++i) {
-                    cell.width += sheet.columnWidth(col + i);
-                }
-                for (var i = 1; i < rowspan; ++i) {
-                    cell.height += sheet.rowHeight(row + i);
-                }
+                cell.merged = true;
+                cell.rowspan = m.height();
+                cell.colspan = m.width();
+            } else {
+                cell.rowspan = 1;
+                cell.colspan = 1;
             }
-
-            if (isVisible) {
-                cell.left = currentX;
-                cell.top = currentY;
-                cell.right = currentX + cell.width;
-                cell.bottom = currentY + cell.height;
-                boxWidth = Math.max(boxWidth, cell.right);
-                boxHeight = Math.max(boxHeight, cell.bottom);
-            }
-            currentY += height;
+            cell.row = relrow;
+            cell.col = relcol;
+            cells.push(cell);
         });
 
-        function shouldDrawCell(row, cell) {
-            return !sheet.isHiddenRow(row)  &&
-                (cell.value != null         ||
-                 cell.background != null    ||
-                 cell.borderTop != null     ||
-                 cell.borderRight != null   ||
-                 cell.borderBottom != null  ||
-                 cell.borderLeft != null);
-        }
+        // 2. calculate top, left, bottom, right, width and height for
+        //    printable cells.  Merged cells will be split across
+        //    pages, unless the first row/col is shifted to next page.
+        //    boxWidth and boxHeight get the complete drawing size.
+        //    Note that cell coordinates keep increasing, i.e. they
+        //    are not reset to zero for a new page (in fact, we don't
+        //    even care about page dimensions here).  The print
+        //    function translates the view to current page.
+        var ys = distributeCoords(rowHeights, pageHeight);
+        var xs = distributeCoords(colWidths, pageWidth);
+        var boxWidth = 0;
+        var boxHeight = 0;
+        cells.forEach(function(cell){
+            cell.left = xs[cell.col];
+            cell.top = ys[cell.row];
+            if (cell.merged) {
+                cell.right = orlast(xs, cell.col + cell.colspan);
+                cell.bottom = orlast(ys, cell.row + cell.rowspan);
+                cell.width = cell.right - cell.left;
+                cell.height = cell.bottom - cell.top;
+            } else {
+                cell.width = colWidths[cell.col];
+                cell.height = rowHeights[cell.row];
+                cell.bottom = cell.top + cell.height;
+                cell.right = cell.left + cell.width;
+            }
+            boxWidth = Math.max(boxWidth, cell.right);
+            boxHeight = Math.max(boxHeight, cell.bottom);
+        });
 
         return {
             width  : boxWidth,
             height : boxHeight,
-            cells  : cells.sort(normalOrder)
+            cells  : cells.sort(normalOrder),
+            xs     : xs,
+            ys     : ys
         };
+    }
+
+    function orlast(a, i) {
+        return i < a.length ? a[i] : a[a.length - 1];
+    }
+
+    function shouldDrawCell(cell) {
+        return cell.value != null
+            || cell.background != null
+            || cell.borderTop != null
+            || cell.borderRight != null
+            || cell.borderBottom != null
+            || cell.borderLeft != null;
     }
 
     function normalOrder(a, b) {
@@ -138,8 +194,8 @@
             var top = row * options.pageHeight;
             var bottom = top + options.pageHeight;
             var cells = layout.cells.filter(function(cell){
-                return !(cell.right <= left || cell.left > right ||
-                         cell.bottom <= top || cell.top > bottom);
+                return !(cell.right <= left || cell.left >= right ||
+                         cell.bottom <= top || cell.top >= bottom);
             });
             if (cells.length > 0) {
                 var page = new drawing.Group();
@@ -224,7 +280,6 @@
     }
 
     spreadsheet.Sheet.prototype.draw = function(range, options, callback) {
-        var layout = makeCellLayout(this, this._ref(range), 800, 600);
         var group = new drawing.Group();
         var paper = kendo.pdf.getPaperOptions(options);
         group.options.set("pdf", {
@@ -238,6 +293,7 @@
             pageWidth -= paper.margin.left + paper.margin.right;
             pageHeight -= paper.margin.top + paper.margin.bottom;
         }
+        var layout = doLayout(this, this._ref(range), pageWidth, pageHeight);
         drawLayout(layout, group, {
             pageWidth: pageWidth,
             pageHeight: pageHeight
