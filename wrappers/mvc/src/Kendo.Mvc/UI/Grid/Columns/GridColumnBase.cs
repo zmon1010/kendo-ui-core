@@ -78,6 +78,24 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        private IDictionary<string, object> PrepareAttributes(IDictionary<string, object> attributes)
+        {
+            var resule = new Dictionary<string, object>();
+
+            attributes.Each(attr =>
+            {
+                var value = HttpUtility.HtmlAttributeEncode(attr.Value.ToString())
+                    .Replace("&#32;", " ")
+                    .Replace("&#39;", "'");
+
+                value = HttpUtility.HtmlDecode(value);
+
+                resule[HttpUtility.HtmlAttributeEncode(attr.Key)] = value;
+            });
+
+            return resule;
+        }
+
         protected override void Serialize(IDictionary<string, object> json)
         {
             if (Title.HasValue())
@@ -86,33 +104,13 @@ namespace Kendo.Mvc.UI
             }
 
             if (HtmlAttributes.Any())
-            {
-                var attributes = new Dictionary<string, object>();
-
-                var hasAntiXss = HttpEncoder.Current != null && HttpEncoder.Current.GetType().ToString().Contains("AntiXssEncoder");
-
-                HtmlAttributes.Each(attr => {
-                    var value = HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
-                    if (hasAntiXss)
-                    {
-                        value = value.Replace("&#32;", " ");
-                    }
-                    attributes[HttpUtility.HtmlAttributeEncode(attr.Key)] = value;
-                });
-
-                json["attributes"] = attributes;
+            {                
+                json["attributes"] = PrepareAttributes(HtmlAttributes);
             }
 
             if (FooterHtmlAttributes.Any())
-            {
-                var attributes = new Dictionary<string, object>();
-
-                FooterHtmlAttributes.Each(attr =>
-                {
-                    attributes[HttpUtility.HtmlAttributeEncode(attr.Key)] = HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
-                });
-
-                json["footerAttributes"] = attributes;
+            {               
+                json["footerAttributes"] = PrepareAttributes(FooterHtmlAttributes);
             }
 
             if (HeaderHtmlAttributes.Any())
