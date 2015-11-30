@@ -521,7 +521,6 @@
 .km-wp {
     .km-list {
         fieldset,
-        .km-icon-label,
         .km-label-above {
             input[type=password],
             input[type=search], 
@@ -540,11 +539,17 @@
             select:not([multiple]), 
             .k-dropdown-wrap, 
             textarea  {
-                //color: @wp-main-text-light;
-                //background: @wp-third-text-dark;
-                background: pink;
+                color: @wp-main-text-light;
+                background: @wp-second-background-light;
             }
         }
-
     }
+}
+
+.km-wp input.km-radio:checked+.km-radio-label:after {
+    background: @wp-main-text-dark;
+}
+
+.km-wp-light input.km-radio:checked+.km-radio-label:after {
+    background: @wp-main-text-light;
 }
