@@ -489,6 +489,31 @@
         ok(sheet._filter.columns[2].filter instanceof kendo.spreadsheet.TopFilter);
     });
 
+    test("fromJSON applies new filter state", function() {
+        sheet.fromJSON({
+            rows: [
+                {
+                    cells: [
+                        { value: 1 }
+                    ]
+                },
+                {
+                    cells: [
+                        { value: 2 }
+                    ]
+                }
+            ],
+            filter: {
+                ref: "A1:A2",
+                columns: [
+                    { index: 0, filter: "value", values: [1] }
+                ]
+            }
+        });
+
+        equal(sheet.rowHeight(1), 0);
+    });
+
     test("fromJSON skips invalid filter state", function() {
         sheet.fromJSON({
             filter: { }
