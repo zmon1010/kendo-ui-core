@@ -5,11 +5,11 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="k-rtl">
-            
-    <label for="timepicker">Pick time:</label>
+ <div class="demo-section k-content k-rtl">
+    <h4>Select time</h4>
     <%= Html.Kendo().TimePicker()
             .Name("timepicker")
+            .HtmlAttributes(new { style = "width: 100%" })
     %>
 
 </div>
