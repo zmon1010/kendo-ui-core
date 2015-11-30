@@ -546,6 +546,9 @@
         },
 
         forEach: function(ref, callback) {
+            if (!(ref instanceof RangeRef)) {
+                ref = this._ref(ref);
+            }
             var topLeft = this._grid.normalize(ref.topLeft);
             var bottomRight = this._grid.normalize(ref.bottomRight);
 
