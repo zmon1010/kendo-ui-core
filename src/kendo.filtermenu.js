@@ -204,7 +204,7 @@ var __meta__ = { // jshint ignore:line
             result = [];
             for (idx = 0, length = items.length; idx < length; idx++) {
                 item = items[idx];
-                text = item.text || item.value || item;
+                text = item.text !== "" ? item.text || item.value || item : item.text;
                 value = item.value == null ? (item.text || item) : item.value;
 
                 result[idx] = { text: text, value: value };

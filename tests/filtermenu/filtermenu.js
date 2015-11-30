@@ -817,6 +817,13 @@
         strictEqual(filterMenu.form.find("select").eq(1).data("kendoDropDownList").value(), "");
     });
 
+    test("values with text as empty string are displayed as select if set", function() {
+        filterMenu = setup(dom, {dataSource: dataSource, values: [ { value: "", text: "" } ]});
+
+        equal(filterMenu.form.find("select").length, 5);
+        strictEqual(filterMenu.form.find("select").eq(1).data("kendoDropDownList").text(), "");
+    });
+
     test("values as plain array", function() {
         filterMenu = setup(dom, {dataSource: dataSource, values: [ "foo", "bar" ]});
 
