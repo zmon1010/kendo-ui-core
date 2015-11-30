@@ -21,7 +21,7 @@
                 },
                 keyCode: key
             });
-        }
+        };
     }
 
     var handleBackspace = handleKey(kendo.keys.BACKSPACE);
@@ -243,6 +243,15 @@
         handleBackspace();
 
         equal(editor.value(), '<p></p><p></p>');
+    });
+
+    test("unwraps empty list", function() {
+        var range = createRangeFromText(editor, '<ul><li>||</li></ul>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '');
     });
 
     //test("does not remove table cells", function() {

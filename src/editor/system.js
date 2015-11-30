@@ -271,11 +271,21 @@ var BackspaceHandler = Class.extend({
 
         // unwrap li element
         if (li && editorNS.RangeUtils.isStartOf(range, li)) {
-            var formatter = new editorNS.GreedyBlockFormatter([ { tags: ["p"] } ]);
             var child = li.firstChild;
-            formatter.editor = this.editor;
-            formatter.apply(li.childNodes);
-            range.setStart(child, 0);
+            if (!child) {
+                li.innerHTML = editorNS.emptyElementContent;
+                child = li.firstChild;
+            }
+
+            var formatter = new editorNS.ListFormatter(li.parentNode.tagName, "p");
+            formatter.remove(li.childNodes);
+
+            if (dom.insignificant(child)) {
+                range.setStartBefore(child);
+            } else {
+                range.setStart(child, 0);
+            }
+
             this.editor.selectRange(range);
 
             return true;
