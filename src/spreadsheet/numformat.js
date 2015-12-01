@@ -748,7 +748,7 @@
         },
         textAndColor: function(value, format, culture) {
             var f = compile(format)(value, culture);
-            return { text: text(f), color: f.color };
+            return { text: text(f), color: f.color, type: f.type };
         },
         type: function(value, format) {
             return compile(format)(value).type;

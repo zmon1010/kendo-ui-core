@@ -312,6 +312,7 @@
         }
         var val = cell.value;
         if (val != null) {
+            var type = typeof val == "number" ? "number" : null;
             var clip = new drawing.Group();
             clip.clip(drawing.Path.fromRect(rect));
             g.append(clip);
@@ -319,10 +320,25 @@
             if (cell.format) {
                 f = formatting.textAndColor(val, cell.format);
                 val = f.text;
+                if (f.type) {
+                    type = f.type;
+                }
             } else {
                 val += "";
             }
-            drawText(val, f ? f.color : "#000", cell, clip);
+            if (!cell.textAlign) {
+                switch (type) {
+                  case "number":
+                  case "date":
+                  case "percent":
+                    cell.textAlign = "right";
+                    break;
+                  case "boolean":
+                    cell.textAlign = "center";
+                    break;
+                }
+            }
+            drawText(val, f && f.color || "#000", cell, clip);
         }
     }
 
@@ -370,10 +386,10 @@
             var htrans = 0;
             switch (cell.textAlign) {
               case "center":
-                htrans = (rect_width - line.box.width) >> 1;
+                htrans = Math.max(0, (rect_width - line.box.width) >> 1);
                 break;
               case "right":
-                htrans = (rect_width - line.box.width);
+                htrans = Math.max(0, rect_width - line.box.width);
                 break;
             }
             if (htrans || vtrans) {
