@@ -11,18 +11,31 @@ $("#pdf").on("click", function(){
 });
 
 var sheet = S.activeSheet();
-sheet.range("A1:Z50")
-    .formula('ROW() & ":" & COLUMN()')
-    .fontFamily("DejaVu Serif");
 
-sheet.range("D19:Q31")
-    .merge()
-    .value("Test merged cell")
-    //.fontSize(24)
-    .italic(true)
-    .background("yellow");
+sheet.batch(function(){
+    sheet.range("A1:Z50")
+        .formula('ROW() & ", " & COLUMN()')
+        .fontFamily("DejaVu Serif");
 
-sheet.range("A27:B28").merge().background("green");
+    sheet.forEach("A1:Z50", function(row, col){
+        if ((row + col) % 2 == 0) {
+            sheet.range(row, col, 1, 1).background("#fea");
+        }
+    });
+
+    sheet.range("D19:Q31")
+        .merge()
+        .value("Test merged cell")
+        .fontSize(24)
+        .italic(true)
+        .background("yellow");
+
+    sheet.range("A27:B28").merge().background("green");
+
+    sheet.range("L1:L50").background("#cfc");
+
+    sheet.range("D3:D4").merge().value("This is wrapped text").wrap(true);
+}, kendo.spreadsheet.ALL_REASONS);
 
 $(document).ready(function(){
     var fonts = kendo.drawing.drawDOM.getFontFaces();
