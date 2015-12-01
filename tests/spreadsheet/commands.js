@@ -929,6 +929,27 @@
         equal(valuesB[2], "a");
     });
 
+    test("Sorts range ascending", function() {
+        var command = sortCommand({ sheet: false, value: "asc", column: 1 });
+
+        sheet.range("A1:B3").values([
+            [ 3, "a" ],
+            [ 2, "b" ],
+            [ 1, "c" ]
+        ]);
+
+        sheet.select("A1:B2");
+        command.range(sheet.range("A1:B2"));
+
+        command.exec();
+
+        var valuesB = sheet.range("B1:B3").values();
+
+        equal(valuesB[0], "a");
+        equal(valuesB[1], "b");
+        equal(valuesB[2], "c");
+    });
+
     module("SpreadSheet ApplyFilterCommand", moduleOptions);
 
     var applyFilterCommand = $.proxy(command, this, kendo.spreadsheet.ApplyFilterCommand);

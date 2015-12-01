@@ -540,7 +540,7 @@
             if (this.options.sheet) {
                 this.expandRange().sort({ column: col, ascending: ascending });
             } else {
-                range.sort({ column: col, ascending: ascending });
+                range.sort({ column: this.options.column || 0, ascending: ascending });
             }
         },
         expandRange: function() {

@@ -295,6 +295,7 @@
 
         filterMenu.bind("action", function(e) {
             equal(e.command, "SortCommand");
+            equal(e.options.column, 0);
             ok(!e.options.sheet);
             ok(e.options.operatingRange instanceof kendo.spreadsheet.Range);
         });

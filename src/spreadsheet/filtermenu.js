@@ -670,7 +670,8 @@
                         var options = {
                             value: dir,
                             sheet: false,
-                            operatingRange: range
+                            operatingRange: range,
+                            column: this.options.column
                         };
 
                         if (range.isSortable()) {
