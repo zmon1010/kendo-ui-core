@@ -1,12 +1,11 @@
 <%@Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section k-header">
-    <div id="tickets">
-        <form class="k-content" id="ticketsForm">
-            <h3>Book Tickets</h3>
-            <ul>
-                <li>
-                    <label for="fullname" class="required">Your Name</label>
+ <div class="demo-section k-content">
+        <div id="tickets">
+            <form id="ticketsForm">
+                <ul id="fieldlist">
+                    <li>
+                        <label for="fullname" class="required">Your Name</label>
                     <%:Html.Kendo().TextBox()
                               .Name("fullname")
                               .HtmlAttributes(new { placeholder = "Full name", required = "required", validationmessage = "Enter {0}", style = "width:200px" })
@@ -60,14 +59,15 @@
                               .HtmlAttributes(new { placeholder = "Enter a ten digit number", pattern = "\\d{10}", required = "required", type = "tel", validationmessage = "Enter at least ten digits", style = "width: 200px;" })
                     %>
                 </li>
-                <li class="accept">
-                    <input type="checkbox" name="Accept" required validationmessage="Acceptance is required" />
-                    I accept the terms of service
+                <li  class="accept">
+                    <label>Terms of Service</label>
+                    <input type="checkbox" name="Accept" required validationMessage="Acceptance is required" /> <p>I accept the terms of service.</p>
                 </li>
                 <li class="confirm">
                     <button class="k-button k-primary" type="submit">Submit</button>
                 </li>
-                <li class="status"></li>
+                <li class="status">
+                </li>
             </ul>
         </form>
     </div>
@@ -93,60 +93,37 @@
 
 </script>
 <style>
-    .k-textbox {
-        width: 11.8em;
-    }
-
-    .demo-section {
-        width: 800px;
+    #fieldlist {
+        margin: 0;
         padding: 0;
     }
 
-    #tickets {
-        width: 800px;
-        background: url('../content/web/validator/tickets.png') transparent no-repeat 30px 50%;
-        background-color: #3f51b5;
+    #fieldlist li {
+        list-style: none;
+        padding-bottom: .7em;
+        text-align: left;
     }
 
-        #tickets form {
-            padding: 30px;
-            margin-left: 150px;
-        }
-
-        #tickets h3 {
-            font-weight: normal;
-            font-size: 1.4em;
-            margin: 0;
-            padding: 0 0 20px;
-        }
-
-        #tickets ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        #tickets li {
-            margin: 5px 0;
-        }
-
-    label {
-        display: inline-block;
-        width: 100px;
-        text-align: right;
-        padding-right: 10px;
-    }
-
-    .required {
+    #fieldlist label {
+        display: block;
+        padding-bottom: .3em;
         font-weight: bold;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: #444;
     }
 
-    .accept, .status {
-        padding-left: 90px;
+    #fieldlist li.status {
+        text-align: center;
+    }
+
+    #fieldlist li .k-widget:not(.k-tooltip),
+    #fieldlist li .k-textbox {
+        margin: 0 5px 5px 0;
     }
 
     .confirm {
-        text-align: right;
+        padding-top: 1em;
     }
 
     .valid {
@@ -157,8 +134,24 @@
         color: red;
     }
 
-    span.k-tooltip {
-        margin-left: 6px;
+    #fieldlist li input[type="checkbox"] {
+        margin: 0 5px 0 0;
+    }
+
+    span.k-widget.k-tooltip-validation {
+        display: inline-block;
+        width: 160px;
+        text-align: left;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background: none;
+        box-shadow: none;
+        color: red;
+    }
+
+    .k-tooltip-validation .k-warning {
+        display: none;
     }
 </style>
 </asp:Content>

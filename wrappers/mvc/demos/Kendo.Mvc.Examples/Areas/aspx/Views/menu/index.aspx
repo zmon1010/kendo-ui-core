@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-
+ <div id="megaStore">
 <% Html.Kendo().Menu()
       .Name("Menu")
       .Items(items =>
@@ -84,8 +84,14 @@
       .Render();
     %>
 
+ </div>
 <style>
-
+    #megaStore {
+        max-width: 600px;
+        margin: 30px auto;
+        padding-top: 120px;
+        background: url('../../content/web/menu/header.jpg') no-repeat center 0;
+    }
     #menu h2 {
         font-size: 1em;
         text-transform: uppercase;
@@ -100,7 +106,7 @@
     }
     #template ol {
         float: left;
-        margin: 0;
+        margin: 0 0 0 30px;
         padding: 10px 10px 0 10px;
     }
     #template:after {
@@ -115,6 +121,5 @@
         clear: left;
         margin: 5px 0 5px 12px;
     }
-
 </style>
 </asp:Content>
