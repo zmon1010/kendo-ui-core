@@ -2495,7 +2495,7 @@ a.footer-links:hover,
     padding-right: 20px;
 }
 
-#overview h2 {
+#overview h1 {
     color: #000;
     font: 400 28px/1 "Roboto Slab", Arial, Helvetica, sans-serif;
     text-align: left;
@@ -2572,7 +2572,7 @@ a.footer-links:hover,
     padding-bottom: 2em;
 }
 
-#overview-widgets h3 {
+#overview-widgets h2 {
     color: #000;
     font: 700 12px/1em Arial,Helvetica,sans-serif;
     text-transform: uppercase;
@@ -2644,7 +2644,7 @@ h5 {
     margin: 20px 0 0 20px;
 }
 
-#overview-widgets h2 strong {
+#overview-widgets h1 strong {
     font-weight: normal;
 }
 
@@ -2652,12 +2652,12 @@ h5 {
     padding-left: 0;
 }
 
-#most-popular h3 {
+#most-popular h2 {
     margin-left: 0;
 }
 
-#overview-widgets h2,
-#most-popular h3,
+#overview-widgets h1,
+#most-popular h2,
 #most-popular .overview-col {
     padding-left: 20px;
     padding-right: 0;
@@ -2966,7 +2966,7 @@ html.k-materialblack .demo-section.k-content {
     text-align: left;
   }
   
-  #overview h2 {
+  #overview h1 {
     padding-top: 1.2em;
   }
   

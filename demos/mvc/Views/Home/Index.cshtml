@@ -22,21 +22,21 @@
         @switch ((string)ViewBag.Product)
         {
             case "kendo-ui":
-        <h2>Kendo UI <strong>Components</strong></h2>
+        <h1>Kendo UI <strong>Components</strong></h1>
                 break;
             case "aspnet-mvc":
-        <h2>ASP.NET MVC <strong>Components</strong></h2>
+        <h1>ASP.NET MVC <strong>Components</strong></h1>
                 break;
             case "php-ui":
-        <h2>PHP <strong>Components</strong></h2>
+        <h1>PHP <strong>Components</strong></h1>
                 break;
             case "jsp-ui":
-        <h2>JSP <strong>Components</strong></h2>
+        <h1>JSP <strong>Components</strong></h1>
                 break;
         }
         <div id="most-popular">
             <div class="popular-widgets">
-                <h3>Most popular</h3>
+                <h2>Most popular</h2>
                 <ul class="overview-col">
                     <li><a href="@Url.Widget("grid")">Grid</a></li>
                     <li><a href="@Url.Widget("editor")">Editor</a></li>
@@ -52,7 +52,7 @@
             </div>
             <div class="qr-code">
                 
-                <h3>View on mobile device</h3>
+                <h2>View on mobile device</h2>
                 <div id="mobileDemosQR"></div>
 
                 <script type="text/javascript">
@@ -106,7 +106,7 @@
             if (category.Any(c => c.ShouldInclude((string)ViewBag.NavProduct)))
             {
             <li class="widget">
-                <h3>@category.Key</h3>
+                <h2>@category.Key</h2>
                 <ul>
                 @foreach (var widget in category)
                 {
@@ -125,7 +125,7 @@
             {
                case "kendo-ui":
             <li class="widget" style="padding-bottom: 0;">
-                  <h3>Hybrid UI</h3>
+                  <h2>Hybrid UI</h2>
                   <ul>
                       <li><a href="http://demos.telerik.com/@ViewBag.Product/m" target="_blank">Launch Demos <span class="new-widget"></span></a></li>
                   </ul>
@@ -152,7 +152,7 @@
     @if (ViewBag.Product == "kendo-ui")
     {
     <div id="overview-applications">
-    <h2>Sample Applications</h2>
+    <h1>Sample Applications</h1>
     <ul>
         <li class="application">
             <a href="./bootstrap/">
@@ -207,7 +207,7 @@
     @if (ViewBag.Product == "aspnet-mvc")
     {
     <div id="overview-applications">
-    <h2>Sample Applications</h2>
+    <h1>Sample Applications</h1>
     <ul>
         <li class="application">
             <a href="./bootstrap/">
@@ -225,7 +225,7 @@
     </div>
     }
     <div id="overview-tools">
-        <h2>Tools</h2>
+        <h1>Tools</h1>
          <ul>
             @if (ViewBag.Product == "kendo-ui")
             {
