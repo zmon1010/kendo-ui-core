@@ -358,7 +358,7 @@
         var preamble = "";
 
         if (condition == "text") {
-            preamble = "if (typeof value == 'string') { ";
+            preamble = "if (typeof value == 'string' || value instanceof kendo.spreadsheet.CalcError) { ";
         }
         else if (condition == "num") {
             preamble = "if (typeof value == 'number') { ";
