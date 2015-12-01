@@ -178,7 +178,7 @@
             filter: new kendo.spreadsheet.ValueFilter( {
                 values: [2]
             })
-        })
+        });
 
         sheet.range("A2:B4").sort([
             { column: 0, ascending: true }

@@ -4,8 +4,9 @@
     var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
     var Sorter = kendo.spreadsheet.Sorter;
+    var CalcError = kendo.spreadsheet.calc.runtime.CalcError;
 
-    var grid, area, sorter, values;
+    var grid, area, sorter, values, colors;
 
     module("rangelist sorter", {
         setup: function() {
@@ -158,7 +159,7 @@
     });
 
     test("numbers are before errors", function() {
-        equal(Sorter.ascendingComparer(2, new kendo.spreadsheet.calc.runtime.CalcError("NAME")), -1);
+        equal(Sorter.ascendingComparer(2, new CalcError("NAME")), -1);
     });
 
     test("strings are after numbers", function() {
@@ -175,7 +176,7 @@
     });
 
     test("strings are before errors", function() {
-        equal(Sorter.ascendingComparer("2", new kendo.spreadsheet.calc.runtime.CalcError("NAME")), -1);
+        equal(Sorter.ascendingComparer("2", new CalcError("NAME")), -1);
     });
 
     test("booleans are after numbers", function() {
@@ -206,7 +207,7 @@
     });
 
     test("booleans are after errors", function() {
-        equal(Sorter.ascendingComparer(true, new kendo.spreadsheet.calc.runtime.CalcError("NAME")), -1);
+        equal(Sorter.ascendingComparer(true, new CalcError("NAME")), -1);
     });
 
     test("null is after numbers", function() {
@@ -228,26 +229,27 @@
     });
 
     test("null is after errors", function() {
-        equal(Sorter.ascendingComparer(null, new kendo.spreadsheet.calc.runtime.CalcError("NAME")), 1);
+        equal(Sorter.ascendingComparer(null, new CalcError("NAME")), 1);
     });
 
     test("errors are after numbers", function() {
-        equal(Sorter.ascendingComparer(new kendo.spreadsheet.calc.runtime.CalcError("NAME"), 2), 1);
+        equal(Sorter.ascendingComparer(new CalcError("NAME"), 2), 1);
     });
 
     test("errors are after strings", function() {
-        equal(Sorter.ascendingComparer(new kendo.spreadsheet.calc.runtime.CalcError("NAME"), "2"), 1);
+        equal(Sorter.ascendingComparer(new CalcError("NAME"), "2"), 1);
     });
 
     test("errors are after booleans", function() {
-        equal(Sorter.ascendingComparer(new kendo.spreadsheet.calc.runtime.CalcError("NAME"), true), 1);
+        equal(Sorter.ascendingComparer(new CalcError("NAME"), true), 1);
     });
 
     test("errors are before null", function() {
-        equal(Sorter.ascendingComparer(new kendo.spreadsheet.calc.runtime.CalcError("NAME"), null), -1);
+        equal(Sorter.ascendingComparer(new CalcError("NAME"), null), -1);
     });
 
     test("errors are equal", function() {
-        equal(Sorter.ascendingComparer(new kendo.spreadsheet.calc.runtime.CalcError("NAME"), new kendo.spreadsheet.calc.runtime.CalcError("DIV/0")), 0);
+        equal(Sorter.ascendingComparer(new CalcError("NAME"), new CalcError("DIV/0")), 0);
     });
+
 })();
