@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.drawing", "./sheet", "./range", "./references", "./numformat" ], f);
+    define([ "../kendo.drawing", "./sheet", "./range", "./references", "./numformat", "../util/text-metrics" ], f);
 })(function(){
 
     "use strict";
@@ -9,6 +9,9 @@
     var drawing = kendo.drawing;
     var formatting = spreadsheet.formatting;
     var geo = kendo.geometry;
+    var translate = geo.Matrix.translate;
+
+    var GUIDELINE_WIDTH = 0.8;
 
     /* jshint eqnull:true, laxbreak:true, shadow:true, -W054 */
     /* jshint latedef: nofunc */
@@ -215,7 +218,7 @@
                                  [ options.pageWidth, options.pageHeight ])));
                 var content = new drawing.Group();
                 page.append(content);
-                content.transform(geo.Matrix.translate(-left, -top));
+                content.transform(translate(-left, -top));
 
                 if (options.guidelines) {
                     var prev = null;
@@ -228,7 +231,7 @@
                                     .moveTo(x, top)
                                     .lineTo(x, endbottom)
                                     .close()
-                                    .stroke("#999", 0.2)
+                                    .stroke("#999", GUIDELINE_WIDTH)
                             );
                         }
                     });
@@ -242,7 +245,7 @@
                                     .moveTo(left, y)
                                     .lineTo(endright, y)
                                     .close()
-                                    .stroke("#999", 0.2)
+                                    .stroke("#999", GUIDELINE_WIDTH)
                             );
                         }
                     });
@@ -264,10 +267,10 @@
             var r2d2 = rect;
             if (options.guidelines) {
                 r2d2 = rect.clone();
-                r2d2.origin.x += 0.1;
-                r2d2.origin.y += 0.1;
-                r2d2.size.width -= 0.2;
-                r2d2.size.height -= 0.2;
+                r2d2.origin.x += GUIDELINE_WIDTH/2;
+                r2d2.origin.y += GUIDELINE_WIDTH/2;
+                r2d2.size.width -= GUIDELINE_WIDTH;
+                r2d2.size.height -= GUIDELINE_WIDTH;
             }
             g.append(
                 new drawing.Rect(r2d2)
@@ -319,12 +322,87 @@
             } else {
                 val += "";
             }
-            // XXX: missing alignment and wrapping
-            var tmp = new drawing.Text(val, [ cell.left + 2, cell.top + 2 ], {
-                font: makeFontDef(cell),
-                fill: { color: f ? f.color : "#000" }
+            drawText(val, f ? f.color : "#000", cell, clip);
+        }
+    }
+
+    function drawText(text, color, cell, group) {
+        // XXX: account for border and padding below.  depends on CSS.
+        var rect_left   = cell.left   + 2;
+        var rect_top    = cell.top    + 2;
+        var rect_width  = cell.width  - 4;
+        var rect_height = cell.height - 4;
+        var font = makeFontDef(cell);
+        var style = { font: font };
+        var props = {
+            font: font,
+            fill: { color: color }
+        };
+        var lines = [], text_height = 0, top = rect_top;
+        if (cell.wrap) {
+            lineBreak(text, style, rect_width).forEach(function(line){
+                var tmp = new drawing.Text(line.text, [ rect_left, top ], props);
+                top += line.box.height;
+                lines.push({ el: tmp, box: line.box });
             });
-            clip.append(tmp);
+            text_height = top - rect_top;
+        } else {
+            var tmp = new drawing.Text(text, [ rect_left, top ], props);
+            var box = kendo.util.measureText(text, style);
+            lines.push({ el: tmp, box: box });
+            text_height = box.height;
+        }
+        var cont = new drawing.Group();
+        group.append(cont);
+        var vtrans = 0;
+        switch (cell.verticalAlign) {
+          case undefined:
+          case null:
+          case "center":
+            vtrans = (rect_height - text_height) >> 1;
+            break;
+          case "bottom":
+            vtrans = (rect_height - text_height);
+            break;
+        }
+        lines.forEach(function(line){
+            cont.append(line.el);
+            var htrans = 0;
+            switch (cell.textAlign) {
+              case "center":
+                htrans = (rect_width - line.box.width) >> 1;
+                break;
+              case "right":
+                htrans = (rect_width - line.box.width);
+                break;
+            }
+            if (htrans || vtrans) {
+                line.el.transform(translate(htrans, vtrans));
+            }
+        });
+    }
+
+    function lineBreak(text, style, width) {
+        var lines = [];
+        var len = text.length;
+        var start = 0;
+        while (start < len) {
+            split(start, len, len);
+        }
+        return lines;
+        function split(min, eol, max) {
+            var sub = text.substring(start, eol);
+            var box = kendo.util.measureText(sub, style);
+            if (box.width <= width) {
+                if (eol < max-1) {
+                    split(eol, (eol+max)>>1, max);
+                } else {
+                    lines.push({ text: sub, box: box });
+                    start = eol;
+                }
+            } else if (min < eol) {
+                split(min, (min + eol) >> 1, eol);
+            }
         }
     }
 
