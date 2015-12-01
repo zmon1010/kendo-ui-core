@@ -338,7 +338,7 @@
                     break;
                 }
             }
-            drawText(val, f && f.color || "#000", cell, clip);
+            drawText(val, (f && f.color) || cell.color || "#000", cell, clip);
         }
     }
 
