@@ -777,8 +777,14 @@
             return this;
         },
 
-        matrix: function() {
-            return this._matrix;
+        matrix: function(matrix) {
+            if (matrix) {
+                this._matrix = matrix;
+                this._optionsChange();
+                return this;
+            } else {
+                return this._matrix;
+            }
         }
     });
 

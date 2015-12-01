@@ -1206,6 +1206,31 @@
             deepEqual(transformation.matrix(), matrix);
         });
 
+        test("matrix sets current matrix", function() {
+            var newMatrix = Matrix.scale(1.5);
+            transformation = new Transformation(matrix);
+            transformation.matrix(newMatrix);
+            deepEqual(transformation.matrix(), newMatrix);
+        });
+
+        test("matrix returns transformation if new matrix is set", function() {
+            var newMatrix = Matrix.scale(1.5);
+            transformation = new Transformation(matrix);
+            ok(transformation === transformation.matrix(newMatrix));
+        });
+
+        test("matrix triggers optionsChange", 1, function() {
+            var newMatrix = Matrix.scale(1.5);
+            transformation = new Transformation(matrix);
+            transformation.addObserver({
+                optionsChange: function(e) {
+                    equal(e.field, "transform");
+                }
+            });
+
+            transformation.matrix(newMatrix);
+        });
+
         test("clone returns new instance", function() {
             var clone = transformation.clone();
             notEqual(clone, transformation);

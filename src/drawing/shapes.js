@@ -1511,6 +1511,8 @@
         var matrix = transofrm.matrix();
         matrix.e += x;
         matrix.f += y;
+
+        transofrm.matrix(matrix);
         element.transform(transofrm);
     }
 

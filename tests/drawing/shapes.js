@@ -2616,6 +2616,21 @@
             ok(true);
         });
 
+        test("optionsChange is triggered if the element already has transformation applied", 1, function() {
+            var path = d.Path.fromRect(new g.Rect([5, 400], [200, 50]), {
+                transform: g.transform().translate(100, 100)
+            });
+            layout = new Layout(new g.Rect([100, 100], [500, 300]));
+            layout.append(path);
+
+            path.addObserver({
+                optionsChange: function(e) {
+                    equal(e.field, "transform");
+                }
+            });
+            layout.reflow();
+        });
+
         // ------------------------------------------------------------
         module("Layout / reflow / horizontal", {
             setup: function() {
