@@ -151,24 +151,30 @@
     margin-right: .89em;
 }
 
-.km-ios .km-icon-label input[type=password],
-.km-ios .km-icon-label input[type=search],
-.km-ios .km-icon-label input[type=number],
-.km-ios .km-icon-label input[type=tel],
-.km-ios .km-icon-label input[type=url],
-.km-ios .km-icon-label input[type=email],
-.km-ios .km-icon-label input[type=month],
-.km-ios .km-icon-label input[type=color],
-.km-ios .km-icon-label input[type=week],
-.km-ios .km-icon-label input[type=date],
-.km-ios .km-icon-label input[type=time],
-.km-ios .km-icon-label input[type=datetime],
-.km-ios .km-icon-label input[type=datetime-local],
-.km-ios .km-icon-label input[type=text]:not(.k-input),
-.km-ios .km-icon-label select:not([multiple]),
-.km-ios .km-icon-label .k-dropdown-wrap,
-.km-ios .km-icon-label textarea {
-    right: auto;
+.km-ios {
+    .km-list {
+        .km-icon-label {
+            input[type=password],
+            input[type=search], 
+            input[type=number], 
+            input[type=tel],
+            input[type=url],
+            input[type=email],
+            input[type=month],
+            input[type=color],
+            input[type=week], 
+            input[type=date], 
+            input[type=time], 
+            input[type=datetime], 
+            input[type=datetime-local], 
+            input[type=text]:not(.k-input), 
+            select:not([multiple]), 
+            .k-dropdown-wrap, 
+            textarea  {
+                right: 0; 
+            }
+        }
+    }
 }
 
 .km-ios .km-label-above {
@@ -197,52 +203,37 @@
     line-height: 1.2em;
 }
 
-.km-ios .km-list .km-label-above input[type=text]:not(.k-input),
-.km-ios .km-list .km-label-above input[type=password],
-.km-ios .km-list .km-label-above input[type=search],
-.km-ios .km-list .km-label-above input[type=number],
-.km-ios .km-list .km-label-above input[type=tel],
-.km-ios .km-list .km-label-above input[type=url],
-.km-ios .km-list .km-label-above input[type=email], 
-.km-ios .km-list .km-label-above input[type=file], 
-.km-ios .km-list .km-label-above input[type=month],
-.km-ios .km-list .km-label-above input[type=color],
-.km-ios .km-list .km-label-above input[type=week],
-.km-ios .km-list .km-label-above input[type=date],
-.km-ios .km-list .km-label-above input[type=time],
-.km-ios .km-list .km-label-above input[type=datetime],
-.km-ios .km-list .km-label-above input[type=datetime-local],
-.km-ios .km-list .km-label-above select:not([multiple]),
-.km-ios .km-list .km-label-above .k-dropdown,
-.km-ios .km-list .km-label-above textarea {
-    width: 100%;
-    right: 0;
-    padding-left: 0;
-    left: 1.2em;
-    transform: translateY(0);
-    -webkit-transform: translateY(0);
-    margin-top: -.375em;
-}
-
-.km-ios .km-list fieldset .km-label-above input[type=text]:not(.k-input),
-.km-ios .km-list fieldset .km-label-above input[type=password],
-.km-ios .km-list fieldset .km-label-above input[type=search],
-.km-ios .km-list fieldset .km-label-above input[type=number],
-.km-ios .km-list fieldset .km-label-above input[type=tel],
-.km-ios .km-list fieldset .km-label-above input[type=url],
-.km-ios .km-list fieldset .km-label-above input[type=email], 
-.km-ios .km-list fieldset .km-label-above input[type=file], 
-.km-ios .km-list fieldset .km-label-above input[type=month],
-.km-ios .km-list fieldset .km-label-above input[type=color],
-.km-ios .km-list fieldset .km-label-above input[type=week],
-.km-ios .km-list fieldset .km-label-above input[type=date],
-.km-ios .km-list fieldset .km-label-above input[type=time],
-.km-ios .km-list fieldset .km-label-above input[type=datetime],
-.km-ios .km-list fieldset .km-label-above input[type=datetime-local],
-.km-ios .km-list fieldset .km-label-above select:not([multiple]),
-.km-ios .km-list fieldset .km-label-above .k-dropdown,
-.km-ios .km-list fieldset .km-label-above textarea {
-    margin-top: -.25em;
+.km-ios {
+    .km-list {
+        fieldset,
+        .km-label-above {
+            input[type=password],
+            input[type=search], 
+            input[type=number], 
+            input[type=tel],
+            input[type=url],
+            input[type=email],
+            input[type=month],
+            input[type=color],
+            input[type=week], 
+            input[type=date], 
+            input[type=time], 
+            input[type=datetime], 
+            input[type=datetime-local], 
+            input[type=text]:not(.k-input), 
+            select:not([multiple]), 
+            .k-dropdown-wrap, 
+            textarea  {
+                width: 100%;
+                right: 0;
+                padding-left: 0;
+                left: 1.2em;
+                transform: translateY(0);
+                -webkit-transform: translateY(0);
+                margin-top: -.375em;
+            }
+        }
+    }
 }
 
 .km-ios .km-list fieldset {
@@ -251,26 +242,42 @@
     margin: -.5em -1.61em;
 }
 
-.km-ios .km-list textarea,
-.km-ios .km-list fieldset input[type=password],
-.km-ios .km-list fieldset input[type=search],
-.km-ios .km-list fieldset input[type=number],
-.km-ios .km-list fieldset input[type=tel],
-.km-ios .km-list fieldset input[type=url],
-.km-ios .km-list fieldset input[type=email],
-.km-ios .km-list fieldset input[type=month],
-.km-ios .km-list fieldset input[type=color],
-.km-ios .km-list fieldset input[type=week],
-.km-ios .km-list fieldset input[type=date],
-.km-ios .km-list fieldset input[type=time],
-.km-ios .km-list fieldset input[type=datetime],
-.km-ios .km-list fieldset input[type=datetime-local],
-.km-ios .km-list fieldset input[type=text]:not(.k-input),
-.km-ios .km-list fieldset select:not([multiple]),
-.km-ios .km-list fieldset .k-dropdown-wrap {
+.km-ios .km-list fieldset textarea {
+    width: 100%;
     transform: translateY(0);
     -webkit-transform: translateY(0);
-    right: auto;
+    margin-right: 0;
+    padding-left: 0;
+}
+
+.km-ios {
+    .km-list {
+        fieldset {
+            input[type=password],
+            input[type=search], 
+            input[type=number], 
+            input[type=tel],
+            input[type=url],
+            input[type=email],
+            input[type=month],
+            input[type=color],
+            input[type=week], 
+            input[type=date], 
+            input[type=time], 
+            input[type=datetime], 
+            input[type=datetime-local], 
+            input[type=text]:not(.k-input), 
+            select:not([multiple]), 
+            .k-dropdown-wrap, 
+            textarea  {
+                transform: translateY(0);
+                -webkit-transform: translateY(0);
+                right: auto;
+                width: 100%;
+                position: relative;
+            }
+        }
+    }
 }
 
 .km-ios .km-list fieldset > input[type=password],
@@ -291,35 +298,6 @@
 .km-ios .km-list fieldset > .k-dropdown-wrap {
     padding: .73em 0; 
     margin-top: 0;
-}
-
-.km-ios .km-list fieldset textarea {
-    width: 100%;
-    transform: translateY(0);
-    -webkit-transform: translateY(0);
-    margin-right: 0;
-    padding-left: 0;
-}
-
-.km-ios .km-list fieldset input[type=password],
-.km-ios .km-list fieldset input[type=search],
-.km-ios .km-list fieldset input[type=number],
-.km-ios .km-list fieldset input[type=tel],
-.km-ios .km-list fieldset input[type=url],
-.km-ios .km-list fieldset input[type=email],
-.km-ios .km-list fieldset input[type=month],
-.km-ios .km-list fieldset input[type=color],
-.km-ios .km-list fieldset input[type=week],
-.km-ios .km-list fieldset input[type=date],
-.km-ios .km-list fieldset input[type=time],
-.km-ios .km-list fieldset input[type=datetime],
-.km-ios .km-list fieldset input[type=datetime-local],
-.km-ios .km-list fieldset input[type=text]:not(.k-input),
-.km-ios .km-list fieldset select:not([multiple]),
-.km-ios .km-list fieldset .k-dropdown-wrap,
-.km-ios .km-list fieldset textarea {
-    width: 100%;
-    position: relative;
 }
 
 .km-ios .km-list fieldset legend {
@@ -364,51 +342,61 @@
     margin-bottom: 0;
 }
 
-.km-ios .km-list .km-inline-field input[type=text]:not(.k-input),
-.km-ios .km-list .km-inline-field input[type=password],
-.km-ios .km-list .km-inline-field input[type=search],
-.km-ios .km-list .km-inline-field input[type=number],
-.km-ios .km-list .km-inline-field input[type=tel],
-.km-ios .km-list .km-inline-field input[type=url],
-.km-ios .km-list .km-inline-field input[type=email],
-.km-ios .km-list .km-inline-field input[type=file],
-.km-ios .km-list .km-inline-field input[type=month],
-.km-ios .km-list .km-inline-field input[type=color],
-.km-ios .km-list .km-inline-field input[type=week],
-.km-ios .km-list .km-inline-field input[type=date],
-.km-ios .km-list .km-inline-field input[type=time],
-.km-ios .km-list .km-inline-field input[type=datetime],
-.km-ios .km-list .km-inline-field input[type=datetime-local],
-.km-ios .km-list .km-inline-field select:not([multiple]),
-.km-ios .km-list .km-inline-field .k-dropdown,
-.km-ios .km-list .km-inline-field textarea {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    padding-left: 0;
-    padding-left: 1em; 
+.km-ios {
+    .km-list {
+        .km-inline-field {
+            input[type=password],
+            input[type=search], 
+            input[type=number], 
+            input[type=tel],
+            input[type=url],
+            input[type=email],
+            input[type=month],
+            input[type=color],
+            input[type=week], 
+            input[type=date], 
+            input[type=time], 
+            input[type=datetime], 
+            input[type=datetime-local], 
+            input[type=text]:not(.k-input), 
+            select:not([multiple]), 
+            .k-dropdown-wrap, 
+            textarea  {
+                position: absolute;
+                width: 100%;
+                left: 0;
+                padding-left: 0;
+                padding-left: 1em;  
+            }
+        }
+    }
 }
 
-.km-ios .km-list .km-inline-field:first-of-type input[type=text]:not(.k-input),
-.km-ios .km-list .km-inline-field:first-of-type input[type=password],
-.km-ios .km-list .km-inline-field:first-of-type input[type=search],
-.km-ios .km-list .km-inline-field:first-of-type input[type=number],
-.km-ios .km-list .km-inline-field:first-of-type input[type=tel],
-.km-ios .km-list .km-inline-field:first-of-type input[type=url],
-.km-ios .km-list .km-inline-field:first-of-type input[type=email],
-.km-ios .km-list .km-inline-field:first-of-type input[type=file],
-.km-ios .km-list .km-inline-field:first-of-type input[type=month],
-.km-ios .km-list .km-inline-field:first-of-type input[type=color],
-.km-ios .km-list .km-inline-field:first-of-type input[type=week],
-.km-ios .km-list .km-inline-field:first-of-type input[type=date],
-.km-ios .km-list .km-inline-field:first-of-type input[type=time],
-.km-ios .km-list .km-inline-field:first-of-type input[type=datetime],
-.km-ios .km-list .km-inline-field:first-of-type input[type=datetime-local],
-.km-ios .km-list .km-inline-field:first-of-type select:not([multiple]),
-.km-ios .km-list .km-inline-field:first-of-type .k-dropdown,
-.km-ios .km-list .km-inline-field:first-of-type textarea {
-    margin-left: 0;
-    padding-left: 0;
+.km-ios {
+    .km-list {
+        .km-inline-field:first-of-type {
+            input[type=password],
+            input[type=search], 
+            input[type=number], 
+            input[type=tel],
+            input[type=url],
+            input[type=email],
+            input[type=month],
+            input[type=color],
+            input[type=week], 
+            input[type=date], 
+            input[type=time], 
+            input[type=datetime], 
+            input[type=datetime-local], 
+            input[type=text]:not(.k-input), 
+            select:not([multiple]), 
+            .k-dropdown-wrap, 
+            textarea  {
+                margin-left: 0;
+                padding-left: 0;  
+            }
+        }
+    }
 }
 
 /* Standalone Checkboxes and RadioButtons */
