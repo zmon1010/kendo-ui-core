@@ -4,9 +4,9 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+<div class="demo-section k-content">
 
-    <h3>Menu with images</h3>
+    <h4>Menu with images</h4>
 
     <%= Html.Kendo().Menu()
           .Name("menuImages")
@@ -41,21 +41,13 @@
                       children.Add().Text("Top News").ImageUrl(Url.Content("~/Content/shared/icons/16/star.png"));
                       children.Add().Text("Photo Galleries").ImageUrl(Url.Content("~/Content/shared/icons/16/photo.png"));
                    });
-
-              items.Add().Text("Snowboarding")
-                   .ImageUrl(Url.Content("~/Content/shared/icons/sports/snowboarding.png"))
-                   .Items(children =>
-                   {
-                       children.Add().Text("Top News").ImageUrl(Url.Content("~/Content/shared/icons/16/star.png"));
-                       children.Add().Text("Photo Galleries").ImageUrl(Url.Content("~/Content/shared/icons/16/photo.png"));
-                   });
           })
     %>
 </div>
 
-<div class="demo-section">
+<div class="demo-section k-content">
 
-    <h3>Menu with sprites</h3>
+    <h4>Menu with sprites</h4>
 
     <%= Html.Kendo().Menu()
           .Name("menuSprites")
@@ -90,13 +82,6 @@
 </div>
 
 <style>
-    .demo-section {
-        width: 500px;
-    }
-    .demo-section h3 {
-        font-weight: normal;
-        padding-bottom: 10px;
-    }
     #menuSprites .k-sprite {
         background-image: url("<%= Url.Content("~/Content/shared/flags.png") %>");
     }

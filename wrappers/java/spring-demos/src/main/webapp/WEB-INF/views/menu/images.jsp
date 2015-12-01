@@ -15,7 +15,9 @@
 <c:url value="/resources/shared/icons/16/video.png" var="video"/>
 <c:url value="/resources/shared/icons/16/speaker.png" var="speaker"/>
 
-<div class="demo-section">
+<div class="demo-section k-content">
+<h4>Menu with images</h4>
+
 <kendo:menu name="menuImages">
     <kendo:menu-items>
         <kendo:menu-item text="Baseball" imageUrl="${baseball}">
@@ -40,17 +42,12 @@
                 <kendo:menu-item text="Photo Galleries" imageUrl="${photo}"></kendo:menu-item>
             </kendo:menu-items>
         </kendo:menu-item>
-        <kendo:menu-item text="Snowboarding" imageUrl="${snowboarding}">
-            <kendo:menu-items>
-                <kendo:menu-item text="Top News" imageUrl="${star}"></kendo:menu-item>
-                <kendo:menu-item text="Photo Galleries" imageUrl="${photo}"></kendo:menu-item>
-            </kendo:menu-items>
-        </kendo:menu-item>
     </kendo:menu-items>
 </kendo:menu>
 </div>
 
-<div class="demo-section">
+<div class="demo-section k-content">
+<h4>Menu with sprites</h4>
 <kendo:menu name="menuSprites">
     <kendo:menu-items>
         <kendo:menu-item text="Brazil" spriteCssClass="brazilFlag">
@@ -76,13 +73,6 @@
 </div>
 
 <style>
-    .demo-section {
-        margin: 30px auto;
-    }
-    .demo-section h3 {
-    	font-weight: normal;
-    	padding-bottom: 10px;
-    }
     #menuSprites .k-sprite {
         background-image: url('../resources/shared/styles/flags.png');
     }

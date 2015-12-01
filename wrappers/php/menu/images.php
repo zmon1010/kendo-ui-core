@@ -5,8 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section">
-    <h3>Menu with images</h3>
+<div class="demo-section k-content">
+    <h4>Menu with images</h4>
 
 <?php
     $menu = new \Kendo\UI\Menu('menu-images');
@@ -36,24 +36,17 @@ require_once '../lib/Kendo/Autoload.php';
             array("text" =>"Photo Galleries", "imageUrl" => "../content/shared/icons/16/photo.png")
         );
 
-    $snowboarding = new \Kendo\UI\MenuItem("Snowboarding");
-    $snowboarding->imageUrl("../content/shared/icons/sports/snowboarding.png");
-    $snowboarding->addItem(
-            array("text" =>"Photo Galleries", "imageUrl" => "../content/shared/icons/16/photo.png"),
-            array("text" =>"Videos Records", "imageUrl" => "../content/shared/icons/16/video.png")
-        );
-
     $menu->dataSource(array(
-        $baseball, $golf, $swimming, $snowboarding
+        $baseball, $golf, $swimming
     ));
 
     echo $menu->render();
 ?>
 </div>
 
-<div class="demo-section">
+<div class="demo-section k-content">
 
-    <h3>Menu with sprites</h3>
+    <h4>Menu with sprites</h4>
 <?php
     $menu = new \Kendo\UI\Menu('menu-sprites');
 
@@ -65,7 +58,7 @@ require_once '../lib/Kendo/Autoload.php';
         );
 
     $india = new \Kendo\UI\MenuItem("India");
-    $india->imageUrl("indiaFlag");
+    $india->spriteCssClass("indiaFlag");
     $india->addItem(
             array("text" =>"Top News", "spriteCssClass" => "historyIcon"),
             array("text" =>"Photo Galleries", "spriteCssClass" => "geographyIcon")
@@ -87,13 +80,6 @@ require_once '../lib/Kendo/Autoload.php';
 </div>
 
 <style>
-    .demo-section {
-        width: 500px;
-    }
-    .demo-section h3 {
-        font-weight: normal;
-        padding-bottom: 10px;
-    }
     #menu-sprites .k-sprite {
         background-image: url("../content/shared/styles/flags.png");
     }
