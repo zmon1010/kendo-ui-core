@@ -381,17 +381,19 @@
             vtrans = (rect_height - text_height);
             break;
         }
+        if (vtrans < 0) { vtrans = 0; }
         lines.forEach(function(line){
             cont.append(line.el);
             var htrans = 0;
             switch (cell.textAlign) {
               case "center":
-                htrans = Math.max(0, (rect_width - line.box.width) >> 1);
+                htrans = (rect_width - line.box.width) >> 1;
                 break;
               case "right":
-                htrans = Math.max(0, rect_width - line.box.width);
+                htrans = rect_width - line.box.width;
                 break;
             }
+            if (htrans < 0) { htrans = 0; }
             if (htrans || vtrans) {
                 line.el.transform(translate(htrans, vtrans));
             }
