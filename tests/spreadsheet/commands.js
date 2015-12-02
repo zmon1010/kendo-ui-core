@@ -753,6 +753,7 @@
     var TextWrapCommand = $.proxy(command, this, kendo.spreadsheet.TextWrapCommand);
 
     test("Expands the row height", function() {
+        sheet.range("A1").value(1);
         kendo.spreadsheet.util.getTextHeight = function() { return 50; };
 
         var command = TextWrapCommand({ value: true });
@@ -762,6 +763,7 @@
     });
 
     test("Undo collapses the row height", function() {
+        sheet.range("A1").value(1);
         kendo.spreadsheet.util.getTextHeight = function() { return 50; };
 
         var command = TextWrapCommand({ value: true });

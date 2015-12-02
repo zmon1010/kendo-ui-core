@@ -325,6 +325,7 @@
     });
 
     test("wrap adjusts the row height", function() {
+        sheet.range("A1").value(1);
         kendo.spreadsheet.util.getTextHeight = function() {
             return 50;
         };
@@ -335,6 +336,8 @@
     });
 
     test("wrap adjusts each row height", function() {
+        sheet.range("A1").value(1);
+        sheet.range("A2").value(1);
         kendo.spreadsheet.util.getTextHeight = function() {
             return 50;
         };
@@ -347,7 +350,9 @@
         ok(sheet.rowHeight(1) > height1);
     });
 
-    test("wrap sets row height equal to the heigh of the highest cell", function() {
+    test("wrap sets row height same as the highest cell", function() {
+        sheet.range("A1").value(1);
+        sheet.range("B1").value(1);
         mockCellHeight = [40, 50];
         kendo.spreadsheet.util.getTextHeight = function() {
             return mockCellHeight.shift();

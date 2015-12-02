@@ -663,7 +663,9 @@
 
                 range.forEachCell(function(row, col, cell) {
                     var width = this._sheet.columnWidth(col);
-                    maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, cell.fontSize, true));
+                    if (cell.value !== null && cell.value !== undefined) {
+                        maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, cell.fontSize, true));
+                    }
                 });
 
                 range.sheet().rowHeight(range.topLeft().row, maxHeight);
@@ -684,7 +686,9 @@
 
                 range.forEachCell(function(row, col, cell) {
                     var width = this._sheet.columnWidth(col);
-                    maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, size, cell.wrap));
+                    if (cell.value !== null && cell.value !== undefined) {
+                        maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, size, cell.wrap));
+                    }
                 });
 
                 range.sheet().rowHeight(range.topLeft().row, maxHeight);
