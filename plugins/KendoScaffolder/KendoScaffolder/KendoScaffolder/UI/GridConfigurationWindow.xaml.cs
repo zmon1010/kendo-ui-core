@@ -195,7 +195,9 @@ namespace KendoScaffolder.UI
         {
             ComboBox cb = sender as ComboBox;
             string item = cb.SelectedItem.ToString();
-            RequireMvc.Visibility = (item.Equals("WebApi") && WidgetTitle.Text == "Kendo UI Grid") ? Visibility.Visible : Visibility.Hidden;
+            var viewModel = cb.DataContext as GridConfigurationViewModel;
+
+            RequireMvc.Visibility = (item.Equals("WebApi") && viewModel.ViewType == ViewType.Web) ? Visibility.Visible : Visibility.Hidden;
             ServerOperation.Visibility = (item.Equals("Server")) ? Visibility.Hidden : Visibility.Visible;
         }
     }
