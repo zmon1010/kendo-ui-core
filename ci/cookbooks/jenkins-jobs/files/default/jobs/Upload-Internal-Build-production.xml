@@ -3,7 +3,11 @@
   <actions/>
   <description>Uploads the latest production bundles as an internal upload.&#xd;
 &#xd;
-See &lt;a href=&quot;https://github.com/telerik/kendo/wiki/Release-Checklist&quot;&gt;the instructions&lt;/a&gt; first!</description>
+See &lt;a href=&quot;https://github.com/telerik/kendo/wiki/Release-Checklist#internal-upload&quot;&gt;the instructions&lt;/a&gt; first!&#xd;
+&#xd;
+&lt;p&gt;&#xd;
+  &lt;img src=&quot;http://kendobuild/serge.jpg&quot;&gt;&lt;/img&gt;&#xd;
+&lt;/p&gt;</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.7">
@@ -58,7 +62,7 @@ See &lt;a href=&quot;https://github.com/telerik/kendo/wiki/Release-Checklist&quo
   </builders>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Upload-Bower-production,Upload-Download-Builder-production,Upload-AppBuilder-Bundle-production</childProjects>
+      <childProjects>Upload-Bower-internal,Upload-Download-Builder-production,Upload-AppBuilder-Bundle-production</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

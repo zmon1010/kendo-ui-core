@@ -60,7 +60,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>xvfb-run -e xvfb-run.log -a ./build/run-build-task bower:official</command>
+      <command>xvfb-run -e xvfb-run.log -a ./build/run-build-task bower:offical</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

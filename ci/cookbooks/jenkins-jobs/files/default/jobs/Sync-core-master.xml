@@ -7,6 +7,21 @@
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.8">
       <projectUrl>https://github.com/telerik/kendo-ui-core/</projectUrl>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.7">
+      <teamDomain></teamDomain>
+      <token></token>
+      <room></room>
+      <startNotification>false</startNotification>
+      <notifySuccess>false</notifySuccess>
+      <notifyAborted>false</notifyAborted>
+      <notifyNotBuilt>false</notifyNotBuilt>
+      <notifyUnstable>false</notifyUnstable>
+      <notifyFailure>false</notifyFailure>
+      <notifyBackToNormal>false</notifyBackToNormal>
+      <notifyRepeatedFailure>false</notifyRepeatedFailure>
+      <includeTestSummary>false</includeTestSummary>
+      <showCommitList>false</showCommitList>
+    </jenkins.plugins.slack.SlackNotifier_-SlackJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@2.0.4">
     <configVersion>2</configVersion>
@@ -71,6 +86,8 @@ fi
 git checkout private-master &amp;&gt;/dev/null
 
 
+STATUS=0;
+
 for commit in `git rev-list --reverse --topo-order previous..core/master`;
 do
     if [ `git cat-file -p $commit | grep ^parent | wc -l` -eq 1 ];
@@ -80,9 +97,10 @@ do
         CHERRY_PICK_RESULT=$?
 
         if [ $CHERRY_PICK_RESULT -gt 0 ]; then
-            git status
-            git cherry-pick --abort
-            git reset --hard
+            STATUS=1;
+            git status;
+            git cherry-pick --abort;
+            git reset --hard;
         fi
     fi
 done
@@ -92,7 +110,7 @@ git push origin private-master:master
 
 git tag -f previous core/master
 
-exit $CHERRY_PICK_RESULT
+exit $STATUS
 </command>
     </hudson.tasks.Shell>
   </builders>

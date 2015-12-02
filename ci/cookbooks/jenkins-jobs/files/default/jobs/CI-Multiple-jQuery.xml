@@ -72,6 +72,12 @@
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
+    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
+      <teamDomain>kendoui</teamDomain>
+      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
+      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
+      <room></room>
+    </jenkins.plugins.slack.SlackNotifier>
   </publishers>
   <buildWrappers>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.3.1">

@@ -91,8 +91,14 @@
       <scriptOnlyIfSuccess>false</scriptOnlyIfSuccess>
       <scriptOnlyIfFailure>true</scriptOnlyIfFailure>
     </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
+    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
+      <teamDomain>kendoui</teamDomain>
+      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
+      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
+      <room></room>
+    </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>CI-Brazil-Time-Zones,CI-Multiple-jQuery,CI-Firefox,CI-Download-Builder</childProjects>
+      <childProjects>CI-Brazil-Time-Zones,CI-Multiple-jQuery,CI-Firefox,CI-Download-Builder,CI-Wrappers-Generation,Bundles</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
@@ -100,12 +106,6 @@
         <completeBuild>true</completeBuild>
       </threshold>
     </hudson.tasks.BuildTrigger>
-    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
-      <teamDomain>kendoui</teamDomain>
-      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
-      <buildServerUrl>/</buildServerUrl>
-      <room></room>
-    </jenkins.plugins.slack.SlackNotifier>
   </publishers>
   <buildWrappers>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.3.1">

@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Test Download Builder configuration</description>
+  <description>Uploads Bower packages			</description>
   <logRotator class="hudson.tasks.LogRotator">
-    <daysToKeep>10</daysToKeep>
-    <numToKeep>20</numToKeep>
-    <artifactDaysToKeep>10</artifactDaysToKeep>
-    <artifactNumToKeep>20</artifactNumToKeep>
+    <daysToKeep>-1</daysToKeep>
+    <numToKeep>10</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -18,7 +18,7 @@
       <token></token>
       <room></room>
       <startNotification>false</startNotification>
-      <notifySuccess>false</notifySuccess>
+      <notifySuccess>true</notifySuccess>
       <notifyAborted>false</notifyAborted>
       <notifyNotBuilt>false</notifyNotBuilt>
       <notifyUnstable>false</notifyUnstable>
@@ -38,7 +38,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>master</name>
+        <name>production</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -49,10 +49,10 @@
         <disableSubmodules>false</disableSubmodules>
         <recursiveSubmodules>true</recursiveSubmodules>
       </hudson.plugins.git.extensions.impl.SubmoduleOption>
+      <hudson.plugins.git.extensions.impl.PerBuildTag/>
     </extensions>
   </scm>
-  <assignedNode>slave</assignedNode>
-  <canRoam>false</canRoam>
+  <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
@@ -60,27 +60,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>./build/run-build-task download_builder:tests</command>
+      <command>xvfb-run -e xvfb-run.log -a ./build/run-build-task bower:internal_build</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.plugins.chucknorris.CordellWalkerRecorder plugin="chucknorris@0.5">
-      <factGenerator/>
-    </hudson.plugins.chucknorris.CordellWalkerRecorder>
-    <hudson.tasks.junit.JUnitResultArchiver>
-      <testResults>*-test-results.xml</testResults>
-      <keepLongStdio>false</keepLongStdio>
-      <testDataPublishers/>
-    </hudson.tasks.junit.JUnitResultArchiver>
-    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@0.16">
-      <buildSteps>
-        <hudson.tasks.Shell>
-          <command>rm *-test-results.xml</command>
-        </hudson.tasks.Shell>
-      </buildSteps>
-      <scriptOnlyIfSuccess>false</scriptOnlyIfSuccess>
-      <scriptOnlyIfFailure>true</scriptOnlyIfFailure>
-    </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
     <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
       <teamDomain>kendoui</teamDomain>
       <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
@@ -88,9 +71,5 @@
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
   </publishers>
-  <buildWrappers>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.3.1">
-      <colorMapName>xterm</colorMapName>
-    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-  </buildWrappers>
+  <buildWrappers/>
 </project>

@@ -1,7 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Set the time zone to BRT (Brasília time) and runs all unit tests		</description>
+  <description>Set the time zone and runs all unit tests.&#xd;
+&lt;ul&gt;&#xd;
+  &lt;li&gt;BRT (Brasília time)&lt;/li&gt;&#xd;
+  &lt;li&gt;Pacific&lt;/li&gt;&#xd;
+&lt;/ul&gt;</description>
   <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>10</daysToKeep>
     <numToKeep>20</numToKeep>
@@ -84,6 +88,12 @@
       <scriptOnlyIfSuccess>false</scriptOnlyIfSuccess>
       <scriptOnlyIfFailure>true</scriptOnlyIfFailure>
     </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
+    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
+      <teamDomain>kendoui</teamDomain>
+      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
+      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
+      <room></room>
+    </jenkins.plugins.slack.SlackNotifier>
   </publishers>
   <buildWrappers/>
 </project>

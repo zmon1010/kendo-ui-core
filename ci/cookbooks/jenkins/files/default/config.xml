@@ -264,7 +264,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[4]/jobNames/comparator"/>
         <string>Upload-AppBuilder-Bundle-production</string>
-        <string>Upload-Bower-production</string>
+        <string>Upload-Bower-Internal</string>
         <string>Upload-Download-Builder-production</string>
         <string>Upload-Internal-Build-production</string>
       </jobNames>
@@ -318,6 +318,9 @@
         <string>Upload-CDN-production</string>
         <string>Upload-Docs-Full</string>
         <string>Upload-Download-Builder-production</string>
+        <string>Upload-NuGet-production</string>
+        <string>Upload-Production-PHASE-1</string>
+        <string>Upload-Production-PHASE-2</string>
         <string>Upload-Release-Notes-production</string>
         <string>Upload-Theme-Builder</string>
       </jobNames>

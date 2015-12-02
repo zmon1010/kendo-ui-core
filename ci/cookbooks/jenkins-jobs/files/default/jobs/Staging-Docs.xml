@@ -56,7 +56,11 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.8">
+      <spec></spec>
+    </com.cloudbees.jenkins.GitHubPushTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -79,6 +83,12 @@ rsync -avc --delete _site/ /var/www/kendo-ui
     <hudson.plugins.chucknorris.CordellWalkerRecorder plugin="chucknorris@0.5">
       <factGenerator/>
     </hudson.plugins.chucknorris.CordellWalkerRecorder>
+    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
+      <teamDomain>kendoui</teamDomain>
+      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
+      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
+      <room></room>
+    </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
       <childProjects>CI-Docs-Links</childProjects>
       <threshold>
@@ -88,12 +98,6 @@ rsync -avc --delete _site/ /var/www/kendo-ui
         <completeBuild>true</completeBuild>
       </threshold>
     </hudson.tasks.BuildTrigger>
-    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
-      <teamDomain>kendoui</teamDomain>
-      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
-      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
-      <room></room>
-    </jenkins.plugins.slack.SlackNotifier>
   </publishers>
   <buildWrappers>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.3.1">
