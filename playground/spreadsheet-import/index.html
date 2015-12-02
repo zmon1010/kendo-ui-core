@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="../loader.js"></script>
+        <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css">
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.flat.css">
+
+        <script src="../../src/jszip.min.js"></script>
+
+        <script>
+            requireSync([
+                "../../src/jquery.js",
+                "../../src/jszip.min.js",
+                "../../src/kendo.all.js"
+            ]);
+        </script>
+    </head>
+    <body>
+        <input id="file" type="file" />
+        <div id="spreadsheet" style="width: 1200px;"></div>
+        <script>
+            $("#spreadsheet").kendoSpreadsheet();
+
+            function readExcel(widget, zip) {
+                var workbook = parseXML(zip.files["xl/workbook.xml"].asText());
+                var sheets = workbook.querySelectorAll("sheet");
+
+                widget.fromJSON({ sheets: placelhoders(sheets.length) });
+
+                var strings = readStrings(zip);
+
+                for (var i = 0; i < sheets.length; i++) {
+                    var sheetElement = sheets[i];
+                    var id = sheetElement.getAttribute("sheetId");
+                    var data = parseXML(zip.files["xl/worksheets/sheet" + id + ".xml"].asText());
+                    var name = sheetElement.getAttribute("name");
+
+                    // TODO: Doesn't seem to get applied immediately
+                    var sheet = widget.sheetByIndex(id - 1).name(name);
+                    sheet.batch(function() {
+                        readSheet(sheet, data, strings);
+                    });
+                }
+            }
+
+            function placelhoders(count) {
+                var arr = [];
+                while (count--) {
+                    arr.push({});
+                }
+
+                return arr;
+            }
+
+            function readStrings(zip) {
+                var shared = parseXML(zip.files["xl/sharedStrings.xml"].asText());
+                var texts = shared.querySelectorAll("t");
+
+                var strings = [];
+                for (var i = 0; i < texts.length; i++) {
+                    strings.push(texts[i].innerHTML);
+                }
+
+                return strings;
+            }
+
+            function readSheet(sheet, data, strings) {
+                var rows = data.querySelectorAll("sheetData row");
+                for (var i = 0; i < rows.length; i++) {
+                    readRow(sheet, rows[i], strings);
+                }
+            }
+
+            function readRow(sheet, row, strings) {
+                var cells = row.children || row.childNodes;
+                for (var i = 0; i < cells.length; i++) {
+                    var cell = cells[i];
+                    readCell(sheet, cell, strings);
+                }
+            }
+
+            function readCell(sheet, cell, strings) {
+                var type = cell.getAttribute("t");
+                var children = cell.children || cell.childNodes;
+                var formula;
+                var value;
+
+                for (var i = 0; i < children.length; i++) {
+                    var child = children[i];
+                    var content = child.innerHTML;
+
+                    if (child.nodeName === "v") {
+                        value = content;
+                        if (type === "n") {
+                            value = parseFloat(value);
+                        } else if (type === "b") {
+                            value = new Boolean(value);
+                        } else if (type === "s") {
+                            value = strings[parseInt(value, 10)];
+                        }
+                    } else if (child.nodeName === "f") {
+                        formula = content;
+                    }
+                }
+
+                var ref = cell.getAttribute("r");
+                var range = sheet.range(ref);
+                range.value(value);
+                range.formula(formula);
+            }
+
+            $("#file").on("change", function(e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    //try {
+                        var ts = new Date();
+
+                        var zip = new JSZip(e.target.result);
+
+                        var duration = new Date() - ts;
+                        console.log("Loaded " + file.name + " in " + duration + " ms");
+
+                        var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+                        readExcel(spreadsheet, zip);
+                    //} catch(e) {
+                        console.log("Error reading " + file.name + " : " + e.message);
+                    //}
+                };
+
+                reader.readAsArrayBuffer(file);
+            });
+
+
+            var parseXML;
+            if (typeof DOMParser != "undefined") {
+                parseXML = function(str) {
+                    var parser = new DOMParser();
+                    var dom = parser.parseFromString(str, "text/xml");
+                    if (dom.documentElement.nodeName == "parsererror") {
+                        throw new Error("Error while parsing XML: " + dom.documentElement.innerHTML);
+                    }
+
+                    return dom;
+                };
+            } else {
+                parseXML = function(str) {
+                    var doc = new ActiveXObject("Microsoft.XMLDOM");
+                    doc.async = "false";
+                    doc.loadXML(str);
+
+                    return doc;
+                }
+            }
+        </script>
+    </body>
+</html>
