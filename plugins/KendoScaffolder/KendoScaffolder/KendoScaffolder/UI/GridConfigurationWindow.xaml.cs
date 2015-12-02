@@ -32,7 +32,6 @@ namespace KendoScaffolder.UI
             InitializeComponent();
 
             GridEventsListBox.SelectionChanged += GridEventsListBoxSelectionChanged;
-            //var a  = Microsoft.VisualStudio.PlatformUI.VSColorTheme;
 
             if (viewModel.ViewType == ViewType.MVC)
             {
@@ -196,6 +195,7 @@ namespace KendoScaffolder.UI
         {
             ComboBox cb = sender as ComboBox;
             string item = cb.SelectedItem.ToString();
+            RequireMvc.Visibility = (item.Equals("WebApi") && WidgetTitle.Text == "Kendo UI Grid") ? Visibility.Visible : Visibility.Hidden;
             ServerOperation.Visibility = (item.Equals("Server")) ? Visibility.Hidden : Visibility.Visible;
         }
     }

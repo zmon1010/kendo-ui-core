@@ -78,7 +78,7 @@
 
                     <Label Grid.Row="2" Content="View Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
                     <TextBox Grid.Row="3" Name="ViewName" Loaded="ViewName_Loaded" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ViewName}" />
-                    
+
                     <Label Grid.Row="4" Content="Model Class:" HorizontalAlignment="Left"  VerticalAlignment="Bottom"/>
                     <ComboBox Grid.Row="5" Name="ModelType" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Top" 
                               ItemsSource="{Binding ModelTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedModelType, Mode=OneWayToSource}" />
@@ -127,7 +127,6 @@
                   ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding SelectedDataSourceType, Mode=TwoWay}" SelectionChanged="SelectedDataSourceType_Changed" />
                         <CheckBox Name="ServerOperation" Content="Server Operation" VerticalAlignment="Center" Margin="20, 0, 0, 0" IsChecked="{Binding ServerOperation, Mode=TwoWay}" />
                     </WrapPanel>
-                    
                     
                     <CheckBox Grid.Row="1" Grid.Column="0"  Content="Editable" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Editable_Clicked" IsChecked="{Binding Editable, Mode=OneWayToSource}" />
                     <WrapPanel Grid.Row="2" Grid.Column="1" Name="EditModeWrapPanel" Visibility="Collapsed">
@@ -182,6 +181,7 @@
                     </WrapPanel>
                     <CheckBox Grid.Row="17" Content="Excel Export" Name="ExcelExport" IsChecked="{Binding ExcelExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <CheckBox Grid.Row="18" Content="PDF Export" Name="PdfExport" IsChecked="{Binding PdfExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Label Name="RequireMvc" Content="Note: WebAPI Scaffolding requires Kendo.MVC.dll to be included, &#xD;&#xA;along with the kendo.aspnetmvc.min.js file" Visibility="Hidden" Foreground="Red" Margin="-14,46,58,-54" Grid.ColumnSpan="2" Grid.Row="18"/>
                 </Grid>
             </TabItem>
             <TabItem Height="36" Width="220" Header="Events">
