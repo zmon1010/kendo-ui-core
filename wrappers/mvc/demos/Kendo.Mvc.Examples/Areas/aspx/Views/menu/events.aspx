@@ -4,7 +4,8 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+<div class="demo-section k-content">
+    <h4>Menu</h4>
     <%= Html.Kendo().Menu()
         .Name("Menu")
         .Items(items =>
@@ -41,36 +42,11 @@
                     children.Add().Text("Sub Item 4");
                     children.Add().Text("Sub Item 5");
                 });
-
-            items.Add()
-                 .Text("Fourth Item")
-                 .Items(children =>
-                 {
-                     children.Add().Text("Sub Item 1");
-                     children.Add().Text("Sub Item 2");
-                     children.Add().Text("Sub Item 3");
-                     children.Add().Text("Sub Item 4");
-                     children.Add().Text("Sub Item 5");
-                 });
-
-            items.Add()
-                .Text("Fifth Item")
-                .Items(children =>
-                {
-                    children.Add().Text("Sub Item 1");
-                    children.Add().Text("Sub Item 2");
-                    children.Add().Text("Sub Item 3");
-                    children.Add().Text("Sub Item 4");
-                    children.Add().Text("Sub Item 5");
-                });
         })
         .Events(e => e.Open("open").Close("close").Select("select").Activate("activate").Deactivate("deactivate"))
     %>
-</div>
-    <div class="demo-section k-header">
-        <h4>Context Menu</h4>
-        <p>A collection of <span id="context-target">Animation (?)</span> objects, used to change default animations. A value of false will disable all animations in the widget.</p>
-    </div>
+        <h4 style="padding-top: 2em;">Context Menu</h4>
+      
 
     <%= Html.Kendo().ContextMenu()
             .Name("context-menu-events")
@@ -106,9 +82,11 @@
             })
             .Events(e => e.Open("open").Close("close").Select("select").Activate("activate").Deactivate("deactivate"))
     %>
-    <div class="demo-section">
-        <h3 class="title">Console log
-        </h3>
+      <p>A collection of <span id="context-target">Animation (?)</span> objects, used to change default animations. A value of false will disable all animations in the widget.</p>
+   </div>
+
+    <div class="box">
+        <h4>Console log</h4>
         <div class="console"></div>
     </div>
 <script>
@@ -137,15 +115,13 @@
     .demo-section .box-col li {
         margin-bottom: 0;
     }
-
     #context-target {
         cursor: pointer;
         color: red;
     }
-
-        #context-target:hover {
-            text-decoration: underline;
-        }
+    #context-target:hover {
+        text-decoration: underline;
+    } 
 </style>
 
 </asp:Content>

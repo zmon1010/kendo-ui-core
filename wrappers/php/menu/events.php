@@ -5,8 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section k-header">
-    <h4>Menu</h4>
+<div class="demo-section k-content">
+        <h4>Menu</h4>
 <?php
     $menu = new \Kendo\UI\Menu('menu');
 
@@ -37,24 +37,6 @@ require_once '../lib/Kendo/Autoload.php';
     );
     $menu->addItem($third);
 
-    $fourth = new \Kendo\UI\MenuItem("Fourth Item");
-    $fourth->addItem(
-        new \Kendo\UI\MenuItem("Sub Item 1"),
-        new \Kendo\UI\MenuItem("Sub Item 2"),
-        new \Kendo\UI\MenuItem("Sub Item 3"),
-        new \Kendo\UI\MenuItem("Sub Item 4")
-    );
-    $menu->addItem($fourth);
-
-    $fifth = new \Kendo\UI\MenuItem("Fifth Item");
-    $fifth->addItem(
-        new \Kendo\UI\MenuItem("Sub Item 1"),
-        new \Kendo\UI\MenuItem("Sub Item 2"),
-        new \Kendo\UI\MenuItem("Sub Item 3"),
-        new \Kendo\UI\MenuItem("Sub Item 4")
-    );
-    $menu->addItem($fifth);
-
     $menu->select('onSelect')
          ->open('onOpen')
          ->close('onClose')
@@ -63,9 +45,7 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $menu->render();
 ?>
-</div>
-<div class="demo-section k-header">
-    <h4>Context Menu</h4>
+<h4 style="padding-top: 2em;">Context Menu</h4>
 <?php
     $contextMenu = new \Kendo\UI\ContextMenu('context-menu-events');
 
@@ -110,6 +90,11 @@ require_once '../lib/Kendo/Autoload.php';
     <p>A collection of <span id="context-target">Animation (?)</span> objects, used to change default animations. A value of false will disable all animations in the widget.</p>
 </div>
 
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
+
 <script>
     function onOpen(e) {
         kendoConsole.log("Opened: " + ($(e.item).children(".k-link").text() || "ContextMenu"));
@@ -147,7 +132,7 @@ require_once '../lib/Kendo/Autoload.php';
     }
     #context-target:hover {
         text-decoration: underline;
-    }
+    } 
 </style>
 
 <?php require_once '../include/footer.php'; ?>

@@ -3,7 +3,8 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-<div class="demo-section">
+<div class="demo-section k-content">
+    <h4>Menu</h4>
 	<kendo:menu name="menu" open="onOpen" close="onClose" select="onSelect" activate="onActivate" deactivate="onDeactivate">
 	    <kendo:menu-items>
 		    <kendo:menu-item text="First Item">
@@ -30,28 +31,10 @@
 	                <kendo:menu-item text="Sub Item 4"></kendo:menu-item>
 	            </kendo:menu-items>
 	        </kendo:menu-item>
-	        <kendo:menu-item text="Fourth Item">
-	            <kendo:menu-items>
-	                <kendo:menu-item text="Sub Item 1"></kendo:menu-item>
-	                <kendo:menu-item text="Sub Item 2"></kendo:menu-item>
-	                <kendo:menu-item text="Sub Item 3"></kendo:menu-item>
-	                <kendo:menu-item text="Sub Item 4"></kendo:menu-item>
-	            </kendo:menu-items>
-	        </kendo:menu-item>
-	        <kendo:menu-item text="Fifth Item">
-	            <kendo:menu-items>
-	                <kendo:menu-item text="Sub Item 1"></kendo:menu-item>
-	                <kendo:menu-item text="Sub Item 2"></kendo:menu-item>
-	                <kendo:menu-item text="Sub Item 3"></kendo:menu-item>
-	                <kendo:menu-item text="Sub Item 4"></kendo:menu-item>
-	            </kendo:menu-items>
-	        </kendo:menu-item>
 	    </kendo:menu-items>
 	</kendo:menu>
     <br/>
-    <div id="context-target">
-        Context Menu Target
-    </div>
+   <h4 style="padding-top: 2em;">Context Menu</h4>
 
     <kendo:contextMenu name="context-menu" open="onOpen" close="onClose" select="onSelect" activate="onActivate" deactivate="onDeactivate" target="#context-target">
    	    <kendo:contextMenu-items>
@@ -81,10 +64,11 @@
    	        </kendo:contextMenu-item>
    	    </kendo:contextMenu-items>
    	</kendo:contextMenu>
-</div>
-<div class="demo-section">
-    <h3 class="title">Console log
-    </h3>
+ <p>A collection of <span id="context-target">Animation (?)</span> objects, used to change default animations. A value of false will disable all animations in the widget.</p>
+ </div>
+
+<div class="box">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>	
 <script>
@@ -109,10 +93,15 @@
     }
 </script>
 <style>
-    #context-target
-    {
-        height: 50px;
-        border: 1px solid red;
+    .demo-section .box-col li {
+        margin-bottom: 0;
     }
+    #context-target {
+        cursor: pointer;
+        color: red;
+    }
+    #context-target:hover {
+        text-decoration: underline;
+    } 
 </style>
 <demo:footer />
