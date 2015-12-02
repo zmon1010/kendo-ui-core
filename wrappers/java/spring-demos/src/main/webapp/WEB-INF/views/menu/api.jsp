@@ -3,32 +3,10 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-<div class="configuration k-widget k-header">
-    <span class="configHead">API Functions</span>
-    <ul class="options">
-        <li>
-            <input type="text" id="toggleIndex" value="0" class="k-textbox"/> <button class="toggleItem k-button">Enable/Disable</button>
-        </li>
-        <li>
-            <input type="text" id="triggerIndex" value="0" class="k-textbox"/> <button class="triggerItem k-button">Open/Close</button>
-        </li>
-        <li>
-            <input type="text" id="removeIndex" value="0" class="k-textbox"/> <button class="removeItem k-button">Remove</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="appendText" class="k-textbox"/> <input type="text" value="0.0" id="appendIndex" class="k-textbox"/> <button class="appendItem k-button">Append</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="beforeText" class="k-textbox"/> <input type="text" value="0" id="beforeIndex" class="k-textbox"/> <button class="beforeItem k-button">Before</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="afterText" class="k-textbox"/> <input type="text" value="0" id="afterIndex" class="k-textbox"/> <button class="afterItem k-button">After</button>
-        </li>
-    </ul>
-</div>
+<div class="demo-section k-content wide">
 <kendo:menu name="menu">
     <kendo:menu-items>
-	    <kendo:menu-item text="First Item">
+	    <kendo:menu-item  text="First Item">
 	        <kendo:menu-items>
 	            <kendo:menu-item text="Sub Item 1"></kendo:menu-item>
 	            <kendo:menu-item text="Sub Item 2"></kendo:menu-item>
@@ -70,7 +48,46 @@
         </kendo:menu-item>
     </kendo:menu-items>
 </kendo:menu>
+</div>
 
+<div class="box wide">
+    <div class="box-col">
+        <h4>Enable / Disable</h4>
+        <ul class="options">
+            <li>
+                <input type="text" id="toggleIndex" class="k-textbox"/> <button class="toggleItem k-button">Enable/Disable</button>
+            </li>
+            <li>
+                <button class="toggleTextItems k-button">Enable/Disable all Sub Item 3</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Add / Remove</h4>
+        <ul class="options">
+            <li>
+                <input type="text" id="removeIndex" class="k-textbox"/> <button class="removeItem k-button">Remove</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="appendText" class="k-textbox"/> <span class="append-position">under</span> <input type="text" value="0.0" id="appendIndex" class="k-textbox"/> <button class="appendItem k-button">Append</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="beforeText" class="k-textbox"/> <span class="append-position">before</span> <input type="text" value="0" id="beforeIndex" class="k-textbox"/> <button class="beforeItem k-button">Append</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="afterText" class="k-textbox"/> <span class="append-position">after</span> <input type="text" value="0" id="afterIndex" class="k-textbox"/> <button class="afterItem k-button">Append</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Open / Close</h4>
+        <ul class="options">
+            <li>
+                <input type="text" id="triggerIndex" class="k-textbox"/> <button class="triggerItem k-button">Open/Close</button>
+            </li>
+        </ul>
+    </div>
+</div>
 <script>
 	$(document).ready(function() {
 	    var getItem = function (target) {
@@ -123,7 +140,11 @@
 	                        text: $("#afterText").val()
 	                    }, getItem($("#afterIndex")));
 	            }
-	        };
+	        },
+	        toggleText = function () {
+                var items = $("#menu").find(".k-link:contains(Sub Item 3)").parent();
+                menu.enable(items, items.hasClass("k-state-disabled"));
+            };
 	
 	    $(".toggleItem").click(toggle);
 	    $("#toggleIndex").keypress(toggle);
@@ -143,12 +164,25 @@
 	    $(".afterItem").click(after);
 	    $("#afterText,#afterIndex").keypress(after);
 	    
+	    $(".toggleTextItems").click(toggleText);
+	    
 	    var menu = $("#menu").css({ marginRight: "220px" }).data("kendoMenu");
 	});
 </script>
-<style>
-	.configuration .k-textbox {
-	    width: 40px;
-	}
+ <style>
+    .box .k-textbox {
+        width: 60px;
+    }
+    .box-col {
+        width: 320px;
+        margin-bottom: -20px;
+    }
+    .box-col .options {
+        margin-bottom: 20px;
+    }
+    .append-position {
+        display: inline-block;
+        min-width: 45px;
+    }
 </style>
 <demo:footer />

@@ -4,33 +4,10 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="configuration k-widget k-header">
-    <span class="configHead">API Functions</span>
-    <ul class="options">
-        <li>
-            <input type="text" id="toggleIndex" value="0" class="k-textbox"/> <button class="toggleItem k-button">Enable/Disable</button>
-        </li>
-        <li>
-            <input type="text" id="triggerIndex" value="0" class="k-textbox"/> <button class="triggerItem k-button">Open/Close</button>
-        </li>
-        <li>
-            <input type="text" id="removeIndex" value="0" class="k-textbox"/> <button class="removeItem k-button">Remove</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="appendText" class="k-textbox"/> <input type="text" value="0.0" id="appendIndex" class="k-textbox"/> <button class="appendItem k-button">Append</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="beforeText" class="k-textbox"/> <input type="text" value="0" id="beforeIndex" class="k-textbox"/> <button class="beforeItem k-button">Before</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="afterText" class="k-textbox"/> <input type="text" value="0" id="afterIndex" class="k-textbox"/> <button class="afterItem k-button">After</button>
-        </li>
-    </ul>
-</div>
+<div class="demo-section k-content wide">
 
 <%= Html.Kendo().Menu()
     .Name("menu")
-    .HtmlAttributes(new { style = "margin-right:220px;" })
     .Items(items =>
     {
         items.Add()
@@ -38,14 +15,14 @@
             .Items(children =>
             {
                 children.Add().Text("Sub Item 1");
-                children.Add().Text("Sub Item 2");
+                children.Add().Text("<strong>Sub Item 2</strong>").Encoded(false);
                 children.Add().Text("Sub Item 3");
                 children.Add().Text("Sub Item 4");
                 children.Add().Text("Sub Item 5");
             });
 
         items.Add()
-             .Text("Second Item")
+             .Text("<strong>Second Item</strong>").Encoded(false)
              .Items(children =>
              {
                  children.Add().Text("Sub Item 1");
@@ -56,7 +33,7 @@
              });
 
         items.Add()
-            .Text("Third Item")
+            .Text("<strong>Third Item</strong>").Encoded(false)
             .Items(children =>
             {
                 children.Add().Text("Sub Item 1");
@@ -68,10 +45,11 @@
 
         items.Add()
              .Text("Fourth Item")
+             .HtmlAttributes(new { @class = "redText" })
              .Items(children =>
              {
                  children.Add().Text("Sub Item 1");
-                 children.Add().Text("Sub Item 2");
+                 children.Add().Text("<strong>Sub Item 2</strong>").Encoded(false);
                  children.Add().Text("Sub Item 3");
                  children.Add().Text("Sub Item 4");
                  children.Add().Text("Sub Item 5");
@@ -82,13 +60,60 @@
             .Items(children =>
             {
                 children.Add().Text("Sub Item 1");
-                children.Add().Text("Sub Item 2");
+                children.Add().Text("Sub Item 2").HtmlAttributes(new { @class = "redText" });
                 children.Add().Text("Sub Item 3");
                 children.Add().Text("Sub Item 4");
                 children.Add().Text("Sub Item 5");
             });
     })
 %>
+
+</div>
+
+<div class="box wide">
+    <div class="box-col">
+        <h4>Enable / Disable</h4>
+        <ul class="options">
+            <li>
+                <input type="text" id="toggleIndex" class="k-textbox"/> <button class="toggleItem k-button">Enable/Disable</button>
+            </li>
+            <li>
+                <button class="toggleTextItems k-button">Enable/Disable all Sub Item 3</button>
+            </li>
+            <li>
+                <button class="toggleStrongItems k-button">Enable/Disable <strong>strong</strong> elements</button>
+            </li>
+            <li>
+                <button class="toggleRedTextItems k-button">Enable/Disable <span class="redText">.redText</span> elements</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Add / Remove</h4>
+        <ul class="options">
+            <li>
+                <input type="text" id="removeIndex" class="k-textbox"/> <button class="removeItem k-button">Remove</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="appendText" class="k-textbox"/> <span class="append-position">under</span> <input type="text" value="0.0" id="appendIndex" class="k-textbox"/> <button class="appendItem k-button">Append</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="beforeText" class="k-textbox"/> <span class="append-position">before</span> <input type="text" value="0" id="beforeIndex" class="k-textbox"/> <button class="beforeItem k-button">Append</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="afterText" class="k-textbox"/> <span class="append-position">after</span> <input type="text" value="0" id="afterIndex" class="k-textbox"/> <button class="afterItem k-button">Append</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Open / Close</h4>
+        <ul class="options">
+            <li>
+                <input type="text" id="triggerIndex" class="k-textbox"/> <button class="triggerItem k-button">Open/Close</button>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <script>
     $(document).ready(function() {
@@ -142,6 +167,19 @@
                             text: $("#afterText").val()
                         }, getItem($("#afterIndex")));
                 }
+            },
+             toggleText = function () {
+                 var items = $("#menu").find(".k-link:contains(Sub Item 3)").parent();
+                 menu.enable(items, items.hasClass("k-state-disabled"));
+             },
+
+            toggleStrong = function () {
+                var items = $("#menu").find(":has(> strong)").parent();
+                menu.enable(items, items.hasClass("k-state-disabled"));
+            },
+
+            toggleRedText = function () {
+                menu.enable(".redText", $("#menu").find(".redText").hasClass("k-state-disabled"));
             };
 
         $(".toggleItem").click(toggle);
@@ -161,13 +199,36 @@
 
         $(".afterItem").click(after);
         $("#afterText,#afterIndex").keypress(after);
+
+        $(".toggleTextItems").click(toggleText);
+        $(".toggleStrongItems").click(toggleStrong);
+        $(".toggleRedTextItems").click(toggleRedText);
         
         var menu = $("#menu").data("kendoMenu");
     });
 </script>
-<style>
-    .configuration .k-textbox {
-        width: 40px;
+ <style>
+    .box .k-textbox {
+        width: 60px;
+    }
+    .box-col {
+        width: 320px;
+        margin-bottom: -20px;
+    }
+    .box-col .options {
+        margin-bottom: 20px;
+    }
+    .append-position {
+        display: inline-block;
+        min-width: 45px;
+    }
+    .redText,
+    .redText > .k-link {
+        color: red;
+    }
+
+    .redText.k-state-disabled > .k-link {
+        color: lightcoral;
     }
 </style>
 </asp:Content>
