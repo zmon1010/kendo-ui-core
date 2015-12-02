@@ -343,6 +343,28 @@
                     forceProxy: options.forceProxy
                 });
             }
+        },
+
+        draw: function(options, callback) {
+            if (typeof options == "function" && !callback) {
+                callback = options;
+                options = {};
+            }
+            var parts = [], sheets = this._sheets;
+            (function loop(i){
+                if (i < sheets.length) {
+                    sheets[i].draw(kendo.spreadsheet.SHEETREF, options, function(group){
+                        parts.push(group);
+                        loop(i + 1);
+                    });
+                } else {
+                    var group = parts[0];
+                    for (i = 1; i < parts.length; ++i) {
+                        group.children = group.children.concat(parts[i].children);
+                    }
+                    callback(group);
+                }
+            })(0);
         }
     });
 

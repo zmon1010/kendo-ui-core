@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.drawing", "./sheet", "./range", "./references", "./numformat", "../util/text-metrics" ], f);
+    define([ "../kendo.pdf", "./sheet", "./range", "./references", "./numformat", "../util/text-metrics" ], f);
 })(function(){
 
     "use strict";
@@ -438,6 +438,16 @@
     }
 
     spreadsheet.Sheet.prototype.draw = function(range, options, callback) {
+        if (typeof options == "function" && !callback) {
+            callback = options;
+            options = null;
+        }
+        options = kendo.jQuery.extend({
+            paperSize  : "A4",
+            landscape  : true,
+            margin     : "1cm",
+            guidelines : true
+        }, options);
         var group = new drawing.Group();
         var paper = kendo.pdf.getPaperOptions(options);
         group.options.set("pdf", {
@@ -455,7 +465,7 @@
         drawLayout(layout, group, {
             pageWidth  : pageWidth,
             pageHeight : pageHeight,
-            guidelines : options.guidelines != null ? options.guidelines : true
+            guidelines : options.guidelines
         });
         callback(group);
     };

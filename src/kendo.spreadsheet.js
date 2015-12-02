@@ -214,6 +214,10 @@
                 this._workbook.saveAsExcel(options);
             },
 
+            draw: function(options, callback) {
+                this._workbook.draw(options, callback);
+            },
+
             _workbookExcelExport: function(e) {
                 if (this.trigger("excelExport", e)) {
                     e.preventDefault();

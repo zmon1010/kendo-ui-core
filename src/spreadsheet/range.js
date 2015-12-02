@@ -697,6 +697,10 @@
             this._property("fontSize", size);
 
             return this;
+        },
+
+        draw: function(options, callback) {
+            this._sheet.draw(this._ref.toRangeRef(), options, callback);
         }
     });
 

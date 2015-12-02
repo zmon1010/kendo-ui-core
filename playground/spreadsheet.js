@@ -179,6 +179,18 @@ $("#pdf").on("click", function(){
     });
 });
 
+$("#pdf2").on("click", function(){
+    spreadsheet.activeSheet().selection().draw(function(group){
+        kendo.drawing.pdf.saveAs(group, "sheet.pdf");
+    });
+});
+
+$("#pdf-all").on("click", function(){
+    spreadsheet._workbook.draw(function(group){
+        kendo.drawing.pdf.saveAs(group, "sheet.pdf");
+    });
+});
+
 $("#recalc").on("click", function(){
     //console.time("recalc");
     spreadsheet.refresh({ recalc: true });
