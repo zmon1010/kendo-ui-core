@@ -1010,7 +1010,7 @@
             return new PDFHexString(this._sub.encodeText(text+""));
         },
         getTextWidth: function(fontSize, text) {
-            var width = 0, codeMap = this._font.cmap.getUnicodeEntry().codeMap;
+            var width = 0, codeMap = this._font.cmap.codeMap;
             for (var i = 0; i < text.length; ++i) {
                 var glyphId = codeMap[text.charCodeAt(i)];
                 width += this._font.widthOfGlyph(glyphId || 0);

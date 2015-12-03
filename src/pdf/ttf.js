@@ -651,33 +651,29 @@ var PostTable = (function(){
 
 var CmapTable = (function(){
 
-    function CmapEntry(data, offset) {
+    function CmapEntry(data, offset, codeMap) {
         var self = this;
         self.platformID = data.readShort();
         self.platformSpecificID = data.readShort();
         self.offset = offset + data.readLong();
 
         data.saveExcursion(function(){
+            var code;
             data.offset(self.offset);
             self.format = data.readShort();
-            self.length = data.readShort();
-            self.language = data.readShort();
 
-            self.isUnicode = (
-                self.platformID == 3 && self.platformSpecificID == 1 && self.format == 4
-            ) || (
-                self.platformID === 0 && self.format == 4
-            );
-
-            self.codeMap = {};
             switch (self.format) {
               case 0:
+                self.length = data.readShort();
+                self.language = data.readShort();
                 for (var i = 0; i < 256; ++i) {
-                    self.codeMap[i] = data.readByte();
+                    codeMap[i] = data.readByte();
                 }
                 break;
 
               case 4:
+                self.length = data.readShort();
+                self.language = data.readShort();
                 var segCount = data.readShort() / 2;
 
                 data.skip(6);       // searchRange, entrySelector, rangeShift
@@ -692,7 +688,7 @@ var CmapTable = (function(){
 
                 for (i = 0; i < segCount; ++i) {
                     var start = startCode[i], end = endCode[i];
-                    for (var code = start; code <= end; ++code) {
+                    for (code = start; code <= end; ++code) {
                         var glyphId;
                         if (idRangeOffset[i] === 0) {
                             glyphId = code + idDelta[i];
@@ -721,8 +717,39 @@ var CmapTable = (function(){
                                 glyphId += idDelta[i];
                             }
                         }
-                        self.codeMap[code] = glyphId & 0xFFFF;
+                        codeMap[code] = glyphId & 0xFFFF;
                     }
+                }
+                break;
+
+              case 6:
+                self.length = data.readShort();
+                self.language = data.readShort();
+                code = data.readShort();
+                var length = data.readShort();
+                while (length-- > 0) {
+                    codeMap[code++] = data.readShort();
+                }
+                break;
+
+              case 12:
+                data.readShort(); // reserved
+                self.length = data.readLong();
+                self.language = data.readLong();
+                var ngroups = data.readLong();
+                while (ngroups-- > 0) {
+                    code = data.readLong();
+                    var endCharCode = data.readLong();
+                    var glyphCode = data.readLong();
+                    while (code <= endCharCode) {
+                        codeMap[code++] = glyphCode++;
+                    }
+                }
+                break;
+
+              default:
+                if (window.console) {
+                    window.console.error("Unhandled CMAP format: " + self.format);
                 }
             }
         });
@@ -818,16 +845,11 @@ var CmapTable = (function(){
             var self = this;
             var offset = self.offset;
             data.offset(offset);
-
+            self.codeMap = {};
             self.version = data.readShort();
             var tableCount = data.readShort();
-            self.unicodeEntry = null;
             self.tables = data.times(tableCount, function(){
-                var entry = new CmapEntry(data, offset);
-                if (entry.isUnicode) {
-                    self.unicodeEntry = entry;
-                }
-                return entry;
+                return new CmapEntry(data, offset, self.codeMap);
             });
         },
         render: function(ncid2ogid, ogid2ngid) {
@@ -836,12 +858,6 @@ var CmapTable = (function(){
             out.writeShort(1);  // tableCount
             out.write(renderCharmap(ncid2ogid, ogid2ngid));
             return out.get();
-        },
-        getUnicodeEntry: function() {
-            if (!this.unicodeEntry) {
-                throw new Error("Font doesn't have an Unicode encoding");
-            }
-            return this.unicodeEntry;
         }
     });
 
@@ -920,32 +936,58 @@ function Subfont(font) {
     this.psName = nextSubsetTag() + "+" + this.font.psName;
 }
 
+// this is taken from punicode.js — https://mths.be/punycode — it's
+// just a small little function so there's no point to depend on the
+// whole lib.
+function ucs2decode(string) {
+    var output = [],
+        counter = 0,
+        length = string.length,
+        value,
+        extra;
+    while (counter < length) {
+        value = string.charCodeAt(counter++);
+        if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+            // high surrogate, and there is a next character
+            extra = string.charCodeAt(counter++);
+            if ((extra & 0xFC00) == 0xDC00) { // low surrogate
+                output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+            } else {
+                // unmatched surrogate; only append this code unit, in case the next
+                // code unit is the high surrogate of a surrogate pair
+                output.push(value);
+                counter--;
+            }
+        } else {
+            output.push(value);
+        }
+    }
+    return output;
+}
+
 Subfont.prototype = {
     use: function(ch) {
-        var code;
+        var self = this;
         if (typeof ch == "string") {
-            var ret = "";
-            for (var i = 0; i < ch.length; ++i) {
-                code = this.use(ch.charCodeAt(i));
-                ret += String.fromCharCode(code);
-            }
-            return ret;
+            return ucs2decode(ch).reduce(function(ret, code){
+                return ret + String.fromCharCode(self.use(code));
+            }, "");
         }
-        code = this.unicodes[ch];
+        var code = self.unicodes[ch];
         if (!code) {
-            code = this.next++;
-            this.subset[code] = ch;
-            this.unicodes[ch] = code;
+            code = self.next++;
+            self.subset[code] = ch;
+            self.unicodes[ch] = code;
 
             // generate new GID (glyph ID) and maintain newGID ->
             // oldGID and back mappings
-            var old_gid = this.font.cmap.getUnicodeEntry().codeMap[ch];
+            var old_gid = self.font.cmap.codeMap[ch];
             if (old_gid) {
-                this.ncid2ogid[code] = old_gid;
-                if (this.ogid2ngid[old_gid] == null) {
-                    var new_gid = this.nextGid++;
-                    this.ogid2ngid[old_gid] = new_gid;
-                    this.ngid2ogid[new_gid] = old_gid;
+                self.ncid2ogid[code] = old_gid;
+                if (self.ogid2ngid[old_gid] == null) {
+                    var new_gid = self.nextGid++;
+                    self.ogid2ngid[old_gid] = new_gid;
+                    self.ngid2ogid[new_gid] = old_gid;
                 }
             }
         }
