@@ -10,8 +10,6 @@ require_once '../lib/Kendo/Autoload.php';
 <?php
     $menu = new \Kendo\UI\Menu('menu');
 
-    $menu->attr('style', 'margin-right: 220px');
-
     $first = new \Kendo\UI\MenuItem("First Item");
     $first->addItem(
         new \Kendo\UI\MenuItem("Sub Item 1"),

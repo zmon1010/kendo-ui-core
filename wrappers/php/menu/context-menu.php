@@ -16,21 +16,6 @@ require_once '../include/header.php';
 
 ?>
 
-    <div class="box">
-        <h4>Orientation Settings</h4>
-        <ul class="options">
-            <li>
-                <label for="orientation">orientation</label>
-                <select id="orientation" name="orientation">
-                    <option value="horizontal">Horizontal</option>
-                    <option value="vertical">Vertical</option>
-                </select>
-            </li>
-        </ul>
-        <br />
-        <a class="k-button" id="apply" href="#" style="width: 80px;">Apply</a>
-    </div>
-
     <script type="text/x-kendo-template" id="template">
         <div class="product">
             <img src="../content/shared/images/employees/#= FromID #.png" alt="#: From #" />
@@ -41,8 +26,8 @@ require_once '../include/header.php';
         </div>
     </script>
 
-    <div class="demo-section k-header">
-        <h4>WebMail</h4>
+<div class="demo-section k-content wide">
+    <h4>WebMail</h4>
 <?php
 
     $transport = new \Kendo\Data\DataSourceTransport();
@@ -98,6 +83,22 @@ require_once '../include/header.php';
     echo $listview->render();
 ?>
     </div>
+
+    <div class="box">
+    <h4>Orientation Settings</h4>
+    <ul class="options">
+        <li>
+            <label for="orientation">orientation</label>
+            <select id="orientation" name="orientation">
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+            </select>
+        </li>
+    </ul>
+    <br />
+    <a class="k-button" id="apply" href="#" style="width: 80px;">Apply</a>
+</div>
+    
 
 <?php
     $contextMenu = new \Kendo\UI\ContextMenu('menu');
@@ -185,9 +186,6 @@ require_once '../include/header.php';
 </script>
 
 <style>
-    .demo-section {
-            width: 860px;
-        }
     #listview-context-menu {
         padding: 0;
         margin-bottom: -1px;
@@ -229,6 +227,16 @@ require_once '../include/header.php';
         height: 0;
         clear: both;
         visibility: hidden;
+    }
+    
+    @media screen and (max-width: 620px) {
+        .product h3 {
+           max-width: 100px;
+           white-space: nowrap;
+           text-overflow: ellipsis;
+           height: 15px;
+        }
+     
     }
 </style>
 
