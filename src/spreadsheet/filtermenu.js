@@ -373,11 +373,19 @@
             }
         });
 
-        function flattern(operators) {
+        function flattenOperators(operators) {
             var messages = FILTERMENU_MESSAGES.operators;
             var result = [];
             for (var type in operators) {
+                if (!operators.hasOwnProperty(type)) {
+                    continue;
+                }
+
                 for (var operator in operators[type]) {
+                    if (!operators[type].hasOwnProperty(operator)) {
+                        continue;
+                    }
+
                     result.push({
                         text: messages[type][operator],
                         value: operator,
@@ -514,13 +522,14 @@
         };
 
         var FilterMenu = Widget.extend({
-            init: function(options) {
-                var element = $("<div />", { "class": FilterMenu.classNames.wrapper }).appendTo(document.body);
+            init: function(element, options) {
                 Widget.call(this, element, options);
+
+                this.element.addClass(FilterMenu.classNames.wrapper);
 
                 this.viewModel = new FilterMenuViewModel({
                     active: "value",
-                    operators: flattern(this.options.operators),
+                    operators: flattenOperators(this.options.operators),
                     clear: this.clear.bind(this),
                     apply: this.apply.bind(this)
                 });

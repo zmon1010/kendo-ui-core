@@ -91,10 +91,12 @@
     var range;
     var sheet;
     var filterMenu;
+    var element;
 
     function createWithValues(values, ref) {
         range = sheet.range(ref || "A1:A4").values(values);
-        return new kendo.spreadsheet.FilterMenu({ range: range });
+        element = $("<div />").appendTo(QUnit.fixture);
+        return new kendo.spreadsheet.FilterMenu(element, { range: range });
     }
 
     module("filter menu: filter by value", {
@@ -154,7 +156,7 @@
 
     test("wrap property is trimmed from values", function() {
         range = sheet.range("A1:A4").values([ ["header"], ["A1"], ["A2"], ["A3"] ]).wrap(true);
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: range });
+        filterMenu = new kendo.spreadsheet.FilterMenu(element, { range: range });
 
         var values = controller.values(range, 0);
 
@@ -245,7 +247,7 @@
 
     test("values that does not match existing custom filter rules appear as unchecked", function() {
         var filterMenuRange = rangeWithCustomFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], { operator: "contains", value: "B" });
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: filterMenuRange });
+        filterMenu = new kendo.spreadsheet.FilterMenu(element, { range: filterMenuRange });
         var values = controller.values(filterMenuRange, 0);
 
         equal(values[0].checked, false);
@@ -255,7 +257,7 @@
 
     test("values that does not match existing value filter rules appear as unchecked", function() {
         var filterMenuRange = rangeWithValuesFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], ["A", "B"] );
-        filterMenu = new kendo.spreadsheet.FilterMenu({ range: filterMenuRange });
+        filterMenu = new kendo.spreadsheet.FilterMenu(element, { range: filterMenuRange });
         var values = controller.values(filterMenuRange, 0);
 
         equal(values[0].checked, true);
