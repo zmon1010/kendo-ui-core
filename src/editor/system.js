@@ -691,13 +691,19 @@ var Clipboard = Class.extend({
             return;
         }
 
-        var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
-        var items = clipboardData && (clipboardData.items || clipboardData.files);
-        var images = items && $.grep(items, function(item) {
-            return (/^image\//i).test(item.type);
-        });
+        var clipboardData = e.clipboardData || e.originalEvent.clipboardData ||
+                    window.clipboardData || {};
 
-        if (!images || !images.length) {
+        var items = clipboardData.items || clipboardData.files;
+
+        if (!items) {
+            return;
+        }
+
+        var images = $.grep(items, function(item) { return (/^image\//i).test(item.type); });
+        var html = $.grep(items, function(item) { return (/^text\/html/i).test(item.type); });
+
+        if (html.length || !images.length) {
             return;
         }
 

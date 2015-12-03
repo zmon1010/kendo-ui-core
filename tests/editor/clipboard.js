@@ -175,7 +175,7 @@ if ('FileReader' in window) {
 
     function imageEvent(times) {
         function file() {
-            return { type: "image/png" };
+            return { type: "image/png", kind: "file" };
         }
 
         var files = [];
@@ -228,6 +228,18 @@ if ('FileReader' in window) {
 
         equal(handler.calls, 1);
         equal(handler.lastArgs[0].html, '<img src="READ_FILE_1" /><img src="READ_FILE_2" />');
+    });
+
+    test("paste prefers html over images", function() {
+        var handler = spy();
+        var event = imageEvent();
+        event.getData = function() { return "foo"; };
+
+        editor.one("paste", handler);
+
+        editor.clipboard.onpaste(event);
+
+        equal(handler.calls, 1);
     });
 }
 
