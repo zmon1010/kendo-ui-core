@@ -289,7 +289,7 @@
             this.navigator.height(this._viewPortHeight);
 
             if (!editor.isActive()) {
-                editor.enable(sheet.activeCellSelection().enable() !== false);
+                editor.enable(sheet.selection().enable() !== false);
                 editor.value(workbook._inputForRef(sheet.activeCell()));
             }
         },
@@ -348,7 +348,7 @@
                     event.preventDefault();
                 }
             } else {
-                var disabled = this._workbook.activeSheet().activeCellSelection().enable() === false;
+                var disabled = this._workbook.activeSheet().selection().enable() === false;
 
                 if (action == "delete" || action == "backspace") {
                     if (disabled) { return; }
@@ -569,7 +569,7 @@
 
         onDblClick: function(event) {
             var object = this.objectAt(event);
-            var disabled = this._workbook.activeSheet().activeCellSelection().enable() === false;
+            var disabled = this._workbook.activeSheet().selection().enable() === false;
 
             if (object.type !== "cell" || disabled) {
                 return;
