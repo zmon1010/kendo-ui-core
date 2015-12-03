@@ -258,10 +258,17 @@
 
                 var content = new drawing.Group();
                 page.append(content);
-                content.transform(
-                    geo.Matrix.scale(layout.scale, layout.scale)
-                        .multiplyCopy(geo.Matrix.translate(-left, -top))
-                );
+
+                var matrix = geo.Matrix.scale(layout.scale, layout.scale)
+                    .multiplyCopy(geo.Matrix.translate(-left, -top));
+
+                if (options.center) {
+                    matrix = matrix.multiplyCopy(
+                        geo.Matrix.translate((right - endright) / 2,
+                                             (bottom - endbottom) / 2));
+                }
+
+                content.transform(matrix);
 
                 if (options.guidelines) {
                     var prev = null;
@@ -503,7 +510,8 @@
             margin     : "1cm",
             guidelines : true,
             emptyCells : true,
-            fitWidth   : true
+            fitWidth   : false,
+            center     : false
         }, options);
         var group = new drawing.Group();
         var paper = kendo.pdf.getPaperOptions(options);
