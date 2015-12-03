@@ -170,10 +170,11 @@ $("#pdf").on("click", function(){
     //     kendo.drawing.pdf.saveAs(group, "spreadsheet.pdf");
     // });
 
-    spreadsheet.activeSheet().draw(kendo.spreadsheet.SHEETREF, {
-        paperSize : "A4",
-        margin    : "1cm",
-        landscape : true
+    spreadsheet.activeSheet().draw({
+        paperSize : "Letter",
+        margin    : "1in",
+        landscape : true,
+        fitWidth  : $("#pdf-fit-width")[0].checked,
     }, function(group){
         kendo.drawing.pdf.saveAs(group, "sheet.pdf");
     });

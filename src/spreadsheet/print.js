@@ -9,7 +9,6 @@
     var drawing = kendo.drawing;
     var formatting = spreadsheet.formatting;
     var geo = kendo.geometry;
-    var translate = geo.Matrix.translate;
 
     var GUIDELINE_WIDTH = 0.8;
 
@@ -75,7 +74,7 @@
         var rowHeights = [];
         var colWidths = [];
         var mergedCells = getMergedCells(sheet, range);
-        var maxRow = 0, maxCol = 0;
+        var maxRow = -1, maxCol = -1;
         sheet.forEach(range, function(row, col, cell){
             var relrow = row - range.topLeft.row;
             var relcol = col - range.topLeft.col;
@@ -116,6 +115,26 @@
             cells.push(cell);
         });
 
+        // keep only the drawable area
+        rowHeights = rowHeights.slice(0, maxRow + 1);
+        colWidths = colWidths.slice(0, maxCol + 1);
+
+        var pageWidth = options.pageWidth;
+        var pageHeight = options.pageHeight;
+        var scaleFactor = 1;
+
+        // when fitWidth is requested, we must update the page size
+        // with the corresponding scale factor; the algorithm below
+        // (2) will continue to work, just drwaing on a bigger page.
+        if (options.fitWidth) {
+            var width = colWidths.reduce(sum, 0);
+            if (width > pageWidth) {
+                scaleFactor = pageWidth / width;
+                pageWidth /= scaleFactor;
+                pageHeight /= scaleFactor;
+            }
+        }
+
         // 2. calculate top, left, bottom, right, width and height for
         //    printable cells.  Merged cells will be split across
         //    pages, unless the first row/col is shifted to next page.
@@ -124,8 +143,8 @@
         //    are not reset to zero for a new page (in fact, we don't
         //    even care about page dimensions here).  The print
         //    function translates the view to current page.
-        var ys = distributeCoords(rowHeights, options.pageHeight);
-        var xs = distributeCoords(colWidths, options.pageWidth);
+        var ys = distributeCoords(rowHeights, pageHeight);
+        var xs = distributeCoords(colWidths, pageWidth);
         var boxWidth = 0;
         var boxHeight = 0;
         cells = cells.filter(function(cell){
@@ -154,9 +173,14 @@
             width  : boxWidth,
             height : boxHeight,
             cells  : cells.sort(normalOrder),
+            scale  : scaleFactor,
             xs     : xs,
             ys     : ys
         };
+    }
+
+    function sum(a, b) {
+        return a + b;
     }
 
     function orlast(a, i) {
@@ -192,10 +216,12 @@
         // options:
         // - pageWidth
         // - pageHeight
-        // - fitWidth?
+        // - fitWidth
         // - center?
         var ncols = Math.ceil(layout.width / options.pageWidth);
         var nrows = Math.ceil(layout.height / options.pageHeight);
+        var pageWidth = options.pageWidth / layout.scale;
+        var pageHeight = options.pageHeight / layout.scale;
 
         for (var i = 0; i < ncols; ++i) {
             for (var j = 0; j < nrows; ++j) {
@@ -204,10 +230,10 @@
         }
 
         function addPage(row, col) {
-            var left = col * options.pageWidth;
-            var right = left + options.pageWidth;
-            var top = row * options.pageHeight;
-            var bottom = top + options.pageHeight;
+            var left = col * pageWidth;
+            var right = left + pageWidth;
+            var top = row * pageHeight;
+            var bottom = top + pageHeight;
             var endbottom = 0, endright = 0;
 
             // XXX: this can be optimized - discard cells that won't
@@ -229,9 +255,13 @@
                 page.clip(drawing.Path.fromRect(
                     new geo.Rect([ 0, 0 ],
                                  [ options.pageWidth, options.pageHeight ])));
+
                 var content = new drawing.Group();
                 page.append(content);
-                content.transform(translate(-left, -top));
+                content.transform(
+                    geo.Matrix.scale(layout.scale, layout.scale)
+                        .multiplyCopy(geo.Matrix.translate(-left, -top))
+                );
 
                 if (options.guidelines) {
                     var prev = null;
@@ -408,7 +438,7 @@
             }
             if (htrans < 0) { htrans = 0; }
             if (htrans || vtrans) {
-                line.el.transform(translate(htrans, vtrans));
+                line.el.transform(geo.Matrix.translate(htrans, vtrans));
             }
         });
     }
@@ -472,7 +502,8 @@
             landscape  : true,
             margin     : "1cm",
             guidelines : true,
-            emptyCells : true
+            emptyCells : true,
+            fitWidth   : true
         }, options);
         var group = new drawing.Group();
         var paper = kendo.pdf.getPaperOptions(options);
