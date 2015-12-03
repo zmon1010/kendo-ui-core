@@ -2310,6 +2310,18 @@ TRUE, TRUE),, 1)": [[ -234.2371645 ],
         });
     });
 
+    test("ROUND", function(){
+        calcTest({
+            "=ROUND(2.15, 1)"   : 2.2,
+            "=ROUND(2.149, 1)"  : 2.1,
+            "=ROUND(-1.475, 2)" : -1.48,
+            "=ROUND(21.5, -1)"  : 20,
+            "=ROUND(626.3,-3)"  : 1000,
+            "=ROUND(1.98,-1)"   : 0,
+            "=ROUND(-50.55,-2)" : -100,
+        });
+    });
+
     test("ROUNDUP", function(){
         calcTest({
             "=ROUNDUP(3.2,0)"           : 4,

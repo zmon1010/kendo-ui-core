@@ -280,6 +280,18 @@
         [ "*multiple", "number" ]
     ]);
 
+    defineFunction("round", function(num, digits){
+        var sign = num < 0 ? -1 : 1;
+        if (sign < 0) { num = -num; }
+        digits = Math.pow(10, digits);
+        num *= digits;
+        num = Math.round(num);
+        return sign * num / digits;
+    }).args([
+        [ "*number", "number" ],
+        [ "*digits", "number" ]
+    ]);
+
     defineFunction("roundup", function(num, digits){
         digits = Math.pow(10, digits);
         num *= digits;
