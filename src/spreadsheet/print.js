@@ -66,7 +66,7 @@
         return { primary: primary, secondary: secondary };
     }
 
-    function doLayout(sheet, range, pageWidth, pageHeight) {
+    function doLayout(sheet, range, options) {
         // 1. obtain the list of cells that need to be printed, the
         //    row heights and column widths.  Place in each cell row,
         //    col (relative to range, i.e. first is 0,0), rowspan,
@@ -75,6 +75,7 @@
         var rowHeights = [];
         var colWidths = [];
         var mergedCells = getMergedCells(sheet, range);
+        var maxRow = 0, maxCol = 0;
         sheet.forEach(range, function(row, col, cell){
             var relrow = row - range.topLeft.row;
             var relcol = col - range.topLeft.col;
@@ -84,9 +85,11 @@
             if (!relrow) {
                 colWidths.push(sheet.columnWidth(col));
             }
-            if (sheet.isHiddenColumn(col)
-                || sheet.isHiddenRow(row)
-                || !shouldDrawCell(cell)) {
+            if (sheet.isHiddenColumn(col) || sheet.isHiddenRow(row)) {
+                return;
+            }
+            var nonEmpty = shouldDrawCell(cell);
+            if (!(options.emptyCells || nonEmpty)) {
                 return;
             }
             var id = new CellRef(row, col).print();
@@ -94,6 +97,12 @@
                 return;
             }
             var m = mergedCells.primary[id];
+            if (nonEmpty) {
+                maxRow = Math.max(maxRow, row);
+                maxCol = Math.max(maxCol, col);
+            } else {
+                cell.empty = true;
+            }
             if (m) {
                 cell.merged = true;
                 cell.rowspan = m.height();
@@ -115,11 +124,14 @@
         //    are not reset to zero for a new page (in fact, we don't
         //    even care about page dimensions here).  The print
         //    function translates the view to current page.
-        var ys = distributeCoords(rowHeights, pageHeight);
-        var xs = distributeCoords(colWidths, pageWidth);
+        var ys = distributeCoords(rowHeights, options.pageHeight);
+        var xs = distributeCoords(colWidths, options.pageWidth);
         var boxWidth = 0;
         var boxHeight = 0;
-        cells.forEach(function(cell){
+        cells = cells.filter(function(cell){
+            if (cell.empty && (cell.row > maxRow || cell.col > maxCol)) {
+                return false;
+            }
             cell.left = xs[cell.col];
             cell.top = ys[cell.row];
             if (cell.merged) {
@@ -135,6 +147,7 @@
             }
             boxWidth = Math.max(boxWidth, cell.right);
             boxHeight = Math.max(boxHeight, cell.bottom);
+            return true;
         });
 
         return {
@@ -446,7 +459,8 @@
             paperSize  : "A4",
             landscape  : true,
             margin     : "1cm",
-            guidelines : true
+            guidelines : true,
+            emptyCells : true
         }, options);
         var group = new drawing.Group();
         var paper = kendo.pdf.getPaperOptions(options);
@@ -461,12 +475,10 @@
             pageWidth -= paper.margin.left + paper.margin.right;
             pageHeight -= paper.margin.top + paper.margin.bottom;
         }
-        var layout = doLayout(this, this._ref(range), pageWidth, pageHeight);
-        drawLayout(layout, group, {
-            pageWidth  : pageWidth,
-            pageHeight : pageHeight,
-            guidelines : options.guidelines
-        });
+        options.pageWidth = pageWidth;
+        options.pageHeight = pageHeight;
+        var layout = doLayout(this, this._ref(range), options);
+        drawLayout(layout, group, options);
         callback(group);
     };
 
