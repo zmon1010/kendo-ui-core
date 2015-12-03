@@ -617,7 +617,9 @@
                 this.element.text(value);
 
                 // also make sure the completion popup goes away
-                this.popup.close();
+                if (this.popup) {
+                    this.popup.close();
+                }
             } else {
                 tokens = kendo.spreadsheet.calc.tokenize(value);
                 tokens.forEach(function(tok){
