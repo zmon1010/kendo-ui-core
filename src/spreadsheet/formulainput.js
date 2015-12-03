@@ -295,6 +295,7 @@
         _move: function(key) {
             var list = this.list;
             var pressed = false;
+            var popup = this.popup;
 
             if (key === keys.DOWN) {
                 list.focusNext();
@@ -309,12 +310,14 @@
                 }
                 pressed = true;
             } else if (key === keys.ENTER) {
-                list.select(list.focus());
-                this.popup.close();
+                if (popup.visible()) {
+                    list.select(list.focus());
+                }
+                popup.close();
                 pressed = true;
             } else if (key === keys.TAB) {
                 list.select(list.focus());
-                this.popup.close();
+                popup.close();
                 pressed = true;
             } else if (key === keys.PAGEUP) {
                 list.focusFirst();

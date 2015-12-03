@@ -852,6 +852,23 @@
         equal(list.value(), "SUM");
     });
 
+    test("does not select focused item if formula list is hidden", 1, function() {
+        createFormulaInput();
+
+        filterInput("su", "=su");
+        filterInput("su", "foo");
+        formulaInput.popup.close();
+
+        var list = formulaInput.list;
+
+        element.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.ENTER
+        });
+
+        equal(formulaInput.value(), "foo");
+    });
+
     test("replace formula value on enter", 1, function() {
         createFormulaInput();
 
