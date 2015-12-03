@@ -409,7 +409,7 @@
         }
         return lines;
         function split(min, eol, max) {
-            var sub = text.substring(start, eol);
+            var sub = text.substring(start, eol).trim();
             var box = kendo.util.measureText(sub, style);
             if (box.width <= width) {
                 if (eol < max-1) {
