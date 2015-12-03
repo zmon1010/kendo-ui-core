@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Telerik.Windows.Documents.Spreadsheet.Model;
+using Telerik.Windows.Documents.Spreadsheet.Model.Filtering;
 using Telerik.Windows.Documents.Spreadsheet.Model.Sorting;
 using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
 using Telerik.Windows.Documents.Spreadsheet.Utilities;
@@ -46,7 +48,9 @@ namespace Telerik.Web.Spreadsheet
                     sheet.FrozenColumns = pane.TopLeftCellIndex.ColumnIndex;
                 }
 
-                sheet.Sort = GetSorting(documentWorksheet);                
+                sheet.Sort = GetSorting(documentWorksheet);
+
+                sheet.Filter = GetFilters(documentWorksheet);
             }
 
             return workbook;
@@ -97,5 +101,134 @@ namespace Telerik.Web.Spreadsheet
                 }).ToList()
             };            
         }
+
+        private static Filter GetFilters(DocumentWorksheet worksheet)
+        {
+            var documentFilter = worksheet.Filter;
+            var range = documentFilter.FilterRange;
+
+            if (range == null)
+            {
+                return null;
+            }            
+            
+            var filter = new Filter
+            {
+                Ref = NameConverter.ConvertCellRangeToName(range.FromIndex, range.ToIndex),
+                Columns = new List<FilterColumn>()
+            };
+
+            foreach (var item in documentFilter.Filters)
+            {                
+                if (item is TopFilter)
+                {
+                    var settings = item as TopFilter;
+
+                    filter.Columns.Add(new FilterColumn
+                    {
+                        Index = settings.RelativeColumnIndex,
+                        Filter = "top",
+                        Type = settings.TopFilterType.ToString().ToCamelCase(),
+                        Value = settings.Value
+                    });
+                }
+
+                if (item is ValuesCollectionFilter)
+                {
+                    var settings = item as ValuesCollectionFilter;
+
+                    filter.Columns.Add(new FilterColumn
+                    {
+                        Index = settings.RelativeColumnIndex,
+                        Filter = "value",
+                        Values = settings.StringValues.Select(value =>
+                        {
+                            double number;
+                            bool boolean;
+
+                            if (double.TryParse(value, out number))
+                            {
+                                return (object)number;
+                            }
+                            else if (bool.TryParse(value, out boolean))
+                            {
+                                return (object)boolean;
+                            }
+                            else
+                            {
+                                return value;
+                            }
+
+                        }).ToList()
+                    });
+                }
+
+                if (item is DynamicFilter)
+                {
+                    var settings = item as DynamicFilter;
+
+                    filter.Columns.Add(new FilterColumn
+                    {
+                        Filter = "dynamic",
+                        Index = settings.RelativeColumnIndex,
+                        Type = settings.DynamicFilterType.ToString().ToCamelCase()
+                    });
+                }
+
+                if (item is CustomFilter)
+                {
+                    var settings = item as CustomFilter;
+
+                    filter.Columns.Add(new FilterColumn
+                    {
+                        Filter = "custom",
+                        Index = settings.RelativeColumnIndex,
+                        Logic = settings.LogicalOperator.ToString().ToLowerInvariant(),
+                        Criteria = CreateFilterCriteria(settings)
+                    });
+                }
+            }
+
+            return filter;
+        }
+
+        private static List<Criteria> CreateFilterCriteria(CustomFilter filter)
+        {
+            var criterias = new List<Criteria>();
+
+            if (filter.Criteria1 != null)
+            {
+                criterias.Add(new Criteria 
+                {
+                    Operator = ComparisonOperators[filter.Criteria1.ComparisonOperator.ToString().ToLowerInvariant()],
+                    Value = filter.Criteria1.FilterValue
+                });
+            }
+
+            if (filter.Criteria2 != null)
+            {
+                criterias.Add(new Criteria
+                {
+                    Operator = ComparisonOperators[filter.Criteria2.ComparisonOperator.ToString().ToLowerInvariant()],
+                    Value = filter.Criteria2.FilterValue
+                });
+            }
+
+            return criterias;
+        }
+
+        private static readonly Dictionary<string, string> ComparisonOperators = new Dictionary<string, string>
+        {
+            { "contains", "contains" },
+            { "doesnotcontain", "doesnotcontain" },
+            { "startswith", "startswith" },
+            { "endswith", "endswith" },
+            { "equalsto", "eq" },
+            { "notequalsto", "neq" },
+            { "lessthan", "lt" },
+            { "greaterthan", "gt" },
+            { "greaterthanorequalsto", "gte" },
+            { "lessthanorequalsto", "lte" }   
+        };
     }
 }

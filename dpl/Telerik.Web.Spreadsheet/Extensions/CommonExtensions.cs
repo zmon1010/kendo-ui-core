@@ -69,5 +69,14 @@ namespace Telerik.Web.Spreadsheet
         {            
             return collection ?? new List<T>();
         }
+
+        /// <summary>
+        /// Converts string to camel-case string
+        /// </summary>
+        /// <param name="instance"></param>        
+        public static string ToCamelCase(this string instance)
+        {
+            return instance[0].ToString().ToLowerInvariant() + instance.Substring(1);
+        }
     }
 }

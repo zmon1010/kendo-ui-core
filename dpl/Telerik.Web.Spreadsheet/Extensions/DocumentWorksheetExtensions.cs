@@ -254,6 +254,15 @@ namespace Telerik.Web.Spreadsheet
                 }
             }
 
+            if (cellValue.ValueType == CellValueType.Boolean)
+            {
+                bool booleanValue;
+                if (bool.TryParse(cellValue.RawValue, out booleanValue))
+                {
+                    value = booleanValue;
+                }
+            }
+
             cell.Value = value;
             cell.Formula = formula;
         }
