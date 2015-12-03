@@ -768,6 +768,26 @@
         ok(grid.thead.find("th").data("kendoFilterMenu"));
     });
 
+    test("filterable columns render text inside the filter button icon element", function () {
+        $(table).html("<thead><tr><th data-kendo-field='col1'>col1</th></tr></thead><tbody><tr><td>&nbsp;</td></tr></tbody>");
+        var grid = new Grid(table, {
+            filterable: true,
+            dataSource: {
+                schema: {
+                    model: {
+                        fields: {
+                            col1: {}
+                        }
+                    }
+                }
+            },
+        });
+
+        var th = grid.thead.find("th").first();
+        var span = th.find(".k-icon");
+        equal(span.eq(0).text(), th.data("kendoFilterMenu").options.messages.filter);
+    });
+
     test("filtercell does not get rendered by default", function() {
         $(table).html("<thead><tr><th data-kendo-field='col1'>col1</th></tr></thead><tbody><tr><td>&nbsp;</td></tr></tbody>");
         var grid = new Grid(table, {

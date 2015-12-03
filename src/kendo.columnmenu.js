@@ -76,7 +76,7 @@ var __meta__ = { // jshint ignore:line
             link = element.find(".k-header-column-menu");
 
             if (!link[0]) {
-                link = element.addClass("k-with-icon").prepend('<a class="k-header-column-menu" href="#"><span class="k-icon k-i-arrowhead-s"/></a>').find(".k-header-column-menu");
+                link = element.addClass("k-with-icon").prepend('<a class="k-header-column-menu" href="#"><span class="k-icon k-i-arrowhead-s">' + options.messages.settings + '</span></a>').find(".k-header-column-menu");
             }
 
             that.link = link
