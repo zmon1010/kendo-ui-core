@@ -949,4 +949,16 @@
 
         equal(range.enable(), false);
     });
+
+    test("enable returns false if some cell is disabled in the range", function() {
+        var range = sheet.range("A1:A3");
+
+        sheet.range("A2").enable(false); //disable second cell
+
+        equal(range.enable(), false);
+    });
+
+    test("enable returns true if range hasn't beed disabled", function() {
+        equal(range.enable(), true);
+    });
 })();

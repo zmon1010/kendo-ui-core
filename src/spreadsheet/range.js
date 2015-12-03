@@ -195,7 +195,19 @@
         },
 
         enable: function(value) {
-            return this._property("enable", value);
+            if (value === undefined) {
+                value = true;
+
+                this._sheet.forEach(this._ref, function(_, _, data) {
+                    if (data.enable === false) {
+                        value = false;
+                    }
+                });
+
+                return value;
+            }
+
+            this._property("enable", value);
         },
 
         format: function(value) {
