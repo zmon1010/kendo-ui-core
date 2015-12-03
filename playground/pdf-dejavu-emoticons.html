@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- http://dojo.telerik.com/ABadO -->
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.min.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.min.css" />
+    <script src="loader.js"></script>
+
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js"
+      ]);
+    </script>
+
+    <style>
+      #content {
+        font-family: "DejaVu Sans", "Arial", sans-serif;
+        font-size: 2em;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <button onclick="getPDF()">Get PDF</button>
+
+    <div id="content">
+      <div style="display: inline-block; border: 1px solid red; width: 400px; text-align: center;">
+        παβγΦ<br />
+        Aşţîâ &#x1F42D; &#x1F603; &#x1F603; &#x1F63F; blerg<br />
+        Doesn't look centered, isn't it?
+      </div>
+    </div> <!-- 🐭 -->
+
+    <script>
+      function getPDF() {
+        // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+        kendo.drawing.drawDOM($("#content"))
+          .then(function(group) {
+          // Render the result as a PDF file
+          return kendo.drawing.exportPDF(group, {
+            paperSize: "auto",
+            margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+          });
+        })
+          .done(function(data) {
+          // Save the PDF file
+          kendo.saveAs({
+            dataURI: data,
+            fileName: "Emoticons.pdf"
+          });
+        });
+      }
+    </script>
+
+  </body>
+</html>
