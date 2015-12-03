@@ -237,6 +237,12 @@
         equal(grid.thead.find("tr>th:first").text(), "foo");
     });
 
+    test("header cells have a scope=col attribute", function () {
+        var div = $("<div />").appendTo(QUnit.fixture), grid = new Grid(div, { dataSource: [{foo: "bar"}] });
+
+        equal(grid.thead.find("th").attr("scope"), "col");
+    });
+
     test("thead initialization", function() {
         var grid = new Grid(table, { columns: [ { field: "foo" } ] });
 
@@ -335,7 +341,10 @@
             }
         });
 
-        equal(grid.thead.find("th.k-group-cell").length, 1);
+        var groupCell = grid.thead.find("th.k-group-cell");
+
+        equal(groupCell.length, 1);
+        equal(groupCell.attr("scope"), "col");
         equal(grid.thead.parent().find("col.k-group-col").length, 1);
     });
 
@@ -609,7 +618,7 @@
         equal(colgroups.eq(1).find("col").length, 2);
     });
 
-    test("hierarhcy col element is created in non-scrollable grid when table element has hierarchy col defined", function() {
+    test("hierarchy col element is created in non-scrollable grid when table element has hierarchy col defined", function() {
         var grid = new Grid($('<table><colgroup><col class="k-hierarchy-col"/></colgroup></table>').appendTo(QUnit.fixture), {
             dataSource: [],
             columns: [{field: "foo" }, {field: "bar"}],
@@ -622,7 +631,7 @@
         ok(headerTable.find("col").eq(0).hasClass("k-hierarchy-col"));
     });
 
-    test("hierarhcy col element is created in scrollable grid when table element has hierarchy col defined", function() {
+    test("hierarchy col element is created in scrollable grid when table element has hierarchy col defined", function() {
         var grid = new Grid($('<table><colgroup><col class="k-hierarchy-col"/></colgroup></table>').appendTo(QUnit.fixture), {
             dataSource: [],
             columns: [{field: "foo" }, {field: "bar"}]

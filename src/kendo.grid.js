@@ -648,7 +648,7 @@ var __meta__ = { // jshint ignore:line
         var targetDepth = depth([target]);
 
         if (sourcesDepth > targetDepth) {
-            var groupCells = new Array(groups + 1).join('<th class="k-group-cell k-header">&nbsp;</th>');
+            var groupCells = new Array(groups + 1).join('<th class="k-group-cell k-header" scope="col">&nbsp;</th>');
             var rows = destination.children(":not(.k-filter-row)");
             $(new Array((sourcesDepth - targetDepth) + 1).join("<tr>" + groupCells + "</tr>")).insertAfter(rows.last());
         }
@@ -6216,7 +6216,7 @@ var __meta__ = { // jshint ignore:line
                         field = kendo.attr("field") + "='" + th.field + "' ";
                     }
 
-                    html += "<th role='columnheader' " + field;
+                    html += "<th scope='col' role='columnheader' " + field;
 
                     if (rowSpan && !columns[idx].colSpan) {
                         html += " rowspan='" + rowSpan + "'";
@@ -6247,7 +6247,7 @@ var __meta__ = { // jshint ignore:line
 
                     html += ">" + text + "</th>";
                 } else {
-                    html += "<th" + stringifyAttributes(th.headerAttributes);
+                    html += "<th scope='col'" + stringifyAttributes(th.headerAttributes);
 
                     if (rowSpan && !columns[idx].colSpan) {
                         html += " rowspan='" + rowSpan + "'";
@@ -6476,7 +6476,7 @@ var __meta__ = { // jshint ignore:line
                    for (idx = 0; idx < rows.length; idx++) {
                        html += "<tr>";
                        if (hasDetails) {
-                           html += '<th class="k-hierarchy-cell">&nbsp;</th>';
+                           html += '<th class="k-hierarchy-cell" scope="col">&nbsp;</th>';
                        }
                        html += that._createHeaderCells(rows[idx].cells, rows[idx].rowSpan);
                        html += "</tr>";
@@ -6490,7 +6490,7 @@ var __meta__ = { // jshint ignore:line
                 var filterRow = $("<tr/>");
                 filterRow.addClass("k-filter-row");
                 if (hasDetails || tr.find(".k-hierarchy-cell").length) { // handles server side detail template
-                    filterRow.prepend('<th class="k-hierarchy-cell">&nbsp;</th>');
+                    filterRow.prepend('<th class="k-hierarchy-cell" scope="col">&nbsp;</th>');
                 }
 
                 var existingFilterRow = (that.thead || thead).find(".k-filter-row");
@@ -6505,14 +6505,14 @@ var __meta__ = { // jshint ignore:line
             if (!tr.children().length) {
                 html = "";
                 if (hasDetails) {
-                    html += '<th class="k-hierarchy-cell">&nbsp;</th>';
+                    html += '<th class="k-hierarchy-cell" scope="col">&nbsp;</th>';
                 }
 
                 html += that._createHeaderCells(columns);
 
                 tr.html(html);
             } else if (hasDetails && !tr.find(".k-hierarchy-cell")[0]) {
-                tr.prepend('<th class="k-hierarchy-cell">&nbsp;</th>');
+                tr.prepend('<th class="k-hierarchy-cell" scope="col">&nbsp;</th>');
             }
 
             tr.attr("role", "row").find("th").addClass("k-header");
@@ -6910,7 +6910,7 @@ var __meta__ = { // jshint ignore:line
                 });
 
             if(groups > length) {
-                $(new Array(groups - length + 1).join('<th class="k-group-cell k-header">&nbsp;</th>')).prependTo(container.children("tr:not(.k-filter-row)"));
+                $(new Array(groups - length + 1).join('<th class="k-group-cell k-header" scope="col">&nbsp;</th>')).prependTo(container.children("tr:not(.k-filter-row)"));
                 if (that.element.is(":visible")) {
                     rows.find("th.k-group-cell").hide();
                 }
@@ -6921,7 +6921,7 @@ var __meta__ = { // jshint ignore:line
                 });
             }
             if(groups > filterCells) {
-                $(new Array(groups - filterCells + 1).join('<th class="k-group-cell k-header">&nbsp;</th>')).prependTo(container.find(".k-filter-row"));
+                $(new Array(groups - filterCells + 1).join('<th class="k-group-cell k-header" scope="col">&nbsp;</th>')).prependTo(container.find(".k-filter-row"));
             }
         },
 
