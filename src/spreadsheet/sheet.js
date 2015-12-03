@@ -470,6 +470,10 @@
                 return row;
             }
 
+            if (row instanceof kendo.spreadsheet.Range) {
+                return row._ref.toRangeRef();
+            }
+
             if (typeof row === "string") {
                 ref = kendo.spreadsheet.calc.parseReference(row);
             } else {

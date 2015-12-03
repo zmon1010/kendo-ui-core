@@ -700,7 +700,7 @@
         },
 
         draw: function(options, callback) {
-            this._sheet.draw(this._ref.toRangeRef(), options, callback);
+            this._sheet.draw(this, options, callback);
         }
     });
 

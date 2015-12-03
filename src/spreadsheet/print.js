@@ -451,9 +451,21 @@
     }
 
     spreadsheet.Sheet.prototype.draw = function(range, options, callback) {
-        if (typeof options == "function" && !callback) {
+        if (options == null && callback == null) {
+            callback = range;
+            options = {};
+            range = spreadsheet.SHEETREF;
+        }
+        if (callback == null) {
             callback = options;
-            options = null;
+            if (range instanceof spreadsheet.Range
+                || range instanceof spreadsheet.Ref
+                || typeof range == "string") {
+                options = {};
+            } else {
+                options = range;
+                range = spreadsheet.SHEETREF;
+            }
         }
         options = kendo.jQuery.extend({
             paperSize  : "A4",
