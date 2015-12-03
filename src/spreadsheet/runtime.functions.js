@@ -2189,6 +2189,15 @@
         [ "*value", "anyvalue" ]
     ]);
 
+    //// other misc functions
+
+    defineFunction("iferror", function(value, valueIfError){
+        return value instanceof CalcError ? valueIfError : value;
+    }).args([
+        [ "*value", "forced!" ],
+        [ "*value_if_error", "anyvalue" ]
+    ]);
+
     //// utils
 
     var parseCriteria = (function(){
