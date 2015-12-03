@@ -94,7 +94,7 @@
                 </Grid>
             </TabItem>
             <TabItem Height="36" Width="220" Header="Grid options">
-                <Grid Margin="20, 20, 0, 0">
+                <Grid Height="625" Margin="20, 0, 0, 0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
@@ -120,14 +120,13 @@
                         <ColumnDefinition Width="120"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-
                     <Label Grid.Row="0" Content="DataSource Type:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="179"/>
                     <WrapPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
                         <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"
                   ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding SelectedDataSourceType, Mode=TwoWay}" SelectionChanged="SelectedDataSourceType_Changed" />
                         <CheckBox Name="ServerOperation" Content="Server Operation" VerticalAlignment="Center" Margin="20, 0, 0, 0" IsChecked="{Binding ServerOperation, Mode=TwoWay}" />
                     </WrapPanel>
-                    
+
                     <CheckBox Grid.Row="1" Grid.Column="0"  Content="Editable" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Editable_Clicked" IsChecked="{Binding Editable, Mode=OneWayToSource}" />
                     <WrapPanel Grid.Row="2" Grid.Column="1" Name="EditModeWrapPanel" Visibility="Collapsed">
                         <Label   Name="EditModeLabel" Content="Edit Mode:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -181,7 +180,7 @@
                     </WrapPanel>
                     <CheckBox Grid.Row="17" Content="Excel Export" Name="ExcelExport" IsChecked="{Binding ExcelExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <CheckBox Grid.Row="18" Content="PDF Export" Name="PdfExport" IsChecked="{Binding PdfExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Label Name="RequireMvc" Content="Note: WebAPI Scaffolding requires Kendo.MVC.dll to be included, &#xD;&#xA;along with the kendo.aspnetmvc.min.js file" Visibility="Hidden" Foreground="Red" Margin="-14,46,58,-54" Grid.ColumnSpan="2" Grid.Row="18"/>
+                    <Label Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="2" Name="RequireMvc" Content="Note: WebAPI Scaffolding requires Kendo.MVC.dll to be included, &#xD;&#xA;along with the kendo.aspnetmvc.min.js file" Visibility="Visible" Foreground="Red" Margin="-5,26,-129,-44" />
                 </Grid>
             </TabItem>
             <TabItem Height="36" Width="220" Header="Events">
