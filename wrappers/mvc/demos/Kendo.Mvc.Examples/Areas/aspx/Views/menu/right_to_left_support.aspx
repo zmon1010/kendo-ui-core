@@ -5,7 +5,7 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="k-rtl">
+<div class="demo-section k-content k-rtl">
 
 <%= Html.Kendo().Menu()
     .Name("Menu")
@@ -25,7 +25,6 @@
                         grandchildren.Add().Text("Sub sub Item 3");
                     });
                 children.Add().Text("Sub Item 4");
-                children.Add().Text("Sub Item 5");
             });
 
         items.Add()
@@ -36,7 +35,6 @@
                  children.Add().Text("Sub Item 2");
                  children.Add().Text("Sub Item 3");
                  children.Add().Text("Sub Item 4");
-                 children.Add().Text("Sub Item 5");
              });
 
         items.Add()
@@ -47,29 +45,6 @@
                 children.Add().Text("Sub Item 2");
                 children.Add().Text("Sub Item 3");
                 children.Add().Text("Sub Item 4");
-                children.Add().Text("Sub Item 5");
-            });
-
-        items.Add()
-             .Text("Fourth Item")
-             .Items(children =>
-             {
-                 children.Add().Text("Sub Item 1");
-                 children.Add().Text("Sub Item 2");
-                 children.Add().Text("Sub Item 3");
-                 children.Add().Text("Sub Item 4");
-                 children.Add().Text("Sub Item 5");
-             });
-
-        items.Add()
-            .Text("Fifth Item")
-            .Items(children =>
-            {
-                children.Add().Text("Sub Item 1");
-                children.Add().Text("Sub Item 2");
-                children.Add().Text("Sub Item 3");
-                children.Add().Text("Sub Item 4");
-                children.Add().Text("Sub Item 5");
             });
     })
 %>
