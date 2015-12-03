@@ -2310,4 +2310,24 @@ TRUE, TRUE),, 1)": [[ -234.2371645 ],
         });
     });
 
+    test("ROUNDUP", function(){
+        calcTest({
+            "=ROUNDUP(3.2,0)"           : 4,
+            "=ROUNDUP(76.9,0)"          : 77,
+            "=ROUNDUP(3.14159, 3)"      : 3.142,
+            "=ROUNDUP(-3.14159, 1)"     : -3.2,
+            "=ROUNDUP(31415.92654, -2)" : 31500
+        });
+    });
+
+    test("ROUNDDOWN", function(){
+        calcTest({
+            "=ROUNDDOWN(3.2,0)"           : 3,
+            "=ROUNDDOWN(76.9,0)"          : 76,
+            "=ROUNDDOWN(3.14159, 3)"      : 3.141,
+            "=ROUNDDOWN(-3.14159, 1)"     : -3.1,
+            "=ROUNDDOWN(31415.92654, -2)" : 31400
+        });
+    });
+
 })();

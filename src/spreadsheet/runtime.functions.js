@@ -280,6 +280,26 @@
         [ "*multiple", "number" ]
     ]);
 
+    defineFunction("roundup", function(num, digits){
+        digits = Math.pow(10, digits);
+        num *= digits;
+        num = num < 0 ? Math.floor(num) : Math.ceil(num);
+        return num / digits;
+    }).args([
+        [ "*number", "number" ],
+        [ "*digits", "number" ]
+    ]);
+
+    defineFunction("rounddown", function(num, digits){
+        digits = Math.pow(10, digits);
+        num *= digits;
+        num = num < 0 ? Math.ceil(num) : Math.floor(num);
+        return num / digits;
+    }).args([
+        [ "*number", "number" ],
+        [ "*digits", "number" ]
+    ]);
+
     defineFunction("even", function(num){
         var n = num < 0 ? Math.floor(num) : Math.ceil(num);
         return n % 2 ? n + (n < 0 ? -1 : 1) : n;
