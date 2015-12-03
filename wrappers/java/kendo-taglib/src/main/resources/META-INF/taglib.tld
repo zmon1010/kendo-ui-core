@@ -3744,7 +3744,7 @@ Summary columns are optional and can be one of two types:</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>A value indicating whether to show the point category name (for bubble, donut and pie series)
+            <description>A value indicating whether to show the point category name (for funnel, donut and pie series)
 or series name (for other available series types) in the legend.</description>
             <name>visibleInLegend</name>
             <rtexprvalue>true</rtexprvalue>

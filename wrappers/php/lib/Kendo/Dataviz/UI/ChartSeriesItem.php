@@ -631,7 +631,7 @@ A string value is interpreted as series.stack.group.
     }
 
     /**
-    * A value indicating whether to show the point category name (for bubble, donut and pie series)
+    * A value indicating whether to show the point category name (for funnel, donut and pie series)
 or series name (for other available series types) in the legend.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
