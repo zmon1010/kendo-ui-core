@@ -164,30 +164,34 @@ $("#filter").on("click", function() {
     filtered = !filtered;
 });
 
+function pdfOptions() {
+    return {
+        paperSize : "Letter",
+        margin    : "1in",
+        landscape : true,
+        fitWidth  : $("#pdf-fit-width")[0].checked,
+    };
+}
+
 $("#pdf").on("click", function(){
     // kendo.drawing.drawDOM("#spreadsheet .k-spreadsheet-view").then(function(group){
     //     group.options.set("pdf.margin", "1cm");
     //     kendo.drawing.pdf.saveAs(group, "spreadsheet.pdf");
     // });
 
-    spreadsheet.activeSheet().draw({
-        paperSize : "Letter",
-        margin    : "1in",
-        landscape : true,
-        fitWidth  : $("#pdf-fit-width")[0].checked,
-    }, function(group){
+    spreadsheet.activeSheet().draw(pdfOptions(), function(group){
         kendo.drawing.pdf.saveAs(group, "sheet.pdf");
     });
 });
 
 $("#pdf2").on("click", function(){
-    spreadsheet.activeSheet().selection().draw(function(group){
+    spreadsheet.activeSheet().selection().draw(pdfOptions(), function(group){
         kendo.drawing.pdf.saveAs(group, "sheet.pdf");
     });
 });
 
 $("#pdf-all").on("click", function(){
-    spreadsheet._workbook.draw(function(group){
+    spreadsheet._workbook.draw(pdfOptions(), function(group){
         kendo.drawing.pdf.saveAs(group, "sheet.pdf");
     });
 });
