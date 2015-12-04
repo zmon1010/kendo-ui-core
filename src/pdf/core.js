@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core" ], f);
+    define([ "../kendo.core", "../util/main" ], f);
 })(function(){
 
 (function(window, parseFloat, undefined){
@@ -1124,8 +1124,12 @@
             out.withIndent(function(){
                 for (var code = self.firstChar; code <= self.lastChar; ++code) {
                     var unicode = self.map[code];
-                    out.indent("<", zeropad(code.toString(16), 4), ">",
-                               "<", zeropad(unicode.toString(16), 4), ">");
+                    var str = kendo.util.ucs2encode([ unicode ]);
+                    out.indent("<", zeropad(code.toString(16), 4), ">", "<");
+                    for (var i = 0; i < str.length; ++i) {
+                        out(zeropad(str.charCodeAt(i).toString(16), 4));
+                    }
+                    out(">");
                 }
             });
             out.indent("endbfchar");
