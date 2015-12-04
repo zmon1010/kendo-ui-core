@@ -477,8 +477,8 @@
         isFilterIcon: function(x, y, pane, ref) {
             var result = false;
 
-            x -= this._sheet._grid._headerWidth;
-            y -= this._sheet._grid._headerHeight;
+            x -= this._sheet._grid._headerWidth - this.scroller.scrollLeft;
+            y -= this._sheet._grid._headerHeight - this.scroller.scrollTop;
 
             this._sheet.forEachFilterHeader(ref, function(ref) {
                 var rect = this._rectangle(pane, ref);
