@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="../loader.js"></script>
+
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.min.css">
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.min.css">
+
+    <script>
+      requireSync([
+      "../../src/jszip.min.js",
+      "../../src/jquery.js",
+      "../../src/kendo.dom.js",
+      "../../src/cultures/kendo.culture.bg-BG.js",
+      "../../src/cultures/kendo.culture.de-DE.js",
+      "../../src/cultures/kendo.culture.el-GR.js",
+      "../../src/cultures/kendo.culture.en-GB.js",
+      "../../src/kendo.ooxml.js",
+      "../../src/kendo.spreadsheet.js",
+      "../../src/kendo.pdf.js"
+      ]);
+    </script>
+    <script src="../pako.min.js"></script>
+  </head>
+
+  <body>
+    <button class="k-button" id="pdf">Make PDF</button>
+    <div id="spreadsheet"></div>
+    <script src="print.js"></script>
+  </body>
+
+</html>

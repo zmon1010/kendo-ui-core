@@ -33,7 +33,8 @@
         "./spreadsheet/sheetbinder",
         "./spreadsheet/filtermenu",
         "./spreadsheet/editor",
-        "./spreadsheet/autofill"
+        "./spreadsheet/autofill",
+        "./spreadsheet/print"
     ], f);
 })(function(){
     var __meta__ = { // jshint ignore:line
@@ -211,6 +212,10 @@
 
             saveAsExcel: function(options) {
                 this._workbook.saveAsExcel(options);
+            },
+
+            draw: function(options, callback) {
+                this._workbook.draw(options, callback);
             },
 
             _workbookExcelExport: function(e) {

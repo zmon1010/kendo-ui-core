@@ -2042,7 +2042,7 @@
         var dec = "";
         while (decimals-- > 0) { dec += "0"; }
         format = format.replace(/DECIMALS/g, dec);
-        return spreadsheet.formatting.format(number, format).text();
+        return spreadsheet.formatting.text(number, format);
     }).args([
         [ "*number", "number" ],
         [ "*decimals", [ "or", "integer++", [ "null", 2 ] ] ]
@@ -2069,7 +2069,7 @@
         var dec = "";
         while (decimals-- > 0) { dec += "0"; }
         format = format.replace(/DECIMALS/g, dec);
-        return spreadsheet.formatting.format(number, format).text();
+        return spreadsheet.formatting.text(number, format);
     }).args([
         [ "*number", "number" ],
         [ "*decimals", [ "or", "integer++", [ "null", 2 ] ] ],
@@ -2200,7 +2200,7 @@
     ]);
 
     defineFunction("text", function(value, format){
-        return spreadsheet.formatting.format(value, format).text();
+        return spreadsheet.formatting.text(value, format);
     }).args([
         [ "*value", "anyvalue" ],
         [ "*format", "string" ]

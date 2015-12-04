@@ -223,8 +223,7 @@
     });
 
     function formattedValue(value, format) {
-        var dom = kendo.spreadsheet.formatting.format(value, format);
-        return dom.children[0].nodeValue;
+        return kendo.spreadsheet.formatting.text(value, format);
     }
 
     var FormatCellsViewModel = kendo.spreadsheet.FormatCellsViewModel = ObservableObject.extend({

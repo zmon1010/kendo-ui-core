@@ -21,6 +21,7 @@
             "../src/kendo.pdf.js"
         ]);
     </script>
+    <script src="./pako.min.js"></script>
     <style>
         body {
             font: 14px/1.5 Arial, Helvetica, sans-serif;
@@ -31,7 +32,10 @@
 <body>
 <button class="k-button" id="sort">Sort I1:I4</button>
 <button class="k-button" id="filter">Filter A1:B3 (values: [3])</button>
+<label><input type="checkbox" id="pdf-fit-width" /> Fit width in PDF</label>
 <button class="k-button" id="pdf">Make PDF</button>
+<button class="k-button" id="pdf2">PDF selection</button>
+<button class="k-button" id="pdf-all">PDF all sheets</button>
 <button class="k-button" id="copy">Copy</button>
 <button class="k-button" id="recalc">Recalc</button>
 <div id="spreadsheet"></div>

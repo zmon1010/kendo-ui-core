@@ -424,8 +424,7 @@
                     }
 
                     if (cell.value !== null && cell.format) {
-                        formatter = kendo.spreadsheet.formatting.compile(cell.format);
-                        cell.text = formatter(cell.value).text();
+                        formatter = kendo.spreadsheet.formatting.text(cell.value, cell.format);
                     } else {
                         cell.text = cell.value ? cell.value : messages.blanks;
                     }

@@ -68,6 +68,9 @@ spreadsheet.insertSheet();
 
 sheet.range("E11:AX200").formula("=RANDBETWEEN(1, 100)").format("[Red][<50]#;[Green][>50]#;[Blue]0.00");
 
+sheet.range("F2").value("this is quite some long centered text");
+sheet.range("G2").value("this is quite some long centered text").wrap(true).textAlign("center");
+
 //sheet.hideColumn(1);
 //sheet.hideColumn(5);
 sheet.hideRow(12);
@@ -162,9 +165,30 @@ $("#filter").on("click", function() {
 });
 
 $("#pdf").on("click", function(){
-    kendo.drawing.drawDOM("#spreadsheet .k-spreadsheet-view").then(function(group){
-        group.options.set("pdf.margin", "1cm");
-        kendo.drawing.pdf.saveAs(group, "spreadsheet.pdf");
+    // kendo.drawing.drawDOM("#spreadsheet .k-spreadsheet-view").then(function(group){
+    //     group.options.set("pdf.margin", "1cm");
+    //     kendo.drawing.pdf.saveAs(group, "spreadsheet.pdf");
+    // });
+
+    spreadsheet.activeSheet().draw({
+        paperSize : "Letter",
+        margin    : "1in",
+        landscape : true,
+        fitWidth  : $("#pdf-fit-width")[0].checked,
+    }, function(group){
+        kendo.drawing.pdf.saveAs(group, "sheet.pdf");
+    });
+});
+
+$("#pdf2").on("click", function(){
+    spreadsheet.activeSheet().selection().draw(function(group){
+        kendo.drawing.pdf.saveAs(group, "sheet.pdf");
+    });
+});
+
+$("#pdf-all").on("click", function(){
+    spreadsheet._workbook.draw(function(group){
+        kendo.drawing.pdf.saveAs(group, "sheet.pdf");
     });
 });
 
@@ -201,6 +225,16 @@ sheet2.range("D7").input("=sum(sheet1!A:AX)");
 
 sheet.range("E2").input('=SUM(A1:C3, 100, B2, 200, D1, INDIRECT("A1:C3"))');
 
+sheet2.insertColumn(2);
+sheet2.hideColumn(2);
+sheet2.range("B4:D7")
+    .merge().value("FOO")
+    .background("yellow")
+    .borderLeft({ color: "red" })
+    .borderTop({ color: "red" })
+    .borderRight({ color: "red" })
+    .borderBottom({ color: "red" });
+sheet2.range("B9:D9").values([[ "A", "B", "C" ]]);
 
 
 
