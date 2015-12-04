@@ -230,6 +230,7 @@
     <Compile Include="Extensions\FilterExtensions.cs" />
     <Compile Include="Extensions\RadVerticalAlignmentExtensions.cs" />
     <Compile Include="Extensions\DocumentWorksheetExtensions.cs" />
+    <Compile Include="Models\ValueFilterDate.cs" />
     <Compile Include="Models\Workbook.Json.cs" />
     <Compile Include="Provider\JsonSettings.cs" />
     <Compile Include="Provider\JsonImportSettings.cs" />

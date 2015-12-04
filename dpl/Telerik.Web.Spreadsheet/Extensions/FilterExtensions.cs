@@ -58,6 +58,14 @@ namespace Telerik.Web.Spreadsheet
             {
                 Index = filter.RelativeColumnIndex,
                 Filter = "value",
+                Dates = filter.DateItems.Select(item => new ValueFilterDate {
+                    Year = item.Year,
+                    Month = item.Month - 1,
+                    Day = item.Day,
+                    Hours = item.Hour,
+                    Minutes = item.Minute,
+                    Seconds = item.Second
+                }).ToList(),
                 Values = filter.StringValues.Select(value =>
                 {
                     double number;
