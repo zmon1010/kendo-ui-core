@@ -4,9 +4,12 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="forecast">
+<div class="demo-section k-content">
     <% Html.Kendo().TabStrip()
           .Name("tabstrip")
+          .Animation(animation => 
+              animation.Open(effect => 
+                  effect.Fade(FadeDirection.In)))
           .Items(tabstrip =>
           {
               tabstrip.Add().Text("Paris")
@@ -52,17 +55,9 @@
 </div>
 
 <style>
-    #forecast {
-        width: 360px;
-        height: 337px;
-        margin: 30px auto;
-        padding: 80px 15px 0 15px;
-        background: url('<%= Url.Content("~/Content/web/tabstrip/forecast.png") %>') transparent no-repeat 0 0;
-    }
-
     .sunny, .cloudy, .rainy {
-        display: inline-block;
-        margin: 20px 0 20px 10px;
+        display: block;
+        margin: 30px auto 10px;
         width: 128px;
         height: 128px;
         background: url('<%= Url.Content("~/Content/web/tabstrip/weather.png") %>') transparent no-repeat 0 0;
@@ -76,27 +71,27 @@
         background-position: -256px 0;
     }
 
-    .weather {
-        width: 160px;
-        padding: 40px 0 0 0;
-        float: right;
+   .weather {
+    margin: 0 auto 30px;
+    text-align: center;
     }
 
-    #forecast h2 {
-        font-weight: lighter;
-        font-size: 5em;
-        padding: 0;
-        margin: 0;
+     #tabstrip h2 {
+    font-weight: lighter;
+    font-size: 5em;
+    line-height: 1;
+    padding: 0 0 0 30px;
+    margin: 0;
     }
 
-    #forecast h2 span {
+    #tabstrip h2 span {
         background: none;
         padding-left: 5px;
-        font-size: .5em;
+        font-size: .3em;
         vertical-align: top;
     }
 
-    #forecast p {
+    #tabstrip p {
         margin: 0;
         padding: 0;
     }
