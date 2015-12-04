@@ -2,6 +2,7 @@ MVC_SRC_ROOT = 'wrappers/mvc/src/'
 MVC_BIN_ROOT = MVC_SRC_ROOT + 'Kendo.Mvc/bin/'
 MVC_DEMOS_ROOT = 'wrappers/mvc/demos/Kendo.Mvc.Examples/'
 DEMO_SHARED_ROOT = 'demos/mvc/content/'
+MVC5_MINOR_VERSION = "2.3"
 
 # The list of files which Kendo.Mvc.dll depends on
 MVC_WRAPPERS_SRC = FileList[MVC_SRC_ROOT + '**/*.cs']
@@ -417,12 +418,12 @@ def patch_examples_csproj(t, vs)
 end
 
 def upgrade_project_to_vs2013(csproj)
-    csproj.gsub(/System\.Web\.([^,]*), Version=2\.0\.0\.0/, "System.Web.\\1, Version=3.0.0.0")
-          .gsub(/System\.Web\.([^,]*), Version=4\.0\.0\.0/, "System.Web.\\1, Version=5.0.0.0")
-          .gsub(/System\.Net\.([^,]*), Version=4\.0\.0\.0/, "System.Web.\\1, Version=5.0.0.0")
-          .gsub('Microsoft.AspNet.Razor.2.0.30506.0\lib\net40', 'Microsoft.AspNet.Razor.3.0.0\lib\net45')
-          .gsub(/Microsoft\.AspNet\.(.*)4\.0\.30506\.0\\lib\\net40/, 'Microsoft.AspNet.\\15.0.0\lib\net45')
-          .gsub(/Microsoft\.AspNet\.(.*)2\.0\.30506\.0\\lib\\net40/, 'Microsoft.AspNet.\\13.0.0\lib\net45')
+    csproj.gsub(/System\.Web\.([^,]*), Version=2\.0\.0\.0/, "System.Web.\\1, Version=3.#{MVC5_MINOR_VERSION}.0")
+          .gsub(/System\.Web\.([^,]*), Version=4\.0\.0\.0/, "System.Web.\\1, Version=5.#{MVC5_MINOR_VERSION}.0")
+          .gsub(/System\.Net\.([^,]*), Version=4\.0\.0\.0/, "System.Web.\\1, Version=5.#{MVC5_MINOR_VERSION}.0")
+          .gsub('Microsoft.AspNet.Razor.2.0.30506.0\lib\net40', "Microsoft.AspNet.Razor.3.#{MVC5_MINOR_VERSION}\lib\net45")
+          .gsub(/Microsoft\.AspNet\.(.*)4\.0\.30506\.0\\lib\\net40/, "Microsoft.AspNet.\\15.#{MVC5_MINOR_VERSION}\lib\net45")
+          .gsub(/Microsoft\.AspNet\.(.*)2\.0\.30506\.0\\lib\\net40/, "Microsoft.AspNet.\\13.#{MVC5_MINOR_VERSION}\lib\net45")
           .gsub("{E3E379DF-F4C6-4180-9B81-6769533ABE47};", "")
 
 end
@@ -430,14 +431,14 @@ end
 def upgrade_web_config_to_mvc5(t)
     xml = File.read(t.name)
 
-    xml = xml.gsub('oldVersion="1.0.0.0-2.0.0.0"', 'oldVersion="1.0.0.0-3.0.0.0"')
-             .gsub('oldVersion="1.0.0.0-4.0.0.0"', 'oldVersion="1.0.0.0-5.0.0.0"')
-             .gsub('newVersion="2.0.0.0"', 'newVersion="3.0.0.0"')
-             .gsub('newVersion="4.0.0.0"', 'newVersion="5.0.0.0"')
-             .sub('key="webpages:Version" value="2.0.0.0"', 'key="webpages:Version" value="3.0.0.0"')
-             .gsub(', Version=4.0.0.0', ', Version=5.0.0.0')
-             .gsub('System.Data.Entity, Version=5.0.0.0', 'System.Data.Entity, Version=4.0.0.0')
-             .gsub(', Version=2.0.0.0', ', Version=3.0.0.0')
+    xml = xml.gsub('oldVersion="1.0.0.0-2.0.0.0"', "oldVersion=\"1.0.0.0-3.#{MVC5_MINOR_VERSION}.0\"")
+             .gsub('oldVersion="1.0.0.0-4.0.0.0"', "oldVersion=\"1.0.0.0-5.#{MVC5_MINOR_VERSION}.0\"")
+             .gsub('newVersion="2.0.0.0"', "newVersion=\"3.#{MVC5_MINOR_VERSION}.0\"")
+             .gsub('newVersion="4.0.0.0"', "newVersion=\"5.#{MVC5_MINOR_VERSION}.0\"")
+             .sub('key="webpages:Version" value="2.0.0.0"', "key=\"webpages:Version\" value=\"3.#{MVC5_MINOR_VERSION}.0\"")
+             .gsub(', Version=4.0.0.0', ", Version=5.#{MVC5_MINOR_VERSION}.0")
+             .gsub("System.Data.Entity, Version=5.#{MVC5_MINOR_VERSION}.0", 'System.Data.Entity, Version=4.0.0.0')
+             .gsub(', Version=2.0.0.0', ", Version=3.#{MVC5_MINOR_VERSION}.0")
 
     xml = xml.sub(/httpRuntime(.*)?Version=5\.0\.0\.0/, "httpRuntime\\1Version=4.0.0.0")
 
