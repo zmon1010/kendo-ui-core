@@ -487,7 +487,7 @@
         return font.join(" ");
     }
 
-    spreadsheet.Sheet.prototype.draw = function(range, options, callback) {
+    function draw(sheet, range, options, callback) {
         if (options == null && callback == null) {
             callback = range;
             options = {};
@@ -528,9 +528,20 @@
         }
         options.pageWidth = pageWidth;
         options.pageHeight = pageHeight;
-        var layout = doLayout(this, this._ref(range), options);
+        var layout = doLayout(sheet, sheet._ref(range), options);
         drawLayout(layout, group, options);
         callback(group);
+    }
+
+    spreadsheet.Sheet.prototype.draw = function(range, options, callback) {
+        var sheet = this;
+        if (sheet._workbook) {
+            sheet.recalc(sheet._workbook._context, function(){
+                draw(sheet, range, options, callback);
+            });
+        } else {
+            draw(sheet, range, options, callback);
+        }
     };
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

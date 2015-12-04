@@ -255,8 +255,10 @@
 
         _forFormulas: function(callback) {
             var props = this._properties;
-            props.get("formula").values().forEach(function(f){
-                callback.call(this, f.value);
+            var formulas = props.get("formula").values();
+            var n = formulas.length;
+            formulas.forEach(function(f, i){
+                callback.call(this, f.value, i, n);
             }, this);
         },
 
@@ -1088,10 +1090,22 @@
             });
         },
 
-        recalc: function(context) {
-            this._forFormulas(function(formula){
-                formula.exec(context);
-            });
+        recalc: function(context, callback) {
+            var formulas = this._properties.get("formula").values();
+            var count = formulas.length, pending = 0, i = 0;
+            if (!count && callback) {
+                return callback();
+            }
+            function next() {
+                pending--;
+                if (i == count && !pending) {
+                    callback();
+                }
+            }
+            while (i < count) {
+                pending++;
+                formulas[i++].value.exec(context, callback ? next : null);
+            }
         },
 
         revalidate: function(context) {
