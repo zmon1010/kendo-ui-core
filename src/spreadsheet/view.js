@@ -630,15 +630,14 @@
                 return this._filterMenu;
             }
 
+            this._destroyFilterMenu();
+
             var sheet = this._sheet;
             var ref = sheet.filter().ref;
             var range = new kendo.spreadsheet.Range(ref, sheet);
-
             var element = $("<div />").appendTo(this.element);
             var options = { column: column, range: range };
             var filterMenu = new kendo.spreadsheet.FilterMenu(element, options);
-
-            this._destroyFilterMenu();
 
             this._filterMenu = filterMenu;
 
