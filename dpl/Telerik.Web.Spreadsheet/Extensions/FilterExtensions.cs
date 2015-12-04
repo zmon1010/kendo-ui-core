@@ -18,9 +18,9 @@ namespace Telerik.Web.Spreadsheet
                 return ToFilterColumn((ValuesCollectionFilter)filter);
             }
 
-            if (filter is TopFilter)
+            if (filter is DynamicFilter)
             {
-                return ToFilterColumn((TopFilter)filter);
+                return ToFilterColumn((DynamicFilter)filter);
             }
 
             if (filter is CustomFilter)
@@ -42,8 +42,18 @@ namespace Telerik.Web.Spreadsheet
             };
         }
 
-        private static FilterColumn ToFilterColumn(ValuesCollectionFilter filter)
+        private static FilterColumn ToFilterColumn(DynamicFilter filter)
         {
+            return new FilterColumn
+            {
+                Filter = "dynamic",
+                Index = filter.RelativeColumnIndex,
+                Type = filter.DynamicFilterType.ToString().ToCamelCase()
+            };
+        }
+
+        private static FilterColumn ToFilterColumn(ValuesCollectionFilter filter)
+        {            
             return new FilterColumn
             {
                 Index = filter.RelativeColumnIndex,
@@ -68,17 +78,7 @@ namespace Telerik.Web.Spreadsheet
 
                 }).ToList()
             };
-        }
-
-        private static FilterColumn ToFilterColumn(DynamicFilter filter)
-        {
-            return new FilterColumn
-            {
-                Filter = "dynamic",
-                Index = filter.RelativeColumnIndex,
-                Type = filter.DynamicFilterType.ToString().ToCamelCase()
-            };
-        }
+        }      
 
         private static FilterColumn ToFilterColumn(CustomFilter filter)
         {

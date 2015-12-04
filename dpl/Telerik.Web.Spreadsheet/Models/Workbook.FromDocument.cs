@@ -115,7 +115,7 @@ namespace Telerik.Web.Spreadsheet
             return new Filter
             {
                 Ref = NameConverter.ConvertCellRangeToName(range.FromIndex, range.ToIndex),
-                Columns = documentFilter.Filters.Select(item => item.ToFilterColumn()).ToList()
+                Columns = documentFilter.Filters.Select(item => item.ToFilterColumn()).SkipWhile(column => column == null).ToList()
             };            
         }       
     }

@@ -47,6 +47,12 @@ namespace Telerik.Web.Spreadsheet
         public bool? Bold { get; set; }
 
         /// <summary>
+        /// Disables the cell, if set to false.
+        /// </summary>
+        [DataMember(Name = "enable", EmitDefaultValue = false)]
+        public bool? Enable { get; set; }
+
+        /// <summary>
         /// The format of the cell text.See Create or delete a custom number format on MS Office.
         /// </summary>
         [DataMember(Name = "format", EmitDefaultValue = false)]
@@ -138,6 +144,11 @@ namespace Telerik.Web.Spreadsheet
             if (Bold != null)
             {
                 settings["bold"] = Bold;
+            }
+
+            if (Enable != null)
+            {
+                settings["enable"] = Enable;
             }
 
             if (Format != null)

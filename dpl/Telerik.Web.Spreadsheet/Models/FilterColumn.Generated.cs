@@ -88,6 +88,12 @@ namespace Telerik.Web.Spreadsheet
             set;
         }
 
+        /// <summary>
+        /// Indicates whether to include blank values
+        /// </summary>
+        [DataMember(Name = "blanks", EmitDefaultValue = false)]
+        public bool? Blanks { get; set; }
+
 
         /// <summary>
         /// Serialize current instance to Dictionary
@@ -129,6 +135,11 @@ namespace Telerik.Web.Spreadsheet
             if (Values != null)
             {
                 settings["values"] = Values;
+            }
+
+            if (Blanks != null)
+            {
+                settings["blanks"] = Blanks;
             }
 
             return settings;

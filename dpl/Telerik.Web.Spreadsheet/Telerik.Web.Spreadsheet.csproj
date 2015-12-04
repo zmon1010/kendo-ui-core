@@ -227,7 +227,7 @@
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\CellBorderExtensions.cs" />
     <Compile Include="Extensions\CommonExtensions.cs" />
-    <Compile Include="Extensions\IFilterExtensions.cs" />
+    <Compile Include="Extensions\FilterExtensions.cs" />
     <Compile Include="Extensions\RadVerticalAlignmentExtensions.cs" />
     <Compile Include="Extensions\DocumentWorksheetExtensions.cs" />
     <Compile Include="Models\Workbook.Json.cs" />
