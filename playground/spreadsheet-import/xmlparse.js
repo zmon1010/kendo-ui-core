@@ -65,22 +65,6 @@ XML = (function(){
             stack: stack
         };
 
-        function push(attrs) {
-            stack.push(attrs);
-        }
-
-        function pop() {
-            stack.pop();
-        }
-
-        function readByte() {
-            return data[index++];
-        }
-
-        function peekByte() {
-            return data[index];
-        }
-
         function readChar() {
             var code = data[index++];
             if (!(code & 0xF0 ^ 0xF0)) {// 4 bytes
@@ -111,8 +95,8 @@ XML = (function(){
 
         function readWhile(pred) {
             var a = [];
-            while (!eof() && pred(peekByte())) {
-                a.push(readByte());
+            while (!eof() && pred(data[index])) {
+                a.push(data[index++]);
             }
             return a;
         }
@@ -128,7 +112,7 @@ XML = (function(){
         function eat(a) {
             var save = index;
             for (var i = 0; i < a.length; ++i) {
-                if (readByte() != a[i]) {
+                if (data[index++] != a[i]) {
                     index = save;
                     return false;
                 }
@@ -185,7 +169,7 @@ XML = (function(){
                 return xmlComment();
             }
             var name = xmlName(), attrs = xmlAttrs(name);
-            push(attrs);
+            stack.push(attrs);
             if (eat(END_SHORT_TAG)) {
                 call("enter", name, attrs, true);
             } else {
@@ -199,7 +183,7 @@ XML = (function(){
                 skipWhitespace();
                 skip(GREATER_THAN);
             }
-            pop();
+            stack.pop();
         }
 
         function xmlContent(name) {
@@ -225,7 +209,7 @@ XML = (function(){
         }
 
         function xmlName() {
-            if (!isNameStart(peekByte())) {
+            if (!isNameStart(data[index])) {
                 croak("Expecting XML name");
             }
             return readAsciiWhile(isName);
@@ -278,7 +262,7 @@ XML = (function(){
             var map = { $tag: name };
             while (!eof()) {
                 skipWhitespace();
-                var code = peekByte();
+                var code = data[index];
                 if (code == 63 || code == 62 || code == 47) { // ?, > or /
                     break;
                 }
