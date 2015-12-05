@@ -69,28 +69,23 @@ XML = (function(){
         function readChar(body) {
             var code = data[index++];
             if (!(code & 0xF0 ^ 0xF0)) {// 4 bytes
-                return UCS2(body,
-                            ((code & 0x03) << 18) |
-                            ((data[index++] & 0x3F) << 12) |
-                            ((data[index++] & 0x3F) << 6) |
-                            (data[index++] & 0x3F));
+                UCS2(body,
+                     ((code & 0x03) << 18) |
+                     ((data[index++] & 0x3F) << 12) |
+                     ((data[index++] & 0x3F) << 6) |
+                     (data[index++] & 0x3F));
+            } else if (!(code & 0xE0 ^ 0xE0)) {// 3 bytes
+                UCS2(body,
+                     ((code & 0x0F) << 12) |
+                     ((data[index++] & 0x3F) << 6) |
+                     (data[index++] & 0x3F));
+            } else if (!(code & 0xC0 ^ 0xC0)) {// 2 bytes
+                UCS2(body,
+                     ((code & 0x1F) << 6) |
+                     (data[index++] & 0x3F));
+            } else {
+                body.push(code);
             }
-            if (!(code & 0xE0 ^ 0xE0)) {// 3 bytes
-                return UCS2(body,
-                            ((code & 0x0F) << 12) |
-                            ((data[index++] & 0x3F) << 6) |
-                            (data[index++] & 0x3F));
-            }
-            if (!(code & 0xC0 ^ 0xC0)) {// 2 bytes
-                return UCS2(body,
-                            ((code & 0x1F) << 6) |
-                            (data[index++] & 0x3F));
-            }
-            body.push(code);
-        }
-
-        function eof() {
-            return index >= data.length;
         }
 
         function croak(msg) {
@@ -99,7 +94,7 @@ XML = (function(){
 
         function readWhile(pred) {
             var a = [];
-            while (!eof() && pred(data[index])) {
+            while (index < data.length && pred(data[index])) {
                 a.push(data[index++]);
             }
             return a;
@@ -157,7 +152,7 @@ XML = (function(){
 
         function xmlComment() {
             var body = [];
-            while (!eof()) {
+            while (index < data.length) {
                 if (eat(END_COMMENT)) {
                     return call("comment", STRING.apply(0, body));
                 }
@@ -166,37 +161,39 @@ XML = (function(){
         }
 
         function xmlTag() {
+            var name, attrs;
             if (eat(QUESTION_MARK)) {
-                return xmlDecl();
-            }
-            if (eat(START_COMMENT)) {
-                return xmlComment();
-            }
-            var name = xmlName(), attrs = xmlAttrs(name);
-            stack.push(attrs);
-            if (eat(END_SHORT_TAG)) {
-                call("enter", name, attrs, true);
+                xmlDecl();
+            } else if (eat(START_COMMENT)) {
+                xmlComment();
             } else {
-                skip(GREATER_THAN);
-                call("enter", name, attrs);
-                xmlContent(name);
-                if (name != xmlName()) {
-                    croak("Bad closing tag");
+                name = xmlName();
+                attrs = xmlAttrs(name);
+                stack.push(attrs);
+                if (eat(END_SHORT_TAG)) {
+                    call("enter", name, attrs, true);
+                } else {
+                    skip(GREATER_THAN);
+                    call("enter", name, attrs);
+                    xmlContent(name);
+                    if (name != xmlName()) {
+                        croak("Bad closing tag");
+                    }
+                    call("leave", name, attrs);
+                    skipWhitespace();
+                    skip(GREATER_THAN);
                 }
-                call("leave", name, attrs);
-                skipWhitespace();
-                skip(GREATER_THAN);
+                stack.pop();
             }
-            stack.pop();
         }
 
         function xmlContent(name) {
             var body = [];
-            while (!eof()) {
+            while (index < data.length) {
                 if (eat(END_TAG)) {
                     return body.length && call("text", STRING.apply(0, body));
                 } else if (eat(START_CDATA)) {
-                    while (!eof() && !eat(END_CDATA)) {
+                    while (index < data.length && !eat(END_CDATA)) {
                         readChar(body);
                     }
                 } else if (eat(LESS_THAN)) {
@@ -225,7 +222,7 @@ XML = (function(){
                 croak("Expecting string");
             }
             var body = [];
-            while (!eof()) {
+            while (index < data.length) {
                 if (eat(quote)) {
                     return STRING.apply(0, body);
                 } else if (eat(AMPERSAND)) {
@@ -248,15 +245,14 @@ XML = (function(){
                 if (isNaN(code)) {
                     croak("Bad numeric entity");
                 }
-                UCS2(body, code);
             } else {
                 var name = xmlName();
                 code = ENTITIES[name];
                 if (code == null) {
                     croak("Unknown entity " + name);
                 }
-                body.push(code);
             }
+            UCS2(body, code);
             skip(SEMICOLON);
         }
 
@@ -267,7 +263,7 @@ XML = (function(){
 
         function xmlAttrs(name) {
             var map = { $tag: name };
-            while (!eof()) {
+            while (index < data.length) {
                 skipWhitespace();
                 var code = data[index];
                 if (code == 63 || code == 62 || code == 47) { // ?, > or /
@@ -278,20 +274,19 @@ XML = (function(){
             return map;
         }
 
-        function call(what, thing, arg) {
+        function call(what, thing, arg1, arg2) {
             var f = callbacks && callbacks[what];
             if (f) {
-                f.call(object, thing, arg);
+                f.call(object, thing, arg1, arg2);
             }
         }
 
-        while (!eof()) {
+        while (index < data.length) {
             skipWhitespace();
             skip(LESS_THAN);
             xmlTag();
             skipWhitespace();
         }
-
     }
 
     return {
