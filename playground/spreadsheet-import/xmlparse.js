@@ -45,6 +45,7 @@ XML = (function(){
     var EQUAL           = CODE("=");
     var AMPERSAND       = CODE("&");
     var QUOTE           = CODE('"');
+    var APOSTROPHE      = CODE("'");
     var SHARP           = CODE("#");
     var LOWERCASE_X     = CODE("x");
     var UPPERCASE_X     = CODE("X");
@@ -117,7 +118,7 @@ XML = (function(){
                     return false;
                 }
             }
-            return true;
+            return a;
         }
 
         function skip(code) {
@@ -216,10 +217,13 @@ XML = (function(){
         }
 
         function xmlString() {
-            skip(QUOTE);
+            var quote = eat(QUOTE) || eat(APOSTROPHE);
+            if (!quote) {
+                croak("Expecting string");
+            }
             var str = "";
             while (!eof()) {
-                if (eat(QUOTE)) {
+                if (eat(quote)) {
                     return str;
                 } else if (eat(AMPERSAND)) {
                     str += xmlEntity();
