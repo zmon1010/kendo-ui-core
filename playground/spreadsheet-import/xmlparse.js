@@ -2,15 +2,15 @@ XML = (function(){
 
     "use strict";
 
-    var CHAR = String.fromCharCode;
+    var STRING = String.fromCharCode;
 
     // XXX: add more here?
     var ENTITIES = {
-        "amp"  : "&",
-        "lt"   : "<",
-        "gt"   : ">",
-        "quot" : '"',
-        "nbsp" : "\xA0"
+        "amp"  : 38,
+        "lt"   : 60,
+        "gt"   : 62,
+        "quot" : 34,
+        "nbsp" : 160
     };
 
     function CODE(str) {
@@ -21,13 +21,13 @@ XML = (function(){
         return out;
     }
 
-    function UCS2(code) {
+    function UCS2(out, code) {
         if (code > 0xFFFF) {
             code -= 0x10000;
-            return CHAR(code >>> 10 & 0x3FF | 0xD800) +
-                CHAR(0xDC00 | code & 0x3FF);
+            out.push(code >>> 10 & 0x3FF | 0xD800,
+                     0xDC00 | code & 0x3FF);
         } else {
-            return CHAR(code);
+            out.push(code);
         }
     }
 
@@ -66,24 +66,27 @@ XML = (function(){
             stack: stack
         };
 
-        function readChar() {
+        function readChar(body) {
             var code = data[index++];
             if (!(code & 0xF0 ^ 0xF0)) {// 4 bytes
-                return UCS2( ((code & 0x03) << 18) |
-                             ((data[index++] & 0x3F) << 12) |
-                             ((data[index++] & 0x3F) << 6) |
-                             (data[index++] & 0x3F) );
+                return UCS2(body,
+                            ((code & 0x03) << 18) |
+                            ((data[index++] & 0x3F) << 12) |
+                            ((data[index++] & 0x3F) << 6) |
+                            (data[index++] & 0x3F));
             }
             if (!(code & 0xE0 ^ 0xE0)) {// 3 bytes
-                return UCS2( ((code & 0x0F) << 12) |
-                             ((data[index++] & 0x3F) << 6) |
-                             (data[index++] & 0x3F) );
+                return UCS2(body,
+                            ((code & 0x0F) << 12) |
+                            ((data[index++] & 0x3F) << 6) |
+                            (data[index++] & 0x3F));
             }
             if (!(code & 0xC0 ^ 0xC0)) {// 2 bytes
-                return UCS2( ((code & 0x1F) << 6) |
-                             (data[index++] & 0x3F) );
+                return UCS2(body,
+                            ((code & 0x1F) << 6) |
+                            (data[index++] & 0x3F));
             }
-            return CHAR(code);
+            body.push(code);
         }
 
         function eof() {
@@ -103,7 +106,7 @@ XML = (function(){
         }
 
         function readAsciiWhile(pred) {
-            return CHAR.apply(null, readWhile(pred));
+            return STRING.apply(0, readWhile(pred));
         }
 
         function skipWhitespace() {
@@ -153,12 +156,12 @@ XML = (function(){
         }
 
         function xmlComment() {
-            var body = "";
+            var body = [];
             while (!eof()) {
                 if (eat(END_COMMENT)) {
-                    return call("comment", body);
+                    return call("comment", STRING.apply(0, body));
                 }
-                body += readChar();
+                readChar(body);
             }
         }
 
@@ -188,22 +191,22 @@ XML = (function(){
         }
 
         function xmlContent(name) {
-            var body = "";
+            var body = [];
             while (!eof()) {
                 if (eat(END_TAG)) {
-                    return body && call("text", body);
+                    return body.length && call("text", STRING.apply(0, body));
                 } else if (eat(START_CDATA)) {
                     while (!eof() && !eat(END_CDATA)) {
-                        body += readChar();
+                        readChar(body);
                     }
                 } else if (eat(LESS_THAN)) {
-                    body && call("text", body);
+                    body.length && call("text", STRING.apply(0, body));
                     xmlTag();
-                    body = "";
+                    body = [];
                 } else if (eat(AMPERSAND)) {
-                    body += xmlEntity();
+                    xmlEntity(body);
                 } else {
-                    body += readChar();
+                    readChar(body);
                 }
             }
             croak("Unclosed tag " + name);
@@ -221,40 +224,40 @@ XML = (function(){
             if (!quote) {
                 croak("Expecting string");
             }
-            var str = "";
+            var body = [];
             while (!eof()) {
                 if (eat(quote)) {
-                    return str;
+                    return STRING.apply(0, body);
                 } else if (eat(AMPERSAND)) {
-                    str += xmlEntity();
+                    xmlEntity(body);
                 } else {
-                    str += readChar();
+                    readChar(body);
                 }
             }
             croak("Unfinished string");
         }
 
-        function xmlEntity() {
-            var ret;
+        function xmlEntity(body) {
+            var code;
             if (eat(SHARP)) {
                 if (eat(LOWERCASE_X) || eat(UPPERCASE_X)) {
-                    ret = parseInt(readAsciiWhile(isHexDigit), 16);
+                    code = parseInt(readAsciiWhile(isHexDigit), 16);
                 } else {
-                    ret = parseInt(readAsciiWhile(isDigit), 10);
+                    code = parseInt(readAsciiWhile(isDigit), 10);
                 }
-                if (isNaN(ret)) {
+                if (isNaN(code)) {
                     croak("Bad numeric entity");
                 }
-                ret = UCS2(ret);
+                UCS2(body, code);
             } else {
                 var name = xmlName();
-                ret = ENTITIES[name];
-                if (ret == null) {
+                code = ENTITIES[name];
+                if (code == null) {
                     croak("Unknown entity " + name);
                 }
+                body.push(code);
             }
             skip(SEMICOLON);
-            return ret;
         }
 
         function xmlDecl() {
