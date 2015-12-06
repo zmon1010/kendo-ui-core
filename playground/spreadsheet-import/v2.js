@@ -29,7 +29,7 @@ var SEL_FORMULA = ["sheetData", "row", "c", "f"];
 var SEL_MERGE = ["mergeCells", "mergeCell"];
 var SEL_TEXT = ["t"];
 var SEL_COL = ["cols", "col"];
-var SEL_ROW = ["rows", "row"];
+var SEL_ROW = ["sheetData", "row"];
 var SEL_SHEET = ["sheets", "sheet"];
 
 function readWorkbook(zip, spreadsheet) {
@@ -48,20 +48,6 @@ function readWorkbook(zip, spreadsheet) {
                     sheet.name(name);
                     readSheet(zip, file, sheet, strings);
                 }, { recalc: true });
-            }
-            else if (this.is(SEL_COL)) {
-                var start = parseInt(attr.min, 10) - 1;
-                var stop = parseInt(attr.max, 10) - 1;
-                // XXX: magic numbers below.  The spec is from another planet.
-                var width = parseInt(attr.width, 10) * 9;
-                sheet._columns.values.value(start, stop, width);
-            }
-            else if (this.is(SEL_ROW)) {
-                var start = parseInt(attr.min, 10) - 1;
-                var stop = parseInt(attr.max, 10) - 1;
-                // XXX: magic numbers below.  The spec is from another planet.
-                var height = parseInt(attr.height, 10) * 9;
-                sheet._rows.values.value(start, stop, height);
             }
         }
     });
@@ -89,6 +75,28 @@ function readSheet(zip, file, sheet, strings) {
             }
             else if (this.is(SEL_MERGE)) {
                 sheet.range(attrs.ref).merge();
+            }
+            else if (this.is(SEL_COL)) {
+                var start = parseInt(attrs.min, 10) - 1;
+                var stop = parseInt(attrs.max, 10) - 1;
+
+                // XXX: magic numbers below.
+                var maximumDigitWidth = 7; // for example.
+                var width = parseFloat(attrs.width);
+
+                // the formula below is taken from the OOXML spec.
+                // why not complicate things if it's possible, right?
+                width = Math.floor((256 * width + Math.floor(128 / maximumDigitWidth)) / 256) * maximumDigitWidth;
+
+                sheet._columns.values.value(start, stop, width);
+            }
+            else if (this.is(SEL_ROW)) {
+                if (attrs.ht) {
+                    var height = parseFloat(attrs.ht);
+                    height *= 1.5625; // XXX: totally unscientific conversion of points into pixels
+                    var row = parseInt(attrs.r) - 1;
+                    sheet._rows.values.value(row, row, height);
+                }
             }
         },
         leave: function(tag) {
