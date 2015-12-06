@@ -10,92 +10,73 @@ $("#file").on("change", function(e) {
     e.target.parentNode.reset();
 
     var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
-    spreadsheet.fromJSON({ sheets: [] });
-    kendo.ooxml.importFile(file, {
-        sheet: function(sheet) {
-            var worksheet;
-            if (sheet.index === 0) {
-                worksheet = spreadsheet.sheetByIndex(0);
-            } else {
-                worksheet = spreadsheet.insertSheet();
-
-                // XXX: ?
-                // spreadsheet.sheetByIndex(sheet.index - 1)
-                //     .suspendChanges(false)
-                //     .triggerChange();
-            }
-
-            worksheet.name(sheet.name);
-            worksheet.triggerChange();
-            // worksheet.suspendChanges(true);
-            return worksheet;
-        }
-    });
+    kendo.ooxml.importFile(file, spreadsheet);
 });
 
-kendo.ooxml.importFile = function(file, visitors) {
+kendo.ooxml.importFile = function(file, spreadsheet) {
+    spreadsheet.fromJSON({ sheets: [] });
     var reader = new FileReader();
     reader.onload = function(e) {
         var zip = new JSZip(e.target.result);
-        readWorkbook(zip, visitors);
+        readWorkbook(zip, spreadsheet);
     };
     reader.readAsArrayBuffer(file);
 };
-
-function readWorkbook(zip, visitors) {
-    var strings = readStrings(zip), i = 0;
-    console.time("read");
-    parse(zip, "xl/workbook.xml", {
-        enter: function(tag, attrs) {
-            if (tag == "sheet") {
-                var id = parseInt( attrs["r:id"].replace("rId", ""), 10 );
-                var name = attrs.name;
-                var sheet = { name: name, index: i++ };
-                sheet = visitors.sheet(sheet);
-                sheet.batch(function(){
-                    readSheet(zip, id, sheet, strings, visitors);
-                }, { recalc: true });
-            }
-        }
-    });
-    console.timeEnd("read");
-}
 
 var SEL_CELL = ["sheetData", "row", "c"];
 var SEL_VALUE = ["sheetData", "row", "c", "v"];
 var SEL_FORMULA = ["sheetData", "row", "c", "f"];
 var SEL_MERGE = ["mergeCells", "mergeCell"];
 var SEL_TEXT = ["t"];
+var SEL_COL = ["cols", "col"];
+var SEL_ROW = ["rows", "row"];
+var SEL_SHEET = ["sheets", "sheet"];
 
-// <XXX optimize calc.parseReference for the simplest case — A1>
-
-function getcol(str) {
-    str = str.toUpperCase();
-    for (var col = 0, i = 0; i < str.length; ++i) {
-        col = col * 26 + str.charCodeAt(i) - 64;
-    }
-    return col - 1;
+function readWorkbook(zip, spreadsheet) {
+    var strings = readStrings(zip), index = 0;
+    var relationships = readRelationships(zip, "workbook.xml");
+    console.time("read");
+    parse(zip, "xl/workbook.xml", {
+        enter: function(tag, attrs) {
+            if (this.is(SEL_SHEET)) {
+                var relId = attrs["r:id"];
+                var file = relationships[relId];
+                var name = attrs.name;
+                var sheet = spreadsheet.sheetByIndex(index++) ||
+                    spreadsheet.insertSheet();
+                sheet.batch(function(){
+                    sheet.name(name);
+                    readSheet(zip, file, sheet, strings);
+                }, { recalc: true });
+            }
+            else if (this.is(SEL_COL)) {
+                var start = parseInt(attr.min, 10) - 1;
+                var stop = parseInt(attr.max, 10) - 1;
+                // XXX: magic numbers below.  The spec is from another planet.
+                var width = parseInt(attr.width, 10) * 9;
+                sheet._columns.values.value(start, stop, width);
+            }
+            else if (this.is(SEL_ROW)) {
+                var start = parseInt(attr.min, 10) - 1;
+                var stop = parseInt(attr.max, 10) - 1;
+                // XXX: magic numbers below.  The spec is from another planet.
+                var height = parseInt(attr.height, 10) * 9;
+                sheet._rows.values.value(start, stop, height);
+            }
+        }
+    });
+    console.timeEnd("read");
 }
 
-function parseRef(str) {
-    var m = /^([a-z]+)([0-9]+)$/i.exec(str);
-    return {
-        row: parseInt(m[2], 10) - 1,
-        col: getcol(m[1])
-    };
-}
-
-// </XXX>
-
-function readSheet(zip, id, sheet, strings, visitors) {
+function readSheet(zip, file, sheet, strings) {
     var ref, type, value, formula, formulaRange;
-    parse(zip, "xl/worksheets/sheet" + id + ".xml", {
+    parse(zip, "xl/" + file, {
         enter: function(tag, attrs) {
             if (this.is(SEL_CELL)) {
                 value = null;
                 formula = null;
                 formulaRange = null;
-                ref = parseRef(attrs.r);
+                ref = attrs.r;
 
                 // XXX: can't find no type actually, so everything is
                 // interpreted as string.  Additionally, cells having
@@ -114,16 +95,10 @@ function readSheet(zip, id, sheet, strings, visitors) {
             if (this.is(SEL_CELL)) {
                 if (formula != null) {
                     try {
-                        if (formulaRange != null) {
-                            sheet.range(formulaRange)
-                                .formula(formula)
-                                .background("#c0ffee"); // XXX
-                        } else {
-                            sheet.range(ref.row, ref.col)
-                                .formula(formula)
-                                .background("#c0ffee"); // XXX
-                        }
+                        sheet.range(formulaRange || ref).formula(formula);
                     } catch(ex) {
+                        sheet.range(formulaRange || ref).value(formula)
+                            .background("#ffaaaa");
                         // console.error(text);
                     }
                 } else if (value != null) {
@@ -132,8 +107,9 @@ function readSheet(zip, id, sheet, strings, visitors) {
                     // whether the formula is present before applying
                     // the value.  This is ruining a dozen
                     // micro-optimizations I've made. ;-\
-                    if (!sheet.range(ref.row, ref.col).formula()) {
-                        sheet.range(ref.row, ref.col).value(value);
+                    var range = sheet.range(ref);
+                    if (!range.formula()) {
+                        range.value(value);
                     }
                 }
             }
@@ -161,6 +137,7 @@ function readSheet(zip, id, sheet, strings, visitors) {
 }
 
 function parse(zip, file, callbacks) {
+    console.log(file);
     XML.parse(zip.files[file].asUint8Array(), callbacks);
 }
 
@@ -176,4 +153,16 @@ function readStrings(zip) {
     });
     console.timeEnd("readStrings");
     return strings;
+}
+
+function readRelationships(zip, file) {
+    var map = {};
+    parse(zip, "xl/_rels/" + file + ".rels", {
+        enter: function(tag, attrs) {
+            if (tag == "Relationship") {
+                map[attrs.Id] = attrs.Target;
+            }
+        }
+    });
+    return map;
 }
