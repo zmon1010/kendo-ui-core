@@ -362,6 +362,7 @@
 
             computedStyles.position = "absolute";
             computedStyles.visibility = "hidden";
+            computedStyles.whiteSpace = "pre";
             computedStyles.top = -3333;
             computedStyles.left = -3333;
 

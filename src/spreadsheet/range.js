@@ -723,7 +723,7 @@
     var measureBox = $('<div style="position: absolute !important; top: -4000px !important; height: auto !important;' +
                         'padding: 1px !important; margin: 0 !important; border: 1px solid black !important;' +
                         'line-height: normal !important; visibility: hidden !important;' +
-                        'white-space: normal !important; word-break: break-all !important;" />'
+                        'white-space: pre-wrap !important; word-break: break-all !important;" />'
                      )[0];
 
     function getTextHeight(text, width, fontSize, wrap) {
@@ -732,7 +732,7 @@
             "width" : width + "px",
             "font-size" : (fontSize || 12) + "px",
             "word-break" : (wrap === true) ? "break-all" : "normal",
-            "white-space" : (wrap === true) ? "normal" : "nowrap"
+            "white-space" : (wrap === true) ? "pre-wrap" : "pre"
         };
 
         return kendo.util.measureText(text, styles, measureBox).height;

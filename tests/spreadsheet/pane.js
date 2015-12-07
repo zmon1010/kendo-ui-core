@@ -149,10 +149,10 @@
     test("adds white-space nowrap style to the cell if wrap is false", function() {
         var table = stub({}, "addCell");
 
-        addCell(table, {}, { wrap: false });
+        addCell(table, {}, { wrap: true });
 
         equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].whiteSpace, "nowrap");
+        equal(table.args("addCell", 0)[2].whiteSpace, "pre-wrap");
     });
 
     test("adds 'k-state-disabled' classname to the cell", function() {

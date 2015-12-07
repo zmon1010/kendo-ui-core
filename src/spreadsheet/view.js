@@ -119,10 +119,8 @@
         }
 
         if (cell.wrap === true) {
-            style.whiteSpace = "normal";
+            style.whiteSpace = "pre-wrap";
             style.wordBreak = "break-all";
-        } else {
-            style.whiteSpace = "nowrap";
         }
 
         if (cell.borderRight) {
