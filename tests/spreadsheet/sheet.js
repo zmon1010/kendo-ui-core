@@ -128,6 +128,28 @@
         equal(sheet._mergedCells.length, 0);
     });
 
+    test("deleteColumn does not delete column if any cell is disabled", function() {
+        var range = sheet.range("B3");
+
+        range.enable(false);
+        range.value("test");
+
+        sheet.deleteColumn(1);
+
+        equal(range.enable(), false);
+        equal(range.value(), "test");
+    });
+
+    test("isEnabledColumn returns true if row range is enabled", function() {
+        ok(sheet.isEnabledColumn(2));
+    });
+
+    test("isEnabledColumn returns false if any cell is disabled", function() {
+        sheet.range("C3").enable(false);
+
+        equal(sheet.isEnabledColumn(2), false);
+    });
+
     test("deleteRow persist merged cells when deleting row is at the start of the merged group", function() {
         sheet.range("A2:B3").merge();
 
@@ -224,6 +246,28 @@
         sheet.deleteRow(4);
 
         equal(sheet.frozenRows(), 3);
+    });
+
+    test("deleteRow does not delete the row if any cell is disabled", 2, function() {
+        var range = sheet.range("A1");
+
+        range.value("test");
+        range.enable(false);
+
+        sheet.deleteRow(0);
+
+        equal(range.value(), "test");
+        equal(range.enable(), false);
+    });
+
+    test("isEnabledRow returns true if row range is enabled", function() {
+        ok(sheet.isEnabledRow(2));
+    });
+
+    test("isEnabledRow returns false if any cell is disabled", function() {
+        sheet.range("C3").enable(false);
+
+        equal(sheet.isEnabledRow(2), false);
     });
 
     test("insertRow into merged cells region expands the merged cells", function() {

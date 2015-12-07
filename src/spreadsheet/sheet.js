@@ -319,7 +319,16 @@
             return this;
         },
 
+        isEnabledRow: function(rowIndex) {
+            var ref = new RangeRef(new CellRef(rowIndex, 0), new CellRef(rowIndex, this._grid.columnCount));
+            return new Range(ref, this).enable();
+        },
+
         deleteRow: function(rowIndex) {
+            if (!this.isEnabledRow(rowIndex)) {
+                return this;
+            }
+
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
@@ -398,7 +407,16 @@
             return this;
         },
 
+        isEnabledColumn: function(columnIndex) {
+            var ref = new RangeRef(new CellRef(0, columnIndex), new CellRef(Infinity, columnIndex));
+            return new Range(ref, this).enable();
+        },
+
         deleteColumn: function(columnIndex) {
+            if (!this.isEnabledColumn(columnIndex)) {
+                return this;
+            }
+
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
