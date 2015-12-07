@@ -411,8 +411,8 @@
                         if (/^(?:top|center|bottom)$/.test(attrs.vertical)) {
                             xf.verticalAlign = attrs.vertical;
                         }
-                        if (xf.wrapText != null) {
-                            xf.wrapText = bool(xf.wrapText);
+                        if (attrs.wrapText != null) {
+                            xf.wrapText = bool(attrs.wrapText);
                         }
                     }
                 }
