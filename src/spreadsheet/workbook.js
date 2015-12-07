@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "./runtime", "./references" ], f);
+    define([ "../kendo.core", "./runtime", "./references", "./excel-reader" ], f);
 })(function(){
 
 (function(kendo) {
@@ -327,6 +327,19 @@
                     return sheet.toJSON();
                 }, this)
             };
+        },
+
+        fromExcel: function(file) {
+            for (var i = 0; i < this._sheets.length; i++) {
+                this._sheets[i].unbind();
+            }
+
+            this._sheets = [];
+            this._sheetsSearchCache = {};
+
+            kendo.spreadsheet.readExcel(file, this, function() {
+                this.activeSheet(this.sheetByIndex(0));
+            }.bind(this));
         },
 
         saveAsExcel: function(options) {

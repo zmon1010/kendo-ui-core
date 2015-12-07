@@ -731,6 +731,12 @@
         }
     });
 
+    kendo.spreadsheet.ImportCommand = Command.extend({
+        exec: function() {
+            this.options.workbook.fromExcel(this.options.file);
+        }
+    });
+
     kendo.spreadsheet.SaveAsCommand = Command.extend({
         exec: function() {
             if(this.options.extension === ".xlsx") {

@@ -210,6 +210,10 @@
                 }
             },
 
+            fromExcel: function(file) {
+                this._workbook.fromExcel(file);
+            },
+
             saveAsExcel: function(options) {
                 this._workbook.saveAsExcel(options);
             },

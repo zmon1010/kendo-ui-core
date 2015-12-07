@@ -1064,7 +1064,12 @@
                 .appendTo(this.element);
         },
         _change: function(e) {
-            console.log("selected :: " + kendo.stringify(e, null, 2));
+            this.toolbar.action({
+                command: "ImportCommand",
+                options: {
+                    file: e.target.files[0]
+                }
+            });
         }
     });
 
