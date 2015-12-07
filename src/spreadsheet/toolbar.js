@@ -1047,8 +1047,7 @@
                     .appendTo(this.element)
                     .bind("change", this.import.bind(this));
         },
-        import: function(e) {
-            console.log("selected :: " + kendo.stringify(e, null, 2));
+        import: function() {
         }
     });
 
