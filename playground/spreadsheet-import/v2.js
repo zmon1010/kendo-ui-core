@@ -123,7 +123,7 @@ function readSheet(zip, file, sheet, strings, styles) {
                             if (type == "n") {
                                 value = parseFloat(value);
                             } else if (type == "b") {
-                                value = new Boolean(value);
+                                value = new Boolean(value).valueOf();
                             } else if (type == "s") {
                                 value = strings[integer(value)];
                             }
@@ -230,7 +230,7 @@ function applyStyle(sheet, ref, styles, styleIndex) {
         setFormat(styles.numFmts[value] || DEFAULT_FORMATS[value]);
     }
     function setFormat(f) {
-        var format = f.formatCode;
+        var format = typeof f == "string" ? f : f.formatCode;
         if (format != null && !/^general$/i.test(format)) {
             // XXX: drop locale info.
             // http://stackoverflow.com/questions/894805/excel-number-format-what-is-409
