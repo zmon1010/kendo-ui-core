@@ -966,4 +966,10 @@
     test("enable returns true if range hasn't beed disabled", function() {
         equal(range.enable(), true);
     });
+
+    test("enable returns true if range hasn't beed disabled", function() {
+        var cellRange = sheet.range("A1");
+
+        equal(cellRange.enable(), true);
+    });
 })();
