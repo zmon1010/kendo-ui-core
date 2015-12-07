@@ -1061,7 +1061,7 @@
             $("<input type='file' autocomplete='off' accept='.xlsx'/>")
                 .attr("title", options.attributes.title)
                 .bind("change", this._change.bind(this))
-                .appendTo(this.element);
+                .appendTo($("<form>").appendTo(this.element));
         },
         _change: function(e) {
             this.toolbar.action({
@@ -1070,6 +1070,8 @@
                     file: e.target.files[0]
                 }
             });
+
+            e.target.parentNode.reset();
         }
     });
 
