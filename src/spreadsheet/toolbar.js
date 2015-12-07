@@ -87,7 +87,6 @@
         textColor: "Text Color",
         textWrap: "Wrap text",
         underline: "Underline",
-        import: "Import from Excel...",
         validation: "Data validation..."
     };
 
@@ -112,7 +111,6 @@
             [ "deleteColumn", "deleteRow" ]
         ],
         data: [
-            "import",
             "sort",
             "filter",
             "validation"
@@ -153,7 +151,6 @@
         deleteRow:             { type: "button", command: "DeleteRowCommand",                    iconClass: "delete-row"       },
 
         //data tab
-        import:                { type: "import", iconClass: "xlsa", overflow: "never" },
         sort:                  { type: "sort", iconClass: "sort-desc" },
         validation:            { type: "dialog", dialogName: "validation", iconClass: "exception", overflow: "never" }
     };
@@ -1033,25 +1030,6 @@
     });
 
     kendo.toolbar.registerComponent("filter", Filter, FilterButton);
-
-    var Import = kendo.toolbar.ToolBarButton.extend({
-        init: function(options, toolbar) {
-            kendo.toolbar.ToolBarButton.fn.init.call(this, options, toolbar);
-
-            this.element = $("<button class='k-button k-upload-button'>" +
-                                 "<span class='k-icon k-font-icon k-i-xls' />" +
-                             "</button>").data("instance", this);
-
-            this._fileInput =
-                $("<input type='file' autocomplete='off' />")
-                    .appendTo(this.element)
-                    .bind("change", this.import.bind(this));
-        },
-        import: function() {
-        }
-    });
-
-    kendo.toolbar.registerComponent("import", Import);
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 
