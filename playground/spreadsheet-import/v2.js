@@ -248,6 +248,12 @@ function applyStyle(sheet, ref, styles, styleIndex) {
         range.fontFamily(f.name);
         //range.fontSize(f.size); //XXX: will recalc row height.
         range._property("fontSize", f.size);
+        if (f.bold) {
+            range.bold(true);
+        }
+        if (f.italic) {
+            range.italic(true);
+        }
     }
     function setBorder(b) {
         function border(side) {
@@ -357,6 +363,10 @@ function readStyles(zip) {
                     font.size = parseFloat(attrs.val);
                 } else if (tag == "name") {
                     font.name = attrs.val;
+                } else if (tag == "b") {
+                    font.bold = bool(attrs.val);
+                } else if (tag == "i") {
+                    font.italic = bool(attrs.val);
                 }
             }
             else if (this.is(SEL_FILL)) {
@@ -387,7 +397,7 @@ function readStyles(zip) {
                 }
             } else if (this.is(SEL_INLINE_STYLE)) {
                 xf = getXf(attrs);
-                styles.inlineStyles.push(getXf(attrs));
+                styles.inlineStyles.push(xf);
                 if (closed) {
                     xf = null;
                 }
