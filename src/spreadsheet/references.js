@@ -91,6 +91,9 @@
         isCell: function() {
             return false;
         },
+        toRow: function() {
+            return this;
+        },
         toColumn: function() {
             return this;
         },
@@ -537,6 +540,12 @@
         },
         toRangeRef: function() {
             return this;
+        },
+        toRow: function(row) {
+            return new RangeRef(
+               new CellRef(this.topLeft.row + row, this.topLeft.col),
+               new CellRef(this.topLeft.row + row, this.bottomRight.col)
+            );
         },
         toColumn: function(col) {
             return new RangeRef(

@@ -135,28 +135,26 @@
     var controller = kendo.spreadsheet.FilterMenuController;
 
     test("gets only distinct values", function() {
-        filterMenu = createWithValues([ ["header"], ["aaa"], ["bbb"], ["aaa"] ]);
+        var range = sheet.range("A1:A3").values([ ["aaa"], ["bbb"], ["aaa"] ]);
 
         var values = controller.values(range, 0);
 
         equal(values.length, 2, "distinct values are loaded");
-
         equal(values[0].text, "aaa");
         equal(values[1].text, "bbb");
     });
 
     test("gets empty values", function() {
-        filterMenu = createWithValues([ ["header"], [], ["A1"] ]);
+        var range = sheet.range("A1:A2").values([ [], ["A2"] ]);
 
         var values = controller.values(range, 0);
 
         equal(values[0].text, "(Blanks)");
-        equal(values[1].text, "A1");
+        equal(values[1].text, "A2");
     });
 
     test("wrap property is trimmed from values", function() {
-        range = sheet.range("A1:A4").values([ ["header"], ["A1"], ["A2"], ["A3"] ]).wrap(true);
-        filterMenu = new kendo.spreadsheet.FilterMenu(element, { range: range });
+        var range = sheet.range("A1:A3").values([ ["A1"], ["A2"], ["A3"] ]).wrap(true);
 
         var values = controller.values(range, 0);
 
@@ -164,19 +162,8 @@
         ok(!values[1].hasOwnProperty("wrap"));
     });
 
-    test("skips header row value", function() {
-        filterMenu = createWithValues([ ["header"], ["A1"] ]);
-
-        var values = controller.values(range, 0);
-
-        equal(values[0].text, "(Blanks)");
-        equal(values[1].text, "A1");
-    });
-
     test("recognizes number dataType", function() {
-        sheet.range("A2").value(123);
-
-        var range = sheet.range("A1:A2");
+        var range = sheet.range("A1").value(123);
 
         var values = controller.values(range, 0);
 
@@ -184,9 +171,7 @@
     });
 
     test("recognizes date dataType", function() {
-        sheet.range("A2").value(new Date(2015,1,1)).format("dd/mm/yyyy");
-
-        var range = sheet.range("A1:A2");
+        var range = sheet.range("A1").value(new Date(2015,1,1)).format("dd/mm/yyyy");
 
         var values = controller.values(range, 0);
 
@@ -194,9 +179,7 @@
     });
 
     test("recognizes string dataType", function() {
-        sheet.range("A2").value("A2");
-
-        var range = sheet.range("A1:A2");
+        var range = sheet.range("A1").value("A1");
 
         var values = controller.values(range, 0);
 
@@ -204,20 +187,63 @@
     });
 
     test("recognizes blank dataType", function() {
-        var range = sheet.range("A1:A2");
+        var range = sheet.range("A1");
 
         var values = controller.values(range, 0);
 
         equal(values[0].dataType, "blank");
     });
 
-    test("sorts the values according to their dataType (blank, number, date, string)", function() {
-        sheet.range("A1").value("header");
-        sheet.range("A2").value(new Date(2015,1,1)).format("dd/mm/yyyy");
-        sheet.range("A3").value(123);
-        sheet.range("A4");
+    test("filterType returns null for empty range", function() {
+        var range = sheet.range("A1:A2").filter(true);
 
-        var range = sheet.range("A1:A4");
+        var type = controller.filterType(range, 0);
+
+        equal(type, null);
+    });
+
+    test("filterType returns null for empty range", function() {
+        var range = sheet.range("A1:A2").filter(true);
+
+        sheet.range("A2").value(new Date(2015,1,1)).format("dd/mm/yyyy");
+
+        var type = controller.filterType(range, 0);
+
+        equal(type, "date");
+    });
+
+    test("filterType returns number for range with number", function() {
+        var range = sheet.range("A1:A2").filter(true);
+
+        sheet.range("A2").value(42);
+
+        var type = controller.filterType(range, 0);
+
+        equal(type, "number");
+    });
+
+    test("filter returns active custom filter", function() {
+        sheet.range("A1:A3").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.CustomFilter({
+                logic: "and",
+                criteria: [
+                    { operator: "eq", value: 11 }
+                ]
+            })
+        });
+
+        var filter = controller.filter(0, sheet);
+
+        equal(filter.type, "custom");
+    });
+
+    test("sorts the values according to their dataType (blank, number, date, string)", function() {
+        sheet.range("A1").value(new Date(2015,1,1)).format("dd/mm/yyyy");
+        sheet.range("A2").value(123);
+        sheet.range("A3");
+
+        var range = sheet.range("A1:A3");
 
         var values = controller.values(range, 0);
 
@@ -245,10 +271,10 @@
         });
     }
 
-    test("values that does not match existing custom filter rules appear as unchecked", function() {
+    test("values that do not match existing custom filter rules appear as unchecked", function() {
         var filterMenuRange = rangeWithCustomFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], { operator: "contains", value: "B" });
         filterMenu = new kendo.spreadsheet.FilterMenu(element, { range: filterMenuRange });
-        var values = controller.values(filterMenuRange, 0);
+        var values = controller.values(filterMenuRange.resize({ top: 1 }), 0);
 
         equal(values[0].checked, false);
         equal(values[1].checked, true);
@@ -258,7 +284,7 @@
     test("values that does not match existing value filter rules appear as unchecked", function() {
         var filterMenuRange = rangeWithValuesFilter("A1:A4", [ ["header"], ["A"], ["B"], ["C"] ], ["A", "B"] );
         filterMenu = new kendo.spreadsheet.FilterMenu(element, { range: filterMenuRange });
-        var values = controller.values(filterMenuRange, 0);
+        var values = controller.values(filterMenuRange.resize({ top: 1 }), 0);
 
         equal(values[0].checked, true);
         equal(values[1].checked, true);
@@ -288,6 +314,7 @@
         teardown: function() {
             if (filterMenu) {
                 filterMenu.destroy();
+                filterMenu = null;
             }
         }
     });
@@ -396,14 +423,12 @@
 
         var criteria = filterMenu.viewModel.customFilter.criteria;
 
-        equal(criteria[0].operator.type, "string");
-        equal(criteria[0].operator.value, "contains");
-        equal(criteria[0].operator.unique, "string_contains");
+        equal(criteria[0].operator, "contains");
         equal(criteria[0].value, "foo");
     });
 
     test("gets the filter type (string filter)", function() {
-        sheet.range("A1:B3").filter({
+        var range = sheet.range("A1:B3").filter({
             column: 0,
             filter: new kendo.spreadsheet.CustomFilter({
                 logic: "and",
@@ -413,10 +438,9 @@
             })
         });
 
-        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+        var filterType = controller.filterType(range, 0);
 
-        var type = filterMenu.viewModel.getOperatorType();
-        equal(type, "string");
+        equal(filterType, "string");
     });
 
     test("gets existing filters (number filter)", function() {
@@ -434,14 +458,12 @@
 
         var criteria = filterMenu.viewModel.customFilter.criteria;
 
-        equal(criteria[0].operator.type, "number");
-        equal(criteria[0].operator.value, "eq");
-        equal(criteria[0].operator.unique, "number_eq");
+        equal(criteria[0].operator, "eq");
         equal(criteria[0].value, 11);
     });
 
     test("gets the filter type (number filter)", function() {
-        sheet.range("A1:B3").filter({
+        var range = sheet.range("A1:B3").filter({
             column: 0,
             filter: new kendo.spreadsheet.CustomFilter({
                 logic: "and",
@@ -451,9 +473,8 @@
             })
         });
 
-        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+        var type = controller.filterType(range, 0);
 
-        var type = filterMenu.viewModel.getOperatorType();
         equal(type, "number");
     });
 
@@ -472,14 +493,12 @@
 
         var criteria = filterMenu.viewModel.customFilter.criteria;
 
-        equal(criteria[0].operator.type, "date");
-        equal(criteria[0].operator.value, "eq");
-        equal(criteria[0].operator.unique, "date_eq");
+        equal(criteria[0].operator, "eq");
         ok(criteria[0].value instanceof Date);
     });
 
     test("gets the filter type (date filter)", function() {
-        sheet.range("A1:B3").filter({
+        var range = sheet.range("A1:B3").filter({
             column: 0,
             filter: new kendo.spreadsheet.CustomFilter({
                 logic: "and",
@@ -489,10 +508,9 @@
             })
         });
 
-        filterMenu = createWithValues([ ["A1", "B1"], ["A2", "B2"], ["A3", "B3"] ], "A1:B3");
+        var filterType = controller.filterType(range, 0);
 
-        var type = filterMenu.viewModel.getOperatorType();
-        equal(type, "date");
+        equal(filterType, "date");
     });
 
     test("apply triggers command on passed column", function() {

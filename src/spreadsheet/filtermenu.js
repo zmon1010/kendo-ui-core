@@ -174,7 +174,7 @@
                     '<div>' +
                         '<select ' +
                             'data-#=ns#role="dropdownlist"' +
-                            'data-#=ns#bind="value: customFilter.criteria[0].operator, source: operators, events: { change: operatorChange } "' +
+                            'data-#=ns#bind="value: operator, source: operators, events: { change: operatorChange } "' +
                             'data-value-primitive="false"' +
                             'data-option-label="#=messages.operatorNone#"' +
                             'data-height="auto"' +
@@ -303,61 +303,14 @@
                 uncheckAll(dataSource);
                 filter(dataSource, query);
             },
-            validateCriteria: function(criteria) {
-                return criteria.filter(function(item) {
-                    var type = item.operator.type;
-                    var value = item.value;
-
-                    if (value && type === "number") {
-                        return !!kendo.parseFloat(item.value);
-                    } else if (value && type === "date") {
-                        return !!kendo.parseDate(item.value);
-                    } else if (value && type === "string") {
-                        return !!item.value.toString();
-                    } else {
-                        return false;
-                    }
-                });
-            },
-            normalizeCriteria: function(criteria) {
-                return criteria.map(function(item) {
-                    item.type = item.operator.type;
-                    item.operator = item.operator.value;
-
-                    if (item.type === "number") {
-                        item.value = kendo.parseFloat(item.value);
-                    } else if (item.type === "date") {
-                        item.value = kendo.parseDate(item.value);
-                    } else {
-                        item.value = item.value.toString();
-                    }
-
-                    return item;
-                });
-            },
-            buildCustomFilter: function() {
-                var customFilter = this.customFilter.toJSON();
-
-                customFilter.criteria = this.validateCriteria(customFilter.criteria);
-                customFilter.criteria = this.normalizeCriteria(customFilter.criteria);
-
-                return customFilter;
-            },
             reset: function() {
                 this.set("customFilter", { logic: "and", criteria: [ { operator: null, value: null } ] });
                 this.set("valueFilter", { values: [] });
             },
-            getOperatorType: function() {
-                var filter = this.customFilter,
-                    operator;
-
-                if (filter && filter.criteria.length) {
-                    operator = filter.criteria[0].operator;
-                    return operator !== null ? operator.type : undefined;
-                }
-            },
             operatorChange: function(e) {
-                this.set("operatorType", e.sender.dataItem().type);
+                var dataItem = e.sender.dataItem();
+                this.set("operatorType", dataItem.type);
+                this.set("customFilter.criteria[0].operator", dataItem.value);
             },
             isNone: function() {
                 return this.get("operatorType") === undefined;
@@ -403,13 +356,13 @@
                     text: "All",
                     expanded: true,
                     checked: true,
-                    items: this.values(range, column)
+                    items: this.values(range.resize({ top: 1 }), column)
                 }];
             },
             values: function(range, column) {
                 var values = [];
                 var messages = FILTERMENU_MESSAGES;
-                var columnRange = range.resize({ top: 1 }).column(column);
+                var columnRange = range.column(column);
                 var sheet = range.sheet();
 
                 columnRange.forEachCell(function(row, col, cell) {
@@ -467,56 +420,75 @@
                 return values;
             },
 
-            filter: function(column, sheet, operators) {
-                var allFilters = sheet.filter();
-                var columnFilters;
-                var json;
-                var criterion;
+            filterType: function(range, column) {
+                // 1. try to infer type from current filter
+                var sheet = range.sheet();
+                var filter = this.filterForColumn(column, sheet);
                 var type;
-                var operator;
+
+                filter = filter && filter.filter.toJSON();
+
+                if (filter && filter.filter == "custom") {
+                    var value = filter.criteria[0].value;
+
+                    if (value instanceof Date) {
+                        type = "date";
+                    } else if (typeof value == "string") {
+                        type = "string";
+                    } else if (typeof value == "number") {
+                        type = "number";
+                    }
+                }
+
+                if (!type) {
+                    // 2. try to infer type from column data
+                    var topValue = this.values(range.row(1), column)[0];
+                    type = topValue && topValue.dataType;
+
+                    if (type == "blank") {
+                        type = null;
+                    }
+                }
+
+                return type;
+            },
+
+            filterForColumn: function(column, sheet) {
+                var allFilters = sheet.filter();
+                var filters;
 
                 if (allFilters) {
-                    columnFilters = allFilters.columns.filter(function(item) {
+                    filters =  allFilters.columns.filter(function(item) {
                         return item.index === column;
                     })[0];
                 }
 
-                if (columnFilters) {
-                    json = columnFilters.filter.toJSON();
+                return filters;
+            },
 
-                    if (json.filter === "custom") {
-                        criterion = json.criteria.pop();
+            filter: function(column, sheet) {
+                var columnFilters = this.filterForColumn(column, sheet);
 
-                        if (typeof criterion.operator === "string") {
-                            type = criterion.value instanceof Date ? "date" : typeof criterion.value;
-                            operator = criterion.operator;
-                            json.criteria.push({
-                                operator: {
-                                    text: operators[type][operator],
-                                    type: type,
-                                    value: operator,
-                                    unique: type + "_" + operator
-                                },
-                                value: criterion.value
-                            });
-                        } else {
-                            json.criteria.push({
-                                operator: {
-                                    text: operators[criterion.type][criterion.operator],
-                                    type: criterion.type,
-                                    value: criterion.operator,
-                                    unique: criterion.type + "_" + criterion.operator
-                                },
-                                value: criterion.value
-                            });
-                        }
-                    }
+                if (!columnFilters) {
+                    return;
                 }
 
-                return {
-                    filter: json,
-                    type: type
+                var options = columnFilters.filter.toJSON();
+                var type = options.filter;
+
+                delete options.filter;
+
+                var result = {
+                    type: type,
+                    options: options
                 };
+
+                var criteria = options.criteria;
+                if (criteria && criteria.length) {
+                    result.operator = criteria[0].operator;
+                }
+
+                return result;
             }
         };
 
@@ -528,6 +500,7 @@
 
                 this.viewModel = new FilterMenuViewModel({
                     active: "value",
+                    operator: null,
                     operators: flattenOperators(this.options.operators),
                     clear: this.clear.bind(this),
                     apply: this.apply.bind(this)
@@ -620,7 +593,7 @@
                         options.valueFilter = valueFilter;
                     }
                 } else if (this.viewModel.active === "custom") {
-                    customFilter = this.viewModel.buildCustomFilter();
+                    customFilter = this.viewModel.customFilter.toJSON();
 
                     if (customFilter.criteria.length) {
                         options.customFilter = customFilter;
@@ -638,15 +611,20 @@
 
             _filterInit: function() {
                 var column = this.options.column;
-                var sheet = this.options.range.sheet();
-                var operators = this.options.operators;
-                var filterInfo = FilterMenuController.filter(column, sheet, operators);
-                var filterProps = filterInfo.filter;
+                var range = this.options.range;
+                var sheet = range.sheet();
+                var activeFilter = FilterMenuController.filter(column, sheet);
 
-                if (filterProps) {
-                    this.viewModel.set("active", filterProps.filter);
-                    this.viewModel.set(filterProps.filter + "Filter", filterProps);
-                    this.viewModel.set("operatorType", filterInfo.type);
+                if (activeFilter) {
+                    var filterType = FilterMenuController.filterType(range, column);
+
+                    this.viewModel.set("active", activeFilter.type);
+                    this.viewModel.set(activeFilter.type + "Filter", activeFilter.options);
+
+                    if (activeFilter.type == "custom") {
+                        this.viewModel.set("operator", filterType + "_" + activeFilter.operator);
+                        this.viewModel.set("operatorType", filterType);
+                    }
                 } else {
                     this.viewModel.reset();
                 }
