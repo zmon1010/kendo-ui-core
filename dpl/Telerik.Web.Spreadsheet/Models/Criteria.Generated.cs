@@ -37,7 +37,7 @@ namespace Telerik.Web.Spreadsheet
         /// The value for the criteria operator.
         /// </summary>
         [DataMember(Name = "value", EmitDefaultValue = false)]
-        public string Value { get; set; }
+        public object Value { get; set; }
 
 
         /// <summary>

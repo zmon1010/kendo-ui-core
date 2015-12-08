@@ -17,6 +17,10 @@
       :item_type: object
       :type: Array
 
+    - :name: sheets.filter.columns.criteria.value
+      :merge: true
+      :type: object
+
     - :name: sheets.filter.columns.blanks
       :description: Indicates whether to include blank values
       :type: Boolean

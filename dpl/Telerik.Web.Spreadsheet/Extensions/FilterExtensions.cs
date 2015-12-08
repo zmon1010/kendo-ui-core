@@ -1,9 +1,21 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using Telerik.Windows.Documents.Spreadsheet.Model.Filtering;
+using System;
+using Telerik.Windows.Documents.Spreadsheet.Model;
 
 namespace Telerik.Web.Spreadsheet
-{    
+{     
+    enum StringFilterOpperators 
+    {
+        EqualsTo = 0,
+        StartsWith = 1,
+        EndsWith = 2,
+        Contains = EqualsTo | StartsWith | EndsWith,
+        NotEqualsTo = 5,
+        DoesNotContain = NotEqualsTo | StartsWith | EndsWith
+    }
+
     public static class FilterExtensions
     {
         public static FilterColumn ToFilterColumn(this IFilter filter)
@@ -58,6 +70,7 @@ namespace Telerik.Web.Spreadsheet
             {
                 Index = filter.RelativeColumnIndex,
                 Filter = "value",
+                Blanks = filter.Blank,
                 Dates = filter.DateItems.Select(item => new ValueFilterDate {
                     Year = item.Year,
                     Month = item.Month - 1,
@@ -66,25 +79,7 @@ namespace Telerik.Web.Spreadsheet
                     Minutes = item.Minute,
                     Seconds = item.Second
                 }).ToList(),
-                Values = filter.StringValues.Select(value =>
-                {
-                    double number;
-                    bool boolean;
-
-                    if (double.TryParse(value, out number))
-                    {
-                        return (object)number;
-                    }
-                    else if (bool.TryParse(value, out boolean))
-                    {
-                        return (object)boolean;
-                    }
-                    else
-                    {
-                        return value;
-                    }
-
-                }).ToList()
+                Values = filter.StringValues.Select(value => ParseValue(value)).ToList()
             };
         }      
 
@@ -105,23 +100,55 @@ namespace Telerik.Web.Spreadsheet
 
             if (filter.Criteria1 != null)
             {
-                criterias.Add(new Criteria
-                {
-                    Operator = ComparisonOperators[filter.Criteria1.ComparisonOperator.ToString().ToLowerInvariant()],
-                    Value = filter.Criteria1.FilterValue
-                });
+                criterias.Add(ToCriteria(filter.Criteria1));
             }
 
             if (filter.Criteria2 != null)
             {
-                criterias.Add(new Criteria
-                {
-                    Operator = ComparisonOperators[filter.Criteria2.ComparisonOperator.ToString().ToLowerInvariant()],
-                    Value = filter.Criteria2.FilterValue
-                });
+                criterias.Add(ToCriteria(filter.Criteria2));
             }
 
             return criterias;
+        }
+
+        private static Criteria ToCriteria(CustomFilterCriteria source)
+        {
+            var @operator = ComparisonOperators[source.ComparisonOperator.ToString().ToLowerInvariant()];
+            var value = ParseValue(source.FilterValue);
+
+            if (value is string && (source.ComparisonOperator == ComparisonOperator.EqualsTo || source.ComparisonOperator == ComparisonOperator.NotEqualsTo))
+            {
+                var startsWith = value.ToString().EndsWith("*") ? StringFilterOpperators.StartsWith : StringFilterOpperators.EqualsTo;
+                var endsWith = value.ToString().StartsWith("*") ? StringFilterOpperators.EndsWith : StringFilterOpperators.EqualsTo;
+
+                var flags = (int)source.ComparisonOperator | (int)startsWith | (int)endsWith;
+                
+                @operator = ComparisonOperators[Enum.GetName(typeof(StringFilterOpperators), flags).ToLowerInvariant()];
+
+                value = value.ToString().TrimStart('*').TrimEnd('*');
+            }            
+
+            return new Criteria {
+                Operator = @operator,
+                Value = value
+            };
+        }
+
+        private static object ParseValue(string value)
+        {
+            double number;
+            bool boolean;
+
+            if (double.TryParse(value, out number))
+            {
+                return (object)number;
+            }
+            else if (bool.TryParse(value, out boolean))
+            {
+                return (object)boolean;
+            }
+            
+            return value;            
         }
 
         private static readonly Dictionary<string, string> ComparisonOperators = new Dictionary<string, string>
