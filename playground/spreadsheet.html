@@ -26,6 +26,30 @@
         body {
             font: 14px/1.5 Arial, Helvetica, sans-serif;
         }
+
+        .k-vertical-align-top {}
+
+        .k-vertical-align-center {
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        .k-vertical-align-bottom {
+          position: relative;
+          top: 100%;
+          transform: translateY(-100%);
+        }
+
+        .k-spreadsheet-pane .k-spreadsheet-cell {
+          position: absolute;
+          overflow: hidden;
+          box-sizing: border-box;
+          padding: 1px;
+        }
+        .k-spreadsheet-pane .k-spreadsheet-merged-cell {
+          background: #fff;
+        }
     </style>
 </head>
 

@@ -189,6 +189,7 @@
 
     function shouldDrawCell(cell) {
         return cell.value != null
+            || cell.merged
             || cell.background != null
             || cell.borderTop != null
             || cell.borderRight != null
@@ -545,8 +546,9 @@
     };
 
     spreadsheet.print = {
-        doLayout   : doLayout,
-        drawLayout : drawLayout
+        doLayout       : doLayout,
+        drawLayout     : drawLayout,
+        shouldDrawCell : shouldDrawCell
     };
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

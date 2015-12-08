@@ -80,6 +80,123 @@
         ].join(" ");
     }
 
+    function drawCell(cont, cell) {
+        var left = cell.left;
+        var top = cell.top;
+        var width = cell.width+1;
+        var height = cell.height+1;
+
+        var style = {};
+
+        if (cell.background) {
+            style.backgroundColor = cell.background;
+        }
+
+        if (cell.color) {
+            style.color = cell.color;
+        }
+
+        if (cell.fontFamily) {
+            style.fontFamily = cell.fontFamily;
+        }
+
+        if (cell.underline) {
+            style.textDecoration = "underline";
+        }
+
+        if (cell.italic) {
+            style.fontStyle = "italic";
+        }
+
+        if (cell.textAlign) {
+            style.textAlign = cell.textAlign;
+        }
+
+        if (cell.bold) {
+            style.fontWeight = "bold";
+        }
+
+        if (cell.fontSize) {
+            style.fontSize = cell.fontSize + "px";
+        }
+
+        if (cell.wrap === true) {
+            style.whiteSpace = "pre-wrap";
+            style.wordBreak = "break-all";
+        }
+
+        if (cell.borderLeft) {
+            style.borderLeft = cellBorder(cell.borderLeft);
+        } else {
+            left++;
+            width--;
+        }
+        if (cell.borderTop) {
+            style.borderTop = cellBorder(cell.borderTop);
+        } else {
+            top++;
+            height--;
+        }
+        if (cell.borderRight) {
+            style.borderRight = cellBorder(cell.borderRight);
+        } else {
+            width--;
+        }
+        if (cell.borderBottom) {
+            style.borderBottom = cellBorder(cell.borderBottom);
+        } else {
+            height--;
+        }
+
+        style.left = left + "px";
+        style.top = top + "px";
+        style.width = width + "px";
+        style.height = height + "px";
+
+        var data = cell.value, type = typeof data;
+        if (cell.format && data !== null) {
+            data = kendo.spreadsheet.formatting.format(data, cell.format);
+            if (data.__dataType) {
+                type = data.__dataType;
+            }
+        } else if (data !== null && data !== undefined) {
+            data = kendo.dom.text(data);
+        }
+
+        if (!style.textAlign) {
+            switch (type) {
+              case "number":
+              case "date":
+              case "percent":
+                style.textAlign = "right";
+                break;
+              case "boolean":
+                style.textAlign = "center";
+                break;
+            }
+        }
+
+        var classNames = [ paneClassNames.cell ];
+
+        if (cell.enable === false) {
+            classNames.push("k-state-disabled");
+        }
+        if (cell.merged) {
+            classNames.push("k-spreadsheet-merged-cell");
+        }
+
+        var verticalAlign = cell.verticalAlign || "center"; // Excel defaults to "bottom" actually
+
+        if (verticalAlign && data) {
+            data = kendo.dom.element("div", { className: "k-vertical-align-" + verticalAlign }, [ data ]);
+        }
+
+        cont.children.push(kendo.dom.element("div", {
+            className: classNames.join(" "),
+            style: style
+        }, data ? [ data ] : []));
+    }
+
     function addCell(table, row, cell) {
         var style = {};
 
@@ -885,6 +1002,7 @@
     });
 
     var paneClassNames = {
+        cell: "k-spreadsheet-cell",
         rowHeader: "k-spreadsheet-row-header",
         columnHeader: "k-spreadsheet-column-header",
         pane: "k-spreadsheet-pane",
@@ -942,8 +1060,6 @@
             var children = [];
 
             children.push(this.renderData());
-
-            children.push(this.renderMergedCells());
 
             children.push(this.renderSelection());
 
@@ -1036,34 +1152,41 @@
         },
 
         renderData: function() {
-            var table = new HtmlTable();
             var view = this._currentView;
-
-            view.rows.values.forEach(function(height) {
-                table.addRow(height);
+            var cont = kendo.dom.element("div", {
+                className: Pane.classNames.data,
+                style: {
+                    position: "relative",
+                    left: view.columnOffset + "px",
+                    top: view.rowOffset + "px"
+                }
             });
-
-            view.columns.values.forEach(function(width) {
-                table.addColumn(width);
+            var layout = kendo.spreadsheet.print.doLayout(this._sheet, view.ref, { forScreen: true });
+            // draw axis first
+            layout.xs.forEach(function(x){
+                cont.children.push(kendo.dom.element("div", { style: {
+                    position: "absolute",
+                    left: x + "px",
+                    top: 0,
+                    height: layout.height + "px",
+                    borderLeft: "1px solid #ccc"
+                }}));
             });
-
-            this._sheet.forEach(view.ref, function(row, col, cell) {
-                addCell(table, row - view.ref.topLeft.row, cell);
+            layout.ys.forEach(function(y){
+                cont.children.push(kendo.dom.element("div", { style: {
+                    position: "absolute",
+                    top: y + "px",
+                    left: 0,
+                    width: layout.width + "px",
+                    borderTop: "1px solid #ccc"
+                }}));
             });
-
-            return table.toDomTree(view.columnOffset, view.rowOffset, Pane.classNames.data);
-        },
-
-        renderMergedCells: function() {
-            var classNames = Pane.classNames;
-            var mergedCells = [];
-            var sheet = this._sheet;
-
-            sheet.forEachMergedCell(function(ref) {
-                this._addTable(mergedCells, ref, classNames.mergedCell);
-            }.bind(this));
-
-            return kendo.dom.element("div", { className: classNames.mergedCellsWrapper }, mergedCells);
+            layout.cells.forEach(function(cell){
+                if (kendo.spreadsheet.print.shouldDrawCell(cell)) {
+                    drawCell(cont, cell);
+                }
+            });
+            return cont;
         },
 
         renderResizeHandler: function() {
