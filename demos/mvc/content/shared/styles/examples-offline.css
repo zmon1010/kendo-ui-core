@@ -26,6 +26,26 @@ body
     padding: 0;
 }
 
+a,
+li>a,
+h2>a,
+h3>a,
+a
+{
+    text-decoration:none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+a
+{
+    color: #0487c4;
+}
+
+a:hover
+{
+    text-decoration: underline;
+}
+
 .page
 {
     width:72%;
@@ -342,21 +362,23 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { background: #eee; }
 
 ul.keyboard-legend {
     list-style-type: none;
-    margin: 1em 0;
-    padding: 3em;
-    background-color: rgba(20,53,80,0.038);
-    border: 1px solid rgba(20,53,80,0.05);
+    margin: 0 auto;
+    padding: 0;
+    text-align: left;
 }
 
-ul.keyboard-legend li {
+#example ul.keyboard-legend li,
+.demo-section .box-col ul.keyboard-legend li {
     display: block;
     margin: 0;
     padding: 4px 0;
+    line-height: 1.5em;
 }
 
 ul.keyboard-legend li a {
-    color: #e26b1d;
+    color: #0487C4;
 }
+
 
 .button-preview {
     display: inline-block;
@@ -484,7 +506,7 @@ ul.keyboard-legend li a {
 }
 
 .demo-section:not(.wide),
-#exampleWrap .box:not(.wide) {
+#example .box:not(.wide) {
     max-width: 400px;
 }
 
@@ -496,7 +518,7 @@ ul.keyboard-legend li a {
     height: 0;
 }
 
-#exampleWrap .box {
+#example .box {
     margin: 4.5em auto;
 }
 
@@ -507,41 +529,6 @@ ul.keyboard-legend li a {
 .demo-section.k-content {
     box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);
 }
-
-/* Remove k-header classes
-.box.k-header,
-.demo-section.k-header {
-    background-position: 50% 70%;
-}
-
-html.k-flat .demo-section.k-header {
-  background-color: #fff;
-  color: #4c5356;
-}
-
-html.k-nova .demo-section.k-header {
-  background-color: #fff;
-  color: #32364c;
-}
-
-html.k-material .demo-section.k-header,
-html.k-material .demo-section.k-content {
-     background-color: #fefefe;
-     border-color: #fefefe;
-     box-shadow: 0 1px 2px 1px rgba(0,0,0,.10), 0 2px 5px rgba(0,0,0,.10);
-     color: #444;
-     font-weight: normal;
-}
-
-html.k-materialblack .demo-section.k-header,
-html.k-materialblack .demo-section.k-content {
-     background-color: #1c1c1c;
-     border-color: #1c1c1c;
-     box-shadow: 0 1px 2px 1px rgba(0,0,0,.10), 0 2px 5px rgba(0,0,0,.10);
-     color: #fff;
-     font-weight: normal;
-}
-*/
 
 .box h4,
 .demo-section h4 {
