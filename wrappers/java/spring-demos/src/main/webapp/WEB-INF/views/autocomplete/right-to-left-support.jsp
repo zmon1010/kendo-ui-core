@@ -2,25 +2,14 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-    <div class="demo-section">
-        <div class="k-rtl">
-            <h2>USA STATES:</h2>
-            <kendo:autoComplete name="states" placeholder="Select state...">
+	<div class="demo-section k-content">
+	    <div class="k-rtl">
+	        <h4>Select a state in USA:</h4>
+            <kendo:autoComplete name="states" placeholder="Select state..." style="width:100%;">
                 <kendo:dataSource data="${states}">
                 </kendo:dataSource>
             </kendo:autoComplete>
-        </div>
+        	<div class="demo-hint">Hint: type <strong>m</strong></div>
+    	</div>
     </div>
-    <style>
-        .demo-section {
-            width: 250px;
-            margin: 35px auto 50px;
-            padding: 30px;
-        }
-        .demo-section h2 {
-            text-transform: uppercase;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-    </style>
 <demo:footer />

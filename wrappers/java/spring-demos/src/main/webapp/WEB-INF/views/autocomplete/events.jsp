@@ -7,21 +7,20 @@
 
 <demo:header />
 
-	<div id="taxi">
-		<label for="states">Select a state in USA:</label>
+	<div class="demo-section k-content">
+    	<h4>Select a state in USA:</h4>
 		<kendo:autoComplete name="states" open="onOpen" close="onClose" 
 							change="onChange" select="onSelect" 
-							dataBound="onDataBound" filtering="onFiltering">
+							dataBound="onDataBound" filtering="onFiltering" style="width:100%;">
 			<kendo:dataSource data="${states}">
 			</kendo:dataSource>
 		</kendo:autoComplete>
 	</div>
 
-    <div class="demo-section">
-        <h3 class="title">Console log
-        </h3>
-        <div class="console"></div>
-    </div>
+	<div class="box">                
+	    <h4>Console log</h4>
+	    <div class="console"></div>
+	</div>
 
     <script>
         function onOpen() {
@@ -61,31 +60,4 @@
             }
         }
     </script>
-    <style>
-        #taxi {
-            width: 240px;
-            height: 160px;
-            padding: 80px 0 0 200px;
-            background: url('${taxiImg}') transparent no-repeat 0 0;
-            margin: 20px auto;
-        }
-        #taxi label {
-            display: block;
-            color: #333;
-            padding-bottom: 5px;
-        }
-        .k-autocomplete {
-            display: block;
-            clear: left;
-            width: 200px;
-            vertical-align: middle;
-        }
-        .demo-section {
-            width: 500px;
-            text-align: center;
-        }
-        .console {
-            margin: 0;
-        }
-    </style>
 <demo:footer />

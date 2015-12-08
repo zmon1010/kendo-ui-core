@@ -5,15 +5,16 @@
 
 <demo:header />
     
-    <div id="colors">
-        <label for="input">Select a color:</label>
-        <kendo:autoComplete name="input" filter="startswith">
+    <div class="demo-section k-content">
+    	<h4>Pick a color</h4>
+        <kendo:autoComplete name="input" filter="startswith" style="width:100%;">
             <kendo:dataSource data="${colors}">
             </kendo:dataSource>
         </kendo:autoComplete>
+        <div class="demo-hint">Hint: type "red"</div>
     </div>
     
-    <div class="box">
+    <div class="box wide">
 	<div class="box-col">
 	    <h4>Set / Get Value</h4>
 	    <ul class="options">
@@ -60,22 +61,6 @@
 	     });
 	</script>
 	<style>
-	    #colors {
-		width: 366px;
-		height: 180px;
-		padding: 114px 0 0 0;
-		background: url(<c:url value="/resources/web/autocomplete/palette.png" />) transparent no-repeat right 0;
-		margin: 30px auto;
-		text-align: center;
-			    }
-	    #colors label {
-		display: block;
-		color: #333;
-		padding-bottom: 5px;
-			    }
-	    #input {
-		margin-right: 50px;
-	    }
 	    .box .k-textbox {
 		width: 80px;
 	    }
