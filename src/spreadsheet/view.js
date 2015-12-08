@@ -80,7 +80,11 @@
         ].join(" ");
     }
 
-    function drawCell(cont, cell) {
+    function drawCell(collection, cell, cls) {
+        if (!kendo.spreadsheet.print.shouldDrawCell(cell)) {
+            return;
+        }
+
         var left = cell.left;
         var top = cell.top;
         var width = cell.width+1;
@@ -178,6 +182,9 @@
 
         var classNames = [ paneClassNames.cell ];
 
+        if (cls) {
+            classNames.push(cls);
+        }
         if (cell.enable === false) {
             classNames.push("k-state-disabled");
         }
@@ -191,7 +198,7 @@
             data = kendo.dom.element("div", { className: "k-vertical-align-" + verticalAlign }, [ data ]);
         }
 
-        cont.children.push(kendo.dom.element("div", {
+        collection.push(kendo.dom.element("div", {
             className: classNames.join(" "),
             style: style
         }, data ? [ data ] : []));
@@ -1003,6 +1010,8 @@
 
     var paneClassNames = {
         cell: "k-spreadsheet-cell",
+        vaxis: "k-spreadsheet-vaxis",
+        haxis: "k-spreadsheet-haxis",
         rowHeader: "k-spreadsheet-row-header",
         columnHeader: "k-spreadsheet-column-header",
         pane: "k-spreadsheet-pane",
@@ -1164,27 +1173,25 @@
             var layout = kendo.spreadsheet.print.doLayout(this._sheet, view.ref, { forScreen: true });
             // draw axis first
             layout.xs.forEach(function(x){
-                cont.children.push(kendo.dom.element("div", { style: {
-                    position: "absolute",
-                    left: x + "px",
-                    top: 0,
-                    height: layout.height + "px",
-                    borderLeft: "1px solid #ccc"
-                }}));
+                cont.children.push(kendo.dom.element("div", {
+                    className: paneClassNames.vaxis,
+                    style: {
+                        left: x + "px",
+                        height: layout.height + "px"
+                    }
+                }));
             });
             layout.ys.forEach(function(y){
-                cont.children.push(kendo.dom.element("div", { style: {
-                    position: "absolute",
-                    top: y + "px",
-                    left: 0,
-                    width: layout.width + "px",
-                    borderTop: "1px solid #ccc"
-                }}));
+                cont.children.push(kendo.dom.element("div", {
+                    className: paneClassNames.haxis,
+                    style: {
+                        top: y + "px",
+                        width: layout.width + "px"
+                    }
+                }));
             });
             layout.cells.forEach(function(cell){
-                if (kendo.spreadsheet.print.shouldDrawCell(cell)) {
-                    drawCell(cont, cell);
-                }
+                drawCell(cont.children, cell);
             });
             return cont;
         },
@@ -1399,13 +1406,11 @@
             if (view.ref.intersects(ref)) {
                 sheet.forEach(ref.collapse(), function(row, col, cell) {
                     var rectangle = this._rectangle(ref);
-
-                    var table = new HtmlTable();
-                    table.addColumn(rectangle.width);
-                    table.addRow(rectangle.height);
-                    addCell(table, 0, cell);
-
-                    collection.push(table.toDomTree(rectangle.left, rectangle.top, className));
+                    cell.left = rectangle.left-1;
+                    cell.top = rectangle.top-1;
+                    cell.width = rectangle.width+2;
+                    cell.height = rectangle.height+2;
+                    drawCell(collection, cell, className);
                 }.bind(this));
             }
         },
