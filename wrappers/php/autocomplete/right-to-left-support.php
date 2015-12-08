@@ -3,9 +3,9 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
-<div class="demo-section">
+<div class="demo-section k-content">
     <div class="k-rtl">
-        <h2>USA STATES:</h2>
+        <h4>Select a state in USA:</h4>
 <?php
 
 $states = array('Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California',
@@ -23,22 +23,13 @@ $dataSource = new \Kendo\Data\DataSource();
 $dataSource->data($states);
 
 $autoComplete = new \Kendo\UI\AutoComplete('states');
-$autoComplete->dataSource($dataSource);
+$autoComplete->dataSource($dataSource)
+             ->placeholder('Select state ...')
+             ->attr('style', 'width: 100%;');
 
 echo $autoComplete->render();
 ?>
+        <div class="demo-hint">Hint: type <strong>m</strong></div>
     </div>
 </div>
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>

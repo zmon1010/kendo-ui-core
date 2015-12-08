@@ -77,14 +77,15 @@ $autoComplete->dataSource($dataSource)
 <span class="order-id">#= OrderID #</span> #= ShipName #, #= ShipCountry #
 TEMPLATE
          )
-         ->attr('style', 'width: 400px');
+         ->attr('style', 'width: 100%;');
 
 ?>
-<div class="demo-section">
-    <h2>Search for shipping name</h2>
+<div class="demo-section k-content">
+    <h4>Search for shipping name</h4>
 <?php
 echo $autoComplete->render();
 ?>
+    <div class="demo-hint">Hint: type "an"</div>
 </div>
 <script>
     function valueMapper(options) {
@@ -111,16 +112,6 @@ echo $autoComplete->render();
     }
 </script>
 <style>
-    .demo-section {
-        width: 400px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
     .order-id {
         display: inline-block;
         min-width: 60px;

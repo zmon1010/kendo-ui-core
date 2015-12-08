@@ -39,25 +39,14 @@ $autoComplete = new \Kendo\UI\AutoComplete('customers');
 $autoComplete->dataSource($dataSource)
          ->dataTextField('ContactName')
          ->height(400)
-         ->attr('style', 'width: 400px');
+         ->attr('style', 'width: 100%;');
 
 ?>
-<div class="demo-section">
-    <h2>Customers</h2>
+<div class="demo-section k-content">
+    <h4>Find a Customer</h4>
 <?php
 echo $autoComplete->render();
 ?>
+    <div class="demo-hint">Hint: type "an"</div>
 </div>
-<style>
-    .demo-section {
-        width: 400px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>

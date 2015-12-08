@@ -3,8 +3,8 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
-<div id="colors">
-   <label for="input">Primary color</label>
+<div class="demo-section k-content">
+    <h4>Pick a color</h4>
 <?php
 
 $dataSource = new \Kendo\Data\DataSource();
@@ -13,13 +13,15 @@ $dataSource->data(array( 'Red-violet', 'Red', 'Red-orange', 'Orange', 'Yellow-or
                         'Blue-violet', 'Violet'));
 
 $autoComplete = new \Kendo\UI\AutoComplete('input');
-$autoComplete->dataSource($dataSource);
+$autoComplete->dataSource($dataSource)
+             ->attr('style', 'width: 100%;');
 
 echo $autoComplete->render();
 ?>
+    <div class="demo-hint">Hint: type "red"</div>
 </div>
 
-<div class="box">
+<div class="box wide">
     <div class="box-col">
         <h4>Set / Get Value</h4>
         <ul class="options">
@@ -66,22 +68,6 @@ echo $autoComplete->render();
     });
 </script>
 <style>
-    #colors {
-        width: 366px;
-        height: 180px;
-        padding: 114px 0 0 0;
-        background: url('../content/web/autocomplete/palette.png') transparent no-repeat right 0;
-        margin: 30px auto;
-        text-align: center;
-                    }
-    #colors label {
-        display: block;
-        color: #333;
-        padding-bottom: 5px;
-                    }
-    #input {
-        margin-right: 50px;
-    }
     .box .k-textbox {
         width: 80px;
     }

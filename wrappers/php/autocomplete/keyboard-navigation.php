@@ -2,8 +2,8 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
-<div class="demo-section">
-    <h2>Choose country: </h2>
+<div class="demo-section k-content">
+    <h4>Choose a country</h4>
 <?php
 
 $countries = array('Albania', 'Andorra', 'Armenia', 'Austria', 'Azerbaijan', 'Belarus', 'Belgium',
@@ -21,14 +21,17 @@ $autoComplete = new \Kendo\UI\AutoComplete('country');
 $autoComplete->dataSource($dataSource)
              ->filter('startswith')
              ->placeholder('Select country...')
-             ->attr('style', 'width: 250px')
+             ->attr('style', 'width: 100%;')
              ->attr('accesskey', 'w')
              ->separator(', ');
 
 echo $autoComplete->render();
 ?>
+    <div class="demo-hint">Hint: type "s"</div>
 </div>
 
+<div class="box">
+<h4>Keyboard legend</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -40,9 +43,6 @@ echo $autoComplete->render();
             focuses the widget
         </span>
     </li>
-</ul>
-
-<ul class="keyboard-legend">
     <li>
         <span class="button-preview">
             <span class="key-button wide leftAlign">up arrow</span>
@@ -76,16 +76,5 @@ echo $autoComplete->render();
         </span>
     </li>
 </ul>
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
+</div>
 <?php require_once '../include/footer.php'; ?>
