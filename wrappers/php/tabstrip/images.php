@@ -5,8 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section">
-    <h3>TabStrip with images</h3>
+<div class="demo-section k-content">
+    <h4>TabStrip with images</h4>
 <?php
     $tabstrip = new \Kendo\UI\TabStrip('tabstrip-images');
 
@@ -32,13 +32,7 @@ require_once '../lib/Kendo/Autoload.php';
         ->imageUrl("../content/shared/icons/sports/swimming.png")
         ->content("Swimming has been recorded since prehistoric times; the earliest recording of swimming dates back to Stone Age paintings from around 7,000 years ago. Written references date from 2000 BC. Some of the earliest references to swimming include the Gilgamesh, the Iliad, the Odyssey, the Bible, Beowulf, and other sagas. In 1578, Nikolaus Wynmann, a German professor of languages, wrote the first swimming book, The Swimmer or A Dialogue on the Art of Swimming (Der Schwimmer oder ein Zwiegespräch über die Schwimmkunst). Competitive swimming in Europe started around 1800, mostly using breaststroke.");
 
-    $snowboarding = new \Kendo\UI\TabStripItem();
-    $snowboarding
-        ->text("Snowboarding")
-        ->imageUrl("../content/shared/icons/sports/snowboarding.png")
-        ->content("Snowboarding is a sport that involves descending a slope that is covered with snow on a snowboard attached to a rider's feet using a special boot set onto a mounted binding. The development of snowboarding was inspired by skateboarding, sledding, surfing and skiing. It was developed in the U.S.A. in the 1960s to 1970s and became a Winter Olympic Sport in 1998.");
-
-    $tabstrip->dataSource(array($baseball, $golf, $swimming, $snowboarding));
+    $tabstrip->dataSource(array($baseball, $golf, $swimming));
 
     // set animation
     $animation = new \Kendo\UI\TabStripAnimation();
@@ -57,8 +51,8 @@ require_once '../lib/Kendo/Autoload.php';
     </script>
 </div>
 
-<div class="demo-section">
-    <h3>TabStrip with sprites</h3>
+<div class="demo-section k-content">
+    <h4>TabStrip with sprites</h4>
 <?php
     $tabstrip = new \Kendo\UI\TabStrip('tabstrip-sprites');
 
@@ -104,15 +98,6 @@ require_once '../lib/Kendo/Autoload.php';
 </div>
 
 <style>
-    h3 {
-        font-weight: normal;
-        padding: 0 0 1em 0;
-    }
-
-    .demo-section {
-        width: 500px;
-    }
-
     #tabstrip-sprites .k-sprite {
         background-image: url("../content/shared/styles/flags.png");
     }
