@@ -5,7 +5,7 @@
     var moduleOptions = {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(4, 4, defaults.rowHeight, defaults.columnWidth);
-            sheet.name("Sheet1");
+            sheet._name("Sheet1");
         },
         teardown: function() {
             sheet.unbind();

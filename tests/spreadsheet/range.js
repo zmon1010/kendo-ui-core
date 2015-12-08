@@ -7,7 +7,7 @@
     module("Sheet API", {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
-            sheet.name("Sheet1");
+            sheet._name("Sheet1");
             range = sheet.range(0, 0);
         },
         teardown: function() {

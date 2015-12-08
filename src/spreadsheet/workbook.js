@@ -185,7 +185,7 @@
 
             sheet._workbook = this;
 
-            sheet.name(sheetName);
+            sheet._name(sheetName);
 
             sheet.bind("change", this._sheetChange.bind(this));
 
@@ -260,7 +260,7 @@
                 });
             });
 
-            sheet.name(newSheetName);
+            sheet._name(newSheetName);
 
             this.trigger("change", { sheetSelection: true });
 

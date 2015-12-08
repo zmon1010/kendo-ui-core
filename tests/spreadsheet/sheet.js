@@ -10,7 +10,7 @@
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
                                                 defaults.rowHeight, defaults.columnWidth);
-            sheet.name("Sheet1");
+            sheet._name("Sheet1");
         }
     });
 

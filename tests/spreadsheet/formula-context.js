@@ -18,7 +18,7 @@
             });
 
             sheet = workbook.activeSheet();
-            sheet.name("Sheet1");
+            sheet._name("Sheet1");
             sheet.range(0, 0).value(1000);
             sheet.range(0, 1).value(2000);
             sheet.range(1, 1).value(3000);

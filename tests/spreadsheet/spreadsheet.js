@@ -301,7 +301,7 @@
         spreadsheet.insertSheet();
 
         spreadsheet._workbook.moveSheetToIndex = function(sheet, index) {
-            equal(sheet._name, "Sheet2");
+            equal(sheet.name(), "Sheet2");
             equal(index, 0);
         };
 
@@ -338,7 +338,7 @@
         }
     });
 
-    test("activeSheet returns a sheet", function() {
+    test("sheetsbar option is working", function() {
         initSpreadsheet(element, { sheetsbar: false });
         ok(element.find('[data-role="sheetsbar"]').length == 0);
     });

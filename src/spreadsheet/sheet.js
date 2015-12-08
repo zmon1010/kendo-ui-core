@@ -140,14 +140,18 @@
             return this._axisManager;
         },
 
-        name: function(value) {
+        _name: function(value) {
             if (!value) {
-                return this._name;
+                return this._sheetName;
             }
 
-            this._name = value;
+            this._sheetName = value;
 
             return this;
+        },
+
+        name: function() {
+            return this._name();
         },
 
         _property: function(accessor, value, reason) {
@@ -235,7 +239,7 @@
                 return a;
             }, []);
             if (this._workbook) {
-                var affectedSheet = this._name;
+                var affectedSheet = this._name();
                 this._workbook._sheets.forEach(function(sheet){
                     sheet._forFormulas(function(formula){
                         formula.adjust(affectedSheet, operation, start, delta);
@@ -945,7 +949,7 @@
             });
 
             var json = {
-                name: this._name,
+                name: this._name(),
                 rows: rows,
                 columns: columns,
                 selection: viewSelection.selection.toString(),
@@ -986,7 +990,7 @@
         fromJSON: function(json) {
             this.batch(function() {
                 if (json.name !== undefined) {
-                    this._name = json.name;
+                    this._name(json.name);
                 }
 
                 if (json.frozenColumns !== undefined) {
@@ -1160,13 +1164,13 @@
                 validation.to = (validation.to + "").replace(/^=/, "");
             }
 
-            return kendo.spreadsheet.validation.compile(this._name, row, col, validation);
+            return kendo.spreadsheet.validation.compile(this._name(), row, col, validation);
         },
 
         _compileFormula: function(row, col, f) {
             f = f.replace(/^=/, "");
 
-            f = kendo.spreadsheet.calc.parseFormula(this._name, row, col, f);
+            f = kendo.spreadsheet.calc.parseFormula(this._name(), row, col, f);
             return kendo.spreadsheet.calc.compile(f);
         },
 
@@ -1180,7 +1184,7 @@
                     // Even if it's the same formula in multiple cells, we
                     // need to have different Formula objects, hence cloning
                     // it.  Don't worry, clone() is fast.
-                    value = value.clone(this._name, row, ci);
+                    value = value.clone(this._name(), row, ci);
                     this._properties.set(property, index, index, value);
                 }
             }
