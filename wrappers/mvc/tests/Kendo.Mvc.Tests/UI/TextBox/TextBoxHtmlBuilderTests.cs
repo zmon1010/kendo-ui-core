@@ -73,6 +73,16 @@
         }
 
         [Fact]
+        public void Build_should_render_disabled_CSS_class()
+        {
+            textBox.Enabled = false;
+
+            IHtmlNode tag = builder.Build();
+
+            tag.Attribute("class").ShouldContain("k-state-disabled");
+        }
+
+        [Fact]
         public void Build_should_render_value()
         {
             string value = "someValue";

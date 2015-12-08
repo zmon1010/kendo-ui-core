@@ -36,6 +36,7 @@
                         .ToggleAttribute("value", value , value.HasValue() )
                         .Attributes(Component.GetUnobtrusiveValidationAttributes())
                         .ToggleAttribute("disabled", "disabled", !Component.Enabled)
+                        .ToggleClass("k-state-disabled", !Component.Enabled)
                         .Attributes(Component.HtmlAttributes)
                         .ToggleClass("input-validation-error", !Component.IsValid())
                         .PrependClass("k-textbox");
