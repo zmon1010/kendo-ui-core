@@ -56,18 +56,18 @@
         validationHandler = function (valueToCompare) { //add 'valueFormat' arg when add isDate comparer
             var toValue = this.to && this.to.value ? this.to.value : undefined;
 
-            if (this.dataType == "custom") {
-                this.value = comparer(valueToCompare, this.from.value,  toValue);
-            } else if (this.dataType == "list") {
-                var data = this._getListData();
-
-                this.value = comparer(valueToCompare, data, toValue);
-            } else if (valueToCompare === null || valueToCompare === "") {
+            if (valueToCompare === null || valueToCompare === "") {
                 if (this.allowNulls) {
                     this.value = true;
                 } else {
                     this.value = false;
                 }
+            } else if (this.dataType == "custom") {
+                this.value = comparer(valueToCompare, this.from.value,  toValue);
+            } else if (this.dataType == "list") {
+                var data = this._getListData();
+
+                this.value = comparer(valueToCompare, data, toValue);
             } else {
                 //TODO: TYPE CHECK IS REQUIRED ONLY FOR DATE TYPE WHEN SPECIAL COMPARER (ISDATE) IS USED
                 this.value = comparer(valueToCompare, this.from.value,  toValue);

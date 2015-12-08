@@ -436,12 +436,12 @@
             allowNulls: false
         });
 
-        f.exec(ss, null, null, validationCallback);
+        f.exec(ss, "some value", null, validationCallback);
     });
 
     test("validation compare null value with custom comparer correctly", function(){
         var validationCallback = function(result) {
-            ok(!result);
+            ok(result);
         };
 
         var f = validation.compile(Sheet1, 0, 0, {
