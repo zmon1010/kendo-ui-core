@@ -7794,12 +7794,16 @@ var __meta__ = { // jshint ignore:line
        }
    }
 
+   function isInputElement(element) {
+       return $(element).is(":button,a,:input,a>.k-icon,textarea,span.k-select,span.k-icon,span.k-link,.k-input,.k-multiselect-wrap,.k-tool-icon");
+   }
+
    function tableClick(e) {
        var currentTarget = $(e.currentTarget),
            isHeader = currentTarget.is("th"),
            table = this.table.add(this.lockedTable),
            headerTable = this.thead.parent().add($(">table", this.lockedHeader)),
-           isInput = $(e.target).is(":button,a,:input,a>.k-icon,textarea,span.k-select,span.k-icon,span.k-link,.k-input,.k-multiselect-wrap,.k-tool-icon"),
+           isInput = isInputElement(e.target),
            currentTable = currentTarget.closest("table")[0];
 
        if (kendo.support.touch) {
@@ -7827,8 +7831,11 @@ var __meta__ = { // jshint ignore:line
            setTimeout(function() {
                //Do not focus if widget, because in IE8 a DDL will be closed
                if (!(isIE8 && $(kendo._activeElement()).hasClass("k-widget"))) {
-                    //DOMElement.focus() only for header, because IE doesn't really focus the table
-                    focusTable(currentTable, true);
+                   //Only if input element is not selected yet
+                   if (!isInputElement(kendo._activeElement())) {
+                       //DOMElement.focus() only for header, because IE doesn't really focus the table
+                       focusTable(currentTable, true);
+                   }
                 }
            });
        }
