@@ -40,18 +40,17 @@ require_once '../lib/Kendo/Autoload.php';
 
 <style>
     .wrapper {
-        width: 270px;
         height: 455px;
         margin: 20px auto;
-        padding: 20px 0 0 390px;
-        background: url('../content/web/tabstrip/bmw.png') no-repeat 40px 60px transparent;
+        padding: 20px 0 0 0;
+        background: url('../content/web/tabstrip/bmw.png') no-repeat center 60px transparent;
     }
     #tabstrip {
-        width: 320px;
+        max-width: 400px;
         float: right;
         margin-bottom: 20px;
     }
-    #tabstrip .k-content 
+    #tabstrip .k-content
     {
         height: 320px;
         overflow: auto;
@@ -62,18 +61,16 @@ require_once '../lib/Kendo/Autoload.php';
         padding: 0;
     }
     .specification dt, dd {
-        width: 140px;
+        max-width: 140px;
         float: left;
         margin: 0;
-        padding: 5px 0 7px 0;
-        border-top: 1px solid rgba(0,0,0,0.3);
+        padding: 5px 0 8px 0;
     }
     .specification dt {
         clear: left;
-        width: 120px;
+        width: 100px;
         margin-right: 7px;
         padding-right: 0;
-        text-align: right;
         opacity: 0.7;
     }
     .specification:after, .wrapper:after {
