@@ -50,6 +50,7 @@ var __meta__ = { // jshint ignore:line
         wrapper: "k-treelist k-grid k-widget",
         header: "k-header",
         alt: "k-alt",
+        rtl: "k-rtl",
         editCell: "k-edit-cell",
         group: "k-treelist-group",
         gridHeader: "k-grid-header",
@@ -791,6 +792,7 @@ var __meta__ = { // jshint ignore:line
             var dropAllowed = true;
             var dropTarget;
             var listStyles = GanttList.styles;
+            var isRtl = kendo.support.isRtl(this.element);
             var selector = 'tr[' + kendo.attr("level") + ' = 0]:last';
             var action = {};
             var clear = function() {
@@ -883,6 +885,10 @@ var __meta__ = { // jshint ignore:line
                         draggedTask = that._modelFromElement(e.currentTarget);
                         this.hint.children(DOT + listStyles.dragClueText)
                             .text(draggedTask.get("title"));
+
+                        if (isRtl) {
+                            this.hint.addClass(listStyles.rtl);
+                        }
                     },
                     "drag": function(e) {
                         if (dropAllowed) {

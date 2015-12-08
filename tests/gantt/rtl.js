@@ -9,10 +9,6 @@
     var GanttTask = kendo.data.GanttTask;
     var GanttDependency = kendo.data.GanttDependency;
 
-    function equalWithRound(value, expected) {
-        QUnit.close(value, expected, 3);
-    }
-
     module("timeline rtl", {
         setup: function() {
             rtl = $('<div class="k-rtl"/>').appendTo(QUnit.fixture);
@@ -130,4 +126,42 @@
         equal(taskWrapper.width(), taskSlot.offsetWidth);
     });
 
+    module("treelist rtl", {
+        setup: function() {
+            rtl = $('<div class="k-rtl"/>').appendTo(QUnit.fixture);
+            element = $("<div/>").appendTo(rtl);
+            var dataSource = [{
+                id: 1,
+                parentId: null,
+                orderId: 0,
+                title: "foo",
+                start: new Date("2014/03/31"),
+                end: new Date("2014/04/05"),
+                summary: false
+            }];
+
+            gantt = new Gantt(element, {
+                editable: true,
+                dataSource: dataSource
+            });
+        },
+        teardown: function() {
+            kendo.destroy(rtl);
+        }
+    });
+
+    test("rtl class added to reorder drag hint", function() {
+        var list = gantt.list;
+        var target = list.content.find("tr:first");
+        var draggable = list.content.data("kendoDraggable");
+
+        draggable.hint = $('<div class="k-header k-drag-clue"/>')
+            .append('<span class="k-icon k-drag-status k-denied" /><span class="k-clue-text"/>');
+
+        draggable.trigger("dragstart", {
+            currentTarget: target
+        });
+
+        ok(draggable.hint.hasClass("k-rtl"));
+    });
 })();
