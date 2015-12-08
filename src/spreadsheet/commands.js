@@ -731,9 +731,14 @@
         }
     });
 
-    kendo.spreadsheet.ImportCommand = Command.extend({
+    kendo.spreadsheet.OpenCommand = Command.extend({
         exec: function() {
-            this.options.workbook.fromExcel(this.options.file);
+            var file = this.options.file;
+            if (file.name.match(/.xlsx$/i) === null) {
+                return { reason: "error", type: "openUnsupported" };
+            }
+
+            this.options.workbook.fromFile(this.options.file);
         }
     });
 

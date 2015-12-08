@@ -32,7 +32,9 @@
             readWorkbook(zip, workbook);
 
             if (complete) {
-                complete();
+                complete({
+                    activeSheet: 0
+                });
             }
         };
 

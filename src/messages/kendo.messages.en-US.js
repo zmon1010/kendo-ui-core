@@ -722,7 +722,7 @@ $.extend(true, kendo.spreadsheet.messages.toolbar,{
   "cut": "Cut",
   "deleteColumn": "Delete column",
   "deleteRow": "Delete row",
-  "excelExport": "Export to Excel...",
+  "open": "Open...",
   "excelImport": "Import from Excel...",
   "filter": "Filter",
   "fontFamily": "Font",

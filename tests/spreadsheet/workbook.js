@@ -328,4 +328,81 @@
         equal(stack[stack.length-1].range()._ref.toString(), "A1:B2");
     });
 
+    // ------------------------------------------------------------
+    (function() {
+        var readExcel;
+        var workbook;
+
+        module("Workbook API / fromFile", {
+            setup: function() {
+                element = $("<div>").appendTo(QUnit.fixture);
+                workbook = new kendo.spreadsheet.Workbook({});
+
+                readExcel = kendo.spreadsheet.readExcel;
+                kendo.spreadsheet.readExcel = function() {};
+            },
+            teardown: function() {
+                kendo.destroy(QUnit.fixture);
+
+                kendo.spreadsheet.readExcel = readExcel;
+            }
+        });
+
+        test("clears sheets", function() {
+            var sheet = workbook.sheetByIndex(0);
+            workbook.fromFile({});
+
+            ok(sheet != workbook.sheetByIndex(0));
+        });
+
+        test("clears sheet search cache", function() {
+            workbook.insertSheet({ name: "Foo" });
+            workbook.sheetIndex("Foo");
+
+            workbook.fromFile({});
+
+            equal(workbook.sheetIndex("Foo"), -1);
+        });
+
+        test("unbinds sheets", function() {
+            var sheet = workbook.sheetByIndex(0);
+            sheet.unbind = function() {
+                ok(true);
+            };
+
+            workbook.fromFile({});
+        });
+
+        test("reads file", function() {
+            var FILE = {};
+
+            kendo.spreadsheet.readExcel = function(file) {
+                equal(file, FILE);
+            };
+
+            workbook.fromFile(FILE);
+        });
+
+        test("sets active sheet", 2, function() {
+            var INDEX = 1;
+            kendo.spreadsheet.readExcel = function(file, workbook, callback) {
+                callback({
+                    activeSheet: INDEX
+                });
+            };
+
+            var SHEET = {};
+            workbook.sheetByIndex = function(index) {
+                equal(index, INDEX);
+                return SHEET;
+            };
+
+            workbook.activeSheet = function(sheet) {
+                equal(sheet, SHEET);
+            };
+
+            workbook.fromFile({});
+        });
+    })();
+
 })();

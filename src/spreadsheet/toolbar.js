@@ -38,7 +38,6 @@
         deleteColumn: "Delete column",
         deleteRow: "Delete row",
         excelExport: "Export to Excel...",
-        excelImport: "Import from Excel...",
         filter: "Filter",
         fontFamily: "Font",
         fontSize: "Font size",
@@ -72,6 +71,7 @@
             mergeVertically: "Merge vertically",
             unmerge: "Unmerge"
         },
+        open: "Open...",
         paste: "Paste",
         quickAccess: {
             redo: "Redo",
@@ -93,7 +93,7 @@
 
     var defaultTools = {
         home: [
-            "excelImport",
+            "open",
             "excelExport",
             [ "cut", "copy", "paste" ],
             [ "bold", "italic", "underline" ],
@@ -121,8 +121,8 @@
 
     var toolDefaults = {
         //home tab
+        open:                  { type: "open",                                     overflow: "never",                          iconClass: "xlsa" },
         excelExport:           { type: "dialog", dialogName: "saveAs",        overflow: "never",         text: "",        iconClass: "xlsa" },
-        excelImport:           { type: "import",                                   overflow: "never",                          iconClass: "xlsa" },
         bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
         italic:                { type: "button", command: "PropertyChangeCommand", property: "italic",        value: true,     iconClass: "italic", togglable: true },
         underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
@@ -350,6 +350,7 @@
             ToolBar.fn.destroy.call(this);
         }
     });
+    kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 
     var DropDownTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
@@ -1051,11 +1052,11 @@
 
     kendo.toolbar.registerComponent("filter", Filter, FilterButton);
 
-    var Import = kendo.toolbar.Item.extend({
+    var Open = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             this.toolbar = toolbar;
             this.element = $("<button class='k-button k-upload-button'>" +
-                                 "<span class='k-icon k-font-icon k-i-xls' />" +
+                                 "<span class='k-icon k-font-icon k-i-open' />" +
                              "</button>").data("instance", this);
 
             $("<input type='file' autocomplete='off' accept='.xlsx'/>")
@@ -1065,7 +1066,7 @@
         },
         _change: function(e) {
             this.toolbar.action({
-                command: "ImportCommand",
+                command: "OpenCommand",
                 options: {
                     file: e.target.files[0]
                 }
@@ -1074,10 +1075,7 @@
             e.target.parentNode.reset();
         }
     });
-
-    kendo.toolbar.registerComponent("import", Import);
-
-    kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
+    kendo.toolbar.registerComponent("open", Open);
 
     kendo.spreadsheet.TabStrip = kendo.ui.TabStrip.extend({
         init: function(element, options) {

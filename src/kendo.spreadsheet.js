@@ -212,8 +212,8 @@
                 }
             },
 
-            fromExcel: function(file) {
-                this._workbook.fromExcel(file);
+            fromFile: function(blob, name) {
+                this._workbook.fromFile(blob, name);
             },
 
             saveAsExcel: function(options) {

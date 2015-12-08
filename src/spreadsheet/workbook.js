@@ -329,7 +329,7 @@
             };
         },
 
-        fromExcel: function(file) {
+        fromFile: function(file) {
             for (var i = 0; i < this._sheets.length; i++) {
                 this._sheets[i].unbind();
             }
@@ -337,8 +337,10 @@
             this._sheets = [];
             this._sheetsSearchCache = {};
 
-            kendo.spreadsheet.readExcel(file, this, function() {
-                this.activeSheet(this.sheetByIndex(0));
+            kendo.spreadsheet.readExcel(file, this, function(state) {
+                this.activeSheet(
+                    this.sheetByIndex(state.activeSheet)
+                );
             }.bind(this));
         },
 
