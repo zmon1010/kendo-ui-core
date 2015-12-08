@@ -87,7 +87,7 @@
             if (sheet.isHiddenColumn(col) || sheet.isHiddenRow(row)) {
                 return;
             }
-            var nonEmpty = shouldDrawCell(cell);
+            var nonEmpty = options.forScreen || shouldDrawCell(cell);
             if (!(options.emptyCells || nonEmpty)) {
                 return;
             }
@@ -143,8 +143,8 @@
         //    are not reset to zero for a new page (in fact, we don't
         //    even care about page dimensions here).  The print
         //    function translates the view to current page.
-        var ys = distributeCoords(rowHeights, pageHeight);
-        var xs = distributeCoords(colWidths, pageWidth);
+        var ys = distributeCoords(rowHeights, pageHeight || Infinity);
+        var xs = distributeCoords(colWidths, pageWidth || Infinity);
         var boxWidth = 0;
         var boxHeight = 0;
         cells = cells.filter(function(cell){
@@ -542,6 +542,11 @@
         } else {
             draw(sheet, range, options, callback);
         }
+    };
+
+    spreadsheet.print = {
+        doLayout   : doLayout,
+        drawLayout : drawLayout
     };
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
