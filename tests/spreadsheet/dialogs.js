@@ -528,17 +528,19 @@
     module("Validation dialog", {
         setup: function() {
             moduleOptions.setup();
-
-            dialog = spreadsheet.openDialog("validation");
         },
         teardown: moduleOptions.teardown
     });
 
     test("attach validator to the form", function() {
+        dialog = spreadsheet.openDialog("validation");
+
         ok(dialog.dialog().element.find(".k-edit-form-container").data("kendoValidator"));
     });
 
     test("apply calls the validate method before closing the dialog", 2, function() {
+        dialog = spreadsheet.openDialog("validation");
+
         dialog.bind("action", function() {
             ok(true);
         });
@@ -551,5 +553,30 @@
         dialog.apply();
 
         ok(dialog.dialog().element.find(".k-edit-form-container").data("kendoValidator"));
+    });
+
+    test("validation dialog is loading validation options correctly", function() {
+        var options = {
+            "from":"0",
+            "dataType":"number",
+            "type":"reject",
+            "comparerType":"greaterThan",
+            "allowNulls":false,
+            "messageTemplate":"messagess",
+            "titleTemplate":"titlett"
+        };
+
+        sheet.range("A1").validation(options);
+
+        dialog = spreadsheet.openDialog("validation");
+
+        equal(dialog.viewModel.comparer, options.comparerType);
+        equal(dialog.viewModel.criterion, options.dataType);
+        equal(dialog.viewModel.from, options.from);
+        equal(dialog.viewModel.hintMessage, options.messageTemplate);
+        equal(dialog.viewModel.hintTitle, options.titleTemplate);
+        equal(dialog.viewModel.ignoreBlank, options.allowNulls);
+        equal(dialog.viewModel.type, options.type);
+        equal(dialog.viewModel.useCustomMessages, true);
     });
 })();

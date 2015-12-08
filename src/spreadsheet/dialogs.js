@@ -980,11 +980,12 @@
             this.set("from", validation.from);
             this.set("to", validation.to);
             this.set("type", validation.type);
-            this.set("allowNulls", validation.ignoreBlank);
+            this.set("ignoreBlank", validation.allowNulls);
 
             if (validation.messageTemplate || validation.titleTemplate) {
                 this.hintMessageTemplate = validation.messageTemplate;
                 this.hintMessage = validation.messageTemplate;
+                this.hintTitleTemplate = validation.titleTemplate;
                 this.hintTitle = validation.titleTemplate;
                 this.useCustomMessages = true;
                 this.buildMessages();
