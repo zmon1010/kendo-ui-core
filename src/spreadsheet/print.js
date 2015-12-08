@@ -29,7 +29,7 @@
         var threshold = 0.2 * pageHeight;
         var bottom = pageHeight;
         heights.forEach(function(h){
-            if (curr + h > bottom) {
+            if (pageHeight && curr + h > bottom) {
                 if (bottom - curr < threshold) {
                     // align to next page
                     curr = pageHeight * Math.ceil(curr / pageHeight);
@@ -57,7 +57,7 @@
                 if (topLeft.eq(cellRef)) {
                     primary[cellRef.print()] = ref;
                 } else {
-                    secondary[cellRef.print()] = true;
+                    secondary[cellRef.print()] = ref;
                 }
             });
         });
@@ -95,17 +95,27 @@
             if (mergedCells.secondary[id]) {
                 return;
             }
-            var m = mergedCells.primary[id];
             if (nonEmpty) {
                 maxRow = Math.max(maxRow, row);
                 maxCol = Math.max(maxCol, col);
             } else {
                 cell.empty = true;
             }
+            var m = mergedCells.primary[id];
             if (m) {
                 cell.merged = true;
                 cell.rowspan = m.height();
                 cell.colspan = m.width();
+                if (options.forScreen) {
+                    cell.width = 0;
+                    for (var i = 0; i < cell.colspan; ++i) {
+                        cell.width += sheet.columnWidth(col + i);
+                    }
+                    cell.height = 0;
+                    for (var i = 0; i < cell.rowspan; ++i) {
+                        cell.height += sheet.rowHeight(row + i);
+                    }
+                }
             } else {
                 cell.rowspan = 1;
                 cell.colspan = 1;
@@ -143,8 +153,8 @@
         //    are not reset to zero for a new page (in fact, we don't
         //    even care about page dimensions here).  The print
         //    function translates the view to current page.
-        var ys = distributeCoords(rowHeights, pageHeight || Infinity);
-        var xs = distributeCoords(colWidths, pageWidth || Infinity);
+        var ys = distributeCoords(rowHeights, pageHeight || 0);
+        var xs = distributeCoords(colWidths, pageWidth || 0);
         var boxWidth = 0;
         var boxHeight = 0;
         cells = cells.filter(function(cell){
@@ -154,10 +164,15 @@
             cell.left = xs[cell.col];
             cell.top = ys[cell.row];
             if (cell.merged) {
-                cell.right = orlast(xs, cell.col + cell.colspan);
-                cell.bottom = orlast(ys, cell.row + cell.rowspan);
-                cell.width = cell.right - cell.left;
-                cell.height = cell.bottom - cell.top;
+                if (!options.forScreen) {
+                    cell.right = orlast(xs, cell.col + cell.colspan);
+                    cell.bottom = orlast(ys, cell.row + cell.rowspan);
+                    cell.width = cell.right - cell.left;
+                    cell.height = cell.bottom - cell.top;
+                } else {
+                    cell.right = cell.left + cell.width;
+                    cell.bottom = cell.top + cell.height;
+                }
             } else {
                 cell.width = colWidths[cell.col];
                 cell.height = rowHeights[cell.row];
@@ -331,34 +346,38 @@
         }
         if (cell.borderLeft) {
             g.append(
-                new drawing.Path({ stroke: cell.borderLeft })
+                new drawing.Path()
                     .moveTo(cell.left, cell.top)
                     .lineTo(cell.left, cell.bottom)
                     .close()
+                    .stroke(cell.borderLeft.color, cell.borderLeft.size)
             );
         }
         if (cell.borderTop) {
             g.append(
-                new drawing.Path({ stroke: cell.borderTop })
+                new drawing.Path()
                     .moveTo(cell.left, cell.top)
                     .lineTo(cell.right, cell.top)
                     .close()
+                    .stroke(cell.borderTop.color, cell.borderTop.size)
             );
         }
         if (cell.borderRight) {
             g.append(
-                new drawing.Path({ stroke: cell.borderRight })
+                new drawing.Path()
                     .moveTo(cell.right, cell.top)
                     .lineTo(cell.right, cell.bottom)
                     .close()
+                    .stroke(cell.borderRight.color, cell.borderRight.size)
             );
         }
         if (cell.borderBottom) {
             g.append(
-                new drawing.Path({ stroke: cell.borderBottom })
+                new drawing.Path()
                     .moveTo(cell.left, cell.bottom)
                     .lineTo(cell.right, cell.bottom)
                     .close()
+                    .stroke(cell.borderBottom.color, cell.borderBottom.size)
             );
         }
         var val = cell.value;

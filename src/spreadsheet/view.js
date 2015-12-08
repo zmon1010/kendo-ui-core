@@ -81,7 +81,7 @@
     }
 
     function drawCell(collection, cell, cls) {
-        if (!kendo.spreadsheet.print.shouldDrawCell(cell)) {
+        if (!cls && !kendo.spreadsheet.print.shouldDrawCell(cell)) {
             return;
         }
 
