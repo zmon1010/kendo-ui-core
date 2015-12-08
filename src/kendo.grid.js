@@ -3943,10 +3943,16 @@ var __meta__ = { // jshint ignore:line
                 $(window).on("resize", this.minScreenResizeHandler);
             }
         },
+
         hideMinScreenCols: function() {
             var cols = this.columns,
-                any = false,
                 screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+            return this._iterateMinScreenCols(cols, screenWidth);
+        },
+
+        _iterateMinScreenCols: function (cols, screenWidth) {
+            var any = false;
 
             for (var i = 0; i < cols.length; i++) {
                 var col = cols[i];
@@ -3958,6 +3964,9 @@ var __meta__ = { // jshint ignore:line
                     } else {
                         this.showColumn(col);
                     }
+                }
+                if (!col.hidden && col.columns) {
+                    any = this._iterateMinScreenCols(col.columns, screenWidth) || any;
                 }
             }
             return any;
