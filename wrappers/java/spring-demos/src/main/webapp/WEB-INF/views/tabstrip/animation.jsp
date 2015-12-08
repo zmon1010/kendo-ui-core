@@ -4,23 +4,11 @@
 
 <demo:header />
 
-<form class="configuration k-widget k-header" method="Post">
-    <span class="configHead">Animation Settings</span>
-    <ul class="options">
-        <li>
-            <input name="animation" type="radio" ${ animation == "toggle" ? "checked=\"checked\"" : "" } value="toggle" /> <label for="toggle">toggle animation</label>
-        </li>
-        <li>
-            <input name="animation" type="radio" ${ animation != "toggle" ? "checked=\"checked\"" : "" } value="expand" /> <label for="expand">expand animation</label>
-        </li>        
-    </ul>
 
-    <button class="k-button">Apply</button>
-</form>
 
-<h3>Conversation history</h3>
+ <div class="demo-section k-content">
 
-<kendo:tabStrip name="tabstrip" style="width: 500px">
+<kendo:tabStrip name="tabstrip">
     <kendo:tabStrip-animation>      
         <kendo:tabStrip-animation-open effects="${ (animation != \"toggle\" ? \"expand:vertical\" : \"\") }" duration="200"/>
     </kendo:tabStrip-animation>
@@ -45,12 +33,37 @@
                 <p>Maecenas vitae eros vel enim molestie cursus. Proin ut lacinia ipsum. Nam at elit arcu, at porttitor ipsum. Praesent id viverra lorem. Nam lacinia elementum fermentum. Nulla facilisi. Nulla bibendum erat sed sem interdum suscipit. Vestibulum eget molestie leo. Aliquam erat volutpat. Ut sed nulla libero. Suspendisse id euismod quam. Aliquam interdum turpis vitae purus consectetur in pulvinar libero accumsan. In id augue dui, ac volutpat ante. Suspendisse purus est, ullamcorper id bibendum sed, placerat id leo.</p>
             </kendo:tabStrip-item-content>
         </kendo:tabStrip-item>
-        <kendo:tabStrip-item text="Fifth tab">
-            <kendo:tabStrip-item-content>
-                <p>Fusce nec mauris enim, non pharetra neque. Etiam elementum nunc ut velit fermentum sed porta eros dignissim. Duis at nisl eros. Integer arcu nisl, accumsan non molestie at, elementum nec odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque arcu odio, aliquam vel viverra ac, varius at sapien. Nullam elementum nulla non libero interdum vestibulum at in lacus. Curabitur ac magna ac lacus dapibus convallis non at turpis.</p>
-            </kendo:tabStrip-item-content>
-        </kendo:tabStrip-item>
     </kendo:tabStrip-items>
 </kendo:tabStrip>
+</div>
+
+
+<form method="Post">
+	<div class="box">
+    	<h4>Animation Settings</h4>
+    	<ul class="options">
+        	<li>
+            	<input name="animation" type="radio" ${ animation == "toggle" ? "checked=\"checked\"" : "" } value="toggle" /> <label for="toggle">toggle animation</label>
+        	</li>
+	        <li>
+	            <input name="animation" type="radio" ${ animation != "toggle" ? "checked=\"checked\"" : "" } value="expand" /> <label for="expand">expand animation</label>
+	        </li>       
+	        <li>
+	            <input id="opacity" type="checkbox" checked="checked" name ="opacity" /> <label for="opacity">animate opacity</label>
+	        </li>
+	    </ul>
+
+    <button class="k-button">Apply</button>
+    </div>
+</form>
+
+ <style>
+    .demo-section {
+        min-height: 250px;
+    }
+    .k-tabstrip > .k-content {
+        padding: 20px;
+    }
+</style>
 
 <demo:footer />

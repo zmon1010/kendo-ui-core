@@ -5,24 +5,10 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Animation Settings</span>
-    <ul class="options">
-        <li>
-            <input id="toggle" name="animation" type="radio" /> <label for="toggle">toggle animation</label>
-        </li>
-        <li>
-            <input id="expand" name="animation" type="radio" checked="checked" /> <label for="expand">expand animation</label>
-        </li>
-        <li>
-            <input id="opacity" type="checkbox" checked="checked" /> <label for="opacity">animate opacity</label>
-        </li>
-    </ul>
-</div>
+ <div class="demo-section k-content">
 
 <?php
     $tabstrip = new \Kendo\UI\TabStrip('tabstrip');
-    $tabstrip->attr("style", "margin-right: 220px;");
 
     $item = new \Kendo\UI\TabStripItem();
     $item->text("First Tab")
@@ -61,15 +47,6 @@ require_once '../lib/Kendo/Autoload.php';
     $item->endContent();
     $tabstrip->addItem($item);
 
-    $item = new \Kendo\UI\TabStripItem();
-    $item->text("Fifth Tab")
-        ->startContent();
-?>
-    <p>Fusce nec mauris enim, non pharetra neque. Etiam elementum nunc ut velit fermentum sed porta eros dignissim. Duis at nisl eros. Integer arcu nisl, accumsan non molestie at, elementum nec odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque arcu odio, aliquam vel viverra ac, varius at sapien. Nullam elementum nulla non libero interdum vestibulum at in lacus. Curabitur ac magna ac lacus dapibus convallis non at turpis.</p>
-<?php
-    $item->endContent();
-    $tabstrip->addItem($item);
-
     // set animation
     $animation = new \Kendo\UI\TabStripAnimation();
     $openAnimation = new \Kendo\UI\TabStripAnimationOpen();
@@ -80,19 +57,34 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $tabstrip->render();
 ?>
+</div>
+
+<div class="box">
+    <h4>Animation Settings</h4>
+    <ul class="options">
+        <li>
+            <input id="toggle" name="animation" type="radio" /> <label for="toggle">toggle animation</label>
+        </li>
+        <li>
+            <input id="expand" name="animation" type="radio" checked="checked" /> <label for="expand">expand animation</label>
+        </li>
+        <li>
+            <input id="opacity" type="checkbox" checked="checked" /> <label for="opacity">animate opacity</label>
+        </li>
+    </ul>
+</div>
 
 <script>
-    var original = $("#tabstrip").clone(true);
-    original.find(".k-state-active").removeClass("k-state-active");
-
     $(document).ready(function() {
+        var original = $("#tabstrip").clone(true);
+        original.find(".k-state-active").removeClass("k-state-active");
 
         var getEffects = function () {
             return (($("#expand")[0].checked ? "expand:vertical " : "") + ($("#opacity")[0].checked ? "fadeIn" : "")) || false;
         };
 
         var initTabStrip = function () {
-            $("#tabstrip").kendoTabStrip({ animation: { open: { effects: getEffects() } } });
+            $("#tabstrip").kendoTabStrip({ animation: { open: { effects: getEffects()}} });
         };
 
         $(".configuration input").change( function() {
@@ -110,8 +102,19 @@ require_once '../lib/Kendo/Autoload.php';
 
             initTabStrip();
         });
+
+        initTabStrip();
     });
 </script>
+
+ <style>
+    .demo-section {
+        min-height: 250px;
+    }
+    .k-tabstrip > .k-content {
+        padding: 20px;
+    }
+</style>
 
 <?php require_once '../include/footer.php'; ?>
 
