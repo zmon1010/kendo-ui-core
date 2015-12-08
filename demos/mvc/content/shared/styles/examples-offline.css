@@ -5,10 +5,11 @@
 .floatWrap,#example{display:block}
 .clear{clear:both}
 
-h1,h2,h3,p
+body,h1,h2,h3,h4,p,ul,li,a,button
 {
     margin:0;
     padding:0;
+    list-style:none;
 }
 
 html
@@ -438,10 +439,6 @@ ul.keyboard-legend li a {
 
 #suites .box h2 {
     margin-top: 1em;
-}
-
-#example h4 {
-    margin: 20px auto 10px;
 }
 
 #draggable
