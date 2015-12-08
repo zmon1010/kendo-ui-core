@@ -4,8 +4,8 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div id="taxi">
-    <label for="states">Select a state in USA:</label>
+<div class="demo-section k-content">
+    <h4>Select a state in USA:</h4>
     <%=Html.Kendo().AutoComplete()
         .Name("states")
         .BindTo(new string[]
@@ -71,10 +71,13 @@
         {
             e.Change("onChange").Select("onSelect").Open("onOpen").Close("onClose").DataBound("onDataBound").Filtering("onFiltering");
         })
+        .HtmlAttributes(new { style = "width:100%;" })
     %>
+    
+    <div class="demo-hint">Hint: type "m"</div>
 </div>
-<div class="demo-section">                
-    <h3 class="title">Console log</h3>
+<div class="box">                
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 <script>
@@ -115,33 +118,5 @@
         }
     }
 </script>
-
-<style>
-	#taxi {
-		width: 240px;
-		height: 160px;
-		padding: 80px 0 0 200px;
-		background: url('<%=Url.Content("~/content/web/autocomplete/taxi.png")%>') transparent no-repeat 0 0;
-        margin: 20px auto;
-	}
-	#taxi label {
-		display: block;
-		color: #333;
-		padding-bottom: 5px;
-	}
-	.k-autocomplete {
-		display: block;
-		clear: left;
-		width: 200px;
-		vertical-align: middle;
-	}
-	.demo-section {
-        width: 500px;
-        text-align: center;
-    }
-    .console {
-        margin: 0;
-    }
-</style>
 
 </asp:Content>

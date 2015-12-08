@@ -4,13 +4,13 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h2>Choose country: </h2>
+<div class="demo-section k-content">
+    <h4>Choose a country</h4>
     <%= Html.Kendo().AutoComplete()
           .Name("countries")
           .Filter("startswith")
           .Placeholder("Select country...")
-          .HtmlAttributes(new { accesskey = "w", style="width: 250px" })
+          .HtmlAttributes(new { accesskey = "w", style="width: 100%;" })
           .BindTo(new string[] {
             "Albania",
             "Andorra",
@@ -65,8 +65,12 @@
             })
             .Separator(", ")
     %>
+    
+    <div class="demo-hint">Hint: type "s"</div>
 </div>
 
+<div class="box">
+<h4>Keyboard legend</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -78,9 +82,6 @@
             focuses the widget
         </span>
     </li>
-</ul>
-
-<ul class="keyboard-legend">
     <li>
         <span class="button-preview">
             <span class="key-button wide leftAlign">up arrow</span>
@@ -114,17 +115,6 @@
         </span>
     </li>
 </ul>
+</div>
 
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 </asp:Content>

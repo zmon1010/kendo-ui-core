@@ -4,14 +4,14 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h4>Orders</h4>
+<div class="demo-section k-content">
+    <h4>Search for shipping name</h4>
 
     <%= Html.Kendo().AutoComplete()
           .Name("orders")
           .DataTextField("ShipName")
-          .MinLength(3)
-          .HtmlAttributes(new { style = "width:450px" })
+          .MinLength(2)
+          .HtmlAttributes(new { style = "width:100%" })
           .Placeholder("Type a ship name")
           .Template("#= OrderID # | For: #= ShipName #, #= ShipCountry #")
           .Height(520)
@@ -33,19 +33,9 @@
           })
           .Virtual(v => v.ItemHeight(26).ValueMapper("valueMapper"))
     %>
+    
+    <div class="demo-hint">Hint: type "an"</div>
 </div>
-<style>
-    .demo-section {
-        width: 450px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 <script>
     function valueMapper(options) {
         $.ajax({

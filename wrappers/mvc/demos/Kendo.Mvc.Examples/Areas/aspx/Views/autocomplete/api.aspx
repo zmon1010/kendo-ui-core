@@ -4,10 +4,9 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <div id="example" class="k-content">
-
-        <div id="colors">
-            <label for="input">Primary color</label>
+    <div id="example">
+        <div class="demo-section k-content">
+            <h4>Pick a color</h4>
             <%= Html.Kendo().AutoComplete()
                     .Name("input")
                     .BindTo(new string[] 
@@ -25,10 +24,13 @@
                     "Blue-violet",
                     "Violet"
                     })
+                    .HtmlAttributes(new { style = "width:100%;" })
             %>
+            
+            <div class="demo-hint">Hint: type "red"</div>
         </div>
 
-        <div class="box">
+        <div class="box wide">
             <div class="box-col">
                 <h4>Set / Get Value</h4>
                 <ul class="options">
@@ -74,29 +76,14 @@
                 });
             });
         </script>
-            <style>
-                #colors {
-                    width: 366px;
-                    height: 180px;
-                    padding: 114px 0 0 0;
-                    background: url('<%= Url.Content("~/Content/web/autocomplete/palette.png") %>') transparent no-repeat right 0;
-                    margin: 30px auto;
-                    text-align: center;
- 				}
-                #colors label {
-                    display: block;
-                    color: #333;
-                    padding-bottom: 5px;
- 				}
-                #input {
-                    margin-right: 50px;
-                }
-                .box .k-textbox {
-                    width: 80px;
-                }
-                .box .k-button {
-                    min-width: 80px;
-                }
-            </style>
+
+        <style>
+            .box .k-textbox {
+                width: 80px;
+            }
+            .box .k-button {
+                min-width: 80px;
+            }
+        </style>
     </div>
 </asp:Content>

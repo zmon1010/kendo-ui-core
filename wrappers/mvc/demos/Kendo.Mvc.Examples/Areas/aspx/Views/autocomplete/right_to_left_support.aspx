@@ -4,13 +4,14 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">            
+<div class="demo-section k-content">            
     <div class="k-rtl">
-        <h2>USA STATES:</h2>   
+        <h4>Select a state in USA:</h4>   
         <%= Html.Kendo().AutoComplete()
               .Name("states")
-              .Placeholder("Select state...")
-                      .BindTo(new string[] {
+              .Placeholder("Select state ...")
+              .HtmlAttributes(new { style = "width:100%;" })
+              .BindTo(new string[] {
                     "Alabama",
                     "Alaska",
                     "American Samoa",
@@ -69,18 +70,8 @@
                     "Wyoming"
               })              
         %>
+        
+        <div class="demo-hint">Hint: type <strong>m</strong></div>
     </div>
 </div>
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 </asp:Content>

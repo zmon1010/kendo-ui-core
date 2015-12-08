@@ -4,14 +4,15 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h4>Customers</h4>
+<div class="demo-section k-content">
+    <h4>Find a Customer</h4>
 
     <%= Html.Kendo().AutoComplete()
           .Name("customers")
           .DataTextField("ContactName")
-          .MinLength(3)
-          .HtmlAttributes(new { style = "width:250px" })
+          .MinLength(2)
+          .Height(400)
+          .HtmlAttributes(new { style = "width:100%" })
           .Placeholder("Type a customer name")
           .DataSource(source =>  source
               .Custom()
@@ -24,6 +25,8 @@
                 }))
               .ServerFiltering(true))
      %>
+
+     <div class="demo-hint">Hint: type "an"</div>
 </div>
 <script>
     function onAdditionalData() {
@@ -32,16 +35,4 @@
         };
     }
 </script>
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 </asp:Content>

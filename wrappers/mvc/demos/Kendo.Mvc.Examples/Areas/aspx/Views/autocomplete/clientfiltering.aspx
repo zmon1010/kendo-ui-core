@@ -4,11 +4,12 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section" style="width: 250px;">
-    <label for="products">Select product:</label>
+<div class="demo-section k-content">
+    <h4>Select product</h4>
     <%= Html.Kendo().AutoComplete()
           .Name("products")
           .DataTextField("ProductName")
+          .HtmlAttributes(new { style = "width:100%" })
           .Filter("contains")
           .DataSource(source => {
               source.Read(read =>
