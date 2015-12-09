@@ -134,6 +134,21 @@
 
     var controller = kendo.spreadsheet.FilterMenuController;
 
+    test("gets the text (formatted) of each value", function() {
+        var range = sheet.range("A1:A3");
+
+        sheet.range("A1").value(12).format("$#");
+        sheet.range("A2").value(new Date(2015, 1, 1)).format("dd/MMM/yyyy");
+        sheet.range("A3").value(0.01).format("0%");
+
+        var values = controller.values(range, 0);
+
+        equal(values.length, 3, "distinct values are loaded");
+        equal(values[0].text, "$12");
+        equal(values[1].text, "1%");
+        equal(values[2].text, "01/Feb/2015");
+    });
+
     test("gets only distinct values", function() {
         var range = sheet.range("A1:A3").values([ ["aaa"], ["bbb"], ["aaa"] ]);
 
@@ -164,6 +179,14 @@
 
     test("recognizes number dataType", function() {
         var range = sheet.range("A1").value(123);
+
+        var values = controller.values(range, 0);
+
+        equal(values[0].dataType, "number");
+    });
+
+    test("recognizes values with percent format as number dataType", function() {
+        var range = sheet.range("A1").value(0.01).format("0%");
 
         var values = controller.values(range, 0);
 

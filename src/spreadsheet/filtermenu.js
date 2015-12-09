@@ -366,8 +366,6 @@
                 var sheet = range.sheet();
 
                 columnRange.forEachCell(function(row, col, cell) {
-                    var formatter;
-
                     if (cell.value === undefined) {
                         cell.dataType = "blank";
                     } else if (cell.format) {
@@ -377,9 +375,13 @@
                     }
 
                     if (cell.value !== null && cell.format) {
-                        formatter = kendo.spreadsheet.formatting.text(cell.value, cell.format);
+                        cell.text = kendo.spreadsheet.formatting.text(cell.value, cell.format);
                     } else {
                         cell.text = cell.value ? cell.value : messages.blanks;
+                    }
+
+                    if (cell.dataType === "percent") { //treat percent as number
+                        cell.dataType = "number";
                     }
 
                     if (cell.dataType === "date") {
