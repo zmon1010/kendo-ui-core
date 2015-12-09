@@ -4,13 +4,17 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h3>Select date & time:</h3>
+<div class="demo-section k-content">
+    <h4>Select date & time:</h4>
     <%= Html.Kendo().DateTimePicker()
             .Name("datetimepicker")
-            .HtmlAttributes(new { style = "width:200px", accesskey = "w" })
+            .HtmlAttributes(new { style = "width:100%;", accesskey = "w" })
     %>
 </div>
+
+<div class="box wide">
+<div class="box-col">
+<h4>Focus:</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -23,9 +27,9 @@
         </span>
     </li>
 </ul>
-<h4>
-    Closed popup:
-</h4>
+</div>
+<div class="box-col">
+<h4>Closed popup:</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -62,10 +66,9 @@
         </span>
     </li>
 </ul>
-
-<h4>
-    Opened popup (date view):
-</h4>
+</div>
+<div class="box-col" style="width: 300px;">
+<h4>Opened popup (date view):</h4>
 <ul id="calendar-nav" class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -161,10 +164,9 @@
         </span>
     </li>
 </ul>
-
-<h4>
-    Opened popup (time view):
-</h4>
+</div>
+<div class="box-col">
+<h4>Opened popup (time view):</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -183,16 +185,6 @@
         </span>
     </li>
 </ul>
-
-<style>
-    .demo-section {
-        width: 204px;
-    }
-
-    #calendar-nav
-    {
-        padding-bottom: 40px;
-    }
-</style>
-
+</div>
+</div>
 </asp:Content>

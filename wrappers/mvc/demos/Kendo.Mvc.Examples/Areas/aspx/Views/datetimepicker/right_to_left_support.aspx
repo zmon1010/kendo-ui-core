@@ -4,22 +4,13 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+<div class="demo-section k-content">
     <div class="k-rtl">
-    <label for="datetimepicker">Choose date:</label>
+    <h4>Choose date:</h4>
     <%= Html.Kendo().DateTimePicker()
           .Name("datetimepicker")
+          .HtmlAttributes(new { style = "width:100%;" })
     %>
     </div>
-
-    <style>
-        .demo-section {
-            width: 400px;
-            text-align: center;
-            margin: 50px auto;
-            padding-top: 50px;
-            padding-bottom: 50px;
-        }
-    </style>
 </div>
 </asp:Content>

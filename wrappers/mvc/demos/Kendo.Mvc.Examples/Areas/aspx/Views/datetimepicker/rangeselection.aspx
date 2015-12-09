@@ -4,8 +4,8 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section" style="width: 535px;">
-    <label for="start">Start date:</label>
+<div class="demo-section k-content">
+    <h4>Start date</h4>
 
     <%= Html.Kendo().DateTimePicker()
           .Name("start")
@@ -13,15 +13,17 @@
           .Max(DateTime.Today)
           .ParseFormats(new string[] { "MM/dd/yyyy" })
           .Events(e => e.Change("startChange"))
+          .HtmlAttributes(new { style = "width:100%;" })
     %>
 
-    <label for="end" style="margin-left:3em">End date:</label>
+    <h4 style="margin-top: 2em;">End date</h4>
     <%= Html.Kendo().DateTimePicker()
           .Name("end")
           .Value(DateTime.Today)
           .Min(DateTime.Today)
           .ParseFormats(new string[] { "MM/dd/yyyy" })
           .Events(e => e.Change("endChange"))
+          .HtmlAttributes(new { style = "width:100%;" })
     %>
 </div>
 <script>

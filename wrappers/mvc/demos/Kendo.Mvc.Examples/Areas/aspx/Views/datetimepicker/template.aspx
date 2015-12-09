@@ -5,15 +5,11 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="configuration k-widget k-header">
-    <span class="infoHead">Information</span>
-    <p>
-        Apply special style for the birthdays.
-    </p>
-</div>
-<div class="demo-section">
+<div class="demo-section k-content">
+    <h4>Birthday Calendar</h4>
     <%= Html.Kendo().DateTimePicker()
           .Name("datetimepicker")
+          .HtmlAttributes(new { style = "width:100%;" })
           .Value(DateTime.Now)
           .Events(e => e.Open("onOpen"))
           .Footer("Today - #=kendo.toString(data, 'd') #")
@@ -37,16 +33,12 @@
     function onOpen() {
         var dateViewCalendar = this.dateView.calendar;
         if (dateViewCalendar) {
-            dateViewCalendar.element.width(340);
+            dateViewCalendar.element.width(300);
         }
     };
 </script>
 
 <style>
-    .demo-section {
-        width: 185px;
-    }
-
     .birthday {
         background: transparent url('<%= Url.Content("~/Content/web/calendar/cake.png") %>') no-repeat 0 50%;
         display: inline-block;

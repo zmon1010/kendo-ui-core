@@ -5,25 +5,13 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div id="to-do">
+<div class="demo-section k-content">
+    <h4>Remind me on</h4>
 <%= Html.Kendo().DateTimePicker()
         .Name("datetimepicker")
-        .Value(DateTime.Now)        
+        .Value(DateTime.Now)
+        .HtmlAttributes(new { style = "width:100%;" })
 %>
 </div>
-
-<style>
-    .k-datetimepicker 
-    {
-        width: 200px;
-    }
-    #to-do {
-        height: 52px;
-        width: 221px;
-        margin: 30px auto;
-        padding: 91px 0 0 188px;
-        background: url('<%=Url.Content("~/content/web/datepicker/todo.png")%>') transparent no-repeat 0 0;
-    }
-</style>
 
 </asp:Content>

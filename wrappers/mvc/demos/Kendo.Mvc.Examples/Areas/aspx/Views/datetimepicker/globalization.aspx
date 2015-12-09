@@ -13,9 +13,11 @@
 <%
     Culture = "de-DE";
 %>
-
+<div class="demo-section k-content">
 <%= Html.Kendo().DateTimePicker()
       .Name("datetimepicker")
       .Value(DateTime.Now)
+      .HtmlAttributes(new { style = "width:100%;" })
 %>
+</div>
 </asp:Content>

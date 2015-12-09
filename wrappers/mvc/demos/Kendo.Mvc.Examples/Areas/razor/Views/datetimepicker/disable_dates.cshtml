@@ -4,16 +4,18 @@
 
 
 <div id="example">
-    <div class="demo-section k-content" style="text-align: center;">
+    <div class="demo-section k-content">
         <h4>Disable weekends</h4>
         @(Html.Kendo().DateTimePicker()
                 .Name("weekend-datetime-picker")
+                .HtmlAttributes(new { style = "width:100%;" })
                 .DisableDates(new string[] { "sa", "su" })
             )
 
         <h4 style="margin-top: 1em">Disable Federal Holidays in USA in 2015</h4>
         @(Html.Kendo().DateTimePicker()
                 .Name("national-datetime-picker")
+                .HtmlAttributes(new { style = "width:100%;" })
                 .DisableDates("disableDates")
             )
     </div>
