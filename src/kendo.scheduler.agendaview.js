@@ -47,8 +47,6 @@ var __meta__ = { // jshint ignore:line
 
             this.title = options.title;
 
-            this.name = "agenda";
-
             this._eventTemplate = this._eventTmpl(options.eventTemplate, EVENT_WRAPPER_FORMAT);
             this._dateTemplate = kendo.template(options.eventDateTemplate);
             this._groupTemplate = kendo.template(options.eventGroupTemplate);
@@ -60,6 +58,8 @@ var __meta__ = { // jshint ignore:line
 
             this._renderLayout(options.date);
         },
+
+        name: "agenda",
 
         _mouseenter: function(e) {
             $(e.currentTarget).addClass("k-state-hover");

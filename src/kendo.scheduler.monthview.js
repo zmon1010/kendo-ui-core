@@ -72,8 +72,6 @@ var __meta__ = { // jshint ignore:line
 
             that.title = that.options.title;
 
-            that.name = "month";
-
             that._templates();
 
             that._editable();
@@ -82,6 +80,8 @@ var __meta__ = { // jshint ignore:line
 
             that._groups();
         },
+
+        name: "month",
 
         _updateDirection: function(selection, ranges, multiple, reverse, vertical) {
             if (multiple) {
