@@ -5,17 +5,18 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="configuration k-widget k-header" style="float:none;max-width:none;margin:0 0 2em;">
-    <span class="infoHead">Information</span>
+<div class="box wide">
+    <h4>Information</h4>
     <p>
         The following demo shows how to customize some of the native Editor tools (font size, font name and block format) by modifying the tools' item
         collections, as well as how to create completely custom tools.
     </p>
 </div>
 
+
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .HtmlAttributes(new { style = "width:100%;height:440px" })
       .Tools(tools => tools
         .Clear()
         .FontName(items => items

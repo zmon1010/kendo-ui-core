@@ -1,6 +1,6 @@
 @(Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .HtmlAttributes(new { style = "height:350px" })
       .Resizable(resizable => resizable.Content(false).Toolbar(true))
       .Events(events => events
           .Change("change")
@@ -61,4 +61,7 @@
     }
 </script>
 
-<div class="console"></div>
+<div class="box wide">
+    <h4>Events log</h4>
+    <div class="console"></div>
+</div>

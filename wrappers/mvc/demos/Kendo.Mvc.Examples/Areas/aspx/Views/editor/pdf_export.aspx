@@ -7,7 +7,7 @@
 
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .HtmlAttributes(new { style = "height:440px" })
       .StyleSheets(css => css
         .Add(Url.Content("~/Content/web/Editor/pdf-export-styles.css"))
       )

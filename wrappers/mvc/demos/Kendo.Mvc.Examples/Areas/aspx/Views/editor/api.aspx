@@ -5,25 +5,31 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Get value</span>
+<div class="box wide">
+    <div class="box-col">
+    <h4>Get value</h4>
     <ul class="options">
         <li>
             <button id="get" class="k-button">Get value</button>
         </li>
     </ul>
-    <span class="configTitle">Set value</span>
+    </div>
+    <div class="box-col">
+    <h4>Set value</h4>
     <ul class="options">
         <li>
             <textarea id="value" style="width: 200px;" rows="4" cols="20">new value</textarea>
+        </li>
+        <li>
             <button id="set" class="k-button">Set value</button>
         </li>
     </ul>
+    </div>
 </div>
 
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width:600px;height:440px" })
+      .HtmlAttributes(new { style = "height:400px" })
       .Resizable(resizable => resizable.Content(false).Toolbar(true))
       .Value(() =>
            { %>

@@ -7,7 +7,7 @@
 
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .HtmlAttributes(new { style = "height:350px" })
       .Events(events => events
           .Change("change")
           .Execute("execute")
@@ -70,6 +70,9 @@
     }
 </script>
 
-<div class="console"></div>
+<div class="box wide">
+    <h4>Events log</h4>
+    <div class="console"></div>
+</div>
 
 </asp:Content>

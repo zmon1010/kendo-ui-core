@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+<div class="demo-section wide k-header">
     <% Html.Kendo().Editor()
           .Name("topEditor")
           .Tag("div")
@@ -119,8 +119,8 @@
         %>
 </div>
 
-<div class="configuration">
-    <div class="infoHead">Important</div>
+<div class="box wide">
+    <h4>Important</h4>
 
     <p>
         Editor widgets instantiated from a <strong>contentEditable</strong> element
@@ -129,29 +129,10 @@
         <a href="http://docs.telerik.com/kendo-ui/getting-started/web/editor/troubleshooting#inline-editor-value-is-not-posted-to-the-server">how to post the inline editor value</a> help section.
     </p>
 </div>
-
 <style>
-    .demo-section {
-        padding: 40px;
-    }
-
-    .configuration {
-        max-width: none;
-        margin: 0;
-        float: none;
-    }
-
-    .configuration a {
-        color: inherit;
-    }
-
-    .configuration a:hover {
-        text-decoration: none;
-    }
-
     .k-editor-inline {
         margin: 0;
-        padding: 21px 2.5% 11px;
+        padding: 21px 21px 11px;
         border-width: 0;
         box-shadow: none;
         background: none;
@@ -165,7 +146,7 @@
 
     #topEditor h2, .column h3 {
         font-size: 24px;
-        color: #e15613;
+        color: #2db245;
         font-family: "Droid Sans",DroidSansWeb,"Segoe UI","Lucida Sans Unicode",Arial,Helvetica,sans-serif;
     }
 
@@ -176,7 +157,7 @@
     .column {
         display: inline-block;
         vertical-align: top;
-        width: 28%;
+        max-width: 250px;
     }
 
     .column a {

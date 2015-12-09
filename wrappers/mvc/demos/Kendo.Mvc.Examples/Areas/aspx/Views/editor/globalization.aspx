@@ -5,7 +5,7 @@
     var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
 %>
 
-<div class="configuration k-widget k-header" style="width: 190px">
+<div class="box wide">
     <ul class="options">
         <li>Choose culture: 
             <%: Html.Kendo().DropDownList()
@@ -20,7 +20,7 @@
 
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 700px;height:440px" })
+      .HtmlAttributes(new { style = "width:100%;height:400px" })
       .Value(() => 
       {
       %>

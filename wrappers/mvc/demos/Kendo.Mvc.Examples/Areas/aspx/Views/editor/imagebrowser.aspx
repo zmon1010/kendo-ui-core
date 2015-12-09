@@ -5,14 +5,14 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="box">
+<div class="box wide">
     <p>Allowed file types for the Image browser are: jpg, jpeg, gif, png</p>
     <p>Allowed file types for the File browser for this demo are: txt, doc, docx, xls, xlsx, ppt, pptx, zip, rar, jpg, jpeg, gif, png</p>
 </div>
 
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .HtmlAttributes(new { style = "height:440px" })
       .Tools(tools => tools.Clear().InsertImage().InsertFile())
       .Value(() =>
            { %>

@@ -5,9 +5,17 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
+<div class="box wide">
+    <h4>Information</h4>
+    <p>
+        The following demo shows how to use the Editor's style tool, which provides the ability to customize the widget content by means of custom
+        CSS classes and styling, and a CSS file registered in the Editor iframe document.
+    </p>
+</div>
+
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .HtmlAttributes(new { style = "height:400px" })
       .Tools(tools => tools
         .Clear()
         .Formatting(formatting => formatting

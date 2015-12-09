@@ -7,7 +7,7 @@
 
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 740px;height:250px" })
+      .HtmlAttributes(new { style = "height:240px" })
       .Resizable(resizable => resizable.Content(false).Toolbar(true))
       .Value(() =>
            { %>
@@ -24,32 +24,28 @@
       .Render();
 %>
 
-<ul id="keyboard-nav" class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Tab</span>
-        </span>
-        <span class="button-descr">
-            focuses next tool icon
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wide rightAlign">Shift</span>
-            +
-            <span class="key-button">Tab</span>
-        </span>
-        <span class="button-descr">
-            focuses previous tool icon
-        </span>
-    </li>
-</ul>
-
-<style>
-    #keyboard-nav
-    {
-        padding-top: 35px;
-    }
-</style>
+<div class="box wide">
+    <h4>Keyboard legend</h4>
+    <ul class="keyboard-legend">
+        <li>
+            <span class="button-preview">
+                <span class="key-button">Tab</span>
+            </span>
+            <span class="button-descr">
+                focuses next tool icon
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button wide rightAlign">Shift</span>
+                +
+                <span class="key-button">Tab</span>
+            </span>
+            <span class="button-descr">
+                focuses previous tool icon
+            </span>
+        </li>
+    </ul>
+</div>
 
 </asp:Content>

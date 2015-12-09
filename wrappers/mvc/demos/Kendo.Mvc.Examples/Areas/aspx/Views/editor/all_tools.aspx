@@ -7,7 +7,7 @@
 
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .HtmlAttributes(new { style = "width:100%;height:440px" })
       .Tools(tools => tools
         .Clear()
         .Bold().Italic().Underline().Strikethrough()

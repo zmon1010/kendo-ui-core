@@ -7,7 +7,7 @@
 
 <% Html.Kendo().Editor()
       .Name("editor")
-      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .HtmlAttributes(new { style = "height:440px" })
       .Resizable(resizable => resizable.Content(true).Toolbar(true))
       .ImageBrowser(imageBrowser => imageBrowser
         .Image("~/Content/UserFiles/Images/{0}")
