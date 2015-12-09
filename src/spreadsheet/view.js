@@ -1170,25 +1170,33 @@
                     top: view.rowOffset + "px"
                 }
             });
-            var layout = kendo.spreadsheet.print.doLayout(this._sheet, view.ref, { forScreen: true });
+            var layout = kendo.spreadsheet.print.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
             // draw axis first
+            prev = null;
             layout.xs.forEach(function(x){
-                cont.children.push(kendo.dom.element("div", {
-                    className: paneClassNames.vaxis,
-                    style: {
-                        left: x + "px",
-                        height: "2000px"
-                    }
-                }));
+                if (x !== prev) {
+                    prev = x;
+                    cont.children.push(kendo.dom.element("div", {
+                        className: paneClassNames.vaxis,
+                        style: {
+                            left: x + "px",
+                            height: "2000px"
+                        }
+                    }));
+                }
             });
+            prev = null;
             layout.ys.forEach(function(y){
-                cont.children.push(kendo.dom.element("div", {
-                    className: paneClassNames.haxis,
-                    style: {
-                        top: y + "px",
-                        width: "2000px"
-                    }
-                }));
+                if (y !== prev) {
+                    prev = y;
+                    cont.children.push(kendo.dom.element("div", {
+                        className: paneClassNames.haxis,
+                        style: {
+                            top: y + "px",
+                            width: "2000px"
+                        }
+                    }));
+                }
             });
             layout.cells.forEach(function(cell){
                 drawCell(cont.children, cell);
