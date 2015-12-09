@@ -5,21 +5,9 @@
 
 <demo:header />
 
-    <div id="to-do">
-        <kendo:dateTimePicker name="datetimepicker" value="${today}"></kendo:dateTimePicker>
+    <div class="demo-section k-content">
+        <h4>Remind me on</h4>
+        <kendo:dateTimePicker name="datetimepicker" value="${today}" style="width: 100%;"></kendo:dateTimePicker>
     </div>
-    <style>
-        .k-datetimepicker 
-        {
-            width: 200px;
-        }
-        #to-do {
-            height: 52px;
-            width: 221px;
-            margin: 30px auto;
-            padding: 91px 0 0 188px;
-            background: url(<c:url value="/resources/web/datepicker/todo.png" />) transparent no-repeat 0 0;
-        }
-    </style>
 
 <demo:footer />

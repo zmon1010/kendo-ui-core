@@ -4,12 +4,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />
-<div class="demo-section" style="width: 650px;">
-    <label for="start">Start date:</label>
-	<kendo:dateTimePicker name="start" value="${today}" max="${today}" change="startChange"></kendo:dateTimePicker>
+<div class="demo-section k-content">
+    <h4>Start date</h4>
+	<kendo:dateTimePicker name="start" value="${today}" max="${today}" change="startChange" style="width: 100%;"></kendo:dateTimePicker>
 	
-	<label for="end" style="margin-left:3em">End date:</label>
-	<kendo:dateTimePicker name="end" value="${today}" min="${today}" change="endChange"></kendo:dateTimePicker>
+	<h4 style="margin-top: 2em;">End date</h4>
+	<kendo:dateTimePicker name="end" value="${today}" min="${today}" change="endChange" style="width: 100%;"></kendo:dateTimePicker>
 </div>
 
 <script>
@@ -35,31 +35,5 @@
         }
     }
 </script>
-
-<style>
-    .k-datetimepicker 
-    {
-        width: 200px;
-    }
-	#example .k-datetimepicker {
-	    vertical-align: middle;
-	}
-	
-	#example h3 {
-	    clear: both;
-	}
-	
-	#example .code-sample {
-	    width: 60%;
-	    float:left;
-	    margin-bottom: 20px;
-	}
-	
-	#example .output {
-	    width: 24%;
-	    margin-left: 4%;
-	    float:left;
-	}
-</style>
 
 <demo:footer />

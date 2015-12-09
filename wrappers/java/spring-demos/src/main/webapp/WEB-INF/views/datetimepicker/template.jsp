@@ -4,13 +4,23 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-	<div class="configuration k-widget k-header">
-	    <span class="infoHead">Information</span>
-	    <p>
-	        Apply special style for the birthdays.
-	    </p>
-	</div>
-	
+
+    <%
+        String template = "# if (isInArray(data.date, birthdays)) { #" +
+        		"<div class=\"birthday\"></div>" +
+                "# } #" +
+                "#= data.value #";
+    
+    String footer = "Today - #=kendo.toString(data, 'd') #";
+    %>
+
+    <div class="demo-section k-content">
+        <h4>Birthday Calendar</h4>  
+        <kendo:dateTimePicker name="datetimepicker" value="<%=new Date()%>" footer="<%=footer%>"  open="onOpen" style="width: 100%;">
+            <kendo:dateTimePicker-month content="<%=template%>"/>
+        </kendo:dateTimePicker>
+    </div>
+
     <script>
 	    var today = new Date(),
 	    birthdays = [
@@ -38,34 +48,10 @@
 	        }
 		}
     </script>
-        <%
-        String template = "# if (isInArray(data.date, birthdays)) { #" +
-	      "<div class=\"" +
-	      "# if (data.value < 10) { #" +
-	          "exhibition" +
-	      "# } else if ( data.value < 20 ) { #" +
-	          "party" +
-	      "# } else { #" +
-	          "cocktail" +
-	      "# } #" +
-	   "\"></div>" +
-	"# } #" +
-	"#= data.value #";
     
-    String footer = "Today - #=kendo.toString(data, 'd') #";
-    %>
-    <div class="demo-section">    
-        <kendo:dateTimePicker name="datetimepicker" value="<%=new Date()%>" footer="<%=footer%>"  open="onOpen">
-            <kendo:dateTimePicker-month content="<%=template%>"/>
-        </kendo:dateTimePicker>
-    </div>
-    <style>       
-        .demo-section {
-            width: 185px;
-        }
-        
-        .party {
-            background: transparent url(<c:url value="/resources/web/calendar/cake.png" />) no-repeat 0 50%;
+    <style>
+        .birthday {
+            background: transparent url(<c:url value="/resources/web/calendar/cake.png"/>) no-repeat 0 50%;
             display: inline-block;
             width: 16px;
             height: 16px;

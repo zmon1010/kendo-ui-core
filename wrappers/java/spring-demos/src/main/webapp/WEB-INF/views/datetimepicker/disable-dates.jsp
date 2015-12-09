@@ -1,13 +1,22 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-<div class="demo-section k-content" style="text-align: center;">
+<div class="demo-section k-content">
+	<h4>Disable weekends</h4>	
+	
+	<c:url value="['Sa', 'Su']" var="disableWeekend" />
+	<kendo:dateTimePicker name="weekenddatetimepicker" disableDates="${disableWeekend}" style="width: 100%">
+	</kendo:dateTimePicker>
+	
 	<h4 style="margin-top:1em">Disable Federal Holidays in USA in 2015</h4>	
-	<kendo:dateTimePicker name="datetimepicker" disableDates="disableDates">
+	
+	<kendo:dateTimePicker name="datetimepicker" disableDates="disableDates" style="width: 100%">
 	</kendo:dateTimePicker>
 </div>
 <script>
+		
 		function compareDates(date, dates) {
 			for (var i = 0; i < dates.length; i++) {
 				if (dates[i].getDate() == date.getDate() && 
@@ -41,3 +50,5 @@
 			}
 		}
 </script>
+
+<demo:footer />

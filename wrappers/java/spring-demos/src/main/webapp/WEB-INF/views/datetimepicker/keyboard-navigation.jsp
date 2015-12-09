@@ -2,12 +2,15 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-    <div class="demo-section">
-        <h3>Select date & time:</h3>
-        <kendo:dateTimePicker name="datetimepicker" style="width: 200px" accesskey="w"></kendo:dateTimePicker>
-    </div>
+<div class="demo-section k-content">
+    <h4>Select date & time:</h4>
+    <kendo:dateTimePicker name="datetimepicker" style="width: 100%;" accesskey="w"></kendo:dateTimePicker>
+</div>
 
-	<ul class="keyboard-legend">
+<div class="box wide">
+    <div class="box-col">
+    <h4>Focus:</h4>
+    <ul class="keyboard-legend">
 	    <li>
 	        <span class="button-preview">
 	            <span class="key-button leftAlign wider"><a target="_blank" href="http://en.wikipedia.org/wiki/Access_key">Access key</a></span>
@@ -19,9 +22,10 @@
 	        </span>
 	    </li>
 	</ul>
-	<h4>
-	    Closed popup:
-	</h4>
+	</div>
+	
+	<div class="box-col">
+	<h4>Closed popup:</h4>
 	<ul class="keyboard-legend">
 	    <li>
 	        <span class="button-preview">
@@ -58,10 +62,10 @@
 	        </span>
 	    </li>
 	</ul>
-	
-	<h4>
-	    Opened popup (date view):
-	</h4>
+	</div>
+
+	<div class="box-col" style="width: 300px;">
+	<h4>Opened popup (date view):</h4>
 	<ul id="calendar-nav" class="keyboard-legend">
 	    <li>
 	        <span class="button-preview">
@@ -157,10 +161,10 @@
 	        </span>
 	    </li>
 	</ul>
+	</div>
 	
-	<h4>
-	    Opened popup (time view):
-	</h4>
+	<div class="box-col">
+	<h4>Opened popup (time view):</h4>
 	<ul class="keyboard-legend">
 	    <li>
 	        <span class="button-preview">
@@ -179,17 +183,7 @@
 	        </span>
 	    </li>
 	</ul>
-
-	<style>
-	    .demo-section
-	    {
-	        width: 204px;
-	    }
-	
-	    #calendar-nav
-	    {
-	        padding-bottom: 40px;
-	    }
-	</style>
+	</div>
+</div>
     
 <demo:footer />
