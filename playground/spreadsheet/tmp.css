@@ -20,8 +20,13 @@
   white-space: pre;
 }
 
-.k-spreadsheet-pane * {
+.k-spreadsheet-fixed-container,
+.k-spreadsheet-fixed-container * {
   user-select: none;
+  -o-user-select:none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
 }
 
 .k-spreadsheet-pane .k-spreadsheet-merged-cell {
