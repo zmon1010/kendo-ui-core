@@ -103,18 +103,13 @@
             }
             var m = mergedCells.primary[id];
             if (m) {
+                delete mergedCells.primary[id];
                 cell.merged = true;
                 cell.rowspan = m.height();
                 cell.colspan = m.width();
                 if (options.forScreen) {
-                    cell.width = 0;
-                    for (var i = 0; i < cell.colspan; ++i) {
-                        cell.width += sheet.columnWidth(col + i);
-                    }
-                    cell.height = 0;
-                    for (var i = 0; i < cell.rowspan; ++i) {
-                        cell.height += sheet.rowHeight(row + i);
-                    }
+                    cell.width = sheet._columns.sum(m.topLeft.col, m.bottomRight.col);
+                    cell.height = sheet._rows.sum(m.topLeft.row, m.bottomRight.row);
                 }
             } else {
                 cell.rowspan = 1;
@@ -182,6 +177,35 @@
             boxWidth = Math.max(boxWidth, cell.right);
             boxHeight = Math.max(boxHeight, cell.bottom);
             return true;
+        });
+
+        // 3. if any merged cells remain in "primary", they start
+        //    outside the printed range and we should still display
+        //    them partially.
+        Object.keys(mergedCells.primary).forEach(function(id){
+            var ref = mergedCells.primary[id];
+            sheet.forEach(ref.topLeft.toRangeRef(), function(row, col, cell){
+                var relrow = row - range.topLeft.row;
+                var relcol = col - range.topLeft.col;
+                cell.merged = true;
+                cell.colspan = ref.height();
+                cell.rowspan = ref.width();
+                if (relrow < 0) {
+                    cell.top = -sheet._rows.sum(row, row - relrow - 1);
+                } else {
+                    cell.top = ys[relrow];
+                }
+                if (relcol < 0) {
+                    cell.left = -sheet._columns.sum(col, col - relcol - 1);
+                } else {
+                    cell.left = xs[relcol];
+                }
+                cell.height = sheet._rows.sum(ref.topLeft.row, ref.bottomRight.row);
+                cell.width = sheet._columns.sum(ref.topLeft.col, ref.bottomRight.col);
+                cell.right = cell.left + cell.width;
+                cell.bottom = cell.top + cell.height;
+                cells.push(cell);
+            });
         });
 
         return {
