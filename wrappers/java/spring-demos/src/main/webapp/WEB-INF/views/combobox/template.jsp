@@ -4,117 +4,105 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />
-    <div>
-        <c:url value="/combobox/template/read" var="readUrl" />
+    <c:url value="/combobox/template/read" var="readUrl" />
 
-        <%
-        String headerTemplate = "<div class=\"dropdown-header\">" +
-                "<span class=\"k-widget k-header\">Photo</span>" +
-                "<span class=\"k-widget k-header\">Contact info</span>" +
-            "</div>";
+    <%
+    String headerTemplate = "<div class=\"dropdown-header k-widget k-header\">" +
+            "<span>Photo</span>" +
+            "<span>Contact info</span>" +
+        "</div>";
 
-        String template = "<span class=\"k-state-default\"><img src=\"../resources/web/Customers/#:data.customerId#.jpg\" alt=\"#:data.customerId#\" /></span>" +
-                          "<span class=\"k-state-default\"><h3>#: data.contactName #</h3><p>#: data.companyName #</p></span>";
-        %>
+    String template = "<span class=\"k-state-default\" style=\" background-image: url('../resources/web/Customers/#:data.customerId#.jpg')\" ></span>" +
+                      "<span class=\"k-state-default\"><h3>#: data.contactName #</h3><p>#: data.companyName #</p></span>";
+    %>
 
-        <div class="demo-section">
-            <h2>Customers</h2>
+    <div class="demo-section k-content">
+        <h4>Customers</h4>
 
-            <kendo:comboBox name="customers" headerTemplate="<%=headerTemplate%>" template="<%=template%>" height="300"
-                dataTextField="contactName" dataValueField="customerID" style="width:400px">
-                <kendo:dataSource serverFiltering="true">
-                    <kendo:dataSource-transport>
-                       <kendo:dataSource-transport-read url="${readUrl}" type="POST" contentType="application/json"/>
-                       <kendo:dataSource-transport-parameterMap>
-                            <script>
-                                function parameterMap(options) {
-                                    return JSON.stringify(options);
-                                }
-                            </script>
-                        </kendo:dataSource-transport-parameterMap>
-                    </kendo:dataSource-transport>
-                    <kendo:dataSource-schema data="data" total="total">
-                    </kendo:dataSource-schema>
-                </kendo:dataSource>
-            </kendo:comboBox>
-        </div>
-
-        <div class="demo-section">
-            <h2>Information</h2>
-            <p>
-                Open the ComboBox to see the customized appearance of the items.
-            </p>
-        </div>
+        <kendo:comboBox name="customers" headerTemplate="<%=headerTemplate%>" template="<%=template%>" height="300"
+            dataTextField="contactName" dataValueField="customerID" style="width:100%;">
+            <kendo:dataSource serverFiltering="true">
+                <kendo:dataSource-transport>
+                   <kendo:dataSource-transport-read url="${readUrl}" type="POST" contentType="application/json"/>
+                   <kendo:dataSource-transport-parameterMap>
+                        <script>
+                            function parameterMap(options) {
+                                return JSON.stringify(options);
+                            }
+                        </script>
+                    </kendo:dataSource-transport-parameterMap>
+                </kendo:dataSource-transport>
+                <kendo:dataSource-schema data="data" total="total">
+                </kendo:dataSource-schema>
+            </kendo:dataSource>
+        </kendo:comboBox>
+        <p class="demo-hint">
+            Open the ComboBox to see the customized appearance.
+        </p>
     </div>
 
     <style>
-        .dropdown-header {
-            font-size: 1.2em;
-        }
-
-        .dropdown-header > span {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            text-align: left;
-            display: inline-block;
-            border-style: solid;
-            border-width: 0 0 1px 1px;
-            padding: .3em .6em;
-            width: 312px;
-        }
-
-        .dropdown-header > span:first-child {
-            width: 82px;
-            border-left-width: 0;
-        }
-
-        .demo-section {
-            width: 400px;
-            padding: 30px;
-        }
-        .demo-section h2 {
-            text-transform: uppercase;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        #customers-list .k-item > span{
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            display: inline-block;
-            border-style: solid;
-            border-width: 0 0 1px 1px;
-            vertical-align: top;
-            min-height: 95px;
-            width: 79%;
-            padding: .6em 0 0 .6em;
-        }
-
-        #customers-list .k-item > span:first-child{
-            width: 77px;
-            border-left-width: 0;
-            padding: .6em 0 0 0;
-        }
-
-        #customers-list img {
-            -moz-box-shadow: 0 0 2px rgba(0,0,0,.4);
-            -webkit-box-shadow: 0 0 2px rgba(0,0,0,.4);
-            box-shadow: 0 0 2px rgba(0,0,0,.4);
-            width: 70px;
-            height: 70px;
-        }
-
-        #customers-list h3 {
-            font-size: 1.6em;
-            margin: 0;
-            padding: 0;
-        }
-
-        #customers-list p {
-            margin: 0;
-            padding: 0;
-        }
+	.dropdown-header {
+	    border-width: 0 0 1px 0;
+	    text-transform: uppercase;
+	}
+	
+	.dropdown-header > span {
+	    display: inline-block;
+	    padding: 10px;
+	}
+	
+	.dropdown-header > span:first-child {
+	    width: 50px;
+	}
+	
+	#customers-list .k-item {
+	    line-height: 1em;
+	    min-width: 300px;
+	}
+	
+	/* Material Theme padding adjustment*/
+	
+	.k-material #customers-list .k-item,
+	.k-material #customers-list .k-item.k-state-hover,
+	.k-materialblack #customers-list .k-item,
+	.k-materialblack #customers-list .k-item.k-state-hover {
+	    padding-left: 5px;
+	    border-left: 0;
+	}
+	
+	#customers-list .k-item > span {
+	    -webkit-box-sizing: border-box;
+	    -moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	    display: inline-block;
+	    vertical-align: top;
+	    margin: 20px 10px 10px 5px;
+	}
+	
+	#customers-list .k-item > span:first-child {
+	    -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+	    -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+	    box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+	    margin: 10px;
+	    width: 50px;
+	    height: 50px;
+	    border-radius: 50%;
+	    background-size: 100%;
+	    background-repeat: no-repeat;
+	}
+	
+	#customers-list h3 {
+	    font-size: 1.2em;
+	    font-weight: normal;
+	    margin: 0 0 1px 0;
+	    padding: 0;
+	}
+	
+	#customers-list p {
+	    margin: 0;
+	    padding: 0;
+	    font-size: .8em;
+	}
     </style>
 <demo:footer />

@@ -4,11 +4,11 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h3>T-shirt Size</h3>
+<div class="demo-section k-content">
+    <h4>T-shirt Size</h4>
     <%= Html.Kendo().ComboBox()
           .Name("size")
-          .HtmlAttributes(new { accesskey="w" })
+          .HtmlAttributes(new { style = "width:100%;", accesskey = "w" })
           .Placeholder("Select size...")
           .BindTo(new List<string>() {
               "X-Small",
@@ -23,6 +23,8 @@
     %>
 </div>
 
+<div class="box">
+<h4>Keyboard legend</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -34,9 +36,6 @@
             focuses the widget
         </span>
     </li>
-</ul>
-
-<ul class="keyboard-legend">
     <li>
         <span class="button-preview">
             <span class="key-button wide leftAlign">up arrow</span>
@@ -88,17 +87,6 @@
         </span>
     </li>
 </ul>
+</div>
 
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 </asp:Content>

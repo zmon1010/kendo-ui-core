@@ -4,13 +4,13 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h2>View Order Details</h2>
-    <p>
+<div class="demo-section k-content">
+    <ul id="fieldlist">
+    <li>
         <label for="categories">Catergories:</label>
         <%= Html.Kendo().ComboBox()
               .Name("categories")
-              .HtmlAttributes(new { style = "width:300px" })
+              .HtmlAttributes(new { style = "width:100%;" })
               .Placeholder("Select category...")
               .DataTextField("CategoryName")
               .DataValueField("CategoryId")
@@ -21,12 +21,12 @@
                    });
               })
         %>
-    </p>
-    <p>
+    </li>
+    <li>
         <label for="products">Products:</label>
         <%= Html.Kendo().ComboBox()
               .Name("products")
-              .HtmlAttributes(new { style = "width:300px" })
+              .HtmlAttributes(new { style = "width:100%;" })
               .Placeholder("Select product...")
               .DataTextField("ProductName")
               .DataValueField("ProductID")
@@ -51,12 +51,12 @@
                 };
             }
         </script>
-    </p>
-    <p>
+    </li>
+    <li>
         <label for="orders">Orders:</label>
         <%= Html.Kendo().ComboBox()
               .Name("orders")
-              .HtmlAttributes(new { style = "width:300px" })
+              .HtmlAttributes(new { style = "width:100%;" })
               .Placeholder("Select order...")
               .DataTextField("ShipCity")
               .DataValueField("OrderID")
@@ -81,8 +81,10 @@
                 };
             }
         </script>
-    </p>
-    <button class="k-button" id="get">View Order</button>
+    </li>
+    <li>
+        <button class="k-button k-primary" id="get">View Order</button>
+    </li>
 </div>
 <script>
     $(document).ready(function () {
@@ -100,27 +102,23 @@
     });
 </script>
 <style>
-    .demo-section {
-        width: 460px;
-        padding: 30px;
+    #fieldlist {
+        margin: 0;
+        padding: 0;
     }
-    .demo-section h2 {
+
+    #fieldlist li {
+        list-style: none;
+        padding-bottom: 1.5em;
+        text-align: left;
+    }
+
+    #fieldlist label {
+        display: block;
+        padding-bottom: .3em;
+        font-weight: bold;
         text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 30px;
-    }
-    .demo-section label {
-        display: inline-block;
-        width: 120px;
-        padding-right: 5px;
-        text-align: right;
-    }
-    .demo-section .k-button {
-        margin: 20px 0 0 125px;
-    }
-    .k-readonly
-    {
-        color: gray;
+        font-size: 12px;
     }
 </style>
 </asp:Content>

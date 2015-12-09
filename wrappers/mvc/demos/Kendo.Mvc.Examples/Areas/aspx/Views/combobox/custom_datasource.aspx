@@ -4,15 +4,15 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h2>Products</h2>
+<div class="demo-section k-content">
+    <h4>Products</h4>
 
     <%= Html.Kendo().ComboBox()
           .Name("products")
           .DataTextField("ProductName")
           .DataValueField("ProductID")
           .Placeholder("Select Product")
-          .HtmlAttributes(new { style = "width:250px" })
+          .HtmlAttributes(new { style = "width:100%;" })
           .Filter("contains")
           .AutoBind(false)
           .MinLength(3)
@@ -29,17 +29,4 @@
           )
     %>
 </div>
-
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 </asp:Content>

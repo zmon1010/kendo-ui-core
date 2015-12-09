@@ -3,10 +3,10 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-    <div>
-        <label for="products">Choose product:</label>
+    <div class="demo-section k-content">
+        <h4>Select product</h4>
         
-        <kendo:comboBox name="products" dataTextField="productName" dataValueField="productId" filter="startswith">
+        <kendo:comboBox name="products" dataTextField="productName" dataValueField="productId" filter="startswith" style="width: 100%;">
             <kendo:dataSource data="${products}"></kendo:dataSource>
         </kendo:comboBox>
     </div>

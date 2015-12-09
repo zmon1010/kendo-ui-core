@@ -9,13 +9,13 @@
 <c:url value="/combobox/cascadingcombobox/orders" var="ordersUrl" />
 
 <demo:header />
-<div class="demo-section">
-    <h2>View Order Details</h2>
-    <p>
+<div class="demo-section k-content">
+    <ul id="fieldlist">
+    <li>
         <label for="categories">Categories:</label>
 
         <kendo:comboBox name="categories" dataTextField="categoryName" dataValueField="categoryId" filter="contains"
-                        placeholder="Select category..." style="width:300px">
+                        placeholder="Select category..." style="width:100%;">
             <kendo:dataSource>
                 <kendo:dataSource-transport>
                    <kendo:dataSource-transport-read url="${categoriesUrl}" type="POST" contentType="application/json"/>
@@ -31,12 +31,12 @@
                 </kendo:dataSource-schema>
             </kendo:dataSource>
         </kendo:comboBox>
-    </p>
-    <p>
+    </li>
+    <li>
         <label for="products">Products:</label>
 
         <kendo:comboBox name="products" dataTextField="productName" dataValueField="productId" filter="contains"
-                        placeholder="Select product..." cascadeFrom="categories" autoBind="false" style="width:300px">
+                        placeholder="Select product..." cascadeFrom="categories" autoBind="false" style="width:100%;">
             <kendo:dataSource serverFiltering="true">
                 <kendo:dataSource-transport>
                    <kendo:dataSource-transport-read url="${productsUrl}" type="POST" contentType="application/json"/>
@@ -52,12 +52,12 @@
                 </kendo:dataSource-schema>
             </kendo:dataSource>
         </kendo:comboBox>
-    </p>
-    <p>
+    </li>
+    <li>
         <label for="orders">Orders:</label>
 
         <kendo:comboBox name="orders" dataTextField="shipCity" dataValueField="orderId" filter="contains"
-                        placeholder="Select order..." cascadeFrom="products" autoBind="false" style="width:300px">
+                        placeholder="Select order..." cascadeFrom="products" autoBind="false" style="width:100%;">
             <kendo:dataSource serverFiltering="true">
                 <kendo:dataSource-transport>
                    <kendo:dataSource-transport-read url="${ordersUrl}" type="POST" contentType="application/json"/>
@@ -71,7 +71,8 @@
                 </kendo:dataSource-transport>
             </kendo:dataSource>
         </kendo:comboBox>
-    </p>
+    </li>
+    </ul>
 </div>
 <script>
     $(document).ready(function () {
@@ -89,27 +90,23 @@
     });
 </script>
 <style>
-    .demo-section {
-        width: 460px;
-        padding: 30px;
+    #fieldlist {
+        margin: 0;
+        padding: 0;
     }
-    .demo-section h2 {
+
+    #fieldlist li {
+        list-style: none;
+        padding-bottom: 1.5em;
+        text-align: left;
+    }
+
+    #fieldlist label {
+        display: block;
+        padding-bottom: .3em;
+        font-weight: bold;
         text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 30px;
-    }
-    .demo-section label {
-        display: inline-block;
-        width: 120px;
-        padding-right: 5px;
-        text-align: right;
-    }
-    .demo-section .k-button {
-        margin: 20px 0 0 125px;
-    }
-    .k-readonly
-    {
-        color: gray;
+        font-size: 12px;
     }
 </style>
 <demo:footer />

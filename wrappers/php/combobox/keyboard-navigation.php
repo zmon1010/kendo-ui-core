@@ -4,13 +4,13 @@ require_once '../lib/DataSourceResult.php';
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
-<div class="demo-section">
-    <h3>T-shirt Size</h3>
+<div class="demo-section k-content">
+    <h4>T-shirt Size</h4>
 <?php
 $comboBox = new \Kendo\UI\ComboBox('select');
 
 $comboBox->placeholder('Select size ...')
-         ->attr('style', 'width: 200px')
+         ->attr('style', 'width: 100%;')
          ->attr('accesskey', 'w')
          ->value('Large')
          ->dataSource(array('X-Small', 'Small', 'Medium', 'Large', 'X-Large', '2X-Large'));
@@ -19,6 +19,8 @@ echo $comboBox->render();
 ?>
 </div>
 
+<div class="box">
+<h4>Keyboard legend</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -30,9 +32,6 @@ echo $comboBox->render();
             focuses the widget
         </span>
     </li>
-</ul>
-
-<ul class="keyboard-legend">
     <li>
         <span class="button-preview">
             <span class="key-button wide leftAlign">up arrow</span>
@@ -84,16 +83,5 @@ echo $comboBox->render();
         </span>
     </li>
 </ul>
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
+</div>
 <?php require_once '../include/footer.php'; ?>

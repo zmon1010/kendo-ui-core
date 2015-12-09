@@ -5,9 +5,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />
-    <div class="configuration-horizontal">
-        <div class="config-section">
-        <span class="configHead">API Functions</span>
+    <div class="demo-section k-content">
+	    <h4>Select movie</h4>
+	    <kendo:comboBox name="movies" dataTextField="text" dataValueField="value" style="width: 100%;">
+	        <kendo:dataSource data="${movies}"></kendo:dataSource>
+	    </kendo:comboBox>
+    </div>
+    
+    <div class="box wide">
+        <div class="box-col">
+        <h4>API Functions</h4>
         <ul class="options">
             <li>
                 <button id="enable" class="k-button">Enable</button> <button id="disable" class="k-button">Disable</button>
@@ -23,8 +30,8 @@
             </li>
         </ul>
         </div>
-        <div class="config-section">
-        <span class="configHead">Filter</span>
+        <div class="box-col">
+        <h4>Filter</h4>
         <ul class="options">
             <li>
                 <select id="filter">
@@ -42,24 +49,19 @@
             </li>
         </ul>
         </div>
-        <div class="config-section">
-        <span class="configHead">Select</span>
+        <div class="box-col">
+        <h4>Select</h4>
         <ul class="options">
             <li>
-                <input id="index" value="0" class="k-textbox" style="width: 40px; margin: 0;" /> <button id="select" class="k-button">Select by index</button>
+                <input id="index" value="0" class="k-textbox" /> <button id="select" class="k-button">Select by index</button>
             </li>
             <li>
-                <input id="value" value="1" class="k-textbox" style="width: 40px; margin: 0;" /> <button id="setValue" class="k-button">Select by value</button>
+                <input id="value" value="1" class="k-textbox" /> <button id="setValue" class="k-button">Select by value</button>
             </li>
         </ul>
         </div>
     </div>
 
-    <div class="demo-section">
-	    <kendo:comboBox name="movies" dataTextField="text" dataValueField="value" style="width: 250px">
-	        <kendo:dataSource data="${movies}"></kendo:dataSource>
-	    </kendo:comboBox>
-    </div>
     <script>
 	     $(document).ready(function() {
 	     	$("#movies").closest(".k-widget")
@@ -128,19 +130,11 @@
 	     });
 	</script>
 	<style>
-        .configuration .k-textbox {
-            width: 40px;
-        }
-        .demo-section {
-            width: 660px;
-            padding: 30px;
-            text-align: center;
-        }
-        .k-button {
-            min-width: 80px;
-        }
-        .configuration-horizontal .options li {
-            padding: 3px 0;
-        }
-    </style>
+         .box .k-textbox {
+             width: 40px;
+         }
+         .k-button {
+             min-width: 80px;
+         }
+     </style>
 <demo:footer />

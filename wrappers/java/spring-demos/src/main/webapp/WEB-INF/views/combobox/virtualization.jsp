@@ -7,10 +7,10 @@
 <c:url value="/combobox/orders/" var="readUrl" />
 
 <demo:header />
-    <div class="demo-section">
-        <h4>Search for shipping name</h4>
+    <div class="demo-section k-content">
+        <h4>Orders</h4>
 
-        <kendo:comboBox name="orders" dataTextField="shipName" dataValueField="orderID" filter="contains" style="width:250px" height="520"
+        <kendo:comboBox name="orders" dataTextField="shipName" dataValueField="orderID" filter="contains" style="width:100%;" height="290"
         					template='<span class="order-id">#= orderId #</span> #= shipName #, #= shipCountry #'>
             <kendo:dataSource pageSize="80" serverPaging="true" serverFiltering="true">
 	            <kendo:dataSource-transport>
@@ -57,16 +57,4 @@
 	        return data;
 	    }
     </script>
-    <style>
-	   .demo-section {
-	       width: 250px;
-	       margin: 35px auto 50px;
-	       padding: 30px;
-	   }
-	   .demo-section h2 {
-	       text-transform: uppercase;
-	       font-size: 1.2em;
-	       margin-bottom: 10px;
-	   }
-	</style>
 <demo:footer />

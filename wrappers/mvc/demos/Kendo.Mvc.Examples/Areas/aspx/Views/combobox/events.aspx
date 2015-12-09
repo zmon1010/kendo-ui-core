@@ -4,14 +4,14 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h3 class="title">Select item
-    </h3>
+<div class="demo-section k-content">
+    <h4>ComboBox</h4>
     <%= Html.Kendo().ComboBox()
             .Name("combobox")
             .DataTextField("Text")
             .DataValueField("Value")
             .Filter("startswith")
+            .HtmlAttributes(new { style = "width:100%;" })
             .BindTo(new List<SelectListItem>()
             {
                 new SelectListItem() {
@@ -30,9 +30,8 @@
             })
     %>
 </div>
-<div class="demo-section">
-    <h3 class="title">Console log
-    </h3>
+<div class="box">                
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 <script>
@@ -65,13 +64,4 @@
         }
     }
 </script>
-<style>
-    .demo-section {
-        width: 500px;
-        text-align: center;
-    }
-    .console {
-        margin: 0;
-    }
-</style>  
 </asp:Content>

@@ -3,11 +3,10 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
 
-<div id="tshirt-view" class="k-header">
-    <h2>Customize your Kendo T-shirt</h2>
+<div id="tshirt-view" class="demo-section k-content">
+	  <h4>Customize your Kendo T-shirt</h4>
     <img id="tshirt" src="../content/web/combobox/tShirt.png" />
-    <div id="options">
-        <h3>T-shirt Fabric</h3>
+    <h4>T-shirt Fabric</h4>
 <?php
 $fabrics = new \Kendo\Data\DataSource();
 $fabrics->data(array(
@@ -24,57 +23,33 @@ $input->dataSource($fabrics)
       ->filter('contains')
       ->placeholder('Select fabric ...')
       ->suggest(true)
-      ->index(3);
+      ->index(3)
+      ->attr('style', 'width: 100%;');
 
 echo $input->render();
 ?>
-        <h3>T-shirt Size</h3>
+    <h4 style="margin-top: 2em;">T-shirt Size</h4> 
 <?php
 
 $select = new \Kendo\UI\ComboBox('size');
 $select->dataSource(array('X-Small', 'Small', 'Medium', 'Large', 'X-Large', '2X-Large'))
        ->placeholder('Select size ...')
-       ->index(0);
+       ->index(0)
+       ->attr('style', 'width: 100%;');
 
 echo $select->render();
 ?>
-        <button class="k-button" id="get">Customize</button>
-    </div>
+    <button class="k-button k-primary" id="get" style="margin-top: 2em; float: right;">Customize</button>
 </div>
 <style>
-#example h2 {
-    font-weight: normal;
-}
-#tshirt-view {
-    border-radius: 10px 10px 10px 10px;
-    border-style: solid;
-    border-width: 1px;
-    overflow: hidden;
-    width: 500px;
-    margin: 30px auto;
-    padding: 20px 20px 0 20px;
-    background-position: 0 -255px;
-}
-#tshirt {
-    float: left;
-    margin: 30px 40px 30px 20px;
-}
-#options {
-    padding: 30px;
-}
-#options h3 {
-    font-size: 1em;
-    font-weight: bold;
-    margin: 25px 0 8px 0;
-}
-#get {
-    margin-top: 25px;
-}
-
-.k-readonly
-{
-    color: gray;
-}
+    #tshirt {
+        display: block;
+        margin: 2em auto;
+    }
+    .k-readonly
+    {
+        color: gray;
+    }
 </style>
 
 <script>

@@ -49,23 +49,23 @@ $schema->data('data')
        ->total('total');
 
 ?>
-<div class="demo-section">
-    <h2>View Order Details</h2>
-    <p>
+<div class="demo-section k-content">
+    <ul id="fieldlist">
+    <li>
         <label for="categories">Categories:</label>
 <?php
 $categories = new \Kendo\UI\ComboBox('categories');
 $categories->dataSource(array('transport' => $transport, 'schema' => $schema, 'serverFiltering' => true))
            ->dataTextField('CategoryName')
            ->dataValueField('CategoryID')
-           ->attr('style', 'width:300px')
+           ->attr('style', 'width:100%;')
            ->filter('contains')
            ->placeholder('Select category ...');
 
 echo $categories->render();
 ?>
-    </p>
-    <p>
+    </li>
+    <li>
         <label for="products">Products:</label>
 <?php
 
@@ -78,14 +78,14 @@ $products->dataSource(array('transport' => $transport, 'schema' => $schema, 'ser
          ->cascadeFrom('categories')
          ->dataTextField('ProductName')
          ->dataValueField('ProductID')
-         ->attr('style', 'width:300px')
+         ->attr('style', 'width:100%;')
          ->filter('contains')
          ->placeholder('Select product ...');
 
 echo $products->render();
 ?>
-    </p>
-    <p>
+    </li>
+    <li>
         <label for="orders">Orders:</label>
 <?php
 
@@ -98,14 +98,17 @@ $products->dataSource(array('transport' => $transport, 'schema' => $schema, 'ser
          ->cascadeFrom('products')
          ->dataTextField('OrderID')
          ->dataValueField('OrderID')
-         ->attr('style', 'width:300px')
+         ->attr('style', 'width:100%;')
          ->filter('contains')
          ->placeholder('Select order ...');
 
 echo $products->render();
 ?>
-    </p>
-    <button class="k-button" id="get">View Order</button>
+    </li>
+    <li>
+        <button class="k-button k-primary" id="get">View Order</button>
+    </li>
+    </ul>
 </div>
 <script>
     $(document).ready(function () {
@@ -123,27 +126,23 @@ echo $products->render();
     });
 </script>
 <style>
-    .demo-section {
-        width: 460px;
-        padding: 30px;
+    #fieldlist {
+        margin: 0;
+        padding: 0;
     }
-    .demo-section h2 {
+
+    #fieldlist li {
+        list-style: none;
+        padding-bottom: 1.5em;
+        text-align: left;
+    }
+
+    #fieldlist label {
+        display: block;
+        padding-bottom: .3em;
+        font-weight: bold;
         text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 30px;
-    }
-    .demo-section label {
-        display: inline-block;
-        width: 120px;
-        padding-right: 5px;
-        text-align: right;
-    }
-    .demo-section .k-button {
-        margin: 20px 0 0 125px;
-    }
-    .k-readonly
-    {
-        color: gray;
+        font-size: 12px;
     }
 </style>
 <?php require_once '../include/footer.php'; ?>
