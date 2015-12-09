@@ -5,7 +5,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="demo-section" style="max-width:400px;">
+ <div class="demo-section k-content">
 
 <% Html.Kendo().TabStrip()
     .Name("tabstrip")

@@ -4,7 +4,7 @@
 
 <demo:header />
 
-<div class="demo-section" style="max-width:400px;">
+<div class="demo-section k-content">
 
 <kendo:tabStrip name="tabstrip">
     <kendo:tabStrip-items>

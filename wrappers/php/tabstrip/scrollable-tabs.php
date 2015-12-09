@@ -5,7 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section" style="max-width:400px;">
+ <div class="demo-section k-content">
 
 <?php
     $tabstrip = new \Kendo\UI\TabStrip('tabstrip');
