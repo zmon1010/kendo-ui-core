@@ -1,6 +1,9 @@
+using System;
+using System.Globalization;
 using System.Linq;
 using Telerik.Windows.Documents.Spreadsheet.Core;
 using Telerik.Windows.Documents.Spreadsheet.Model;
+using Telerik.Windows.Documents.Spreadsheet.Model.Filtering;
 using Telerik.Windows.Documents.Spreadsheet.Model.Sorting;
 using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
 using Telerik.Windows.Documents.Spreadsheet.Utilities;
@@ -67,6 +70,8 @@ namespace Telerik.Web.Spreadsheet
                     }
 
                     SetSortState(documentSheet, sheet.Sort);
+
+                    SetFilterState(documentSheet, sheet.Filter);
                 }
 
                 if (document.Worksheets.Count > 0)
@@ -229,6 +234,56 @@ namespace Telerik.Web.Spreadsheet
             var range = sort.Ref.ToCellRange().First();
 
             documentWorksheet.SortState.Set(range, conditions);
+        }
+
+        private T ToEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value);
+        }
+
+        private void SetFilterState(DocumentWorksheet documentWorksheet, Filter filter)
+        {
+            if (filter == null)
+            {
+                return;
+            }
+            
+            documentWorksheet.Filter.FilterRange = filter.Ref.ToCellRange().First();
+            documentWorksheet.Filter.SetFilters(filter.Columns.Select(column =>
+            {
+                IFilter result = null;
+
+                if (column.Filter == "top")
+                {                    
+                    result = new TopFilter((int)column.Index, column.Type.ToEnum(TopFilterType.TopNumber), column.Value.GetValueOrDefault());
+                }
+                else if (column.Filter == "dynamic")
+                {
+                    result = new DynamicFilter((int)column.Index, column.Type.ToEnum(DynamicFilterType.AboveAverage));
+                }
+                else if (column.Filter == "value")
+                {                    
+                    result = new ValuesCollectionFilter(
+                        (int)column.Index, 
+                        column.Values.GetOrDefault().Select(value => Convert.ToString(value, CultureInfo.InvariantCulture)),
+                        column.Dates.GetOrDefault().Select(item => new DateGroupItem(item.Year, item.Month + 1, item.Day, item.Hours, item.Minutes, item.Seconds)), 
+                        column.Blanks.GetValueOrDefault());
+                }
+                else if (column.Filter == "custom")
+                {                    
+                    var criterias = column.Criteria
+                        .GetOrDefault()
+                        .Select(c => new CustomFilterCriteria(c.Operator.ToEnum(ComparisonOperator.EqualsTo), Convert.ToString(c.Value, CultureInfo.InvariantCulture)));
+
+                    var criteria1 = criterias.Count() > 0 ? criterias.First() : null;
+                    var criteria2 = criterias.Count() > 1 ? criterias.Last() : null;
+
+                    result = new CustomFilter((int)column.Index, criteria1, column.Logic.ToEnum(LogicalOperator.Or), criteria2);
+                }
+
+                return result;
+            })
+            .SkipWhile(item => item == null));
         }
     }
 }

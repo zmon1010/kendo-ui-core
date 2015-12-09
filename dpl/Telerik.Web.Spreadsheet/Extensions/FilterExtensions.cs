@@ -73,7 +73,7 @@ namespace Telerik.Web.Spreadsheet
                 Blanks = filter.Blank,
                 Dates = filter.DateItems.Select(item => new ValueFilterDate {
                     Year = item.Year,
-                    Month = item.Month - 1,
+                    Month = item.Month == 0 ? item.Month : item.Month - 1,
                     Day = item.Day,
                     Hours = item.Hour,
                     Minutes = item.Minute,
