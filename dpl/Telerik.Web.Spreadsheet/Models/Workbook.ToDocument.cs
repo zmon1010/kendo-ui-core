@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Telerik.Windows.Documents.Spreadsheet.Core;
@@ -273,7 +274,7 @@ namespace Telerik.Web.Spreadsheet
                 {                    
                     var criterias = column.Criteria
                         .GetOrDefault()
-                        .Select(c => new CustomFilterCriteria(c.Operator.ToEnum(ComparisonOperator.EqualsTo), Convert.ToString(c.Value, CultureInfo.InvariantCulture)));
+                        .Select(criteria => FromCriteria(criteria));
 
                     var criteria1 = criterias.Count() > 0 ? criterias.First() : null;
                     var criteria2 = criterias.Count() > 1 ? criterias.Last() : null;
@@ -285,5 +286,48 @@ namespace Telerik.Web.Spreadsheet
             })
             .SkipWhile(item => item == null));
         }
+
+        private CustomFilterCriteria FromCriteria(Criteria criteria)
+        {
+            var @operator = criteria.Operator;
+            var filterValue = Convert.ToString(criteria.Value, CultureInfo.InvariantCulture);
+
+            if (criteria.Value is string)
+            {
+                switch(@operator) 
+                {
+                    case "startswith":                        
+                            @operator = "eq";
+                            filterValue += "*";
+                            break;                        
+                    case "endswith":                        
+                            @operator = "eq";
+                            filterValue = "*" + filterValue;
+                            break;                        
+                    case "contains":                        
+                            @operator = "eq";
+                            filterValue = "*" + filterValue + "*";
+                            break;                        
+                    case "doesnotcontain":                        
+                            @operator = "neq";
+                            filterValue = "*" + filterValue + "*";
+                            break;                        
+                }
+            }
+
+            @operator = ComparisonOperators.ContainsKey(@operator) ? ComparisonOperators[@operator] : "eq";
+
+            return new CustomFilterCriteria(@operator.ToEnum(ComparisonOperator.EqualsTo), filterValue);
+        }
+
+        private readonly Dictionary<string, string> ComparisonOperators = new Dictionary<string, string>
+        {           
+            { "eq", "equalsto" },
+            { "neq", "notequalsto" },
+            { "lt", "lessthan" },
+            { "gt", "greaterthan" },
+            { "gte", "greaterthanorequalsto" },
+            { "lte", "lessthanorequalsto" }   
+        };
     }
 }
