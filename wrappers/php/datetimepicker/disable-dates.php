@@ -3,7 +3,7 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
 
-<div class="demo-section k-content" style="text-align: center;">
+<div class="demo-section k-content">
 <h4>Disable weekends</h4>
 <?php
 $array = array(
@@ -12,7 +12,8 @@ $array = array(
 
 $datetimepicker = new \Kendo\UI\DateTimePicker('weekend-picker');
 
-$datetimepicker->disableDates($array);
+$datetimepicker->disableDates($array)
+               ->attr('style', 'width: 100%;');
 
 echo $datetimepicker->render();
 ?>
@@ -22,7 +23,8 @@ echo $datetimepicker->render();
 <?php
 $datetimepicker = new \Kendo\UI\DateTimePicker('national-holidays');
 
-$datetimepicker->disableDates('disableDates');
+$datetimepicker->disableDates('disableDates')
+               ->attr('style', 'width: 100%;');
 
 echo $datetimepicker->render();
 ?>

@@ -3,17 +3,21 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
-<div class="demo-section">
-   <h3>Select date &amp; time:</h3>
+<div class="demo-section k-content">
+   <h4>Select date &amp; time:</h4>
 <?php
 $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
 
-$dateTimePicker->attr('style', 'width: 200px')
+$dateTimePicker->attr('style', 'width: 100%')
                ->attr('accesskey', 'w');
 
 echo $dateTimePicker->render();
 ?>
 </div>
+
+<div class="box wide">
+<div class="box-col">
+<h4>Focus:</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -26,9 +30,9 @@ echo $dateTimePicker->render();
         </span>
     </li>
 </ul>
-<h4>
-    Closed popup:
-</h4>
+</div>
+<div class="box-col">
+<h4>Closed popup:</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -65,10 +69,9 @@ echo $dateTimePicker->render();
         </span>
     </li>
 </ul>
-
-<h4>
-    Opened popup (date view):
-</h4>
+</div>
+<div class="box-col" style="width: 300px;">
+<h4>Opened popup (date view):</h4>
 <ul id="calendar-nav" class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -164,10 +167,9 @@ echo $dateTimePicker->render();
         </span>
     </li>
 </ul>
-
-<h4>
-    Opened popup (time view):
-</h4>
+</div>
+<div class="box-col">
+<h4>Opened popup (time view):</h4>
 <ul class="keyboard-legend">
     <li>
         <span class="button-preview">
@@ -186,15 +188,6 @@ echo $dateTimePicker->render();
         </span>
     </li>
 </ul>
-<style>
-    .demo-section
-    {
-        width: 204px;
-    }
-
-    #calendar-nav
-    {
-        padding-bottom: 40px;
-    }
-</style>
+</div>
+</div>
 <?php require_once '../include/footer.php'; ?>

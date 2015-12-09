@@ -8,18 +8,20 @@ require_once '../include/header.php';
 $start = new \Kendo\UI\DateTimePicker('start');
 $start->value(new DateTime('now', new DateTimeZone('UTC')))
       ->parseFormats(array('MM/dd/yyyy'))
-      ->change('startChange');
+      ->change('startChange')
+      ->attr('style', 'width: 100%;');
 
 $end = new \Kendo\UI\DateTimePicker('end');
 $end->value(new DateTime('now', new DateTimeZone('UTC')))
     ->parseFormats(array('MM/dd/yyyy'))
-    ->change('endChange');
+    ->change('endChange')
+    ->attr('style', 'width: 100%;');
 ?>
-<div class="demo-section" style="width:535px">
-    <label for="start">Start date:</label>
+<div class="demo-section k-content">
+    <h4>Start date</h4>
     <?= $start->render() ?>
 
-    <label for="end" style="margin-left:3em">End date:</label>
+    <h4 style="margin-top: 2em;">End date</h4>
     <?= $end->render() ?>
 </div>
 <script>
@@ -54,25 +56,4 @@ $end->value(new DateTime('now', new DateTimeZone('UTC')))
     });
 
 </script>
-<style>
-    #example .k-datetimepicker {
-        vertical-align: middle;
-    }
-
-    #example h3 {
-        clear: both;
-    }
-
-    #example .code-sample {
-        width: 60%;
-        float:left;
-        margin-bottom: 20px;
-    }
-
-    #example .output {
-        width: 24%;
-        margin-left: 4%;
-        float:left;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>

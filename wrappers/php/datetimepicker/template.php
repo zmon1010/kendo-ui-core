@@ -3,14 +3,8 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
-<div class="configuration k-widget k-header">
-    <span class="infoHead">Information</span>
-    <p>
-        Apply special style for the birthdays.
-    </p>
-</div>
-
-<div class="demo-section" style="width: 185px;">
+<div class="demo-section k-content">
+    <h4>Birthday Calendar</h4>
 <?php
 $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
 $dateTimePicker->value(new DateTime('today', new DateTimeZone('UTC')))
@@ -23,7 +17,8 @@ $dateTimePicker->value(new DateTime('today', new DateTimeZone('UTC')))
 TEMPLATE
             ))
             ->footer("Today - #= kendo.toString(data, 'd') #")
-            ->open("onOpen");
+            ->open("onOpen")
+            ->attr('style', 'width: 100%;');
 
 echo $dateTimePicker->render();
 ?>
@@ -60,10 +55,6 @@ echo $dateTimePicker->render();
 </script>
 
 <style>
-    .demo-section {
-        margin: 0 0;
-    }
-
     .birthday {
         background: transparent url(../content/web/calendar/cake.png) no-repeat 0 50%;
         display: inline-block;

@@ -3,23 +3,15 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
-<div class="demo-section">
+<div class="demo-section k-content">
     <div class="k-rtl">
-        <label for="datetimepicker">Choose date:</label>
+        <h4>Choose date:</h4>
 <?php
 $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
+$dateTimePicker->attr('style', 'width: 100%;');
 
 echo $dateTimePicker->render();
 ?>
     </div>
 </div>
-<style>
-    .demo-section {
-        width: 400px;
-        text-align: center;
-        margin: 50px auto;
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>

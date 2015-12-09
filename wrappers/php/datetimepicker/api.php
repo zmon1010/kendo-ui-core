@@ -3,11 +3,53 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
+<div class="demo-section k-content">
 <?php
 $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
+$dateTimePicker->attr('style', 'width: 100%;');
 
 echo $dateTimePicker->render();
 ?>
+</div>
+
+<div class="box wide">
+    <div class="box-col">
+        <h4>Set / Get Value</h4>
+        <ul class="options">
+            <li>
+                <input id="value" value="10/10/2000 12:00 AM" style="float:none" />
+                <button id="set" class="k-button">Set value</button>
+            </li>
+            <li style="text-align: right;">
+                <button id="get" class="k-button">Get value</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Open / Close</h4>
+        <ul class="options">
+            <li>
+                <button id="openDateView" class="k-button">Open date view</button>
+                <button id="closeDateView" class="k-button">Close date view</button>
+            </li>
+            <li>
+                <button id="openTimeView" class="k-button">Open time view</button>
+                <button id="closeTimeView" class="k-button">Close time view</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Enable / Disable</h4>
+        <ul class="options">
+            <li>
+                <button id="enable" class="k-button">Enable</button> 
+                <button id="disable" class="k-button">Disable</button> 
+                <button id="readonly" class="k-button">Readonly</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         var datetimepicker = $("#datetimepicker").data("kendoDateTimePicker");
@@ -55,27 +97,5 @@ echo $dateTimePicker->render();
         });
     });
 </script>
-<div class="configuration k-widget k-header" style="width: 220px">
-    <span class="configHead">API Functions</span>
-    <ul class="options">
-        <li>
-           <button id="get" class="k-button">Get value</button>
-       </li>
-       <li>
-           <input id="value" value="10/10/2000 12:00 AM" style="float:none" />
-           <button id="set" class="k-button">Set value</button>
-       </li>
-        <li>
-            <button id="enable" class="k-button">Enable</button> or <button id="disable" class="k-button">Disable</button> or <button id="readonly" class="k-button">Readonly</button>
-        </li>
-        <li>
-            <button id="openDateView" class="k-button">Open</button> or <button id="closeDateView" class="k-button">Close</button> the date view
-        </li>
-        <li>
-            <button id="openTimeView" class="k-button">Open</button> or <button id="closeTimeView" class="k-button">Close</button> the time view
-        </li>
-    </ul>
-</div>
-
 
 <?php require_once '../include/footer.php'; ?>
