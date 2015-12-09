@@ -62,14 +62,13 @@
     }
 
     function readSheet(zip, file, sheet, strings, styles) {
-        var ref, type, value, formula, formulaRange, styleIndex;
+        var ref, type, value, formula, formulaRange;
         parse(zip, "xl/" + file, {
             enter: function(tag, attrs) {
                 if (this.is(SEL_CELL)) {
                     value = null;
                     formula = null;
                     formulaRange = null;
-                    styleIndex = attrs.s;
                     ref = attrs.r;
 
                     // XXX: can't find no type actually, so everything is
@@ -80,6 +79,11 @@
                     // them in the `text` handler, and apply the
                     // appropriate one in the `leave` handler below.
                     type = attrs.t;
+
+                    var styleIndex = attrs.s;
+                    if (styleIndex != null) {
+                        applyStyle(sheet, ref, styles, styleIndex);
+                    }
                 }
                 else if (this.is(SEL_MERGE)) {
                     sheet.range(attrs.ref).merge();
@@ -97,13 +101,24 @@
                     width = Math.floor((256 * width + Math.floor(128 / maximumDigitWidth)) / 256) * maximumDigitWidth;
 
                     sheet._columns.values.value(start, stop, width);
+
+                    if (attrs.hidden === "1") {
+                        for (var ci = start; ci <= stop; ci++) {
+                            sheet.hideColumn(ci);
+                        }
+                    }
                 }
                 else if (this.is(SEL_ROW)) {
+                    var row = integer(attrs.r) - 1;
+
                     if (attrs.ht) {
                         var height = parseFloat(attrs.ht);
                         height *= 1.5625; // XXX: totally unscientific conversion of points into pixels
-                        var row = integer(attrs.r) - 1;
                         sheet._rows.values.value(row, row, height);
+                    }
+
+                    if (attrs.hidden === "1") {
+                        sheet.hideRow(row);
                     }
                 }
             },
@@ -138,9 +153,6 @@
                                 range.input(value);
                             }
                         }
-                    }
-                    if (styleIndex != null) {
-                        applyStyle(sheet, ref, styles, styleIndex);
                     }
                 }
             },
