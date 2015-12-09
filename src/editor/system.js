@@ -277,8 +277,9 @@ var BackspaceHandler = Class.extend({
                 child = li.firstChild;
             }
 
-            var formatter = new editorNS.ListFormatter(li.parentNode.tagName, "p");
-            formatter.remove(li.childNodes);
+            var formatter = new editorNS.ListFormatter(dom.name(li.parentNode), "p");
+            range.selectNodeContents(li);
+            formatter.toggle(range);
 
             if (dom.insignificant(child)) {
                 range.setStartBefore(child);

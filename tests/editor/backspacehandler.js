@@ -254,18 +254,15 @@
         equal(editor.value(), '');
     });
 
-    //test("does not remove table cells", function() {
-        //editor.value("<table><tr><td>foo</td><td>bar</td></tr></table>");
+    test("does not unwrap complete ul", function() {
+        var range = createRangeFromText(editor, '<ul><li>foo</li><li><em>||</em></li></ul>');
+        editor.selectRange(range);
 
-        //var td = $(editor.body).find("td");
-        //var range = editor.createRange();
-        //range.setStartBefore(td[0]);
-        //range.setEndAfter(td[1]);
-        //editor.selectRange(range);
+        handleBackspace();
 
-        //handleDelete();
+        editor.getRange().insertNode(editor.document.createElement("a"));
 
-        //equal(editor.value(), "<table><tr><td></td><td></td></tr></table>");
-    //});
+        equal(editor.value(), '<ul><li>foo</li></ul><p><em><a></a></em></p>');
+    });
 
 }());
