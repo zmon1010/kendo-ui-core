@@ -5,7 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div id="forecast">
+<div class="demo-section k-content">
 <?php
     $tabstrip = new \Kendo\UI\TabStrip('tabstrip');
 
@@ -61,19 +61,7 @@ require_once '../lib/Kendo/Autoload.php';
 <?php
     $moscow->endContent();
 
-    $sydney = new \Kendo\UI\TabStripItem();
-    $sydney->text("sydney")
-        ->startContent();
-?>
-        <div class="weather">
-            <h2>17<span>&ordm;C</span></h2>
-            <p>Rainy weather in Sydney.</p>
-        </div>
-        <span class="rainy">&nbsp;</span>
-<?php
-    $sydney->endContent();
-
-    $tabstrip->addItem($paris, $newYork, $london, $moscow, $sydney);
+    $tabstrip->addItem($paris, $newYork, $london, $moscow);
 
     // set animation
     $animation = new \Kendo\UI\TabStripAnimation();
@@ -87,53 +75,55 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 </div>
 
-<ul id="keyboard-nav" class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign wider">Alt</span>
-            +
-            <span class="key-button">w</span>
-        </span>
-        <span class="button-descr">
-            focuses the widget
-        </span>
-    </li>
-</ul>
-
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">left arrow</span>
-        </span>
-        <span class="button-descr">
-            selects previous tab
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">right arrow</span>
-        </span>
-        <span class="button-descr">
-            selects next tab
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">home</span>
-        </span>
-        <span class="button-descr">
-            selects first tab
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">end</span>
-        </span>
-        <span class="button-descr">
-            selects last tab
-        </span>
-    </li>
-</ul>
+<div class="box">
+    <div class="box-col">
+        <h4>Keyboard legend</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign wider">Alt</span>
+                    +
+                    <span class="key-button">w</span>
+                </span>
+                <span class="button-descr">
+                    focuses the widget
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button wider leftAlign">left arrow</span>
+                </span>
+                <span class="button-descr">
+                    selects previous tab
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button wider leftAlign">right arrow</span>
+                </span>
+                <span class="button-descr">
+                    selects next tab
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">home</span>
+                </span>
+                <span class="button-descr">
+                    selects first tab
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">end</span>
+                </span>
+                <span class="button-descr">
+                    selects last tab
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <script>
     $(document.body).keydown(function (e) {
@@ -145,14 +135,14 @@ require_once '../lib/Kendo/Autoload.php';
 
 <style>
     .sunny, .cloudy, .rainy {
-        display: inline-block;
-        margin: 20px 0 20px 10px;
+        display: block;
+        margin: 30px auto 10px;
         width: 128px;
         height: 128px;
         background: url('../content/web/tabstrip/weather.png') transparent no-repeat 0 0;
     }
 
-    .cloudy{
+   .cloudy{
         background-position: -128px 0;
     }
 
@@ -161,14 +151,28 @@ require_once '../lib/Kendo/Autoload.php';
     }
 
     .weather {
-        width: 160px;
-        padding: 40px 0 0 0;
-        float: right;
+        margin: 0 auto 30px;
+        text-align: center;
     }
 
-    #keyboard-nav
-    {
-        padding-top: 35px;
+    #tabstrip h2 {
+        font-weight: lighter;
+        font-size: 5em;
+        line-height: 1;
+        padding: 0 0 0 30px;
+        margin: 0;
+    }
+
+    #tabstrip h2 span {
+        background: none;
+        padding-left: 5px;
+        font-size: .3em;
+        vertical-align: top;
+    }
+
+    #tabstrip p {
+        margin: 0;
+        padding: 0;
     }
 </style>
 

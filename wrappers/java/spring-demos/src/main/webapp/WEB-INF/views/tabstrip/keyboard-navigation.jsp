@@ -4,7 +4,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />
-
+<div class="demo-section k-content">
 <kendo:tabStrip name="tabStrip">
 	<kendo:tabStrip-items>
 	    <kendo:tabStrip-item text="Paris" selected="true">
@@ -43,65 +43,59 @@
                 <span class="cloudy">&nbsp;</span>
             </kendo:tabStrip-item-content>    
         </kendo:tabStrip-item>
-        <kendo:tabStrip-item text="Sydney">
-            <kendo:tabStrip-item-content>
-                <div class="weather">
-                    <h2>17<span>&ordm;C</span></h2>
-                    <p>Rainy weather in Sidney.</p>
-                </div>
-                <span class="rainy">&nbsp;</span>
-            </kendo:tabStrip-item-content>    
-        </kendo:tabStrip-item>
     </kendo:tabStrip-items>
 </kendo:tabStrip>
+</div>
 
-<ul id="keyboard-nav" class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign wider">Alt</span>
-            +
-            <span class="key-button">w</span>
-        </span>
-        <span class="button-descr">
-            focuses the widget
-        </span>
-    </li>
-</ul>
-
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">left arrow</span>
-        </span>
-        <span class="button-descr">
-            selects previous tab
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">right arrow</span>
-        </span>
-        <span class="button-descr">
-            selects next tab
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">home</span>
-        </span>
-        <span class="button-descr">
-            selects first tab
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">end</span>
-        </span>
-        <span class="button-descr">
-            selects last tab
-        </span>
-    </li>
-</ul>
+<div class="box">
+     <div class="box-col">
+         <h4>Keyboard legend</h4>
+         <ul class="keyboard-legend">
+             <li>
+                 <span class="button-preview">
+                     <span class="key-button leftAlign wider">Alt</span>
+                     +
+                     <span class="key-button">w</span>
+                 </span>
+                 <span class="button-descr">
+                     focuses the widget
+                 </span>
+             </li>
+             <li>
+                 <span class="button-preview">
+                     <span class="key-button wider leftAlign">left arrow</span>
+                 </span>
+                 <span class="button-descr">
+                     selects previous tab
+                 </span>
+             </li>
+             <li>
+                 <span class="button-preview">
+                     <span class="key-button wider leftAlign">right arrow</span>
+                 </span>
+                 <span class="button-descr">
+                     selects next tab
+                 </span>
+             </li>
+             <li>
+                 <span class="button-preview">
+                     <span class="key-button">home</span>
+                 </span>
+                 <span class="button-descr">
+                     selects first tab
+                 </span>
+             </li>
+             <li>
+                 <span class="button-preview">
+                     <span class="key-button">end</span>
+                 </span>
+                 <span class="button-descr">
+                     selects last tab
+                 </span>
+             </li>
+         </ul>
+     </div>
+ </div>
 
 <script>
     $(document.body).keydown(function (e) {
@@ -112,59 +106,46 @@
 </script>
 
 <style>
-	#forecast {
-	    width: 360px;
-	    height: 337px;
-	    margin: 30px auto;
-	    padding: 80px 15px 0 15px;
-	    background: url('<c:url value="/resources/web/tabstrip/forecast.png" />') transparent no-repeat 0 0;
-	}
-	
 	.sunny, .cloudy, .rainy {
-	    display: inline-block;
-	    margin: 20px 0 20px 10px;
-	    width: 128px;
-	    height: 128px;
+	    display: block;
+        margin: 30px auto 10px;
+        width: 128px;
+        height: 128px;
 	    background: url('<c:url value="/resources/web/tabstrip/weather.png" />') transparent no-repeat 0 0;
 	}
 	
 	.cloudy{
-	    background-position: -128px 0;
-	}
-	
-	.rainy{
-	    background-position: -256px 0;
-	}
-	
-	.weather {
-	    width: 160px;
-	    padding: 40px 0 0 0;
-	    float: right;
-	}
-	
-	#keyboard-nav
-    {
-        padding-top: 35px;
+        background-position: -128px 0;
     }
-	
-	#forecast h2 {
-	    font-weight: lighter;
-	    font-size: 5em;
-	    padding: 0;
-	    margin: 0;
-	}
-	
-	#forecast h2 span {
-	    background: none;
-	    padding-left: 5px;
-	    font-size: .5em;
-	    vertical-align: top;
-	}
-	
-	#forecast p {
-	    margin: 0;
-	    padding: 0;
-	}
+
+    .rainy{
+        background-position: -256px 0;
+    }
+
+    .weather {
+        margin: 0 auto 30px;
+        text-align: center;
+    }
+
+    #tabstrip h2 {
+        font-weight: lighter;
+        font-size: 5em;
+        line-height: 1;
+        padding: 0 0 0 30px;
+        margin: 0;
+    }
+
+    #tabstrip h2 span {
+        background: none;
+        padding-left: 5px;
+        font-size: .3em;
+        vertical-align: top;
+    }
+
+    #tabstrip p {
+        margin: 0;
+        padding: 0;
+    }
 </style>
 
 <demo:footer />
