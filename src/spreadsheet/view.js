@@ -1177,7 +1177,7 @@
                     className: paneClassNames.vaxis,
                     style: {
                         left: x + "px",
-                        height: layout.height + "px"
+                        height: "2000px"
                     }
                 }));
             });
@@ -1186,7 +1186,7 @@
                     className: paneClassNames.haxis,
                     style: {
                         top: y + "px",
-                        width: layout.width + "px"
+                        width: "2000px"
                     }
                 }));
             });

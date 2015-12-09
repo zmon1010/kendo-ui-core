@@ -56,8 +56,8 @@
             grid.forEach(ref, function(cellRef) {
                 if (topLeft.eq(cellRef)) {
                     primary[cellRef.print()] = ref;
-                } else {
-                    secondary[cellRef.print()] = ref;
+                } else if (range.contains(cellRef)) {
+                    secondary[cellRef.print()] = topLeft;
                 }
             });
         });
@@ -96,8 +96,8 @@
                 return;
             }
             if (nonEmpty) {
-                maxRow = Math.max(maxRow, row);
-                maxCol = Math.max(maxCol, col);
+                maxRow = Math.max(maxRow, relrow);
+                maxCol = Math.max(maxCol, relcol);
             } else {
                 cell.empty = true;
             }

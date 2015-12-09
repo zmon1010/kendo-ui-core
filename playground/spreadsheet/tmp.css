@@ -18,6 +18,9 @@
   box-sizing: border-box;
   padding: 1px;
   white-space: pre;
+}
+
+.k-spreadsheet-pane * {
   user-select: none;
 }
 
