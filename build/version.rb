@@ -7,7 +7,6 @@ now = Time.now
 VERSION_YEAR = version_data['year'].to_i
 
 month = [(now.month + (now.year - VERSION_YEAR) * 12), 0].max * 100
-month = '00' if month == 0
 
 VERSION_Q = version_data['release'].to_i
 VERSION_SERVICE_PACK = version_data['servicePack']
