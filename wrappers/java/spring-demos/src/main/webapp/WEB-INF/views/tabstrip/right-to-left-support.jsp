@@ -11,8 +11,10 @@
 <c:url value="/resources/shared/icons/sports/snowboarding.png" var="snowboarding"/>
 
 <div class="k-rtl">
-	<div class="demo-section">
-	<h3>TabStrip with images</h3>
+
+   <div class="demo-section k-content">
+
+       <h4>TabStrip with images</h4>
 	
 	<kendo:tabStrip name="tabstrip-images">
 	    <kendo:tabStrip-animation>
@@ -31,20 +33,16 @@
 	        </kendo:tabStrip-item>
 	        <kendo:tabStrip-item text="Swimming" imageUrl="${swimming}">
 	            <kendo:tabStrip-item-content>
-	                Swimming has been recorded since prehistoric times; the earliest recording of swimming dates back to Stone Age paintings from around 7,000 years ago. Written references date from 2000 BC. Some of the earliest references to swimming include the Gilgamesh, the Iliad, the Odyssey, the Bible, Beowulf, and other sagas. In 1578, Nikolaus Wynmann, a German professor of languages, wrote the first swimming book, The Swimmer or A Dialogue on the Art of Swimming (Der Schwimmer oder ein Zwiegespräch über die Schwimmkunst). Competitive swimming in Europe started around 1800, mostly using breaststroke.
-	            </kendo:tabStrip-item-content>    
-	        </kendo:tabStrip-item>
-	        <kendo:tabStrip-item text="Snowboarding" imageUrl="${snowboarding}">
-	            <kendo:tabStrip-item-content>
-	                Snowboarding is a sport that involves descending a slope that is covered with snow on a snowboard attached to a rider's feet using a special boot set onto a mounted binding. The development of snowboarding was inspired by skateboarding, sledding, surfing and skiing. It was developed in the U.S.A. in the 1960s to 1970s and became a Winter Olympic Sport in 1998.
+	                Swimming has been recorded since prehistoric times; the earliest recording of swimming dates back to Stone Age paintings from around 7,000 years ago. Written references date from 2000 BC. Some of the earliest references to swimming include the Gilgamesh, the Iliad, the Odyssey, the Bible, Beowulf, and other sagas. In 1578, Nikolaus Wynmann, a German professor of languages, wrote the first swimming book, The Swimmer or A Dialogue on the Art of Swimming (Der Schwimmer oder ein Zwiegesprï¿½ch ï¿½ber die Schwimmkunst). Competitive swimming in Europe started around 1800, mostly using breaststroke.
 	            </kendo:tabStrip-item-content>    
 	        </kendo:tabStrip-item>
 	    </kendo:tabStrip-items>
 	</kendo:tabStrip>
 	</div>
 	
-	<div class="demo-section">
-	<h3>TabStrip with sprites</h3>
+ <div class="demo-section k-content">
+
+   <h4>TabStrip with sprites</h4>
 	
 	<kendo:tabStrip name="tabstrip-sprites">
 	    <kendo:tabStrip-animation>
@@ -71,31 +69,26 @@
 	</div>
 </div>
 <style>
-    h3 {
-	    font-weight: normal;
-	    padding: 0 0 1em 0;
-	}
-	
-	.demo-section {
-	    width: 500px;
-	}
+ .demo-section {
+       min-height: 280px;
+   }
 	
 	#tabstrip-sprites .k-sprite {
-        background-image: url('<c:url value="/resources/content/shared/styles/flags.png" />');
+        background-image: url('<c:url value="/resources/shared/styles/flags.png" />');
     }
 	
-	.brazilFlag {
-	   background-position: 0 0;
-	}
-	.indiaFlag {
-	    background-position: 0 -32px;
-	}
-	.netherlandsFlag {
-	    background-position: 0 -64px;
-	}
-	.k-tabstrip .k-content {
-	    padding-top: 10px;
-	    padding-bottom: 10px;
+	 .brazilFlag {
+        background-position: 0 0;
+    }
+    .indiaFlag {
+        background-position: 0 -32px;
+    }
+    .netherlandsFlag {
+        background-position: 0 -64px;
+    }
+    .k-tabstrip .k-content {
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 </style>
 
