@@ -116,6 +116,11 @@
         ok(filterMenu.valuesTreeView instanceof kendo.ui.TreeView);
     });
 
+    test("stores valuesTreeView dataSource in the viewModel", function() {
+        filterMenu = createWithValues([ ["A1"], ["A2"], ["A3"] ]);
+        ok(filterMenu.viewModel.valuesDataSource instanceof kendo.data.HierarchicalDataSource);
+    });
+
     test("loads range values in TreeView", function() {
         filterMenu = createWithValues([ ["header"], ["A2"], ["A3"], ["A4"] ]);
         var data = filterMenu.valuesTreeView.dataSource.data();

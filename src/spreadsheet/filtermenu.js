@@ -711,7 +711,7 @@
 
                 var values = FilterMenuController.valuesTree(this.options.range, this.options.column);
 
-                this.valuesTreeView.setDataSource(values);
+                this.viewModel.set("valuesDataSource", new kendo.data.HierarchicalDataSource({ data: values }));
             },
 
             _actionButtons: function() {
