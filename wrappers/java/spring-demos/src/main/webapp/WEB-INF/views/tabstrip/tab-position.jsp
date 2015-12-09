@@ -4,7 +4,8 @@
 
 <demo:header />
 
-<h3>Left</h3>
+ <div class="demo-section k-content">
+	<h4>Left</h4>
 
 <kendo:tabStrip name="tabstrip-left" tabPosition="left">
     <kendo:tabStrip-animation>
@@ -29,7 +30,7 @@
     </kendo:tabStrip-items>
 </kendo:tabStrip>
 
-<h3>Right</h3>
+<h4>Right</h4>
 
 <kendo:tabStrip name="tabstrip-right" tabPosition="right">
     <kendo:tabStrip-animation>
@@ -54,7 +55,7 @@
     </kendo:tabStrip-items>
 </kendo:tabStrip>
 
-<h3>Bottom</h3>
+ <h4>Bottom</h4>
 
 <kendo:tabStrip name="tabstrip-bottom" tabPosition="bottom">
     <kendo:tabStrip-animation>
@@ -78,5 +79,5 @@
         </kendo:tabStrip-item>
     </kendo:tabStrip-items>
 </kendo:tabStrip>
-
+</div>
 <demo:footer />

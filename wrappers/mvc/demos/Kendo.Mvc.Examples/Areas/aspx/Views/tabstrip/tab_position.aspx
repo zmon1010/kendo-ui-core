@@ -5,7 +5,8 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<h3>Left</h3>
+<div class="demo-section k-content">
+    <h4>Left</h4>
 
 <% Html.Kendo().TabStrip()
     .Name("tabstrip-left")
@@ -42,7 +43,7 @@
     .Render();
 %>
 
-<h3>Right</h3>
+<h4>Right</h4>
 
 <% Html.Kendo().TabStrip()
     .Name("tabstrip-right")
@@ -79,7 +80,8 @@
     .Render();
 %>
 
-<h3>Bottom</h3>
+ <h4>Bottom</h4>
+
 
 <% Html.Kendo().TabStrip()
     .Name("tabstrip-bottom")
@@ -115,5 +117,5 @@
     })
     .Render();
 %>
-
+</div>
 </asp:Content>
