@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../util/parse-xml" ], f);
+    define([ "../kendo.core", "../kendo.color", "../util/parse-xml" ], f);
 })(function(){
     "use strict";
 
@@ -44,12 +44,13 @@
     function readWorkbook(zip, workbook) {
         var strings = readStrings(zip);
         var relationships = readRelationships(zip, "workbook.xml");
-        var styles = readStyles(zip);
+        var theme = readTheme(zip, relationships.byType["theme"]);
+        var styles = readStyles(zip, theme);
         parse(zip, "xl/workbook.xml", {
             enter: function(tag, attrs) {
                 if (this.is(SEL_SHEET)) {
                     var relId = attrs["r:id"];
-                    var file = relationships[relId];
+                    var file = relationships.byId[relId];
                     var name = attrs.name;
                     var sheet = workbook.insertSheet();
                     sheet.batch(function(){
@@ -332,11 +333,12 @@
     }
 
     function readRelationships(zip, file) {
-        var map = {};
+        var map = { byId: {}, byType: {} };
         parse(zip, "xl/_rels/" + file + ".rels", {
             enter: function(tag, attrs) {
                 if (tag == "Relationship") {
-                    map[attrs.Id] = attrs.Target;
+                    map.byId[attrs.Id] = attrs.Target;
+                    map.byType[attrs.Type.match(/\w+$/)[0]] = attrs.Target;
                 }
             }
         });
@@ -351,7 +353,7 @@
     var SEL_NAMED_STYLE = ["cellStyleXfs", "xf"];
     var SEL_INLINE_STYLE = ["cellXfs", "xf"];
     var SEL_NUM_FMT = ["numFmts", "numFmt"];
-    function readStyles(zip) {
+    function readStyles(zip, theme) {
         var styles = {
             fonts        : [],
             numFmts      : {},
@@ -366,8 +368,8 @@
                 toCSSColor("00FFFF00"),
                 toCSSColor("00FF00FF"),
                 toCSSColor("0000FFFF"),
-                , // none
-                , // none
+                null,
+                null,
                 toCSSColor("00000000"),
                 toCSSColor("00FFFFFF"),
                 toCSSColor("00FF0000"),
@@ -425,7 +427,7 @@
                 toCSSColor("00333399"),
                 toCSSColor("00333333"),
                 toCSSColor("00FFFFFF"), // System Foreground
-                toCSSColor("00BFBFBF"), // System Background
+                toCSSColor("00000000") // System Background
             ],
             namedStyles  : [],
             inlineStyles : []
@@ -542,31 +544,71 @@
             return xf;
         }
 
-        function toCSSColor(rgb) {
-            var m = /^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(rgb);
-            return "rgba(" +
-                parseInt(m[2], 16) + ", " +
-                parseInt(m[3], 16) + ", " +
-                parseInt(m[4], 16) + ", " +
-                parseInt(m[1], 16) / 255 + ")";
-        }
-
         function getColor(attrs) {
             if (attrs.rgb) {
                 return toCSSColor(attrs.rgb);
             } else if (attrs.indexed) {
-                return new Color(integer(attrs.indexed));
+                return new IndexedColor(integer(attrs.indexed));
+            } else if (attrs.theme) {
+                var themeColor = theme.colorScheme[integer(attrs.theme)];
+                var color = kendo.parseColor(themeColor);
+
+                if (attrs.tint) {
+                    color = color.toHSV();
+                    color.v = color.v * (1 + parseFloat(attrs.tint));
+                }
+
+                return color.toCssRgba();
             }
         }
 
-        function Color(index) {
+        function IndexedColor(index) {
             this.index = index;
         }
-        Color.prototype.toString = Color.prototype.valueOf = function() {
+        IndexedColor.prototype.toString = IndexedColor.prototype.valueOf = function() {
             return styles.colors[this.index];
         };
 
         return styles;
+    }
+
+    function readTheme(zip, rel) {
+        var theme = {
+            colorScheme: []
+        };
+
+        var file = "xl/" + rel;
+        if (zip.files[file]) {
+            var scheme = null;
+            parse(zip, file, {
+                enter: function(tag, attrs) {
+                    if (tag == "a:clrScheme") {
+                        scheme = theme.colorScheme;
+                    } else if (scheme && tag == "a:sysClr") {
+                        scheme.push(toCSSColor(
+                            attrs.val == "window" ? "FFFFFFFF" : "FF000000"
+                        ));
+                    } else if (scheme && tag == "a:srgbClr") {
+                        scheme.push(toCSSColor("FF" + attrs.val));
+                    }
+                },
+                leave: function(tag) {
+                    if (tag === "a:clrScheme") {
+                        swap(scheme, 0, 1);
+                        swap(scheme, 2, 3);
+                        scheme = null;
+                    }
+                }
+            });
+        }
+
+        function swap(arr, a, b) {
+            var tmp = arr[a];
+            arr[a] = arr[b];
+            arr[b] = tmp;
+        }
+
+        return theme;
     }
 
     function integer(val) {
@@ -575,6 +617,15 @@
 
     function bool(val) {
         return val == "true" || val === true || val == 1;
+    }
+
+    function toCSSColor(rgb) {
+        var m = /^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(rgb);
+        return "rgba(" +
+            parseInt(m[2], 16) + ", " +
+            parseInt(m[3], 16) + ", " +
+            parseInt(m[4], 16) + ", " +
+            parseInt(m[1], 16) / 255 + ")";
     }
 
     kendo.spreadsheet.readExcel = readExcel;
