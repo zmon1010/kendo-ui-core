@@ -198,10 +198,19 @@
             data = kendo.dom.element("div", { className: "k-vertical-align-" + verticalAlign }, [ data ]);
         }
 
-        collection.push(kendo.dom.element("div", {
+        var children = data ? [ data ] : [];
+        var properties = {
             className: classNames.join(" "),
             style: style
-        }, data ? [ data ] : []));
+        };
+        var validation = cell.validation;
+        if (validation && !validation.value) {
+            children.push(kendo.dom.element("span", { className: "k-dirty" }));
+            classNames.push("k-dirty-cell");
+            properties.title = validation._getOptions().messageTemplate;
+        }
+
+        collection.push(kendo.dom.element("div", properties, children));
     }
 
     function addCell(table, row, cell) {

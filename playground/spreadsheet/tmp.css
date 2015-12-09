@@ -20,6 +20,12 @@
   white-space: pre;
 }
 
+.k-spreadsheet-pane .k-spreadsheet-cell span.k-dirty {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .k-spreadsheet-fixed-container,
 .k-spreadsheet-fixed-container * {
   user-select: none;
