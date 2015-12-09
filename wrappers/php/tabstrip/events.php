@@ -5,9 +5,10 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
+<div class="demo-section k-content">
+
 <?php
     $tabstrip = new \Kendo\UI\TabStrip('tabstrip');
-    $tabstrip->attr("style", "margin-right: 220px;");
 
     // attach events
     $tabstrip
@@ -86,7 +87,7 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $tabstrip->render();
 ?>
-
+</div>
 <script>
     function onShow(e) {
         kendoConsole.log("Shown: " + $(e.item).find("> .k-link").text());
@@ -109,7 +110,40 @@ require_once '../lib/Kendo/Autoload.php';
     }
 </script>
 
-<div class="console"></div>
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
+<style>
+    .k-tabstrip > .k-content {
+        padding: 1em;
+    }
+    .specification {
+        max-width: 670px;
+        margin: 10px 0;
+        padding: 0;
+    }
+    .specification dt, dd {
+        max-width: 140px;
+        float: left;
+        margin: 0;
+        padding: 5px 0 8px 0;
+    }
+    .specification dt {
+        clear: left;
+        width: 100px;
+        margin-right: 7px;
+        padding-right: 0;
+        opacity: 0.7;
+    }
+    .specification:after, .wrapper:after {
+        content: ".";
+        display: block;
+        clear: both;
+        height: 0;
+        visibility: hidden;
+    }
+</style>
 
 <?php require_once '../include/footer.php'; ?>
 
