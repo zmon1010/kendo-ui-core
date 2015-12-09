@@ -4,31 +4,50 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="configuration k-widget k-header">
-    <span class="configHead">API Functions</span>
-    <ul class="options">
-        <li>
-            <input type="text" value="0" id="tabIndex" class="k-textbox"/> <button class="selectTab k-button">Select</button>
-        </li>
-        <li>
-            <button class="toggleTab k-button">Enable/Disable Selected</button>
-        </li>
-        <li>
-            <button class="removeItem k-button">Remove Selected</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="appendText" class="k-textbox"/> <button class="appendItem k-button">Append</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="beforeText" class="k-textbox"/> <button class="beforeItem k-button">Insert Before</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="afterText" class="k-textbox"/> <button class="afterItem k-button">Insert After</button>
-        </li>
-    </ul>
-</div>
+ <div class="box wide">
+    <div class="box-col">
+        <h4>Select</h4>
+        <ul class="options">
+            <li>
+                <input type="text" value="0" id="tabIndex" class="k-textbox"/> <button class="selectTab k-button">Select</button>
+            </li>
+                    
+        </ul>
+                
+        <h4>Enable / Disable</h4>
+        <ul class="options">
+            <li>
+                <button class="toggleTab k-button">Enable/Disable Selected</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Add / Remove</h4>
+        <ul class="options">
+            <li>
+                <button class="removeItem k-button">Remove Selected</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="appendText" class="k-textbox"/> <button class="appendItem k-button">Append</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>&nbsp;</h4>
+        <ul class="options">
+            <li>
+                <input type="text" value="Item" id="beforeText" class="k-textbox"/> <button class="beforeItem k-button">Insert Before</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="afterText" class="k-textbox"/> <button class="afterItem k-button">Insert After</button>
+            </li>
 
-<div style="width: 500px;">
+        </ul>
+    </div>
+    </div>
+
+    <div class="demo-section k-content">
+
     <% Html.Kendo().TabStrip()
           .Name("tabstrip")
           .Items(tabstrip =>
@@ -122,8 +141,14 @@ Snowboarding is a sport that involves descending a slope that is covered with sn
     });
 </script>
 <style>
-    .configuration .k-textbox {
-        width: 40px;
+    .box .k-textbox {
+        width: 80px;
+    }
+    .box-col .options {
+        margin-bottom: 20px;
+    }
+    .box-col {
+        margin-bottom: -20px;
     }
 </style>
 </asp:Content>

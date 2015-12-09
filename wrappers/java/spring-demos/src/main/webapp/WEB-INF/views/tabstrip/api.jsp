@@ -5,36 +5,51 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">API Functions</span>
-    <ul class="options">
-        <li>
-            <input type="text" value="0" id="tabIndex" class="k-textbox"/> <button class="selectTab k-button">Select</button>
-        </li>
-        <li>
-            <button class="toggleTab k-button">Enable/Disable Selected</button>
-        </li>
-        <li>
-            <button class="removeItem k-button">Remove Selected</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="appendText" class="k-textbox"/> <button class="appendItem k-button">Append</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="beforeText" class="k-textbox"/> <button class="beforeItem k-button">Insert Before</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="afterText" class="k-textbox"/> <button class="afterItem k-button">Insert After</button>
-        </li>
-    </ul>
-</div>
+ <div class="box wide">
+     <div class="box-col">
+         <h4>Select</h4>
+         <ul class="options">
+             <li>
+                 <input type="text" value="0" id="tabIndex" class="k-textbox"/> <button class="selectTab k-button">Select</button>
+             </li>
+             
+         </ul>
+         
+         <h4>Enable / Disable</h4>
+         <ul class="options">
+             <li>
+                 <button class="toggleTab k-button">Enable/Disable Selected</button>
+             </li>
+         </ul>
+     </div>
+     <div class="box-col">
+         <h4>Add / Remove</h4>
+         <ul class="options">
+             <li>
+                 <button class="removeItem k-button">Remove Selected</button>
+             </li>
+             <li>
+                 <input type="text" value="Item" id="appendText" class="k-textbox"/> <button class="appendItem k-button">Append</button>
+             </li>
+         </ul>
+     </div>
+     <div class="box-col">
+         <h4>&nbsp;</h4>
+         <ul class="options">
+             <li>
+                 <input type="text" value="Item" id="beforeText" class="k-textbox"/> <button class="beforeItem k-button">Insert Before</button>
+             </li>
+             <li>
+                 <input type="text" value="Item" id="afterText" class="k-textbox"/> <button class="afterItem k-button">Insert After</button>
+             </li>
 
-<c:url value="/resources/shared/icons/sports/baseball.png" var="baseball"/>
-<c:url value="/resources/shared/icons/sports/golf.png" var="golf"/>
-<c:url value="/resources/shared/icons/sports/swimming.png" var="swimming"/>
-<c:url value="/resources/shared/icons/sports/snowboarding.png" var="snowboarding"/>
+         </ul>
+     </div>
+     </div>
 
-<kendo:tabStrip name="tabstrip" style="width: 500px">
+     <div class="demo-section k-content">
+
+<kendo:tabStrip name="tabstrip">
     <kendo:tabStrip-animation>
         <kendo:tabStrip-animation-open effects="fadeIn"/>
     </kendo:tabStrip-animation>
@@ -51,7 +66,7 @@
         </kendo:tabStrip-item>
         <kendo:tabStrip-item text="Swimming" imageUrl="${swimming}">
             <kendo:tabStrip-item-content>
-                Swimming has been recorded since prehistoric times; the earliest recording of swimming dates back to Stone Age paintings from around 7,000 years ago. Written references date from 2000 BC. Some of the earliest references to swimming include the Gilgamesh, the Iliad, the Odyssey, the Bible, Beowulf, and other sagas. In 1578, Nikolaus Wynmann, a German professor of languages, wrote the first swimming book, The Swimmer or A Dialogue on the Art of Swimming (Der Schwimmer oder ein Zwiegespräch über die Schwimmkunst). Competitive swimming in Europe started around 1800, mostly using breaststroke.
+                Swimming has been recorded since prehistoric times; the earliest recording of swimming dates back to Stone Age paintings from around 7,000 years ago. Written references date from 2000 BC. Some of the earliest references to swimming include the Gilgamesh, the Iliad, the Odyssey, the Bible, Beowulf, and other sagas. In 1578, Nikolaus Wynmann, a German professor of languages, wrote the first swimming book, The Swimmer or A Dialogue on the Art of Swimming (Der Schwimmer oder ein Zwiegesprï¿½ch ï¿½ber die Schwimmkunst). Competitive swimming in Europe started around 1800, mostly using breaststroke.
             </kendo:tabStrip-item-content>    
         </kendo:tabStrip-item>
         <kendo:tabStrip-item text="Snowboarding" imageUrl="${snowboarding}">
@@ -61,7 +76,7 @@
         </kendo:tabStrip-item>
     </kendo:tabStrip-items>
 </kendo:tabStrip>
-
+</div>
 <script>
     $(document).ready(function() {
     	var tabStrip = $("#tabstrip").data("kendoTabStrip");
@@ -126,8 +141,14 @@
     });
 </script>
 <style>
-    .configuration .k-textbox {
-        width: 40px;
+    .box .k-textbox {
+        width: 80px;
+    }
+    .box-col .options {
+        margin-bottom: 20px;
+    }
+    .box-col {
+        margin-bottom: -20px;
     }
 </style>
 
