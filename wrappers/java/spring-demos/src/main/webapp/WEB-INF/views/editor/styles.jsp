@@ -4,8 +4,16 @@
 
 <demo:header />
 
+<div class="box wide">
+    <h4>Information</h4>
+    <p>
+        The following demo shows how to use the Editor's style tool, which provides the ability to customize the widget content by means of custom
+        CSS classes and styling, and a CSS file registered in the Editor iframe document.
+    </p>
+</div>
+
 <kendo:editor name="editor" stylesheets="<%= new String[]{request.getContextPath() + \"/resources/web/editor/editorStyles.css\"}%>" 
-	style="width:740px;height:440px">
+	style="width:100%;height:400px">
     <kendo:editor-tools>
    		 <kendo:editor-tool name="formatting">
 	         <kendo:editor-tool-items>
@@ -17,7 +25,7 @@
     </kendo:editor-tools>
     <kendo:editor-value>
             <p>
-               <img src="../../content/web/editor/kendo-ui-web.png" alt="Editor for ASP.NET MVC logo" style="display:block;margin-left:auto;margin-right:auto;" />
+               <img src="../resources/web/editor/kendo-ui-web.png" alt="Editor for JSP logo" style="display:block;margin-left:auto;margin-right:auto;" />
             </p>
             <p>
                 Kendo UI Editor allows your users to edit HTML in a familiar, user-friendly way.<br />

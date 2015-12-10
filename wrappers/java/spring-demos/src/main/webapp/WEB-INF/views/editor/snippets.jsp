@@ -4,7 +4,7 @@
 
 <demo:header />
 
-<kendo:editor name="editor" style="width:740px;height:440px">
+<kendo:editor name="editor">
     <kendo:editor-tools>
    		 <kendo:editor-tool name="insertHtml">
 	         <kendo:editor-tool-items>

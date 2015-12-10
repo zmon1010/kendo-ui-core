@@ -6,7 +6,7 @@
 <demo:header />
 
 <kendo:editor name="editor" stylesheets="<%= new String[]{request.getContextPath() + \"/resources/web/editor/pdf-export-styles.css\"}%>" 
-	style="width:740px;height:440px">
+	style="height:440px">
     <kendo:editor-tools>
         <kendo:editor-tool name="pdf" /> 
     </kendo:editor-tools>
@@ -15,7 +15,7 @@
     </kendo:editor-pdf>
     <kendo:editor-value>
          &lt;p&gt;
-               &lt;img src="../resources/web/editor/kendo-ui-web.png" alt="Editor for ASP.NET MVC logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
+               &lt;img src="<c:url value='../resources/web/editor/kendo-ui-web.png'/>" alt="Editor for JSP logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
             &lt;/p&gt;
             &lt;p&gt;
                 Kendo UI Editor allows your users to edit HTML in a familiar, user-friendly way.&lt;br /&gt;

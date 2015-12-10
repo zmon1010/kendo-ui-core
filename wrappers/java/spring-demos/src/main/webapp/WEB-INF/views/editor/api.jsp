@@ -5,26 +5,32 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Get value</span>
+<div class="box wide">
+    <div class="box-col">
+    <h4>Get value</h4>
     <ul class="options">
         <li>
             <button id="get" class="k-button">Get value</button>
         </li>
     </ul>
-    <span class="configTitle">Set value</span>
+    </div>
+    <div class="box-col">
+    <h4>Set value</h4>
     <ul class="options">
         <li>
             <textarea id="value" style="width: 200px;" rows="4" cols="20">new value</textarea>
+        </li>
+        <li>
             <button id="set" class="k-button">Set value</button>
         </li>
     </ul>
+    </div>
 </div>
 
-<kendo:editor name="editor" style="width:600px;height:440px">
+<kendo:editor name="editor" style="height:400px">
     <kendo:editor-value>
          &lt;p&gt;
-               &lt;img src="../../content/web/editor/kendo-ui-web.png" alt="Editor for ASP.NET MVC logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
+               &lt;img src="<c:url value='../resources/web/editor/kendo-ui-web.png'/>" alt="Editor for JSP logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
             &lt;/p&gt;
             &lt;p&gt;
                 Kendo UI Editor allows your users to edit HTML in a familiar, user-friendly way.&lt;br /&gt;

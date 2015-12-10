@@ -12,11 +12,12 @@
 <c:url value="/editor/imagebrowser/destroy" var="transportDestroyUrl" />
 <c:url value="/resources/shared/imagebrowser/{0}" var="transportImageUrl" />
 
-<div class="box">
-    <p>Allowed file types for this demo are: jpg, jpeg, gif, png</p>
+<div class="box wide">
+    <p>Allowed file types for the Image browser are: jpg, jpeg, gif, png</p>
+    <p>Allowed file types for the File browser for this demo are: txt, doc, docx, xls, xlsx, ppt, pptx, zip, rar, jpg, jpeg, gif, png</p>
 </div>
 
-<kendo:editor name="editor" style="width:740px;height:440px">
+<kendo:editor name="editor" style="height:440px">
 	<kendo:editor-tools>
     		<kendo:editor-tool name="insertImage"/>
 		<kendo:editor-tool name="insertFile"/>
@@ -42,7 +43,7 @@
 	</kendo:editor-fileBrowser>
     <kendo:editor-value>
          &lt;p&gt;
-               &lt;img src="../../content/web/editor/kendo-ui-web.png" alt="Editor for ASP.NET MVC logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
+               &lt;img src="<c:url value='../resources/web/editor/kendo-ui-web.png'/>" alt="Editor for JSP logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
             &lt;/p&gt;
             &lt;p&gt;
                 Kendo UI Editor allows your users to edit HTML in a familiar, user-friendly way.&lt;br /&gt;

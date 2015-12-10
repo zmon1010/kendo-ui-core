@@ -5,10 +5,10 @@
 
 <demo:header />
             
-<kendo:editor name="editor" style="width:740px;height:440px" change="onChange" select="onSelect" execute="onExecute" paste="onPaste">
+<kendo:editor name="editor" style="height:350px" change="onChange" select="onSelect" execute="onExecute" paste="onPaste">
     <kendo:editor-value>
          &lt;p&gt;
-               &lt;img src="../../content/web/editor/kendo-ui-web.png" alt="Editor for ASP.NET MVC logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
+               &lt;img src="<c:url value='../resources/web/editor/kendo-ui-web.png'/>" alt="Editor for JSP logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
             &lt;/p&gt;
             &lt;p&gt;
                 Kendo UI Editor allows your users to edit HTML in a familiar, user-friendly way.&lt;br /&gt;
@@ -32,7 +32,10 @@
     </kendo:editor-value>
 </kendo:editor>
 
-<div class="console"></div>
+<div class="box wide">
+    <h4>Events log</h4>
+    <div class="console"></div>
+</div>
 
  <script>
     function onChange(e) {

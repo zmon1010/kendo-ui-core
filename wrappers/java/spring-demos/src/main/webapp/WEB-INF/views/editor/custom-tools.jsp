@@ -5,15 +5,15 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header" style="float:none;max-width:none;margin:0 0 2em;">
-    <span class="infoHead">Information</span>
+<div class="box wide">
+    <h4>Information</h4>
     <p>
         The following demo shows how to customize some of the native Editor tools (font size, font name and block format) by modifying the tools' item
         collections, as well as how to create completely custom tools.
     </p>
 </div>
 
-<kendo:editor name="editor" style="width:740px;height:440px">
+<kendo:editor name="editor" style="width:100%;height:400px">
     <kendo:editor-tools>
    		 <kendo:editor-tool name="fontName">
 	         <kendo:editor-tool-items>
@@ -49,7 +49,7 @@
     </kendo:editor-tools>
     <kendo:editor-value>
          &lt;p&gt;
-               &lt;img src="../../content/web/editor/kendo-ui-web.png" alt="Editor for ASP.NET MVC logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
+               &lt;img src="<c:url value='../resources/web/editor/kendo-ui-web.png'/>" alt="Editor for JSP logo" style="display:block;margin-left:auto;margin-right:auto;" /&gt;
             &lt;/p&gt;
             &lt;p&gt;
                 Kendo UI Editor allows your users to edit HTML in a familiar, user-friendly way.&lt;br /&gt;
