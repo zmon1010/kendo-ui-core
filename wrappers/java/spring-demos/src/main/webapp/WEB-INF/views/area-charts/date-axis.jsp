@@ -3,6 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
+<div class="demo-section k-content wide">
  	<kendo:chart name="chart">
     	<kendo:dataSource data="${stats}" />
  	 	<kendo:chart-series>
@@ -12,9 +13,10 @@
  	 		<kendo:chart-categoryAxisItem type="date" baseUnit="weeks" />
  	 	</kendo:chart-categoryAxis>
 	</kendo:chart>
-    <div class="configuration-horizontal">
-        <div class="config-section">
-        <span class="configHead">Base date unit</span>
+</div>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Base date unit</h4>
         <ul class="options">
             <li>
                 <input id="baseUnitAuto" name="baseUnit"
@@ -42,9 +44,9 @@
                 <label for="baseUnitDays">Days</label>
             </li>
         </ul>
-        </div>
-        <div class="config-section">
-        <span class="configHead">Aggregate function</span>
+    </div>
+    <div class="box-col">
+        <h4>Aggregate function</h4>
         <ul class="options">
             <li>
                 <input id="aggregateMax" name="aggregate"
@@ -72,31 +74,29 @@
                 <label for="aggregateCount">Count</label>
             </li>
         </ul>
-        <p>Custom aggregate functions are supported.</p>
-        </div>
     </div>
-    <script>
-    	$(".configuration-horizontal").bind("change", refresh);
-	
-	    function refresh() {
-	        var chart = $("#chart").data("kendoChart"),
-	            series = chart.options.series,
-	            categoryAxis = chart.options.categoryAxis,
-	            baseUnitInputs = $("input:radio[name=baseUnit]"),
-	            aggregateInputs = $("input:radio[name=aggregate]");
-	
-	        for (var i = 0, length = series.length; i < length; i++) {
-	            series[i].aggregate = aggregateInputs.filter(":checked").val();
-	        }
-	
-	        categoryAxis.baseUnit = baseUnitInputs.filter(":checked").val();
-	
-	        chart.refresh();
-	    }
-	</script>
-    <style>
-	    .k-chart {
-	        height: 300px;
-	    }
-	</style>
+    <div class="box-col">
+        <h4>&nbsp;</h4>
+        <p>Custom aggregate functions are supported.</p>
+    </div>
+</div>
+<script>
+	$(".box").bind("change", refresh);
+
+ function refresh() {
+     var chart = $("#chart").data("kendoChart"),
+         series = chart.options.series,
+         categoryAxis = chart.options.categoryAxis,
+         baseUnitInputs = $("input:radio[name=baseUnit]"),
+         aggregateInputs = $("input:radio[name=aggregate]");
+
+     for (var i = 0, length = series.length; i < length; i++) {
+         series[i].aggregate = aggregateInputs.filter(":checked").val();
+     }
+
+     categoryAxis.baseUnit = baseUnitInputs.filter(":checked").val();
+
+     chart.refresh();
+ }
+</script>
 <demo:footer />

@@ -3,10 +3,10 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url value="/area-charts/remote-data/read" var="readUrl" />
+<c:url value="../resources/dataviz/js/spain-electricity.json" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Spain electricity production (GWh)" />
              <kendo:chart-legend position="top" />
@@ -15,7 +15,7 @@
                      <kendo:dataSource-sortItem field="year" dir="asc" />
                  </kendo:dataSource-sort>
                  <kendo:dataSource-transport>
-                     <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" />
+                     <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="GET" contentType="application/json" />
                  </kendo:dataSource-transport>
              </kendo:dataSource>
              <kendo:chart-series>
