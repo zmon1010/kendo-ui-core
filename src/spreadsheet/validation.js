@@ -25,6 +25,8 @@
     function compileValidation(sheet, row, col, validation) {
         var validationHandler;
         var comparer;
+        var parsedFromDate;
+        var parsedToDate;
 
         if (typeof validation === "string") {
             validation = JSON.parse(validation);
@@ -36,19 +38,10 @@
             }
 
             if (validation.dataType === "date") {
-                var parsedFromDate = calc.runtime.parseDate(validation.from);
-
+                parsedFromDate = calc.runtime.parseDate(validation.from);
                 if (parsedFromDate) {
                     validation.from = kendo.format(DATE_FORMAT, validation.from);
                     validation.fromIsDateValue = true;
-                }
-
-                if (validation.to) {
-                    var parsedToDate = calc.runtime.parseDate(validation.to);
-                    if (parsedToDate) {
-                        validation.to = kendo.format(DATE_FORMAT, validation.to);
-                        validation.toIsDateValue = true;
-                    }
                 }
             }
 
@@ -56,6 +49,14 @@
         }
 
         if (validation.to) {
+            if (validation.dataType === "date") {
+                parsedToDate = calc.runtime.parseDate(validation.to);
+                if (parsedToDate) {
+                    validation.to = kendo.format(DATE_FORMAT, validation.to);
+                    validation.toIsDateValue = true;
+                }
+            }
+
             validation.to = calc.compile(calc.parseFormula(sheet, row, col, validation.to));
         }
 
