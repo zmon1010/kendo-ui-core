@@ -41,7 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content">
+<?php
 $transport = new \Kendo\Data\DataSourceTransport();
 
 $read = new \Kendo\Data\DataSourceTransportRead();
@@ -74,27 +76,11 @@ $dataSource->transport($transport)
            ->schema($schema);
 
 $treeview = new \Kendo\UI\TreeView('treeview');
-$treeview->attr('class', 'demo-section');
 
 $treeview->dataSource($dataSource);
 $treeview->dataTextField("FullName");
 
 echo $treeview->render();
 ?>
-
-<style>
-    #example {
-        text-align: center;
-    }
-
-    .demo-section {
-        display: inline-block;
-        vertical-align: top;
-        width: 320px;
-        height: 300px;
-        text-align: left;
-        margin: 0 2em;
-    }
-</style>
 
 <?php require_once '../include/footer.php'; ?>

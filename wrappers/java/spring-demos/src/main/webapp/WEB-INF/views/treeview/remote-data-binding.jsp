@@ -7,8 +7,8 @@
 <c:url value="/treeview/remote-data-binding/read" var="transportReadUrl" />
 
 <demo:header />
-
- <kendo:treeView name="treeview" class="demo-section" dataTextField="fullName">
+<div class="demo-section k-content">
+ <kendo:treeView name="treeview" dataTextField="fullName">
      <kendo:dataSource>
          <kendo:dataSource-transport>
              <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST"  contentType="application/json"/>    
@@ -25,21 +25,6 @@
          </kendo:dataSource-schema>
      </kendo:dataSource>
  </kendo:treeView>
+</div>
 
-    <style>
-    
-        #example {
-            text-align: center;
-        }
-        
-        .demo-section {
-            display: inline-block;
-            vertical-align: top;
-            width: 320px;
-            height: 300px;
-            text-align: left;
-            margin: 0 2em;
-        }
-
-    </style>
 <demo:footer />
