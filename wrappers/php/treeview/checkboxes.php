@@ -5,13 +5,17 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
+<div class="demo-section k-content">
+    <div>
+        <h4>Check nodes</h4>
 <?php
     $treeview = new \Kendo\UI\TreeView('treeview');
-    $treeview->attr('class', 'demo-section');
 
     $checkboxes = new \Kendo\UI\TreeViewCheckboxes();
     $checkboxes->checkChildren(true);
     $treeview->checkboxes($checkboxes);
+
+    $treeview->check("onCheck");
 
     // helper function that creates TreeViewItem with id and spriteCssClass
     function TreeViewItem($id, $text, $spriteCssClass) {
@@ -52,12 +56,46 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $treeview->render();
 ?>
+</div>
+    <div style="padding-top: 2em;">
+        <h4>Status</h4>
+        <p id="result">No nodes checked.</p>
+    </div>
+</div>
+
+<script type="text/javascript">
+     // function that gathers IDs of checked nodes
+        function checkedNodeIds(nodes, checkedNodes) {
+            for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].checked) {
+                    checkedNodes.push(nodes[i].id);
+                }
+
+                if (nodes[i].hasChildren) {
+                    checkedNodeIds(nodes[i].children.view(), checkedNodes);
+                }
+            }
+        }
+
+        // show checked node IDs on datasource change
+        function onCheck() {
+            var checkedNodes = [],
+                treeView = $("#treeview").data("kendoTreeView"),
+                message;
+
+            checkedNodeIds(treeView.dataSource.view(), checkedNodes);
+
+            if (checkedNodes.length > 0) {
+                message = "IDs of checked nodes: " + checkedNodes.join(",");
+            } else {
+                message = "No nodes checked.";
+            }
+
+            $("#result").html(message);
+        }
+    </script>
 
 <style>
-    #treeview {
-        width: 300px;
-        margin: 0 auto;
-    }
 
     #treeview .k-sprite {
         background-image: url("../content/web/treeview/coloricons-sprite.png");

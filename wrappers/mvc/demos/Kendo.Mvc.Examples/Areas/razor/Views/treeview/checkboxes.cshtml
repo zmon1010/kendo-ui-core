@@ -1,13 +1,14 @@
-@model string[]
-           
-@using (Html.BeginForm("Checkboxes", "TreeView", FormMethod.Post, new { @class = "container" }))
-{   
-    <div class="treeview-back">
+<div class="demo-section k-content">
+    <div>
+        <h4>Check nodes</h4>
         @(Html.Kendo().TreeView()
             .Name("treeview")
             .Checkboxes(checkboxes => checkboxes
                 .Name("checkedFiles")
                 .CheckChildren(true)
+            )
+             .Events(events => events
+                .Check("onCheck")
             )
             .Items(treeview =>
             {
@@ -46,26 +47,45 @@
                             });
                     });
             })
-            .ItemAction(item =>
-            {
-                item.Checked = Model.Contains(item.Id);
-            })
         )
-    </div>    
-    <button id="find" class="k-button">Find checked nodes</button>
-}
-
-<div id="result">
-@if (Model.Length > 0)
-{
-    <text>Checked nodes: @(String.Join(", ", Model)) </text>
-}
-else
-{
-    <text>No nodes checked.</text>
-}
+    </div>
+    <div style="padding-top: 2em;">
+        <h4>Status</h4>
+        <p id="result">No nodes checked.</p>
+    </div>
 </div>
+<script>
 
+    // function that gathers IDs of checked nodes
+    function checkedNodeIds(nodes, checkedNodes) {
+        for (var i = 0; i < nodes.length; i++) {
+            if (nodes[i].checked) {
+                checkedNodes.push(nodes[i].id);
+            }
+
+            if (nodes[i].hasChildren) {
+                checkedNodeIds(nodes[i].children.view(), checkedNodes);
+            }
+        }
+    }
+
+    // show checked node IDs on datasource change
+    function onCheck() {
+        var checkedNodes = [],
+            treeView = $("#treeview").data("kendoTreeView"),
+            message;
+
+        checkedNodeIds(treeView.dataSource.view(), checkedNodes);
+
+        if (checkedNodes.length > 0) {
+            message = "IDs of checked nodes: " + checkedNodes.join(",");
+        } else {
+            message = "No nodes checked.";
+        }
+
+        $("#result").html(message);
+    }
+</script>
 <style>
     #treeview .k-sprite {
         background-image: url("@Url.Content("~/Content/web/treeview/coloricons-sprite.png")");
@@ -76,36 +96,4 @@ else
     .pdf        { background-position: 0 -32px; }
     .html       { background-position: 0 -48px; }
     .image      { background-position: 0 -64px; }
-
-    .treeview-back 
-    {
-        float: left;
-        margin: 0 0 2em;
-        padding: 20px;
-        -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-        box-shadow: 0 1px 2px rgba(0,0,0,0.45), inner 0 0 30px rgba(0,0,0,0.07);
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        border-radius: 8px;
-    }
-
-    .container
-    {
-        margin: 0 30px;
-        float: left;
-        width: 220px;
-    }
-
-    #result 
-    {
-        float: left;
-        padding: 10px;
-        -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-        box-shadow: 0 1px 2px rgba(0,0,0,0.45), inner 0 0 30px rgba(0,0,0,0.07);
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        border-radius: 8px;
-    }
 </style>
