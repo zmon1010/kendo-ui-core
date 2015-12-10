@@ -25,6 +25,10 @@
         return ref;
     }
 
+    function isMergedCell(element) {
+        return element.attr.className.indexOf('k-spreadsheet-merged-cell') > -1
+    }
+
     var DUMMY_VIEW = { ref: rangeRef(0, 0, 100, 100), top: 0, left: 0 };
 
     test("pane renders merged cell", function() {
@@ -33,15 +37,15 @@
         sheet.range(0, 0, 2, 3).merge().value("foo");
 
         pane._currentView = DUMMY_VIEW;
-        var mergedCells = pane.renderMergedCells().children;
-        var table = mergedCells[0];
+        var elements = pane.renderData().children;
 
-        equal(mergedCells.length, 1);
-        equal(table.attr.style.height, 2 * 10 + "px");
-        equal(table.attr.style.width, 3 * 10 + "px");
-        equal(table.attr.className, "k-spreadsheet-merged-cell");
-        var cell = table.children[1].children[0].children[0];
-        equal(cell.children[0].nodeValue, "foo");
+        var mergedCell = elements.find(isMergedCell)
+
+        // console.log(JSON.stringify(mergedCell))
+
+        equal(mergedCell.attr.style.height, (2 * 10 - 1) + "px");
+        equal(mergedCell.attr.style.width, (3 * 10 - 1) + "px");
+        equal(mergedCell.children[0].children[0].nodeValue, "foo");
     });
 
     test("pane renders multiple merged cell", function() {
@@ -51,9 +55,7 @@
         sheet.range(2, 2, 2, 2).merge();
 
         pane._currentView = DUMMY_VIEW;
-        var mergedCells = pane.renderMergedCells().children;
-
-        equal(mergedCells.length, 2);
+        equal(pane.renderData().children.filter(isMergedCell).length, 2);
     });
 
     test("pane does not render merged cells which are invisible", function() {
@@ -63,7 +65,7 @@
 
         pane._currentView = { ref: rangeRef(0, 3, 100, 100) , top: 0, left: 0 };
 
-        var mergedCells = pane.renderMergedCells(rangeRef(0, 3, 100, 100), 0, 0).children;
+        var mergedCells = pane.renderData().children.filter(isMergedCell);
 
         equal(mergedCells.length, 0);
     });
