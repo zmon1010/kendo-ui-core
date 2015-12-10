@@ -15,50 +15,22 @@
     cursor: default;
 
     .k-spreadsheet-pane {
+        padding-right: 1px;
+        position: absolute;
+        border-width: 1px;
+        border-style: solid;
+        overflow: hidden;
+        box-sizing: border-box;
+
+        &.k-top { border-top-width: 0; }
+        &.k-left { border-left-width: 0; }
+
         .k-spreadsheet-cell {
             position: absolute;
             white-space: pre;
             box-sizing: border-box;
             overflow: hidden;
             padding: 1px;
-        }
-
-        td {
-            white-space: pre;
-            border-width: 1px;
-            border-style: solid;
-            box-sizing: border-box;
-            overflow: hidden;
-            height: 20px;
-            user-select: none;
-        }
-
-        table {
-            table-layout: fixed;
-            border-collapse: collapse;
-            box-sizing: border-box;
-            position: absolute;
-
-            &.k-spreadsheet-merged-cell {
-                width: auto;
-                height: auto;
-            }
-
-            &.k-spreadsheet-row-header {
-                width: auto;
-
-                td {
-                    border-left-width: 0;
-                }
-            }
-
-            &.k-spreadsheet-column-header {
-                height: auto;
-
-                td {
-                    border-top-width: 0;
-                }
-            }
         }
     }
 
@@ -92,14 +64,6 @@
         border-style: solid;
         position: absolute;
         box-sizing: border-box;
-    }
-
-    .k-spreadsheet-active-cell {
-        &.k-left { border-left-width: 0; }
-
-        td {
-            border-width: 0 !important; // overrides model border
-        }
     }
 
     @formula-bar-height: 26px;
@@ -349,21 +313,19 @@
     position: relative;
 }
 
-.k-spreadsheet-pane {
-    padding-right: 1px;
-    position: absolute;
-    border-width: 1px;
-    border-style: solid;
-    overflow: hidden;
-    box-sizing: border-box;
-
-    &.k-top { border-top-width: 0; }
-    &.k-left { border-left-width: 0; }
-}
-
 .k-spreadsheet-column-header,
 .k-spreadsheet-row-header {
     text-align: center;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+}
+
+.k-spreadsheet-column-header {
+    border-right-width: 0;
+}
+
+.k-spreadsheet-row-header {
+    border-bottom-width: 0;
 }
 
 .k-spreadsheet-window {
@@ -422,7 +384,7 @@
 .k-spreadsheet-border-palette {
     width: 153px;
 
-    .k-button {
+    .k-spreadsheet-border-type-palette .k-button {
         box-sizing: border-box;
         width: 20%;
     }

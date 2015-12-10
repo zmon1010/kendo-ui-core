@@ -11,8 +11,8 @@
 }
 
 .k-spreadsheet-top-corner,
-.k-spreadsheet-row-header td,
-.k-spreadsheet-column-header td {
+.k-spreadsheet-row-header,
+.k-spreadsheet-column-header {
     background-color: @spreadsheet-header-background;
     background-image: none;
     color: contrast(@spreadsheet-header-background);
@@ -35,8 +35,8 @@
         border-color: @spreadsheet-cell-border;
     }
 
-    .k-spreadsheet-column-header td,
-    .k-spreadsheet-row-header td {
+    .k-spreadsheet-column-header,
+    .k-spreadsheet-row-header {
         border-color: @spreadsheet-header-border;
     }
 
@@ -54,13 +54,13 @@
         border-color: @spreadsheet-selection-border;
     }
 
-    .k-spreadsheet-column-header .k-selection-partial,
-    .k-spreadsheet-column-header .k-selection-full {
+    .k-spreadsheet-column-header.k-selection-partial,
+    .k-spreadsheet-column-header.k-selection-full {
         border-bottom-color: fadein(@spreadsheet-selection-background, 80%);
     }
 
-    .k-spreadsheet-row-header .k-selection-partial,
-    .k-spreadsheet-row-header .k-selection-full {
+    .k-spreadsheet-row-header.k-selection-partial,
+    .k-spreadsheet-row-header.k-selection-full {
         border-right-color: fadein(@spreadsheet-selection-background, 80%);
     }
 }
