@@ -68,6 +68,9 @@ spreadsheet.insertSheet();
 
 sheet.range("E11:AX200").formula("=RANDBETWEEN(1, 100)").format("[Red][<50]#;[Green][>50]#;[Blue]0.00");
 
+sheet.range("G14:I17").background("#fef0cd");
+sheet.range("G20:I25").background("#0081a5");
+
 sheet.range("F2").value("this is quite some long centered text");
 sheet.range("G2").value("this is quite some long centered text").wrap(true).textAlign("center");
 
