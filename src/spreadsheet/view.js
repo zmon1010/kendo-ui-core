@@ -91,9 +91,18 @@
         var height = cell.height+1;
 
         var style = {};
+        var background = cell.background;
+        //var defaultBorder = background ? cellBorder({ color: background }) : null;
+        var defaultBorder = null;
+        if (background) {
+            defaultBorder = kendo.parseColor(background);
+            defaultBorder.a = 0.5;
+            defaultBorder = defaultBorder.toCssRgba();
+            defaultBorder = cellBorder({ color: defaultBorder });
+        }
 
-        if (cell.background) {
-            style.backgroundColor = cell.background;
+        if (background) {
+            style.backgroundColor = background;
         }
 
         if (cell.color) {
@@ -131,25 +140,27 @@
 
         if (cell.borderLeft) {
             style.borderLeft = cellBorder(cell.borderLeft);
-        } else {
-            left++;
-            width--;
+        } else if (defaultBorder) {
+            style.borderLeft = defaultBorder;
+            style.backgroundClip = "padding-box";
         }
         if (cell.borderTop) {
             style.borderTop = cellBorder(cell.borderTop);
-        } else {
-            top++;
-            height--;
+        } else if (defaultBorder) {
+            style.borderTop = defaultBorder;
+            style.backgroundClip = "padding-box";
         }
         if (cell.borderRight) {
             style.borderRight = cellBorder(cell.borderRight);
-        } else {
-            width--;
+        } else if (defaultBorder) {
+            style.borderRight = defaultBorder;
+            style.backgroundClip = "padding-box";
         }
         if (cell.borderBottom) {
             style.borderBottom = cellBorder(cell.borderBottom);
-        } else {
-            height--;
+        } else if (defaultBorder) {
+            style.borderBottom = defaultBorder;
+            style.backgroundClip = "padding-box";
         }
 
         style.left = left + "px";
