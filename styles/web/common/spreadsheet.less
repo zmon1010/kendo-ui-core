@@ -15,6 +15,14 @@
     cursor: default;
 
     .k-spreadsheet-pane {
+        .k-spreadsheet-cell {
+            position: absolute;
+            white-space: pre;
+            box-sizing: border-box;
+            overflow: hidden;
+            padding: 1px;
+        }
+
         td {
             white-space: pre;
             border-width: 1px;
@@ -52,6 +60,22 @@
                 }
             }
         }
+    }
+
+    .k-spreadsheet-vaxis,
+    .k-spreadsheet-haxis {
+      position: absolute;
+      border-style: solid;
+    }
+
+    .k-spreadsheet-vaxis {
+      top: 0;
+      border-width: 0 0 0 1px;
+    }
+
+    .k-spreadsheet-haxis {
+      left: 0;
+      border-width: 1px 0 0;
     }
 
     .k-spreadsheet-data,
@@ -173,11 +197,23 @@
         border-width: 1px 0 0;
     }
 
-    .k-dirty-cell {
-        position: relative;
+    .k-vertical-align-top {}
+
+    .k-vertical-align-center {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .k-vertical-align-bottom {
+      position: relative;
+      top: 100%;
+      transform: translateY(-100%);
     }
 
     .k-dirty {
+        position: absolute;
+        top: 0;
         right: 0;
         margin: -2px 0 0 -7px;
         border-width: 4px;
@@ -306,6 +342,7 @@
     height: 100%;
     box-sizing: border-box;
     z-index: 2;
+    user-select: none;
 }
 
 .k-spreadsheet-view-size {
