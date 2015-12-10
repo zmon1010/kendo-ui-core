@@ -95,8 +95,8 @@
         //var defaultBorder = background ? cellBorder({ color: background }) : null;
         var defaultBorder = null;
         if (background) {
-            defaultBorder = kendo.parseColor(background);
-            defaultBorder.a = 0.5;
+            defaultBorder = kendo.parseColor(background).toHSV();
+            defaultBorder.v *= 0.9;
             defaultBorder = defaultBorder.toCssRgba();
             defaultBorder = cellBorder({ color: defaultBorder });
         }
