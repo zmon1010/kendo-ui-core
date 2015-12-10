@@ -717,9 +717,35 @@
 
     kendo.spreadsheet.SaveAsCommand = Command.extend({
         exec: function() {
-            this.options.workbook.saveAsExcel({
-                fileName: this.options.fileName
-            });
+            if(this.options.extension === ".xlsx") {
+                this.options.workbook.saveAsExcel({
+                    fileName: this.options.fileName + this.options.extension,
+                });
+            } else if(this.options.extension === ".pdf") {
+                var name = this.options.name;
+                var pdfOptions = {
+                    paperSize: this.options.paperSize,
+                    margin: this.options.margin,
+                    landscape: this.options.landscape
+                };
+                switch(this.options.area) {
+                case "workbook":
+                    this.options.workbook.draw(pdfOptions, function(group){
+                        kendo.drawing.pdf.saveAs(group,name);
+                    });
+                    break;
+                case "sheet":
+                    this.options.workbook.activeSheet().draw(pdfOptions, function(group){
+                        kendo.drawing.pdf.saveAs(group,name);
+                    });
+                    break;
+                case "selection":
+                    this.options.workbook.activeSheet().selection().draw(pdfOptions, function(group){
+                        kendo.drawing.pdf.saveAs(group,name);
+                    });
+                    break;
+                }
+            }
         }
     });
 

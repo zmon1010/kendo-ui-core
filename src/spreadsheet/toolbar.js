@@ -119,7 +119,7 @@
 
     var toolDefaults = {
         //home tab
-        excelExport:           { type: "dialog", dialogName: "excelExport",        overflow: "never",         text: "",        iconClass: "xlsa" },
+        excelExport:           { type: "dialog", dialogName: "saveAs",        overflow: "never",         text: "",        iconClass: "xlsa" },
         bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
         italic:                { type: "button", command: "PropertyChangeCommand", property: "italic",        value: true,     iconClass: "italic", togglable: true },
         underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
