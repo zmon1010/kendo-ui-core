@@ -1056,7 +1056,7 @@
         init: function(options, toolbar) {
             this.toolbar = toolbar;
             this.element = $("<button class='k-button k-upload-button'>" +
-                                 "<span class='k-icon k-font-icon k-i-open' />" +
+                                 "<span class='k-icon k-font-icon k-i-folder-open' />" +
                              "</button>").data("instance", this);
 
             $("<input type='file' autocomplete='off' accept='.xlsx'/>")
