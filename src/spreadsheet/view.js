@@ -1219,7 +1219,7 @@
             var layout = kendo.spreadsheet.draw.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
             // draw axis first
             prev = null;
-            layout.xs.forEach(function(x){
+            layout.xCoords.forEach(function(x){
                 if (x !== prev) {
                     prev = x;
                     cont.children.push(kendo.dom.element("div", {
@@ -1232,7 +1232,7 @@
                 }
             });
             prev = null;
-            layout.ys.forEach(function(y){
+            layout.yCoords.forEach(function(y){
                 if (y !== prev) {
                     prev = y;
                     cont.children.push(kendo.dom.element("div", {

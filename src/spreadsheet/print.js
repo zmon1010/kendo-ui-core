@@ -148,20 +148,20 @@
         //    are not reset to zero for a new page (in fact, we don't
         //    even care about page dimensions here).  The print
         //    function translates the view to current page.
-        var ys = distributeCoords(rowHeights, pageHeight || 0);
-        var xs = distributeCoords(colWidths, pageWidth || 0);
+        var yCoords = distributeCoords(rowHeights, pageHeight || 0);
+        var xCoords = distributeCoords(colWidths, pageWidth || 0);
         var boxWidth = 0;
         var boxHeight = 0;
         cells = cells.filter(function(cell){
             if (cell.empty && (cell.row > maxRow || cell.col > maxCol)) {
                 return false;
             }
-            cell.left = xs[cell.col];
-            cell.top = ys[cell.row];
+            cell.left = xCoords[cell.col];
+            cell.top = yCoords[cell.row];
             if (cell.merged) {
                 if (!options.forScreen) {
-                    cell.right = orlast(xs, cell.col + cell.colspan);
-                    cell.bottom = orlast(ys, cell.row + cell.rowspan);
+                    cell.right = orlast(xCoords, cell.col + cell.colspan);
+                    cell.bottom = orlast(yCoords, cell.row + cell.rowspan);
                     cell.width = cell.right - cell.left;
                     cell.height = cell.bottom - cell.top;
                 } else {
@@ -193,12 +193,12 @@
                 if (relrow < 0) {
                     cell.top = -sheet._rows.sum(row, row - relrow - 1);
                 } else {
-                    cell.top = ys[relrow];
+                    cell.top = yCoords[relrow];
                 }
                 if (relcol < 0) {
                     cell.left = -sheet._columns.sum(col, col - relcol - 1);
                 } else {
-                    cell.left = xs[relcol];
+                    cell.left = xCoords[relcol];
                 }
                 cell.height = sheet._rows.sum(ref.topLeft.row, ref.bottomRight.row);
                 cell.width = sheet._columns.sum(ref.topLeft.col, ref.bottomRight.col);
@@ -213,8 +213,8 @@
             height : boxHeight,
             cells  : cells.sort(normalOrder),
             scale  : scaleFactor,
-            xs     : xs,
-            ys     : ys
+            xCoords: xCoords,
+            yCoords: yCoords
         };
     }
 
@@ -312,7 +312,7 @@
 
                 if (options.guidelines) {
                     var prev = null;
-                    layout.xs.forEach(function(x){
+                    layout.xCoords.forEach(function(x){
                         x = Math.min(x, endright);
                         if (x !== prev && x >= left && x <= right) {
                             prev = x;
@@ -326,7 +326,7 @@
                         }
                     });
                     var prev = null;
-                    layout.ys.forEach(function(y){
+                    layout.yCoords.forEach(function(y){
                         y = Math.min(y, endbottom);
                         if (y !== prev && y >= top && y <= bottom) {
                             prev = y;
