@@ -4,9 +4,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="k-rtl">
-
-    <div class="demo-section">
+ <div class="k-rtl demo-section k-content">
         <%=Html.Kendo().TreeView()
             .Name("treeview")
             .Items(treeview =>
@@ -66,14 +64,10 @@
                     });
             })
         %>
-    </div>
 
 </div>
 
 <style>
-    .demo-section {
-        width: 200px;
-    }
 
     #treeview .k-sprite {
         background-image: url("<%=Url.Content("~/Content/web/treeview/coloricons-sprite.png")%>");

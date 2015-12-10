@@ -5,7 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="k-rtl demo-section">
+ <div class="k-rtl demo-section k-content">
 <?php
     $treeview = new \Kendo\UI\TreeView('treeview');
 
@@ -50,9 +50,6 @@ require_once '../lib/Kendo/Autoload.php';
 </div>
 
 <style>
-    .demo-section {
-        width: 200px;
-    }
 
     #treeview .k-sprite {
         background-image: url("../content/web/treeview/coloricons-sprite.png");
