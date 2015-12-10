@@ -348,87 +348,84 @@
     var SEL_FONT = ["fonts", "font"];
     var SEL_FILL = ["fills", "fill"];
     var SEL_BORDER = ["borders", "border"];
-    var SEL_INDEXED_COLOR = ["indexedColors"];
-    var SEL_COLOR = ["colors", "indexedColors", "rgbColor"];
     var SEL_NAMED_STYLE = ["cellStyleXfs", "xf"];
     var SEL_INLINE_STYLE = ["cellXfs", "xf"];
     var SEL_NUM_FMT = ["numFmts", "numFmt"];
+    var INDEXED_COLORS = [
+        toCSSColor("FF000000"),
+        toCSSColor("FFFFFFFF"),
+        toCSSColor("FFFF0000"),
+        toCSSColor("FF00FF00"),
+        toCSSColor("FF0000FF"),
+        toCSSColor("FFFFFF00"),
+        toCSSColor("FFFF00FF"),
+        toCSSColor("FF00FFFF"),
+        toCSSColor("FF000000"),
+        toCSSColor("FFFFFFFF"),
+        toCSSColor("FFFF0000"),
+        toCSSColor("FF00FF00"),
+        toCSSColor("FF0000FF"),
+        toCSSColor("FFFFFF00"),
+        toCSSColor("FFFF00FF"),
+        toCSSColor("FF00FFFF"),
+        toCSSColor("FF800000"),
+        toCSSColor("FF008000"),
+        toCSSColor("FF000080"),
+        toCSSColor("FF808000"),
+        toCSSColor("FF800080"),
+        toCSSColor("FF008080"),
+        toCSSColor("FFC0C0C0"),
+        toCSSColor("FF808080"),
+        toCSSColor("FF9999FF"),
+        toCSSColor("FF993366"),
+        toCSSColor("FFFFFFCC"),
+        toCSSColor("FFCCFFFF"),
+        toCSSColor("FF660066"),
+        toCSSColor("FFFF8080"),
+        toCSSColor("FF0066CC"),
+        toCSSColor("FFCCCCFF"),
+        toCSSColor("FF000080"),
+        toCSSColor("FFFF00FF"),
+        toCSSColor("FFFFFF00"),
+        toCSSColor("FF00FFFF"),
+        toCSSColor("FF800080"),
+        toCSSColor("FF800000"),
+        toCSSColor("FF008080"),
+        toCSSColor("FF0000FF"),
+        toCSSColor("FF00CCFF"),
+        toCSSColor("FFCCFFFF"),
+        toCSSColor("FFCCFFCC"),
+        toCSSColor("FFFFFF99"),
+        toCSSColor("FF99CCFF"),
+        toCSSColor("FFFF99CC"),
+        toCSSColor("FFCC99FF"),
+        toCSSColor("FFFFCC99"),
+        toCSSColor("FF3366FF"),
+        toCSSColor("FF33CCCC"),
+        toCSSColor("FF99CC00"),
+        toCSSColor("FFFFCC00"),
+        toCSSColor("FFFF9900"),
+        toCSSColor("FFFF6600"),
+        toCSSColor("FF666699"),
+        toCSSColor("FF969696"),
+        toCSSColor("FF003366"),
+        toCSSColor("FF339966"),
+        toCSSColor("FF003300"),
+        toCSSColor("FF333300"),
+        toCSSColor("FF993300"),
+        toCSSColor("FF993366"),
+        toCSSColor("FF333399"),
+        toCSSColor("FF333333"),
+        toCSSColor("FF000000"), // System Foreground
+        toCSSColor("FFFFFFFF")  // System Background
+    ];
+
     function readStyles(zip, theme) {
         var styles = {
             fonts        : [],
             numFmts      : {},
             fills        : [],
             borders      : [],
-            colors       : [
-                toCSSColor("00000000"),
-                toCSSColor("00FFFFFF"),
-                toCSSColor("00FF0000"),
-                toCSSColor("0000FF00"),
-                toCSSColor("000000FF"),
-                toCSSColor("00FFFF00"),
-                toCSSColor("00FF00FF"),
-                toCSSColor("0000FFFF"),
-                null,
-                null,
-                toCSSColor("00000000"),
-                toCSSColor("00FFFFFF"),
-                toCSSColor("00FF0000"),
-                toCSSColor("0000FF00"),
-                toCSSColor("000000FF"),
-                toCSSColor("00FFFF00"),
-                toCSSColor("00FF00FF"),
-                toCSSColor("0000FFFF"),
-                toCSSColor("00800000"),
-                toCSSColor("00008000"),
-                toCSSColor("00000080"),
-                toCSSColor("00808000"),
-                toCSSColor("00800080"),
-                toCSSColor("00008080"),
-                toCSSColor("00C0C0C0"),
-                toCSSColor("00808080"),
-                toCSSColor("009999FF"),
-                toCSSColor("00993366"),
-                toCSSColor("00FFFFCC"),
-                toCSSColor("00CCFFFF"),
-                toCSSColor("00660066"),
-                toCSSColor("00FF8080"),
-                toCSSColor("000066CC"),
-                toCSSColor("00CCCCFF"),
-                toCSSColor("00000080"),
-                toCSSColor("00FF00FF"),
-                toCSSColor("00FFFF00"),
-                toCSSColor("0000FFFF"),
-                toCSSColor("00800080"),
-                toCSSColor("00800000"),
-                toCSSColor("00008080"),
-                toCSSColor("000000FF"),
-                toCSSColor("0000CCFF"),
-                toCSSColor("00CCFFFF"),
-                toCSSColor("00CCFFCC"),
-                toCSSColor("00FFFF99"),
-                toCSSColor("0099CCFF"),
-                toCSSColor("00FF99CC"),
-                toCSSColor("00CC99FF"),
-                toCSSColor("00FFCC99"),
-                toCSSColor("003366FF"),
-                toCSSColor("0033CCCC"),
-                toCSSColor("0099CC00"),
-                toCSSColor("00FFCC00"),
-                toCSSColor("00FF9900"),
-                toCSSColor("00FF6600"),
-                toCSSColor("00666699"),
-                toCSSColor("00969696"),
-                toCSSColor("00003366"),
-                toCSSColor("00339966"),
-                toCSSColor("00003300"),
-                toCSSColor("00333300"),
-                toCSSColor("00993300"),
-                toCSSColor("00993366"),
-                toCSSColor("00333399"),
-                toCSSColor("00333333"),
-                toCSSColor("00FFFFFF"), // System Foreground
-                toCSSColor("00000000") // System Background
-            ],
             namedStyles  : [],
             inlineStyles : []
         };
@@ -438,12 +435,7 @@
         var xf = null;
         parse(zip, "xl/styles.xml", {
             enter: function(tag, attrs, closed) {
-                if (this.is(SEL_INDEXED_COLOR)) {
-                    styles.colors = [];
-                } else if (this.is(SEL_COLOR)) {
-                    styles.colors.push(toCSSColor(attrs.rgb));
-                }
-                else if (this.is(SEL_NUM_FMT)) {
+                if (this.is(SEL_NUM_FMT)) {
                     styles.numFmts[attrs.numFmtId] = attrs;
                 }
                 else if (this.is(SEL_FONT)) {
@@ -548,26 +540,25 @@
             if (attrs.rgb) {
                 return toCSSColor(attrs.rgb);
             } else if (attrs.indexed) {
-                return new IndexedColor(integer(attrs.indexed));
+                return INDEXED_COLORS[integer(attrs.indexed)];
             } else if (attrs.theme) {
                 var themeColor = theme.colorScheme[integer(attrs.theme)];
                 var color = kendo.parseColor(themeColor);
 
                 if (attrs.tint) {
-                    color = color.toHSV();
-                    color.v = color.v * (1 + parseFloat(attrs.tint));
+                    color = color.toHSL();
+
+                    var tint = parseFloat(attrs.tint);
+                    if (tint < 0) {
+                        color.l = color.l * (1 + tint);
+                    } else {
+                        color.l = color.l * (1 - tint) + (100 - 100 * (1 - tint));
+                    }
                 }
 
                 return color.toCssRgba();
             }
         }
-
-        function IndexedColor(index) {
-            this.index = index;
-        }
-        IndexedColor.prototype.toString = IndexedColor.prototype.valueOf = function() {
-            return styles.colors[this.index];
-        };
 
         return styles;
     }
@@ -629,5 +620,6 @@
     }
 
     kendo.spreadsheet.readExcel = readExcel;
+    kendo.spreadsheet._readStyles = readStyles;
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
