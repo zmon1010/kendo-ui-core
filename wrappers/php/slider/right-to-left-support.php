@@ -16,9 +16,15 @@ $rangeslider->min(0)
             ->largeStep(2)
             ->tickPlacement('both');
 ?>
-<div class="k-rtl">
+
+<div class="demo-section k-content k-rtl">
+    <h4>RTL Slider</h4>
     <?= $slider->render() ?>
-    <br/><br/><br/>
+</div>
+
+<div class="demo-section k-content k-rtl">
+    <h4>RTL RangeSlider</h4>
     <?= $rangeslider->render() ?>
 </div>
+
 <?php require_once '../include/footer.php'; ?>

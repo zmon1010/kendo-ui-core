@@ -5,46 +5,58 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header" style="width: 200px;">
-    <span class="configHead">Slider API Functions</span>
-    <ul class="options">
+<div class="box wide">
+    <div class="box-col">
+        <h4>Slider API Functions</h4>
+        <ul class="options">
+            <li>
+                <button class="k-button" id="enableSlider">Enable</button>
+                <button class="k-button" id="disableSlider">Disable</button>
+            </li>
+            <li>
+                <input type="text" id="newValue" value="1" class="k-textbox" />
+                <button class="k-button" id="setSliderValue">Set value</button>
+            </li>
+            <li>
+                <button class="k-button" id="getSliderValue">Get value</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>RangeSlider API Functions</h4>
+        <ul class="options">
+            <li>
+                <button class="k-button" id="enableRangeSlider">Enable</button>
+                <button class="k-button" id="disableRangeSlider">Disable</button>
+            </li>
+            <li>
+                <input type="text" id="startValue" value="1" class="k-textbox" />
+                <button class="k-button" id="setStartValue">Set selection start</button> &nbsp; | &nbsp;
+                <input type="text" id="endValue" value="1" class="k-textbox" />
+                <button class="k-button" id="setEndValue">Set selection end</button>
+            </li>
+            <li>
+                <button class="k-button" id="getRangeSliderValue">Get value</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="demo-section k-content">
+    <ul id="fieldlist">
         <li>
-            <input type="text" id="newValue" value="1" class="k-textbox" />
-            <button class="k-button" id="setSliderValue">Set value</button>
+            <label>Temperature</label>
+            <kendo:slider name="slider" class="temperature" min="0" max="10" smallStep="1" largeStep="5">
+            </kendo:slider>
         </li>
         <li>
-            <button class="k-button" id="getSliderValue">Get value</button>
-        </li>
-        <li>
-            <button class="k-button" id="enableSlider">Enable</button> or <button class="k-button" id="disableSlider">Disable</button>
-        </li>
-    </ul>
-    <span class="configTitle">RangeSlider API Functions</span>
-    <ul class="options">
-        <li>
-            <input type="text" id="startValue" value="1" class="k-textbox" />
-            <button class="k-button" id="setStartValue">Set selection start</button>
-        </li>
-        <li>
-            <input type="text" id="endValue" value="1" class="k-textbox" />
-            <button class="k-button" id="setEndValue">Set selection end</button>
-        </li>
-        <li>
-            <button class="k-button" id="getRangeSliderValue">Get value</button>
-        </li>
-        <li>
-            <button class="k-button" id="enableRangeSlider">Enable</button> or <button class="k-button" id="disableRangeSlider">Disable</button>
+            <label>Humidity</label>
+            <kendo:rangeSlider name="rangeSlider" class="humidity" min="0" max="10" smallStep="1" largeStep="5" tickPlacement="both">
+            </kendo:rangeSlider>
         </li>
     </ul>
 </div>
 
-<div id="climateCtrl">
-    <kendo:slider name="slider" class="temperature" min="0" max="30" smallStep="1" largeStep="10">
-	</kendo:slider>
-	
-	<kendo:rangeSlider name="rangeSlider" class="humidity" min="0" max="10" smallStep="1" largeStep="2" tickPlacement="both">
-    </kendo:rangeSlider>
-</div>
 
 <script>
     $(document).ready(function() {
@@ -129,18 +141,34 @@
 </script>
 
 <style>
-    #climateCtrl {
-        display: inline-block;
-        width: 245px;
-        height: 167px;
-        margin: 20px 20px 20px 40px;
-        padding: 102px 0 0 156px;
-        background: url('<c:url value="/resources/web/slider/climateController.png" />') transparent no-repeat 0 0;
-    }
-    .humidity {
-        margin: 67px 0 0 15px;
-        width: 170px;
-    }
+   .options .k-textbox {
+       width: 40px;
+       margin-left: 0;
+
+   }
+   .k-button {
+       min-width: 80px;
+   }
+
+   #fieldlist {
+       margin: 0 0 -2em;
+       padding: 0;
+       text-align: center;
+   }
+
+   #fieldlist > li {
+       list-style: none;
+       padding-bottom: 2em;
+   }
+
+   #fieldlist label {
+       display: block;
+       padding-bottom: 1em;
+       font-weight: bold;
+       text-transform: uppercase;
+       font-size: 12px;
+       color: #444;
+   }
 </style>
 
 <demo:footer />

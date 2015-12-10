@@ -5,11 +5,13 @@
 
 <demo:header />
 
-<div id="wrapper">
+<div class="demo-section k-content">
+	<h4>Balance</h4>
 	<kendo:slider name="slider" increaseButtonTitle="Right" decreaseButtonTitle="Left" min="-10" max="10"
-				  smallStep="2" largeStep="5" value="0" class="balSlider">
+				  smallStep="2" largeStep="1" value="0" class="balSlider">
 	</kendo:slider>
 
+    <h4 style="padding-top: 2em;">Equalizer</h4>
     <div id="equalizer">
 	    <kendo:slider name="eqSlider1" orientation="vertical" min="-20" max="20"
 				  smallStep="1" largeStep="20" showButtons="false" value="10" class="eqSlider">
@@ -34,32 +36,28 @@
 </div>
 	
 <style>
-    #wrapper {
-        width: 300px;
-        height: 255px;
-        padding: 45px 0 0 0;
-        margin: 0 auto;
-        background: url('<c:url value="/resources/web/slider/eqBack.png" />') no-repeat 0 0;
+    .demo-section {
         text-align: center;
     }
+
     #equalizer {
-        margin-top: 75px;
         padding-right: 15px;
     }
+
     div.balSlider {
-        width: 240px;
+        width: 100%;
     }
+
     div.balSlider .k-slider-selection {
         display: none;
     }
+
     div.eqSlider {
         display: inline-block;
-        margin: 0 12px;
+        margin: 1em;
         height: 122px;
+        vertical-align: top;
     }
-
-    .k-ie7 div.eqSlider {display:inline;zoom:1;}
-                
 </style>
 
 <demo:footer />

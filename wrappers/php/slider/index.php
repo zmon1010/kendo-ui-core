@@ -4,7 +4,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 $slider = new \Kendo\UI\Slider('slider');
 
-$slider->increaseButtonTitle('Right')
+$slider->attr('class', 'balSlider')
+       ->increaseButtonTitle('Right')
        ->decreaseButtonTitle('Left')
        ->min(-10)
        ->max(10)
@@ -28,8 +29,10 @@ function eqSlider($index, $value) {
 }
 
 ?>
-<div id="wrapper">
+<div class="demo-section k-content">
+    <h4>Balance</h4>
     <?= $slider->render() ?>
+    <h4 style="padding-top: 2em;">Equalizer</h4>
     <div id="equalizer">
         <?= eqSlider(1, 10)->render() ?>
         <?= eqSlider(2, 5)->render() ?>
@@ -40,31 +43,28 @@ function eqSlider($index, $value) {
 </div>
 
 <style>
-    #wrapper {
-        width: 300px;
-        height: 255px;
-        padding: 45px 0 0 0;
-        margin: 0 auto;
-        background: url('../content/web/slider/eqBack.png') no-repeat 0 0;
+    .demo-section {
         text-align: center;
     }
+
     #equalizer {
-        margin-top: 75px;
         padding-right: 15px;
     }
+
     div.balSlider {
-        width: 240px;
+        width: 100%;
     }
+
     div.balSlider .k-slider-selection {
         display: none;
     }
+
     div.eqSlider {
         display: inline-block;
-        margin: 0 12px;
+        margin: 1em;
         height: 122px;
+        vertical-align: top;
     }
-
-    .k-ie7 div.eqSlider {display:inline;zoom:1;}
-
 </style>
+
 <?php require_once '../include/footer.php'; ?>

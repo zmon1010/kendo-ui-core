@@ -5,12 +5,17 @@
 
 <demo:header />
 
-<div class="k-rtl">
+<div class="demo-section k-content k-rtl">
+    <h4>RTL Slider</h4>
     <kendo:slider name="slider" class="temperature" min="0" max="30" smallStep="1" largeStep="10" value="18">
 	</kendo:slider>
-    <br /><br /><br />	
+</div>
+
+<div class="demo-section k-content k-rtl">
+    <h4>RTL RangeSlider</h4>
 	<kendo:rangeSlider name="rangeSlider" class="humidity" min="0" max="10" smallStep="1" largeStep="2" tickPlacement="both">
     </kendo:rangeSlider>
 </div>
+
 
 <demo:footer />

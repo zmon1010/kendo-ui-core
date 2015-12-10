@@ -22,11 +22,25 @@ $rangeslider->attr('class', 'humidity')
             ->largeStep(2)
             ->tickPlacement('both');
 ?>
-<div id="climateCtrl">
-    <?= $slider->render() ?>
-    <?= $rangeslider->render() ?>
+
+<div class="demo-section k-content">
+    <ul id="fieldlist">
+        <li>
+            <label>Temperature</label>
+            <?= $slider->render() ?>
+        </li>
+        <li>
+            <label>Humidity</label>
+            <?= $rangeslider->render() ?>
+        </li>
+    </ul>
 </div>
-<div class="console"></div>
+
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
+
 <script>
     function sliderOnSlide(e) {
         kendoConsole.log("Slide :: new slide value is: " + e.value);
@@ -45,17 +59,25 @@ $rangeslider->attr('class', 'humidity')
     }
 </script>
 <style>
-    #climateCtrl {
-        width: 245px;
-        height: 167px;
-        margin: 30px auto;
-        padding: 102px 0 0 156px;
-        background: url('../content/web/slider/climateController.png') transparent no-repeat 0 0;
-    }
-    .humidity {
-        margin: 67px 0 0 15px;
-        width: 170px;
-    }
+   #fieldlist {
+       margin: 0 0 -2em;
+       padding: 0;
+       text-align: center;
+   }
+
+   #fieldlist > li {
+       list-style: none;
+       padding-bottom: 2em;
+   }
+
+   #fieldlist label {
+       display: block;
+       padding-bottom: 1em;
+       font-weight: bold;
+       text-transform: uppercase;
+       font-size: 12px;
+       color: #444;
+   }
 </style>
 
 <?php require_once '../include/footer.php'; ?>

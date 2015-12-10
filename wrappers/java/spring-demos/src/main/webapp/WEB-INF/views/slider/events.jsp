@@ -5,14 +5,27 @@
 
 <demo:header />
 
-<div id="climateCtrl">
-    <kendo:slider name="slider" class="temperature" change="sliderOnChange" slide="sliderOnSlide"
+<div class="demo-section k-content">
+    <ul id="fieldlist">
+        <li>
+            <label>Temperature</label>
+            <kendo:slider name="slider" class="temperature" change="sliderOnChange" slide="sliderOnSlide"
                   min="0" max="30" smallStep="1" largeStep="10" value="18">
-	</kendo:slider>
-	
-	<kendo:rangeSlider name="rangeSlider" class="humidity" change="rangeSliderOnChange" slide="rangeSliderOnSlide"
+            </kendo:slider>
+        </li>
+        <li>
+            <label>Humidity</label>
+            <kendo:rangeSlider name="rangeSlider" class="humidity" change="rangeSliderOnChange" slide="rangeSliderOnSlide"
                   min="0" max="10" smallStep="1" largeStep="2" tickPlacement="both">
-    </kendo:rangeSlider>
+            </kendo:rangeSlider>
+        </li>
+    </ul>
+</div>
+
+
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
 </div>
 
 <script>
@@ -35,19 +48,25 @@
 
 
 <style>
-	#climateCtrl {
-	    width: 245px;
-	    height: 167px;
-	    margin: 30px auto;
-	    padding: 102px 0 0 156px;
-	    background: url('<c:url value="/resources/web/slider/climateController.png" />') transparent no-repeat 0 0;
-	}
-	.humidity {
-	    margin: 67px 0 0 15px;
-	    width: 170px;
-	}
-</style>
+   #fieldlist {
+       margin: 0 0 -2em;
+       padding: 0;
+       text-align: center;
+   }
 
-<div class="console"></div>
+   #fieldlist > li {
+       list-style: none;
+       padding-bottom: 2em;
+   }
+
+   #fieldlist label {
+       display: block;
+       padding-bottom: 1em;
+       font-weight: bold;
+       text-transform: uppercase;
+       font-size: 12px;
+       color: #444;
+   }
+</style>
 
 <demo:footer />

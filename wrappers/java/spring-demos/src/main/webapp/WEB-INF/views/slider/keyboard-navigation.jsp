@@ -5,106 +5,116 @@
 
 <demo:header />
 
-<div id="climateCtrl">
+<div class="demo-section k-content">
+    <h4>Slider</h4>
     <kendo:slider name="slider" class="temperature" min="0" max="30" smallStep="1" largeStep="10" value="18">
 	</kendo:slider>
-	
+</div>
+<div class="demo-section k-content">
+    <h4>RangeSlider</h4>
 	<kendo:rangeSlider name="rangeSlider" class="humidity" min="0" max="10" smallStep="1" largeStep="2" tickPlacement="both">
     </kendo:rangeSlider>
 </div>
 
-<ul class="keyboard-legend" style="padding-top: 25px">
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign">Alt</span>
-            +
-            <span class="key-button">W</span>
-        </span>
-        <span class="button-descr">
-            Focuses the slider (clicking on it or tabbing also work)
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign">Alt</span>
-            +
-            <span class="key-button">Q</span>
-        </span>
-        <span class="button-descr">
-            Focuses the range slider (clicking on it or tabbing also work)
-        </span>
-    </li>
-</ul>
+<div class="box wide">
+    <div class="box-col">
+    <h4>Focus</h4>
+    <ul class="keyboard-legend" style="padding-top: 25px">
+        <li>
+            <span class="button-preview">
+                <span class="key-button leftAlign">Alt</span>
+                +
+                <span class="key-button">W</span>
+            </span>
+            <span class="button-descr">
+                Focuses the slider (clicking on it or tabbing also work)
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button leftAlign">Alt</span>
+                +
+                <span class="key-button">Q</span>
+            </span>
+            <span class="button-descr">
+                Focuses the range slider (clicking on it or tabbing also work)
+            </span>
+        </li>
+    </ul>
+    </div>
 
-<h4>Supported keys and user actions</h4>
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Right</span>
-        </span>
-        <span class="button-descr">
-            Increments the value by a small step (equivalent to Up)
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Left</span>
-        </span>
-        <span class="button-descr">
-            Decrements the value by a small step (equivalent to Down)
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider">Page Up</span>
-        </span>
-        <span class="button-descr">
-            Increments the value by a large step
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider">Page Down</span>
-        </span>
-        <span class="button-descr">
-            Decrements the value by a large step
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Home</span>
-        </span>
-        <span class="button-descr">
-            Move the draghandle to the min value
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">End</span>
-        </span>
-        <span class="button-descr">
-            Move the draghandle to the max value
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Tab</span>
-        </span>
-        <span class="button-descr">
-            Tabs to second range slider draghandle or next focusable page element
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign">Shift</span>
-            +
-            <span class="key-button">Tab</span>
-        </span>
-        <span class="button-descr">
-            Tabs to first range slider draghandle or previous focusable page element
-        </span>
-    </li>
-</ul>
+    <div class="box-col">
+    <h4>Supported keys and user actions</h4>
+    <ul class="keyboard-legend">
+        <li>
+            <span class="button-preview">
+                <span class="key-button">Right</span>
+            </span>
+            <span class="button-descr">
+                Increments the value by a small step (equivalent to Up)
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">Left</span>
+            </span>
+            <span class="button-descr">
+                Decrements the value by a small step (equivalent to Down)
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button wider">Page Up</span>
+            </span>
+            <span class="button-descr">
+                Increments the value by a large step
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button wider">Page Down</span>
+            </span>
+            <span class="button-descr">
+                Decrements the value by a large step
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">Home</span>
+            </span>
+            <span class="button-descr">
+                Move the draghandle to the min value
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">End</span>
+            </span>
+            <span class="button-descr">
+                Move the draghandle to the max value
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">Tab</span>
+            </span>
+            <span class="button-descr">
+                Tabs to second range slider draghandle or next focusable page element
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button leftAlign">Shift</span>
+                +
+                <span class="key-button">Tab</span>
+            </span>
+            <span class="button-descr">
+                Tabs to first range slider draghandle or previous focusable page element
+            </span>
+        </li>
+    </ul>
+    </div>
+</div>
 
 <script>
 	$(document.body).keydown(function(e) {
@@ -115,19 +125,5 @@
 	    }
 	});
 </script>
-
-<style>
-	#climateCtrl {
-	    width: 245px;
-	    height: 167px;
-	    margin: 30px auto;
-	    padding: 102px 0 0 156px;
-	    background: url('<c:url value="/resources/web/slider/climateController.png" />') transparent no-repeat 0 0;
-	}
-	.humidity {
-	    margin: 67px 0 0 15px;
-	    width: 170px;
-	}
-</style>
 
 <demo:footer />

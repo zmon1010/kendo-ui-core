@@ -2,21 +2,69 @@
 require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
-<div id="climateCtrl">
+
+<div class="box wide">
+    <div class="box-col">
+        <h4>Slider API Functions</h4>
+        <ul class="options">
+            <li>
+                <button class="k-button" id="enableSlider">Enable</button>
+                <button class="k-button" id="disableSlider">Disable</button>
+            </li>
+            <li>
+                <input type="text" id="newValue" value="1" class="k-textbox" />
+                <button class="k-button" id="setSliderValue">Set value</button>
+            </li>
+            <li>
+                <button class="k-button" id="getSliderValue">Get value</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>RangeSlider API Functions</h4>
+        <ul class="options">
+            <li>
+                <button class="k-button" id="enableRangeSlider">Enable</button>
+                <button class="k-button" id="disableRangeSlider">Disable</button>
+            </li>
+            <li>
+                <input type="text" id="startValue" value="1" class="k-textbox" />
+                <button class="k-button" id="setStartValue">Set selection start</button> &nbsp; | &nbsp;
+                <input type="text" id="endValue" value="1" class="k-textbox" />
+                <button class="k-button" id="setEndValue">Set selection end</button>
+            </li>
+            <li>
+                <button class="k-button" id="getRangeSliderValue">Get value</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="demo-section k-content">
+    <ul id="fieldlist">
+        <li>
+            <label>Temperature</label>
 <?php
 $slider = new \Kendo\UI\Slider('slider');
 
 $slider->attr('class', 'temperature');
 
 echo $slider->render();
-
+?>
+        </li>
+        <li>
+            <label>Humidity</label>
+<?php
 $rangeslider = new \Kendo\UI\RangeSlider('rangeslider');
 
 $rangeslider->attr('class', 'humidity');
 
 echo $rangeslider->render();
 ?>
+        </li>
+    </ul>
 </div>
+
 <script>
     $(document).ready(function() {
         var slider = $("#slider").data("kendoSlider"),
@@ -98,51 +146,36 @@ echo $rangeslider->render();
         });
     });
 </script>
-<div class="configuration k-widget k-header" style="width: 200px;">
-    <span class="configHead">Slider API Functions</span>
-    <ul class="options">
-        <li>
-            <input type="text" id="newValue" value="1" class="k-textbox" />
-            <button class="k-button" id="setSliderValue">Set value</button>
-        </li>
-        <li>
-            <button class="k-button" id="getSliderValue">Get value</button>
-        </li>
-        <li>
-            <button class="k-button" id="enableSlider">Enable</button> or <button class="k-button" id="disableSlider">Disable</button>
-        </li>
-    </ul>
-    <span class="configTitle">RangeSlider API Functions</span>
-    <ul class="options">
-        <li>
-            <input type="text" id="startValue" value="1" class="k-textbox" />
-            <button class="k-button" id="setStartValue">Set selection start</button>
-        </li>
-        <li>
-            <input type="text" id="endValue" value="1" class="k-textbox" />
-            <button class="k-button" id="setEndValue">Set selection end</button>
-        </li>
-        <li>
-            <button class="k-button" id="getRangeSliderValue">Get value</button>
-        </li>
-        <li>
-            <button class="k-button" id="enableRangeSlider">Enable</button> or <button class="k-button" id="disableRangeSlider">Disable</button>
-        </li>
-    </ul>
-</div>
 
 <style>
-    #climateCtrl {
-        float: left;
-        width: 245px;
-        height: 167px;
-        margin: 20px 20px 20px 40px;
-        padding: 102px 0 0 156px;
-        background: url('../content/web/slider/climateController.png') transparent no-repeat 0 0;
-    }
-    .humidity {
-        margin: 67px 0 0 15px;
-        width: 170px;
-    }
+   .options .k-textbox {
+       width: 40px;
+       margin-left: 0;
+
+   }
+   .k-button {
+       min-width: 80px;
+   }
+
+   #fieldlist {
+       margin: 0 0 -2em;
+       padding: 0;
+       text-align: center;
+   }
+
+   #fieldlist > li {
+       list-style: none;
+       padding-bottom: 2em;
+   }
+
+   #fieldlist label {
+       display: block;
+       padding-bottom: 1em;
+       font-weight: bold;
+       text-transform: uppercase;
+       font-size: 12px;
+       color: #444;
+   }
 </style>
+
 <?php require_once '../include/footer.php'; ?>
