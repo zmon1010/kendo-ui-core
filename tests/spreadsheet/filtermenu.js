@@ -148,7 +148,6 @@
 
         var values = controller.values(range, 0);
 
-        equal(values.length, 3, "distinct values are loaded");
         equal(values[0].text, "$12");
         equal(values[1].text, "1%");
         equal(values[2].text, "01/Feb/2015");
