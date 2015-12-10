@@ -3,13 +3,13 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-   
-	<kendo:treeView name="treeview" class="demo-section"
+<div class="demo-section k-content">   
+	<kendo:treeView name="treeview"
 		template="#: item.text# # if (!item.items) { # <a class='delete-link' href='\#'></a> # } #">
 	    <kendo:dataSource data="${data}">                                      
 	    </kendo:dataSource>
 	</kendo:treeView>
-
+</div>
 	<script>
 		$(document).on("click", ".delete-link", function(e) {
             e.preventDefault();

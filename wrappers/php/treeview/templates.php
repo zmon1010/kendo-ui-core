@@ -4,10 +4,9 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 
 ?>
-
+<div class="demo-section k-content">
 <?php
     $treeview = new \Kendo\UI\TreeView('treeview');
-    $treeview->attr('class', 'demo-section');
 
     $treeview->template(
         '#: item.text #'.
@@ -55,7 +54,7 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $treeview->render();
 ?>
-
+</div>
 <script>
     // Delete button behavior
     $(document).on("click", ".delete-link", function(e) {

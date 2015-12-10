@@ -8,17 +8,16 @@
         <a class='delete-link' href='\#'></a>
     # } #
 </script>
-
-<%=Html.Kendo().TreeView()
-    .Name("treeview")
-    .TemplateId("treeview-template")
-    .HtmlAttributes(new { @class = "demo-section" })    
-    .DataSource(source =>
-    {
-        source.Read(read => read.Action("Read_TemplateData", "TreeView"));
-    })    
-%>
-
+<div class="demo-section k-content">
+    <%=Html.Kendo().TreeView()
+        .Name("treeview")
+        .TemplateId("treeview-template")
+        .DataSource(source =>
+        {
+            source.Read(read => read.Action("Read_TemplateData", "TreeView"));
+        })    
+    %>
+</div>
 <script type="text/javascript">
 
     $(document).on("click", ".delete-link", function (e) {
