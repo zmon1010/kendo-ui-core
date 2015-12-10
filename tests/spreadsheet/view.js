@@ -21,7 +21,7 @@
     }
 
     function firstDataCell(element) {
-        return element.find(".k-spreadsheet-data td").eq(0);
+        return element.find(".k-spreadsheet-cell").eq(0);
     }
 
     test("renders border color", function() {
@@ -50,11 +50,11 @@
 
     test("renders border color on cells with background and no border", function() {
         sheet.fromJSON(singleCell({ background: "rgb(255, 0, 0)" }));
-
-        equal(firstDataCell(element).css("borderBottomColor"), "rgb(255, 0, 0)");
-        equal(firstDataCell(element).css("borderRightColor"), "rgb(255, 0, 0)");
-        equal(firstDataCell(element).css("borderLeftColor"), "rgb(255, 0, 0)");
-        equal(firstDataCell(element).css("borderTopColor"), "rgb(255, 0, 0)");
+        // note: the border color will be a darker version of the background color
+        equal(firstDataCell(element).css("borderBottomColor"), "rgb(230, 0, 0)");
+        equal(firstDataCell(element).css("borderRightColor"), "rgb(230, 0, 0)");
+        equal(firstDataCell(element).css("borderLeftColor"), "rgb(230, 0, 0)");
+        equal(firstDataCell(element).css("borderTopColor"), "rgb(230, 0, 0)");
     });
 
     test("borderLeft renders right border on previous cell", function() {
