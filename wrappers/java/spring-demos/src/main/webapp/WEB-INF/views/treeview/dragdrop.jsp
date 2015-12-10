@@ -6,7 +6,8 @@
 
 <demo:header />
 
-    <div class="treeview-back">
+ <div class="demo-section k-content">
+        <h4>Treeview One</h4>
         <kendo:treeView name="treeview-left" dragAndDrop="true">
             <kendo:treeView-items>
                 <kendo:treeView-item text="Furniture" expanded="true">
@@ -25,9 +26,9 @@
                 </kendo:treeView-item>
             </kendo:treeView-items>
         </kendo:treeView>
-    </div>
-
-    <div class="treeview-back">
+	
+	<h4 style="padding-top: 2em;">Treeview Two</h4>
+	
         <kendo:treeView name="treeview-right" dragAndDrop="true">
             <kendo:treeView-items>
                 <kendo:treeView-item text="Storage" expanded="true">
@@ -49,18 +50,10 @@
     </div>
 
     <style>
-        .treeview-back
-        {
-            float: left;
-            width: 220px;
-            margin: 30px;
-            padding: 20px;
-            -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.45), inner 0 0 30px rgba(0,0,0,0.07);
-            -webkit-border-radius: 8px;
-            -moz-border-radius: 8px;
-            border-radius: 8px;
-        }
-    </style>
+       #treeview-left,
+       #treeview-right
+       {
+           overflow: visible;
+       }
+   	</style>
 <demo:footer />

@@ -5,9 +5,8 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<p>Drag and drop items within one TreeView or between the two.</p>
-
-<div class="treeview-back">
+<div class="demo-section k-content">
+   <h4>Treeview One</h4>
 
     <%= Html.Kendo().TreeView()
         .Name("treeview-left")
@@ -24,7 +23,6 @@
                 });
 
             treeview.Add().Text("Decor")
-                .Expanded(true)
                 .Items(furniture =>
                 {
                     furniture.Add().Text("Bed Linen");
@@ -34,9 +32,7 @@
         })
     %>
 
-</div>
-
-<div class="treeview-back">
+<h4 style="padding-top: 2em;">Treeview Two</h4>
 
     <%= Html.Kendo().TreeView()
         .Name("treeview-right")
@@ -53,7 +49,6 @@
                 });
 
             treeview.Add().Text("Lights")
-                .Expanded(true)
                 .Items(furniture =>
                 {
                     furniture.Add().Text("Ceiling");
@@ -66,21 +61,11 @@
 </div>
 
 <style>
-
-.treeview-back 
-{
-    float: left;
-    width: 220px;
-    margin: 30px;
-    padding: 20px;
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.45), inner 0 0 30px rgba(0,0,0,0.07);
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-}
-
+    #treeview-left,
+    #treeview-right
+    {
+        overflow: visible;
+    }
 </style>
 
 </asp:Content>

@@ -5,7 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section">
+<div class="demo-section k-content">
+    <h4>Treeview One</h4>
 
 <?php
     $treeview = new \Kendo\UI\TreeView('treeview-left');
@@ -33,7 +34,7 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $treeview->render();
 ?>
-
+<h4 style="padding-top: 2em;">Treeview Two</h4>
 <?php
     $treeview = new \Kendo\UI\TreeView('treeview-right');
     $treeview->dragAndDrop(true);
@@ -66,19 +67,7 @@ require_once '../lib/Kendo/Autoload.php';
     #treeview-left,
     #treeview-right
     {
-        float: left;
-        width: 220px;
         overflow: visible;
-    }
-    .demo-section {
-        width: 500px;
-    }
-    .demo-section:after {
-        content: ".";
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
     }
 </style>
 
