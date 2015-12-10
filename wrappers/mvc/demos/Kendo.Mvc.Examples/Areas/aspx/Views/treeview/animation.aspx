@@ -1,9 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<% using (Html.BeginForm("Animation", "TreeView", FormMethod.Post, new { @class = "configuration k-widget k-header" }))
+<% using (Html.BeginForm("Animation", "TreeView", FormMethod.Post))
   {%>
-    <span class="configHead">Animation Settings</span>
+   <div class="box">
+     <h4>Animation Settings</h4>
      <ul class="options">
         <li>
             <%= Html.RadioButton("animation", "toggle") %>
@@ -20,13 +21,14 @@
     </ul>
 
     <button class="k-button">Apply</button>
+   </div>
   <% }
 %>
 
-<div class="demo-section">
+
+<div class="demo-section k-content">
     <%:Html.Kendo().TreeView()
         .Name("treeview")
-        .HtmlAttributes(new { style = "width:200px;" })
         .Animation(animation =>
         {
             animation.Expand(open =>
@@ -87,10 +89,9 @@
     %>
 </div>
 
-<style>
-    .demo-section {
-        width: 200px;
-    }
+ <style>
+    /* demo style, do not show treeview scrollbars */
+    div.k-treeview { overflow: visible; }
 </style>
 </asp:Content>
 

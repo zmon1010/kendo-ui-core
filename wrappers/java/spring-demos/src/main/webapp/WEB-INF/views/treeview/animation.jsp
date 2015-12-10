@@ -4,8 +4,9 @@
 
 <demo:header />
 
-<form class="configuration k-widget k-header" method="Post">
-    <span class="configHead">Animation Settings</span>
+<form method="Post">
+   <div class="box">
+    <h4>Animation Settings</h4>
     <ul class="options">
         <li>
             <input id="toggle" name="animation" type="radio" ${ animation == "toggle" ? "checked=\"checked\"" : "" } value="toggle" /> <label for="toggle">toggle animation</label>
@@ -20,9 +21,10 @@
     </ul>
 
     <button class="k-button">Apply</button>
+   </div>
 </form>
 
-<div class="demo-section">
+<div class="demo-section k-content">
     <kendo:treeView name="treeview">
 	    <kendo:treeView-animation>
 	    	<kendo:treeView-animation-expand effects="${animationConfig}"/>
@@ -63,10 +65,9 @@
     </kendo:treeView>
 </div>
 
-<style>
-   .demo-section {
-       width: 200px;
-   }
+ <style>
+    /* demo style, do not show treeview scrollbars */
+    div.k-treeview { overflow: visible; }
 </style>
 
 <demo:footer />   

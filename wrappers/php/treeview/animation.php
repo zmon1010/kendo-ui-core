@@ -5,8 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Animation Settings</span>
+<div class="box">
+    <h4>Animation Settings</h4>
     <ul class="options">
         <li>
             <input id="toggle" name="animation" type="radio" />
@@ -23,11 +23,10 @@ require_once '../lib/Kendo/Autoload.php';
     </ul>
 </div>
 
-<div class="demo-section">
+<div class="demo-section k-content">
 <?php
     $treeview = new \Kendo\UI\TreeView('treeview');
 
-    $treeview->attr('style', 'width: 200px;');
 
     $furniture = new \Kendo\UI\TreeViewItem('Furniture');
     $furniture->addItem(
@@ -71,7 +70,7 @@ require_once '../lib/Kendo/Autoload.php';
     $(document).ready(function() {
         var original = $("#treeview").clone(true);
 
-        $(".configuration input").change( function() {
+        $(".box input").change( function() {
             var treeView = $("#treeview"),
                 clone = original.clone(true);
 
@@ -82,7 +81,7 @@ require_once '../lib/Kendo/Autoload.php';
         });
 
         var initTreeView = function () {
-            $("#treeview").width(200)
+            $("#treeview")
                 .kendoTreeView({
                     animation: {
                         expand: {
@@ -99,10 +98,9 @@ require_once '../lib/Kendo/Autoload.php';
     });
 </script>
 
-<style>
-    .demo-section {
-        width: 200px;
-    }
+ <style>
+    /* demo style, do not show treeview scrollbars */
+    div.k-treeview { overflow: visible; }
 </style>
 
 <?php require_once '../include/footer.php'; ?>
