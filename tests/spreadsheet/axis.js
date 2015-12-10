@@ -82,6 +82,12 @@
         equal(axis.hidden(1), true);
     });
 
+    test("hidden return true if value was hidden twice", function() {
+        axis.hide(1);
+        axis.hide(1);
+        equal(axis.hidden(1), true);
+    });
+
     test("values are not hidden by default", function() {
         equal(axis.hidden(1), false);
     });

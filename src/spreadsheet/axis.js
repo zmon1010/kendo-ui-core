@@ -62,9 +62,11 @@
         },
 
         hide: function(index) {
-            var value = this.value(index, index);
-            this._hidden.value(index, index, value);
-            this.value(index, index, 0);
+            if (!this.hidden(index)) {
+                var value = this.value(index, index);
+                this._hidden.value(index, index, value);
+                this.value(index, index, 0);
+            }
         },
 
         hidden: function(index) {
