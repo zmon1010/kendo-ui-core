@@ -726,7 +726,10 @@
                 var pdfOptions = {
                     paperSize: this.options.paperSize,
                     margin: this.options.margin,
-                    landscape: this.options.landscape
+                    landscape: this.options.landscape,
+                    guidelines: this.options.guidelines,
+                    hCenter: this.options.centerHorizontally,
+                    vCenter: this.tions.centerVertically
                 };
                 switch(this.options.area) {
                 case "workbook":

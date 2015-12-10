@@ -127,7 +127,7 @@
                 margins: "Margins",
                 orientation: "Orientation",
                 print: "Print",
-                gridlines: "Gridlines",
+                guidelines: "Guidelines",
                 center: "Center",
                 horizontally: "Horizontally",
                 vertically: "Vertically"
@@ -1259,7 +1259,7 @@
                 margin:             this.options.margin,
                 margins:            this.options.margins,
                 landscape:          this.options.landscape,
-                gridlines:          this.options.gridlines,
+                guidelines:         this.options.guidelines,
                 centerHorizontally: this.options.centerHorizontally,
                 centerVertically:   this.options.centerVertically,
                 fileName: function() {
@@ -1319,7 +1319,7 @@
                 {value: {bottom: "1in", left: "1in", right: "1in", top: "1in"}, text: "Wide"}
             ],
             landscape: false,
-            gridlines: true,
+            guidelines: true,
             centerHorizontally: true,
             centerVertically: true,
             width: 350,
@@ -1367,7 +1367,7 @@
                      "</div>" +
                      "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.print + ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<label><input type='checkbox' data-bind='checked: gridlines'/>" + MESSAGES.saveAsDialog.labels.gridlines + "</label>" +
+                         "<label><input type='checkbox' data-bind='checked: guidelines'/>" + MESSAGES.saveAsDialog.labels.guidelines+ "</label>" +
                      "</div>" +
                      "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.center+ ":</label></div>" +
                      "<div class='k-edit-field'>" +
