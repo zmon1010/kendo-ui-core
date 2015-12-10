@@ -23,10 +23,10 @@
         return ref;
     }
 
-    var DUMMY_VIEW = { ref: rangeRef(0,0, 100, 100), top: 0, left: 0 };
+    var DUMMY_VIEW = {ref: rangeRef(0,0, 100, 100), top: 0, left: 0};
 
     function createPane(row, column, rowCount, columnCount) {
-        return new Pane(sheet, sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
+        return new Pane(sheet, sheet._grid.pane({row: row, column: column, rowCount: rowCount, columnCount: columnCount}));
     }
 
     test("selects the range", function() {
@@ -290,7 +290,9 @@
         var selections = pane.renderSelection().children;
         var activeCell = selections[1];
 
-        equal(activeCell.attr.className, "k-spreadsheet-active-cell k-left k-top k-single");
+        ok(activeCell.attr.className.indexOf("k-single") > -1)
+        ok(activeCell.attr.className.indexOf("k-top") > -1)
+        ok(activeCell.attr.className.indexOf("k-left") > -1)
     });
 
     test("top left selection is marked as such", function() {
@@ -303,7 +305,8 @@
         var selections = pane.renderSelection().children;
         var activeCell = selections[1];
 
-        equal(activeCell.attr.className, "k-spreadsheet-active-cell k-left k-single");
+        ok(activeCell.attr.className.indexOf("k-single") > -1)
+        ok(activeCell.attr.className.indexOf("k-left") > -1)
     });
 
     test("top left selection is marked as such", function() {
@@ -316,6 +319,8 @@
         var selections = pane.renderSelection().children;
         var activeCell = selections[1];
 
-        equal(activeCell.attr.className, "k-spreadsheet-active-cell k-left k-bottom k-single");
+        ok(activeCell.attr.className.indexOf("k-single") > -1)
+        ok(activeCell.attr.className.indexOf("k-left") > -1)
+        ok(activeCell.attr.className.indexOf("k-bottom") > -1)
     });
 })();
