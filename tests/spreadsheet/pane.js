@@ -26,7 +26,7 @@
         var pane = createPane(0, 0, 4, 4);
         pane.refresh();
 
-        var header = pane.render(0, 0).children[7];
+        var header = pane.render(0, 0).children[6];
 
         equal(header.children[1].children.length, 1);
 
@@ -39,30 +39,31 @@
 
     test("doesn't render hidden columns", function() {
         sheet.range("C1:C1").value("foo");
+        sheet.range("B1:B1").value("bar");
         sheet.hideColumn(1);
 
         var pane = createPane(0, 0, 3, 3);
         pane.refresh();
 
-        var table = pane.render(0, 0).children[0];
+        var data = pane.render(0, 0).children[0];
 
-        equal(table.children[0].children.length, 2);
+        var cells = data.children.filter(function(element) { return element.attr.className.indexOf('k-spreadsheet-cell') > - 1 });
 
-        var tds = table.children[1].children[0].children;
-
-        equal(tds.length, 2);
-        equal(text(tds[1]), "foo");
+        equal(cells.length, 1);
+        equal(text(cells[0]), "foo");
     });
 
     test("doesn't render hidden rows", function() {
         sheet.hideRow(1);
+        sheet.range("A1:A3").value("bar");
 
         var pane = createPane(0, 0, 3, 3);
         pane.refresh();
 
-        var table = pane.render(0, 0).children[0];
+        var data = pane.render(0, 0).children[0];
+        var cells = data.children.filter(function(element) { return element.attr.className.indexOf('k-spreadsheet-cell') > - 1 });
 
-        equal(table.children[1].children.length, 2);
+        equal(cells.length, 2);
     });
 
     test("adds background color style to the cell", function() {
