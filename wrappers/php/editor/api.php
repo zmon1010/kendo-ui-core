@@ -5,27 +5,33 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Get value</span>
+<div class="box wide">
+    <div class="box-col">
+    <h4>Get value</h4>
     <ul class="options">
         <li>
             <button id="get" class="k-button">Get value</button>
         </li>
     </ul>
-    <span class="configTitle">Set value</span>
+    </div>
+    <div class="box-col">
+    <h4>Set value</h4>
     <ul class="options">
         <li>
             <textarea id="value" style="width: 200px;" rows="4" cols="20">new value</textarea>
+        </li>
+        <li>
             <button id="set" class="k-button">Set value</button>
         </li>
     </ul>
+    </div>
 </div>
 
 <?php
     $editor = new \Kendo\UI\Editor('editor');
 
     $editor
-        ->attr('style', 'width:490px;height:400px')
+        ->attr('style', 'height:400px')
         ->startContent();
 ?>
     &lt;p&gt;&lt;img src=&quot;../content/web/editor/kendo-ui-web.png&quot; alt=&quot;Editor for ASP.NET MVC logo&quot; style=&quot;display:block;margin-left:auto;margin-right:auto;&quot; /&gt;&lt;/p&gt;

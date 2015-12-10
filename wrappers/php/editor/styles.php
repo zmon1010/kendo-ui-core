@@ -5,13 +5,13 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="configuration k-widget k-header" style="float:none;max-width:none;margin:0 0 2em;">
-    <span class="infoHead">Information</span>
-    <p>
-        The following demo shows how to use the Editor's style tool, which provides the ability to customize the widget content by means of custom
-        CSS classes and styling, and a CSS file registered in the Editor iframe document.
-    </p>
-</div>
+<div class="box wide">
+        <h4>Information</h4>
+        <p>
+            The following demo shows how to use the Editor's style tool, which provides the ability to customize the widget content by means of custom
+            CSS classes and styling, and a CSS file registered in the Editor iframe document.
+        </p>
+    </div>
 
 <?php
     $editor = new \Kendo\UI\Editor('editor');
@@ -37,7 +37,7 @@ require_once '../lib/Kendo/Autoload.php';
     $editor->stylesheets(array("../content/web/editor/editorStyles.css"));
 
     $editor
-        ->attr('style', 'width:740px;height:400px')
+        ->attr('style', 'width:100%;height:400px')
         ->startContent();
 ?>
     &lt;p&gt;&lt;img src=&quot;../content/web/editor/kendo-ui-web.png&quot; alt=&quot;Editor for ASP.NET MVC logo&quot; style=&quot;display:block;margin-left:auto;margin-right:auto;&quot; /&gt;&lt;/p&gt;

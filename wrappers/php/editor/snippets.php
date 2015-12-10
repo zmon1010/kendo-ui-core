@@ -23,7 +23,6 @@ require_once '../lib/Kendo/Autoload.php';
     $editor->addTool($insertHtml);
 
     $editor
-        ->attr('style', 'width:740px;height:440px')
         ->content('Put the cursor after this text and use the "Insert HTML" tool. ');
 
     echo $editor->render();

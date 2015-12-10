@@ -5,7 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section">
+<div class="demo-section wide k-header">
 <?php
     $editor = new \Kendo\UI\Editor('topEditor');
 
@@ -22,7 +22,7 @@ require_once '../lib/Kendo/Autoload.php';
         ->startContent();
 ?>
     <h2>
-        Comprehensive <br />HTML5/JavaScript framework <br />
+        Comprehensive HTML5/JavaScript framework <br />
         for modern web and mobile app development
     </h2>
     <p>
@@ -57,7 +57,7 @@ require_once '../lib/Kendo/Autoload.php';
         ->startContent();
 ?>
     <img src="../content/web/editor/web.png" />
-    <h3>Web app <br />development <br />framework</h3>
+    <h3>Web app <br />development framework</h3>
     <p>
         Kendo UI Web provides you with a simple and consistent
         programming interface, polished and innovative
@@ -86,7 +86,7 @@ require_once '../lib/Kendo/Autoload.php';
         ->startContent();
 ?>
     <img src="../content/web/editor/mobile.png" />
-    <h3>Mobile app <br />development <br />framework</h3>
+    <h3>Mobile app <br />development framework</h3>
     <p>
         Build native-like mobile apps for iPhone, Android and Blackberry,
         and deliver unmatched user experience without any extra coding.
@@ -112,7 +112,7 @@ require_once '../lib/Kendo/Autoload.php';
         ->startContent();
 ?>
     <img src="../content/web/editor/dataviz.png" />
-    <h3>Rich UI widgets <br />for interactive <br />data visualization </h3>
+    <h3>Rich UI widgets for interactive <br />data visualization </h3>
     <p>
         Create interactive data visualization with HTML5 and JavaScript,
         build rich web apps that look and behave native on any platform or device.
@@ -131,24 +131,6 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 
 <style>
-    .demo-section {
-        padding: 40px;
-    }
-
-    #example .configuration {
-        max-width: none;
-        margin: 0;
-        float: none;
-    }
-
-    .configuration a {
-        color: inherit;
-    }
-
-    .configuration a:hover {
-        text-decoration: none;
-    }
-
     .k-editor-inline {
         margin: 0;
         padding: 21px 21px 11px;
@@ -165,7 +147,7 @@ require_once '../lib/Kendo/Autoload.php';
 
     #topEditor h2, .column h3 {
         font-size: 24px;
-        color: #e15613;
+        color: #2db245;
         font-family: "Droid Sans",DroidSansWeb,"Segoe UI","Lucida Sans Unicode",Arial,Helvetica,sans-serif;
     }
 
@@ -176,7 +158,7 @@ require_once '../lib/Kendo/Autoload.php';
     .column {
         display: inline-block;
         vertical-align: top;
-        width: 170px;
+        max-width: 250px;
     }
 
     .column a {

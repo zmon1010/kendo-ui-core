@@ -5,16 +5,11 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Events log</span>
-    <div class="console"></div>
-</div>
-
 <?php
     $editor = new \Kendo\UI\Editor('editor');
 
     $editor
-        ->attr('style', 'width:490px;height:400px')
+        ->attr('style', 'height:350px')
         ->startContent();
 ?>
     &lt;p&gt;&lt;img src=&quot;../content/web/editor/kendo-ui-web.png&quot; alt=&quot;Editor for ASP.NET MVC logo&quot; style=&quot;display:block;margin-left:auto;margin-right:auto;&quot; /&gt;&lt;/p&gt;
@@ -51,6 +46,11 @@ require_once '../lib/Kendo/Autoload.php';
     echo $editor->render();
 ?>
 
+<div class="box wide">
+    <h4>Events log</h4>
+    <div class="console"></div>
+</div>
+
 <script>
     function onChange(e) {
         kendoConsole.log("value change");
@@ -65,20 +65,6 @@ require_once '../lib/Kendo/Autoload.php';
         kendoConsole.log("paste");
     }
 </script>
-
-<style>
-    .configuration {
-        height: 376px;
-        width: 200px;
-        margin-bottom: -21px;
-    }
-    .configuration .console {
-        background-color: transparent;
-        border: 0;
-        height: 342px;
-        overflow: auto;
-    }
-</style>
 
 <?php require_once '../include/footer.php'; ?>
 

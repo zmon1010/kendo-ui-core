@@ -9,7 +9,7 @@ require_once '../lib/Kendo/Autoload.php';
     $editor = new \Kendo\UI\Editor('editor');
 
     $editor
-        ->attr('style', 'width:740px;height:440px')
+        ->attr('style', 'height:440px')
         ->resizable(true)
         ->startContent();
 ?>

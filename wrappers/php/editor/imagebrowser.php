@@ -5,7 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="box">
+<div class="box wide">
     <p>Allowed file types for the Image browser are: jpg, jpeg, gif, png</p>
     <p>Allowed file types for the File browser for this demo are: txt, doc, docx, xls, xlsx, ppt, pptx, zip, rar, jpg, jpeg, gif, png</p>
 </div>
@@ -64,7 +64,7 @@ require_once '../lib/Kendo/Autoload.php';
 
     // add content
     $editor
-        ->attr('style', 'width:740px;height:440px')
+        ->attr('style', 'height:440px')
         ->startContent();
 ?>
     &lt;p&gt;&lt;img src=&quot;../content/web/editor/kendo-ui-web.png&quot; alt=&quot;Editor for ASP.NET MVC logo&quot; style=&quot;display:block;margin-left:auto;margin-right:auto;&quot; /&gt;&lt;/p&gt;

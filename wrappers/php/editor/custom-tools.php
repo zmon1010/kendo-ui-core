@@ -5,8 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="configuration k-widget k-header" style="float:none;max-width:none;margin:0 0 2em;">
-    <span class="infoHead">Information</span>
+<div class="box wide">
+    <h4>Information</h4>
     <p>
         The following demo shows how to customize some of the native Editor tools (font size, font name and block format) by modifying the tools' item
         collections, as well as how to create completely custom tools.
