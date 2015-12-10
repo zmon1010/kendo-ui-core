@@ -5,7 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<p class="box">Resize the page to see how the responsive panel hides content.</p>
+<p class="box wide">Resize the page to see how the responsive panel hides content.</p>
 
 <div class="dash-head">
     <!-- toggle button for responsive panel, hidden on large screens -->

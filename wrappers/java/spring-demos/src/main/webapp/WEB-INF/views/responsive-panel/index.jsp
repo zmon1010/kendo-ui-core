@@ -4,7 +4,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
 
-    <p class="box">Resize the page to see how the responsive panel hides content.</p>
+    <p class="box wide">Resize the page to see how the responsive panel hides content.</p>
 
     <div class="dash-head">
         <!-- toggle button for responsive panel, hidden on large screens -->
