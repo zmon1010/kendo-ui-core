@@ -8,8 +8,8 @@
         setup: function() {
             ss = new Spreadsheet();
             ss.fill({
-                A1: 1, B1: 2, C1: 3,
-                A2: 4, B2: 5, C2: 6,
+                A1: 1, B1: 2, C1: 3, D1: 42005,
+                A2: 4, B2: 5, C2: 6, D2: 42007,
                 A3: 7, B3: 8, C3: 9,
                 A4: '=""', B4: '=" "',
 
@@ -480,4 +480,71 @@
 
         f.exec(ss, 100000000000, null, validationCallback);
     });
+
+    test("validation parse dates correctly", 6, function(){
+        var customOptions = {
+            from: "1/1/2015",
+            to: "1/3/2015",
+            comparerType: "between",
+            dataType: "date",
+            type: "reject"
+        };
+
+        var validationCallback = function(e) {
+            ok(e === false);
+        };
+
+        var validationCallback2 = function(e) {
+            ok(e === true);
+        };
+
+        var f = validation.compile(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var parsedOutput = f.toJSON();
+
+        equal(parsedOutput.from, customOptions.from);
+        equal(parsedOutput.to, customOptions.to);
+        equal(parsedOutput.dataType, customOptions.dataType);
+        equal(parsedOutput.type, customOptions.type);
+
+        f.exec(ss, 10, "m/d/yyyy", validationCallback);
+
+        delete f.value;
+
+        f.exec(ss, 42006, "m/d/yyyy", validationCallback2);
+    });
+
+    test("validation work with formulas and date type correctly", 6, function(){
+        var customOptions = {
+            from: "D1",
+            to: "D2",
+            comparerType: "between",
+            dataType: "date",
+            type: "reject"
+        };
+
+        var validationCallback = function(e) {
+            ok(e === false);
+        };
+
+        var validationCallback2 = function(e) {
+            ok(e === true);
+        };
+
+        var f = validation.compile(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var parsedOutput = f.toJSON();
+
+        equal(parsedOutput.from, customOptions.from);
+        equal(parsedOutput.to, customOptions.to);
+        equal(parsedOutput.dataType, customOptions.dataType);
+        equal(parsedOutput.type, customOptions.type);
+
+        f.exec(ss, 10, "m/d/yyyy", validationCallback);
+
+        delete f.value;
+
+        f.exec(ss, 42006, "m/d/yyyy", validationCallback2);
+    });
+
 })();

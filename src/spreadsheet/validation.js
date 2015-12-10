@@ -14,6 +14,7 @@
     var calc = spreadsheet.calc;
     var Class = kendo.Class;
     var TRANSPOSE_FORMAT = "_matrix({0})";
+    var DATE_FORMAT = 'DATEVALUE("{0}")';
 
     calc.runtime.defineFunction("_matrix", function(m){
         return m;
@@ -32,6 +33,23 @@
         if (validation.from) {
             if (validation.dataType === "list") {
                 validation.from = kendo.format(TRANSPOSE_FORMAT, validation.from);
+            }
+
+            if (validation.dataType === "date") {
+                var parsedFromDate = calc.runtime.parseDate(validation.from);
+
+                if (parsedFromDate) {
+                    validation.from = kendo.format(DATE_FORMAT, validation.from);
+                    validation.fromIsDateValue = true;
+                }
+
+                if (validation.to) {
+                    var parsedToDate = calc.runtime.parseDate(validation.to);
+                    if (parsedToDate) {
+                        validation.to = kendo.format(DATE_FORMAT, validation.to);
+                        validation.toIsDateValue = true;
+                    }
+                }
             }
 
             validation.from = calc.compile(calc.parseFormula(sheet, row, col, validation.from));
@@ -93,6 +111,8 @@
             this.comparerType =  options.comparerType; //greaterThan, EqaulTo etc
             this.type = options.type ? options.type : "warning"; //info, warning, reject
             this.allowNulls = options.allowNulls ? true : false;
+            this.fromIsDateValue = options.fromIsDateValue ? true : false;
+            this.toIsDateValue = options.toIsDateValue ? true : false;
 
             //TODO: address to be range / cell ref, and adjust it based on it
             this.sheet = options.sheet;
@@ -255,11 +275,26 @@
                 if (options.dataType === "list") {
                     options.from = options.from.replace(/^_matrix\((.*)\)$/i, "$1");
                 }
+
+                if (options.dataType === "date") {
+                    if (this.fromIsDateValue) {
+                        options.from = options.from.replace(/^DATEVALUE\("(.*)"\)$/i, "$1");
+                    }
+                }
             }
 
             if (options.to) {
                 options.to = options.to.toString();
+
+                if (options.dataType === "date") {
+                    if (this.toIsDateValue) {
+                        options.to = options.to.replace(/^DATEVALUE\("(.*)"\)$/i, "$1");
+                    }
+                }
             }
+
+
+
 
             return options;
         },
