@@ -1179,6 +1179,7 @@
                     top: view.rowOffset + "px"
                 }
             });
+            var rect = this._rectangle(view.ref);
             var layout = kendo.spreadsheet.print.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
             // draw axis first
             prev = null;
@@ -1189,7 +1190,7 @@
                         className: paneClassNames.vaxis,
                         style: {
                             left: x + "px",
-                            height: "2000px"
+                            height: rect.height + "px"
                         }
                     }));
                 }
@@ -1202,7 +1203,7 @@
                         className: paneClassNames.haxis,
                         style: {
                             top: y + "px",
-                            width: "2000px"
+                            width: rect.width + "px"
                         }
                     }));
                 }
