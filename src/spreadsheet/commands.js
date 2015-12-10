@@ -729,7 +729,7 @@
                     landscape: this.options.landscape,
                     guidelines: this.options.guidelines,
                     hCenter: this.options.centerHorizontally,
-                    vCenter: this.tions.centerVertically
+                    vCenter: this.options.centerVertically
                 };
                 switch(this.options.area) {
                 case "workbook":
