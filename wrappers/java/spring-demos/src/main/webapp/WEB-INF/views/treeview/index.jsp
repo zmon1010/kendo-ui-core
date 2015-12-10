@@ -5,7 +5,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />
-
+<div class="demo-section k-content">
     <kendo:treeView name="treeview">
         <kendo:treeView-items>
             <kendo:treeView-item text="My Web Site" spriteCssClass="folder" expanded="true">
@@ -36,12 +36,8 @@
             </kendo:treeView-item>
         </kendo:treeView-items>
     </kendo:treeView>
-
+</div>
     <style>
-        .demo-section {
-            width: 200px;
-        }
-
         #treeview .k-sprite {
             background-image: url("../resources/web/treeview/coloricons-sprite.png");
         }
