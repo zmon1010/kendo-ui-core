@@ -564,10 +564,10 @@
         },
         getState: function() {
             var sheet = this.range().sheet();
-            var currentFilter = sheet.filter();
+            var current = sheet.filter();
 
-            if (currentFilter) {
-                this._state = currentFilter.columns.filter(function(c) {
+            if (current) {
+                this._state = current.columns.filter(function(c) {
                     return c.index == this.column();
                 }.bind(this));
             }
@@ -575,22 +575,38 @@
         exec: function() {
             var range = this.range();
             var column = this.column();
-            var filter;
+            var current = range.sheet().filter();
+            var options;
+            var filterRule;
+            var exists = false;
 
             if (this.options.valueFilter) {
-                filter = new kendo.spreadsheet.ValueFilter(this.options.valueFilter);
+                filterRule = { column: column, filter: new kendo.spreadsheet.ValueFilter(this.options.valueFilter) };
             } else if (this.options.customFilter) {
-                filter = new kendo.spreadsheet.CustomFilter(this.options.customFilter);
+                filterRule = { column: column, filter: new kendo.spreadsheet.CustomFilter(this.options.customFilter) };
             }
 
             this.getState();
 
-            range.clearFilter(column);
+            if (current && current.ref.eq(range._ref) && current.columns.length) {
+                current.columns.forEach(function(element) {
+                    if (element.index === column) {
+                        exists = true;
+                    }
+                });
 
-            range.filter({
-                column: column,
-                filter: filter
-            });
+                options = current.columns.map(function(element) {
+                    return element.index === column ? filterRule : { column: element.index, filter: element.filter };
+                });
+
+                if (!exists) {
+                    options.push(filterRule);
+                }
+            } else {
+                options = filterRule;
+            }
+
+            range.filter(options);
         }
     });
 

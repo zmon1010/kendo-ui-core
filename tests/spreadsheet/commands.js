@@ -1022,6 +1022,70 @@
         equal(column.index, 1);
     });
 
+    test("exec adds filter if range is same but column is different", function() {
+        var range = sheet.range("A1:B4").filter(
+            { column: 0, filter: new kendo.spreadsheet.ValueFilter({ values: [ 2 ] }) }
+        );
+
+        var command = applyFilterCommand(
+            { column: 1, valueFilter: { values: [ 1 ] } }
+        );
+
+        command.range(range);
+        command.exec();
+
+        var columns = sheet.filter().columns;
+
+        equal(columns.length, 2);
+        equal(columns[0].index, 0);
+        equal(columns[1].index, 1);
+
+        ok(columns[0].filter.matches(2));
+        ok(columns[1].filter.matches(1));
+    });
+
+    test("exec replaces current filter if range is same and column is same", function() {
+        var range = sheet.range("A1:B4").filter(
+            { column: 0, filter: new kendo.spreadsheet.ValueFilter({ values: [ 2 ] }) }
+        );
+
+        var command = applyFilterCommand(
+            { column: 0, valueFilter: { values: [ 1 ] } }
+        );
+
+        command.range(range);
+        command.exec();
+
+        var columns = sheet.filter().columns;
+
+        equal(columns.length, 1);
+        equal(columns[0].index, 0);
+
+        ok(!columns[0].filter.matches(2));
+        ok(columns[0].filter.matches(1));
+    });
+
+    test("exec replaces current filter if range is different and column is different", function() {
+        sheet.range("A1:A3").filter(
+            { column: 0, filter: new kendo.spreadsheet.ValueFilter({ values: [ 2 ] }) }
+        );
+
+        var command = applyFilterCommand(
+            { column: 1, valueFilter: { values: [ 1 ] } }
+        );
+
+        command.range(sheet.range("A1:B3"));
+        command.exec();
+
+        var columns = sheet.filter().columns;
+
+        equal(columns.length, 1);
+        equal(columns[0].index, 1);
+
+        ok(!columns[0].filter.matches(2));
+        ok(columns[0].filter.matches(1));
+    });
+
     test("undo clears filter", function() {
         var command = applyFilterCommand({
             column: 1,
