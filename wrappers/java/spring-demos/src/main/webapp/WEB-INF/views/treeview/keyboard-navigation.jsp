@@ -3,7 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-<div class="demo-section">
+ <div class="demo-section k-content">
     <kendo:treeView name="treeview">
         <kendo:treeView-items>
             <kendo:treeView-item text="Furniture">
@@ -40,77 +40,84 @@
         </kendo:treeView-items>
     </kendo:treeView>
 </div>
-    <ul class="keyboard-legend">
-        <li>
-            <span class="button-preview">
-                <span class="key-button leftAlign wider">Alt</span>
-                +
-                <span class="key-button">w</span>
-            </span>
-            <span class="button-descr">
-                focuses the widget
-            </span>
-        </li>
-    </ul>
-
-    <ul class="keyboard-legend">
-        <li>
-            <span class="button-preview">
-                <span class="key-button wider leftAlign">up arrow</span>
-            </span>
-            <span class="button-descr">
-                highlights previous item
-            </span>
-        </li>
-        <li>
-            <span class="button-preview">
-                <span class="key-button wider leftAlign">left arrow</span>
-            </span>
-            <span class="button-descr">
-                collapses the item
-            </span>
-        </li>
-        <li>
-            <span class="button-preview">
-                <span class="key-button wider leftAlign">down arrow</span>
-            </span>
-            <span class="button-descr">
-                highlights next item
-            </span>
-        </li>
-        <li>
-            <span class="button-preview">
-                <span class="key-button wider leftAlign">right arrow</span>
-            </span>
-            <span class="button-descr">
-                expands the item
-            </span>
-        </li>
-        <li>
-            <span class="button-preview">
-                <span class="key-button">home</span>
-            </span>
-            <span class="button-descr">
-                highlights first item in the list
-            </span>
-        </li>
-        <li>
-            <span class="button-preview">
-                <span class="key-button">end</span>
-            </span>
-            <span class="button-descr">
-                highlights last item in the list
-            </span>
-        </li>
-        <li>
-            <span class="button-preview">
-                <span class="key-button wider rightAlign">enter</span>
-            </span>
-            <span class="button-descr">
-                selects highlighted item
-            </span>
-        </li>
-    </ul>
+    <div class="box">
+        <div class="box-col">
+            <h4>Focus</h4>
+            <ul class="keyboard-legend">
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button leftAlign wider">Alt</span>
+                        +
+                        <span class="key-button">w</span>
+                    </span>
+                    <span class="button-descr">
+                        focuses the widget
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div class="box-col">
+            <h4>Supported keys and user actions</h4>
+            <ul class="keyboard-legend">
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button wider leftAlign">up arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        highlights previous item
+                    </span>
+                </li>
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button wider leftAlign">left arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        collapses the item
+                    </span>
+                </li>
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button wider leftAlign">down arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        highlights next item
+                    </span>
+                </li>
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button wider leftAlign">right arrow</span>
+                    </span>
+                    <span class="button-descr">
+                        expands the item
+                    </span>
+                </li>
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button">home</span>
+                    </span>
+                    <span class="button-descr">
+                        highlights first item in the list
+                    </span>
+                </li>
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button">end</span>
+                    </span>
+                    <span class="button-descr">
+                        highlights last item in the list
+                    </span>
+                </li>
+                <li>
+                    <span class="button-preview">
+                        <span class="key-button wider rightAlign">enter</span>
+                    </span>
+                    <span class="button-descr">
+                        selects highlighted item
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <script>
         $(document).ready(function() {
@@ -122,11 +129,5 @@
             });
         });
     </script>
-
-    <style>
-        .demo-section {
-            width: 200px;
-        }
-    </style>
     
 <demo:footer />
