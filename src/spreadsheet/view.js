@@ -80,7 +80,7 @@
         ].join(" ");
     }
 
-    function drawCell(collection, cell, cls) {
+    function drawCell(collection, cell, cls, hBorders, vBorders) {
         if (!cls && !kendo.spreadsheet.draw.shouldDrawCell(cell)) {
             return;
         }
@@ -140,27 +140,48 @@
 
         if (cell.borderLeft) {
             style.borderLeft = cellBorder(cell.borderLeft);
-        } else if (defaultBorder) {
+            if (vBorders) {
+                vBorders[cell.left] = true;
+            }
+        } else if (defaultBorder && vBorders && !vBorders[cell.left]) {
             style.borderLeft = defaultBorder;
-            style.backgroundClip = "padding-box";
+        } else {
+            left++;
+            width--;
         }
+
         if (cell.borderTop) {
             style.borderTop = cellBorder(cell.borderTop);
-        } else if (defaultBorder) {
+            if (hBorders) {
+                hBorders[cell.top] = true;
+            }
+        } else if (defaultBorder && hBorders && !hBorders[cell.top]) {
             style.borderTop = defaultBorder;
-            style.backgroundClip = "padding-box";
+        } else {
+            top++;
+            height--;
         }
+
         if (cell.borderRight) {
             style.borderRight = cellBorder(cell.borderRight);
-        } else if (defaultBorder) {
+            if (vBorders) {
+                vBorders[cell.right] = true;
+            }
+        } else if (defaultBorder && vBorders && !vBorders[cell.right]) {
             style.borderRight = defaultBorder;
-            style.backgroundClip = "padding-box";
+        } else {
+            width--;
         }
+
         if (cell.borderBottom) {
             style.borderBottom = cellBorder(cell.borderBottom);
-        } else if (defaultBorder) {
+            if (hBorders) {
+                hBorders[cell.bottom] = true;
+            }
+        } else if (defaultBorder && hBorders && !hBorders[cell.bottom]) {
             style.borderBottom = defaultBorder;
-            style.backgroundClip = "padding-box";
+        } else {
+            height--;
         }
 
         style.left = left + "px";
@@ -1223,8 +1244,11 @@
                     }));
                 }
             });
+            var vBorders = {}, hBorders = {};
             layout.cells.forEach(function(cell){
-                drawCell(cont.children, cell);
+                var hb = hBorders[cell.col] || (hBorders[cell.col] = {});
+                var vb = vBorders[cell.row] || (vBorders[cell.row] = {});
+                drawCell(cont.children, cell, null, hb, vb);
             });
             return cont;
         },
