@@ -4,49 +4,48 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<%= Html.Kendo().TreeView()
-    .Name("treeview")
-    .Checkboxes(true)
-    .HtmlAttributes(new { @class = "demo-section", style = "width: 200px" })
-    .DragAndDrop(true)
-    .Events(events => events
-        .Select("onSelect")
-        .Check("onCheck")
-        .Change("onChange")
-        .Collapse("onCollapse")
-        .Expand("onExpand")
-        .DragStart("onDragStart")
-        .Drag("onDrag")
-        .Drop("onDrop")
-        .DragEnd("onDragEnd")
-    )
-    .Items(treeview =>
-    {
-        treeview.Add().Text("Furniture")
-            .Expanded(true)
-            .Items(furniture =>
-            {
-                furniture.Add().Text("Tables & Chairs");
-                furniture.Add().Text("Sofas");
-                furniture.Add().Text("Occasional Furniture");
-            });
+<div class="demo-section k-content">
+    <%= Html.Kendo().TreeView()
+        .Name("treeview")
+        .Checkboxes(true)
+        .DragAndDrop(true)
+        .Events(events => events
+            .Select("onSelect")
+            .Check("onCheck")
+            .Change("onChange")
+            .Collapse("onCollapse")
+            .Expand("onExpand")
+            .DragStart("onDragStart")
+            .Drag("onDrag")
+            .Drop("onDrop")
+            .DragEnd("onDragEnd")
+        )
+        .Items(treeview =>
+        {
+            treeview.Add().Text("Furniture")
+                .Expanded(true)
+                .Items(furniture =>
+                {
+                    furniture.Add().Text("Tables & Chairs");
+                    furniture.Add().Text("Sofas");
+                    furniture.Add().Text("Occasional Furniture");
+                });
 
-        treeview.Add().Text("Decor")
-            .Expanded(false)
-            .Items(furniture =>
-            {
-                furniture.Add().Text("Bed Linen");
-                furniture.Add().Text("Curtains & Blinds");
-                furniture.Add().Text("Carpets");
-            });
+            treeview.Add().Text("Decor")
+                .Expanded(false)
+                .Items(furniture =>
+                {
+                    furniture.Add().Text("Bed Linen");
+                    furniture.Add().Text("Curtains & Blinds");
+                    furniture.Add().Text("Carpets");
+                });
 
-        treeview.Add().Text("Storage");
-    })
-%>
-
-<div class="demo-section">
-    <h3 class="title">Console log
-    </h3>
+            treeview.Add().Text("Storage");
+        })
+    %>
+</div>
+<div class="box">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 

@@ -3,7 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-<div class="demo-section" style="width: 200px">
+<div class="demo-section k-content">
     <kendo:treeView name="treeview" checkboxes="true" select="onSelect" check="onCheck" change="onChange" collapse="onCollapse" expand="onExpand"
                     dragAndDrop="true" dragstart="onDragStart" drag="onDrag" drop="onDrop" dragend="onDragEnd">
         <kendo:treeView-items>
@@ -25,11 +25,10 @@
         </kendo:treeView-items>
     </kendo:treeView>
 </div>
-    <div class="demo-section">
-        <h3 class="title">Console log
-        </h3>
-        <div class="console"></div>
-    </div>
+<div class="box">
+     <h4>Console log</h4>
+     <div class="console"></div>
+ </div>
     <script>
         function onSelect(e) {
             kendoConsole.log("Selected: " + this.text(e.node));

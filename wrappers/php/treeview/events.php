@@ -4,11 +4,9 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 
 ?>
-
+<div class="demo-section k-content">
 <?php
     $treeview = new \Kendo\UI\TreeView('treeview');
-    $treeview->attr('class', 'demo-section')
-             ->attr('style', 'width: 200px');
 
     $treeview->dragAndDrop(true);
 
@@ -56,7 +54,7 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $treeview->render();
 ?>
-
+</div>
 <script>
     function onSelect(e) {
         kendoConsole.log("Selecting: " + this.text(e.node));
@@ -102,6 +100,9 @@ require_once '../lib/Kendo/Autoload.php';
     }
 </script>
 
-<div class="console"></div>
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
 <?php require_once '../include/footer.php'; ?>
