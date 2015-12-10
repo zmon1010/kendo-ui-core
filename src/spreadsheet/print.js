@@ -588,7 +588,7 @@
         }
     };
 
-    spreadsheet.print = {
+    spreadsheet.draw = {
         doLayout       : doLayout,
         drawLayout     : drawLayout,
         shouldDrawCell : shouldDrawCell

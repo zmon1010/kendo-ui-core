@@ -81,7 +81,7 @@
     }
 
     function drawCell(collection, cell, cls) {
-        if (!cls && !kendo.spreadsheet.print.shouldDrawCell(cell)) {
+        if (!cls && !kendo.spreadsheet.draw.shouldDrawCell(cell)) {
             return;
         }
 
@@ -1180,7 +1180,7 @@
                 }
             });
             var rect = this._rectangle(view.ref);
-            var layout = kendo.spreadsheet.print.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
+            var layout = kendo.spreadsheet.draw.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
             // draw axis first
             prev = null;
             layout.xs.forEach(function(x){
