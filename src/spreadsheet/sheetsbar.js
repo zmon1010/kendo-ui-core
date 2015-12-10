@@ -19,9 +19,9 @@
             sheetsBarRemove: "k-spreadsheet-sheets-remove",
             sheetsBarItems: "k-spreadsheet-sheets-items",
             sheetsBarEditor: "k-spreadsheet-sheets-editor",
-            sheetsBarScrollable: "k-spreadsheet-sheets-scrollable",
-            sheetsBarNext: "k-spreadsheet-sheets-next",
-            sheetsBarPrev: "k-spreadsheet-sheets-prev",
+            sheetsBarScrollable: "k-tabstrip-scrollable",
+            sheetsBarNext: "k-tabstrip-next",
+            sheetsBarPrev: "k-tabstrip-prev",
             sheetsBarKItem: "k-item k-state-default",
             sheetsBarKActive: "k-state-active k-state-tab-on-top",
             sheetsBarKTextbox: "k-textbox",
@@ -117,9 +117,9 @@
                 var scrollNextButton;
                 var sheetsWrapper = that._sheetsWrapper();
                 var sheetsGroup = that._sheetsGroup();
-                var options = that.options;
                 var classNames = SheetsBar.classNames;
 
+                that._isRtl = kendo.support.isRtl(that.element);
                 that._sheets = sheets;
                 that._selectedIndex = selectedIndex;
 
@@ -133,18 +133,55 @@
                 wrapperOffsetWidth = sheetsWrapper[0].offsetWidth;
                 sheetsGroupScrollWidth = sheetsGroup[0].scrollWidth;
 
-                if (sheetsGroupScrollWidth > wrapperOffsetWidth && !that._scrollableModeActive) {
+                if (sheetsGroupScrollWidth > wrapperOffsetWidth) {
+                  if (!that._scrollableModeActive) {
+                      var addButtonWidth;
+                      var scrollPrevButtonWidth;
 
-                    that._nowScrollingSheets = false;
-                    that._isRtl = kendo.support.isRtl(that.element);
+                      that._nowScrollingSheets = false;
+                      that._renderHtml(isInEditMode, true);
 
-                    that._renderHtml(isInEditMode, true);
+                      scrollPrevButton = sheetsWrapper.children(DOT + classNames.sheetsBarPrev);
+                      scrollNextButton = sheetsWrapper.children(DOT + classNames.sheetsBarNext);
 
-                    scrollPrevButton = sheetsWrapper.children(DOT + classNames.sheetsBarPrev);
-                    scrollNextButton = sheetsWrapper.children(DOT + classNames.sheetsBarNext);
+                      addButtonWidth = $(DOT + classNames.sheetsBarAdd).outerWidth();
+                      scrollPrevButtonWidth = scrollPrevButton.outerWidth();
 
-                    sheetsGroup.css({ marginLeft: scrollPrevButton.outerWidth() + 9, marginRight: scrollNextButton.outerWidth() + 12 });
+                      scrollPrevButton.css({ marginLeft: scrollPrevButtonWidth + 4 });
+                      sheetsGroup.css({ marginLeft: scrollPrevButtonWidth + addButtonWidth + 11, marginRight: scrollNextButton.outerWidth() + 12 });
 
+                      that._scrollableModeActive = true;
+
+                      that._toggleScrollEvents(true);
+                      that._toggleScrollButtons();
+                  } else {
+                      that._toggleScrollButtons();
+                      that._renderHtml(isInEditMode, true);
+                  }
+                } else if (that._scrollableModeActive && sheetsGroupScrollWidth <= wrapperOffsetWidth) {
+                    that._scrollableModeActive = false;
+
+                    that._toggleScrollEvents(false);
+
+                    that._renderHtml(isInEditMode, false);
+
+                    that._sheetsGroup().css({ marginLeft: "", marginRight: "" });
+                } else {
+                    that._renderHtml(isInEditMode, false);
+                }
+            },
+
+            _toggleScrollEvents: function(toggle) {
+                var that = this;
+                var classNames = SheetsBar.classNames;
+                var options = that.options;
+                var scrollPrevButton;
+                var scrollNextButton;
+                var sheetsWrapper = that._sheetsWrapper();
+                scrollPrevButton = sheetsWrapper.children(DOT + classNames.sheetsBarPrev);
+                scrollNextButton = sheetsWrapper.children(DOT + classNames.sheetsBarNext);
+
+                if (toggle) {
                     scrollPrevButton.on("mousedown", function () {
                         that._nowScrollingSheets = true;
                         that._scrollSheetsByDelta(options.scrollable.distance * (that._isRtl ? 1 : -1));
@@ -158,20 +195,9 @@
                     scrollPrevButton.add(scrollNextButton).on("mouseup", function () {
                         that._nowScrollingSheets = false;
                     });
-
-                    that._scrollableModeActive = true;
-
-                    that._toggleScrollButtons();
-                } else if (that._scrollableModeActive && sheetsGroupScrollWidth <= wrapperOffsetWidth) {
-                    that._scrollableModeActive = false;
-
-                    sheetsWrapper.children(DOT + classNames.sheetsBarPrev).off();
-                    sheetsWrapper.children(DOT + classNames.sheetsBarNext).off();
-
-                    that._renderHtml(isInEditMode, false);
-                    that._sheetsGroup().css({ marginLeft: "", marginRight: "" });
                 } else {
-                    that._renderHtml(isInEditMode, false);
+                    scrollPrevButton.off();
+                    scrollNextButton.off();
                 }
             },
 
@@ -347,6 +373,7 @@
                 return options.scrollable && !isNaN(options.scrollable.distance);
             },
 
+            //TODO: ENABLE SCROLL TO SHEET:
             _scrollSheetsToItem: function (item) {
                 var that = this;
                 var sheetsGroup = that._sheetsGroup();

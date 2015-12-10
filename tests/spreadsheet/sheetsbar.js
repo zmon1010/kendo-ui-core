@@ -5,7 +5,7 @@
 
     module("Spreadsheet SheetsBar", {
         setup: function() {
-            element = $("<div style='width:200px' />").appendTo(QUnit.fixture);
+            element = $("<div style='width:400px' />").appendTo(QUnit.fixture);
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -304,27 +304,33 @@
         equal(buttons.length, 0);
     });
 
-    //test('scrolling buttons are rendered if sheet tabs do not fit', 3, function () {
-    //    var sheets = [
-    //        {name: function() {return "Sheet1"}},
-    //        {name: function() {return "Sheet2"}},
-    //        {name: function() {return "Sheet3"}},
-    //        {name: function() {return "Sheet4"}},
-    //        {name: function() {return "Sheet5"}},
-    //        {name: function() {return "Sheet6"}},
-    //        {name: function() {return "Sheet7"}},
-    //        {name: function() {return "Sheet8"}},
-    //        {name: function() {return "Sheet9"}},
-    //        {name: function() {return "Sheet10"}}
-    //    ];
+    test('scrolling buttons are rendered if sheet tabs do not fit', 3, function () {
+        var sheets = [
+            {name: function() {return "Sheet1"}},
+            {name: function() {return "Sheet2"}},
+            {name: function() {return "Sheet3"}},
+            {name: function() {return "Sheet4"}},
+            {name: function() {return "Sheet5"}},
+            {name: function() {return "Sheet6"}},
+            {name: function() {return "Sheet7"}},
+            {name: function() {return "Sheet8"}},
+            {name: function() {return "Sheet9"}},
+            {name: function() {return "Sheet10"}}
+        ];
 
-    //    createSheetsBar();
-    //    sheetsBar.renderSheets(sheets, 3);
+        createSheetsBar();
 
-    //    var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-button-bare");
+        sheetsBar.renderSheets(sheets, 3);
 
-    //    equal(buttons.length, 2);
-    //    ok(buttons.eq(0).is(".k-spreadsheet-sheets-prev"));
-    //    ok(buttons.eq(1).is(".k-spreadsheet-sheets-next"));
-    //});
+        //XX: Second render is not needed in spreadsheet due to side effect.
+        //XX: If needed update sheetsbar to calculate expected width of "ul" element
+        //    based on number of sheets passed and mean width of current sheet tabs.
+        sheetsBar.renderSheets(sheets, 3);
+
+        var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-button-bare");
+
+        equal(buttons.length, 2);
+        ok(buttons.eq(0).is(".k-tabstrip-prev"));
+        ok(buttons.eq(1).is(".k-tabstrip-next"));
+    });
 })();
