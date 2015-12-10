@@ -719,7 +719,7 @@
         exec: function() {
             if(this.options.extension === ".xlsx") {
                 this.options.workbook.saveAsExcel({
-                    fileName: this.options.fileName + this.options.extension,
+                    fileName: this.options.fileName + this.options.extension
                 });
             } else if(this.options.extension === ".pdf") {
                 var name = this.options.name;
