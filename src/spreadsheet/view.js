@@ -1088,36 +1088,38 @@
             children.push(this.renderFilterHeaders());
 
             if (grid.hasRowHeader) {
-                var rowHeader = new HtmlTable();
-                rowHeader.addColumn(grid.headerWidth);
-
-                view.rows.values.forEach(function(height) {
-                    rowHeader.addRow(height);
-                });
-
-                sheet.forEach(view.ref.leftColumn(), function(row) {
-                    var text = row + 1;
-                    rowHeader.addCell(row - view.ref.topLeft.row, text, {}, this.headerClassName(row, "row"));
+                var top = view.rowOffset;
+                sheet.forEach(view.ref.leftColumn(), function(row){
+                    if (!sheet.isHiddenRow(row)) {
+                        var text = row + 1, height = sheet.rowHeight(row);
+                        drawCell(children, {
+                            left   : -1,
+                            top    : top,
+                            width  : grid.headerWidth+1,
+                            height : height,
+                            value  : text + ""
+                        }, classNames.rowHeader + " " + this.headerClassName(row, "row"));
+                        top += height;
+                    }
                 }.bind(this));
-
-                children.push(rowHeader.toDomTree(0, view.rowOffset, classNames.rowHeader));
             }
 
             if (grid.hasColumnHeader) {
-                var columnHeader = new HtmlTable();
-
-                view.columns.values.forEach(function(width) {
-                    columnHeader.addColumn(width);
-                });
-
-                columnHeader.addRow(grid.headerHeight);
-
-                sheet.forEach(view.ref.topRow(), function(row, col) {
-                    var text = kendo.spreadsheet.Ref.display(null, Infinity, col);
-                    columnHeader.addCell(0, text, {}, this.headerClassName(col, "col"));
+                var left = view.columnOffset;
+                sheet.forEach(view.ref.topRow(), function(row, col){
+                    if (!sheet.isHiddenColumn(col)) {
+                        var text = kendo.spreadsheet.Ref.display(null, Infinity, col),
+                            width = sheet.columnWidth(col);
+                        drawCell(children, {
+                            left   : left,
+                            top    : -1,
+                            width  : width,
+                            height : grid.headerHeight+1,
+                            value  : text
+                        }, classNames.columnHeader + " " + this.headerClassName(col, "col"));
+                        left += width;
+                    }
                 }.bind(this));
-
-                children.push(columnHeader.toDomTree(view.columnOffset, 0, classNames.columnHeader));
             }
 
             if (sheet.resizeHandlePosition() && (grid.hasColumnHeader || grid.hasRowHeader)) {
@@ -1479,7 +1481,6 @@
 
     kendo.spreadsheet.View = View;
     kendo.spreadsheet.Pane = Pane;
-    kendo.spreadsheet.addCell = addCell;
 
     $.extend(true, View, { classNames: viewClassNames });
     $.extend(true, Pane, { classNames: paneClassNames });
