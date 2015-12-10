@@ -163,6 +163,26 @@
         equal(values[1].text, "bbb");
     });
 
+    test("gets checked items", function() {
+        /*
+             | A |  B  |
+             | 1 | foo |
+             | 2 | foo |
+             | 3 | bar |
+        */
+        sheet.range("A2:B4").values([[1, "foo"], [2, "foo"], [3, "bar"]]);
+        sheet.range("A1:B4").filter([
+            {column: 0, filter: new kendo.spreadsheet.ValueFilter({ values: [ 2, 3 ] }) }
+        ]);
+
+        range = sheet.range("A2:B4");
+
+        var values = controller.values(range, 1);
+
+        ok(values[0].text === "foo" && values[0].checked);
+        ok(values[1].text === "bar" && values[1].checked);
+    });
+
     test("gets empty values", function() {
         var range = sheet.range("A1:A2").values([ [], ["A2"] ]);
 

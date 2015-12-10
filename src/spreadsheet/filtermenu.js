@@ -210,8 +210,10 @@
 
             for (var i = 0; i < values.length; i++) {
                 if (!hash[values[i].value]) {
-                    hash[values[i].value] = true;
+                    hash[values[i].value] = values[i];
                     result.push(values[i]);
+                } else if (!hash[values[i].value].checked && values[i].checked) {
+                    hash[values[i].value].checked = true;
                 }
             }
 
