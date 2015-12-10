@@ -25,7 +25,9 @@ $tooltip = new \Kendo\Dataviz\UI\ChartTooltip();
 $tooltip->visible(true)
         ->format('{0}%')
         ->template('#= value # (σ = #= kendo.toString(high - low, "N2") #)');
-
+?>
+<div class="demo-section k-content wide">
+<?php 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->title(array('text' => 'GDP growth and standard deviation'))
       ->legend(array('visible' => false))
@@ -37,4 +39,5 @@ $chart->title(array('text' => 'GDP growth and standard deviation'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

@@ -49,7 +49,9 @@ $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
            ->addSortItem(array('field' => 'year', 'dir' => 'asc'));
-
+?>
+<div class="demo-section k-content wide">
+<?php 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->title(array('text' => 'Spain electricity production (GWh)'))
       ->dataSource($dataSource)
@@ -62,4 +64,5 @@ $chart->title(array('text' => 'Spain electricity production (GWh)'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

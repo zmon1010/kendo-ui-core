@@ -25,7 +25,9 @@ $tooltip->visible(true)
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->data(chart_united_states_internet_usage());
-
+?>
+<div class="demo-section k-content wide">
+<?php 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->title(array('text' => 'Internet Users in United States'))
       ->dataSource($dataSource)
@@ -45,4 +47,5 @@ $chart->title(array('text' => 'Internet Users in United States'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

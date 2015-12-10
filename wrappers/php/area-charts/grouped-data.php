@@ -57,7 +57,9 @@ $dataSource->transport($transport)
            ->schema($schema)
            ->addGroupItem(array('field' => 'symbol'))
            ->addSortItem(array('field' => 'date', 'dir' => 'asc'));
-
+?>
+<div class="demo-section k-content wide">
+<?php 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->title(array('text' => 'Stock Prices'))
       ->dataSource($dataSource)
@@ -70,4 +72,5 @@ $chart->title(array('text' => 'Stock Prices'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

@@ -39,7 +39,9 @@ $tooltip = new \Kendo\Dataviz\UI\ChartTooltip();
 $tooltip->visible(true)
         ->format('{0}%')
         ->template('#= series.name #: #= value #');
-
+?>
+<div class="demo-section k-content wide">
+<?php 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->title(array('text' => 'Browser Usage Trends'))
       ->legend(array('position' => 'bottom'))
@@ -54,4 +56,5 @@ $chart->title(array('text' => 'Browser Usage Trends'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

@@ -30,7 +30,9 @@ $tooltip = new \Kendo\Dataviz\UI\ChartTooltip();
 $tooltip->visible(true)
         ->format('{0}%')
         ->template('#= series.name #: #= value #');
-
+?>
+<div class="demo-section k-content wide">
+<?php 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->title(array('text' => 'Gross domestic product growth \n /GDP annual %/'))
       ->chartArea(array('background' => 'transparent'))
@@ -43,10 +45,5 @@ $chart->title(array('text' => 'Gross domestic product growth \n /GDP annual %/')
 
 echo $chart->render();
 ?>
-
-<style type="text/css">
-    #chart {
-        background: center no-repeat url('../content/shared/styles/world-map.png');
-    }
-</style>
+</div>
 <?php require_once '../include/footer.php'; ?>

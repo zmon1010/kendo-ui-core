@@ -59,7 +59,9 @@ $l100kmAxis->name('l100km')
 $categoryAxis = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
 $categoryAxis->categories(array('Mon', 'Tue', 'Wed', 'Thu', 'Fri'))
              ->axisCrossingValue(array(0, 0, 10, 10));
-
+?>
+<div class="demo-section k-content wide">
+<?php 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->title(array('text' => 'Hybrid car mileage report'))
       ->legend(array('position' => 'top'))
@@ -69,4 +71,5 @@ $chart->title(array('text' => 'Hybrid car mileage report'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

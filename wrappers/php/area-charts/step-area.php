@@ -18,7 +18,9 @@ $valueAxis->max(22)
 		  ->title(array('text' => 'voltage'))
           ->majorGridLines(array('visible' => false))
           ->visible(false);
-
+?>
+<div class="demo-section k-content wide">
+<?php 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->title(array('text' => 'A digital signal'))
       ->legend(array('visible' => false))
@@ -28,4 +30,5 @@ $chart->title(array('text' => 'A digital signal'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
