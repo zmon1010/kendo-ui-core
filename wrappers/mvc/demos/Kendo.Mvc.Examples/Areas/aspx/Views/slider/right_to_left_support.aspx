@@ -5,15 +5,26 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="k-rtl">
+<div class="demo-section k-content k-rtl">
+    <h4>RTL Slider</h4>
     <%= Html.Kendo().Slider()
             .Name("slider")
+            .Min(0)
+            .Max(30)
+            .SmallStep(1)
+            .LargeStep(10)
+            .Value(18)
     %>
+</div>
 
-<br /><br /><br />
-
+<div class="demo-section k-content k-rtl">
+    <h4>RTL RangeSlider</h4>
     <%= Html.Kendo().RangeSlider()
             .Name("rangeslider")
+            .Min(0)
+            .Max(10)
+            .SmallStep(1)
+            .LargeStep(10)
     %>
 </div>
 

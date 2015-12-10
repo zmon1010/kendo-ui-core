@@ -4,31 +4,44 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="climateCtrl">
-    <%= Html.Kendo().Slider()
-            .Name("slider")
-            .Min(0)
-            .Max(30)
-            .SmallStep(1)
-            .LargeStep(10)
-            .Value(18)
-            .Events(events => events
-                .Slide("sliderSlide")
-                .Change("sliderChange"))
-            .HtmlAttributes(new { @class = "temperature" })
-      %>
 
-     <%= Html.Kendo().RangeSlider()
-             .Name("rangeslider")
-             .Min(0)
-             .Max(10)
-             .SmallStep(1)
-             .LargeStep(10)
-             .Events(events => events
-                 .Slide("rangeSliderSlide")
-                 .Change("rangeSliderChange"))
-             .HtmlAttributes(new { @class = "humidity" })
-     %>
+<div class="demo-section k-content">
+    <ul id="fieldlist">
+        <li>
+            <label>Temperature</label>
+<%= Html.Kendo().Slider()
+        .Name("slider")
+        .Min(0)
+        .Max(30)
+        .SmallStep(1)
+        .LargeStep(10)
+        .Value(18)
+        .Events(events => events
+            .Slide("sliderSlide")
+            .Change("sliderChange"))
+        .HtmlAttributes(new { @class = "temperature" })
+  %>
+        </li>
+        <li>
+            <label>Humidity</label>
+<%= Html.Kendo().RangeSlider()
+        .Name("rangeslider")
+        .Min(0)
+        .Max(10)
+        .SmallStep(1)
+        .LargeStep(10)
+        .Events(events => events
+            .Slide("rangeSliderSlide")
+            .Change("rangeSliderChange"))
+        .HtmlAttributes(new { @class = "humidity" })
+%>
+        </li>
+    </ul>
+</div>
+
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
 </div>
 
 <script>
@@ -50,18 +63,24 @@
 </script>
 
 <style>
-    #climateCtrl {
-        width: 245px;
-        height: 167px;
-        margin: 30px auto;
-        padding: 102px 0 0 156px;
-        background: url(<%= Url.Content("~/Content/web/slider/climateController.png") %>) transparent no-repeat 0 0;
-    }
-    .humidity {
-        margin: 67px 0 0 15px;
-        width: 170px;
-    }
-</style>
+   #fieldlist {
+       margin: 0 0 -2em;
+       padding: 0;
+       text-align: center;
+   }
 
-<div class="console"></div>
+   #fieldlist > li {
+       list-style: none;
+       padding-bottom: 2em;
+   }
+
+   #fieldlist label {
+       display: block;
+       padding-bottom: 1em;
+       font-weight: bold;
+       text-transform: uppercase;
+       font-size: 12px;
+       color: #444;
+   }
+</style>
 </asp:Content>

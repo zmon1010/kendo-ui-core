@@ -4,7 +4,8 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="wrapper">
+<div class="demo-section k-content">
+    <h4>Balance</h4>
     <%= Html.Kendo().Slider()
             .Name("slider")
             .IncreaseButtonTitle("Right")
@@ -12,10 +13,11 @@
             .Min(-10)
             .Max(10)
             .SmallStep(2)
-            .LargeStep(5)
+            .LargeStep(1)
             .Value(0)
             .HtmlAttributes(new { @class = "balSlider" })
     %>
+    <h4 style="padding-top: 2em;">Equalizer</h4>
     <div id="equalizer">
         <%= Html.Kendo().Slider()
                 .Name("eqSlider1")
@@ -80,31 +82,27 @@
 </div>
 
 <style>
-    #wrapper {
-        width: 300px;
-        height: 255px;
-        padding: 45px 0 0 0;
-        margin: 0 auto;
-        background: url(<%= Url.Content("~/Content/web/slider/eqBack.png") %>) no-repeat 0 0;
+    .demo-section {
         text-align: center;
     }
+
     #equalizer {
-        margin-top: 75px;
         padding-right: 15px;
     }
+
     div.balSlider {
-        width: 240px;
+        width: 100%;
     }
+
     div.balSlider .k-slider-selection {
         display: none;
     }
+
     div.eqSlider {
         display: inline-block;
-        margin: 0 12px;
+        margin: 1em;
         height: 122px;
+        vertical-align: top;
     }
-
-    .k-ie7 div.eqSlider {display:inline;zoom:1;}
-                
 </style>
 </asp:Content>
