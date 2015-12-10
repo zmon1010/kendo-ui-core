@@ -4,8 +4,8 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 
 ?>
-<div class="demo-section">
-	<strong>Inline data (default settings)</strong>	
+ <div class="demo-section k-content">
+	<h4>Inline data (default settings)</h4>
 	<?php
 		$inlineDefault = new \Kendo\Data\HierarchicalDataSource();
 		$inlineDefault -> data(array(
@@ -28,8 +28,8 @@ require_once '../lib/Kendo/Autoload.php';
 	?>
 </div>
 
-<div class="demo-section">
-	<strong>Inline data</strong>	
+ <div class="demo-section k-content">
+	<h4>Inline data</h4>
 	<?php
 	
 		$model = new \Kendo\Data\HierarchicalDataSourceSchemaModel();
@@ -62,17 +62,16 @@ require_once '../lib/Kendo/Autoload.php';
 </div>
 
 <style>
-	#example {
-		text-align: center;
-	}
+	 #example {
+        text-align: center;
+    }
 
-	.demo-section {
-		display: inline-block;
-		vertical-align: top;
-		width: 220px;
-		text-align: left;
-		margin: 0 2em;
-	}
+    .demo-section {
+        display: inline-block;
+        vertical-align: top;
+        text-align: left;
+        margin: 0 2em;
+    }
 </style>
 
 <?php require_once '../include/footer.php'; ?>

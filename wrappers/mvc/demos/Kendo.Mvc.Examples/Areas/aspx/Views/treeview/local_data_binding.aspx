@@ -3,8 +3,8 @@
 <%@ Import Namespace="Kendo.Mvc.UI.Fluent" %>
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="demo-section">
-    <strong>Inline data (default settings)</strong>
+<div class="demo-section k-content">
+    <h4>Inline data (default settings)</h4>
     <%=
         Html.Kendo().TreeView()
             .Name("treeview-left")
@@ -12,8 +12,8 @@
     %>
 </div>
 
-<div class="demo-section">
-    <strong>Inline data</strong>
+<div class="demo-section k-content">
+    <h4>Inline data</h4>
     <%=
         Html.Kendo().TreeView()
             .Name("treeview-right")
@@ -33,7 +33,7 @@
     %>
 </div>
 
-<style>
+ <style>
     #example {
         text-align: center;
     }
@@ -41,7 +41,6 @@
     .demo-section {
         display: inline-block;
         vertical-align: top;
-        width: 220px;
         text-align: left;
         margin: 0 2em;
     }
