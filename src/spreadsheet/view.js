@@ -221,7 +221,9 @@
             properties.title = validation._getOptions().messageTemplate;
         }
 
-        collection.push(kendo.dom.element("div", properties, children));
+        var div = kendo.dom.element("div", properties, children);
+        collection.push(div);
+        return div;
     }
 
     function addCell(table, row, cell) {
@@ -1492,6 +1494,7 @@
 
     kendo.spreadsheet.View = View;
     kendo.spreadsheet.Pane = Pane;
+    kendo.spreadsheet.drawCell = drawCell;
 
     $.extend(true, View, { classNames: viewClassNames });
     $.extend(true, Pane, { classNames: paneClassNames });
