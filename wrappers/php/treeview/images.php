@@ -5,8 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="treeview-back">
-<h3>TreeView with images</h3>
+<div class="demo-section k-content">
+<h4>TreeView with images</h4>
 <?php
     $treeview = new \Kendo\UI\TreeView('treeview-images');
 
@@ -45,8 +45,8 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 </div>
 
-<div class="treeview-back">
-<h3>TreeView with sprites</h3>
+<div class="demo-section k-content">
+<h4>TreeView with sprites</h4>
 <?php
     $treeview = new \Kendo\UI\TreeView('treeview-sprites');
 
@@ -100,25 +100,6 @@ require_once '../lib/Kendo/Autoload.php';
     .pdf { background-position: 0 -32px; }
     .html { background-position: 0 -48px; }
     .image { background-position: 0 -64px; }
-
-    .treeview-back
-    {
-        float: left;
-        width: 200px;
-        margin: 30px;
-        padding: 20px;
-        -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-        box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        border-radius: 8px;
-    }
-    .treeview-back h3
-    {
-        margin: 0 0 10px 0;
-        padding: 0;
-    }
 </style>
 
 <?php require_once '../include/footer.php'; ?>

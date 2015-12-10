@@ -6,8 +6,8 @@
 
 <demo:header />
 
-    <div class="treeview-back">
-    	<h3>TreeView with images</h3>
+       <div class="demo-section k-content">
+    	<h4>TreeView with images</h4>
     	
         <kendo:treeView name="treeview-images">
             <kendo:treeView-items>
@@ -29,35 +29,34 @@
         </kendo:treeView>
     </div>
     
-    <div class="treeview-back">
-    	<h3>TreeView with sprites</h3>
+     <div class="demo-section k-content">
+    	<h4>TreeView with sprites</h4>
     	
 	    <kendo:treeView name="treeview-sprites">
 	        <kendo:treeView-items>
-	            <kendo:treeView-item text="My Web Site" spriteCssClass="folder" expanded="true">
+	            <kendo:treeView-item text="My Documents" spriteCssClass="rootfolder" expanded="true">
 	                <kendo:treeView-items>
-	                    <kendo:treeView-item text="images" spriteCssClass="folder" expanded="true">
+	                    <kendo:treeView-item text="Kendo UI Project" spriteCssClass="folder" expanded="true">
 	                        <kendo:treeView-items>
-	                            <kendo:treeView-item text="logo.png" spriteCssClass="image" />
-	                            <kendo:treeView-item text="body-back.png" spriteCssClass="image" />
-	                            <kendo:treeView-item text="my-photo.jpg" spriteCssClass="image" />
+	                            <kendo:treeView-item text="about.html" spriteCssClass="html" />
+	                            <kendo:treeView-item text="index.html" spriteCssClass="html" />
+	                            <kendo:treeView-item text="logo.png" spriteCssClass="html" />
 	                        </kendo:treeView-items>
 	                    </kendo:treeView-item>
-	                    <kendo:treeView-item text="resources" spriteCssClass="folder" expanded="true">
+	                    <kendo:treeView-item text="New Web Site" spriteCssClass="folder" expanded="true">
 	                        <kendo:treeView-items>
-	                            <kendo:treeView-item text="pdf" spriteCssClass="folder" expanded="true">
-	                                <kendo:treeView-items>
-	                                    <kendo:treeView-item text="brochure.pdf" spriteCssClass="pdf" />
-	                                    <kendo:treeView-item text="prices.pdf" spriteCssClass="pdf" />
-	                                </kendo:treeView-items>
-	                            </kendo:treeView-item>
-	                            <kendo:treeView-item text="zip" spriteCssClass="folder" />
+	                            <kendo:treeView-item text="mockup.jpg" spriteCssClass="image" expanded="true" />
+	                            <kendo:treeView-item text="Research.pdf" spriteCssClass="pdf" />
+	                            <kendo:treeView-item text="Research.pdf" spriteCssClass="pdf" />
 	                        </kendo:treeView-items>
 	                    </kendo:treeView-item>
-	                    <kendo:treeView-item text="about.html" spriteCssClass="html" />
-	                    <kendo:treeView-item text="contacts.html" spriteCssClass="html" />
-	                    <kendo:treeView-item text="index.html" spriteCssClass="html" />
-	                    <kendo:treeView-item text="portfolio.html" spriteCssClass="html" />
+	                    <kendo:treeView-item text="Reports" spriteCssClass="folder" expanded="true">
+	                        <kendo:treeView-items>
+	                            <kendo:treeView-item text="February.pdf" spriteCssClass="pdf" expanded="true" />
+	                            <kendo:treeView-item text="March.pdf" spriteCssClass="pdf" />
+	                            <kendo:treeView-item text="April.pdf" spriteCssClass="pdf" />
+	                        </kendo:treeView-items>
+	                    </kendo:treeView-item>
 	                </kendo:treeView-items>
 	            </kendo:treeView-item>
 	        </kendo:treeView-items>
@@ -65,20 +64,6 @@
     </div>
 
     <style>
-        .treeview-back
-        {
-            float: left;
-            width: 220px;
-            margin: 30px;
-            padding: 20px;
-            -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.07);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.45), inner 0 0 30px rgba(0,0,0,0.07);
-            -webkit-border-radius: 8px;
-            -moz-border-radius: 8px;
-            border-radius: 8px;
-        }
-
         #treeview-sprites .k-sprite {
             background-image: url("../resources/web/treeview/coloricons-sprite.png");
         }
