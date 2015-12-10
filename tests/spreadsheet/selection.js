@@ -192,49 +192,69 @@
         }
     }
 
+    function filterByClass(className) {
+        return function(element) {
+            return element.attr.className.indexOf(className) > - 1;
+        }
+    }
+
     var rowHeader = $.proxy(find, null, /k-spreadsheet-row-header/);
     var columnHeader = $.proxy(find, null, /k-spreadsheet-column-header/);
+
+    var ROW_HEADER_INDEX = 5;
+    var COL_HEADER_INDEX = 6;
+
+    function getHeaders(pane) {
+        var elements = pane.render(1000, 1000).children;
+
+        var rowHeaderCells = elements.filter(filterByClass('k-spreadsheet-row-header'));
+        var colHeaderCells = elements.filter(filterByClass('k-spreadsheet-column-header'));
+
+        return {
+            rows: rowHeaderCells,
+            cols: colHeaderCells
+        }
+    }
+
+
+    function hasClass(element, className) {
+        ok(element.attr.className.indexOf(className) > -1, element.attr.className + " does not contain " + className);
+    }
 
     test("visually selects the FULL headers for range and cell", function() {
         var pane = createPane(0, 0, 100, 100);
 
         sheet.range("A1:B2,D3").select();
 
-        var tables = pane.render(1000, 1000).children;
+        var headers = getHeaders(pane);
 
-        var rowHeaderCells = rowHeader(tables).children[1].children;
-        var colHeaderCells = columnHeader(tables).children[1].children[0].children;
+        hasClass(headers.rows[0], PARTIAL)
+        hasClass(headers.rows[1], PARTIAL)
+        hasClass(headers.rows[2], PARTIAL)
 
-        equal(rowHeaderCells[0].children[0].attr.className, PARTIAL);
-        equal(rowHeaderCells[1].children[0].attr.className, PARTIAL);
-        equal(rowHeaderCells[2].children[0].attr.className, PARTIAL);
-
-        equal(colHeaderCells[0].attr.className, PARTIAL);
-        equal(colHeaderCells[1].attr.className, PARTIAL);
-        equal(colHeaderCells[3].attr.className, PARTIAL);
+        hasClass(headers.cols[0], PARTIAL)
+        hasClass(headers.cols[1], PARTIAL)
+        hasClass(headers.cols[3], PARTIAL)
     });
+
 
     test("visually selects the FULL headers for range and row", function() {
         var pane = createPane(0, 0, 100, 100);
 
         sheet.range("A3:C7,10:10").select();
 
-        var tables = pane.render(1000, 1000).children;
+        var headers = getHeaders(pane);
 
-        var rowHeaderCells = rowHeader(tables).children[1].children;
-        var colHeaderCells = columnHeader(tables).children[1].children[0].children;
-
-        equal(rowHeaderCells[2].children[0].attr.className, PARTIAL);
-        equal(rowHeaderCells[3].children[0].attr.className, PARTIAL);
-        equal(rowHeaderCells[4].children[0].attr.className, PARTIAL);
-        equal(rowHeaderCells[5].children[0].attr.className, PARTIAL);
-        equal(rowHeaderCells[6].children[0].attr.className, PARTIAL);
-
-        equal(rowHeaderCells[9].children[0].attr.className, FULL);
+        hasClass(headers.rows[2], PARTIAL)
+        hasClass(headers.rows[3], PARTIAL)
+        hasClass(headers.rows[4], PARTIAL)
+        hasClass(headers.rows[5], PARTIAL)
+        hasClass(headers.rows[6], PARTIAL)
+        hasClass(headers.rows[9], FULL)
 
         //row 10 is FULL => all colHeaders should be PARTIAL
-        for (var i = 0; i < colHeaderCells.length; i++) {
-            equal(colHeaderCells[i].attr.className, PARTIAL);
+        for (var i = 0; i < headers.cols.length; i++) {
+            hasClass(headers.cols[i], PARTIAL)
         }
     });
 
@@ -243,20 +263,17 @@
 
         sheet.range("4:4,A3:C7").select();
 
-        var tables = pane.render(1000, 1000).children;
+        var headers = getHeaders(pane);
 
-        var rowHeaderCells = rowHeader(tables).children[1].children;
-        var colHeaderCells = columnHeader(tables).children[1].children[0].children;
-
-        equal(rowHeaderCells[2].children[0].attr.className, PARTIAL);
-        equal(rowHeaderCells[3].children[0].attr.className, FULL);
-        equal(rowHeaderCells[4].children[0].attr.className, PARTIAL);
-        equal(rowHeaderCells[5].children[0].attr.className, PARTIAL);
-        equal(rowHeaderCells[6].children[0].attr.className, PARTIAL);
+        hasClass(headers.rows[2], PARTIAL);
+        hasClass(headers.rows[3], FULL);
+        hasClass(headers.rows[4], PARTIAL);
+        hasClass(headers.rows[5], PARTIAL);
+        hasClass(headers.rows[6], PARTIAL);
 
         //row 10 is FULL => all colHeaders should be PARTIAL
-        for (var i = 0; i < colHeaderCells.length; i++) {
-            equal(colHeaderCells[i].attr.className, PARTIAL);
+        for (var i = 0; i < headers.cols.length; i++) {
+            hasClass(headers.cols[i], PARTIAL);
         }
     });
 
@@ -265,19 +282,16 @@
 
         sheet.range("A3:C7,C:C").select();
 
-        var tables = pane.render(1000, 1000).children;
-
-        var rowHeaderCells = rowHeader(tables).children[1].children;
-        var colHeaderCells = columnHeader(tables).children[1].children[0].children;
+        var headers = getHeaders(pane);
 
         //col C is FULL => all rowHeaders should be PARTIAL
-        for (var i = 0; i < colHeaderCells.length; i++) {
-            equal(rowHeaderCells[i].children[0].attr.className, PARTIAL);
+        for (var i = 0; i < headers.rows.length; i++) {
+            hasClass(headers.rows[i], PARTIAL);
         }
 
-        equal(colHeaderCells[0].attr.className, PARTIAL);
-        equal(colHeaderCells[1].attr.className, PARTIAL);
-        equal(colHeaderCells[2].attr.className, FULL);
+        hasClass(headers.cols[0], PARTIAL);
+        hasClass(headers.cols[1], PARTIAL);
+        hasClass(headers.cols[2], FULL);
     });
 
     test("top left selection is marked as such", function() {
