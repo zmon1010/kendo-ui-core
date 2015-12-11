@@ -35,7 +35,7 @@
             .Resize("onResize")
             .ResizeEnd("onResizeEnd")
         )
-        .Height(400)
+        .Height(700)
         .ShowWorkHours(false)
         .ShowWorkDays(false)
         .DataSource(d => d
@@ -66,11 +66,10 @@
         )
     %>
 
-<div id="example">
-    <div class="box">
-        <h4>Console log</h4>
-        <div class="console"></div>
-    </div>
+<div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
     <script>
         function onChange(e) {
@@ -139,7 +138,6 @@
             kendoConsole.log("resizeEnd");
         }
     </script>
-</div>
 
 </asp:Content>
 
