@@ -3,7 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" sortable="true" filterable="true">
+    <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" style="height:550px;">
     	<kendo:grid-scrollable />    	
         <kendo:grid-columns>
             <kendo:grid-column title="Product Name" field="productName" />
@@ -25,9 +25,4 @@
         </kendo:dataSource>
         <kendo:grid-pageable input="true" numeric="false" />
     </kendo:grid>
-    <style>
-    #grid .k-grid-content{
-    	height: 430px; 	
-    }
-    </style>
 <demo:footer />

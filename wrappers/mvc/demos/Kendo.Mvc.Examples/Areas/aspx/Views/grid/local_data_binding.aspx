@@ -11,7 +11,11 @@
         columns.Bound(p => p.UnitsInStock).Title("Units In Stock").Width(130);
         columns.Bound(p => p.Discontinued).Width(130);
     })
-    .Pageable()
+    .Pageable( pageable => pageable
+        .Input(true)
+        .Numeric(false)
+     )
+     .HtmlAttributes(new { style = "height: 550px;" })
     .Sortable()
     .Scrollable(scr => scr.Height(430))
     .Filterable()

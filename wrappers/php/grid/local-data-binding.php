@@ -69,7 +69,7 @@ $grid->addColumn($productName)
      ->addColumn($unitsInStock)
      ->addColumn($discontinued)
      ->dataSource($dataSource)
-     ->height(430)
+     ->height(550)
      ->sortable(true)
      ->filterable(true)
      ->pageable($pageable);
