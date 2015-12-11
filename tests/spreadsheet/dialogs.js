@@ -472,17 +472,35 @@
         $(".k-item a[data-value='vertically']").trigger("click");
     });
 
-    module("SaveAs dialog", {
+    module("ExportAs dialog", {
         setup: function() {
             moduleOptions.setup();
-
-            dialog = spreadsheet.openDialog("saveAs");
+            var defaultOptions = {
+                excelExport: {
+                    proxyURL: "",
+                    fileName: "Workbook.xlsx"
+                },
+                pdfExport: {
+                    fileName  : "Workbook.pdf",
+                    proxyURL  : "",
+                    paperSize : "a4",
+                    landscape : false,
+                    margin    : null,
+                    title     : null,
+                    author    : null,
+                    subject   : null,
+                    keywords  : null,
+                    creator   : "Kendo UI PDF Generator",
+                    date      : null
+                }
+            }
+            dialog = spreadsheet.openDialog("exportAs", defaultOptions);
         },
         teardown: moduleOptions.teardown
     });
 
     test("sets correct window title", function() {
-        equal(dialog.dialog().options.title, "Save As...");
+        equal(dialog.dialog().options.title, "Export...");
     });
 
     test("triggers SaveAsCommand with default name", 2, function() {
