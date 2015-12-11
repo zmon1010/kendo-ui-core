@@ -16,7 +16,7 @@
             views.WeekView();
             views.MonthView(monthView => monthView.Selected(true));
         })
-        .Height(400)
+        .Height(700)
         .ShowWorkHours(false)
         .ShowWorkDays(false)
         .Snap(false)
