@@ -44364,6 +44364,12 @@ additional information along the TreeView checkboxes.The fields which can be use
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Specifies the id of the item</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Specifies the URL of the image displayed by the item</description>
             <name>imageUrl</name>
             <rtexprvalue>true</rtexprvalue>

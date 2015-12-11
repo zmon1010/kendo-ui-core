@@ -124,6 +124,14 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
         setProperty("expanded", value);
     }
 
+    public java.lang.String getId() {
+        return (java.lang.String)getProperty("id");
+    }
+
+    public void setId(java.lang.String value) {
+        setProperty("id", value);
+    }
+
     public java.lang.String getImageUrl() {
         return (java.lang.String)getProperty("imageUrl");
     }

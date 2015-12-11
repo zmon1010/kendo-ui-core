@@ -5,6 +5,10 @@
       :content: true
       :description: Contains the items of the treeview widget
 
+    - :name: items.id
+      :type: String
+      :description: Specifies the id of the item
+
     - :name: items.text
       :type: String
       :description: Specifies the text displayed by the item
