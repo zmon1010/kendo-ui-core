@@ -5050,6 +5050,11 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 that._applyLockedContainersWidth();
+
+                // workaround IE does not show vertical scrollbar for elements without width
+                if (that.lockedHeader && that.table[0].clientWidth === 0) {
+                    that.table[0].style.width = "1px";
+                }
             }
         },
 

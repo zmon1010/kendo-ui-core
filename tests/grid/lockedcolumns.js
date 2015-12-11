@@ -1571,4 +1571,21 @@
         equal(grid.thead.find("tr:last th:first").text(), "baz child");
     });
 
+    test("non locked table has 1px width if all of the columns are hidden", function() {
+        var grid = setup({
+            dataSource: {
+                data: [ {field: "foo" }, { field: "bar" } ]
+            },
+            scrollable: true,
+            columns: [
+                { title: "master", locked: true, width: 100 },
+                { title: "master", locked: true, width: 100 },
+                { title: "master2", width: 100, hidden: true }
+            ]
+        });
+
+        equal(grid.table[0].clientWidth, 1);
+    });
+
+
 })();
