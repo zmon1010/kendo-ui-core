@@ -332,7 +332,7 @@
 
     test("renders toolbar button for Open command", function() {
         createWithTools();
-        equal(element.find("span.k-font-icon.k-i-open").length, 1);
+        equal(element.find("span.k-font-icon.k-i-folder-open").length, 1);
     });
 
     test("renders toolbar button for Save As command", function() {

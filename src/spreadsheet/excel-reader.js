@@ -44,7 +44,7 @@
     function readWorkbook(zip, workbook) {
         var strings = readStrings(zip);
         var relationships = readRelationships(zip, "workbook.xml");
-        var theme = readTheme(zip, relationships.byType["theme"]);
+        var theme = readTheme(zip, relationships.byType.theme);
         var styles = readStyles(zip, theme);
         parse(zip, "xl/workbook.xml", {
             enter: function(tag, attrs) {
