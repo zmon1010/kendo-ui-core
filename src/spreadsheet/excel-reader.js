@@ -262,7 +262,7 @@
         }
         function setFill(f) {
             if (f.type == "solid") {
-                range.background(f.color+"");
+                range.background(f.color);
             }
         }
         function setFont(f) {
@@ -279,25 +279,22 @@
         function setBorder(b) {
             function border(side) {
                 var width = BORDER_WIDTHS[side.style];
-                if (width == null) {
-                    width = 1;
-                }
                 var color = side.color;
                 if (color == null) {
                     color = "#000";
                 }
-                return { size: width, color: color+"" };
+                return { size: width, color: color };
             }
-            if (b.left) {
+            if (b.left && b.left.style != "none") {
                 range.borderLeft(border(b.left));
             }
-            if (b.top) {
+            if (b.top && b.top.style != "none") {
                 range.borderTop(border(b.top));
             }
-            if (b.right) {
+            if (b.right && b.right.style != "none") {
                 range.borderRight(border(b.right));
             }
-            if (b.bottom) {
+            if (b.bottom && b.bottom.style != "none") {
                 range.borderBottom(border(b.bottom));
             }
         }
