@@ -324,7 +324,10 @@
     }
 
     function parse(zip, file, callbacks) {
-        parseXML(zip.files[file].asUint8Array(), callbacks);
+        var file = zip.files[file];
+        if (file) {
+            parseXML(file.asUint8Array(), callbacks);
+        }
     }
 
     function readStrings(zip) {
@@ -627,6 +630,7 @@
     }
 
     kendo.spreadsheet.readExcel = readExcel;
+    kendo.spreadsheet._readStrings = readStrings;
     kendo.spreadsheet._readStyles = readStyles;
     kendo.spreadsheet._readTheme = readTheme;
 

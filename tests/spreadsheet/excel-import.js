@@ -9,7 +9,7 @@
     }
 
     // ------------------------------------------------------------
-    module("Spreadsheet / Excel Import / Styles", {
+    module("Spreadsheet / Excel Import", {
         setup: function() {
             zip = { files: {} };
         }
@@ -19,7 +19,7 @@
         var THEME = {};
         var STYLESHEET = `
             <styleSheet>
-              <fills count="4">
+              <fills>
                 <fill>
                   <patternFill patternType="solid">
                     <fgColor rgb="FFCCFF00"/>
@@ -40,7 +40,7 @@
         var THEME = {};
         var STYLESHEET = `
             <styleSheet>
-              <fills count="4">
+              <fills>
                 <fill>
                   <patternFill patternType="solid">
                     <fgColor indexed="64"/>
@@ -63,7 +63,7 @@
         };
         var STYLESHEET = `
             <styleSheet>
-              <fills count="4">
+              <fills>
                 <fill>
                   <patternFill patternType="solid">
                     <fgColor theme="0"/>
@@ -86,7 +86,7 @@
         };
         var STYLESHEET = `
             <styleSheet>
-              <fills count="4">
+              <fills>
                 <fill>
                   <patternFill patternType="solid">
                     <fgColor theme="0" tint="-0.25"/>
@@ -109,7 +109,7 @@
         };
         var STYLESHEET = `
             <styleSheet>
-              <fills count="4">
+              <fills>
                 <fill>
                   <patternFill patternType="solid">
                     <fgColor theme="0" tint="0.6"/>
@@ -195,5 +195,27 @@
             "rgba(5, 99, 193, 1)",
             "rgba(149, 79, 114, 1)"
         ]);
+    });
+
+    test("reads strings", function() {
+        var STRINGS = `
+            <sst count="2" uniqueCount="2">
+              <si>
+                <t>String 1</t>
+              </si>
+              <si>
+                <t>String 2</t>
+              </si>
+            </sst>
+        `;
+
+        addFile("xl/sharedStrings.xml", STRINGS);
+
+        var strings = kendo.spreadsheet._readStrings(zip);
+        deepEqual(strings, ["String 1", "String 2"]);
+    });
+
+    test("does not fail if no strings are defined", 0, function() {
+        kendo.spreadsheet._readStrings(zip);
     });
 })();
