@@ -30,6 +30,7 @@
     }
 
     var DUMMY_VIEW = { ref: rangeRef(0, 0, 100, 100), top: 0, left: 0 };
+    var DUMMY_RECT = { width: 1000, height: 1000, left: 0, top: 0, right: 1000, bottom: 1000 };
 
     test("pane renders merged cell", function() {
         var pane = createPane(0, 0);
@@ -37,6 +38,7 @@
         sheet.range(0, 0, 2, 3).merge().value("foo");
 
         pane._currentView = DUMMY_VIEW;
+        pane._currentRect = DUMMY_RECT;
         var elements = pane.renderData().children;
 
         var mergedCell = elements.find(isMergedCell)
@@ -55,6 +57,7 @@
         sheet.range(2, 2, 2, 2).merge();
 
         pane._currentView = DUMMY_VIEW;
+        pane._currentRect = DUMMY_RECT;
         equal(pane.renderData().children.filter(isMergedCell).length, 2);
     });
 
@@ -64,6 +67,7 @@
         sheet.range(0, 0, 2, 2).merge();
 
         pane._currentView = { ref: rangeRef(0, 3, 100, 100) , top: 0, left: 0 };
+        pane._currentRect = DUMMY_RECT;
 
         var mergedCells = pane.renderData().children.filter(isMergedCell);
 
