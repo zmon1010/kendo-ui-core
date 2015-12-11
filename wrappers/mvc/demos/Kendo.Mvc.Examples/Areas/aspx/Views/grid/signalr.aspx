@@ -31,23 +31,19 @@
     .Name("Grid")
     .Columns(columns =>
     {
+        columns.Bound(p => p.UnitPrice);
         columns.Bound(p => p.ProductName);
-        columns.Bound(p => p.UnitPrice).Width(140);
-        columns.Bound(p => p.UnitsInStock).Width(140);
-        columns.Bound(p => p.Discontinued).Width(100);
         columns.Command(command =>
         {
             command.Destroy();
-        }).Width(110);
+        }).Width(150);
     })
+    .HtmlAttributes(new { style = "height: 550px;" })
     .ToolBar(toolbar =>
     {
         toolbar.Create();
-        toolbar.Save();
     })
     .Editable(editable => editable.Mode(GridEditMode.InCell))
-    .Pageable()
-    .Navigatable()
     .Sortable()
     .Scrollable()
     .DataSource(dataSource => dataSource
@@ -80,18 +76,15 @@
         )
     )
 %>
-<br />
-<div class="configuration-horizontal">
-    <span class="configHead">Information</span>
-    <p>
-    This demo demonstrates real-time push-notifications from <a href="http://signalr.net/">SignalR</a>.
-    </p>
-    <p>
-        To see the real-time updates:
-    </p>
+<div class="box wide">
+    <h4>Information</h4>
+    <p>This example demonstrates real-time push-notifications from <a href="http://signalr.net/">SignalR</a>. To see the real-time updates:</p>
     <ol>
         <li>Open this page in another browser window by clicking <a href="./signalr" target="_new">here</a></li>
-        <li>Create, update or destroy Grid items.</li>
+        <li>Create, update or destroy grid items.</li>
     </ol>
+    <p><strong>Note:</strong> To further enhance real-time experience, the Grid will also display changes from other users,
+        which currently happen to perform CRUD operations on the same demo.
+        If you refresh the page, all changes will be lost, because the remote service only broadcasts changes, it does not actually save them.</p>
 </div>
 </asp:Content>
