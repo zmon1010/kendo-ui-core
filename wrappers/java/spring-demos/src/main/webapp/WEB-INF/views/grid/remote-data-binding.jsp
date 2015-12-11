@@ -7,14 +7,14 @@
 <c:url value="/grid/remote-data-binding/read" var="transportReadUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" height="430px" sortable="true" filterable="true" groupable="true">
+    <kendo:grid name="grid" pageable="true" height="550px" sortable="true" filterable="true">
     	<kendo:grid-scrollable/>
         <kendo:grid-columns>
-            <kendo:grid-column title="Order ID" field="orderId" width="100px" filterable="false" />
-            <kendo:grid-column title="Freight" field="freight" width="100px" />
-            <kendo:grid-column title="Order Date" field="orderDate" format="{0:MM/dd/yyyy}" width="140px"/>
+            <kendo:grid-column title="Order ID" field="orderId" filterable="false" />
+            <kendo:grid-column title="Freight" field="freight" />
+            <kendo:grid-column title="Order Date" field="orderDate" format="{0:MM/dd/yyyy}"/>
             <kendo:grid-column title="Ship Name" field="shipName" />
-            <kendo:grid-column title="Ship City" field="shipCity" width="150px" />
+            <kendo:grid-column title="Ship City" field="shipCity" />
         </kendo:grid-columns>
         <kendo:dataSource pageSize="20" serverPaging="true" serverSorting="true" serverFiltering="true" serverGrouping="true">
             <kendo:dataSource-transport>            	

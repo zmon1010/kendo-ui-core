@@ -60,7 +60,7 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(10)
+           ->pageSize(20)
            ->schema($schema)
            ->serverFiltering(true)
            ->serverSorting(true)
@@ -79,23 +79,21 @@ $freight->field('Freight')
 
 $orderDate = new \Kendo\UI\GridColumn();
 $orderDate->field('OrderDate')
-          ->width(120)
           ->format('{0:MM/dd/yyyy}')
           ->title('OrderDate');
 
 $shipName = new \Kendo\UI\GridColumn();
 $shipName->field('ShipName')
-          ->width(260)
           ->title('Ship Name');
 
 $shipCity= new \Kendo\UI\GridColumn();
 $shipCity->field('ShipCity')
-          ->width(150)
           ->title('Ship City');
 
 $grid->addColumn($orderID, $freight, $orderDate, $shipName, $shipCity)
      ->dataSource($dataSource)
      ->sortable(true)
+     ->height(550)
      ->filterable(true)
      ->pageable(true);
 

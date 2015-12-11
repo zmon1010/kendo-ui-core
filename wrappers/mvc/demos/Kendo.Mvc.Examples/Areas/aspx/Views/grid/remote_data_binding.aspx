@@ -5,17 +5,17 @@
         .Name("grid")
         .Columns(columns =>
         {
-            columns.Bound(p => p.OrderID).Filterable(false).Width(100);
-            columns.Bound(p => p.Freight).Width(100);
-            columns.Bound(p => p.OrderDate).Format("{0:MM/dd/yyyy}").Width(140);
+            columns.Bound(p => p.OrderID).Filterable(false);
+            columns.Bound(p => p.Freight);
+            columns.Bound(p => p.OrderDate).Format("{0:MM/dd/yyyy}");
             columns.Bound(p => p.ShipName);
-            columns.Bound(p => p.ShipCity).Width(150);
+            columns.Bound(p => p.ShipCity);
         })
         .Pageable()
         .Sortable()
         .Scrollable()
         .Filterable()
-        .HtmlAttributes(new { style = "height:430px;" })
+        .HtmlAttributes(new { style = "height:550px;" })
         .DataSource(dataSource => dataSource
             .Ajax()
             .PageSize(20)
