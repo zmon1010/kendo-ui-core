@@ -43,6 +43,15 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
             super.addLinkAttributes(element);
         }
     }
+
+    @Override
+    protected void addAttributes(Li element) {
+        if (this.isSet("id")) {
+            element.attr("data-id", this.get("id"));
+        }
+
+        super.addAttributes();
+    }
     
     @Override
     public void initialize() {
