@@ -141,18 +141,16 @@
                         // micro-optimizations I've made. ;-\
                         var range = sheet.range(ref);
                         if (!range.formula()) {
-                            if (type != null) {
-                                if (type == "n") {
-                                    value = parseFloat(value);
-                                } else if (type == "b") {
-                                    value = value.toLowerCase() == "true";
-                                } else if (type == "s") {
-                                    value = strings[integer(value)];
-                                }
-                                range.value(value);
+                            if (type == "b") {
+                                value = value.toLowerCase() == "true";
+                            } else if (type == "s") {
+                                value = strings[integer(value)];
+                            } else if (type == "d") {
+                                value = kendo.parseDate(value);
                             } else {
-                                range.input(value);
+                                value = parseFloat(value);
                             }
+                            range.value(value);
                         }
                     }
                 } else if (tag == "cols") {
