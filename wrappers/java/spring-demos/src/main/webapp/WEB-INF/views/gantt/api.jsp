@@ -21,28 +21,28 @@
 
 <demo:header />
 
-	<div class="box">
-        <div class="box-col">
-        <h4>Selection</h4>
-        <ul class="options">
-            <li>
-                <input type="text" value="0" id="selectTask" class="k-textbox"/>
-                <button class="selectTask k-button">Select task</button>
-            </li>
-            <li>
-                <button class="clearSelection k-button">Clear selected task</button>
-            </li>
-        </ul>
-        </div>
-        <div class="box-col">
-        <h4>Get selected task</h4>
-        <ul class="options">
-            <li>
-                <button class="getData k-button">Get data</button>
-            </li>
-        </ul>
-        </div>
-    </div>
+  <div class="box wide">
+      <div class="box-col">
+          <h4>Selection</h4>
+          <ul class="options">
+              <li>
+                  <input type="text" value="0" id="selectTask" class="k-textbox" />
+                  <button class="selectTask k-button">Select task</button>
+              </li>
+              <li>
+                  <button class="clearSelection k-button">Clear selected task</button>
+              </li>
+          </ul>
+      </div>
+      <div class="box-col">
+          <h4>Get selected task</h4>
+          <ul class="options">
+              <li>
+                  <button class="getData k-button">Get data</button>
+              </li>
+          </ul>
+      </div>
+  </div>
 
     <script>
 

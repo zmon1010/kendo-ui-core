@@ -3,6 +3,63 @@
 <%@ Import Namespace="Kendo.Mvc.Examples.Models.Gantt" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+
+<div class="box wide">
+            <div class="box-col">
+                <h4>Selection</h4>
+                <ul class="options">
+                    <li>
+                        <input type="text" value="0" id="Text1" class="k-textbox" />
+                        <button class="selectTask k-button">Select task</button>
+                    </li>
+                    <li>
+                        <button class="clearSelection k-button">Clear selected task</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-col">
+                <h4>Get selected task</h4>
+                <ul class="options">
+                    <li>
+                        <button class="getData k-button">Get data</button>
+                    </li>
+                </ul>
+            </div>
+      <script>
+
+          $(".clearSelection").click(function () {
+              var gantt = $("#gantt").data("kendoGantt");
+              gantt.clearSelection();
+          });
+
+          function selectTask(e) {
+              if (e.type != "keypress" || kendo.keys.ENTER == e.keyCode) {
+                  var gantt = $("#gantt").data("kendoGantt");
+                  var taskIndex = $("#selectTask").val();
+
+                  gantt.select("tr:eq(" + taskIndex + ")");
+              }
+          }
+
+          $(".selectTask").click(selectTask);
+          $("#selectTask").keypress(selectTask);
+
+          $(".getData").click(function () {
+              var gantt = $("#gantt").data("kendoGantt");
+              var selection = gantt.select();
+
+              if (!selection.length) {
+                  alert("No item selected");
+              } else {
+                  var dataItem = gantt.dataItem(selection);
+                  alert(
+                      "'" + dataItem.title + "' is " +
+                      (dataItem.percentComplete * 100) + "% complete"
+                  );
+              }
+          });
+    </script>
+</div>
     <%: Html.Kendo().Gantt<TaskViewModel, DependencyViewModel>()
         .Name("gantt")
         .Columns(columns =>
@@ -48,66 +105,6 @@
             .Update("UpdateDependency", "Gantt")
         )
     %>
-
-<div id="example">
-    <div class="box">
-        <div class="box-col">
-            <h4>Selection</h4>
-            <ul class="options">
-                <li>
-                    <input type="text" value="0" id="selectTask" class="k-textbox" />
-                    <button class="selectTask k-button">Select task</button>
-                </li>
-                <li>
-                    <button class="clearSelection k-button">Clear selected task</button>
-                </li>
-            </ul>
-        </div>
-        <div class="box-col">
-            <h4>Get selected task</h4>
-            <ul class="options">
-                <li>
-                    <button class="getData k-button">Get data</button>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <script>
-
-        $(".clearSelection").click(function() {
-            var gantt = $("#gantt").data("kendoGantt");
-            gantt.clearSelection();
-        });
-
-        function selectTask(e) {
-            if (e.type != "keypress" || kendo.keys.ENTER == e.keyCode) {
-                var gantt = $("#gantt").data("kendoGantt");
-                var taskIndex = $("#selectTask").val();
-
-                gantt.select("tr:eq(" + taskIndex + ")");
-            }
-        }
-
-        $(".selectTask").click(selectTask);
-        $("#selectTask").keypress(selectTask);
-
-        $(".getData").click(function() {
-            var gantt = $("#gantt").data("kendoGantt");
-            var selection = gantt.select();
-
-            if (!selection.length) {
-                alert("No item selected");
-            } else {
-                var dataItem = gantt.dataItem(selection);
-                alert(
-                    "'" + dataItem.title + "' is " +
-                    (dataItem.percentComplete * 100) + "% complete"
-                );
-            }
-        });
-    </script>
-</div>
 
 </asp:Content>
 
