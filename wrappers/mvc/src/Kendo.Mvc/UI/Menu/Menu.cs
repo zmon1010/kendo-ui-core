@@ -18,6 +18,7 @@ namespace Kendo.Mvc.UI
             : base(viewContext, initializer)
         {
             Animation = new PopupAnimation();
+            PopupCollision = new PopupCollision();
 
             UrlGenerator = urlGenerator;
             Authorization = authorization;
@@ -30,6 +31,12 @@ namespace Kendo.Mvc.UI
         }
 
         public PopupAnimation Animation
+        {
+            get;
+            private set;
+        }
+
+        public PopupCollision PopupCollision
         {
             get;
             private set;
@@ -110,6 +117,13 @@ namespace Kendo.Mvc.UI
             if (animation.Keys.Any())
             {
                 options["animation"] = animation["animation"];
+            }
+
+            var popupCollision = PopupCollision.ToJson();
+
+            if (popupCollision.Keys.Any())
+            {
+                options["popupCollision"] = popupCollision["popupCollision"];
             }
 
             if (Direction.HasValue())

@@ -822,6 +822,8 @@
     <Compile Include="UI\Editor\Fluent\EditorPdfSettingsBuilder.cs" />
     <Compile Include="UI\Editor\Settings\EditorPdfMarginSettings.cs" />
     <Compile Include="UI\Editor\Settings\EditorPdfSettings.cs" />
+    <Compile Include="UI\Effects\Fluent\PopupCollisionBuilder.cs" />
+    <Compile Include="UI\Effects\PopupCollision.cs" />
     <Compile Include="UI\Gantt\Columns\GanttResourceColumn.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttAssignmentsDataSourceBuilder.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttResourceColumnBuilder.cs" />

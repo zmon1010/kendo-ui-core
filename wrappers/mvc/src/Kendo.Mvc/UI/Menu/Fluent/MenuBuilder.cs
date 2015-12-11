@@ -33,6 +33,44 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Disables the menu popup collision detection.
+        /// </summary>
+        /// <param name="enable">Boolean parameter.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Menu()
+        ///             .Name("Menu")
+        ///             .PopupCollision(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public MenuBuilder PopupCollision(bool enable)
+        {
+            Component.PopupCollision.Enabled = enable;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the menu popup collision detection.
+        /// </summary>
+        /// <param name="popupCollisionAction">The collision action. Can be "fit", "flip" or "fit flip".</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Menu()
+        ///             .Name("Menu")
+        ///             .PopupCollision(c => c.Collision("flip"))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public MenuBuilder PopupCollision(Action<PopupCollisionBuilder> popupCollisionAction)
+        {
+            popupCollisionAction(new PopupCollisionBuilder(Component.PopupCollision));
+
+            return this;
+        }
+
+        /// <summary>
         /// Defines the items in the menu
         /// </summary>
         /// <param name="addAction">The add action.</param>
