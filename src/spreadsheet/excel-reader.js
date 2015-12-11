@@ -101,7 +101,7 @@
                     // why not complicate things if it's possible, right?
                     width = Math.floor((256 * width + Math.floor(128 / maximumDigitWidth)) / 256) * maximumDigitWidth;
 
-                    sheet._columns.values.value(start, stop, width);
+                    sheet._columns.values.value(start, stop, width|0);
 
                     if (attrs.hidden === "1") {
                         for (var ci = start; ci <= stop; ci++) {
@@ -115,7 +115,7 @@
                     if (attrs.ht) {
                         var height = parseFloat(attrs.ht);
                         height *= 1.5625; // XXX: totally unscientific conversion of points into pixels
-                        sheet._rows.values.value(row, row, height);
+                        sheet._rows.values.value(row, row, height|0);
                     }
 
                     if (attrs.hidden === "1") {
