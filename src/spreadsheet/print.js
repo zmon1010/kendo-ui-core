@@ -257,7 +257,8 @@
         // - pageWidth
         // - pageHeight
         // - fitWidth
-        // - center?
+        // - hCenter
+        // - vCenter
         var ncols = Math.ceil(layout.width / options.pageWidth);
         var nrows = Math.ceil(layout.height / options.pageHeight);
         var pageWidth = options.pageWidth / layout.scale;
@@ -302,10 +303,12 @@
                 var matrix = geo.Matrix.scale(layout.scale, layout.scale)
                     .multiplyCopy(geo.Matrix.translate(-left, -top));
 
-                if (options.center) {
+                if (options.hCenter || options.vCenter) {
                     matrix = matrix.multiplyCopy(
-                        geo.Matrix.translate((right - endright) / 2,
-                                             (bottom - endbottom) / 2));
+                        geo.Matrix.translate(
+                            options.hCenter ? (right - endright) / 2 : 0,
+                            options.vCenter ? (bottom - endbottom) / 2 : 0)
+                    );
                 }
 
                 content.transform(matrix);
