@@ -1532,8 +1532,8 @@ var __meta__ = { // jshint ignore:line
 
             this.root.attr("role", "tree");
 
+            var elements = this.root.children(".k-item");
             for (var i = 0; i < items.length; i++) {
-                var elements = this.root.children(".k-item");
                 this.trigger("itemChange", {
                     item: elements.eq(i),
                     data: items[i],
