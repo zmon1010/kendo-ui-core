@@ -1,7 +1,7 @@
 (function() {
     var Pane = kendo.spreadsheet.Pane;
     var Sheet = kendo.spreadsheet.Sheet;
-    var addCell = kendo.spreadsheet.addCell;
+    var drawCell = kendo.spreadsheet.drawCell;
     var sheet;
 
     module("pane", {
@@ -26,142 +26,68 @@
         var pane = createPane(0, 0, 4, 4);
         pane.refresh();
 
-        var header = pane.render(0, 0).children[7];
+        var div = $("<div>");
+        pane.render(0, 0).render(div[0], div);
+        var columnHeaders = div.find(".k-spreadsheet-column-header div div");
 
-        equal(header.children[1].children.length, 1);
-
-        var tds = header.children[1].children[0].children;
-
-        equal(tds.length, 2);
-        equal(text(tds[0]), "A");
-        equal(text(tds[1]), "D");
+        equal(columnHeaders.length, 2);
+        equal(columnHeaders.eq(0).text(), "A");
+        equal(columnHeaders.eq(1).text(), "D");
     });
 
     test("doesn't render hidden columns", function() {
         sheet.range("C1:C1").value("foo");
+        sheet.range("B1:B1").value("bar");
         sheet.hideColumn(1);
 
         var pane = createPane(0, 0, 3, 3);
         pane.refresh();
 
-        var table = pane.render(0, 0).children[0];
+        var data = pane.render(0, 0).children[0];
 
-        equal(table.children[0].children.length, 2);
+        var cells = data.children.filter(function(element) { return element.attr.className.indexOf('k-spreadsheet-cell') > - 1 });
 
-        var tds = table.children[1].children[0].children;
-
-        equal(tds.length, 2);
-        equal(text(tds[1]), "foo");
+        equal(cells.length, 1);
+        equal(text(cells[0]), "foo");
     });
 
     test("doesn't render hidden rows", function() {
         sheet.hideRow(1);
+        sheet.range("A1:A3").value("bar");
 
         var pane = createPane(0, 0, 3, 3);
         pane.refresh();
 
-        var table = pane.render(0, 0).children[0];
+        var data = pane.render(0, 0).children[0];
+        var cells = data.children.filter(function(element) { return element.attr.className.indexOf('k-spreadsheet-cell') > - 1 });
 
-        equal(table.children[1].children.length, 2);
+        equal(cells.length, 2);
     });
 
-    test("adds background color style to the cell", function() {
-        var table = stub({}, "addCell");
+    function testCellAttributes(options, attr, value) {
+        test("passing " + JSON.stringify(options) + " sets " + attr + " to " + value, function() {
+            var cell = drawCell([], options, "dummy");
+            equal(cell.attr.style[attr], value);
+        });
+    }
 
-        addCell(table, {}, { background: "red" });
+    testCellAttributes({ background: "red" }, "backgroundColor", "red");
+    testCellAttributes({ color: "red" }, "color", "red");
+    testCellAttributes({ fontFamily: "foo" }, "fontFamily", "foo");
+    testCellAttributes({ fontFamily: "foo" }, "fontFamily", "foo");
+    testCellAttributes({ underline: true}, "textDecoration", "underline");
+    testCellAttributes({ fontSize: 12}, "fontSize", "12px");
+    testCellAttributes({ italic: true}, "fontStyle", "italic");
+    testCellAttributes({ bold: true}, "fontWeight", "bold");
+    testCellAttributes({ wrap: true}, "whiteSpace", "pre-wrap");
 
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].backgroundColor, "red");
-    });
-
-    test("adds fontColor style to the cell", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { color: "red" });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].color, "red");
-    });
-
-    test("adds font-family style to the cell", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { fontFamily: "foo" });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].fontFamily, "foo");
-    });
-
-    test("adds text-decoration style to the cell", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { underline: true });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].textDecoration, "underline");
-    });
-
-    test("adds font-size style to the cell", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { fontSize: 12 });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].fontSize, "12px");
-    });
-
-    test("adds font-style style to the cell", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { italic: true });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].fontStyle, "italic");
-    });
-
-    test("adds font-weight style to the cell", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { bold: true });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].fontWeight, "bold");
-    });
-
-    test("adds text-align  style to the cell", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { textAlign: "foo" });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].textAlign, "foo");
-    });
-
-    test("adds vertical-align  style to the cell", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { verticalAlign: "foo" });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].verticalAlign, "foo");
-    });
-
-    test("adds white-space nowrap style to the cell if wrap is false", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { wrap: true });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].whiteSpace, "pre-wrap");
-    });
+    test("verticalAlign applies class to a child element", function() {
+            var cell = drawCell([], { value: "foo", verticalAlign: "bottom" }, "dummy");
+            equal(cell.children[0].attr.className, "k-vertical-align-bottom");
+    })
 
     test("adds 'k-state-disabled' classname to the cell", function() {
-        var table = stub({}, "addCell");
-
-        addCell(table, {}, { enable: false });
-
-        equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[3], "k-state-disabled");
-    });
-
+        var cell = drawCell([], { value: "foo", verticalAlign: "bottom" }, "k-state-disabled");
+        ok(cell.attr.className.indexOf("k-state-disabled") > -1);
+    })
 })();

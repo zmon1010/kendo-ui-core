@@ -4,6 +4,7 @@
 @spreadsheet-cell-border: darken(@base, 10%);
 @spreadsheet-selection-background: fadeout(@selected-background, 80%);
 @spreadsheet-selection-border: @selected-background;
+@spreadsheet-header-selection-border: fadein(@spreadsheet-selection-background, 80%);
 
 .k-spreadsheet-row-header,
 .k-spreadsheet-column-header {
@@ -11,8 +12,8 @@
 }
 
 .k-spreadsheet-top-corner,
-.k-spreadsheet-row-header td,
-.k-spreadsheet-column-header td {
+.k-spreadsheet-row-header,
+.k-spreadsheet-column-header {
     background-color: @spreadsheet-header-background;
     background-image: none;
     color: contrast(@spreadsheet-header-background);
@@ -30,12 +31,13 @@
 .k-spreadsheet-pane {
     border-color: @spreadsheet-pane-border;
 
-    td {
+    .k-spreadsheet-vaxis,
+    .k-spreadsheet-haxis {
         border-color: @spreadsheet-cell-border;
     }
 
-    .k-spreadsheet-column-header td,
-    .k-spreadsheet-row-header td {
+    .k-spreadsheet-column-header,
+    .k-spreadsheet-row-header {
         border-color: @spreadsheet-header-border;
     }
 
@@ -55,12 +57,12 @@
 
     .k-spreadsheet-column-header .k-selection-partial,
     .k-spreadsheet-column-header .k-selection-full {
-        border-bottom-color: fadein(@spreadsheet-selection-background, 80%);
+        border-bottom-color: @spreadsheet-header-selection-border;
     }
 
     .k-spreadsheet-row-header .k-selection-partial,
     .k-spreadsheet-row-header .k-selection-full {
-        border-right-color: fadein(@spreadsheet-selection-background, 80%);
+        border-right-color: @spreadsheet-header-selection-border;
     }
 }
 
@@ -76,28 +78,7 @@
 .k-spreadsheet-active-cell {
     box-shadow: inset 0 0 0 1px @spreadsheet-selection-border;
     border-color: @spreadsheet-selection-border;
-
-    td {
-        background-color: @background;
-        border-color: @spreadsheet-selection-border;
-        box-shadow: inset 1px 1px 0 1px @spreadsheet-selection-border, inset 0 0 0 1px @spreadsheet-selection-border;
-    }
-
-    &.k-right td {
-        box-shadow: inset 1px 1px 0 1px @spreadsheet-selection-border, inset -2px 0 0 1px @spreadsheet-selection-border;
-    }
-
-    &.k-bottom td {
-        box-shadow: inset 1px 1px 0 1px @spreadsheet-selection-border, inset 0 -2px 0 1px @spreadsheet-selection-border;
-    }
-
-    &.k-right.k-bottom td {
-        box-shadow: inset 1px 1px 0 1px @spreadsheet-selection-border, inset -2px -2px 0 1px @spreadsheet-selection-border;
-    }
-
-    .k-ff & td {
-        box-shadow: inset 0 0 0 1px @spreadsheet-selection-border;
-    }
+    background-color: @background;
 }
 
 .k-spreadsheet-active-cell.k-single {

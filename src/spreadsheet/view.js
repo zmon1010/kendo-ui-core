@@ -80,6 +80,173 @@
         ].join(" ");
     }
 
+    function drawCell(collection, cell, cls, hBorders, vBorders) {
+        if (!cls && !kendo.spreadsheet.draw.shouldDrawCell(cell)) {
+            return;
+        }
+
+        var left = cell.left;
+        var top = cell.top;
+        var width = cell.width+1;
+        var height = cell.height+1;
+
+        var style = {};
+        var background = cell.background;
+        //var defaultBorder = background ? cellBorder({ color: background }) : null;
+        var defaultBorder = null;
+        if (background) {
+            defaultBorder = kendo.parseColor(background).toHSV();
+            defaultBorder.v *= 0.9;
+            defaultBorder = defaultBorder.toCssRgba();
+            defaultBorder = cellBorder({ color: defaultBorder });
+        }
+
+        if (background) {
+            style.backgroundColor = background;
+        }
+
+        if (cell.color) {
+            style.color = cell.color;
+        }
+
+        if (cell.fontFamily) {
+            style.fontFamily = cell.fontFamily;
+        }
+
+        if (cell.underline) {
+            style.textDecoration = "underline";
+        }
+
+        if (cell.italic) {
+            style.fontStyle = "italic";
+        }
+
+        if (cell.textAlign) {
+            style.textAlign = cell.textAlign;
+        }
+
+        if (cell.bold) {
+            style.fontWeight = "bold";
+        }
+
+        if (cell.fontSize) {
+            style.fontSize = cell.fontSize + "px";
+        }
+
+        if (cell.wrap === true) {
+            style.whiteSpace = "pre-wrap";
+            style.wordBreak = "break-all";
+        }
+
+        if (cell.borderLeft) {
+            style.borderLeft = cellBorder(cell.borderLeft);
+            if (vBorders) {
+                vBorders[cell.left] = true;
+            }
+        } else if (defaultBorder && vBorders && !vBorders[cell.left]) {
+            style.borderLeft = defaultBorder;
+        } else {
+            left++;
+            width--;
+        }
+
+        if (cell.borderTop) {
+            style.borderTop = cellBorder(cell.borderTop);
+            if (hBorders) {
+                hBorders[cell.top] = true;
+            }
+        } else if (defaultBorder && hBorders && !hBorders[cell.top]) {
+            style.borderTop = defaultBorder;
+        } else {
+            top++;
+            height--;
+        }
+
+        if (cell.borderRight) {
+            style.borderRight = cellBorder(cell.borderRight);
+            if (vBorders) {
+                vBorders[cell.right] = true;
+            }
+        } else if (defaultBorder && vBorders && !vBorders[cell.right]) {
+            style.borderRight = defaultBorder;
+        } else {
+            width--;
+        }
+
+        if (cell.borderBottom) {
+            style.borderBottom = cellBorder(cell.borderBottom);
+            if (hBorders) {
+                hBorders[cell.bottom] = true;
+            }
+        } else if (defaultBorder && hBorders && !hBorders[cell.bottom]) {
+            style.borderBottom = defaultBorder;
+        } else {
+            height--;
+        }
+
+        style.left = left + "px";
+        style.top = top + "px";
+        style.width = width + "px";
+        style.height = height + "px";
+
+        var data = cell.value, type = typeof data;
+        if (cell.format && data !== null) {
+            data = kendo.spreadsheet.formatting.format(data, cell.format);
+            if (data.__dataType) {
+                type = data.__dataType;
+            }
+        } else if (data !== null && data !== undefined) {
+            data = kendo.dom.text(data);
+        }
+
+        if (!style.textAlign) {
+            switch (type) {
+              case "number":
+              case "date":
+              case "percent":
+                style.textAlign = "right";
+                break;
+              case "boolean":
+                style.textAlign = "center";
+                break;
+            }
+        }
+
+        var classNames = [ paneClassNames.cell ];
+
+        if (cls) {
+            classNames.push(cls);
+        }
+        if (cell.enable === false) {
+            classNames.push("k-state-disabled");
+        }
+        if (cell.merged) {
+            classNames.push("k-spreadsheet-merged-cell");
+        }
+
+        var verticalAlign = cell.verticalAlign || "center"; // Excel defaults to "bottom" actually
+
+        if (verticalAlign && data) {
+            data = kendo.dom.element("div", { className: "k-vertical-align-" + verticalAlign }, [ data ]);
+        }
+
+        var children = data ? [ data ] : [];
+        var properties = {
+            style: style
+        };
+        var validation = cell.validation;
+        if (validation && !validation.value) {
+            children.push(kendo.dom.element("span", { className: "k-dirty" }));
+            classNames.push("k-dirty-cell");
+            properties.title = validation._getOptions().messageTemplate;
+        }
+        properties.className = classNames.join(" ");
+
+        var div = kendo.dom.element("div", properties, children);
+        collection.push(div);
+        return div;
+    }
+
     function addCell(table, row, cell) {
         var style = {};
 
@@ -885,6 +1052,9 @@
     });
 
     var paneClassNames = {
+        cell: "k-spreadsheet-cell",
+        vaxis: "k-spreadsheet-vaxis",
+        haxis: "k-spreadsheet-haxis",
         rowHeader: "k-spreadsheet-row-header",
         columnHeader: "k-spreadsheet-column-header",
         pane: "k-spreadsheet-pane",
@@ -937,13 +1107,12 @@
 
             var view = grid.view(scrollLeft, scrollTop);
             this._currentView = view;
+            this._currentRect = this._rectangle(view.ref);
             this._selectedHeaders = sheet.selectedHeaders();
 
             var children = [];
 
             children.push(this.renderData());
-
-            children.push(this.renderMergedCells());
 
             children.push(this.renderSelection());
 
@@ -954,36 +1123,60 @@
             children.push(this.renderFilterHeaders());
 
             if (grid.hasRowHeader) {
-                var rowHeader = new HtmlTable();
-                rowHeader.addColumn(grid.headerWidth);
-
-                view.rows.values.forEach(function(height) {
-                    rowHeader.addRow(height);
+                var rowHeader = kendo.dom.element("div", {
+                    className: classNames.rowHeader,
+                    style: {
+                        width: grid.headerWidth + "px",
+                        top: view.rowOffset + "px"
+                    }
                 });
-
-                sheet.forEach(view.ref.leftColumn(), function(row) {
-                    var text = row + 1;
-                    rowHeader.addCell(row - view.ref.topLeft.row, text, {}, this.headerClassName(row, "row"));
+                children.push(rowHeader);
+                sheet.forEach(view.ref.leftColumn(), function(row){
+                    if (!sheet.isHiddenRow(row)) {
+                        var text = row + 1, height = sheet.rowHeight(row);
+                        rowHeader.children.push(kendo.dom.element("div", {
+                            className: this.headerClassName(row, "row"),
+                            style: {
+                                width: grid.headerWidth + "px",
+                                height: height + "px"
+                            }
+                        }, [ kendo.dom.element("div", {
+                            className: "k-vertical-align-center"
+                        }, [ kendo.dom.text(text+"") ])]));
+                    }
                 }.bind(this));
-
-                children.push(rowHeader.toDomTree(0, view.rowOffset, classNames.rowHeader));
             }
 
             if (grid.hasColumnHeader) {
-                var columnHeader = new HtmlTable();
-
-                view.columns.values.forEach(function(width) {
-                    columnHeader.addColumn(width);
+                var columnHeader = kendo.dom.element("div", {
+                    className: classNames.columnHeader,
+                    style: {
+                        top: "0px",
+                        left: view.columnOffset + "px",
+                        width: this._currentRect.width + "px",
+                        height: grid.headerHeight + "px"
+                    }
                 });
-
-                columnHeader.addRow(grid.headerHeight);
-
-                sheet.forEach(view.ref.topRow(), function(row, col) {
-                    var text = kendo.spreadsheet.Ref.display(null, Infinity, col);
-                    columnHeader.addCell(0, text, {}, this.headerClassName(col, "col"));
+                children.push(columnHeader);
+                var left = 0;
+                sheet.forEach(view.ref.topRow(), function(row, col){
+                    if (!sheet.isHiddenColumn(col)) {
+                        var text = kendo.spreadsheet.Ref.display(null, Infinity, col),
+                            width = sheet.columnWidth(col);
+                        columnHeader.children.push(kendo.dom.element("div", {
+                            className: this.headerClassName(col, "col"),
+                            style: {
+                                position: "absolute",
+                                left: left + "px",
+                                width: width + "px",
+                                height: grid.headerHeight + "px"
+                            }
+                        }, [ kendo.dom.element("div", {
+                            className: "k-vertical-align-center"
+                        }, [ kendo.dom.text(text+"") ])]));
+                        left += width;
+                    }
                 }.bind(this));
-
-                children.push(columnHeader.toDomTree(view.columnOffset, 0, classNames.columnHeader));
             }
 
             if (sheet.resizeHandlePosition() && (grid.hasColumnHeader || grid.hasRowHeader)) {
@@ -1036,34 +1229,51 @@
         },
 
         renderData: function() {
-            var table = new HtmlTable();
             var view = this._currentView;
-
-            view.rows.values.forEach(function(height) {
-                table.addRow(height);
+            var cont = kendo.dom.element("div", {
+                className: Pane.classNames.data,
+                style: {
+                    position: "relative",
+                    left: view.columnOffset + "px",
+                    top: view.rowOffset + "px"
+                }
             });
-
-            view.columns.values.forEach(function(width) {
-                table.addColumn(width);
+            var rect = this._rectangle(view.ref);
+            var layout = kendo.spreadsheet.draw.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
+            // draw axis first
+            prev = null;
+            layout.xCoords.forEach(function(x){
+                if (x !== prev) {
+                    prev = x;
+                    cont.children.push(kendo.dom.element("div", {
+                        className: paneClassNames.vaxis,
+                        style: {
+                            left: x + "px",
+                            height: rect.height + "px"
+                        }
+                    }));
+                }
             });
-
-            this._sheet.forEach(view.ref, function(row, col, cell) {
-                addCell(table, row - view.ref.topLeft.row, cell);
+            prev = null;
+            layout.yCoords.forEach(function(y){
+                if (y !== prev) {
+                    prev = y;
+                    cont.children.push(kendo.dom.element("div", {
+                        className: paneClassNames.haxis,
+                        style: {
+                            top: y + "px",
+                            width: rect.width + "px"
+                        }
+                    }));
+                }
             });
-
-            return table.toDomTree(view.columnOffset, view.rowOffset, Pane.classNames.data);
-        },
-
-        renderMergedCells: function() {
-            var classNames = Pane.classNames;
-            var mergedCells = [];
-            var sheet = this._sheet;
-
-            sheet.forEachMergedCell(function(ref) {
-                this._addTable(mergedCells, ref, classNames.mergedCell);
-            }.bind(this));
-
-            return kendo.dom.element("div", { className: classNames.mergedCellsWrapper }, mergedCells);
+            var vBorders = {}, hBorders = {};
+            layout.cells.forEach(function(cell){
+                var hb = hBorders[cell.col] || (hBorders[cell.col] = {});
+                var vb = vBorders[cell.row] || (vBorders[cell.row] = {});
+                drawCell(cont.children, cell, null, hb, vb);
+            });
+            return cont;
         },
 
         renderResizeHandler: function() {
@@ -1276,13 +1486,11 @@
             if (view.ref.intersects(ref)) {
                 sheet.forEach(ref.collapse(), function(row, col, cell) {
                     var rectangle = this._rectangle(ref);
-
-                    var table = new HtmlTable();
-                    table.addColumn(rectangle.width);
-                    table.addRow(rectangle.height);
-                    addCell(table, 0, cell);
-
-                    collection.push(table.toDomTree(rectangle.left, rectangle.top, className));
+                    cell.left = rectangle.left-1;
+                    cell.top = rectangle.top-1;
+                    cell.width = rectangle.width+2;
+                    cell.height = rectangle.height+2;
+                    drawCell(collection, cell, className);
                 }.bind(this));
             }
         },
@@ -1333,7 +1541,7 @@
 
     kendo.spreadsheet.View = View;
     kendo.spreadsheet.Pane = Pane;
-    kendo.spreadsheet.addCell = addCell;
+    kendo.spreadsheet.drawCell = drawCell;
 
     $.extend(true, View, { classNames: viewClassNames });
     $.extend(true, Pane, { classNames: paneClassNames });

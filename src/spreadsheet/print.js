@@ -29,7 +29,7 @@
         var threshold = 0.2 * pageHeight;
         var bottom = pageHeight;
         heights.forEach(function(h){
-            if (curr + h > bottom) {
+            if (pageHeight && curr + h > bottom) {
                 if (bottom - curr < threshold) {
                     // align to next page
                     curr = pageHeight * Math.ceil(curr / pageHeight);
@@ -56,8 +56,8 @@
             grid.forEach(ref, function(cellRef) {
                 if (topLeft.eq(cellRef)) {
                     primary[cellRef.print()] = ref;
-                } else {
-                    secondary[cellRef.print()] = true;
+                } else if (range.contains(cellRef)) {
+                    secondary[cellRef.print()] = topLeft;
                 }
             });
         });
@@ -87,7 +87,7 @@
             if (sheet.isHiddenColumn(col) || sheet.isHiddenRow(row)) {
                 return;
             }
-            var nonEmpty = shouldDrawCell(cell);
+            var nonEmpty = options.forScreen || shouldDrawCell(cell);
             if (!(options.emptyCells || nonEmpty)) {
                 return;
             }
@@ -95,17 +95,22 @@
             if (mergedCells.secondary[id]) {
                 return;
             }
-            var m = mergedCells.primary[id];
             if (nonEmpty) {
-                maxRow = Math.max(maxRow, row);
-                maxCol = Math.max(maxCol, col);
+                maxRow = Math.max(maxRow, relrow);
+                maxCol = Math.max(maxCol, relcol);
             } else {
                 cell.empty = true;
             }
+            var m = mergedCells.primary[id];
             if (m) {
+                delete mergedCells.primary[id];
                 cell.merged = true;
                 cell.rowspan = m.height();
                 cell.colspan = m.width();
+                if (options.forScreen) {
+                    cell.width = sheet._columns.sum(m.topLeft.col, m.bottomRight.col);
+                    cell.height = sheet._rows.sum(m.topLeft.row, m.bottomRight.row);
+                }
             } else {
                 cell.rowspan = 1;
                 cell.colspan = 1;
@@ -143,21 +148,26 @@
         //    are not reset to zero for a new page (in fact, we don't
         //    even care about page dimensions here).  The print
         //    function translates the view to current page.
-        var ys = distributeCoords(rowHeights, pageHeight);
-        var xs = distributeCoords(colWidths, pageWidth);
+        var yCoords = distributeCoords(rowHeights, pageHeight || 0);
+        var xCoords = distributeCoords(colWidths, pageWidth || 0);
         var boxWidth = 0;
         var boxHeight = 0;
         cells = cells.filter(function(cell){
             if (cell.empty && (cell.row > maxRow || cell.col > maxCol)) {
                 return false;
             }
-            cell.left = xs[cell.col];
-            cell.top = ys[cell.row];
+            cell.left = xCoords[cell.col];
+            cell.top = yCoords[cell.row];
             if (cell.merged) {
-                cell.right = orlast(xs, cell.col + cell.colspan);
-                cell.bottom = orlast(ys, cell.row + cell.rowspan);
-                cell.width = cell.right - cell.left;
-                cell.height = cell.bottom - cell.top;
+                if (!options.forScreen) {
+                    cell.right = orlast(xCoords, cell.col + cell.colspan);
+                    cell.bottom = orlast(yCoords, cell.row + cell.rowspan);
+                    cell.width = cell.right - cell.left;
+                    cell.height = cell.bottom - cell.top;
+                } else {
+                    cell.right = cell.left + cell.width;
+                    cell.bottom = cell.top + cell.height;
+                }
             } else {
                 cell.width = colWidths[cell.col];
                 cell.height = rowHeights[cell.row];
@@ -169,13 +179,42 @@
             return true;
         });
 
+        // 3. if any merged cells remain in "primary", they start
+        //    outside the printed range and we should still display
+        //    them partially.
+        Object.keys(mergedCells.primary).forEach(function(id){
+            var ref = mergedCells.primary[id];
+            sheet.forEach(ref.topLeft.toRangeRef(), function(row, col, cell){
+                var relrow = row - range.topLeft.row;
+                var relcol = col - range.topLeft.col;
+                cell.merged = true;
+                cell.colspan = ref.height();
+                cell.rowspan = ref.width();
+                if (relrow < 0) {
+                    cell.top = -sheet._rows.sum(row, row - relrow - 1);
+                } else {
+                    cell.top = yCoords[relrow];
+                }
+                if (relcol < 0) {
+                    cell.left = -sheet._columns.sum(col, col - relcol - 1);
+                } else {
+                    cell.left = xCoords[relcol];
+                }
+                cell.height = sheet._rows.sum(ref.topLeft.row, ref.bottomRight.row);
+                cell.width = sheet._columns.sum(ref.topLeft.col, ref.bottomRight.col);
+                cell.right = cell.left + cell.width;
+                cell.bottom = cell.top + cell.height;
+                cells.push(cell);
+            });
+        });
+
         return {
             width  : boxWidth,
             height : boxHeight,
             cells  : cells.sort(normalOrder),
             scale  : scaleFactor,
-            xs     : xs,
-            ys     : ys
+            xCoords: xCoords,
+            yCoords: yCoords
         };
     }
 
@@ -189,6 +228,7 @@
 
     function shouldDrawCell(cell) {
         return cell.value != null
+            || cell.merged
             || cell.background != null
             || cell.borderTop != null
             || cell.borderRight != null
@@ -272,7 +312,7 @@
 
                 if (options.guidelines) {
                     var prev = null;
-                    layout.xs.forEach(function(x){
+                    layout.xCoords.forEach(function(x){
                         x = Math.min(x, endright);
                         if (x !== prev && x >= left && x <= right) {
                             prev = x;
@@ -286,7 +326,7 @@
                         }
                     });
                     var prev = null;
-                    layout.ys.forEach(function(y){
+                    layout.yCoords.forEach(function(y){
                         y = Math.min(y, endbottom);
                         if (y !== prev && y >= top && y <= bottom) {
                             prev = y;
@@ -330,34 +370,38 @@
         }
         if (cell.borderLeft) {
             g.append(
-                new drawing.Path({ stroke: cell.borderLeft })
+                new drawing.Path()
                     .moveTo(cell.left, cell.top)
                     .lineTo(cell.left, cell.bottom)
                     .close()
+                    .stroke(cell.borderLeft.color, cell.borderLeft.size)
             );
         }
         if (cell.borderTop) {
             g.append(
-                new drawing.Path({ stroke: cell.borderTop })
+                new drawing.Path()
                     .moveTo(cell.left, cell.top)
                     .lineTo(cell.right, cell.top)
                     .close()
+                    .stroke(cell.borderTop.color, cell.borderTop.size)
             );
         }
         if (cell.borderRight) {
             g.append(
-                new drawing.Path({ stroke: cell.borderRight })
+                new drawing.Path()
                     .moveTo(cell.right, cell.top)
                     .lineTo(cell.right, cell.bottom)
                     .close()
+                    .stroke(cell.borderRight.color, cell.borderRight.size)
             );
         }
         if (cell.borderBottom) {
             g.append(
-                new drawing.Path({ stroke: cell.borderBottom })
+                new drawing.Path()
                     .moveTo(cell.left, cell.bottom)
                     .lineTo(cell.right, cell.bottom)
                     .close()
+                    .stroke(cell.borderBottom.color, cell.borderBottom.size)
             );
         }
         var val = cell.value;
@@ -542,6 +586,12 @@
         } else {
             draw(sheet, range, options, callback);
         }
+    };
+
+    spreadsheet.draw = {
+        doLayout       : doLayout,
+        drawLayout     : drawLayout,
+        shouldDrawCell : shouldDrawCell
     };
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
