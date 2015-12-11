@@ -484,6 +484,18 @@
         equal(filter.matches(filter.value({ value: 11, format: "m/d/yyyy" })), true);
     });
 
+    test("date filter matches formatted numbers", function() {
+        var date = kendo.spreadsheet.dateToNumber(new Date("1/1/2001"));
+        filter = new CustomFilter({
+            criteria: [
+                { operator: "eq", value: new Date("1/1/2001") }
+            ]
+        });
+
+        equal(filter.matches(filter.value({ value: date, format: "m/d/yyyy" })), true);
+        equal(filter.matches(filter.value({ value: date+1, format: "m/d/yyyy" })), false);
+    });
+
     module("top filter");
 
     test("top number matches the top X values", function() {

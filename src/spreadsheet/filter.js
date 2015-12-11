@@ -127,7 +127,8 @@
         },
         value: function(cell) {
             var value = cell.value;
-            var criterionType = this._criteria[0].type || typeof this._criteria[0].value;
+            var criterionValue = this._criteria[0].value;
+            var criterionType = criterionValue instanceof Date ? "date" : typeof criterionValue;
             var valueType = typeof value;
 
             if (cell.format) {
