@@ -48,7 +48,7 @@
             .FileName("Kendo UI Gantt Export.pdf")
             .ProxyURL(Url.Action("Pdf_Export_Save", "Gantt"))
         )
-        .Height(400)
+        .Height(700)
         .ShowWorkHours(false)
         .ShowWorkDays(false)
         .Snap(false)
