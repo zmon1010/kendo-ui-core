@@ -21,7 +21,7 @@
 
 <demo:header />
 
-    <kendo:gantt name="gantt" navigatable="true" height="400" showWorkDays="false" showWorkHours="false" snap="false">
+    <kendo:gantt name="gantt" navigatable="true" height="700" showWorkDays="false" showWorkHours="false" snap="false">
     	<kendo:gantt-views>
     		<kendo:gantt-view type="day" />
     		<kendo:gantt-view type="week" selected="true" />
@@ -93,7 +93,7 @@
         </kendo:dependencies>
     </kendo:gantt>
     
-    <div class="box">
+  <div class="box wide">
         <div class="box-col">
             <h4>Focus</h4>
             <ul class="keyboard-legend" style="margin-bottom: 1em;">

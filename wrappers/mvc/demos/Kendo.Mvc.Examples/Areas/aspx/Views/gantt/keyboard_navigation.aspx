@@ -18,7 +18,7 @@
             views.WeekView(weekView => weekView.Selected(true));
             views.MonthView();
         })
-        .Height(400)
+        .Height(700)
         .Navigatable(true)
         .ShowWorkHours(false)
         .ShowWorkDays(false)
@@ -50,8 +50,8 @@
         )
     %>
 
-<div id="example">
-
+<div class="box wide">
+    <div class="box-col">
         <h4>Focus</h4>
         <ul class="keyboard-legend" style="margin-bottom: 1em;">
             <li>
@@ -86,7 +86,9 @@
                 </span>
             </li>
         </ul>
+    </div>
 
+    <div class="box-col">
         <h4>Actions applied on Gantt's TreeList data table</h4>
         <ul class="keyboard-legend">
             <li>
@@ -152,7 +154,9 @@
                 </span>
             </li>
         </ul>
+    </div>
 
+    <div class="box-col">
         <h4>Actions applied on 'Add Task' action DropDown</h4>
         <ul class="keyboard-legend">
             <li>
@@ -184,6 +188,8 @@
                 </span>
             </li>
         </ul>
+    </div>
+</div>
 
     <script>
         $(document.body).keydown(function(e) {
@@ -192,7 +198,5 @@
             }
         });
     </script>
-
-</div>
 
 </asp:Content>
