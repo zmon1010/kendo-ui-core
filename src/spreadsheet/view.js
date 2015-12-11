@@ -1486,10 +1486,10 @@
             if (view.ref.intersects(ref)) {
                 sheet.forEach(ref.collapse(), function(row, col, cell) {
                     var rectangle = this._rectangle(ref);
-                    cell.left = rectangle.left-1;
-                    cell.top = rectangle.top-1;
-                    cell.width = rectangle.width+2;
-                    cell.height = rectangle.height+2;
+                    cell.left = rectangle.left;
+                    cell.top = rectangle.top;
+                    cell.width = rectangle.width;
+                    cell.height = rectangle.height;
                     drawCell(collection, cell, className);
                 }.bind(this));
             }
