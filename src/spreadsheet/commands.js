@@ -153,7 +153,7 @@
 
     kendo.spreadsheet.AdjustDecimalsCommand = Command.extend({
         init: function(options) {
-            this._decimals = options.decimals;
+            this._decimals = options.value;
             options.property = "format";
             Command.fn.init.call(this, options);
         },

@@ -705,7 +705,7 @@
     test("adds decimal points", function() {
         sheet.range("A1").format("#.00");
 
-        var command = adjustDecimalsCommand({ decimals: -1 });
+        var command = adjustDecimalsCommand({ value: -1 });
         command.exec();
 
         equal(sheet.range("A1").format(), "#.0;@");
@@ -714,7 +714,7 @@
     test("removes decimal points", function() {
         sheet.range("A1").format("#.0");
 
-        var command = adjustDecimalsCommand({ decimals: +1 });
+        var command = adjustDecimalsCommand({ value: +1 });
         command.exec();
 
         equal(sheet.range("A1").format(), "#.00;@");
@@ -723,7 +723,7 @@
     test("can be undone", function() {
         sheet.range("A1").format("#.00");
 
-        var command = adjustDecimalsCommand({ decimals: -1 });
+        var command = adjustDecimalsCommand({ value: -1 });
         command.exec();
         command.undo();
 
@@ -733,7 +733,7 @@
     test("does not break on cells with no format", function() {
         sheet.range("A1").format(null);
 
-        var command = adjustDecimalsCommand({ decimals: -1 });
+        var command = adjustDecimalsCommand({ value: -1 });
         command.exec();
 
         equal(sheet.range("A1").format(), null);
@@ -742,7 +742,7 @@
     test("adds decimals to cells without format", function() {
         sheet.range("A1").format(null);
 
-        var command = adjustDecimalsCommand({ decimals: +1 });
+        var command = adjustDecimalsCommand({ value: +1 });
         command.exec();
 
         equal(sheet.range("A1").format(), "#.0;@");
