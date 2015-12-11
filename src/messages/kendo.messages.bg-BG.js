@@ -259,7 +259,6 @@ $.extend(true, kendo.spreadsheet.messages.toolbar,{
   "cut": "Изрежи",
   "deleteColumn": "Изтрий колона",
   "deleteRow": "Изтрии ред",
-  "open": "Отвори...",
   "excelImport": "Импортиране от Excel...",
   "filter": "Филтриране",
   "fontFamily": "Шрифт",
