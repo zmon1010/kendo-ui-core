@@ -563,34 +563,34 @@
         return styles;
     }
 
+    var SEL_SCHEME_SYSCLR = ["a:clrScheme", "*", "a:sysClr"];
+    var SEL_SCHEME_RGBCLR = ["a:clrScheme", "*", "a:srgbClr"];
     function readTheme(zip, rel) {
+        var scheme = [];
         var theme = {
-            colorScheme: []
+            colorScheme: scheme
         };
 
         var file = "xl/" + rel;
         if (zip.files[file]) {
-            var scheme = null;
             parse(zip, file, {
                 enter: function(tag, attrs) {
-                    if (tag == "a:clrScheme") {
-                        scheme = theme.colorScheme;
-                    } else if (scheme && tag == "a:sysClr") {
+                    if (this.is(SEL_SCHEME_SYSCLR)) {
                         scheme.push(toCSSColor(
                             attrs.val == "window" ? "FFFFFFFF" : "FF000000"
                         ));
-                    } else if (scheme && tag == "a:srgbClr") {
+                    } else if (this.is(SEL_SCHEME_RGBCLR)) {
                         scheme.push(toCSSColor("FF" + attrs.val));
-                    }
-                },
-                leave: function(tag) {
-                    if (tag === "a:clrScheme") {
-                        swap(scheme, 0, 1);
-                        swap(scheme, 2, 3);
-                        scheme = null;
                     }
                 }
             });
+
+            if (scheme.length > 3) {
+                // lt1 <-> dk1
+                swap(scheme, 0, 1);
+                // lt2 <-> dk2
+                swap(scheme, 2, 3);
+            }
         }
 
         function swap(arr, a, b) {
@@ -621,5 +621,6 @@
 
     kendo.spreadsheet.readExcel = readExcel;
     kendo.spreadsheet._readStyles = readStyles;
+    kendo.spreadsheet._readTheme = readTheme;
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

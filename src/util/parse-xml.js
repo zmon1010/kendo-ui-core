@@ -59,7 +59,7 @@
             is: function(selector) {
                 var i = stack.length, j = selector.length;
                 while (--i >= 0 && --j >= 0) {
-                    if (stack[i].$tag != selector[j]) {
+                    if (stack[i].$tag != selector[j] && selector[j] != "*") {
                         return false;
                     }
                 }

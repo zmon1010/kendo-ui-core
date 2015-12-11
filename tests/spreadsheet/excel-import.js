@@ -125,4 +125,75 @@
         var styles = kendo.spreadsheet._readStyles(zip, THEME);
         equal(styles.fills[0].color, "rgba(172, 222, 247, 1)");
     });
+
+    test("reads theme colors", function() {
+        var THEME = `
+            <a:theme name="Office Theme">
+              <a:themeElements>
+                <a:clrScheme name="Office">
+                  <a:dk1>
+                    <a:sysClr val="windowText" lastClr="000000"/>
+                  </a:dk1>
+                  <a:lt1>
+                    <a:sysClr val="window" lastClr="FFFFFF"/>
+                  </a:lt1>
+                  <a:dk2>
+                    <a:srgbClr val="44546A"/>
+                  </a:dk2>
+                  <a:lt2>
+                    <a:srgbClr val="E7E6E6"/>
+                  </a:lt2>
+                  <a:accent1>
+                    <a:srgbClr val="5B9BD5"/>
+                  </a:accent1>
+                  <a:accent2>
+                    <a:srgbClr val="ED7D31"/>
+                  </a:accent2>
+                  <a:accent3>
+                    <a:srgbClr val="A5A5A5"/>
+                  </a:accent3>
+                  <a:accent4>
+                    <a:srgbClr val="FFC000"/>
+                  </a:accent4>
+                  <a:accent5>
+                    <a:srgbClr val="4472C4"/>
+                  </a:accent5>
+                  <a:accent6>
+                    <a:srgbClr val="70AD47"/>
+                  </a:accent6>
+                  <a:hlink>
+                    <a:srgbClr val="0563C1"/>
+                  </a:hlink>
+                  <a:folHlink>
+                    <a:srgbClr val="954F72"/>
+                  </a:folHlink>
+                </a:clrScheme>
+              </a:themeElements>
+            </a:theme>
+        `;
+
+        addFile("xl/theme/theme1.xml", THEME);
+
+        var theme = kendo.spreadsheet._readTheme(zip, "theme/theme1.xml");
+
+        deepEqual(theme.colorScheme, [
+            // Notice lt1 <-> dk1 swap,
+            // system color defaults
+            "rgba(255, 255, 255, 1)",
+            "rgba(0, 0, 0, 1)",
+
+            // Notice lt2 <-> dk2 swap
+            "rgba(231, 230, 230, 1)",
+            "rgba(68, 84, 106, 1)",
+
+            "rgba(91, 155, 213, 1)",
+            "rgba(237, 125, 49, 1)",
+            "rgba(165, 165, 165, 1)",
+            "rgba(255, 192, 0, 1)",
+            "rgba(68, 114, 196, 1)",
+            "rgba(112, 173, 71, 1)",
+            "rgba(5, 99, 193, 1)",
+            "rgba(149, 79, 114, 1)"
+        ]);
+    });
 })();
