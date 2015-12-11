@@ -1103,7 +1103,7 @@ var RangeUtils = {
             var index = dom.findNodeIndex(range.startContainer);
             var parent = range.startContainer.parentNode;
 
-            while (index > 0 && dom.insignificant(parent[index-1])) {
+            while (index > 0 && parent[index-1] && dom.insignificant(parent[index-1])) {
                 index--;
             }
 

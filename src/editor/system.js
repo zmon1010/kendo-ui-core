@@ -237,25 +237,31 @@ var BackspaceHandler = Class.extend({
 
         return false;
     },
-    _handleBackspace: function(range) {
+    _cleanBomBefore: function(range) {
+        var offset = range.startOffset;
         var node = range.startContainer;
-        var li = dom.closestEditableOfType(node, ['li']);
-        var block = dom.closestEditableOfType(node, 'p,h1,h2,h3,h4,h5,h6'.split(','));
+        var text = node.nodeValue;
+        var count = 0;
+        while (offset-count >= 0 && text[offset-count-1] == "\ufeff") {
+            count++;
+        }
 
-        if (dom.isDataNode(node)) {
-            var offset = range.startOffset;
-            var text = node.nodeValue;
-            var count = 0;
-            while (offset-count >= 0 && text[offset-count-1] == "\ufeff") {
-                count++;
-            }
-
+        if (count > 0) {
             node.deleteData(offset-count, count);
 
             range.setStart(node, Math.max(0, offset-count));
             range.collapse(true);
 
             this.editor.selectRange(range);
+        }
+    },
+    _handleBackspace: function(range) {
+        var node = range.startContainer;
+        var li = dom.closestEditableOfType(node, ['li']);
+        var block = dom.closestEditableOfType(node, 'p,h1,h2,h3,h4,h5,h6'.split(','));
+
+        if (dom.isDataNode(node)) {
+            this._cleanBomBefore(range);
         }
 
         // unwrap block
