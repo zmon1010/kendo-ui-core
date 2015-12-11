@@ -14,6 +14,8 @@ import com.kendoui.taglib.html.Input;
 
 
 
+import com.kendoui.taglib.html.Li;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
 
@@ -47,10 +49,10 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
     @Override
     protected void addAttributes(Li element) {
         if (this.isSet("id")) {
-            element.attr("data-id", this.get("id"));
+            element.attr("data-id", this.getId());
         }
 
-        super.addAttributes();
+        super.addAttributes(element);
     }
     
     @Override
