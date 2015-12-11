@@ -232,7 +232,6 @@
 
         var children = data ? [ data ] : [];
         var properties = {
-            className: classNames.join(" "),
             style: style
         };
         var validation = cell.validation;
@@ -241,6 +240,7 @@
             classNames.push("k-dirty-cell");
             properties.title = validation._getOptions().messageTemplate;
         }
+        properties.className = classNames.join(" ");
 
         var div = kendo.dom.element("div", properties, children);
         collection.push(div);

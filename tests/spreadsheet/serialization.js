@@ -596,7 +596,7 @@
             ]
         });
 
-        var firstCell = spreadsheet._view.element.find(".k-spreadsheet-data td")[0];
+        var firstCell = spreadsheet._view.element.find(".k-spreadsheet-cell")[0];
 
         equal(firstCell.style.backgroundColor, "red");
     });

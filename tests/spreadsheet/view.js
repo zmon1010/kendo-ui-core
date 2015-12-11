@@ -57,46 +57,6 @@
         equal(firstDataCell(element).css("borderTopColor"), "rgb(230, 0, 0)");
     });
 
-    test("borderLeft renders right border on previous cell", function() {
-        sheet.fromJSON({ rows: [
-            { cells: [
-                { },
-                { borderLeft: { size: 3 } }
-            ] }
-        ] });
-
-        var leftCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
-
-        equal(leftCell[0].style.borderRightWidth, "3px");
-    });
-
-    test("borderLeft of first cell can be set", function() {
-        sheet.fromJSON(singleCell({ borderLeft: { size: 1, color: "rgb(255, 0 0)" } }));
-
-        ok(true);
-    });
-
-    test("borderTop renders bottom border on cell above", function() {
-        sheet.fromJSON({ rows: [
-            { cells: [
-                { }
-            ] },
-            { cells: [
-                { borderTop: { size: 3 } }
-            ] }
-        ] });
-
-        var topCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
-
-        equal(topCell[0].style.borderBottomWidth, "3px");
-    });
-
-    test("borderTop of first cell can be set", function() {
-        sheet.fromJSON(singleCell({ borderTop: { size: 1, color: "rgb(255, 0 0)" } }));
-
-        ok(true);
-    });
-
     test("add 'k-dirty-cell' of first cell when value is not valid", function() {
         var cell = singleCell({
             borderTop: { size: 1, color: "rgb(255, 0 0)" },
@@ -104,7 +64,7 @@
         });
         sheet.fromJSON(cell);
 
-        var topCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
+        var topCell = firstDataCell(element);
 
         ok(topCell.hasClass("k-dirty-cell"));
     });
@@ -116,7 +76,7 @@
         });
         sheet.fromJSON(cell);
 
-        var topCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
+        var topCell = firstDataCell(element);
         var flagSpan = topCell.children(".k-dirty");
 
         equal(flagSpan.length, 1);
@@ -131,7 +91,7 @@
         });
         sheet.fromJSON(cell);
 
-        var topCell = element.find(".k-spreadsheet-data tr:eq(0) td:eq(0)");
+        var topCell = firstDataCell(element);
 
         equal(topCell.attr("title"), title);
     });
