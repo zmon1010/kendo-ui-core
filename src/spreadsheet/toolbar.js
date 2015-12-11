@@ -76,7 +76,7 @@
             redo: "Redo",
             undo: "Undo"
         },
-        saveAs: "Save As...",
+        exportAs: "Export...",
         sortAsc: "Sort ascending",
         sortDesc: "Sort descending",
         sortButtons: {
@@ -94,7 +94,7 @@
     var defaultTools = {
         home: [
             "open",
-            "saveAs",
+            "exportAs",
             [ "cut", "copy", "paste" ],
             [ "bold", "italic", "underline" ],
             "backgroundColor", "textColor",
@@ -122,7 +122,7 @@
     var toolDefaults = {
         //home tab
         open:                  { type: "open",                                     overflow: "never",                          iconClass: "xlsa" },
-        saveAs:                { type: "save-as-dialog", dialogName: "saveAs",     overflow: "never",         text: "",        iconClass: "xlsa" },
+        exportAs:              { type: "exportAsDialog", dialogName: "exportAs",   overflow: "never",       text: "",        iconClass: "xlsa" },
         bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
         italic:                { type: "button", command: "PropertyChangeCommand", property: "italic",        value: true,     iconClass: "italic", togglable: true },
         underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
@@ -473,7 +473,7 @@
         }
     }));
 
-    kendo.toolbar.registerComponent("save-as-dialog", kendo.toolbar.Item.extend({
+    kendo.toolbar.registerComponent("exportAsDialog", kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             this._dialogName = options.dialogName;
 

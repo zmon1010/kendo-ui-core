@@ -117,8 +117,8 @@
                 typeMessage: "Type message"
             }
         },
-        saveAsDialog: {
-            title: "Save As...",
+        exportAsDialog: {
+            title: "Export...",
             labels: {
                 fileName: "File name",
                 saveAsType: "Save as type",
@@ -1240,7 +1240,7 @@
     kendo.spreadsheet.dialogs.register("validation", ValidationDialog);
     kendo.spreadsheet.dialogs.ValidationDialog = ValidationDialog;
 
-    var SaveAsDialog = SpreadsheetDialog.extend({
+    var ExportAsDialog = SpreadsheetDialog.extend({
         init: function(options) {
             SpreadsheetDialog.fn.init.call(this, options);
 
@@ -1285,7 +1285,7 @@
             kendo.bind(this.dialog().element, this.viewModel);
         },
         options: {
-            title: MESSAGES.saveAsDialog.title,
+            title: MESSAGES.exportAsDialog.title,
             name: "Workbook",
             extension: ".xlsx",
             fileFormats: [{
@@ -1335,12 +1335,12 @@
             },
             width: 350,
             template:
-                "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.fileName + ":</label></div>" +
+                "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.fileName + ":</label></div>" +
                 "<div class='k-edit-field'>" +
                     "<input class='k-textbox' data-bind='value: name' />" +
                 "</div>" +
                 "<div >" +
-                    "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.saveAsType + ":</label></div>" +
+                    "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.saveAsType + ":</label></div>" +
                     "<div class='k-edit-field'>" +
                     "<select data-role='dropdownlist' class='k-file-format' " +
                         "data-text-field='description' " +
@@ -1349,21 +1349,21 @@
                     "</div>" +
                 "</div>" +
                 "<div data-bind='visible: showPdfOptions'>" +
-                    "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.exportArea + ":</label></div>" +
+                    "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.exportArea + ":</label></div>" +
                     "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-text-field='text' " +
                             "data-value-field='area' " +
                             "data-bind='value: pdf.area, source: pdf.areas' />" +
                     "</div>" +
-                    "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.paperSize+ ":</label></div>" +
+                    "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.paperSize+ ":</label></div>" +
                     "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-text-field='text' " +
                             "data-value-field='value' " +
                             "data-bind='value: pdf.paperSize, source: pdf.paperSizes' />" +
                     "</div>" +
-                    "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.margins + ":</label></div>" +
+                    "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.margins + ":</label></div>" +
                     "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-value-primitive='true'" +
@@ -1371,19 +1371,19 @@
                             "data-value-field='value' " +
                             "data-bind='value: pdf.margin, source: pdf.margins' />" +
                       "</div>" +
-                      "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.orientation + ":</label></div>" +
+                      "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.orientation + ":</label></div>" +
                       "<div class='k-edit-field'>" +
                           "<input type='radio' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='false' />" +
                           "<input type='radio' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='true' />" +
                      "</div>" +
-                     "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.print + ":</label></div>" +
+                     "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.print + ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<label><input type='checkbox' data-bind='checked: pdf.guidelines'/>" + MESSAGES.saveAsDialog.labels.guidelines+ "</label>" +
+                         "<label><input type='checkbox' data-bind='checked: pdf.guidelines'/>" + MESSAGES.exportAsDialog.labels.guidelines+ "</label>" +
                      "</div>" +
-                     "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.center+ ":</label></div>" +
+                     "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.center+ ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<label><input type='checkbox' data-bind='checked: pdf.hCenter'/>" + MESSAGES.saveAsDialog.labels.horizontally + "</label>" +
-                         "<label><input type='checkbox' data-bind='checked: pdf.vCenter'  />" + MESSAGES.saveAsDialog.labels.vertically +   "</label>" +
+                         "<label><input type='checkbox' data-bind='checked: pdf.hCenter'/>" + MESSAGES.exportAsDialog.labels.horizontally + "</label>" +
+                         "<label><input type='checkbox' data-bind='checked: pdf.vCenter'  />" + MESSAGES.exportAsDialog.labels.vertically +   "</label>" +
                      "</div>" +
                    "</div>" +
                    "<div class='k-action-buttons'>" +
@@ -1400,7 +1400,7 @@
             });
         }
     });
-    kendo.spreadsheet.dialogs.register("saveAs", SaveAsDialog);
+    kendo.spreadsheet.dialogs.register("exportAs", ExportAsDialog);
 
     var ModifyMergedDialog = MessageDialog.extend({
         init: function(options) {
