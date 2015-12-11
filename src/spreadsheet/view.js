@@ -1238,7 +1238,7 @@
                     top: view.rowOffset + "px"
                 }
             });
-            var rect = this._rectangle(view.ref);
+            var rect = this._currentRect;
             var layout = kendo.spreadsheet.draw.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
             // draw axis first
             prev = null;
