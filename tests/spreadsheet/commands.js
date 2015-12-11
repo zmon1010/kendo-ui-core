@@ -1181,10 +1181,11 @@
         var command = SaveAsCommand({
             workbook: {
                 saveAsExcel: function(e) {
+                    console.log(e)
                     equal(e.fileName, "Foo.xlsx");
                 }
             },
-            fileName: "Foo",
+            name: "Foo.xlsx",
             extension: ".xlsx"
         });
 
