@@ -249,6 +249,7 @@
                         validation.adjust(affectedSheet, operation, start, delta);
                     });
                 });
+                this._workbook.adjustNames(affectedSheet, operation == "row", start, delta);
             }
             var selection = this.select();
             selection = selection.adjust(null, null, null, null, operation == "row", start, delta);

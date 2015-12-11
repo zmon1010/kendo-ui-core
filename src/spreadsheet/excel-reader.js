@@ -24,6 +24,7 @@
     var SEL_COL = ["cols", "col"];
     var SEL_ROW = ["sheetData", "row"];
     var SEL_SHEET = ["sheets", "sheet"];
+    var SEL_DEFINED_NAME = ["definedNames", "definedName"];
 
     function readExcel(file, workbook, complete) {
         var reader = new FileReader();
@@ -57,6 +58,13 @@
                         sheet.name(name);
                         readSheet(zip, file, sheet, strings, styles);
                     }, { recalc: true });
+                }
+            },
+            text: function(text) {
+                var attrs = this.is(SEL_DEFINED_NAME);
+                if (attrs && !(bool(attrs["function"]) || bool(attrs.vbProcedure))) {
+                    var ref = kendo.spreadsheet.calc.parseReference(text);
+                    workbook.defineName(attrs.name, ref, bool(attrs.hidden));
                 }
             }
         });

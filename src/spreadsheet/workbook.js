@@ -35,6 +35,7 @@
 
             this._context = new kendo.spreadsheet.FormulaContext(this);
             this._validationContext = new kendo.spreadsheet.ValidationFormulaContext(this);
+            this._names = Object.create(null);
 
             this.fromJSON(this.options);
         },
@@ -380,6 +381,33 @@
                     callback(group);
                 }
             })(0);
+        },
+
+        defineName: function(name, value, hidden) {
+            this._names[name] = { value: value, hidden: hidden };
+        },
+
+        undefineName: function(name) {
+            delete this._names[name];
+        },
+
+        nameValue: function(name) {
+            if (name in this._names) {
+                return this._names[name].value;
+            }
+            return null;
+        },
+
+        adjustNames: function(affectedSheet, forRow, start, delta) {
+            affectedSheet = affectedSheet.toLowerCase();
+            Object.keys(this._names).forEach(function(name){
+                var ref = this.nameValue(name);
+                if (ref instanceof kendo.spreadsheet.Ref &&
+                    ref.sheet.toLowerCase() == affectedSheet) {
+                    ref = ref.adjust(null, null, null, null, forRow, start, delta);
+                    this.defineName(name, ref);
+                }
+            }, this);
         }
     });
 

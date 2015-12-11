@@ -8,10 +8,11 @@
     /* jshint eqnull:true */
 
     var spreadsheet = kendo.spreadsheet;
-    var CellRef = kendo.spreadsheet.CellRef;
-    var RangeRef = kendo.spreadsheet.RangeRef;
-    var UnionRef = kendo.spreadsheet.UnionRef;
-    var NameRef = kendo.spreadsheet.NameRef;
+    var CellRef = spreadsheet.CellRef;
+    var RangeRef = spreadsheet.RangeRef;
+    var UnionRef = spreadsheet.UnionRef;
+    var NameRef = spreadsheet.NameRef;
+    var Ref = spreadsheet.Ref;
 
     var FormulaContext = kendo.Class.extend({
         init: function (workbook) {
@@ -119,7 +120,10 @@
                 return a;
             }
             if (ref instanceof NameRef) {
-                // XXX: NameRef-s not yet supported
+                var val = this.workbook.nameValue(ref.name);
+                if (val instanceof Ref) {
+                    return this.getRefCells(val, hiddenInfo);
+                }
                 return [{
                     value: new kendo.spreadsheet.calc.runtime.CalcError("NAME")
                 }];
@@ -128,10 +132,14 @@
         },
 
         getData: function(ref) {
+            var single = ref instanceof CellRef;
+            if (ref instanceof NameRef) {
+                single = this.workbook.nameValue(ref) instanceof CellRef;
+            }
             var data = this.getRefCells(ref).map(function(cell){
                 return cell.value;
             });
-            return ref instanceof CellRef ? data[0] : data;
+            return single ? data[0] : data;
         },
 
         onFormula: function(f) {
