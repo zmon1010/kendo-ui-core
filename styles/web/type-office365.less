@@ -1354,6 +1354,12 @@ div.k-filebrowser-dropzone em
     background-color: @selected-background-color;
 }
 
+.k-gantt .k-treelist .k-state-selected:hover,
+.k-gantt .k-treelist .k-state-selected:hover td
+{
+    background-color: desaturate(@selected-background-color, 35%);
+}
+
 .k-task-dot:after
 {
     background-color: @widget-text-color;
