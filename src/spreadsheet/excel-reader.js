@@ -250,6 +250,7 @@
         if (shouldSet("applyNumberFormat", "numFmtId")) {
             setFormat(styles.numFmts[value] || DEFAULT_FORMATS[value]);
         }
+
         function setFormat(f) {
             var format = typeof f == "string" ? f : f.formatCode;
             if (format != null && !GENERAL_REGEX.test(format)) {
@@ -260,11 +261,13 @@
                 range.format(format);
             }
         }
+
         function setFill(f) {
             if (f.type == "solid") {
                 range.background(f.color);
             }
         }
+
         function setFont(f) {
             range.fontFamily(f.name);
             //range.fontSize(f.size); //XXX: will recalc row height.
@@ -276,28 +279,33 @@
                 range.italic(true);
             }
         }
+
         function setBorder(b) {
-            function border(side) {
+            function set(side, prop) {
+                var border = b[side];
+                if (!border) {
+                    return;
+                }
+
                 var width = BORDER_WIDTHS[side.style];
+                if (width === 0) {
+                    return;
+                }
+
                 var color = side.color;
                 if (color == null) {
                     color = "#000";
                 }
-                return { size: width, color: color };
+
+                range._property(prop, { size: width, color: color });
             }
-            if (b.left && b.left.style != "none") {
-                range.borderLeft(border(b.left));
-            }
-            if (b.top && b.top.style != "none") {
-                range.borderTop(border(b.top));
-            }
-            if (b.right && b.right.style != "none") {
-                range.borderRight(border(b.right));
-            }
-            if (b.bottom && b.bottom.style != "none") {
-                range.borderBottom(border(b.bottom));
-            }
+
+            set("left", "borderLeft");
+            set("top", "borderTop");
+            set("right", "borderRight");
+            set("bottom", "borderBottom");
         }
+
         function shouldSet(applyName, propName) {
             var t = xf[applyName];
             if (t != null && !t) {
