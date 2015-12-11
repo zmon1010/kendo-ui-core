@@ -1331,7 +1331,7 @@
                 landscape: true,
                 guidelines: true,
                 hCenter: true,
-                vCenter: true,
+                vCenter: true
             },
             width: 350,
             template:

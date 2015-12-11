@@ -281,7 +281,7 @@
                     creator   : "Kendo UI PDF Generator",
                     // Creation Date; defaults to new Date()
                     date      : null
-                },
+                }
             },
 
             events: [
