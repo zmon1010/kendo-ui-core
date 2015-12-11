@@ -123,7 +123,7 @@
                     }
                 }
             },
-            leave: function() {
+            leave: function(tag) {
                 if (this.is(SEL_CELL)) {
                     if (formula != null) {
                         try {
@@ -155,6 +155,10 @@
                             }
                         }
                     }
+                } else if (tag == "cols") {
+                    sheet._columns._refresh();
+                } else if (tag == "sheetData") {
+                    sheet._rows._refresh();
                 }
             },
             text: function(text) {
@@ -287,12 +291,12 @@
                     return;
                 }
 
-                var width = BORDER_WIDTHS[side.style];
+                var width = BORDER_WIDTHS[border.style];
                 if (width === 0) {
                     return;
                 }
 
-                var color = side.color;
+                var color = border.color;
                 if (color == null) {
                     color = "#000";
                 }
@@ -324,9 +328,9 @@
     }
 
     function parse(zip, file, callbacks) {
-        var file = zip.files[file];
-        if (file) {
-            parseXML(file.asUint8Array(), callbacks);
+        var part = zip.files[file];
+        if (part) {
+            parseXML(part.asUint8Array(), callbacks);
         }
     }
 

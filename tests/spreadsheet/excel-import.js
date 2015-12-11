@@ -80,6 +80,114 @@
         equal(styles.fills[0].color, "rgba(204, 255, 0, 1)");
     });
 
+    test("reads border style", function() {
+        var THEME = {};
+        var STYLESHEET = `
+          <styleSheet>
+          <borders>
+            <border>
+              <left style="thick">
+                <color indexed="64"/>
+              </left>
+              <right/>
+              <top/>
+              <bottom/>
+              <diagonal/>
+            </border>
+          </borders>
+          </styleSheet>
+        `;
+
+        addFile("xl/styles.xml", STYLESHEET);
+
+        var styles = kendo.spreadsheet._readStyles(zip, THEME);
+        var border = styles.borders[0];
+
+        equal(border.left.style, "thick");
+    });
+
+    test("reads border indexed color", function() {
+        var THEME = { };
+        var STYLESHEET = `
+          <styleSheet>
+          <borders>
+            <border>
+              <left/>
+              <right style="thick">
+                <color indexed="64"/>
+              </right>
+              <top/>
+              <bottom/>
+              <diagonal/>
+            </border>
+          </borders>
+          </styleSheet>
+        `;
+
+        addFile("xl/styles.xml", STYLESHEET);
+
+        var styles = kendo.spreadsheet._readStyles(zip, THEME);
+        var border = styles.borders[0];
+
+        equal(border.right.color, "rgba(0, 0, 0, 1)");
+    });
+
+    test("reads border theme color", function() {
+        var THEME = {
+            colorScheme: ["rgba(255, 0, 0, 1)"]
+        };
+        var STYLESHEET = `
+          <styleSheet>
+          <borders>
+            <border>
+              <left/>
+              <right/>
+              <top style="thick">
+                <color theme="0"/>
+              </top>
+              <bottom/>
+              <diagonal/>
+            </border>
+          </borders>
+          </styleSheet>
+        `;
+
+        addFile("xl/styles.xml", STYLESHEET);
+
+        var styles = kendo.spreadsheet._readStyles(zip, THEME);
+        var border = styles.borders[0];
+
+        equal(border.top.color, "rgba(255, 0, 0, 1)");
+    });
+
+    test("reads border theme tinted color", function() {
+        var THEME = {
+            colorScheme: ["rgba(48, 172, 236, 1)"]
+        };
+        var STYLESHEET = `
+          <styleSheet>
+          <borders>
+            <border>
+              <left/>
+              <right/>
+              <top style="thick">
+                <color theme="0" tint="-0.25"/>
+              </top>
+              <bottom/>
+              <diagonal/>
+            </border>
+          </borders>
+          </styleSheet>
+        `;
+
+        addFile("xl/styles.xml", STYLESHEET);
+
+        var styles = kendo.spreadsheet._readStyles(zip, THEME);
+        var border = styles.borders[0];
+
+        equal(border.top.color, "rgba(18, 135, 195, 1)");
+    });
+
     test("sets solid fill to -tinted theme fgColor", function() {
         var THEME = {
             colorScheme: ["rgba(48, 172, 236, 1)"]
