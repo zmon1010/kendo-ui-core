@@ -202,7 +202,6 @@
                     if (body.length) {
                         call("text", STRING.apply(0, body));
                     }
-
                     xmlTag();
                     body = [];
                 } else if (eat(AMPERSAND)) {
