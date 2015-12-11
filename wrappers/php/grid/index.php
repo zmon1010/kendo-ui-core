@@ -74,8 +74,7 @@ $contactName->field('ContactName')
 
 $contactTitle = new \Kendo\UI\GridColumn();
 $contactTitle->field('ContactTitle')
-            ->title('Contact Title')
-            ->width(190);
+            ->title('Contact Title');
 
 $companyName = new \Kendo\UI\GridColumn();
 $companyName->field('CompanyName')
@@ -83,7 +82,7 @@ $companyName->field('CompanyName')
 
 $Country = new \Kendo\UI\GridColumn();
 $Country->field('Country')
-        ->width(110);
+        ->width(150);
 
 $pageable = new Kendo\UI\GridPageable();
 $pageable->refresh(true)
@@ -95,26 +94,13 @@ $grid->addColumn($contactName, $contactTitle, $companyName, $Country)
      ->sortable(true)
      ->groupable(true)
      ->pageable($pageable)
-     ->attr('style', 'height:380px');
+     ->attr('style', 'height:550px');
 
-?>
-
-<div id="clientsDb">
-<?php
 echo $grid->render();
 ?>
-</div>
 
-<style>
-    #clientsDb {
-        width: 952px;
-        height: 396px;
-        margin: 20px auto 0;
-        padding: 51px 4px 0 4px;
-        background: url('../content/web/grid/clientsDb.png') no-repeat 0 0;
-    }
-
-        .customer-photo {
+<style type="text/css">
+    .customer-photo {
         display: inline-block;
         width: 32px;
         height: 32px;

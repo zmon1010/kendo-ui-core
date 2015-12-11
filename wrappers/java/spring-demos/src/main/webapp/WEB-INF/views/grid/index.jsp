@@ -9,45 +9,36 @@
 
 <demo:header />
 
-<div id="clientsDb">
-    <kendo:grid name="grid" groupable="true" sortable="true" style="height:380px;">
-    	<kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5">
-    	</kendo:grid-pageable>
-        <kendo:grid-columns>
-            <kendo:grid-column title="Contact Name" field="contactName" width="240" 
-            	template="<div class='customer-photo' style='background-image: url(../resources/web/Customers/#:data.customerId#.jpg);'></div><div class='customer-name'>#: contactName #</div>">            	
-            </kendo:grid-column>
-            <kendo:grid-column title="Contact Title" field="contactTitle" width="190" />
-            <kendo:grid-column title="Company Name" field="companyName" />
-            <kendo:grid-column title="Country" field="country" width="110" />
-        </kendo:grid-columns>
-        <kendo:dataSource pageSize="10">
-             <kendo:dataSource-schema>
-                <kendo:dataSource-schema-model>
-                    <kendo:dataSource-schema-model-fields>
-                        <kendo:dataSource-schema-model-field name="contactName" type="string" />
-                        <kendo:dataSource-schema-model-field name="contactTitle" type="string" />
-                        <kendo:dataSource-schema-model-field name="companyName" type="string" />
-                        <kendo:dataSource-schema-model-field name="country" type="string" />
-                    </kendo:dataSource-schema-model-fields>
-                </kendo:dataSource-schema-model>
-            </kendo:dataSource-schema>
-            <kendo:dataSource-transport>
-                <kendo:dataSource-transport-read url="${transportReadUrl}"/>
-            </kendo:dataSource-transport>
-        </kendo:dataSource>
-    </kendo:grid>
-</div>  
+<kendo:grid name="grid" groupable="true" sortable="true" style="height:550px;">
+	<kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5">
+	</kendo:grid-pageable>
+    <kendo:grid-columns>
+        <kendo:grid-column title="Contact Name" field="contactName" width="240" 
+        	template="<div class='customer-photo' style='background-image: url(../resources/web/Customers/#:data.customerId#.jpg);'></div><div class='customer-name'>#: contactName #</div>">            	
+        </kendo:grid-column>
+        <kendo:grid-column title="Contact Title" field="contactTitle" />
+        <kendo:grid-column title="Company Name" field="companyName" />
+        <kendo:grid-column title="Country" field="country" width="150" />
+    </kendo:grid-columns>
+    <kendo:dataSource pageSize="10">
+         <kendo:dataSource-schema>
+            <kendo:dataSource-schema-model>
+                <kendo:dataSource-schema-model-fields>
+                    <kendo:dataSource-schema-model-field name="contactName" type="string" />
+                    <kendo:dataSource-schema-model-field name="contactTitle" type="string" />
+                    <kendo:dataSource-schema-model-field name="companyName" type="string" />
+                    <kendo:dataSource-schema-model-field name="country" type="string" />
+                </kendo:dataSource-schema-model-fields>
+            </kendo:dataSource-schema-model>
+        </kendo:dataSource-schema>
+        <kendo:dataSource-transport>
+            <kendo:dataSource-transport-read url="${transportReadUrl}"/>
+        </kendo:dataSource-transport>
+    </kendo:dataSource>
+</kendo:grid>
 
- <style>
-	#clientsDb {
-	    width: 952px;
-	    height: 396px;
-	    margin: 20px auto 0;
-	    padding: 51px 4px 0 4px;
-        background: url('${backgroundUrl}') no-repeat 0 0;
-     }
-     
+
+ <style type="text/css">
     .customer-photo {
         display: inline-block;
         width: 32px;
@@ -67,5 +58,5 @@
         line-height: 32px;
         padding-left: 3px;
     }
- </style>  
+</style>  
 <demo:footer />
