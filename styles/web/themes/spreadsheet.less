@@ -4,6 +4,7 @@
 @spreadsheet-cell-border: darken(@base, 10%);
 @spreadsheet-selection-background: fadeout(@selected-background, 80%);
 @spreadsheet-selection-border: @selected-background;
+@spreadsheet-header-selection-border: fadein(@spreadsheet-selection-background, 80%);
 
 .k-spreadsheet-row-header,
 .k-spreadsheet-column-header {
@@ -54,14 +55,14 @@
         border-color: @spreadsheet-selection-border;
     }
 
-    .k-spreadsheet-column-header.k-selection-partial,
-    .k-spreadsheet-column-header.k-selection-full {
-        border-bottom-color: fadein(@spreadsheet-selection-background, 80%);
+    .k-spreadsheet-column-header .k-selection-partial,
+    .k-spreadsheet-column-header .k-selection-full {
+        border-bottom-color: @spreadsheet-header-selection-border;
     }
 
-    .k-spreadsheet-row-header.k-selection-partial,
-    .k-spreadsheet-row-header.k-selection-full {
-        border-right-color: fadein(@spreadsheet-selection-background, 80%);
+    .k-spreadsheet-row-header .k-selection-partial,
+    .k-spreadsheet-row-header .k-selection-full {
+        border-right-color: @spreadsheet-header-selection-border;
     }
 }
 

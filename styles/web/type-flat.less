@@ -2518,14 +2518,14 @@ html .km-pane-wrapper .km-widget,
 
 @spreadsheet-cell-border: darken(@background, 10%);
 @spreadsheet-header-border: lighten(@base, 18%);
+@spreadsheet-header-selection-border: darken(@selected-background, 9%);
 
 .k-spreadsheet-pane {
     .k-spreadsheet-column-header,
     .k-spreadsheet-row-header {
-        &.k-selection-partial,
-        &.k-selection-full {
+        .k-selection-partial,
+        .k-selection-full {
             background-color: @selected-background;
-            border-color: darken(@selected-background, 9%);
         }
     }
 }
