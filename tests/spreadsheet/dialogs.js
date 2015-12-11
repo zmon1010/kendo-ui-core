@@ -472,17 +472,17 @@
         $(".k-item a[data-value='vertically']").trigger("click");
     });
 
-    module("ExcelExport dialog", {
+    module("SaveAs dialog", {
         setup: function() {
             moduleOptions.setup();
 
-            dialog = spreadsheet.openDialog("excelExport");
+            dialog = spreadsheet.openDialog("saveAs");
         },
         teardown: moduleOptions.teardown
     });
 
     test("sets correct window title", function() {
-        equal(dialog.dialog().options.title, "Export to Excel...");
+        equal(dialog.dialog().options.title, "Save As...");
     });
 
     test("triggers SaveAsCommand with default name", 2, function() {
@@ -492,7 +492,7 @@
             stubMethod(kendo, "saveAs", function(options) { }, function() {
                 dialog.one("action", function(e) {
                     equal(e.command, "SaveAsCommand");
-                    equal(e.options.fileName, "Workbook.xlsx");
+                    equal(e.options.fileName(), "Workbook.xlsx");
                 });
 
                 dialog.apply();
@@ -509,7 +509,7 @@
 
                 dialog.one("action", function(e) {
                     equal(e.command, "SaveAsCommand");
-                    equal(e.options.fileName, "Name.xlsx");
+                    equal(e.options.fileName(), "Name.xlsx");
                 });
 
                 dialog.apply();

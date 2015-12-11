@@ -3,20 +3,16 @@
     var spreadsheet;
     var saveAsExcel = kendo.ui.Spreadsheet.fn.saveAsExcel;
 
-    module("Excel Export", {
+    module("Spreadsheet / Excel Export", {
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
             spreadsheet = new kendo.ui.Spreadsheet(element);
-            kendo.ui.Grid.fn.saveAsExcel = $.noop;
+            kendo.ui.Spreadsheet.fn.saveAsExcel = $.noop;
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
-            kendo.ui.Grid.fn.saveAsExcel = saveAsExcel;
+            kendo.ui.Spreadsheet.fn.saveAsExcel = saveAsExcel;
         }
-    });
-
-    test("renders toolbar button for save command", function() {
-        equal(element.find("span.k-icon.k-i-xlsa").length, 1);
     });
 
     test("the excelExport event is triggered", 1, function() {

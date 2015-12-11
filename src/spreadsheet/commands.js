@@ -731,6 +731,17 @@
         }
     });
 
+    kendo.spreadsheet.OpenCommand = Command.extend({
+        exec: function() {
+            var file = this.options.file;
+            if (file.name.match(/.xlsx$/i) === null) {
+                return { reason: "error", type: "openUnsupported" };
+            }
+
+            this.options.workbook.fromFile(this.options.file);
+        }
+    });
+
     kendo.spreadsheet.SaveAsCommand = Command.extend({
         exec: function() {
             if(this.options.extension === ".xlsx") {

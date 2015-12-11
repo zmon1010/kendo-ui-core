@@ -330,4 +330,71 @@
         toolbar.dialog({ name: "foo" });
     });
 
+    test("renders toolbar button for Open command", function() {
+        createWithTools();
+        equal(element.find("span.k-font-icon.k-i-folder-open").length, 1);
+    });
+
+    test("renders toolbar button for Save As command", function() {
+        createWithTools();
+        equal(element.find("span.k-font-icon.k-i-xls").length, 1);
+    });
+
+    // ------------------------------------------------------------
+    (function() {
+        var openCommand;
+
+        var OpenCommandMock = kendo.spreadsheet.Command.extend({
+            exec: function() {}
+        });
+
+        module("Spreadsheet Toolbar / Open", {
+            setup: function() {
+                element = $("<div>").appendTo(QUnit.fixture);
+                createWithTools();
+
+                openCommand = kendo.spreadsheet.OpenCommand;
+                kendo.spreadsheet.OpenCommand = OpenCommandMock;
+            },
+            teardown: function() {
+                kendo.destroy(QUnit.fixture);
+
+                kendo.spreadsheet.OpenCommand = openCommand;
+            }
+        });
+
+        test("open triggers", function() {
+            toolbar.one("action", function(e) {
+                equal(e.command, "OpenCommand");
+                equal(e.options.file, FILE);
+            });
+
+            var FILE = { name: "foo.xlsx" };
+            var CHANGE = $.Event("change", {
+                target: {
+                    files: [FILE],
+                    parentNode: {
+                        reset: function() {}
+                    }
+                }
+            });
+            $("input", element).trigger(CHANGE);
+        });
+
+        test("open resets the parent form", function() {
+            var FILE = { name: "foo.xlsx" };
+            var CHANGE = $.Event("change", {
+                target: {
+                    files: [FILE],
+                    parentNode: {
+                        reset: function() {
+                            ok(true);
+                        }
+                    }
+                }
+            });
+
+            $("input", element).trigger(CHANGE);
+        });
+    })();
 })();

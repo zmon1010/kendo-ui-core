@@ -6,6 +6,7 @@
         spreadsheet = new kendo.ui.Spreadsheet(element, options);
     }
 
+    // ------------------------------------------------------------
     module("Spreadsheet API", {
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
@@ -329,6 +330,19 @@
         });
     });
 
+    test("fromFile forwards call to workbook", function() {
+        var BLOB = {};
+        var NAME = "foo";
+
+        spreadsheet._workbook.fromFile = function(blob, name) {
+            equal(blob, BLOB);
+            equal(name, NAME);
+        };
+
+        spreadsheet.fromFile(BLOB, NAME);
+    });
+
+    // ------------------------------------------------------------
     module("Spreadsheet options", {
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);

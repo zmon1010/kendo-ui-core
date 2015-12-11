@@ -37,7 +37,6 @@
         cut: "Cut",
         deleteColumn: "Delete column",
         deleteRow: "Delete row",
-        excelExport: "Export to Excel...",
         filter: "Filter",
         fontFamily: "Font",
         fontSize: "Font size",
@@ -71,11 +70,13 @@
             mergeVertically: "Merge vertically",
             unmerge: "Unmerge"
         },
+        open: "Open...",
         paste: "Paste",
         quickAccess: {
             redo: "Redo",
             undo: "Undo"
         },
+        saveAs: "Save As...",
         sortAsc: "Sort ascending",
         sortDesc: "Sort descending",
         sortButtons: {
@@ -92,7 +93,8 @@
 
     var defaultTools = {
         home: [
-            "excelExport",
+            "open",
+            "saveAs",
             [ "cut", "copy", "paste" ],
             [ "bold", "italic", "underline" ],
             "backgroundColor", "textColor",
@@ -119,7 +121,8 @@
 
     var toolDefaults = {
         //home tab
-        excelExport:           { type: "dialog", dialogName: "saveAs",        overflow: "never",         text: "",        iconClass: "xlsa" },
+        open:                  { type: "open",                                     overflow: "never",                          iconClass: "xlsa" },
+        saveAs:                { type: "save-as-dialog", dialogName: "saveAs",     overflow: "never",         text: "",        iconClass: "xlsa" },
         bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
         italic:                { type: "button", command: "PropertyChangeCommand", property: "italic",        value: true,     iconClass: "italic", togglable: true },
         underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
@@ -172,9 +175,9 @@
             });
         },
         _addSeparators: function(element) {
-            var groups = element.children(".k-widget, .k-button, .k-button-group");
+            var groups = element.children(".k-widget, a.k-button, .k-button-group");
 
-            groups.slice(2).before("<span class='k-separator' />");
+            groups.before("<span class='k-separator' />");
         },
         _expandTools: function(tools) {
             function expandTool(toolName) {
@@ -347,6 +350,7 @@
             ToolBar.fn.destroy.call(this);
         }
     });
+    kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 
     var DropDownTool = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
@@ -460,6 +464,23 @@
             kendo.toolbar.ToolBarButton.fn.init.call(this, options, toolbar);
 
             this._dialogName = options.dialogName;
+
+            this.element.bind("click", this.open.bind(this))
+                        .data("instance", this);
+        },
+        open: function() {
+            this.toolbar.dialog({ name: this._dialogName });
+        }
+    }));
+
+    kendo.toolbar.registerComponent("save-as-dialog", kendo.toolbar.Item.extend({
+        init: function(options, toolbar) {
+            this._dialogName = options.dialogName;
+
+            this.toolbar = toolbar;
+            this.element = $("<button class='k-button' title='" + options.attributes.title + "'>" +
+                                 "<span class='k-icon k-font-icon k-i-xls' />" +
+                             "</button>").data("instance", this);
 
             this.element.bind("click", this.open.bind(this))
                         .data("instance", this);
@@ -1031,7 +1052,30 @@
 
     kendo.toolbar.registerComponent("filter", Filter, FilterButton);
 
-    kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
+    var Open = kendo.toolbar.Item.extend({
+        init: function(options, toolbar) {
+            this.toolbar = toolbar;
+            this.element = $("<div class='k-button k-upload-button'>" +
+                                 "<span class='k-icon k-font-icon k-i-folder-open' />" +
+                             "</div>").data("instance", this);
+
+            $("<input type='file' autocomplete='off' accept='.xlsx'/>")
+                .attr("title", options.attributes.title)
+                .bind("change", this._change.bind(this))
+                .appendTo($("<form>").appendTo(this.element));
+        },
+        _change: function(e) {
+            this.toolbar.action({
+                command: "OpenCommand",
+                options: {
+                    file: e.target.files[0]
+                }
+            });
+
+            e.target.parentNode.reset();
+        }
+    });
+    kendo.toolbar.registerComponent("open", Open);
 
     kendo.spreadsheet.TabStrip = kendo.ui.TabStrip.extend({
         init: function(element, options) {

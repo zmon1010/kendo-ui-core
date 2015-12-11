@@ -1184,7 +1184,8 @@
                     equal(e.fileName, "Foo.xlsx");
                 }
             },
-            fileName: "Foo.xlsx"
+            fileName: "Foo",
+            extension: ".xlsx"
         });
 
         command.exec();

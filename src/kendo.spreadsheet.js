@@ -2,6 +2,7 @@
     define([
         "./util/undoredostack",
         "./util/text-metrics",
+        "./util/parse-xml",
         "./spreadsheet/commands",
         "./spreadsheet/formulabar",
         "./spreadsheet/formulainput",
@@ -15,6 +16,7 @@
         "./spreadsheet/range",
         "./spreadsheet/sheet",
         "./spreadsheet/sheetsbar",
+        "./spreadsheet/excel-reader",
         "./spreadsheet/workbook",
         "./spreadsheet/formulacontext",
         "./spreadsheet/controller",
@@ -208,6 +210,10 @@
                 } else {
                     this.refresh();
                 }
+            },
+
+            fromFile: function(blob, name) {
+                this._workbook.fromFile(blob, name);
             },
 
             saveAsExcel: function(options) {

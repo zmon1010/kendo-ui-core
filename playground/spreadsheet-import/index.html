@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="../loader.js"></script>
+        <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css">
+        <link rel="stylesheet" href="../../dist/styles/web/kendo.flat.css">
+
+        <script src="../../src/jszip.js"></script>
+
+        <script>
+            requireSync([
+                "../../src/jquery.js",
+                "../../src/kendo.ooxml.js",
+                "../../src/kendo.spreadsheet.js"
+            ]);
+        </script>
+    </head>
+    <body>
+        <div id="spreadsheet" style="width: 1200px;"></div>
+        <script>
+            $("#spreadsheet").kendoSpreadsheet({
+                rows: 1000,
+                columns: 1000
+            });
+        </script>
+    </body>
+</html>
