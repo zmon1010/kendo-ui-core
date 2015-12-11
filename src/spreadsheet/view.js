@@ -1107,6 +1107,7 @@
 
             var view = grid.view(scrollLeft, scrollTop);
             this._currentView = view;
+            this._currentRect = this._rectangle(view.ref);
             this._selectedHeaders = sheet.selectedHeaders();
 
             var children = [];
@@ -1122,35 +1123,57 @@
             children.push(this.renderFilterHeaders());
 
             if (grid.hasRowHeader) {
-                var top = view.rowOffset;
+                var rowHeader = kendo.dom.element("div", {
+                    className: classNames.rowHeader,
+                    style: {
+                        width: grid.headerWidth + "px",
+                        top: view.rowOffset + "px"
+                    }
+                });
+                children.push(rowHeader);
                 sheet.forEach(view.ref.leftColumn(), function(row){
                     if (!sheet.isHiddenRow(row)) {
                         var text = row + 1, height = sheet.rowHeight(row);
-                        drawCell(children, {
-                            left   : -1,
-                            top    : top,
-                            width  : grid.headerWidth+1,
-                            height : height,
-                            value  : text + ""
-                        }, classNames.rowHeader + " " + this.headerClassName(row, "row"));
-                        top += height;
+                        rowHeader.children.push(kendo.dom.element("div", {
+                            className: this.headerClassName(row, "row"),
+                            style: {
+                                width: grid.headerWidth + "px",
+                                height: height + "px"
+                            }
+                        }, [ kendo.dom.element("div", {
+                            className: "k-vertical-align-center"
+                        }, [ kendo.dom.text(text+"") ])]));
                     }
                 }.bind(this));
             }
 
             if (grid.hasColumnHeader) {
-                var left = view.columnOffset;
+                var columnHeader = kendo.dom.element("div", {
+                    className: classNames.columnHeader,
+                    style: {
+                        top: "0px",
+                        left: view.columnOffset + "px",
+                        width: this._currentRect.width + "px",
+                        height: grid.headerHeight + "px"
+                    }
+                });
+                children.push(columnHeader);
+                var left = 0;
                 sheet.forEach(view.ref.topRow(), function(row, col){
                     if (!sheet.isHiddenColumn(col)) {
                         var text = kendo.spreadsheet.Ref.display(null, Infinity, col),
                             width = sheet.columnWidth(col);
-                        drawCell(children, {
-                            left   : left,
-                            top    : -1,
-                            width  : width,
-                            height : grid.headerHeight+1,
-                            value  : text
-                        }, classNames.columnHeader + " " + this.headerClassName(col, "col"));
+                        columnHeader.children.push(kendo.dom.element("div", {
+                            className: this.headerClassName(col, "col"),
+                            style: {
+                                position: "absolute",
+                                left: left + "px",
+                                width: width + "px",
+                                height: grid.headerHeight + "px"
+                            }
+                        }, [ kendo.dom.element("div", {
+                            className: "k-vertical-align-center"
+                        }, [ kendo.dom.text(text+"") ])]));
                         left += width;
                     }
                 }.bind(this));
