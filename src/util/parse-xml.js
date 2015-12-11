@@ -253,7 +253,7 @@
             } else {
                 var name = xmlName();
                 code = ENTITIES[name];
-                if (code === null) {
+                if (code === undefined) {
                     croak("Unknown entity " + name);
                 }
             }
