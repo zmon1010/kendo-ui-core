@@ -178,9 +178,6 @@ $.extend(true, kendo.spreadsheet.messages.dialogs,{
       "saveAsType": "Запиши като"
     }
   },
-  "excelExportDialog": {
-    "title": "Експортиране към Excel..."
-  },
   "modifyMergedDialog": {
     "errorMessage": "Не може да се промени част от обединена клетка."
   },
@@ -297,11 +294,13 @@ $.extend(true, kendo.spreadsheet.messages.toolbar,{
     "mergeVertically": "Обединяване по колони",
     "unmerge": "Разделяне на клетки"
   },
+  "open": "Отвори...",
   "paste": "Поставяне",
   "quickAccess": {
     "redo": "Стъпка напред",
     "undo": "Стъпка назад"
   },
+  "saveAs": "Запиши като...",
   "sortAsc": "Сортирай възходящо",
   "sortDesc": "Сортирай низходящо",
   "sortButtons": {

@@ -133,9 +133,6 @@
                 vertically: "Vertically"
             }
         },
-        excelExportDialog: {
-            title: "Export to Excel..."
-        },
         modifyMergedDialog: {
             errorMessage: "Cannot change part of a merged cell."
         },

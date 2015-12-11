@@ -633,9 +633,6 @@ $.extend(true, kendo.spreadsheet.messages.dialogs,{
       "saveAsType": "Save as type"
     }
   },
-  "excelExportDialog": {
-    "title": "Export to Excel..."
-  },
   "modifyMergedDialog": {
     "errorMessage": "Cannot change part of a merged cell."
   },
@@ -757,11 +754,13 @@ $.extend(true, kendo.spreadsheet.messages.toolbar,{
     "mergeVertically": "Merge vertically",
     "unmerge": "Unmerge"
   },
+  "open": "Open...",
   "paste": "Paste",
   "quickAccess": {
     "redo": "Redo",
     "undo": "Undo"
   },
+  "saveAs": "Save As...",
   "sortAsc": "Sort ascending",
   "sortDesc": "Sort descending",
   "sortButtons": {
