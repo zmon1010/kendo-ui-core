@@ -26,13 +26,13 @@
         var pane = createPane(0, 0, 4, 4);
         pane.refresh();
 
-        var columnHeaders = pane.render(0, 0).children.filter(function(element) {
-            return element.attr.className.indexOf("column-header") > -1
-        })
+        var div = $("<div>");
+        pane.render(0, 0).render(div[0], div);
+        var columnHeaders = div.find(".k-spreadsheet-column-header div div");
 
         equal(columnHeaders.length, 2);
-        equal(text(columnHeaders[0]), "A");
-        equal(text(columnHeaders[1]), "D");
+        equal(columnHeaders.eq(0).text(), "A");
+        equal(columnHeaders.eq(1).text(), "D");
     });
 
     test("doesn't render hidden columns", function() {

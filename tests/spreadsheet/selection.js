@@ -211,8 +211,8 @@
         var colHeaderCells = elements.filter(filterByClass('k-spreadsheet-column-header'));
 
         return {
-            rows: rowHeaderCells,
-            cols: colHeaderCells
+            rows: rowHeaderCells[0].children,
+            cols: colHeaderCells[0].children
         }
     }
 
