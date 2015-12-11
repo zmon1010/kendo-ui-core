@@ -744,36 +744,28 @@
 
     kendo.spreadsheet.SaveAsCommand = Command.extend({
         exec: function() {
+            var name = this.options.name;
             if(this.options.extension === ".xlsx") {
                 this.options.workbook.saveAsExcel({
-                    fileName: this.options.fileName + this.options.extension
+                    fileName: name
                 });
             } else if(this.options.extension === ".pdf") {
-                var name = this.options.name;
-                var pdfOptions = {
-                    paperSize: this.options.paperSize,
-                    margin: this.options.margin,
-                    landscape: this.options.landscape,
-                    guidelines: this.options.guidelines,
-                    hCenter: this.options.centerHorizontally,
-                    vCenter: this.options.centerVertically
-                };
-                switch(this.options.area) {
-                case "workbook":
-                    this.options.workbook.draw(pdfOptions, function(group){
-                        kendo.drawing.pdf.saveAs(group,name);
-                    });
-                    break;
-                case "sheet":
-                    this.options.workbook.activeSheet().draw(pdfOptions, function(group){
-                        kendo.drawing.pdf.saveAs(group,name);
-                    });
-                    break;
-                case "selection":
-                    this.options.workbook.activeSheet().selection().draw(pdfOptions, function(group){
-                        kendo.drawing.pdf.saveAs(group,name);
-                    });
-                    break;
+                switch(this.options.pdf.area) {
+                    case "workbook":
+                        this.options.workbook.draw(this.options.pdf, function(group){
+                            kendo.drawing.pdf.saveAs(group,name);
+                        });
+                        break;
+                    case "sheet":
+                        this.options.workbook.activeSheet().draw(this.options.pdf, function(group){
+                            kendo.drawing.pdf.saveAs(group,name);
+                        });
+                        break;
+                    case "selection":
+                        this.options.workbook.activeSheet().selection().draw(this.options.pdf, function(group){
+                            kendo.drawing.pdf.saveAs(group,name);
+                        });
+                        break;
                 }
             }
         }

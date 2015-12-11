@@ -880,6 +880,15 @@
         },
 
         onDialogRequest: function(e) {
+            var exportOptions = {
+                pdfExport: this._workbook.options.pdf,
+                excelExport: this._workbook.options.excel
+            };
+            if(e.options) {
+                $.extend(true, e.options, exportOptions);
+            } else {
+                e.options = exportOptions;
+            }
             this.view.openDialog(e.name, e.options);
         }
     });

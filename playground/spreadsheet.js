@@ -42,6 +42,11 @@ function timeFunction(obj, func, name) {
 
 
 $("#spreadsheet").kendoSpreadsheet({
+    pdf: {
+        author: "Kendo UI PDF Generator",
+        proxyURL: "test url",
+        title: "TEST WORKBOOK"
+    },
     toolbar: {
         home: kendo.spreadsheet.ToolBar.fn.options.tools["home"].concat([
             {

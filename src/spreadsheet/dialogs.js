@@ -1245,20 +1245,32 @@
             SpreadsheetDialog.fn.init.call(this, options);
 
             this.viewModel = kendo.observable({
-                title:              this.options.title,
-                name:               this.options.name,
-                extension:          this.options.extension,
-                fileFormats:        this.options.fileFormats,
-                area:               this.options.area,
-                areas:              this.options.areas,
-                paperSize:          this.options.paperSize,
-                paperSizes:         this.options.paperSizes,
-                margin:             this.options.margin,
-                margins:            this.options.margins,
-                landscape:          this.options.landscape,
-                guidelines:         this.options.guidelines,
-                centerHorizontally: this.options.centerHorizontally,
-                centerVertically:   this.options.centerVertically,
+                title: this.options.title,
+                name: this.options.name,
+                extension: this.options.extension,
+                fileFormats:this.options.fileFormats,
+                excel: options.excelExport,
+                pdf: {
+                    proxyURL: options.pdfExport.proxyURL,
+                    forceProxy: options.pdfExport.forceProxy,
+                    title: options.pdfExport.title,
+                    author: options.pdfExport.author,
+                    subject: options.pdfExport.subject,
+                    keywords: options.pdfExport.keywords,
+                    creator: options.pdfExport.creator,
+                    date: options.pdfExport.date,
+
+                    area: this.options.pdf.area,
+                    areas: this.options.pdf.areas,
+                    paperSize: this.options.pdf.paperSize,
+                    paperSizes: this.options.pdf.paperSizes,
+                    margin: this.options.pdf.margin,
+                    margins: this.options.pdf.margins,
+                    landscape: this.options.pdf.landscape,
+                    guidelines: this.options.pdf.guidelines,
+                    hCenter: this.options.pdf.hCenter,
+                    vCenter: this.options.pdf.vCenter
+                },
                 fileName: function() {
                     return this.name + this.extension;
                 },
@@ -1283,42 +1295,44 @@
                 description: "Portable Document Format(.pdf)",
                 extension: ".pdf"
             }],
-            area: "workbook",
-            areas: [{
+            pdf: {
                 area: "workbook",
-                text: "Entire Workbook"
-            },{
-                area: "sheet",
-                text: "Active Sheet"
-            },{
-                area: "selection",
-                text: "Selection"
-            }],
-            paperSize: "a4",
-            paperSizes: [
-                {value: "a2"       , text: 'A2 (420 mm × 594 mm)     '},
-                {value: "a3"       , text: 'A3 (297 mm x 420 mm)     '},
-                {value: "a4"       , text: 'A4 (210 mm x 297 mm)     '},
-                {value: "a5"       , text: 'A5 (148 mm x 210 mm)     '},
-                {value: "b3"       , text: 'B3 (353 mm × 500 mm)     '},
-                {value: "b4"       , text: 'B4 (250 mm x 353 mm)     '},
-                {value: "b5"       , text: 'B5 (176 mm x 250 mm)     '},
-                {value: "folio"    , text: 'Folio (8.5" x 13")       '},
-                {value: "legal"    , text: 'Legal (8.5" x 14")       '},
-                {value: "letter"   , text: 'Letter (8.5" x 11")      '},
-                {value: "tabloid"  , text: 'Tabloid (11" x 17")      '},
-                {value: "executive", text: 'Executive (7.25" x 10.5")'}
-            ],
-            margin: {bottom: "0.75in", left: "0.7in", right: "0.7in", top: "0.75in"},
-            margins: [
-                {value: {bottom: "0.75in", left: "0.7in", right: "0.7in", top: "0.75in"}, text: "Normal"},
-                {value: {bottom: "0.75in", left: "0.25in", right: "0.25in", top: "0.75in"}, text: "Narrow"},
-                {value: {bottom: "1in", left: "1in", right: "1in", top: "1in"}, text: "Wide"}
-            ],
-            landscape: false,
-            guidelines: true,
-            centerHorizontally: true,
-            centerVertically: true,
+                areas: [{
+                    area: "workbook",
+                    text: "Entire Workbook"
+                },{
+                    area: "sheet",
+                    text: "Active Sheet"
+                },{
+                    area: "selection",
+                    text: "Selection"
+                }],
+                paperSize: "a4",
+                paperSizes: [
+                    {value: "a2"       , text: 'A2 (420 mm × 594 mm)     '},
+                    {value: "a3"       , text: 'A3 (297 mm x 420 mm)     '},
+                    {value: "a4"       , text: 'A4 (210 mm x 297 mm)     '},
+                    {value: "a5"       , text: 'A5 (148 mm x 210 mm)     '},
+                    {value: "b3"       , text: 'B3 (353 mm × 500 mm)     '},
+                    {value: "b4"       , text: 'B4 (250 mm x 353 mm)     '},
+                    {value: "b5"       , text: 'B5 (176 mm x 250 mm)     '},
+                    {value: "folio"    , text: 'Folio (8.5" x 13")       '},
+                    {value: "legal"    , text: 'Legal (8.5" x 14")       '},
+                    {value: "letter"   , text: 'Letter (8.5" x 11")      '},
+                    {value: "tabloid"  , text: 'Tabloid (11" x 17")      '},
+                    {value: "executive", text: 'Executive (7.25" x 10.5")'}
+                ],
+                margin: {bottom: "0.75in", left: "0.7in", right: "0.7in", top: "0.75in"},
+                margins: [
+                    {value: {bottom: "0.75in", left: "0.7in", right: "0.7in", top: "0.75in"}, text: "Normal"},
+                    {value: {bottom: "0.75in", left: "0.25in", right: "0.25in", top: "0.75in"}, text: "Narrow"},
+                    {value: {bottom: "1in", left: "1in", right: "1in", top: "1in"}, text: "Wide"}
+                ],
+                landscape: true,
+                guidelines: true,
+                hCenter: true,
+                vCenter: true,
+            },
             width: 350,
             template:
                 "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.fileName + ":</label></div>" +
@@ -1340,14 +1354,14 @@
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-text-field='text' " +
                             "data-value-field='area' " +
-                            "data-bind='value: area, source: areas' />" +
+                            "data-bind='value: pdf.area, source: pdf.areas' />" +
                     "</div>" +
                     "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.paperSize+ ":</label></div>" +
                     "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-text-field='text' " +
                             "data-value-field='value' " +
-                            "data-bind='value: paperSize, source: paperSizes' />" +
+                            "data-bind='value: pdf.paperSize, source: pdf.paperSizes' />" +
                     "</div>" +
                     "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.margins + ":</label></div>" +
                     "<div class='k-edit-field'>" +
@@ -1355,21 +1369,21 @@
                             "data-value-primitive='true'" +
                             "data-text-field='text' " +
                             "data-value-field='value' " +
-                            "data-bind='value: margin, source: margins' />" +
+                            "data-bind='value: pdf.margin, source: pdf.margins' />" +
                       "</div>" +
                       "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.orientation + ":</label></div>" +
                       "<div class='k-edit-field'>" +
-                          "<input type='radio' name='orientation' data-type='boolean' data-bind='checked: landscape' value='false' />" +
-                          "<input type='radio' name='orientation' data-type='boolean' data-bind='checked: landscape' value='true' />" +
+                          "<input type='radio' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='false' />" +
+                          "<input type='radio' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='true' />" +
                      "</div>" +
                      "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.print + ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<label><input type='checkbox' data-bind='checked: guidelines'/>" + MESSAGES.saveAsDialog.labels.guidelines+ "</label>" +
+                         "<label><input type='checkbox' data-bind='checked: pdf.guidelines'/>" + MESSAGES.saveAsDialog.labels.guidelines+ "</label>" +
                      "</div>" +
                      "<div class='k-edit-label'><label>" + MESSAGES.saveAsDialog.labels.center+ ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<label><input type='checkbox' data-bind='checked: centerHorizontally'/>" + MESSAGES.saveAsDialog.labels.horizontally + "</label>" +
-                         "<label><input type='checkbox' data-bind='checked: centerVertically'  />" + MESSAGES.saveAsDialog.labels.vertically +   "</label>" +
+                         "<label><input type='checkbox' data-bind='checked: pdf.hCenter'/>" + MESSAGES.saveAsDialog.labels.horizontally + "</label>" +
+                         "<label><input type='checkbox' data-bind='checked: pdf.vCenter'  />" + MESSAGES.saveAsDialog.labels.vertically +   "</label>" +
                      "</div>" +
                    "</div>" +
                    "<div class='k-action-buttons'>" +
