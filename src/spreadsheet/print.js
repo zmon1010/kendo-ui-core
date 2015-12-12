@@ -344,16 +344,18 @@
                     });
                 }
 
+                var borders = new drawing.Group();
                 cells.forEach(function(cell){
-                    drawCell(cell, content, options);
+                    drawCell(cell, content, borders, options);
                 });
+                content.append(borders);
             }
         }
     }
 
-    function drawCell(cell, group, options) {
+    function drawCell(cell, content, borders, options) {
         var g = new drawing.Group();
-        group.append(g);
+        content.append(g);
         var rect = new geo.Rect([ cell.left, cell.top ],
                                 [ cell.width, cell.height ]);
         if (cell.background || cell.merged) {
@@ -372,7 +374,7 @@
             );
         }
         if (cell.borderLeft) {
-            g.append(
+            borders.append(
                 new drawing.Path()
                     .moveTo(cell.left, cell.top)
                     .lineTo(cell.left, cell.bottom)
@@ -381,7 +383,7 @@
             );
         }
         if (cell.borderTop) {
-            g.append(
+            borders.append(
                 new drawing.Path()
                     .moveTo(cell.left, cell.top)
                     .lineTo(cell.right, cell.top)
@@ -390,7 +392,7 @@
             );
         }
         if (cell.borderRight) {
-            g.append(
+            borders.append(
                 new drawing.Path()
                     .moveTo(cell.right, cell.top)
                     .lineTo(cell.right, cell.bottom)
@@ -399,7 +401,7 @@
             );
         }
         if (cell.borderBottom) {
-            g.append(
+            borders.append(
                 new drawing.Path()
                     .moveTo(cell.left, cell.bottom)
                     .lineTo(cell.right, cell.bottom)
