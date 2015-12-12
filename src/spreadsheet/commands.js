@@ -744,29 +744,13 @@
 
     kendo.spreadsheet.SaveAsCommand = Command.extend({
         exec: function() {
-            var name = this.options.name;
+            var fileName = this.options.name + this.options.extension;
             if(this.options.extension === ".xlsx") {
                 this.options.workbook.saveAsExcel({
-                    fileName: name
+                    fileName: fileName
                 });
             } else if(this.options.extension === ".pdf") {
-                switch(this.options.pdf.area) {
-                    case "workbook":
-                        this.options.workbook.draw(this.options.pdf, function(group){
-                            kendo.drawing.pdf.saveAs(group,name);
-                        });
-                        break;
-                    case "sheet":
-                        this.options.workbook.activeSheet().draw(this.options.pdf, function(group){
-                            kendo.drawing.pdf.saveAs(group,name);
-                        });
-                        break;
-                    case "selection":
-                        this.options.workbook.activeSheet().selection().draw(this.options.pdf, function(group){
-                            kendo.drawing.pdf.saveAs(group,name);
-                        });
-                        break;
-                }
+                this.options.workbook.saveAsPDF($.extend(this.options.pdf, {workbook: this.options.workbook, fileName: fileName}));
             }
         }
     });

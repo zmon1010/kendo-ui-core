@@ -216,6 +216,10 @@
                 this._workbook.fromFile(blob, name);
             },
 
+            saveAsPDF: function(options) {
+                this._workbook.saveAsPDF(options || $.extend(this.options.pdf, {workbook: this._workbook}));
+            },
+
             saveAsExcel: function(options) {
                 this._workbook.saveAsExcel(options);
             },
@@ -230,9 +234,16 @@
                 }
             },
 
+            _workbookPdfExport: function(e) {
+                if (this.trigger("pdfExport", e)) {
+                    e.preventDefault();
+                }
+            },
+
             _bindWorkbookEvents: function() {
                 this._workbook.bind("change", this._workbookChange.bind(this));
                 this._workbook.bind("excelExport", this._workbookExcelExport.bind(this));
+                this._workbook.bind("pdfExport", this._workbookPdfExport.bind(this));
             },
 
             destroy: function() {
@@ -262,6 +273,8 @@
                     fileName: "Workbook.xlsx"
                 },
                 pdf: {
+                    // which part of the workbook to be exported
+                    area      : "workbook",
                     fileName  : "Workbook.pdf",
                     proxyURL  : "",
                     // paperSize can be an usual name, i.e. "A4", or an array of two Number-s specifying the
@@ -270,7 +283,7 @@
                     // by content.
                     paperSize : "a4",
                     // True to reverse the paper dimensions if needed such that width is the larger edge.
-                    landscape : false,
+                    landscape : true,
                     // An object containing { left, top, bottom, right } margins with units.
                     margin    : null,
                     // Optional information for the PDF Info dictionary; all strings except for the date.
@@ -285,6 +298,7 @@
             },
 
             events: [
+                "pdfExport",
                 "excelExport",
                 "render"
             ]

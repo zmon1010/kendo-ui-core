@@ -1185,7 +1185,7 @@
                     equal(e.fileName, "Foo.xlsx");
                 }
             },
-            name: "Foo.xlsx",
+            name: "Foo",
             extension: ".xlsx"
         });
 

@@ -42,6 +42,10 @@ function timeFunction(obj, func, name) {
 
 
 $("#spreadsheet").kendoSpreadsheet({
+    pdfExport: function(e){
+        //e.preventDefault();
+        console.log("pdfExport event triggered");
+    },
     pdf: {
         author: "Kendo UI PDF Generator",
         proxyURL: "test url",

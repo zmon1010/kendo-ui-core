@@ -408,11 +408,53 @@
                     this.defineName(name, ref);
                 }
             }, this);
-        }
+        },
+        options: {}
     });
 
     kendo.spreadsheet.Workbook = Workbook;
+    if (kendo.PDFMixin) {
+        kendo.PDFMixin.extend(Workbook.prototype);
 
+        Workbook.prototype.saveAsPDF = function(options) {
+            var progress = new $.Deferred();
+            var promise = progress.promise();
+            var args = { promise: promise };
+            if (this.trigger("pdfExport", args)) {
+                return;
+            }
+
+            this._drawPDF(options, progress)
+                .done(function(group) {
+                    kendo.drawing.pdf.saveAs(group,options.fileName);
+                })
+                .fail(function(err) {
+                    progress.reject(err);
+                });
+
+            return promise;
+        };
+
+        Workbook.prototype._drawPDF = function(options) {
+            var result = new $.Deferred();
+            var callback = function(group) {
+                result.resolve(group);
+            };
+            switch(options.area) {
+            case "workbook":
+                options.workbook.draw(options, callback);
+                break;
+            case "sheet":
+                options.workbook.activeSheet().draw(options, callback);
+                break;
+            case "selection":
+                options.workbook.activeSheet().selection().draw(options, callback);
+                break;
+            }
+
+            return result.promise();
+        };
+    }
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
