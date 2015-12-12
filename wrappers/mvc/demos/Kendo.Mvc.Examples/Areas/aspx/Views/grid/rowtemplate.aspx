@@ -4,11 +4,12 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 <%=Html.Kendo().Grid<Kendo.Mvc.Examples.Models.EmployeeViewModel>()
     .Name("grid")
-    .HtmlAttributes(new { style = "width: 750px;height:430px;" })
+    .HtmlAttributes(new { style = "height:550px;" })
     .Columns(columns =>
     {
         columns.Template(e => { }).ClientTemplate(" ").Width(140).Title("Picture");
         columns.Bound(e => e.Title).Width(400).Title("Details");
+        columns.Bound(e => e.Country).Title("Country");
         columns.Bound(e=> e.EmployeeID).Title("ID");
     })
     .ClientRowTemplate(
@@ -21,6 +22,8 @@
                 "<span class='description'>Name : #: FirstName# #: LastName#</span>" +
                 "<span class='description'>Country : #: Country# </span>" +
             "</td>" +
+            "<td class='country'>#: Country #" +
+		        "</td>" +
             "<td class='employeeID'>" +
                 "#: EmployeeID #" +
             "</td>" +
@@ -36,6 +39,8 @@
                 "<span class='description'>Name : #: FirstName# #: LastName#</span>" +
                 "<span class='description'>Country : #: Country# </span>" +
             "</td>" +
+            "<td class='country'>#: Country #" +
+		        "</td>" +
             "<td class='employeeID'>" +
                 "#: EmployeeID #" +
             "</td>" +
@@ -51,16 +56,23 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-    <style>           
-        .title {
-            display: block;
-            font-size: 1.6em; 
+     <style>
+        .photo {
+            width: 140px;
         }
-        .description {
+        .details {
+            width: 400px;
+        }
+        .name {
+            display: block;
+            font-size: 1.6em;
+        }
+        .title {
             display: block;
             padding-top: 1.6em;
         }
-        .employeeID {
+        .employeeID,
+        .country {
             font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
             font-size: 50px;
             font-weight: bold;

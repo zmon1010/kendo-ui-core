@@ -1,11 +1,12 @@
 
 @(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.EmployeeViewModel>()
     .Name("grid")
-    .HtmlAttributes(new { style = "width: 750px;height:430px;" })
+    .HtmlAttributes(new { style = "height:550px;" })
     .Columns(columns =>
     {
         columns.Template(e => { }).ClientTemplate(" ").Width(140).Title("Picture");
         columns.Bound(e => e.Title).Width(400).Title("Details");
+        columns.Bound(e => e.Country).Title("Country");
         columns.Bound(e=> e.EmployeeID).Title("ID");
     })
     .ClientRowTemplate(
@@ -18,6 +19,8 @@
                 "<span class='description'>Name : #: FirstName# #: LastName#</span>" +
                 "<span class='description'>Country : #: Country# </span>" +
             "</td>" +
+            "<td class='country'>#: Country #" +
+		        "</td>" +
             "<td class='employeeID'>" +
                 "#: EmployeeID #" +
             "</td>" +
@@ -33,6 +36,8 @@
                 "<span class='description'>alt Name : #: FirstName# #: LastName#</span>" +
                 "<span class='description'>alt Country : #: Country# </span>" +
             "</td>" +
+            "<td class='country'>#: Country #" +
+		        "</td>" +
             "<td class='employeeID'>" +
                 "#: EmployeeID #" +
             "</td>" +
@@ -47,43 +52,50 @@
 
 
 @section HeadContent {
-      <style>           
-        .title {
-            display: block;
-            font-size: 1.6em; 
-        }
-        .description {
-            display: block;
-            padding-top: 1.6em;
-        }
-        .employeeID {
-            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-            font-size: 50px;
-            font-weight: bold;
-            color: #898989;
-        }
-        td.photo, .employeeID {
-            text-align: center;
-        }
-        .k-grid-header .k-header {
-            padding: 10px 20px;
-        }
-        .k-grid td {
-            background: -moz-linear-gradient(top,  rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.05)), color-stop(100%,rgba(0,0,0,0.15)));
-            background: -webkit-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-            background: -o-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-            background: -ms-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-            background: linear-gradient(to bottom,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-            padding: 20px;
-        }
-        .k-grid .k-alt td {
-            background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.1)));
-            background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-            background: -o-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-            background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-            background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-        }
-    </style>
+      <style>
+            .photo {
+                width: 140px;
+            }
+            .details {
+                width: 400px;
+            }
+            .name {
+                display: block;
+                font-size: 1.6em;
+            }
+            .title {
+                display: block;
+                padding-top: 1.6em;
+            }
+            .employeeID,
+            .country {
+                font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+                font-size: 50px;
+                font-weight: bold;
+                color: #898989;
+            }
+            td.photo, .employeeID {
+                text-align: center;
+            }
+            .k-grid-header .k-header {
+                padding: 10px 20px;
+            }
+            .k-grid td {
+                background: -moz-linear-gradient(top,  rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.05)), color-stop(100%,rgba(0,0,0,0.15)));
+                background: -webkit-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
+                background: -o-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
+                background: -ms-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
+                background: linear-gradient(to bottom,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
+                padding: 20px;
+            }
+            .k-grid .k-alt td {
+                background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.1)));
+                background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+                background: -o-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+                background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+                background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+            }
+        </style>
 }

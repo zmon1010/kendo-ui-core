@@ -7,10 +7,11 @@
 <c:url value="/grid/rowtemplate/read" var="transportReadUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" height="430" style="width:750px;" rowTemplate="row-template" altRowTemplate="alt-row-template">
+    <kendo:grid name="grid" height="550" rowTemplate="row-template" altRowTemplate="alt-row-template">
         <kendo:grid-columns>
             <kendo:grid-column title="Picture" width="140px" />
             <kendo:grid-column title="Details" field="title" width="400px" />
+            <kendo:grid-column title="Country" field="country" />
             <kendo:grid-column title="ID" field="employeeId" />
         </kendo:grid-columns>        
         <kendo:dataSource serverPaging="true" serverSorting="true" serverFiltering="true">
@@ -34,6 +35,9 @@
                <span class="description">Name : #: firstName# #: lastName#</span>
                <span class="description">Country : #: country# </span>
             </td>
+			<td class="country">
+               #: country #
+            </td>
             <td class="employeeID">
                #: employeeId #
             </td>
@@ -50,6 +54,9 @@
                <span class="description">Name : #: firstName# #: lastName#</span>
                <span class="description">Country : #: country# </span>
             </td>
+			<td class="country">
+               #: country #
+            </td>
             <td class="employeeID">
                #: employeeId #
             </td>
@@ -57,21 +64,22 @@
     </script>
     
     <style>
-        .photo {
-             width: 140px;                    
+         .photo {
+             width: 140px;
          }
          .details {
              width: 400px;
-         }                
-         .title {
-             display: block;
-             font-size: 1.6em; 
          }
-         .description {
+         .name {
+             display: block;
+             font-size: 1.6em;
+         }
+         .title {
              display: block;
              padding-top: 1.6em;
          }
-         .employeeID {
+         .employeeID,
+         .country {
              font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
              font-size: 50px;
              font-weight: bold;
@@ -91,14 +99,14 @@
              background: -ms-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
              background: linear-gradient(to bottom,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
              padding: 20px;
-         }  
+         }
          .k-grid .k-alt td {
-            background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.1)));
-            background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-            background: -o-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-            background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-            background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-         }  
-    </style>
+             background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+             background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.1)));
+             background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+             background: -o-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+             background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+             background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+         }
+     </style>
 <demo:footer />
