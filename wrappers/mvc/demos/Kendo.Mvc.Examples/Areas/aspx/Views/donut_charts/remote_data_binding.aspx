@@ -2,7 +2,7 @@
          Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart<Kendo.Mvc.Examples.Models.ScreenResolutionRemoteDataViewModel>()
         .Name("chart")
         .Title("1024x768 screen resolution trends")
@@ -27,7 +27,7 @@
 </div>
 
 <style>
-    .chart-wrapper 
+    .demo-section k-content wide 
     {
     	text-align: center;
     	padding-top: 20px;

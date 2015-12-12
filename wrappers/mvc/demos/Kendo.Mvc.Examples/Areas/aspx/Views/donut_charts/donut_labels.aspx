@@ -1,37 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-    <style>    
-        .k-chart {
-            height: 280px;
-            padding: 37px;
-            margin: 0 0 50px 0;
-            width: 390px;
-        }
-    </style>
-</asp:Content>
-
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="configuration k-widget k-header" style="width:170px;">
-    <span class="configHead">Configuration</span>
-    <span class="configTitle">Donut Chart</span>
-    <ul class="options">
-        <li>
-            <input id="labels" checked="checked" type="checkbox" autocomplete="off" />
-            <label for="labels">Show labels</label>
-        </li>
-        <li>
-            <input id="alignCircle" name="alignType" type="radio"
-                    value="circle" checked="checked" autocomplete="off" />
-            <label for="alignCircle">- aligned in circle</label>
-        </li>
-        <li>
-            <input id="alignColumn" name="alignType" type="radio"
-                    value="column" autocomplete="off" />
-            <label for="alignColumn">- aligned in columns</label>
-        </li>
-    </ul>
-</div>
+<div class="demo-section k-content wide">
 <%= Html.Kendo().Chart()
     .Name("chart")
     .Title("What is you favourite sport?")
@@ -59,9 +29,31 @@
         .Template("#= category # - #= kendo.format('{0:P}', percentage) #")
     )
 %>
+</div>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Labels Configuration</h4>
+        <ul class="options">
+            <li>
+                <input id="labels" checked="checked" type="checkbox" autocomplete="off" />
+                <label for="labels">Show labels</label>
+            </li>
+            <li>
+                <input id="alignCircle" name="alignType" type="radio"
+                       value="circle" checked="checked" autocomplete="off" />
+                <label for="alignCircle">Aligned in circle</label>
+            </li>
+            <li>
+                <input id="alignColumn" name="alignType" type="radio"
+                       value="column" autocomplete="off" />
+                <label for="alignColumn">Aligned in columns</label>
+            </li>
+        </ul>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
-        $(".configuration").bind("change", refresh);
+        $(".box").bind("change", refresh);
     });
 
     function refresh() {

@@ -1,7 +1,9 @@
 <?php
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $series2011 = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $series2011->name('2011')
            ->data(array(
@@ -36,8 +38,17 @@ $chart->title(array('position' => 'bottom', 'text' => 'Share of Internet Populat
       ->addSeriesItem($series2011, $series2012)
       ->legend(array('visible' => false))
       ->tooltip(array('visible' => true, 'template' => '#= category # (#= series.name #): #= value #%'))
-      ->seriesDefaults(array('type' => 'donut', 'startAngle' => 150));
+      ->seriesDefaults(array('type' => 'donut', 'startAngle' => 150))
+      ->chartArea(array('background' => 'transparent'));
 
 echo $chart->render();
 ?>
+</div>
+
+<style type="text/css">
+    #chart {
+        background: center no-repeat url('../content/shared/styles/world-map.png');
+    }
+</style>
+
 <?php require_once '../include/footer.php'; ?>

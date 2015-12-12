@@ -3,9 +3,21 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-    <div class="configuration k-widget k-header" style="width:170px;">
-        <span class="configHead">Configuration</span>
-        <span class="configTitle">Donut Chart</span>
+	<div class="demo-section k-content wide">
+		<kendo:chart name="chart">
+		    <kendo:chart-title text="What is you favourite sport?" />
+		    <kendo:chart-legend position="top" />
+		    <kendo:chart-series>
+		       <kendo:chart-seriesItem type="donut" data="${donutData}">
+		           <kendo:chart-seriesItem-labels visible="true" template="#= category # - #= kendo.format('{0:P}', percentage)#" position="outsideEnd" background="transparent" />
+		       </kendo:chart-seriesItem>
+		    </kendo:chart-series>
+		    <kendo:chart-tooltip visible="true" template="#= category # - #= kendo.format('{0:P}', percentage) #" />
+		</kendo:chart>
+	</div>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Labels Configuration</h4>
         <ul class="options">
             <li>
                 <input id="labels" checked="checked" type="checkbox" autocomplete="off" />
@@ -13,31 +25,20 @@
             </li>
             <li>
                 <input id="alignCircle" name="alignType" type="radio"
-                        value="circle" checked="checked" autocomplete="off" />
-                <label for="alignCircle">- aligned in circle</label>
+                       value="circle" checked="checked" autocomplete="off" />
+                <label for="alignCircle">Aligned in circle</label>
             </li>
             <li>
                 <input id="alignColumn" name="alignType" type="radio"
-                        value="column" autocomplete="off" />
-                <label for="alignColumn">- aligned in columns</label>
+                       value="column" autocomplete="off" />
+                <label for="alignColumn">Aligned in columns</label>
             </li>
         </ul>
     </div>
-
-   <kendo:chart name="chart">
-       <kendo:chart-title text="What is you favourite sport?" />
-       <kendo:chart-legend position="top" />
-       <kendo:chart-series>
-          <kendo:chart-seriesItem type="donut" data="${donutData}">
-              <kendo:chart-seriesItem-labels visible="true" template="#= category # - #= kendo.format('{0:P}', percentage)#" position="outsideEnd" background="transparent" />
-          </kendo:chart-seriesItem>
-       </kendo:chart-series>
-       <kendo:chart-tooltip visible="true" template="#= category # - #= kendo.format('{0:P}', percentage) #" />
-   </kendo:chart>
-    
+</div>
 	<script>
 		$(document).ready(function() {
-	        $(".configuration").bind("change", refresh);
+	        $(".box").bind("change", refresh);
 	    });
 	
 	    function refresh() {
@@ -56,13 +57,4 @@
 	        chart.refresh();
 	    }
 	</script>
-         
-    <style>
-	    .k-chart {
-	        height: 280px;
-	        padding: 37px;
-	        margin: 0 0 50px 0;
-	        width: 390px;
-	    }
-	</style>
 <demo:footer />

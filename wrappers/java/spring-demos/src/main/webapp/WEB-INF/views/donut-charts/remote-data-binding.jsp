@@ -3,10 +3,10 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url value="/donut-charts/remote-data/read" var="readUrl" />
+<c:url value="/donut-charts/remote-data-binding/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="1024x768 screen resolution trends" />
              <kendo:chart-legend position="top" />
@@ -22,18 +22,9 @@
                  </kendo:dataSource-sort>
              </kendo:dataSource>
              <kendo:chart-series>
-                <kendo:chart-seriesItem type="donut" field="share" categoryField="resolution" visibleInLegendField="visibleInLegend" colorField="color" startAngle="270" />
+                <kendo:chart-seriesItem padding="10" type="donut" field="share" categoryField="resolution" visibleInLegendField="visibleInLegend" colorField="color" startAngle="270" />
              </kendo:chart-series>
              <kendo:chart-tooltip visible="true" template="#= dataItem.resolution #: #= value #% (#= dataItem.year #)" />
          </kendo:chart>
     </div>
-    
-    <style>
-	    .chart-wrapper 
-	    {
-	    	text-align: center;
-	    	padding-top: 20px;
-	    	background-repeat: no-repeat;
-	    }
-	</style>
-<demo:footer />
+ <demo:footer />

@@ -8,7 +8,7 @@
              "#999999", "#cccccc"
          };
      %>
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart" seriesColors="<%= colors %>">
              <kendo:chart-title text="Break-up of Spain Electricity Production for 2008" />
              <kendo:chart-legend position="bottom" />

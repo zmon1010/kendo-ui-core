@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/chart_data.php';
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $series = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $series->type('donut')
        ->data(array(
@@ -30,30 +32,31 @@ $chart->title(array('text' => 'What is you favourite sport?'))
 
 echo $chart->render();
 ?>
-<div class="configuration-horizontal">
-    <div class="config-section">
-        <span class="configHead">Labels Configuration</span>
-        <ul class="options">
-            <li>
-                <input id="labels" checked="checked" type="checkbox" autocomplete="off" />
-                <label for="labels">Show labels</label>
-            </li>
-            <li>
-                <input id="alignCircle" name="alignType" type="radio"
-                       value="circle" checked="checked" autocomplete="off" />
-                <label for="alignCircle">Aligned in circle</label>
-            </li>
-            <li>
-                <input id="alignColumn" name="alignType" type="radio"
-                       value="column" autocomplete="off" />
-                <label for="alignColumn">Aligned in columns</label>
-            </li>
-        </ul>
-    </div>
 </div>
+<div class="box wide">
+        <div class="box-col">
+            <h4>Labels Configuration</h4>
+            <ul class="options">
+                <li>
+                    <input id="labels" checked="checked" type="checkbox" autocomplete="off" />
+                    <label for="labels">Show labels</label>
+                </li>
+                <li>
+                    <input id="alignCircle" name="alignType" type="radio"
+                           value="circle" checked="checked" autocomplete="off" />
+                    <label for="alignCircle">Aligned in circle</label>
+                </li>
+                <li>
+                    <input id="alignColumn" name="alignType" type="radio"
+                           value="column" autocomplete="off" />
+                    <label for="alignColumn">Aligned in columns</label>
+                </li>
+            </ul>
+        </div>
+    </div>
 <script>
 $(document).ready(function() {
-    $(".configuration-horizontal").bind("change", refresh);
+    $(".box").bind("change", refresh);
 });
 
 function refresh() {
