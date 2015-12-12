@@ -106,8 +106,10 @@ $grid->addColumn($contactName, $contactTitle, $companyName, $Country)
 
 ?>
 
-<a href="#" class="k-button" id="save">Save State</a>
-<a href="#" class="k-button" id="load">Load State</a>
+ <div class="box wide">
+    <a href="#" class="k-button" id="save">Save State</a>
+    <a href="#" class="k-button" id="load">Load State</a>
+</div>
 <?php
 echo $grid->render();
 ?>

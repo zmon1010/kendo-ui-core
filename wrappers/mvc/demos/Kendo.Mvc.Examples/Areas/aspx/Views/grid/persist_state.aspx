@@ -3,8 +3,10 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-    <a href="#" class="k-button" id="save">Save State</a>
-    <a href="#" class="k-button" id="load">Load State</a>
+    <div class="box wide">
+        <a href="#" class="k-button" id="save">Save State</a>
+        <a href="#" class="k-button" id="load">Load State</a>
+    </div>
             
     <%: Html.Kendo().Grid<Kendo.Mvc.Examples.Models.CustomerViewModel>()
         .Name("grid")
