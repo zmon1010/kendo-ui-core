@@ -8,15 +8,15 @@
 
 <demo:header />
 
-    <kendo:grid name="grid" pageable="true" sortable="true" height="430px" reorderable="true" resizable="true">
+    <kendo:grid name="grid" pageable="true" sortable="true" height="550px" reorderable="true" resizable="true">
     	<kendo:grid-scrollable/>
         <kendo:grid-columns>
-            <kendo:grid-column title="Order Date" field="orderDate" format="{0:MM/dd/yyyy}" width="110px"/>
-            <kendo:grid-column title="Ship Country" field="shipCountry" width="110px" />
-            <kendo:grid-column title="Ship City" field="shipCity" width="110px" />
+            <kendo:grid-column title="Order Date" field="orderDate" format="{0:MM/dd/yyyy}" width="120px"/>
+            <kendo:grid-column title="Ship Country" field="shipCountry" />
+            <kendo:grid-column title="Ship City" field="shipCity" />
             <kendo:grid-column title="Ship Name" field="shipName" width="200px" />
             <kendo:grid-column title="Shipped Date" field="shippedDate" format="{0:MM/dd/yyyy}" />
-            <kendo:grid-column title="ID" field="orderId" width="60px" />
+            <kendo:grid-column title="ID" field="orderId" width="80px" />
         </kendo:grid-columns>
         <kendo:dataSource pageSize="15" serverPaging="true" serverSorting="true">
             <kendo:dataSource-transport>            	
