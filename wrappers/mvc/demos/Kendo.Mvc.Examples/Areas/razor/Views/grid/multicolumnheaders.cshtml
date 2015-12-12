@@ -30,6 +30,7 @@
     .Pageable()
     .DataSource(dataSource => dataSource
         .Ajax()
+        .PageSize(20)
         .Read(read => read.Action("Customers_Read", "Grid"))
     )
 )

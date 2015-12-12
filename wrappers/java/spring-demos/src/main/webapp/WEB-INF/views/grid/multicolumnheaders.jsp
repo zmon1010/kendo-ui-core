@@ -26,7 +26,7 @@
         	</kendo:grid-column-group-columns>        	
         </kendo:grid-column-group>
     </kendo:grid-columns>
-    <kendo:dataSource pageSize="10" serverPaging="true" serverSorting="true" serverFiltering="true" serverGrouping="true">
+    <kendo:dataSource pageSize="20" serverPaging="true" serverSorting="true" serverFiltering="true" serverGrouping="true">
          <kendo:dataSource-schema data="data" total="total" groups="data">
             <kendo:dataSource-schema-model>
                 <kendo:dataSource-schema-model-fields>

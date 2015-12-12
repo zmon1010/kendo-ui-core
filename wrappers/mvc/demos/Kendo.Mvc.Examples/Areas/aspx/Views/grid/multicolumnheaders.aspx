@@ -33,6 +33,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     .Pageable()
     .DataSource(dataSource => dataSource
         .Ajax()
+        .PageSize(20)
         .Read(read => read.Action("Customers_Read", "Grid"))
     )
 %>

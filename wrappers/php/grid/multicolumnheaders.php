@@ -38,7 +38,7 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(10)
+           ->pageSize(20)
            ->serverPaging(true)
            ->serverSorting(true)
            ->serverGrouping(true)
