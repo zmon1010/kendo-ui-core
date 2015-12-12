@@ -635,7 +635,7 @@ var __meta__ = { // jshint ignore:line
             var zoomable = this.options.zoomable;
             var mousewheel = (zoomable || {}).mousewheel;
             if (zoomable !== false && mousewheel !== false) {
-                this._mousewheelZoom = new MousewheelZoom(this._plotArea, mousewheel);
+                this._mousewheelZoom = new MousewheelZoom(this, mousewheel);
             }
         },
 
@@ -12655,8 +12655,8 @@ var __meta__ = { // jshint ignore:line
     });
 
     var MousewheelZoom = Class.extend({
-        init: function(plotArea, options) {
-            this.plotArea = plotArea;
+        init: function(chart, options) {
+            this.chart = chart;
             this.options = deepExtend({}, this.options, options);
         },
 
@@ -12664,7 +12664,7 @@ var __meta__ = { // jshint ignore:line
             var lock = (this.options.lock  || "").toLowerCase();
             var axisRanges = [];
 
-            var axes = this.plotArea.axes;
+            var axes = this.chart._plotArea.axes;
             var axis, vertical;
             for (var idx = 0; idx < axes.length; idx++) {
                 axis = axes[idx];
@@ -12687,7 +12687,7 @@ var __meta__ = { // jshint ignore:line
         zoom: function() {
             var axisRanges = this.axisRanges;
             if (axisRanges && axisRanges.length) {
-                var plotArea = this.plotArea;
+                var plotArea = this.chart._plotArea;
                 var axisRange;
                 for (var idx = 0; idx < axisRanges.length; idx++) {
                     axisRange = axisRanges[idx];
