@@ -62,7 +62,7 @@ $productName->field('ProductName')
 
 $unitPrice = new \Kendo\UI\GridColumn();
 $unitPrice->field('UnitPrice')
-          ->width(100)
+          ->width(150)
           ->title('Unit Price');
 
 $quantityPerUnit = new \Kendo\UI\GridColumn();
@@ -71,7 +71,7 @@ $quantityPerUnit->field('QuantityPerUnit')
 
 $grid->addColumn($productID, $productName, $unitPrice, $quantityPerUnit)
      ->dataSource($dataSource)
-     ->height(430)
+     ->height(550)
      ->sortable(true)
      ->pageable(true)
      ->toolbarTemplateId('toolbar');

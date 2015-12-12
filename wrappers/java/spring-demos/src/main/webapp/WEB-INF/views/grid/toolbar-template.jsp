@@ -8,11 +8,11 @@
 <c:url value="/grid/toolbar-template/categories" var="categoriesReadUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" height="430px">
+    <kendo:grid name="grid" pageable="true" height="550px">
     	<kendo:grid-toolbarTemplate>
     		<div class="toolbar">
     			<label class="category-label" for="categories">Show products by category:</label>
-	    		<kendo:dropDownList name="categories" optionLabel="All" dataTextField="categoryName" 
+	    		<kendo:dropDownList name="categories" optionLabel="All" dataTextField="categoryName"
 	    				dataValueField="categoryId" autoBind="false" change="categoriesChange">
 	    			<kendo:dataSource>
 		    			<kendo:dataSource-transport>            	
@@ -25,7 +25,7 @@
         <kendo:grid-columns>
         	<kendo:grid-column title="Product ID" field="productId" width="100px"/>
             <kendo:grid-column title="Product Name" field="productName" />
-            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="100px" />
+            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="150px" />
             <kendo:grid-column title="Quantity Per Unit" field="quantityPerUnit" />
         </kendo:grid-columns>
         <kendo:dataSource pageSize="20">
