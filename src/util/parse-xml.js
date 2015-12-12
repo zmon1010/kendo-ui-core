@@ -52,6 +52,8 @@
     var LOWERCASE_X     = CODE("x");
     var UPPERCASE_X     = CODE("X");
 
+    var EXIT = {};
+
     function parse(data, callbacks) {
         var index = 0;
         var stack = [];
@@ -64,6 +66,9 @@
                     }
                 }
                 return j < 0 ? stack[stack.length - 1] : null;
+            },
+            exit: function() {
+                throw EXIT;
             },
             stack: stack
         };
@@ -294,6 +299,14 @@
     }
 
     // Exports ================================================================
-    kendo.util.parseXML = parse;
+    kendo.util.parseXML = function parseXML() {
+        try {
+            return parse.apply(this, arguments);
+        } catch(ex) {
+            if (ex !== EXIT) {
+                throw ex;
+            }
+        }
+    };
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
