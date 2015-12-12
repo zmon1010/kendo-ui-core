@@ -64,7 +64,7 @@
             text: function(text) {
                 var attrs = this.is(SEL_DEFINED_NAME);
                 if (attrs && !(bool(attrs["function"]) || bool(attrs.vbProcedure))) {
-                    var ref = kendo.spreadsheet.calc.parseReference(text);
+                    var ref = kendo.spreadsheet.calc.parseReference(text, true);
                     workbook.defineName(attrs.name, ref, bool(attrs.hidden));
                 }
             }
