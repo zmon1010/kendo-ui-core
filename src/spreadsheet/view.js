@@ -962,13 +962,15 @@
                 style = {
                     height: this.scroller.clientHeight + "px",
                     width: RESIZE_HANDLE_WIDTH + "px",
-                    left: sheet.resizeHintPosition().x + "px"
+                    left: sheet.resizeHintPosition().x + "px",
+                    top: "0px"
                 };
             } else {
                 style = {
                     height: RESIZE_HANDLE_WIDTH + "px",
                     width: this.scroller.clientWidth + "px",
-                    top: sheet.resizeHintPosition().y + "px"
+                    top: sheet.resizeHintPosition().y + "px",
+                    left: "0px"
                 };
             }
 
@@ -1286,13 +1288,15 @@
                 style = {
                     height: this._grid.headerHeight + "px",
                     width: RESIZE_HANDLE_WIDTH + "px",
-                    left: rectangle.right - RESIZE_HANDLE_WIDTH/2  + "px"
+                    left: rectangle.right - RESIZE_HANDLE_WIDTH/2  + "px",
+                    top: "0px"
                 };
             } else {
                 style = {
                     height: RESIZE_HANDLE_WIDTH + "px",
                     width:  this._grid.headerWidth + "px",
-                    top: rectangle.bottom - RESIZE_HANDLE_WIDTH/2  + "px"
+                    top: rectangle.bottom - RESIZE_HANDLE_WIDTH/2  + "px",
+                    left: "0px"
                 };
             }
             return kendo.dom.element("div", {
