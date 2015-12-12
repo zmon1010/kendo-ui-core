@@ -13,7 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $series = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $series->type('verticalBullet')
        ->currentField('current')
@@ -49,22 +51,19 @@ $categoryAxis = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
 $categoryAxis->majorGridLines(array('visible' => false))
              ->field('category');
 
+$title = new \Kendo\Dataviz\UI\ChartTitle();
+$title->text('April sales per day');
+
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->dataSource($dataSource)
       ->legend(array('visible' => false))
       ->addSeriesItem($series)
       ->addCategoryAxisItem($categoryAxis)
       ->addValueAxisItem($valueAxis)
-      ->tooltip($tooltip);
+      ->tooltip($tooltip)
+      ->title($title);
 
 echo $chart->render();
 ?>
-<style>
-    .chart-wrapper {
-        padding-top: 20px;
-    }
-    .chart-wrapper .k-tooltip {
-        text-align: left;
-    }
-</style>
+</div>
 <?php require_once '../include/footer.php'; ?>

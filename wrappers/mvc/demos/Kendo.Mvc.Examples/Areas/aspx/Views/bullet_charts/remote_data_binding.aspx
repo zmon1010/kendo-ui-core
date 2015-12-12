@@ -1,21 +1,10 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-<style>
-    .chart-wrapper {
-        padding-top: 20px;
-    }
-    
-    .chart-wrapper .k-tooltip {
-        text-align: left;
-    }
-</style>
-</asp:Content>
-
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <div class="chart-wrapper">
+    <div class="demo-section k-content wide">
         <%= Html.Kendo().Chart<Kendo.Mvc.Examples.Models.AprilSales>()
                 .Name("chart")
+                .Title("April sales per day")
                 .Legend(false)
                 .DataSource(ds => ds.Read(read => read
                     .Action("_AprilSales", "Bullet_Charts")

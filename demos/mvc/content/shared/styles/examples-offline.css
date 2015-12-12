@@ -398,11 +398,6 @@ ul.keyboard-legend li a {
     text-decoration: none;
 }
 
-.k-chart {
-    margin: 0 auto 15px auto;
-    height: 430px;
-}
-
 .chart-wrapper,
 .map-wrapper,
 .diagram-wrapper {

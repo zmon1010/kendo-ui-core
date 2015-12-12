@@ -3,22 +3,17 @@ Inherits="System.Web.Mvc.ViewPage<Kendo.Mvc.Examples.Models.BulletChartLocalData
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 <style>
-    .chart-wrapper {
-        padding-top: 20px;
-    }
-    .chart-wrapper .k-chart {
-        width: 325px;
-        margin: 0 10px;
-        display: inline-block;
-    }
-    .chart-wrapper .k-tooltip {
-        text-align: left;
-    }
+   .demo-section {
+    text-align: center;
+   }
+   .k-chart {
+       display: inline-block;
+   }
 </style>
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart(Model.mmHg)
             .Name("chart-mmHg")
             .Legend(legend => legend

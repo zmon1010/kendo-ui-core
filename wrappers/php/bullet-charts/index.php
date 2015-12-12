@@ -3,7 +3,7 @@
     require_once '../include/header.php';
 ?>
 
-<div class="chart-wrapper">
+<div class="demo-section k-content">
     <table class="history">
         <tr>
             <td class="item">mmHg</td>
@@ -207,27 +207,19 @@
 </div>
 
 <style>
-    .history {
+  .history {
         border-collapse: collapse;
         width: 100%;
-    }
-    .history td.chart {
-        width: 430px;
+        margin: 0 auto;
     }
     .history .k-chart {
         height: 65px;
-        width: 400px;
     }
     .history td.item {
         line-height: 65px;
         width: 20px;
         text-align: right;
         padding-bottom: 22px;
-    }
-
-    .chart-wrapper  {
-        width: 450px;
-        height: 350px;
     }
 </style>
 <?php require_once '../include/footer.php'; ?>

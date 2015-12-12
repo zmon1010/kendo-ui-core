@@ -3,10 +3,10 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url value="/bullet-charts/remote-data/read" var="readUrl" />
+<c:url value="/bullet-charts/remote-data-binding/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart-sales">
              <kendo:chart-title text="April sales per day" />
              <kendo:chart-legend visible="false" />
@@ -40,12 +40,4 @@
              <kendo:chart-tooltip visible="true" shared="true" template="Target: #= value.target # items<br /> Actual: #= value.current # items" />
          </kendo:chart>
      </div>
-     <style>
-        .chart-wrapper {
-            padding-top: 20px;
-        }
-        .chart-wrapper .k-tooltip {
-            text-align: left;
-        }
-    </style>
 <demo:footer />

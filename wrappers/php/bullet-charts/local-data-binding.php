@@ -4,7 +4,7 @@
     require_once '../include/chart_data.php';
 ?>
 
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <?php
         $mmHg = new \Kendo\Dataviz\UI\ChartSeriesItem();
         $mmHg->currentField('current')
@@ -139,16 +139,11 @@
 </div>
 
 <style>
-    .chart-wrapper  {
-        padding-top: 20px;
-    }
-    .chart-wrapper .k-chart {
-        width: 325px;
-        margin: 0 10px;
-        display: inline-block;
-    }
-    .chart-wrapper .k-tooltip {
-        text-align: left;
-    }
+   .demo-section {
+    text-align: center;
+   }
+   .k-chart {
+       display: inline-block;
+   }
 </style>
 <?php require_once '../include/footer.php'; ?>

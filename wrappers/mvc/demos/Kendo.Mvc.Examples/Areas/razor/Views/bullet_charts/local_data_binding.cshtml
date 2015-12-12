@@ -1,22 +1,17 @@
 @model Kendo.Mvc.Examples.Models.BulletChartLocalDataViewModel
 
 @section HeadContent {
-    <style>
-        .chart-wrapper {
-            padding-top: 20px;
-        }
-        .chart-wrapper .k-chart {
-            width: 325px;
-            margin: 0 10px;
-            display: inline-block;
-        }
-        .chart-wrapper .k-tooltip {
-            text-align: left;
-        }
-    </style>
+<style>
+   .demo-section {
+    text-align: center;
+   }
+   .k-chart {
+       display: inline-block;
+   }
+</style>
 }
 
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     @(Html.Kendo().Chart(Model.mmHg)
           .Name("chart-mmHg")
           .Legend(legend => legend
