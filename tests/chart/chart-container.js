@@ -86,6 +86,9 @@
         function chartPoint(box, visibleLabel) {
             return {
                 box: box,
+                overlapsBox: function(box) {
+                    return this.box.overlaps(box);
+                },
                 label: {
                     options: {
                         visible: visibleLabel

@@ -3922,6 +3922,10 @@ var __meta__ = { // jshint ignore:line
             }
 
             return new Point2D(x, y);
+        },
+
+        overlapsBox: function(box) {
+            return this.box.overlaps(box);
         }
     });
     deepExtend(Bar.fn, PointEventsMixin);
@@ -5705,6 +5709,11 @@ var __meta__ = { // jshint ignore:line
             var point = this;
 
             return point.owner.formatPointValue(point, format);
+        },
+
+        overlapsBox: function(box) {
+            var markerBox = this.markerBox();
+            return markerBox.overlaps(box);
         }
     });
     deepExtend(LinePoint.fn, PointEventsMixin);
@@ -7262,6 +7271,10 @@ var __meta__ = { // jshint ignore:line
         formatValue: function(format) {
             var point = this;
             return point.owner.formatPointValue(point, format);
+        },
+
+        overlapsBox: function(box) {
+            return this.box.overlaps(box);
         }
     });
     deepExtend(Candlestick.fn, PointEventsMixin);
@@ -9074,7 +9087,7 @@ var __meta__ = { // jshint ignore:line
                 for (j = 0; j < length; j++) {
                     point = points[j];
                     if (point && point.label && point.label.options.visible) {
-                        if (point.box.overlaps(clipBox)) {
+                        if (point.overlapsBox(clipBox)) {
                             if (point.label.alignToClipBox) {
                                 point.label.alignToClipBox(clipBox);
                             }
