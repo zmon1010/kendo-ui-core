@@ -76,9 +76,10 @@
     }
 
     function recalcSheets(sheets) {
-        var sheet;
-        while (sheet = sheets.pop()) {
-            sheet.suspendChanges(false).triggerChange({ recalc: true });
+        while (sheets.length > 0) {
+            sheets.pop()
+                .suspendChanges(false)
+                .triggerChange({ recalc: true });
         }
     }
 
@@ -241,8 +242,6 @@
         49 : "@"
     };
 
-    var GENERAL_REGEX = /^general$/i;
-    var LOCALE_REGEX = /^\[\$-[0-9]+\]/;
     function applyStyle(sheet, ref, styles, styleIndex) {
         var range = sheet.range(ref);
         var xf = styles.inlineStyles[styleIndex], base, value;
@@ -274,11 +273,11 @@
 
         function setFormat(f) {
             var format = typeof f == "string" ? f : f.formatCode;
-            if (format != null && !GENERAL_REGEX.test(format)) {
+            if (format != null && !/^general$/i.test(format)) {
                 // XXX: drop locale info.
                 // http://stackoverflow.com/questions/894805/excel-number-format-what-is-409
                 // not supported by the formatting library.
-                format = format.replace(LOCALE_REGEX, "");
+                format = format.replace(/^\[\$-[0-9]+\]/, "");
                 range.format(format);
             }
         }
