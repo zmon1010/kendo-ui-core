@@ -2746,7 +2746,8 @@ var __meta__ = { // jshint ignore:line
                 min: toDate(options.min),
                 max: toDate(options.max)
             });
-
+            options.userSetBaseUnit = options.userSetBaseUnit || options.baseUnit;
+            options.userSetBaseUnitStep = options.userSetBaseUnitStep || options.baseUnitStep;
             if (options.categories && options.categories.length > 0) {
                 baseUnit = (options.baseUnit || "").toLowerCase();
                 useDefault = baseUnit !== FIT && !inArray(baseUnit, BASE_UNITS);
@@ -2757,6 +2758,8 @@ var __meta__ = { // jshint ignore:line
                 if (baseUnit === FIT || options.baseUnitStep === AUTO) {
                     axis.autoBaseUnit(options);
                 }
+
+                this._groupsStart = addDuration(options.categories[0], 0, options.baseUnit, options.weekStartDay);
 
                 axis.groupCategories(options);
             } else {
@@ -2864,7 +2867,7 @@ var __meta__ = { // jshint ignore:line
                 cat = categories[categoryIx];
 
                 if (cat && lastCat) {
-                    diff = dateDiff(cat, lastCat);
+                    diff = absoluteDateDiff(cat, lastCat);
                     if (diff > 0) {
                         minDiff = math.min(minDiff, diff);
 
@@ -2910,28 +2913,22 @@ var __meta__ = { // jshint ignore:line
 
         rangeIndices: function() {
             var options = this.options;
+            var baseUnit = options.baseUnit;
+            var baseUnitStep = options.baseUnitStep || 1;
             var categories = options.categories;
-            var categoryLimits = this._categoryRange(options.srcCategories || categories);
-            var min = options.min || toDate(categoryLimits.min);
-            var max = options.max || toDate(categoryLimits.max);
-            var length = categories.length - 1;
+            var categoryLimits = this.categoriesRange();
+            var min = toDate(options.min || categoryLimits.min);
+            var max = toDate(options.max || categoryLimits.max);
             var minIdx = 0, maxIdx = 0;
 
             if (categories.length) {
-                var rangeSize = dateDiff(last(categories), categories[0]) || 1;
-                minIdx = (dateDiff(min, categories[0]) / rangeSize) * length;
-                maxIdx = length - (dateDiff(last(categories), max) / rangeSize) * length;
-
-                if ((!(options.justified || options.roundToBaseUnit) && (maxIdx != length))
-                    ) {
-                    maxIdx--;
-                }
+                minIdx = dateIndex(min, categories[0], baseUnit, baseUnitStep);
+                maxIdx = dateIndex(max, categories[0], baseUnit, baseUnitStep);
 
                 if (options.roundToBaseUnit) {
                     minIdx = math.floor(minIdx);
-                    maxIdx = math.floor(maxIdx);
+                    maxIdx = options.justified ? math.floor(maxIdx) : math.ceil(maxIdx);
                 }
-
             }
 
             return { min: minIdx, max: maxIdx };
@@ -2946,23 +2943,46 @@ var __meta__ = { // jshint ignore:line
 
             return {
                 min: min + labelOptions.skip,
-                max: options.categories.length ? max + 1 : 0
+                max: options.categories.length ? max + (options.justified ? 1 : 0) : 0
             };
         },
 
-        panRange: function(from, to) {
-            var range = this._categoryRange(this.options.srcCategories);
+        categoriesRange: function() {
             var options = this.options;
-            var baseUnit = options.baseUnit;
-            var baseUnitStep = options.baseUnitStep || 1;
-            var weekStartDay = options.weekStartDay;
-            var min = toTime(addDuration(range.min, 0, baseUnit, weekStartDay));
-            var max = toTime(addDuration(range.max, options.justified || options.roundToBaseUnit ? 0 : baseUnitStep, baseUnit, weekStartDay));
-            return this.limitRange(from, to, min, max);
+            var range = this._categoryRange(options.srcCategories || options.categories);
+
+            var max = toDate(range.max);
+            if (!options.justified && dateEquals(max, this._roundToTotalStep(max, options, false))) {
+                max = this._roundToTotalStep(max, options, true, true);
+            }
+            return {
+                min: toDate(range.min),
+                max: max
+            };
+        },
+
+        currentRange: function() {
+            var options = this.options;
+            var round = options.roundToBaseUnit !== false;
+            var totalRange = this.categoriesRange();
+            var min = options.min;
+            var max = options.max;
+            if (!min) {
+                min = round ? this._roundToTotalStep(totalRange.min, options, false): totalRange.min;
+            }
+
+            if (!max) {
+                max = round ? this._roundToTotalStep(totalRange.max, options, !options.justified) : totalRange.max;
+            }
+
+            return {
+                min: min,
+                max: max
+            };
         },
 
         datesRange: function() {
-            var range = this._categoryRange(this.options.srcCategories);
+            var range = this._categoryRange(this.options.srcCategories || this.options.categories);
             return {
                 min: toDate(range.min),
                 max: toDate(range.max)
@@ -2975,61 +2995,131 @@ var __meta__ = { // jshint ignore:line
                 baseUnit = options.baseUnit,
                 lineBox = axis.lineBox(),
                 size = options.vertical ? lineBox.height() : lineBox.width(),
-                range = axis.range(),
-                scale = size / (range.max - range.min),
+                range = this.currentRange(),
+                totalLimits = this.totalLimits(),
+                min = range.min,
+                max = range.max,
+                scale = size / (max - min),
                 offset = round(delta / scale, DEFAULT_PRECISION),
                 panRange,
                 from,
                 to;
 
-            if (range.min && range.max) {
-                from = addTicks(options.min || range.min, offset);
-                to = addTicks(options.max || range.max, offset);
+            from = addTicks(min, offset);
+            to = addTicks(max, offset);
 
-                panRange = this.panRange(from, to);
-                if (panRange) {
-                    panRange.baseUnit = baseUnit;
-                    panRange.baseUnitStep = options.baseUnitStep || 1;
-                }
+            panRange = this.limitRange(toTime(from), toTime(to), toTime(totalLimits.min), toTime(totalLimits.max), offset);
+
+            if (panRange) {
+                panRange.min = toDate(panRange.min);
+                panRange.max = toDate(panRange.max);
+                panRange.baseUnit = baseUnit;
+                panRange.baseUnitStep = options.baseUnitStep || 1;
+                panRange.userSetBaseUnit = options.userSetBaseUnit;
+                panRange.userSetBaseUnitStep = options.userSetBaseUnitStep;
+
+                return panRange;
             }
-
-            return panRange;
         },
 
         pointsRange: function(start, end) {
-            var pointsRange = CategoryAxis.fn.pointsRange.call(this, start, end, true);
-            var categories = this.options.categories;
-            var length = categories.length - 1;
-            var rangeSize = dateDiff(last(categories), categories[0]);
+            var pointsRange = CategoryAxis.fn.pointsRange.call(this, start, end);
+            var datesRange = this.currentRange();
+            var indicesRange = this.rangeIndices();
+            var scale = dateDiff(datesRange.max, datesRange.min) / (indicesRange.max - indicesRange.min);
+            var options = this.options;
 
-            var min = addTicks(categories[0], (pointsRange.min / length) * rangeSize);
-            var max = addTicks(categories[0], (pointsRange.max / length) * rangeSize);
+            var min = addTicks(datesRange.min, pointsRange.min * scale);
+            var max = addTicks(datesRange.min, pointsRange.max * scale);
 
             return {
                 min: min,
-                max: max
+                max: max,
+                baseUnit: options.userSetBaseUnit,
+                baseUnitStep: options.userSetBaseUnitStep
             };
         },
 
         zoomRange: function(delta) {
             var options = this.options;
-            var range = this._categoryRange(this.options.categories);
-            var totalRange = this._categoryRange(this.options.srcCategories);
+            var totalLimits = this.totalLimits();
+            var currentRange = this.currentRange();
             var baseUnit = options.baseUnit;
             var baseUnitStep = options.baseUnitStep || 1;
             var weekStartDay = options.weekStartDay;
-            var min = addDuration(toDate(options.min || range.min), delta * baseUnitStep, baseUnit, weekStartDay);
-            var max = addDuration(toDate(options.max || range.max), -delta * baseUnitStep, baseUnit, weekStartDay);
-            var minRange = TIME_PER_UNIT[baseUnit] * baseUnitStep;
-            min = toDate(limitValue(min, totalRange.min, totalRange.max));
-            max = toDate(limitValue(max, totalRange.min, totalRange.max));
+            var rangeMax = currentRange.max;
+            var rangeMin = currentRange.min;
+            var min = addDuration(rangeMin, delta * baseUnitStep, baseUnit, weekStartDay);
+            var max = addDuration(rangeMax, -delta * baseUnitStep, baseUnit, weekStartDay);
 
-            if (dateDiff(max, min) > minRange) {
+            if (options.userSetBaseUnit == FIT) {
+                var autoBaseUnitSteps = options.autoBaseUnitSteps;
+                var maxDateGroups = options.maxDateGroups;
+                var baseUnitIndex = indexOf(baseUnit, BASE_UNITS);
+                var autoBaseUnitStep;
+                var diff = dateDiff(max, min);
+                var maxDiff = last(autoBaseUnitSteps[baseUnit]) * maxDateGroups * TIME_PER_UNIT[baseUnit];
+                var rangeDiff = dateDiff(rangeMax, rangeMin);
+                var ticks;
+
+                if (diff < TIME_PER_UNIT[baseUnit] && baseUnit !== SECONDS) {
+                    baseUnit = BASE_UNITS[baseUnitIndex - 1];
+                    autoBaseUnitStep = last(autoBaseUnitSteps[baseUnit]);
+                    ticks = (rangeDiff - (maxDateGroups - 1) * autoBaseUnitStep * TIME_PER_UNIT[baseUnit]) / 2;
+                    min = addTicks(rangeMin, ticks);
+                    max = addTicks(rangeMax, -ticks);
+
+                } else if (diff > maxDiff && baseUnit !== YEARS) {
+                    var stepIndex = 0;
+
+                    do {
+                        baseUnitIndex++;
+                        baseUnit = BASE_UNITS[baseUnitIndex];
+                        stepIndex = 0;
+                        ticks = 2 * TIME_PER_UNIT[baseUnit];
+                        do {
+                            autoBaseUnitStep =  autoBaseUnitSteps[baseUnit][stepIndex];
+                            stepIndex++;
+                        } while(stepIndex < autoBaseUnitSteps[baseUnit].length && ticks * autoBaseUnitStep  < rangeDiff);
+                    } while(baseUnit !== YEARS && ticks * autoBaseUnitStep < rangeDiff);
+
+                    ticks = (ticks * autoBaseUnitStep - rangeDiff) / 2;
+                    if (ticks > 0) {
+                        min = addTicks(rangeMin, -ticks);
+                        max = addTicks(rangeMax, ticks);
+                        min = addTicks(min, limitValue(max, totalLimits.min, totalLimits.max) - max);
+                        max = addTicks(max, limitValue(min, totalLimits.min, totalLimits.max) - min);
+                    }
+                }
+            }
+
+            min = toDate(limitValue(min, totalLimits.min, totalLimits.max));
+            max = toDate(limitValue(max, totalLimits.min, totalLimits.max));
+
+            if (dateDiff(max, min) > 0) {
                 return {
-                    min: addDuration(min, 0, baseUnit, weekStartDay),
-                    max: addDuration(max, 0, baseUnit, weekStartDay)
+                    min: min,
+                    max: max,
+                    baseUnit: options.userSetBaseUnit,
+                    baseUnitStep: options.userSetBaseUnitStep
                 };
             }
+        },
+
+        totalLimits: function() {
+            var options = this.options;
+            var datesRange = this.datesRange();
+
+            var min = this._roundToTotalStep(toDate(datesRange.min), options, false);
+            var max = datesRange.max;
+
+            if (!options.justified) {
+                max = this._roundToTotalStep(max, options, true, dateEquals(max, this._roundToTotalStep(max, options, false)));
+            }
+            return {
+                min: min,
+                max: max
+            };
         },
 
         range: function(options) {
@@ -3039,44 +3129,30 @@ var __meta__ = { // jshint ignore:line
                 autoUnit = options.baseUnit === FIT,
                 baseUnit = autoUnit ? BASE_UNITS[0] : options.baseUnit,
                 baseUnitStep = options.baseUnitStep || 1,
-                min = toTime(options.min),
-                max = toTime(options.max),
+                stepOptions = {
+                    baseUnit: baseUnit,
+                    baseUnitStep: baseUnitStep,
+                    weekStartDay: options.weekStartDay
+                },
                 categoryLimits = this._categoryRange(categories),
-                totalLimits = this._categoryRange(options.srcCategories || categories);
-
-            var minCategory = toTime(categoryLimits.min),
-                maxCategory = toTime(categoryLimits.max);
-
-            var rangeMin = addDuration(min || minCategory, 0, baseUnit, options.weekStartDay);
-            var rangeMax = addDuration(max || maxCategory, baseUnitStep, baseUnit, options.weekStartDay);
-
-            if (options.outOfRangePoints) {
-                if (totalLimits.min < rangeMin) {
-                    rangeMin = addDuration(rangeMin, -baseUnitStep, baseUnit, options.weekStartDay);
-                }
-
-                if (rangeMax <= totalLimits.max) {
-                    rangeMax = addDuration(rangeMax, baseUnitStep, baseUnit, options.weekStartDay);
-                }
-            }
-
-            if (options.limitRange) {
-                rangeMax = limitValue(rangeMax, totalLimits.min, addDuration(totalLimits.max, baseUnitStep, baseUnit, options.weekStartDay));
-            }
+                min = toDate(options.min || categoryLimits.min),
+                max = toDate(options.max || categoryLimits.max);
 
             return {
-                min: toDate(rangeMin),
-                max: toDate(rangeMax)
+                min: this._roundToTotalStep(min, stepOptions, false),
+                max: this._roundToTotalStep(max, stepOptions, true, true)
             };
         },
 
         autoBaseUnit: function(options) {
             var axis = this,
-                range = axis.range(deepExtend({}, options, { baseUnitStep: 1 })),
+                categoryLimits = this._categoryRange(options.categories),
+                min = toDate(options.min || categoryLimits.min),
+                max = toDate(options.max || categoryLimits.max),
                 autoUnit = options.baseUnit === FIT,
                 autoUnitIx = 0,
                 baseUnit = autoUnit ? BASE_UNITS[autoUnitIx++] : options.baseUnit,
-                span = range.max - range.min,
+                span = max - min,
                 units = span / TIME_PER_UNIT[baseUnit],
                 totalUnits = units,
                 maxDateGroups = options.maxDateGroups || axis.options.maxDateGroups,
@@ -3087,7 +3163,7 @@ var __meta__ = { // jshint ignore:line
                 step,
                 nextStep;
 
-            while (!step || units > maxDateGroups) {
+            while (!step || units >= maxDateGroups) {
                 unitSteps = unitSteps || autoBaseUnitSteps[baseUnit].slice(0);
                 nextStep = unitSteps.shift();
 
@@ -3158,6 +3234,24 @@ var __meta__ = { // jshint ignore:line
             options.categories = groups;
         },
 
+        _roundToTotalStep: function(value, options, upper, roundToNext) {
+            options = options || this.options;
+            var baseUnit = options.baseUnit;
+            var baseUnitStep = options.baseUnitStep || 1;
+            var start = this._groupsStart;
+
+            if (start) {
+                var step =  dateIndex(value, start, baseUnit, baseUnitStep);
+                var roundedStep = upper ? math.ceil(step) : math.floor(step);
+                if (roundToNext) {
+                    roundedStep++;
+                }
+                return addDuration(start, roundedStep * baseUnitStep, baseUnit, options.weekStartDay);
+            } else {
+                return addDuration(value, upper ? baseUnitStep : 0, baseUnit, options.weekStartDay);
+            }
+        },
+
         createAxisLabel: function(index, labelOptions) {
             var options = this.options,
                 dataItem = options.dataItems ? options.dataItems[index] : null,
@@ -3182,36 +3276,25 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        categoryIndex: function(value, range, limit) {
-            var axis = this,
-                options = axis.options,
-                categories = options.categories,
-                index;
+        categoryIndex: function(value) {
+            var axis = this;
+            var options = axis.options;
+            var categories = options.categories;
 
-            value = toDate(value);
-            range = range || axis.range();
-            if (limit && value && options.roundToBaseUnit && value >= range.max) {
-                return categories.length;
-            }
+            var index = dateIndex(toDate(value), categories[0], options.baseUnit, options.baseUnitStep || 1);
 
-            if (!value || value < range.min || value >= range.max) {
-                return -1;
-            }
-
-            index = lteDateIndex(value, categories);
-
-            return index;
+            return math.floor(index);
         },
 
         getSlot: function(a, b, limit) {
             var axis = this;
 
             if (typeof a === OBJECT) {
-                a = axis.categoryIndex(a, null, limit);
+                a = axis.categoryIndex(a);
             }
 
             if (typeof b === OBJECT) {
-                b = axis.categoryIndex(b, null, limit);
+                b = axis.categoryIndex(b);
             }
 
             return CategoryAxis.fn.getSlot.call(axis, a, b, limit);
@@ -12906,18 +12989,15 @@ var __meta__ = { // jshint ignore:line
                 result = new Date(date.getFullYear(), date.getMonth(), date.getDate() + value);
                 kendo.date.adjustDST(result, hours);
             } else if (unit === HOURS) {
-                result = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours() + value);
-                if (value > 0 && dateEquals(date, result)) {
-                    result = addDuration(date, value + 1, unit, weekStartDay);
-                }
+                result = addTicks(new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()), value * TIME_PER_HOUR);
             } else if (unit === MINUTES) {
-                result = new Date(date.getTime() + value * TIME_PER_MINUTE);
+                result = addTicks(date, value * TIME_PER_MINUTE);
 
                 if (result.getSeconds() > 0) {
                     result.setSeconds(0);
                 }
             } else if (unit === SECONDS) {
-                result = new Date(date.getTime() + value * TIME_PER_SECOND);
+                result = addTicks(date, value * TIME_PER_SECOND);
             }
 
             if (result.getMilliseconds() > 0) {
@@ -12968,6 +13048,13 @@ var __meta__ = { // jshint ignore:line
         var diff = a.getTime() - b,
             offsetDiff = a.getTimezoneOffset() - b.getTimezoneOffset();
 
+        return diff - (offsetDiff * diff > 0 ? offsetDiff * TIME_PER_MINUTE : 0);
+    }
+
+    function absoluteDateDiff(a, b) {
+        var diff = a.getTime() - b,
+            offsetDiff = a.getTimezoneOffset() - b.getTimezoneOffset();
+
         return diff - (offsetDiff * TIME_PER_MINUTE);
     }
 
@@ -12976,7 +13063,7 @@ var __meta__ = { // jshint ignore:line
             result = new Date(date.getTime() + ticks),
             tzOffsetDiff = result.getTimezoneOffset() - tzOffsetBefore;
 
-        return new Date(result.getTime() + tzOffsetDiff * TIME_PER_MINUTE);
+        return new Date(result.getTime() + ((ticks * tzOffsetDiff) > 0 ? tzOffsetDiff * TIME_PER_MINUTE : 0));
     }
 
     function duration(a, b, unit) {
@@ -12993,6 +13080,26 @@ var __meta__ = { // jshint ignore:line
         }
 
         return diff;
+    }
+
+    function dateIndex(value, start, baseUnit, baseUnitStep) {
+        var index;
+        var date = toDate(value);
+        var startDate = toDate(start);
+        if (baseUnit == MONTHS) {
+            index = (date.getMonth() - startDate.getMonth() + (date.getFullYear() - startDate.getFullYear()) * 12) +
+                timeIndex(date,  new Date(date.getFullYear(), date.getMonth()), DAYS) / new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+        } else if (baseUnit === YEARS) {
+            index = date.getFullYear() - startDate.getFullYear() + dateIndex(date, new Date(date.getFullYear(), 0), MONTHS, 1)  / 12;
+        } else {
+            index = timeIndex(date, startDate, baseUnit);
+        }
+
+        return index / baseUnitStep;
+    }
+
+    function timeIndex(date, start, baseUnit) {
+        return dateDiff(date, start) /  TIME_PER_UNIT[baseUnit];
     }
 
     function singleItemOrArray(array) {
