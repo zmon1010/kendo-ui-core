@@ -6,16 +6,16 @@
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(p => p.OrderID).Filterable(ftb => ftb.Cell(cell => cell.ShowOperators(false))).Width(220);
+        columns.Bound(p => p.OrderID).Filterable(ftb => ftb.Cell(cell => cell.ShowOperators(false))).Width(225);
         columns.Bound(p => p.ShipName).Width(500).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
-        columns.Bound(p => p.Freight).Width(250).Filterable(ftb => ftb.Cell(cell => cell.Operator("gte")));
+        columns.Bound(p => p.Freight).Width(255).Filterable(ftb => ftb.Cell(cell => cell.Operator("gte")));
         columns.Bound(p => p.OrderDate).Format("{0:MM/dd/yyyy}");
     })
     .Pageable()
     .Sortable()
     .Scrollable()
     .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
-    .HtmlAttributes(new { style = "height:430px;" })
+    .HtmlAttributes(new { style = "height:550px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
         .PageSize(20)

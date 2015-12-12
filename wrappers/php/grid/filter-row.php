@@ -60,7 +60,7 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(10)
+           ->pageSize(20)
            ->schema($schema)
            ->serverFiltering(true)
            ->serverSorting(true)
@@ -76,7 +76,7 @@ $orderFilterable->cell($orderFilterableCell);
 
 $orderID = new \Kendo\UI\GridColumn();
 $orderID->field('OrderID')
-            ->width(220)
+            ->width(225)
             ->filterable($orderFilterable)
             ->title('Order ID');
 
@@ -100,7 +100,7 @@ $freightFilterable->cell($freightFilterableCell);
 
 $freight = new \Kendo\UI\GridColumn();
 $freight->field('Freight')
-          ->width(250)
+          ->width(255)
           ->filterable($freightFilterable)
           ->title('Freight');
 
@@ -117,8 +117,8 @@ $grid->addColumn($orderID, $shipName, $freight, $orderDate)
      ->dataSource($dataSource)
      ->sortable(true)
      ->filterable($gridFilterable)
-     ->pageable(true);
-
+     ->pageable(true)
+     ->height(550);
 echo $grid->render();
 ?>
 

@@ -7,11 +7,11 @@
 <c:url value="/grid/filter-row/read" var="transportReadUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" height="430px" sortable="true" groupable="true">
+    <kendo:grid name="grid" pageable="true" height="550px" sortable="true" groupable="true">
         <kendo:grid-filterable mode="row"/>
         <kendo:grid-scrollable/>
         <kendo:grid-columns>
-            <kendo:grid-column title="Order ID" field="orderId" width="220px">
+            <kendo:grid-column title="Order ID" field="orderId" width="225px">
                  <kendo:grid-column-filterable>
                      <kendo:grid-column-filterable-cell showOperators="false" />
                  </kendo:grid-column-filterable>
@@ -21,7 +21,7 @@
                     <kendo:grid-column-filterable-cell operator="contains" />
                 </kendo:grid-column-filterable>
             </kendo:grid-column>
-            <kendo:grid-column title="Freight" field="freight" width="250px" >
+            <kendo:grid-column title="Freight" field="freight" width="255px" >
                 <kendo:grid-column-filterable>
                      <kendo:grid-column-filterable-cell operator="gte" />
                 </kendo:grid-column-filterable>
