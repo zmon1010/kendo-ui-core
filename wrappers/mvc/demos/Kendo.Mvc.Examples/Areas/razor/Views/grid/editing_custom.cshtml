@@ -3,9 +3,9 @@
     .Columns(columns =>
     {
         columns.Bound(p => p.ProductName);
-        columns.Bound(p => p.Category).ClientTemplate("#=Category.CategoryName#").Width(160);
-        columns.Bound(p => p.UnitPrice).Width(120);
-        columns.Command(command => command.Destroy()).Width(90);
+        columns.Bound(p => p.Category).ClientTemplate("#=Category.CategoryName#").Width(180);
+        columns.Bound(p => p.UnitPrice).Width(130);
+        columns.Command(command => command.Destroy()).Width(150);
     })
     .ToolBar(toolBar =>
         {
@@ -16,7 +16,7 @@
     .Pageable()
     .Sortable()
     .Scrollable()
-    .HtmlAttributes(new { style = "height:430px;" })
+    .HtmlAttributes(new { style = "height:550px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
         .Batch(true)

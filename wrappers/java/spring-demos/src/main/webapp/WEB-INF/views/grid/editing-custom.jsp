@@ -12,7 +12,7 @@
 <c:url value="/grid/editing-custom/categories" var="categoriesUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" sortable="true" scrollable="true" editable="true" height="430px">
+    <kendo:grid name="grid" pageable="true" sortable="true" scrollable="true" editable="true" height="550px">
         <kendo:grid-toolbar>
             <kendo:grid-toolbarItem name="create"/>
             <kendo:grid-toolbarItem name="save"/>
@@ -21,9 +21,9 @@
         <kendo:grid-columns>
             <kendo:grid-column title="Product Name" field="productName" />
             <kendo:grid-column title="Category" field="category" editor="categoryDropDownEditor" template="#=category.categoryName#"
-            	width="160px"  />
-            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="120px" />
-            <kendo:grid-column command="destroy" title="&nbsp;" width="120px" />
+            	width="180px"  />
+            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="130px" />
+            <kendo:grid-column command="destroy" title="&nbsp;" width="150px" />
         </kendo:grid-columns>
         <kendo:dataSource pageSize="20" batch="true">
             <kendo:dataSource-transport>
