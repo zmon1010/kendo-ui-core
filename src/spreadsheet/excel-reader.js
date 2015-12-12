@@ -19,6 +19,7 @@
     var SEL_CELL = ["sheetData", "row", "c"];
     var SEL_VALUE = ["sheetData", "row", "c", "v"];
     var SEL_FORMULA = ["sheetData", "row", "c", "f"];
+    var SEL_STRING = ["sheetData", "row", "c", "is"];
     var SEL_MERGE = ["mergeCells", "mergeCell"];
     var SEL_TEXT = ["t"];
     var SEL_COL = ["cols", "col"];
@@ -142,22 +143,22 @@
                             // console.error(text);
                         }
                     } else if (value != null) {
-                        // XXX because "shared" formulas might have been
-                        // already set on this cell, we need to check
-                        // whether the formula is present before applying
-                        // the value.  This is ruining a dozen
-                        // micro-optimizations I've made. ;-\
                         var range = sheet.range(ref);
-                        if (!range.formula()) {
-                            if (type == "b") {
-                                value = value.toLowerCase() == "true";
+
+                        if (type == "str") {
+                            range.formula(value);
+                        } else if (!range.formula()) {
+                            // Check for "shared" formulas before applying a value.
+                            if (!type) {
+                                value = parseFloat(value);
                             } else if (type == "s") {
                                 value = strings[integer(value)];
+                            } else if (type == "b") {
+                                value = value === "1";
                             } else if (type == "d") {
                                 value = kendo.parseDate(value);
-                            } else {
-                                value = parseFloat(value);
                             }
+
                             range.value(value);
                         }
                     }
@@ -169,10 +170,9 @@
             },
             text: function(text) {
                 var attrs;
-                if (this.is(SEL_VALUE)) {
+                if (this.is(SEL_VALUE) || this.is(SEL_STRING)) {
                     value = text;
-                }
-                else if ((attrs = this.is(SEL_FORMULA))) {
+                } else if ((attrs = this.is(SEL_FORMULA))) {
                     formula = text;
                     if (attrs.t == "shared") {
                         formulaRange = attrs.ref;
@@ -640,6 +640,7 @@
     }
 
     kendo.spreadsheet.readExcel = readExcel;
+    kendo.spreadsheet._readSheet = readSheet;
     kendo.spreadsheet._readStrings = readStrings;
     kendo.spreadsheet._readStyles = readStyles;
     kendo.spreadsheet._readTheme = readTheme;

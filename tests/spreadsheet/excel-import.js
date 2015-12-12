@@ -326,4 +326,267 @@
     test("does not fail if no strings are defined", 0, function() {
         kendo.spreadsheet._readStrings(zip);
     });
+
+    test("reads untyped cell data as numbers", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="C1">
+                    <v>123</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: val => equal(val, 123),
+                formula: () => null
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads string cell data", function() {
+        var STRINGS = ["Foo"];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="A1" t="s">
+                    <v>0</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: val => equal(val, "Foo"),
+                formula: () => null
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads inline string cell data", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="A1" t="inlineStr">
+                    <is>foo</is>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: val => equal(val, "foo"),
+                formula: () => null
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads boolean (true) cell data", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="E1" t="b">
+                    <v>1</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: val => equal(val, true),
+                formula: () => null
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads boolean (false) cell data", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="E1" t="b">
+                    <v>0</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: val => equal(val, false),
+                formula: () => null
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads date cell data", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="E1" t="d">
+                    <v>2015-12-09</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: val => equal(val.toString(), new Date("2015/12/09").toString()),
+                formula: () => null
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads formula", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="B1">
+                    <f>SUM(A1:A1000)</f>
+                    <v>0</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: () => null,
+                formula: val => equal(val, "SUM(A1:A1000)")
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads formula with error", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="A1" t="e">
+                    <f>1/0</f>
+                    <v>#DIV/0!</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: () => null,
+                formula: val => equal(val, "1/0")
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads string formula", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="B1" t="str">
+                    <v>SUM(A1:A1000)</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: () => null,
+                formula: val => equal(val, "SUM(A1:A1000)")
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
 })();
