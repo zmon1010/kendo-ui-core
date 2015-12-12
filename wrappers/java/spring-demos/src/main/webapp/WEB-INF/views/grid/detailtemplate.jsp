@@ -14,7 +14,7 @@
 	data.put("employeeId", "#=employeeId#");
 %>
 
-<kendo:grid name="grid" pageable="true" sortable="true" height="430px" detailTemplate="template"
+<kendo:grid name="grid" pageable="true" sortable="true" height="550px" detailTemplate="template"
 	dataBound="dataBound">
     <kendo:grid-columns>
         <kendo:grid-column title="First Name" field="firstName" width="120px" />

@@ -15,7 +15,7 @@
             .Pageable()
             .Scrollable()
             .ClientDetailTemplateId("template")
-            .HtmlAttributes(new { style = "height:430px;" })
+            .HtmlAttributes(new { style = "height:550px;" })
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .PageSize(5)

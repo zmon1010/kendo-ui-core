@@ -73,7 +73,7 @@ $title->field('Title');
 
 $grid->addColumn($firstName, $lastName, $country, $city, $title)
      ->dataSource($dataSource)
-     ->height(430)
+     ->height(550)
      ->sortable(true)
      ->pageable(true)
      ->dataBound('dataBound')
