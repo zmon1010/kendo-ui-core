@@ -38,7 +38,7 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(10)
+           ->pageSize(20)
            ->schema($schema)
            ->serverPaging(true);
 
@@ -46,11 +46,13 @@ $grid = new \Kendo\UI\Grid('grid');
 
 $firstName = new \Kendo\UI\GridColumn();
 $firstName->field('FirstName')
-    ->title('First Name');
+    ->title('First Name')
+    ->width(140);
 
 $lastName = new \Kendo\UI\GridColumn();
 $lastName->field('LastName')
-    ->title('Last Name');
+    ->title('Last Name')
+    ->width(140);
 
 $title = new \Kendo\UI\GridColumn();
 $title->field('Title');
@@ -62,11 +64,11 @@ $command->click('commandClick')
 $commandColumn = new \Kendo\UI\GridColumn();
 $commandColumn->addCommandItem($command)
         ->title('&nbsp;')
-        ->width(140);
+        ->width(180);
 
 $grid->addColumn($firstName, $lastName, $title, $commandColumn)
      ->dataSource($dataSource)
-     ->height(260)
+     ->height(400)
      ->pageable(true);
 
 echo $grid->render();
@@ -105,4 +107,27 @@ echo $window->render();
         wnd.center().open();
     }
 </script>
+
+ <style type="text/css">
+    #details-container
+    {
+        padding: 10px;
+    }
+
+    #details-container h2
+    {
+        margin: 0;
+    }
+
+    #details-container em
+    {
+        color: #8c8c8c;
+    }
+
+    #details-container dt
+    {
+        margin:0;
+        display: inline;
+    }
+</style>
 <?php require_once '../include/footer.php'; ?>

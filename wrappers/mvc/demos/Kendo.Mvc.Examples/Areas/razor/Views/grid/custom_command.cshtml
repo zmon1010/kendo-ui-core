@@ -1,13 +1,15 @@
 @(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.EmployeeViewModel>()    
     .Name("Grid")
     .Columns(columns => {
-        columns.Bound(e => e.FirstName);
-        columns.Bound(e => e.LastName);
+        columns.Bound(e => e.FirstName).Width(140);
+        columns.Bound(e => e.LastName).Width(140);
         columns.Bound(e => e.Title);
-        columns.Command(command => command.Custom("ViewDetails").Click("showDetails"));
+        columns.Command(command => command.Custom("ViewDetails").Click("showDetails")).Width(180);
     })    
+    .HtmlAttributes(new { style = "height: 400px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
+        .PageSize(20)
         .Read(read => read.Action("CustomCommand_Read", "Grid"))
      )
 )
@@ -44,3 +46,26 @@
         wnd.center().open();
     }
 </script>
+
+<style type="text/css">
+    #details-container
+    {
+        padding: 10px;
+    }
+
+    #details-container h2
+    {
+        margin: 0;
+    }
+
+    #details-container em
+    {
+        color: #8c8c8c;
+    }
+
+    #details-container dt
+    {
+        margin:0;
+        display: inline;
+    }
+</style>
