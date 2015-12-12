@@ -11,7 +11,7 @@
 
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" sortable="true" scrollable="true" navigatable="true" editable="true">
+    <kendo:grid name="grid" pageable="true" sortable="true" scrollable="true" navigatable="true" editable="true" height="550px">
         <kendo:grid-toolbar>
             <kendo:grid-toolbarItem name="create"/>
             <kendo:grid-toolbarItem name="save"/>
@@ -19,12 +19,12 @@
         </kendo:grid-toolbar>
         <kendo:grid-columns>
             <kendo:grid-column title="Product Name" field="productName" />
-            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" />
-            <kendo:grid-column title="Units In Stock" field="unitsInStock" />
-            <kendo:grid-column title="Discontinued" field="discontinued" />
-            <kendo:grid-column command="destroy" title="&nbsp;" />
+            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="120" />
+            <kendo:grid-column title="Units In Stock" field="unitsInStock" width="120"  />
+            <kendo:grid-column title="Discontinued" field="discontinued" width="120"  />
+            <kendo:grid-column command="destroy" title="&nbsp;" width="150"  />
         </kendo:grid-columns>
-        <kendo:dataSource pageSize="10" batch="true">
+        <kendo:dataSource pageSize="20" batch="true">
             <kendo:dataSource-transport>
                 <kendo:dataSource-transport-create url="${createUrl}" dataType="json" type="POST" contentType="application/json" />
                 <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" />
