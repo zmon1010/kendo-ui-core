@@ -56,17 +56,19 @@
                     var relId = attrs["r:id"];
                     var file = relationships.byId[relId];
                     var name = attrs.name;
-                    var dim = getSheetDimensions(zip, file);
+                    var dim = sheetDimensions(zip, file);
                     var sheet = workbook.insertSheet({
                         name: name,
                         rows: Math.max(workbook.options.rows || 0, dim.rows),
-                        columns: Math.max(workbook.options.columns || 0, dim.cols)
+                        columns: Math.max(workbook.options.columns || 0, dim.cols),
+                        columnWidth: dim.columnWidth,
+                        rowHeight: dim.rowHeight
                     });
 
                     sheets.push(sheet);
                     sheet.suspendChanges(true);
 
-                    readSheet(zip, file, sheet, strings, styles);
+                    readSheet(zip, file, sheet, strings, styles, dim);
                 }
             },
             text: function(text) {
@@ -89,21 +91,28 @@
         }
     }
 
-    function getSheetDimensions(zip, file) {
+    function sheetDimensions(zip, file) {
         var rows = 0;
         var cols = 0;
+        var columnWidth;
+        var rowHeight;
 
         parse(zip, "xl/" + file, {
             enter: function(tag, attrs) {
                 if (tag == "dimension") {
-                    // Take row count from dimension tag
                     var ref = kendo.spreadsheet.calc.parseReference(attrs.ref);
                     if (ref.bottomRight) {
-                        cols = Math.max(cols, ref.bottomRight.col + 1);
+                        cols = ref.bottomRight.col + 1;
                         rows = ref.bottomRight.row + 1;
                     }
-                } else if (this.is(SEL_COL)) {
-                    cols = Math.max(cols, integer(attrs.max));
+                } else if (tag === "sheetFormatPr") {
+                    if (attrs.defaultColWidth) {
+                        columnWidth = toColWidth(parseFloat(attrs.defaultColWidth));
+                    }
+
+                    if (attrs.defaultRowHeight) {
+                        rowHeight = toRowHeight(parseFloat(attrs.defaultRowHeight));
+                    }
                 } else if (this.is(SEL_ROW)) {
                     // Don't process actual rows
                     this.exit();
@@ -111,7 +120,25 @@
             }
         });
 
-        return { rows: rows, cols: cols };
+        return {
+            rows: rows,
+            cols: cols,
+            columnWidth: columnWidth,
+            rowHeight: rowHeight
+        };
+    }
+
+    function toColWidth(size) {
+        // No font to compute agains, hence the magic number
+        var maximumDigitWidth = 7;
+
+        // The formula below is taken from the OOXML spec
+        var fraction = (256 * size + Math.floor(128 / maximumDigitWidth)) / 256;
+        return Math.floor(fraction) * maximumDigitWidth;
+    }
+
+    function toRowHeight(pts) {
+        return pts * 1.5625;
     }
 
     function readSheet(zip, file, sheet, strings, styles) {
@@ -144,16 +171,11 @@
                 else if (this.is(SEL_COL)) {
                     var start = integer(attrs.min) - 1;
                     var stop = integer(attrs.max) - 1;
+                    var width = toColWidth(parseFloat(attrs.width));
 
-                    // XXX: magic numbers below.
-                    var maximumDigitWidth = 7; // for example.
-                    var width = parseFloat(attrs.width);
-
-                    // the formula below is taken from the OOXML spec.
-                    // why not complicate things if it's possible, right?
-                    width = Math.floor((256 * width + Math.floor(128 / maximumDigitWidth)) / 256) * maximumDigitWidth;
-
-                    sheet._columns.values.value(start, stop, width|0);
+                    if (attrs.customWidth === "1") {
+                        sheet._columns.values.value(start, stop, width);
+                    }
 
                     if (attrs.hidden === "1") {
                         for (var ci = start; ci <= stop; ci++) {
@@ -165,9 +187,8 @@
                     var row = integer(attrs.r) - 1;
 
                     if (attrs.ht) {
-                        var height = parseFloat(attrs.ht);
-                        height *= 1.5625; // XXX: totally unscientific conversion of points into pixels
-                        sheet._rows.values.value(row, row, height|0);
+                        var height = toRowHeight(parseFloat(attrs.ht));
+                        sheet._rows.values.value(row, row, height);
                     }
 
                     if (attrs.hidden === "1") {
