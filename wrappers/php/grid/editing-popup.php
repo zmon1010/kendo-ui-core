@@ -124,28 +124,28 @@ $productName->field('ProductName')
 $unitPrice = new \Kendo\UI\GridColumn();
 $unitPrice->field('UnitPrice')
           ->format('{0:c}')
-          ->width(100)
+          ->width(120)
           ->title('Unit Price');
 
 $unitsInStock = new \Kendo\UI\GridColumn();
 $unitsInStock->field('UnitsInStock')
-          ->width(100)
+          ->width(120)
           ->title('Units In Stock');
 
 $discontinued = new \Kendo\UI\GridColumn();
 $discontinued->field('Discontinued')
-          ->width(100);
+          ->width(120);
 
 $command = new \Kendo\UI\GridColumn();
 $command->addCommandItem('edit')
         ->addCommandItem('destroy')
         ->title('&nbsp;')
-        ->width(160);
+        ->width(250);
 
 $grid->addColumn($productName, $unitPrice, $unitsInStock, $discontinued, $command)
      ->dataSource($dataSource)
      ->addToolbarItem(new \Kendo\UI\GridToolbarItem('create'))
-     ->height(430)
+     ->height(550)
      ->editable('popup')
      ->pageable(true);
 
