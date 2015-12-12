@@ -1340,8 +1340,8 @@
 
             plotArea.reflow(chartBox);
 
-            var crossingSlotY = axisY.getSlot(axisY.options.axisCrossingValue),
-                crossingSlotX = axisX.getSlot(axisX.options.axisCrossingValue);
+            var crossingSlotY = axisY.getSlot(axisY.options.axisCrossingValue, axisY.options.axisCrossingValue, true),
+                crossingSlotX = axisX.getSlot(axisX.options.axisCrossingValue, axisX.options.axisCrossingValue, true);
             deepEqual([crossingSlotY.x1, crossingSlotY.y1], [crossingSlotX.x1, crossingSlotX.y1]);
         });
 
@@ -1356,8 +1356,8 @@
 
             plotArea.reflow(chartBox);
 
-            var crossingSlotY = axisY.getSlot(axisY.options.axisCrossingValue),
-                crossingSlotX = axisX.getSlot(axisX.options.axisCrossingValue);
+            var crossingSlotY = axisY.getSlot(axisY.options.axisCrossingValue, axisY.options.axisCrossingValue, true),
+                crossingSlotX = axisX.getSlot(axisX.options.axisCrossingValue, axisX.options.axisCrossingValue, true);
 
             deepEqual([crossingSlotY.x2, crossingSlotY.y2], [crossingSlotX.x2, crossingSlotX.y2]);
         });
@@ -2492,6 +2492,337 @@
             equal(data[0].value, 2);
             equal(data.length, 2);
         });
+
+        test("filters series based on category axis", function() {
+            createPlotArea([{
+                type: "column",
+                categoryField: "category",
+                data: [{
+                    value: 1,
+                    category: "A"
+                }, {
+                    value: 2,
+                    category: "B"
+                }, {
+                    value: 3,
+                    category: "C"
+                }, {
+                    value: 4,
+                    category: "D"
+                }]
+            }], {
+                categoryAxis: {
+                    min: 1,
+                    max: 3,
+                    categories: [ "A", "B", "C", "D"]
+                }
+            });
+
+            var data = plotArea.series[0].data;
+
+            equal(data[0].value, 2);
+            equal(data.length, 2);
+        });
+
+        (function() {
+            function assertOutOfRangePoints(expectedMin, expectedMax) {
+                var series = plotArea.series[0];
+                var min = series._outOfRangeMinPoint;
+                var max = series._outOfRangeMaxPoint;
+
+                if (expectedMin === undefined) {
+                    ok(!min);
+                } else {
+                    equal(min.categoryIx, expectedMin.categoryIx);
+                    equal(min.item.value, expectedMin.value);
+                    if (expectedMin.category.getTime) {
+                        equal(min.category.getTime(), expectedMin.category.getTime());
+                    } else {
+                        equal(min.category, expectedMin.category);
+                    }
+                }
+
+                if (expectedMax === undefined) {
+                    ok(!min);
+                } else {
+                    equal(max.categoryIx, expectedMax.categoryIx);
+                    equal(max.item.value, expectedMax.value);
+                    if (expectedMax.category.getTime) {
+                        equal(max.category.getTime(), expectedMax.category.getTime());
+                    } else {
+                        equal(max.category, expectedMax.category);
+                    }
+                }
+            }
+
+            function setupPlotArea(seriesOptions, categoryOptions) {
+                createPlotArea([$.extend(true, {
+                    type: "line",
+                    categoryField: "category",
+                    data: [{
+                        value: 1,
+                        category: "A"
+                    }, {
+                        value: 2,
+                        category: "B"
+                    }, {
+                        value: 3,
+                        category: "C"
+                    }, {
+                        value: 4,
+                        category: "D"
+                    }]
+                }, seriesOptions)], {
+                    categoryAxis: $.extend(true, {
+                        categories: [ "A", "B", "C", "D"]
+                    }, categoryOptions)
+                });
+            }
+
+            // ------------------------------------------------------------
+            module("Categorical PlotArea / Category Field / out of range points", {
+                setup: moduleSetup,
+                teardown: moduleTeardown
+            });
+
+            test("Adds out of range points for line series", function() {
+                setupPlotArea({}, {
+                    min: 1,
+                    max: 3
+                });
+                assertOutOfRangePoints({
+                    categoryIx: -1,
+                    category: "A",
+                    value: 1
+                }, {
+                    categoryIx: 2,
+                    category: "D",
+                    value: 4
+                });
+            });
+
+            test("Does not add out of range points if full range is shown", function() {
+                setupPlotArea({}, {});
+
+                assertOutOfRangePoints();
+            });
+
+            test("Does not add out of range points for column series", function() {
+                setupPlotArea({
+                    type: "column"
+                }, {
+                    min: 1,
+                    max: 3
+                });
+
+                assertOutOfRangePoints();
+            });
+
+            test("Aggregates out of range points", function() {
+                setupPlotArea({
+                    data: [{
+                        value: 1,
+                        category: "A"
+                    }, {
+                        value: 10,
+                        category: "A"
+                    }, {
+                        value: 2,
+                        category: "B"
+                    }, {
+                        value: 3,
+                        category: "C"
+                    }, {
+                        value: 4,
+                        category: "D"
+                    }, {
+                        value: 10,
+                        category: "D"
+                    }, {
+                        value: 10,
+                        category: "D"
+                    }],
+                    aggregate: "sum"
+                }, {
+                    min: 1,
+                    max: 3
+                });
+
+                assertOutOfRangePoints({
+                    categoryIx: -1,
+                    category: "A",
+                    value: 11
+                }, {
+                    categoryIx: 2,
+                    category: "D",
+                    value: 24
+                });
+            });
+
+            test("have absolute categories for date category axis", function() {
+                setupPlotArea({
+                    data: [{
+                        value: 1,
+                        category: new Date("2015/01/01")
+                    }, {
+                        value: 1,
+                        category: new Date("2015/01/02")
+                    }, {
+                        value: 10,
+                        category: new Date("2015/01/02")
+                    }, {
+                        value: 2,
+                        category: new Date("2015/01/05")
+                    }, {
+                        value: 3,
+                        category: new Date("2015/01/06")
+                    }, {
+                        value: 4,
+                        category: new Date("2015/01/09")
+                    }, {
+                        value: 10,
+                        category: new Date("2015/01/09")
+                    }, {
+                        value: 10,
+                        category: new Date("2015/01/10")
+                    }],
+                    aggregate: "sum"
+                }, {
+                    categories: [new Date("2015/01/01"), new Date("2015/01/10")],
+                    min: new Date("2015/01/05"),
+                    max: new Date("2015/01/06"),
+                    baseUnit: "days"
+                });
+
+                assertOutOfRangePoints({
+                    categoryIx: -3,
+                    category: new Date("2015/01/02"),
+                    value: 11
+                }, {
+                    categoryIx: 4,
+                    category: new Date("2015/01/09"),
+                    value: 14
+                });
+            });
+
+        })();
+
+        (function() {
+
+            function assertOutOfRangePoints(expectedMin, expectedMax) {
+                var series = plotArea.series[0];
+                var min = series._outOfRangeMinPoint;
+                var max = series._outOfRangeMaxPoint;
+
+                if (expectedMin === undefined) {
+                    ok(!min);
+                } else {
+                    equal(min.categoryIx, expectedMin.categoryIx);
+                    equal(min.item, expectedMin.value);
+                    equal(min.category, expectedMin.category);
+                }
+
+                if (expectedMax === undefined) {
+                    ok(!min);
+                } else {
+                    equal(max.categoryIx, expectedMax.categoryIx);
+                    equal(max.item, expectedMax.value);
+                    equal(min.category, expectedMin.category);
+                }
+            }
+
+            function setupPlotArea(seriesOptions, categoryOptions) {
+                createPlotArea($.extend(true, [{
+                    type: "line",
+                    data: [1, 2, 3, 4]
+                }], seriesOptions), {
+                    categoryAxis: $.extend(true, {
+                        categories: [ "A", "B", "C", "D"]
+                    }, categoryOptions)
+                });
+            }
+
+            // ------------------------------------------------------------
+            module("Categorical PlotArea / Category index filter", {
+                setup: moduleSetup,
+                teardown: moduleTeardown
+            });
+
+            test("filters series data based on category axis range", function() {
+                setupPlotArea([], {
+                    min: 1,
+                    max: 3
+                });
+
+                arrayClose(plotArea.series[0].data, [2, 3]);
+            });
+
+            test("filters series data based on category axis range (justified)", function() {
+                setupPlotArea([], {
+                    min: 1,
+                    max: 3,
+                    justified: true
+                });
+
+                arrayClose(plotArea.series[0].data, [2, 3, 4]);
+            });
+
+            test("sets axis _seriesMax field to the maximum series length", function() {
+                setupPlotArea([{
+                    type: "line",
+                    data: [1, 2, 3, 4, 5]
+                }, {
+                    type: "line",
+                    data: [1, 2, 3, 4, 5, 6]
+                }], {
+                    min: 1,
+                    max: 3,
+                    justified: true
+                });
+                equal(plotArea.categoryAxis._seriesMax, 6);
+            });
+
+            // ------------------------------------------------------------
+            module("Categorical PlotArea / Category index out of range points", {
+                setup: moduleSetup,
+                teardown: moduleTeardown
+            });
+
+            test("adds out of range points for line series", function() {
+                setupPlotArea([], {
+                    min: 1,
+                    max: 3
+                });
+
+                assertOutOfRangePoints({
+                    categoryIx: -1,
+                    category: "A",
+                    value: 1
+                }, {
+                    categoryIx: 2,
+                    category: "D",
+                    value: 4
+                });
+            });
+
+            test("does not add out of range points for column series", function() {
+                setupPlotArea([{
+                    type: "column"
+                }], {
+                    min: 1,
+                    max: 3
+                });
+
+                assertOutOfRangePoints();
+            });
+
+            test("does not add out of range points if full range is shown", function() {
+                setupPlotArea([], {});
+
+                assertOutOfRangePoints();
+            });
+
+        })();
 
     })();
 

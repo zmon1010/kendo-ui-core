@@ -1676,10 +1676,10 @@ var __meta__ = { // jshint ignore:line
             return this._otherFields[series.type] || [VALUE];
         },
 
-        bindPoint: function(series, pointIx) {
+        bindPoint: function(series, pointIx, item) {
             var binder = this,
                 data = series.data,
-                pointData = data[pointIx],
+                pointData = defined(item) ? item : data[pointIx],
                 result = { valueFields: { value: pointData } },
                 fields, fieldData,
                 srcValueFields, srcPointFields,
@@ -4423,7 +4423,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         evalPointOptions: function(options, value, category, categoryIx, series, seriesIx) {
-            var state = { defaults: series._defaults, excluded: ["data", "aggregate", "_events", "tooltip", "template", "visual", "toggle"] };
+            var state = { defaults: series._defaults, excluded: ["data", "aggregate", "_events", "tooltip", "template", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint"] };
 
             var doEval = this._evalSeries[seriesIx];
             if (!defined(doEval)) {
@@ -4571,6 +4571,10 @@ var __meta__ = { // jshint ignore:line
                 currentSeries,
                 seriesCount = series.length;
 
+            for (seriesIx = 0; seriesIx < seriesCount; seriesIx++) {
+                this._outOfRangeCallback(series[seriesIx], "_outOfRangeMinPoint", seriesIx, callback);
+            }
+
             for (categoryIx = 0; categoryIx < count; categoryIx++) {
                 for (seriesIx = 0; seriesIx < seriesCount; seriesIx++) {
                     currentSeries = series[seriesIx];
@@ -4585,9 +4589,28 @@ var __meta__ = { // jshint ignore:line
                     });
                 }
             }
+
+            for (seriesIx = 0; seriesIx < seriesCount; seriesIx++) {
+                this._outOfRangeCallback(series[seriesIx], "_outOfRangeMaxPoint", seriesIx, callback);
+            }
         },
 
-        _bindPoint: function(series, seriesIx, categoryIx) {
+        _outOfRangeCallback: function(series, field, seriesIx, callback) {
+            var outOfRangePoint = series[field];
+            if (outOfRangePoint) {
+                var categoryIx = outOfRangePoint.categoryIx;
+                var pointData = this._bindPoint(series, seriesIx, categoryIx, outOfRangePoint.item);
+
+                callback(pointData, {
+                    category: outOfRangePoint.category,
+                    categoryIx: categoryIx,
+                    series: series,
+                    seriesIx: seriesIx
+                });
+            }
+        },
+
+        _bindPoint: function(series, seriesIx, categoryIx, item) {
             if (!this._bindCache) {
                 this._bindCache = [];
             }
@@ -4599,7 +4622,7 @@ var __meta__ = { // jshint ignore:line
 
             var data = bindCache[categoryIx];
             if (!data) {
-                data = bindCache[categoryIx] = SeriesBinder.current.bindPoint(series, categoryIx);
+                data = bindCache[categoryIx] = SeriesBinder.current.bindPoint(series, categoryIx, item);
             }
 
             return data;
@@ -6655,7 +6678,7 @@ var __meta__ = { // jshint ignore:line
         evalPointOptions: function(options, value, fields) {
             var series = fields.series;
             var seriesIx = fields.seriesIx;
-            var state = { defaults: series._defaults, excluded: ["data", "tooltip", "tempate", "visual", "toggle"] };
+            var state = { defaults: series._defaults, excluded: ["data", "tooltip", "tempate", "visual", "toggle", "_outOfRangeMinPoint", "_outOfRangeMaxPoint"] };
 
             var doEval = this._evalSeries[seriesIx];
             if (!defined(doEval)) {
@@ -10056,6 +10079,8 @@ var __meta__ = { // jshint ignore:line
 
                 if ((dateAxis || currentSeries.categoryField) && inArray(axisPane, panes)) {
                     currentSeries = plotArea.aggregateSeries(currentSeries, categoryAxis);
+                } else if (isNumber(categoryAxis.options.min) || isNumber(categoryAxis.options.max)){
+                    currentSeries = plotArea.filterSeries(currentSeries, categoryAxis);
                 }
 
                 processedSeries.push(currentSeries);
@@ -10065,6 +10090,44 @@ var __meta__ = { // jshint ignore:line
             plotArea.series = processedSeries;
         },
 
+        filterSeries: function(currentSeries, categoryAxis) {
+            var range = categoryAxis.totalRangeIndices();
+            var justified = categoryAxis.options.justified;
+            var outOfRangePoints = inArray(currentSeries.type, [LINE, VERTICAL_LINE, AREA, VERTICAL_AREA]);
+            var categoryIx;
+
+            range.min = isNumber(categoryAxis.options.min) ? math.floor(range.min) : 0;
+            range.max = isNumber(categoryAxis.options.max) ? (justified ? math.floor(range.max) + 1 : math.ceil(range.max)) : currentSeries.data.length;
+
+            currentSeries = deepExtend({}, currentSeries);
+
+            if (outOfRangePoints) {
+                if (range.min - 1 >= 0) {
+                    categoryIx = range.min - 1;
+                    currentSeries._outOfRangeMinPoint = {
+                        item: currentSeries.data[categoryIx],
+                        category: categoryAxis.options.srcCategories[categoryIx],
+                        categoryIx: -1
+                    };
+                }
+
+                if (range.max < currentSeries.data.length) {
+                    categoryIx = range.max;
+                    currentSeries._outOfRangeMaxPoint = {
+                        item: currentSeries.data[categoryIx],
+                        category: categoryAxis.options.srcCategories[categoryIx],
+                        categoryIx: range.max - range.min
+                    };
+                }
+            }
+
+            categoryAxis._seriesMax = math.max(categoryAxis._seriesMax || 0, currentSeries.data.length);
+
+            currentSeries.data = (currentSeries.data || []).slice(range.min, range.max);
+
+            return currentSeries;
+        },
+
         aggregateSeries: function(series, categoryAxis) {
             var axisOptions = categoryAxis.options,
                 dateAxis = equalsIgnoreCase(categoryAxis.options.type, DATE),
@@ -10072,14 +10135,18 @@ var __meta__ = { // jshint ignore:line
                 srcCategories = axisOptions.srcCategories || categories,
                 srcData = series.data,
                 srcPoints = [],
-                range = categoryAxis.range(),
                 result = deepExtend({}, series),
                 aggregatorSeries = deepExtend({}, series),
                 dataItems = axisOptions.dataItems || [],
                 i, category, categoryIx,
                 data,
                 aggregator,
-                getFn = getField;
+                getFn = getField,
+                outOfRangeMinIdx = util.MIN_NUM,
+                outOfRangeMinCategory,
+                outOfRangeMaxCategory,
+                outOfRangeMaxIdx = util.MAX_NUM,
+                outOfRangePoints = inArray(series.type, [LINE, VERTICAL_LINE, AREA, VERTICAL_AREA]);
 
             result.data = data = [];
 
@@ -10094,10 +10161,34 @@ var __meta__ = { // jshint ignore:line
                     category = srcCategories[i];
                 }
 
-                categoryIx = categoryAxis.categoryIndex(category, range);
-                if (categoryIx > -1) {
-                    srcPoints[categoryIx] = srcPoints[categoryIx] || [];
-                    srcPoints[categoryIx].push(i);
+                if (defined(category)) {
+                    categoryIx = categoryAxis.categoryIndex(category);
+                    if (0 <= categoryIx && categoryIx < categories.length) {
+                        srcPoints[categoryIx] = srcPoints[categoryIx] || [];
+                        srcPoints[categoryIx].push(i);
+                    } else if (outOfRangePoints) {
+                        if (categoryIx < 0) {
+                            if (categoryIx == outOfRangeMinIdx) {
+                                 outOfRangeMinCategory.points.push(i);
+                            } else if (categoryIx > outOfRangeMinIdx) {
+                                outOfRangeMinIdx = categoryIx;
+                                outOfRangeMinCategory = {
+                                    category: category,
+                                    points: [i]
+                                };
+                            }
+                        } else if (categoryIx >= categories.length) {
+                            if (categoryIx == outOfRangeMaxIdx) {
+                                outOfRangeMaxCategory.points.push(i);
+                            } else if (categoryIx < outOfRangeMaxIdx) {
+                                outOfRangeMaxIdx = categoryIx;
+                                outOfRangeMaxCategory = {
+                                    category: category,
+                                    points: [i]
+                                };
+                            }
+                        }
+                    }
                 }
             }
 
@@ -10114,6 +10205,25 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
+            if (outOfRangeMinCategory) {
+                result._outOfRangeMinPoint = {
+                    item: aggregator.aggregatePoints(
+                        outOfRangeMinCategory.points, outOfRangeMinCategory.category
+                    ),
+                    categoryIx: outOfRangeMinIdx,
+                    category: outOfRangeMinCategory.category
+                };
+            }
+
+            if (outOfRangeMaxCategory) {
+                result._outOfRangeMaxPoint = {
+                    item: aggregator.aggregatePoints(
+                        outOfRangeMaxCategory.points, outOfRangeMaxCategory.category
+                    ),
+                    categoryIx: outOfRangeMaxIdx,
+                    category: outOfRangeMaxCategory.category
+                };
+            }
             categoryAxis.options.dataItems = dataItems;
 
             return result;
@@ -10400,22 +10510,6 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        axisRequiresOutOfRangePoints: function(categoryAxisName, categoryAxisIndex) {
-            var plotArea = this,
-                contineousSeries = filterSeriesByType(plotArea.series, [LINE, VERTICAL_LINE, AREA, VERTICAL_AREA]),
-                seriesIx,
-                line,
-                seriesAxis;
-
-            for (seriesIx = 0; seriesIx < contineousSeries.length; seriesIx++) {
-                seriesAxis = contineousSeries[seriesIx].categoryAxis || "";
-                line = contineousSeries[seriesIx].line;
-                if ((seriesAxis === categoryAxisName || (!seriesAxis && categoryAxisIndex === 0)) && (!line || line.style !== STEP)) {
-                    return true;
-                }
-            }
-        },
-
         createCategoryAxesLabels: function() {
             var axes = this.axes;
             for (var i = 0; i < axes.length; i++) {
@@ -10456,14 +10550,9 @@ var __meta__ = { // jshint ignore:line
                         axisOptions.justified = false;
                     }
 
-                    if (plotArea.axisRequiresOutOfRangePoints(name, i)) {
-                        axisOptions.outOfRangePoints = true;
-                    }
-
                     if (isDateAxis(axisOptions, categories[0])) {
                         categoryAxis = new DateCategoryAxis(axisOptions);
                     } else {
-                        axisOptions.limitCategories = plotArea.aggregatedAxis(name, i);
                         categoryAxis = new CategoryAxis(axisOptions);
                     }
 
