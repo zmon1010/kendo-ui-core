@@ -67,18 +67,16 @@ $grid = new \Kendo\UI\Grid('grid');
 
 $orderID = new \Kendo\UI\GridColumn();
 $orderID->field('OrderID')
-    ->width(130)
+    ->width(120)
     ->title('Order ID');
 
 $shipCountry = new \Kendo\UI\GridColumn();
 $shipCountry->field('ShipCountry')
-    ->width(160)
     ->title('Ship Country');
 
 $shipName = new \Kendo\UI\GridColumn();
 $shipName->field('ShipName')
-    ->title('Ship Name')
-    ->width(220);
+    ->title('Ship Name');
 
 $shipAddress = new \Kendo\UI\GridColumn();
 $shipAddress->field('ShipAddress')
@@ -88,7 +86,7 @@ $shipAddress->field('ShipAddress')
 
 $grid->dataSource($dataSource)
     ->addColumn($orderID, $shipCountry, $shipName, $shipAddress)
-    ->height(430)
+    ->height(550)
     ->columnMenu(true)
     ->pageable(true)
     ->sortable(true)

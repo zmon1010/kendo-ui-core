@@ -6,14 +6,14 @@
 <c:url value="/grid/column-menu/read" var="transportReadUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" columnMenu="true">
+    <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" columnMenu="true" height="550px">
         <kendo:grid-columns>
-            <kendo:grid-column title="Order ID" field="orderId" />
+            <kendo:grid-column title="Order ID" field="orderId" width="120" />
 			<kendo:grid-column title="Ship Country" field="shipCountry" />
 			<kendo:grid-column title="Ship Name" field="shipName" />   
 			<kendo:grid-column title="Ship Address" field="shipAddress" />   					
         </kendo:grid-columns>
-        <kendo:dataSource pageSize="10" serverPaging="true" serverSorting="true" serverFiltering="true">
+        <kendo:dataSource pageSize="30" serverPaging="true" serverSorting="true" serverFiltering="true">
             <kendo:dataSource-transport>            	
                 <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST"  contentType="application/json"/>
                 <kendo:dataSource-transport-parameterMap>
