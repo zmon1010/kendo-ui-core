@@ -48,17 +48,19 @@
         var relationships = readRelationships(zip, "workbook.xml");
         var theme = readTheme(zip, relationships.byType.theme);
         var styles = readStyles(zip, theme);
+        var sheets = [];
+
         parse(zip, "xl/workbook.xml", {
             enter: function(tag, attrs) {
                 if (this.is(SEL_SHEET)) {
                     var relId = attrs["r:id"];
                     var file = relationships.byId[relId];
                     var name = attrs.name;
-                    var sheet = workbook.insertSheet();
-                    sheet.batch(function(){
-                        sheet.name(name);
-                        readSheet(zip, file, sheet, strings, styles);
-                    }, { recalc: true });
+                    var sheet = workbook.insertSheet({ name: name });
+                    sheets.push(sheet);
+
+                    sheet.suspendChanges(true);
+                    readSheet(zip, file, sheet, strings, styles);
                 }
             },
             text: function(text) {
@@ -69,6 +71,15 @@
                 }
             }
         });
+
+        recalcSheets(sheets);
+    }
+
+    function recalcSheets(sheets) {
+        var sheet;
+        while (sheet = sheets.pop()) {
+            sheet.suspendChanges(false).triggerChange({ recalc: true });
+        }
     }
 
     function readSheet(zip, file, sheet, strings, styles) {
