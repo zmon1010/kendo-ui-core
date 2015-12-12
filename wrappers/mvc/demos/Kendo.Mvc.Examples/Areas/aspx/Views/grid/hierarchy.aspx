@@ -16,7 +16,7 @@
             .Pageable()
             .Scrollable()
             .ClientDetailTemplateId("template")
-            .HtmlAttributes(new { style = "height:430px;" })
+            .HtmlAttributes(new { style = "height:600px;" })
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .PageSize(6)
@@ -30,10 +30,10 @@
                 .Name("grid_#=EmployeeID#") // template expression, to be evaluated in the master context
                 .Columns(columns =>
                 {
-                    columns.Bound(o => o.OrderID).Width(70);
+                    columns.Bound(o => o.OrderID).Width(110);
                     columns.Bound(o => o.ShipCountry).Width(110);
-                    columns.Bound(o => o.ShipAddress).ClientTemplate("\\#= ShipAddress \\#"); // escaped template expression, to be evaluated in the child/detail context
-                    columns.Bound(o => o.ShipName).Width(200);
+                    columns.Bound(o => o.ShipAddress);
+                    columns.Bound(o => o.ShipName).Width(300);
                 })
                 .DataSource(dataSource => dataSource
                     .Ajax()

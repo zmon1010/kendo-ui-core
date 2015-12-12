@@ -14,7 +14,7 @@
     data.put("employeeId", "#=employeeId#");
 %>
 
-<kendo:grid name="grid" pageable="true" sortable="true" height="430px" detailTemplate="template"
+<kendo:grid name="grid" pageable="true" sortable="true" height="600px" detailTemplate="template"
 	dataBound="dataBound">            
 	<kendo:grid-columns>
 		<kendo:grid-column title="First Name" field="firstName" width="110px" />
@@ -44,7 +44,7 @@
 			<kendo:grid-column title="Order ID" field="orderId" width="110px" />
 			<kendo:grid-column title="Ship Country" field="shipCountry" width="110px" />
 			<kendo:grid-column title="Ship Address" field="shipAddress" />
-			<kendo:grid-column title="Ship Name" field="shipName" width="200px" />            
+			<kendo:grid-column title="Ship Name" field="shipName" width="300px" />            
 		</kendo:grid-columns>		
 		<kendo:dataSource pageSize="10" serverPaging="true" serverSorting="true">
 			<kendo:dataSource-schema data="data" total="total"></kendo:dataSource-schema>             

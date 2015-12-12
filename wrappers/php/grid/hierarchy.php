@@ -73,7 +73,7 @@ $title->field('Title');
 
 $grid->addColumn($firstName, $lastName, $country, $city, $title)
      ->dataSource($dataSource)
-     ->height(430)
+     ->height(600)
      ->sortable(true)
      ->pageable(true)
      ->dataBound('dataBound')
@@ -136,7 +136,7 @@ echo $grid->render();
         $shipName = new \Kendo\UI\GridColumn();
         $shipName->field('ShipName')
             ->title('Ship Name')
-            ->width(200);
+            ->width(300);
 
         $detailGrid->dataSource($dataSource)
             ->addColumn($orderID, $shipCountry, $shipAddress, $shipName)
