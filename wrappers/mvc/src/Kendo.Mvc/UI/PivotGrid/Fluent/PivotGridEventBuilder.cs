@@ -97,5 +97,47 @@
 
             return this;
         }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the excelExport client-side event.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        public PivotGridEventBuilder ExcelExport(Func<object, object> handler)
+        {
+            Handler("excelExport", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the excelExport client-side event.
+        /// </summary>
+        public PivotGridEventBuilder ExcelExport(string handler)
+        {
+            Handler("excelExport", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the pdfExport client-side event.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        public PivotGridEventBuilder PdfExport(Func<object, object> handler)
+        {
+            Handler("pdfExport", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the pdfExport client-side event.
+        /// </summary>
+        public PivotGridEventBuilder PdfExport(string handler)
+        {
+            Handler("pdfExport", handler);
+
+            return this;
+        }
     }
 }
