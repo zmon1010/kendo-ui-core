@@ -1,7 +1,11 @@
 <?php
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
+?>
 
+<div class="demo-section k-content wide">
+ 
+<?php
 $series = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $series->type('boxPlot')       
        ->data(array(
@@ -22,7 +26,7 @@ $series->type('boxPlot')
 $categoryAxis = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
 $categoryAxis->categories(array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))
              ->majorGridLines(array('visible' => false));        
-        
+
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 
 $chart->title(array('text' => 'Monthly Mean Temperatures (&deg;F)'))
@@ -32,4 +36,5 @@ $chart->title(array('text' => 'Monthly Mean Temperatures (&deg;F)'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

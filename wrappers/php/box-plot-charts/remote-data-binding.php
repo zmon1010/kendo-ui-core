@@ -14,7 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 require_once '../include/header.php';
 ?>
-<div class="chart-wrapper" style="margin: auto;">
+
+<div class="demo-section k-content wide">
+
 <?php
     $series = new \Kendo\Dataviz\UI\ChartSeriesItem();
     $series->type('boxPlot')       
