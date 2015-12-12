@@ -1,4 +1,6 @@
 (function() {
+    "use strict";
+
     var zip;
 
     function addFile(name, content) {
@@ -627,5 +629,152 @@
         };
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads sheet dimensions", function() {
+        const RELS = `
+            <Relationships>
+              <Relationship Id="rId1"
+                Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
+                Target="worksheets/sheet1.xml"/>
+            </Relationships>
+        `;
+        const WORKBOOK = `
+            <workbook>
+              <sheets>
+                <sheet name="Sheet1" sheetId="1" r:id="rId1"/>
+              </sheets>
+            </workbook>
+        `;
+        const SHEET = `
+            <worksheet>
+              <dimension ref="A1:AA100"/>
+            </worksheet>
+        `;
+
+        addFile("xl/_rels/workbook.xml.rels", RELS);
+        addFile("xl/workbook.xml", WORKBOOK);
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+
+        const workbook = {
+            options: { },
+            insertSheet: options => {
+                equal(options.rows, 100, "rows");
+                equal(options.columns, 27, "columns");
+
+                let sheet = {
+                    suspendChanges: () => sheet,
+                    triggerChange: () => null
+                };
+
+                return sheet;
+            },
+            recalcSheets: () => null,
+            triggerChange: () => null
+        };
+
+        kendo.spreadsheet._readWorkbook(zip, workbook);
+    });
+
+    test("reads sheet dimensions from column definitions", function() {
+        const RELS = `
+            <Relationships>
+              <Relationship Id="rId1"
+                Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
+                Target="worksheets/sheet1.xml"/>
+            </Relationships>
+        `;
+        const WORKBOOK = `
+            <workbook>
+              <sheets>
+                <sheet name="Sheet1" sheetId="1" r:id="rId1"/>
+              </sheets>
+            </workbook>
+        `;
+        const SHEET = `
+            <worksheet>
+              <dimension ref="A1:AA100"/>
+              <cols>
+                <col min="1" max="16384" width="1" style="1"/>
+              </cols>
+            </worksheet>
+        `;
+
+        addFile("xl/_rels/workbook.xml.rels", RELS);
+        addFile("xl/workbook.xml", WORKBOOK);
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+
+        const workbook = {
+            options: { },
+            insertSheet: options => {
+                equal(options.rows, 100, "rows");
+                equal(options.columns, 16384, "columns");
+
+                let sheet = {
+                    suspendChanges: () => sheet,
+                    triggerChange: () => null,
+                    _columns: {
+                        values: {
+                            value: () => null
+                        },
+                        _refresh: () => null
+                    }
+                };
+
+                return sheet;
+            },
+            recalcSheets: () => null,
+            triggerChange: () => null
+        };
+
+        kendo.spreadsheet._readWorkbook(zip, workbook);
+    });
+
+    test("applies default dimensions", function() {
+        const RELS = `
+            <Relationships>
+              <Relationship Id="rId1"
+                Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
+                Target="worksheets/sheet1.xml"/>
+            </Relationships>
+        `;
+        const WORKBOOK = `
+            <workbook>
+              <sheets>
+                <sheet name="Sheet1" sheetId="1" r:id="rId1"/>
+              </sheets>
+            </workbook>
+        `;
+        const SHEET = `
+            <worksheet>
+              <dimension ref="A1:AA100"/>
+            </worksheet>
+        `;
+
+        addFile("xl/_rels/workbook.xml.rels", RELS);
+        addFile("xl/workbook.xml", WORKBOOK);
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+
+        const workbook = {
+            options: {
+                rows: 1000,
+                columns: 100
+            },
+            insertSheet: options => {
+                equal(options.rows, 1000, "rows");
+                equal(options.columns, 100, "columns");
+
+                let sheet = {
+                    suspendChanges: () => sheet,
+                    triggerChange: () => null
+                };
+
+                return sheet;
+            },
+            recalcSheets: () => null,
+            triggerChange: () => null
+        };
+
+        kendo.spreadsheet._readWorkbook(zip, workbook);
     });
 })();

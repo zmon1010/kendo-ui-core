@@ -56,10 +56,16 @@
                     var relId = attrs["r:id"];
                     var file = relationships.byId[relId];
                     var name = attrs.name;
-                    var sheet = workbook.insertSheet({ name: name });
-                    sheets.push(sheet);
+                    var dim = getSheetDimensions(zip, file);
+                    var sheet = workbook.insertSheet({
+                        name: name,
+                        rows: Math.max(workbook.options.rows || 0, dim.rows),
+                        columns: Math.max(workbook.options.columns || 0, dim.cols)
+                    });
 
+                    sheets.push(sheet);
                     sheet.suspendChanges(true);
+
                     readSheet(zip, file, sheet, strings, styles);
                 }
             },
@@ -81,6 +87,31 @@
                 .suspendChanges(false)
                 .triggerChange({ recalc: true });
         }
+    }
+
+    function getSheetDimensions(zip, file) {
+        var rows = 0;
+        var cols = 0;
+
+        parse(zip, "xl/" + file, {
+            enter: function(tag, attrs) {
+                if (tag == "dimension") {
+                    // Take row count from dimension tag
+                    var ref = kendo.spreadsheet.calc.parseReference(attrs.ref);
+                    if (ref.bottomRight) {
+                        cols = Math.max(cols, ref.bottomRight.col + 1);
+                        rows = ref.bottomRight.row + 1;
+                    }
+                } else if (this.is(SEL_COL)) {
+                    cols = Math.max(cols, integer(attrs.max));
+                } else if (this.is(SEL_ROW)) {
+                    // Don't process actual rows
+                    this.exit();
+                }
+            }
+        });
+
+        return { rows: rows, cols: cols };
     }
 
     function readSheet(zip, file, sheet, strings, styles) {
@@ -654,5 +685,6 @@
     kendo.spreadsheet._readStrings = readStrings;
     kendo.spreadsheet._readStyles = readStyles;
     kendo.spreadsheet._readTheme = readTheme;
+    kendo.spreadsheet._readWorkbook = readWorkbook;
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
