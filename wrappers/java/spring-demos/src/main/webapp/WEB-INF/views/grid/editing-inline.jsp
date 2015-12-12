@@ -11,17 +11,17 @@
 
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" sortable="true" height="430px" >
+    <kendo:grid name="grid" pageable="true" sortable="true" height="550px" >
     	<kendo:grid-editable mode="inline" confirmation="Are you sure you want to remove this item?"/>
         <kendo:grid-toolbar>
             <kendo:grid-toolbarItem name="create"/>
         </kendo:grid-toolbar>
         <kendo:grid-columns>
             <kendo:grid-column title="Product Name" field="productName" />
-            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="100px" />
-            <kendo:grid-column title="Units In Stock" field="unitsInStock" width="100px" />
-            <kendo:grid-column title="Discontinued" field="discontinued" width="100px"/>
-            <kendo:grid-column title="&nbsp;" width="172px">
+            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="120px" />
+            <kendo:grid-column title="Units In Stock" field="unitsInStock" width="120px" />
+            <kendo:grid-column title="Discontinued" field="discontinued" width="120px"/>
+            <kendo:grid-column title="&nbsp;" width="250px">
             	<kendo:grid-column-command>
             		<kendo:grid-column-commandItem name="edit" />
             		<kendo:grid-column-commandItem name="destroy" />

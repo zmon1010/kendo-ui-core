@@ -6,17 +6,17 @@
         .Columns(columns =>
         {
             columns.Bound(p => p.ProductName);
-            columns.Bound(p => p.UnitPrice).Width(100);
-            columns.Bound(p => p.UnitsInStock).Width(100);
-            columns.Bound(p => p.Discontinued).Width(100);
-            columns.Command(command => { command.Edit(); command.Destroy(); }).Width(172);
+            columns.Bound(p => p.UnitPrice).Width(120);
+            columns.Bound(p => p.UnitsInStock).Width(120);
+            columns.Bound(p => p.Discontinued).Width(120);
+            columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
         })
         .ToolBar(toolbar => toolbar.Create())
         .Editable(editable => editable.Mode(GridEditMode.InLine))
         .Pageable()
         .Sortable()
         .Scrollable()
-        .HtmlAttributes(new { style = "height:430px;" })
+        .HtmlAttributes(new { style = "height:550px;" })
         .DataSource(dataSource => dataSource
             .Ajax()
             .PageSize(20)
