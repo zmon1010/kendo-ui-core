@@ -35,6 +35,13 @@ sheet.batch(function(){
     sheet.range("L1:L50").background("#cfc");
 
     sheet.range("D3:D4").merge().value("This is wrapped text").wrap(true);
+
+    sheet.range("E5:H9")
+        .borderLeft({ size: 3, color: "red" })
+        .borderTop({ size: 2, color: "blue" })
+        .borderRight({ size: 3, color: "red" })
+        .borderBottom({ size: 1, color: "black" });
+
 }, kendo.spreadsheet.ALL_REASONS);
 
 $(document).ready(function(){
