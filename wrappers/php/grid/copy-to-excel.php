@@ -72,11 +72,10 @@ $orderDate->field('OrderDate')
           ->title('Order Date');
 ?>
 
-    <div class="box">
-        <h4>Information</h4>
-        <p>Select the cells you want to copy press Ctrl/Command + C to copy into the clipboard then go to Excel and paste</p>
-    </div>
-
+ <div class="box wide">
+    <h4>Information</h4>
+    <p>Select the cells you want to copy press Ctrl/Command + C to copy into the clipboard then go to Excel and paste</p>
+</div>
 <?php
 
 $grid = new \Kendo\UI\Grid('cellSelection');

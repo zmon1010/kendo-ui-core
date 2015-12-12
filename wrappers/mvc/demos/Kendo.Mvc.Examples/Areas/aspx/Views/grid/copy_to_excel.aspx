@@ -3,9 +3,8 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="demo-section">
 
-    <div class="box">
+    <div class="box wide">
         <h4>Information</h4>
         <p>Select the cells you want to copy press Ctrl/Command + C to copy into the clipboard then go to Excel and paste</p>
     </div>
@@ -13,8 +12,8 @@
     <%= Html.Kendo().Grid<Kendo.Mvc.Examples.Models.OrderViewModel>()
         .Name("cellSelection")
         .Columns(columns => {
-            columns.Bound(o => o.ShipCountry).Width(200);
-            columns.Bound(p => p.Freight).Width(200);
+            columns.Bound(o => o.ShipCountry).Width(300);
+            columns.Bound(p => p.Freight).Width(300);
             columns.Bound(p => p.OrderDate).Format("{0:dd/MM/yyyy}");
         })
         .Pageable(pageable => pageable.ButtonCount(5))
@@ -29,7 +28,6 @@
             .Read(read => read.Action("Orders_Read", "Grid"))
          )
      %>
-</div>
 
 
 </asp:Content>
