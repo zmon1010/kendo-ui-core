@@ -7,13 +7,12 @@
         {
             columns.Bound(p => p.ProductName);
             columns.ForeignKey(p => p.CategoryID, (System.Collections.IEnumerable)ViewData["categories"], "CategoryID", "CategoryName")
-                .Title("Category").Width(150);
-            columns.Bound(p => p.UnitPrice).Width(150);
-            columns.Command(command => command.Destroy()).Width(110);
+                .Title("Category").Width(200);
+            columns.Bound(p => p.UnitPrice).Width(200);
+            columns.Command(command => command.Destroy()).Width(150);
         })
         .ToolBar(toolBar =>
             {
-                toolBar.Save();
                 toolBar.Create();
             })
         .Editable(editable => editable.Mode(GridEditMode.InCell))
@@ -21,10 +20,9 @@
         .Groupable()
         .Pageable()     
         .Scrollable()
-        .HtmlAttributes(new { style = "height:430px;" })    
+        .HtmlAttributes(new { style = "height:540px;" })    
         .DataSource(dataSource => dataSource
             .Ajax()
-            .Batch(true)
             .PageSize(20)
             .ServerOperation(false)
             .Events(events => events.Error("errorHandler"))

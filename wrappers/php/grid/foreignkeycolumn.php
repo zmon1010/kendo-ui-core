@@ -122,25 +122,24 @@ $productName->field('ProductName')
 $unitPrice = new \Kendo\UI\GridColumn();
 $unitPrice->field('UnitPrice')
           ->format('{0:c}')
-          ->width(150)
+          ->width(200)
           ->title('Unit Price');
 
 $categoryID = new \Kendo\UI\GridColumn();
 $categoryID->field('CategoryID')
           ->title('Category')
           ->values($categories['data'])
-          ->width(180);
+          ->width(200);
 
 $command = new \Kendo\UI\GridColumn();
 $command->addCommandItem('destroy')
         ->title('&nbsp;')
-        ->width(110);
+        ->width(150);
 
 $grid->addColumn($productName, $categoryID, $unitPrice, $command)
      ->dataSource($dataSource)
-     ->addToolbarItem(new \Kendo\UI\GridToolbarItem('create'),
-        new \Kendo\UI\GridToolbarItem('save'), new \Kendo\UI\GridToolbarItem('cancel'))
-     ->height(400)
+     ->addToolbarItem(new \Kendo\UI\GridToolbarItem('create'))
+     ->height(540)
      ->navigatable(true)
      ->editable(true)
      ->groupable(true)

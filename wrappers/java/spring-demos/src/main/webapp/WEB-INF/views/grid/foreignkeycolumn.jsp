@@ -11,19 +11,17 @@
 
 
 <demo:header />
-    <kendo:grid name="grid" filterable="true" groupable="true" pageable="true" height="430px" sortable="true" scrollable="true" editable="true">
+    <kendo:grid name="grid" filterable="true" groupable="true" pageable="true" height="540px" sortable="true" scrollable="true" editable="true">
         <kendo:grid-toolbar>
             <kendo:grid-toolbarItem name="create"/>
-            <kendo:grid-toolbarItem name="save"/>
-            <kendo:grid-toolbarItem name="cancel"/>
         </kendo:grid-toolbar>
         <kendo:grid-columns>
             <kendo:grid-column title="Product Name" field="productName" />
-            <kendo:grid-column title="Category" field="categoryId" width="150px">
+            <kendo:grid-column title="Category" field="categoryId" width="200px">
             	<kendo:grid-column-values value="${categories}"/>
             </kendo:grid-column>
-            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="150px" />
-            <kendo:grid-column command="destroy" title="&nbsp;" width="110px" />
+            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="200px" />
+            <kendo:grid-column command="destroy" title="&nbsp;" width="150px" />
         </kendo:grid-columns>
         <kendo:dataSource pageSize="20" batch="true">
             <kendo:dataSource-transport>
