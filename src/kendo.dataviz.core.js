@@ -2346,24 +2346,33 @@ var __meta__ = { // jshint ignore:line
             return box;
         },
 
-        limitRange: function(from, to, min, max) {
+        limitRange: function(from, to, min, max, offset) {
             var options = this.options;
-            var rangeSize = to - from;
 
-            if (from < min && (!defined(options.min) || min < options.min)) {
-                from = min;
-                to = from + rangeSize;
-            } else if (max < to && (!defined(options.max) || options.max < max)) {
-                to = max;
-                from = to - rangeSize;
+            if ((from < min && offset < 0 && (!defined(options.min) || options.min <= min)) || (max < to && offset > 0 && (!defined(options.max) || max <= options.max))) {
+                return;
             }
 
-            if (from >= min && max >= to) {
+            if ((to < min && offset > 0) || (max < from && offset < 0)) {
                 return {
                     min: from,
                     max: to
                 };
             }
+
+            var rangeSize = to - from;
+            if (from < min) {
+                from = util.limitValue(from, min, max);
+                to = util.limitValue(from + rangeSize, min + rangeSize, max);
+            } else if (to > max) {
+                to = util.limitValue(to, min, max);
+                from = util.limitValue(to - rangeSize, min, max - rangeSize);
+            }
+
+            return {
+                min: from,
+                max: to
+            };
         }
     });
 
