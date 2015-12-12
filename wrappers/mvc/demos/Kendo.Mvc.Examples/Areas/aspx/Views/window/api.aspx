@@ -36,30 +36,30 @@
 
 <script>
     $(document).ready(function() {
-        var window = $("#window");
+        var myWindow = $("#window");
 
         $("#open").click( function (e) {
-            window.data("kendoWindow").open();
+            myWindow.data("kendoWindow").open();
         });
 
         $("#close").click( function (e) {
-            window.data("kendoWindow").close();
+            myWindow.data("kendoWindow").close();
         });
 
         $("#refresh").click( function (e) {
-            window.data("kendoWindow").refresh();
+            myWindow.data("kendoWindow").refresh();
         });
 
         $("#center").click( function (e) {
-            window.data("kendoWindow").center();
+            myWindow.data("kendoWindow").center();
         });
 
         $("#pin").click( function (e) {
-            window.data("kendoWindow").pin();
+            myWindow.data("kendoWindow").pin();
         });
 
         $("#unpin").click( function (e) {
-            window.data("kendoWindow").unpin();
+            myWindow.data("kendoWindow").unpin();
         });
     });
 </script>

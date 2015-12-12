@@ -16,27 +16,27 @@
 
             <script>
                 $(document).ready(function() {
-                    var window = $("#window"),
+                    var myWindow = $("#window"),
                         undo = $("#undo");
 
-                    undo.bind("click", function() {
-                        window.data("kendoWindow").open();
-                        undo.hide();
+                    myWindow.kendoWindow({
+                        width: "500px",
+                        actions: ["Custom", "Minimize", "Maximize", "Close"],
+                        title: "About Josef Hoffmann",
+                        close: function() {
+                            undo.fadeIn();
+                        }
                     });
 
-                    if (!window.data("kendoWindow")) {
-                        window.kendoWindow({
-                            width: "500px",
-                            actions: ["Custom", "Minimize", "Maximize", "Close"],
-                            title: "About Josef Hoffmann",
-                            close: function() {
-                                undo.show();
-                            }
+                    myWindow.data("kendoWindow").wrapper
+                        .find(".k-i-custom").click(function (e) {
+                            alert("Custom action button clicked");
+                            e.preventDefault();
                         });
-                    }
-                    window.data("kendoWindow").wrapper.find(".k-i-custom").click(function(e){
-                        alert("Custom action button clicked");
-                        e.preventDefault();
+
+                    undo.click(function () {
+                        myWindow.data("kendoWindow").open();
+                        undo.fadeOut();
                     });
                 });
             </script>

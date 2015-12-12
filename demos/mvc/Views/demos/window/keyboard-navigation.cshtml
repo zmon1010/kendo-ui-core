@@ -114,30 +114,31 @@
             </div>
 
             <script>
-                function onClose() {
-                    $("#undo").show();
-                }
+                $(document).ready(function () {
+                    var myWindow = $("#window");
 
-                $("#undo")
-                    .bind("click", function() {
-                        $("#window").data("kendoWindow").open();
-                        $("#undo").hide();
+                    function onClose() {
+                        $("#undo").fadeIn();
+                    }
+
+                    $("#undo").click(function () {
+                        myWindow.data("kendoWindow").open();
+                        $("#undo").fadeOut();
                     });
 
-                // focus the widget
-                $(document).on("keydown.examples", function(e) {
-                    if (e.altKey && e.keyCode === 87 /* w */) {
-                        $("#window").focus();
-                    }
-                });
-
-                if (!$("#window").data("kendoWindow")) {
-                    $("#window").kendoWindow({
+                    myWindow.kendoWindow({
                         width: "600px",
                         title: "About Alvar Aalto",
                         close: onClose
                     });
-                }
+
+                    // focus the widget's element
+                    $(document).on("keydown.examples", function (e) {
+                        if (e.altKey && e.keyCode === 87 /* w */) {
+                            myWindow.focus();
+                        }
+                    });
+                });
 
             </script>
 

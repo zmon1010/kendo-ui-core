@@ -37,38 +37,38 @@
 
             <script>
                 $(document).ready(function() {
-                    var window = $("#window");
+                    var myWindow = $("#window");
 
-                    $("#open").click( function (e) {
-                        window.data("kendoWindow").open();
-                    });
-
-                    $("#close").click( function (e) {
-                        window.data("kendoWindow").close();
-                    });
-
-                    $("#refresh").click( function (e) {
-                        window.data("kendoWindow").refresh();
-                    });
-
-                    $("#center").click( function (e) {
-                        window.data("kendoWindow").center();
-                    });
-
-                    $("#pin").click( function (e) {
-                        window.data("kendoWindow").pin();
-                    });
-
-                    $("#unpin").click( function (e) {
-                        window.data("kendoWindow").unpin();
-                    });
-
-                    window.kendoWindow({
+                    myWindow.kendoWindow({
                         width: "505px",
                         height: "315px",
                         title: "Rams's Ten Principles of Good Design",
                         actions: ["Pin", "Refresh", "Maximize", "Close"],
                         content: "../content/web/window/ajax/ajaxContent1.html"
+                    });
+
+                    $("#open").click(function (e) {
+                        myWindow.data("kendoWindow").open();
+                    });
+
+                    $("#close").click(function (e) {
+                        myWindow.data("kendoWindow").close();
+                    });
+
+                    $("#refresh").click(function (e) {
+                        myWindow.data("kendoWindow").refresh();
+                    });
+
+                    $("#center").click(function (e) {
+                        myWindow.data("kendoWindow").center();
+                    });
+
+                    $("#pin").click(function (e) {
+                        myWindow.data("kendoWindow").pin();
+                    });
+
+                    $("#unpin").click(function (e) {
+                        myWindow.data("kendoWindow").unpin();
                     });
                 });
             </script>

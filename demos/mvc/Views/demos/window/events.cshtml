@@ -16,7 +16,7 @@
                 }
 
                 function onClose(e) {
-                    $("#undo").show();
+                    $("#undo").fadeIn();
                     kendoConsole.log("event :: close");
                 }
 
@@ -44,33 +44,31 @@
                     kendoConsole.log("event :: dragend");
                 }
 
-                $("#undo")
-                    .bind("click", function() {
-                        $("#window").data("kendoWindow").open();
-                        $("#undo").hide();
-                    });
+                $("#undo").click(function () {
+                    $("#window").data("kendoWindow").open();
+                    $("#undo").fadeOut();
+                });
 
                 $(document).ready(function() {
-                    if (!$("#window").data("kendoWindow")) {
-                        $("#window").kendoWindow({
-                            width: "630px",
-                            height: "315px",
-                            title: "Rams's Ten Principles of Good Design",
-                            actions: ["Refresh", "Close"],
-                            content: "../content/web/window/ajax/ajaxContent1.html",
-                            visible: false,
-                            open: onOpen,
-                            activate: onActivate,
-                            close: onClose,
-                            deactivate: onDeactivate,
+                    $("#window").kendoWindow({
+                        width: "630px",
+                        height: "315px",
+                        title: "Rams's Ten Principles of Good Design",
+                        actions: ["Refresh", "Close"],
+                        content: "../content/web/window/ajax/ajaxContent1.html",
+                        visible: false,
 
-                            refresh: onRefresh,
+                        open: onOpen,
+                        activate: onActivate,
+                        close: onClose,
+                        deactivate: onDeactivate,
 
-                            resize: onResize,
-                            dragstart: onDragStart,
-                            dragend: onDragEnd
-                        }).data("kendoWindow").open();
-                    }
+                        refresh: onRefresh,
+
+                        resize: onResize,
+                        dragstart: onDragStart,
+                        dragend: onDragEnd
+                    }).data("kendoWindow").open();
                 });
             </script>
 

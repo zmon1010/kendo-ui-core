@@ -53,13 +53,13 @@
 
 <script>
     $(document).ready(function() {
-        var dialog = $("#window");
+        var myWindow = $("#window");
 
         $("#undo").bind("click", function() {
-            dialog.data("kendoWindow").open();
+            myWindow.data("kendoWindow").open();
         });
 
-        dialog.data("kendoWindow").wrapper.find(".k-i-custom").click(function(e){
+        myWindow.data("kendoWindow").wrapper.find(".k-i-custom").click(function (e) {
             alert("Custom action button clicked");
             e.preventDefault();
         });

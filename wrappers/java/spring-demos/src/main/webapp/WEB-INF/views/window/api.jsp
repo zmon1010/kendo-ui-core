@@ -24,18 +24,18 @@
 	<script>
 	
 	    $(document).ready(function() {	
-	    	var window = $("#window");
+			var myWindow = $("#window");
 
             $("#open").click( function (e) {
-                window.data("kendoWindow").open();
+                myWindow.data("kendoWindow").open();
             });
 
             $("#close").click( function (e) {
-                window.data("kendoWindow").close();
+                myWindow.data("kendoWindow").close();
             });
 
             $("#refresh").click( function (e) {
-                window.data("kendoWindow").refresh();
+                myWindow.data("kendoWindow").refresh();
             });
 	    });
 	    

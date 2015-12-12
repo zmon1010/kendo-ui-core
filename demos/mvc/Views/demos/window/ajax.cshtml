@@ -7,22 +7,23 @@
 
             <script>
                 $(document).ready(function() {
-                    var window = $("#window"),
-                        undo = $("#undo")
-                                .bind("click", function() {
-                                    window.data("kendoWindow").open();
-                                    undo.hide();
-                                });
+                    var myWindow = $("#window"),
+                        undo = $("#undo");
 
-                    var onClose = function() {
-                        undo.show();
+                    function onClose() {
+                        undo.fadeIn();
                     }
 
-                    window.kendoWindow({
+                    myWindow.kendoWindow({
                         width: "615px",
                         title: "Rams's Ten Principles of Good Design",
                         content: "../content/web/window/ajax/ajaxContent.html",
                         close: onClose
+                    });
+
+                    undo.click(function () {
+                        myWindow.data("kendoWindow").open();
+                        undo.fadeOut();
                     });
                 });
             </script>

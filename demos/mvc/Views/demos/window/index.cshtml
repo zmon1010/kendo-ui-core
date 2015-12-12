@@ -15,30 +15,30 @@
 
             <script>
                 $(document).ready(function() {
-                    var window = $("#window"),
-                        undo = $("#undo")
-                                .bind("click", function() {
-                                    window.data("kendoWindow").open();
-                                    undo.hide();
-                                });
+                    var myWindow = $("#window"),
+                        undo = $("#undo");
 
-                    var onClose = function() {
-                        undo.show();
+                    undo.click(function() {
+                        mywindow.data("kendoWindow").open();
+                        undo.fadeOut();
+                    });
+
+                    function onClose() {
+                        undo.fadeIn();
                     }
 
-                    if (!window.data("kendoWindow")) {
-                        window.kendoWindow({
-                            width: "600px",
-                            title: "About Alvar Aalto",
-                            actions: [
-                                "Pin",
-                                "Minimize",
-                                "Maximize",
-                                "Close"
-                            ],
-                            close: onClose
-                        });
-                    }
+                    myWindow.kendoWindow({
+                        width: "600px",
+                        title: "About Alvar Aalto",
+                        visible: false,
+                        actions: [
+                            "Pin",
+                            "Minimize",
+                            "Maximize",
+                            "Close"
+                        ],
+                        close: onClose
+                    }).data("kendoWindow").center().open();
                 });
             </script>
 
