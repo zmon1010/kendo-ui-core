@@ -1,9 +1,9 @@
  
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     @(
         Html.Kendo().Chart()
             .Name("chart")
-            .Title("Gross domestic product growth /GDP annual %/")
+            .Title("Gross domestic product growth and percentage error")
             .Legend(legend => legend.Visible(false))
             .SeriesDefaults(seriesDefaults => seriesDefaults.Line()
                 .ErrorBars(errorBars => errorBars.Value("percentage(20)"))

@@ -6,7 +6,7 @@
 <c:url value="/line-charts/grouped-data/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Stock Prices" />
              <kendo:chart-legend position="bottom" />
@@ -38,7 +38,7 @@
              </kendo:chart-categoryAxis>
              <kendo:chart-valueAxis>
                 <kendo:chart-valueAxisItem>
-                    <kendo:chart-valueAxisItem-labels format="\${0}" />
+                    <kendo:chart-valueAxisItem-labels format="\${0}" step="2" skip="2" />
                 </kendo:chart-valueAxisItem>
              </kendo:chart-valueAxis>
          </kendo:chart>

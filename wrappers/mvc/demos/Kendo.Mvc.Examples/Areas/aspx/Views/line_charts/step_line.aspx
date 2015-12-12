@@ -2,7 +2,7 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart()
           .Name("chart")
           .Title("A digital signal")

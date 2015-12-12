@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/chart_data.php';
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $highlight = new \Kendo\Dataviz\UI\ChartSeriesItemHighlight();
 $highlight->toggle('toggleHandler');
 
@@ -33,25 +35,20 @@ $dataSource = new \Kendo\Data\DataSource();
 $dataSource->data(forecast_data());
 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
-$chart->title(array('text' => 'Internet Users in United States'))
+$chart->title(array('text' => 'Forecast'))
       ->dataSource($dataSource)
       ->legend(array('visible' => false))
       ->addSeriesItem($series)
       ->addValueAxisItem($valueAxis)
       ->addCategoryAxisItem($categoryAxis)
       ->seriesDefaults(array(
-          'type' => 'line',
-          'labels' => array(
-              'visible' => true,
-              'format'=> '{0}%',
-              'background' => 'transparent'
-          )
+          'type' => 'line'
       ))
       ->tooltip($tooltip);
 
 echo $chart->render();
 ?>
-
+</div>
 <script>
     function toggleHandler(e) {
         e.preventDefault();

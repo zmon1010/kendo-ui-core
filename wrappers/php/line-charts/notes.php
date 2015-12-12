@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/chart_data.php';
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $wins = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $wins->field('win')
      ->noteTextField('extremum')
@@ -41,4 +43,5 @@ $chart->title(array('text' => 'Roger Federer Grand Slam tournament performance')
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

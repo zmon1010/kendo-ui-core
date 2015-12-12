@@ -2,7 +2,7 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <% 
              String[] categories = {
         		 "1952","1956",
@@ -31,6 +31,7 @@
              <kendo:chart-valueAxis>
                 <kendo:chart-valueAxisItem max="180">
                     <kendo:chart-valueAxisItem-line visible="false" />
+                    <kendo:chart-valueAxisItem-minorGridLines visible="true"/>
                 </kendo:chart-valueAxisItem>
              </kendo:chart-valueAxis>
              <kendo:chart-tooltip visible="true" template="#= series.name #: #= value #"  />

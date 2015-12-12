@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $maxTemperature = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $maxTemperature->type('line')
                ->data(array(6, 10, 10, 10, 10, 9, 5, 5, 10, 8, 8, 5, 8, 11, 9, 15, 20, 23, 24, 21, 21, 20, 22, 22, 20, 18, 16, 15, 20, 13.2, 18))
@@ -69,4 +71,5 @@ $chart->title(array('text' => 'March Weather Report'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

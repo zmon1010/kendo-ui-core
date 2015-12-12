@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $gold = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $gold->name('Gold Medals')
      ->data(array(40, 32, 34, 36, 45, 33, 34, null, 83, 36, 37, 44, 37, 35, 36, 46))
@@ -22,7 +24,8 @@ $valueAxis = new \Kendo\Dataviz\UI\ChartValueAxisItem();
 
 $valueAxis->max(180)
           ->line(array('visible' => false))
-          ->majorGridLines(array('visible' => true));
+          ->majorGridLines(array('visible' => true))
+          ->minorGridLines(array('visible' => true));
 
 $categoryAxis = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
 $categoryAxis->categories(array(1952, 1956, 1960, 1964, 1968, 1972, 1976, 1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012))
@@ -44,5 +47,5 @@ $chart->title(array('text' => 'Olympic Medals won by USA'))
 
 echo $chart->render();
 ?>
-
+</div>
 <?php require_once '../include/footer.php'; ?>

@@ -2,13 +2,11 @@
 Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.InternetUsers>>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart(Model)
         .Name("chart")
-        .Title("Internet Users")
-        .Legend(legend => legend
-            .Position(ChartLegendPosition.Bottom)
-        )
+        .Title("Internet Users in United States")
+        .Legend(legend => legend.Visible(false))
         .Series(series => {
             series.Line(model => model.Value)
                 .Name("United States")
@@ -16,9 +14,11 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.Internet
         })
         .CategoryAxis(axis => axis
             .Categories(model => model.Year)
+            .MajorGridLines(lines => lines.Visible(false))
         )
         .ValueAxis(axis => axis.Numeric()
             .Labels(labels => labels.Format("{0}%"))
+            .Line(lines => lines.Visible(false))
         )
     %>
 </div>

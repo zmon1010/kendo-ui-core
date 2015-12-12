@@ -3,7 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="A digital signal" />
              <kendo:chart-legend visible="false" />

@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $india = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $india->name('India')
       ->data(array(3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855));
@@ -47,4 +49,5 @@ $chart->title(array('text' => 'Gross domestic product growth and percentage erro
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

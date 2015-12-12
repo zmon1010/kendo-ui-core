@@ -13,7 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $nuclear = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $nuclear->field('nuclear')
         ->name('Nuclear');
@@ -29,7 +31,6 @@ $wind->field('wind')
 $valueAxis = new \Kendo\Dataviz\UI\ChartValueAxisItem();
 
 $valueAxis->labels(array('format' => 'N0'))
-          ->line(array('visible' => false))
           ->minorGridLines(array('visible' => true))
           ->type('log');
 
@@ -64,4 +65,5 @@ $chart->title(array('text' => 'Spain electricity production (GWh)'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

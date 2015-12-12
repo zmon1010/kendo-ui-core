@@ -2,7 +2,7 @@
 Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.GrandSlam>>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart(Model)
             .Name("chart")
             .Title("Roger Federer Grand Slam tournament performance")
