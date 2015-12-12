@@ -345,7 +345,36 @@
         addFile("xl/worksheets/sheet1.xml", SHEET);
         var sheet = {
             range: ref => ({
-                value: val => equal(val, 123),
+                value: val => ok(val === 123),
+                formula: () => null
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads number cell data", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="B1" t="n">
+                    <v>1</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            range: ref => ({
+                value: val => ok(val === 1),
                 formula: () => null
             }),
             _rows: {

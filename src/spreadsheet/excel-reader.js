@@ -149,7 +149,7 @@
                             range.formula(value);
                         } else if (!range.formula()) {
                             // Check for "shared" formulas before applying a value.
-                            if (!type) {
+                            if (!type || type == "n") {
                                 value = parseFloat(value);
                             } else if (type == "s") {
                                 value = strings[integer(value)];
