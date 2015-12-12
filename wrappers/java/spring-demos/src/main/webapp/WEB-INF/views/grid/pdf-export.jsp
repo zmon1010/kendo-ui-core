@@ -28,8 +28,27 @@
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
 <script src="../resources/shared/js/pako.min.js"></script>
+<div class="box wide">
+       <p style="margin-bottom: 1em"><b>Important:</b></p>
 
-    <kendo:grid name="grid" style="width:900px;" rowTemplate="row-template" altRowTemplate="alt-row-template"
+       <p style="margin-bottom: 1em">This page loads pako_deflate.min.js.  This enables compression
+       in the PDF, and it is required if your dataset is very large.
+       Chrome is known to crash on grids with lots of pages when pako is
+       not loaded.</p>
+
+       <p>In order for the output to be precise, and for Unicode support,
+       you must declare TrueType fonts.  Please read the information about
+       fonts
+       <a href="http://docs.telerik.com/kendo-ui/framework/drawing/drawing-dom#custom-fonts-and-pdf">here</a>
+       and <a href="http://docs.telerik.com/kendo-ui/framework/drawing/pdf-output#using-custom-fonts">here</a>.
+       This demo renders the grid in "DejaVu Sans" font family, which is
+       declared in kendo.common.css, but it also declares the paths to the
+       font files using <tt>kendo.pdf.defineFont</tt>, because the
+       stylesheet is hosted on a different domain.
+       </p>
+   </div>
+
+    <kendo:grid name="grid" style="height:500px;" rowTemplate="row-template" altRowTemplate="alt-row-template"
                 height="500" scrollable="true" pageable="true">
         <kendo:grid-toolbar>
             <kendo:grid-toolbarItem name="pdf" />
@@ -39,7 +58,7 @@
             <kendo:grid-column title="Picture" width="140px" />
             <kendo:grid-column title="Details" field="title" width="350px" />
             <kendo:grid-column title="Country" field="country" />
-            <kendo:grid-column title="ID" field="employeeId" />
+            <kendo:grid-column title="EmployeeID" field="employeeId" />
         </kendo:grid-columns>
         <kendo:dataSource serverPaging="true" serverSorting="true" serverFiltering="true" pageSize="5">
             <kendo:dataSource-transport>
@@ -88,43 +107,43 @@
         </tr>
     </script>
 
-<style>
-   .employeeID,
-   .country {
-       font-size: 42px;
-       font-weight: bold;
-       color: #898989;
-   }
-   .name {
-       display: block;
-       font-size: 1.6em;
-   }
-   .title {
-       display: block;
-       padding-top: 1.6em;
-   }
-   td.photo, .employeeID {
-       text-align: center;
-   }
-   .k-grid-header .k-header {
-       padding: 10px 20px;
-   }
-   .k-grid tr {
-       background: -moz-linear-gradient(top,  rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
-       background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.05)), color-stop(100%,rgba(0,0,0,0.15)));
-       background: -webkit-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-       background: -o-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-       background: -ms-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-       background: linear-gradient(to bottom,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-       padding: 20px;
-   }
-   .k-grid tr.k-alt {
-       background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
-       background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.1)));
-       background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-       background: -o-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-       background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-       background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-   }
+ <style>
+    .employeeID,
+    .country {
+        font-size: 50px;
+        font-weight: bold;
+        color: #898989;
+    }
+    .name {
+        display: block;
+        font-size: 1.6em;
+    }
+    .title {
+        display: block;
+        padding-top: 1.6em;
+    }
+    td.photo, .employeeID {
+        text-align: center;
+    }
+    .k-grid-header .k-header {
+        padding: 10px 20px;
+    }
+    .k-grid tr {
+        background: -moz-linear-gradient(top,  rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.05)), color-stop(100%,rgba(0,0,0,0.15)));
+        background: -webkit-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
+        background: -o-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
+        background: -ms-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
+        background: linear-gradient(to bottom,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
+        padding: 20px;
+    }
+    .k-grid tr.k-alt {
+        background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.1)));
+        background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+        background: -o-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+        background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+        background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+    }
 </style>
 <demo:footer />

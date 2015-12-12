@@ -24,15 +24,35 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
+<div class="box wide">
+    <p style="margin-bottom: 1em"><b>Important:</b></p>
+
+    <p style="margin-bottom: 1em">This page loads pako_deflate.min.js.  This enables compression
+    in the PDF, and it is required if your dataset is very large.
+    Chrome is known to crash on grids with lots of pages when pako is
+    not loaded.</p>
+
+    <p>In order for the output to be precise, and for Unicode support,
+    you must declare TrueType fonts.  Please read the information about
+    fonts
+    <a href="http://docs.telerik.com/kendo-ui/framework/drawing/drawing-dom#custom-fonts-and-pdf">here</a>
+    and <a href="http://docs.telerik.com/kendo-ui/framework/drawing/pdf-output#using-custom-fonts">here</a>.
+    This demo renders the grid in "DejaVu Sans" font family, which is
+    declared in kendo.common.css, but it also declares the paths to the
+    font files using <tt>kendo.pdf.defineFont</tt>, because the
+    stylesheet is hosted on a different domain.
+    </p>
+</div>
+
 <%: Html.Kendo().Grid<Kendo.Mvc.Examples.Models.EmployeeViewModel>()    
     .Name("grid")    
-    .HtmlAttributes( new { style = "width: 900px; height: 500px;" } )
+    .HtmlAttributes( new { style = "height: 500px;" } )
     .Columns(columns =>
     {
         columns.Bound(e => e.EmployeeID).Width(140).Title("Picture");
         columns.Bound(e => e.Title).Width(350).Title("Details");
         columns.Bound(e => e.Title).Title("Country");
-        columns.Bound(e=> e.EmployeeID).Title("ID");
+        columns.Bound(e => e.EmployeeID).Title("EmployeeID");
     })
     .ClientRowTemplate(
         "<tr data-uid='#: uid #'>" +

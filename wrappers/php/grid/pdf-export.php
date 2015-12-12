@@ -92,7 +92,7 @@ $country->field('Country')
         ->title('Country');
 
 $id = new \Kendo\UI\GridColumn();
-$id->title('ID');
+$id->title('EmployeeID');
 
 $pdf = new \Kendo\UI\GridPdf();
 $pdf->allPages(true)
@@ -108,10 +108,29 @@ $grid->dataSource($dataSource)
      ->height(500)
      ->scrollable(true)
      ->pageable(true)
-     ->attr('style', 'width: 900px')
      ->rowTemplateId('row-template')
      ->altRowTemplateId('alt-row-template');
+?>
+<div class="box wide">
+      <p style="margin-bottom: 1em"><b>Important:</b></p>
 
+      <p style="margin-bottom: 1em">This page loads pako_deflate.min.js.  This enables compression
+      in the PDF, and it is required if your dataset is very large.
+      Chrome is known to crash on grids with lots of pages when pako is
+      not loaded.</p>
+
+      <p>In order for the output to be precise, and for Unicode support,
+      you must declare TrueType fonts.  Please read the information about
+      fonts
+      <a href="http://docs.telerik.com/kendo-ui/framework/drawing/drawing-dom#custom-fonts-and-pdf">here</a>
+      and <a href="http://docs.telerik.com/kendo-ui/framework/drawing/pdf-output#using-custom-fonts">here</a>.
+      This demo renders the grid in "DejaVu Sans" font family, which is
+      declared in kendo.common.css, but it also declares the paths to the
+      font files using <tt>kendo.pdf.defineFont</tt>, because the
+      stylesheet is hosted on a different domain.
+      </p>
+  </div>
+<?php
 echo $grid->render();
 ?>
 
