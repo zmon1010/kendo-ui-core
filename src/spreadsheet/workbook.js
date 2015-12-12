@@ -338,11 +338,7 @@
             this._sheets = [];
             this._sheetsSearchCache = {};
 
-            kendo.spreadsheet.readExcel(file, this, function(state) {
-                this.activeSheet(
-                    this.sheetByIndex(state.activeSheet)
-                );
-            }.bind(this));
+            kendo.spreadsheet.readExcel(file, this);
         },
 
         saveAsExcel: function(options) {

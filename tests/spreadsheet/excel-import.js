@@ -738,7 +738,8 @@
                 return sheet;
             },
             recalcSheets: () => null,
-            triggerChange: () => null
+            triggerChange: () => null,
+            activeSheet: () => null
         };
 
         kendo.spreadsheet._readWorkbook(zip, workbook);
@@ -786,7 +787,8 @@
                 return sheet;
             },
             recalcSheets: () => null,
-            triggerChange: () => null
+            triggerChange: () => null,
+            activeSheet: () => null
         };
 
         kendo.spreadsheet._readWorkbook(zip, workbook);
@@ -838,7 +840,65 @@
                 return sheet;
             },
             recalcSheets: () => null,
-            triggerChange: () => null
+            triggerChange: () => null,
+            activeSheet: () => null
+        };
+
+        kendo.spreadsheet._readWorkbook(zip, workbook);
+    });
+
+    test("reads active sheet", function() {
+        const RELS = `
+            <Relationships>
+              <Relationship Id="rId1"
+                Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
+                Target="worksheets/sheet1.xml"/>
+              <Relationship Id="rId2"
+                Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
+                Target="worksheets/sheet2.xml"/>
+            </Relationships>
+        `;
+        const WORKBOOK = `
+            <workbook>
+              <bookViews>
+                <workbookView activeTab="1"/>
+              </bookViews>
+              <sheets>
+                <sheet name="Sheet1" sheetId="1" r:id="rId1"/>
+                <sheet name="Sheet2" sheetId="2" r:id="rId2"/>
+              </sheets>
+            </workbook>
+        `;
+        const SHEET = `
+            <worksheet>
+            </worksheet>
+        `;
+
+        addFile("xl/_rels/workbook.xml.rels", RELS);
+        addFile("xl/workbook.xml", WORKBOOK);
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        addFile("xl/worksheets/sheet2.xml", SHEET);
+
+        const workbook = {
+            options: { },
+            insertSheet: options => {
+                let sheet = {
+                    name: () => options.name,
+                    suspendChanges: () => sheet,
+                    triggerChange: () => null,
+                    _columns: {
+                        values: {
+                            value: () => null
+                        },
+                        _refresh: () => null
+                    }
+                };
+
+                return sheet;
+            },
+            recalcSheets: () => null,
+            triggerChange: () => null,
+            activeSheet: sheet => equal(sheet.name(), "Sheet2")
         };
 
         kendo.spreadsheet._readWorkbook(zip, workbook);

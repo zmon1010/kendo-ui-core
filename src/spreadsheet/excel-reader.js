@@ -26,18 +26,13 @@
     var SEL_ROW = ["sheetData", "row"];
     var SEL_SHEET = ["sheets", "sheet"];
     var SEL_DEFINED_NAME = ["definedNames", "definedName"];
+    var SEL_VIEW = ["bookViews", "workbookView"];
 
     function readExcel(file, workbook, complete) {
         var reader = new FileReader();
         reader.onload = function(e) {
             var zip = new JSZip(e.target.result);
             readWorkbook(zip, workbook);
-
-            if (complete) {
-                complete({
-                    activeSheet: 0
-                });
-            }
         };
 
         reader.readAsArrayBuffer(file);
@@ -49,6 +44,7 @@
         var theme = readTheme(zip, relationships.byType.theme);
         var styles = readStyles(zip, theme);
         var sheets = [];
+        var activeSheet = 0;
 
         parse(zip, "xl/workbook.xml", {
             enter: function(tag, attrs) {
@@ -68,7 +64,11 @@
                     sheets.push(sheet);
                     sheet.suspendChanges(true);
 
-                    readSheet(zip, file, sheet, strings, styles, dim);
+                    readSheet(zip, file, sheet, strings, styles);
+                } else if (this.is(SEL_VIEW)) {
+                    if (attrs.activeTab) {
+                        activeSheet = integer(attrs.activeTab);
+                    }
                 }
             },
             text: function(text) {
@@ -81,37 +81,38 @@
         });
 
         recalcSheets(sheets);
+        workbook.activeSheet(sheets[activeSheet]);
     }
 
     function recalcSheets(sheets) {
-        while (sheets.length > 0) {
-            sheets.pop()
+        for (var i = 0; i < sheets.length; i++) {
+            sheets[i]
                 .suspendChanges(false)
                 .triggerChange({ recalc: true });
         }
     }
 
     function sheetDimensions(zip, file) {
-        var rows = 0;
-        var cols = 0;
-        var columnWidth;
-        var rowHeight;
+        var dim = {
+            rows: 0,
+            cols: 0
+        };
 
         parse(zip, "xl/" + file, {
             enter: function(tag, attrs) {
                 if (tag == "dimension") {
                     var ref = kendo.spreadsheet.calc.parseReference(attrs.ref);
                     if (ref.bottomRight) {
-                        cols = ref.bottomRight.col + 1;
-                        rows = ref.bottomRight.row + 1;
+                        dim.cols = ref.bottomRight.col + 1;
+                        dim.rows = ref.bottomRight.row + 1;
                     }
                 } else if (tag === "sheetFormatPr") {
                     if (attrs.defaultColWidth) {
-                        columnWidth = toColWidth(parseFloat(attrs.defaultColWidth));
+                        dim.columnWidth = toColWidth(parseFloat(attrs.defaultColWidth));
                     }
 
                     if (attrs.defaultRowHeight) {
-                        rowHeight = toRowHeight(parseFloat(attrs.defaultRowHeight));
+                        dim.rowHeight = toRowHeight(parseFloat(attrs.defaultRowHeight));
                     }
                 } else if (this.is(SEL_ROW)) {
                     // Don't process actual rows
@@ -120,12 +121,7 @@
             }
         });
 
-        return {
-            rows: rows,
-            cols: cols,
-            columnWidth: columnWidth,
-            rowHeight: rowHeight
-        };
+        return dim;
     }
 
     function toColWidth(size) {
