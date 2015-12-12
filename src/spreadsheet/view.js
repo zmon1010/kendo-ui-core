@@ -72,13 +72,34 @@
         }
     }
 
-    function drawCell(collection, cell, cls) {
+    function cellBorder(value) {
+        return [
+            "solid",
+            (value.size || 1) + "px",
+            value.color || "#000"
+        ].join(" ");
+    }
+
+    function drawCell(collection, cell, cls, hBorders, vBorders) {
         if (!cls && !kendo.spreadsheet.draw.shouldDrawCell(cell)) {
             return;
         }
 
+        var left = cell.left;
+        var top = cell.top;
+        var width = cell.width+1;
+        var height = cell.height+1;
+
         var style = {};
         var background = cell.background;
+        //var defaultBorder = background ? cellBorder({ color: background }) : null;
+        var defaultBorder = null;
+        if (background) {
+            defaultBorder = kendo.parseColor(background).toHSV();
+            defaultBorder.v *= 0.9;
+            defaultBorder = defaultBorder.toCssRgba();
+            defaultBorder = cellBorder({ color: defaultBorder });
+        }
 
         if (background) {
             style.backgroundColor = background;
@@ -117,11 +138,56 @@
             style.wordBreak = "break-all";
         }
 
+        if (cell.borderLeft) {
+            style.borderLeft = cellBorder(cell.borderLeft);
+            if (vBorders) {
+                vBorders[cell.left] = true;
+            }
+        } else if (defaultBorder && vBorders && !vBorders[cell.left]) {
+            style.borderLeft = defaultBorder;
+        } else {
+            left++;
+            width--;
+        }
 
-        style.left = cell.left + "px";
-        style.top = cell.top + "px";
-        style.width = cell.width+1 + "px";
-        style.height = cell.height+1 + "px";
+        if (cell.borderTop) {
+            style.borderTop = cellBorder(cell.borderTop);
+            if (hBorders) {
+                hBorders[cell.top] = true;
+            }
+        } else if (defaultBorder && hBorders && !hBorders[cell.top]) {
+            style.borderTop = defaultBorder;
+        } else {
+            top++;
+            height--;
+        }
+
+        if (cell.borderRight) {
+            style.borderRight = cellBorder(cell.borderRight);
+            if (vBorders) {
+                vBorders[cell.right] = true;
+            }
+        } else if (defaultBorder && vBorders && !vBorders[cell.right]) {
+            style.borderRight = defaultBorder;
+        } else {
+            width--;
+        }
+
+        if (cell.borderBottom) {
+            style.borderBottom = cellBorder(cell.borderBottom);
+            if (hBorders) {
+                hBorders[cell.bottom] = true;
+            }
+        } else if (defaultBorder && hBorders && !hBorders[cell.bottom]) {
+            style.borderBottom = defaultBorder;
+        } else {
+            height--;
+        }
+
+        style.left = left + "px";
+        style.top = top + "px";
+        style.width = width + "px";
+        style.height = height + "px";
 
         var data = cell.value, type = typeof data;
         if (cell.format && data !== null) {
@@ -178,92 +244,6 @@
 
         var div = kendo.dom.element("div", properties, children);
         collection.push(div);
-        return div;
-    }
-
-    function cellBorder(value) {
-        return [
-            "solid",
-            (value.size || 1) + "px",
-            value.color || "#000"
-        ].join(" ");
-    }
-
-    function drawDataCell(collection, cell, cls, hBorders, vBorders) {
-        var div = drawCell(collection, cell, cls);
-
-        if (!div) {
-            return;
-        }
-
-        var style = div.attr.style;
-
-        var left = cell.left;
-        var top = cell.top;
-        var width = cell.width+1;
-        var height = cell.height+1;
-
-        var background = cell.background;
-
-        var defaultBorder = null;
-        if (background) {
-            defaultBorder = kendo.parseColor(background).toHSV();
-            defaultBorder.v *= 0.9;
-            defaultBorder = defaultBorder.toCssRgba();
-            defaultBorder = cellBorder({ color: defaultBorder });
-        }
-
-        if (cell.borderLeft) {
-            style.borderLeft = cellBorder(cell.borderLeft);
-            if (vBorders) {
-                vBorders[cell.left] = true;
-            }
-        } else if (defaultBorder && vBorders && !vBorders[cell.left]) {
-            style.borderLeft = defaultBorder;
-        } else {
-            left++;
-            width--;
-        }
-
-        if (cell.borderTop) {
-            style.borderTop = cellBorder(cell.borderTop);
-            if (hBorders) {
-                hBorders[cell.top] = true;
-            }
-        } else if (defaultBorder && hBorders && !hBorders[cell.top]) {
-            style.borderTop = defaultBorder;
-        } else {
-            top++;
-            height--;
-        }
-
-        if (cell.borderRight) {
-            style.borderRight = cellBorder(cell.borderRight);
-            if (vBorders) {
-                vBorders[cell.right] = true;
-            }
-        } else if (defaultBorder && vBorders && !vBorders[cell.right]) {
-            style.borderRight = defaultBorder;
-        } else {
-            width--;
-        }
-
-        if (cell.borderBottom) {
-            style.borderBottom = cellBorder(cell.borderBottom);
-            if (hBorders) {
-                hBorders[cell.bottom] = true;
-            }
-        } else if (defaultBorder && hBorders && !hBorders[cell.bottom]) {
-            style.borderBottom = defaultBorder;
-        } else {
-            height--;
-        }
-
-        style.left = left + "px";
-        style.top = top + "px";
-        style.width = width + "px";
-        style.height = height + "px";
-
         return div;
     }
 
@@ -1293,7 +1273,7 @@
             layout.cells.forEach(function(cell){
                 var hb = hBorders[cell.col] || (hBorders[cell.col] = {});
                 var vb = vBorders[cell.row] || (vBorders[cell.row] = {});
-                drawDataCell(cont.children, cell, null, hb, vb);
+                drawCell(cont.children, cell, null, hb, vb);
             });
             return cont;
         },
@@ -1514,7 +1494,7 @@
                     cell.top = rectangle.top;
                     cell.width = rectangle.width;
                     cell.height = rectangle.height;
-                    drawCell(collection, cell, className, false, false);
+                    drawCell(collection, cell, className);
                 }.bind(this));
             }
         },
@@ -1565,7 +1545,7 @@
 
     kendo.spreadsheet.View = View;
     kendo.spreadsheet.Pane = Pane;
-    kendo.spreadsheet.drawCell = drawDataCell;
+    kendo.spreadsheet.drawCell = drawCell;
 
     $.extend(true, View, { classNames: viewClassNames });
     $.extend(true, Pane, { classNames: paneClassNames });
