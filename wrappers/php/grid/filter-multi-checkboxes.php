@@ -180,7 +180,7 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(6)
+           ->pageSize(20)
            ->schema($schema)
            ->serverSorting(true)
            ->serverPaging(true);
@@ -259,19 +259,15 @@ $server->addColumn($firstName, $lastName, $country, $city, $title)
 ?>
 
 
-<div id="example">
+ <div class="demo-section k-content wide">
     <h4>Client Operations</h4>
     <?php echo $client->render(); ?>
+  </div>
+     <div class="demo-section k-content wide">
     <h4>Server Operations</h4>
     <?php echo $server->render(); ?>
 </div>
 
-<style>
-    .k-multicheck-wrap
-    {
-        overflow-x: hidden;
-    }
-</style>
 <script>
     function itemTemplate(e) {
             if (e.field == "all") {

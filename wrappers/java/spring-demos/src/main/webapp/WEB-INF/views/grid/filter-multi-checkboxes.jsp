@@ -16,8 +16,9 @@
 
 
 <demo:header />
+	 <div class="demo-section k-content wide">
 	<h4>Client Operations</h4>
-    <kendo:grid name="client" pageable="true" sortable="true" scrollable="true" filterable="true" navigatable="true" editable="true">
+    <kendo:grid name="client" pageable="true" sortable="true" scrollable="true" filterable="true" navigatable="true" editable="true" height="550px">
         <kendo:grid-toolbar>
             <kendo:grid-toolbarItem name="create"/>
             <kendo:grid-toolbarItem name="save"/>
@@ -38,7 +39,7 @@
             </kendo:grid-column>
             <kendo:grid-column command="destroy" title="&nbsp;" />
         </kendo:grid-columns>
-        <kendo:dataSource pageSize="10" batch="true">
+        <kendo:dataSource pageSize="20" batch="true">
             <kendo:dataSource-transport>
                 <kendo:dataSource-transport-create url="${createUrl}" dataType="json" type="POST" contentType="application/json" />
                 <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" />
@@ -74,7 +75,8 @@
             </kendo:dataSource-schema>
         </kendo:dataSource>
     </kendo:grid>
-    
+    </div>
+    <div class="demo-section k-content wide">
 	<h4>Server Operations</h4>
 	<kendo:grid name="server" pageable="true" sortable="true" filterable="true">
 	    <kendo:grid-columns>
@@ -219,9 +221,5 @@
 	        </kendo:dataSource-transport>
 	    </kendo:dataSource>
 	</kendo:grid>
-	<style>
-       	.k-multicheck-wrap{
-        	overflow-x: hidden;
-        }
-	</style>
+	</div>
 <demo:footer />

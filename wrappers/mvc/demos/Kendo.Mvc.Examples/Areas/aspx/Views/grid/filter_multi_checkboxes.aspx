@@ -1,6 +1,7 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+     <div class="demo-section k-content wide">
     <h4>Client Operations</h4>
     <%: Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()
             .Name("client")
@@ -17,6 +18,7 @@
                 toolbar.Create();
                 toolbar.Save();
             })
+            .HtmlAttributes(new { style = "height: 550px;" })
             .Editable(editable => editable.Mode(GridEditMode.InCell))
             .Filterable()
             .Pageable()
@@ -36,6 +38,8 @@
                 .Destroy("Editing_Destroy", "Grid")
             )
     %>
+    </div>
+     <div class="demo-section k-content wide">
     <h4>Server Operations</h4>
     <%: Html.Kendo().Grid<Kendo.Mvc.Examples.Models.EmployeeViewModel>()
             .Name("server")
@@ -68,10 +72,12 @@
             .Filterable()
             .DataSource(dataSource => dataSource
                 .Ajax()
+                .PageSize(20)     
                 .ServerOperation(true)
                 .Read(read => read.Action("HierarchyBinding_Employees", "Grid"))
             )
     %>
+  </div>
     <script type="text/javascript">
         function itemTemplate(e) {
             if (e.field == "all") {
