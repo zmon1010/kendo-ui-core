@@ -73,33 +73,33 @@ $orderID = new \Kendo\UI\GridColumn();
 $orderID->field('OrderID')
             ->locked(true)
             ->lockable(false)
-            ->width(120)
+            ->width(150)
             ->title('Order ID');
 
 $shipCountry = new \Kendo\UI\GridColumn();
 $shipCountry->field('ShipCountry')
-          ->width(200)
+          ->width(300)
           ->title('Ship Country');
 
 $shipCity= new \Kendo\UI\GridColumn();
 $shipCity->field('ShipCity')
-          ->width(160)
+          ->width(300)
           ->title('Ship City');
 
 $shipName = new \Kendo\UI\GridColumn();
 $shipName->field('ShipName')
-          ->width(200)
+          ->width(300)
           ->locked(true)
           ->title('Ship Name');
 
 $shipAddress = new \Kendo\UI\GridColumn();
 $shipAddress->field('ShipAddress')
-          ->width(300)
+          ->width(400)
           ->lockable(false)
           ->title('Ship Address');
 
 $grid->addColumn($orderID, $shipCountry, $shipCity, $shipName, $shipAddress)
-     ->height(430)
+     ->height(540)
      ->scrollable(true)
      ->dataSource($dataSource)
      ->groupable(true)
