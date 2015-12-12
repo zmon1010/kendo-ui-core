@@ -120,6 +120,8 @@
         exportAsDialog: {
             title: "Export...",
             labels: {
+                scale: "Scale",
+                fit: "Fit to page",
                 fileName: "File name",
                 saveAsType: "Save as type",
                 exportArea: "Export",
@@ -1260,6 +1262,7 @@
                     creator: options.pdfExport.creator,
                     date: options.pdfExport.date,
 
+                    fitWidth: this.options.pdf.fitWidth,
                     area: this.options.pdf.area,
                     areas: this.options.pdf.areas,
                     paperSize: this.options.pdf.paperSize,
@@ -1270,9 +1273,6 @@
                     guidelines: this.options.pdf.guidelines,
                     hCenter: this.options.pdf.hCenter,
                     vCenter: this.options.pdf.vCenter
-                },
-                fileName: function() {
-                    return this.name + this.extension;
                 },
                 apply: this.apply.bind(this),
                 close: this.close.bind(this)
@@ -1296,6 +1296,7 @@
                 extension: ".pdf"
             }],
             pdf: {
+                fitWidth: true,
                 area: "workbook",
                 areas: [{
                     area: "workbook",
@@ -1348,7 +1349,7 @@
                         "data-bind='value: extension, source: fileFormats' />" +
                     "</div>" +
                 "</div>" +
-                "<div data-bind='visible: showPdfOptions'>" +
+                "<div class='export-config' data-bind='visible: showPdfOptions'>" +
                     "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.exportArea + ":</label></div>" +
                     "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
@@ -1373,17 +1374,25 @@
                       "</div>" +
                       "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.orientation + ":</label></div>" +
                       "<div class='k-edit-field'>" +
-                          "<input type='radio' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='false' />" +
-                          "<input type='radio' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='true' />" +
+                          "<input type='radio' id='orientation-portrait' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='false' />" +
+                          "<input type='radio' id='orientation-landscape' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='true' />" +
                      "</div>" +
                      "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.print + ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<label><input type='checkbox' data-bind='checked: pdf.guidelines'/>" + MESSAGES.exportAsDialog.labels.guidelines+ "</label>" +
+                         "<input id='guidelines' type='checkbox' data-bind='checked: pdf.guidelines'/><label for='guidelines'>" + MESSAGES.exportAsDialog.labels.guidelines+ "</label>" +
+                     "</div>" +
+                     "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.scale+ ":</label></div>" +
+                     "<div class='k-edit-field'>" +
+                         "<input id='fitWidth' type='checkbox' data-bind='checked: pdf.fitWidth'/><label for='fitWidth'>" + MESSAGES.exportAsDialog.labels.fit+ "</label>" +
                      "</div>" +
                      "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.center+ ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<label><input type='checkbox' data-bind='checked: pdf.hCenter'/>" + MESSAGES.exportAsDialog.labels.horizontally + "</label>" +
-                         "<label><input type='checkbox' data-bind='checked: pdf.vCenter'  />" + MESSAGES.exportAsDialog.labels.vertically +   "</label>" +
+                         "<input id='hCenter' type='checkbox' data-bind='checked: pdf.hCenter'/><label for='hCenter'>" + MESSAGES.exportAsDialog.labels.horizontally + "</label>" +
+                         "<input id='vCenter' type='checkbox' data-bind='checked: pdf.vCenter'/><label for='vCenter'>" + MESSAGES.exportAsDialog.labels.vertically +   "</label>" +
+                     "</div>" +
+                     "<div class='orientation'>" +
+                         "<div class='orientation-portrait'><div>" +
+                         "<div class='orientation-landscape'></div>" +
                      "</div>" +
                    "</div>" +
                    "<div class='k-action-buttons'>" +

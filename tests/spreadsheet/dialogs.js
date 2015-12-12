@@ -510,7 +510,7 @@
             stubMethod(kendo, "saveAs", function(options) { }, function() {
                 dialog.one("action", function(e) {
                     equal(e.command, "SaveAsCommand");
-                    equal(e.options.fileName(), "Workbook.xlsx");
+                    equal(e.options.name + e.options.extension, "Workbook.xlsx");
                 });
 
                 dialog.apply();
@@ -527,7 +527,7 @@
 
                 dialog.one("action", function(e) {
                     equal(e.command, "SaveAsCommand");
-                    equal(e.options.fileName(), "Name.xlsx");
+                    equal(e.options.name + e.options.extension, "Name.xlsx");
                 });
 
                 dialog.apply();
