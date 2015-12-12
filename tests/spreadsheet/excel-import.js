@@ -699,6 +699,44 @@
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
 
+    test("sets active cell", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetViews>
+                <sheetView>
+                  <selection activeCell="G17"/>
+                </sheetView>
+              </sheetViews>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = {
+            select: (ref, active) => {
+                equal(ref.toString(), "G17")
+                equal(active, true);
+            },
+            _columns: {
+                values: {
+                    value: () => ok(false)
+                },
+                _refresh: () => null
+            },
+            range: ref => ({
+                value: () => null,
+                formula: val => equal(val, "SUM(A1:A1000)"),
+                _get: () => true
+            }),
+            _rows: {
+                _refresh: () => null
+            }
+        };
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
     test("reads sheet dimensions", function() {
         const RELS = `
             <Relationships>
@@ -883,6 +921,7 @@
             options: { },
             insertSheet: options => {
                 let sheet = {
+                    select: () => null,
                     name: () => options.name,
                     suspendChanges: () => sheet,
                     triggerChange: () => null,

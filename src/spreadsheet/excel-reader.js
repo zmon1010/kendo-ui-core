@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.color", "../util/parse-xml" ], f);
+    define([ "../kendo.core", "../kendo.color", "../util/parse-xml", "./calc" ], f);
 })(function(){
     "use strict";
 
@@ -15,6 +15,7 @@
     /* jshint latedef: nofunc */
 
     var parseXML = kendo.util.parseXML;
+    var parseReference = kendo.spreadsheet.calc.parseReference;
 
     var SEL_CELL = ["sheetData", "row", "c"];
     var SEL_VALUE = ["sheetData", "row", "c", "v"];
@@ -27,8 +28,9 @@
     var SEL_SHEET = ["sheets", "sheet"];
     var SEL_DEFINED_NAME = ["definedNames", "definedName"];
     var SEL_VIEW = ["bookViews", "workbookView"];
+    var SEL_SELECTION = ["sheetViews", "sheetView", "selection"];
 
-    function readExcel(file, workbook, complete) {
+    function readExcel(file, workbook) {
         var reader = new FileReader();
         reader.onload = function(e) {
             var zip = new JSZip(e.target.result);
@@ -74,7 +76,7 @@
             text: function(text) {
                 var attrs = this.is(SEL_DEFINED_NAME);
                 if (attrs && !(bool(attrs["function"]) || bool(attrs.vbProcedure))) {
-                    var ref = kendo.spreadsheet.calc.parseReference(text, true);
+                    var ref = parseReference(text, true);
                     workbook.defineName(attrs.name, ref, bool(attrs.hidden));
                 }
             }
@@ -101,7 +103,7 @@
         parse(zip, "xl/" + file, {
             enter: function(tag, attrs) {
                 if (tag == "dimension") {
-                    var ref = kendo.spreadsheet.calc.parseReference(attrs.ref);
+                    var ref = parseReference(attrs.ref);
                     if (ref.bottomRight) {
                         dim.cols = ref.bottomRight.col + 1;
                         dim.rows = ref.bottomRight.row + 1;
@@ -189,6 +191,12 @@
 
                     if (attrs.hidden === "1") {
                         sheet.hideRow(row);
+                    }
+                }
+                else if (this.is(SEL_SELECTION)) {
+                    if (attrs.activeCell) {
+                        var acRef = parseReference(attrs.activeCell);
+                        sheet.select(acRef, true);
                     }
                 }
             },
