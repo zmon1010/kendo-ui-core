@@ -147,7 +147,7 @@
 
                         if (type == "str") {
                             range.formula(value);
-                        } else if (!range.formula()) {
+                        } else if (!range._get("formula")) {
                             // Check for "shared" formulas before applying a value.
                             if (!type || type == "n") {
                                 value = parseFloat(value);
