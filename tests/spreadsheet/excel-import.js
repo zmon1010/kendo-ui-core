@@ -346,7 +346,8 @@
         var sheet = {
             range: ref => ({
                 value: val => ok(val === 123),
-                formula: () => null
+                formula: () => null,
+                _get: () => null
             }),
             _rows: {
                 _refresh: () => null
@@ -375,7 +376,8 @@
         var sheet = {
             range: ref => ({
                 value: val => ok(val === 1),
-                formula: () => null
+                formula: () => null,
+                _get: () => null
             }),
             _rows: {
                 _refresh: () => null
@@ -404,7 +406,8 @@
         var sheet = {
             range: ref => ({
                 value: val => equal(val, "Foo"),
-                formula: () => null
+                formula: () => null,
+                _get: () => null
             }),
             _rows: {
                 _refresh: () => null
@@ -433,7 +436,8 @@
         var sheet = {
             range: ref => ({
                 value: val => equal(val, "foo"),
-                formula: () => null
+                formula: () => null,
+                _get: () => null
             }),
             _rows: {
                 _refresh: () => null
@@ -462,7 +466,8 @@
         var sheet = {
             range: ref => ({
                 value: val => equal(val, true),
-                formula: () => null
+                formula: () => null,
+                _get: () => null
             }),
             _rows: {
                 _refresh: () => null
@@ -491,7 +496,8 @@
         var sheet = {
             range: ref => ({
                 value: val => equal(val, false),
-                formula: () => null
+                formula: () => null,
+                _get: () => null
             }),
             _rows: {
                 _refresh: () => null
@@ -520,7 +526,8 @@
         var sheet = {
             range: ref => ({
                 value: val => equal(val.toString(), new Date("2015/12/09").toString()),
-                formula: () => null
+                formula: () => null,
+                _get: () => null
             }),
             _rows: {
                 _refresh: () => null
@@ -550,7 +557,8 @@
         var sheet = {
             range: ref => ({
                 value: () => null,
-                formula: val => equal(val, "SUM(A1:A1000)")
+                formula: val => equal(val, "SUM(A1:A1000)"),
+                _get: () => true
             }),
             _rows: {
                 _refresh: () => null
@@ -580,7 +588,8 @@
         var sheet = {
             range: ref => ({
                 value: () => null,
-                formula: val => equal(val, "1/0")
+                formula: val => equal(val, "1/0"),
+                _get: () => true
             }),
             _rows: {
                 _refresh: () => null
@@ -609,7 +618,8 @@
         var sheet = {
             range: ref => ({
                 value: () => null,
-                formula: val => equal(val, "SUM(A1:A1000)")
+                formula: val => equal(val, "SUM(A1:A1000)"),
+                _get: () => true
             }),
             _rows: {
                 _refresh: () => null
