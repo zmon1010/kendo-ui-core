@@ -6,15 +6,15 @@
     .Pageable()
     .Sortable()
     .Scrollable()
-    .HtmlAttributes(new { style = "height:430px;" })
+    .HtmlAttributes(new { style = "height:550px;" })
     .Columns(columns =>
     {
-        columns.Bound(o => o.OrderDate).Width(110).Format("{0:MM/dd/yyyy}");
-        columns.Bound(o => o.ShipCountry).Width(110);
-        columns.Bound(o => o.ShipCity).Width(110);
-        columns.Bound(o => o.ShipName).Width(200);
-        columns.Bound(o => o.ShipAddress).Format("{0:MM/dd/yyyy}");
-        columns.Bound(o => o.OrderID).Width(60);
+        columns.Bound(o => o.OrderDate).Width(120).Format("{0:MM/dd/yyyy}");
+        columns.Bound(o => o.ShipCountry);
+        columns.Bound(o => o.ShipCity);
+        columns.Bound(o => o.ShipName);
+        columns.Bound(o => o.ShippedDate).Format("{0:MM/dd/yyyy}").Width(200);
+        columns.Bound(o => o.OrderID).Width(80);
     })
     .DataSource(dataSource => dataSource
         .Ajax()

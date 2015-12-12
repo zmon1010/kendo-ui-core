@@ -89,7 +89,7 @@ $shipCountry->field('ShipCountry')
 
 $shipCity = new \Kendo\UI\GridColumn();
 $shipCity->field('ShipCity')
-    ->title('Ship Name')
+    ->title('Ship City')
     ->width(220);
 
 $shipName = new \Kendo\UI\GridColumn();
@@ -101,7 +101,7 @@ $shipName->field('ShipName')
 
 $shippedDate = new \Kendo\UI\GridColumn();
 $shippedDate->field('ShippedDate')
-    ->title('Ship Date')
+    ->title('Shipped Date')
     ->format('{0:MM/dd/yyyy}');
 
 $grid->dataSource($dataSource)
