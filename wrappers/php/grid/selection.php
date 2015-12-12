@@ -52,7 +52,7 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(5)
+           ->pageSize(6)
            ->serverPaging(true)
            ->serverSorting(true)
            ->schema($schema);
@@ -71,7 +71,8 @@ $orderDate->field('OrderDate')
           ->format('{0:dd/MM/yyyy}')
           ->title('Order Date');
 ?>
-   <h3>Grid with multiple row selection enabled</h3>
+<div class="demo-section k-content wide">
+   <h4>Grid with multiple row selection enabled</h4>
 <?php
 $grid = new \Kendo\UI\Grid('rowSelection');
 
@@ -85,8 +86,9 @@ $grid->addColumn($shipCountry, $freight, $orderDate)
 
 echo $grid->render();
 ?>
-
-    <h3>Grid with multiple cell selection enabled</h3>
+</div>
+<div class="demo-section k-content wide">
+    <h4>Grid with multiple cell selection enabled</h4>
 
 <?php
 
@@ -102,5 +104,6 @@ $grid->addColumn($shipCountry, $freight, $orderDate)
 
 echo $grid->render();
 ?>
+</div>
 
 <?php require_once '../include/footer.php'; ?>

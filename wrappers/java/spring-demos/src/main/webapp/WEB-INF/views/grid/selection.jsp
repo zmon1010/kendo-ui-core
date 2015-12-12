@@ -7,16 +7,16 @@
 <c:url value="/grid/selection/read" var="transportReadUrl" />
 
 <demo:header />
-    <div class="demo-section">
-        <h3>Grid with multiple row selection enabled</h3>
+  <div class="demo-section k-content wide">
+        <h4>Grid with multiple row selection enabled</h4>
         <kendo:grid name="rowSelection" selectable="multiple" scrollable="false" navigatable="true">
 	    	<kendo:grid-pageable buttonCount="5" />	    	    
 	        <kendo:grid-columns>
-	            <kendo:grid-column title="Order ID" field="orderId" width="200px"  />
-	            <kendo:grid-column title="Freight" field="freight" width="200px" />
+	            <kendo:grid-column title="Order ID" field="orderId" width="300px"  />
+	            <kendo:grid-column title="Freight" field="freight" width="300px" />
 	            <kendo:grid-column title="Order Date" field="orderDate" format="{0:dd/MM/yyyy}"/>
 	        </kendo:grid-columns>
-	        <kendo:dataSource pageSize="5" serverPaging="true" serverSorting="true" serverFiltering="true" serverGrouping="true">
+	        <kendo:dataSource pageSize="6" serverPaging="true" serverSorting="true" serverFiltering="true" serverGrouping="true">
 	            <kendo:dataSource-transport>            	
 	                <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST"  contentType="application/json"/>  
 	                <kendo:dataSource-transport-parameterMap>
@@ -36,16 +36,16 @@
 	    </kendo:grid>
     </div>
 
-    <div class="demo-section">
-        <h3>Grid with multiple cell selection enabled</h3>
+  <div class="demo-section k-content wide">
+        <h4>Grid with multiple cell selection enabled</h4>
          <kendo:grid name="cellSelection" selectable="multiple cell" scrollable="false" navigatable="true">
 	    	<kendo:grid-pageable buttonCount="5" />	    		    		
 	        <kendo:grid-columns>
-	            <kendo:grid-column title="Order ID" field="orderId" width="200px"  />
-	            <kendo:grid-column title="Freight" field="freight" width="200px" />
+	            <kendo:grid-column title="Order ID" field="orderId" width="300px"  />
+	            <kendo:grid-column title="Freight" field="freight" width="300px" />
 	            <kendo:grid-column title="Order Date" field="orderDate" format="{0:dd/MM/yyyy}"/>
 	        </kendo:grid-columns>
-	        <kendo:dataSource pageSize="5" serverPaging="true" serverSorting="true" serverFiltering="true" serverGrouping="true">
+	        <kendo:dataSource pageSize="6" serverPaging="true" serverSorting="true" serverFiltering="true" serverGrouping="true">
 	            <kendo:dataSource-transport>            	
 	                <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST"  contentType="application/json"/>  
 	                <kendo:dataSource-transport-parameterMap>
@@ -64,15 +64,5 @@
 	        </kendo:dataSource>
 	    </kendo:grid>
     </div>
-    
-    <style>
-        .demo-section {
-            width: 600px;
-        }
-        .demo-section h3 {
-            margin: 5px 0 15px 0;
-            text-align: center;
-        }
-    </style>
     
 <demo:footer />

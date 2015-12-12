@@ -2,13 +2,13 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="demo-section">
-    <h3>Grid with multiple row selection enabled</h3>
+<div class="demo-section k-content wide">
+    <h4>Grid with multiple row selection enabled</h4>
     <%=Html.Kendo().Grid<Kendo.Mvc.Examples.Models.OrderViewModel>()
         .Name("rowSelection")
         .Columns(columns => {
-            columns.Bound(o => o.ShipCountry).Width(200);
-            columns.Bound(p => p.Freight).Width(200);
+            columns.Bound(o => o.ShipCountry).Width(300);
+            columns.Bound(p => p.Freight).Width(300);
             columns.Bound(p => p.OrderDate).Format("{0:dd/MM/yyyy}");
         })
         .Pageable(pageable => pageable.ButtonCount(5))
@@ -23,8 +23,8 @@
     %>
 </div>
 
-<div class="demo-section">
-   <h3>Grid with multiple cell selection enabled</h3>
+<div class="demo-section k-content wide">
+   <h4>Grid with multiple cell selection enabled</h4>
     <%=Html.Kendo().Grid<Kendo.Mvc.Examples.Models.OrderViewModel>()
         .Name("cellSelection")
         .Columns(columns => {
@@ -39,20 +39,10 @@
         .Navigatable()
         .DataSource(dataSource => dataSource
             .Ajax()
-            .PageSize(5)
+            .PageSize(6)
             .Read(read => read.Action("Orders_Read", "Grid"))
          )
     %>
 </div>
-
-<style>
-    .demo-section {
-        width: 600px;
-    }
-    .demo-section h3 {
-        margin: 5px 0 15px 0;
-        text-align: center;
-    }
-</style>
 
 </asp:Content>
