@@ -1372,6 +1372,7 @@
                     });
 
                     var range = new Range(currentRef, sheet);
+                    var formula = range._get("formula");
                     var value = range.value();
                     var format = range.format();
                     var background = range.background();
@@ -1382,7 +1383,11 @@
 
                     var topLeft = new Range(currentRef.collapse(), sheet);
 
-                    topLeft.value(value);
+                    if (formula) {
+                        topLeft._set("formula", formula);
+                    } else {
+                        topLeft.value(value);
+                    }
                     topLeft.format(format);
                     topLeft.background(background);
 
