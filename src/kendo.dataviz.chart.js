@@ -2318,23 +2318,15 @@ var __meta__ = { // jshint ignore:line
 
         _initCategories: function(options) {
             var categories = (options.categories || []).slice(0);
+            var definedMin = defined(options.min);
+            var definedMax = defined(options.max);
             options.categories = categories;
 
-            if (options.limitCategories && (defined(options.min) || defined(options.max)) && categories.length) {
+            if ((definedMin || definedMax) && categories.length) {
                 options.srcCategories = options.categories;
-                var min = defined(options.min) ? math.floor(options.min) : 0;
-                var max = defined(options.max) ? math.ceil(options.max) + 1 : categories.length;
+                var min = definedMin ? math.floor(options.min) : 0;
+                var max = definedMax ? (options.justified ? math.floor(options.max) + 1 : math.ceil(options.max)) : categories.length;
 
-                if (options.outOfRangePoints) {
-                    if (min - 1 >= 0) {
-                        min--;
-                        this.outOfRangeMin = 1;
-                    }
-                    if (max + 1 < options.srcCategories.length) {
-                        max++;
-                        this.outOfRangeMax = 1;
-                    }
-                }
                 options.categories = options.categories.slice(min, max);
             }
         },
@@ -2356,27 +2348,42 @@ var __meta__ = { // jshint ignore:line
 
         rangeIndices: function() {
             var options = this.options;
-            var range;
-            if (options.limitCategories) {
-                var length = (options.categories.length || 1) - 1;
-                var min = this.outOfRangeMin + (defined(options.min) ? options.min % 1 : 0);
-                var max = (defined(options.max) && options.max % 1 !== 0 ? length -  (1 - options.max % 1) : length) - this.outOfRangeMax;
-                range = {
-                    min: min,
-                    max: max
-                };
+            var length = options.categories.length || 1;
+            var min = isNumber(options.min) ? options.min % 1 : 0;
+            var max;
+            if (isNumber(options.max) && options.max % 1 !== 0 && options.max < this.totalRange().max) {
+                max = length - (1 - options.max % 1);
             } else {
-                range = this.totalRangeIndices();
+                max = length - (options.justified ? 1 : 0);
             }
 
-            return range;
+            return {
+                min: min,
+                max: max
+            };
         },
 
-        totalRangeIndices: function() {
+        totalRangeIndices: function(limit) {
             var options = this.options;
+            var min = isNumber(options.min) ? options.min : 0;
+            var max;
+            if (isNumber(options.max)) {
+                max = options.max;
+            } else if (isNumber(options.min)) {
+                max = min + options.categories.length;
+            } else {
+                max = ((options.srcCategories || options.categories).length - (options.justified ? 1 : 0) || 1);
+            }
+
+            if (limit) {
+                var totalRange = this.totalRange();
+                min = limitValue(min, 0, totalRange.max);
+                max = limitValue(max, 0, totalRange.max);
+            }
+
             return {
-                min: isNumber(options.min) ? options.min : 0,
-                max: isNumber(options.max) ? options.max : ((options.srcCategories || options.categories).length || 1) - 1
+                min: min,
+                max: max
             };
         },
 
@@ -2386,13 +2393,14 @@ var __meta__ = { // jshint ignore:line
         },
 
 		totalRange: function() {
-			return { min: 0, max: (this.options.srcCategories || this.options.categories).length };
+            var options = this.options;
+			return { min: 0, max: math.max(this._seriesMax || 0, (options.srcCategories || options.categories).length) - (options.justified ? 1 : 0) };
 		},
 
 		getScale: function() {
 			var range = this.rangeIndices();
             var min = range.min;
-            var max = range.max + (this.options.justified ? 0 : 1);
+            var max = range.max;
 			var lineBox = this.lineBox();
             var size = this.options.vertical ? lineBox.height() : lineBox.width();
 			var scale = size / ((max - min) || 1);
@@ -2409,7 +2417,7 @@ var __meta__ = { // jshint ignore:line
                 scale = axis.getScale(),
                 range = axis.rangeIndices(),
                 min = range.min,
-                max = range.max + (options.justified ? 0 : 1),
+                max = range.max,
                 current = min % 1 !== 0 ? math.floor(min / 1) + stepSize : min,
                 pos = lineBox[(vertical ? Y : X) + (reverse ? 2 : 1)],
                 positions = [];
@@ -2426,12 +2434,18 @@ var __meta__ = { // jshint ignore:line
             var tickPositions = this.getMajorTickPositions().slice(0);
             var range = this.rangeIndices();
             var scale = this.getScale();
+            var box = this.lineBox();
+            var options = this.options;
+            var axis = options.vertical ? Y : X;
+            var start = options.reverse ? 2 : 1;
+            var end = options.reverse ? 1 : 2;
 
 			if (range.min % 1 !== 0) {
-				tickPositions.unshift(tickPositions[0] - scale);
+				tickPositions.unshift(box[axis + start] - scale * (range.min % 1));
 			}
+
 			if (range.max % 1 !== 0) {
-				tickPositions.push(last(tickPositions) + scale);
+				tickPositions.push(box[axis + end] + scale * (1 - range.max % 1));
 			}
 
             return tickPositions;
@@ -2504,7 +2518,6 @@ var __meta__ = { // jshint ignore:line
                 justified = options.justified,
                 valueAxis = options.vertical ? Y : X,
                 lineBox = axis.lineBox(),
-                totalRange = axis.totalRange(),
 				range = axis.rangeIndices(),
 				min = range.min,
 				scale = this.getScale(),
@@ -2517,8 +2530,7 @@ var __meta__ = { // jshint ignore:line
 
             from = valueOrDefault(from, 0);
             to = valueOrDefault(to, from);
-            from = limitValue(from, totalRange.min, totalRange.max || 1);
-            to = limitValue(to - 1, from, totalRange.max || 1);
+            to = math.max(to - 1, from);
 
             // Fixes transient bug caused by iOS 6.0 JIT
             // (one can never be too sure)
@@ -2550,7 +2562,7 @@ var __meta__ = { // jshint ignore:line
                 valueAxis = options.vertical ? Y : X,
                 lineBox = axis.lineBox(),
                 range = axis.rangeIndices(),
-                startValue = reverse ? range.max + (justified ? 0 : 1) : range.min,
+                startValue = reverse ? range.max : range.min,
                 scale = this.getScale(),
                 lineStart = lineBox[valueAxis + 1],
                 lineEnd = lineBox[valueAxis + 2],
@@ -2584,7 +2596,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         categoryIndex: function(value) {
-            return indexOf(value, this.options.categories);
+            var options = this.options;
+            var index = indexOf(value, options.srcCategories || options.categories);
+
+            return index - math.floor(options.min || 0);
         },
 
         translateRange: function(delta) {
@@ -2605,12 +2620,12 @@ var __meta__ = { // jshint ignore:line
         zoomRange: function(rate) {
             var rangeIndices = this.totalRangeIndices();
             var totalRange = this.totalRange();
-            var totalMax = totalRange.max - 1;
+            var totalMax = totalRange.max;
             var totalMin = totalRange.min;
             var min = limitValue(rangeIndices.min + rate, totalMin, totalMax);
             var max = limitValue(rangeIndices.max - rate, totalMin, totalMax);
 
-            if (max - min >= 0) {
+            if (max - min > 0) {
                 return {
                     min: min,
                     max: max
@@ -2640,10 +2655,10 @@ var __meta__ = { // jshint ignore:line
             var options = this.options;
             var labelOptions = options.labels;
             var justified = options.justified;
-            var range = this.totalRangeIndices();
+            var range = this.totalRangeIndices(true);
             var min = range.min;
             var max = range.max;
-            var start = options.limitCategories ? math.floor(min) - this.outOfRangeMin : 0;
+            var start = math.floor(min);
             var skip;
 
             if (!justified) {
@@ -2662,7 +2677,7 @@ var __meta__ = { // jshint ignore:line
 
             return {
                 min: skip - start,
-                max: (options.categories.length ? max + 1 : 0) - start
+                max: (options.categories.length ? max + (justified ? 1 : 0) : 0) - start
             };
         },
 
@@ -2683,24 +2698,23 @@ var __meta__ = { // jshint ignore:line
         },
 
 		pan: function(delta) {
-            var range = this.totalRangeIndices(),
+            var range = this.totalRangeIndices(true),
                 scale = this.getScale(),
                 offset = round(delta / scale, DEFAULT_PRECISION),
                 totalRange = this.totalRange(),
                 min = range.min + offset,
                 max = range.max + offset;
 
-            return this.limitRange(min, max, totalRange.min, totalRange.max - 1);
+            return this.limitRange(min, max, 0, totalRange.max, offset);
 		},
 
-        pointsRange: function(start, end, exact) {
+        pointsRange: function(start, end) {
             var axis = this,
                 options = axis.options,
                 reverse = options.reverse,
-                justified = options.justified,
                 valueAxis = options.vertical ? Y : X,
                 lineBox = axis.lineBox(),
-                range = axis.totalRangeIndices(),
+                range = axis.totalRangeIndices(true),
                 scale = this.getScale(),
                 lineStart = lineBox[valueAxis + (reverse ? 2 : 1)];
 
@@ -2709,15 +2723,10 @@ var __meta__ = { // jshint ignore:line
 
             var min = range.min + diffStart / scale;
             var max = range.min + diffEnd / scale;
-            min = math.min(min, max);
-            max =  math.max(min, max);
-            if (!exact && !justified) {
-                max--;
-            }
 
             return {
-                min: min,
-                max: max
+                min: math.min(min, max),
+                max: math.max(min, max)
             };
         }
     });
