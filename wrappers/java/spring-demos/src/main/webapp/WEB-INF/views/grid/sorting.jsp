@@ -7,14 +7,14 @@
 <c:url value="/grid/sorting/read" var="transportReadUrl" />
 
 <demo:header />
-	<div class="demo-section">
-        <h3>Grid with single column sorting enabled</h3>
+<div class="demo-section k-content wide">
+        <h4>Grid with single column sorting enabled</h4>
         <kendo:grid name="singleSort" scrollable="false">
 	    	<kendo:grid-pageable buttonCount="5" />
 	    	<kendo:grid-sortable allowUnsort="false" mode="single" />
 	        <kendo:grid-columns>
-	            <kendo:grid-column title="Order ID" field="orderId" width="200px"  />
-	            <kendo:grid-column title="Freight" field="freight" width="200px" />
+	            <kendo:grid-column title="Order ID" field="orderId" width="300px"  />
+	            <kendo:grid-column title="Freight" field="freight" width="300px" />
 	            <kendo:grid-column title="Order Date" field="orderDate" format="{0:dd/MM/yyyy}"/>
 	        </kendo:grid-columns>
 	        <kendo:dataSource pageSize="5" serverPaging="true" serverSorting="true" serverFiltering="true" serverGrouping="true">
@@ -37,14 +37,14 @@
 	    </kendo:grid>
     </div>
 
-    <div class="demo-section">
-        <h3>Grid with multiple column sorting enabled</h3>
+<div class="demo-section k-content wide">
+        <h4>Grid with multiple column sorting enabled</h4>
          <kendo:grid name="multipleSort" scrollable="false">
 	    	<kendo:grid-pageable buttonCount="5" />
 	    	<kendo:grid-sortable allowUnsort="true" mode="multiple" />
 	        <kendo:grid-columns>
-	            <kendo:grid-column title="Order ID" field="orderId" width="200px"  />
-	            <kendo:grid-column title="Freight" field="freight" width="200px" />
+	            <kendo:grid-column title="Order ID" field="orderId" width="300px"  />
+	            <kendo:grid-column title="Freight" field="freight" width="300px" />
 	            <kendo:grid-column title="Order Date" field="orderDate" format="{0:dd/MM/yyyy}"/>
 	        </kendo:grid-columns>
 	        <kendo:dataSource pageSize="5" serverPaging="true" serverSorting="true" serverFiltering="true" serverGrouping="true">
@@ -67,14 +67,10 @@
 	    </kendo:grid>
     </div>
     
-    <style>
-        .demo-section {
-            width: 600px;
-        }
-        .demo-section h3 {
-            margin: 5px 0 15px 0;
-            text-align: center;
-        }
-    </style>
+<style>
+    .demo-section h3 {
+        margin: 5px 0 15px 0;
+    }
+</style>
     
 <demo:footer />

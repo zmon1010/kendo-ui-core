@@ -71,8 +71,8 @@ $orderDate->field('OrderDate')
           ->format('{0:dd/MM/yyyy}')
           ->title('Order Date');
 ?>
-
-   <h3>Grid with single column sorting enabled</h3>
+<div class="demo-section k-content wide">
+   <h4>Grid with single column sorting enabled</h4>
 <?php
 $grid = new \Kendo\UI\Grid('rowSelection');
 
@@ -89,8 +89,9 @@ $grid->addColumn($shipCountry, $freight, $orderDate)
 
 echo $grid->render();
 ?>
-
-    <h3>Grid with multiple column sorting enabled</h3>
+</div>
+<div class="demo-section k-content wide">
+    <h4>Grid with multiple column sorting enabled</h4>
 <?php
 
 $grid = new \Kendo\UI\Grid('cellSelection');
@@ -109,5 +110,5 @@ $grid->addColumn($shipCountry, $freight, $orderDate)
 
 echo $grid->render();
 ?>
-
+</div>
 <?php require_once '../include/footer.php'; ?>
