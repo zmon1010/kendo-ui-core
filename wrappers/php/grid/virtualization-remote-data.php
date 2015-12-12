@@ -79,9 +79,19 @@ $grid->addColumn($orderID, $customerID, $shipName, $shipAddress, $shipCity, $shi
      ->dataSource($dataSource)
      ->scrollable($scrollable)
      ->sortable(true)
-     ->height(430);
+     ->height(543);
 
 echo $grid->render();
 ?>
+
+<style>
+
+    /*horizontal Grid scrollbar should appear if the browser window is shrinked too much*/
+    #grid table
+    {
+        min-width: 1190px;
+    }
+
+</style>
 
 <?php require_once '../include/footer.php'; ?>

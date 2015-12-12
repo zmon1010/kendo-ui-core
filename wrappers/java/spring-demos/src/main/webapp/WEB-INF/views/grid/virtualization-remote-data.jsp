@@ -7,7 +7,7 @@
 <c:url value="/grid/virtualization-remote-data/read" var="transportReadUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" sortable="true" height="430px">
+    <kendo:grid name="grid" sortable="true" height="543px">
     	<kendo:grid-scrollable virtual="true"/>
         <kendo:grid-columns>
             <kendo:grid-column title="Order ID" field="orderId" width="110" />
@@ -42,4 +42,13 @@
                 </kendo:dataSource-schema>
         </kendo:dataSource>
     </kendo:grid>
+    
+    <style>
+        /*horizontal Grid scrollbar should appear if the browser window is shrinked too much*/
+        #grid table
+        {
+            min-width: 1190px;
+        }
+
+    </style>
 <demo:footer />
