@@ -3,14 +3,13 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Polar area" />
              <kendo:chart-legend position="bottom" />
              <kendo:chart-series>
                 <kendo:chart-seriesItem
                 	type="polarArea"
-                	name="at 3 ft"
                 	data="<%= new double[][] {
 	                	new double[] {10, 10}, new double[] {30, 20},
 	                	new double[] {50, 30}, new double[] {70, 20},

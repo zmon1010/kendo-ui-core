@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $polar = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $polar->type('polarArea')
       ->data(array(
@@ -19,4 +21,5 @@ $chart->title(array('text' => 'Polar area'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

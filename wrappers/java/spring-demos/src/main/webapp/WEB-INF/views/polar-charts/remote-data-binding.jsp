@@ -3,10 +3,10 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url value="/polar-charts/remote-data/read" var="readUrl" />
+<c:url value="/polar-charts/remote-data-binding/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Antenna Gain (dB)" />
              <kendo:dataSource>

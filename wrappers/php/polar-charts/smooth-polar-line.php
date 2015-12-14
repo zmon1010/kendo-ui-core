@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/chart_data.php';
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $dataSource = new \Kendo\Data\DataSource();
 $dataSource->data(chart_sun_position());
 
@@ -33,4 +35,5 @@ $chart->title(array('text' => 'Sun position at equinox'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

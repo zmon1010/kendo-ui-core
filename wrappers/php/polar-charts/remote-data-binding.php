@@ -13,7 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $gain = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $gain->type('polarLine')
       ->xField('azimuth')
@@ -36,4 +38,5 @@ $chart->title(array('text' => 'Antenna Gain (dB)'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
