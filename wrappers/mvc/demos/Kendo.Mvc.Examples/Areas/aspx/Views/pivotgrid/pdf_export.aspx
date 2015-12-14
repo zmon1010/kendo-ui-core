@@ -21,7 +21,9 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
+    <div class="responsive-message"></div>
+
+    <button id="export" class="k-button k-button-icontext hidden-on-narrow"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
 
     <%= Html.Kendo().PivotGrid()
         .Name("pivotgrid")
@@ -29,6 +31,7 @@
             .FileName("Kendo UI PivotGrid Export.pdf")
             .ProxyURL(Url.Action("Pdf_Export_Save", "PivotGrid"))
         )
+        .HtmlAttributes(new { @class = "hidden-on-narrow" })
         .ColumnWidth(200)
         .Height(570)
         .DataSource(dataSource => dataSource.

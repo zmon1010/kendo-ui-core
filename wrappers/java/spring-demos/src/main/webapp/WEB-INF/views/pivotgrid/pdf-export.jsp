@@ -9,9 +9,9 @@
 <c:url value="/pivotgrid/pdf-export/save" var="saveUrl" />
 
 <demo:header />
-
-    <button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
-    <kendo:pivotGrid name="pivotgrid" columnWidth="200" height="570"
+	<div class="responsive-message"></div>
+    <button id="export" class="k-button k-button-icontext hidden-on-narrow"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
+    <kendo:pivotGrid name="pivotgrid" columnWidth="200" height="570" class="hidden-on-narrow"
     filterable="true" sortable="true">
         <kendo:pivotGrid-pdf proxyURL="${saveUrl}" fileName="Kendo UI PivotGrid Export.pdf" />
         <kendo:pivotDataSource type="xmla">
@@ -45,9 +45,9 @@
     </script>
     <style>
        #export
-       {
-          margin: 0 0 10px 1px;
-       }
+        {
+            margin: 0 0 10px 1px;
+        }
 
        /*
            Use the DejaVu Sans font for display and embedding in the PDF file.

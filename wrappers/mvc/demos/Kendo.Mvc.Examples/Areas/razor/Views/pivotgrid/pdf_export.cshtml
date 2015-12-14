@@ -17,8 +17,9 @@
     <!-- Load Pako ZLIB library to enable PDF compression -->
     <script src="@Url.Content("~/Scripts/pako.min.js")"></script>
 }
+<div class="responsive-message"></div>
 
-<button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
+<button id="export" class="k-button k-button-icontext hidden-on-narrow"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
 
 @(Html.Kendo().PivotGrid()
     .Name("pivotgrid")
@@ -27,6 +28,7 @@
         .ProxyURL(Url.Action("Pdf_Export_Save", "PivotGrid"))
     )
     .ColumnWidth(200)
+    .HtmlAttributes(new { @class = "hidden-on-narrow" })
     .Height(570)
     .DataSource(dataSource => dataSource.
         Xmla()

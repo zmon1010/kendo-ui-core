@@ -77,10 +77,11 @@ $pivotgrid->dataSource($dataSource)
     ->configurator("#configurator")
     ->filterable(true)
     ->sortable(true)
-    ->height(580);
+    ->height(580)
+    ->attr('class', 'hidden-on-narrow');
 ?>
-
-<button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
+<div class="responsive-message"></div>
+<button id="export" class="k-button k-button-icontext hidden-on-narrow"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
 <?php
 echo $pivotgrid->render();
 ?>
