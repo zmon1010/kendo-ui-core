@@ -397,7 +397,8 @@
             var sheet = this._sheet;
 
             var reason = {
-                recalc: clearAll || (options && options.contentsOnly === true)
+                recalc: clearAll || (options && options.contentsOnly === true),
+                ref: this._ref
             };
 
             sheet.batch(function() {

@@ -651,6 +651,15 @@
         equal(sheet.range("A1:A3").format(), null);
     });
 
+    test("clear triggers change event passing the current ref", 1, function() {
+        sheet.bind("change", function(e) {
+            ok(e.ref);
+        });
+
+        sheet.range("A1:A3")
+            .clearFormat();
+    });
+
     test("clearFormat triggers only one change", 1, function() {
         sheet.bind("change", function() {
             ok(true);
