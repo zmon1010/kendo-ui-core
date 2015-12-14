@@ -5,7 +5,7 @@
 
     module("Spreadsheet SheetsBar", {
         setup: function() {
-            element = $("<div style='width:400px' />").appendTo(QUnit.fixture);
+            element = $("<div style='width:400px' class='" + kendo.spreadsheet.View.classNames.sheetsBar + "' />").appendTo(QUnit.fixture);
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -290,7 +290,7 @@
         element.find(".k-spreadsheet-sheets-remove").trigger("click");
     });
 
-    test('scrolling buttons are not rendered if sheet tabs fit', 1, function () {
+    test('scrolling buttons are not rendered if sheet tabs fit', 3, function () {
         var name = "Sheet1";
         var name2 = "Sheet2";
         var sheets = [
@@ -298,10 +298,13 @@
             {name: function() {return name2}}
         ];
         createSheetsBar();
+
         sheetsBar.renderSheets(sheets, 0);
         var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-button-bare");
 
-        equal(buttons.length, 0);
+        equal(buttons.length, 2);
+        ok(!buttons.eq(0).is(".k-tabstrip-prev:visible"));
+        ok(!buttons.eq(1).is(".k-tabstrip-next:visible"));
     });
 
     test('scrolling buttons are rendered if sheet tabs do not fit', 3, function () {
@@ -322,10 +325,9 @@
 
         sheetsBar.renderSheets(sheets, 3);
 
-        //XX: Second render is not needed in spreadsheet due to side effect.
-        //XX: If needed update sheetsbar to calculate expected width of "ul" element
-        //    based on number of sheets passed and mean width of current sheet tabs.
-        sheetsBar.renderSheets(sheets, 3);
+        //XX: Second render is not needed in spreadsheet due to the renderSheets is called two times by spreadsheet
+        //XX: If needed add additional renderHtml at beginning of the renderSheets method in order
+        // to render sheets before calculating the scroll width.
 
         var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-button-bare");
 

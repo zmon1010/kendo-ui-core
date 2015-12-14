@@ -118,6 +118,7 @@
                 var sheetsWrapper = that._sheetsWrapper();
                 var sheetsGroup = that._sheetsGroup();
                 var classNames = SheetsBar.classNames;
+                var addButtonWidth = $(DOT + classNames.sheetsBarAdd).outerWidth() + 11;
 
                 that._isRtl = kendo.support.isRtl(that.element);
                 that._sheets = sheets;
@@ -131,11 +132,10 @@
                 sheetsWrapper.addClass(classNames.sheetsBarScrollable + EMPTYCHAR + classNames.sheetsBarSheetsWrapper);
 
                 wrapperOffsetWidth = sheetsWrapper[0].offsetWidth;
-                sheetsGroupScrollWidth = sheetsGroup[0].scrollWidth;
+                sheetsGroupScrollWidth = sheetsGroup[0].scrollWidth + addButtonWidth + 11;
 
                 if (sheetsGroupScrollWidth > wrapperOffsetWidth) {
                   if (!that._scrollableModeActive) {
-                      var addButtonWidth;
                       var scrollPrevButtonWidth;
 
                       that._nowScrollingSheets = false;
@@ -144,11 +144,11 @@
                       scrollPrevButton = sheetsWrapper.children(DOT + classNames.sheetsBarPrev);
                       scrollNextButton = sheetsWrapper.children(DOT + classNames.sheetsBarNext);
 
-                      addButtonWidth = $(DOT + classNames.sheetsBarAdd).outerWidth();
+
                       scrollPrevButtonWidth = scrollPrevButton.outerWidth();
 
                       scrollPrevButton.css({ marginLeft: scrollPrevButtonWidth + 4 });
-                      sheetsGroup.css({ marginLeft: scrollPrevButtonWidth + addButtonWidth + 11, marginRight: scrollNextButton.outerWidth() + 12 });
+                      that._sheetsGroup().css({ marginLeft: scrollPrevButtonWidth + addButtonWidth, marginRight: scrollNextButton.outerWidth() + 12 });
 
                       that._scrollableModeActive = true;
 
@@ -165,9 +165,11 @@
 
                     that._renderHtml(isInEditMode, false);
 
-                    that._sheetsGroup().css({ marginLeft: "", marginRight: "" });
+                    that._sheetsGroup().css({ marginLeft: addButtonWidth, marginRight: "" });
+
                 } else {
                     that._renderHtml(isInEditMode, false);
+                    that._sheetsGroup().css({ marginLeft:  addButtonWidth});
                 }
             },
 
@@ -254,7 +256,6 @@
                 var element = kendo.dom.element;
                 var classNames = SheetsBar.classNames;
                 var childrenElements = [element("ul", {
-                    style: { paddingLeft: "50px" },
                     className: classNames.sheetsBarKReset
                 }, sheetElements)];
 
@@ -345,6 +346,8 @@
                     this._onSheetRename(editorValue);
                 }
 
+                this._scrollSheetsToItem($(e.target).closest("li"));
+
                 this.trigger("select", {name: selectedSheetText, isAddButton: false});
             },
 
@@ -373,10 +376,15 @@
                 return options.scrollable && !isNaN(options.scrollable.distance);
             },
 
-            //TODO: ENABLE SCROLL TO SHEET:
             _scrollSheetsToItem: function (item) {
                 var that = this;
+
+                if (!that._scrollableModeActive) {
+                    return;
+                }
+
                 var sheetsGroup = that._sheetsGroup();
+
                 var currentScrollOffset = sheetsGroup.scrollLeft();
                 var itemWidth = item.outerWidth();
                 var itemOffset = that._isRtl ? item.position().left : item.position().left - sheetsGroup.children().first().position().left;
