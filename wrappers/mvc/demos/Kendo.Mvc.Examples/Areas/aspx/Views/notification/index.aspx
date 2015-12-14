@@ -14,45 +14,27 @@
     .AppendTo("#appendto")
 %>
 
-        <div class="demo-section">
-            <div id="appendto" class="k-block"></div>
-            
-            <h3>Show notification:</h3>
+         <div class="demo-section k-content">
+            <h4>Show notification</h4>
             <p>
                 <button id="showPopupNotification" class="k-button">As a popup at bottom-right</button><br />
-                <button id="showStaticNotification" class="k-button">Static in the right panel</button>
+                <button id="showStaticNotification" class="k-button">Static in the panel below</button>
             </p>
-            
-            <h3>Hide notification:</h3>
-            <p>
+            <div style="padding-top: 1em;">
+                <h4>Hide notification</h4>
                 <button id="hideAllNotifications" class="k-button">Hide All Notifications</button>
-            </p>
+            </div>
         </div>
-            
+        
+        <div id="appendto" class="demo-section k-content"></div>
+
         <style>
             .demo-section {
-                width: 600px;
-                padding: 20px 30px;
-            }
-            .demo-section:after {
-                content: "";
-                display: block;
-                clear: both;
-                height: 0;
-            }
-            .demo-section p {
-                margin: 3px 0 20px;
-                line-height: 40px;
+                text-align: center;
+                line-height: 4em;
             }
             .demo-section .k-button {
-                width: 200px;
-            }
-            #appendto {
-                float: right;
-                width: 300px;
-                height: 170px;
-                margin: 1em 0;
-                overflow: auto;
+                width: 250px;
             }
         </style>
 
