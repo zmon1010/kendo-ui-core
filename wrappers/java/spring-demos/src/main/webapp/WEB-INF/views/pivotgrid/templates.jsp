@@ -23,7 +23,9 @@
     						"	#: member.caption #" +
 							"# } #";
 	%>	
-	<kendo:pivotGrid name="pivotgrid" columnWidth="200" height="270"
+	<div class="responsive-message"></div>
+	
+	<kendo:pivotGrid name="pivotgrid" columnWidth="190" height="320" class="hidden-on-narrow"
 		dataCellTemplate="<%=dataCellTemplate%>" columnHeaderTemplate="<%=headerTemplate%>"
 		rowHeaderTemplate="<%=headerTemplate%>">		
 		<kendo:pivotGrid-configurator name="configurator" />
@@ -32,7 +34,7 @@
 				<kendo:pivotDataSource-column name="[Date].[Calendar]" expand="true"/>
 			</kendo:pivotDataSource-columns>
 			<kendo:pivotDataSource-rows>
-				<kendo:pivotDataSource-row name="[Product].[Product Line]"/>
+				<kendo:pivotDataSource-row name="[Product].[Product Line]" expand="true"/>
 			</kendo:pivotDataSource-rows>
 			<kendo:pivotDataSource-measures>
 				<kendo:pivotDataSource-measure name="[Measures].[Reseller Freight Cost]"/>

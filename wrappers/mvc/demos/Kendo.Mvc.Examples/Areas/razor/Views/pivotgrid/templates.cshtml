@@ -17,11 +17,13 @@
         #: member.caption #
     # } #
 </script>
+<div class="responsive-message"></div>
 
 @(Html.Kendo().PivotGrid()
     .Name("pivotgrid")
-    .ColumnWidth(200)
-    .Height(570)
+    .HtmlAttributes(new { @class = "hidden-on-narrow" })
+    .ColumnWidth(190)
+    .Height(320)
     .DataCellTemplateId("dataCellTemplate")
     .ColumnHeaderTemplateId("headerTemplate")
     .RowHeaderTemplateId("headerTemplate")

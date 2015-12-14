@@ -50,7 +50,8 @@ $dataSource->transport($transport)
 
 $pivotgrid = new \Kendo\UI\PivotGrid('pivotgrid');
 $pivotgrid->dataSource($dataSource)
-    ->columnWidth(200)
+    ->columnWidth(190)
+    ->attr('class', 'hidden-on-narrow')
     ->dataCellTemplateId('dataCellTemplate')
     ->columnHeaderTemplateId('headerTemplate')
     ->rowHeaderTemplateId('headerTemplate')
@@ -76,7 +77,7 @@ $pivotgrid->dataSource($dataSource)
         #: member.caption #
     # } #
 </script>
-
+<div class="responsive-message"></div>
 <?php
 echo $pivotgrid->render();
 ?>
