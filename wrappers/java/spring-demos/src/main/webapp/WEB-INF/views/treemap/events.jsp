@@ -6,7 +6,7 @@
 <c:url value="/treemap/events/read" var="readUrl" />
 
 <demo:header />
-<kendo:treeMap name="treeMap" textField="Name" valueField="Value" dataBound="onDataBound" itemCreated="onItemCreated">
+<kendo:treeMap name="treeMap" textField="name" valueField="value" dataBound="onDataBound" itemCreated="onItemCreated" style="height: 600px; font-size: 12px;">
      <kendo:dataSource>
          <kendo:dataSource-transport>
              <kendo:dataSource-transport-read url="${readUrl}" type="POST"  contentType="application/json"/>     
@@ -16,7 +16,10 @@
          </kendo:dataSource-schema>
      </kendo:dataSource>
 </kendo:treeMap>
-<div class="console"></div>
+<div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 <script>
 	function onDataBound(e) {
 	    kendoConsole.log("Data bound");

@@ -33,12 +33,12 @@ $treeMap->dataSource($dataSource)
         ->textField('name')
         ->dataBound('onDataBound')
 		->itemCreated('onItemCreated')
-        ->attr('style', 'height: 600px;');
+        ->attr('style', 'height: 600px; font-size: 12px;');
 
 echo $treeMap->render();
 ?>
-<div class="demo-section">
-    <h3 class="title">Console log</h3>
+<div class="box wide">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 
