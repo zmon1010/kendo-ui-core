@@ -382,27 +382,6 @@
 
             workbook.fromFile(FILE);
         });
-
-        test("sets active sheet", 2, function() {
-            var INDEX = 1;
-            kendo.spreadsheet.readExcel = function(file, workbook, callback) {
-                callback({
-                    activeSheet: INDEX
-                });
-            };
-
-            var SHEET = {};
-            workbook.sheetByIndex = function(index) {
-                equal(index, INDEX);
-                return SHEET;
-            };
-
-            workbook.activeSheet = function(sheet) {
-                equal(sheet, SHEET);
-            };
-
-            workbook.fromFile({});
-        });
     })();
 
 })();
