@@ -2,9 +2,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
  <style>
-    #export
+   #export
     {
-        padding: 0 0 10px 1px;
+        margin: 0 0 10px 1px;
     }
 </style>
 </asp:Content>
@@ -12,7 +12,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 
-    <button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-excel"></span>Export to Excel</button>
+    <div class="responsive-message"></div>
+
+    <button id="export" class="k-button k-button-icontext hidden-on-narrow"><span class="k-icon k-i-excel"></span>Export to Excel</button>
 
     <%= Html.Kendo().PivotGrid()
         .Name("pivotgrid")
@@ -21,6 +23,7 @@
             .Filterable(true)
             .ProxyURL(Url.Action("Excel_Export_Save", "PivotGrid"))
         )
+        .HtmlAttributes(new { @class = "hidden-on-narrow" })
         .ColumnWidth(200)
         .Height(570)
         .DataSource(dataSource => dataSource.

@@ -73,14 +73,16 @@ $excel->fileName('Kendo UI Grid Export.xlsx')
 $pivotgrid = new \Kendo\UI\PivotGrid('pivotgrid');
 $pivotgrid->dataSource($dataSource)
     ->excel($excel)
+    ->attr('class', 'hidden-on-narrow')
     ->columnWidth(200)
     ->configurator("#configurator")
     ->filterable(true)
     ->sortable(true)
     ->height(580);
 ?>
+<div class="responsive-message"></div>
 
-<button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-excel"></span>Export to Excel</button>
+<button id="export" class="k-button k-button-icontext hidden-on-narrow"><span class="k-icon k-i-excel"></span>Export to Excel</button>
 <?php
 echo $pivotgrid->render();
 ?>
@@ -95,7 +97,7 @@ echo $pivotgrid->render();
 <style>
     #export
     {
-        padding: 0 0 10px 1px;
+        margin: 0 0 10px 1px;
     }
 </style>
 

@@ -11,9 +11,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 
 <demo:header />
-
-	<button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-excel"></span>Export to Excel</button>
-	<kendo:pivotGrid name="pivotgrid" columnWidth="200" height="570"
+	<div class="responsive-message"></div>
+	<button id="export" class="k-button k-button-icontext hidden-on-narrow"><span class="k-icon k-i-excel"></span>Export to Excel</button>
+	<kendo:pivotGrid name="pivotgrid" columnWidth="200" height="570" class="hidden-on-narrow"
 	filterable="true" sortable="true">
 		<kendo:pivotGrid-excel fileName="Kendo UI PivotGrid Export.xlsx" filterable="true" proxyURL="${saveUrl}" />
 		<kendo:pivotDataSource type="xmla">
@@ -48,9 +48,9 @@
 	</script>
 	 <style>
 	     #export
-	     {
-	     	maring: 0 0 10px 1px;
-	     }
+	        {
+	            margin: 0 0 10px 1px;
+	        }
       </style>
 
 <demo:footer />
