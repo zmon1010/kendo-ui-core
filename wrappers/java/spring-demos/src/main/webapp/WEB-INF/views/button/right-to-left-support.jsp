@@ -5,38 +5,51 @@
 
 <demo:header />
 
-<div class="k-rtl">
-
-<p>
-
+<div class="demo-section k-rtl k-content">
+    <h4>Basic Button</h4>
+    <p>
 <kendo:button name="textButton" type="button">
     <kendo:button-content>
-        Text button
+       Submit
     </kendo:button-content>
 </kendo:button>
-
-<kendo:button name="iconTextButton" tag="a" icon="ungroup">
+    </p>
+    
+    <h4>Buttons with icons</h4>
+    <p>
+<kendo:button name="iconTextButton" tag="a" icon="funnel">
     <kendo:button-content>
-        Icon and text
+        Filter
     </kendo:button-content>
 </kendo:button>
-
 <kendo:button name="iconButton" tag="em" icon="refresh">
     <kendo:button-content>
         <span class='k-icon'>Refresh</span>
     </kendo:button-content>
 </kendo:button>
-
-</p><p>
-
+    </p>
+    
+    <h4>Disabled Button</h4>
+    <p>
 <kendo:button name="disabledButton" tag="span" enable="false">
     <kendo:button-content>
-        Disabled button
+        Disabled
     </kendo:button-content>
 </kendo:button>
-
-</p>
-
+    </p>
 </div>
+
+<style>
+    .demo-section p {
+        margin: 0 0 30px;
+        line-height: 4em;
+    }
+    .demo-section .k-button {
+        margin-left: 10px;
+    }
+    #textButton, #disabledButton {
+        width: 150px;
+    }
+</style>
 
 <demo:footer />

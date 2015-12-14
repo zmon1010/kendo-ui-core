@@ -4,7 +4,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />
-
+<div class="demo-section k-content">
+<h4>Buttons</h4>
 <kendo:button name="textButton" type="button" click="onClick">
     <kendo:button-content>
         Text button
@@ -23,12 +24,21 @@
     </kendo:button-content>
 </kendo:button>
 
-<p>(The disabled button will not fire click events)</p>
-
-<div class="configuration k-widget k-header">
-    <span class="configHead">Events log</span>
+<p class="demo-hint">(The disabled button will not fire click events)</p>
+</div>
+<div class="box">                
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
+
+<style>
+    .demo-section {
+        line-height: 4em;
+    }
+    .demo-section .k-button {
+        margin-right: 10px;
+    }
+</style>
 
 <script>
     function onClick(e) {

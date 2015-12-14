@@ -5,7 +5,7 @@
 
 <demo:header />
 
-<div class="demo-section k-header">
+<div class="demo-section k-content">
     <div>
         <h4>Basic Button</h4>
         <p>
@@ -62,17 +62,17 @@
 
 
     <style>
-        .demo-section {
-            width: 400px;
-        }
-        .demo-section p {
-            margin: 0 0 30px;
-            line-height: 40px;
-        }
-        .k-primary {
-            width: 150px;
-        }
-    </style>
+         .demo-section p {
+             margin: 0 0 30px;
+             line-height: 50px;
+         }
+         .demo-section p .k-button {
+             margin: 0 10px 0 0;
+         }
+         .k-primary {
+             min-width: 150px;
+         }                
+     </style>
 </div>
 
 <demo:footer />

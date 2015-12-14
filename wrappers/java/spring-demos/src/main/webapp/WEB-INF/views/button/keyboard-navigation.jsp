@@ -5,6 +5,38 @@
 
 <demo:header />
 
+<div class="box">
+    <div class="box-col">
+        <h4>Focus</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign">Alt</span>
+                    +
+                    <span class="key-button">W</span>
+                </span>
+                <span class="button-descr">
+                    Focuses the first button (clicking on it or tabbing will also work).
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Supported keys and user actions</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Enter</span> or <span class="key-button">Space</span>
+                </span>
+                <span class="button-descr">
+                    Trigger click event.
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="demo-section k-content">                
 <kendo:button name="textButton" type="button" click="onClick">
     <kendo:button-content>
         Text button
@@ -28,36 +60,10 @@
         Disabled button
     </kendo:button-content>
 </kendo:button>
+</div>
 
-<p>(The disabled button will not fire click events)</p>
-
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign">Alt</span>
-            +
-            <span class="key-button">W</span>
-        </span>
-        <span class="button-descr">
-            Focuses the first button (clicking on it or tabbing will also work).
-        </span>
-    </li>
-</ul>
-
-<h4>Supported keys and user actions</h4>
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Enter</span> or <span class="key-button">Space</span>
-        </span>
-        <span class="button-descr">
-            Trigger click event.
-        </span>
-    </li>
-</ul>
-
-<div class="configuration k-widget k-header">
-    <span class="configHead">Events log</span>
+<div class="box">                
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 
@@ -73,5 +79,15 @@
     });
 
 </script>
+
+<style>
+    .demo-section {
+        line-height: 4em;
+    }
+
+    .demo-section .k-button {
+        margin-right: 5px;
+    }
+</style>
 
 <demo:footer />

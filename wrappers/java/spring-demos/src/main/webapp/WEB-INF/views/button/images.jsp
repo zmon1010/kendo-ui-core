@@ -8,30 +8,33 @@
 <c:url value="/resources/shared/icons/sports/snowboarding.png" var="snowboarding"/>
 
 <style>
-
-.k-button .k-image
-{
-    height: 16px;
-}
-            
+    .demo-section {
+        line-height: 4em;
+    }
+    .demo-section .k-button {
+        margin-right: 5px;
+    }
+    .k-button .k-image {
+        height: 16px;
+    }
+    .netherlandsFlag {
+        background-image: url(<c:url value="/resources/shared/styles/flags.png" />);
+        background-position: 0 -64px;
+    }
 </style>
 
-<kendo:button name="iconButton" type="button" spriteCssClass="k-icon k-i-refresh">
-    <kendo:button-content>
-        Sprite icon
-    </kendo:button-content>
+<div class="demo-section k-content">
+<h4>Kendo UI Button with icons</h4>
+<kendo:button name="iconButton" type="button" spriteCssClass="k-icon netherlandsFlag">
+    <kendo:button-content>Sprite icon</kendo:button-content>
 </kendo:button>
 
-<kendo:button name="kendoIconButton" type="button" icon="note">
-    <kendo:button-content>
-        Kendo UI sprite icon
-    </kendo:button-content>
+<kendo:button name="kendoIconButton" type="button" icon="funnel">
+    <kendo:button-content>Kendo UI sprite icon</kendo:button-content>
 </kendo:button>
 
 <kendo:button name="imageButton" type="button" imageUrl="${snowboarding}">
-    <kendo:button-content>
-        Image icon
-    </kendo:button-content>
+    <kendo:button-content>Image icon</kendo:button-content>
 </kendo:button>
-
+</div>
 <demo:footer />

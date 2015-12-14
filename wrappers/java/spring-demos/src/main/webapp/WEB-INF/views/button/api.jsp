@@ -5,22 +5,35 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Button API Functions</span>
-    <ul class="options">
-        <li>
-            <button class="k-button" id="enableButton" type="button">Enable</button> or <button class="k-button" id="disableButton" type="button">Disable</button>
-        </li>
-    </ul>
+<div class="box">
+    <div class="box-col">
+        <h4>Button API Functions</h4>
+        <ul class="options">
+            <li>
+                <button class="k-button" id="enableButton" type="button">Enable</button>
+                <button class="k-button" id="disableButton" type="button">Disable</button>
+            </li>
+        </ul>
+    </div>
 </div>
 
-<br /><br />
-
+<div class="demo-section k-content">
 <kendo:button name="iconTextButton" type="button" icon="ungroup">
     <kendo:button-content>
         Kendo UI Button
     </kendo:button-content>
 </kendo:button>
+</div>
+
+<style>
+    .demo-section {
+        text-align: center;
+    }
+    .box .k-textbox {
+        margin: 0;
+        width: 80px;
+    }
+</style>
 
 <script>
 
