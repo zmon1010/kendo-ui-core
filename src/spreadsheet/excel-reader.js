@@ -169,7 +169,7 @@
                 }
                 else if (this.is(SEL_COL)) {
                     var start = integer(attrs.min) - 1;
-                    var stop = Math.min(nCols, integer(attrs.max) - 1);
+                    var stop = Math.min(nCols, integer(attrs.max)) - 1;
                     var width = toColWidth(parseFloat(attrs.width));
 
                     if (attrs.hidden === "1") {

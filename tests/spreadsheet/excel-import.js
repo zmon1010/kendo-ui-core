@@ -10,6 +10,31 @@
         };
     }
 
+    function mockSheet(props, options) {
+        var sheet = Object.assign({}, {
+            select: () => null,
+            name: () => options.name,
+            suspendChanges: () => sheet,
+            triggerChange: () => null,
+            _columns: {
+                values: {
+                    value: () => null
+                },
+                _refresh: () => null
+            },
+            _rows: {
+                _refresh: () => null
+            },
+            range: ref => ({
+                value: () => null,
+                formula: () => null,
+                _get: () => true
+            })
+        }, props);
+
+        return sheet;
+    }
+
     // ------------------------------------------------------------
     module("Spreadsheet / Excel Import", {
         setup: function() {
@@ -345,16 +370,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: val => ok(val === 123),
                 formula: () => null,
                 _get: () => null
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -375,16 +397,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: val => ok(val === 1),
                 formula: () => null,
                 _get: () => null
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -405,16 +424,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: val => equal(val, "Foo"),
                 formula: () => null,
                 _get: () => null
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -435,16 +451,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: val => equal(val, "foo"),
                 formula: () => null,
                 _get: () => null
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -465,16 +478,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: val => equal(val, true),
                 formula: () => null,
                 _get: () => null
             }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -495,16 +505,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: val => equal(val, false),
                 formula: () => null,
                 _get: () => null
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -525,16 +532,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: val => equal(val.toString(), new Date("2015/12/09").toString()),
                 formula: () => null,
                 _get: () => null
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -556,16 +560,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: () => null,
                 formula: val => equal(val, "SUM(A1:A1000)"),
                 _get: () => true
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -587,16 +588,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: () => null,
                 formula: val => equal(val, "1/0"),
                 _get: () => true
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -617,16 +615,13 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             range: ref => ({
                 value: () => null,
                 formula: val => equal(val, "SUM(A1:A1000)"),
                 _get: () => true
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -643,8 +638,9 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             _columns: {
+                _count: 100,
                 values: {
                     value: (start, end, width) => {
                         equal(start, 0, "start");
@@ -653,21 +649,13 @@
                     }
                 },
                 _refresh: () => null
-            },
-            range: ref => ({
-                value: () => null,
-                formula: () => null,
-                _get: () => true
-            }),
-            _rows: {
-                _refresh: () => null
             }
-        };
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
 
-    test("does not apply default column widths", 0, function() {
+    test("applies column widths only in used dimensions", function() {
         var STRINGS = [];
         var STYLES = {};
         var SHEET = `
@@ -679,10 +667,15 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             _columns: {
+                _count: 100,
                 values: {
-                    value: () => ok(false)
+                    value: (start, stop, width) => {
+                        equal(start, 34);
+                        equal(stop, 99);
+                        equal(width, 7);
+                    }
                 },
                 _refresh: () => null
             },
@@ -690,11 +683,8 @@
                 value: () => null,
                 formula: val => equal(val, "SUM(A1:A1000)"),
                 _get: () => true
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -713,7 +703,7 @@
         `;
 
         addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = {
+        var sheet = mockSheet({
             select: (ref, active) => {
                 equal(ref.toString(), "G17")
                 equal(active, true);
@@ -728,11 +718,8 @@
                 value: () => null,
                 formula: val => equal(val, "SUM(A1:A1000)"),
                 _get: () => true
-            }),
-            _rows: {
-                _refresh: () => null
-            }
-        };
+            })
+        });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
@@ -768,12 +755,7 @@
                 equal(options.rows, 100, "rows");
                 equal(options.columns, 27, "columns");
 
-                let sheet = {
-                    suspendChanges: () => sheet,
-                    triggerChange: () => null
-                };
-
-                return sheet;
+                return mockSheet();
             },
             recalcSheets: () => null,
             triggerChange: () => null,
@@ -817,12 +799,7 @@
                 equal(options.rows, 1000, "rows");
                 equal(options.columns, 100, "columns");
 
-                let sheet = {
-                    suspendChanges: () => sheet,
-                    triggerChange: () => null
-                };
-
-                return sheet;
+                return mockSheet();
             },
             recalcSheets: () => null,
             triggerChange: () => null,
@@ -864,18 +841,7 @@
                 equal(options.columnWidth, 7, "width");
                 equal(options.rowHeight, 24.5, "height");
 
-                let sheet = {
-                    suspendChanges: () => sheet,
-                    triggerChange: () => null,
-                    _columns: {
-                        values: {
-                            value: () => null
-                        },
-                        _refresh: () => null
-                    }
-                };
-
-                return sheet;
+                return mockSheet();
             },
             recalcSheets: () => null,
             triggerChange: () => null,
@@ -919,22 +885,7 @@
 
         const workbook = {
             options: { },
-            insertSheet: options => {
-                let sheet = {
-                    select: () => null,
-                    name: () => options.name,
-                    suspendChanges: () => sheet,
-                    triggerChange: () => null,
-                    _columns: {
-                        values: {
-                            value: () => null
-                        },
-                        _refresh: () => null
-                    }
-                };
-
-                return sheet;
-            },
+            insertSheet: options => mockSheet({}, options),
             recalcSheets: () => null,
             triggerChange: () => null,
             activeSheet: sheet => equal(sheet.name(), "Sheet2")
