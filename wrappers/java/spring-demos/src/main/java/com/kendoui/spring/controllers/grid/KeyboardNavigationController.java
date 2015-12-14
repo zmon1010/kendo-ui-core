@@ -8,18 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.kendoui.spring.models.ProductDao;
+import com.kendoui.spring.models.EmployeeDao;
 
 @Controller("grid-navigation-controller")
 @RequestMapping(value="/grid/")
 public class KeyboardNavigationController {
     @Autowired 
-    private ProductDao product;
+    private EmployeeDao employee;
     
     @RequestMapping(value = "/keyboard-navigation", method = RequestMethod.GET)
     public String index(Locale locale, Model model) {
-        model.addAttribute("products", product.getList());
+        model.addAttribute("employees", employee.getList());
         
-        return "grid/keyboard-navigation";
+        return "grid/keyboard-navigation"; 
     }
 }
