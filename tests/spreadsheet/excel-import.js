@@ -893,4 +893,50 @@
 
         kendo.spreadsheet._readWorkbook(zip, workbook);
     });
+
+    test("reads frozen pane", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        const SHEET = `
+            <worksheet>
+              <sheetViews>
+                <sheetView>
+                  <pane xSplit="1" ySplit="2" state="frozen"/>
+                </sheetView>
+              </sheetViews>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+
+        var sheet = mockSheet({
+            frozenRows: rows => equal(rows, 2),
+            frozenColumns: cols => equal(cols, 1)
+        });
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("ignores non-frozen pane", 0, function() {
+        var STRINGS = [];
+        var STYLES = {};
+        const SHEET = `
+            <worksheet>
+              <sheetViews>
+                <sheetView>
+                  <pane xSplit="2" ySplit="2"/>
+                </sheetView>
+              </sheetViews>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+
+        var sheet = mockSheet({
+            frozenRows: rows => ok(false),
+            frozenColumns: cols => ok(false)
+        });
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
 })();

@@ -29,6 +29,7 @@
     var SEL_DEFINED_NAME = ["definedNames", "definedName"];
     var SEL_VIEW = ["bookViews", "workbookView"];
     var SEL_SELECTION = ["sheetViews", "sheetView", "selection"];
+    var SEL_PANE = ["sheetViews", "sheetView", "pane"];
 
     function readExcel(file, workbook) {
         var reader = new FileReader();
@@ -194,6 +195,17 @@
                     if (attrs.activeCell) {
                         var acRef = parseReference(attrs.activeCell);
                         sheet.select(acRef, true);
+                    }
+                }
+                else if (this.is(SEL_PANE)) {
+                    if (attrs.state == "frozen") {
+                        if (attrs.xSplit) {
+                            sheet.frozenColumns(integer(attrs.xSplit));
+                        }
+
+                        if (attrs.ySplit) {
+                            sheet.frozenRows(integer(attrs.ySplit));
+                        }
                     }
                 }
             },
