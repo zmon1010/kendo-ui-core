@@ -18,19 +18,19 @@
     })
 %>
 
-            <div class="demo-section">
-                
-                <h3>Show notification:</h3>
+            <div class="demo-section k-content" style="text-align: center;">
+
+                <h4>Show notification:</h4>
                 <p>
-                    <button id="showEmailNotification" class="k-button">Email Notification</button><br />
-                    <button id="showErrorNotification" class="k-button">Error Notification</button><br />
-                    <button id="showSuccessNotification" class="k-button">Upload Success Notification</button>
+                    <button id="showEmailNotification" class="k-button">Email</button><br />
+                    <button id="showErrorNotification" class="k-button">Error</button><br />
+                    <button id="showSuccessNotification" class="k-button">Upload Success</button>
                 </p>
-                <h3>Hide notification:</h3>
+                <h4>Hide notification:</h4>
                 <p>
                     <button id="hideAllNotifications" class="k-button">Hide All Notifications</button>
                 </p>
-    
+
             </div>
             
             <script id="emailTemplate" type="text/x-kendo-template">        
@@ -89,23 +89,19 @@
             </script>
             
             <style>
-                .demo-section {
-                    width: 200px;
-                    padding: 20px 30px;
-                }
-                .demo-section p {
+                 .demo-section p {
                     margin: 3px 0 20px;
-                    line-height: 40px;
+                    line-height: 50px;
                 }
                 .demo-section .k-button {
-                    width: 200px;
+                    width: 250px;
                 }
-                
+
                 .k-notification {
                     border: 0;
                 }
-                
-                
+
+
                 /* Info template */
                 .k-notification-info.k-group {
                     background: rgba(0%,0%,0%,.7);
@@ -123,7 +119,7 @@
                     float: left;
                     margin: 30px 15px 30px 30px;
                 }
-                
+
                 /* Error template */
                 .k-notification-error.k-group {
                     background: rgba(100%,0%,0%,.7);
@@ -141,7 +137,7 @@
                     float: left;
                     margin: 30px 15px 30px 30px;
                 }
-                
+
                 /* Success template */
                 .k-notification-upload-success.k-group {
                     background: rgba(0%,60%,0%,.7);

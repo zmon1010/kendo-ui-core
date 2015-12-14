@@ -36,20 +36,18 @@ echo $notification->render();
 
 <span id="notification" style="display:none;"></span>
 
-<div class="demo-section">
+<div class="demo-section k-content" style="text-align: center;">
 
-  <h3>Show notification:</h3>
-  <p>
-    <button id="showEmailNotification" class="k-button">Email Notification</button>
-    <br />
-    <button id="showErrorNotification" class="k-button">Error Notification</button>
-    <br />
-    <button id="showSuccessNotification" class="k-button">Upload Success Notification</button>
-  </p>
-  <h3>Hide notification:</h3>
-  <p>
-    <button id="hideAllNotifications" class="k-button">Hide All Notifications</button>
-  </p>
+    <h4>Show notification:</h4>
+    <p>
+        <button id="showEmailNotification" class="k-button">Email</button><br />
+        <button id="showErrorNotification" class="k-button">Error</button><br />
+        <button id="showSuccessNotification" class="k-button">Upload Success</button>
+    </p>
+    <h4>Hide notification:</h4>
+    <p>
+        <button id="hideAllNotifications" class="k-button">Hide All Notifications</button>
+    </p>
 
 </div>
 
@@ -109,80 +107,77 @@ echo $notification->render();
 </script>
 
 <style>
-  .demo-section {
-    width: 200px;
-    padding: 20px 30px;
-  }
-  .demo-section p {
-    margin: 3px 0 20px;
-    line-height: 40px;
-  }
-  .demo-section .k-button {
-    width: 200px;
-  }
+   .demo-section p {
+        margin: 3px 0 20px;
+        line-height: 50px;
+    }
+    .demo-section .k-button {
+        width: 250px;
+    }
 
-  .k-notification {
-    border: 0;
-  }
+    .k-notification {
+        border: 0;
+    }
 
-  /* Info template */
-  .k-notification-info.k-group {
-    background: rgba(0%,0%,0%,.7);
-    color: #fff;
-  }
-  .new-mail {
-    width: 300px;
-    height: 100px;
-  }
-  .new-mail h3 {
-    font-size: 1em;
-    padding: 32px 10px 5px;
-  }
-  .new-mail img {
-    float: left;
-    margin: 30px 15px 30px 30px;
-  }
 
-  /* Error template */
-  .k-notification-error.k-group {
-    background: rgba(100%,0%,0%,.7);
-    color: #ffffff;
-  }
-  .wrong-pass {
-    width: 300px;
-    height: 100px;
-  }
-  .wrong-pass h3 {
-    font-size: 1em;
-    padding: 32px 10px 5px;
-  }
-  .wrong-pass img {
-    float: left;
-    margin: 30px 15px 30px 30px;
-  }
+    /* Info template */
+    .k-notification-info.k-group {
+        background: rgba(0%,0%,0%,.7);
+        color: #fff;
+    }
+    .new-mail {
+        width: 300px;
+        height: 100px;
+    }
+    .new-mail h3 {
+        font-size: 1em;
+        padding: 32px 10px 5px;
+    }
+    .new-mail img {
+        float: left;
+        margin: 30px 15px 30px 30px;
+    }
 
-  /* Success template */
-  .k-notification-upload-success.k-group {
-    background: rgba(0%,60%,0%,.7);
-    color: #fff;
-  }
-  .upload-success {
-    width: 240px;
-    height: 100px;
-    padding: 0 30px;
-    line-height: 100px;
-  }
-  .upload-success h3 {
-    font-size: 1.7em;
-    font-weight: normal;
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .upload-success img {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
+    /* Error template */
+    .k-notification-error.k-group {
+        background: rgba(100%,0%,0%,.7);
+        color: #ffffff;
+    }
+    .wrong-pass {
+        width: 300px;
+        height: 100px;
+    }
+    .wrong-pass h3 {
+        font-size: 1em;
+        padding: 32px 10px 5px;
+    }
+    .wrong-pass img {
+        float: left;
+        margin: 30px 15px 30px 30px;
+    }
+
+    /* Success template */
+    .k-notification-upload-success.k-group {
+        background: rgba(0%,60%,0%,.7);
+        color: #fff;
+    }
+    .upload-success {
+        width: 240px;
+        height: 100px;
+        padding: 0 30px;
+        line-height: 100px;
+    }
+    .upload-success h3 {
+        font-size: 1.7em;
+        font-weight: normal;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .upload-success img {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
 </style>
 
 <?php require_once '../include/footer.php'; ?>
