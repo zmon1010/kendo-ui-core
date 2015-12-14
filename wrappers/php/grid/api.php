@@ -63,7 +63,6 @@ $unitsInStock->field('UnitsInStock')
           ->title('Units In Stock');
 
 $grid->addColumn($productName, $unitPrice, $unitsInStock)
-     ->attr('style', 'width:700px')
      ->selectable('row multiple')
      ->pageable(true)
      ->sortable(true)
@@ -71,8 +70,9 @@ $grid->addColumn($productName, $unitPrice, $unitsInStock)
      ->dataSource($dataSource);
 ?>
 
-<div class="configuration k-widget k-header" style="width:190px">
-    <span class="configHead">API Functions</span>
+ <div class="box wide">
+    <div class="box-col">
+    <h4>Selection</h4>
     <ul class="options">
         <li>
             <input type="text" value="0" id="selectRow" class="k-textbox"/>
@@ -81,11 +81,17 @@ $grid->addColumn($productName, $unitPrice, $unitsInStock)
         <li>
             <button class="clearSelection k-button">Clear selected rows</button>
         </li>
+    </ul>
+    </div>
+    <div class="box-col">
+    <h4>Expand / Collapse</h4>
+    <ul class="options">
         <li>
             <input type="text" value="0" id="groupRow" class="k-textbox"/>
             <button class="toggleGroup k-button">Collapse/Expand group</button>
         </li>
     </ul>
+    </div>
 </div>
 
 <?php
@@ -128,12 +134,5 @@ echo $grid->render();
         $("#groupRow").keypress(toggleGroup);
     });
 </script>
-
-<style>
-    .configuration .k-textbox
-    {
-        width: 23px;
-    }
-</style>
 
 <?php require_once '../include/footer.php'; ?>

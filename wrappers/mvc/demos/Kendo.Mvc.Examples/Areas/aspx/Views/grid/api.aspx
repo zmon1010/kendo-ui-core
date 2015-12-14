@@ -1,26 +1,32 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="configuration k-widget k-header" style="width: 190px">
-    <span class="configHead">API Functions</span>
+<div class="box wide">
+    <div class="box-col">
+    <h4>Selection</h4>
     <ul class="options">
         <li>
-            <input type="text" value="0" id="selectRow" class="k-textbox" />
+            <input type="text" value="0" id="selectRow" class="k-textbox"/>
             <button class="selectRow k-button">Select row</button>
         </li>
         <li>
             <button class="clearSelection k-button">Clear selected rows</button>
         </li>
+    </ul>
+    </div>
+    <div class="box-col">
+    <h4>Expand / Collapse</h4>
+    <ul class="options">
         <li>
-            <input type="text" value="0" id="groupRow" class="k-textbox" />
+            <input type="text" value="0" id="groupRow" class="k-textbox"/>
             <button class="toggleGroup k-button">Collapse/Expand group</button>
         </li>
     </ul>
+    </div>
 </div>
 
 <%= Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()
     .Name("grid")
-    .HtmlAttributes(new { style = "width:700px" })
     .Columns(columns =>
     {
         columns.Bound(p => p.ProductName).Title("Product Name");
@@ -78,11 +84,5 @@
     });
     
 </script>
-<style>
-    .configuration .k-textbox
-    {
-        width: 23px;
-    }
-</style>
 
 </asp:Content>

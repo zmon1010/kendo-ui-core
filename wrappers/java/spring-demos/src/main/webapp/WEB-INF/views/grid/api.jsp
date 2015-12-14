@@ -8,8 +8,9 @@
 
 <demo:header />
 
-	<div class="configuration k-widget k-header" style="width:190px">
-         <span class="configHead">API Functions</span>
+	 <div class="box wide">
+         <div class="box-col">
+         <h4>Selection</h4>
          <ul class="options">
              <li>
                  <input type="text" value="0" id="selectRow" class="k-textbox"/>
@@ -18,14 +19,20 @@
              <li>
                  <button class="clearSelection k-button">Clear selected rows</button>
              </li>
+         </ul>
+         </div>
+         <div class="box-col">
+         <h4>Expand / Collapse</h4>
+         <ul class="options">
              <li>
                  <input type="text" value="0" id="groupRow" class="k-textbox"/>
                  <button class="toggleGroup k-button">Collapse/Expand group</button>
              </li>
          </ul>
+         </div>
      </div>
      
-    <kendo:grid name="grid" pageable="true" style="width:700px;" sortable="true" selectable="multiple row"
+    <kendo:grid name="grid" pageable="true" sortable="true" selectable="multiple row"
     	groupable="true" scrollable="false">
         <kendo:grid-columns>
             <kendo:grid-column title="Product Name" field="productName" />
@@ -79,10 +86,4 @@
         });
 	</script>
 	
-	<style>
-	.configuration .k-textbox
-	{
-	    width: 23px;
-	}
-	</style>   
 <demo:footer />
