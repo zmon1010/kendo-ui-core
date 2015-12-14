@@ -51,7 +51,7 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(5)
+           ->pageSize(10)
            ->schema($schema)
            ->serverSorting(true)
            ->serverPaging(true);
@@ -103,6 +103,9 @@ echo $grid->render();
     }
 </script>
 
-<div class="console"></div>
+ <div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
 <?php require_once '../include/footer.php'; ?>

@@ -25,7 +25,6 @@
 	        kendoConsole.log("Grid data binding");
 	    }
 	</script>
-	<div class="demo-section">
         <kendo:grid name="grid" pageable="true" sortable="true" selectable="true"
 	    	change="onChange" dataBound="onDataBound" dataBinding="onDataBinding">
 	        <kendo:grid-columns>
@@ -39,15 +38,9 @@
 	            </kendo:dataSource-transport>
 	        </kendo:dataSource>       
 	    </kendo:grid>       
-   </div>	
       
-   <div class="demo-section">
-       <h3 class="title">Console log</h3>
-       <div class="console"></div>
-   </div>
-   <style>
-       .demo-section {
-           width: 600px;
-       }
-   </style>   
+  <div class="box wide">
+      <h4>Console log</h4>
+      <div class="console"></div>
+  </div>
 <demo:footer />

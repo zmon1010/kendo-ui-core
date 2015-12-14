@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
     <%= Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()
         .Name("grid")
         .Columns(columns =>
@@ -21,18 +20,10 @@
             .Read(read => read.Action("Products_Read", "Grid"))
          )
     %>
-</div>
- <div class="demo-section">
-    <h3 class="title">Console log</h3>
+<div class="box wide">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
-<style>
-    
-    .demo-section {
-        width: 600px;
-    }    
-        
-</style>
 
 <script type="text/javascript">
 
