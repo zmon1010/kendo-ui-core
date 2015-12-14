@@ -2751,6 +2751,7 @@ var __meta__ = { // jshint ignore:line
             if (options.categories && options.categories.length > 0) {
                 baseUnit = (options.baseUnit || "").toLowerCase();
                 useDefault = baseUnit !== FIT && !inArray(baseUnit, BASE_UNITS);
+
                 if (useDefault) {
                     options.baseUnit = axis.defaultBaseUnit(options);
                 }
@@ -3280,10 +3281,13 @@ var __meta__ = { // jshint ignore:line
             var axis = this;
             var options = axis.options;
             var categories = options.categories;
+            var index = -1;
 
-            var index = dateIndex(toDate(value), categories[0], options.baseUnit, options.baseUnitStep || 1);
+            if (categories.length) {
+                index = math.floor(dateIndex(toDate(value), categories[0], options.baseUnit, options.baseUnitStep || 1));
+            }
 
-            return math.floor(index);
+            return index;
         },
 
         getSlot: function(a, b, limit) {
@@ -10218,7 +10222,7 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
-            if (outOfRangeMinCategory) {
+            if (outOfRangeMinCategory && data.length) {
                 result._outOfRangeMinPoint = {
                     item: aggregator.aggregatePoints(
                         outOfRangeMinCategory.points, outOfRangeMinCategory.category
@@ -10228,7 +10232,7 @@ var __meta__ = { // jshint ignore:line
                 };
             }
 
-            if (outOfRangeMaxCategory) {
+            if (outOfRangeMaxCategory && data.length) {
                 result._outOfRangeMaxPoint = {
                     item: aggregator.aggregatePoints(
                         outOfRangeMaxCategory.points, outOfRangeMaxCategory.category

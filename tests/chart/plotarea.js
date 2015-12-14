@@ -2618,6 +2618,15 @@
                 assertOutOfRangePoints();
             });
 
+            test("Does not add out of range points if there is are no points in range", function() {
+                setupPlotArea({}, {
+                    min: 5,
+                    max: 10
+                });
+
+                assertOutOfRangePoints();
+            });
+
             test("Aggregates out of range points", function() {
                 setupPlotArea({
                     data: [{

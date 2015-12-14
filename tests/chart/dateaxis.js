@@ -349,6 +349,14 @@
             equal(dateAxis.categoryIndex(new Date("2012/01/01")), -31);
         });
 
+        test("categoryAxis returns -1 if there are no categories", function() {
+            createDateCategoryAxis({
+                categories: []
+            });
+
+            equal(dateAxis.categoryIndex(new Date("2012/01/31")), -1);
+        });
+
         test("categoryAxis returns exact index if value is larger then max axis value", function() {
             createDateCategoryAxis({
                 categories: [
