@@ -52,6 +52,7 @@ $dataSource->transport($transport)
 $pivotgrid = new \Kendo\UI\PivotGrid('pivotgrid');
 $pivotgrid->dataSource($dataSource)
     ->columnWidth(200)
+    ->attr('class', 'hidden-on-narrow')
     ->configurator("#configurator")
     ->filterable(true)
     ->sortable(true)
@@ -59,11 +60,12 @@ $pivotgrid->dataSource($dataSource)
 
 $configurator = new \Kendo\UI\PivotConfigurator('configurator');
 $configurator->height(580)
+             ->attr('class', 'hidden-on-narrow')
              ->filterable(true)
              ->sortable(true);
 
 ?>
-
+<div class="responsive-message"></div>
 <?php
 echo $configurator->render();
 echo $pivotgrid->render();
@@ -79,6 +81,10 @@ echo $pivotgrid->render();
 
     #configurator
     {
+        display: inline-block;
+        vertical-align: top;
+    }
+    .hidden-on-narrow {
         display: inline-block;
         vertical-align: top;
     }

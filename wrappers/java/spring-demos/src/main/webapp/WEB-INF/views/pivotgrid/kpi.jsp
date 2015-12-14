@@ -7,11 +7,12 @@
 <c:url value="http://demos.telerik.com/olap/msmdpump.dll" var="transportReadUrl" />
 
 <demo:header />
+	<div class="responsive-message"></div>
 
-	<kendo:pivotConfigurator name="configurator" height="570" filterable="true" sortable="true">
+	<kendo:pivotConfigurator name="configurator" height="570" filterable="true" sortable="true" class="hidden-on-narrow">
 	</kendo:pivotConfigurator>
 
-	<kendo:pivotGrid name="pivotgrid" columnWidth="200" height="570"
+	<kendo:pivotGrid name="pivotgrid" columnWidth="200" height="570" class="hidden-on-narrow"
 	filterable="true" sortable="true">		
 		<kendo:pivotGrid-configurator name="configurator" />
 		<kendo:pivotDataSource type="xmla">
@@ -51,6 +52,10 @@
 	         display: inline-block;
 	         vertical-align: top;
 	     }
+	     .hidden-on-narrow {
+	        display: inline-block;
+	        vertical-align: top;
+    	}
       </style>
 
 <demo:footer />
