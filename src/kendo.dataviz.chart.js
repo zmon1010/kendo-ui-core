@@ -3340,7 +3340,7 @@ var __meta__ = { // jshint ignore:line
             var axis = this,
                 min = options.min || seriesMin,
                 max = options.max || seriesMax,
-                baseUnit = options.baseUnit || axis.timeUnits(max - min),
+                baseUnit = options.baseUnit || (max && min ? axis.timeUnits(absoluteDateDiff(max, min)) : HOURS),
                 baseUnitTime = TIME_PER_UNIT[baseUnit],
                 autoMin = floorDate(toTime(min) - 1, baseUnit) || toDate(max),
                 autoMax = ceilDate(toTime(max) + 1, baseUnit),
@@ -3395,14 +3395,14 @@ var __meta__ = { // jshint ignore:line
             var start = lineBox[(vertical ? Y : X) + startEdge];
 
             var divisions = this.getDivisions(step);
-            var timeRange = options.max - options.min;
+            var timeRange = dateDiff(options.max, options.min);
             var lineSize = vertical ? lineBox.height() : lineBox.width();
             var scale = lineSize / timeRange;
 
             var positions = [start];
             for (var i = 1; i < divisions; i++) {
                 var date = addDuration(options.min, i * options.majorUnit, options.baseUnit);
-                var pos = start + (date - options.min) * scale * dir;
+                var pos = start + dateDiff(date, options.min) * scale * dir;
 
                 positions.push(round(pos, COORD_PRECISION));
             }
@@ -3478,7 +3478,7 @@ var __meta__ = { // jshint ignore:line
                 lineBox = axis.lineBox(),
                 size = options.vertical ? lineBox.height() : lineBox.width(),
                 range = axis.range(),
-                scale = size / (range.max - range.min),
+                scale = size / dateDiff(range.max, range.min),
                 offset = round(delta / scale, DEFAULT_PRECISION),
                 from = addTicks(options.min, offset),
                 to = addTicks(options.max, offset);
@@ -13182,7 +13182,7 @@ var __meta__ = { // jshint ignore:line
         } else if (unit === DAYS) {
             diff = math.floor(dateDiff(b, a) / TIME_PER_DAY);
         } else {
-            diff = math.floor((b - a) / TIME_PER_UNIT[unit]);
+            diff = math.floor(dateDiff(b, a) / TIME_PER_UNIT[unit]);
         }
 
         return diff;

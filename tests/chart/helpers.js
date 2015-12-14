@@ -728,12 +728,12 @@
         equal(duration(dateA, dateB, "days"), 424);
     });
 
-    tzTest("Sofia", "calculates duration in days during DST transition", function() {
+    tzTest("Sofia", "calculates duration in days during DST End", function() {
         equal(duration(
             new Date("2012/03/24 GMT+0200 (FLE Standard Time)"),
             new Date("2012/03/26 GMT+0300 (FLE Daylight Time)"),
             "days"
-            ), 2
+            ), 1
         );
     });
 
@@ -809,7 +809,7 @@
                 new Date("2012/03/25 00:00 GMT+0200 (FLE Standard Time)"),
                 6,
                 "hours"
-            ), new Date("2012/03/25 06:00 GMT+0300 (FLE Daylight Time)")
+            ), new Date("2012/03/25 07:00 GMT+0300 (FLE Daylight Time)")
         );
     });
 
@@ -837,15 +837,15 @@
         );
     });
 
-    tzTest("Sofia", "Adding minutes includes duplicate DST end", function() {
+    tzTest("Sofia", "Adding minutes does not include duplicate DST end", function() {
         deepEqual(addDuration(new Date("2012/10/28 02:00"), 180, "minutes"),
-             new Date("2012/10/28 04:00:00")
+             new Date("2012/10/28 05:00:00")
         );
     });
 
-    tzTest("Sofia", "Adding seconds includes duplicate DST end", function() {
+    tzTest("Sofia", "Adding seconds does not include duplicate DST end", function() {
         deepEqual(addDuration(new Date("2012/10/28 02:00"), 180 * 60, "seconds"),
-             new Date("2012/10/28 04:00:00")
+             new Date("2012/10/28 05:00:00")
         );
     });
 
