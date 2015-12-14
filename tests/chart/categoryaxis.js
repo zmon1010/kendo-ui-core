@@ -5,6 +5,7 @@
         geom = kendo.geometry,
         dataviz = kendo.dataviz,
         Box2D = dataviz.Box2D,
+        Point2D = dataviz.Point2D,
         chartBox = new Box2D(0, 0, 800, 600),
         CategoryAxis,
         TOLERANCE = 2;
@@ -61,6 +62,492 @@
                 return kendo.util.last(item.children);
             });
         }
+
+        (function() {
+            var categories;
+            var range;
+
+            function setupAxis(options) {
+                createCategoryAxis($.extend({
+                    categories: ["A", "B", "C", "D"]
+                }, options));
+                categories = categoryAxis.options.categories;
+                range = categoryAxis.rangeIndices();
+            }
+
+            // ------------------------------------------------------------
+            module("Category Axis / range");
+
+            test("filters categories based on min value", function() {
+                setupAxis({
+                    min: 1
+                });
+
+                equal(categories.length, 3);
+                equal(categories[0], "B");
+                equal(categories[2], "D");
+            });
+
+            test("filters categories based on not round min value", function() {
+                setupAxis({
+                    min: 1.5
+                });
+
+                equal(categories.length, 3);
+                equal(categories[0], "B");
+                equal(categories[2], "D");
+            });
+
+            test("filters categories based on max value", function() {
+                setupAxis({
+                    max: 2
+                });
+
+                equal(categories.length, 2);
+                equal(categories[0], "A");
+                equal(categories[1], "B");
+            });
+
+            test("filters categories based on max value (justified)", function() {
+                setupAxis({
+                    max: 2,
+                    justified: true
+                });
+
+                equal(categories.length, 3);
+                equal(categories[0], "A");
+                equal(categories[2], "C");
+            });
+
+            test("filters categories based on not round max value", function() {
+                setupAxis({
+                    max: 2.5
+                });
+
+                equal(categories.length, 3);
+                equal(categories[0], "A");
+                equal(categories[2], "C");
+            });
+
+            test("filters categories based on not round max value (justified)", function() {
+                setupAxis({
+                    max: 2.5,
+                    justified: true
+                });
+
+                equal(categories.length, 3);
+                equal(categories[0], "A");
+                equal(categories[2], "C");
+            });
+
+            // ------------------------------------------------------------
+            module("Category Axis / range / indices");
+
+            test("returns user set min value remainder", function() {
+                setupAxis({
+                    min: 2
+                });
+
+                equal(range.min, 0);
+
+                setupAxis({
+                    min: 2.5
+                });
+
+                equal(range.min, 0.5);
+            });
+
+            test("returns zero for the minimum if no min value is set", function() {
+                setupAxis({});
+
+                equal(range.min, 0);
+            });
+
+            test("returns the categories length for the max value if no max value is set", function() {
+                setupAxis({});
+
+                equal(range.max, 4);
+            });
+
+            test("returns the categories length minus one for justified axis if no max value is set", function() {
+                setupAxis({
+                    justified: true
+                });
+
+                equal(range.max, 3);
+            });
+
+            test("returns user set max value", function() {
+                setupAxis({
+                    max: 3
+                });
+
+                equal(range.max, 3);
+
+                setupAxis({
+                    max: 3.5
+                });
+
+                equal(range.max, 3.5);
+            });
+
+            test("returns user set max value relative to the min value", function() {
+                setupAxis({
+                    min: 1,
+                    max: 3
+                });
+
+                equal(range.max, 2);
+
+                setupAxis({
+                    min: 1,
+                    max: 2.5
+                });
+
+                equal(range.max, 1.5);
+            });
+
+            test("returns user set max value (justified)", function() {
+                setupAxis({
+                    max: 3,
+                    justified: true
+                });
+
+                equal(range.max, 3);
+
+                setupAxis({
+                    max: 2.5,
+                    justified: true
+                });
+
+                equal(range.max, 2.5);
+            });
+
+            test("returns user set max value relative to the min value (justified)", function() {
+                setupAxis({
+                    min: 1,
+                    max: 3,
+                    justified: true
+                });
+
+                equal(range.max, 2);
+
+                setupAxis({
+                    min: 1,
+                    max: 2.5,
+                    justified: true
+                });
+
+                equal(range.max, 1.5);
+            });
+
+            test("returns automatic maximum if user set maximum exceeds the total range", function() {
+                setupAxis({
+                    max: 10
+                });
+
+                equal(range.max, 4);
+            });
+
+            test("returns automatic maximum if user set maximum exceeds the categories length (justified)", function() {
+                setupAxis({
+                    max: 10,
+                    justified: true
+                });
+
+                equal(range.max, 3);
+            });
+
+            // ------------------------------------------------------------
+            module("Category Axis / range / total");
+
+            test("returns zero for the minimum", function() {
+                setupAxis({});
+
+                var totalRange = categoryAxis.totalRange();
+
+                equal(totalRange.min, 0);
+            });
+
+            test("returns the categories length for the maximum", function() {
+                setupAxis({});
+
+                var totalRange = categoryAxis.totalRange();
+
+                equal(totalRange.max, 4);
+            });
+
+            test("returns the categories length minus one for the maximum (justified)", function() {
+                setupAxis({
+                    justified: true
+                });
+
+                var totalRange = categoryAxis.totalRange();
+
+                equal(totalRange.max, 3);
+            });
+
+            test("returns zero for the minimum if the axis has been filtered", function() {
+                setupAxis({
+                    min: 2
+                });
+
+                var totalRange = categoryAxis.totalRange();
+
+                equal(totalRange.min, 0);
+            });
+
+            test("returns the source categories length if the axis has been filtered", function() {
+                setupAxis({
+                    min: 2,
+                    max: 3
+                });
+
+                var totalRange = categoryAxis.totalRange();
+
+                equal(totalRange.max, 4);
+            });
+
+            test("returns the source categories length minus one if the axis has been filtered (justified)", function() {
+                setupAxis({
+                    min: 1,
+                    max: 2,
+                    justified: true
+                });
+
+                var totalRange = categoryAxis.totalRange();
+
+                equal(totalRange.max, 3);
+            });
+
+            test("returns the series maximum if bigger than the categories length", function() {
+                setupAxis({
+                    min: 2,
+                    max: 3
+                });
+
+                categoryAxis._seriesMax = 5;
+
+                var totalRange = categoryAxis.totalRange();
+
+                equal(totalRange.max, 5);
+            });
+
+            test("returns the categories length if bigger than the series maximum", function() {
+                setupAxis({
+                    min: 2,
+                    max: 3
+                });
+
+                categoryAxis._seriesMax = 3;
+
+                var totalRange = categoryAxis.totalRange();
+
+                equal(totalRange.max, 4);
+            });
+
+            // ------------------------------------------------------------
+            module("Category Axis / range / total indices");
+
+            test("returns zero for the minimum", function() {
+                setupAxis({});
+
+                var totalRange = categoryAxis.totalRangeIndices();
+
+                equal(totalRange.min, 0);
+            });
+
+            test("returns user set min value", function() {
+                setupAxis({
+                    min: 2
+                });
+
+                var totalRange = categoryAxis.totalRangeIndices();
+
+                equal(totalRange.min, 2);
+            });
+
+            test("returns the categories length for the maximum", function() {
+                setupAxis({});
+
+                var totalRange = categoryAxis.totalRangeIndices();
+
+                equal(totalRange.max, 4);
+            });
+
+            test("returns the categories length minus one for the maximum (justified)", function() {
+                setupAxis({
+                    justified: true
+                });
+
+                var totalRange = categoryAxis.totalRangeIndices();
+
+                equal(totalRange.max, 3);
+            });
+
+            test("returns user set maximum", function() {
+                setupAxis({
+                    max: 3
+                });
+
+                var totalRange = categoryAxis.totalRangeIndices();
+
+                equal(totalRange.max, 3);
+            });
+
+            test("does not limit user set maximum", function() {
+                setupAxis({
+                    max: 20
+                });
+
+                var totalRange = categoryAxis.totalRangeIndices();
+
+                equal(totalRange.max, 20);
+            });
+
+            test("limits user set maximum if true is passed as parameter", function() {
+                setupAxis({
+                    max: 20
+                });
+
+                var totalRange = categoryAxis.totalRangeIndices(true);
+
+                equal(totalRange.max, 4);
+            });
+
+            test("returns user set minimum plus the categories length if only the minimum value is set", function() {
+                setupAxis({
+                    min: 3
+                });
+
+                var totalRange = categoryAxis.totalRangeIndices();
+
+                equal(totalRange.max, 3 + categories.length);
+            });
+
+        })();
+
+        (function() {
+            var TOLERANCE = 0.01;
+            var categories;
+            var range;
+
+            function setupAxis(options) {
+                createCategoryAxis($.extend({
+                    categories: ["A", "B", "C", "D"]
+                }, options));
+                categories = categoryAxis.options.categories;
+            }
+
+            // ------------------------------------------------------------
+            module("Category Axis / pan");
+
+            test("returns translated range",  function() {
+                setupAxis({
+                    min: 1,
+                    max: 2
+                });
+
+                range = categoryAxis.pan(100);
+                close(range.min, 1.125, TOLERANCE);
+                close(range.max, 2.125, TOLERANCE);
+
+                range = categoryAxis.pan(-100);
+                close(range.min, 0.875, TOLERANCE);
+                close(range.max, 1.875, TOLERANCE);
+            });
+
+            test("returns undefined if range exceeds maximum",  function() {
+                setupAxis({
+                    min: 1
+                });
+
+                range = categoryAxis.pan(100);
+                ok(!range);
+            });
+
+            test("returns undefined if range exceeds minimum",  function() {
+                setupAxis({
+                    max: 1
+                });
+
+                range = categoryAxis.pan(-100);
+                ok(!range);
+            });
+
+            // ------------------------------------------------------------
+            module("Category Axis / zoom");
+
+            test("returns scaled range",  function() {
+                setupAxis({
+                    min: 1,
+                    max: 4
+                });
+
+                range = categoryAxis.zoomRange(1);
+                equal(range.min, 2);
+                equal(range.max, 3);
+
+                setupAxis({
+                    min: 1,
+                    max: 2
+                });
+
+                range = categoryAxis.zoomRange(-1);
+                equal(range.min, 0);
+                equal(range.max, 3);
+            });
+
+            test("limits range to zero",  function() {
+                setupAxis({
+                    min: 0.5
+                });
+
+                range = categoryAxis.zoomRange(-1);
+                equal(range.min, 0);
+            });
+
+            test("limits range to maximum",  function() {
+                setupAxis({
+                    min: 3.5
+                });
+
+                range = categoryAxis.zoomRange(-1);
+                equal(range.max, 4);
+            });
+
+            test("returns undefined if new range is not bigger than zero",  function() {
+                setupAxis({
+                    min: 1,
+                    max: 3
+                });
+
+                range = categoryAxis.zoomRange(1);
+                ok(!range);
+            });
+
+            // ------------------------------------------------------------
+            module("Category Axis / pointsRange");
+
+            test("returns range based on passed points",  function() {
+                setupAxis({});
+
+                range = categoryAxis.pointsRange(new Point2D(200, 0), new Point2D(400, 0));
+                close(range.min, 1, TOLERANCE);
+                close(range.max, 2, TOLERANCE);
+            });
+
+            test("returns range based on passed points (reverse)",  function() {
+                setupAxis({
+                    reverse: true
+                });
+
+                range = categoryAxis.pointsRange(new Point2D(200, 0), new Point2D(400, 0));
+                close(range.min, 2, TOLERANCE);
+                close(range.max, 3, TOLERANCE);
+            });
+
+        })();
 
         // ------------------------------------------------------------
         module("Category Axis / Configuration / Labels");

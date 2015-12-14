@@ -338,29 +338,18 @@
             equal(dateAxis.categoryIndex("2012/02/03"), 2);
         });
 
-        test("categoryAxis returns -1 if value is missing", function() {
-            createDateCategoryAxis({
-                categories: [
-                    new Date("2012/02/01"), new Date("2012/02/03")
-                ],
-                roundToBaseUnit: false,
-                justified: true
-            });
-
-            equal(dateAxis.categoryIndex(), -1);
-        });
-
-        test("categoryAxis returns -1 if value is smaller then min axis value", function() {
+        test("categoryAxis returns exact index if value is smaller than min axis value", function() {
             createDateCategoryAxis({
                 categories: [
                     new Date("2012/02/01"), new Date("2012/02/03")
                 ]
             });
 
-            equal(dateAxis.categoryIndex(new Date("2012/01/01")), -1);
+            equal(dateAxis.categoryIndex(new Date("2012/01/31")), -1);
+            equal(dateAxis.categoryIndex(new Date("2012/01/01")), -31);
         });
 
-        test("categoryAxis returns 2 if value is larger then max axis value", function() {
+        test("categoryAxis returns exact index if value is larger then max axis value", function() {
             createDateCategoryAxis({
                 categories: [
                     new Date("2012/02/01"), new Date("2012/02/03")
@@ -368,6 +357,7 @@
             });
 
             equal(dateAxis.categoryIndex(new Date("2012/02/04"), null, true), 3);
+            equal(dateAxis.categoryIndex(new Date("2012/02/05"), null, true), 4);
         });
 
         // ------------------------------------------------------------
@@ -448,6 +438,1103 @@
                 new Date("2012/02/07")
             ]);
         });
+
+        // ------------------------------------------------------------
+        module("Date Category Axis / range");
+
+        test("auto max", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2012/02/05"), new Date("2012/02/06")
+                ],
+                baseUnit: "days"
+            });
+
+            var range = dateAxis.range();
+
+            equal(range.max.getTime(), new Date("2012/02/07").getTime());
+        });
+
+        test("auto max with not round max value", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2012/02/05"), new Date("2012/02/06 10:00")
+                ],
+                baseUnit: "days"
+            });
+
+            var range = dateAxis.range();
+
+            equal(range.max.getTime(), new Date("2012/02/07").getTime());
+        });
+
+        test("auto max with step bigger than one", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2012/02/05"), new Date("2012/02/10")
+                ],
+                baseUnitStep: 3,
+                baseUnit: "days"
+            });
+
+            var range = dateAxis.range();
+
+            equal(range.max.getTime(), new Date("2012/02/11").getTime());
+        });
+
+        test("auto max with step bigger than one based on source range", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2012/02/05"), new Date("2012/02/10")
+                ],
+                min: new Date("2012/02/07"),
+                baseUnitStep: 3,
+                baseUnit: "days"
+            });
+
+            var range = dateAxis.range();
+
+            equal(range.max.getTime(), new Date("2012/02/11").getTime());
+        });
+
+        test("auto min", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2012/02/05"), new Date("2012/02/06")
+                ],
+                baseUnit: "days"
+            });
+
+            var range = dateAxis.range();
+
+            equal(range.min.getTime(), new Date("2012/02/05").getTime());
+        });
+
+        test("auto min with not round min value", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2012/02/05 10:00"), new Date("2012/02/06 10:00")
+                ],
+                baseUnit: "days"
+            });
+
+            var range = dateAxis.range();
+
+            equal(range.min.getTime(), new Date("2012/02/05").getTime());
+        });
+
+        test("auto min with step bigger than one based on source range", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2012/02/05"), new Date("2012/02/10")
+                ],
+                min: new Date("2012/02/07"),
+                baseUnitStep: 3,
+                baseUnit: "days"
+            });
+
+            var range = dateAxis.range();
+
+            equal(range.min.getTime(), new Date("2012/02/05").getTime());
+        });
+
+        (function() {
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / range indices / justified / no rounding");
+
+            test("auto range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/06 00:00")
+                    ],
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 1);
+            });
+
+            test("auto range with not round dates", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/06 12:00")
+                    ],
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0.5);
+                equal(range.max, 1.5);
+            });
+
+            test("auto range with baseUnitStep bigger than one", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/08 00:00")
+                    ],
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 1.5);
+            });
+
+            test("auto range with not round dates and baseUnitStep bigger than one", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/08 12:00")
+                    ],
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0.25);
+                equal(range.max, 1.75);
+            });
+
+            test("range with baseUnitStep bigger than one based on source range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/08 00:00")
+                    ],
+                    min: new Date("2012/02/06 00:00"),
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0.5);
+                equal(range.max, 1.5);
+            });
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / range indices / justified / rounded");
+
+            test("auto range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/06 00:00")
+                    ],
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 1);
+            });
+
+            test("auto range with not round dates", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/06 12:00")
+                    ],
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 1);
+            });
+
+            test("auto range with baseUnitStep bigger than one", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/08 00:00")
+                    ],
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 1);
+            });
+
+            test("auto range with not round dates and baseUnitStep bigger than one", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/08 12:00")
+                    ],
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 1);
+            });
+
+            test("range with baseUnitStep bigger than one based on source range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/08 00:00")
+                    ],
+                    min: new Date("2012/02/06 00:00"),
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: true,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 1);
+            });
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / range indices / not justified / no rounding");
+
+            test("auto range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/06 00:00")
+                    ],
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 2);
+            });
+
+            test("auto range with not round dates", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/06 12:00")
+                    ],
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0.5);
+                equal(range.max, 1.5);
+            });
+
+            test("auto range with baseUnitStep bigger than one", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/08 00:00")
+                    ],
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 1.5);
+            });
+
+            test("auto range with not round dates and baseUnitStep bigger than one", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/08 12:00")
+                    ],
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0.25);
+                equal(range.max, 1.75);
+            });
+
+            test("range with baseUnitStep bigger than one based on source range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/08 00:00")
+                    ],
+                    min: new Date("2012/02/06 00:00"),
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0.5);
+                equal(range.max, 1.5);
+            });
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / range indices / not justified / rounded");
+
+            test("auto range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/06 00:00")
+                    ],
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 2);
+            });
+
+            test("auto range with not round dates", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/06 12:00")
+                    ],
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 2);
+            });
+
+            test("auto range with baseUnitStep bigger than one", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/08 00:00")
+                    ],
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 2);
+            });
+
+            test("auto range with not round dates and baseUnitStep bigger than one", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/08 12:00")
+                    ],
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 2);
+            });
+
+            test("range with baseUnitStep bigger than one based on source range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 00:00"), new Date("2012/02/08 00:00")
+                    ],
+                    min: new Date("2012/02/06 00:00"),
+                    baseUnitStep: 2,
+                    baseUnit: "days",
+                    justified: false,
+                    roundToBaseUnit: true
+                });
+
+                var range = dateAxis.rangeIndices();
+
+                equal(range.min, 0);
+                equal(range.max, 2);
+            });
+
+        })();
+
+        (function() {
+
+            var TOLERANCE = 60000;
+
+            function compareRange(actual, expected) {
+                close(actual.min.getTime(), expected.min.getTime(), TOLERANCE);
+                close(actual.max.getTime(), expected.max.getTime(), TOLERANCE);
+            }
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / pan");
+
+            test("returns translated range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    min: new Date("2012/02/06"),
+                    max: new Date("2012/02/07")
+                });
+
+                var range = dateAxis.pan(10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/06 00:18"),
+                    max: new Date("2012/02/07 00:18")
+                });
+
+                range = dateAxis.pan(-10);
+                compareRange(range, {
+                    min: new Date("2012/02/05 23:42"),
+                    max: new Date("2012/02/06 23:42")
+                });
+            });
+
+            test("returns nothing if new range is out of limits", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ]
+                });
+
+                var range = dateAxis.pan(10);
+
+                ok(!range);
+
+                range = dateAxis.pan(-10);
+
+                ok(!range);
+            });
+
+            test("returns translated range if user set minimum is after the automatic maximum", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    min: new Date("2012/02/10"),
+                    max: new Date("2012/02/11")
+                });
+
+                var range = dateAxis.pan(-10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/09 23:42"),
+                    max: new Date("2012/02/10 23:42")
+                });
+            });
+
+            test("returns translated range if user set maximum is before the automatic minimum", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    min: new Date("2012/02/02"),
+                    max: new Date("2012/02/03")
+                });
+
+                var range = dateAxis.pan(10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/02 00:18"),
+                    max: new Date("2012/02/03 00:18")
+                });
+            });
+
+            test("returns calculated baseUnit and baseUnitStep if baseUnit is set to fit", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    min: new Date("2012/02/06"),
+                    max: new Date("2012/02/07"),
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.pan(10);
+
+                equal(range.baseUnit, "hours");
+                equal(range.baseUnitStep, 3);
+            });
+
+            test("returns user set baseUnit and baseUnitStep", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    min: new Date("2012/02/06"),
+                    max: new Date("2012/02/07"),
+                    baseUnit: "fit",
+                    baseUnitStep: 1
+                });
+
+                var range = dateAxis.pan(10);
+
+                equal(range.userSetBaseUnit, "fit");
+                equal(range.userSetBaseUnitStep, 1);
+            });
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / pan / not justified");
+
+            test("translates from automatic maximum", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    min: new Date("2012/02/06")
+                });
+
+                var range = dateAxis.pan(-10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 23:06"),
+                    max: new Date("2012/02/08 23:06")
+                });
+            });
+
+            test("translates from automatic maximum (no rounding)", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08 12:00")
+                    ],
+                    min: new Date("2012/02/06"),
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.pan(-10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 23:15"),
+                    max: new Date("2012/02/08 11:15")
+                });
+            });
+
+            test("translates in positive direction from automatic maximum if the maximum is not round category (no rounding)", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08 12:00")
+                    ],
+                    min: new Date("2012/02/06"),
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.pan(10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/06 00:45"),
+                    max: new Date("2012/02/08 12:45")
+                });
+            });
+
+            test("translates from automatic minimum", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    max: new Date("2012/02/06")
+                });
+
+                var range = dateAxis.pan(10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 00:18"),
+                    max: new Date("2012/02/06 00:18")
+                });
+            });
+
+            test("translates from automatic minimum (no rounding)", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/08 12:00")
+                    ],
+                    max: new Date("2012/02/06 12:00"),
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.pan(10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 12:18"),
+                    max: new Date("2012/02/06 12:18")
+                });
+            });
+
+            test("translates in negative direction from automatic minimum if the minimum is not round category (no rounding)", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/08 12:00")
+                    ],
+                    max: new Date("2012/02/06 12:00"),
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.pan(-10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 11:42"),
+                    max: new Date("2012/02/06 11:42")
+                });
+            });
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / pan / justified");
+
+            test("translates from automatic maximum", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    min: new Date("2012/02/06"),
+                    justified: true
+                });
+
+                var range = dateAxis.pan(-10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 23:24"),
+                    max: new Date("2012/02/07 23:24")
+                });
+            });
+
+            test("translates from automatic maximum (no rounding)", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08 12:00")
+                    ],
+                    min: new Date("2012/02/06"),
+                    roundToBaseUnit: false,
+                    justified: true
+                });
+
+                var range = dateAxis.pan(-10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 23:15"),
+                    max: new Date("2012/02/08 11:15")
+                });
+            });
+
+            test("returns nothing if panning in positive direction from automatic maximum if the maximum is not round category (no rounding)", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08 12:00")
+                    ],
+                    min: new Date("2012/02/06"),
+                    justified: true,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.pan(10);
+
+                ok(!range);
+            });
+
+            test("translates from automatic minimum", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    max: new Date("2012/02/06"),
+                    justified: true
+                });
+
+                var range = dateAxis.pan(10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 00:18"),
+                    max: new Date("2012/02/06 00:18")
+                });
+            });
+
+            test("translates from automatic minimum (no rounding)", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/08 12:00")
+                    ],
+                    max: new Date("2012/02/06 12:00"),
+                    roundToBaseUnit: false,
+                    justified: true
+                });
+
+                var range = dateAxis.pan(10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 12:18"),
+                    max: new Date("2012/02/06 12:18")
+                });
+            });
+
+            test("translates in negative direction from automatic minimum if the minimum is not round category (no rounding)", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05 12:00"), new Date("2012/02/08 12:00")
+                    ],
+                    max: new Date("2012/02/06 12:00"),
+                    justified: true,
+                    roundToBaseUnit: false
+                });
+
+                var range = dateAxis.pan(-10);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05 11:42"),
+                    max: new Date("2012/02/06 11:42")
+                });
+            });
+
+        })();
+
+        (function() {
+
+            var TOLERANCE = 60000;
+
+            function compareRange(actual, expected) {
+                close(actual.min.getTime(), expected.min.getTime(), TOLERANCE);
+                close(actual.max.getTime(), expected.max.getTime(), TOLERANCE);
+            }
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / zoomRange");
+
+            test("returns scaled range", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/10")
+                    ],
+                    min: new Date("2012/02/06"),
+                    max: new Date("2012/02/09"),
+                    baseUnit: "days"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                compareRange(range, {
+                    min: new Date("2012/02/07"),
+                    max: new Date("2012/02/08")
+                });
+
+                range = dateAxis.zoomRange(-1);
+                compareRange(range, {
+                    min: new Date("2012/02/05"),
+                    max: new Date("2012/02/10")
+                });
+            });
+
+            test("scales range based on baseUnitStep", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/14")
+                    ],
+                    min: new Date("2012/02/07"),
+                    max: new Date("2012/02/12"),
+                    baseUnitStep: 2,
+                    baseUnit: "days"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                compareRange(range, {
+                    min: new Date("2012/02/09"),
+                    max: new Date("2012/02/10")
+                });
+
+                range = dateAxis.zoomRange(-1);
+                compareRange(range, {
+                    min: new Date("2012/02/05"),
+                    max: new Date("2012/02/14")
+                });
+            });
+
+            test("returns nothing if new range is smaller than the baseUnit", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/08")
+                    ],
+                    min: new Date("2012/02/06"),
+                    max: new Date("2012/02/08"),
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                ok(!range);
+            });
+
+            test("limits minimum to axis minimum", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/12")
+                    ],
+                    min: new Date("2012/02/06"),
+                    max: new Date("2012/02/08"),
+                    baseUnitStep: 2,
+                    baseUnit: "days"
+                });
+
+                var range = dateAxis.zoomRange(-1);
+
+                compareRange(range, {
+                    min: new Date("2012/02/05"),
+                    max: new Date("2012/02/10")
+                });
+            });
+
+            test("limits maximum to axis maximum", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/12")
+                    ],
+                    min: new Date("2012/02/09"),
+                    max: new Date("2012/02/12"),
+                    baseUnitStep: 2,
+                    baseUnit: "days"
+                });
+
+                var range = dateAxis.zoomRange(-1);
+
+                compareRange(range, {
+                    min: new Date("2012/02/07"),
+                    max: new Date("2012/02/13")
+                });
+            });
+
+            test("returns baseUnit and baseUnitStep equal to the user set options", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/05"), new Date("2012/02/12")
+                    ],
+                    min: new Date("2012/02/09"),
+                    max: new Date("2012/02/12"),
+                    baseUnitStep: 15,
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(-1);
+
+                equal(range.baseUnit, "fit");
+                equal(range.baseUnitStep, 15);
+            });
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / zoomRange / fit / zoom in");
+
+            test("jumps from years to months", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    min: new Date("2013/01/01"),
+                    max: new Date("2014/01/01"),
+                    autoBaseUnitSteps: {
+                        months: [1]
+                    },
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                compareRange(range, {
+                    min: new Date("2013/02/13 00:00"),
+                    max: new Date("2013/11/19 00:00")
+                });
+            });
+
+            test("jumps from months to weeks", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    min: new Date("2013/04/01"),
+                    max: new Date("2013/06/01"),
+                    maxDateGroups: 3,
+                    autoBaseUnitSteps: {
+                        weeks: [1]
+                    },
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                compareRange(range, {
+                    min: new Date("2013/04/24 12:00"),
+                    max: new Date("2013/05/08 12:00")
+                });
+            });
+
+            test("jumps from weeks to days", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    min: new Date("2013/04/01"),
+                    max: new Date("2013/04/14"),
+                    maxDateGroups: 3,
+                    autoBaseUnitSteps: {
+                        days: [1]
+                    },
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                compareRange(range, {
+                    min: new Date("2013/04/06 12:00"),
+                    max: new Date("2013/04/08 12:00")
+                });
+            });
+
+            test("jumps from days to hours", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    min: new Date("2013/04/01"),
+                    max: new Date("2013/04/03"),
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                compareRange(range, {
+                    min: new Date("2013/04/01 10:30"),
+                    max: new Date("2013/04/02 13:30")
+                });
+            });
+
+            test("jumps from hours to minutes", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    autoBaseUnitSteps: {
+                        minutes: [10]
+                    },
+                    min: new Date("2013/04/01 00:00"),
+                    max: new Date("2013/04/01 02:00"),
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                compareRange(range, {
+                    min: new Date("2013/04/01 00:15"),
+                    max: new Date("2013/04/01 01:45")
+                });
+            });
+
+            test("jumps from minutes to seconds", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    autoBaseUnitSteps: {
+                        seconds: [10]
+                    },
+                    min: new Date("2013/04/01 00:01"),
+                    max: new Date("2013/04/01 00:03"),
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                compareRange(range, {
+                    min: new Date("2013/04/01 00:01:15"),
+                    max: new Date("2013/04/01 00:02:45")
+                });
+            });
+
+            test("returns undefined if the range becomes less than a second", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    autoBaseUnitSteps: {
+                        seconds: [10]
+                    },
+                    min: new Date("2013/04/01 00:00:10"),
+                    max: new Date("2013/04/01 00:00:30"),
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                ok(!range);
+            });
+
+            // ------------------------------------------------------------
+            module("Date Category Axis / pointsRange");
+
+            test("returns dates range based on points", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    min: new Date("2013/01/01 10:00"),
+                    max: new Date("2013/01/05 10:00"),
+                    vertical: false
+                });
+
+                var range = dateAxis.pointsRange(new Point2D(0, 0), new Point2D(799, 0));
+
+                compareRange(range, {
+                    min: new Date("2013/01/01 10:00"),
+                    max: new Date("2013/01/05 10:00")
+                });
+            });
+
+            test("returns the user set baseUnit and baseUnitStep as baseUnit and baseUnitStep", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    min: new Date("2013/01/01 10:00"),
+                    max: new Date("2013/01/05 10:00"),
+                    vertical: false,
+                    baseUnit: "fit",
+                    baseUnitStep: 100
+                });
+
+                var range = dateAxis.pointsRange(new Point2D(0, 0), new Point2D(799, 0));
+
+                equal(range.baseUnit, "fit");
+                equal(range.baseUnitStep, 100);
+            });
+
+        })();
 
         // ------------------------------------------------------------
         module("Date Category Axis / Base unit / Minutes");

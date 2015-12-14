@@ -903,4 +903,81 @@ function baseLineChartTests(seriesName, TChart) {
         });
 
     })();
+
+    (function() {
+        var CATEGORY_AXIS_Y = 2;
+        var points;
+        var getCategorySlot = function(categoryIndex) {
+            return new Box2D(categoryIndex, 0,
+                             categoryIndex, 0);
+        };
+
+        var getValueSlot = function(value) {
+            return new Box2D(0, value, 0, value);
+        };
+
+        var plotArea = stubPlotArea(
+            getCategorySlot,
+            getValueSlot,
+            {
+                categoryAxis: {
+
+                }
+            }
+        );
+
+        function setupChart(minPoint, maxPoint) {
+            chart = new TChart(plotArea, {
+                series: [{
+                    data: [1, 2],
+                    _outOfRangeMinPoint: minPoint,
+                    _outOfRangeMaxPoint: maxPoint
+                }]
+            });
+            chart.reflow(chartBox);
+            points = chart.points;
+        }
+        // ------------------------------------------------------------
+        module(chartName + " / out of range points", {
+        });
+
+        test("creates out of range points", function() {
+            setupChart({
+                categoryIx: -1,
+                category: "foo",
+                item: 0
+            }, {
+                categoryIx: 2,
+                category: "bar",
+                item: 3
+            });
+
+            equal(points.length, 4);
+            equal(points[0].category, "foo");
+            equal(points[0].categoryIx, -1);
+            equal(points[0].value, 0);
+
+            equal(points[3].category, "bar");
+            equal(points[3].categoryIx, 2);
+            equal(points[3].value, 3);
+        });
+
+        test("reflows out of range points", function() {
+            setupChart({
+                categoryIx: -1,
+                category: "foo",
+                item: 5
+            }, {
+                categoryIx: 2,
+                category: "bar",
+                item: 10
+            });
+
+
+            sameBox(points[0].box, new Box2D(-1, 5, -1, 5));
+            sameBox(points[3].box, new Box2D(2, 10, 2, 10));
+
+        });
+
+    })();
 }
