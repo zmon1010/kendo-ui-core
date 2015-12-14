@@ -6,14 +6,13 @@ now = Time.now
 
 VERSION_YEAR = version_data['year'].to_i
 
-month = [(now.month + (now.year - VERSION_YEAR) * 12), 0].max * 100
+month = [(now.month + (now.year - VERSION_YEAR) * 12), 0].max
 
 VERSION_Q = version_data['release'].to_i
 VERSION_SERVICE_PACK = version_data['servicePack']
 SERVICE_PACK_NUMBER = version_data['servicePackNumber']
-VERSION_DATE = "#{month}#{now.day}"
 
-VERSION = ENV['VERSION'] || "#{VERSION_YEAR}.#{VERSION_Q}.#{VERSION_DATE}"
+VERSION = ENV['VERSION'] || "#{VERSION_YEAR}.#{VERSION_Q}.#{month * 100 + now.day}"
 
 CURRENT_COMMIT = `git rev-parse HEAD`.strip
 BETA = !!ENV['BETA']
