@@ -2,15 +2,17 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 <style>
-    #pivotgrid
+    #configurator
     {
         display: inline-block;
         vertical-align: top;
+    }
+
+    #pivotgrid {
         width: 70%;
     }
 
-    #configurator
-    {
+    .hidden-on-narrow {
         display: inline-block;
         vertical-align: top;
     }
@@ -18,15 +20,20 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+    <div class="responsive-message"></div>
+
     <%= Html.Kendo().PivotConfigurator()
         .Name("configurator")
         .Filterable(true)
+        .HtmlAttributes(new { @class = "hidden-on-narrow" })
         .Sortable()
         .Height(570)
     %>
 
     <%= Html.Kendo().PivotGrid()
         .Name("pivotgrid")
+        .HtmlAttributes(new { @class = "hidden-on-narrow" })
         .ColumnWidth(200)
         .Filterable(true)
         .Sortable()

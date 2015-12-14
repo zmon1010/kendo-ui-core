@@ -1,14 +1,18 @@
-﻿@(Html.Kendo().PivotConfigurator()
+﻿<div class="responsive-message"></div>
+
+@(Html.Kendo().PivotConfigurator()
     .Name("configurator")
+    .HtmlAttributes(new { @class = "hidden-on-narrow" })
     .Filterable(true)
     .Sortable()
-    .Height(570)
+    .Height(580)
 )
 
 @(Html.Kendo().PivotGrid()
     .Name("pivotgrid")
     .ColumnWidth(200)
-    .Height(570)
+    .Height(580)
+    .HtmlAttributes(new { @class = "hidden-on-narrow" })
     .Filterable(true)
     .Sortable()
     .Configurator("#configurator")
@@ -42,11 +46,13 @@
 </script>
 
  <style>
-    #pivotgrid
-    {
+     #pivotgrid {
+        width: 70%;
+    }
+
+    .hidden-on-narrow {
         display: inline-block;
         vertical-align: top;
-        width: 70%;
     }
 
     #configurator
