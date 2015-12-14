@@ -2,7 +2,7 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="box">
+<div class="box wide">
     <h4>Export diagram view</h4>
     <div class="box-col">
         <button class='export-pdf k-button'>Save as PDF</button>
@@ -54,8 +54,12 @@
 
     return g;
     }
+    
+    function onDataBound() {
+        this.bringIntoView(this.shapes);
+    }
 </script>
-<div class="diagram-wrapper" style="margin: auto;">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Diagram()
             .Name("diagram")
             .Pdf(pdf => pdf
@@ -79,6 +83,7 @@
                     .Width(2)
                 )
             )
+            .Events(events => events.DataBound("onDataBound"))
     %>
 </div>
 </asp:Content>

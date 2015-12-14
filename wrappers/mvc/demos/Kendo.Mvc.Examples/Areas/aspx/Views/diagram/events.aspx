@@ -76,7 +76,7 @@
             .DragEnd("onDragEnd")
         )
 %>
-<div class="box">
+<div class="box wide">
     <h4>Console log</h4>
     <div class="console"></div>
 </div>

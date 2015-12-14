@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div id="apiOptions" class="box">
+<div id="apiOptions" class="box wide">
     <div class="box-col">
         <h4>Add Shape</h4>
         <ul class="options">
@@ -58,7 +58,7 @@
         <h4>Zoom/Pan</h4>
         <ul class="options">
             <li>
-                <input data-role="slider" id="zoom" data-min="0.1" data-max="2" data-small-step="0.1" data-bind="value: zoom, events: { change: zoomDiagram }" />
+                <input data-role="slider" id="zoom" data-min="0.1" data-max="2" data-show-buttons="false" data-small-step="0.1" data-bind="value: zoom, events: { change: zoomDiagram }" />
             </li>                                    
             <li>
                 <label for="panX">Pan X:</label>

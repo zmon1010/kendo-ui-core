@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 ?>
 
-<div class="box">
+<div class="box wide">
     <h4>Export diagram view</h4>
     <div class="box-col">
         <button class='export-pdf k-button'>Save as PDF</button>
@@ -82,8 +82,12 @@ require_once '../include/header.php';
 
         return g;
     }
+    
+    function onDataBound() {
+        this.bringIntoView(this.shapes);
+    }
 </script>
-
+<div class="demo-section k-content wide">
 <?php
 $pdf = new \Kendo\Dataviz\UI\ChartPdf();
 $pdf->fileName('Kendo UI Diagram Export.pdf')
@@ -123,11 +127,12 @@ $connection_defaults->stroke($stroke);
 $diagram = new \Kendo\Dataviz\UI\Diagram('diagram');
 $diagram->pdf($pdf)
         ->dataSource($dataSource)
+        ->dataBound('onDataBound')
         ->layout($layout)
         ->shapeDefaults($shape_defaults)
         ->connectionDefaults($connection_defaults);
 
 echo $diagram->render();
 ?>
-
+</div>
 <?php require_once '../include/footer.php'; ?>

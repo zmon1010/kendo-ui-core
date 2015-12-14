@@ -55,9 +55,13 @@
         }));
         return g;
     }
+
+    function onDataBound() {
+        this.bringIntoView(this.shapes);
+    }
 </script>
 
-<kendo:diagram name="diagram">
+<kendo:diagram name="diagram" dataBound="onDataBound">
      <kendo:dataSource>
          <kendo:dataSource-transport>
              <kendo:dataSource-transport-read url="${readUrl}" type="POST"  contentType="application/json"/>     

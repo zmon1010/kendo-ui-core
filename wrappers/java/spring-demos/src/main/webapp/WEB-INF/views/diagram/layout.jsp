@@ -7,6 +7,17 @@
 
 <demo:header />
 
+<div class="box wide">
+    <div class="box-col">
+        <h4>Layout: </h4>
+           <select id="subtype">
+                <option value="down">Tree Down</option>
+                <option value="up">Tree Up</option>
+                <option value="tipover">Tipover Tree</option>
+           </select>
+    </div>
+</div>
+
 <kendo:diagram name="diagram">
      <kendo:dataSource>
          <kendo:dataSource-transport>
@@ -20,16 +31,6 @@
      <kendo:diagram-shapeDefaults width="40" height="40" />
  </kendo:diagram>
 
-<div class="configuration-horizontal">
-    <div class="config-section">
-        <label for="subtype">Layout: </label>
-           <select id="subtype">
-                <option value="down">Tree Down</option>
-                <option value="up">Tree Up</option>
-                <option value="tipover">Tipover Tree</option>
-            </select>
-    </div>
-</div>
 <script>
     $(document).ready(function() {
         $("#subtype").change(function() {

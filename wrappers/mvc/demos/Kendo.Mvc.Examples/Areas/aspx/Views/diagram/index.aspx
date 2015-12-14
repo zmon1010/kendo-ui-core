@@ -54,27 +54,30 @@
 
         return g;
     }
+    
+    function onDataBound() {
+        this.bringIntoView(this.shapes);
+    }
 </script>
-<div class="diagram-wrapper" style="margin: auto;">
-    <%= Html.Kendo().Diagram()
-            .Name("diagram")
-            .DataSource(dataSource => dataSource
-                .Read(read => read
-                    .Action("_OrgChart", "Diagram")
-                )
-                .Model(m => m.Children("Items"))
+<%= Html.Kendo().Diagram()
+        .Name("diagram")
+        .DataSource(dataSource => dataSource
+            .Read(read => read
+                .Action("_OrgChart", "Diagram")
             )
-            .Editable(false)
-            .Layout(l => l.Type(DiagramLayoutType.Layered))
-            .ShapeDefaults(sd => sd
-                .Visual("visualTemplate")
+            .Model(m => m.Children("Items"))
+        )        
+        .Editable(false)
+        .Layout(l => l.Type(DiagramLayoutType.Layered))
+        .ShapeDefaults(sd => sd
+            .Visual("visualTemplate")
+        )
+        .ConnectionDefaults(cd => cd
+            .Stroke(s => s
+                .Color("#979797")
+                .Width(2)
             )
-            .ConnectionDefaults(cd => cd
-                .Stroke(s => s
-                    .Color("#979797")
-                    .Width(2)
-                )
-            )
-    %>
-</div>
+        )
+        .Events(events => events.DataBound("onDataBound"))
+%>
 </asp:Content>

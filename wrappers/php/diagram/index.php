@@ -67,6 +67,10 @@ require_once '../include/header.php';
 
         return g;
     }
+    
+    function onDataBound() {
+        this.bringIntoView(this.shapes);
+    }
 </script>
 
 <?php
@@ -103,6 +107,7 @@ $connection_defaults->stroke($stroke);
 
 $diagram = new \Kendo\Dataviz\UI\Diagram('diagram');
 $diagram->dataSource($dataSource)
+        ->dataBound('onDataBound')
         ->layout($layout)
         ->shapeDefaults($shape_defaults)
         ->connectionDefaults($connection_defaults);

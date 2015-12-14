@@ -8,7 +8,7 @@
 <c:url value="/diagram/export/save" var="proxyUrl" />
 
 <demo:header />
-    <div class="box">
+    <div class="box wide">
         <h4>Export diagram content</h4>
         <div class="box-col">
             <button class='export-pdf k-button'>Export as PDF</button>
@@ -88,9 +88,14 @@
 	        }));
 	        return g;
 	    }
+	    
+	    function onDataBound() {
+	        this.bringIntoView(this.shapes);
+	    }
 	</script>
 	
-	<kendo:diagram name="diagram">
+	<div class="demo-section k-content wide">
+	<kendo:diagram name="diagram" dataBound="onDataBound">
 		<kendo:dataSource>
 	         <kendo:dataSource-transport>
 	             <kendo:dataSource-transport-read url="${readUrl}" type="POST"  contentType="application/json"/>     
@@ -105,4 +110,5 @@
 	     	<kendo:diagram-connectionDefaults-stroke color="#979797" width="2" />
 		 </kendo:diagram-connectionDefaults>
 	 </kendo:diagram>
+	 </div>
 <demo:footer />

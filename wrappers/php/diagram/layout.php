@@ -15,6 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 ?>
 
+<div class="box wide">
+    <div class="box-col">
+        <h4>Layout: </h4>
+           <select id="subtype">
+                <option value="down">Tree Down</option>
+                <option value="up">Tree Up</option>
+                <option value="tipover">Tipover Tree</option>
+           </select>
+    </div>
+</div>
+
 <?php
 $read = new \Kendo\Data\DataSourceTransportRead();
 $read->url('layout.php')
@@ -52,16 +63,6 @@ $diagram->dataSource($dataSource)
 echo $diagram->render();
 ?>
 
-<div class="configuration-horizontal">
-    <div class="config-section">
-        <label for="subtype">Layout: </label>
-           <select id="subtype">
-                <option value="down">Tree Down</option>
-                <option value="up">Tree Up</option>
-                <option value="tipover">Tipover Tree</option>
-            </select>
-    </div>
-</div>
 <script>
     $(document).ready(function() {
         $("#subtype").change(function() {
