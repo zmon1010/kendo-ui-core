@@ -478,7 +478,7 @@
             this._dialogName = options.dialogName;
 
             this.toolbar = toolbar;
-            this.element = $("<button class='k-button' title='" + options.attributes.title + "'>" +
+            this.element = $("<button class='k-button k-button-icon' title='" + options.attributes.title + "'>" +
                                  "<span class='k-icon k-font-icon k-i-xls' />" +
                              "</button>").data("instance", this);
 
@@ -1055,7 +1055,7 @@
     var Open = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             this.toolbar = toolbar;
-            this.element = $("<div class='k-button k-upload-button'>" +
+            this.element = $("<div class='k-button k-upload-button k-button-icon'>" +
                                  "<span class='k-icon k-font-icon k-i-folder-open' />" +
                              "</div>").data("instance", this);
 
