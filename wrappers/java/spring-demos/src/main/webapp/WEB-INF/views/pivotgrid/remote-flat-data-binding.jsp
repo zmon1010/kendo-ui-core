@@ -6,10 +6,12 @@
 <c:url value="/grid/customers/" var="transportReadUrl" />
 
 <demo:header />
-	<kendo:pivotConfigurator name="configurator" height="570px">
+	<div class="responsive-message"></div>
+
+	<kendo:pivotConfigurator name="configurator" height="570px" class="hidden-on-narrow">
 	</kendo:pivotConfigurator>
 	
-	<kendo:pivotGrid name="pivotgrid" columnWidth="120" height="570px">		
+	<kendo:pivotGrid name="pivotgrid" columnWidth="120" height="570px" class="hidden-on-narrow">		
 		<kendo:pivotGrid-configurator name="configurator" />
 		<kendo:pivotDataSource data="${products}">
 			<kendo:pivotDataSource-schema>
@@ -56,7 +58,7 @@
      {
          display: inline-block;
          vertical-align: top;
-         width: 60%;
+         width: 70%;
      }
 
      #configurator
@@ -64,5 +66,10 @@
          display: inline-block;
          vertical-align: top;
      }
+     
+     .hidden-on-narrow {
+        display: inline-block;
+        vertical-align: top;
+    }
      </style>
 <demo:footer />
