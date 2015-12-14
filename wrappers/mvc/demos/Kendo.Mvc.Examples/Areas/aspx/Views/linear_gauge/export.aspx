@@ -21,7 +21,7 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <div id="example">
-        <div class="box">
+        <div class="box wide">
             <h4>Advanced Export options</h4>
             <div class="box-col">
                 <button class='export-pdf k-button'>Export as PDF</button>

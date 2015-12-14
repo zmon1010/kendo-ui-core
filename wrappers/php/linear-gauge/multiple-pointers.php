@@ -38,7 +38,7 @@ function createSlider($name, $value){
     ?>
 </div>
 
-<div class="box">
+<div class="box wide">
     <div class="box-col">
         <h4>Red pointer value</h4>
         <?= createSlider('gauge-value0', 10)->render() ?>

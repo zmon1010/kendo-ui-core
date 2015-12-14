@@ -20,7 +20,7 @@ $gauge->pointer(array('value' => 65, 'shape' => 'arrow'))
     ?>
 </div>
 
-<div class="box">
+<div class="box wide">
     <h4>Gauge scale should...</h4>
     <ul class="options">
         <li>

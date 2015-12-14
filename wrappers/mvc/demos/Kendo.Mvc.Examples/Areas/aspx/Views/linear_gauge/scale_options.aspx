@@ -25,25 +25,6 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="box">
-    <h4>Gauge scale should...</h4>
-    <ul class="options">
-        <li>
-            <input id="vertical" checked="checked" type="checkbox" autocomplete="off">
-            <label for="vertical">... be vertical</label>
-        </li>
-
-        <li>
-            <input id="labels" checked="checked" type="checkbox" autocomplete="off">
-            <label for="labels">... show labels</label>
-        </li>
-
-        <li>
-            <input id="ranges" checked="checked" type="checkbox" autocomplete="off">
-            <label for="ranges">... show ranges</label>
-        </li>
-    </ul>
-</div>
 <div id="gauge-container">
     <%= Html.Kendo().LinearGauge()
             .Name("gauge")
@@ -64,6 +45,26 @@
             )
             .HtmlAttributes(new { style = "width:200px;" })
     %>
+</div>
+
+<div class="box wide">
+    <h4>Gauge scale should...</h4>
+    <ul class="options">
+        <li>
+            <input id="vertical" checked="checked" type="checkbox" autocomplete="off">
+            <label for="vertical">... be vertical</label>
+        </li>
+
+        <li>
+            <input id="labels" checked="checked" type="checkbox" autocomplete="off">
+            <label for="labels">... show labels</label>
+        </li>
+
+        <li>
+            <input id="ranges" checked="checked" type="checkbox" autocomplete="off">
+            <label for="ranges">... show ranges</label>
+        </li>
+    </ul>
 </div>
 
 <script>

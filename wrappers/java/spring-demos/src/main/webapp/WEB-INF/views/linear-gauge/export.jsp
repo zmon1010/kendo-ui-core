@@ -3,7 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-	<div class="box">
+	<div class="box wide">
         <h4>Advanced Export options</h4>
         <div class="box-col">
             <button class='export-pdf k-button'>Export as PDF</button>

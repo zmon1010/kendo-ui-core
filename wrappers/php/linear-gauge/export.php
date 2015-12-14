@@ -27,7 +27,7 @@ $gauge->pointer(array($pointer0, $pointer1, $pointer2, $pointer3))
 ?>
 
 <div id="example">
-    <div class="box">
+    <div class="box wide">
         <h4>Advanced Export options</h4>
         <div class="box-col">
             <button class='export-pdf k-button'>Export as PDF</button>
@@ -39,7 +39,7 @@ $gauge->pointer(array($pointer0, $pointer1, $pointer2, $pointer3))
             <button class='export-svg k-button'>Export as SVG</button>
         </div>
     </div>
-    <div id="gauge-container" class="demo-section">
+    <div id="gauge-container">
         <?php echo $gauge->render(); ?>
     </div>
     <script>
@@ -93,3 +93,5 @@ $gauge->pointer(array($pointer0, $pointer1, $pointer2, $pointer3))
 	    }
 	</style>
 </div>
+
+<?php require_once '../include/footer.php'; ?>

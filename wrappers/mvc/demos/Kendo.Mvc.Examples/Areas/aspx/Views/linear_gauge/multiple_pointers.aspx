@@ -20,7 +20,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <div id="example" class="k-content">
+    <div id="example">
         <div id="gauge-container">
             <%= Html.Kendo().LinearGauge()
               .Name("gauge")
@@ -39,7 +39,7 @@
             %>
         </div>
 
-        <div class="box">
+        <div class="box wide">
             <div class="box-col">
                 <h4>Red pointer value</h4>
                     <%= Html.Kendo().Slider().Name("gauge-value0")

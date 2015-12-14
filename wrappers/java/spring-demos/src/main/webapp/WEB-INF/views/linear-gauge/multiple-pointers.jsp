@@ -14,7 +14,7 @@
          </kendo:linearGauge>
     </div>
 
-	<div class="box">
+	<div class="box wide">
         <div class="box-col">
             <h4>Red pointer value</h4>
                 <kendo:slider name="gauge-value0" value="10" style="width: 220px;" min="0" max="180" showButtons="false" change="onSliderChange"></kendo:slider>
