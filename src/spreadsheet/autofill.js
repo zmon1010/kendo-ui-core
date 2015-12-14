@@ -158,7 +158,8 @@
             var f, values;
             if (type == "number") {
                 values = getData(a);
-                if (values.length == 1 && (begin > 0 || end < data.length || properties[begin].format)) {
+                if (values.length == 1 && (begin > 0 || end < data.length ||
+                                           formatType(values[0], properties[begin].format) == "date")) {
                     values.push(values[0] + 1);
                 }
                 f = linearRegression(values);
@@ -218,6 +219,12 @@
             }
             return props;
         };
+    }
+
+    function formatType(value, format) {
+        if (format != null) {
+            return spreadsheet.formatting.type(value, format);
+        }
     }
 
     function clone(obj) {
