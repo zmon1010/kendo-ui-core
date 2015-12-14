@@ -76,12 +76,14 @@ $pivotgrid = new \Kendo\UI\PivotGrid('pivotgrid');
 $pivotgrid->dataSource($dataSource)
     ->configurator("#configurator")
     ->columnWidth(120)
-    ->height(570);
+    ->height(570)
+    ->attr('class', 'hidden-on-narrow');
 
 $configurator = new \Kendo\UI\PivotConfigurator('configurator');
-$configurator->height(570);
+$configurator->height(570)
+             ->attr('class', 'hidden-on-narrow');
 ?>
-
+<div class="responsive-message"></div>
 <?php
 echo $configurator->render();
 echo $pivotgrid->render();
@@ -92,11 +94,15 @@ echo $pivotgrid->render();
     {
         display: inline-block;
         vertical-align: top;
-        width: 60%;
+        width: 70%;
     }
 
     #configurator
     {
+        display: inline-block;
+        vertical-align: top;
+    }
+    .hidden-on-narrow {
         display: inline-block;
         vertical-align: top;
     }

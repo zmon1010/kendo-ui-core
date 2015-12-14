@@ -14,17 +14,26 @@
         display: inline-block;
         vertical-align: top;
     }
+
+    .hidden-on-narrow {
+        display: inline-block;
+        vertical-align: top;
+    }
 </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+<div class="responsive-message"></div>
 <%= Html.Kendo().PivotConfigurator()
     .Name("configurator")
+    .HtmlAttributes(new { @class = "hidden-on-narrow" })
     .Height(570)
 %>
 
 <%= Html.Kendo().PivotGrid<Kendo.Mvc.Examples.Models.ProductViewModel>()
     .Name("pivotgrid")
+    .HtmlAttributes(new { @class = "hidden-on-narrow" })
     .Configurator("#configurator")
     .ColumnWidth(120)
     .Height(570)
