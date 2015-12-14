@@ -17,20 +17,6 @@
     var parseXML = kendo.util.parseXML;
     var parseReference = kendo.spreadsheet.calc.parseReference;
 
-    var SEL_CELL = ["sheetData", "row", "c"];
-    var SEL_VALUE = ["sheetData", "row", "c", "v"];
-    var SEL_FORMULA = ["sheetData", "row", "c", "f"];
-    var SEL_STRING = ["sheetData", "row", "c", "is"];
-    var SEL_MERGE = ["mergeCells", "mergeCell"];
-    var SEL_TEXT = ["t"];
-    var SEL_COL = ["cols", "col"];
-    var SEL_ROW = ["sheetData", "row"];
-    var SEL_SHEET = ["sheets", "sheet"];
-    var SEL_DEFINED_NAME = ["definedNames", "definedName"];
-    var SEL_VIEW = ["bookViews", "workbookView"];
-    var SEL_SELECTION = ["sheetViews", "sheetView", "selection"];
-    var SEL_PANE = ["sheetViews", "sheetView", "pane"];
-
     function readExcel(file, workbook) {
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -40,6 +26,20 @@
 
         reader.readAsArrayBuffer(file);
     }
+
+    var SEL_CELL = ["sheetData", "row", "c"];
+    var SEL_COL = ["cols", "col"];
+    var SEL_DEFINED_NAME = ["definedNames", "definedName"];
+    var SEL_FORMULA = ["sheetData", "row", "c", "f"];
+    var SEL_MERGE = ["mergeCells", "mergeCell"];
+    var SEL_PANE = ["sheetViews", "sheetView", "pane"];
+    var SEL_ROW = ["sheetData", "row"];
+    var SEL_SELECTION = ["sheetViews", "sheetView", "selection"];
+    var SEL_SHEET = ["sheets", "sheet"];
+    var SEL_STRING = ["sheetData", "row", "c", "is"];
+    var SEL_TEXT = ["t"];
+    var SEL_VALUE = ["sheetData", "row", "c", "v"];
+    var SEL_VIEW = ["bookViews", "workbookView"];
 
     function readWorkbook(zip, workbook) {
         var strings = readStrings(zip);
@@ -440,76 +440,35 @@
         return map;
     }
 
-    var SEL_FONT = ["fonts", "font"];
-    var SEL_FILL = ["fills", "fill"];
     var SEL_BORDER = ["borders", "border"];
-    var SEL_NAMED_STYLE = ["cellStyleXfs", "xf"];
+    var SEL_FILL = ["fills", "fill"];
+    var SEL_FONT = ["fonts", "font"];
     var SEL_INLINE_STYLE = ["cellXfs", "xf"];
+    var SEL_NAMED_STYLE = ["cellStyleXfs", "xf"];
     var SEL_NUM_FMT = ["numFmts", "numFmt"];
+
     var INDEXED_COLORS = [
-        toCSSColor("FF000000"),
-        toCSSColor("FFFFFFFF"),
-        toCSSColor("FFFF0000"),
-        toCSSColor("FF00FF00"),
-        toCSSColor("FF0000FF"),
-        toCSSColor("FFFFFF00"),
-        toCSSColor("FFFF00FF"),
-        toCSSColor("FF00FFFF"),
-        toCSSColor("FF000000"),
-        toCSSColor("FFFFFFFF"),
-        toCSSColor("FFFF0000"),
-        toCSSColor("FF00FF00"),
-        toCSSColor("FF0000FF"),
-        toCSSColor("FFFFFF00"),
-        toCSSColor("FFFF00FF"),
-        toCSSColor("FF00FFFF"),
-        toCSSColor("FF800000"),
-        toCSSColor("FF008000"),
-        toCSSColor("FF000080"),
-        toCSSColor("FF808000"),
-        toCSSColor("FF800080"),
-        toCSSColor("FF008080"),
-        toCSSColor("FFC0C0C0"),
-        toCSSColor("FF808080"),
-        toCSSColor("FF9999FF"),
-        toCSSColor("FF993366"),
-        toCSSColor("FFFFFFCC"),
-        toCSSColor("FFCCFFFF"),
-        toCSSColor("FF660066"),
-        toCSSColor("FFFF8080"),
-        toCSSColor("FF0066CC"),
-        toCSSColor("FFCCCCFF"),
-        toCSSColor("FF000080"),
-        toCSSColor("FFFF00FF"),
-        toCSSColor("FFFFFF00"),
-        toCSSColor("FF00FFFF"),
-        toCSSColor("FF800080"),
-        toCSSColor("FF800000"),
-        toCSSColor("FF008080"),
-        toCSSColor("FF0000FF"),
-        toCSSColor("FF00CCFF"),
-        toCSSColor("FFCCFFFF"),
-        toCSSColor("FFCCFFCC"),
-        toCSSColor("FFFFFF99"),
-        toCSSColor("FF99CCFF"),
-        toCSSColor("FFFF99CC"),
-        toCSSColor("FFCC99FF"),
-        toCSSColor("FFFFCC99"),
-        toCSSColor("FF3366FF"),
-        toCSSColor("FF33CCCC"),
-        toCSSColor("FF99CC00"),
-        toCSSColor("FFFFCC00"),
-        toCSSColor("FFFF9900"),
-        toCSSColor("FFFF6600"),
-        toCSSColor("FF666699"),
-        toCSSColor("FF969696"),
-        toCSSColor("FF003366"),
-        toCSSColor("FF339966"),
-        toCSSColor("FF003300"),
-        toCSSColor("FF333300"),
-        toCSSColor("FF993300"),
-        toCSSColor("FF993366"),
-        toCSSColor("FF333399"),
+        toCSSColor("FF000000"), toCSSColor("FFFFFFFF"), toCSSColor("FFFF0000"),
+        toCSSColor("FF00FF00"), toCSSColor("FF0000FF"), toCSSColor("FFFFFF00"),
+        toCSSColor("FFFF00FF"), toCSSColor("FF00FFFF"), toCSSColor("FF000000"),
+        toCSSColor("FFFFFFFF"), toCSSColor("FFFF0000"), toCSSColor("FF00FF00"),
+        toCSSColor("FF0000FF"), toCSSColor("FFFFFF00"), toCSSColor("FFFF00FF"),
+        toCSSColor("FF00FFFF"), toCSSColor("FF800000"), toCSSColor("FF008000"),
+        toCSSColor("FF000080"), toCSSColor("FF808000"), toCSSColor("FF800080"),
+        toCSSColor("FF008080"), toCSSColor("FFC0C0C0"), toCSSColor("FF808080"),
+        toCSSColor("FF9999FF"), toCSSColor("FF993366"), toCSSColor("FFFFFFCC"),
+        toCSSColor("FFCCFFFF"), toCSSColor("FF660066"), toCSSColor("FFFF8080"),
+        toCSSColor("FF0066CC"), toCSSColor("FFCCCCFF"), toCSSColor("FF000080"),
+        toCSSColor("FFFF00FF"), toCSSColor("FFFFFF00"), toCSSColor("FF00FFFF"),
+        toCSSColor("FF800080"), toCSSColor("FF800000"), toCSSColor("FF008080"),
+        toCSSColor("FF0000FF"), toCSSColor("FF00CCFF"), toCSSColor("FFCCFFFF"),
+        toCSSColor("FFCCFFCC"), toCSSColor("FFFFFF99"), toCSSColor("FF99CCFF"),
+        toCSSColor("FFFF99CC"), toCSSColor("FFCC99FF"), toCSSColor("FFFFCC99"),
+        toCSSColor("FF3366FF"), toCSSColor("FF33CCCC"), toCSSColor("FF99CC00"),
+        toCSSColor("FFFFCC00"), toCSSColor("FFFF9900"), toCSSColor("FFFF6600"),
+        toCSSColor("FF666699"), toCSSColor("FF969696"), toCSSColor("FF003366"),
+        toCSSColor("FF339966"), toCSSColor("FF003300"), toCSSColor("FF333300"),
+        toCSSColor("FF993300"), toCSSColor("FF993366"), toCSSColor("FF333399"),
         toCSSColor("FF333333"),
         toCSSColor("FF000000"), // System Foreground
         toCSSColor("FFFFFFFF")  // System Background
@@ -658,8 +617,8 @@
         return styles;
     }
 
-    var SEL_SCHEME_SYSCLR = ["a:clrScheme", "*", "a:sysClr"];
     var SEL_SCHEME_RGBCLR = ["a:clrScheme", "*", "a:srgbClr"];
+    var SEL_SCHEME_SYSCLR = ["a:clrScheme", "*", "a:sysClr"];
     function readTheme(zip, rel) {
         var scheme = [];
         var theme = {
