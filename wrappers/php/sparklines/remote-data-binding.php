@@ -3,7 +3,7 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <table id="weather" class="weather">
         <thead>
             <tr>
@@ -85,24 +85,16 @@ for ($i = 0; $i < count($months); $i++) {
 </div>
 
 <style>
-    .chart-wrapper {
-        height: 370px;
-    }
-    .chart-wrapper .k-chart {
-        width: auto;
-        height: auto;
-    }
     .weather {
         border-collapse: collapse;
         line-height: 50px;
+        width: 100%;
     }
     .weather td, .weather th {
         padding: 0;
-        width: 200px;
         text-align: center;
     }
     .weather .month, .weather .month {
-        width: 80px;
         text-align: right;
         padding-right: 20px;
     }

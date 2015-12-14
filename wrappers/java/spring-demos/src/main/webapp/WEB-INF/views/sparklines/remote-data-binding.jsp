@@ -3,7 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
     <table id="weather" class="weather">
         <thead>
             <tr>
@@ -69,29 +69,21 @@ for (int i = 0; i < months.length; i++) {
     </table>
 </div>
 
-<style>
-    .chart-wrapper {
-        height: 370px;
-    }
-    .chart-wrapper .k-chart {
-        width: auto;
-        height: auto;
-    }
-    .weather {
-        border-collapse: collapse;
-        line-height: 50px;
-    }
-    .weather td, .weather th {
-        padding: 0;
-        width: 200px;
-        text-align: center;
-    }
-    .weather .month, .weather .month {
-        width: 80px;
-        text-align: right;
-        padding-right: 20px;
-    }
-</style>
+    <style>
+        .weather {
+            border-collapse: collapse;
+            line-height: 50px;
+            width: 100%;
+        }
+        .weather td, .weather th {
+            padding: 0;
+            text-align: center;
+        }
+        .weather .month, .weather .month {
+            text-align: right;
+            padding-right: 20px;
+        }
+    </style>
 
 
 <demo:footer />

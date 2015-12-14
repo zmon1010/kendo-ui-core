@@ -3,14 +3,13 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
-<div class="chart-wrapper">
+<div class="demo-section k-content">
     <div class="climate">
-        <h1>
+        <h4>
             Climate control history
-        </h1>
+        </h4>
         <table class="history">
             <tr>
-                <td class="item">Pressure</td>
                 <td class="spark">
 <?php
 $pressLog = new \Kendo\Dataviz\UI\Sparkline('press-log', array(
@@ -26,7 +25,6 @@ echo $pressLog->render();
                 <td class="value">980<span>mb</span></td>
             </tr>
             <tr>
-                <td class="item">Temperature</td>
                 <td class="spark">
 <?php
 $tempLogTooltip = new \Kendo\Dataviz\UI\SparklineTooltip();
@@ -49,7 +47,6 @@ echo $tempLog->render();
                 <td class="value">21<span>&deg;C</span></td>
             </tr>
             <tr>
-                <td class="item">Humidity</td>
                 <td class="spark">
 <?php
 $humLogTooltip = new \Kendo\Dataviz\UI\SparklineTooltip();
@@ -74,9 +71,9 @@ echo $humLog->render();
         </table>
     </div>
     <div class="temperature">
-        <h1>
+        <h4>
             Temperature control
-        </h1>
+        </h4>
         <div class="stats">
 <?php
 $lowRange = new \Kendo\Dataviz\UI\SparklineValueAxisItemPlotBand();
@@ -114,9 +111,9 @@ echo $tempRange->render();
         </div>
     </div>
     <div class="conditioner">
-        <h1>
+        <h4>
             Conditioner working time
-        </h1>
+        </h4>
         <ul class="pie-list stats">
             <li>MON
 <?php
@@ -186,48 +183,31 @@ echo $statsSun->render();
 </div>
 
 <style>
-    .chart-wrapper {
-        width: 460px;
-        height: 100%;
-        margin: 0 auto 30px auto;
-        padding: 0 0 30px 0;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-    .climate, .temperature, .conditioner {
-        margin: 0 30px;
+    .temperature, .conditioner {
+        margin: 0;
         padding: 30px 0 0 0;
     }
-    h1 {
-        margin-bottom: 20px;
-        font-size: 1.2em;
-    }
+
     .history {
         border-collapse: collapse;
         width: 100%;
     }
     .history td {
         padding: 0;
-    }
-    .history td.item {
-        text-align: right;
-        line-height: normal;
         vertical-align: bottom;
     }
     .history td.spark {
-        text-align: center;
-        line-height: 50px;
-        padding: 0 5px;
+        line-height: 30px;
     }
     .history td.value {
-        font-size: 2em;
+        font-size: 1.6em;
         font-weight: normal;
-        line-height: normal;
-        vertical-align: bottom;
+        line-height: 20px;
     }
     .history td.value span {
         font-size: .5em;
         vertical-align: top;
+        line-height: 30px;
     }
     .stats {
         text-align: center;
@@ -239,7 +219,9 @@ echo $statsSun->render();
     }
     .pie-list li {
         display: inline-block;
-        width: 54px;
+        text-align: center;
+        width: 34px;
+        font-size: 10px;
     }
     #stats-mon,
     #stats-tue,
@@ -249,12 +231,12 @@ echo $statsSun->render();
     #stats-sat,
     #stats-sun {
         display: block;
-        width: 54px;
-        line-height: 50px;
+        width: 34px;
+        line-height: 30px;
     }
     #temp-range {
-        width: 400px;
-        line-height: 50px;
+        width: 100%;
+        line-height: 30px;
     }
 </style>
 

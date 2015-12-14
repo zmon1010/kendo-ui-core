@@ -8,7 +8,7 @@ ini_set('display_startup_errors',1);
 error_reporting(-1);
 ?>
 
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <table id="stats" class="stats">
         <thead>
             <tr>
@@ -124,7 +124,7 @@ for ($i = 0; $i < count($data); $i++) {
 </div>
 
 <style>
-    .chart-wrapper {
+    .demo-section k-content {
         padding: 10px 0;
         height: 450px;
     }

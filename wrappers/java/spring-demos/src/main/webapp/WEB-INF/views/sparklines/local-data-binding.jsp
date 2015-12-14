@@ -6,7 +6,7 @@
 <%@ page import="com.kendoui.spring.models.CompensationStats" %>
 
 <demo:header />
-	<div class="chart-wrapper">
+	<div class="demo-section k-content wide">
     <table id="stats" class="stats">
         <thead>
             <tr>

@@ -2,7 +2,7 @@
 Inherits="System.Web.Mvc.ViewPage<IList<Kendo.Mvc.Examples.Models.CompensationStats>>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <table id="stats" class="stats">
         <thead>
             <tr>
@@ -81,7 +81,7 @@ for (var i = 0; i < Model.Count; i++) {
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
-        .chart-wrapper {
+        .demo-section k-content wide {
             padding: 10px 0;
             height: 450px;
         }

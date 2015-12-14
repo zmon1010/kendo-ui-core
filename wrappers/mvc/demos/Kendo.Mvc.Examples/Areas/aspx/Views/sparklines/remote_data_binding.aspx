@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <table id="weather" class="weather">
         <thead>
             <tr>
@@ -58,24 +58,16 @@ for (int i = 0; i < months.Length; i++) {
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
-        .chart-wrapper {
-            height: 370px;
-        }
-        .chart-wrapper .k-chart {
-            width: auto;
-            height: auto;
-        }
         .weather {
             border-collapse: collapse;
             line-height: 50px;
+            width: 100%;
         }
         .weather td, .weather th {
             padding: 0;
-            width: 200px;
             text-align: center;
         }
         .weather .month, .weather .month {
-            width: 80px;
             text-align: right;
             padding-right: 20px;
         }
