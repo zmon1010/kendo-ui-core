@@ -2,7 +2,7 @@
          Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart<Kendo.Mvc.Examples.Models.DownloadSpeed>()
         .Name("chart")
         .Title("Transfer speed Mbit/s")

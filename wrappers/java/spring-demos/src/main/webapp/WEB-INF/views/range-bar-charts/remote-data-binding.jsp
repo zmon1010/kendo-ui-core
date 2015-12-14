@@ -6,7 +6,7 @@
 <c:url value="/range-bar-charts/remote-data-binding/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Transfer speed Mbit/s" />
              <kendo:chart-legend position="top" />

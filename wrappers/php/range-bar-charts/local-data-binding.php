@@ -2,14 +2,18 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/chart_data.php';
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $seriesA = new \Kendo\Dataviz\UI\ChartSeriesItem();
-$seriesA->fromField('fromA')
-	   ->toField('toA');
+$seriesA->name('Task A')
+        ->fromField('fromA')
+        ->toField('toA');
 
 $seriesB = new \Kendo\Dataviz\UI\ChartSeriesItem();
-$seriesB->fromField('fromB')
-	    ->toField('toB');
+$seriesB->name('Task B')
+        ->fromField('fromB')
+        ->toField('toB');
 
 $valueAxis = new \Kendo\Dataviz\UI\ChartValueAxisItem();
 $valueAxis->max(100);
@@ -39,4 +43,5 @@ $chart->title(array('text' => 'Task Completeness'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

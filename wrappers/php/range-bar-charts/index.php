@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $weather = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $weather
   ->data(array(
@@ -20,8 +22,8 @@ $weather
   ));
 
 $categoryAxis = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
-$categoryAxis->categories(array("Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
+$categoryAxis->categories(array("January", "February", "March", "April", "May", "June",
+                                "July", "August", "September", "October", "November", "December"));
 
 $tooltip = new \Kendo\Dataviz\UI\ChartTooltip();
 $tooltip->visible(true)
@@ -36,5 +38,5 @@ $chart->addSeriesItem($weather)
 
 echo $chart->render();
 ?>
-
+</div>
 <?php require_once '../include/footer.php'; ?>

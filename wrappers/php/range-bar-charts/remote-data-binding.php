@@ -13,7 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $wifi = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $wifi->fromField('wifiFrom')
 	 ->toField('wifiTo')
@@ -48,4 +50,5 @@ $chart->title(array('text' => 'Transfer speed Mbit/s'))
 
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
