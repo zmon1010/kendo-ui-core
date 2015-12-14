@@ -7,9 +7,10 @@
 <%: Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()
     .Name("grid")
     .Pageable()
+    .Groupable()
     .Scrollable()
     .Sortable()
-    .HtmlAttributes(new { style = "height:430px;" })
+    .HtmlAttributes(new { style = "height:550px;" })
     .Columns(columns =>
     {
         columns.Bound(p => p.ProductName).Title("Product Name");
@@ -19,7 +20,7 @@
     })
     .DataSource(dataSource => dataSource
         .Ajax()
-        .PageSize(15)
+        .PageSize(20)
         .Read(read => read.Action("Products_Read", "Grid"))
      )
     .Resizable(resize => resize.Columns(true))

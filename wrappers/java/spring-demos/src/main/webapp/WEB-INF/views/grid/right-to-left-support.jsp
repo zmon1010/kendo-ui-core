@@ -4,14 +4,14 @@
 
 <demo:header />
 	<div class="k-rtl">
-	    <kendo:grid name="grid" pageable="true" sortable="true" height="430">
+	    <kendo:grid name="grid" pageable="true" sortable="true" height="550">
 	        <kendo:grid-columns>
 	            <kendo:grid-column title="Product Name" field="productName" />
 	            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="130px" />
 	            <kendo:grid-column title="Units In Stock" field="unitsInStock" width="130px" />
 	            <kendo:grid-column title="Discontinued" field="discontinued" width="130px" />
 	        </kendo:grid-columns>
-	        <kendo:dataSource data="${products}" pageSize="15">        
+	        <kendo:dataSource data="${products}" pageSize="20">        
 	            <kendo:dataSource-schema>
 	                <kendo:dataSource-schema-model>
 	                    <kendo:dataSource-schema-model-fields>

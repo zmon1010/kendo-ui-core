@@ -20,7 +20,7 @@ $transport = new \Kendo\Data\DataSourceTransport();
 
 $read = new \Kendo\Data\DataSourceTransportRead();
 
-$read->url('rtl.php')
+$read->url('right-to-left-support.php')
      ->contentType('application/json')
      ->type('POST');
 
@@ -57,7 +57,7 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(15)
+           ->pageSize(20)
            ->serverPaging(true)
            ->serverSorting(true)
            ->serverGrouping(true)
@@ -86,7 +86,7 @@ $discontinued->field('Discontinued')
 
 $grid->addColumn($productName, $unitPrice, $unitsInStock, $discontinued)
      ->dataSource($dataSource)
-     ->height(430)
+     ->height(550)
      ->sortable(true)
      ->resizable(true)
      ->pageable(true);
