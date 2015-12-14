@@ -3920,13 +3920,15 @@ var __meta__ = { // jshint ignore:line
             return text;
         },
 
-        clearArea: function(e) {
+        clearArea: function (e) {
+            var table;
             if (this.areaClipBoard && e && e.target === this.areaClipBoard[0]) {
                 if (this.options.navigatable) {
-                    $(this.current()).closest("table").focus();
+                    table = $(this.current()).closest("table");
                 } else {
-                    this.table.focus();
+                    table = this.table;
                 }
+                focusTable(table, true);
             }
 
             if (this.areaClipBoard) {
@@ -7768,35 +7770,29 @@ var __meta__ = { // jshint ignore:line
    }
 
    function focusTable(table, direct) {
-       var msie = browser.msie;
-       if (direct === true) {
-           table = $(table);
-           var condition = true || msie && table.parent().is(".k-grid-content,.k-grid-header-wrap"),
-               scrollTop, scrollLeft;
-           if (condition) {
-               scrollTop = table.parent().scrollTop();
-               scrollLeft = table.parent().scrollLeft();
-           }
+      var msie = browser.msie || browser.edge;
+      if (direct === true) {
+         table = $(table);
+         var scrollTop, scrollLeft;
+         scrollTop = table.parent().scrollTop();
+         scrollLeft = table.parent().scrollLeft();
 
-           if (msie) {
-               try {
-                   //The setActive method does not cause the document to scroll to the active object in the current page
-                   table[0].setActive();
-               } catch(e) {
-                   table[0].focus();
-               }
-           } else {
-               table[0].focus(); //because preventDefault bellow, IE cannot focus the table alternative is unselectable=on
-           }
+         if (msie) {
+            try {
+               //The setActive method does not cause the document to scroll to the active object in the current page
+               table[0].setActive();
+            } catch(e) {
+               table[0].focus();
+            }
+         } else {
+            table[0].focus(); //because preventDefault bellow, IE cannot focus the table alternative is unselectable=on
+         }
 
-           if (condition) {
-               table.parent().scrollTop(scrollTop);
-               table.parent().scrollLeft(scrollLeft);
-           }
+         table.parent().scrollTop(scrollTop).scrollLeft(scrollLeft);
 
-       } else {
-           $(table).one("focusin", function(e) { e.preventDefault(); }).focus();
-       }
+      } else {
+         $(table).one("focusin", function(e) { e.preventDefault(); }).focus();
+      }
    }
 
    function isInputElement(element) {
