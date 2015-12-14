@@ -2,28 +2,33 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-       <div id="example" class="k-content">
-        
-        <div class="demo-section">
+       <div id="example">
+        <div class="box wide">
+            <div class="box-col">
+                <h4>Options</h4>
+                <ul class="options">
+                    <li><input type="checkbox" id="text" checked="checked"/><label for="text">Show Text </label></li>
+                    <li><input type="checkbox" id="checksum" /><label for="checksum">Show Checksum</label></li>
+                </ul>
+            </div>
+            <div class="box-col">
+                <h4>Types</h4>
+                <ul class="options second-col">
+                    <li><label for="type">Encoding:</label><input  id="type" /></li>
+                    <li>
+                        <label for="value">Value:</label><input  id="value" class="k-textbox" value="1234567"/>
+                        <span id="validValue" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="demo-section k-content">
             <%=Html.Kendo().Barcode()
                 .Name("barcode")
                 .Value("1234567")
                 .Encoding(BarcodeSymbology.EAN8)
                 .Background("transparent")
             %>
-        </div>
-        <div class="configuration-horizontal">
-            <div class="config-section">
-                <ul class="options">
-                    <li>
-                        <label><input  id="value" class="k-textbox" value="1234567"/> Value </label>
-                        <span id="validValue" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"></span>
-                    </li>
-                    <li><label><input  id="type" /> Encoding </label></li>
-                    <li><label><input type="checkbox" id="text" checked="checked"/> Show Text </label></li>
-                    <li><label><input type="checkbox" id="checksum" /> Show Checksum </label></li>
-                </ul>
-            </div>
         </div>
         
         <script>
@@ -81,26 +86,9 @@
             });
         </script>
         <style type="text/css">
-            #barcode
-            {
+            #barcode {
                 width: 300px;
-                margin: 0 auto;
-            }
-            
-            .configuration-horizontal .options li
-            {
-                padding: 3px 0;
-            }
-            
-            .configuration-horizontal .k-textbox
-            {
-                width:150px;
-                margin-left: 0;
-            }
-            
-            #validValue
-            {
-                display:none;
+                margin: 20px auto;
             }
         </style>
     </div>

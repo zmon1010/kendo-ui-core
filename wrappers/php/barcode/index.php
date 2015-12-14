@@ -6,20 +6,20 @@ require_once '../include/header.php';
      <?php
     $manchego = new \Kendo\Dataviz\UI\Barcode('manchego');
         $manchego->value("2346722");
-        $manchego->width("200");
+        $manchego->width("280");
         $manchego->height("100");
         $manchego->type("ean8");            
                 
 	$mascarpone = new \Kendo\Dataviz\UI\Barcode('mascarpone');
         $mascarpone->value("Mascarpone");
         $mascarpone->type("code128");
-        $mascarpone->width("200");
+        $mascarpone->width("280");
         $mascarpone->height("100"); 
 
 	$gudbrands = new \Kendo\Dataviz\UI\Barcode('gudbrands');
         $gudbrands->value("CHEESE");
         $gudbrands->type("code39");
-        $gudbrands->width("200");
+        $gudbrands->width("280");
         $gudbrands->height("100"); 
     ?>
 
@@ -41,7 +41,7 @@ require_once '../include/header.php';
     <style>
         #dairy {
             margin: 0;
-            padding: 30px 25px;
+            padding: 30px 0;
             list-style-type: none;
         }
         #dairy li {
@@ -49,17 +49,16 @@ require_once '../include/header.php';
             padding: 10px;
             margin: 6px;
             background-color: #fff;
-            
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
             -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
             -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
-        #dairy li p, #dairy li img {
+        #dairy li span, #dairy li img {
             margin: 0;
             padding: 0;
         }
         #dairy li img {
-            margin-bottom: 10px;
+            margin: 40px;
         }
     </style>
 

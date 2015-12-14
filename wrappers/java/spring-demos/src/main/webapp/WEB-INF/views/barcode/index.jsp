@@ -12,17 +12,17 @@
     <ul id="dairy">
         <li>
             <img src="${manchegoUrl}" alt="Queso Manchego La Pastora" />
-            <kendo:barcode name="manchego" value="2346722" type="ean8" width="200" height="100">
+            <kendo:barcode name="manchego" value="2346722" type="ean8" width="280" height="100">
             </kendo:barcode>
         </li>
         <li>
             <img src="${mascarponeUrl}" alt="Mascarpone Fabioli" />
-            <kendo:barcode name="mascarpone" value="Mascarpone" type="code128" width="200" height="100">
+            <kendo:barcode name="mascarpone" value="Mascarpone" type="code128" width="280" height="100">
             </kendo:barcode>
         </li>
         <li>
             <img src="${gudbrandsUrl}" alt="Gudbrandsdalsost" />
-            <kendo:barcode name="gudbrands" value="CHEESE" type="code39" width="200" height="100">
+            <kendo:barcode name="gudbrands" value="CHEESE" type="code39" width="280" height="100">
             </kendo:barcode>
         </li>
     </ul>
@@ -30,7 +30,7 @@
     <style>
         #dairy {
             margin: 0;
-            padding: 30px 25px;
+            padding: 30px 0;
             list-style-type: none;
         }
         #dairy li {
@@ -38,17 +38,16 @@
             padding: 10px;
             margin: 6px;
             background-color: #fff;
-            
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
             -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
             -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
-        #dairy li p, #dairy li img {
+        #dairy li span, #dairy li img {
             margin: 0;
             padding: 0;
         }
         #dairy li img {
-            margin-bottom: 10px;
+            margin: 40px;
         }
     </style>
 <demo:footer />
