@@ -3,14 +3,14 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
 
-<div class="demo-section k-header">
+<div class="demo-section k-content">
     <div>
         <h4>Basic Button</h4>
         <p>
             <?php
                 echo (new \Kendo\UI\Button('primaryTextButton'))
                     ->attr('class', 'k-primary')
-                    ->content('Primary button')
+                    ->content('Primary Button')
                     ->render();
             ?>
 
@@ -73,16 +73,16 @@ require_once '../lib/Kendo/Autoload.php';
 
 
     <style>
-        .demo-section {
-            width: 400px;
-        }
         .demo-section p {
             margin: 0 0 30px;
-            line-height: 40px;
+            line-height: 50px;
+        }
+        .demo-section p .k-button {
+            margin: 0 10px 0 0;
         }
         .k-primary {
-            width: 150px;
-        }
+            min-width: 150px;
+        }                
     </style>
 </div>
 

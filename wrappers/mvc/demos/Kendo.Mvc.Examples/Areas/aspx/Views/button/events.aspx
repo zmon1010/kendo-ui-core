@@ -5,6 +5,9 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
+<div class="demo-section k-content">
+    <h4>Buttons</h4>
+
 <%= Html.Kendo().Button()
     .Name("textButton")
     .Content("Text button")
@@ -25,10 +28,11 @@
     .HtmlAttributes( new {type = "button"} )
     .Events(ev => ev.Click("onClick")) %>
 
-<p>(The disabled button will not fire click events)</p>
+    <p class="demo-hint">The disabled button will not fire click events.</p>
+</div>
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Events log</span>
+<div class="box">                
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 
@@ -37,5 +41,14 @@
         kendoConsole.log("event :: click (" + $(e.event.target).closest(".k-button").attr("id") + ")");
     }
 </script>
+
+<style>
+    .demo-section {
+        line-height: 4em;
+    }
+    .demo-section .k-button {
+        margin-right: 10px;
+    }
+</style>
 
 </asp:Content>

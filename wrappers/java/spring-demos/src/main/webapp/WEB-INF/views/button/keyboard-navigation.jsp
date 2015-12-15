@@ -36,7 +36,8 @@
     </div>
 </div>
 
-<div class="demo-section k-content">                
+<div class="demo-section k-content">
+    <h4>Buttons</h4>                
 <kendo:button name="textButton" type="button" click="onClick">
     <kendo:button-content>
         Text button
