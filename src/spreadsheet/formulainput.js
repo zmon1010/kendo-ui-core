@@ -418,8 +418,8 @@
             this.element
                 .show()
                 .css({
-                    "top": rectangle.top + "px",
-                    "left": rectangle.left + "px"
+                    "top": rectangle.top + 1 + "px",
+                    "left": rectangle.left + 1 + "px"
                 });
 
             this._cellTooltip.css({
@@ -434,8 +434,8 @@
             }
 
             this.element.css({
-                width: rectangle.width + 1,
-                height: rectangle.height + 1
+                width: rectangle.width - 1,
+                height: rectangle.height - 1
             });
         },
 

@@ -121,7 +121,7 @@
     .k-spreadsheet-cell-editor {
         position: absolute;
         display: none;
-        padding: 0 .3em;
+        padding: 0 3px;
         line-height: @formula-input-height;
         z-index: 2000;
         overflow: hidden;
@@ -201,8 +201,9 @@
         display: block;
         bottom: 0;
         right: 0;
-        margin-bottom: -4px;
-        margin-right: -4px;
+        border-radius: 50%;
+        margin-bottom: -5px;
+        margin-right: -5px;
         border-width: 1px;
         border-style: solid;
         z-index: 100;
@@ -216,7 +217,7 @@
     }
 
     .k-auto-fill {
-        border-width: 3px;
+        border-width: 1px;
         border-style: solid;
         cursor: crosshair;
     }
@@ -620,7 +621,7 @@
 }
 
 .k-spreadsheet-selection-highlight {
-    border-width: 2px;
+    border-width: 1px;
     border-style: solid;
     position: absolute;
     box-sizing: border-box;
