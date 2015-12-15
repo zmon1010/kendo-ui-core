@@ -14,7 +14,7 @@
                 return;
             }
 
-            var filters = dropdownlist.dataSource.filter();
+            var filter = dropdownlist.dataSource.filter();
             var filterInput = dropdownlist.filterInput;
             var value = filterInput ? filterInput.val() : "";
 

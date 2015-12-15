@@ -14,7 +14,7 @@
                 return;
             }
 
-            var filters = combobox.dataSource.filter();
+            var filter = combobox.dataSource.filter();
             var value = combobox.input.val();
 
             if (!filter || !filter.filters.length) {
