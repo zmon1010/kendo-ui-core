@@ -66,7 +66,7 @@
         "enter": "onEditorBlur",
         "shift+enter": "onEditorBlur",
         "tab": "onEditorBlur",
-        "shift+tab": "oonEditorBlur"
+        "shift+tab": "onEditorBlur"
     };
 
     var FORMULABAR_EVENTS = $.extend({ focus: "onEditorBarFocus" }, EDITOR_EVENTS);
