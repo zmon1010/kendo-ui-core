@@ -15,7 +15,12 @@
     	</kendo:tooltip-content>
     </kendo:tooltip>    
     
-    <div class="demo-section">
+<div class="demo-section k-content wide">
+        <div class="dairy-description">
+            <h2>Dairy Products</h2>
+            <p>Queso Cabrales, Queso Manchego La Pastora, Gorgonzola Telino, Mascarpone Fabioli, Geitost, Raclette Courdavault, Camembert Pierrott, Gudbrandsdalsost, Flotemysost, Mozzarella di Giovanni</p>
+            <p class="demo-hint" style="margin: 1em 0;">Hover an image for details.</p>
+        </div>
         <ul id="products" class="dairy-photos">
             <li>
                 <a href="#" data-id="11"><img src="${ imageFolderUrl }11.jpg" /></a>
@@ -37,11 +42,6 @@
                 <a href="#" data-id="72"><img src="${ imageFolderUrl }72.jpg" /></a>
             </li>
         </ul>
-        <div class="dairy-description">
-            <h2>Dairy Products</h2>
-            <p>Queso Cabrales, Queso Manchego La Pastora, Gorgonzola Telino, Mascarpone Fabioli, Geitost, Raclette Courdavault, Camembert Pierrott, Gudbrandsdalsost, Flotemysost, Mozzarella di Giovanni</p>
-            <p>Hover an image for details.</p>
-        </div>
     </div>
     
 	<script>
@@ -53,15 +53,10 @@
 	</script>
 	
 	<style>
-	   .demo-section {
-           height: 460px;
-       }
-       .dairy-photos {
-           float: left;
+	   .dairy-photos {
            list-style-type: none;
-           margin: 60px 0 0 60px;
+           margin: 0;
            padding: 0;
-           width: 330px;
            line-height: 0;
        }
        .dairy-photos li {
@@ -88,16 +83,14 @@
            display: inline-block;
        }
        .dairy-description {
-           float: right;
-           width: 250px;
-           margin: 80px 60px 0 0;
+
        }
        .dairy-description h2 {
            font-size: 2.7em;
            font-weight: normal;
        }
        .dairy-description p {
-           line-height: 2em;
+           line-height: 1.5;
        }
        .dairy-details {
            padding: 10px 0 0 0;

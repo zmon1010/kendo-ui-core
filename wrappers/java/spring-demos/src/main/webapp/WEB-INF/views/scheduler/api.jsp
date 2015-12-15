@@ -60,77 +60,78 @@
 %>
 
 <demo:header />
-    <kendo:scheduler name="scheduler" timezone="Etc/UTC" height="400" date="<%= date %>" startTime="<%= startTime %>">
-    	<kendo:scheduler-views>
-    		<kendo:scheduler-view type="day" />
-    		<kendo:scheduler-view type="week" selected="true" />
-    		<kendo:scheduler-view type="month"  />
-    		<kendo:scheduler-view type="agenda" />
-			<kendo:scheduler-view type="timeline" />
-    	</kendo:scheduler-views>
-        <kendo:dataSource batch="true">
-             <kendo:dataSource-schema>
-                <kendo:dataSource-schema-model id="taskId">
-                     <kendo:dataSource-schema-model-fields>
-                         <kendo:dataSource-schema-model-field name="taskId" type="number" />
-                         <kendo:dataSource-schema-model-field name="title" defaultValue="No title" type="string" />
-                         <kendo:dataSource-schema-model-field name="description" type="string" />
-                         <kendo:dataSource-schema-model-field name="isAllDay" type="boolean" />
-                         <kendo:dataSource-schema-model-field name="recurrenceRule" type="string" nullable="true"/>
-                         <kendo:dataSource-schema-model-field name="recurrenceId" type="number" nullable="true" />
-                         <kendo:dataSource-schema-model-field name="recurrenceException" type="string" nullable="true" />
-                         <kendo:dataSource-schema-model-field name="ownerId" type="number" defaultValue="1" />
-                         <kendo:dataSource-schema-model-field name="start" type="date" />
-                         <kendo:dataSource-schema-model-field name="end" type="date" />
-                    </kendo:dataSource-schema-model-fields>
-                </kendo:dataSource-schema-model>
-            </kendo:dataSource-schema>
-            <kendo:dataSource-transport>
-                <kendo:dataSource-transport-create url="${createUrl}" dataType="json" type="POST" contentType="application/json" />
-                <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" />
-                <kendo:dataSource-transport-update url="${updateUrl}" dataType="json" type="POST" contentType="application/json" />
-                <kendo:dataSource-transport-destroy url="${destroyUrl}" dataType="json" type="POST" contentType="application/json" />
-                <kendo:dataSource-transport-parameterMap>
-                	<script>
-	                	function parameterMap(options, type) { 
-	                		if(type==="read"){
-	                			return JSON.stringify(options);
-	                		} else {
-	                			return JSON.stringify(options.models);
-	                		}
-	                	}
-                	</script>
-                </kendo:dataSource-transport-parameterMap>              
-            </kendo:dataSource-transport>
-        </kendo:dataSource>
-    </kendo:scheduler>
-     <div class="demo-section">
-        <p>
-            <label>Current Date:</label>
-            <kendo:datePicker name="date" value="<%= date %>">
-            	<kendo:datePicker-change>
-            	<script>
-            	function() {
-            		var scheduler = $("#scheduler").data("kendoScheduler");
-         		   	scheduler.date(this.value());
-        		}
-            	</script>
-            	</kendo:datePicker-change>
-            </kendo:datePicker>
-        </p>
-        <p>
-            <label>Current View:</label>
-            <kendo:dropDownList name="views" value="week" dataTextField="text" dataValueField="value">
-            	<kendo:dataSource data="<%= views %>" />
-            	<kendo:dropDownList-change>
-            	<script>
-            	function() {
-            		var scheduler = $("#scheduler").data("kendoScheduler");
-         		   	scheduler.view(this.value());
-        		}
-            	</script>
-            	</kendo:dropDownList-change>
-            </kendo:dropDownList>
-        </p>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Current Date</h4>
+        <kendo:datePicker name="date" value="<%= date %>">
+        	<kendo:datePicker-change>
+        	<script>
+        	function() {
+        		var scheduler = $("#scheduler").data("kendoScheduler");
+     		   	scheduler.date(this.value());
+    		}
+        	</script>
+        	</kendo:datePicker-change>
+        </kendo:datePicker>
     </div>
+    <div class="box-col">
+        <h4>Current View</h4>
+        <kendo:dropDownList name="views" value="week" dataTextField="text" dataValueField="value">
+        	<kendo:dataSource data="<%= views %>" />
+        	<kendo:dropDownList-change>
+        	<script>
+        	function() {
+        		var scheduler = $("#scheduler").data("kendoScheduler");
+     		   	scheduler.view(this.value());
+    		}
+        	</script>
+        	</kendo:dropDownList-change>
+        </kendo:dropDownList>
+    </div>
+</div>
+<kendo:scheduler name="scheduler" timezone="Etc/UTC" height="400" date="<%= date %>" startTime="<%= startTime %>">
+	<kendo:scheduler-views>
+		<kendo:scheduler-view type="day" />
+		<kendo:scheduler-view type="week" selected="true" />
+		<kendo:scheduler-view type="month"  />
+		<kendo:scheduler-view type="agenda" />
+		<kendo:scheduler-view type="timeline" />
+	</kendo:scheduler-views>
+    <kendo:dataSource batch="true">
+         <kendo:dataSource-schema>
+            <kendo:dataSource-schema-model id="taskId">
+                 <kendo:dataSource-schema-model-fields>
+                     <kendo:dataSource-schema-model-field name="taskId" type="number" />
+                     <kendo:dataSource-schema-model-field name="title" defaultValue="No title" type="string" />
+                     <kendo:dataSource-schema-model-field name="description" type="string" />
+                     <kendo:dataSource-schema-model-field name="isAllDay" type="boolean" />
+                     <kendo:dataSource-schema-model-field name="recurrenceRule" type="string" nullable="true"/>
+                     <kendo:dataSource-schema-model-field name="recurrenceId" type="number" nullable="true" />
+                     <kendo:dataSource-schema-model-field name="recurrenceException" type="string" nullable="true" />
+                     <kendo:dataSource-schema-model-field name="ownerId" type="number" defaultValue="1" />
+                     <kendo:dataSource-schema-model-field name="start" type="date" />
+                     <kendo:dataSource-schema-model-field name="end" type="date" />
+                </kendo:dataSource-schema-model-fields>
+            </kendo:dataSource-schema-model>
+        </kendo:dataSource-schema>
+        <kendo:dataSource-transport>
+            <kendo:dataSource-transport-create url="${createUrl}" dataType="json" type="POST" contentType="application/json" />
+            <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" />
+            <kendo:dataSource-transport-update url="${updateUrl}" dataType="json" type="POST" contentType="application/json" />
+            <kendo:dataSource-transport-destroy url="${destroyUrl}" dataType="json" type="POST" contentType="application/json" />
+            <kendo:dataSource-transport-parameterMap>
+            	<script>
+             	function parameterMap(options, type) { 
+             		if(type==="read"){
+             			return JSON.stringify(options);
+             		} else {
+             			return JSON.stringify(options.models);
+             		}
+             	}
+            	</script>
+            </kendo:dataSource-transport-parameterMap>              
+        </kendo:dataSource-transport>
+    </kendo:dataSource>
+</kendo:scheduler>
+
 <demo:footer />

@@ -27,7 +27,7 @@ echo $tooltip->render();
         <p>#=target.data('title')#</p>
     </script>
 
-    <div class="demo-section">
+     <div class="demo-section k-content wide">
         <ul id="products" class="dairy-photos">
             <li>
                 <a href="#" data-id="11" title="A cheese made in the artisan tradition by rural dairy farmers in the north of Spain"><img src="../content/web/foods/11.jpg" /> Queso de Cabrales</a>
@@ -57,12 +57,7 @@ echo $tooltip->render();
     </div>
 
     <style>
-        .demo-section {
-            width: 620px;
-            border: 0;
-            background: #ffc851 url('../content/web/tooltip/cheese.jpg') no-repeat 100% 100%;
-        }
-        .dairy-photos {
+         .dairy-photos {
             list-style-type: none;
             margin: 15px 0 15px 10px;
             padding: 0;

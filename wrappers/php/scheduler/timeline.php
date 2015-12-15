@@ -171,6 +171,7 @@ $attendeesResource->field('attendees')
 $scheduler = new \Kendo\UI\Scheduler('scheduler');
 $scheduler->timezone("Etc/UTC")
         ->date(new DateTime('2013/6/13'))
+        ->startTime(new DateTime('2013/6/13 7:00'))
         ->addResource($roomResource, $attendeesResource)
         ->group(array('resources' => array('Rooms', 'Attendees'), 'orientation' => 'vertical'))
         ->addView(array('type' => 'timeline', 'eventHeight' => 50, 'majorTick' => 60, 'startTime' => new DateTime('2013/6/13 7:00')),
