@@ -387,7 +387,7 @@
     });
 
     test("intersection operator", function(){
-        var exp = calc.parse(Sheet1, 0, 0, "=sum(A2:A5 A3:A4, Sheet2!FOO)");
+        var exp = calc.parse(Sheet1, 0, 0, "=sum(A2:A5 A3:A4, Sheet2!FOOBAR)");
         hasProps(exp, {
             type: "exp",
             ast: {
@@ -406,7 +406,7 @@
                              },
                     },
                     // second arg is the user-defined name FOO
-                    { type: "ref", ref: "name", name: "FOO", sheet: "Sheet2", _hasSheet: true }
+                    { type: "ref", ref: "name", name: "FOOBAR", sheet: "Sheet2", _hasSheet: true }
                 ]
             }
         });

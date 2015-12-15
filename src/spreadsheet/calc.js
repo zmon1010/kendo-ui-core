@@ -133,9 +133,7 @@
     function parseFormula(sheet, row, col, input) {
         var refs = [];
 
-        if (typeof input == "string") {
-            input = TokenStream(InputStream(input));
-        }
+        input = TokenStreamWithReferences(InputStream(input));
 
         return {
             type: "exp",
@@ -177,74 +175,93 @@
             return maybeBinary(maybeIntersect(parseAtom(commas)), 0, commas);
         }
 
-        function maybeRef(name) {
-            var m;
-            if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/i.exec(name))) {
-                var thesheet  = m[1] && m[2];
-                var relcol = m[3] ? 0 : 1, thecol = getcol(m[4]);
-                var relrow = m[5] ? 0 : 2, therow = getrow(m[6]);
-                if (relcol) {
-                    thecol -= col;
-                }
-                if (relrow) {
-                    therow -= row;
-                }
-                return new CellRef(therow, thecol, relcol | relrow)
-                    .setSheet(thesheet || sheet, !!thesheet);
-            }
-            if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
-                var thesheet  = m[1] && m[2];
-                var name = m[3];
-                return new NameRef(name)
-                    .setSheet(thesheet || sheet, !!thesheet);
-            }
-        }
-
-        function parseSymbol(tok, addRef) {
+        function parseSymbol(tok) {
             if (tok.upper == "TRUE" || tok.upper == "FALSE") {
                 return tok.upper == "TRUE" ? TRUE : FALSE;
             }
-            var ref = maybeRef(tok.value);
-            if (ref) {
-                if (addRef) {
-                    addReference(ref);
+            return addReference(new NameRef(tok.value));
+        }
+
+        function parseFuncall() {
+            var fname = input.next();
+            fname = fname.value;
+            skip("punc", "(");
+            var args = [];
+            if (!is("punc", ")")) {
+                while (1) {
+                    if (is("op", ",")) {
+                        args.push({ type: "null" });
+                        input.next();
+                        continue;
+                    }
+                    args.push(parseExpression(false));
+                    if (input.eof() || is("punc", ")")) {
+                        break;
+                    }
+                    skip("op", ",");
                 }
-                return ref;
             }
-            return tok;
+            skip("punc", ")");
+            return {
+                type: "func",
+                func: fname,
+                args: args
+            };
+        }
+
+        function fixReference(ref) {
+            if (!ref.hasSheet()) {
+                ref.setSheet(sheet);
+            }
+            if (ref instanceof RangeRef) {
+                fixReference(ref.topLeft);
+                fixReference(ref.bottomRight);
+            } else if (ref instanceof CellRef) {
+                if (ref.rel & 1) {
+                    ref.col -= col;
+                }
+                if (ref.rel & 2) {
+                    ref.row -= row;
+                }
+            }
+            return addReference(ref);
         }
 
         function parseAtom(commas) {
-            var exp = maybeRange() || maybeCall();
-            if (!exp) {
-                if (is("punc", "(")) {
-                    input.next();
-                    exp = parseExpression(true);
-                    skip("punc", ")");
-                }
-                else if (is("num") || is("str") || is("sheet")) {
-                    exp = input.next();
-                }
-                else if (is("sym")) {
-                    exp = parseSymbol(input.next(), true);
-                }
-                else if (is("op", "+") || is("op", "-")) {
-                    exp = {
-                        type: "prefix",
-                        op: input.next().value,
-                        exp: parseExpression(commas)
-                    };
-                }
-                else if (is("punc", "{")) {
-                    input.next();
-                    exp = parseArray();
-                }
-                else if (!input.peek()) {
-                    input.croak("Incomplete expression");
-                }
-                else {
-                    input.croak("Parse error");
-                }
+            var exp;
+            if (is("ref")) {
+                exp = fixReference(input.next());
+            }
+            else if (is("func")) {
+                exp = parseFuncall();
+            }
+            else if (is("punc", "(")) {
+                input.next();
+                exp = parseExpression(true);
+                skip("punc", ")");
+            }
+            else if (is("num") || is("str") || is("sheet")) {
+                exp = input.next();
+            }
+            else if (is("sym")) {
+                exp = parseSymbol(input.next());
+            }
+            else if (is("op", "+") || is("op", "-")) {
+                exp = {
+                    type: "prefix",
+                    op: input.next().value,
+                    exp: parseExpression(commas)
+                };
+            }
+            else if (is("punc", "{")) {
+                input.next();
+                exp = parseArray();
+            }
+            else if (!input.peek()) {
+                input.croak("Incomplete expression");
+            }
+            else {
+                input.croak("Parse error");
             }
             return maybePercent(exp);
         }
@@ -270,7 +287,7 @@
         }
 
         function maybeIntersect(exp) {
-            if (is("punc", "(") || is("sym") || is("num")) {
+            if (is("punc", "(") || is("ref") || is("num") || is("func")) {
                 return {
                     type: "binary",
                     op: " ",
@@ -280,36 +297,6 @@
             } else {
                 return exp;
             }
-        }
-
-        function maybeCall() {
-            return input.ahead(2, function(fname, b){
-                if (fname.type == "sym" && b.type == "punc" && b.value == "(") {
-                    fname = fname.value;
-                    input.skip(2);
-                    var args = [];
-                    if (!is("punc", ")")) {
-                        while (1) {
-                            if (is("op", ",")) {
-                                args.push({ type: "null" });
-                                input.next();
-                                continue;
-                            }
-                            args.push(parseExpression(false));
-                            if (input.eof() || is("punc", ")")) {
-                                break;
-                            }
-                            skip("op", ",");
-                        }
-                    }
-                    skip("punc", ")");
-                    return {
-                        type: "func",
-                        func: fname,
-                        args: args
-                    };
-                }
-            });
         }
 
         function maybePercent(exp) {
@@ -341,76 +328,6 @@
                 }
             }
             return left;
-        }
-
-        // Attempt to resolve constant ranges at parse time.  This helps handling row or column
-        // ranges (i.e. A:A), printing ranges in normalized form, determining a formula's
-        // dependencies.  However, the following can also be a valid range, and we can't analyze it
-        // statically:
-        //
-        // ( INDIRECT(A1) : INDIRECT(A2) )
-        //
-        // therefore support for the range operators must also be present at run-time.
-        //
-        // This function will only deal with constant ranges like:
-        //
-        // - A1:B3
-        // - A:A
-        // - 2:2
-        function maybeRange() {
-            return input.ahead(4, function(a, b, c, d){
-                if (looksLikeRange(a, b, c, d)) {
-                    var topLeft = getref(a, true);
-                    var bottomRight = getref(c, false);
-                    if (topLeft != null && bottomRight != null) {
-                        if (bottomRight.hasSheet() && topLeft.sheet.toLowerCase() != bottomRight.sheet.toLowerCase()) {
-                            input.croak("Invalid range");
-                        } else {
-                            input.skip(3);
-                            return addReference(
-                                new RangeRef(topLeft, bottomRight)
-                                    .setSheet(topLeft.sheet, topLeft.hasSheet())
-                            );
-                        }
-                    }
-                }
-            });
-        }
-
-        function getref(tok, isFirst) {
-            if (tok.type == "num" && tok.value == tok.value|0) {
-                return new CellRef(
-                    getrow(tok.value) - row,
-                    isFirst ? -Infinity : +Infinity,
-                    2
-                ).setSheet(sheet, false);
-            }
-            var ref = parseSymbol(tok);
-            if (ref.type == "ref") {
-                if (ref.ref == "name") {
-                    var name = ref.name;
-                    var abs = name.charAt(0) == "$";
-                    if (abs) {
-                        name = name.substr(1);
-                    }
-                    if (/^[0-9]+$/.test(name)) {
-                        // row ref
-                        return new CellRef(
-                            getrow(name) - (abs ? 0 : row),
-                            isFirst ? -Infinity : +Infinity,
-                            (abs ? 0 : 2)
-                        ).setSheet(ref.sheet || sheet, ref.hasSheet());
-                    } else {
-                        // col ref
-                        return new CellRef(
-                            isFirst ? -Infinity : +Infinity,
-                            getcol(name) - (abs ? 0 : col),
-                            (abs ? 0 : 1)
-                        ).setSheet(ref.sheet || sheet, ref.hasSheet());
-                    }
-                }
-                return ref;
-            }
         }
     }
 
@@ -927,13 +844,13 @@
         // Sheet1(a) !(b) A1(c) not followed by paren (d)
         function refSheetCell(a, b, c, d) {
             if (a.type == "sym" &&
-                b.type == "op" && b.type == "!" &&
+                b.type == "op" && b.value == "!" &&
                 (c.type == "sym" || (c.type == "num" && c.value == c.value|0)) &&
                 !(d.type == "punc" && d.value == "(" && !c.space))
             {
+                skip(3);
                 var x = toCell(c);
-                if (x && isFinite(x.row) && isFinite(x.col)) {
-                    skip(3);
+                if (x) {
                     return x.setSheet(a.value, true);
                 }
                 return new NameRef(c.value).setSheet(a.value, true);
@@ -963,7 +880,6 @@
                     skip(1);
                     return x;
                 }
-                return new NameRef(a.value);
             }
         }
 
@@ -1373,10 +1289,5 @@
     exports.InputStream = InputStream;
     exports.ParseError = ParseError;
     exports.tokenize = tokenize;
-
-    var t = TokenStreamWithReferences(InputStream("10 + $A$10:D5"));
-    while (!t.eof()) {
-        console.log(t.next());
-    }
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
