@@ -10,6 +10,7 @@
         columns.Bound(o => o.ShipName);
         columns.Bound(o => o.ShipAddress).Filterable(false);
     })
+    .Scrollable()
     .HtmlAttributes(new { style = "height: 550px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
