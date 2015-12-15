@@ -981,7 +981,6 @@
         }
 
         function readNext() {
-            readWhile(isWhitespace);
             if (input.eof()) {
                 return null;
             }
@@ -1016,6 +1015,7 @@
 
         function peek() {
             while (tokens.length <= index) {
+                readWhile(isWhitespace);
                 var begin = input.pos();
                 var tok = readNext();
                 if (forEditor && tok) {
