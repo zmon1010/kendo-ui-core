@@ -1408,7 +1408,7 @@
         },
 		"description": {
             "kendo-ui": "",
-            "aspnet-mvc": "<p>The Kendo UI Editor for ASP.NET MVC is a powerful WYSIWYG component, which allows you and your users to create rich text content in a familiar and user friendly way. It provides a variety of tools for creating, editing and formatting text, paragraphs, lists, images, tables, hyperlinks and other HTML elements. The component outputs identical HTML across all major browsers, follows accessibility standards and provides API for content manipulation and export to PDF.</p> <p>You can find additional information on how to use the Kendo UI MVC Grid in <a href=\"http://http/docs.telerik.com/KENDO-UI/aspnet-mvc/helpers/editor/overview\" target=\"_blank\">this section</a> of the product documentation.</p> <p><strong>Key Features</strong></p> <ul> <li>Intuitive UI for Rich Text Editing, Formatting and Styling</li> <li>UI for lists, tables, images and hyperlinks creation and formatting</li> <li>File attachment support</li> <li>Simple-to-Customize Look and Feel</li> <li>Ability to create and add custom buttons</li> <li>Rich API for maximum flexibility</li> <li>High performance</li> <li>Export to PDF</li> <li>Built-in themes</li> <li>Accessibility, keyboard navigation and RTL Support</li> <li>Rich cross-browser and mobile support</li> <li>Responsive HTML 5 Rendering</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/editor\">Editor for ASP.NET MVC</a></p>"
+            "aspnet-mvc": "<p>The Kendo UI Editor for ASP.NET MVC is a powerful WYSIWYG component, which allows you and your users to create rich text content in a familiar and user friendly way. It provides a variety of tools for creating, editing and formatting text, paragraphs, lists, images, tables, hyperlinks and other HTML elements. The component outputs identical HTML across all major browsers, follows accessibility standards and provides API for content manipulation and export to PDF.</p> <p>You can find additional information on how to use the Kendo UI MVC Editor in <a href=\"http://docs.telerik.com/KENDO-UI/aspnet-mvc/helpers/editor/overview\" target=\"_blank\">this section</a> of the product documentation.</p> <p><strong>Key Features</strong></p> <ul> <li>Intuitive UI for Rich Text Editing, Formatting and Styling</li> <li>UI for lists, tables, images and hyperlinks creation and formatting</li> <li>File attachment support</li> <li>Simple-to-Customize Look and Feel</li> <li>Ability to create and add custom buttons</li> <li>Rich API for maximum flexibility</li> <li>High performance</li> <li>Export to PDF</li> <li>Built-in themes</li> <li>Accessibility, keyboard navigation and RTL Support</li> <li>Rich cross-browser and mobile support</li> <li>Responsive HTML 5 Rendering</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/editor\">Editor for ASP.NET MVC</a></p>"
         },
         "meta": {
             "kendo-ui": "This example of Kendo UI WYSIWYG editor component shows how you can implement this easy-to-use and beautiful editor in your web app.",
@@ -4445,216 +4445,10 @@
         "meta": {
             "kendo-ui": "This demo shows the basic functionality of Kendo UI Scheduler widget, included in Kendo UI Web framework.",
             "aspnet-mvc": "This demo shows the basic functionality and UI of the Telerik ASP.NET MVC Scheduler control."
-        }
-      },
-      {
-        "text": "Custom data source",
-        "url": "scheduler/custom-datasource",
-        "packages": [
-          "mvc-offline"
-        ]
-      },
-      {
-        "text": "Timeline view",
-        "url": "scheduler/timeline",
-        "title": {
-            "kendo-ui": "Timeline view in Kendo UI Scheduler"
         },
-        "meta": {
-            "kendo-ui": "This demo shows the Timeline, Timeline Week and Timeline Work Week views."
-        }
-      },
-      {
-          "text": "Export to PDF",
-          "url": "scheduler/pdf-export",
-          "title": {
-              "kendo-ui": "Exporting to PDF"
-          },
-          "meta": {
-              "kendo-ui": "Export Kendo UI scheduler as PDF file"
-          },
-          "packages": [
-              "!offline"
-          ]
-      },
-      {
-        "text": "Binding to Telerik Backend Services",
-        "url": "scheduler/backend-services",
-        "title": {
-            "kendo-ui": "Binding to Telerik Backend Services | Kendo UI Scheduler demo"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how the Kendo UI Scheduler can be bound to Telerik Backend Services which will provide the backend functionality"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Binding to SignalR",
-        "url": "scheduler/signalr",
-        "title": {
-            "kendo-ui": "Real-time Binding to SignalR Hub",
-            "aspnet-mvc": "Real-time Binding to SignalR Hub | UI for ASP.NET MVC demos"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how the Kendo UI Scheduler can be bound to SignalR Hub for real-time push notifications",
-            "aspnet-mvc": "This example shows how the Telerik ASP.NET MVC Scheduler can be bound to SignalR Hub for real-time push notifications."
-        },
-        "packages": [
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Resources",
-        "url": "scheduler/resources",
-        "title": {
-            "kendo-ui": "Resources in Kendo UI Scheduler",
-            "aspnet-mvc": "Resources in ASP.NET MVC Scheduler"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how to assign resources to scheduler events.",
-            "aspnet-mvc": "This demo shows how to assign resources to events in ASP.NET MVC Scheduler."
-        }
-      },
-      {
-        "text": "Horizontal Grouping",
-        "url": "scheduler/resources-grouping-horizontal",
-        "title": {
-            "kendo-ui": "Horizontal resources grouping in Kendo UI Scheduler",
-            "aspnet-mvc": "Horizontal resources grouping in ASP.NET MVC Scheduler control"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how to group resources horizontally in scheduler widget.",
-            "aspnet-mvc": "This demo shows how to group resources horizontally in ASP.NET MVC Scheduler."
-        }
-      },
-      {
-        "text": "Vertical Grouping",
-        "url": "scheduler/resources-grouping-vertical",
-        "title": {
-            "kendo-ui": "Vertical resources grouping in Kendo UI Scheduler",
-            "aspnet-mvc": "Vertical resources grouping in ASP.NET MVC Scheduler control"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how to group resources vertically in scheduler widget.",
-            "aspnet-mvc": "This demo shows how to group resources vertically in ASP.NET MVC Scheduler."
-        }
-      },
-      {
-        "text": "Web API binding",
-        "url": "scheduler/webapi",
-        "packages": [
-          "mvc-offline"
-        ]
-      },
-      {
-        "text": "Templates",
-        "url": "scheduler/templates",
-        "title": {
-            "kendo-ui": "Templates in Kendo UI Scheduler",
-            "aspnet-mvc": "Templates in ASP.NET MVC Scheduler"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how to use templates to customize the appearance of scheduler events",
-            "aspnet-mvc": "This demo shows how to use templates to customize the appearance of the scheduler events of your ASP.NET MVC app."
-        }
-      },
-      {
-        "text": "Events",
-        "url": "scheduler/events",
-        "title": {
-            "kendo-ui": "Events in Kendo UI Scheduler",
-            "aspnet-mvc": "Events in ASP.NET MVC Scheduler"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how events are handled and triggered in Kendo UI Scheduler.",
-            "aspnet-mvc": "This demo shows how events are handled and triggered in ASP.NET MVC Scheduler."
-        }
-      },
-      {
-        "text": "API",
-        "url": "scheduler/api",
-        "title": {
-            "kendo-ui": "API in Kendo UI Scheduler",
-            "aspnet-mvc": "API in Telerik ASP.NET MVC Scheduler component"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the API of Kendo UI Scheduler.",
-            "aspnet-mvc": "This demo shows the API of Telerik ASP.NET MVC Scheduler control."
-        }
-      },
-      {
-        "text": "Globalization",
-        "url": "scheduler/globalization",
-        "packages": [
-          "mvc-offline"
-        ]
-      },
-      {
-        "text": "Restrictions",
-        "url": "scheduler/restriction",
-        "title": {
-            "kendo-ui": "Restricting events resizing and moving",
-            "aspnet-mvc": "Restrictions in ASP.NET MVC Scheduler | UI for ASP.NET MVC Demos"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how to restrict the events in Kendo UI Scheduler",
-            "aspnet-mvc": "Set restrictions to better control your resources with ASP.NET MVC Scheduler."
-        }
-      },
-      {
-        "text": "Event move & resize",
-        "url": "scheduler/move-resize",
-        "title": {
-            "kendo-ui": "Moving and resizing events",
-            "aspnet-mvc": "Moving and resizing events in ASP.NET MVC Scheduler"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the move and resize feature of Kendo UI Scheduler",
-            "aspnet-mvc": "This demo shows the move and resize feature of ASP.NET MVC Scheduler."
-        }
-      },
-      {
-        "text": "Selection",
-        "url": "scheduler/selection",
-        "title": {
-            "kendo-ui": "Selection and Keyboard navigation in Kendo UI Scheduler",
-            "aspnet-mvc": "Selection and Keyboard navigation in ASP.NET MVC Scheduler"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the selection and the different keyboard combinations that could be used to navigate in Kendo UI Scheduler.",
-            "aspnet-mvc": "This demo shows the selection and the different keyboard combinations that could be used to navigate in ASP.NET MVC Scheduler."
-        }
-      },
-      {
-        "text": "Localization",
-        "url": "scheduler/localization",
-        "title": {
-            "kendo-ui": "Kendo UI Scheduler localization demo"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how Kendo UI Scheduler widget can be localized."
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "RTL Support",
-        "url": "scheduler/right-to-left-support",
-        "title": {
-            "kendo-ui": "Right-to-left (RTL) support of Kendo UI Scheduler",
-            "aspnet-mvc": "Right-to-left (RTL) support for ASP.NET MVC Scheduler control"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the Right-to-left (RTL) support of Kendo UI Scheduler.",
-            "aspnet-mvc": "This demo shows the Right-to-left (RTL) support for ASP.NET MVC Scheduler."
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The Telerik ASP.NET MVC Scheduler component allows you to easily display, edit and schedule appointments. You can display day, week, month and agenda views, group horizontally and vertically and enjoy out-of-the-box templates.</p> <p>You can find additional information on how to use the Scheduler in <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/scheduler/ajax-editing\" target=\"_blank\">this section</a> of the product documentation.</p> <p><strong>Key Features</strong></p> <ul> <li>Day, Week, Work Week, Month, Agenda and Timeline views</li> <li>Multiple Resources and Resource Grouping</li> <li>Templates for Appointments</li> <li>Time Zone Support</li> <li>Simple-to-Customize Look and Feel</li> <li>Rich API for maximum flexibility</li> <li>Export to PDF</li> <li>Accessibility, keyboard navigation and RTL Support</li> <li>Rich cross-browser and mobile support</li> <li>Responsive HTML 5 Rendering</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/scheduler\">Scheduler for ASP.NET MVC</a></p>"
         }
       },
       {
@@ -4685,6 +4479,281 @@
           "!mvc",
           "!jsp",
           "!php"
+        ]
+      },
+      {
+        "text": "Timeline view",
+        "url": "scheduler/timeline",
+        "title": {
+            "kendo-ui": "Timeline view in Kendo UI Scheduler"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the Timeline, Timeline Week and Timeline Work Week views."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The Scheduler's Timeline view allows you to display a variable number of appointment slots and define their duration. You can use the Timeline to provide end-users with an overview for scheduling purposes.</p> <p>You can define and show the available time line views through the Views -&gt; TimelineView, TimelineWeekView, TimelineWorkWeekView and TimelineMonthView settings. You can further customize these views by setting their StartTime, EndTime, MajorTick, ShowWorkHours, WorkDayStart, WorkDayEnd, WorkWeekStart, WorkWeekEnd and other properties.</p>"
+        },
+		"group": "Functionality",
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": ""
+        }
+      },
+      {
+          "text": "Export to PDF",
+          "url": "scheduler/pdf-export",
+          "title": {
+              "kendo-ui": "Exporting to PDF"
+          },
+          "meta": {
+              "kendo-ui": "Export Kendo UI scheduler as PDF file"
+          },
+		  "description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>Nowadays, the PDF format is very popular and widely used to present documents in a manner independent of application software, hardware and operating systems. This demo demonstrates how to export the Telerik MVC Scheduler contents to PDF.</p> <p>The approach is very straight-forward - to export the content to PDF include the corresponding command to the scheduler&rsquo;s toolbar&nbsp;.Toolbar(t =&gt; t.Pdf())<span> </span>and configure the export settings through the Pdf attribute. You can specify the file name and whether to export all pages, margins, paper size, font and other.</p>"
+          },
+          "packages": [
+              "!offline"
+          ]
+      },
+      {
+        "text": "Resources",
+        "url": "scheduler/resources",
+        "title": {
+            "kendo-ui": "Resources in Kendo UI Scheduler",
+            "aspnet-mvc": "Resources in ASP.NET MVC Scheduler"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to assign resources to scheduler events.",
+            "aspnet-mvc": "This demo shows how to assign resources to events in ASP.NET MVC Scheduler."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>Telerik MVC Scheduler extension allows you to assign scheduler events to a set of predefined resources. The resources can be divided on:</p> <ul> <li>Single Instance Resources &ndash; when only one instance can be assigned to a scheduler event. This is for example a list of meetings (Scheduler events), which are held in two rooms (resources). Since a meeting can be held in only one room it can be considered a single resource.</li> <li>Multiple Instance Resources<span> - </span>when more than one instance can be assigned to a scheduler event. For example when there is a list of meetings and meeting attendees. Since more than one attendee can participate in a meeting, it is a multiple instance resource. You can enable this feature through the Resources -&gt; .Multiple(true) setting.</li> </ul> <p>The Scheduler supports also unlimited resource types. For example you can combine single and multiple resource as shown in this demo.</p> <p>You can find more information on how to define and configure Scheduler resources in this <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/scheduler/mvc-scheduler-resources\">documentation article</a>.</p>"
+        }
+      },
+      {
+        "text": "Horizontal Grouping",
+        "url": "scheduler/resources-grouping-horizontal",
+        "title": {
+            "kendo-ui": "Horizontal resources grouping in Kendo UI Scheduler",
+            "aspnet-mvc": "Horizontal resources grouping in ASP.NET MVC Scheduler control"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to group resources horizontally in scheduler widget.",
+            "aspnet-mvc": "This demo shows how to group resources horizontally in ASP.NET MVC Scheduler."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>This demo illustrates how you can group the resources horizontally in ASP.NET MVC Scheduler. The direction of the grouping can be controlled with the Orientation property, i.e.</p> <p>.Group(group =&gt; group.Resources(\"Rooms\").Orientation(SchedulerGroupOrientation.Horizontal))</p> <p>The available options of the SchedulerGroupOrientation setting are Default, Horizontal and Vertical.</p>"
+        }
+      },
+      {
+        "text": "Vertical Grouping",
+        "url": "scheduler/resources-grouping-vertical",
+        "title": {
+            "kendo-ui": "Vertical resources grouping in Kendo UI Scheduler",
+            "aspnet-mvc": "Vertical resources grouping in ASP.NET MVC Scheduler control"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to group resources vertically in scheduler widget.",
+            "aspnet-mvc": "This demo shows how to group resources vertically in ASP.NET MVC Scheduler."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>You can see in this example how to group the scheduler&rsquo;s resources vertically. The direction of the grouping can be controlled with the Orientation property, i.e.</p> <p>.Group(group =&gt; group.Resources(\"Rooms\", \"Attendees\").Orientation(SchedulerGroupOrientation.Vertical))</p> <p>The available orientation options are Default, Horizontal and Vertical.</p>"
+        }
+      },
+      {
+        "text": "Templates",
+        "url": "scheduler/templates",
+        "title": {
+            "kendo-ui": "Templates in Kendo UI Scheduler",
+            "aspnet-mvc": "Templates in ASP.NET MVC Scheduler"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to use templates to customize the appearance of scheduler events",
+            "aspnet-mvc": "This demo shows how to use templates to customize the appearance of the scheduler events of your ASP.NET MVC app."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>This example demonstrates how to use templates to customize the appearance of the scheduler events. You can use the EventTemplate setting to create a template for the scheduler&rsquo;s events. Other template settings provided by the component are AllDayEventTemplate, DateHeaderTemplate, GroupHeaderTemplate, MajorTimeHeaderTemplate and MinorTimeHeaderTemplate.</p> <p>Templates use a simple templating syntax where the hash # symbol is used to mark areas in a template that should be replaced with data when the template is executed. The # character is also used to signify the beginning and end of custom JavaScript code inside the template.</p> <p>There are three ways to use the hash syntax:</p> <ol> <li>Render values as HTML: #= # </li> <li>Uses HTML encoding to display values: #: # </li> <li>Execute arbitrary JavaScript code: # if (true) { # ... non-script content here ... # } # </li> </ol> <p>You can find more information about the templates in this article: <a href=\"http://docs.telerik.com/kendo-ui/framework/templates/overview\">Kendo UI Templates Overview</a>.</p>"
+        }
+      },
+      {
+        "text": "Restrictions",
+        "url": "scheduler/restriction",
+        "title": {
+            "kendo-ui": "Restricting events resizing and moving",
+            "aspnet-mvc": "Restrictions in ASP.NET MVC Scheduler | UI for ASP.NET MVC Demos"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to restrict the events in Kendo UI Scheduler",
+            "aspnet-mvc": "Set restrictions to better control your resources with ASP.NET MVC Scheduler."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>This demo shows how you can restrict the events and better control your resources in ASP.NET MVC Scheduler using the client-side API of the component. You can prevent not only to the drag and resize capabilities of the appointments, but also allow or not the creation of a new event or the modification of an existing one by criteria defined by you.</p> <p>For example, double click on the \"Call Charlie about the project\" event, change the attendee to Bob and click SAVE. This will result into an error: \"This person is not available in this time period.\"</p> <p>You will also get an error \"This person is not available in this time period.\", if you change the start date of the \"HR Lecture\" event to 10:30 AM.</p>"
+        }
+      },
+      {
+        "text": "Event move & resize",
+        "url": "scheduler/move-resize",
+        "title": {
+            "kendo-ui": "Moving and resizing events",
+            "aspnet-mvc": "Moving and resizing events in ASP.NET MVC Scheduler"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the move and resize feature of Kendo UI Scheduler",
+            "aspnet-mvc": "This demo shows the move and resize feature of ASP.NET MVC Scheduler."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The ASP.NET MVC Scheduler allows you and your users to move and resize its events. In addition to this, you can also specify whether the scheduler will either snap events to the nearest slot during dragging (resizing or moving) or it will allow free moving and resizing of events. You can do that through the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/scheduler#configuration-snap\">snap client-side bool property</a> of the scheduler as shown in this example.</p>"
+        }
+      },
+      {
+        "text": "Selection",
+        "url": "scheduler/selection",
+        "title": {
+            "kendo-ui": "Selection and Keyboard navigation in Kendo UI Scheduler",
+            "aspnet-mvc": "Selection and Keyboard navigation in ASP.NET MVC Scheduler"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the selection and the different keyboard combinations that could be used to navigate in Kendo UI Scheduler.",
+            "aspnet-mvc": "This demo shows the selection and the different keyboard combinations that could be used to navigate in ASP.NET MVC Scheduler."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The Scheduler offers extended keyboard navigation which allows you to focus the control, navigate over its cells, to select an appointment and modify it, to create new appointments, to switch between the available views as many more. This is especially useful for the visually impaired users. </p> <p>For more information on the supported keyboard shortcuts see the provided information box.</p>"
+        }
+      },
+      {
+        "text": "Binding to Telerik Backend Services",
+        "url": "scheduler/backend-services",
+        "title": {
+            "kendo-ui": "Binding to Telerik Backend Services | Kendo UI Scheduler demo"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how the Kendo UI Scheduler can be bound to Telerik Backend Services which will provide the backend functionality"
+        },
+		"description": {
+            "kendo-ui": ""
+        },
+        "group": "Data Binding",
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "Binding to SignalR",
+        "url": "scheduler/signalr",
+        "title": {
+            "kendo-ui": "Real-time Binding to SignalR Hub",
+            "aspnet-mvc": "Real-time Binding to SignalR Hub | UI for ASP.NET MVC demos"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how the Kendo UI Scheduler can be bound to SignalR Hub for real-time push notifications",
+            "aspnet-mvc": "This example shows how the Telerik ASP.NET MVC Scheduler can be bound to SignalR Hub for real-time push notifications."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>This demo shows how the Telerik ASP.NET MVC Scheduler can be bound to a <a href=\"http://signalr.net\">SignalR</a> Hub for real-time push notifications. This is useful for web applications (chat, calendar and scheduling, gaming and other aps) which require high-frequency updates where you usually want to perform data updates in real-time on all connected clients.</p> <p>To configure the SignalR binding, set the <strong>SignalR</strong> and <strong>Transport</strong> settings in the Scheduler&rsquo;s DataSource configuration. In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time. You can find more information in the following help article: <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/scheduler/how-to/signalr-local-hub-locking-events\">Scheduler SignalR Binding</a></p>"
+        },
+        "packages": [
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "Web API binding",
+        "url": "scheduler/webapi",
+        "packages": [
+          "mvc-offline"
+        ]
+      },
+      {
+        "text": "Custom data source",
+        "url": "scheduler/custom-datasource",
+        "packages": [
+          "mvc-offline"
+        ]
+      },
+      {
+        "text": "Events",
+        "url": "scheduler/events",
+        "title": {
+            "kendo-ui": "Events in Kendo UI Scheduler",
+            "aspnet-mvc": "Events in ASP.NET MVC Scheduler"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how events are handled and triggered in Kendo UI Scheduler.",
+            "aspnet-mvc": "This demo shows how events are handled and triggered in ASP.NET MVC Scheduler."
+        },
+        "group": "API",
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>Telerik MVC Scheduler exposes rich API and events which provide easy configuration or extension points for customization on top of its built-in features.</p> <p>This example demonstrates how you can intercept the scheduler's events to output messages in the console when these events are raised. You can use these events for customizations or to execute custom logic, if necessary.</p>"
+        }
+      },
+      {
+        "text": "API",
+        "url": "scheduler/api",
+        "title": {
+            "kendo-ui": "API in Kendo UI Scheduler",
+            "aspnet-mvc": "API in Telerik ASP.NET MVC Scheduler component"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the API of Kendo UI Scheduler.",
+            "aspnet-mvc": "This demo shows the API of Telerik ASP.NET MVC Scheduler control."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The Telerik Scheduler for ASP.NET MVC exposes rich client-side API and events, which provide easy configuration or extension points for custom functionality on top of the built-in features.</p> <p>In this demo, you can see how to get a reference to the scheduler's client-side object and using its date() and view() methods to update its current date and current view.</p> <p>You can find more information about its client-side API <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/ui/scheduler\">here</a>.</p>"
+        }
+      },
+      {
+        "text": "RTL Support",
+        "url": "scheduler/right-to-left-support",
+        "title": {
+            "kendo-ui": "Right-to-left (RTL) support of Kendo UI Scheduler",
+            "aspnet-mvc": "Right-to-left (RTL) support for ASP.NET MVC Scheduler control"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the Right-to-left (RTL) support of Kendo UI Scheduler.",
+            "aspnet-mvc": "This demo shows the Right-to-left (RTL) support for ASP.NET MVC Scheduler."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The Telerik MVC Scheduler supports right-to-left languages and rendering. All you need to do is to register the <strong>kendo.rtl.min.css</strong> file (located at Kendo.Mvc.Examples\\Content\\web\\ installation folder) and wrap the scheduler in a container element with <strong>k-rtl</strong> class set for it, as demonstrated in this particular example.</p> <p>You can learn more for the right-to-left support of the components in <a href=\"http://docs.telerik.com/kendo-ui/accessibility/supporting-rtl-languages\" target=\"_blank\">this article</a>.</p>"
+        }
+      },
+      {
+        "text": "Localization",
+        "url": "scheduler/localization",
+        "title": {
+            "kendo-ui": "Kendo UI Scheduler localization demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how Kendo UI Scheduler widget can be localized."
+        },
+		"description": {
+            "kendo-ui": ""
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "Globalization",
+        "url": "scheduler/globalization",
+        "packages": [
+          "mvc-offline"
         ]
       }
     ],
