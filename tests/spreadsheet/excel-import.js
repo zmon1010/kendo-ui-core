@@ -757,6 +757,7 @@
 
                 return mockSheet();
             },
+            sheets: () => [],
             recalcSheets: () => null,
             triggerChange: () => null,
             activeSheet: () => null
@@ -795,6 +796,7 @@
                 rows: 1000,
                 columns: 100
             },
+            sheets: () => [],
             insertSheet: options => {
                 equal(options.rows, 1000, "rows");
                 equal(options.columns, 100, "columns");
@@ -837,6 +839,7 @@
 
         const workbook = {
             options: { },
+            sheets: () => [],
             insertSheet: options => {
                 equal(options.columnWidth, 7, "width");
                 equal(options.rowHeight, 24.5, "height");
@@ -851,7 +854,7 @@
         kendo.spreadsheet._readWorkbook(zip, workbook);
     });
 
-    test("reads active sheet", function() {
+    asyncTest("reads active sheet", function() {
         const RELS = `
             <Relationships>
               <Relationship Id="rId1"
@@ -883,15 +886,26 @@
         addFile("xl/worksheets/sheet1.xml", SHEET);
         addFile("xl/worksheets/sheet2.xml", SHEET);
 
+        var sheets = [];
         const workbook = {
             options: { },
-            insertSheet: options => mockSheet({}, options),
+            sheets: () => sheets,
+            insertSheet: options => {
+                var sheet = mockSheet({}, options);
+                sheets.push(sheet);
+                return sheet;
+            },
             recalcSheets: () => null,
             triggerChange: () => null,
             activeSheet: sheet => equal(sheet.name(), "Sheet2")
         };
 
-        kendo.spreadsheet._readWorkbook(zip, workbook);
+        var deferred = new $.Deferred();
+        kendo.spreadsheet._readWorkbook(zip, workbook, deferred);
+
+        deferred.then(function() {
+            start();
+        });
     });
 
     test("reads frozen pane", function() {

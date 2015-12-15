@@ -14,14 +14,15 @@
     /* jshint eqnull:true */
     /* jshint latedef: nofunc */
 
+    var $ = kendo.jQuery;
     var parseXML = kendo.util.parseXML;
     var parseReference = kendo.spreadsheet.calc.parseReference;
 
-    function readExcel(file, workbook) {
+    function readExcel(file, workbook, deferred) {
         var reader = new FileReader();
         reader.onload = function(e) {
             var zip = new JSZip(e.target.result);
-            readWorkbook(zip, workbook);
+            readWorkbook(zip, workbook, deferred);
         };
 
         reader.readAsArrayBuffer(file);
@@ -41,12 +42,12 @@
     var SEL_VALUE = ["sheetData", "row", "c", "v"];
     var SEL_VIEW = ["bookViews", "workbookView"];
 
-    function readWorkbook(zip, workbook) {
+    function readWorkbook(zip, workbook, deferred) {
         var strings = readStrings(zip);
         var relationships = readRelationships(zip, "workbook.xml");
-        var theme = readTheme(zip, relationships.byType.theme);
+        var theme = readTheme(zip, relationships.byType.theme[0]);
         var styles = readStyles(zip, theme);
-        var sheets = [];
+        var items = [];
         var activeSheet = 0;
 
         parse(zip, "xl/workbook.xml", {
@@ -56,18 +57,21 @@
                     var file = relationships.byId[relId];
                     var name = attrs.name;
                     var dim = sheetDimensions(zip, file);
-                    var sheet = workbook.insertSheet({
-                        name: name,
-                        rows: Math.max(workbook.options.rows || 0, dim.rows),
-                        columns: Math.max(workbook.options.columns || 0, dim.cols),
-                        columnWidth: dim.columnWidth,
-                        rowHeight: dim.rowHeight
+
+                    items.push({
+                        workbook: workbook,
+                        zip: zip,
+                        strings: strings,
+                        styles: styles,
+                        file: file,
+                        options: {
+                            name: name,
+                            rows: Math.max(workbook.options.rows || 0, dim.rows),
+                            columns: Math.max(workbook.options.columns || 0, dim.cols),
+                            columnWidth: dim.columnWidth,
+                            rowHeight: dim.rowHeight
+                        }
                     });
-
-                    sheets.push(sheet);
-                    sheet.suspendChanges(true);
-
-                    readSheet(zip, file, sheet, strings, styles);
                 } else if (this.is(SEL_VIEW)) {
                     if (attrs.activeTab) {
                         activeSheet = integer(attrs.activeTab);
@@ -83,8 +87,58 @@
             }
         });
 
-        recalcSheets(sheets);
-        workbook.activeSheet(sheets[activeSheet]);
+        loadSheets(items, workbook, deferred)
+            .then(function() {
+                var sheets = workbook.sheets();
+                recalcSheets(sheets);
+
+                workbook.activeSheet(sheets[activeSheet]);
+            });
+    }
+
+    function loadSheets(items, workbook, deferred) {
+        var ready = (new $.Deferred()).resolve();
+        for (var i = 0; i < items.length; i++) {
+            (function(entry, i) {
+                ready = ready.then(function() {
+                    var sheet = workbook.insertSheet(entry.options);
+                    sheet.suspendChanges(true);
+
+                    var promise = queueSheet(sheet, entry);
+                    if (deferred) {
+                        var args = {
+                            sheet: sheet,
+                            progress: i / (items.length - 1)
+                        };
+
+                        promise.then(function() {
+                            deferred.notify(args);
+                        });
+                    }
+
+                    return promise;
+                });
+            })(items[i], i);
+        }
+
+        if (deferred) {
+            ready.then(function() {
+                deferred.resolve();
+            });
+        }
+
+        return ready;
+    }
+
+    function queueSheet(sheet, ctx) {
+        var deferred = new $.Deferred();
+
+        setTimeout(function() {
+            readSheet(ctx.zip, ctx.file, sheet, ctx.strings, ctx.styles);
+            deferred.resolve();
+        }, 0);
+
+        return deferred;
     }
 
     function recalcSheets(sheets) {
@@ -428,12 +482,16 @@
     }
 
     function readRelationships(zip, file) {
-        var map = { byId: {}, byType: {} };
+        var map = { byId: {}, byType: { theme: [] } };
         parse(zip, "xl/_rels/" + file + ".rels", {
             enter: function(tag, attrs) {
                 if (tag == "Relationship") {
                     map.byId[attrs.Id] = attrs.Target;
-                    map.byType[attrs.Type.match(/\w+$/)[0]] = attrs.Target;
+
+                    var type = attrs.Type.match(/\w+$/)[0];
+                    var entries = map.byType[type] || [];
+                    entries.push(attrs.Target);
+                    map.byType[type] = entries;
                 }
             }
         });

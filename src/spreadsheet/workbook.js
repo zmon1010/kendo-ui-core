@@ -56,7 +56,9 @@
         },
 
         events: [
-            "change"
+            "change",
+            "excelImport",
+            "excelExport"
         ],
 
         _sheetChange: function(e) {
@@ -331,14 +333,21 @@
         },
 
         fromFile: function(file) {
-            for (var i = 0; i < this._sheets.length; i++) {
-                this._sheets[i].unbind();
+            var deferred = new $.Deferred;
+            var args = { file: file, promise: deferred.promise() };
+
+            if(!this.trigger("excelImport", args)) {
+                for (var i = 0; i < this._sheets.length; i++) {
+                    this._sheets[i].unbind();
+                }
+
+                this._sheets = [];
+                this._sheetsSearchCache = {};
+
+                kendo.spreadsheet.readExcel(file, this, deferred);
             }
 
-            this._sheets = [];
-            this._sheetsSearchCache = {};
-
-            kendo.spreadsheet.readExcel(file, this);
+            return deferred;
         },
 
         saveAsExcel: function(options) {
