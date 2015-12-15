@@ -4,6 +4,8 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+<div class="demo-section k-content">
 <%= Html.Kendo().PanelBar()
     .Name("panelbar")
     .ExpandMode(PanelBarExpandMode.Single)
@@ -15,7 +17,6 @@
         .ContentLoad("contentLoad")
         .Error("error")
     )
-    .HtmlAttributes(new { style = "width: 250px;" })
     .Items(panelbar =>
     {
         panelbar.Add().Text("Metallica - Master of Puppets 1986")
@@ -53,6 +54,7 @@
             .LoadContentFrom("error.html");
     })
 %>
+</div>
 
 <script>
     function select(e) {
@@ -81,5 +83,8 @@
     }
 </script>
 
-<div class="console"></div>
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 </asp:Content>

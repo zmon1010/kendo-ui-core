@@ -13,8 +13,7 @@
 <c:url value="/resources/web/panelbar/orgHead.png" var="orgHead" />
 <c:url value="/resources/web/panelbar/orgFoot.png" var="orgFoot" />
 
-<div id="organizer">
-	<kendo:panelBar name="panelBar" expandMode="single">
+	<kendo:panelBar name="panelbar" expandMode="single">
 		<kendo:panelBar-items>
 			<kendo:panelBar-item  text="My Teammates" expanded="true">
 				<kendo:panelBar-item-content>
@@ -63,20 +62,11 @@
 			<kendo:panelBar-item text="Communication" enabled="false"/>
 		</kendo:panelBar-items>
 	</kendo:panelBar>
-	<div id="bottom"></div>
-</div>
 
 <style>
-    #organizer {
-        width: 300px;
+    #panelbar {
+        max-width: 400px;
         margin: 0 auto;
-        padding: 47px 0 0 0;
-        background: url('${ orgHead }') transparent no-repeat 0 0;
-    }
-    #bottom {
-        width: 300px;
-        height: 90px;
-        background: url('${ orgFoot }') transparent no-repeat 0 0;
     }
     .teamMate:after {
         content: ".";
@@ -92,12 +82,13 @@
         padding-top: 20px;
     }
     .teamMate p {
-        margin: 5px 0;
+        margin: 0;
     }
     .teamMate img {
         float: left;
         margin: 5px 15px 5px 5px;
         border: 1px solid #ccc;
+        border-radius: 50%;
     }
 </style>
 

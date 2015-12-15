@@ -1334,7 +1334,7 @@
                 hCenter: true,
                 vCenter: true
             },
-            width: 350,
+            width: 520,
             template:
                 "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.fileName + ":</label></div>" +
                 "<div class='k-edit-field'>" +
@@ -1374,25 +1374,25 @@
                       "</div>" +
                       "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.orientation + ":</label></div>" +
                       "<div class='k-edit-field'>" +
-                          "<input type='radio' id='orientation-portrait' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='false' />" +
-                          "<input type='radio' id='orientation-landscape' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='true' />" +
+                          "<input type='radio' id='k-orientation-portrait' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='false' /><label class='k-orientation-label k-orientation-portrait-label' for='k-orientation-portrait'></label>" +
+                          "<input type='radio' id='k-orientation-landscape' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='true' /><label class='k-orientation-label k-orientation-landscape-label' for='k-orientation-landscape'></label>" +
                      "</div>" +
                      "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.print + ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<input id='guidelines' type='checkbox' data-bind='checked: pdf.guidelines'/><label for='guidelines'>" + MESSAGES.exportAsDialog.labels.guidelines+ "</label>" +
+                         "<input class='k-checkbox' id='guidelines' type='checkbox' data-bind='checked: pdf.guidelines'/><label class='k-checkbox-label' for='guidelines'>" + MESSAGES.exportAsDialog.labels.guidelines+ "</label>" +
                      "</div>" +
                      "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.scale+ ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<input id='fitWidth' type='checkbox' data-bind='checked: pdf.fitWidth'/><label for='fitWidth'>" + MESSAGES.exportAsDialog.labels.fit+ "</label>" +
+                         "<input class='k-checkbox' id='fitWidth' type='checkbox' data-bind='checked: pdf.fitWidth'/><label class='k-checkbox-label' for='fitWidth'>" + MESSAGES.exportAsDialog.labels.fit+ "</label>" +
                      "</div>" +
                      "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.center+ ":</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<input id='hCenter' type='checkbox' data-bind='checked: pdf.hCenter'/><label for='hCenter'>" + MESSAGES.exportAsDialog.labels.horizontally + "</label>" +
-                         "<input id='vCenter' type='checkbox' data-bind='checked: pdf.vCenter'/><label for='vCenter'>" + MESSAGES.exportAsDialog.labels.vertically +   "</label>" +
+                         "<input class='k-checkbox' id='hCenter' type='checkbox' data-bind='checked: pdf.hCenter'/><label class='k-checkbox-label' for='hCenter'>" + MESSAGES.exportAsDialog.labels.horizontally + "</label>" +
+                         "<input class='k-checkbox' id='vCenter' type='checkbox' data-bind='checked: pdf.vCenter'/><label class='k-checkbox-label' for='vCenter'>" + MESSAGES.exportAsDialog.labels.vertically +   "</label>" +
                      "</div>" +
-                     "<div class='orientation'>" +
-                         "<div class='orientation-portrait'><div>" +
-                         "<div class='orientation-landscape'></div>" +
+                     "<div class='k-page-orientation' data-bind='css: {k-page-landscape: pdf.landscape}'>" +
+                         "<div class='k-margins-horizontal'></div>" +
+                         "<div class='k-margins-vertical'></div>" +
                      "</div>" +
                    "</div>" +
                    "<div class='k-action-buttons'>" +

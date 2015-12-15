@@ -1650,10 +1650,26 @@
             "kendo-ui": "With Kendo UI Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the RTL support in the widget.",
             "aspnet-mvc": "With ASP.NET MVC Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the RTL support in the component."
         },
+        "group": "Accessibility and Internationalization",
 		"description": {
             "kendo-ui": "<p>The Telerik Kendo UI Editor supports right-to-left languages and rendering. All you have to do is register the <strong>kendo.rtl.min.css</strong> file (located in the /styles installation folder) and wrap the editor in a container element with <strong>k-rtl </strong>class set for it, as demonstrated in this example.</p> <p>More information on the right-to-left support of the Kendo UI widgets can be found in <a href=\"http://docs.telerik.com/kendo-ui/accessibility/supporting-rtl-languages\" target=\"_blank\">this topic</a>.</p>",
             "aspnet-mvc": "<p>The Telerik MVC Editor supports right-to-left languages and rendering. All you have to do is to register the <strong>kendo.rtl.min.css</strong> file (located at Kendo.Mvc.Examples\\Content\\web installation folder) and wrap the editor in a container element with <strong>k-rtl </strong>class set for it, as demonstrated in this example.</p> <p>More information on the right-to-left support of the components can be found in <a href=\"http://docs.telerik.com/kendo-ui/accessibility/supporting-rtl-languages\" target=\"_blank\">this topic</a>.</p>"
         }
+      },
+      {
+        "text": "Localization",
+        "url": "editor/localization",
+        "title": {
+            "kendo-ui": "Localization support in Kendo UI Editor"
+        },
+        "meta": {
+            "kendo-ui": "With Kendo UI Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the localization support in the widget."
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Keyboard navigation",
@@ -1840,7 +1856,7 @@
         },
          "description": {
              "kendo-ui": "<p>There are situations when you would like to perform real-time updates for all users which start a session with your web app. <br /> <br /> This is when you can utilize SignalR and the Kendo UI DataSource. The latter supports signalr dialect by setting its <strong>type </strong>attribute and<strong> transport-&gt;signalr </strong>configuration.&nbsp; In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time on every page refresh, also known under the term long polling.</p> <p>This is especially useful for web applications which require high-frequency updates, for instance chat apps, real-time gaming, etc. More on the SignalR support of the Kendo UI DataSource can be found <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.signalr\" target=\"_blank\">in this section of the docs.</a></p>",
-       "aspnet-mvc": "<p>This demo shows how the Telerik ASP.NET MVC Grid can be bound to a <a href=\"http://signalr.net/\">SignalR</a> Hub for real-time push notifications. This is useful for web applications (chat, gaming and other aps) which require high-frequency updates where you usually want to perform grid updates in real-time on all connected clients.</p> <p>To configure the SignalR binding, set the <strong>SignalR</strong> and <strong>Transport</strong> settings in the Grid&rsquo;s DataSource configuration.&nbsp; In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time.</p> <p>You can find more information in this article: <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/grid/how-to/grid-bound-to-signalr\" target=\"_blank\">Binding Grid widget to <strong>SignalR</strong> Hub</a>.</p>"
+       "aspnet-mvc": "<p>This demo shows how the Telerik ASP.NET MVC Grid can be bound to a <a href=\"http://signalr.net/\">SignalR</a> Hub for real-time push notifications. This is useful for web applications (chat, gaming and other apps) which require high-frequency updates where you usually want to perform grid updates in real-time on all connected clients.</p> <p>To configure the SignalR binding, set the <strong>SignalR</strong> and <strong>Transport</strong> settings in the Grid&rsquo;s DataSource configuration.&nbsp; In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time.</p> <p>You can find more information in this article: <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/grid/how-to/grid-bound-to-signalr\" target=\"_blank\">Binding Grid widget to <strong>SignalR</strong> Hub</a>.</p>"
          },
         "packages": [
           "!jsp",
@@ -4499,14 +4515,10 @@
         "meta": {
             "kendo-ui": "This demo shows the Timeline, Timeline Week and Timeline Work Week views."
         },
-		"description": {
-            "kendo-ui": "",
-            "aspnet-mvc": "<p>The Scheduler's Timeline view allows you to display a variable number of appointment slots and define their duration. You can use the Timeline to provide end-users with an overview for scheduling purposes.</p> <p>You can define and show the available time line views through the Views -&gt; TimelineView, TimelineWeekView, TimelineWorkWeekView and TimelineMonthView settings. You can further customize these views by setting their StartTime, EndTime, MajorTick, ShowWorkHours, WorkDayStart, WorkDayEnd, WorkWeekStart, WorkWeekEnd and other properties.</p>"
-        },
 		"group": "Functionality",
 		"description": {
             "kendo-ui": "",
-            "aspnet-mvc": ""
+            "aspnet-mvc": "<p>The Scheduler's Timeline view allows you to display a variable number of appointment slots and define their duration. You can use the Timeline to provide end-users with an overview for scheduling purposes.</p> <p>You can define and show the available time line views through the Views -&gt; TimelineView, TimelineWeekView, TimelineWorkWeekView and TimelineMonthView settings. You can further customize these views by setting their StartTime, EndTime, MajorTick, ShowWorkHours, WorkDayStart, WorkDayEnd, WorkWeekStart, WorkWeekEnd and other properties.</p>"
         }
       },
       {
@@ -4623,20 +4635,25 @@
         }
       },
       {
-        "text": "Selection",
-        "url": "scheduler/selection",
+        "text": "Binding to SignalR",
+        "url": "scheduler/signalr",
         "title": {
-            "kendo-ui": "Selection and Keyboard navigation in Kendo UI Scheduler",
-            "aspnet-mvc": "Selection and Keyboard navigation in ASP.NET MVC Scheduler"
+            "kendo-ui": "Real-time Binding to SignalR Hub",
+            "aspnet-mvc": "Real-time Binding to SignalR Hub | UI for ASP.NET MVC demos"
         },
         "meta": {
-            "kendo-ui": "This demo shows the selection and the different keyboard combinations that could be used to navigate in Kendo UI Scheduler.",
-            "aspnet-mvc": "This demo shows the selection and the different keyboard combinations that could be used to navigate in ASP.NET MVC Scheduler."
+            "kendo-ui": "This example shows how the Kendo UI Scheduler can be bound to SignalR Hub for real-time push notifications",
+            "aspnet-mvc": "This example shows how the Telerik ASP.NET MVC Scheduler can be bound to SignalR Hub for real-time push notifications."
         },
+        "group": "Data Binding",
 		"description": {
             "kendo-ui": "",
-            "aspnet-mvc": "<p>The Scheduler offers extended keyboard navigation which allows you to focus the control, navigate over its cells, to select an appointment and modify it, to create new appointments, to switch between the available views as many more. This is especially useful for the visually impaired users. </p> <p>For more information on the supported keyboard shortcuts see the provided information box.</p>"
-        }
+            "aspnet-mvc": "<p>This demo shows how the Telerik ASP.NET MVC Scheduler can be bound to a <a href=\"http://signalr.net\">SignalR</a> Hub for real-time push notifications. This is useful for web applications (chat, calendar and scheduling, gaming and other apps) which require high-frequency updates where you usually want to perform data updates in real-time on all connected clients.</p> <p>To configure the SignalR binding, set the <strong>SignalR</strong> and <strong>Transport</strong> settings in the Scheduler&rsquo;s DataSource configuration. In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time. You can find more information in the following help article: <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/scheduler/how-to/signalr-local-hub-locking-events\">Scheduler SignalR Binding</a></p>"
+        },
+        "packages": [
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Binding to Telerik Backend Services",
@@ -4650,29 +4667,8 @@
 		"description": {
             "kendo-ui": ""
         },
-        "group": "Data Binding",
         "packages": [
           "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Binding to SignalR",
-        "url": "scheduler/signalr",
-        "title": {
-            "kendo-ui": "Real-time Binding to SignalR Hub",
-            "aspnet-mvc": "Real-time Binding to SignalR Hub | UI for ASP.NET MVC demos"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how the Kendo UI Scheduler can be bound to SignalR Hub for real-time push notifications",
-            "aspnet-mvc": "This example shows how the Telerik ASP.NET MVC Scheduler can be bound to SignalR Hub for real-time push notifications."
-        },
-		"description": {
-            "kendo-ui": "",
-            "aspnet-mvc": "<p>This demo shows how the Telerik ASP.NET MVC Scheduler can be bound to a <a href=\"http://signalr.net\">SignalR</a> Hub for real-time push notifications. This is useful for web applications (chat, calendar and scheduling, gaming and other aps) which require high-frequency updates where you usually want to perform data updates in real-time on all connected clients.</p> <p>To configure the SignalR binding, set the <strong>SignalR</strong> and <strong>Transport</strong> settings in the Scheduler&rsquo;s DataSource configuration. In this way you instruct the data source to use SignalR protocol for transmitting and operating with data in real time. You can find more information in the following help article: <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/scheduler/how-to/signalr-local-hub-locking-events\">Scheduler SignalR Binding</a></p>"
-        },
-        "packages": [
           "!jsp",
           "!php"
         ]
@@ -4735,9 +4731,26 @@
             "kendo-ui": "This demo shows the Right-to-left (RTL) support of Kendo UI Scheduler.",
             "aspnet-mvc": "This demo shows the Right-to-left (RTL) support for ASP.NET MVC Scheduler."
         },
+        "group": "Accessibility and Internationalization",
 		"description": {
             "kendo-ui": "",
             "aspnet-mvc": "<p>The Telerik MVC Scheduler supports right-to-left languages and rendering. All you need to do is to register the <strong>kendo.rtl.min.css</strong> file (located at Kendo.Mvc.Examples\\Content\\web\\ installation folder) and wrap the scheduler in a container element with <strong>k-rtl</strong> class set for it, as demonstrated in this particular example.</p> <p>You can learn more for the right-to-left support of the components in <a href=\"http://docs.telerik.com/kendo-ui/accessibility/supporting-rtl-languages\" target=\"_blank\">this article</a>.</p>"
+        }
+      },
+      {
+        "text": "Selection",
+        "url": "scheduler/selection",
+        "title": {
+            "kendo-ui": "Selection and Keyboard navigation in Kendo UI Scheduler",
+            "aspnet-mvc": "Selection and Keyboard navigation in ASP.NET MVC Scheduler"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the selection and the different keyboard combinations that could be used to navigate in Kendo UI Scheduler.",
+            "aspnet-mvc": "This demo shows the selection and the different keyboard combinations that could be used to navigate in ASP.NET MVC Scheduler."
+        },
+		"description": {
+            "kendo-ui": "",
+            "aspnet-mvc": "<p>The Scheduler offers extended keyboard navigation which allows you to focus the control, navigate over its cells, to select an appointment and modify it, to create new appointments, to switch between the available views as many more. This is especially useful for the visually impaired users. </p> <p>For more information on the supported keyboard shortcuts see the provided information box.</p>"
         }
       },
       {

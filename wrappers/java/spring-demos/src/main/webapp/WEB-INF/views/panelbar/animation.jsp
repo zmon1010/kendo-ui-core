@@ -10,22 +10,24 @@
 <c:url value="/resources/web/panelbar/history.png" var="history" />
 <c:url value="/resources/web/panelbar/orgFoot.png" var="orgFoot" />
 
-
-<form class="configuration k-widget k-header" method="Post">
-    <span class="configHead">Animation Settings</span>
+<form class="box" method="Post">
+    <h4>Animation Settings</h4>
     <ul class="options">
         <li>
             <input name="animation" type="radio" ${ animation == "toggle" ? "checked=\"checked\"" : "" } value="toggle" /> <label for="toggle">toggle animation</label>
         </li>
         <li>
             <input name="animation" type="radio" ${ animation != "toggle" ? "checked=\"checked\"" : "" } value="expand" /> <label for="expand">expand animation</label>
-        </li>        
+        </li> 
+        <li>
+            <button class="k-button">Apply</button>
+        </li>
     </ul>
-
-    <button class="k-button">Apply</button>
 </form>
 
-<div class="history">
+<div class="demo-section k-content">
+    <h4>Conversation history</h4>
+
 	<kendo:panelBar name="panelbar" animation="${ animation != \"toggle\" }">
 		<kendo:panelBar-animation>		
 			<kendo:panelBar-animation-expand effects="${ (animation != \"toggle\" ? \"expand:vertical\" : \" simple\") }" duration="200"/>
@@ -73,21 +75,6 @@
 			</kendo:panelBar-item>		
 		</kendo:panelBar-items>
 	</kendo:panelBar>
-	<div id="bottom"></div>
 </div>
-
-<style>
-    .history {
-        width: 252px;
-        margin: 20px auto;
-        padding: 36px 0 0 0;
-        background: url('${history}') transparent no-repeat 0 0;
-    }
-    .bottom {
-        width: 252px;
-        height: 9px;
-        background: url('${history}') transparent no-repeat 0 -35px;
-    }
-</style>
 
 <demo:footer />

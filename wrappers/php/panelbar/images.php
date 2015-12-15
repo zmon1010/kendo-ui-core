@@ -5,8 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-    <div class="demo-section">
-        <h3>PanelBar with images</h3>
+    <div class="demo-section k-content">
+        <h4>PanelBar with images</h4>
 
 <?php
     $panelbar = new \Kendo\UI\PanelBar('panelbar-images');
@@ -51,14 +51,14 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
     </div>
 
-    <div class="demo-section">
+    <div class="demo-section k-content">
 
-        <h3>PanelBar with sprites</h3>
+        <h4>PanelBar with sprites</h4>
 
 <?php
     $panelbar = new \Kendo\UI\PanelBar('panelbar-sprites');
 
-    $brazil = new \Kendo\UI\PanelBarItem("Brail");
+    $brazil = new \Kendo\UI\PanelBarItem("Brazil");
     $brazil->spriteCssClass("brazilFlag");
     $brazil->addItem(
             array("text" =>"History", "spriteCssClass" => "historyIcon"),
@@ -66,7 +66,7 @@ require_once '../lib/Kendo/Autoload.php';
         );
 
     $india = new \Kendo\UI\PanelBarItem("India");
-    $india->imageUrl("indiaFlag");
+    $india->spriteCssClass("indiaFlag");
     $india->addItem(
             array("text" =>"Top News", "spriteCssClass" => "historyIcon"),
             array("text" =>"Photo Galleries", "spriteCssClass" => "geographyIcon")
@@ -88,29 +88,9 @@ require_once '../lib/Kendo/Autoload.php';
     </div>
 
     <style>
-        .k-panel
-        {
+        .k-panel {
             -webkit-transform: translatez(0);
         }
-
-        .demo-section {
-            width: 300px;
-        }
-        .demo-section h3 {
-            font-weight: normal;
-            padding-bottom: 10px;
-        }
-        #panelbar-images > .k-item > .k-link > .k-image
-        {
-            margin-top: 2px;
-            margin-left: -5px;
-        }
-
-        #panelbar-sprites > .k-item > .k-link > .k-sprite
-        {
-            margin-top: 6px;
-        }
-
         #panelbar-sprites .k-sprite {
             background-image: url("../content/shared/styles/flags.png");
         }

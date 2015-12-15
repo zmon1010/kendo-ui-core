@@ -7,8 +7,9 @@
 <demo:header />
 <c:url value="/panelbar/content/1" var="contentUrl" />
 
+<div class="demo-section k-content">
 <kendo:panelBar name="panelbar" expandMode="single" select="select" expand="expand" collapse="collapse" 
-	activate="activate" contentLoad="contentLoad" error="error" style="width:250px;">	
+	activate="activate" contentLoad="contentLoad" error="error">	
 	<kendo:panelBar-items>			
 		<kendo:panelBar-item  text="Metallica - Master of Puppets 1986" expanded="true">
 			<kendo:panelBar-items>
@@ -41,6 +42,7 @@
 		<kendo:panelBar-item  text="Error Item" contentUrl="error.html" />					
 	</kendo:panelBar-items>
 </kendo:panelBar>
+</div>
 
 <script>
     function select(e) {
@@ -69,6 +71,9 @@
     }
 </script>
 	
-<div class="console"></div>
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
 <demo:footer />

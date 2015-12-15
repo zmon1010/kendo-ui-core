@@ -5,7 +5,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="k-rtl">             
+<div class="demo-section k-content k-rtl">           
 
     <%= Html.Kendo().PanelBar()
         .Name("panelbar")

@@ -4,9 +4,9 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+<div class="demo-section k-content">
                 
-    <h3>PanelBar with images</h3>
+    <h4>PanelBar with images</h4>
 
     <%= Html.Kendo().PanelBar()
         .Name("panelbar-images")
@@ -59,9 +59,9 @@
     %>
 </div>
             
-<div class="demo-section">
+<div class="demo-section k-content">
 
-    <h3>PanelBar with sprites</h3>
+    <h4>PanelBar with sprites</h4>
     
     <%= Html.Kendo().PanelBar()
         .Name("panelbar-sprites")
@@ -101,32 +101,14 @@
 </div>
 
 <style>
-    .k-panel
-    {
+    .k-panel {
         -webkit-transform: translatez(0);
-    }
-
-    .demo-section {
-        width: 300px;
-    }
-    .demo-section h3 {
-        font-weight: normal;
-        padding-bottom: 10px;
-    }
-    #panelbar-images > .k-item > .k-link > .k-image
-    {
-        margin-top: 2px;
-        margin-left: -5px;
-    }
-
-    #panelbar-sprites > .k-item > .k-link > .k-sprite
-    {
-        margin-top: 6px;
     }
 
     #panelbar-sprites .k-sprite {
         background-image: url("<%= Url.Content("~/Content/shared/flags.png") %>");
     }
+
     .brazilFlag { background-position: 0 0; }
     .indiaFlag { background-position: 0 -32px; }
     .netherlandsFlag { background-position: 0 -64px; }

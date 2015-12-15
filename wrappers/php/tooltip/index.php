@@ -10,6 +10,7 @@ $tooltip->filter('a')
 
 echo $tooltip->render();
 ?>
+<div class="demo-section k-content wide">
     <div id="agglomerations">
         <a href="#" title="Canton - 26,300,000" id="canton"></a>
         <a href="#" title="Jakarta - 25,800,000" id="jakarta"></a>
@@ -23,7 +24,7 @@ echo $tooltip->render();
         <a href="#" title="Osaka - 16,800,000" id="osaka"></a>
         <a href="#" title="Moscow - 16,200,000" id="moscow"></a>
     </div>
-
+</div>
     <script>
         $(document).ready(function() {
             $("#agglomerations").data("kendoTooltip").show($("#canton"));
@@ -32,8 +33,12 @@ echo $tooltip->render();
 
     <style>
 
-        .demo-section {
-            width: 692px;
+         .demo-section.k-content,
+        html.k-material .demo-section.k-content {
+            overflow: hidden;
+            padding: 0;
+            border: 0;
+            box-shadow: none;
         }
 
         #agglomerations {

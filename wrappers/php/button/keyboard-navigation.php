@@ -1,7 +1,41 @@
 <?php
 require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
+?>
+<div class="box">
+    <div class="box-col">
+        <h4>Focus</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign">Alt</span>
+                    +
+                    <span class="key-button">W</span>
+                </span>
+                <span class="button-descr">
+                    Focuses the first button (clicking on it or tabbing will also work).
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Supported keys and user actions</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Enter</span> or <span class="key-button">Space</span>
+                </span>
+                <span class="button-descr">
+                    Trigger click event.
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
 
+<div class="demo-section k-content">                
+    <h4>Buttons</h4>
+<?php
 $textButton = new \Kendo\UI\Button('textButton');
 $textButton->attr('type', 'button')
            ->content('Text button')
@@ -24,7 +58,6 @@ echo " ";
 $iconButton = new \Kendo\UI\Button('iconButton');
 $iconButton->tag('em')
            ->icon('refresh')
-           ->content('Refresh')
            ->click('onClick');
 
 echo $iconButton->render();
@@ -40,37 +73,11 @@ $disabledButton->tag('a')
 echo $disabledButton->render();
 
 ?>
+</div>
 
-<p>(The disabled button will not fire click events)</p>
-
-<ul class="keyboard-legend">
-  <li>
-    <span class="button-preview">
-      <span class="key-button leftAlign">Alt</span>
-      +
-      <span class="key-button">W</span>
-    </span>
-    <span class="button-descr">
-      Focuses the first button (clicking on it or tabbing will also work).
-    </span>
-  </li>
-</ul>
-
-<h4>Supported keys and user actions</h4>
-<ul class="keyboard-legend">
-  <li>
-    <span class="button-preview">
-      <span class="key-button">Enter</span> or <span class="key-button">Space</span>
-    </span>
-    <span class="button-descr">
-      Trigger click event.
-    </span>
-  </li>
-</ul>
-
-<div class="configuration k-widget k-header">
-  <span class="configHead">Events log</span>
-  <div class="console"></div>
+<div class="box">                
+    <h4>Console log</h4>
+    <div class="console"></div>
 </div>
 
 <script>
@@ -84,5 +91,15 @@ echo $disabledButton->render();
     }
   });
 </script>
+
+<style>
+    .demo-section {
+        line-height: 4em;
+    }
+
+    .demo-section .k-button {
+        margin-right: 10px;
+    }
+</style>
 
 <?php require_once '../include/footer.php'; ?>
