@@ -622,7 +622,9 @@ var __meta__ = { // jshint ignore:line
                 this.dataSource.one("change", $.proxy(this.updateIndeterminate, this, null));
             }
 
-            this.dataSource.fetch();
+            if (this.options.autoBind) {
+                this.dataSource.fetch();
+            }
         },
 
         _bindDataSource: function() {

@@ -622,6 +622,20 @@
         ok(treeSpy.calls("updateIndeterminate"));
     });
 
+    test("setDataSource does not fetch data when autoBind is false", function() {
+        createTreeView({
+            autoBind: false
+        });
+
+        treeviewObject.setDataSource(new HierarchicalDataSource({
+            data: [
+                { text: "bar" }
+            ]
+        }));
+
+        equal(treeviewObject.dataSource.view().length, 0);
+    });
+
     var Node = kendo.data.Node;
 
     test("binding to derived nodes", function() {
