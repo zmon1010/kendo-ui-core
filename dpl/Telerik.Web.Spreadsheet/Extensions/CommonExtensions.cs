@@ -69,5 +69,46 @@ namespace Telerik.Web.Spreadsheet
         {            
             return collection ?? new List<T>();
         }
+
+        /// <summary>
+        /// Converts string to camel-case string
+        /// </summary>
+        /// <param name="instance"></param>        
+        public static string ToCamelCase(this string instance)
+        {
+            return instance[0].ToString().ToLowerInvariant() + instance.Substring(1);
+        }
+
+        /// <summary>
+        /// Check string value for empty string or null
+        /// </summary>        
+        public static bool HasValue(this string value)
+        {
+            return !string.IsNullOrEmpty(value);
+        }
+
+        /// <summary>
+        /// Converts string to enum
+        /// </summary>
+        /// <typeparam name="T">The type of enum</typeparam>
+        /// <param name="value">The value to convert</param>
+        /// <param name="defaultValue">Default value if convertion fails</param>
+        /// <returns>The result enum</returns>
+        public static T ToEnum<T>(this string value, T defaultValue)
+        {
+            if (!value.HasValue())
+            {
+                return defaultValue;
+            }
+
+            try
+            {
+                return (T)Enum.Parse(typeof(T), value, true);
+            }
+            catch (ArgumentException)
+            {
+                return defaultValue;
+            }
+        }
     }
 }

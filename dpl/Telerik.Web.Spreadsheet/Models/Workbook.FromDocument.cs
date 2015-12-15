@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Telerik.Windows.Documents.Spreadsheet.Model;
+using Telerik.Windows.Documents.Spreadsheet.Model.Filtering;
 using Telerik.Windows.Documents.Spreadsheet.Model.Sorting;
 using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
 using Telerik.Windows.Documents.Spreadsheet.Utilities;
@@ -46,7 +48,9 @@ namespace Telerik.Web.Spreadsheet
                     sheet.FrozenColumns = pane.TopLeftCellIndex.ColumnIndex;
                 }
 
-                sheet.Sort = GetSorting(documentWorksheet);                
+                sheet.Sort = GetSorting(documentWorksheet);
+
+                sheet.Filter = GetFilters(documentWorksheet);
             }
 
             return workbook;
@@ -97,5 +101,22 @@ namespace Telerik.Web.Spreadsheet
                 }).ToList()
             };            
         }
+       
+        private static Filter GetFilters(DocumentWorksheet worksheet)
+        {
+            var documentFilter = worksheet.Filter;
+            var range = documentFilter.FilterRange;
+
+            if (range == null)
+            {
+                return null;
+            }            
+            
+            return new Filter
+            {
+                Ref = NameConverter.ConvertCellRangeToName(range.FromIndex, range.ToIndex),
+                Columns = documentFilter.Filters.Select(item => item.ToFilterColumn()).SkipWhile(column => column == null).ToList()
+            };            
+        }       
     }
 }
