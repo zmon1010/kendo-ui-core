@@ -17,17 +17,12 @@ echo $notification->render();
 
 ?>
 
-<div class="demo-section">
+ <div class="demo-section k-content" style="text-align: center;">
     <p>
-        <button id="showNotification" class="k-button">Show notification</button>
+        <button id="showNotification" class="k-button k-primary">Show</button> &nbsp; &nbsp;
 
-        <button id="hideAllNotifications" class="k-button">Hide All Notifications</button>
+        <button id="hideAllNotifications" class="k-button">Hide All</button>
     </p>
-</div>
- 
-<div class="demo-section">                
-    <h3 class="title">Console log</h3>
-    <div class="console"></div>
 </div>
            
 <script>

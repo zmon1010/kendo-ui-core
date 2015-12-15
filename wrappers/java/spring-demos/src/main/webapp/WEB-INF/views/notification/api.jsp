@@ -11,18 +11,13 @@
     </kendo:notification-templates>
 </kendo:notification>
 
-<div class="demo-section">
-    <p>
-        <button id="showNotification" class="k-button">Show notification</button>
+ <div class="demo-section k-content" style="text-align: center;">
+     <p>
+         <button id="showNotification" class="k-button k-primary">Show</button> &nbsp; &nbsp;
 
-        <button id="hideAllNotifications" class="k-button">Hide All Notifications</button>
-    </p>
-</div>
- 
-<div class="demo-section">                
-    <h3 class="title">Console log</h3>
-    <div class="console"></div>
-</div>
+         <button id="hideAllNotifications" class="k-button">Hide All</button>
+     </p>
+ </div>
            
 <script>
 
