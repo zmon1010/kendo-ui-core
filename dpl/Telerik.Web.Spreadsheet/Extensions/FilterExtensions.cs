@@ -16,8 +16,14 @@ namespace Telerik.Web.Spreadsheet
         DoesNotContain = NotEqualsTo | StartsWith | EndsWith
     }
 
+    /// <summary>
+    /// Extensions methods for DPL filters
+    /// </summary>
     public static class FilterExtensions
     {
+        /// <summary>
+        /// Converts DPL filter expressions to Telerik.Web.Spreadsheet.FilterColumn
+        /// </summary>        
         public static FilterColumn ToFilterColumn(this IFilter filter)
         {
             if (filter is TopFilter)
