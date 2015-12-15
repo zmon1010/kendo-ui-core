@@ -39,7 +39,7 @@ MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
             .include(MVC6_SRC_ROOT + '**/*.snk')
             .include(MVC6_SRC_ROOT + '**/*.json')
 
-MVC6_VERSION = "#{VERSION_YEAR}.#{VERSION_Q}.0-beta-#{VERSION_DATE}"
+MVC6_VERSION = "#{VERSION_YEAR}.#{VERSION_Q}.#{VERSION_DATE}"
 
 # For the official release use:
 #MVC6_VERSION = VERSION
