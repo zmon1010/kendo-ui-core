@@ -61,8 +61,8 @@
             left: 30
         });
 
-        equal(element.css("top"), "50px");
-        equal(element.css("left"), "30px");
+        equal(element.css("top"), "51px");
+        equal(element.css("left"), "31px");
     });
 
     test("position method sets top and left of the tooltip", function() {
@@ -87,8 +87,8 @@
             height: 30
         });
 
-        equal(element.width(), 51);
-        equal(element.height(), 31);
+        equal(element.width(), 49);
+        equal(element.height(), 29);
     });
 
     test("hide method shows the element", function() {
@@ -165,7 +165,7 @@
         formulaInput.value("s text");
         formulaInput.element.triggerHandler("input");
 
-        equal(formulaInput.element.width(), initialWidth+1);
+        equal(formulaInput.element.width(), initialWidth-1);
     });
 
     test("scale sets input width to cell width", function() {
