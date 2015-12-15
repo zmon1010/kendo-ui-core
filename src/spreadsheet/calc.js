@@ -75,55 +75,45 @@
         if (name.toLowerCase() == "#sheet") {
             return spreadsheet.SHEETREF;
         }
-        if (name.indexOf(",") >= 0) {
-            return new spreadsheet.UnionRef(name.split(/\s*,\s*/g).map(parseReference));
-        }
-        var m;
-        // Sheet!A1
-        if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
-            return new CellRef(getrow(m[4]), getcol(m[3]), 0)
-                .setSheet(m[2], !!m[2]);
-        }
-        // Sheet!R1C1
-        if ((m = /^(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+)$/i.exec(name))) {
-            return new CellRef(getrow(m[3]), getrow(m[4]))
-                .setSheet(m[2], !!m[2]);
-        }
-        // Sheet1!R1C1:Sheet2!R2C2
-        if ((m = /^(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+):(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+)$/i.exec(name))) {
-            return new RangeRef(
-                new CellRef(getrow(m[3]), getrow(m[4]))
-                    .setSheet(m[2], !!m[2]),
-                new CellRef(getrow(m[7]), getrow(m[8]))
-                    .setSheet(m[6], !!m[6])
-            ).setSheet(m[2], !!m[2]);
-        }
-        // Sheet!A1:B2, Sheet!$A$1:$B$2, Sheet1!A1:Sheet2:B2 etc.
-        if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+):(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
-            return new RangeRef(
-                new CellRef(getrow(m[4]), getcol(m[3]), 0)
-                    .setSheet(m[2], !!m[2]),
-                new CellRef(getrow(m[8]), getcol(m[7]), 0)
-                    .setSheet(m[6], !!m[6])
-            ).setSheet(m[2], !!m[2]);
-        }
-        // Sheet1!A:Sheet2!B
-        if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+):(([A-Z0-9]+)!)?\$?([A-Z]+)$/i.exec(name))) {
-            return new RangeRef(
-                new CellRef(-Infinity, getcol(m[3]), 0)
-                    .setSheet(m[2], !!m[2]),
-                new CellRef(+Infinity, getcol(m[6]), 0)
-                    .setSheet(m[5], !!m[5])
-            ).setSheet(m[2], !!m[2]);
-        }
-        // Sheet1!5:Sheet2!6
-        if ((m = /^(([A-Z0-9]+)!)?\$?([0-9]+):(([A-Z0-9]+)!)?\$?([0-9]+)$/i.exec(name))) {
-            return new RangeRef(
-                new CellRef(getrow(m[3]), -Infinity, 0)
-                    .setSheet(m[2], !!m[2]),
-                new CellRef(getrow(m[6]), +Infinity, 0)
-                    .setSheet(m[5], !!m[5])
-            ).setSheet(m[2], !!m[2]);
+        OUT: {
+            // this is redundant, but let's keep it fast for the most
+            // common case — A1.  If this fails, we'll try to employ the
+            // whole tokenizer.
+            var m;
+            if ((m = /^(\$)?([a-z]+)(\$)?(\d+)$/i.exec(name))) {
+                var row = getrow(m[4]), col = getcol(m[2]);
+                if (row <= 1048576 && col <= 16383) {
+                    return new CellRef(getrow(m[4]), getcol(m[2]));
+                }
+                // no NameRef-s from this function
+                break OUT;      // jshint ignore:line
+            }
+            var stream = TokenStreamWithReferences(InputStream(name));
+            var a = [];
+            while (true) {
+                var ref = stream.next();
+                if (ref instanceof CellRef) {
+                    // this function always makes absolute references
+                    ref.rel = 0;
+                } else if (ref instanceof RangeRef) {
+                    ref.topLeft.rel = 0;
+                    ref.bottomRight.rel = 0;
+                } else {
+                    break OUT;  // jshint ignore:line
+                }
+                a.push(ref);
+                if (stream.eof()) {
+                    break;
+                }
+                if (!stream.is("op", ",")) {
+                    break OUT;  // jshint ignore:line
+                }
+                stream.next();
+            }
+            if (!a.length) {
+                break OUT;      // jshint ignore:line, you retard
+            }
+            return a.length == 1 ? a[0] : new spreadsheet.UnionRef(a);
         }
         if (!noThrow) {
             throw new Error("Cannot parse reference: " + name);
@@ -132,8 +122,8 @@
 
     function parseFormula(sheet, row, col, input) {
         var refs = [];
-
         input = TokenStreamWithReferences(InputStream(input));
+        var is = input.is;
 
         return {
             type: "exp",
@@ -161,14 +151,6 @@
                     input.croak("Expected " + type + " «" + value + "»");
                 }
             }
-        }
-
-        function is(type, value) {
-            var tok = input.peek();
-            return tok != null
-                && (type == null || tok.type === type)
-                && (value == null || tok.value === value)
-                ? tok : null;
         }
 
         function parseExpression(commas) {
@@ -697,8 +679,17 @@
             peek  : peek,
             next  : next,
             croak : input.croak,
-            eof   : input.eof
+            eof   : input.eof,
+            is    : is
         };
+
+        function is(type, value) {
+            var tok = peek();
+            return tok != null
+                && (type == null || tok.type === type)
+                && (value == null || tok.value === value)
+                ? tok : null;
+        }
 
         function peek() {
             if (token == null) {
@@ -723,7 +714,7 @@
                 || ahead(4, refSheetCell)
                 || ahead(4, refRange)
                 || ahead(2, refCell)
-                || ahead(2, funCall)
+                || ahead(2, funcall)
                 || input.next();
         }
 
@@ -883,7 +874,7 @@
             }
         }
 
-        function funCall(a, b) {
+        function funcall(a, b) {
             if (a.type == "sym" && b.type == "punc" && b.value == "(" && !a.space) {
                 a.type = "func";
                 skip(1);
