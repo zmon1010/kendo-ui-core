@@ -24,50 +24,33 @@ echo $staticNotification->render();
 ?>
 
 <div class="k-rtl">
-  <div class="demo-section">
-    <div id="appendto" class="k-block"></div>
+    <span id="popupNotification"></span>
+    <span id="staticNotification"></span>
 
-    <h3>Show notification:</h3>
-    <p>
-      <button id="showPopupNotification" class="k-button">As a popup at top-left</button>
-      <br />
-      <button id="showStaticNotification" class="k-button">Static in the left panel</button>
-    </p>
-
-    <h3>Hide notification:</h3>
-    <p>
-      <button id="hideAllNotifications" class="k-button">Hide All Notifications</button>
-    </p>
-  </div>
+    <div class="demo-section k-content">
+       <h4>Show notification</h4>
+       <p>
+           <button id="showPopupNotification" class="k-button">As a popup at top-left</button><br />
+           <button id="showStaticNotification" class="k-button">Static in the panel below</button>
+       </p>
+       <div style="padding-top: 1em;">
+           <h4>Hide notification</h4>
+           <button id="hideAllNotifications" class="k-button">Hide All Notifications</button>
+       </div>
+   </div>
+   
+   <div id="appendto" class="demo-section k-content"></div>
 </div>
 
 <style>
-  .demo-section {
-  width: 600px;
-  padding: 20px 30px;
-  }
-  .demo-section:after {
-  content: "";
-  display: block;
-  clear: both;
-  height: 0;
-  }
-  .demo-section p {
-  margin: 3px 0 20px;
-  line-height: 40px;
-  }
-  .demo-section .k-button {
-  width: 200px;
-  }
-  #appendto {
-  float: left;
-  width: 300px;
-  height: 170px;
-  margin: 1em 0;
-  overflow: auto;
-  }
+    .demo-section p {
+        margin: 3px 0 20px;
+        line-height: 40px;
+    }
+    .demo-section .k-button {
+        width: 250px;
+    }
 </style>
-
 <script>
   $(document).ready(function() {
   var popupNotification = $("#popupNotification").data("kendoNotification");
