@@ -36,6 +36,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 require_once '../include/header.php';
 
+?>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Current Date</h4>
+        <?php
+            $datePicker = new \Kendo\UI\DatePicker('date');
+            $datePicker->value(new DateTime('2013/6/13'))
+                  ->change('date_change');
+
+            echo $datePicker->render();
+        ?>
+    </div>
+    <div class="box-col">
+        <h4>Current View</h4>
+        <?php
+            $viewsPicker = new \Kendo\UI\DropDownList('views');
+
+            $viewsPicker->change('views_change')
+                  ->dataTextField('text')
+                  ->dataValueField('value')
+                  ->value('week')
+                  ->dataSource(array(
+                      array('text' => 'Agenda', 'value' => 'agenda'),
+                      array('text' => 'Day', 'value' => 'day'),
+                      array('text' => 'Month', 'value' => 'month'),
+                      array('text' => 'Week', 'value' => 'week'),
+                      array('text' => 'Timeline', 'value' => 'timeline')
+                  ));
+
+            echo $viewsPicker->render();
+        ?>
+    </div>
+</div>
+<?php
 $transport = new \Kendo\Data\DataSourceTransport();
 
 $create = new \Kendo\Data\DataSourceTransportCreate();
@@ -149,38 +183,6 @@ $scheduler->timezone("Etc/UTC")
 
 echo $scheduler->render();
 ?>
-    <div class="demo-section">
-        <p>
-            <label>Current Date:</label>
-            <?php
-                $datePicker = new \Kendo\UI\DatePicker('date');
-                $datePicker->value(new DateTime('2013/6/13'))
-                      ->change('date_change');
-
-                echo $datePicker->render();
-            ?>
-        </p>
-        <p>
-            <label>Current View:</label>
-            <?php
-                $viewsPicker = new \Kendo\UI\DropDownList('views');
-
-                $viewsPicker->change('views_change')
-                      ->dataTextField('text')
-                      ->dataValueField('value')
-                      ->value('week')
-                      ->dataSource(array(
-                          array('text' => 'Agenda', 'value' => 'agenda'),
-                          array('text' => 'Day', 'value' => 'day'),
-                          array('text' => 'Month', 'value' => 'month'),
-                          array('text' => 'Week', 'value' => 'week'),
-                          array('text' => 'Timeline', 'value' => 'timeline')
-                      ));
-
-                echo $viewsPicker->render();
-            ?>
-       </p>
-    </div>
 
 <script>
     function views_change() {

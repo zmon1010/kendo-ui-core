@@ -134,8 +134,8 @@ function scheduler_navigate(e) {
             </kendo:dataSource-transport>
         </kendo:dataSource>
     </kendo:scheduler>
-    <div class="demo-section">
-        <h3 class="title">Console log</h3>
+    <div class="box wide">
+        <h4>Console log</h4>
         <div class="console"></div>
     </div>
 <demo:footer />

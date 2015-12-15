@@ -1,3 +1,20 @@
+<div class="box wide">
+    <div class="box-col">
+        <h4>Current Date</h4>
+        <input id="date" />
+    </div>
+    <div class="box-col">
+        <h4>Current View</h4>
+        <select id="views">
+            <option value="agenda">Agenda</option>
+            <option value="day">Day</option>
+            <option value="month">Month</option>
+            <option value="week">Week</option>
+            <option value="timeline">Timeline</option>
+        </select>
+    </div>
+</div>
+
 @(Html.Kendo().Scheduler<Kendo.Mvc.Examples.Models.Scheduler.TaskViewModel>()
     .Name("scheduler")
     .Date(new DateTime(2013, 6, 13))
@@ -26,21 +43,6 @@
     )
 )
 
-<div class="demo-section">
-    <p>
-        <label>Current Date:</label> <input id="date" />
-    </p>
-    <p>
-        <label>Current View:</label>
-        <select id="views">
-            <option value="agenda">Agenda</option>
-            <option value="day">Day</option>
-            <option value="month">Month</option>
-            <option value="week">Week</option>
-            <option value="timeline">Timeline</option>
-        </select>
-    </p>
-</div>
 <script>
     $(function () {
         var scheduler = $("#scheduler").data("kendoScheduler");

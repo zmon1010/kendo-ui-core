@@ -142,7 +142,7 @@ $scheduler = new \Kendo\UI\Scheduler('scheduler');
 $scheduler->timezone("Etc/UTC")
     ->selectable(true)
     ->date(new DateTime('2013/6/13', new DateTimeZone('UTC')))
-    ->height(600)
+    ->height(400)
     ->addView(
         array('type' => 'day', 'startTime' => new DateTime('2013/6/13 7:00', new DateTimeZone('UTC'))),
         array('type' => 'week', 'selected' => true, 'startTime' => new DateTime('2013/6/13 7:00', new DateTimeZone('UTC'))),
@@ -166,7 +166,10 @@ $scheduler->timezone("Etc/UTC")
 
 echo $scheduler->render();
 ?>
-<div class="console"></div>
+<div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
 <script>
     function scheduler_dataBinding(e) {

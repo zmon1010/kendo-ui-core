@@ -16,7 +16,8 @@
     .Views(views =>
     {
         views.DayView();
-        views.WeekView(weekView => weekView.Selected(true));
+        views.WorkWeekView(workWeekView => workWeekView.Selected(true));
+        views.WeekView();
         views.MonthView();
         views.AgendaView();
         views.TimelineView();
@@ -79,37 +80,44 @@
 </script>
 
 <style>
-    #scheduler {
-        font-size: 14px;    
-    }
-    #team-schedule {
-        background: url('<%=Url.Content("~/Content/web/scheduler/")%>team-schedule.png') transparent no-repeat;
-        height: 115px;
-        position: relative;
-    }
 
-    #people {
-        background: url('<%=Url.Content("~/Content/web/scheduler/")%>scheduler-people.png') no-repeat;
-        width: 345px;
-        height: 115px;
-        position: absolute;
-        right: 0;
-    }
-    #alex {
-        position: absolute;
-        left: 4px;
-        top: 81px;
-    }
-    #bob {
-        position: absolute;
-        left: 119px;
-        top: 81px;
-    }
-    #charlie {
-        position: absolute;
-        left: 234px;
-        top: 81px;
-    }
+.k-nav-current > .k-link span + span {
+    max-width: 200px;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+#team-schedule {
+    background: url('<%=Url.Content("~/Content/web/scheduler/")%>team-schedule.png') transparent no-repeat;
+    height: 115px;
+    position: relative;
+}
+
+#people {
+    background: url('<%=Url.Content("~/Content/web/scheduler/")%>scheduler-people.png') no-repeat;
+    width: 345px;
+    height: 115px;
+    position: absolute;
+    right: 0;
+}
+#alex {
+    position: absolute;
+    left: 4px;
+    top: 81px;
+}
+#bob {
+    position: absolute;
+    left: 119px;
+    top: 81px;
+}
+#charlie {
+    position: absolute;
+    left: 234px;
+    top: 81px;
+}
 </style>
 
 </asp:Content>
