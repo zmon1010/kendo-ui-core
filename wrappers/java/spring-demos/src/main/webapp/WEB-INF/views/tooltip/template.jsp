@@ -13,7 +13,7 @@
     	<kendo:tooltip-content template="template"/>    	
     </kendo:tooltip>    
   
-	<div class="demo-section">
+ 	<div class="demo-section k-content wide">
 	    <ul id="products" class="dairy-photos">
 	        <li>
 	            <a href="#" data-id="11" title="A cheese made in the artisan tradition by rural dairy farmers in the north of Spain"><img src="${imageFolderUrl}/11.jpg" /> Queso de Cabrales</a>
@@ -41,55 +41,50 @@
 	</script>
 	
 	 <style>
-	     .demo-section {
-	         width: 620px;
-	         border: 0;
-	         background: #ffc851 url('${ backgroundUrl }') no-repeat 100% 100%;
-	     }
-	     .dairy-photos {
-	         list-style-type: none;
-	         margin: 15px 0 15px 10px;
-	         padding: 0;
-	     }
-	     .dairy-photos li {
-	         display: inline-block;
-	         margin: 5px;
-	         padding: 0;
-	         vertical-align: top;
-	     }
-	     .dairy-photos a {
-	         display: block;
-	         width: 100px;
-	         height: 155px;
-	         padding: 0 0 0 10px;
-	         font-size: .9em;
-	         line-height: 1.2em;
-	         text-transform: uppercase;
-	         color: #777;
-	         background-color: rgba(255,255,255,0.8);
-	         -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
-	         -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
-	         box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
-	     }
-	     .dairy-photos a:hover {
-	         color: #fff;
-	         background-color: #000;
-	     }
-	     .dairy-photos a img {
-	         margin: 0 0 5px -10px;
-	     }
-	     .k-tooltip-content {
-	         vertical-align: middle;
-	     }
-	     .k-tooltip-content img,
-	     .k-tooltip-content p {
-	         float: left;
-	     }
-	     .k-tooltip-content p {
-	         font-size: 1.4em;
-	         padding: 20px;
-	         width: 160px;
-	         text-align: left;
-	     }
+	      .dairy-photos {
+             list-style-type: none;
+             margin: 15px 0 15px 10px;
+             padding: 0;
+         }
+         .dairy-photos li {
+             display: inline-block;
+             margin: 5px;
+             padding: 0;
+             vertical-align: top;
+         }
+         .dairy-photos a {
+             display: block;
+             width: 100px;
+             height: 155px;
+             padding: 0 0 0 10px;
+             font-size: .9em;
+             line-height: 1.2em;
+             text-transform: uppercase;
+             color: #777;
+             background-color: rgba(255,255,255,0.8);
+             -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+             -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+             box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+         }
+         .dairy-photos a:hover {
+             color: #fff;
+             background-color: #000;
+         }
+         .dairy-photos a img {
+             margin: 0 0 5px -10px;
+         }
+         .k-tooltip-content {
+             vertical-align: middle;
+         }
+         .k-tooltip-content img,
+         .k-tooltip-content p {
+             float: left;
+         }
+         .k-tooltip-content p {
+             font-size: 1.4em;
+             padding: 20px;
+             width: 160px;
+             text-align: left;
+         }
 	 </style>
 <demo:footer />
