@@ -22,7 +22,12 @@ echo $tooltip->render();
         }
     </script>
 
-    <div class="demo-section">
+<div class="demo-section k-content wide">
+        <div class="dairy-description">
+            <h2>Dairy Products</h2>
+            <p>Queso Cabrales, Queso Manchego La Pastora, Gorgonzola Telino, Mascarpone Fabioli, Geitost, Raclette Courdavault, Camembert Pierrott, Gudbrandsdalsost, Flotemysost, Mozzarella di Giovanni</p>
+            <p class="demo-hint" style="margin: 1em 0;">Hover an image for details.</p>
+        </div>
          <ul id="products" class="dairy-photos">
              <li>
              <a href="#" data-id="1"><img src="../content/web/foods/11.jpg" /></a>
@@ -44,28 +49,15 @@ echo $tooltip->render();
              <a href="#" data-id="9"><img src="../content/web/foods/72.jpg" /></a>
              </li>
          </ul>
-
-         <div class="dairy-description">
-             <h2>Dairy Products</h2>
-             <p>Queso Cabrales, Queso Manchego La Pastora, Gorgonzola Telino, Mascarpone Fabioli, Geitost, Raclette Courdavault, Camembert Pierrott, Gudbrandsdalsost, Flotemysost, Mozzarella di Giovanni</p>
-             <p>Hover an image for details.</p>
-         </div>
     </div>
 
     <style>
-        .demo-section {
-            height: 460px;
-        }
-
         .dairy-photos {
-            float: left;
             list-style-type: none;
-            margin: 60px 0 0 60px;
+            margin: 0;
             padding: 0;
-            width: 330px;
             line-height: 0;
         }
-
         .dairy-photos li {
             display: inline-block;
             margin: 0;
@@ -74,37 +66,30 @@ echo $tooltip->render();
             height: 110px;
             position: relative;
         }
-
         .dairy-photos li:hover {
             -moz-box-shadow: 0 0 10px rgba(0,0,0,0.8);
             -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.8);
             box-shadow: 0 0 10px rgba(0,0,0,0.8);
             z-index: 1;
         }
-
         .dairy-photos li,
         .dairy-photos li:hover {
             transition: all .2s;
             -moz-transition: all .2s;
             -webkit-transition: all .2s;
         }
-
         .dairy-photos a {
             display: inline-block;
         }
-
         .dairy-description {
-            float: right;
-            width: 250px;
-            margin: 80px 60px 0 0;
-        }
 
+        }
         .dairy-description h2 {
             font-size: 2.7em;
             font-weight: normal;
         }
         .dairy-description p {
-            line-height: 2em;
+            line-height: 1.5;
         }
         .dairy-details {
             padding: 10px 0 0 0;
