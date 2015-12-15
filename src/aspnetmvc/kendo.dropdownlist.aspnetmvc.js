@@ -8,10 +8,15 @@
 
     if (ui && ui.DropDownList) {
         ui.DropDownList.requestData = function (selector) {
-            var dropdownlist = $(selector).data("kendoDropDownList"),
-                filters = dropdownlist.dataSource.filter(),
-                filterInput = dropdownlist.filterInput,
-                value = filterInput ? filterInput.val() : "";
+            var dropdownlist = $(selector).data("kendoDropDownList");
+
+            if (!dropdownlist) {
+                return;
+            }
+
+            var filters = dropdownlist.dataSource.filter();
+            var filterInput = dropdownlist.filterInput;
+            var value = filterInput ? filterInput.val() : "";
 
             if (!filters) {
                 value = "";

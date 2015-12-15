@@ -8,9 +8,14 @@
 
     if (ui && ui.ComboBox) {
         ui.ComboBox.requestData = function (selector) {
-            var combobox = $(selector).data("kendoComboBox"),
-                filters = combobox.dataSource.filter(),
-                value = combobox.input.val();
+            var combobox = $(selector).data("kendoComboBox");
+
+            if (!combobox) {
+                return;
+            }
+
+            var filters = combobox.dataSource.filter();
+            var value = combobox.input.val();
 
             if (!filters) {
                 value = "";

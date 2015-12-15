@@ -9,8 +9,13 @@
     if (ui && ui.MultiSelect) {
         ui.MultiSelect.requestData = function (selector) {
             var multiselect = $(selector).data("kendoMultiSelect");
+
+            if (!multiselect) {
+                return;
+            }
+
             var text = multiselect.input.val();
-            
+
             return { text: text !== multiselect.options.placeholder ? text : "" };
         };
     }
