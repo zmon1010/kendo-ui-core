@@ -17,7 +17,7 @@
             var filters = combobox.dataSource.filter();
             var value = combobox.input.val();
 
-            if (!filters) {
+            if (!filter || !filter.filters.length) {
                 value = "";
             }
 

@@ -18,7 +18,7 @@
             var filterInput = dropdownlist.filterInput;
             var value = filterInput ? filterInput.val() : "";
 
-            if (!filters) {
+            if (!filter || !filter.filters.length) {
                 value = "";
             }
 
