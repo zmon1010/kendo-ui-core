@@ -6,7 +6,7 @@
 
 <demo:header />   
    <kendo:tooltip name="#agglomerations" filter="a" width="120" position="top" />
-   
+<div class="demo-section k-content wide">
    <div id="agglomerations">
         <a href="#" title="Canton - 26,300,000" id="canton"></a>
         <a href="#" title="Jakarta - 25,800,000" id="jakarta"></a>
@@ -20,7 +20,7 @@
         <a href="#" title="Osaka - 16,800,000" id="osaka"></a>
         <a href="#" title="Moscow - 16,200,000" id="moscow"></a>
     </div>
-    
+</div>
     <c:url value="/resources/web/tooltip/world-map.jpg" var="mapUrl" />
     
     <script>
@@ -31,9 +31,13 @@
     
     <style>
 
-        .demo-section {
-            width: 692px;
-        }
+         .demo-section.k-content,
+         html.k-material .demo-section.k-content {
+             overflow: hidden;
+             padding: 0;
+             border: 0;
+             box-shadow: none;
+         }
 
         #agglomerations {
             position: relative;
