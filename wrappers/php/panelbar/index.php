@@ -5,8 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 $panelbar = new \Kendo\UI\PanelBar('panelbar');
 
-$panelbar->attr('style', 'width: 300px')
-         ->expandMode('single');
+$panelbar->expandMode('single');
 
 $teamMates = new \Kendo\UI\PanelBarItem();
 
@@ -72,25 +71,15 @@ $communication->text('Communication')
               ->enabled(false);
 
 $panelbar->addItem($communication);
+
+echo $panelbar->render();
 ?>
 
-<div id="organizer">
-<?php
-    echo $panelbar->render();
-?>
-</div>
 
 <style>
-    #organizer {
-        width: 300px;
+    #panelbar {
+        max-width: 400px;
         margin: 0 auto;
-        padding: 47px 0 0 0;
-        background: url('../content/web/panelbar/orgHead.png') transparent no-repeat 0 0;
-    }
-    #bottom {
-        width: 300px;
-        height: 90px;
-        background: url('../content/web/panelbar/orgFoot.png') transparent no-repeat 0 0;
     }
     .teamMate:after {
         content: ".";
@@ -106,12 +95,13 @@ $panelbar->addItem($communication);
         padding-top: 20px;
     }
     .teamMate p {
-        margin: 5px 0;
+        margin: 0;
     }
     .teamMate img {
         float: left;
         margin: 5px 15px 5px 5px;
         border: 1px solid #ccc;
+        border-radius: 50%;
     }
 </style>
 <?php require_once '../include/footer.php'; ?>

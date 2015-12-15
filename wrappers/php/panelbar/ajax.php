@@ -29,11 +29,9 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 </div>
 
-<div class="configuration configuration-horizontal-bottom">
-    <span class="infoHead">Information</span>
-    <p>Image courtesy of Aston Martin</p>
+<div class="box wide">
+    <h4>Note</h4>
     <p>
-        <strong>Note:</strong>
         Security restrictions in Chrome prevent this
         example from working when the page is
         loaded from the file system (via file:// protocol).
@@ -42,18 +40,19 @@ require_once '../lib/Kendo/Autoload.php';
 
 <style>
     .wrapper {
-        width: 310px;
-        height: 400px;
+        height: 320px;
         margin: 20px auto;
-        padding: 75px 0 0 390px;
-        background: url('../content/web/panelbar/astonmartin.png') no-repeat 0 50px transparent;
+        padding: 20px 0 0;
+        background: url('../content/web/panelbar/astonmartin.png') no-repeat center 50px transparent;
     }
     #panelbar {
-        width: 300px;
+        width: 250px;
+        float: right;
+        margin-bottom: 20px;
     }
     #panelbar p {
-        margin-left: 1em;
-        margin-right: 1em;
+        padding: 1em;
     }
 </style>
+
 <?php require_once '../include/footer.php'; ?>

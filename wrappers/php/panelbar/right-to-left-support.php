@@ -5,7 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="k-rtl">
+<div class="demo-section k-content k-rtl">
 
 <?php
     $panelbar = new \Kendo\UI\PanelBar('panelbar');
@@ -37,6 +37,24 @@ require_once '../lib/Kendo/Autoload.php';
         new \Kendo\UI\PanelBarItem("Sub Item 4")
     );
     $panelbar->addItem($third);
+    
+    $fourth = new \Kendo\UI\PanelBarItem("Fourth Item");
+    $fourth->addItem(
+        new \Kendo\UI\PanelBarItem("Sub Item 1"),
+        new \Kendo\UI\PanelBarItem("Sub Item 2"),
+        new \Kendo\UI\PanelBarItem("Sub Item 3"),
+        new \Kendo\UI\PanelBarItem("Sub Item 4")
+    );
+    $panelbar->addItem($fourth);
+    
+    $fifth = new \Kendo\UI\PanelBarItem("Fifth Item");
+    $fifth->addItem(
+        new \Kendo\UI\PanelBarItem("Sub Item 1"),
+        new \Kendo\UI\PanelBarItem("Sub Item 2"),
+        new \Kendo\UI\PanelBarItem("Sub Item 3"),
+        new \Kendo\UI\PanelBarItem("Sub Item 4")
+    );
+    $panelbar->addItem($fifth);
 
     echo $panelbar->render();
 ?>

@@ -5,7 +5,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />
-<div class="k-rtl">
+<div class="demo-section k-content k-rtl">
 	<kendo:panelBar name="panelbar">
 		<kendo:panelBar-items>
 			<kendo:panelBar-item  text="First Item" expanded="true">

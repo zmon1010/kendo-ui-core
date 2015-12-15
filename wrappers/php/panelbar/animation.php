@@ -5,8 +5,8 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Animation Settings</span>
+<div class="box">
+    <h4>Animation Settings</h4>
     <ul class="options">
         <li>
             <input id="toggle" name="animation" type="radio" /> <label for="toggle">toggle animation</label>
@@ -20,7 +20,8 @@ require_once '../lib/Kendo/Autoload.php';
     </ul>
 </div>
 
-<div class="history">
+<div class="demo-section k-content">
+    <h4>Conversation history</h4>
 <?php
     $panelbar = new \Kendo\UI\PanelBar('panelbar');
 
@@ -73,7 +74,6 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $panelbar->render();
 ?>
-    <div class="bottom"></div>
 </div>
 <script>
     $(document).ready(function() {
@@ -101,19 +101,5 @@ require_once '../lib/Kendo/Autoload.php';
         };
     });
 </script>
-
-<style>
-    .history {
-        width: 252px;
-        margin: 20px auto;
-        padding: 36px 0 0 0;
-        background: url('../content/web/panelbar/history.png') transparent no-repeat 0 0;
-    }
-    .bottom {
-        width: 252px;
-        height: 9px;
-        background: url('../content/web/panelbar/history.png') transparent no-repeat 0 -35px;
-    }
-</style>
 
 <?php require_once '../include/footer.php'; ?>

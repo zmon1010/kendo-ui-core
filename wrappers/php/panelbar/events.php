@@ -2,11 +2,12 @@
 
 require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
-
+?>
+<div class="demo-section k-content">
+<?php
     $panelbar = new \Kendo\UI\PanelBar('panelbar');
 
-    $panelbar->attr('style', 'width: 250px; margin: 20px auto;')
-             ->expandMode("single");
+    $panelbar->expandMode("single");
 
     $metallica = new \Kendo\UI\PanelBarItem("Metallica - Master of Puppets 1986");
     $metallica->expanded(true);
@@ -59,7 +60,7 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $panelbar->render();
 ?>
-
+</div>
 
 <script>
     function onSelect(e) {
@@ -88,6 +89,9 @@ require_once '../lib/Kendo/Autoload.php';
     }
 
 </script>
-<div class="console"></div>
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
 <?php require_once '../include/footer.php'; ?>

@@ -5,11 +5,10 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+<div class="demo-section k-content">
 <%:Html.Kendo().PanelBar()
     .Name("panelbar")
     .ExpandMode(PanelBarExpandMode.Multiple)
-    .HtmlAttributes(new { style = "width:300px" })
     .Items(panelbar =>
     {
         panelbar.Add().Text("Projects")
@@ -43,86 +42,97 @@
     })
 %>
 </div>
-
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign wider">Alt</span>
-            +
-            <span class="key-button">w</span>
-        </span>
-        <span class="button-descr">
-            focuses the widget
-        </span>
-    </li>
-</ul>
-
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">up arrow</span>
-        </span>
-        <span class="button-descr">
-            highlights previous item
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">left arrow</span>
-        </span>
-        <span class="button-descr">
-            highlights previous item
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">down arrow</span>
-        </span>
-        <span class="button-descr">
-            highlights next item
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">right arrow</span>
-        </span>
-        <span class="button-descr">
-            highlights next item
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">home</span>
-        </span>
-        <span class="button-descr">
-            selects first item in the list
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">end</span>
-        </span>
-        <span class="button-descr">
-            selects last item in the list
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider rightAlign">enter</span>
-        </span>
-        <span class="button-descr">
-            selects highlighted item / toggles item's group
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button widest">space</span>
-        </span>
-        <span class="button-descr">
-            selects highlighted item / toggles item's group
-        </span>
-    </li>
-</ul>
+<div class="box">
+    <div class="box-col">
+        <h4>Focus</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign wider">Alt</span>
+                    +
+                    <span class="key-button">w</span>
+                </span>
+                <span class="button-descr">
+                    focuses the widget
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Supported keys and user actions</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button wider leftAlign">up arrow</span>
+                </span>
+                <span class="button-descr">
+                    highlights previous item
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button wider leftAlign">left arrow</span>
+                </span>
+                <span class="button-descr">
+                    highlights previous item
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button wider leftAlign">down arrow</span>
+                </span>
+                <span class="button-descr">
+                    highlights next item
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button wider leftAlign">right arrow</span>
+                </span>
+                <span class="button-descr">
+                    highlights next item
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>&nbsp;</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">home</span>
+                </span>
+                <span class="button-descr">
+                    selects first item in the list
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">end</span>
+                </span>
+                <span class="button-descr">
+                    selects last item in the list
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button wider rightAlign">enter</span>
+                </span>
+                <span class="button-descr">
+                    selects highlighted item / toggles item's group
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button widest">space</span>
+                </span>
+                <span class="button-descr">
+                    selects highlighted item / toggles item's group
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <script>
     $(document.body).keydown(function (e) {
@@ -132,10 +142,4 @@
     });
 </script>
 
-<style>
-    .demo-section
-    {
-        width: 200px;
-    }
-</style>
 </asp:Content>

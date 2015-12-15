@@ -6,34 +6,51 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">API Functions</span>
-    <ul class="options">
-        <li>
-            <input type="text" value="0" id="selectIndex" class="k-textbox"/> <button class="selectItem k-button">Select</button>
-        </li>
-        <li>
-            <button class="toggleItem k-button">Enable/Disable</button>
-        </li>
-        <li>
-            <button class="triggerItem k-button">Expand/Collapse</button>
-        </li>
-        <li>
-            <button class="removeItem k-button">Remove</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="appendText" class="k-textbox"/> <button class="appendItem k-button">Append</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="beforeText" class="k-textbox"/> <button class="beforeItem k-button">Insert Before</button>
-        </li>
-        <li>
-            <input type="text" value="Item" id="afterText" class="k-textbox"/> <button class="afterItem k-button">Insert After</button>
-        </li>
-    </ul>
-</div>            
+<div class="box wide">
+    <div class="box-col">
+        <h4>Expand / Collapse</h4>
+        <ul class="options">
+            <li>
+                <input type="text" value="0" id="selectIndex" class="k-textbox"/> <button class="selectItem k-button">Select</button>
+            </li>
+            <li>
+                <button class="triggerItem k-button">Expand/Collapse</button>
+            </li>
+        </ul>
 
-<kendo:panelBar name="panelbar" style="margin-right: 220px;">
+        <h4>Enable / Disable</h4>
+        <ul class="options">
+            <li>
+                <button class="toggleItem k-button">Enable/Disable</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Add / Remove</h4>
+        <ul class="options">
+            <li>
+                <button class="removeItem k-button">Remove</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="appendText" class="k-textbox"/> <button class="appendItem k-button">Append</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>&nbsp;</h4>
+        <ul class="options">
+            <li>
+                <input type="text" value="Item" id="beforeText" class="k-textbox"/> <button class="beforeItem k-button">Insert Before</button>
+            </li>
+            <li>
+                <input type="text" value="Item" id="afterText" class="k-textbox"/> <button class="afterItem k-button">Insert After</button>
+            </li>
+
+        </ul>
+    </div>
+</div>           
+
+<kendo:panelBar name="panelbar">
 	<kendo:panelBar-items>
 		<kendo:panelBar-item  text="First Item" expanded="true">
 			<kendo:panelBar-items>
@@ -150,8 +167,15 @@
 </script>
 
 <style>
-    .configuration .k-textbox {
-        width: 40px;
+    .box-col {
+        width: 250px;
+        margin-bottom: -20px;
+    }
+    .box-col .options {
+        margin-bottom: 20px;
+    }
+    .box .k-textbox {
+        width: 80px;
     }
 </style>
 

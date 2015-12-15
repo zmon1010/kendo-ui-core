@@ -4,8 +4,9 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<form class="configuration k-widget k-header">
-    <span class="configHead">Animation Settings</span>
+
+<form class="box">
+    <h4>Animation Settings</h4>
     <ul class="options">
         <li>
             <input name="animation" type="radio" <%= ViewBag.animation == "toggle" ? "checked=\"checked\"" : "" %> value="toggle" /> <label for="toggle">toggle animation</label>
@@ -16,16 +17,17 @@
         <li>
             <%= Html.CheckBox("opacity", (bool)ViewBag.opacity) %> <label for="opacity">animate opacity</label>
         </li>
+        <li>
+            <button class="k-button">Apply</button>
+        </li>
     </ul>
-
-    <button class="k-button">Apply</button>
 </form>
 
-<h3>Conversation history</h3>
+<div class="demo-section k-content">
+    <h4>Conversation history</h4>
 
 <%= Html.Kendo().PanelBar()
     .Name("panelbar")
-    .HtmlAttributes(new { style = "width:300px" })
     .Animation(animation =>
     {
         animation.Enable(ViewBag.animation == "expand" || ViewBag.opacity);
@@ -92,5 +94,5 @@
             });
     })
 %>
-
+</div>
 </asp:Content>

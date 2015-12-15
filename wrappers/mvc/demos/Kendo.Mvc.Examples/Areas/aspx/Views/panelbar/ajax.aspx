@@ -24,25 +24,22 @@
         })
     %>
 </div>
-            
-<div class="configuration configuration-horizontal-bottom">
-    <p>Image courtesy of Aston Martin</p>
-</div>
 
 <style>
     .wrapper {
-        width: 310px;
-        height: 400px;
+        height: 320px;
         margin: 20px auto;
-        padding: 75px 0 0 390px;
-        background: url('<%= Url.Content("~/Content/web/panelbar/astonmartin.png")%>') no-repeat 0 50px transparent;
+        padding: 20px 0 0;
+        background: url('<%= Url.Content("~/Content/web/panelbar/astonmartin.png")%>') no-repeat center 50px transparent;
     }
     #panelbar {
-        width: 300px;
+        width: 250px;
+        float: right;
+        margin-bottom: 20px;
     }
     #panelbar p {
-        margin-left: 1em;
-        margin-right: 1em;
+        padding: 1em;
     }
 </style>
+
 </asp:Content>

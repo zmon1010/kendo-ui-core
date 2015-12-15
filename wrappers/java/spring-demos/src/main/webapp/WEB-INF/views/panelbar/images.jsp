@@ -19,8 +19,8 @@
 <c:url value="/resources/shared/icons/16/speaker.png" var="speaker" />
 
 
-<div class="demo-section">
-	<h3>PanelBar with images</h3>
+<div class="demo-section k-content">
+	<h4>PanelBar with images</h4>
 	
 	<kendo:panelBar name="panelbar-images">
 		<kendo:panelBar-items>
@@ -57,8 +57,8 @@
 </div>
 
 
-<div class="demo-section">
-	<h3>PanelBar with sprites</h3>
+<div class="demo-section k-content">
+	<h4>PanelBar with sprites</h4>
 	
 	<kendo:panelBar name="panelbar-sprites">
 		<kendo:panelBar-items>
@@ -86,29 +86,9 @@
 </div>
 
 <style>
-    .k-panel
-    {
+    .k-panel {
         -webkit-transform: translatez(0);
     }
-
-    .demo-section {
-        width: 300px;
-    }
-    .demo-section h3 {
-        font-weight: normal;
-        padding-bottom: 10px;
-    }
-    #panelbar-images > .k-item > .k-link > .k-image
-    {
-        margin-top: 2px;
-        margin-left: -5px;
-    }
-
-    #panelbar-sprites > .k-item > .k-link > .k-sprite
-    {
-        margin-top: 6px;
-    }
-
     #panelbar-sprites .k-sprite {
         background-image: url("${flags}");
     }
