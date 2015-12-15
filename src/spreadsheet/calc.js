@@ -15,6 +15,9 @@
     /* jshint latedef: nofunc */
 
     var spreadsheet = kendo.spreadsheet;
+    var RangeRef = spreadsheet.RangeRef;
+    var CellRef = spreadsheet.CellRef;
+    var NameRef = spreadsheet.NameRef;
     var exports = spreadsheet.calc;
     var runtime = exports.runtime;
 
@@ -41,6 +44,7 @@
         });
     })([
         [ ":" ],
+        [ "!" ],
         [ " " ],
         [ "," ],
         [ "%" ],
@@ -63,7 +67,7 @@
     }
 
     function getrow(str) {
-        return parseFloat(str) - 1;
+        return parseInt(str, 10) - 1;
     }
 
     // XXX: rewrite this with the TokenStream.
@@ -77,47 +81,47 @@
         var m;
         // Sheet!A1
         if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.CellRef(getrow(m[4]), getcol(m[3]), 0)
+            return new CellRef(getrow(m[4]), getcol(m[3]), 0)
                 .setSheet(m[2], !!m[2]);
         }
         // Sheet!R1C1
         if ((m = /^(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.CellRef(getrow(m[3]), getrow(m[4]))
+            return new CellRef(getrow(m[3]), getrow(m[4]))
                 .setSheet(m[2], !!m[2]);
         }
         // Sheet1!R1C1:Sheet2!R2C2
         if ((m = /^(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+):(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(getrow(m[3]), getrow(m[4]))
+            return new RangeRef(
+                new CellRef(getrow(m[3]), getrow(m[4]))
                     .setSheet(m[2], !!m[2]),
-                new spreadsheet.CellRef(getrow(m[7]), getrow(m[8]))
+                new CellRef(getrow(m[7]), getrow(m[8]))
                     .setSheet(m[6], !!m[6])
             ).setSheet(m[2], !!m[2]);
         }
         // Sheet!A1:B2, Sheet!$A$1:$B$2, Sheet1!A1:Sheet2:B2 etc.
         if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+):(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(getrow(m[4]), getcol(m[3]), 0)
+            return new RangeRef(
+                new CellRef(getrow(m[4]), getcol(m[3]), 0)
                     .setSheet(m[2], !!m[2]),
-                new spreadsheet.CellRef(getrow(m[8]), getcol(m[7]), 0)
+                new CellRef(getrow(m[8]), getcol(m[7]), 0)
                     .setSheet(m[6], !!m[6])
             ).setSheet(m[2], !!m[2]);
         }
         // Sheet1!A:Sheet2!B
         if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+):(([A-Z0-9]+)!)?\$?([A-Z]+)$/i.exec(name))) {
-            return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(-Infinity, getcol(m[3]), 0)
+            return new RangeRef(
+                new CellRef(-Infinity, getcol(m[3]), 0)
                     .setSheet(m[2], !!m[2]),
-                new spreadsheet.CellRef(+Infinity, getcol(m[6]), 0)
+                new CellRef(+Infinity, getcol(m[6]), 0)
                     .setSheet(m[5], !!m[5])
             ).setSheet(m[2], !!m[2]);
         }
         // Sheet1!5:Sheet2!6
         if ((m = /^(([A-Z0-9]+)!)?\$?([0-9]+):(([A-Z0-9]+)!)?\$?([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(getrow(m[3]), -Infinity, 0)
+            return new RangeRef(
+                new CellRef(getrow(m[3]), -Infinity, 0)
                     .setSheet(m[2], !!m[2]),
-                new spreadsheet.CellRef(getrow(m[6]), +Infinity, 0)
+                new CellRef(getrow(m[6]), +Infinity, 0)
                     .setSheet(m[5], !!m[5])
             ).setSheet(m[2], !!m[2]);
         }
@@ -132,6 +136,7 @@
         if (typeof input == "string") {
             input = TokenStream(InputStream(input));
         }
+
         return {
             type: "exp",
             ast: parseExpression(true),
@@ -184,13 +189,13 @@
                 if (relrow) {
                     therow -= row;
                 }
-                return new spreadsheet.CellRef(therow, thecol, relcol | relrow)
+                return new CellRef(therow, thecol, relcol | relrow)
                     .setSheet(thesheet || sheet, !!thesheet);
             }
             if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
                 var thesheet  = m[1] && m[2];
                 var name = m[3];
-                return new spreadsheet.NameRef(name)
+                return new NameRef(name)
                     .setSheet(thesheet || sheet, !!thesheet);
             }
         }
@@ -217,7 +222,7 @@
                     exp = parseExpression(true);
                     skip("punc", ")");
                 }
-                else if (is("num") || is("str")) {
+                else if (is("num") || is("str") || is("sheet")) {
                     exp = input.next();
                 }
                 else if (is("sym")) {
@@ -363,7 +368,7 @@
                         } else {
                             input.skip(3);
                             return addReference(
-                                new spreadsheet.RangeRef(topLeft, bottomRight)
+                                new RangeRef(topLeft, bottomRight)
                                     .setSheet(topLeft.sheet, topLeft.hasSheet())
                             );
                         }
@@ -374,7 +379,7 @@
 
         function getref(tok, isFirst) {
             if (tok.type == "num" && tok.value == tok.value|0) {
-                return new spreadsheet.CellRef(
+                return new CellRef(
                     getrow(tok.value) - row,
                     isFirst ? -Infinity : +Infinity,
                     2
@@ -390,14 +395,14 @@
                     }
                     if (/^[0-9]+$/.test(name)) {
                         // row ref
-                        return new spreadsheet.CellRef(
+                        return new CellRef(
                             getrow(name) - (abs ? 0 : row),
                             isFirst ? -Infinity : +Infinity,
                             (abs ? 0 : 2)
                         ).setSheet(ref.sheet || sheet, ref.hasSheet());
                     } else {
                         // col ref
-                        return new spreadsheet.CellRef(
+                        return new CellRef(
                             isFirst ? -Infinity : +Infinity,
                             getcol(name) - (abs ? 0 : col),
                             (abs ? 0 : 1)
@@ -432,11 +437,11 @@
                 return withParens(node.op, prec, function(){
                     var left = parenthesize(
                         print(node.left, OPERATORS[node.op]),
-                        node.left instanceof spreadsheet.NameRef && node.op == ":"
+                        node.left instanceof NameRef && node.op == ":"
                     );
                     var right = parenthesize(
                         print(node.right, OPERATORS[node.op]),
-                        node.right instanceof spreadsheet.NameRef && node.op == ":"
+                        node.right instanceof NameRef && node.op == ":"
                     );
                     return left + " + " + JSON.stringify(node.op) + " + " + right;
                 });
@@ -765,18 +770,215 @@
         }
     }
 
+    function TokenStreamWithReferences(input, forEditor) {
+        input = TokenStream(input, forEditor);
+        var ahead = input.ahead;
+        var skip = input.skip;
+        var token = null;
+
+        return {
+            peek  : peek,
+            next  : next,
+            croak : input.croak,
+            eof   : input.eof
+        };
+
+        function peek() {
+            if (token == null) {
+                token = readNext();
+            }
+            return token;
+        }
+
+        function next() {
+            if (token != null) {
+                var tmp = token;
+                token = null;
+                return tmp;
+            }
+            return readNext();
+        }
+
+        function readNext() {
+            return ahead(8, refRange3D)
+                || ahead(6, refCell3D)
+                || ahead(6, refSheetRange)
+                || ahead(4, refSheetCell)
+                || ahead(4, refRange)
+                || ahead(2, refCell)
+                || ahead(2, funCall)
+                || input.next();
+        }
+
+        function toCell(tok, isFirst) {
+            if (tok.type == "num" && tok.value <= 1048577) {
+                // whole row
+                return new CellRef(
+                    getrow(tok.value),
+                    isFirst ? -Infinity : +Infinity,
+                    2
+                );
+            }
+            // otherwise it's "sym".  The OOXML spec (SpreadsheetML
+            // 18.2.5) defines the maximum value to be interpreted as
+            // a cell reference to be XFD1048576.
+            var name = tok.value;
+            var m = /^(\$)?([a-z]+)(\$)?(\d+)$/i.exec(name);
+            if (m) {
+                var row = getrow(m[4]), col = getcol(m[2]);
+                if (row <= 1048576 && col <= 16383) {
+                    return new CellRef(
+                        getrow(m[4]),
+                        getcol(m[2]),
+                        (m[1] ? 0 : 1) | (m[3] ? 0 : 2)
+                    );
+                } else {
+                    return null;
+                }
+            }
+            var abs = name.charAt(0) == "$";
+            if (abs) {
+                name = name.substr(1);
+            }
+            if (/^\d+$/.test(name)) {
+                var row = getrow(name);
+                if (row <= 1048576) {
+                    return new CellRef(
+                        getrow(name),
+                        isFirst ? -Infinity : +Infinity,
+                        (abs ? 0 : 2)
+                    );
+                }
+            } else {
+                var col = getcol(name);
+                if (col <= 16383) {
+                    return new CellRef(
+                        isFirst ? -Infinity : +Infinity,
+                        getcol(name),
+                        (abs ? 0 : 1)
+                    );
+                }
+            }
+        }
+
+        // Sheet1(a) :(b) Sheet2(c) !(d) A1(e) :(f) C3(g) not followed by paren (h)
+        function refRange3D(a, b, c, d, e, f, g, h) {
+            if (a.type == "sym" &&
+                b.type == "op" && b.value == ":" &&
+                c.type == "sym" &&
+                d.type == "op" && d.value == "!" &&
+                (e.type == "sym" || (e.type == "num" && e.value == e.value|0)) &&
+                f.type == "op" && f.value == ":" &&
+                (g.type == "sym" || (g.type == "num" && g.value == g.value|0)) &&
+                g.type == e.type &&
+                !(h.type == "punc" && h.value == "(" && !g.space))
+            {
+                var tl = toCell(e, true), br = toCell(g, false);
+                if (tl && br) {
+                    // skip them except the last one, we only wanted to
+                    // ensure it's not paren.
+                    skip(7);
+                    return new RangeRef(
+                        tl.setSheet(a.value, true),
+                        br.setSheet(c.value, true)
+                    ).setSheet(a.value, true);
+                }
+            }
+        }
+
+        // Sheet1(a) :(b) Sheet2(c) !(d) A1(e) not followed by paren (f)
+        function refCell3D(a, b, c, d, e, f) {
+            if (a.type == "sym" &&
+                b.type == "op" && b.value == ":" &&
+                c.type == "sym" &&
+                d.type == "op" && d.value == "!" &&
+                (e.type == "sym" || (e.type == "num" && e.value == e.value|0)) &&
+                !(f.type == "punc" && f.value == "(" && !e.space))
+            {
+                var tl = toCell(e);
+                if (tl) {
+                    skip(5);
+                    var br = tl.clone();
+                    return new RangeRef(
+                        tl.setSheet(a.value, true),
+                        br.setSheet(c.value, true)
+                    ).setSheet(a.value, true);
+                }
+            }
+        }
+
+        // Sheet1(a) !(b) A1(c) :(d) C3(e) not followed by paren (f)
+        function refSheetRange(a, b, c, d, e, f) {
+            if (a.type == "sym" &&
+                b.type == "op" && b.value == "!" &&
+                (c.type == "sym" || (c.type == "num" && c.value == c.value|0)) &&
+                d.type == "op" && d.value == ":" &&
+                (e.type == "sym" || (e.type == "num" && e.value == e.value|0)) &&
+                !(f.type == "punc" && f.value == "(" && !e.space))
+            {
+                var tl = toCell(c, true), br = toCell(e, false);
+                if (tl && br) {
+                    skip(5);
+                    return new RangeRef(tl, br).setSheet(a.value, true);
+                }
+            }
+        }
+
+        // Sheet1(a) !(b) A1(c) not followed by paren (d)
+        function refSheetCell(a, b, c, d) {
+            if (a.type == "sym" &&
+                b.type == "op" && b.type == "!" &&
+                (c.type == "sym" || (c.type == "num" && c.value == c.value|0)) &&
+                !(d.type == "punc" && d.value == "(" && !c.space))
+            {
+                var x = toCell(c);
+                if (x && isFinite(x.row) && isFinite(x.col)) {
+                    skip(3);
+                    return x.setSheet(a.value, true);
+                }
+                return new NameRef(c.value).setSheet(a.value, true);
+            }
+        }
+
+        // A1(a) :(b) C3(c) not followed by paren (d)
+        function refRange(a, b, c, d) {
+            if ((a.type == "sym" || (a.type == "num" && a.value == a.value|0)) &&
+                (b.type == "op" && b.value == ":") &&
+                (c.type == "sym" || (c.type == "num" && c.value == c.value|0)) &&
+                !(d.type == "punc" && d.value == "(" && !c.space))
+            {
+                var tl = toCell(a, true), br = toCell(c, false);
+                if (tl && br) {
+                    skip(3);
+                    return new RangeRef(tl, br);
+                }
+            }
+        }
+
+        // A1(a) not followed by paren (b)
+        function refCell(a, b) {
+            if (a.type == "sym" && !(b.type == "punc" && b.value == "(" && !a.space)) {
+                var x = toCell(a);
+                if (x && isFinite(x.row) && isFinite(x.col)) {
+                    skip(1);
+                    return x;
+                }
+                return new NameRef(a.value);
+            }
+        }
+
+        function funCall(a, b) {
+            if (a.type == "sym" && b.type == "punc" && b.value == "(" && !a.space) {
+                a.type = "func";
+                skip(1);
+                return a;
+            }
+        }
+    }
+
     function TokenStream(input, forEditor) {
         var tokens = [], index = 0;
         var readWhile = input.readWhile;
-        var addPos = forEditor ? function(thing) {
-            var begin = input.pos();
-            thing = thing();
-            thing.begin = begin;
-            thing.end = input.pos();
-            return thing;
-        } : function(thing) {
-            return thing();
-        };
 
         return {
             next  : next,
@@ -790,21 +992,27 @@
         function isDigit(ch) {
             return (/[0-9]/i.test(ch));
         }
+
         function isIdStart(ch) {
             return (/[a-z$_]/i.test(ch) || ch.toLowerCase() != ch.toUpperCase());
         }
+
         function isId(ch) {
-            return isIdStart(ch) || isDigit(ch) || ch == "!" || ch == ".";
+            return isIdStart(ch) || isDigit(ch) || ch == ".";
         }
+
         function isOpChar(ch) {
             return ch in OPERATORS;
         }
+
         function isPunc(ch) {
             return ";(){}[]".indexOf(ch) >= 0;
         }
+
         function isWhitespace(ch) {
             return " \t\n\xa0".indexOf(ch) >= 0;
         }
+
         function readNumber() {
             // XXX: TODO: exponential notation
             var has_dot = false;
@@ -820,19 +1028,31 @@
             });
             return { type: "num", value: parseFloat(number) };
         }
-        function readSymbol() {
-            var id = readWhile(isId);
+
+        function symbol(id, quote) {
             return {
                 type  : "sym",
                 value : id,
                 upper : id.toUpperCase(),
-                space : isWhitespace(input.peek())
+                space : isWhitespace(input.peek()),
+                quote : quote
             };
         }
+
+        function readSymbol() {
+            return symbol(readWhile(isId));
+        }
+
         function readString() {
             input.next();
             return { type: "str", value: input.readEscaped('"') };
         }
+
+        function readSheetName() {
+            input.next();
+            return symbol(input.readEscaped("'"), true);
+        }
+
         function readOperator() {
             return {
                 type  : "op",
@@ -841,12 +1061,18 @@
                 })
             };
         }
+
         function readPunc() {
             return {
                 type  : "punc",
                 value : input.next()
             };
         }
+
+        function unknown() {
+            return { type: "error", value: input.next() };
+        }
+
         function readNext() {
             readWhile(isWhitespace);
             if (input.eof()) {
@@ -854,39 +1080,46 @@
             }
             var ch = input.peek(), m;
             if (ch == '"') {
-                return addPos(readString);
+                return readString();
+            }
+            if (ch == "'") {
+                return readSheetName();
             }
             if (isDigit(ch)) {
-                return addPos(readNumber);
+                return readNumber();
             }
             if (isIdStart(ch)) {
-                return addPos(readSymbol);
+                return readSymbol();
             }
             if (isOpChar(ch)) {
-                return addPos(readOperator);
+                return readOperator();
             }
             if (isPunc(ch)) {
-                return addPos(readPunc);
+                return readPunc();
             }
             if ((m = input.lookingAt(/^#([a-z\/]+)[?!]/i))) {
-                return addPos(function(){
-                    input.skip(m);
-                    return { type: "error", value: m[1] };
-                });
+                input.skip(m);
+                return { type: "error", value: m[1] };
             }
             if (!forEditor) {
                 input.croak("Can't handle character: " + ch);
             }
-            return addPos(function(){
-                return { type: "error", value: input.next() };
-            });
+            return unknown();
         }
+
         function peek() {
             while (tokens.length <= index) {
-                tokens.push(readNext());
+                var begin = input.pos();
+                var tok = readNext();
+                if (forEditor && tok) {
+                    tok.begin = begin;
+                    tok.end = input.pos();
+                }
+                tokens.push(tok);
             }
             return tokens[index];
         }
+
         function next() {
             var tok = peek();
             if (tok) {
@@ -894,6 +1127,7 @@
             }
             return tok;
         }
+
         function ahead(n, f) {
             var pos = index, a = [], eof = { type: "eof" };
             while (n-- > 0) {
@@ -902,9 +1136,11 @@
             index = pos;
             return f.apply(a, a);
         }
+
         function skip(n) {
             index += n;
         }
+
         function eof() {
             return peek() == null;
         }
@@ -1070,9 +1306,9 @@
         //
         // note no space between CHOOSE and the paren in the second example.
         // I believe this is the Right Way™.
-        return ((a.type == "sym" || a.type == "num") &&
+        return ((a.type == "sym" || (a.type == "num" && a.value == a.value|0)) &&
                 (b.type == "op" && b.value == ":") &&
-                (c.type == "sym" || c.type == "num") &&
+                (c.type == "sym" || (c.type == "num" && c.value == c.value|0)) &&
                 !(d.type == "punc" && d.value == "(" && !c.space));
     }
 
@@ -1130,7 +1366,6 @@
         }
     }
 
-
     exports.parseFormula = parseFormula;
     exports.parseReference = parseReference;
     exports.compile = makeFormula;
@@ -1138,5 +1373,10 @@
     exports.InputStream = InputStream;
     exports.ParseError = ParseError;
     exports.tokenize = tokenize;
+
+    var t = TokenStreamWithReferences(InputStream("10 + $A$10:D5"));
+    while (!t.eof()) {
+        console.log(t.next());
+    }
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
