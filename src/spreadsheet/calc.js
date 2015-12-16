@@ -108,9 +108,6 @@
                 }
                 stream.next();
             }
-            if (!a.length) {
-                break OUT;      // jshint ignore:line, you retard
-            }
             return a.length == 1 ? a[0] : new spreadsheet.UnionRef(a);
         }
         if (!noThrow) {
