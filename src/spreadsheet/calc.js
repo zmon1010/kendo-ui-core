@@ -15,6 +15,9 @@
     /* jshint latedef: nofunc */
 
     var spreadsheet = kendo.spreadsheet;
+    var RangeRef = spreadsheet.RangeRef;
+    var CellRef = spreadsheet.CellRef;
+    var NameRef = spreadsheet.NameRef;
     var exports = spreadsheet.calc;
     var runtime = exports.runtime;
 
@@ -63,63 +66,52 @@
     }
 
     function getrow(str) {
-        return parseFloat(str) - 1;
+        return parseInt(str, 10) - 1;
     }
 
-    // XXX: rewrite this with the TokenStream.
     function parseReference(name, noThrow) {
         if (name.toLowerCase() == "#sheet") {
             return spreadsheet.SHEETREF;
         }
-        if (name.indexOf(",") >= 0) {
-            return new spreadsheet.UnionRef(name.split(/\s*,\s*/g).map(parseReference));
-        }
-        var m;
-        // Sheet!A1
-        if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.CellRef(getrow(m[4]), getcol(m[3]), 0)
-                .setSheet(m[2], !!m[2]);
-        }
-        // Sheet!R1C1
-        if ((m = /^(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.CellRef(getrow(m[3]), getrow(m[4]))
-                .setSheet(m[2], !!m[2]);
-        }
-        // Sheet1!R1C1:Sheet2!R2C2
-        if ((m = /^(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+):(([A-Z0-9]+)!)?R([0-9]+)C([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(getrow(m[3]), getrow(m[4]))
-                    .setSheet(m[2], !!m[2]),
-                new spreadsheet.CellRef(getrow(m[7]), getrow(m[8]))
-                    .setSheet(m[6], !!m[6])
-            ).setSheet(m[2], !!m[2]);
-        }
-        // Sheet!A1:B2, Sheet!$A$1:$B$2, Sheet1!A1:Sheet2:B2 etc.
-        if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+):(([A-Z0-9]+)!)?\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(getrow(m[4]), getcol(m[3]), 0)
-                    .setSheet(m[2], !!m[2]),
-                new spreadsheet.CellRef(getrow(m[8]), getcol(m[7]), 0)
-                    .setSheet(m[6], !!m[6])
-            ).setSheet(m[2], !!m[2]);
-        }
-        // Sheet1!A:Sheet2!B
-        if ((m = /^(([A-Z0-9]+)!)?\$?([A-Z]+):(([A-Z0-9]+)!)?\$?([A-Z]+)$/i.exec(name))) {
-            return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(-Infinity, getcol(m[3]), 0)
-                    .setSheet(m[2], !!m[2]),
-                new spreadsheet.CellRef(+Infinity, getcol(m[6]), 0)
-                    .setSheet(m[5], !!m[5])
-            ).setSheet(m[2], !!m[2]);
-        }
-        // Sheet1!5:Sheet2!6
-        if ((m = /^(([A-Z0-9]+)!)?\$?([0-9]+):(([A-Z0-9]+)!)?\$?([0-9]+)$/i.exec(name))) {
-            return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(getrow(m[3]), -Infinity, 0)
-                    .setSheet(m[2], !!m[2]),
-                new spreadsheet.CellRef(getrow(m[6]), +Infinity, 0)
-                    .setSheet(m[5], !!m[5])
-            ).setSheet(m[2], !!m[2]);
+        OUT: {
+            // this is redundant, but let's keep it fast for the most
+            // common case — A1.  If this fails, we'll try to employ the
+            // whole tokenizer.
+            var m;
+            if ((m = /^(\$)?([a-z]+)(\$)?(\d+)$/i.exec(name))) {
+                var row = getrow(m[4]), col = getcol(m[2]);
+                if (row <= 1048576 && col <= 16383) {
+                    return new CellRef(getrow(m[4]), getcol(m[2]));
+                }
+                // no NameRef-s from this function
+                break OUT;      // jshint ignore:line
+            }
+            var stream = TokenStream(name, {});
+            var a = [];
+            while (true) {
+                var ref = stream.next();
+                if (ref instanceof CellRef) {
+                    // this function always makes absolute references
+                    ref.rel = 0;
+                } else if (ref instanceof RangeRef) {
+                    ref.topLeft.rel = 0;
+                    ref.bottomRight.rel = 0;
+                } else {
+                    break OUT;  // jshint ignore:line
+                }
+                a.push(ref);
+                if (stream.eof()) {
+                    break;
+                }
+                if (!stream.is("op", ",")) {
+                    break OUT;  // jshint ignore:line
+                }
+                stream.next();
+            }
+            if (!a.length) {
+                break OUT;      // jshint ignore:line, you retard
+            }
+            return a.length == 1 ? a[0] : new spreadsheet.UnionRef(a);
         }
         if (!noThrow) {
             throw new Error("Cannot parse reference: " + name);
@@ -128,10 +120,9 @@
 
     function parseFormula(sheet, row, col, input) {
         var refs = [];
+        input = TokenStream(input, { row: row, col: col });
+        var is = input.is;
 
-        if (typeof input == "string") {
-            input = TokenStream(InputStream(input));
-        }
         return {
             type: "exp",
             ast: parseExpression(true),
@@ -160,86 +151,86 @@
             }
         }
 
-        function is(type, value) {
-            var tok = input.peek();
-            return tok != null
-                && (type == null || tok.type === type)
-                && (value == null || tok.value === value)
-                ? tok : null;
-        }
-
         function parseExpression(commas) {
             return maybeBinary(maybeIntersect(parseAtom(commas)), 0, commas);
         }
 
-        function maybeRef(name) {
-            var m;
-            if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/i.exec(name))) {
-                var thesheet  = m[1] && m[2];
-                var relcol = m[3] ? 0 : 1, thecol = getcol(m[4]);
-                var relrow = m[5] ? 0 : 2, therow = getrow(m[6]);
-                if (relcol) {
-                    thecol -= col;
-                }
-                if (relrow) {
-                    therow -= row;
-                }
-                return new spreadsheet.CellRef(therow, thecol, relcol | relrow)
-                    .setSheet(thesheet || sheet, !!thesheet);
-            }
-            if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
-                var thesheet  = m[1] && m[2];
-                var name = m[3];
-                return new spreadsheet.NameRef(name)
-                    .setSheet(thesheet || sheet, !!thesheet);
-            }
-        }
-
-        function parseSymbol(tok, addRef) {
+        function parseSymbol(tok) {
             if (tok.upper == "TRUE" || tok.upper == "FALSE") {
                 return tok.upper == "TRUE" ? TRUE : FALSE;
             }
-            var ref = maybeRef(tok.value);
-            if (ref) {
-                if (addRef) {
-                    addReference(ref);
+            return addReference(new NameRef(tok.value));
+        }
+
+        function parseFuncall() {
+            var fname = input.next();
+            fname = fname.value;
+            skip("punc", "(");
+            var args = [];
+            if (!is("punc", ")")) {
+                while (1) {
+                    if (is("op", ",")) {
+                        args.push({ type: "null" });
+                        input.next();
+                        continue;
+                    }
+                    args.push(parseExpression(false));
+                    if (input.eof() || is("punc", ")")) {
+                        break;
+                    }
+                    skip("op", ",");
                 }
-                return ref;
             }
-            return tok;
+            skip("punc", ")");
+            return {
+                type: "func",
+                func: fname,
+                args: args
+            };
+        }
+
+        function fixReference(ref) {
+            if (!ref.hasSheet()) {
+                ref.setSheet(sheet);
+            }
+            return addReference(ref);
         }
 
         function parseAtom(commas) {
-            var exp = maybeRange() || maybeCall();
-            if (!exp) {
-                if (is("punc", "(")) {
-                    input.next();
-                    exp = parseExpression(true);
-                    skip("punc", ")");
-                }
-                else if (is("num") || is("str")) {
-                    exp = input.next();
-                }
-                else if (is("sym")) {
-                    exp = parseSymbol(input.next(), true);
-                }
-                else if (is("op", "+") || is("op", "-")) {
-                    exp = {
-                        type: "prefix",
-                        op: input.next().value,
-                        exp: parseExpression(commas)
-                    };
-                }
-                else if (is("punc", "{")) {
-                    input.next();
-                    exp = parseArray();
-                }
-                else if (!input.peek()) {
-                    input.croak("Incomplete expression");
-                }
-                else {
-                    input.croak("Parse error");
-                }
+            var exp;
+            if (is("ref")) {
+                exp = fixReference(input.next());
+            }
+            else if (is("func")) {
+                exp = parseFuncall();
+            }
+            else if (is("punc", "(")) {
+                input.next();
+                exp = parseExpression(true);
+                skip("punc", ")");
+            }
+            else if (is("num") || is("str") || is("sheet")) {
+                exp = input.next();
+            }
+            else if (is("sym")) {
+                exp = parseSymbol(input.next());
+            }
+            else if (is("op", "+") || is("op", "-")) {
+                exp = {
+                    type: "prefix",
+                    op: input.next().value,
+                    exp: parseExpression(commas)
+                };
+            }
+            else if (is("punc", "{")) {
+                input.next();
+                exp = parseArray();
+            }
+            else if (!input.peek()) {
+                input.croak("Incomplete expression");
+            }
+            else {
+                input.croak("Parse error");
             }
             return maybePercent(exp);
         }
@@ -265,7 +256,7 @@
         }
 
         function maybeIntersect(exp) {
-            if (is("punc", "(") || is("sym") || is("num")) {
+            if (is("punc", "(") || is("ref") || is("num") || is("func")) {
                 return {
                     type: "binary",
                     op: " ",
@@ -275,36 +266,6 @@
             } else {
                 return exp;
             }
-        }
-
-        function maybeCall() {
-            return input.ahead(2, function(fname, b){
-                if (fname.type == "sym" && b.type == "punc" && b.value == "(") {
-                    fname = fname.value;
-                    input.skip(2);
-                    var args = [];
-                    if (!is("punc", ")")) {
-                        while (1) {
-                            if (is("op", ",")) {
-                                args.push({ type: "null" });
-                                input.next();
-                                continue;
-                            }
-                            args.push(parseExpression(false));
-                            if (input.eof() || is("punc", ")")) {
-                                break;
-                            }
-                            skip("op", ",");
-                        }
-                    }
-                    skip("punc", ")");
-                    return {
-                        type: "func",
-                        func: fname,
-                        args: args
-                    };
-                }
-            });
         }
 
         function maybePercent(exp) {
@@ -337,76 +298,6 @@
             }
             return left;
         }
-
-        // Attempt to resolve constant ranges at parse time.  This helps handling row or column
-        // ranges (i.e. A:A), printing ranges in normalized form, determining a formula's
-        // dependencies.  However, the following can also be a valid range, and we can't analyze it
-        // statically:
-        //
-        // ( INDIRECT(A1) : INDIRECT(A2) )
-        //
-        // therefore support for the range operators must also be present at run-time.
-        //
-        // This function will only deal with constant ranges like:
-        //
-        // - A1:B3
-        // - A:A
-        // - 2:2
-        function maybeRange() {
-            return input.ahead(4, function(a, b, c, d){
-                if (looksLikeRange(a, b, c, d)) {
-                    var topLeft = getref(a, true);
-                    var bottomRight = getref(c, false);
-                    if (topLeft != null && bottomRight != null) {
-                        if (bottomRight.hasSheet() && topLeft.sheet.toLowerCase() != bottomRight.sheet.toLowerCase()) {
-                            input.croak("Invalid range");
-                        } else {
-                            input.skip(3);
-                            return addReference(
-                                new spreadsheet.RangeRef(topLeft, bottomRight)
-                                    .setSheet(topLeft.sheet, topLeft.hasSheet())
-                            );
-                        }
-                    }
-                }
-            });
-        }
-
-        function getref(tok, isFirst) {
-            if (tok.type == "num" && tok.value == tok.value|0) {
-                return new spreadsheet.CellRef(
-                    getrow(tok.value) - row,
-                    isFirst ? -Infinity : +Infinity,
-                    2
-                ).setSheet(sheet, false);
-            }
-            var ref = parseSymbol(tok);
-            if (ref.type == "ref") {
-                if (ref.ref == "name") {
-                    var name = ref.name;
-                    var abs = name.charAt(0) == "$";
-                    if (abs) {
-                        name = name.substr(1);
-                    }
-                    if (/^[0-9]+$/.test(name)) {
-                        // row ref
-                        return new spreadsheet.CellRef(
-                            getrow(name) - (abs ? 0 : row),
-                            isFirst ? -Infinity : +Infinity,
-                            (abs ? 0 : 2)
-                        ).setSheet(ref.sheet || sheet, ref.hasSheet());
-                    } else {
-                        // col ref
-                        return new spreadsheet.CellRef(
-                            isFirst ? -Infinity : +Infinity,
-                            getcol(name) - (abs ? 0 : col),
-                            (abs ? 0 : 1)
-                        ).setSheet(ref.sheet || sheet, ref.hasSheet());
-                    }
-                }
-                return ref;
-            }
-        }
     }
 
     function makePrinter(exp) {
@@ -432,11 +323,11 @@
                 return withParens(node.op, prec, function(){
                     var left = parenthesize(
                         print(node.left, OPERATORS[node.op]),
-                        node.left instanceof spreadsheet.NameRef && node.op == ":"
+                        node.left instanceof NameRef && node.op == ":"
                     );
                     var right = parenthesize(
                         print(node.right, OPERATORS[node.op]),
-                        node.right instanceof spreadsheet.NameRef && node.op == ":"
+                        node.right instanceof NameRef && node.op == ":"
                     );
                     return left + " + " + JSON.stringify(node.op) + " + " + right;
                 });
@@ -765,18 +656,268 @@
         }
     }
 
-    function TokenStream(input, forEditor) {
+    function TokenStream(input, options) {
+        input = RawTokenStream(InputStream(input), options);
+        var ahead = input.ahead;
+        var skip = input.skip;
+        var token = null;
+        var fixCell = options.row != null && options.col != null
+            ? function(cell) {
+                if (cell.rel & 1) {
+                    cell.col -= options.col;
+                }
+                if (cell.rel & 2) {
+                    cell.row -= options.row;
+                }
+                return cell;
+            }
+            : function(cell) {
+                return cell;
+            };
+
+        return {
+            peek  : peek,
+            next  : next,
+            croak : input.croak,
+            eof   : input.eof,
+            is    : is
+        };
+
+        function is(type, value) {
+            var tok = peek();
+            return tok != null
+                && (type == null || tok.type === type)
+                && (value == null || tok.value === value)
+                ? tok : null;
+        }
+
+        function peek() {
+            if (token == null) {
+                token = readNext();
+            }
+            return token;
+        }
+
+        function next() {
+            if (token != null) {
+                var tmp = token;
+                token = null;
+                return tmp;
+            }
+            return readNext();
+        }
+
+        function readNext() {
+            var ret;
+            var t = input.peek();
+            if (t) {
+                if (t.type == "sym" || t.type == "rc" || t.type == "num") {
+                    ret =  ahead(8, refRange3D)
+                        || ahead(6, refCell3D)
+                        || ahead(6, refSheetRange)
+                        || ahead(4, refSheetCell)
+                        || ahead(4, refRange)
+                        || ahead(2, refCell)
+                        || ahead(2, funcall);
+                }
+                if (!ret) {
+                    ret = input.next();
+                }
+            }
+            return ret;
+        }
+
+        function addPos(thing, startToken, endToken) {
+            if (options.forEditor) {
+                thing.begin = startToken.begin;
+                thing.end = endToken.end;
+            }
+            return thing;
+        }
+
+        function toCell(tok, isFirst) {
+            if (tok.type == "rc") {
+                // RC notation is read properly without knowing where
+                // we are, so no need to fixCell on this one.
+                // However, if only absolute refs were asked for (from
+                // i.e. parseReference) I feel it's alright to yell
+                // about it here.
+                if (tok.rel && !options.forEditor && (options.row == null || options.col == null)) {
+                    input.croak("Cannot read relative cell in RC notation");
+                }
+                return new CellRef(tok.row, tok.col, tok.rel);
+            }
+            if (tok.type == "num") {
+                if (tok.value <= 1048577) {
+                    // whole row
+                    return fixCell(new CellRef(
+                        getrow(tok.value),
+                        isFirst ? -Infinity : +Infinity,
+                        2
+                    ));
+                } else {
+                    return null;
+                }
+            }
+            // otherwise it's "sym".  The OOXML spec (SpreadsheetML
+            // 18.2.5) defines the maximum value to be interpreted as
+            // a cell reference to be XFD1048576.
+            var name = tok.value;
+            var m = /^(\$)?([a-z]+)(\$)?(\d+)$/i.exec(name);
+            if (m) {
+                var row = getrow(m[4]), col = getcol(m[2]);
+                if (row <= 1048576 && col <= 16383) {
+                    return fixCell(new CellRef(
+                        getrow(m[4]),
+                        getcol(m[2]),
+                        (m[1] ? 0 : 1) | (m[3] ? 0 : 2)
+                    ));
+                } else {
+                    return null;
+                }
+            }
+            var abs = name.charAt(0) == "$";
+            if (abs) {
+                name = name.substr(1);
+            }
+            if (/^\d+$/.test(name)) {
+                var row = getrow(name);
+                if (row <= 1048576) {
+                    return fixCell(new CellRef(
+                        getrow(name),
+                        isFirst ? -Infinity : +Infinity,
+                        (abs ? 0 : 2)
+                    ));
+                }
+            } else {
+                var col = getcol(name);
+                if (col <= 16383) {
+                    return fixCell(new CellRef(
+                        isFirst ? -Infinity : +Infinity,
+                        getcol(name),
+                        (abs ? 0 : 1)
+                    ));
+                }
+            }
+        }
+
+        // Sheet1(a) :(b) Sheet2(c) !(d) A1(e) :(f) C3(g) not followed by paren (h)
+        function refRange3D(a, b, c, d, e, f, g, h) {
+            if (a.type == "sym" &&
+                b.type == "op" && b.value == ":" &&
+                c.type == "sym" &&
+                d.type == "punc" && d.value == "!" &&
+                (e.type == "sym" || e.type == "rc" || (e.type == "num" && e.value == e.value|0)) &&
+                f.type == "op" && f.value == ":" &&
+                (g.type == "sym" || g.type == "rc" || (g.type == "num" && g.value == g.value|0)) &&
+                g.type == e.type &&
+                !(h.type == "punc" && h.value == "(" && !g.space))
+            {
+                var tl = toCell(e, true), br = toCell(g, false);
+                if (tl && br) {
+                    // skip them except the last one, we only wanted to
+                    // ensure it's not paren.
+                    skip(7);
+                    return addPos(new RangeRef(
+                        tl.setSheet(a.value, true),
+                        br.setSheet(c.value, true)
+                    ).setSheet(a.value, true), a, g);
+                }
+            }
+        }
+
+        // Sheet1(a) :(b) Sheet2(c) !(d) A1(e) not followed by paren (f)
+        function refCell3D(a, b, c, d, e, f) {
+            if (a.type == "sym" &&
+                b.type == "op" && b.value == ":" &&
+                c.type == "sym" &&
+                d.type == "punc" && d.value == "!" &&
+                (e.type == "sym" || e.type == "rc" || (e.type == "num" && e.value == e.value|0)) &&
+                !(f.type == "punc" && f.value == "(" && !e.space))
+            {
+                var tl = toCell(e);
+                if (tl) {
+                    skip(5);
+                    var br = tl.clone();
+                    return addPos(new RangeRef(
+                        tl.setSheet(a.value, true),
+                        br.setSheet(c.value, true)
+                    ).setSheet(a.value, true), a, e);
+                }
+            }
+        }
+
+        // Sheet1(a) !(b) A1(c) :(d) C3(e) not followed by paren (f)
+        function refSheetRange(a, b, c, d, e, f) {
+            if (a.type == "sym" &&
+                b.type == "punc" && b.value == "!" &&
+                (c.type == "sym" || c.type == "rc" || (c.type == "num" && c.value == c.value|0)) &&
+                d.type == "op" && d.value == ":" &&
+                (e.type == "sym" || e.type == "rc" || (e.type == "num" && e.value == e.value|0)) &&
+                !(f.type == "punc" && f.value == "(" && !e.space))
+            {
+                var tl = toCell(c, true), br = toCell(e, false);
+                if (tl && br) {
+                    skip(5);
+                    return addPos(new RangeRef(tl, br).setSheet(a.value, true), a, e);
+                }
+            }
+        }
+
+        // Sheet1(a) !(b) A1(c) not followed by paren (d)
+        function refSheetCell(a, b, c, d) {
+            if (a.type == "sym" &&
+                b.type == "punc" && b.value == "!" &&
+                (c.type == "sym" || c.type == "rc" || (c.type == "num" && c.value == c.value|0)) &&
+                !(d.type == "punc" && d.value == "(" && !c.space))
+            {
+                skip(3);
+                var x = toCell(c);
+                if (!x) {
+                    x = new NameRef(c.value);
+                }
+                return addPos(x.setSheet(a.value, true), a, c);
+            }
+        }
+
+        // A1(a) :(b) C3(c) not followed by paren (d)
+        function refRange(a, b, c, d) {
+            if ((a.type == "sym" || a.type == "rc" || (a.type == "num" && a.value == a.value|0)) &&
+                (b.type == "op" && b.value == ":") &&
+                (c.type == "sym" || c.type == "rc" || (c.type == "num" && c.value == c.value|0)) &&
+                !(d.type == "punc" && d.value == "(" && !c.space))
+            {
+                var tl = toCell(a, true), br = toCell(c, false);
+                if (tl && br) {
+                    skip(3);
+                    return addPos(new RangeRef(tl, br), a, c);
+                }
+            }
+        }
+
+        // A1(a) not followed by paren (b)
+        function refCell(a, b) {
+            if ((a.type == "sym" || a.type == "rc") && !(b.type == "punc" && b.value == "(" && !a.space)) {
+                var x = toCell(a);
+                if (x && isFinite(x.row) && isFinite(x.col)) {
+                    skip(1);
+                    return addPos(x, a, a);
+                }
+            }
+        }
+
+        function funcall(a, b) {
+            if (a.type == "sym" && b.type == "punc" && b.value == "(" && !a.space) {
+                a.type = "func";
+                skip(1);
+                return a;       // already has position
+            }
+        }
+    }
+
+    function RawTokenStream(input, options) {
         var tokens = [], index = 0;
         var readWhile = input.readWhile;
-        var addPos = forEditor ? function(thing) {
-            var begin = input.pos();
-            thing = thing();
-            thing.begin = begin;
-            thing.end = input.pos();
-            return thing;
-        } : function(thing) {
-            return thing();
-        };
 
         return {
             next  : next,
@@ -790,21 +931,27 @@
         function isDigit(ch) {
             return (/[0-9]/i.test(ch));
         }
+
         function isIdStart(ch) {
             return (/[a-z$_]/i.test(ch) || ch.toLowerCase() != ch.toUpperCase());
         }
+
         function isId(ch) {
-            return isIdStart(ch) || isDigit(ch) || ch == "!" || ch == ".";
+            return isIdStart(ch) || isDigit(ch) || ch == ".";
         }
+
         function isOpChar(ch) {
             return ch in OPERATORS;
         }
+
         function isPunc(ch) {
-            return ";(){}[]".indexOf(ch) >= 0;
+            return "!;(){}[]".indexOf(ch) >= 0;
         }
+
         function isWhitespace(ch) {
             return " \t\n\xa0".indexOf(ch) >= 0;
         }
+
         function readNumber() {
             // XXX: TODO: exponential notation
             var has_dot = false;
@@ -820,19 +967,59 @@
             });
             return { type: "num", value: parseFloat(number) };
         }
-        function readSymbol() {
-            var id = readWhile(isId);
+
+        function symbol(id, quote) {
             return {
                 type  : "sym",
                 value : id,
                 upper : id.toUpperCase(),
-                space : isWhitespace(input.peek())
+                space : isWhitespace(input.peek()),
+                quote : quote
             };
         }
+
+        function getRC(a, b, c) {
+            if ((!a && !c) || (a && c)) {
+                var negative = a && /-$/.test(a);
+                var num = parseInt(b, 10);
+                if (negative) {
+                    num = -num;
+                }
+                if (!a) {
+                    num--;
+                }
+                return num;
+            }
+        }
+
+        function readSymbol() {
+            var m = input.lookingAt(/^R(\[-?)?([0-9]+)(\])?C(\[-?)?([0-9]+)(\])?/i);
+            if (m) {
+                var row = getRC(m[1], m[2], m[3]);
+                var col = getRC(m[4], m[5], m[6]);
+                if (row != null && col != null) {
+                    input.skip(m);
+                    return {
+                        type: "rc",
+                        row: row,
+                        col: col,
+                        rel: (m[4] ? 1 : 0) | (m[1] ? 2 : 0)
+                    };
+                }
+            }
+            return symbol(readWhile(isId));
+        }
+
         function readString() {
             input.next();
             return { type: "str", value: input.readEscaped('"') };
         }
+
+        function readSheetName() {
+            input.next();
+            return symbol(input.readEscaped("'"), true);
+        }
+
         function readOperator() {
             return {
                 type  : "op",
@@ -841,52 +1028,65 @@
                 })
             };
         }
+
         function readPunc() {
             return {
                 type  : "punc",
                 value : input.next()
             };
         }
+
+        function unknown() {
+            return { type: "error", value: input.next() };
+        }
+
         function readNext() {
-            readWhile(isWhitespace);
             if (input.eof()) {
                 return null;
             }
             var ch = input.peek(), m;
             if (ch == '"') {
-                return addPos(readString);
+                return readString();
+            }
+            if (ch == "'") {
+                return readSheetName();
             }
             if (isDigit(ch)) {
-                return addPos(readNumber);
+                return readNumber();
             }
             if (isIdStart(ch)) {
-                return addPos(readSymbol);
+                return readSymbol();
             }
             if (isOpChar(ch)) {
-                return addPos(readOperator);
+                return readOperator();
             }
             if (isPunc(ch)) {
-                return addPos(readPunc);
+                return readPunc();
             }
             if ((m = input.lookingAt(/^#([a-z\/]+)[?!]/i))) {
-                return addPos(function(){
-                    input.skip(m);
-                    return { type: "error", value: m[1] };
-                });
+                input.skip(m);
+                return { type: "error", value: m[1] };
             }
-            if (!forEditor) {
+            if (!options.forEditor) {
                 input.croak("Can't handle character: " + ch);
             }
-            return addPos(function(){
-                return { type: "error", value: input.next() };
-            });
+            return unknown();
         }
+
         function peek() {
             while (tokens.length <= index) {
-                tokens.push(readNext());
+                readWhile(isWhitespace);
+                var begin = input.pos();
+                var tok = readNext();
+                if (options.forEditor && tok) {
+                    tok.begin = begin;
+                    tok.end = input.pos();
+                }
+                tokens.push(tok);
             }
             return tokens[index];
         }
+
         function next() {
             var tok = peek();
             if (tok) {
@@ -894,21 +1094,26 @@
             }
             return tok;
         }
+
         function ahead(n, f) {
-            var pos = index, a = [], eof = { type: "eof" };
+            var pos = index, a = [];
             while (n-- > 0) {
-                a.push(next() || eof);
+                a.push(next() || EOF);
             }
             index = pos;
             return f.apply(a, a);
         }
+
         function skip(n) {
             index += n;
         }
+
         function eof() {
             return peek() == null;
         }
     }
+
+    var EOF = { type: "eof" };
 
     function InputStream(input) {
         var pos = 0, line = 1, col = 0;
@@ -1060,29 +1265,11 @@
         };
     };
 
-    function looksLikeRange(a, b, c, d) {
-        // We need c.space here to resolve an ambiguity:
-        //
-        //   - A1:C3 (A2, A3) -- parse as intersection between range and union
-        //
-        //   - A1:CHOOSE(2, A1, A2, A3) -- parse as range operator where the
-        //     bottom-right side is returned by the CHOOSE function
-        //
-        // note no space between CHOOSE and the paren in the second example.
-        // I believe this is the Right Way™.
-        return ((a.type == "sym" || a.type == "num") &&
-                (b.type == "op" && b.value == ":") &&
-                (c.type == "sym" || c.type == "num") &&
-                !(d.type == "punc" && d.value == "(" && !c.space));
-    }
-
-    function tokenize(input) {
+    function tokenize(input, row, col) {
         var tokens = [];
-        input = TokenStream(InputStream(input), true);
+        input = TokenStream(input, { forEditor: true, row: row, col: col });
         while (!input.eof()) {
-            tokens.push(input.ahead(4, maybeRange) ||
-                        input.ahead(2, maybeCall) ||
-                        next());
+            tokens.push(next());
         }
         var tok = tokens[0];
         if (tok.type == "op" && tok.value == "=") {
@@ -1090,46 +1277,27 @@
         }
         return tokens;
 
-        function maybeRange(a, b, c, d) {
-            if (looksLikeRange(a, b, c, d)) {
-                var ref = parseReference(a.value + ":" + c.value, true);
-                if (ref) {
-                    input.skip(3);
-                    return {
-                        type: "ref",
-                        ref: ref,
-                        begin: a.begin,
-                        end: c.end
-                    };
-                }
-            }
-        }
         function next() {
             var tok = input.next();
             if (tok.type == "sym") {
-                var ref = parseReference(tok.value, true);
-                if (ref) {
-                    tok.type = "ref";
-                    tok.ref = ref;
-                } else if (tok.upper == "TRUE") {
+                if (tok.upper == "TRUE") {
                     tok.type = "bool";
                     tok.value = true;
                 } else if (tok.upper == "FALSE") {
                     tok.type = "bool";
                     tok.value = false;
                 }
+            } else if (tok.type == "ref") {
+                tok = {
+                    type  : "ref",
+                    ref   : (row != null && col != null ? tok.absolute(row, col) : tok),
+                    begin : tok.begin,
+                    end   : tok.end
+                };
             }
             return tok;
         }
-        function maybeCall(fname, b) {
-            if (fname.type == "sym" && b.type == "punc" && b.value == "(") {
-                input.skip(1);
-                fname.type = "func";
-                return fname;
-            }
-        }
     }
-
 
     exports.parseFormula = parseFormula;
     exports.parseReference = parseReference;

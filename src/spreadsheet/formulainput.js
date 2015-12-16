@@ -338,7 +338,7 @@
                 return null;
             }
 
-            var tokens = kendo.spreadsheet.calc.tokenize(value);
+            var tokens = kendo.spreadsheet.calc.tokenize(value, this.row(), this.col());
             var tok;
 
             for (var i = 0; i < tokens.length; ++i) {
@@ -410,6 +410,18 @@
             this.element.show();
         },
 
+        row: function() {
+            if (this.activeCell) {
+                return this.activeCell.row;
+            }
+        },
+
+        col: function() {
+            if (this.activeCell) {
+                return this.activeCell.col;
+            }
+        },
+
         position: function(rectangle) {
             if (!rectangle) {
                 return;
@@ -468,7 +480,7 @@
                     return null;
                 }
 
-                tokens = kendo.spreadsheet.calc.tokenize(this.value());
+                tokens = kendo.spreadsheet.calc.tokenize(this.value(), this.row(), this.col());
 
                 for (var i = 0; i < tokens.length; ++i) {
                     tok = tokens[i];
@@ -622,7 +634,7 @@
                     this.popup.close();
                 }
             } else {
-                tokens = kendo.spreadsheet.calc.tokenize(value);
+                tokens = kendo.spreadsheet.calc.tokenize(value, this.row(), this.col());
                 tokens.forEach(function(tok){
                     tok.active = false;
                     tok.cls = [ "k-syntax-" + tok.type ];

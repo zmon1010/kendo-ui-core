@@ -364,6 +364,7 @@
 
                     this.editor
                         .activate({
+                            range: this._workbook.activeSheet()._viewActiveCell(),
                             rect: this.view.activeCellRectangle(),
                             tooltip: this._activeTooltip()
                         })
@@ -577,6 +578,7 @@
 
             this.editor
                 .activate({
+                    range: this._workbook.activeSheet()._viewActiveCell(),
                     rect: this.view.activeCellRectangle(),
                     tooltip: this._activeTooltip()
                 })
@@ -812,6 +814,7 @@
         onEditorBarFocus: function() {
             this.editor
                 .activate({
+                    range: this._workbook.activeSheet()._viewActiveCell(),
                     rect: this.view.activeCellRectangle(),
                     tooltip: this._activeTooltip()
                 });

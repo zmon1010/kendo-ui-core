@@ -62,6 +62,7 @@
             this.cellInput.position(options.rect);
             this.cellInput.resize(options.rect);
             this.cellInput.tooltip(options.tooltip);
+            this.cellInput.activeCell = this.barInput.activeCell = options.range.topLeft;
 
             this.trigger("activate");
 
