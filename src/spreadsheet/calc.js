@@ -707,14 +707,23 @@
         }
 
         function readNext() {
-            return ahead(8, refRange3D)
-                || ahead(6, refCell3D)
-                || ahead(6, refSheetRange)
-                || ahead(4, refSheetCell)
-                || ahead(4, refRange)
-                || ahead(2, refCell)
-                || ahead(2, funcall)
-                || input.next();
+            var ret;
+            var t = input.peek();
+            if (t) {
+                if (t.type == "sym" || t.type == "rc" || t.type == "num") {
+                    ret =  ahead(8, refRange3D)
+                        || ahead(6, refCell3D)
+                        || ahead(6, refSheetRange)
+                        || ahead(4, refSheetCell)
+                        || ahead(4, refRange)
+                        || ahead(2, refCell)
+                        || ahead(2, funcall);
+                }
+                if (!ret) {
+                    ret = input.next();
+                }
+            }
+            return ret;
         }
 
         function toCell(tok, isFirst) {
@@ -1068,9 +1077,9 @@
         }
 
         function ahead(n, f) {
-            var pos = index, a = [], eof = { type: "eof" };
+            var pos = index, a = [];
             while (n-- > 0) {
-                a.push(next() || eof);
+                a.push(next() || EOF);
             }
             index = pos;
             return f.apply(a, a);
@@ -1084,6 +1093,8 @@
             return peek() == null;
         }
     }
+
+    var EOF = { type: "eof" };
 
     function InputStream(input) {
         var pos = 0, line = 1, col = 0;
