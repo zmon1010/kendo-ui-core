@@ -26,7 +26,7 @@ require_once '../include/header.php';
     </div>
 </script>
 
-<div class="demo-section">
+<div class="demo-section k-content wide">
 <?php
 
     $transport = new \Kendo\Data\DataSourceTransport();
@@ -65,7 +65,7 @@ require_once '../include/header.php';
 
     $dataSource->transport($transport)
                ->schema($schema)
-               ->pageSize(12);
+               ->pageSize(15);
 
     $listview = new \Kendo\UI\ListView('listView');
     $listview->dataSource($dataSource)
@@ -79,11 +79,10 @@ require_once '../include/header.php';
 ?>
 </div>
 
-<div class="demo-section">
-	<h2>Console Log</h2>
-	<div class="console"></div>
+<div class="box wide">
+    <h4>Console Log</h4>
+    <div class="console"></div>
 </div>
-
 
 <script>
     function onDataBound() {
@@ -98,22 +97,10 @@ require_once '../include/header.php';
 
         kendoConsole.log("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
     }
-
 </script>
+
 <style>
-    .demo-section {
-        padding: 15px;
-        width: 692px;
-    }
-    .demo-section h2 {
-        font-size: 1.2em;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-    }
-    .demo-section .console {
-        margin: 0;
-    }
-    .product
+     .product
     {
         float: left;
         width: 220px;
@@ -143,19 +130,13 @@ require_once '../include/header.php';
     {
         border-top: 0;
     }
-    .k-listview:after
+    .demo-section .k-listview:after
     {
         content: ".";
         display: block;
         height: 0;
         clear: both;
         visibility: hidden;
-    }
-    .k-listview
-    {
-        padding: 0;
-        min-width: 690px;
-        min-height: 360px;
     }
 </style>
 

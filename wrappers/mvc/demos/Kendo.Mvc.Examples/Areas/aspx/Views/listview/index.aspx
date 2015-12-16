@@ -11,28 +11,23 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     </div>
 </script>
 
-<div class="demo-section">
+<div class="demo-section k-content wide">
 <%: Html.Kendo().ListView<Kendo.Mvc.Examples.Models.ProductViewModel>(Model)
     .Name("listView")
     .TagName("div")
     .ClientTemplateId("template")
     .DataSource(dataSource => {
         dataSource.Read(read => read.Action("Products_Read", "ListView"));
-        dataSource.PageSize(15);
+        dataSource.PageSize(21);
     })
     .Pageable()
 %>
 </div>
 
 <style>
-    .demo-section {
-        padding: 30px;
-        width: 577px;
-    }
     #listView {
-        padding: 10px;
+        padding: 10px 5px;
         margin-bottom: -1px;
-        min-width: 555px;
         min-height: 510px;
     }
     .product {
@@ -40,7 +35,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
         position: relative;
         width: 111px;
         height: 170px;
-        margin: 0;
+        margin: 0 5px;
         padding: 0;
     }
     .product img {
@@ -50,8 +45,8 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     .product h3 {
         margin: 0;
         padding: 3px 5px 0 0;
-	    max-width: 96px;
-	    overflow: hidden;
+        max-width: 96px;
+        overflow: hidden;
         line-height: 1.1em;
         font-size: .9em;
         font-weight: normal;
@@ -79,7 +74,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
         -webkit-transition: background .2s linear, color .2s linear;
         -o-transition: background .2s linear, color .2s linear;
     }
-    .k-listview:after, .product dl:after {
+    .k-listview:after {
         content: ".";
         display: block;
         height: 0;

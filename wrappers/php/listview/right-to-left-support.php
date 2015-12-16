@@ -26,15 +26,14 @@ require_once '../include/header.php';
     </div>
 </script>
 
-<div class="demo-section k-rtl">
-
+<div class="demo-section k-content wide k-rtl">
 <?php
 
     $transport = new \Kendo\Data\DataSourceTransport();
 
     $read = new \Kendo\Data\DataSourceTransportRead();
 
-    $read->url('rtl.php')
+    $read->url('right-to-left-support.php')
          ->contentType('application/json')
          ->type('POST');
 
@@ -66,32 +65,18 @@ require_once '../include/header.php';
 
     $dataSource->transport($transport)
                ->schema($schema)
-               ->pageSize(12);
+               ->pageSize(15);
 
     $listview = new \Kendo\UI\ListView('listView');
     $listview->dataSource($dataSource)
              ->templateId('template')
-             ->selectable('multiple')
              ->pageable(true);
 
     echo $listview->render();
 ?>
-
 </div>
 
 <style>
-    .demo-section {
-        padding: 15px;
-        width: 692px;
-    }
-    .demo-section h2 {
-        font-size: 1.2em;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-    }
-    .demo-section .console {
-        margin: 0;
-    }
     .product
     {
         float: right;
@@ -118,7 +103,7 @@ require_once '../include/header.php';
         max-width: 100px;
         text-transform: uppercase;
     }
-	.k-pager-wrap
+    .k-pager-wrap
     {
         border-top: 0;
     }
@@ -130,10 +115,9 @@ require_once '../include/header.php';
         clear: both;
         visibility: hidden;
     }
-	.k-listview
+    .k-listview
     {
         padding: 0;
-        min-width: 690px;
         min-height: 360px;
     }
 </style>

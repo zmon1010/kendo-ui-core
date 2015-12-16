@@ -7,9 +7,9 @@
 <c:url value="/listview/selection_read" var="transportReadUrl" />
 
 <demo:header />
-<div class="demo-section">
+<div class="demo-section k-content wide">
 <kendo:listView name="listView" template="template" selectable="multiple" pageable="true">	
-	<kendo:dataSource pageSize="12" serverPaging="true">
+	<kendo:dataSource pageSize="15" serverPaging="true">
 		<kendo:dataSource-transport>
 			<kendo:dataSource-transport-read url="${transportReadUrl}" contentType="application/json" type="POST"/>
 			 <kendo:dataSource-transport-parameterMap>
@@ -50,24 +50,13 @@
     </div>
 </script>
 
-<div class="demo-section">
+<div class="box wide">
+    <h4>Console Log</h4>
     <div class="console"></div>
 </div>
 
 <style>
-    .demo-section {
-    padding: 15px;
-    width: 692px;
-}
-.demo-section h2 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-.demo-section .console {
-    margin: 0;
-}
-.product
+     .product
     {
         float: left;
         width: 220px;
@@ -87,29 +76,23 @@
         margin: 0;
         padding: 10px 0 0 10px;
         font-size: .9em;
-    overflow: hidden;
-    font-weight: normal;
+        overflow: hidden;
+        font-weight: normal;
         float: left;
         max-width: 100px;
         text-transform: uppercase;
     }
-.k-pager-wrap
+    .k-pager-wrap
     {
         border-top: 0;
     }
-    .k-listview:after
+    .demo-section .k-listview:after
     {
         content: ".";
         display: block;
         height: 0;
         clear: both;
         visibility: hidden;
-    }
-.k-listview
-    {
-        padding: 0;
-        min-width: 690px;
-    min-height: 360px;
     }
 </style>
 

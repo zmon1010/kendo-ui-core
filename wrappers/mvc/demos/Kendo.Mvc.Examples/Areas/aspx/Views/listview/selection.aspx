@@ -10,7 +10,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     </div>
 </script>
 
-<div class="demo-section">
+<div class="demo-section k-content wide">
 <%: Html.Kendo().ListView<Kendo.Mvc.Examples.Models.ProductViewModel>(Model)
     .Name("listView")
     .TagName("div")
@@ -18,7 +18,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     .DataSource(dataSource =>
     {
         dataSource.Read(read => read.Action("Products_Read", "ListView"));
-        dataSource.PageSize(12);
+        dataSource.PageSize(15);
     })
     .Pageable()
     .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Multiple))
@@ -26,7 +26,8 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
 %>
 </div>
 
-<div class="demo-section">
+<div class="box wide">
+    <h4>Console Log</h4>
     <div class="console"></div>
 </div>
 
@@ -45,19 +46,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
 </script>
 
 <style>
-    .demo-section {
-	    padding: 15px;
-	    width: 692px;
-	}
-	.demo-section h2 {
-	    font-size: 1.2em;
-	    margin-bottom: 10px;
-	    text-transform: uppercase;
-	}
-	.demo-section .console {
-	    margin: 0;
-	}
-    .product
+     .product
     {
         float: left;
         width: 220px;
@@ -87,19 +76,13 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     {
         border-top: 0;
     }
-    .k-listview:after
+    .demo-section .k-listview:after
     {
         content: ".";
         display: block;
         height: 0;
         clear: both;
         visibility: hidden;
-    }
-    .k-listview
-    {
-        padding: 0;
-        min-width: 690px;
-        min-height: 360px;
     }
 </style>
 

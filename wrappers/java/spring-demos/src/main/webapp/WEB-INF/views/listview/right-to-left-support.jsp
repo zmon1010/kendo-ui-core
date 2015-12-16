@@ -4,13 +4,13 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:url value="/listview/rtl_read" var="transportReadUrl" />
+<c:url value="right-to-left-support_read" var="transportReadUrl" />
 
 <demo:header />
 
-<div class="demo-section k-rtl">
+<div class="demo-section k-content wide k-rtl">
 	<kendo:listView name="listView" template="template" selectable="multiple" pageable="true">	
-		<kendo:dataSource pageSize="12" serverPaging="true">
+		<kendo:dataSource pageSize="15" serverPaging="true">
 			<kendo:dataSource-transport>
 				<kendo:dataSource-transport-read url="${transportReadUrl}" contentType="application/json" type="POST"/>
 				 <kendo:dataSource-transport-parameterMap>
@@ -34,19 +34,7 @@
 </script>
 
 <style>
-    .demo-section {
-    padding: 15px;
-    width: 692px;
-}
-.demo-section h2 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-.demo-section .console {
-    margin: 0;
-}
-.product
+    .product
     {
         float: right;
         width: 220px;
@@ -66,13 +54,13 @@
         margin: 0;
         padding: 10px 10px 0 0;
         font-size: .9em;
-    overflow: hidden;
-    font-weight: normal;
+        overflow: hidden;
+        font-weight: normal;
         float: right;
         max-width: 100px;
         text-transform: uppercase;
     }
-.k-pager-wrap
+    .k-pager-wrap
     {
         border-top: 0;
     }
@@ -84,11 +72,10 @@
         clear: both;
         visibility: hidden;
     }
-.k-listview
+    .k-listview
     {
         padding: 0;
-        min-width: 690px;
-    min-height: 360px;
+        min-height: 360px;
     }
 </style>
             

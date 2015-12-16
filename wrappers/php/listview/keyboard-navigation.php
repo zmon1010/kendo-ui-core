@@ -40,10 +40,6 @@ require_once '../include/header.php';
 
     <script type="text/x-kendo-tmpl" id="template">
         <div class="product-view k-widget">
-            <div class="edit-buttons">
-                <a class="k-button k-button-icontext k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-                <a class="k-button k-button-icontext k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-            </div>
             <dl>
                 <dt>Product Name</dt>
                 <dd>#:ProductName#</dd>
@@ -54,15 +50,15 @@ require_once '../include/header.php';
                 <dt>Discontinued</dt>
                 <dd>#:Discontinued#</dd>
             </dl>
+            <div class="edit-buttons">
+                <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+                <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+            </div>
         </div>
     </script>
 
     <script type="text/x-kendo-tmpl" id="editTemplate">
         <div class="product-view k-widget">
-            <div class="edit-buttons">
-                <a class="k-button k-button-icontext k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-                <a class="k-button k-button-icontext k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-            </div>
             <dl>
                 <dt>Product Name</dt>
                 <dd>
@@ -82,39 +78,40 @@ require_once '../include/header.php';
                 <dt>Discontinued</dt>
                 <dd><input type="checkbox" name="Discontinued" data-bind="checked:Discontinued"></dd>
             </dl>
+            <div class="edit-buttons">
+                <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+                <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            </div>
         </div>
     </script>
 
-<div class="demo-section">
+<div class="demo-section k-content wide">
     <a class="k-button k-button-icontext k-add-button" href="#"><span class="k-icon k-add"></span>Add new record</a>
-</div>
-
-<div class="demo-section">
 <?php
 
     $transport = new \Kendo\Data\DataSourceTransport();
 
     $create = new \Kendo\Data\DataSourceTransportCreate();
 
-    $create->url('navigation.php?type=create')
+    $create->url('keyboard-navigation.php?type=create')
          ->contentType('application/json')
          ->type('POST');
 
     $read = new \Kendo\Data\DataSourceTransportRead();
 
-    $read->url('navigation.php?type=read')
+    $read->url('keyboard-navigation.php?type=read')
          ->contentType('application/json')
          ->type('POST');
 
     $update = new \Kendo\Data\DataSourceTransportUpdate();
 
-    $update->url('navigation.php?type=update')
+    $update->url('keyboard-navigation.php?type=update')
          ->contentType('application/json')
          ->type('POST');
 
     $destroy = new \Kendo\Data\DataSourceTransportDestroy();
 
-    $destroy->url('navigation.php?type=destroy')
+    $destroy->url('keyboard-navigation.php?type=destroy')
          ->contentType('application/json')
          ->type('POST');
 
@@ -194,173 +191,200 @@ require_once '../include/header.php';
     });
 </script>
 
-<ul class="keyboard-legend" style="padding-top: 25px">
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign">Alt</span>
-            +
-            <span class="key-button">W</span>
-        </span>
-        <span class="button-descr">
-            Focus the ListView
-        </span>
-    </li>
-</ul>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Focus</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign">Alt</span>
+                    +
+                    <span class="key-button">W</span>
+                </span>
+                <span class="button-descr">
+                    Focus the ListView
+                </span>
+            </li>
+        </ul>
+    </div>
 
-<h4>Supported keys and user actions</h4>
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Right</span>
-        </span>
-        <span class="button-descr">
-            Goes to the next item (same as Down)
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Left</span>
-        </span>
-        <span class="button-descr">
-            Goes to the previous item (same as Up)
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Home</span>
-        </span>
-        <span class="button-descr">
-            Goes to the first item
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">End</span>
-        </span>
-        <span class="button-descr">
-            Goes to the last item
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Enter</span>
-        </span>
-        <span class="button-descr">
-            Enter Edit mode or Apply changes
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Esc</span>
-        </span>
-        <span class="button-descr">
-            Exit Edit mode and Cancel changes
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Tab</span>
-        </span>
-        <span class="button-descr">
-            Tabs away from the ListView on the next focusable page element
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign">Shift</span>
-            +
-            <span class="key-button">Tab</span>
-        </span>
-        <span class="button-descr">
-            Tabs away from the ListView on the previous focusable page element
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">Space</span>
-        </span>
-        <span class="button-descr">
-            Select item
-        </span>
-    </li>
-</ul>
+    <div class="box-col">
+        <h4>Supported keys and user actions</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Right</span>
+                </span>
+                <span class="button-descr">
+                    Goes to the next item (same as Down)
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Left</span>
+                </span>
+                <span class="button-descr">
+                    Goes to the previous item (same as Up)
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Home</span>
+                </span>
+                <span class="button-descr">
+                    Goes to the first item
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">End</span>
+                </span>
+                <span class="button-descr">
+                    Goes to the last item
+                </span>
+            </li>
+        </ul>
+    </div>
 
+    <div class="box-col">
+        <h4>&nbsp;</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Enter</span>
+                </span>
+                <span class="button-descr">
+                    Enter Edit mode or Apply changes
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Esc</span>
+                </span>
+                <span class="button-descr">
+                    Exit Edit mode and Cancel changes
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Tab</span>
+                </span>
+                <span class="button-descr">
+                    Tabs away from the ListView on the next focusable page element
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign">Shift</span>
+                    +
+                    <span class="key-button">Tab</span>
+                </span>
+                <span class="button-descr">
+                    Tabs away from the ListView on the previous focusable page element
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Space</span>
+                </span>
+                <span class="button-descr">
+                    Select item
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
 
- <style>
-.demo-section {
-    width: 605px;
-}
-.product-view
-{
-    float: left;
-    position: relative;
-    width: 301px;
-    margin: -1px -1px 0 0;
-}
+<style>
+    .product-view
+    {
+        float: left;
+        width: 50%;
+        height: 300px;
+        box-sizing: border-box;
+        border-top: 0;
+        position: relative;
+    }
+    .product-view:nth-child(even) {
+        border-left-width: 0;
+    }
+    .product-view dl
+    {
+        margin: 10px 10px 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .product-view dt, dd
+    {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        line-height: 24px;
+        font-size: 18px;
+    }
+    .product-view dt
+    {
+        font-size: 11px;
+        height: 16px;
+        line-height: 16px;
+        text-transform: uppercase;
+        opacity: 0.5;
+    }
+    
+    .product-view dd
+    {
+        height: 46px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
-.product-view dl
-{
-    margin: 10px 0;
-    padding: 0;
-    min-width: 0;
-}
-.product-view dt, dd
-{
-    float: left;
-    margin: 0;
-    padding: 3px;
-    height: 26px;
-    width: 160px;
-    line-height: 26px;
-    overflow: hidden;
-}
-.product-view dt
-{
-    clear: left;
-    padding: 3px 5px 3px 0;
-    text-align: right;
-    opacity: 0.6;
-    width: 100px;
-}
-.k-listview
-{
-    border: 0;
-    padding: 0;
-    min-width: 605px;
-    min-height: 298px;
-}
-.k-listview:after, .product-view dl:after
-{
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-.edit-buttons
-{
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 26px;
-    height: 146px;
-    padding: 2px 2px 0 3px;
-    background-color: rgba(0,0,0,0.1);
-}
-.edit-buttons .k-button
-{
-    width: 26px;
-    margin-bottom: 1px;
-}
-.k-pager-wrap
-{
-    border-top: 0;
-}
-span.k-invalid-msg
-{
-    position: absolute;
-    margin-left: 6px;
-}
+    }
+    
+    .product-view dd .k-widget,
+    .product-view dd .k-textbox {
+        font-size: 14px;
+    }
+    .k-listview
+    {
+        border-width: 1px 0 0;
+        padding: 0;
+        overflow: hidden;
+        min-height: 298px;
+    }
+    .edit-buttons
+    {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: right;
+        padding: 5px;
+        background-color: rgba(0,0,0,0.1);
+    }
+    .k-pager-wrap
+    {
+        border-top: 0;
+    }
+    span.k-invalid-msg
+    {
+        position: absolute;
+        margin-left: 6px;
+    }
+    
+    .k-add-button {
+        margin-bottom: 2em;
+    }
+    
+    @media only screen and (max-width : 620px) {
+    
+        .product-view
+        {
+            width: 100%;
+        }
+        .product-view:nth-child(even) {
+            border-left-width: 1px;
+        }
+    }
 </style>
 
 <?php require_once '../include/footer.php'; ?>

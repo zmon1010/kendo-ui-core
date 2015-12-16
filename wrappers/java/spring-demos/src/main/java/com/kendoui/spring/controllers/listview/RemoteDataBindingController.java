@@ -17,7 +17,7 @@ public class RemoteDataBindingController {
     @Autowired 
     private ProductDao product;
     
-    @RequestMapping(value = "remote-data", method = RequestMethod.GET)
+    @RequestMapping(value = "/remote-data-binding", method = RequestMethod.GET)
     public String index() {        
         
         return "listview/remote-data-binding";

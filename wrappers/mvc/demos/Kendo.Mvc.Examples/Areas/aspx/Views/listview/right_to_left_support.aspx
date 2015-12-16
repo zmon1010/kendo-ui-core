@@ -3,7 +3,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="demo-section k-rtl">
+<div class="demo-section k-content wide k-rtl">
 
     <script type="text/x-kendo-tmpl" id="template">
         <div class="product">
@@ -19,7 +19,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
         .DataSource(dataSource =>
         {
             dataSource.Read(read => read.Action("Products_Read", "ListView"));
-            dataSource.PageSize(12);
+            dataSource.PageSize(15);
         })
         .Pageable()
         .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Multiple))
@@ -28,18 +28,6 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
 </div>
 
 <style>
-    .demo-section {
-        padding: 15px;
-        width: 692px;
-    }
-    .demo-section h2 {
-        font-size: 1.2em;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-    }
-    .demo-section .console {
-        margin: 0;
-    }
     .product
     {
         float: right;
@@ -81,7 +69,6 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     .k-listview
     {
         padding: 0;
-        min-width: 690px;
         min-height: 360px;
     }
 </style>

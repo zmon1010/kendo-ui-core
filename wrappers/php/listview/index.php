@@ -27,7 +27,7 @@ require_once '../include/header.php';
     </div>
 </script>
 
-<div class="demo-section">
+<div class="demo-section k-content wide">
 <?php
 
     $transport = new \Kendo\Data\DataSourceTransport();
@@ -66,7 +66,7 @@ require_once '../include/header.php';
 
     $dataSource->transport($transport)
                ->schema($schema)
-               ->pageSize(15);
+               ->pageSize(21);
 
     $listview = new \Kendo\UI\ListView('listView');
     $listview->dataSource($dataSource)
@@ -78,22 +78,17 @@ require_once '../include/header.php';
 </div>
 
 <style>
-    .demo-section {
-        padding: 30px;
-        width: 577px;
-    }
     #listView {
-        padding: 10px;
-	    margin-bottom: -1px;
-	    min-width: 555px;
-	    min-height: 510px;
+        padding: 10px 5px;
+        margin-bottom: -1px;
+        min-height: 510px;
     }
     .product {
         float: left;
         position: relative;
         width: 111px;
         height: 170px;
-        margin: 0;
+        margin: 0 5px;
         padding: 0;
     }
     .product img {
@@ -132,7 +127,7 @@ require_once '../include/header.php';
         -webkit-transition: background .2s linear, color .2s linear;
         -o-transition: background .2s linear, color .2s linear;
     }
-    .k-listview:after, .product dl:after {
+    .k-listview:after {
         content: ".";
         display: block;
         height: 0;
