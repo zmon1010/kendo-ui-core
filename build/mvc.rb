@@ -421,9 +421,9 @@ def upgrade_project_to_vs2013(csproj)
     csproj.gsub(/System\.Web\.([^,]*), Version=2\.0\.0\.0/, "System.Web.\\1, Version=3.0.0.0")
           .gsub(/System\.Web\.([^,]*), Version=4\.0\.0\.0/, "System.Web.\\1, Version=5.#{MVC5_MINOR_VERSION}.0")
           .gsub(/System\.Net\.([^,]*), Version=4\.0\.0\.0/, "System.Web.\\1, Version=5.#{MVC5_MINOR_VERSION}.0")
-          .gsub('Microsoft.AspNet.Razor.2.0.30506.0\lib\net40', "Microsoft.AspNet.Razor.3.#{MVC5_MINOR_VERSION}\lib\net45")
-          .gsub(/Microsoft\.AspNet\.(.*)4\.0\.30506\.0\\lib\\net40/, "Microsoft.AspNet.\\15.#{MVC5_MINOR_VERSION}\lib\net45")
-          .gsub(/Microsoft\.AspNet\.(.*)2\.0\.30506\.0\\lib\\net40/, "Microsoft.AspNet.\\13.#{MVC5_MINOR_VERSION}\lib\net45")
+          .gsub('Microsoft.AspNet.Razor.2.0.30506.0\lib\net40', "Microsoft.AspNet.Razor.3.#{MVC5_MINOR_VERSION}\\lib\\net45")
+          .gsub(/Microsoft\.AspNet\.(.*)4\.0\.30506\.0\\lib\\net40/, "Microsoft.AspNet.\\15.#{MVC5_MINOR_VERSION}\\lib\\net45")
+          .gsub(/Microsoft\.AspNet\.(.*)2\.0\.30506\.0\\lib\\net40/, "Microsoft.AspNet.\\13.#{MVC5_MINOR_VERSION}\\lib\\net45")
           .gsub("{E3E379DF-F4C6-4180-9B81-6769533ABE47};", "")
 
 end
