@@ -21,6 +21,13 @@
         return (letter >= 0 ? columnName(letter) : "") + String.fromCharCode(65 + (colIndex % 26));
     }
 
+    function displaySheet(sheet) {
+        if (/^[a-z0-9_]*$/i.test(sheet)) {
+            return sheet;
+        }
+        return "'" + sheet.replace(/\x27/g, "\\'") + "'";
+    }
+
     function displayRef(sheet, row, col, rel) {
         var aa = "";
 
@@ -44,7 +51,7 @@
         }
 
         if (sheet) {
-            return sheet + "!" + aa + row;
+            return displaySheet(sheet) + "!" + aa + row;
         } else {
             return aa + row;
         }
@@ -490,7 +497,9 @@
                     + ":"
                     + this.bottomRight.print(trow, tcol);
                 if (this.hasSheet()) {
-                    ret = this.sheet + "!" + ret;
+                    ret = displaySheet(this.sheet)
+                        + (this.endSheet ? displaySheet(this.endSheet) + ":" : "")
+                        + "!" + ret;
                 }
                 return ret;
             }
