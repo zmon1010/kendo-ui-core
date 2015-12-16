@@ -698,6 +698,7 @@
             ddl.bind("dataBound", this._revertTitle.bind(this));
             ddl.setOptions({
                 dataValueField: "format",
+                dataTextField: "name",
                 dataValuePrimitive: true,
                 valueTemplate: "<span class='k-icon k-font-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>",
                 template:
@@ -974,6 +975,7 @@
             ddl.setOptions({
                 valueTemplate: "<span class='k-icon k-font-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>",
                 template: "<span class='k-icon k-font-icon k-i-#= iconClass #' style='line-height: 1em; width: 1.35em;'></span>#=text#",
+                dataTextField: "text",
                 dataValueField: "value"
             });
             ddl.setDataSource([
@@ -982,6 +984,7 @@
                 { value: "asc", sheet: false, text: MESSAGES.sortButtons.sortRangeAsc, iconClass: "sort-asc" },
                 { value: "desc", sheet: false, text: MESSAGES.sortButtons.sortRangeDesc, iconClass: "sort-desc" }
             ]);
+            ddl.select(0);
 
             this.element.data({
                 type: "sort",
