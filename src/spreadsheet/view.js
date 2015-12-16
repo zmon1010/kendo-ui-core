@@ -991,7 +991,7 @@
             var sheet = this._sheet;
             var grid = sheet._grid;
 
-            var selection = sheet.select();
+            var selection = sheet.select().toRangeRef();
             var status = this._workbook.clipboard().canCopy();
             if(status.canCopy === false && status.multiSelection) {
                 this.clipboardContents.render([]);
