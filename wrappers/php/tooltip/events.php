@@ -21,15 +21,16 @@ $tooltip->show('onShow')
 echo $tooltip->render();
 ?>
 
-    <div class="demo-section">
-        <span id="autohide-true" class="key-button wider">Hover me!</span>
-        <span id="autohide-false" class="key-button wider">Hover me too!</span>
+    <div class="demo-section k-content">
+        <span id="autohide-true" class="k-button wider">Hover me!</span>
+        <span id="autohide-false" class="k-button wider">Hover me too!</span>
     </div>
 
-    <div class="demo-section">
-        <h3 class="title">Console log</h3>
+    <div class="box">
+        <h4>Console log</h4>
         <div class="console"></div>
     </div>
+            
 
     <script>
         function onShow(e) {
@@ -43,16 +44,14 @@ echo $tooltip->render();
 
     <style>
         .demo-section {
-            width: 600px;
-            padding-top: 2em;
-            padding-bottom: 2em;
             text-align: center;
         }
         .wider {
-            margin: 0 20px;
+            display: block;
+            margin: 20px 0;
             padding: 15px 8px;
             line-height: 23px;
-            width: 120px;
+            width: 100%;
         }
     </style>
 

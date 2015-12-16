@@ -5,18 +5,18 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <demo:header />   
-   <kendo:tooltip name="#autohide-true" position="top" content="Hello!" show="onShow" hide="onHide" />
+   <kendo:tooltip name="#autohide-true" position="top"  content="Hello!" show="onShow" hide="onHide" />
    <kendo:tooltip name="#autohide-false" position="top" content="Hello!" show="onShow" hide="onHide" autoHide="false" />
    
-	<div class="demo-section">
-	    <span id="autohide-true" class="key-button wider">Hover me!</span>
-	    <span id="autohide-false" class="key-button wider">Hover me too!</span>
+	<div class="demo-section k-content">
+	    <span id="autohide-true" class="k-button wider">Hover me!</span>
+	    <span id="autohide-false" class="k-button wider">Hover me too!</span>
 	</div>
     
-	<div class="demo-section">
-	    <h3 class="title">Console log</h3>
-	    <div class="console"></div>
-	</div>
+	<div class="box">
+       <h4>Console log</h4>
+       <div class="console"></div>
+   </div>
             
     <script>
 	    function onShow(e) {
@@ -28,19 +28,17 @@
 	    }
     </script>
     
-    <style>
-		.demo-section {
-			 width: 600px;
-             padding-top: 2em;
-             padding-bottom: 2em;
-             text-align: center;
-         }
-         .wider {
-             margin: 0 20px;
-             padding: 15px 8px;
-             line-height: 23px;
-             width: 120px;
-         }
-    </style>                   
+ <style>
+    .demo-section {
+        text-align: center;
+    }
+    .wider {
+        display: block;
+        margin: 20px 0;
+        padding: 15px 8px;
+        line-height: 23px;
+        width: 100%;
+    }
+</style>                 
     
 <demo:footer />
