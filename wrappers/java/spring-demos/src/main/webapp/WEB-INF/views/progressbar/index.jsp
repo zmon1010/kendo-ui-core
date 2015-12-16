@@ -6,8 +6,7 @@
 
 <demo:header />
 
-<div id="example" class="k-content">
-    <div class="demo-section">
+ <div class="demo-section k-content">
         <h2>What are your favourite recent movies?</h2>
         <ul class="forms">
             <li>
@@ -38,11 +37,11 @@
                 </select>
             </li>
             <li>
-                <button id ="voteButton" class="k-button">Vote</button>
+                <button id ="voteButton" class="k-button k-primary">Vote</button>
             </li>
         </ul>
     </div>
-    <div class="demo-section">
+ <div class="demo-section k-content">
         <h2>Poll results</h2>
         <ul class="poll-results">
             <li>
@@ -118,11 +117,6 @@
     </script>
 
     <style>      
-        .demo-section {
-            width: 400px;
-            padding: 30px;
-        }
-        
         .demo-section h2 {
             font-weight: normal;
             margin-bottom: 15px;
@@ -131,23 +125,24 @@
         .forms {
             list-style-type: none;
             padding: 0;
-            margin-bottom: -10px;
+            margin: 0;
         }
         
         .forms label {
-            display: inline-block;
-            width: 120px;
-            text-align: right;
-            padding-right: 18px;
+            display: block;
+            font-size: 12px;
+            line-height: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1em;
         }
         
         .forms li {
-            margin-bottom: 10px;
+            margin-bottom: 1.5em;
         }
         
         #voteButton {
-            width: 260px;
-            margin: 10px 0 0 138px;
+            width: 100%;
         }
         
         .poll-results {
@@ -162,11 +157,10 @@
             height: 3px;
             line-height: 0;
         }
-        #example .poll-results h4, .poll-results .k-progressbar {
-            margin: 0 0 5px 0;
-            width: 400px;
+        .poll-results .k-progressbar {
+            margin-bottom: 1.5em;
+            width: 100%;
         }
     </style>
-</div>
 
 <demo:footer />
