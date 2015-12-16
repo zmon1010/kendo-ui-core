@@ -5,7 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section wide k-header">
+<div class="demo-section wide k-content">
 <?php
     $editor = new \Kendo\UI\Editor('topEditor');
 

@@ -5,7 +5,7 @@
 
 <demo:header />
 <div id="example">
-   <div class="demo-section wide k-header">
+   <div class="demo-section wide k-content">
 		<kendo:editor name="topEditor" tag="div">
 		    <kendo:editor-value>
 		        <h2>

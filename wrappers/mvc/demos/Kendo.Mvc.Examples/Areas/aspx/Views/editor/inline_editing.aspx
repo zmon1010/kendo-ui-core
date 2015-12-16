@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section wide k-header">
+<div class="demo-section wide k-content">
     <% Html.Kendo().Editor()
           .Name("topEditor")
           .Tag("div")
