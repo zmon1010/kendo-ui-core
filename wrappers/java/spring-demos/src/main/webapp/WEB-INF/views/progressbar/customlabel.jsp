@@ -7,17 +7,15 @@
 <demo:header />
 
 <div id="example" class="k-content">
-    <div class="demo-section">
-        <h2>Reset Password</h2>
-        <div>
-            <ul class="forms">
-                <li>
-                    <label>New Password</label>
-                    <input id="userPass" type="password" name="userPass" value="" class="k-textbox" style="width: 260px;" />
-                </li>
-                <li>
-                    <label>Password strength</label>
-                    <kendo:progressBar name="passStrength" type="value" max="9" change="onChange">
+    <div class="demo-section k-content">
+        <ul class="forms">
+            <li>
+                <label>New Password</label>
+                <input id="userPass" type="password" name="userPass" value="" class="k-textbox" style="width: 100%;" />
+            </li>
+            <li>
+                <label>Password strength</label>
+                    <kendo:progressBar style="width: 100%" name="passStrength" type="value" max="9" change="onChange">
                     	<kendo:progressBar-animation duration="0"></kendo:progressBar-animation>
                     </kendo:progressBar>
                 </li>
@@ -78,42 +76,28 @@
     </script>
 
     <style>
-    	#passStrength {
-            width: 260px;
-        }
-    
-        .demo-section {
-            width: 400px;
-            padding: 30px;
-        }
-        
-        .demo-section h2 {
-            font-weight: normal;
-            margin: 0 0 20px 0;
-        }
-        
-        .forms {
+    	.forms {
             list-style-type: none;
             padding: 0;
-            margin-bottom: -10px;
+            margin: 0;
         }
         
         .forms label {
-            display: inline-block;
-            width: 115px;
-            text-align: right;
-            padding-right: 20px;
+            display: block;
+            font-size: 12px;
+            line-height: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1em;
         }
         
         .forms li {
-            margin-bottom: 10px;
+            margin-bottom: 1.5em;
         }
         
         #submitButton {
-            width: 260px;
-            margin: 10px 0 0 0;
+            width: 100%;
         }
     </style>
-</div>
 
 <demo:footer />
