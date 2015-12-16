@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
+        public string Type { get; set; }
+        
         public string ComparerType { get; set; }
         
         public string DataType { get; set; }
@@ -41,6 +43,11 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
+            if (Type.HasValue())
+            {
+                json["type"] = Type;
+            }
+            
             if (ComparerType.HasValue())
             {
                 json["comparerType"] = ComparerType;

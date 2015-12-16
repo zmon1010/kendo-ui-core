@@ -34580,6 +34580,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Defines the validation type. The acceptable options are reject or warning</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 

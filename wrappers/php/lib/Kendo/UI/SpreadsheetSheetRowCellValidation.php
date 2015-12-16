@@ -6,6 +6,15 @@ class SpreadsheetSheetRowCellValidation extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * Defines the validation type. The acceptable options are reject or warning
+    * @param string $value
+    * @return \Kendo\UI\SpreadsheetSheetRowCellValidation
+    */
+    public function type($value) {
+        return $this->setProperty('type', $value);
+    }
+
+    /**
     * Defines the comparer type used to validate the cell value, e.g. "greaterThan", "between" and etc.
     * @param string $value
     * @return \Kendo\UI\SpreadsheetSheetRowCellValidation
