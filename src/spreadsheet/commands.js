@@ -532,15 +532,19 @@
             var range = this.range();
             var sheet = range.sheet();
             var activeCell = sheet.activeCell();
-            var col = activeCell.topLeft.col;
+            var col = this.options.sheet ? activeCell.topLeft.col : (this.options.column || 0);
             var ascending = this.options.value === "asc" ? true : false;
 
             this._state = sheet.getState();
 
             if (this.options.sheet) {
-                this.expandRange().sort({ column: col, ascending: ascending });
+                range = this.expandRange();
+            }
+
+            if (!range.intersectingMerged().length) {
+                range.sort({ column: col, ascending: ascending });
             } else {
-                range.sort({ column: this.options.column || 0, ascending: ascending });
+                return { reason: "error", type: "sortRangeContainingMerges" };
             }
         },
         expandRange: function() {

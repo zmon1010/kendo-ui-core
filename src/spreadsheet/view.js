@@ -39,6 +39,7 @@
             openUnsupported: "Unsupported format. Please select an .xlsx file.",
             shiftingNonblankCells: "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet.",
             filterRangeContainingMerges: "Cannot create a filter within a range containing merges",
+            sortRangeContainingMerges: "Cannot sort a range containing merges",
             validationError: "The value that you entered violates the validation rules set on the cell."
         },
         tabs: {

@@ -952,6 +952,19 @@
         equal(valuesB[2], "c");
     });
 
+    test("Returns warning on attempt to sort range containing merges", function() {
+        var command = sortCommand({ sheet: false, value: "asc", column: 1 });
+        var range = sheet.range("A1:A3");
+
+        range.values([ ["a"], ["c"], ["b"] ]);
+        sheet.range("A1:B2").merge();
+
+        var result = command.exec();
+
+        equal(result.reason, "error");
+        equal(result.type, "sortRangeContainingMerges");
+    });
+
     module("SpreadSheet ApplyFilterCommand", moduleOptions);
 
     var applyFilterCommand = $.proxy(command, this, kendo.spreadsheet.ApplyFilterCommand);
