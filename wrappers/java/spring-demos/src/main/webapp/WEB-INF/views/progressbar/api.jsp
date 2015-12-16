@@ -6,11 +6,9 @@
 
 <demo:header />
 
-<div id="example" class="k-content">
-    
-    <div class="configuration-horizontal">
-        <div class="config-section">
-            <span class="configHead">Toggle state</span>
+<div class="box wide">
+        <div class="box-col">
+            <h4>Toggle state</h4>
             <ul class="options">
                 <li>
                     <button class="k-button" id="enableProgressBar">Enable</button>
@@ -18,8 +16,8 @@
                 </li>
             </ul>
         </div>
-        <div class="config-section">
-            <span class="configHead">Value</span>
+        <div class="box-col">
+            <h4>Value</h4>
             <ul class="options">
                 <li>
                     <input type="text" id="newValue" value="25" class="k-textbox" placeholder="e.g. 23"/>             
@@ -28,8 +26,8 @@
                 </li>
             </ul>
         </div>
-        <div class="config-section">
-            <span class="configHead">Indeterminate</span>
+        <div class="box-col">
+            <h4>Indeterminate</h4>
             <ul class="options">
                 <li>
                     <button class="k-button" id="setIndeterminate">Set indeterminate</button>
@@ -37,8 +35,8 @@
             </ul>
         </div>
     </div>
-    <div class="demo-section">
-        <kendo:progressBar name="progressBar" type="value" min="0" max="100">
+    <div class="demo-section k-content">
+        <kendo:progressBar name="progressBar" type="value" min="0" max="100" style="width: 100%;">
                 	<kendo:progressBar-animation duration="400"></kendo:progressBar-animation>
         </kendo:progressBar>
     </div>
@@ -70,26 +68,12 @@
     </script>
 
     <style>
-        #example .config-section {
-            min-width: 160px;
-        }
-
-        .configuration-horizontal .k-textbox {
+        .box .k-textbox {
             margin: 0;
             width: 80px;
-        }
-        .demo-section {
-            width: 660px;
-            padding: 30px;
-            text-align: center;
         }
         .k-button {
             min-width: 80px;
         }
-        .configuration-horizontal .options li {
-            padding: 3px 0;
-        }
     </style>
-</div>
-
 <demo:footer />

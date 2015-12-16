@@ -3,11 +3,9 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
-<div id="example" class="k-content">
-    
-    <div class="configuration-horizontal">
-        <div class="config-section">
-            <span class="configHead">Toggle state</span>
+<div class="box wide">
+        <div class="box-col">
+            <h4>Toggle state</h4>
             <ul class="options">
                 <li>
                     <button class="k-button" id="enableProgressBar">Enable</button>
@@ -15,8 +13,8 @@ require_once '../include/header.php';
                 </li>
             </ul>
         </div>
-        <div class="config-section">
-            <span class="configHead">Value</span>
+        <div class="box-col">
+            <h4>Value</h4>
             <ul class="options">
                 <li>
                     <input type="text" id="newValue" value="25" class="k-textbox" placeholder="e.g. 23"/>             
@@ -25,8 +23,8 @@ require_once '../include/header.php';
                 </li>
             </ul>
         </div>
-        <div class="config-section">
-            <span class="configHead">Indeterminate</span>
+        <div class="box-col">
+            <h4>Indeterminate</h4>
             <ul class="options">
                 <li>
                     <button class="k-button" id="setIndeterminate">Set indeterminate</button>
@@ -34,7 +32,7 @@ require_once '../include/header.php';
             </ul>
         </div>
     </div>
-    <div class="demo-section">
+    <div class="demo-section k-content">
         <?php 
             $pb = new \Kendo\UI\ProgressBar('progressBar');
 
@@ -44,6 +42,7 @@ require_once '../include/header.php';
             $pb->min(0)
                ->max(100)
                ->type('value')
+               ->attr('style', 'width: 100%')
                ->animation($animation);
 
             echo $pb->render();
@@ -79,24 +78,11 @@ require_once '../include/header.php';
     </script>
 
     <style>
-        #example .config-section {
-            min-width: 160px;
-        }
-
-        .configuration-horizontal .k-textbox {
+        .box .k-textbox {
             margin: 0;
             width: 80px;
-        }
-        .demo-section {
-            width: 660px;
-            padding: 30px;
-            text-align: center;
         }
         .k-button {
             min-width: 80px;
         }
-        .configuration-horizontal .options li {
-            padding: 3px 0;
-        }
     </style>
-</div>
