@@ -53,7 +53,7 @@
 
 <demo:header />
 	<div class="k-rtl">
-    <kendo:scheduler name="scheduler" timezone="Etc/UTC" height="400" date="<%= date %>" startTime="<%= startTime %>">
+    <kendo:scheduler name="scheduler" timezone="Etc/UTC" height="600" date="<%= date %>" startTime="<%= startTime %>">
     	<kendo:scheduler-views>
     		<kendo:scheduler-view type="day" />
     		<kendo:scheduler-view type="week" selected="true" />

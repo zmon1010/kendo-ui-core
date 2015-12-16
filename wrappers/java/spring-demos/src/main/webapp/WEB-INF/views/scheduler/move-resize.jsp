@@ -21,11 +21,11 @@
 %>
 <demo:header />
 
-	<div class="configuration-horizontal">
-	    <div class="config-section">
-	        <label><input type="checkbox" checked />Snap events to slot boundaries</label>
-	    </div>
-	</div>
+	<div class="box wide">
+        <div class="box-col">
+            <label><input type="checkbox" checked>Snap events to slot boundaries</label>
+        </div>
+    </div>
 	
     <kendo:scheduler name="scheduler" timezone="Etc/UTC" height="600" date="<%= date %>" startTime="<%= startTime %>">
     	<kendo:scheduler-views>

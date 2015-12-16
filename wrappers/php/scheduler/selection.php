@@ -185,80 +185,87 @@ echo $scheduler->render();
 	    });
 	</script>
 	
-	<ul class="keyboard-legend" style="padding-top: 25px">
-	    <li>
-	        <span class="button-preview">
-	            <span class="key-button leftAlign">Alt</span>
-	            +
-	            <span class="key-button">w</span>
-	        </span>
-	        <span class="button-descr">
-	            focuses the widget
-	        </span>
-	    </li>
-	</ul>
-	 
-	<h4>Actions applied on Scheduler table</h4>
-	<ul class="keyboard-legend">
-	    <li>
-	        <span class="button-preview">
-	            <span class="key-button wider">Arrow Keys</span>
-	        </span>
-	        <span class="button-descr">
-	            to navigate over the cells.
-	        </span>
-	    </li>
-	    <li>
-	        <span class="button-preview">
-	            <span class="key-button">Enter</span>
-	        </span>
-	        <span class="button-descr">
-	            creates new event from empty cell or selection. On selected event opens the edit popup window.
-	        </span>
-	    </li>
-	    <li>
-	        <span class="button-preview">
-	            <span class="key-button">Tab</span>
-	        </span>
-	        <span class="button-descr">
-	            moves between available events.
-	        </span>
-	    </li>
-	    <li>
-	        <span class="button-preview">
-	            <span class="key-button leftAlign">Shift</span> 
-	            +
-	            <span class="key-button">Tab</span>
-	        </span>
-	        <span class="button-descr">
-	            moves between the available events backwards.
-	        </span>
-	    </li>
-	    <li>
-	        <span class="button-preview">
-	            <span class="key-button">1</span> 
-	            -
-	            <span class="key-button">4</span>
-	        </span>
-	        <span class="button-descr">
-	            moves between the available views.
-	        </span>
-	    </li>
-	    <li>
-	        <span class="button-preview">
-	                <span class="key-button">Esc</span>
-	        </span>
-	        <span class="button-descr">
-	            closes the edit popup window.
-	        </span>
-	    </li>
-	    <li>
-	        <span class="button-preview">
-	            <span class="key-button leftAlign">Shift</span>
-	        </span>
-	        <span class="button-descr">
-	            to create multiple selection.
-	        </span>
-	    </li>
-	</ul>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Focus</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign">Alt</span>
+                    +
+                    <span class="key-button">w</span>
+                </span>
+                <span class="button-descr">
+                    focuses the widget
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="box-col">
+        <h4>Actions applied on Scheduler table</h4>
+        <ul class="keyboard-legend">
+            <li>
+                <span class="button-preview">
+                    <span class="key-button wider">Arrow Keys</span>
+                </span>
+                <span class="button-descr">
+                    to navigate over the cells.
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Enter</span>
+                </span>
+                <span class="button-descr">
+                    creates new event from empty cell or selection. On selected event opens the edit popup window.
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">Tab</span>
+                </span>
+                <span class="button-descr">
+                    moves between available events.
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign">Shift</span> 
+                    +
+                    <span class="key-button">Tab</span>
+                </span>
+                <span class="button-descr">
+                    moves between the available events backwards.
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button">1</span> 
+                    -
+                    <span class="key-button">4</span>
+                </span>
+                <span class="button-descr">
+                    moves between the available views.
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                     <span class="key-button">Esc</span>
+                </span>
+                <span class="button-descr">
+                    closes the edit popup window.
+                </span>
+            </li>
+            <li>
+                <span class="button-preview">
+                    <span class="key-button leftAlign">Shift</span>
+                </span>
+                <span class="button-descr">
+                    to create multiple selection.
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
 <?php require_once '../include/footer.php'; ?>

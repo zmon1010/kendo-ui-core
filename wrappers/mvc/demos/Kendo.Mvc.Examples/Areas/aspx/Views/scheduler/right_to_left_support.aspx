@@ -7,7 +7,7 @@
     .Name("scheduler")
     .Date(new DateTime(2013, 6, 13))
     .StartTime(new DateTime(2013, 6, 13, 7, 00, 00))
-    .Height(400)
+    .Height(600)
     .Timezone("Etc/UTC")
     .Views(views =>
     {

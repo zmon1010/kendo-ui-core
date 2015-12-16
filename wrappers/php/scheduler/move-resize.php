@@ -152,9 +152,9 @@ $scheduler->timezone("Etc/UTC")
         ->dataSource($dataSource);
 
 ?>
-<div class="configuration-horizontal">
-    <div class="config-section">
-        <label><input type="checkbox" checked />Snap events to slot boundaries</label>
+<div class="box wide">
+    <div class="box-col">
+        <label><input type="checkbox" checked>Snap events to slot boundaries</label>
     </div>
 </div>
 

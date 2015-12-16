@@ -140,7 +140,7 @@ $dataSource->transport($transport)
 $scheduler = new \Kendo\UI\Scheduler('scheduler');
 $scheduler->timezone("Etc/UTC")
     ->date(new DateTime('2013/6/13', new DateTimeZone('UTC')))
-    ->height(400)
+    ->height(600)
     ->addView(
         array('type' => 'day', 'startTime' => new DateTime('2013/6/13 7:00', new DateTimeZone('UTC'))),
         array('type' => 'week', 'selected' => true, 'startTime' => new DateTime('2013/6/13 7:00', new DateTimeZone('UTC') )),
