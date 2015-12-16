@@ -3,11 +3,8 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
 
-<div class="configuration k-widget k-header">
-    <span class="configHead">Events log</span>
-    <div class="console"></div>
-</div>
-<div class="reports">
+<div class="demo-section k-content" style="text-align: center;">
+<h4>Pick a date</h4>
 <?php
 $calendar = new \Kendo\UI\Calendar('calendar');
 $calendar->attr('style', 'width: 243px')
@@ -16,6 +13,11 @@ $calendar->attr('style', 'width: 243px')
 
 echo $calendar->render();
 ?>
+</div>
+
+<div class="box" style="text-align: center;">
+    <h4>Events log</h4>
+    <div class="console"></div>
 </div>
 
 <script>
@@ -27,25 +29,5 @@ echo $calendar->render();
         kendoConsole.log("Navigate");
     }
 </script>
-
-<style>
-    .reports {
-        width: 265px;
-        height: 247px;
-        padding: 108px 0 0 20px;
-        background: url('../content/web/calendar/reports.png') transparent no-repeat 0 0;
-        margin: 30px 105px 20px;
-    }
-    .configuration {
-        height: 390px;
-        width: 200px;
-    }
-    .configuration .console {
-        background-color: transparent;
-        border: 0;
-        height: 342px;
-        overflow: auto;
-    }
-</style>
 
 <?php require_once '../include/footer.php'; ?>

@@ -4,6 +4,10 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+<div class="demo-section k-content" style="text-align: center;">
+    <h4>Pick a date</h4>
+
 <%=Html.Kendo().Calendar()
       .Name("calendar")
       .Format("MM/dd/yyyy")
@@ -20,8 +24,14 @@
       })
       .Value(ViewBag.date as DateTime?)
 %>
-
+</div>
+<div class="demo-section k-content" style="text-align: center;">
 <% if (ViewBag.date != null) { %>
-    <p>This date was clicked: <%=ViewBag.date%></p>
+        <h4>Picked Date:</h4>
+        <p><%=ViewBag.date%></p>
+<%    }
+    else { %>
+        <h4>Pick an action date from the calendar above <br />(undelined item)</h4>
 <% } %>
- </asp:Content>
+</div>
+</asp:Content>

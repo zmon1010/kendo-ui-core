@@ -2,39 +2,44 @@
 require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
-<div class="configuration k-widget k-header">
-    <span class="configHead">API Functions</span>
-    <span class="configTitle">Get value</span>
-    <ul class="options">
-        <li>
-            <button id="get" class="k-button">Get date</button>
-        </li>
-    </ul>
-    <span class="configTitle">Set value</span>
-    <ul class="options">
-        <li>
-            <input id="value" value="10/10/2000" style="float:none; width: 120px;" />
-            <button id="set" class="k-button">Set date</button>
-        </li>
-    </ul>
-    <span class="configTitle">Navigation</span>
-    <ul class="options">
-        <li>
-            <select id="direction" style="vertical-align: top; width: 120px; margin-bottom: 3px;">
-                <option value="up">upper view</option>
-                <option value="down">lower view</option>
-                <option value="past">past</option>
-                <option value="future" selected="selected">future</option>
-            </select>
-            <button id="navigate" class="k-button">Navigate</button>
-        </li>
-    </ul>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Get value</h4>
+        <ul class="options">
+            <li>
+                <button id="get" class="k-button">Get date</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Set value</h4>
+        <ul class="options">
+            <li>
+                <input id="value" value="10/10/2000" />
+                <button id="set" class="k-button">Set date</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Navigation</h4>
+        <ul class="options">
+            <li>
+                <select id="direction">
+                    <option value="up">upper view</option>
+                    <option value="down">lower view</option>
+                    <option value="past">past</option>
+                    <option value="future" selected="selected">future</option>
+                </select>
+                <button id="navigate" class="k-button">Navigate</button>
+            </li>
+        </ul>
+    </div>
 </div>
-<div class="reports">
+<div class="demo-section k-content" style="text-align: center;">
+    <h4>Pick a date</h4>
 <?php
 $calendar = new \Kendo\UI\Calendar('calendar');
-$calendar->attr('style', 'width: 243px')
-         ->value(new DateTime('today', new DateTimeZone('UTC')));
+$calendar->value(new DateTime('today', new DateTimeZone('UTC')));
 
 echo $calendar->render();
 ?>
@@ -81,18 +86,5 @@ echo $calendar->render();
         $("#navigate").click(navigate);
     });
 </script>
-<style>
-    .reports {
-        width: 265px;
-        height: 247px;
-        padding: 108px 0 0 20px;
-        background: url('../content/web/calendar/reports.png') transparent no-repeat 0 0;
-        margin: 30px 105px 20px;
-    }
-    .configuration {
-        height: 390px;
-        width: 200px;
-    }
-</style>
 
 <?php require_once '../include/footer.php'; ?>

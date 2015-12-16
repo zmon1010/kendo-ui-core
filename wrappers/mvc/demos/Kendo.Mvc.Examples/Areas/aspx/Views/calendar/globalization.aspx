@@ -9,9 +9,10 @@
         //set the culture
         kendo.culture("de-DE");
     </script>
-
+    <div class="demo-section k-content" style="text-align: center;">
     <%= Html.Kendo().Calendar()
             .Name("calendar")
             .Value(DateTime.Today)
     %>
+    </div>
 </asp:Content>

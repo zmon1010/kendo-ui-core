@@ -5,15 +5,16 @@
 
 <demo:header />
     
-   	<div class="configuration k-widget k-header">
-	    <span class="configHead">Events log</span>
-	    <div class="console"></div>
-	</div>
-
-	<div class='reports'>
+	<div class="demo-section k-content" style="text-align: center;">
+        <h4>Pick a date</h4>
 		<kendo:calendar name="calendar" style="width:243px" change="onChange" navigate="onNavigate">
     	</kendo:calendar>
 	</div>
+	
+	<div class="box" style="text-align: center;">
+        <h4>Events log</h4>
+        <div class="console"></div>
+    </div>
     
     <script>
         function onChange() {
@@ -29,23 +30,4 @@
         }
     </script>
     
-    <style>
-	    .reports {
-	        width: 265px;
-	        height: 247px;
-	        padding: 108px 0 0 20px;
-	        background: url(<c:url value="/resources/web/calendar/reports.png" />) transparent no-repeat 0 0;
-	        margin: 30px 105px 20px;
-	    }
-	    .configuration {
-	        height: 390px;
-	        width: 200px;
-	    }
-	    .configuration .console {
-	        background-color: transparent;
-	        border: 0;
-	        height: 342px;
-	        overflow: auto;
-	    }
-	</style>
 <demo:footer />

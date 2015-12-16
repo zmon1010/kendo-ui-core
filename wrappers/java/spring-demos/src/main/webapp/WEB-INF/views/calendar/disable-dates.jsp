@@ -3,10 +3,15 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="weekends">["sa","su"]</c:set>
+
 <demo:header />
 <div class="demo-section k-content" style="text-align: center;">
+	<h4>Disable weekends</h4>
+	<kendo:calendar name="weekend-calendar" disableDates="${weekends}">
+	</kendo:calendar>	
 	<h4 style="margin-top:1em">Disable Federal Holidays in USA in 2015</h4>	
-	<kendo:calendar name="calendar" disableDates="disableDates">
+	<kendo:calendar name="national-calendar" disableDates="disableDates">
 	</kendo:calendar>
 </div>
 <script>
@@ -43,3 +48,5 @@
 			}
 		}
 </script>
+
+<demo:footer />

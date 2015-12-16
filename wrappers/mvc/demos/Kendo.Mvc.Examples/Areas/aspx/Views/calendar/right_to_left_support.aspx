@@ -6,7 +6,8 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
 <div class="k-rtl">
-    <div class="demo-section"> 
+    <div class="demo-section k-content">
+        <h4>Pick a day:</h4>
         <%= Html.Kendo().Calendar()
                 .Name("calendar")
         %>

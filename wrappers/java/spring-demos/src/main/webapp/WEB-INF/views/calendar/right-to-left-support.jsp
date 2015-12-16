@@ -4,7 +4,8 @@
 <demo:header />
 
 <div class="k-rtl">
-	<div class="demo-section"> 
+	<div class="demo-section k-content">
+        <h4>Pick a day:</h4>
     	<kendo:calendar name="calendar"></kendo:calendar>
    	</div>
 </div>

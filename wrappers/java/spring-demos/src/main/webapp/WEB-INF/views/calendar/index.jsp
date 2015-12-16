@@ -5,21 +5,9 @@
 
 <c:url value="/resources/web/calendar/calendar.png" var="calendarImg"/>
 <demo:header />
-<div id="background">		
+<div class="demo-section k-content" style="text-align: center;">
+    <h4>Pick a date</h4>	
 	<kendo:calendar name="calendar">
 	</kendo:calendar>
 </div>
-
-<style>
-	#background {
-		width: 254px;
-		height: 250px;
-		margin: 30px auto;
-		padding: 69px 0 0 11px;
-		background: url('${calendarImg}') transparent no-repeat 0 0;
-	}
-	#calendar {
-		width: 241px;
-	}
-</style>
 <demo:footer />
