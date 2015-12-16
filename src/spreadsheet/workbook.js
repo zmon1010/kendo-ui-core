@@ -332,8 +332,8 @@
             };
         },
 
-        fromFile: function(file, name) {
-            var deferred = new $.Deferred;
+        fromFile: function(file) {
+            var deferred = new $.Deferred();
             var promise = deferred.promise();
             var args = { file: file, promise: promise };
 

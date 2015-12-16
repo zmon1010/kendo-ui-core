@@ -99,6 +99,7 @@
     function loadSheets(items, workbook, deferred) {
         var ready = (new $.Deferred()).resolve();
         for (var i = 0; i < items.length; i++) {
+            /*jshint -W083 */
             (function(entry, i) {
                 ready = ready.then(function() {
                     var sheet = workbook.insertSheet(entry.options);
