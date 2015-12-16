@@ -86,7 +86,7 @@
                 // no NameRef-s from this function
                 break OUT;      // jshint ignore:line
             }
-            var stream = TokenStreamWithReferences(name, {});
+            var stream = TokenStream(name, {});
             var a = [];
             while (true) {
                 var ref = stream.next();
@@ -120,7 +120,7 @@
 
     function parseFormula(sheet, row, col, input) {
         var refs = [];
-        input = TokenStreamWithReferences(input, { row: row, col: col });
+        input = TokenStream(input, { row: row, col: col });
         var is = input.is;
 
         return {
@@ -656,8 +656,8 @@
         }
     }
 
-    function TokenStreamWithReferences(input, options) {
-        input = TokenStream(InputStream(input), options);
+    function TokenStream(input, options) {
+        input = RawTokenStream(InputStream(input), options);
         var ahead = input.ahead;
         var skip = input.skip;
         var token = null;
@@ -726,6 +726,14 @@
             return cell;
         }
 
+        function addPos(thing, startToken, endToken) {
+            if (options.forEditor) {
+                thing.begin = startToken.begin;
+                thing.end = endToken.end;
+            }
+            return thing;
+        }
+
         function toCell(tok, isFirst) {
             if (tok.type == "rc") {
                 // RC notation is read properly without knowing where
@@ -733,7 +741,7 @@
                 // However, if only absolute refs were asked for (from
                 // i.e. parseReference) I feel it's alright to yell
                 // about it here.
-                if (tok.rel && (options.row == null || options.col == null)) {
+                if (tok.rel && !options.forEditor && (options.row == null || options.col == null)) {
                     input.croak("Cannot read relative cell in RC notation");
                 }
                 return new CellRef(tok.row, tok.col, tok.rel);
@@ -809,10 +817,10 @@
                     // skip them except the last one, we only wanted to
                     // ensure it's not paren.
                     skip(7);
-                    return new RangeRef(
+                    return addPos(new RangeRef(
                         tl.setSheet(a.value, true),
                         br.setSheet(c.value, true)
-                    ).setSheet(a.value, true);
+                    ).setSheet(a.value, true), a, g);
                 }
             }
         }
@@ -830,10 +838,10 @@
                 if (tl) {
                     skip(5);
                     var br = tl.clone();
-                    return new RangeRef(
+                    return addPos(new RangeRef(
                         tl.setSheet(a.value, true),
                         br.setSheet(c.value, true)
-                    ).setSheet(a.value, true);
+                    ).setSheet(a.value, true), a, e);
                 }
             }
         }
@@ -850,7 +858,7 @@
                 var tl = toCell(c, true), br = toCell(e, false);
                 if (tl && br) {
                     skip(5);
-                    return new RangeRef(tl, br).setSheet(a.value, true);
+                    return addPos(new RangeRef(tl, br).setSheet(a.value, true), a, e);
                 }
             }
         }
@@ -864,10 +872,10 @@
             {
                 skip(3);
                 var x = toCell(c);
-                if (x) {
-                    return x.setSheet(a.value, true);
+                if (!x) {
+                    x = new NameRef(c.value);
                 }
-                return new NameRef(c.value).setSheet(a.value, true);
+                return addPos(x.setSheet(a.value, true), a, c);
             }
         }
 
@@ -881,7 +889,7 @@
                 var tl = toCell(a, true), br = toCell(c, false);
                 if (tl && br) {
                     skip(3);
-                    return new RangeRef(tl, br);
+                    return addPos(new RangeRef(tl, br), a, c);
                 }
             }
         }
@@ -892,7 +900,7 @@
                 var x = toCell(a);
                 if (x && isFinite(x.row) && isFinite(x.col)) {
                     skip(1);
-                    return x;
+                    return addPos(x, a, a);
                 }
             }
         }
@@ -901,12 +909,12 @@
             if (a.type == "sym" && b.type == "punc" && b.value == "(" && !a.space) {
                 a.type = "func";
                 skip(1);
-                return a;
+                return a;       // already has position
             }
         }
     }
 
-    function TokenStream(input, options) {
+    function RawTokenStream(input, options) {
         var tokens = [], index = 0;
         var readWhile = input.readWhile;
 
@@ -1272,13 +1280,11 @@
                 !(d.type == "punc" && d.value == "(" && !c.space));
     }
 
-    function tokenize(input) {
+    function tokenize(input, row, col) {
         var tokens = [];
-        input = TokenStream(InputStream(input), { forEditor: true });
+        input = TokenStream(input, { forEditor: true, row: row, col: col });
         while (!input.eof()) {
-            tokens.push(input.ahead(4, maybeRange) ||
-                        input.ahead(2, maybeCall) ||
-                        next());
+            tokens.push(next());
         }
         var tok = tokens[0];
         if (tok.type == "op" && tok.value == "=") {
@@ -1286,43 +1292,25 @@
         }
         return tokens;
 
-        function maybeRange(a, b, c, d) {
-            if (looksLikeRange(a, b, c, d)) {
-                var ref = parseReference(a.value + ":" + c.value, true);
-                if (ref) {
-                    input.skip(3);
-                    return {
-                        type: "ref",
-                        ref: ref,
-                        begin: a.begin,
-                        end: c.end
-                    };
-                }
-            }
-        }
         function next() {
             var tok = input.next();
             if (tok.type == "sym") {
-                var ref = parseReference(tok.value, true);
-                if (ref) {
-                    tok.type = "ref";
-                    tok.ref = ref;
-                } else if (tok.upper == "TRUE") {
+                if (tok.upper == "TRUE") {
                     tok.type = "bool";
                     tok.value = true;
                 } else if (tok.upper == "FALSE") {
                     tok.type = "bool";
                     tok.value = false;
                 }
+            } else if (tok.type == "ref") {
+                tok = {
+                    type  : "ref",
+                    ref   : (row != null && col != null ? tok.absolute(row, col) : tok),
+                    begin : tok.begin,
+                    end   : tok.end
+                };
             }
             return tok;
-        }
-        function maybeCall(fname, b) {
-            if (fname.type == "sym" && b.type == "punc" && b.value == "(") {
-                input.skip(1);
-                fname.type = "func";
-                return fname;
-            }
         }
     }
 
