@@ -1264,22 +1264,6 @@
         };
     };
 
-    function looksLikeRange(a, b, c, d) {
-        // We need c.space here to resolve an ambiguity:
-        //
-        //   - A1:C3 (A2, A3) -- parse as intersection between range and union
-        //
-        //   - A1:CHOOSE(2, A1, A2, A3) -- parse as range operator where the
-        //     bottom-right side is returned by the CHOOSE function
-        //
-        // note no space between CHOOSE and the paren in the second example.
-        // I believe this is the Right Way™.
-        return ((a.type == "sym" || (a.type == "num" && a.value == a.value|0)) &&
-                (b.type == "op" && b.value == ":") &&
-                (c.type == "sym" || (c.type == "num" && c.value == c.value|0)) &&
-                !(d.type == "punc" && d.value == "(" && !c.space));
-    }
-
     function tokenize(input, row, col) {
         var tokens = [];
         input = TokenStream(input, { forEditor: true, row: row, col: col });
