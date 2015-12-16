@@ -10,819 +10,649 @@ require_once '../include/header.php';
 
 $spreadsheet = new \Kendo\UI\Spreadsheet('spreadsheet');
 
-$sheet = new \Kendo\UI\SpreadsheetSheet();
-$sheet->name("Food Order")
-      ->mergedCells(array("A1:G1", "C15:E15"));
+$spreadsheet->columns(5);
+$spreadsheet->rows(9);
+$spreadsheet->sheetsbar(false);
 
-$spreadsheet->addSheet($sheet);
+$contactsSheet = new \Kendo\UI\SpreadsheetSheet();
+$contactsSheet->name("ContactsForm")
+      ->mergedCells(array("A1:E1"));
+
+$listSheet = new \Kendo\UI\SpreadsheetSheet();
+$listSheet->name("ListValues");
+
+$spreadsheet->addSheet($contactsSheet);
+$spreadsheet->addSheet($listSheet);
 
 $row = new \Kendo\UI\SpreadsheetSheetRow();
 $row->height(70);
-$sheet->addRow($row);
+$contactsSheet->addRow($row);
 
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Invoice #52 - 06/23/2015");
-$cell->fontSize(32);
-$cell->textAlign("center");
-$cell->background("rgb(96,181,255)");
-$cell->color("white");
-
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("CONTACTS FORM");
+	$cell->fontSize(32);
+	$cell->textAlign("center");
+	$cell->background("rgb(96,181,255)");
+	$cell->enable(false);
+	$cell->color("white");
 
 $row = new \Kendo\UI\SpreadsheetSheetRow();
 $row->height(25);
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("ID");
-$cell->textAlign("center");
-$cell->background("rgb(167,214,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Product");
-$cell->textAlign("center");
-$cell->background("rgb(167,214,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Quantity");
-$cell->textAlign("center");
-$cell->background("rgb(167,214,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Price");
-$cell->textAlign("center");
-$cell->background("rgb(167,214,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Tax");
-$cell->textAlign("center");
-$cell->background("rgb(167,214,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Amount");
-$cell->textAlign("center");
-$cell->background("rgb(167,214,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(167,214,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("216321");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Calzone");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("1");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("12.39");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C3*D3*0.2");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C3*D3+E3");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("546897");
-$cell->textAlign("center");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Margarita");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("2");
-$cell->textAlign("center");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("8.79");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C4*D4*0.2");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C4*D4+E4");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("456231");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Pollo Formaggio");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("1");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("13.99");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C5*D5*0.2");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C5*D5+E5");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("455873");
-$cell->textAlign("center");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Greek Salad");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("1");
-$cell->textAlign("center");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("9.49");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C6*D6*0.2");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C6*D6+E6");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("456892");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Spinach and Blue Cheese");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("3");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("11.49");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C7*D7*0.2");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C7*D7+E7");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("546564");
-$cell->textAlign("center");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Rigoletto");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("1");
-$cell->textAlign("center");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("10.99");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C8*D8*0.2");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C8*D8+E8");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("789455");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Creme Brulee");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("5");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("6.99");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C9*D9*0.2");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C9*D9+E9");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("123002");
-$cell->textAlign("center");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Radeberger Beer");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("4");
-$cell->textAlign("center");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("4.99");
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C10*D10*0.2");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C10*D10+E10");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("564896");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Budweiser Beer");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("3");
-$cell->textAlign("center");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("4.49");
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C11*D11*0.2");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("C11*D11+E11");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(229,243,255)");
-$cell->color("rgb(0,62,117)");
-
-
-$row = new \Kendo\UI\SpreadsheetSheetRow();
-
-$sheet->addRow($row);
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(255,255,255)");
-$cell->color("rgb(0,62,117)");
-
+$contactsSheet->addRow($row);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("Full Name");
+	$cell->textAlign("center");
+	$cell->background("rgb(167,214,255)");
+	$cell->enable(false);
+	$cell->color("rgb(0,62,117)");
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("Email");
+	$cell->textAlign("center");
+	$cell->background("rgb(167,214,255)");
+	$cell->enable(false);
+	$cell->color("rgb(0,62,117)");
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("Date of Birth");
+	$cell->textAlign("center");
+	$cell->background("rgb(167,214,255)");
+	$cell->enable(false);
+	$cell->color("rgb(0,62,117)");
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("Phone");
+	$cell->textAlign("center");
+	$cell->background("rgb(167,214,255)");
+	$cell->enable(false);
+	$cell->color("rgb(0,62,117)");
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("Confirmed");
+	$cell->textAlign("center");
+	$cell->background("rgb(167,214,255)");
+	$cell->enable(false);
+	$cell->color("rgb(0,62,117)");
 
 $row = new \Kendo\UI\SpreadsheetSheetRow();
 $row->height(25);
-$sheet->addRow($row);
+$contactsSheet->addRow($row);
 
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("Peter Pan");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(LEN(A3)>3, LEN(A3)<200)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Full Name validation error");
+		$validation->messageTemplate("The full name should be longer than 3 letters and shorter than 200.");
+		$cell->validation($validation);
 
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("PeterPan@Gmail.com");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(NOT(ISERROR(FIND(\"@@\", B3))), NOT(ISERROR(FIND(\".\", B3))), ISERROR(FIND(\" \", J1)), LEN(B3)>5)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate( "Email validation error");
+		$validation->messageTemplate("The value entered is not an valid email address.");
+		$cell->validation($validation);
 
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value(35431);
+	$cell->format("m/d/yyyy");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("date");
+		$validation->comparerType("between");
+		$validation->from("DATEVALUE(\"1/1/1900\")");
+		$validation->to("DATEVALUE(\"1/1/1998\")");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Birth Date validaiton error");
+		$validation->messageTemplate("Birth Date should be between 1899 and 1998 year.");
+		$cell->validation($validation);
 
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value(359887699774);
 
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(ISNUMBER(D3),LEN(D3)<14)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Phone validation error");
+		$validation->messageTemplate("The value entered is not an valid phone number. Please enter numeric value with less than 14 digits.");
+		$cell->validation($validation);
 
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->value("Tip:");
-$cell->textAlign("right");
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("SUM(F3:F11)*0.1");
-$cell->format("$#,##0.00");
-
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
-
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
-
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value(true);
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("list");
+		$validation->from("ListValues!A1:B1");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Invalid value");
+		$validation->messageTemplate("Valid values are 'true' and 'false'.");
+		$cell->validation($validation);
 
 $row = new \Kendo\UI\SpreadsheetSheetRow();
-$row->height(50);
-$sheet->addRow($row);
+$row->height(25);
+$contactsSheet->addRow($row);
 
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(LEN(A3)>3, LEN(A3)<200)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Full Name validation error");
+		$validation->messageTemplate("The full name should be longer than 3 letters and shorter than 200.");
+		$cell->validation($validation);
 
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(NOT(ISERROR(FIND(\"@@\", B3))), NOT(ISERROR(FIND(\".\", B3))), ISERROR(FIND(\" \", J1)), LEN(B3)>5)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate( "Email validation error");
+		$validation->messageTemplate("The value entered is not an valid email address.");
+		$cell->validation($validation);
 
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+	$cell->format("m/d/yyyy");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("date");
+		$validation->comparerType("between");
+		$validation->from("DATEVALUE(\"1/1/1900\")");
+		$validation->to("DATEVALUE(\"1/1/1998\")");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Birth Date validaiton error");
+		$validation->messageTemplate("Birth Date should be between 1899 and 1998 year.");
+		$cell->validation($validation);
 
-$cell->index(1);
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(ISNUMBER(D3),LEN(D3)<14)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Phone validation error");
+		$validation->messageTemplate("The value entered is not an valid phone number. Please enter numeric value with less than 14 digits.");
+		$cell->validation($validation);
 
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("list");
+		$validation->from("ListValues!A1:B1");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Invalid value");
+		$validation->messageTemplate("Valid values are 'true' and 'false'.");
+		$cell->validation($validation);
 
-$cell->index(2);
-$cell->value("Total Amount:");
-$cell->fontSize(20);
-$cell->textAlign("right");
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
+$row = new \Kendo\UI\SpreadsheetSheetRow();
+$row->height(25);
+$contactsSheet->addRow($row);
 
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(LEN(A3)>3, LEN(A3)<200)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Full Name validation error");
+		$validation->messageTemplate("The full name should be longer than 3 letters and shorter than 200.");
+		$cell->validation($validation);
 
-$cell->index(5);
-$cell->fontSize(20);
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
-$cell->formula("SUM(F3:F14)");
-$cell->format("$#,##0.00");
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(NOT(ISERROR(FIND(\"@@\", B3))), NOT(ISERROR(FIND(\".\", B3))), ISERROR(FIND(\" \", J1)), LEN(B3)>5)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate( "Email validation error");
+		$validation->messageTemplate("The value entered is not an valid email address.");
+		$cell->validation($validation);
 
-$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
-$row->addCell($cell);
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+	$cell->format("m/d/yyyy");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("date");
+		$validation->comparerType("between");
+		$validation->from("DATEVALUE(\"1/1/1900\")");
+		$validation->to("DATEVALUE(\"1/1/1998\")");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Birth Date validaiton error");
+		$validation->messageTemplate("Birth Date should be between 1899 and 1998 year.");
+		$cell->validation($validation);
 
-$cell->index(6);
-$cell->background("rgb(193,226,255)");
-$cell->color("rgb(0,62,117)");
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(ISNUMBER(D3),LEN(D3)<14)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Phone validation error");
+		$validation->messageTemplate("The value entered is not an valid phone number. Please enter numeric value with less than 14 digits.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("list");
+		$validation->from("ListValues!A1:B1");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Invalid value");
+		$validation->messageTemplate("Valid values are 'true' and 'false'.");
+		$cell->validation($validation);
+
+$row = new \Kendo\UI\SpreadsheetSheetRow();
+$row->height(25);
+$contactsSheet->addRow($row);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(LEN(A3)>3, LEN(A3)<200)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Full Name validation error");
+		$validation->messageTemplate("The full name should be longer than 3 letters and shorter than 200.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(NOT(ISERROR(FIND(\"@@\", B3))), NOT(ISERROR(FIND(\".\", B3))), ISERROR(FIND(\" \", J1)), LEN(B3)>5)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate( "Email validation error");
+		$validation->messageTemplate("The value entered is not an valid email address.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+	$cell->format("m/d/yyyy");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("date");
+		$validation->comparerType("between");
+		$validation->from("DATEVALUE(\"1/1/1900\")");
+		$validation->to("DATEVALUE(\"1/1/1998\")");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Birth Date validaiton error");
+		$validation->messageTemplate("Birth Date should be between 1899 and 1998 year.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(ISNUMBER(D3),LEN(D3)<14)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Phone validation error");
+		$validation->messageTemplate("The value entered is not an valid phone number. Please enter numeric value with less than 14 digits.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("list");
+		$validation->from("ListValues!A1:B1");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Invalid value");
+		$validation->messageTemplate("Valid values are 'true' and 'false'.");
+		$cell->validation($validation);
+
+$row = new \Kendo\UI\SpreadsheetSheetRow();
+$row->height(25);
+$contactsSheet->addRow($row);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(LEN(A3)>3, LEN(A3)<200)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Full Name validation error");
+		$validation->messageTemplate("The full name should be longer than 3 letters and shorter than 200.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(NOT(ISERROR(FIND(\"@@\", B3))), NOT(ISERROR(FIND(\".\", B3))), ISERROR(FIND(\" \", J1)), LEN(B3)>5)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate( "Email validation error");
+		$validation->messageTemplate("The value entered is not an valid email address.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+	$cell->format("m/d/yyyy");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("date");
+		$validation->comparerType("between");
+		$validation->from("DATEVALUE(\"1/1/1900\")");
+		$validation->to("DATEVALUE(\"1/1/1998\")");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Birth Date validaiton error");
+		$validation->messageTemplate("Birth Date should be between 1899 and 1998 year.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(ISNUMBER(D3),LEN(D3)<14)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Phone validation error");
+		$validation->messageTemplate("The value entered is not an valid phone number. Please enter numeric value with less than 14 digits.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("list");
+		$validation->from("ListValues!A1:B1");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Invalid value");
+		$validation->messageTemplate("Valid values are 'true' and 'false'.");
+		$cell->validation($validation);
+
+$row = new \Kendo\UI\SpreadsheetSheetRow();
+$row->height(25);
+$contactsSheet->addRow($row);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(LEN(A3)>3, LEN(A3)<200)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Full Name validation error");
+		$validation->messageTemplate("The full name should be longer than 3 letters and shorter than 200.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(NOT(ISERROR(FIND(\"@@\", B3))), NOT(ISERROR(FIND(\".\", B3))), ISERROR(FIND(\" \", J1)), LEN(B3)>5)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate( "Email validation error");
+		$validation->messageTemplate("The value entered is not an valid email address.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+	$cell->format("m/d/yyyy");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("date");
+		$validation->comparerType("between");
+		$validation->from("DATEVALUE(\"1/1/1900\")");
+		$validation->to("DATEVALUE(\"1/1/1998\")");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Birth Date validaiton error");
+		$validation->messageTemplate("Birth Date should be between 1899 and 1998 year.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(ISNUMBER(D3),LEN(D3)<14)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Phone validation error");
+		$validation->messageTemplate("The value entered is not an valid phone number. Please enter numeric value with less than 14 digits.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("list");
+		$validation->from("ListValues!A1:B1");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Invalid value");
+		$validation->messageTemplate("Valid values are 'true' and 'false'.");
+		$cell->validation($validation);
+
+$row = new \Kendo\UI\SpreadsheetSheetRow();
+$row->height(25);
+$contactsSheet->addRow($row);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(LEN(A3)>3, LEN(A3)<200)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Full Name validation error");
+		$validation->messageTemplate("The full name should be longer than 3 letters and shorter than 200.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(NOT(ISERROR(FIND(\"@@\", B3))), NOT(ISERROR(FIND(\".\", B3))), ISERROR(FIND(\" \", J1)), LEN(B3)>5)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate( "Email validation error");
+		$validation->messageTemplate("The value entered is not an valid email address.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+	$cell->format("m/d/yyyy");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("date");
+		$validation->comparerType("between");
+		$validation->from("DATEVALUE(\"1/1/1900\")");
+		$validation->to("DATEVALUE(\"1/1/1998\")");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Birth Date validaiton error");
+		$validation->messageTemplate("Birth Date should be between 1899 and 1998 year.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(ISNUMBER(D3),LEN(D3)<14)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Phone validation error");
+		$validation->messageTemplate("The value entered is not an valid phone number. Please enter numeric value with less than 14 digits.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("list");
+		$validation->from("ListValues!A1:B1");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Invalid value");
+		$validation->messageTemplate("Valid values are 'true' and 'false'.");
+		$cell->validation($validation);
+
+$row = new \Kendo\UI\SpreadsheetSheetRow();
+$row->height(25);
+$contactsSheet->addRow($row);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(LEN(A3)>3, LEN(A3)<200)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Full Name validation error");
+		$validation->messageTemplate("The full name should be longer than 3 letters and shorter than 200.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(NOT(ISERROR(FIND(\"@@\", B3))), NOT(ISERROR(FIND(\".\", B3))), ISERROR(FIND(\" \", J1)), LEN(B3)>5)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate( "Email validation error");
+		$validation->messageTemplate("The value entered is not an valid email address.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+	$cell->format("m/d/yyyy");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("date");
+		$validation->comparerType("between");
+		$validation->from("DATEVALUE(\"1/1/1900\")");
+		$validation->to("DATEVALUE(\"1/1/1998\")");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Birth Date validaiton error");
+		$validation->messageTemplate("Birth Date should be between 1899 and 1998 year.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("custom");
+		$validation->from("AND(ISNUMBER(D3),LEN(D3)<14)");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Phone validation error");
+		$validation->messageTemplate("The value entered is not an valid phone number. Please enter numeric value with less than 14 digits.");
+		$cell->validation($validation);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value("");
+		$validation = new \Kendo\UI\SpreadsheetSheetRowCellValidation();
+		$validation->dataType("list");
+		$validation->from("ListValues!A1:B1");
+		//$validation->type("reject");
+		//$validaiton->allowNulls(true);
+		$validation->titleTemplate("Invalid value");
+		$validation->messageTemplate("Valid values are 'true' and 'false'.");
+		$cell->validation($validation);
+
+$row = new \Kendo\UI\SpreadsheetSheetRow();
+$row->height(70);
+$listSheet->addRow($row);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value(true);
+
+	$cell = new \Kendo\UI\SpreadsheetSheetRowCell();
+	$row->addCell($cell);
+	$cell->value(false);
 
 $column = new \Kendo\UI\SpreadsheetSheetColumn();
 $column->width(100);
-$sheet->addColumn($column);
+$contactsSheet->addColumn($column);
 
 $column = new \Kendo\UI\SpreadsheetSheetColumn();
 $column->width(215);
-$sheet->addColumn($column);
+$contactsSheet->addColumn($column);
 
 $column = new \Kendo\UI\SpreadsheetSheetColumn();
 $column->width(115);
-$sheet->addColumn($column);
+$contactsSheet->addColumn($column);
 
 $column = new \Kendo\UI\SpreadsheetSheetColumn();
 $column->width(115);
-$sheet->addColumn($column);
+$contactsSheet->addColumn($column);
 
 $column = new \Kendo\UI\SpreadsheetSheetColumn();
 $column->width(115);
-$sheet->addColumn($column);
+$contactsSheet->addColumn($column);
 
 $column = new \Kendo\UI\SpreadsheetSheetColumn();
 $column->width(155);
-$sheet->addColumn($column);
+$contactsSheet->addColumn($column);
 
 echo $spreadsheet->render();
 ?>
