@@ -34058,6 +34058,11 @@ and is about to render it.</description>
             <name>excelExport</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <description>Fired when the user clicks the "Open" toolbar button.</description>
+            <name>excelImport</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
         <dynamic-attributes>true</dynamic-attributes>
     </tag>
 
@@ -34648,6 +34653,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         <description>Fired when the user clicks the "Export to Excel" toolbar button.</description>
         <name>spreadsheet-excelExport</name>
         <tag-class>com.kendoui.taglib.spreadsheet.ExcelExportFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user clicks the "Open" toolbar button.</description>
+        <name>spreadsheet-excelImport</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.ExcelImportFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

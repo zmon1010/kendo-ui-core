@@ -135,6 +135,20 @@ class Spreadsheet extends \Kendo\UI\Widget {
         return $this->setProperty('excelExport', $value);
     }
 
+    /**
+    * Sets the excelImport event of the Spreadsheet.
+    * Fired when the user clicks the "Open" toolbar button.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function excelImport($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('excelImport', $value);
+    }
+
 
 //<< Properties
 }

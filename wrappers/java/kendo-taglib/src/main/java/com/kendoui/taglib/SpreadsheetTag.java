@@ -61,6 +61,10 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("excelExport", value.getBody());
     }
 
+    public void setExcelImport(ExcelImportFunctionTag value) {
+        setEvent("excelImport", value.getBody());
+    }
+
     public void setRender(RenderFunctionTag value) {
         setEvent("render", value.getBody());
     }
@@ -147,6 +151,18 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setExcelExport(String value) {
         setProperty("excelExport", new Function(value));
+    }
+
+    public String getExcelImport() {
+        Function property = ((Function)getProperty("excelImport"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setExcelImport(String value) {
+        setProperty("excelImport", new Function(value));
     }
 
     public String getRender() {
