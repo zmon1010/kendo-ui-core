@@ -332,11 +332,12 @@
             };
         },
 
-        fromFile: function(file) {
+        fromFile: function(file, name) {
             var deferred = new $.Deferred;
-            var args = { file: file, promise: deferred.promise() };
+            var promise = deferred.promise();
+            var args = { file: file, promise: promise };
 
-            if(!this.trigger("excelImport", args)) {
+            if(file && !this.trigger("excelImport", args)) {
                 for (var i = 0; i < this._sheets.length; i++) {
                     this._sheets[i].unbind();
                 }
@@ -345,9 +346,11 @@
                 this._sheetsSearchCache = {};
 
                 kendo.spreadsheet.readExcel(file, this, deferred);
+            } else {
+                deferred.reject();
             }
 
-            return deferred;
+            return promise;
         },
 
         saveAsExcel: function(options) {
