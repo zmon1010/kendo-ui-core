@@ -5,9 +5,8 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div id="example" class="k-content">
-    <div class="k-rtl demo-section">
-        <h3 class="title">ProgressBar</h3>
+<div class="k-rtl demo-section k-content">
+        <h4>ProgressBar</h4>
         <div id="progressBar"></div>
         <%= Html.Kendo().ProgressBar()
               .Name("progressBar")
@@ -56,14 +55,13 @@
     </script>
 
     <style>
-        #progressBar {
-            width: 440px;
+       #progressBar {
+            width: 100%;
             margin-bottom: 10px;
         }
         .demo-section {
-            width: 500px;
             text-align: right;
         }
     </style>
-</div>
+
 </asp:Content>

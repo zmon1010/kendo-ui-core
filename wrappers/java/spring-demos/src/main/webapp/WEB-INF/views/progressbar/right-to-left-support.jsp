@@ -6,9 +6,8 @@
 
 <demo:header />
 
-<div id="example" class="k-content">
-    <div class="k-rtl demo-section">
-        <h3 class="title">ProgressBar</h3>
+<div class="k-rtl demo-section k-content">
+        <h4>ProgressBar</h4>
         <kendo:progressBar name="progressBar" type="percent" complete="onComplete">
                     	<kendo:progressBar-animation duration="600"></kendo:progressBar-animation>
         </kendo:progressBar>
@@ -44,14 +43,12 @@
 
     <style>
         #progressBar {
-            width: 440px;
+            width: 100%;
             margin-bottom: 10px;
         }
         .demo-section {
-            width: 500px;
             text-align: right;
         }
     </style> 
-</div>
 
 <demo:footer />

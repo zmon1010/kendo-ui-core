@@ -3,10 +3,8 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
-
-<div id="example" class="k-content">
-    <div class="k-rtl demo-section">
-        <h3 class="title">ProgressBar</h3>
+<div class="k-rtl demo-section k-content">
+        <h4>ProgressBar</h4>
         <?php 
             $pb = new \Kendo\UI\ProgressBar('progressBar');
 
@@ -53,12 +51,10 @@ require_once '../include/header.php';
 
     <style>
         #progressBar {
-            width: 440px;
+            width: 100%;
             margin-bottom: 10px;
         }
         .demo-section {
-            width: 500px;
             text-align: right;
         }
     </style> 
-</div>
