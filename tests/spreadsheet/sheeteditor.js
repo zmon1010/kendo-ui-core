@@ -20,6 +20,11 @@
         });
     }
 
+    function activateEditor(editor, options) {
+        options.range = { topLeft: { row: 0, col: 0 } };
+        editor.activate(options);
+    }
+
     test("activate method calls cell formulaInput position method", 2, function() {
         var editor = createEditor();
         var rect = { top: 0, left: 0 };
@@ -28,7 +33,7 @@
             position: editor.cellInput.position
         });
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
 
         equal(editor.cellInput.calls("position"), 1);
         equal(editor.cellInput.args("position")[0], rect);
@@ -42,7 +47,7 @@
             resize: editor.cellInput.resize
         });
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
 
         equal(editor.cellInput.calls("resize"), 1);
         equal(editor.cellInput.args("resize")[0], rect);
@@ -56,7 +61,7 @@
             tooltip: editor.cellInput.tooltip
         });
 
-        editor.activate({ rect: rect, tooltip: "B2" });
+        activateEditor(editor, { rect: rect, tooltip: "B2" });
 
         equal(editor.cellInput.calls("tooltip"), 1);
         equal(editor.cellInput.args("tooltip")[0], "B2");
@@ -65,7 +70,7 @@
     test("focus method focuses cell formulaInput", 1, function() {
         var editor = createEditor();
 
-        editor.activate({ rect: { rect: { top: 0, left: 0 } } });
+        activateEditor(editor, { rect: { rect: { top: 0, left: 0 } } });
         editor.focus();
 
         equal(editor.cellInput.element[0], document.activeElement);
@@ -73,7 +78,7 @@
 
     test("editor keeps last active editor", 2, function() {
         var editor = createEditor();
-        editor.activate({ rect: { rect: { top: 0, left: 0 } } });
+        activateEditor(editor, { rect: { rect: { top: 0, left: 0 } } });
         editor.focus("cell");
 
         equal(editor.lastActive, "cell");
@@ -92,7 +97,7 @@
             setPos: cellInput.setPos
         });
 
-        editor.activate({ rect: { rect: { top: 0, left: 0 } } });
+        activateEditor(editor, { rect: { rect: { top: 0, left: 0 } } });
         editor.value(value);
         editor.focus();
 
@@ -114,7 +119,7 @@
         var barInput = bar.formulaInput.element;
         var value = "test";
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
 
         barInput.focus().html(value).trigger("input");
 
@@ -127,7 +132,7 @@
         var cellInput = input.element;
         var value = "test";
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
         editor.focus();
 
         cellInput.html(value).trigger("input");
@@ -143,7 +148,7 @@
             toggleTooltip: editor.cellInput.toggleTooltip
         });
 
-        editor.activate({ rect: rect, tooltip: "A1" });
+        activateEditor(editor, { rect: rect, tooltip: "A1" });
 
         editor.toggleTooltip({ top: 10, left: 0 });
 
@@ -155,7 +160,7 @@
         var editor = createEditor();
         var rect = { top: 0, left: 0 };
 
-        editor.activate({ rect: rect, tooltip: "A1" });
+        activateEditor(editor, { rect: rect, tooltip: "A1" });
         editor.toggleTooltip({ top: 10, left: 0 });
 
         stub(editor.cellInput, {
@@ -201,7 +206,7 @@
     test("isActive returns true if editing is enabled", function() {
         var editor = createEditor();
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
 
         ok(editor.isActive());
     });
@@ -227,7 +232,7 @@
     test("isFiltered returns true if formulaInput popup is opened", function() {
         var editor = createEditor();
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
 
         editor.cellInput.filter("sum");
         editor.cellInput.popup.open();
@@ -238,7 +243,7 @@
     test("activeEditor returns the focused cell formula input", function() {
         var editor = createEditor();
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
 
         input.element.focus();
 
@@ -248,7 +253,7 @@
     test("activeEditor returns the focused bar formula input", function() {
         var editor = createEditor();
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
 
         bar.formulaInput.element.focus();
 
@@ -258,7 +263,7 @@
     test("activeEditor returns null if no focused formulaInput", function() {
         var editor = createEditor();
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
 
         equal(editor.activeEditor(), null);
     });
@@ -266,7 +271,7 @@
     test("canInsertRef calls formulaInput canInsertRef method", function() {
         var editor = createEditor();
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
         editor.focus();
 
         stub(editor.cellInput, {
@@ -295,7 +300,7 @@
             ok(true);
         });
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
     });
 
     test("deactivate method triggers deactivate", 1, function() {
@@ -305,7 +310,7 @@
             ok(true);
         });
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
         editor.deactivate();
     });
 
@@ -337,7 +342,7 @@
             hide: editor.cellInput.hide
         });
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
         editor.deactivate();
 
         equal(editor.cellInput.calls("hide"), 1);
@@ -352,7 +357,7 @@
             equal(e.value, newValue);
         });
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
         editor.value("test");
 
         editor.cellInput.value(newValue);
@@ -373,7 +378,7 @@
             ok(true);
         };
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
         editor.value("test");
 
         editor.cellInput.value(newValue);
@@ -392,7 +397,7 @@
             ok(true);
         });
 
-        editor.activate({ rect: { top: 0, left: 0 } });
+        activateEditor(editor, { rect: { top: 0, left: 0 } });
         editor.deactivate();
     });
 
@@ -405,7 +410,7 @@
             ok(false);
         });
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
         editor.value("test");
 
         editor.deactivate();
@@ -420,7 +425,7 @@
             equal(e.value, value);
         });
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
         editor.value(value);
 
         editor.cellInput.trigger("keyup");
@@ -435,7 +440,7 @@
             equal(e.value, value);
         });
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
         editor.value(value);
 
         editor.barInput.trigger("keyup");
@@ -445,7 +450,7 @@
         var editor = createEditor();
         var rect = { top: 0, left: 0 };
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
 
         editor.enable(false);
 
@@ -456,7 +461,7 @@
         var editor = createEditor();
         var rect = { top: 0, left: 0 };
 
-        editor.activate({ rect: rect });
+        activateEditor(editor, { rect: rect });
 
         editor.enable(false);
         editor.enable(true);
