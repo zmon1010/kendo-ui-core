@@ -206,7 +206,12 @@
                 exp = parseExpression(true);
                 skip("punc", ")");
             }
-            else if (is("num") || is("str") || is("sheet")) {
+            else if (is("punc", "{")) {
+                input.next();
+                exp = parseArray();
+                skip("punc", "}");
+            }
+            else if (is("num") || is("str")) {
                 exp = input.next();
             }
             else if (is("sym")) {
@@ -218,10 +223,6 @@
                     op: input.next().value,
                     exp: parseExpression(commas)
                 };
-            }
-            else if (is("punc", "{")) {
-                input.next();
-                exp = parseArray();
             }
             else if (!input.peek()) {
                 input.croak("Incomplete expression");
@@ -245,7 +246,6 @@
                 }
                 row.push(parseExpression(false));
             }
-            skip("punc", "}");
             return {
                 type: "matrix",
                 value: value
@@ -653,6 +653,10 @@
         }
     }
 
+    function identity(x) {
+        return x;
+    }
+
     function TokenStream(input, options) {
         input = RawTokenStream(InputStream(input), options);
         var ahead = input.ahead;
@@ -668,9 +672,15 @@
                 }
                 return cell;
             }
-            : function(cell) {
-                return cell;
-            };
+            : identity;
+
+        var addPos = options.forEditor
+            ? function(thing, startToken, endToken) {
+                thing.begin = startToken.begin;
+                thing.end = endToken.end;
+                return thing;
+            }
+            : identity;
 
         return {
             peek  : peek,
@@ -722,14 +732,6 @@
                 }
             }
             return ret;
-        }
-
-        function addPos(thing, startToken, endToken) {
-            if (options.forEditor) {
-                thing.begin = startToken.begin;
-                thing.end = endToken.end;
-            }
-            return thing;
         }
 
         function toCell(tok, isFirst) {
