@@ -3,11 +3,8 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
-<div id="example" class="k-content">
-    <div class="demo-section">
-        <h2>Profile Completeness</h2>
-        <div class="completenessLevel">
-            <h2>40%</h2>
+  <div class="demo-section k-content">
+        <h4>Profile Completeness: <span id="completed">40%</span></h4>
             <?php 
             	$pb = new \Kendo\UI\ProgressBar('profileCompleteness');
 
@@ -19,39 +16,32 @@ require_once '../include/header.php';
 
             	echo $pb->render();
             ?>
-        </div>
-    </div>
-
-    <div class="demo-section">
-        <h2>Please fill your details</h2>
-        <div>
             <ul class="forms">
-                <li>
-                    <label>First Name</label>
-                    <input type="text" name="firstName" value="" class="k-textbox" style="width: 265px;" />
-                </li>
-                <li>
-                    <label>Last Name</label>
-                    <input type="text" name="lastName" value="" class="k-textbox" style="width: 265px;" />
-                </li>
-                <li>
-                    <label>Birthday</label>
-                    <input id="birthdayInput" type="date" name="birthday" value="" style="width: 265px;" />
-                </li>
-                <li>
-                    <label>Gender</label>
-                    <select id="genderInput" name="gender" style="width: 265px;">
-                        <option value="male" selected>Male</option>
-                        <option value="female">Female</option>
-                        <option value="notsay">Rather not say</option>
-                    </select>
-                </li>
-                <li>
-                    <label>Occupation</label>
-                    <input type="text" name="occupation" value="Software Developer" class="k-textbox" style="width: 265px;" />
-                </li>
-            </ul>
-        </div>
+            <li>
+                <label>First Name</label>
+                <input type="text" name="firstName" value="" class="k-textbox" style="width: 100%;" />
+            </li>
+            <li>
+                <label>Last Name</label>
+                <input type="text" name="lastName" value="" class="k-textbox" style="width: 100%;" />
+            </li>
+            <li>
+                <label>Birthday</label>
+                <input id="birthdayInput" type="date" name="birthday" value="" style="width: 100%;" />
+            </li>
+            <li>
+                <label>Gender</label>
+                <select id="genderInput" name="gender" style="width: 100%;">
+                    <option value="male" selected>Male</option>
+                    <option value="female">Female</option>
+                    <option value="notsay">Rather not say</option>
+                </select>
+            </li>
+            <li>
+                <label>Occupation</label>
+                <input type="text" name="occupation" value="Software Developer" class="k-textbox" style="width: 100%;" />
+            </li>
+        </ul>
     </div>
 
     <?php require_once '../include/footer.php'; ?>
@@ -86,45 +76,27 @@ require_once '../include/header.php';
     </script>
 
     <style>
-        .demo-section {
-            width: 400px;
-            padding: 30px;
+        #profileCompleteness {
+            width: 100%;
         }
-        
-        .demo-section h2 {
-            font-weight: normal;
-            margin: 0 0 20px 0;
-        }
-        
-        .completenessLevel {
-            margin: 10px 0 0 0;
-        }
-        
-        .completenessLevel h2 {
-            display: inline-block;
-            vertical-align: middle;
-            width: 50px;
+
+        .forms {
+            list-style-type: none;
+            padding: 2em 0 0;
             margin: 0;
         }
         
-        #profileCompleteness {
-            width: 340px;
-        }
-        
-        .forms {
-            list-style-type: none;
-            padding: 0;
-        }
-        
         .forms label {
-            display: inline-block;
-            width: 115px;
-            text-align: right;
-            padding-right: 10px;
+            display: block;
+            font-size: 12px;
+            line-height: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1em;
         }
         
         .forms li {
-            margin: 0 0 10px 0;
+            margin-bottom: 1.5em;
         }
     </style>
 </div>
