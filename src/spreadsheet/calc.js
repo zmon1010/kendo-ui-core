@@ -70,7 +70,6 @@
         return parseInt(str, 10) - 1;
     }
 
-    // XXX: rewrite this with the TokenStream.
     function parseReference(name, noThrow) {
         if (name.toLowerCase() == "#sheet") {
             return spreadsheet.SHEETREF;
@@ -670,7 +669,7 @@
     }
 
     function TokenStreamWithReferences(input, forEditor) {
-        input = TokenStream(input, forEditor);
+        input = TokenStream(input, { forEditor: forEditor });
         var ahead = input.ahead;
         var skip = input.skip;
         var token = null;
@@ -719,6 +718,9 @@
         }
 
         function toCell(tok, isFirst) {
+            if (tok.type == "rc") {
+                return new CellRef(tok.row, tok.col, tok.rel);
+            }
             if (tok.type == "num" && tok.value <= 1048577) {
                 // whole row
                 return new CellRef(
@@ -775,9 +777,9 @@
                 b.type == "op" && b.value == ":" &&
                 c.type == "sym" &&
                 d.type == "op" && d.value == "!" &&
-                (e.type == "sym" || (e.type == "num" && e.value == e.value|0)) &&
+                (e.type == "sym" || e.type == "rc" || (e.type == "num" && e.value == e.value|0)) &&
                 f.type == "op" && f.value == ":" &&
-                (g.type == "sym" || (g.type == "num" && g.value == g.value|0)) &&
+                (g.type == "sym" || g.type == "rc" || (g.type == "num" && g.value == g.value|0)) &&
                 g.type == e.type &&
                 !(h.type == "punc" && h.value == "(" && !g.space))
             {
@@ -800,7 +802,7 @@
                 b.type == "op" && b.value == ":" &&
                 c.type == "sym" &&
                 d.type == "op" && d.value == "!" &&
-                (e.type == "sym" || (e.type == "num" && e.value == e.value|0)) &&
+                (e.type == "sym" || e.type == "rc" || (e.type == "num" && e.value == e.value|0)) &&
                 !(f.type == "punc" && f.value == "(" && !e.space))
             {
                 var tl = toCell(e);
@@ -819,9 +821,9 @@
         function refSheetRange(a, b, c, d, e, f) {
             if (a.type == "sym" &&
                 b.type == "op" && b.value == "!" &&
-                (c.type == "sym" || (c.type == "num" && c.value == c.value|0)) &&
+                (c.type == "sym" || c.type == "rc" || (c.type == "num" && c.value == c.value|0)) &&
                 d.type == "op" && d.value == ":" &&
-                (e.type == "sym" || (e.type == "num" && e.value == e.value|0)) &&
+                (e.type == "sym" || e.type == "rc" || (e.type == "num" && e.value == e.value|0)) &&
                 !(f.type == "punc" && f.value == "(" && !e.space))
             {
                 var tl = toCell(c, true), br = toCell(e, false);
@@ -836,7 +838,7 @@
         function refSheetCell(a, b, c, d) {
             if (a.type == "sym" &&
                 b.type == "op" && b.value == "!" &&
-                (c.type == "sym" || (c.type == "num" && c.value == c.value|0)) &&
+                (c.type == "sym" || c.type == "rc" || (c.type == "num" && c.value == c.value|0)) &&
                 !(d.type == "punc" && d.value == "(" && !c.space))
             {
                 skip(3);
@@ -850,9 +852,9 @@
 
         // A1(a) :(b) C3(c) not followed by paren (d)
         function refRange(a, b, c, d) {
-            if ((a.type == "sym" || (a.type == "num" && a.value == a.value|0)) &&
+            if ((a.type == "sym" || a.type == "rc" || (a.type == "num" && a.value == a.value|0)) &&
                 (b.type == "op" && b.value == ":") &&
-                (c.type == "sym" || (c.type == "num" && c.value == c.value|0)) &&
+                (c.type == "sym" || c.type == "rc" || (c.type == "num" && c.value == c.value|0)) &&
                 !(d.type == "punc" && d.value == "(" && !c.space))
             {
                 var tl = toCell(a, true), br = toCell(c, false);
@@ -865,7 +867,7 @@
 
         // A1(a) not followed by paren (b)
         function refCell(a, b) {
-            if (a.type == "sym" && !(b.type == "punc" && b.value == "(" && !a.space)) {
+            if ((a.type == "sym" || a.type == "rc") && !(b.type == "punc" && b.value == "(" && !a.space)) {
                 var x = toCell(a);
                 if (x && isFinite(x.row) && isFinite(x.col)) {
                     skip(1);
@@ -883,7 +885,7 @@
         }
     }
 
-    function TokenStream(input, forEditor) {
+    function TokenStream(input, options) {
         var tokens = [], index = 0;
         var readWhile = input.readWhile;
 
@@ -946,7 +948,37 @@
             };
         }
 
+        function getRC(a, b, c, base) {
+            if ((!a && !c) || (a && c)) {
+                var negative = a && /-$/.test(a);
+                var num = parseInt(b, 10);
+                if (negative) {
+                    num = -num;
+                }
+                if (a) {
+                    num += base;
+                } else {
+                    num--;
+                }
+                return num;
+            }
+        }
+
         function readSymbol() {
+            var m = input.lookingAt(/^R(\[?-)?([0-9]+)(\])?C(\[?-)?([0-9]+)(\])?/i);
+            if (m) {
+                var row = getRC(m[1], m[2], m[3], options.row);
+                var col = getRC(m[4], m[5], m[6], options.col);
+                if (row != null && col != null) {
+                    input.skip(m);
+                    return {
+                        type: "rc",
+                        row: row,
+                        col: col,
+                        rel: (m[4] ? 1 : 0) | (m[1] ? 2 : 0)
+                    };
+                }
+            }
             return symbol(readWhile(isId));
         }
 
@@ -1007,7 +1039,7 @@
                 input.skip(m);
                 return { type: "error", value: m[1] };
             }
-            if (!forEditor) {
+            if (!options.forEditor) {
                 input.croak("Can't handle character: " + ch);
             }
             return unknown();
@@ -1018,7 +1050,7 @@
                 readWhile(isWhitespace);
                 var begin = input.pos();
                 var tok = readNext();
-                if (forEditor && tok) {
+                if (options.forEditor && tok) {
                     tok.begin = begin;
                     tok.end = input.pos();
                 }
@@ -1221,7 +1253,7 @@
 
     function tokenize(input) {
         var tokens = [];
-        input = TokenStream(InputStream(input), true);
+        input = TokenStream(InputStream(input), { forEditor: true });
         while (!input.eof()) {
             tokens.push(input.ahead(4, maybeRange) ||
                         input.ahead(2, maybeCall) ||
