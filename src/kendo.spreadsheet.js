@@ -3,6 +3,9 @@
         "./util/undoredostack",
         "./util/text-metrics",
         "./util/parse-xml",
+        "./kendo.excel",
+        "./kendo.progressbar",
+        "./kendo.pdf",
         "./spreadsheet/commands",
         "./spreadsheet/formulabar",
         "./spreadsheet/formulainput",
@@ -44,9 +47,10 @@
         name: "Spreadsheet",
         category: "web",
         description: "Spreadsheet component",
-        depends: [ "core", "binder", "colorpicker", "combobox", "data", "dom", "dropdownlist",
-                  "menu", "ooxml", "popup", "sortable", "tabstrip", "toolbar", "treeview", "window", "validator" ],
-        features: []
+        depends: [
+            "core", "binder", "colorpicker", "combobox", "data", "dom", "dropdownlist",
+            "menu", "ooxml", "popup", "sortable", "tabstrip", "toolbar", "treeview",
+            "window", "validator", "excel", "pdf", "drawing" ]
     };
 
     (function(kendo, undefined) {
@@ -213,7 +217,7 @@
             },
 
             fromFile: function(blob, name) {
-                this._workbook.fromFile(blob, name);
+                return this._workbook.fromFile(blob, name);
             },
 
             saveAsPDF: function(options) {
@@ -234,6 +238,38 @@
                 }
             },
 
+            _workbookExcelImport: function(e) {
+                if (this.trigger("excelImport", e)) {
+                    e.preventDefault();
+                } else {
+                    this._initProgress(e.promise);
+                }
+            },
+
+            _initProgress: function(deferred) {
+                var loading =
+                    $("<div class='k-loading-mask' " +
+                           "style='width: 100%; height: 100%; top: 0;'>" +
+                        "<div class='k-loading-color'/>" +
+                    "</div>")
+                    .appendTo(this.element);
+
+                var pb = $("<div class='k-loading-progress'>")
+                .appendTo(loading)
+                .kendoProgressBar({
+                    type: "chunk", chunkCount: 10,
+                    min: 0, max: 1, value: 0
+                }).data("kendoProgressBar");
+
+                deferred.progress(function(e) {
+                    pb.value(e.progress);
+                })
+                .always(function() {
+                    kendo.destroy(loading);
+                    loading.remove();
+                });
+            },
+
             _workbookPdfExport: function(e) {
                 if (this.trigger("pdfExport", e)) {
                     e.preventDefault();
@@ -243,6 +279,7 @@
             _bindWorkbookEvents: function() {
                 this._workbook.bind("change", this._workbookChange.bind(this));
                 this._workbook.bind("excelExport", this._workbookExcelExport.bind(this));
+                this._workbook.bind("excelImport", this._workbookExcelImport.bind(this));
                 this._workbook.bind("pdfExport", this._workbookPdfExport.bind(this));
             },
 
@@ -300,6 +337,7 @@
             events: [
                 "pdfExport",
                 "excelExport",
+                "excelImport",
                 "render"
             ]
         });
