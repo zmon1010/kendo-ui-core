@@ -1216,6 +1216,11 @@
     <Content Include="Views\demos\spreadsheet\server-side-pdf-export.cshtml" />
     <Content Include="Views\demos\bar-charts\pan-and-zoom.cshtml" />
     <Content Include="Views\demos\scatter-charts\pan-and-zoom.cshtml" />
+    <Content Include="Views\demos\spreadsheet\validation.cshtml" />
+    <Content Include="Views\demos\spreadsheet\sorting-filtering.cshtml" />
+    <Content Include="Views\demos\spreadsheet\events.cshtml" />
+    <Content Include="Views\demos\spreadsheet\disabled-cells.cshtml" />
+    <Content Include="Views\demos\spreadsheet\datasource.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
