@@ -197,10 +197,7 @@
                         },
                         close: this._onDialogClose.bind(this),
                         activate: this._onDialogActivate.bind(this),
-                        deactivate: function() {
-                            this._dialog.destroy();
-                            this._dialog = null;
-                        }.bind(this)
+                        deactivate: this._onDialogDeactivate.bind(this)
                     })
                     .data("kendoWindow");
             }
@@ -212,6 +209,10 @@
         },
         _onDialogActivate: function() {
             this.trigger("activate");
+        },
+        _onDialogDeactivate: function() {
+            this.trigger("deactivate");
+            this.destroy();
         },
         destroy: function() {
             if (this._dialog) {

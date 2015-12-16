@@ -849,6 +849,10 @@
             return willScroll;
         },
 
+        _destroyDialog: function() {
+            this._dialogs.pop();
+        },
+
         openDialog: function(name, options) {
             var sheet = this._sheet;
             var ref = sheet.activeCell();
@@ -857,6 +861,7 @@
 
             if (dialog) {
                 dialog.bind("action", this._executeCommand.bind(this));
+                dialog.bind("deactivate", this._destroyDialog.bind(this));
                 this._dialogs.push(dialog);
                 dialog.open(range);
                 return dialog;
