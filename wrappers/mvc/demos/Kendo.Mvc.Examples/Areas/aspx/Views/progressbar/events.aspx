@@ -4,9 +4,8 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div id="example" class="k-content">
-    <div class="demo-section">
-        <h3 class="title">ProgressBar</h3>
+<div class="demo-section k-content">
+        <h4>ProgressBar</h4>
         <%= Html.Kendo().ProgressBar()
               .Name("progressBar")
               .Min(0)
@@ -17,10 +16,10 @@
                   e.Complete("onComplete");
               })
         %>
-        <button id="startProgress" class="k-button">Start progress</button>
+      <button id="startProgress" class="k-button k-primary">Start progress</button>
     </div>
-    <div class="demo-section">
-        <h3 class="title">Console log</h3>
+    <div class="box">
+        <h4>Console log</h4>
         <div class="console"></div>
     </div>
     <script>
@@ -56,17 +55,10 @@
     </script>
 
     <style>
-        #progressBar {
-            width: 440px;
+       #progressBar {
+            display: block;
+            width: 100%;
             margin-bottom: 10px;
         }
-        .demo-section {
-            width: 500px;
-            text-align: center;
-        }
-        .console {
-            margin: 0;
-        }
     </style> 
-</div>
 </asp:Content>

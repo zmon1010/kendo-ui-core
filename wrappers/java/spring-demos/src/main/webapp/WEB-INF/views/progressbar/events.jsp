@@ -6,14 +6,13 @@
 
 <demo:header />
 
-<div id="example" class="k-content">
-    <div class="demo-section">
-        <h3 class="title">ProgressBar</h3>
+<div class="demo-section k-content">
+        <h4>ProgressBar</h4>
         <kendo:progressBar name="progressBar" type="percent" min="0" max="10" change="onChange" complete="onComplete"></kendo:progressBar>
-        <button id="startProgress" class="k-button">Start progress</button>
+       <button id="startProgress" class="k-button k-primary">Start progress</button>
     </div>
-    <div class="demo-section">
-        <h3 class="title">Console log</h3>
+    <div class="box">
+        <h4>Console log</h4>
         <div class="console"></div>
     </div>
     <script>
@@ -50,17 +49,10 @@
 
     <style>
         #progressBar {
-            width: 440px;
+            display: block;
+            width: 100%;
             margin-bottom: 10px;
         }
-        .demo-section {
-            width: 500px;
-            text-align: center;
-        }
-        .console {
-            margin: 0;
-        }
     </style> 
-</div>
 
 <demo:footer />
