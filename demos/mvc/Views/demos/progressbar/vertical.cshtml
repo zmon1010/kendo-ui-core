@@ -48,14 +48,14 @@
 
             if (total.value() < total.options.max) {
                 $(".chunkStatus").text(total.value() + 1);
-                $(".loadingInfo h2").text("Loading " + itemsToLoad[total.value()]);
+                $(".loadingInfo h4").text("Loading " + itemsToLoad[total.value()]);
 
                 load();
             }
         }
 
         function onTotalComplete(e) {
-            $(".loadingInfo h2").text("All items loaded");
+            $(".loadingInfo h4").text("All items loaded");
             $(".statusContainer").hide();
             $(".reloadButton").show();
         }
@@ -79,7 +79,7 @@
 
             $("#totalProgressBar").data("kendoProgressBar").value(0);
             $("#loadingProgressBar").data("kendoProgressBar").value(0);
-            $(".loadingInfo h2").text("Loading " + itemsToLoad[0]);
+            $(".loadingInfo h4").text("Loading " + itemsToLoad[0]);
             $(".chunkStatus").text(1);
 
             load();

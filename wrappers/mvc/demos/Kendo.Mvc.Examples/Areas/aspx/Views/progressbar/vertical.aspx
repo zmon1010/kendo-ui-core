@@ -4,8 +4,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <div id="example" class="k-content">
-    <div class="demo-section">
+   <div class="demo-section k-content">
         <div class="loading">
              <%= Html.Kendo().ProgressBar()
                   .Name("totalProgressBar")
@@ -30,7 +29,7 @@
             %>
         </div>
         <div class="loadingInfo">
-            <h2>Loading styles</h2>
+            <h4>Loading styles</h4>
             <div class="statusContainer">
                 <p>
                 Loaded: <span class="loadingStatus">0%</span> <br />
@@ -56,14 +55,14 @@
 
             if (total.value() < total.options.max) {
                 $(".chunkStatus").text(total.value() + 1);
-                $(".loadingInfo h2").text("Loading " + itemsToLoad[total.value()]);
+                $(".loadingInfo h4").text("Loading " + itemsToLoad[total.value()]);
 
                 load();
             }
         }
 
         function onTotalComplete(e) {
-            $(".loadingInfo h2").text("All items loaded");
+            $(".loadingInfo h4").text("All items loaded");
             $(".statusContainer").hide();
             $(".reloadButton").show();
         }
@@ -87,7 +86,7 @@
 
             $("#totalProgressBar").data("kendoProgressBar").value(0);
             $("#loadingProgressBar").data("kendoProgressBar").value(0);
-            $(".loadingInfo h2").text("Loading " + itemsToLoad[0]);
+            $(".loadingInfo h4").text("Loading " + itemsToLoad[0]);
             $(".chunkStatus").text(1);
 
             load();
@@ -97,18 +96,8 @@
     </script>
     <style>
         .demo-section {
-            width: 250px;
-            margin: 50px auto;
-            padding: 30px 30px 30px 50px;
             overflow: auto;
         }
-
-        .demo-section h2
-        {
-            margin: 0;
-            padding: 0;
-        }
-
         .k-progressbar
         {
             width: 8px;
@@ -127,7 +116,6 @@
         .loadingInfo
         {
             float: left;
-            width: 180px;
             margin: 20px 0 0 30px;
         }
 
@@ -137,6 +125,6 @@
             margin-top: 10px;
         }
     </style>
-</div>
+
 
 </asp:Content>
