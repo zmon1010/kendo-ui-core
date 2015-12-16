@@ -1033,10 +1033,6 @@
             };
         }
 
-        function unknown() {
-            return { type: "error", value: input.next() };
-        }
-
         function readNext() {
             if (input.eof()) {
                 return null;
@@ -1067,7 +1063,7 @@
             if (!options.forEditor) {
                 input.croak("Can't handle character: " + ch);
             }
-            return unknown();
+            return { type: "error", value: input.next() };
         }
 
         function peek() {
