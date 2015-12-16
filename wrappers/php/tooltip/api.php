@@ -7,8 +7,8 @@ $tooltip = new \Kendo\UI\Tooltip('#tooltip'); // select the container for the to
 $tooltip->filter('div')
     ->autoHide(false)
     ->showOn('click')
-    ->position('right')
-    ->width(300);
+    ->position('bottom')
+    ->width(200);
 
 $tooltip->startContent();
 ?>
@@ -20,8 +20,7 @@ echo $tooltip->render();
 
 ?>
 
-    <div class="configuration k-widget k-header" style="z-index:10000">
-        <span class="configHead">API Functions</span>
+    <div class="box wide">
         <ul class="options">
             <li>
                Show at
@@ -49,14 +48,15 @@ echo $tooltip->render();
     </script>
 
     <style>
-        #target1, #target2 {
+       #target1, #target2 {
+            display: block;
+            margin: 20px auto;
             text-align: center;
             width: 200px;
             white-space: nowrap;
             border-width: 1px;
             border-style: solid;
             padding: 2em;
-            margin: 10px;
         }
     </style>
 
