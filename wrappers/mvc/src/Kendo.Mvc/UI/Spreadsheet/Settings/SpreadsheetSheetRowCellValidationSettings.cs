@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI
         
         public string To { get; set; }
         
-        public string AllowNulls { get; set; }
+        public bool? AllowNulls { get; set; }
         
         public string MessageTemplate { get; set; }
 
@@ -61,11 +61,11 @@ namespace Kendo.Mvc.UI
                 json["to"] = To;
             }
             
-            if (AllowNulls.HasValue())
+            if (AllowNulls.HasValue)
             {
                 json["allowNulls"] = AllowNulls;
             }
-            
+                
             if (!string.IsNullOrEmpty(MessageTemplateId))
             {
                 json["messageTemplate"] = new ClientHandlerDescriptor {

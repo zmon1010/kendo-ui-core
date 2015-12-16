@@ -43,7 +43,7 @@ class SpreadsheetSheetRowCellValidation extends \Kendo\SerializableObject {
 
     /**
     * Specifies whether to allow nulls.
-    * @param string $value
+    * @param boolean $value
     * @return \Kendo\UI\SpreadsheetSheetRowCellValidation
     */
     public function allowNulls($value) {

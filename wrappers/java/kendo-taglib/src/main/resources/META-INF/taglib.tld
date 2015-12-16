@@ -34542,7 +34542,7 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <description>Specifies whether to allow nulls.</description>
             <name>allowNulls</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Defines the comparer type used to validate the cell value, e.g. "greaterThan", "between" and etc.</description>

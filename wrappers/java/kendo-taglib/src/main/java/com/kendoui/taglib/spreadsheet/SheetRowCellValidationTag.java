@@ -51,11 +51,11 @@ public class SheetRowCellValidationTag extends  BaseTag  /* interfaces */ /* int
         return "spreadsheet-sheet-row-cell-validation";
     }
 
-    public java.lang.String getAllowNulls() {
-        return (java.lang.String)getProperty("allowNulls");
+    public boolean getAllowNulls() {
+        return (Boolean)getProperty("allowNulls");
     }
 
-    public void setAllowNulls(java.lang.String value) {
+    public void setAllowNulls(boolean value) {
         setProperty("allowNulls", value);
     }
 

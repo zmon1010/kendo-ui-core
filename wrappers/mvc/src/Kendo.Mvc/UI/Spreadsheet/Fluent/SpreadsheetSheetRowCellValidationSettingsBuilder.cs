@@ -67,7 +67,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies whether to allow nulls.
         /// </summary>
         /// <param name="value">The value that configures the allownulls.</param>
-        public SpreadsheetSheetRowCellValidationSettingsBuilder AllowNulls(string value)
+        public SpreadsheetSheetRowCellValidationSettingsBuilder AllowNulls(bool value)
         {
             container.AllowNulls = value;
 
