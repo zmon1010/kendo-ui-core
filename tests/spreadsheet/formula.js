@@ -461,6 +461,45 @@
         equal(f.print(0, 0), "sum(A1, , B1)");
     });
 
+    test("parse reference with sheet names", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "=Sheet1!C3");
+        equal(exp.ast.print(0, 0), "Sheet1!C3");
+        var exp = calc.parse(Sheet1, 0, 0, "=Sheet1!C3:D4");
+        equal(exp.ast.print(0, 0), "Sheet1!C3:D4");
+        var exp = calc.parse(Sheet1, 0, 0, "='The Sheet, man!'!C3");
+        equal(exp.ast.print(0, 0), "'The Sheet, man!'!C3");
+        var exp = calc.parse(Sheet1, 0, 0, "='The Sheet, man!'!C3:D4");
+        equal(exp.ast.print(0, 0), "'The Sheet, man!'!C3:D4");
+        var exp = calc.parse(Sheet1, 0, 0, "='The Sheet, man!'!$C3:D$4");
+        equal(exp.ast.print(0, 0), "'The Sheet, man!'!$C3:D$4");
+        var exp = calc.parse(Sheet1, 0, 0, "='The Sheet, man!':'This is deep'!$C3:D$4");
+        equal(exp.ast.print(0, 0), "'The Sheet, man!':'This is deep'!$C3:D$4");
+    });
+
+    test("RC-style notation", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "=R3C3:R4C4");
+        equal(exp.ast.print(0, 0), "$C$3:$D$4");
+        var exp = calc.parse(Sheet1, 0, 0, "=R[3]C[3]:R5C5");
+        equal(exp.ast.print(0, 0), "D4:$E$5");
+        var exp = calc.parse(Sheet1, 0, 0, "='The Sheet':'Man'!R3C3:R4C4");
+        equal(exp.ast.print(0, 0), "'The Sheet':Man!$C$3:$D$4");
+        var exp = calc.parse(Sheet1, 0, 0, "='The Sheet':'Man'!R[3]C[3]:R5C5");
+        equal(exp.ast.print(0, 0), "'The Sheet':Man!D4:$E$5");
+    });
+
+    test("parseReference", function(){
+        var tests = {
+            "A1": "$A$1",
+            "A1:B2": "$A$1:$B$2",
+            "Sheet1!A1:B2": "Sheet1!$A$1:$B$2",
+            "'The Sheet'!A1:B2": "'The Sheet'!$A$1:$B$2",
+            "A1, B2, C3": [ "$A$1", "$B$2", "$C$3" ]
+        };
+        Object.keys(tests).forEach(function(key){
+            equal(calc.parseReference(key).print(0, 0), tests[key]);
+        });
+    });
+
     /* -----[ printer tests ]----- */
 
     test("print adjusts cell references", function(){

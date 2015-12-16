@@ -661,6 +661,19 @@
         var ahead = input.ahead;
         var skip = input.skip;
         var token = null;
+        var fixCell = options.row != null && options.col != null
+            ? function(cell) {
+                if (cell.rel & 1) {
+                    cell.col -= options.col;
+                }
+                if (cell.rel & 2) {
+                    cell.row -= options.row;
+                }
+                return cell;
+            }
+            : function(cell) {
+                return cell;
+            };
 
         return {
             peek  : peek,
@@ -712,18 +725,6 @@
                 }
             }
             return ret;
-        }
-
-        function fixCell(cell) {
-            if (options.row != null && options.col != null) {
-                if (cell.rel & 1) {
-                    cell.col -= options.col;
-                }
-                if (cell.rel & 2) {
-                    cell.row -= options.row;
-                }
-            }
-            return cell;
         }
 
         function addPos(thing, startToken, endToken) {

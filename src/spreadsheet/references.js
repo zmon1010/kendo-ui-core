@@ -233,9 +233,9 @@
             this.name = name;
         },
         print: function() {
-            var ret = this.name;
+            var ret = displaySheet(this.name);
             if (this.hasSheet()) {
-                ret = this.sheet + "!" + ret;
+                ret = displaySheet(this.sheet) + "!" + ret;
             }
             return ret;
         }
@@ -498,7 +498,7 @@
                     + this.bottomRight.print(trow, tcol);
                 if (this.hasSheet()) {
                     ret = displaySheet(this.sheet)
-                        + (this.endSheet ? displaySheet(this.endSheet) + ":" : "")
+                        + (this.endSheet ? ":" + displaySheet(this.endSheet) : "")
                         + "!" + ret;
                 }
                 return ret;
@@ -805,8 +805,8 @@
         concat: function(ref) {
             return new UnionRef(this.refs.concat([ref]));
         },
-        print: function() {
-            return this.refs.map(function(ref) { return ref.print(); }).join(",");
+        print: function(row, col) {
+            return this.refs.map(function(ref) { return ref.print(row, col); }).join(",");
         },
 
         replaceAt: function(index, ref) {
