@@ -44,7 +44,6 @@
         });
     })([
         [ ":" ],
-        [ "!" ],
         [ " " ],
         [ "," ],
         [ "%" ],
@@ -87,7 +86,7 @@
                 // no NameRef-s from this function
                 break OUT;      // jshint ignore:line
             }
-            var stream = TokenStreamWithReferences(InputStream(name));
+            var stream = TokenStreamWithReferences(name, {});
             var a = [];
             while (true) {
                 var ref = stream.next();
@@ -121,7 +120,7 @@
 
     function parseFormula(sheet, row, col, input) {
         var refs = [];
-        input = TokenStreamWithReferences(InputStream(input));
+        input = TokenStreamWithReferences(input, { row: row, col: col });
         var is = input.is;
 
         return {
@@ -193,17 +192,6 @@
         function fixReference(ref) {
             if (!ref.hasSheet()) {
                 ref.setSheet(sheet);
-            }
-            if (ref instanceof RangeRef) {
-                fixReference(ref.topLeft);
-                fixReference(ref.bottomRight);
-            } else if (ref instanceof CellRef) {
-                if (ref.rel & 1) {
-                    ref.col -= col;
-                }
-                if (ref.rel & 2) {
-                    ref.row -= row;
-                }
             }
             return addReference(ref);
         }
@@ -668,8 +656,8 @@
         }
     }
 
-    function TokenStreamWithReferences(input, forEditor) {
-        input = TokenStream(input, { forEditor: forEditor });
+    function TokenStreamWithReferences(input, options) {
+        input = TokenStream(InputStream(input), options);
         var ahead = input.ahead;
         var skip = input.skip;
         var token = null;
@@ -726,17 +714,41 @@
             return ret;
         }
 
+        function fixCell(cell) {
+            if (options.row != null && options.col != null) {
+                if (cell.rel & 1) {
+                    cell.col -= options.col;
+                }
+                if (cell.rel & 2) {
+                    cell.row -= options.row;
+                }
+            }
+            return cell;
+        }
+
         function toCell(tok, isFirst) {
             if (tok.type == "rc") {
+                // RC notation is read properly without knowing where
+                // we are, so no need to fixCell on this one.
+                // However, if only absolute refs were asked for (from
+                // i.e. parseReference) I feel it's alright to yell
+                // about it here.
+                if (tok.rel && (options.row == null || options.col == null)) {
+                    input.croak("Cannot read relative cell in RC notation");
+                }
                 return new CellRef(tok.row, tok.col, tok.rel);
             }
-            if (tok.type == "num" && tok.value <= 1048577) {
-                // whole row
-                return new CellRef(
-                    getrow(tok.value),
-                    isFirst ? -Infinity : +Infinity,
-                    2
-                );
+            if (tok.type == "num") {
+                if (tok.value <= 1048577) {
+                    // whole row
+                    return fixCell(new CellRef(
+                        getrow(tok.value),
+                        isFirst ? -Infinity : +Infinity,
+                        2
+                    ));
+                } else {
+                    return null;
+                }
             }
             // otherwise it's "sym".  The OOXML spec (SpreadsheetML
             // 18.2.5) defines the maximum value to be interpreted as
@@ -746,11 +758,11 @@
             if (m) {
                 var row = getrow(m[4]), col = getcol(m[2]);
                 if (row <= 1048576 && col <= 16383) {
-                    return new CellRef(
+                    return fixCell(new CellRef(
                         getrow(m[4]),
                         getcol(m[2]),
                         (m[1] ? 0 : 1) | (m[3] ? 0 : 2)
-                    );
+                    ));
                 } else {
                     return null;
                 }
@@ -762,20 +774,20 @@
             if (/^\d+$/.test(name)) {
                 var row = getrow(name);
                 if (row <= 1048576) {
-                    return new CellRef(
+                    return fixCell(new CellRef(
                         getrow(name),
                         isFirst ? -Infinity : +Infinity,
                         (abs ? 0 : 2)
-                    );
+                    ));
                 }
             } else {
                 var col = getcol(name);
                 if (col <= 16383) {
-                    return new CellRef(
+                    return fixCell(new CellRef(
                         isFirst ? -Infinity : +Infinity,
                         getcol(name),
                         (abs ? 0 : 1)
-                    );
+                    ));
                 }
             }
         }
@@ -785,7 +797,7 @@
             if (a.type == "sym" &&
                 b.type == "op" && b.value == ":" &&
                 c.type == "sym" &&
-                d.type == "op" && d.value == "!" &&
+                d.type == "punc" && d.value == "!" &&
                 (e.type == "sym" || e.type == "rc" || (e.type == "num" && e.value == e.value|0)) &&
                 f.type == "op" && f.value == ":" &&
                 (g.type == "sym" || g.type == "rc" || (g.type == "num" && g.value == g.value|0)) &&
@@ -810,7 +822,7 @@
             if (a.type == "sym" &&
                 b.type == "op" && b.value == ":" &&
                 c.type == "sym" &&
-                d.type == "op" && d.value == "!" &&
+                d.type == "punc" && d.value == "!" &&
                 (e.type == "sym" || e.type == "rc" || (e.type == "num" && e.value == e.value|0)) &&
                 !(f.type == "punc" && f.value == "(" && !e.space))
             {
@@ -829,7 +841,7 @@
         // Sheet1(a) !(b) A1(c) :(d) C3(e) not followed by paren (f)
         function refSheetRange(a, b, c, d, e, f) {
             if (a.type == "sym" &&
-                b.type == "op" && b.value == "!" &&
+                b.type == "punc" && b.value == "!" &&
                 (c.type == "sym" || c.type == "rc" || (c.type == "num" && c.value == c.value|0)) &&
                 d.type == "op" && d.value == ":" &&
                 (e.type == "sym" || e.type == "rc" || (e.type == "num" && e.value == e.value|0)) &&
@@ -846,7 +858,7 @@
         // Sheet1(a) !(b) A1(c) not followed by paren (d)
         function refSheetCell(a, b, c, d) {
             if (a.type == "sym" &&
-                b.type == "op" && b.value == "!" &&
+                b.type == "punc" && b.value == "!" &&
                 (c.type == "sym" || c.type == "rc" || (c.type == "num" && c.value == c.value|0)) &&
                 !(d.type == "punc" && d.value == "(" && !c.space))
             {
@@ -924,7 +936,7 @@
         }
 
         function isPunc(ch) {
-            return ";(){}[]".indexOf(ch) >= 0;
+            return "!;(){}[]".indexOf(ch) >= 0;
         }
 
         function isWhitespace(ch) {
@@ -957,16 +969,14 @@
             };
         }
 
-        function getRC(a, b, c, base) {
+        function getRC(a, b, c) {
             if ((!a && !c) || (a && c)) {
                 var negative = a && /-$/.test(a);
                 var num = parseInt(b, 10);
                 if (negative) {
                     num = -num;
                 }
-                if (a) {
-                    num += base;
-                } else {
+                if (!a) {
                     num--;
                 }
                 return num;
@@ -974,10 +984,10 @@
         }
 
         function readSymbol() {
-            var m = input.lookingAt(/^R(\[?-)?([0-9]+)(\])?C(\[?-)?([0-9]+)(\])?/i);
+            var m = input.lookingAt(/^R(\[-?)?([0-9]+)(\])?C(\[-?)?([0-9]+)(\])?/i);
             if (m) {
-                var row = getRC(m[1], m[2], m[3], options.row);
-                var col = getRC(m[4], m[5], m[6], options.col);
+                var row = getRC(m[1], m[2], m[3]);
+                var col = getRC(m[4], m[5], m[6]);
                 if (row != null && col != null) {
                     input.skip(m);
                     return {
