@@ -34063,6 +34063,11 @@ and is about to render it.</description>
             <name>excelImport</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <description>Fired when the user initiates PDF export.</description>
+            <name>pdfExport</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
         <dynamic-attributes>true</dynamic-attributes>
     </tag>
 
@@ -34094,6 +34099,157 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         </attribute>
 
     </tag>
+
+
+
+    <tag>
+        <description>Configures the Kendo UI Spreadsheet PDF export settings.</description>
+        <name>spreadsheet-pdf</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.PdfTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The area to export. Possible values:</description>
+            <name>area</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The author of the PDF document.</description>
+            <name>author</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The creator of the PDF document.</description>
+            <name>creator</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The date when the PDF document is created. Defaults to new Date().</description>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the file name of the exported PDF file.</description>
+            <name>fileName</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>An option indicating whether to fit the spreadsheet content to page width.</description>
+            <name>fitWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.</description>
+            <name>forceProxy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>An option indicating whether to export the cell guidelines.</description>
+            <name>guidelines</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>An option indicating whether to center the content horizontally.See also vCenter.</description>
+            <name>hcenter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the keywords of the exported PDF file.</description>
+            <name>keywords</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Set to true to reverse the paper dimensions if needed such that width is the larger edge.</description>
+            <name>landscape</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the paper size of the PDF document.
+The default "auto" means paper size is determined by content.Supported values:</description>
+            <name>paperSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyURL</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the subject of the PDF file.</description>
+            <name>subject</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the title of the PDF file.</description>
+            <name>title</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>An option indicating whether to center the content vertically.See also hCenter.</description>
+            <name>vcenter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Specifies the margins of the page (numbers or strings with units). Supported
+units are "mm", "cm", "in" and "pt" (default).</description>
+        <name>spreadsheet-pdf-margin</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.PdfMarginTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom margin. Numbers are considered as "pt" units.</description>
+            <name>bottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The left margin. Numbers are considered as "pt" units.</description>
+            <name>left</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The right margin. Numbers are considered as "pt" units.</description>
+            <name>right</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The top margin. Numbers are considered as "pt" units.</description>
+            <name>top</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+
+    </tag>
+
 
 
 
@@ -34659,6 +34815,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         <description>Fired when the user clicks the "Open" toolbar button.</description>
         <name>spreadsheet-excelImport</name>
         <tag-class>com.kendoui.taglib.spreadsheet.ExcelImportFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user initiates PDF export.</description>
+        <name>spreadsheet-pdfExport</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.PdfExportFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

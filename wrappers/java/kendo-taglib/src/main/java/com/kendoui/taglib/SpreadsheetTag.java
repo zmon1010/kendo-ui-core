@@ -51,6 +51,10 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("excel", value);
     }
 
+    public void setPdf(com.kendoui.taglib.spreadsheet.PdfTag value) {
+        setProperty("pdf", value);
+    }
+
     public void setSheets(SheetsTag value) {
 
         setProperty("sheets", value.sheets());
@@ -63,6 +67,10 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setExcelImport(ExcelImportFunctionTag value) {
         setEvent("excelImport", value.getBody());
+    }
+
+    public void setPdfExport(PdfExportFunctionTag value) {
+        setEvent("pdfExport", value.getBody());
     }
 
     public void setRender(RenderFunctionTag value) {
@@ -163,6 +171,18 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setExcelImport(String value) {
         setProperty("excelImport", new Function(value));
+    }
+
+    public String getPdfExport() {
+        Function property = ((Function)getProperty("pdfExport"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setPdfExport(String value) {
+        setProperty("pdfExport", new Function(value));
     }
 
     public String getRender() {

@@ -4,6 +4,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url value="/resources/shared/js/jszip.min.js" var="jszip" />
+<c:url value="/spreadsheet/index/save" var="saveUrl" />
 
 <demo:header />
 <%
@@ -12,6 +13,8 @@
 
 <kendo:spreadsheet name="spreadsheet">
 	<kendo:spreadsheet-sheets>
+        <kendo:spreadsheet-excel fileName="Kendo UI Spreadsheet Export.xlsx" proxyURL="${saveUrl}" />
+        <kendo:spreadsheet-pdf fileName="Kendo UI Spreadsheet Export.pdf" proxyURL="${saveUrl}" />
 		<kendo:spreadsheet-sheet name="Food Order"
 			mergedCells="<%=mergedCells%>">
 			<kendo:spreadsheet-sheet-rows>
