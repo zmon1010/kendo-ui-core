@@ -39,6 +39,7 @@
     var SEL_SHEET = ["sheets", "sheet"];
     var SEL_STRING = ["sheetData", "row", "c", "is"];
     var SEL_TEXT = ["t"];
+    var SEL_SHARED_STRING = ["si"];
     var SEL_VALUE = ["sheetData", "row", "c", "v"];
     var SEL_VIEW = ["bookViews", "workbookView"];
 
@@ -472,10 +473,21 @@
 
     function readStrings(zip) {
         var strings = [];
+        var current;
         parse(zip, "xl/sharedStrings.xml", {
+            enter: function() {
+                if (this.is(SEL_SHARED_STRING)) {
+                    current = "";
+                }
+            },
+            leave: function() {
+                if (this.is(SEL_SHARED_STRING)) {
+                    strings.push(current);
+                }
+            },
             text: function(text) {
                 if (this.is(SEL_TEXT)) {
-                    strings.push(text);
+                    current += text;
                 }
             }
         });
