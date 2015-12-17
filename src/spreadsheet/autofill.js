@@ -163,7 +163,7 @@
                     values.push(values[0] + 1);
                 }
                 f = linearRegression(values);
-            } else if (type == "string" || type == "formula") {
+            } else if (type == "string" || type == "formula" || type == "boolean") {
                 // formulas are simply copied over; the sheet will internally clone the objects
                 f = function(N, i) {
                     return data[i];
