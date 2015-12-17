@@ -481,7 +481,7 @@
         },
         exec: function() {
             this.getState();
-            this._range.fillFrom(this._origin);
+            this.range().fillFrom(this._origin);
         }
     });
 

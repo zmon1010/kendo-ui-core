@@ -386,7 +386,7 @@
                         }
                     }
                 }
-                sheet.triggerChange({ recalc: true });
+                sheet.triggerChange({ recalc: true, ref: ref });
                 return this;
             }
         },
