@@ -1670,6 +1670,10 @@ var __meta__ = { // jshint ignore:line
             that.content =
             that.footer =
             that.wrapper =
+            that.lockedTable =
+            that.lockedContent =
+            that.lockedHeader =
+            that.lockedFooter =
             that._groupableClickHandler =
             that._setContentWidthHandler = null;
         },
