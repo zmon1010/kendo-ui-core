@@ -2663,4 +2663,4 @@
     <Compile Include="UI\Spreadsheet\Settings\SpreadsheetSheetRowCellValidationSettings.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetRowCellValidationSettingsBuilder.cs" />
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Include="UI\Spreadsheet\Settings\SpreadsheetPdfSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetPdfSettingsBuilder.cs" /><Compile Include="UI\Spreadsheet\Settings\SpreadsheetPdfMarginSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetPdfMarginSettingsBuilder.cs" /></ItemGroup></Project>

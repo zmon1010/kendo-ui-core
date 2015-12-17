@@ -88,6 +88,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Configures the Kendo UI Spreadsheet PDF export settings.
+        /// </summary>
+        /// <param name="configurator">The action that configures the pdf.</param>
+        public SpreadsheetBuilder Pdf(Action<SpreadsheetPdfSettingsBuilder> configurator)
+        {
+            configurator(new SpreadsheetPdfSettingsBuilder(container.Pdf));
+            return this;
+        }
+        
+        /// <summary>
         /// The default row height in pixels.
         /// </summary>
         /// <param name="value">The value that configures the rowheight.</param>

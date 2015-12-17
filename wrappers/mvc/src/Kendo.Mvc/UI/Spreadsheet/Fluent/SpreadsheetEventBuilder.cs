@@ -48,6 +48,17 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// Fired when the user initiates PDF export.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the pdfExport event.</param>
+        public SpreadsheetEventBuilder PdfExport(string handler)
+        {
+            Handler("pdfExport", handler);
+
+            return this;
+        }
+        
         //<< Handlers
     }
 }

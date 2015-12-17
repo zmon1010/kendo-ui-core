@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
         
             Excel = new SpreadsheetExcelSettings();
                 
+            Pdf = new SpreadsheetPdfSettings();
+                
             Sheets = new List<SpreadsheetSheet>();
                 
         //<< Initialization
@@ -39,6 +41,12 @@ namespace Kendo.Mvc.UI
         public double? HeaderWidth { get; set; }
         
         public SpreadsheetExcelSettings Excel
+        {
+            get;
+            set;
+        }
+        
+        public SpreadsheetPdfSettings Pdf
         {
             get;
             set;
@@ -97,6 +105,11 @@ namespace Kendo.Mvc.UI
             if (excel.Any())
             {
                 json["excel"] = excel;
+            }
+            var pdf = Pdf.ToJson();
+            if (pdf.Any())
+            {
+                json["pdf"] = pdf;
             }
             if (RowHeight.HasValue)
             {
