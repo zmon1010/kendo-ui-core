@@ -1,12 +1,11 @@
-<div class="demo-section">
-    <h4>Customers</h4>
+<div class="demo-section k-content">
+    <h4>Search for shipping names</h4>
 
     @(Html.Kendo().MultiSelect()
           .Name("customers")
           .DataTextField("ContactName")
           .DataValueField("CustomerID")
-          .HtmlAttributes(new { style = "width:250px" })
-          .Placeholder("Type a contact name")
+          .Placeholder("Select customers...")
           .DataSource(source =>  source
               .Custom()
               .Group(g => g.Add("Country", typeof(string)))
@@ -26,15 +25,3 @@
         };
     }
 </script>
-<style>
-    .demo-section {
-        width: 250px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>

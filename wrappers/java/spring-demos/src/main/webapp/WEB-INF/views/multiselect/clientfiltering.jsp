@@ -3,17 +3,11 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-    <div class="demo-section">
-        <h3 class="title">Select Products</h3>
+    <div class="demo-section k-content">
+        <h4>Select Products</h4>
 
         <kendo:multiSelect name="products" dataTextField="productName" dataValueField="productId" filter="startswith">
             <kendo:dataSource data="${products}"></kendo:dataSource>
         </kendo:multiSelect>
     </div>
-    <style>
-        .demo-section {
-            width: 450px;
-            margin-top: 40px;
-        }
-    </style>
 <demo:footer />

@@ -4,8 +4,8 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h2>Select Customers</h2>
+<div class="demo-section k-content">
+    <h4>Select Customers</h4>
     <%= Html.Kendo().MultiSelect()
           .Name("customers")
           .DataTextField("ContactName")
@@ -17,23 +17,19 @@
                   read.Action("GetCustomers", "Home");
               });
           })
-          .Height(300)
-          .HtmlAttributes(new { style = "width: 400px" })
-          .HeaderTemplate("<div class=\"dropdown-header\">" +
-                        "<span class=\"k-widget k-header\">Photo</span>" +
-                        "<span class=\"k-widget k-header\">Contact info</span>" +
+          .Height(400)
+          .HeaderTemplate("<div class=\"dropdown-header k-widget k-header\">" +
+                        "<span>Photo</span>" +
+                        "<span>Contact info</span>" +
                     "</div>")
-          .ItemTemplate("<span class=\"k-state-default\"><img src=\"" + Url.Content("~/Content/web/Customers/") + "#:data.CustomerID#.jpg\" alt=\"#:data.CustomerID#\" /></span>" +
+          .ItemTemplate("<span class=\"k-state-default\" style=\"background-image: url(" + Url.Content("~/Content/web/Customers/") + "#:data.CustomerID#.jpg\");\"></span>" +
                     "<span class=\"k-state-default\"><h3>#: data.ContactName #</h3><p>#: data.CompanyName #</p></span>")
-          .TagTemplate("<img class=\"tag-image\" src=\"" + Url.Content("~/Content/web/Customers/") + "#:data.CustomerID#.jpg\" alt=\"#:data.CustomerID#\" />" +
-                       "#: data.ContactName #")
+          .TagTemplate("<span class=\"selected-value\" style=\"background-image: url(" + Url.Content("~/Content/web/Customers/") + "#:data.CustomerID#.jpg\");\"></span>" +
+                       "<span>#: data.ContactName #</span>")
     %>
-</div>
-
-<div class="demo-section">
-    <h2>Information</h2>
-    <p>
-        Click the MultiSelect to see the customized appearance of the items.
+    
+    <p class="demo-hint">
+        Click the MultiSelect to see the customized appearance.
     </p>
 </div>
 
@@ -45,80 +41,79 @@
 </script>
 
 <style>
+
     .dropdown-header {
-        font-size: 1.2em;
+        border-width: 0 0 1px 0;
+        text-transform: uppercase;
     }
 
     .dropdown-header > span {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        text-align: left;
         display: inline-block;
-        border-style: solid;
-        border-width: 0 0 1px 1px;
-        padding: .3em .6em;
-        width: 312px;
+        padding: 10px;
     }
 
     .dropdown-header > span:first-child {
-        width: 82px;
-        border-left-width: 0;
+        width: 50px;
     }
 
-    .demo-section {
-        width: 400px;
-        margin: 30px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-    .tag-image {
-        width: auto;
+    .selected-value {
+        display: inline-block;
+        vertical-align: middle;
+        width: 18px;
         height: 18px;
+        background-size: 100%;
         margin-right: 5px;
-        vertical-align: top;
+        border-radius: 50%;
     }
 
-    #customers-list .k-item > span{
+    #customers-list .k-item {
+        line-height: 1em;
+        min-width: 300px;
+    }
+    
+    /* Material Theme padding adjustment*/
+    
+    .k-material #customers-list .k-item,
+    .k-material #customers-list .k-item.k-state-hover,
+    .k-materialblack #customers-list .k-item,
+    .k-materialblack #customers-list .k-item.k-state-hover {
+        padding-left: 5px;
+        border-left: 0;
+    }
+
+    #customers-list .k-item > span {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         display: inline-block;
-        border-style: solid;
-        border-width: 0 0 1px 1px;
         vertical-align: top;
-        min-height: 95px;
-        width: 79%;
-        padding: .6em 0 0 .6em;
+        margin: 20px 10px 10px 5px;
     }
 
-    #customers-list .k-item > span:first-child{
-        width: 77px;
-        border-left-width: 0;
-        padding: .6em 0 0 0;
-    }
-
-    #customers-list img {
-        -moz-box-shadow: 0 0 2px rgba(0,0,0,.4);
-        -webkit-box-shadow: 0 0 2px rgba(0,0,0,.4);
-        box-shadow: 0 0 2px rgba(0,0,0,.4);
-        width: 70px;
-        height: 70px;
+    #customers-list .k-item > span:first-child {
+        -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+        -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+        box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+        margin: 10px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-size: 100%;
+        background-repeat: no-repeat;
     }
 
     #customers-list h3 {
-        font-size: 1.6em;
-        margin: 0;
+        font-size: 1.2em;
+        font-weight: normal;
+        margin: 0 0 1px 0;
         padding: 0;
     }
 
     #customers-list p {
         margin: 0;
         padding: 0;
+        font-size: .8em;
     }
+
 </style>
 </asp:Content>

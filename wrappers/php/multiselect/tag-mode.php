@@ -3,7 +3,7 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
 
-<div class="demo-section">
+<div class="demo-section k-content">
     <h4>'Single' tag mode</h4>
 <?php
 $select = new \Kendo\UI\MultiSelect('required');
@@ -28,7 +28,8 @@ $select->dataSource(array('Steven White',
                           'Laura Fuller'))
        ->autoClose(false)
        ->tagMode('single')
-       ->placeholder('Choose attendees...');
+       ->placeholder('Select attendees...')
+       ->Value(array('Anne King', 'Andrew Fuller' ));
 
 echo $select->render();
 ?>

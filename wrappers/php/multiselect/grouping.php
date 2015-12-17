@@ -41,25 +41,13 @@ $multiselect->dataSource($dataSource)
          ->dataTextField('ContactName')
          ->dataValueField('CustomerID')
          ->height(400)
-         ->attr('style', 'width: 400px');
 
 ?>
-<div class="demo-section">
-    <h2>Customers</h2>
+<div class="demo-section k-content">
+    <h4>Search for shipping names</h4>
 <?php
 echo $multiselect->render();
 ?>
 </div>
-<style>
-    .demo-section {
-        width: 400px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
+
 <?php require_once '../include/footer.php'; ?>

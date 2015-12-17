@@ -8,7 +8,7 @@
 	<%
 	String[] values = {"Anne King", "Andrew Fuller"};
 	%>
-    <div class="demo-section">
+    <div class="demo-section k-content">
         <h2>Invite Attendees</h2>
         <label for="required">Required</label>
 	    <kendo:multiSelect name="required" placeholder="Select attendees..." value="<%= values %>">
@@ -31,24 +31,13 @@
         });
     </script>
 	<style>
-        .demo-section {
-            width: 350px;
-            height: 200px;
-            padding: 30px;
-        }
-        .demo-section h2 {
-            font-weight: normal;
-        }
-        .demo-section label {
-            display: inline-block;
-            margin: 15px 0 5px 0;
-        }
-        .demo-section select {
-            width: 350px;
-        }
-        #get {
-            float: right;
-            margin: 25px auto 0;
-        }
-    </style>
+	    .demo-section label {
+	        display: block;
+	        margin: 15px 0 5px 0;
+	    }
+	    #get {
+	        float: right;
+	        margin: 25px auto 0;
+	    }
+	</style>
 <demo:footer />

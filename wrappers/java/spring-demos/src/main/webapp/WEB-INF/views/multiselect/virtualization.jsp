@@ -7,10 +7,11 @@
 <c:url value="/multiselect/orders/" var="readUrl" />
 
 <demo:header />
-    <div class="demo-section">
-        <h4>Search for shipping name</h4>
+    
+    <div class="demo-section k-content">
+        <h4>Search for shipping names</h4>
 
-        <kendo:multiSelect name="orders" dataTextField="shipName" dataValueField="orderID" filter="contains" style="width:250px" height="520">
+        <kendo:multiSelect name="orders" dataTextField="shipName" dataValueField="orderID" filter="contains" height="520">
             <kendo:dataSource pageSize="80" serverPaging="true" serverFiltering="true">
 	            <kendo:dataSource-transport>
                    <kendo:dataSource-transport-read url="${readUrl}" type="POST" contentType="application/json"/>
@@ -56,16 +57,4 @@
 	        return data;
 	    }
     </script>
-    <style>
-	   .demo-section {
-	       width: 250px;
-	       margin: 35px auto 50px;
-	       padding: 30px;
-	   }
-	   .demo-section h2 {
-	       text-transform: uppercase;
-	       font-size: 1.2em;
-	       margin-bottom: 10px;
-	   }
-	</style>
 <demo:footer />

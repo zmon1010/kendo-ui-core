@@ -8,7 +8,7 @@
 	<%
 	String[] values = {"Anne King", "Andrew Fuller"};
 	%>
-    <div class="demo-section">
+    <div class="demo-section k-content">
         <h4>'Single' tag mode</h4>
 	    <kendo:multiSelect name="required" placeholder="Select attendees..." value="<%= values %>"
             autoClose="false" tagMode="single">

@@ -2,8 +2,8 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-    <div class="demo-section">
-        <h3 class="title">Select Continents</h3>
+    <div class="demo-section k-content">
+        <h4>Select Continents</h4>
         <kendo:multiSelect name="select" open="onOpen" close="onClose" change="onChange" dataBound="onDataBound" select="onSelect"
             filtering="onFiltering" dataTextField="text" dataValueField="value">
             <kendo:dataSource data="${items}">
@@ -11,20 +11,10 @@
         </kendo:multiSelect>
     </div>
 
-    <div class="demo-section">
-        <h3 class="title">Console log</h3>
+    <div class="box">
+        <h4>Console log</h4>
         <div class="console"></div>
     </div>
-
-    <style>
-        .demo-section {
-            width: 500px;
-            text-align: center;
-        }
-        .console {
-            margin: 0;
-        }
-    </style>
 
     <script>
         function onOpen() {

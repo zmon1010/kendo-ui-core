@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+<div class="demo-section k-content">
     <h4>'Single' tag mode</h4>
     <%= Html.Kendo().MultiSelect()
           .Name("required")

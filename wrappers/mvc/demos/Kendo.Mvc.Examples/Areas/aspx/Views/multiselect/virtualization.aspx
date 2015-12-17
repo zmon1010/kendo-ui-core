@@ -4,14 +4,13 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
-    <h4>Orders</h4>
+<div class="demo-section k-content">
+    <h4>Search for shipping names</h4>
 
     <%= Html.Kendo().MultiSelect()
           .Name("orders")
           .DataTextField("ShipName")
           .DataValueField("OrderID")
-          .HtmlAttributes(new { style = "width:450px" })
           .Placeholder("Select addresses...")
           .ItemTemplate("<span class=\"order-id\">#= OrderID #</span> #= ShipName #, #= ShipCountry #")
           .Height(520)
@@ -32,6 +31,7 @@
                   });
           })
           .Virtual(v => v.ItemHeight(26).ValueMapper("valueMapper"))
+          .Value(new int[] { 10265, 10289 })
     %>
 </div>
 <script>
@@ -57,16 +57,4 @@
         return data;
     }
 </script>
-<style>
-    .demo-section {
-        width: 450px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-</style>
 </asp:Content>

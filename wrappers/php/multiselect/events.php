@@ -26,8 +26,8 @@ $multiselect->dataTextField('text')
          ->open('onOpen');
 ?>
 
-<div class="demo-section">
-    <h3 class="title">Select Continents</h3>
+<div class="demo-section k-content">
+    <h4>Select Continents</h4>
 <?php
 echo $multiselect->render();
 ?>
@@ -69,17 +69,8 @@ echo $multiselect->render();
         }
     };
 </script>
-<div class="demo-section">
-    <h3 class="title">Console log</h3>
+<div class="box">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
-<style>
-    .demo-section {
-        width: 500px;
-        text-align: center;
-    }
-    .console {
-        margin: 0;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>

@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section">
+<div class="demo-section k-content">
     <h2>Invite Attendees</h2>
     <label for="required">Required</label>
     <%= Html.Kendo().MultiSelect()
@@ -73,20 +73,9 @@
     });
 </script>
 <style>
-    .demo-section {
-        width: 350px;
-        height: 200px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        font-weight: normal;
-    }
     .demo-section label {
-        display: inline-block;
+        display: block;
         margin: 15px 0 5px 0;
-    }
-    .demo-section select {
-        width: 350px;
     }
     #get {
         float: right;

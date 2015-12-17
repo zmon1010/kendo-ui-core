@@ -7,10 +7,10 @@
 <c:url value="/multiselect/customers/" var="readUrl" />
 
 <demo:header />
-    <div class="demo-section">
-        <h2>Products</h2>
+    <div class="demo-section k-content">
+        <h4>Search for shipping names</h4>
 
-        <kendo:multiSelect name="customers" dataTextField="contactName" dataValueField="customerID" filter="contains" style="width:250px">
+        <kendo:multiSelect name="customers" dataTextField="contactName" dataValueField="customerID" filter="contains">
             <kendo:dataSource serverFiltering="true">
             	<kendo:dataSource-group>
 		        	<kendo:dataSource-groupItem field="country">
@@ -31,16 +31,4 @@
             </kendo:dataSource>
         </kendo:multiSelect>
     </div>
-    <style>
-	   .demo-section {
-	       width: 250px;
-	       margin: 35px auto 50px;
-	       padding: 30px;
-	   }
-	   .demo-section h2 {
-	       text-transform: uppercase;
-	       font-size: 1.2em;
-	       margin-bottom: 10px;
-	   }
-	</style>
 <demo:footer />
