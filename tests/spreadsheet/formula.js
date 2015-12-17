@@ -876,6 +876,42 @@
         });
     });
 
+    // tests from http://www.techonthenet.com/excel/formulas/subtotal.php
+    test("SUBTOTAL", function(){
+        ss.fill({
+            D2  : 7,
+            D3  : 25,
+            D4  : 21.69,
+            D5  : 35.88,
+            F2  : "=subtotal(1, D2:D5)",
+            F3  : "=subtotal(2, D2:D5)",
+            F4  : "=subtotal(3, D2:D5)",
+            F5  : "=subtotal(4, D2:D5)",
+            F6  : "=subtotal(5, D2:D5)",
+            F7  : "=subtotal(6, D2:D5)",
+            F8  : "=subtotal(7, D2:D5)",
+            F9  : "=subtotal(8, D2:D5)",
+            F10 : "=subtotal(9, D2:D5)",
+            F11 : "=subtotal(10, D2:D5)",
+            F12 : "=subtotal(11, D2:D5)",
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                F2  : 22.3925,
+                F3  : 4,
+                F4  : 4,
+                F5  : 35.88,
+                F6  : 7,
+                F7  : 136191.51,
+                F8  : APPROX(11.91825316),
+                F9  : APPROX(10.32151),
+                F10 : 89.57,
+                F11 : APPROX(142.0447583),
+                F12 : APPROX(106.5335688),
+            });
+        });
+    });
+
     test("MDETERM", function(){
         ss.fill({
             A4: '=mdeterm(A1:C3)',

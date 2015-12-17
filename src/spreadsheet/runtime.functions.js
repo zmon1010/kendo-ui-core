@@ -1162,26 +1162,19 @@
     defineAlias("quartile", "quartile.inc");
     defineAlias("percentile", "percentile.inc");
 
-    // AGGREGATE function
-    //
-    // https://support.office.com/en-SG/article/aggregate-function-c8caed56-07df-4aeb-9741-23693ffbe525
-    //
-    // we can only partially type-check this function.  also, we need to use the async version in
-    // order to resolve references and delegate values to the function to aggregate.
-    defineFunction("aggregate", function(callback, funcId, options, args){
-        // options is a bit field.  that makes sense; it's the documentation which doesn't.
-        var self = this;
+    var AGGREGATE_FUNCS = [
+        "AVERAGE", "COUNT", "COUNTA", "MAX", "MIN", "PRODUCT",
+        "STDEV.S", "STDEV.P", "SUM", "VAR.S", "VAR.P", "MEDIAN",
+        "MODE.SNGL", "LARGE", "SMALL", "PERCENTILE.INC",
+        "QUARTILE.INC", "PERCENTILE.EXC", "QUARTILE.EXC"
+    ];
+
+    function fetchValuesForAggregate(self, args, options) {
+        var values = [];
         var opt_ignore_hidden_rows = 1;
         var opt_ignore_errors = 2;
         var opt_use_aggregates = 4;
-        var fname = [
-            "AVERAGE", "COUNT", "COUNTA", "MAX", "MIN", "PRODUCT",
-            "STDEV.S", "STDEV.P", "SUM", "VAR.S", "VAR.P", "MEDIAN",
-            "MODE.SNGL", "LARGE", "SMALL", "PERCENTILE.INC",
-            "QUARTILE.INC", "PERCENTILE.EXC", "QUARTILE.EXC"
-        ][funcId - 1];
-        var values = [];
-        function fetchValues(args) {
+        (function fetchValues(args) {
             if (args instanceof Ref) {
                 self.getRefCells(args, true).forEach(function(cell){
                     var value = cell.value;
@@ -1219,11 +1212,24 @@
             } else if (args instanceof CalcError && !(options & opt_ignore_errors)) {
                 values.push(args);
             }
-        }
+        })(args);
+        return values;
+    }
+
+    // AGGREGATE function
+    //
+    // https://support.office.com/en-SG/article/aggregate-function-c8caed56-07df-4aeb-9741-23693ffbe525
+    //
+    // we can only partially type-check this function.  also, we need to use the async version in
+    // order to resolve references and delegate values to the function to aggregate.
+    defineFunction("aggregate", function(callback, funcId, options, args){
+        // options is a bit field.  that makes sense; it's the documentation which doesn't.
+        var self = this;
         self.resolveCells(args, function(){
+            var values;
             if (funcId > 12) {
                 // "array form"
-                fetchValues(args[0]);
+                values = fetchValuesForAggregate(self, args[0], options);
                 var k = args[1];
                 if (k instanceof CellRef) {
                     k = self.getRefData(k);
@@ -1232,9 +1238,9 @@
                     return callback(new CalcError("VALUE"));
                 }
             } else {
-                fetchValues(args);
+                values = fetchValuesForAggregate(self, args, options);
             }
-            self.func(fname, callback, values);
+            self.func(AGGREGATE_FUNCS[funcId - 1], callback, values);
         });
     }).argsAsync([
         [ "funcId", [ "values", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
@@ -1243,6 +1249,26 @@
                        [ "null", 0 ],
                        [ "values", 0, 1, 2, 3, 4, 5, 6, 7  ] ] ],
         [ "args", "rest" ]
+    ]);
+
+    defineFunction("subtotal", function(callback, funcId){
+        var self = this;
+        var ignoreHidden = funcId > 100;
+        if (ignoreHidden) {
+            funcId -= 100;
+        }
+        var args = [];
+        for (var i = 2; i < arguments.length; ++i) {
+            args.push(arguments[i]);
+        }
+        self.resolveCells(args, function(){
+            var values = fetchValuesForAggregate(self, args, ignoreHidden ? 1 : 0);
+            self.func(AGGREGATE_FUNCS[funcId - 1], callback, values);
+        });
+    }).argsAsync([
+        [ "funcId", [ "values", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                      101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111 ] ],
+        [ "+", [ "ref", [ "or", "ref", "#matrix" ] ] ]
     ]);
 
     // https://support.office.com/en-sg/article/AVEDEV-function-ec78fa01-4755-466c-9a2b-0c4f9eacaf6d
