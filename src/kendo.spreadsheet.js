@@ -221,7 +221,9 @@
             },
 
             saveAsPDF: function(options) {
-                this._workbook.saveAsPDF(options || $.extend(this.options.pdf, {workbook: this._workbook}));
+                this._workbook.saveAsPDF(
+                    $.extend({}, this.options.pdf, options, { workbook: this._workbook })
+                );
             },
 
             saveAsExcel: function(options) {
