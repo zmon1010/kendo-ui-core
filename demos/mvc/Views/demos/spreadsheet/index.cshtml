@@ -4,7 +4,10 @@
     $(function() {
         $("#spreadsheet").kendoSpreadsheet({
             excel: {                
-                // Required to enable Excel Export in some browsers
+                // Required to enable saving files in older browsers
+                proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+            },
+            pdf: {                
                 proxyURL: "//demos.telerik.com/kendo-ui/service/export"
             },
             sheets: [
