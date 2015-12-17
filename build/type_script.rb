@@ -17,6 +17,8 @@ module CodeGen::TypeScript
 
     TYPES = {
         'Number' => 'number',
+        'Blob' => 'Blob',
+        'File' => 'File',
         'String' => 'string',
         'Boolean' => 'boolean',
         'Document' => 'Document',
