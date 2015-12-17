@@ -119,6 +119,10 @@
             this._editSelection = new Selection(this);
 
             this._formulaSelections = [];
+
+            this.options = {
+                showGridLines: true
+            };
         },
 
         _selectionState: function() {

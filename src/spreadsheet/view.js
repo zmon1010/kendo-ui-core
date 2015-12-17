@@ -81,7 +81,7 @@
         ].join(" ");
     }
 
-    function drawCell(collection, cell, cls, hBorders, vBorders) {
+    function drawCell(collection, cell, cls, hBorders, vBorders, showGrid) {
         if (!cls && !kendo.spreadsheet.draw.shouldDrawCell(cell)) {
             return;
         }
@@ -96,9 +96,13 @@
         //var defaultBorder = background ? cellBorder({ color: background }) : null;
         var defaultBorder = null;
         if (background) {
-            defaultBorder = kendo.parseColor(background).toHSV();
-            defaultBorder.v *= 0.9;
-            defaultBorder = defaultBorder.toCssRgba();
+            defaultBorder = background;
+            if (showGrid) {
+                // darken
+                defaultBorder = kendo.parseColor(defaultBorder).toHSV();
+                defaultBorder.v *= 0.9;
+                defaultBorder = defaultBorder.toCssRgba();
+            }
             defaultBorder = cellBorder({ color: defaultBorder });
         }
 
@@ -1248,38 +1252,41 @@
             });
             var rect = this._currentRect;
             var layout = kendo.spreadsheet.draw.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
-            // draw axis first
-            prev = null;
-            layout.xCoords.forEach(function(x){
-                if (x !== prev) {
-                    prev = x;
-                    cont.children.push(kendo.dom.element("div", {
-                        className: paneClassNames.vaxis,
-                        style: {
-                            left: x + "px",
-                            height: rect.height + "px"
-                        }
-                    }));
-                }
-            });
-            prev = null;
-            layout.yCoords.forEach(function(y){
-                if (y !== prev) {
-                    prev = y;
-                    cont.children.push(kendo.dom.element("div", {
-                        className: paneClassNames.haxis,
-                        style: {
-                            top: y + "px",
-                            width: rect.width + "px"
-                        }
-                    }));
-                }
-            });
+            var showGridLines = this._sheet.options.showGridLines;
+            if (showGridLines) {
+                // draw axis first
+                prev = null;
+                layout.xCoords.forEach(function(x){
+                    if (x !== prev) {
+                        prev = x;
+                        cont.children.push(kendo.dom.element("div", {
+                            className: paneClassNames.vaxis,
+                            style: {
+                                left: x + "px",
+                                height: rect.height + "px"
+                            }
+                        }));
+                    }
+                });
+                prev = null;
+                layout.yCoords.forEach(function(y){
+                    if (y !== prev) {
+                        prev = y;
+                        cont.children.push(kendo.dom.element("div", {
+                            className: paneClassNames.haxis,
+                            style: {
+                                top: y + "px",
+                                width: rect.width + "px"
+                            }
+                        }));
+                    }
+                });
+            }
             var vBorders = {}, hBorders = {};
             layout.cells.forEach(function(cell){
                 var hb = hBorders[cell.col] || (hBorders[cell.col] = {});
                 var vb = vBorders[cell.row] || (vBorders[cell.row] = {});
-                drawCell(cont.children, cell, null, hb, vb);
+                drawCell(cont.children, cell, null, hb, vb, showGridLines);
             });
             return cont;
         },
@@ -1500,7 +1507,7 @@
                     cell.top = rectangle.top;
                     cell.width = rectangle.width;
                     cell.height = rectangle.height;
-                    drawCell(collection, cell, className);
+                    drawCell(collection, cell, className, null, null, true);
                 }.bind(this));
             }
         },

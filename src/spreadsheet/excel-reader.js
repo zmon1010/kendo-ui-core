@@ -42,6 +42,7 @@
     var SEL_SHARED_STRING = ["si"];
     var SEL_VALUE = ["sheetData", "row", "c", "v"];
     var SEL_VIEW = ["bookViews", "workbookView"];
+    var SEL_SHEET_VIEW = ["sheetViews", "sheetView"];
 
     function readWorkbook(zip, workbook, deferred) {
         var strings = readStrings(zip);
@@ -264,6 +265,9 @@
                             sheet.frozenRows(integer(attrs.ySplit));
                         }
                     }
+                }
+                else if (this.is(SEL_SHEET_VIEW)) {
+                    sheet.options.showGridLines = bool(attrs.showGridLines);
                 }
             },
             leave: function(tag) {

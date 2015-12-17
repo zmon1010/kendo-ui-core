@@ -29,7 +29,8 @@
                 value: () => null,
                 formula: () => null,
                 _get: () => true
-            })
+            }),
+            options: {}
         }, props);
 
         return sheet;
