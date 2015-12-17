@@ -4,6 +4,12 @@
 @(Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
     .HtmlAttributes(new { style = "width:100%" })
+    .Excel(excel => excel
+        .ProxyURL(Url.Action("Index_Save", "Spreadsheet"))
+    )
+    .Pdf(pdf => pdf
+        .ProxyURL(Url.Action("Index_Save", "Spreadsheet"))
+    )
     .Sheets(sheets =>
     {
         sheets.Add()
