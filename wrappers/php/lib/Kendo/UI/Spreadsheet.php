@@ -63,6 +63,15 @@ class Spreadsheet extends \Kendo\UI\Widget {
     }
 
     /**
+    * Configures the Kendo UI Spreadsheet PDF export settings.
+    * @param \Kendo\UI\SpreadsheetPdf|array $value
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function pdf($value) {
+        return $this->setProperty('pdf', $value);
+    }
+
+    /**
     * The default row height in pixels.
     * @param float $value
     * @return \Kendo\UI\Spreadsheet
@@ -147,6 +156,20 @@ class Spreadsheet extends \Kendo\UI\Widget {
         }
 
         return $this->setProperty('excelImport', $value);
+    }
+
+    /**
+    * Sets the pdfExport event of the Spreadsheet.
+    * Fired when the user initiates PDF export.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function pdfExport($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('pdfExport', $value);
     }
 
 

@@ -1,5 +1,24 @@
 <?php
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $type = $_GET['type'];
+    if ($type == 'save') {
+        $fileName = $_POST['fileName'];
+        $contentType = $_POST['contentType'];
+        $base64 = $_POST['base64'];
+
+        $data = base64_decode($base64);
+
+        header('Content-Type:' . $contentType);
+        header('Content-Length:' . strlen($data));
+        header('Content-Disposition: attachment; filename=' . $fileName);
+
+        echo $data;
+    }
+
+    exit;
+}
+
 ini_set('display_startup_errors',1);
 ini_set('display_errors',1);
 error_reporting(-1);
@@ -9,6 +28,18 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 
 $spreadsheet = new \Kendo\UI\Spreadsheet('spreadsheet');
+
+$excel = new \Kendo\UI\SpreadsheetExcel();
+$excel->fileName('Kendo UI Spreadsheet Export.xlsx')
+      ->proxyURL('index.php?type=save');
+
+$spreadsheet->excel($excel);
+
+$pdf = new \Kendo\UI\SpreadsheetPdf();
+$pdf->fileName('Kendo UI Spreadsheet Export.pdf')
+      ->proxyURL('index.php?type=save');
+
+$spreadsheet->pdf($pdf);
 
 $sheet = new \Kendo\UI\SpreadsheetSheet();
 $sheet->name("Food Order")
