@@ -565,9 +565,15 @@
         var group = new drawing.Group();
         var paper = kendo.pdf.getPaperOptions(options);
         group.options.set("pdf", {
+            author    : options.author,
+            creator   : options.creator,
+            date      : options.date,
+            keywords  : options.keywords,
+            margin    : paper.margin,
             multiPage : true,
             paperSize : paper.paperSize,
-            margin    : paper.margin
+            subject   : options.subject,
+            title     : options.title
         });
         var pageWidth = paper.paperSize[0];
         var pageHeight = paper.paperSize[1];

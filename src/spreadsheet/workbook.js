@@ -433,12 +433,23 @@
             }
 
             this._drawPDF(options, progress)
-                .done(function(group) {
-                    kendo.drawing.pdf.saveAs(group,options.fileName);
-                })
-                .fail(function(err) {
-                    progress.reject(err);
+            .then(function(root) {
+                return kendo.drawing.exportPDF(root);
+            })
+            .done(function(dataURI) {
+                kendo.saveAs({
+                    dataURI: dataURI,
+                    fileName: options.fileName,
+                    proxyURL: options.proxyURL,
+                    forceProxy: options.forceProxy,
+                    proxyTarget: options.proxyTarget
                 });
+
+                progress.resolve();
+            })
+            .fail(function(err) {
+                progress.reject(err);
+            });
 
             return promise;
         };
