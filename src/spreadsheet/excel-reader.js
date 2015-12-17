@@ -571,9 +571,9 @@
                     } else if (tag == "name") {
                         font.name = attrs.val;
                     } else if (tag == "b") {
-                        font.bold = bool(attrs.val);
+                        font.bold = bool(attrs.val, true);
                     } else if (tag == "i") {
-                        font.italic = bool(attrs.val);
+                        font.italic = bool(attrs.val, true);
                     }
                 }
                 else if (this.is(SEL_FILL)) {
@@ -731,7 +731,10 @@
         return val == null ? null : parseInt(val, 10);
     }
 
-    function bool(val) {
+    function bool(val, def) {
+        if (val == null) {
+            return def;
+        }
         return val == "true" || val === true || val == 1;
     }
 
