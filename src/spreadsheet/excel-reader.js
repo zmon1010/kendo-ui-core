@@ -227,24 +227,25 @@
                 else if (this.is(SEL_COL)) {
                     var start = integer(attrs.min) - 1;
                     var stop = Math.min(nCols, integer(attrs.max)) - 1;
-                    var width = toColWidth(parseFloat(attrs.width));
-
+                    if (attrs.width) {
+                        var width = toColWidth(parseFloat(attrs.width));
+                        sheet._columns.values.value(start, stop, width);
+                    }
                     if (attrs.hidden === "1") {
                         for (var ci = start; ci <= stop; ci++) {
                             sheet.hideColumn(ci);
                         }
-                    } else {
-                        sheet._columns.values.value(start, stop, width);
                     }
                 }
                 else if (this.is(SEL_ROW)) {
                     var row = integer(attrs.r) - 1;
 
-                    if (attrs.hidden === "1") {
-                        sheet.hideRow(row);
-                    } else if (attrs.ht) {
+                    if (attrs.ht) {
                         var height = toRowHeight(parseFloat(attrs.ht));
                         sheet._rows.values.value(row, row, height);
+                    }
+                    if (attrs.hidden === "1") {
+                        sheet.hideRow(row);
                     }
                 }
                 else if (this.is(SEL_SELECTION)) {
