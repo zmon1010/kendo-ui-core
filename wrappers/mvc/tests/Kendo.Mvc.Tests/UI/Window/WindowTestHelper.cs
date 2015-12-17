@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI.Tests
 
             ViewContext viewContext = TestHelper.CreateViewContext();            
 
-            Window window = new Window(viewContext, javaScriptInitializer.Object);
+            Window window = new Window(viewContext, urlGenerator.Object, javaScriptInitializer.Object);
 
             renderer = renderer ?? new WindowHtmlBuilder(window);
 

@@ -1878,7 +1878,9 @@
     <Compile Include="UI\Upload\Upload.cs" />
     <Compile Include="UI\WidgetExtensions.cs" />
     <Compile Include="UI\WidgetFactory.cs" />
+    <Compile Include="UI\Window\Fluent\WindowContentBuilder.cs" />
     <Compile Include="UI\Window\Fluent\WindowPositionSettingsBuilder.cs" />
+    <Compile Include="UI\Window\Settings\WindowContentSettings.cs" />
     <Compile Include="UI\Window\Settings\WindowPositionSettings.cs" />
     <Compile Include="UI\Window\WindowButtons.cs" />
     <Compile Include="UI\Window\Fluent\WindowActionsBuilder.cs" />

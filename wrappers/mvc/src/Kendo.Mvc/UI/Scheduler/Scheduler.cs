@@ -47,7 +47,7 @@
 
             Editable = new SchedulerEditableSettings<TModel>()
             {
-                PopUp = new Window(viewContext, Initializer)
+                PopUp = new Window(viewContext, urlGenerator, Initializer)
                 {
                     Modal = true,
                     Draggable = true,

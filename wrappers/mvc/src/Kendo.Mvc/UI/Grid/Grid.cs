@@ -60,8 +60,8 @@ namespace Kendo.Mvc.UI
             NoRecords = new GridNoRecordsSettings();
 
             Editable = new GridEditableSettings<T>(this)
-            { 
-                PopUp = new Window(viewContext, Initializer)
+            {
+                PopUp = new Window(viewContext, urlGenerator, Initializer)
                 {
                     Modal = true,
                     Draggable = true

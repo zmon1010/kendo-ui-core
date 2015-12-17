@@ -68,7 +68,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.LoadContentFrom(value);
 
-            component.ContentUrl.ShouldEqual(value);
+            component.ContentSettings.Url.ShouldEqual(value);
         }
 
         [Fact]

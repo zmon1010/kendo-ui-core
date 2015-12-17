@@ -19,11 +19,13 @@ namespace Kendo.Mvc.UI
 
         private string loadContentFromUrl;
 
-        public Window(ViewContext viewContext, IJavaScriptInitializer initializer)
+        public Window(ViewContext viewContext, IUrlGenerator urlGenerator, IJavaScriptInitializer initializer)
             : base(viewContext, initializer)
         {
+            UrlGenerator = urlGenerator;
             Template = new HtmlTemplate();
 
+            ContentSettings = new WindowContentSettings();
             ResizingSettings = new WindowResizingSettings();
             PositionSettings = new WindowPositionSettings();
 
@@ -39,6 +41,12 @@ namespace Kendo.Mvc.UI
             Visible = true;
 
             AutoFocus = true;
+        }
+
+        public IUrlGenerator UrlGenerator
+        {
+            get;
+            private set;
         }
 
         public HtmlTemplate Template
@@ -189,6 +197,12 @@ namespace Kendo.Mvc.UI
             }
         }
 
+        public WindowContentSettings ContentSettings
+        {
+            get;
+            set;
+        }
+
         public IDictionary<string, object> ContentHtmlAttributes
         {
             get;
@@ -215,7 +229,7 @@ namespace Kendo.Mvc.UI
 
             // properties
             options.Add("modal", Modal);
-            options.Add("iframe", Iframe);
+            options.Add("iframe", ContentSettings.Iframe || Iframe);
             options.Add("draggable", Draggable);
             options.Add("scrollable", Scrollable);
             options.Add("pinned", Pinned);
@@ -229,7 +243,7 @@ namespace Kendo.Mvc.UI
                 options.Add("appendTo", AppendTo);
             }
             options.Add("resizable", ResizingSettings.Enabled);
-            options.Add("content", ContentUrl);
+
             if (Width != 0)
             {
                 options.Add("width", Width);
@@ -278,6 +292,36 @@ namespace Kendo.Mvc.UI
                 }
 
                 options.Add("position", topLeft);
+            }
+
+            var contentSettings = ContentSettings.ToJson();
+
+            if (!contentSettings.Keys.Contains("url") && ContentUrl.HasValue())
+            {
+                contentSettings["url"] = ContentUrl;
+            }
+
+            if (ContentSettings.TemplateId.HasValue() || ContentSettings.Template.HasValue())
+            {
+                var idPrefix = "#";
+                if (IsInClientTemplate)
+                {
+                    idPrefix = "\\" + idPrefix;
+                }
+
+                if (!string.IsNullOrEmpty(ContentSettings.TemplateId))
+                {
+                    contentSettings["template"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, ContentSettings.TemplateId) };
+                }
+                else if (!string.IsNullOrEmpty(ContentSettings.Template))
+                {
+                    contentSettings["template"] = ContentSettings.Template;
+                }
+            }
+
+            if (contentSettings.Any())
+            {
+                options.Add("content", contentSettings);
             }
 
             return options;

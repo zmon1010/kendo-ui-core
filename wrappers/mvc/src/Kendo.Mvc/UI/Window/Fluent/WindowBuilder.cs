@@ -48,6 +48,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Configure how the window content is fetched, parsed, and rendered
+        /// </summary>
+        /// <param name="selector">A selector of the Window container</param>
+        public WindowBuilder ContentSettings(Action<WindowContentBuilder> action)
+        {
+            action(new WindowContentBuilder(Component.ContentSettings, Component.ViewContext, Component.UrlGenerator));
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets the HTML content which the window should display.
         /// </summary>
         /// <param name="value">The action which renders the content.</param>
@@ -97,7 +108,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <code lang="CS">
         ///  &lt;%= Html.Kendo().Window()
         ///             .Name("Window")
-        ///             .Content("&lt;strong&gt; First Item Content&lt;/strong&gt;")
+        ///             .Content("&lt;strong&gt; Content&lt;/strong&gt;")
         /// %&gt;
         /// </code>        
         public WindowBuilder Content(string value)
@@ -182,9 +193,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public WindowBuilder LoadContentFrom(string value)
         {
-            Component.ContentUrl = value;
-
-            return this;
+            return ContentSettings(c => c.Url(value));
         }
 
         /// <summary>

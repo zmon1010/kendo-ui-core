@@ -773,7 +773,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public virtual WindowBuilder Window()
         {
-            return new WindowBuilder(new Window(ViewContext, Initializer));
+            return new WindowBuilder(new Window(ViewContext, UrlGenerator, Initializer));
         }
 
         /// <summary>
