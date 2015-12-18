@@ -9,12 +9,10 @@
 <c:url value="/upload/async/save" var="saveUrl" />
 <c:url value="/upload/async/remove" var="removeUrl" />
 
-<div class="k-rtl">
-    <div class="demo-section">
-	    <kendo:upload name="files">
-	        <kendo:upload-async autoUpload="true" saveUrl="${saveUrl}" removeUrl="${removeUrl}"/>
-	    </kendo:upload>
-    </div>
+<div class="demo-section k-content k-rtl">
+    <kendo:upload name="files">
+        <kendo:upload-async autoUpload="true" saveUrl="${saveUrl}" removeUrl="${removeUrl}"/>
+    </kendo:upload>
 </div>
 
 <demo:footer />

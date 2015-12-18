@@ -6,25 +6,22 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header">
-    <span class="infoHead">Information</span>
+<div class="box">
+    <h4>Information</h4>
     <p>
         The Upload can be used as a drop-in replacement
-        for file input elements.
-    </p>
-    <p>
-        This "synchronous" mode does not require
+        for file input elements. This "synchronous" mode does not require
         special handling on the server.
     </p>
 </div>
 
-<form method="post" action="<c:url value='/web/upload/' />" style="width:45%">
-    <div class="demo-section">
+<form method="post" action="<c:url value='/upload/' />">
+    <div class="demo-section k-content">
     
         <kendo:upload name="files" />
         
-        <p>
-            <input type="submit" value="Submit" class="k-button" />
+        <p style="padding-top: 1em; text-align: right">
+            <input type="submit" value="Submit" class="k-button k-primary" />
         </p>
     </div>
 </form>

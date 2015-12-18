@@ -6,8 +6,8 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header" style="width: 300px">
-    <span class="infoHead">Information</span>
+<div class="box">
+    <h4>Information</h4>
     <p>
         The Upload is able to upload files out-of-band using the
         HTML5 File API with fallback for legacy browsers.
@@ -19,15 +19,14 @@
     </p>
 </div>
 
+
 <c:url value="/upload/async/save" var="saveUrl" />
 <c:url value="/upload/async/remove" var="removeUrl" />
 
-<div style="width:45%">
-	<div class="demo-section">
+<div class="demo-section k-content">
 	    <kendo:upload name="files">
 	        <kendo:upload-async autoUpload="true" saveUrl="${saveUrl}" removeUrl="${removeUrl}"/>
 	    </kendo:upload>
-    </div>
 </div>
 
 <demo:footer />

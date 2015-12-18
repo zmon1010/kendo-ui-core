@@ -9,6 +9,7 @@
 <c:url value="/upload/async/save" var="saveUrl" />
 <c:url value="/upload/async/remove" var="removeUrl" />
 
+<div class="demo-section k-content">
 <kendo:upload name="files" 
 		      template="<span class='k-progress'></span><div class='file-wrapper'>
                     <span class='file-icon #=addExtensionClass(files[0].extension)#'></span>
@@ -18,6 +19,7 @@
                 </div>">
 	<kendo:upload-async  autoUpload="false" saveUrl="${saveUrl}" removeUrl="${removeUrl}"/>
 </kendo:upload>
+</div>
 
 <script>
 	function addExtensionClass(extension) {
@@ -45,72 +47,57 @@
 </script>
 
 <style>
-	.file-icon {
-		display: inline-block;
-		float: left;
-		width: 48px;
-		height: 48px;
-		margin-left: 10px;
-		margin-top: 13.5px;
-	}
+    .file-icon {
+        display: inline-block;
+        float: left;
+        width: 48px;
+        height: 48px;
+        margin-left: 10px;
+        margin-top: 13.5px;
+    }
+
+	.img-file { background-image: url(../resources/web/upload/jpg.png) }
+	.doc-file { background-image: url(../resources/web/upload/doc.png) }
+	.pdf-file { background-image: url(../resources/web/upload/pdf.png) }
+	.xls-file { background-image: url(../resources/web/upload/xls.png) }
+	.zip-file { background-image: url(../resources/web/upload/zip.png) }
+	.default-file { background-image: url(../resources/web/upload/default.png) }
 	
-	.img-file {
-		background-image: url(../resources/web/upload/jpg.png)
-	}
-	
-	.doc-file {
-		background-image: url(../resources/web/upload/doc.png)
-	}
-	
-	.pdf-file {
-		background-image: url(../resources/web/upload/pdf.png)
-	}
-	
-	.xls-file {
-		background-image: url(../resources/web/upload/xls.png)
-	}
-	
-	.zip-file {
-		background-image: url(../resources/web/upload/zip.png)
-	}
-	
-	.default-file {
-		background-image: url(../resources/web/upload/default.png)
-	}
-	
-	#example .file-heading {
-		font-family: Arial;
-		font-size: 1.1em;
-		display: inline-block;
-		float: left;
-		width: 450px;
-		margin: 0 0 0 20px;
-		height: 25px;
-		-ms-text-overflow: ellipsis;
-		-o-text-overflow: ellipsis;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-	}
-	
-	#example .file-name-heading {
-		font-weight: bold;
-	}
-	
-	#example .file-size-heading {
-		font-weight: normal;
-		font-style: italic;
-	}
-	
-	li.k-file .file-wrapper .k-upload-action {
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
-	
-	li.k-file div.file-wrapper {
-		position: relative;
-		height: 75px;
-	}
+    #example .file-heading {
+        font-family: Arial;
+        font-size: 1.1em;
+        display: inline-block;
+        float: left;
+        width: 60%;
+        margin: 0 0 0 20px;
+        height: 25px;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        overflow:hidden;
+        white-space:nowrap;
+    }
+
+    #example .file-name-heading {
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+     #example .file-size-heading {
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    li.k-file .file-wrapper .k-upload-action {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    li.k-file div.file-wrapper {
+        position: relative;
+        height: 75px;
+    }
 </style>
+
 <demo:footer />

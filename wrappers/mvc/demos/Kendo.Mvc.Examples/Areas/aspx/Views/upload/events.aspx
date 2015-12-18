@@ -4,38 +4,35 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="configuration k-widget k-header" style="width: 300px">
-    <span class="infoHead">Information</span>
+<div class="box">
+    <h4>Information</h4>
     <p>
         This example shows how to handle events triggered by kendoUpload.
     </p>
 </div>
-<div style="width:45%">
-    <div class="demo-section">
-        <%= Html.Kendo().Upload()
-            .Name("files")
-            .Async(a => a
-                .Save("Save", "Upload")
-                .Remove("Remove", "Upload")
-                .AutoUpload(true)
-            )
-            .Events(events => events
-                .Cancel("onCancel")
-                .Complete("onComplete")
-                .Error("onError")
-                .Progress("onProgress")
-                .Remove("onRemove")
-                .Select("onSelect")
-                .Success("onSuccess")
-                .Upload("onUpload")
-            )
-        %>
-    </div>
+<div class="demo-section k-content">
+    <%= Html.Kendo().Upload()
+        .Name("files")
+        .Async(a => a
+            .Save("Save", "Upload")
+            .Remove("Remove", "Upload")
+            .AutoUpload(true)
+        )
+        .Events(events => events
+            .Cancel("onCancel")
+            .Complete("onComplete")
+            .Error("onError")
+            .Progress("onProgress")
+            .Remove("onRemove")
+            .Select("onSelect")
+            .Success("onSuccess")
+            .Upload("onUpload")
+        )
+    %>
 </div>
 
-<div class="demo-section" style="margin-top: 50px;">
-    <h3 class="title">Console log
-    </h3>
+<div class="box">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 <script>

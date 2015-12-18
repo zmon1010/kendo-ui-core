@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 ?>
 
+<div class="demo-section k-content">
 <?php
 $upload = new \Kendo\UI\Upload('files[]');
 $upload->async(array(
@@ -55,6 +56,7 @@ $upload->template(
 
 echo $upload->render();
 ?>
+</div>
 
 <script>
 	function addExtensionClass(extension) {
@@ -82,8 +84,7 @@ echo $upload->render();
 </script>
 
 <style>
-    .file-icon
-    {
+    .file-icon {
         display: inline-block;
         float: left;
         width: 48px;
@@ -99,13 +100,12 @@ echo $upload->render();
     .zip-file { background-image: url(../content/web/upload/zip.png) }
     .default-file { background-image: url(../content/web/upload/default.png) }
 
-    #example .file-heading
-    {
+    #example .file-heading {
         font-family: Arial;
         font-size: 1.1em;
         display: inline-block;
         float: left;
-        width: 450px;
+        width: 60%;
         margin: 0 0 0 20px;
         height: 25px;
         -ms-text-overflow: ellipsis;
@@ -115,26 +115,23 @@ echo $upload->render();
         white-space:nowrap;
     }
 
-        #example .file-name-heading
-        {
-            font-weight: bold;
-        }
+    #example .file-name-heading {
+        font-weight: bold;
+        margin-top: 20px;
+    }
 
-         #example .file-size-heading
-        {
-            font-weight: normal;
-            font-style: italic;
-        }
+     #example .file-size-heading {
+        font-weight: normal;
+        font-style: italic;
+    }
 
-    li.k-file .file-wrapper .k-upload-action
-    {
+    li.k-file .file-wrapper .k-upload-action {
         position: absolute;
         top: 0;
         right: 0;
     }
 
-    li.k-file div.file-wrapper
-    {
+    li.k-file div.file-wrapper {
         position: relative;
         height: 75px;
     }

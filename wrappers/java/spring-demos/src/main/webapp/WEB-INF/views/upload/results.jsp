@@ -6,9 +6,8 @@
 
 <demo:header />
 
-<p>
-    Uploaded files
-</p>
+<div class="demo-section k-content">
+<h4>Uploaded files</h4>
 
 <c:if test="${!files.isEmpty()}">
 	<ul>
@@ -24,7 +23,8 @@
 -- None --
 </c:if>
 
-<p>
-    <a href="<c:url value='/web/upload/' />">Go back</a>
+<p style="margin-top: 1em;">
+    <a href="<c:url value='/upload/' />" class="k-button k-primary">Go back</a>
 </p>
+</div>
 <demo:footer />

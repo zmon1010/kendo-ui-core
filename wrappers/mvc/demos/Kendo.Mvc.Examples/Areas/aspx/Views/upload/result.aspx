@@ -4,7 +4,8 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<p>Uploaded files</p>
+<div class="demo-section k-content">
+<h4>Uploaded files</h4>
 
 <% if (TempData.ContainsKey("UploadedFiles")) { %>
     <div class="t-widget t-upload">
@@ -19,5 +20,8 @@
     -- None --
 <% } %>
 
-<p><a href='<%=Url.Action("Index", "Upload") %>' class="t-button">Go back</a></p>
+<p style="margin-top: 1em;">
+    <a href='<%=Url.Action("Index", "Upload") %>' class="k-button k-primary">Go back</a>
+</p>
+</div>
 </asp:Content>

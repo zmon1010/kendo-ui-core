@@ -6,13 +6,11 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header" style="width: 300px">
-    <span class="infoHead">Information</span>
+<div class="box">
+    <h4>Information</h4>
     <p>
         This example show how to persist the successfully uploaded files
-        in the list and display them again when the page is reloaded.
-    </p>
-    <p>
+        in the list and display them again when the page is reloaded. 
         Please upload some files and refresh the page.
     </p>
 </div>
@@ -20,14 +18,12 @@
 <c:url value="/upload/initialfiles/saveAndPersist" var="saveAndPersistUrl" />
 <c:url value="/upload/initialfiles/removeAndPersist" var="removeAndPersistUrl" />
 
-<div style="width:45%">
-	<div class="demo-section">
+<div class="demo-section k-content">
 	    <kendo:upload name="files" files="${initialFiles}">
 	        <kendo:upload-async autoUpload="true"
 	        					saveUrl="${saveAndPersistUrl}" 
 	        					removeUrl="${removeAndPersistUrl}"/>
 	    </kendo:upload>
-    </div>
 </div>
 
 <demo:footer />

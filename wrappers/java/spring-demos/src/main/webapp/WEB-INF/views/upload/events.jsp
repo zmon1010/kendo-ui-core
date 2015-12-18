@@ -6,8 +6,8 @@
 
 <demo:header />
 
-<div class="configuration k-widget k-header" style="width: 300px">
-    <span class="infoHead">Information</span>
+<div class="box">
+    <h4>Information</h4>
     <p>
         This example shows how to handle events triggered by kendoUpload.
     </p>
@@ -16,18 +16,15 @@
 <c:url value="/upload/events/save" var="saveUrl" />
 <c:url value="/upload/events/remove" var="removeUrl" />
 
-<div style="width:45%">
-    <div class="demo-section">
-	    <kendo:upload name="files" select="onSelect" upload="onUpload" 
-	        success="onSuccess" error="onError" complete="onComplete" progress="onProgress">
-	        <kendo:upload-async autoUpload="true" saveUrl="${saveUrl}" removeUrl="${removeUrl}"/>
-	    </kendo:upload>
-    </div>
+<div class="demo-section k-content">
+    <kendo:upload name="files" select="onSelect" upload="onUpload" 
+        success="onSuccess" error="onError" complete="onComplete" progress="onProgress">
+        <kendo:upload-async autoUpload="true" saveUrl="${saveUrl}" removeUrl="${removeUrl}"/>
+    </kendo:upload>
 </div>
 
-<div class="demo-section" style="margin-top: 50px;">
-    <h3 class="title">Console log
-    </h3>
+<div class="box">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 

@@ -2,7 +2,8 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
-<p>Uploaded files</p>
+<div class="demo-section k-content">
+<h4>Uploaded files</h4>
 <?php
 // Check if any files are uploaded
 if (isset($_FILES['files'])) {
@@ -35,7 +36,8 @@ if (isset($_FILES['files'])) {
 <?php
 }
 ?>
-<p>
-    <a href="index.php">Go back</a>
+<p style="margin-top: 1em;">
+    <a href="index.php" class="k-button k-primary">Go back</a>
 </p>
+</div>
 <?php require_once '../include/footer.php'; ?>

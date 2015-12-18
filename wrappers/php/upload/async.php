@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 require_once '../include/header.php';
 ?>
-<div class="configuration k-widget k-header" style="width: 300px">
-    <span class="infoHead">Information</span>
+<div class="box">
+    <h4>Information</h4>
     <p>
         The Upload is able to upload files out-of-band using the
         HTML5 File API with fallback for legacy browsers.
@@ -46,7 +46,7 @@ require_once '../include/header.php';
     </p>
 </div>
 
-<div style="width:45%">
+<div class="demo-section k-content">
 <?php
 $upload = new \Kendo\UI\Upload('files[]');
 $upload->async(array(

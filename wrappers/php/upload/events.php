@@ -20,13 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 require_once '../include/header.php';
 ?>
-<div class="configuration k-widget k-header" style="width: 300px">
-    <span class="infoHead">Information</span>
+<div class="box">
+    <h4>Information</h4>
     <p>
         This example shows how to handle events triggered by kendoUpload.
     </p>
 </div>
-<div style="width:45%">
+<div class="demo-section k-content">
 <?php
 $upload = new \Kendo\UI\Upload('files[]');
 $upload->async(array(
@@ -44,6 +44,10 @@ $upload->async(array(
 
 echo $upload->render();
 ?>
+</div>
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
 </div>
 <script>
     function onSelect(e) {
@@ -90,5 +94,4 @@ echo $upload->render();
         }).join(", ");
     }
 </script>
-<div class="console"></div>
 <?php require_once '../include/footer.php'; ?>

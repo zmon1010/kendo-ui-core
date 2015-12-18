@@ -55,18 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 require_once '../include/header.php';
 ?>
-<div class="configuration k-widget k-header" style="width: 300px">
-    <span class="infoHead">Information</span>
+<div class="box">
+    <h4>Information</h4>
     <p>
         This example show how to persist the successfully uploaded files
-        in the list and display them again when the page is reloaded.
-    </p>
-    <p>
+        in the list and display them again when the page is reloaded. 
         Please upload some files and refresh the page.
     </p>
 </div>
 
-<div style="width:45%">
+<div class="demo-section k-content">
 <?php
 
 $upload = new \Kendo\UI\Upload('files[]');

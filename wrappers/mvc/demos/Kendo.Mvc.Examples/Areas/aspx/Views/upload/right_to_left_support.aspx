@@ -5,17 +5,15 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="k-rtl">
-    <div class="demo-section">    
-        <%= Html.Kendo().Upload()
-            .Name("files")
-            .Async(a => a
-                .Save("Save", "Upload")
-                .Remove("Remove", "Upload")
-                .AutoUpload(true)
-            )
-        %>
-    </div>
+<div class="demo-section k-content k-rtl">  
+    <%= Html.Kendo().Upload()
+        .Name("files")
+        .Async(a => a
+            .Save("Save", "Upload")
+            .Remove("Remove", "Upload")
+            .AutoUpload(true)
+        )
+    %>
 </div>
 
 </asp:Content>

@@ -15,6 +15,7 @@
     </div>
 </script>
 
+<div class="demo-section k-content">
 <%= Html.Kendo().Upload()
     .Name("files")
     .TemplateId("fileTemplate")
@@ -24,6 +25,7 @@
         .AutoUpload(false)
     )
 %>
+</div>
 
 <script type="text/javascript">
     function addExtensionClass(extension) {
@@ -51,62 +53,58 @@
 </script>
 
 <style>
-   .file-icon
-   {
-       display: inline-block;
-       float: left;
-       width: 48px;
-       height: 48px;
-       margin-left: 10px;
-       margin-top: 13.5px;
-   }
+    .file-icon {
+        display: inline-block;
+        float: left;
+        width: 48px;
+        height: 48px;
+        margin-left: 10px;
+        margin-top: 13.5px;
+    }
 
-   .img-file { background-image: url(/content/web/upload/jpg.png) }
-   .doc-file { background-image: url(/content/web/upload/doc.png) }
-   .pdf-file { background-image: url(/content/web/upload/pdf.png) }
-   .xls-file { background-image: url(/content/web/upload/xls.png) }
-   .zip-file { background-image: url(/content/web/upload/zip.png) }
-   .default-file { background-image: url(/content/web/upload/default.png) }
+    .img-file { background-image: url(/content/web/upload/jpg.png) }
+    .doc-file { background-image: url(/content/web/upload/doc.png) }
+    .pdf-file { background-image: url(/content/web/upload/pdf.png) }
+    .xls-file { background-image: url(/content/web/upload/xls.png) }
+    .zip-file { background-image: url(/content/web/upload/zip.png) }
+    .default-file { background-image: url(/content/web/upload/default.png) }
 
-   #example .file-heading
-   {
-       font-family: Arial;
-       font-size: 1.1em;
-       display: inline-block;
-       float: left;
-       width: 450px;
-       margin: 0 0 0 20px;
-       height: 25px;
-       -ms-text-overflow: ellipsis;
-       -o-text-overflow: ellipsis;
-       text-overflow: ellipsis;
-       overflow:hidden;
-       white-space:nowrap;
-   }
+    #example .file-heading {
+        font-family: Arial;
+        font-size: 1.1em;
+        display: inline-block;
+        float: left;
+        width: 60%;
+        margin: 0 0 0 20px;
+        height: 25px;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        overflow:hidden;
+        white-space:nowrap;
+    }
 
-       #example .file-name-heading
-       {
-           font-weight: bold;
-       }
+    #example .file-name-heading {
+        font-weight: bold;
+        margin-top: 20px;
+    }
 
-        #example .file-size-heading
-       {
-           font-weight: normal;
-           font-style: italic;
-       }
+     #example .file-size-heading {
+        font-weight: normal;
+        font-style: italic;
+    }
 
-   li.k-file .file-wrapper .k-upload-action
-   {
-       position: absolute;
-       top: 0;
-       right: 0;
-   }
+    li.k-file .file-wrapper .k-upload-action {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 
-   li.k-file div.file-wrapper
-   {
-       position: relative;
-       height: 75px;
-   }
+    li.k-file div.file-wrapper {
+        position: relative;
+        height: 75px;
+    }
 </style>
+
 
 </asp:Content>
