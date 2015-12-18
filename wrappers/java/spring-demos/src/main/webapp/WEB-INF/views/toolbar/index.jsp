@@ -5,6 +5,7 @@
 
 <demo:header />
 
+<div class="demo-section k-content wide">
 <kendo:toolBar name="toolbar">
 	<kendo:toolBar-items>
 		<kendo:toolBar-item type="button" text="Button"></kendo:toolBar-item>
@@ -40,6 +41,7 @@
 		<kendo:toolBar-item type="button" text="Something else here" overflow="always"></kendo:toolBar-item>
 	</kendo:toolBar-items>
 </kendo:toolBar>
+</div>
 
 <script>
 	$(document).ready(function() {

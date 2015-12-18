@@ -52,10 +52,10 @@ $toolbar->addItem(
 </script>
 
 <div id="example">
-    <div class="box">
+    <div class="box wide">
         <h4>Info</h4>
         <p>Resize the window and watch how ToolBar's items show or hide according to the available space.</p>
-        <p>More information regarding the resizable functionality can be found in the <a href="">Getting Started topic</a>.</p>
+        <p>More information regarding the resizable functionality can be found in the <a href="http://docs.telerik.com/kendo-ui/web/toolbar/overview">Getting Started topic</a>.</p>
         <span id="undo" style="display:none" class="k-button">Click here to open the window.</span>
     </div>
     <div id="window">

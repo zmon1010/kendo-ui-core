@@ -32,10 +32,10 @@
 		</kendo:toolBar-items>
 	</kendo:toolBar>
 
-	<div class="box">
-	    <h4>Console log</h4>
-	    <div class="console"></div>
-	</div>
+    <div class="box wide">
+        <h4>Console log</h4>
+        <div class="console"></div>
+    </div>
 
 	<script>
 	    function buttonClickHandler(e) {

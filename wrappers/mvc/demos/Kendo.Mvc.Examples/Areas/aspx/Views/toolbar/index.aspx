@@ -5,6 +5,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+<div class="demo-section k-content wide">
 <%= Html.Kendo().ToolBar()
     .Name("ToolBar")
     .Items(items => {
@@ -37,6 +38,7 @@
         items.Add().Type(CommandType.Button).Text("Something else here").Overflow(ShowInOverflowPopup.Always);
     })
 %>
+</div>
 
 <script>
     $(document).ready(function () {

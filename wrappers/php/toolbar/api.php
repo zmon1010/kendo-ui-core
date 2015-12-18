@@ -8,6 +8,7 @@ $toolbar = new \Kendo\UI\ToolBar('toolbar');
 $toolbar->addItem(
     array(
         "type" => "buttonGroup",
+        "id" => "playerControls",
         "buttons" => array(
             array("id" => "play", "text" => "play", "togglable" => true, "group" => "player"),
             array("id" => "pause", "text" => "pause", "togglable" => true, "group" => "player", "selected" => true),
@@ -32,50 +33,57 @@ $toolbar->addItem(
 
 <div id="example">
 
-    <div class="box">
-        <div class="box-col">
-            <h4>Get selected action</h4>
-            <ul class="options">
-                <li>
-                    <button class="getSelected k-button">Get selected action</button>
-                </li>
-                <li>
-                    Selected: <span id="selectedFromGroup"></span>
-                </li>
-            </ul>
-        </div>
-        <div class="box-col">
-            <h4>Enable / Disable</h4>
-            <ul class="options">
-                <li>
-                    <button class="toggleRepeat k-button">Enable/Disable Repeat</button>
-                </li>
-            </ul>
-        </div>
-        <div class="box-col">
-            <h4>Add / Remove</h4>
-            <ul class="options">
-                <li>
-                    <button class="removeItem k-button">Remove by ID</button>
-                    <input type="text" value="#delete" id="forRemoval" class="k-textbox"/> 
-                </li>
-                <li>
-                    <button class="addItem k-button">Add new button</button>
-                    <label>Text: <input type="text" value="New Button" id="btnText" class="k-textbox"/></label>
-                    <label>ID: <input type="text" value="newButton" id="btnID" class="k-textbox"/></label>
-                    <label>Togglable: <input type="checkbox" id="btnTogglable"/></label>
-                </li>
-                <li>
-                    <button class="addSplitButton k-button">Add new SplitButton</button>
-                </li> 
-                <li>
-                    <button class="addButtonGroup k-button">Add new ButtonGroup</button>
-                </li>
-            </ul>
-        </div>
-    </div>
 
     <?php echo $toolbar->render(); ?>
+    
+<div class="box wide">
+    <div class="box-col">
+        <h4>Get selected action</h4>
+        <ul class="options">
+            <li>
+                <button class="getSelected k-button">Get selected action</button>
+            </li>
+            <li>
+                Selected: <span id="selectedFromGroup"></span>
+            </li>
+            <li>
+                <button class="togglePlayerControlsVisibility k-button">Hide player controls</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Enable / Disable</h4>
+        <ul class="options">
+            <li>
+                <button class="toggleRepeat k-button">Enable/Disable Repeat</button>
+            </li>
+            <li>
+                <button class="toggleRepeatVisibility k-button">Hide Repeat</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Add / Remove</h4>
+        <ul class="options">
+            <li>
+                <button class="removeItem k-button">Remove by ID</button>
+                <input type="text" value="#delete" id="forRemoval" class="k-textbox"/> 
+            </li>
+            <li>
+                <button class="addItem k-button">Add new button</button>
+                <label>Text: <input type="text" value="New Button" id="btnText" class="k-textbox"/></label>
+                <label>ID: <input type="text" value="newButton" id="btnID" class="k-textbox"/></label>
+                <label>Togglable: <input type="checkbox" id="btnTogglable"/></label>
+            </li>
+            <li>
+                <button class="addSplitButton k-button">Add new SplitButton</button>
+            </li> 
+            <li>
+                <button class="addButtonGroup k-button">Add new ButtonGroup</button>
+            </li>
+        </ul>
+    </div>
+</div>
 
 </div>
 
@@ -89,12 +97,40 @@ $toolbar->addItem(
             $("#selectedFromGroup").text(selected.text());
         });
 
+        $(".togglePlayerControlsVisibility").click(function(e) {
+            var toolbar = $("#toolbar").data("kendoToolBar"),
+                buttonGroup = $("#playerControls"),
+                isVisible = buttonGroup.is(":visible");
+
+            if (isVisible) {
+                toolbar.hide(buttonGroup);
+                $(e.target).text("Show player controls");
+            } else {
+                toolbar.show(buttonGroup);
+                $(e.target).text("Hide player controls");
+            }
+        });
+
         $(".toggleRepeat").click(function() {
             var toolbar = $("#toolbar").data("kendoToolBar"),
                 repeatButton = $("#repeat"),
                 isDisabled = repeatButton.hasClass("k-state-disabled");
 
             toolbar.enable(repeatButton, isDisabled);
+        });
+
+        $(".toggleRepeatVisibility").click(function(e) {
+            var toolbar = $("#toolbar").data("kendoToolBar"),
+                repeatButton = $("#repeat"),
+                isVisible = repeatButton.is(":visible");
+
+            if (isVisible) {
+                toolbar.hide(repeatButton);
+                $(e.target).text("Show Repeat");
+            } else {
+                toolbar.show(repeatButton);
+                $(e.target).text("Hide Repeat");
+            }
         });
 
         $(".removeItem").click(function() {

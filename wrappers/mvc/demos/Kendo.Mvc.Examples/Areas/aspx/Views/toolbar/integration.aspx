@@ -5,8 +5,8 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="demo-section k-header">
-    <h4>Cutomize the element</h4>
+<div class="demo-section k-content wide">
+    <h4>Customize the element</h4>
     <%= Html.Kendo().ToolBar()
         .Name("ToolBar")
         .Resizable(false)
@@ -32,7 +32,7 @@
         .Events(e => e.Toggle("onToggle"))        
     %>
 </div>
-<div class="box">
+<div class="box wide">
     <div id="target"></div>
 </div>
 

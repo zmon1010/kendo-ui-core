@@ -2,7 +2,10 @@
 require_once '../lib/Kendo/Autoload.php';
 
 require_once '../include/header.php';
+?>
 
+<div class="demo-section k-content wide">
+<?php
 $toolbar = new \Kendo\UI\ToolBar('toolbar');
 
 $toolbar->addItem(
@@ -44,6 +47,7 @@ $toolbar->addItem(
 
 echo $toolbar->render();
 ?>
+</div>
 
 <script>
     $(document).ready(function() {

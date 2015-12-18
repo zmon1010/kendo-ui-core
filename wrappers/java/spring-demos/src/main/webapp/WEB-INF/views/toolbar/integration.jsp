@@ -6,7 +6,7 @@
 <demo:header />
 
 <div id="example">
-    <div class="demo-section k-header">
+    <div class="demo-section k-content wide">
         <h4>Customize the element</h4>
         
         <kendo:toolBar name="toolbar" toggle="onToggle" resizable="false">
@@ -33,7 +33,7 @@
 		</kendo:toolBar>
         
     </div>
-    <div class="box">
+    <div class="box wide">
         <div id="target"></div>
     </div>
 </div>

@@ -25,18 +25,18 @@ $toolbar->addItem(
     array("type" => "separator"),
     array("template" => "<label>BORDER:</label><div type='color' id='border-picker'></div>"),
     array("template" => "<input id='border-style' style='width: 100px;' />")
-);
-
-$toolbar->toggle("onToggle");
+)
+        ->resizable(false)
+        ->toggle("onToggle");
 
 ?>
 
 <div id="example">
-    <div class="demo-section k-header">
-        <h4>Cutomize the element</h4>
+    <div class="demo-section k-content wide">
+        <h4>Customize the element</h4>
         <?php echo $toolbar->render(); ?>
     </div>
-    <div class="box">
+    <div class="box wide">
         <div id="target"></div>
     </div>
 </div>

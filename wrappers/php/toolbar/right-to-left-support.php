@@ -4,7 +4,7 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
-<div class="k-rtl">
+<div class="demo-section k-content wide k-rtl">
 
 <?php
 

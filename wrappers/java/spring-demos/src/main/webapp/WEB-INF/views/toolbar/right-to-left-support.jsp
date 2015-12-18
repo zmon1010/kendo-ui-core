@@ -5,7 +5,7 @@
 
 <demo:header />
 
-<div class="k-rtl">
+<div class="demo-section k-content wide k-rtl">
 
 <kendo:toolBar name="toolbar">
 	<kendo:toolBar-items>

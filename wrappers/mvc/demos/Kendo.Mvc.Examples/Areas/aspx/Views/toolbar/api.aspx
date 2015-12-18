@@ -5,7 +5,27 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="box">
+<%= Html.Kendo().ToolBar()
+    .Name("ToolBar")
+    .Items(items => {
+        items.Add().Type(CommandType.ButtonGroup).Id("playerControls").Buttons(buttons =>
+        {
+            buttons.Add().Text("play").Id("play").Togglable(true).Group("player");
+            buttons.Add().Text("pause").Id("pause").Togglable(true).Group("player").Selected(true);
+            buttons.Add().Text("stop").Id("stop").Togglable(true).Group("player");
+        });
+        items.Add().Type(CommandType.Button).Id("repeat").Text("repeat").Togglable(true);
+        items.Add().Type(CommandType.SplitButton).Text("Save").Id("save").MenuButtons(menuButtons =>
+        {
+            menuButtons.Add().Text("Add to favourites").Id("favourites");
+            menuButtons.Add().Text("Listen later").Id("later");
+            menuButtons.Add().Text("Download").Id("download");
+        });
+        items.Add().Type(CommandType.Button).Id("delete").Text("Delete");
+    })
+%>
+
+<div class="box wide">
     <div class="box-col">
         <h4>Get selected action</h4>
         <ul class="options">
@@ -15,6 +35,9 @@
             <li>
                 Selected: <span id="selectedFromGroup"></span>
             </li>
+            <li>
+                <button class="togglePlayerControlsVisibility k-button">Hide player controls</button>
+            </li>
         </ul>
     </div>
     <div class="box-col">
@@ -22,6 +45,9 @@
         <ul class="options">
             <li>
                 <button class="toggleRepeat k-button">Enable/Disable Repeat</button>
+            </li>
+            <li>
+                <button class="toggleRepeatVisibility k-button">Hide Repeat</button>
             </li>
         </ul>
     </div>
@@ -48,26 +74,6 @@
     </div>
 </div>
 
-<%= Html.Kendo().ToolBar()
-    .Name("ToolBar")
-    .Items(items => {
-        items.Add().Type(CommandType.ButtonGroup).Buttons(buttons =>
-        {
-            buttons.Add().Text("play").Id("play").Togglable(true).Group("player");
-            buttons.Add().Text("pause").Id("pause").Togglable(true).Group("player").Selected(true);
-            buttons.Add().Text("stop").Id("stop").Togglable(true).Group("player");
-        });
-        items.Add().Type(CommandType.Button).Id("repeat").Text("repeat").Togglable(true);
-        items.Add().Type(CommandType.SplitButton).Text("Save").Id("save").MenuButtons(menuButtons =>
-        {
-            menuButtons.Add().Text("Add to favourites").Id("favourites");
-            menuButtons.Add().Text("Listen later").Id("later");
-            menuButtons.Add().Text("Download").Id("download");
-        });
-        items.Add().Type(CommandType.Button).Id("delete").Text("Delete");
-    })
-%>
-
 <script>
     $(document).ready(function () {
 
@@ -79,12 +85,40 @@
             $("#selectedFromGroup").text(selected.text());
         });
 
+        $(".togglePlayerControlsVisibility").click(function(e) {
+            var toolbar = $("#ToolBar").data("kendoToolBar"),
+                buttonGroup = $("#playerControls"),
+                isVisible = buttonGroup.is(":visible");
+
+            if (isVisible) {
+                toolbar.hide(buttonGroup);
+                $(e.target).text("Show player controls");
+            } else {
+                toolbar.show(buttonGroup);
+                $(e.target).text("Hide player controls");
+            }
+        });
+
         $(".toggleRepeat").click(function () {
             var toolbar = $("#ToolBar").data("kendoToolBar"),
                 repeatButton = $("#repeat"),
                 isDisabled = repeatButton.hasClass("k-state-disabled");
 
             toolbar.enable(repeatButton, isDisabled);
+        });
+
+        $(".toggleRepeatVisibility").click(function(e) {
+            var toolbar = $("#ToolBar").data("kendoToolBar"),
+                repeatButton = $("#repeat"),
+                isVisible = repeatButton.is(":visible");
+
+            if (isVisible) {
+                toolbar.hide(repeatButton);
+                $(e.target).text("Show Repeat");
+            } else {
+                toolbar.show(repeatButton);
+                $(e.target).text("Hide Repeat");
+            }
         });
 
         $(".removeItem").click(function () {
