@@ -15,6 +15,15 @@ class Upload extends \Kendo\UI\Widget {
         return $element;
     }
 
+    /**
+    * List of files to be initially rendered in the Upload widget files list.
+    * @param array $value
+    * @return \Kendo\UI\Upload
+    */
+    public function files($value) {
+        return $this->setProperty('files', $value);
+    }
+
 //>> Properties
 
     /**
