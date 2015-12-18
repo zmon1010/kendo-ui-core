@@ -71,19 +71,25 @@
 
                 this._skipRebind = true;
 
+                var values = this.sheet.range(e.ref).values();
+
                 e.ref.forEach(function(ref) {
                     ref = ref.toRangeRef();
+                    var record;
+                    var valueIndex = 0;
                     for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row; ri++) {
-                        var record = data[ri - 1]; // skip header row
+                        record = data[ri - 1]; // skip header row
 
                         if (!record) {
                             record = dataSource.insert(ri - 1, {});
                             data = dataSource.view();
                         }
 
+                        var colValueIndex = 0;
                         for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col && ci < columns.length; ci++) {
-                            record.set(columns[ci].field, e.value);
+                            record.set(columns[ci].field, values[valueIndex][colValueIndex++]);
                         }
+                        valueIndex++;
                     }
                 });
 
