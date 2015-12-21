@@ -43,7 +43,10 @@ $chart->title(array('text' => 'Olympic Medals won by USA'))
           'type' => 'bar',
           'stack' => array('type' => '100%')
       ));
+?>
 
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
 
