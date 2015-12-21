@@ -1,15 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-<style>
-    #chart {
-        background: center no-repeat url('<%= Url.Content("~/Content/shared/world-map.png") %>')
-    }
-</style>
-</asp:Content>
-
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart()
         .Name("chart")
         .Title("Site Visitors Stats \n /thousands/")

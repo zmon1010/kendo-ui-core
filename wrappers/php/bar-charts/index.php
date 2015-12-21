@@ -33,13 +33,12 @@ $chart->addSeriesItem($total, $unique)
       ->title(array('text' => 'Site Visitors Stats \n /thousands/'))
       ->chartArea(array('background' => 'transparent'))
       ->tooltip($tooltip);
+?>
+<div class="demo-section k-content wide">
 
+<?php
 echo $chart->render();
 ?>
 
-<style type="text/css">
-    #chart {
-        background: center no-repeat url('../content/shared/styles/world-map.png');
-    }
-</style>
+</div>
 <?php require_once '../include/footer.php'; ?>

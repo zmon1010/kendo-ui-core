@@ -3,7 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <% 
              String[] categories = {
                  "Jan", "Feb", 
@@ -33,9 +33,4 @@
              <kendo:chart-tooltip visible="true" template="#= series.name #: #= value #" />
          </kendo:chart>
      </div>
-    <style>
-	    #chart {
-	    	background: center no-repeat url(<c:url value="/resources/shared/styles/world-map.png" />)
-	    }
-	</style>
 <demo:footer />

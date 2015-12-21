@@ -4,11 +4,9 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div id="example">
-    <div class="demo-section k-header">
-        <div class="box-col">
-	        <h4>Choose Extra Equipment</h4>
-             <ul>
+   <div class="demo-section k-content">
+		    <h4>Select Car Engine</h4>
+            <ul class="fieldlist">
               <li>
                    <%= Html.Kendo().RadioButton().Name("engine1").Checked(true).HtmlAttributes(new{@name = "engine"}).Label("1.4 Petrol, 92kW") %>
               </li>
@@ -31,18 +29,16 @@
                    <%= Html.Kendo().RadioButton().Name("engine7").Enable(false).HtmlAttributes(new{@name = "engine"}).Label("2.0 Diesel, 125kW") %>
               </li>
             </ul>
-        </div>
-    </div>
-    <style>
-	.demo-section.k-header {
-	    background-image: url('/Content/web/tabstrip/bmw.png');
-	    background-repeat: no-repeat;
-	    background-position: 55px 45px;
-	    width: 250px;
-	    padding-left: 515px;
-	    padding-top: 80px;
-	    height: 245px;
-	}
-    </style>   
-  </div>           
+  </div>    
+  <style>
+        .fieldlist {
+            margin: 0 0 -1em;
+            padding: 0;
+        }
+
+        .fieldlist li {
+            list-style: none;
+            padding-bottom: 1em;
+        }
+    </style>    
 </asp:Content>
