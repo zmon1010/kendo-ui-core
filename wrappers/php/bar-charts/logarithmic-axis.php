@@ -24,9 +24,11 @@ $chart->addSeriesItem($series)
       ->addValueAxisItem($valueAxis)
       ->title(array('text' => 'Fibonacci sequence'))
       ->tooltip($tooltip);
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
-
+</div>
 
 <?php require_once '../include/footer.php'; ?>

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<int>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%=Html.Kendo().Chart()
         .Name("chart")
         .Title("Fibonacci sequence")
