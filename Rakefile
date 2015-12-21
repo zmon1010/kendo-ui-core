@@ -43,7 +43,7 @@ else
     ADMIN_URL = 'http://admin.telerik.com/'
     ADMIN_RELEASE_UPLOAD_LOGIN = 'KendoBuildUser@telerik.com'
 
-    SITE_URL = "http://www1.telerik.com"
+    SITE_URL = "http://www.telerik.com"
     SITE_LOGIN = "stefan.rahnev@telerik.com"
     NUGET_SITE_URL = "https://www.nuget.org/"
     NUGET_SITE_LOGIN = "stefan.rahnev@telerik.com"
