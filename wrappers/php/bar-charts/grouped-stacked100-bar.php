@@ -79,8 +79,10 @@ $chart->title(array('text' => 'World population by age group and sex'))
               'type' => 'column',
               'stack' => array('type' => '100%')
           ));
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
-
+</div>
 <?php require_once '../include/footer.php'; ?>
