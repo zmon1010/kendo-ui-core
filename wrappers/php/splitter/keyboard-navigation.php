@@ -80,117 +80,120 @@ require_once '../lib/Kendo/Autoload.php';
     echo $outer->render();
 ?>
 
-<ul id="keyboard-nav" class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button leftAlign wider">Alt</span>
-            <span class="key-button">w</span>
-        </span>
-        <span class="button-descr">
-            focuses first splitbar
-        </span>
-    </li>
-</ul>
-
-<ul class="keyboard-legend">
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">left arrow</span>
-        </span>
-        <span class="button-descr">
-            moves focused splitbar to the left (if horizontal splitter)
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">right arrow</span>
-        </span>
-        <span class="button-descr">
-            moves focused splitbar to the right (if horizontal splitter)
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">up arrow</span>
-        </span>
-        <span class="button-descr">
-            moves focused splitbar up (if vertical splitter)
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider leftAlign">down arrow</span>
-        </span>
-        <span class="button-descr">
-            moves focused splitbar down (if vertical splitter)
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button wider rightAlign">enter</span>
-        </span>
-        <span class="button-descr">
-            accepts current position of the splitbar
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">esc</span>
-        </span>
-        <span class="button-descr">
-            returns splitbar to its initial position
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">ctrl</span>
-            <span class="key-button wider leftAlign">left arrow</span>
-        </span>
-        <span class="button-descr">
-            collapses the left pane or expands the right one
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">ctrl</span>
-            <span class="key-button wider leftAlign">right arrow</span>
-        </span>
-        <span class="button-descr">
-            collapses the right pane or expands the left one
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">ctrl</span>
-            <span class="key-button wider leftAlign">down arrow</span>
-        </span>
-        <span class="button-descr">
-            collapses the upper pane or expands the lower one
-        </span>
-    </li>
-    <li>
-        <span class="button-preview">
-            <span class="key-button">ctrl</span>
-            <span class="key-button wider leftAlign">up arrow</span>
-        </span>
-        <span class="button-descr">
-            collapses the lower pane or expands the upper one
-        </span>
-    </li>
-</ul>
-
-<script>
-    $(document).on("keydown.examples", function(e) {
-        if (e.altKey && e.keyCode === 87 /* w */) {
-            $("#horizontal").find(".k-splitbar:first").focus();
-        }
-    });
-</script>
+<div class="box wide">
+    <div class="box-col">
+    <h4>Keyboard Legend</h4>
+    <ul class="keyboard-legend">
+        <li>
+            <span class="button-preview">
+                <span class="key-button leftAlign wider">Alt</span>
+                <span class="key-button">w</span>
+            </span>
+            <span class="button-descr">
+                focuses first splitbar
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button wider leftAlign">left arrow</span>
+            </span>
+            <span class="button-descr">
+                moves focused splitbar to the left (if horizontal splitter)
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button wider leftAlign">right arrow</span>
+            </span>
+            <span class="button-descr">
+                moves focused splitbar to the right (if horizontal splitter)
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button wider leftAlign">up arrow</span>
+            </span>
+            <span class="button-descr">
+                moves focused splitbar up (if vertical splitter)
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button wider leftAlign">down arrow</span>
+            </span>
+            <span class="button-descr">
+                moves focused splitbar down (if vertical splitter)
+            </span>
+        </li>
+    </ul>
+    </div>
+    <div class="box-col">
+    <h4>&nbsp;</h4>
+    <ul class="keyboard-legend">
+        <li>
+            <span class="button-preview">
+                <span class="key-button">ctrl</span>
+                <span class="key-button wider leftAlign">left arrow</span>
+            </span>
+            <span class="button-descr">
+                collapses the left pane or expands the right one
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">ctrl</span>
+                <span class="key-button wider leftAlign">right arrow</span>
+            </span>
+            <span class="button-descr">
+                collapses the right pane or expands the left one
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">ctrl</span>
+                <span class="key-button wider leftAlign">down arrow</span>
+            </span>
+            <span class="button-descr">
+                collapses the upper pane or expands the lower one
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">ctrl</span>
+                <span class="key-button wider leftAlign">up arrow</span>
+            </span>
+            <span class="button-descr">
+                collapses the lower pane or expands the upper one
+            </span>
+        </li>
+    </ul>
+    </div>
+    <div class="box-col">
+    <h4>&nbsp;</h4>
+    <ul class="keyboard-legend">
+        <li>
+            <span class="button-preview">
+                <span class="key-button wider rightAlign">enter</span>
+            </span>
+            <span class="button-descr">
+                accepts current position of the splitbar
+            </span>
+        </li>
+        <li>
+            <span class="button-preview">
+                <span class="key-button">esc</span>
+            </span>
+            <span class="button-descr">
+                returns splitbar to its initial position
+            </span>
+        </li>
+    </ul>
+    </div>
+</div>
 
 <style>
     #vertical {
         height: 200px;
-        width: 700px;
         margin: 0 auto;
     }
 
@@ -201,21 +204,14 @@ require_once '../lib/Kendo/Autoload.php';
     .pane-content {
         padding: 0 10px;
     }
-
-    #keyboard-nav
-    {
-        padding-top: 35px;
-    }
-
-    ul.keyboard-legend li
-    {
-        margin: 5px 0 15px 5px;
-    }
-
-    div.demo-section
-    {
-        margin: 0px auto;
-    }
 </style>
+
+<script>
+    $(document).on("keydown.examples", function(e) {
+        if (e.altKey && e.keyCode === 87 /* w */) {
+            $("#horizontal").find(".k-splitbar:first").focus();
+        }
+    });
+</script>
 
 <?php require_once '../include/footer.php'; ?>

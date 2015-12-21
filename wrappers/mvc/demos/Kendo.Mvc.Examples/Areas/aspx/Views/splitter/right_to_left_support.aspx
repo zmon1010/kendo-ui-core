@@ -25,7 +25,6 @@
                     {
                         horizontalPanes.Add()
                             .HtmlAttributes(new { id = "left-pane" })
-                            .Size("220px")
                             .Collapsible(true)
                             .Content(() => { %>
                                 <div class="pane-content">
@@ -46,7 +45,6 @@
                         horizontalPanes.Add()
                             .HtmlAttributes(new { id = "right-pane" })
                             .Collapsible(true)
-                            .Size("220px")
                             .Content(() => { %>
                                 <div class="pane-content">
                                     <h3>Inner splitter / right pane</h3>

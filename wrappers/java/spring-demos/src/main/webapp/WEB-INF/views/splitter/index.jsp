@@ -60,7 +60,6 @@
 <style>
     #vertical {
         height: 380px;
-        width: 700px;
         margin: 0 auto;
     }
 

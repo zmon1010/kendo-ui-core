@@ -57,6 +57,9 @@ require_once '../lib/Kendo/Autoload.php';
     }
 </script>
 
-<div class="console"></div>
+<div class="box wide">                
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
 <?php require_once '../include/footer.php'; ?>

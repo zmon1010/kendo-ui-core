@@ -4,43 +4,54 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="configuration k-widget k-header" style="z-index:10000">
-    <span class="configHead">API Functions</span>
-    <ul class="options">
-        <li>
-            The pane index: <input id="index" type="text" value="0" class="k-textbox" style="margin-top: -5px;" />
-        </li>
-        <li>Functions:</li>
-        <li>
-                <button id="toggle" class="k-button">Expand/Collapse</button>
-        </li>
-        <li>
-            <input id="size" type="text" value="100px" class="k-textbox" /> <button id="setSize" class="k-button">Set size</button>
-        </li>
-        <li>
-            <input id="min" type="text" value="50px" class="k-textbox" /> <button id="setMinSize" class="k-button">Set minimum size</button>
-        </li>
-        <li>
-            <input id="max" type="text" value="150px" class="k-textbox" /> <button id="setMaxSize" class="k-button">Set maximum size</button>
-        </li>
-        <li>
-            <button id="appendPane" class="k-button">Append a pane</button>
-        </li>
-        <li>
-            <button id="removePane" class="k-button">Remove pane</button>
-        </li>
-        <li>
-            <button id="insertBefore" class="k-button">Insert before index</button>
-        </li>
-        <li>
-            <button id="insertAfter" class="k-button">Insert after index</button>
-        </li>
-    </ul>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Pane index</h4>
+        <ul class="options">
+            <li>
+                <input id="index" type="text" value="0" class="k-textbox" />
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Resize</h4>
+        <ul class="options">
+            <li>
+                 <button id="toggle" class="k-button">Expand/Collapse</button>
+            </li>
+            <li>
+                <input id="size" type="text" value="100px" class="k-textbox" /> <button id="setSize" class="k-button">Set size</button>
+            </li>
+            <li>
+                <input id="min" type="text" value="50px" class="k-textbox" /> <button id="setMinSize" class="k-button">Set minimum size</button>
+            </li>
+            <li>
+                <input id="max" type="text" value="150px" class="k-textbox" /> <button id="setMaxSize" class="k-button">Set maximum size</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Insert</h4>
+        <ul class="options">
+            <li>
+                <button id="appendPane" class="k-button">Append a pane</button>
+            </li>
+            <li>
+                <button id="removePane" class="k-button">Remove pane</button>
+            </li>
+            <li>
+                <button id="insertBefore" class="k-button">Insert before index</button>
+            </li>
+            <li>
+                <button id="insertAfter" class="k-button">Insert after index</button>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <% Html.Kendo().Splitter()
       .Name("splitter")
-      .HtmlAttributes(new { style = "height: 300px; width: 72%;" })
+      .HtmlAttributes(new { style = "height: 300px;" })
       .Panes(panes =>
       {
           panes.Add()
@@ -143,9 +154,9 @@
 </script>
 
 <style>
-    .configuration .options input
+    .box input
     {
-        width: 40px;
+        width: 80px;
     }
 </style>
 </asp:Content>

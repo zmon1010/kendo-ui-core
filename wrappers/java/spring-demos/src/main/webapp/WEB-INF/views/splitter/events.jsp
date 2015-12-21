@@ -7,7 +7,7 @@
 
 <c:url value="/splitter/content/1" var="ajaxContent1" />
 
-<kendo:splitter name="splitter" expand="onExpand" collapse="onCollapse" contentLoad="onContentLoad" resize="onResize">
+<kendo:splitter name="splitter" expand="onExpand" orientation="vertical" collapse="onCollapse" contentLoad="onContentLoad" resize="onResize" style="height: 400px">
     <kendo:splitter-panes>
 	    <kendo:splitter-pane id="top_pane" size="100px" collapsible="true">
 	        <p>
@@ -42,6 +42,9 @@
     }
 </script>
 
-<div class="console"></div>
+<div class="box wide">                
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
 <demo:footer />

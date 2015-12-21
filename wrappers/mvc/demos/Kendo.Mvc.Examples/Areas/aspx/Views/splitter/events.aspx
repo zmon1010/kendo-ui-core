@@ -7,6 +7,7 @@
 <% Html.Kendo().Splitter()
       .Name("splitter")
       .HtmlAttributes(new { style = "height: 400px;" })
+      .Orientation(SplitterOrientation.Vertical)
       .Events(events => events
           .Collapse("collapse")
           .Resize("resize")
@@ -35,7 +36,7 @@
               .Size("20%")
               .Content(() => { %>
                         <p>
-                           Outer splitter : bottom pane
+                           Bottom pane
                         </p>
                <% });
       })
@@ -60,6 +61,8 @@
             "</b> and starts with <b>" + $(e.pane).text().substr(0, 20) + "...</b>");
     }
 </script>
-<br/>
-<div class="console"></div>
+<div class="box wide">                
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 </asp:Content>
