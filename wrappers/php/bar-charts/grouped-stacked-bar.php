@@ -77,8 +77,10 @@ $chart->title(array('text' => 'World population by age group and sex'))
       ->seriesColors(array('#cd1533', '#d43851', '#dc5c71', '#e47f8f',
           '#eba1ad', '#009bd7', '#26aadd', '#4db9e3', '#73c8e9', '#99d7ef'))
       ->seriesDefaults(array('type' => 'column'));
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
-
+</div>
 <?php require_once '../include/footer.php'; ?>
