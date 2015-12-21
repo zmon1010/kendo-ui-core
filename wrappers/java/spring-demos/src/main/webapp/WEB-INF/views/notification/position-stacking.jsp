@@ -50,7 +50,7 @@
  <script>
 
      function onShow(e) {
-         if (!$("." + e.sender._guid)[1]) {
+         if (e.sender.getNotifications().length == 1) {
              var element = e.element.parent(),
                  eWidth = element.width(),
                  eHeight = element.height(),
