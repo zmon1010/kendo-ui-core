@@ -1,13 +1,4 @@
-@section HeadContent {
-<style>
-    #chart {
-        background: center no-repeat url('@Url.Content("~/Content/shared/world-map.png")');
-        height: 430px;
-    }
-</style>
-}
-
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     @(Html.Kendo().Chart()
         .Name("chart")
         .Title("Gross domestic product growth /GDP annual %/")
