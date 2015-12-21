@@ -47,14 +47,14 @@ $kmAxis->name('km')
 $mpgAxis= new \Kendo\Dataviz\UI\ChartValueAxisItem();
 
 $mpgAxis->name('mpg')
-       ->title(array('text' => 'miles per gallo'))
-       ->color('#642381');
+       ->title(array('text' => 'miles per gallon'))
+       ->color('#ec5e0a');
 
 $l100kmAxis= new \Kendo\Dataviz\UI\ChartValueAxisItem();
 
 $l100kmAxis->name('l100km')
            ->title(array('text' => 'liters per 100km'))
-           ->color('#e5388a');
+           ->color('#4e4141');
 
 $categoryAxis = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
 $categoryAxis->categories(array('Mon', 'Tue', 'Wed', 'Thu', 'Fri'))
@@ -66,7 +66,10 @@ $chart->title(array('text' => 'Hybrid car mileage report'))
       ->addSeriesItem($battery, $gas, $mpg, $l100km)
       ->addValueAxisItem($milesAxis, $kmAxis, $mpgAxis, $l100kmAxis)
       ->addCategoryAxisItem($categoryAxis);
-
+?>
+ <div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
