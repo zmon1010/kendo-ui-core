@@ -41,8 +41,10 @@ $chart->title(array('text' => 'Olympic Medals won by USA'))
       ->addCategoryAxisItem($categoryAxis)
       ->tooltip($tooltip)
       ->seriesDefaults(array('type' => 'bar', 'stack' => true));
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
-
+</div>
 <?php require_once '../include/footer.php'; ?>
