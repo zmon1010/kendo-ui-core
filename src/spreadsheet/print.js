@@ -1,11 +1,11 @@
 (function(f, define){
     define([ "../kendo.pdf", "./sheet", "./range", "./references", "./numformat", "../util/text-metrics" ], f);
 })(function(){
+    "use strict";
+
     if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
         return;
     }
-
-    "use strict";
 
     var spreadsheet = kendo.spreadsheet;
     var CellRef = spreadsheet.CellRef;
