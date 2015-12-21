@@ -3,25 +3,27 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-    <kendo:chart name="chart">
-    	<kendo:dataSource data="${stats}" />
- 	 	<kendo:chart-series>
- 	 		<kendo:chart-seriesItem type="column" aggregate="avg" field="value" categoryField="date" />
- 	 	</kendo:chart-series>
-        <kendo:chart-categoryAxis>
-           <kendo:chart-categoryAxisItem type="date" baseUnit="weeks">
-           	<kendo:chart-categoryAxisItem-majorGridLines visible="false"/>
-           </kendo:chart-categoryAxisItem>
-        </kendo:chart-categoryAxis>
-        <kendo:chart-valueAxis>
-           <kendo:chart-valueAxisItem >
-               <kendo:chart-valueAxisItem-line visible="false"/>
-           </kendo:chart-valueAxisItem>
-        </kendo:chart-valueAxis>
-    </kendo:chart>
-    <div class="configuration-horizontal">
-        <div class="config-section">
-        <span class="configHead">Base date unit</span>
+	<div class="demo-section k-content wide">
+	    <kendo:chart name="chart">
+	    	<kendo:dataSource data="${stats}" />
+	 	 	<kendo:chart-series>
+	 	 		<kendo:chart-seriesItem type="column" aggregate="avg" field="value" categoryField="date" />
+	 	 	</kendo:chart-series>
+	        <kendo:chart-categoryAxis>
+	           <kendo:chart-categoryAxisItem type="date" baseUnit="weeks">
+	           	<kendo:chart-categoryAxisItem-majorGridLines visible="false"/>
+	           </kendo:chart-categoryAxisItem>
+	        </kendo:chart-categoryAxis>
+	        <kendo:chart-valueAxis>
+	           <kendo:chart-valueAxisItem >
+	               <kendo:chart-valueAxisItem-line visible="false"/>
+	           </kendo:chart-valueAxisItem>
+	        </kendo:chart-valueAxis>
+	    </kendo:chart>
+	</div>
+    <div class="box wide">
+        <div class="box-col">
+        <h4>Base date unit</h4>
         <ul class="options">
             <li>
                 <input id="baseUnitAuto" name="baseUnit"
@@ -50,8 +52,8 @@
             </li>
         </ul>
         </div>
-        <div class="config-section">
-        <span class="configHead">Aggregate function</span>
+        <div class="box-col">
+        <h4>Aggregate function</h4>
         <ul class="options">
             <li>
                 <input id="aggregateMax" name="aggregate"
@@ -79,11 +81,14 @@
                 <label for="aggregateCount">Count</label>
             </li>
         </ul>
-        <p>Custom aggregate functions are supported.</p>
+        </div>
+        <div class="box-col">
+            <h4>&nbsp;</h4>
+            <p>Custom aggregate functions are supported.</p>
         </div>
     </div>
     <script>
-    	$(".configuration-horizontal").bind("change", refresh);
+    $(".box").bind("change", refresh);
 	
 	    function refresh() {
 	        var chart = $("#chart").data("kendoChart"),
@@ -101,9 +106,4 @@
 	        chart.refresh();
 	    }
 	</script>
-    <style>
-	    .k-chart {
-	        height: 300px;
-	    }
-	</style>
 <demo:footer />
