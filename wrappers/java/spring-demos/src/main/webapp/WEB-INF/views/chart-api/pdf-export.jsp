@@ -9,18 +9,18 @@
 <script src="../resources/shared/js/pako.min.js"></script>
 
 <demo:header />
-    <div class="box">
+  <div class="box wide">
         <h4>Export chart</h4>
         <div class="box-col">
             <button class='export-pdf k-button'>Save as PDF</button>
         </div>
     </div>
+    <div class="demo-section k-content wide">
     <script>
         $(".export-pdf").click(function() {
             $("#chart").getKendoChart().saveAsPDF();
         });
     </script>
-    <div class="chart-wrapper">
          <% 
              String[] categories = {
                  "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011"
@@ -57,10 +57,4 @@
              <kendo:chart-tooltip visible="true" format="{0}%" template="#= series.name #: #= value #" />
          </kendo:chart>
      </div>
-    <style>
-        #chart {
-            background: center no-repeat url(<c:url value="/resources/shared/styles/world-map.png" />);
-            height: 430px;
-        }
-    </style>
 <demo:footer />

@@ -2,30 +2,19 @@
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
 <style>
-    #chart {
-        background: center no-repeat url('@Url.Content("~/Content/shared/world-map.png")');
-        height: 430px;
-    }
-
     <!-- Load Pako ZLIB library to enable PDF compression -->
     <script src="@Url.Content("~/Scripts/pako.min.js")"></script>
 </style>
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="box">
-    <h4>Export chart</h4>
-    <div class="box-col">
-        <button class='export-pdf k-button'>Save as PDF</button>
+<div class="box wide">
+        <h4>Export chart</h4>
+        <div class="box-col">
+            <button class='export-pdf k-button'>Save as PDF</button>
+        </div>
     </div>
-</div>
-
-<script>
-    $(".export-pdf").click(function () {
-        $("#chart").getKendoChart().saveAsPDF();
-    });
-</script>
-
+    <div class="demo-section k-content wide">
 <%= Html.Kendo().Chart()
     .Name("chart")
     .Pdf(pdf => pdf
@@ -68,4 +57,10 @@
         .Template("#= series.name #: #= value #")
     )
 %>
+</div>
+<script>
+    $(".export-pdf").click(function () {
+        $("#chart").getKendoChart().saveAsPDF();
+    });
+</script>
 </asp:Content>

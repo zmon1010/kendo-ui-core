@@ -23,12 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 ?>
 
-<div class="box">
-    <h4>Export chart</h4>
-    <div class="box-col">
-        <button class='export-pdf k-button'>Save as PDF</button>
+<div class="box wide">
+        <h4>Export chart</h4>
+        <div class="box-col">
+            <button class='export-pdf k-button'>Save as PDF</button>
+        </div>
     </div>
-</div>
+    <div class="demo-section k-content wide">
 
 <script>
     $(".export-pdf").click(function() {
@@ -86,12 +87,7 @@ $chart->title($title)
 
 echo $chart->render();
 ?>
-
-<style>
-    #chart {
-        background: center no-repeat url('../content/shared/styles/world-map.png');
-    }
-</style>
+</div>
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
 <script src="../content/shared/js/pako.min.js"></script>
