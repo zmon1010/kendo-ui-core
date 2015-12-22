@@ -34,7 +34,7 @@ $chart->title(array('text' => 'Job Growth for 2011'))
       ->tooltip(array('visible' => true, 'format' => '{3}: {2:N0} applications', 'opacity' => 1))
       ->addSeriesItem($series);
 ?>
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <?= $chart->render() ?>
     <ul class="k-content">
         <li>Circle size shows number of job applicants</li>
@@ -44,20 +44,20 @@ $chart->title(array('text' => 'Job Growth for 2011'))
 </div>
 
 <style>
-.chart-wrapper {
+.demo-section {
     position: relative;
 }
 
-.chart-wrapper ul {
+.demo-section ul {
     font-size: 11px;
-    margin: 62px 16px 0 0;
+    margin: 63px 30px 0 0;
     padding: 30px;
     position: absolute;
     right: 0;
     top: 0;
     text-transform: uppercase;
-    width: 150px;
-    height: 105px;
+    width: 146px;
+    height: 94px;
 }
 </style>
 <?php require_once '../include/footer.php'; ?>

@@ -2,7 +2,7 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Job Growth for 2011" />
              <kendo:chart-legend visible="false" />
@@ -33,20 +33,20 @@
      </div>
   
     <style>
-	    .chart-wrapper {
-	        position: relative;
-	    }
-	
-	    .chart-wrapper ul {
-	        font-size: 11px;
-	        margin: 53px 20px 0 0;
-	        padding: 30px;
-	        position: absolute;
-	        right: 0;
-	        top: 0;
-	        text-transform: uppercase;
-	        width: 150px;
-	        height: 105px;
-	    }
+    .demo-section {
+        position: relative;
+    }
+
+    .demo-section ul {
+        font-size: 11px;
+        margin: 63px 30px 0 0;
+        padding: 30px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-transform: uppercase;
+        width: 146px;
+        height: 94px;
+    }
 	</style>
 <demo:footer />

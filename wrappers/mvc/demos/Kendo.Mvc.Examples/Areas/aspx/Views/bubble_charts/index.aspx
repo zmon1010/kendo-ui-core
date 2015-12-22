@@ -2,26 +2,26 @@
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
 <style>
-    .chart-wrapper {
+    .demo-section {
         position: relative;
     }
 
-    .chart-wrapper ul {
+    .demo-section ul {
         font-size: 11px;
-        margin: 53px 20px 0 0;
+        margin: 63px 30px 0 0;
         padding: 30px;
         position: absolute;
         right: 0;
         top: 0;
         text-transform: uppercase;
-        width: 150px;
-        height: 105px;
+        width: 146px;
+        height: 94px;
     }
 </style>
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart()
         .Name("chart")
         .Title("Job Growth for 2011")
