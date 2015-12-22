@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 require_once '../include/header.php';
 ?>
-<div class="chart-wrapper" style="margin: auto;">
-    <h3>1024x768 screen resolution trends</h3>
+<div class="demo-section k-content wide">
+        <h3>1024x768 screen resolution trends</h3>
 <?php
 for ($year = 2000; $year <= 2009; $year++) {
     $series = new \Kendo\Dataviz\UI\ChartSeriesItem();
@@ -37,6 +37,7 @@ for ($year = 2000; $year <= 2009; $year++) {
     $chart->title(array('text' => "$year"))
           ->dataSource($dataSource)
           ->addSeriesItem($series)
+          ->attr('class', 'small-chart')
           ->legend(array('position' => 'top'))
           ->tooltip(array(
               'visible' => true,
@@ -49,17 +50,7 @@ for ($year = 2000; $year <= 2009; $year++) {
 ?>
 </div>
 <style>
-    .chart-wrapper {
-        text-align: center;
-        height: 340px;
-        width: 700px;
-    }
-    .chart-wrapper h3 {
-        padding: 1em 0;
-        font-size: 1.5em;
-        font-weight: normal;
-    }
-    .k-chart {
+    .k-chart.small-chart {
         display: inline-block;
         width: 120px;
         height: 120px;

@@ -2,8 +2,8 @@
          Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
-    <h3>1024x768 screen resolution trends</h3>
+<div class="demo-section k-content wide">
+        <h3>1024x768 screen resolution trends</h3>
 
     <% foreach (var year in (IEnumerable<string>)ViewData["years"])
     {
@@ -33,17 +33,6 @@
      } %>
 </div>
 <style>
-    .chart-wrapper {
-        text-align: center;
-        width: 700px;
-        height: 340px;
-        margin:0 auto;
-    }
-    .chart-wrapper h3 {
-        padding: 1em 0;
-        font-size: 1.5em;
-        font-weight: normal;
-    }
     .k-chart.small-chart {
         display: inline-block;
         width: 120px;
