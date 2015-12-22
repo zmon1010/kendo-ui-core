@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 require_once '../include/header.php';
 ?>
-<div class="chart-wrapper" style="margin: auto;">
+<div class="demo-section k-content wide">
 <?php
     $series = new \Kendo\Dataviz\UI\ChartSeriesItem();
     $series->field('wind')
@@ -52,10 +52,4 @@ require_once '../include/header.php';
     echo $chart->render();
 ?>
 </div>
-<style>
-    .chart-wrapper .k-chart {
-        margin: 0 auto;
-        width: 400px;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>

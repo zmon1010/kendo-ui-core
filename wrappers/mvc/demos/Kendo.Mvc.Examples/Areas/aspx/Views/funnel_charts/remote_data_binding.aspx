@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%=
         Html.Kendo().Chart<Kendo.Mvc.Examples.Models.ElectricityProduction>()
         .Name("chart")
@@ -27,11 +27,5 @@
      %>
 </div>
 
-<style>
-    .chart-wrapper .k-chart {
-        width: 400px;
-        margin: 0 auto;
-    }
-</style>
 
 </asp:Content>
