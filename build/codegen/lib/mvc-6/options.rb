@@ -83,6 +83,12 @@ module CodeGen::MVC6::Wrappers::Options
         name.to_csharp_name
     end
 
+    def var_name
+        prefix = (name == 'virtual') ? "@" : ""
+
+        prefix + name
+    end
+
     def csharp_generic
         GENERIC_ARGS[full_name.split('.')[0].to_sym]
     end

@@ -1,8 +1,8 @@
 %if serialize?
-            var <%= name %> = <%= csharp_name %>.Serialize();
-            if (<%= name %>.Any())
+            var <%= var_name %> = <%= csharp_name %>.Serialize();
+            if (<%= var_name %>.Any())
             {
-                settings["<%= name %>"] = <%= name %>;
+                settings["<%= name %>"] = <%= var_name %>;
             }
 % if toggleable
             else if (<%= csharp_name %>.Enabled == true)

@@ -1,3 +1,6 @@
+- autocomplete.animation
+- autocomplete.datasource
+- autocomplete.popup
 - barcode.type
 - button.content
 - calendar.month

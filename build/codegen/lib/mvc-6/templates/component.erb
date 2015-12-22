@@ -1,5 +1,5 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI
         {
             var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
 
-            writer.Write(tag.ToString());
+            tag.WriteTo(writer, HtmlEncoder);
 
             base.WriteHtml(writer);
         }
