@@ -4,7 +4,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-     <div class="chart-wrapper">
+      <div class="demo-section k-content wide">
          <% 
              String[] categories = {
         		 "2002", "2003", 

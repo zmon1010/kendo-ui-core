@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="chart-wrapper">
+ <div class="demo-section k-content wide">
     <%= Html.Kendo().Chart()
             .Name("chart")
             .Title("Gross domestic product growth and standard error")
