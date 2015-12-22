@@ -7,7 +7,31 @@
 <c:url value="/api/events/read" var="readUrl" />
 
 <demo:header />
-    <div class="chart-wrapper">
+<div class="box wide">
+    <h4>Mousewheel</h4>
+    <div class="box-col">
+        <ul class="options">
+            <li>
+                <input id="reverse" type="checkbox" />
+                <label for="reverse">Reverse</label>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <ul class="options">
+            <li>
+                <label for="zoom">Zoom direction</label>
+                <select id="zoom">
+                    <option value="both">Both</option>
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="demo-section k-content wide">
          <% String[] categories = {
         		 "1952", "1956", 
         		 "1960", "1964",
@@ -34,31 +58,11 @@
                 </kendo:chart-categoryAxisItem>
              </kendo:chart-categoryAxis>
          </kendo:chart>
-    </div>
-    <div class="configuration-horizontal">
-	    <span class="configHead">Mousewheel</span>
-	    <div class="config-section">
-	        <ul class="options">
-	            <li>
-	                <input id="reverse" type="checkbox" />
-	                <label for="reverse">Reverse</label>
-	            </li>
-	        </ul>
-	    </div>
-	    <div class="config-section">
-	        <ul class="options">
-	            <li>
-	                <label for="zoom">Zoom direction</label>
-	                <select id="zoom">
-	                    <option value="both">Both</option>
-	                    <option value="left">Left</option>
-	                    <option value="right">Right</option>
-	                </select>
-	            </li>
-	        </ul>
-	    </div>
+   </div>
+	<div style="padding-top: 1em;">
+	    <h4>Console log</h4>
+	    <div class="console"></div>
 	</div>
-    <div class="console"></div>
     <script>
 	    function formatRange(e) {
 	        var categories = e.axis.categories;
@@ -102,13 +106,4 @@
 	    
         $("#reverse, #zoom").click(setOptions);
 	</script>
-	<style>
-	    .chart-wrapper, .chart-wrapper .k-chart {
-	        height: 250px;
-	    }
-	
-	    .demo-section {
-	        width: 700px;
-	    }
-	</style>	
 <demo:footer />

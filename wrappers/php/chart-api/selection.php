@@ -30,12 +30,10 @@ $chart->title(array('text' => 'Olympic Medals won by USA'))
       ->selectStart('onSelectStart')
       ->select('onSelect')
       ->selectEnd('onSelectEnd');
-
-echo $chart->render();
 ?>
-<div class="configuration-horizontal">
-    <span class="configHead">Mousewheel</span>
-    <div class="config-section">
+<div class="box wide">
+    <h4>Mousewheel</h4>
+    <div class="box-col">
         <ul class="options">
             <li>
                 <input id="reverse" type="checkbox" />
@@ -43,7 +41,7 @@ echo $chart->render();
             </li>
         </ul>
     </div>
-    <div class="config-section">
+    <div class="box-col">
         <ul class="options">
             <li>
                 <label for="zoom">Zoom direction</label>
@@ -56,8 +54,14 @@ echo $chart->render();
         </ul>
     </div>
 </div>
-<div class="demo-section">
-    <h3 class="title">Console log</h3>
+
+<div class="demo-section k-content wide">
+<?php
+echo $chart->render();
+?>
+</div>
+<div style="padding-top: 1em;">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
 
@@ -104,9 +108,4 @@ echo $chart->render();
 
     $("#reverse, #zoom").click(setOptions);
 </script>
-<style>
-    .k-chart {
-        height: 250px;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>

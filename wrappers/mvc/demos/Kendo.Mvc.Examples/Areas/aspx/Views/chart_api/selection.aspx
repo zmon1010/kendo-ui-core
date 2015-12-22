@@ -1,20 +1,32 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master"
          Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-    <style> 
-        .chart-wrapper, .chart-wrapper .k-chart {
-            height: 250px;
-        }
-
-        .demo-section {
-            width: 700px;
-        }
-    </style>
-</asp:Content>
-
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="box wide">
+    <h4>Mousewheel</h4>
+    <div class="box-col">
+        <ul class="options">
+            <li>
+                <input id="reverse" type="checkbox" />
+                <label for="reverse">Reverse</label>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <ul class="options">
+            <li>
+                <label for="zoom">Zoom direction</label>
+                <select id="zoom">
+                    <option value="both">Both</option>
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart<Kendo.Mvc.Examples.Models.ElectricityProduction>()
         .Name("chart")
         .Title("Olympic Medals won by USA")
@@ -39,34 +51,11 @@
         )
     %>
 </div>
-<div class="configuration-horizontal">
-    <span class="configHead">Mousewheel</span>
-    <div class="config-section">
-        <ul class="options">
-            <li>
-                <input id="reverse" type="checkbox" />
-                <label for="reverse">Reverse</label>
-            </li>
-        </ul>
-    </div>
-    <div class="config-section">
-        <ul class="options">
-            <li>
-                <label for="zoom">Zoom direction</label>
-                <select id="zoom">
-                    <option value="both">Both</option>
-                    <option value="left">Left</option>
-                    <option value="right">Right</option>
-                </select>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class="demo-section">
-    <h3 class="title">Console log</h3>
+<div style="padding-top: 1em;">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
+
 
 <script>
     function formatRange(e) {
