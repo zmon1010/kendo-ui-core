@@ -7,7 +7,7 @@
 <c:url value="/bubble-charts/grouped-data/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Olypmic Medals Won by Japan" />
              <kendo:chart-legend visible="false" />
@@ -44,9 +44,4 @@
              <kendo:chart-tooltip visible="true" template="#= value.x #: #= value.size # Medals" />
          </kendo:chart>
     </div>
-    <style>
-	    .chart-wrapper {
-	        position: relative;
-	    }
-	</style>
 <demo:footer />

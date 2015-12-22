@@ -1,16 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master"
 Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.JobGrowth>>" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-<style>
-    .chart-wrapper {
-        position: relative;
-    }
-</style>
-</asp:Content>
-
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart<Kendo.Mvc.Examples.Models.BubbleChartsGroupedDataViewModel>()
         .Name("chart")
         .Title("Olypmic Medals Won by Japan")
