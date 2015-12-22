@@ -2,14 +2,14 @@
 Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ElectricitySource>>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart(Model)
         .Name("chart")
         .Title("Break-up of Spain Electricity Production for 2008")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Bottom)
         )
-        .SeriesColors(new string[] { "#42a7ff", "#666666", "#999999", "#cccccc" })
+        .SeriesColors(new string[] { "#03a9f4", "#ff9800", "#fad84a", "#4caf50" })
         .Series(series =>
         {
             series.Pie(

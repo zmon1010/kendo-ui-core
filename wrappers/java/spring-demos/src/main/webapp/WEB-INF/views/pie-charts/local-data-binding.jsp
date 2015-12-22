@@ -4,11 +4,10 @@
 <demo:header />
 	<% 
          String[] colors = {
-             "#42a7ff", "#666666",
-             "#999999", "#cccccc"
+			"#03a9f4", "#ff9800", "#fad84a", "#4caf50"
          };
      %>
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart" seriesColors="<%= colors %>">
              <kendo:chart-title text="Break-up of Spain Electricity Production for 2008" />
              <kendo:chart-legend position="bottom" />
