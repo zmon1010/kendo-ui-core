@@ -65,8 +65,7 @@ $position = new \Kendo\UI\TreeListColumn();
 $position->field('Position');
 
 $phone = new \Kendo\UI\TreeListColumn();
-$phone->field('Phone')
-            ->width(200);
+$phone->field('Phone');
 
 $treeList->addColumn($position, $firstName, $phone)
      ->dataSource($dataSource)

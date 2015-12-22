@@ -1,4 +1,4 @@
-<div class="demo-section k-header">
+<div class="responsive-message"></div>
     @(Html.Kendo().TreeList<Kendo.Mvc.Examples.Models.TreeList.EmployeeDirectoryModel>()
         .Name("treelist")
         .Columns(columns =>
@@ -24,4 +24,14 @@
             })
         )
     )
-</div>
+    
+<style>
+    #treelist {
+        width: 950px;
+    }
+    @@media screen and (max-width: 1023px) {
+        #treelist {
+            display: none;
+        }
+    }
+</style>

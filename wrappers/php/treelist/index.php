@@ -81,7 +81,7 @@ $treeList = new \Kendo\UI\TreeList('treelist');
 $firstName = new \Kendo\UI\TreeListColumn();
 $firstName->field('FirstName')
             ->title('First Name')
-            ->width(220)
+            ->width(280)
             ->templateId("photo-template");
 
 $lastName = new \Kendo\UI\TreeListColumn();
@@ -117,30 +117,29 @@ $treeList->addColumn($firstName, $lastName, $position, $phone, $extension, $addr
    <div class='employee-name'>#: FirstName #</div>
 </script>
 
-<div class="demo-section k-header">
 <?php
 echo $treeList->render();
 ?>
-</div>
 
 <style>
     .employee-photo {
         display: inline-block;
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
-        background-size: 40px 44px;
+        background-size: 32px 35px;
         background-position: center center;
         vertical-align: middle;
-        line-height: 41px;
+        line-height: 32px;
         box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
     }
 
     .employee-name {
         display: inline-block;
         vertical-align: middle;
-        line-height: 41px;
-        padding-left: 10px;
+        line-height: 32px;
+        padding-left: 3px;
     }
 </style>
 

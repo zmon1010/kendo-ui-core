@@ -2,7 +2,7 @@
 Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.TreeList.EmployeeDirectoryModel>>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section k-header">
+<div class="responsive-message"></div>
     <%:Html.Kendo().TreeList<Kendo.Mvc.Examples.Models.TreeList.EmployeeDirectoryModel>()
         .Name("treelist")
         .Columns(columns =>
@@ -28,5 +28,14 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.TreeList
             })
         )
     %>
-</div>
+<style>
+    #treelist {
+        width: 950px;
+    }
+    @media screen and (max-width: 1023px) {
+        #treelist {
+            display: none;
+        }
+    }
+</style>
 </asp:Content>

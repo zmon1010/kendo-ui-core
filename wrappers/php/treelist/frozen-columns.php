@@ -115,7 +115,7 @@ $lastName->field('LastName')
 
 $position = new \Kendo\UI\TreeListColumn();
 $position->field('Position')
-        ->width(200);
+        ->width(400);
 
 $extensionField = new \Kendo\UI\TreeListColumn();
 $extensionField->field('Extension')
@@ -129,12 +129,21 @@ $treeList->addColumn($firstName, $lastName, $position, $extensionField)
      ->sortable(true)
      ->filterable(true)
      ->columnMenu(true)
-     ->dataSource($dataSource);
+     ->dataSource($dataSource)
 
 ?>
-
+<div class="responsive-message"></div>
 <?php
 echo $treeList->render();
 ?>
-
+<style>
+    #treelist {
+        width: 950px;
+    }
+    @media screen and (max-width: 1023px) {
+        #treelist {
+            display: none;
+        }
+    }
+</style>
 <?php require_once '../include/footer.php'; ?>

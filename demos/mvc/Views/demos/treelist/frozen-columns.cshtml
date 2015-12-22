@@ -1,6 +1,7 @@
 
 
         <div id="example">
+            <div class="responsive-message"></div>
             <div id="treelist"></div>
 
             <script>
@@ -67,6 +68,11 @@
             <style>
                 #treelist {
                     width: 950px;
+                }
+                @@media screen and (max-width: 1023px) {
+                    #treelist {
+                        display: none;
+                    }
                 }
             </style>
         </div>

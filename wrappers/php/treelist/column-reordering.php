@@ -115,8 +115,7 @@ $position->field('Position');
 $extensionField = new \Kendo\UI\TreeListColumn();
 $extensionField->field('Extension')
         ->title('Ext')
-        ->format('{0:#}')
-        ->width(200);
+        ->format('{0:#}');
 
 $treeList->addColumn($firstName, $lastName, $position, $extensionField)
      ->reorderable(true)

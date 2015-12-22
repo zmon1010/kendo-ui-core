@@ -14,10 +14,9 @@
    <div class='employee-name'>#: FirstName #</div>
 </script>
 
-<div class="demo-section k-header">
 <kendo:treeList name="treelist" sortable="true" filterable="true" height="540" >
     <kendo:treeList-columns>
-        <kendo:treeList-column field="firstName" title="First Name" width="220"
+        <kendo:treeList-column field="firstName" title="First Name" width="280"
         	template="<div class='employee-photo' style='background-image: url(../resources/web/treelist/people/#:employeeId#.jpg);'></div><div class='employee-name'>#: firstName #</div>">
        	</kendo:treeList-column>
         <kendo:treeList-column field="lastName" title="Last Name" width="160"></kendo:treeList-column>
@@ -50,24 +49,23 @@
 <style>
     .employee-photo {
         display: inline-block;
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
-        background-size: 40px 44px;
+        background-size: 32px 35px;
         background-position: center center;
         vertical-align: middle;
-        line-height: 41px;
+        line-height: 32px;
         box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
     }
 
     .employee-name {
         display: inline-block;
         vertical-align: middle;
-        line-height: 41px;
-        padding-left: 10px;
+        line-height: 32px;
+        padding-left: 3px;
     }
 </style>
-
-</div>
  
 <demo:footer />

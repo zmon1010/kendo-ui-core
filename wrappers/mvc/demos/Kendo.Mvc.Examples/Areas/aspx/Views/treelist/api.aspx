@@ -2,7 +2,7 @@
 Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.TreeList.EmployeeDirectoryModel>>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="box">
+<div class="box wide">
     <div class="box-col">
     <h4>Selection</h4>
     <ul class="options">
@@ -30,10 +30,10 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.TreeList
     .Name("treelist")
     .Columns(columns =>
     {
-        columns.Add().Field(e => e.FirstName).Width(250);
-        columns.Add().Field(e => e.LastName).Width(160);
-        columns.Add().Field(e => e.HireDate).Width(200).Format("{0:MMMM d, yyyy}");
-        columns.Add().Field(e => e.Extension).Width(140);
+        columns.Add().Field(e => e.FirstName);
+        columns.Add().Field(e => e.LastName);
+        columns.Add().Field(e => e.Position);
+        columns.Add().Field(e => e.Extension).Title("Ext");
     })
     .Selectable(true)    
     .DataSource(dataSource => dataSource
@@ -46,7 +46,6 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.TreeList
             m.Field(f => f.ReportsTo);
         })
     )
-    .Height(540)
 %>
 
 <script>

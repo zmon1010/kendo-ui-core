@@ -22,8 +22,8 @@
 		<kendo:treeList-column field="position" title="Position"></kendo:treeList-column>
 		<kendo:treeList-column field="hireDate" title="Hire Date" format="{0:MMMM d, yyyy}"></kendo:treeList-column>
 		<kendo:treeList-column field="phone" title="Phone" width="200"></kendo:treeList-column>
-		<kendo:treeList-column field="extension" title="Extension" width="140"></kendo:treeList-column>	
-		<kendo:treeList-column title="Edit" width="200">			
+		<kendo:treeList-column field="extension" title="Ext" width="140"></kendo:treeList-column>	
+		<kendo:treeList-column width="200">			
 			<kendo:treeList-column-command>
 				<kendo:treeList-column-commandItem name="edit"></kendo:treeList-column-commandItem>				
 				<kendo:treeList-column-commandItem name="destroy"></kendo:treeList-column-commandItem>

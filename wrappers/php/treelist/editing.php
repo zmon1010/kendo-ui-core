@@ -138,24 +138,23 @@ $position = new \Kendo\UI\TreeListColumn();
 $position->field('Position');
 
 $phone = new \Kendo\UI\TreeListColumn();
-$phone->field('Phone')
-            ->width(200);
+$phone->field('Phone');
 
 $extension = new \Kendo\UI\TreeListColumn();
 $extension->field('Extension')
             ->title('Ext')
-            ->format('{0:#}')
-            ->width(140);
+            ->format('{0:#}');
 
 $hireDate = new \Kendo\UI\TreeListColumn();
 $hireDate->field('HireDate')
+        ->title('Hire Date')
         ->format('{0:MMMM d, yyyy}');
 
 $command = new \Kendo\UI\GridColumn();
 $command->addCommandItem('edit')
         ->addCommandItem('destroy')
         ->title('Edit')
-        ->width(200);
+        ->width(250);
 
 $treeList->addColumn($firstName, $lastName, $position, $hireDate, $phone, $extension, $command)
      ->dataSource($dataSource)

@@ -11,7 +11,7 @@
 
 <demo:header />
 
-<div class="box">
+<div class="box wide">
 	<div class="box-col">
 		<h4>Selection</h4>
 		<ul class="options">
@@ -72,13 +72,12 @@
  });
 </script>
 
-<kendo:treeList name="treelist" height="540" selectable="true">		
+<kendo:treeList name="treelist" selectable="true">		
 	<kendo:treeList-columns>
-		<kendo:treeList-column field="firstName" title="First Name" width="220"></kendo:treeList-column>
-		<kendo:treeList-column field="lastName" title="Last Name" width="100"></kendo:treeList-column>
-		<kendo:treeList-column field="position" title="Position"></kendo:treeList-column>
-		<kendo:treeList-column field="hireDate" title="Hire Date" format="{0:MMMM d, yyyy}"></kendo:treeList-column>		
-		<kendo:treeList-column field="extension" title="Ext" width="140"></kendo:treeList-column>			
+		<kendo:treeList-column field="firstName" title="First Name"></kendo:treeList-column>
+		<kendo:treeList-column field="lastName" title="Last Name"></kendo:treeList-column>
+		<kendo:treeList-column field="position" title="Position"></kendo:treeList-column>	
+		<kendo:treeList-column field="extension" title="Ext"></kendo:treeList-column>			
 	</kendo:treeList-columns>	
 	<kendo:dataSource >
              <kendo:dataSource-schema>

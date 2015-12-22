@@ -7,7 +7,7 @@
 <c:url value="/treelist/frozen-columns/read" var="transportReadUrl" />
 
 <demo:header /> 
- 
+<div class="responsive-message"></div>
 <kendo:treeList name="treelist" reorderable="true" sortable="true" filterable="true" columnMenu="true">
 	<kendo:treeList-columns>
 		<kendo:treeList-column field="firstName" title="First Name" width="250" lockable="false" locked="true"></kendo:treeList-column>
@@ -41,5 +41,14 @@
             </kendo:dataSource-transport>
         </kendo:dataSource>        
 </kendo:treeList>
-  
+<style>
+    #treelist {
+        width: 950px;
+    }
+    @media screen and (max-width: 1023px) {
+        #treelist {
+            display: none;
+        }
+    }
+</style>
 <demo:footer />

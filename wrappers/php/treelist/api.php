@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $result = new DataSourceResult('sqlite:..//sample.db');
 
-    echo json_encode($result->read('EmployeeDirectory', array('EmployeeID', 'ReportsTo', 'FirstName', 'LastName', 'Extension' => array('type' => 'number'), 'HireDate'), $request));
+    echo json_encode($result->read('EmployeeDirectory', array('EmployeeID', 'ReportsTo', 'FirstName', 'LastName', 'Extension' => array('type' => 'number'), 'Position'), $request));
 
     exit;
 }
@@ -40,8 +40,8 @@ $lastNameField->type('string');
 $extentionField = new \Kendo\Data\DataSourceSchemaModelField('Extension');
 $extentionField->type('number');
 
-$hireDateField = new \Kendo\Data\DataSourceSchemaModelField('HireDate');
-$hireDateField->type('date');
+$positionField = new \Kendo\Data\DataSourceSchemaModelField('Position');
+$positionField->type('string');
 
 $employeeIDField = new \Kendo\Data\DataSourceSchemaModelField('EmployeeID');
 $employeeIDField->type('number');
@@ -57,7 +57,7 @@ $model->id("EmployeeID")
     ->addField($firstNameField)
     ->addField($lastNameField)
     ->addField($extentionField)
-    ->addField($hireDateField);
+    ->addField($positionField);
 
 $schema = new \Kendo\Data\DataSourceSchema();
 $schema->data('data')
@@ -84,19 +84,17 @@ $extension->field('Extension')
             ->title('Ext')
             ->format('{0:#}');
 
-$hireDate = new \Kendo\UI\TreeListColumn();
-$hireDate->field('HireDate')
-            ->format('{0:MMMM d, yyyy}')
-            ->title('Hire Date');
+$position = new \Kendo\UI\TreeListColumn();
+$position->field('Position')
+            ->title('Position');
 
-$treeList->addColumn($firstName, $lastName, $hireDate, $extension)
+$treeList->addColumn($firstName, $lastName, $position, $extension)
      ->dataSource($dataSource)
      ->selectable(true)
-     ->attr('style', 'height:540px');
 
 ?>
 
-<div class="box">
+<div class="box wide">
     <div class="box-col">
     <h4>Selection</h4>
     <ul class="options">
@@ -119,8 +117,6 @@ $treeList->addColumn($firstName, $lastName, $hireDate, $extension)
     </ul>
     </div>
 </div>
-
-<div id="treelist"></div>
 
 <script>
     $(document).ready(function () {
@@ -160,8 +156,10 @@ $treeList->addColumn($firstName, $lastName, $hireDate, $extension)
         $("#groupRow").keypress(toggleGroup);
     });
 </script>
+
 <?php
 echo $treeList->render();
 ?>
+
 
 <?php require_once '../include/footer.php'; ?>

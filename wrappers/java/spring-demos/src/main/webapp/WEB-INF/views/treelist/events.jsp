@@ -11,7 +11,7 @@
 
 <demo:header />
 
-<kendo:treeList name="treelist" editable="true" height="540">
+<kendo:treeList name="treelist" editable="true">
 	<kendo:treeList-edit>
 		<script>
 			function onEdit(arg) {
@@ -58,12 +58,11 @@
 		<kendo:treeList-toolbarItem name="create"/>
 	</kendo:treeList-toolbar>
 	<kendo:treeList-columns>
-		<kendo:treeList-column field="firstName" title="First Name" width="220"></kendo:treeList-column>
-		<kendo:treeList-column field="lastName" title="Last Name" width="100"></kendo:treeList-column>
-		<kendo:treeList-column field="position" title="Position"></kendo:treeList-column>
+		<kendo:treeList-column field="firstName" title="First Name"></kendo:treeList-column>
+		<kendo:treeList-column field="lastName" title="Last Name"></kendo:treeList-column>
 		<kendo:treeList-column field="hireDate" title="Hire Date" format="{0:MMMM d, yyyy}"></kendo:treeList-column>		
-		<kendo:treeList-column field="extension" title="Ext" width="140"></kendo:treeList-column>	
-		<kendo:treeList-column width="200">			
+		<kendo:treeList-column field="extension" title="Ext"></kendo:treeList-column>	
+		<kendo:treeList-column>			
 			<kendo:treeList-column-command>
 				<kendo:treeList-column-commandItem name="edit"></kendo:treeList-column-commandItem>				
 				<kendo:treeList-column-commandItem name="destroy"></kendo:treeList-column-commandItem>
@@ -108,7 +107,7 @@
         </kendo:dataSource>        
 </kendo:treeList>
 
-<div class="box console-section">
+<div class="box wide">
        <h4>Console</h4>
        <div class="console"></div>
  </div>

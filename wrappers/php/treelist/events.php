@@ -118,8 +118,7 @@ $treeList = new \Kendo\UI\TreeList('treelist');
 
 $firstName = new \Kendo\UI\TreeListColumn();
 $firstName->field('FirstName')
-            ->title('First Name')
-            ->width(250);
+            ->title('First Name');
 
 $lastName = new \Kendo\UI\TreeListColumn();
 $lastName->field('LastName')
@@ -127,7 +126,12 @@ $lastName->field('LastName')
 
 $hireDate = new \Kendo\UI\TreeListColumn();
 $hireDate->field('HireDate')
-        ->format('{0:MMMM d, yyyy}');
+            ->title('Hire Date')
+            ->format('{0:MMMM d, yyyy}');
+
+$extension = new \Kendo\UI\TreeListColumn();
+$extension->field('Extension')
+            ->title('Ext');
 
 $command = new \Kendo\UI\GridColumn();
 $command->addCommandItem('edit')
@@ -142,7 +146,6 @@ $treeList->addColumn($firstName, $lastName, $hireDate, $extension, $command)
      ->remove('onRemove')
      ->dataBinding('onDataBinding')
      ->dataBound('onDataBound')
-     ->attr('style', 'height:540px');
 
 ?>
 
@@ -172,7 +175,7 @@ echo $treeList->render();
             kendoConsole.log("TreeList data binding");
         }
 </script>
-<div class="box console-section">
+<div class="box wide">
     <h4>Console</h4>
     <div class="console"></div>
 </div>

@@ -149,12 +149,12 @@ $extension->field('Extension')
 
 $hireDate = new \Kendo\UI\TreeListColumn();
 $hireDate->field('HireDate')
+        ->title('Hire Date')
         ->format('{0:MMMM d, yyyy}');
 
 $command = new \Kendo\UI\GridColumn();
 $command->addCommandItem('edit')
         ->addCommandItem('destroy')
-        ->title('Edit')
         ->width(200);
 
 $treeList->addColumn($firstName, $lastName, $position, $hireDate, $phone, $extension, $command)

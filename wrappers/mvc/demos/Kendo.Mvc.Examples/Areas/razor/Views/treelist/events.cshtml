@@ -4,11 +4,11 @@
     .Toolbar(toolbar => toolbar.Create())
     .Columns(columns =>
     {
-        columns.Add().Field(e => e.FirstName).Width(220);
-        columns.Add().Field(e => e.LastName).Width(160);
+        columns.Add().Field(e => e.FirstName).Title("First Name");
+        columns.Add().Field(e => e.LastName).Title("Last Name");
         columns.Add().Field(e => e.HireDate).Format("{0:MMMM d, yyyy}");
         columns.Add().Field(e => e.Extension).Title("Ext").Format("{0:#}");
-        columns.Add().Title("Edit").Width(200).Command(c =>
+        columns.Add().Command(c =>
         {
             c.Edit();
             c.Destroy();
@@ -31,7 +31,6 @@
             m.Field(f => f.Position);
         })
     )
-    .Height(540)
     .Events(events => {
         events.Edit("onEdit");
         events.Save("onSave");
@@ -40,7 +39,7 @@
         events.DataBound("onDataBound");
     })
 )
-<div class="box console-section">
+<div class="box wide">
     <h4>Console</h4>
     <div class="console"></div>
 </div>
