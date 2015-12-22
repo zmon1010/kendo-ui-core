@@ -6,7 +6,7 @@
 <c:url value="/chart-api/export/save" var="proxyUrl" />
 
 <demo:header />
-    <div class="box">
+   <div class="box wide">
         <h4>Advanced Export options</h4>
         <div class="box-col">
             <button class='export-pdf k-button'>Export as PDF</button>
@@ -52,7 +52,7 @@
             });
         });
     </script>
-    <div class="chart-wrapper">
+    <div class="demo-section k-content wide">
          <%
             String[] categories = {
                 "Mon", "Tue",

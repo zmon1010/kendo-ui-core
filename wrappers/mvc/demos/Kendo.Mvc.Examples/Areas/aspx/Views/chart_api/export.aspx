@@ -8,7 +8,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="box">
+<div class="box wide">
     <h4>Advanced Export options</h4>
     <div class="box-col">
         <button class='export-pdf k-button'>Export as PDF</button>
@@ -56,7 +56,7 @@ $(".export-svg").click(function () {
 });
 </script>
 
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart()
         .Name("chart")
         .Title(title => title

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 ?>
 
-<div class="box">
+<div class="box wide">
     <h4>Advanced Export options</h4>
     <div class="box-col">
         <button class='export-pdf k-button'>Export as PDF</button>
@@ -35,6 +35,7 @@ require_once '../include/header.php';
         <button class='export-svg k-button'>Export as SVG</button>
     </div>
 </div>
+<div class="demo-section k-content wide">
 
 <script>
     $(".export-pdf").click(function() {
@@ -147,5 +148,5 @@ $chart->title($title)
 
 echo $chart->render();
 ?>
-
+</div>
 <?php require_once '../include/footer.php'; ?>
