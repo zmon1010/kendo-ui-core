@@ -3,33 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-    <div class="configuration k-widget k-header" style="width:170px;">
-        <span class="configHead">API Functions</span>
-        <ul class="options">
-            <li>
-                <input id="typeColumn" name="seriesType"
-                        type="radio" value="column" checked="checked" autocomplete="off" />
-                <label for="typeColumn">Columns</label>
-            </li>
-            <li>
-                <input id="typeBar" name="seriesType"
-                        type="radio" value="bar" autocomplete="off" />
-                <label for="typeBar">Bars</label>
-            </li>
-            <li>
-                <input id="typeLine" name="seriesType"
-                        type="radio" value="line" autocomplete="off" />
-                <label for="typeLine">Lines</label>
-            </li>
-            <li>
-                <input id="stack" type="checkbox" autocomplete="off" checked="checked" />
-                <label for="stack">Stacked</label>
-            </li>
-        </ul>
-        <p>
-            <strong>refresh()</strong> will be called on each configuration change
-        </p>
-    </div>
+    <div class="demo-section k-content wide">
     
  	 <% 
 		String[] categories = {
@@ -60,10 +34,39 @@
 		 </kendo:chart-valueAxis>
 		 <kendo:chart-tooltip visible="true" format="{0}" />
 	</kendo:chart>
-	
+	</div>
+	<div class="box wide">
+	    <div class="box-col">
+	        <h4>API Functions</h4>
+	        <ul class="options">
+	            <li>
+	                <input id="typeColumn" name="seriesType"
+	                            type="radio" value="column" checked="checked" autocomplete="off" />
+	                <label for="typeColumn">Columns</label>
+	            </li>
+	            <li>
+	                <input id="typeBar" name="seriesType"
+	                            type="radio" value="bar" autocomplete="off" />
+	                <label for="typeBar">Bars</label>
+	            </li>
+	            <li>
+	                <input id="typeLine" name="seriesType"
+	                            type="radio" value="line" autocomplete="off" />
+	                <label for="typeLine">Lines</label>
+	            </li>
+	            <li>
+	                <input id="stack" type="checkbox" autocomplete="off" checked="checked" />
+	                <label for="stack">Stacked</label>
+	            </li>
+	        </ul>
+	        <p>
+	            <strong>refresh()</strong> will be called on each configuration change
+	        </p>
+	    </div>
+	</div>
     <script>
 	     $(document).ready(function() {
-	    	 $(".configuration").bind("change", refresh);
+	    	 $(".options").bind("change", refresh);
 	     });
 	     
 	     function refresh() {
@@ -80,13 +83,4 @@
 	         chart.refresh();
 	     }
 	</script>
-	
-	<style>
-	    .k-chart {
-	        height: 280px;
-	        padding: 37px;
-	        margin: 0 0 50px 0;
-	        width: 590px;
-	    }
-	</style>
 <demo:footer />

@@ -28,12 +28,15 @@ $chart->title(array('text' => 'Site Visitors Stats /thousands/'))
     ->seriesDefaults(array('type' => 'column', 'stack' => true))
     ->addSeriesItem($total, $unique)
     ->tooltip(array('visible' => true, 'format' => '{0}'));
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
-<div class="configuration-horizontal">
-    <div class="config-section">
-        <span class="configHead">API Functions</span>
+</div>
+<div class="box wide">
+    <div class="box-col">
+        <h4>API Functions</h4>
         <ul class="options">
             <li>
                 <input id="typeColumn" name="seriesType"
@@ -61,7 +64,7 @@ echo $chart->render();
     </div>
 </div>
 <script>
-    $(".configuration-horizontal").bind("change", refresh);
+    $(".options").bind("change", refresh);
 
     function refresh() {
         var chart = $("#chart").data("kendoChart"),
