@@ -38,7 +38,15 @@ $chart->dataSource($dataSource)
       ->addCategoryAxisItem($categoryAxis)
       ->pannable($pannable)
       ->zoomable($zoomable);
+?>
+<div class="box wide">
 
+	<p>Use SHIFT + Mouse Drag Region Selection combination on mouse-enabled devices to zoom in data for a specific period of time</p>
+
+</div>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

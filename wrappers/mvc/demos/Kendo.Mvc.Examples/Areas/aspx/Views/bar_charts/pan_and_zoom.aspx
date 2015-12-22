@@ -2,13 +2,21 @@
 
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="box wide">
+
+<p>Use SHIFT + Mouse Drag Region Selection combination on mouse-enabled devices to zoom in data for a specific period of time</p>
+
+</div>
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart(Model)
         .Name("chart")
         .RenderAs(RenderingMode.Canvas)
         .Series(series => {
             series.Column(model=> model.Value).CategoryField("Category");
         })
+        .Legend(leg => 
+            leg.Visible(false)
+         )
         .CategoryAxis(axis => axis
             .Min(0)
             .Max(10)
