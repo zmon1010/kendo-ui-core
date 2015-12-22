@@ -1,4 +1,6 @@
 //http://dojo.telerik.com/@Iliana/oWAZi
+//http://dojo.telerik.com/@Iliana/olURa
+
 @accent: #ff4350;
 @base: #f8fafb;
 @background: #fff;
@@ -550,4 +552,20 @@
 
 .km-nova span.km-loading-right {
    background: @background;
+}
+
+/* Validation */
+.km-nova .km-list > li label.km-invalid,
+.km-nova .km-list fieldset .km-legend-button.km-invalid,
+.km-nova .km-list > li label.km-invalid.km-required:after {
+    color: @warning;
+}
+
+.km-nova .k-error-colored {
+    background: @warning;
+}
+
+.km-nova .k-error-colored .k-tooltip-validation,
+.km-nova .km-invalid-msg {
+    color: @background;
 }
