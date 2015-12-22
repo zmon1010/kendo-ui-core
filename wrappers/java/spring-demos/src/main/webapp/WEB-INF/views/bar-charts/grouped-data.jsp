@@ -6,7 +6,7 @@
 <c:url value="/bar-charts/grouped-data/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Stock Prices" />
              <kendo:chart-legend position="bottom" />

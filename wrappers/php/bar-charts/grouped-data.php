@@ -67,7 +67,10 @@ $chart->title(array('text' => 'Stock Prices'))
       ->addCategoryAxisItem($categoryAxis)
       ->seriesDefaults(array('type' => 'area'))
       ->tooltip($tooltip);
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
