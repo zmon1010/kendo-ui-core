@@ -608,4 +608,13 @@ test("multiple script tags are persisted", function() {
     verifyCycle('<script>var a;</script><script>var b;</script>', { scripts: true });
 });
 
+test("base64 encoded image is persisted", function() {
+    verifyCycle('<div style="background:url(data:image/png;base64,foobarbaz);"></div>');
+});
+
+test("multiple css properties are persisted", function() {
+    verifyCycle('<span style="margin:2px;padding:1px;"></span>');
+    verifyCycle('<span style="background:url(data:image/png;base64,foobarbaz);color:#ff0000;"></span>');
+});
+
 }());

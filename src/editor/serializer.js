@@ -15,7 +15,7 @@ var quoteRe = /"/g; //"
 var brRe = /<br[^>]*>/i;
 var pixelRe = /^\d+(\.\d*)?(px)?$/i;
 var emptyPRe = /<p><\/p>/i;
-var cssDeclaration = /([\w|\-]+)\s*:\s*([^;]+);?/i;
+var cssDeclaration = /(\*?[-#\/\*\\\w]+(?:\[[0-9a-z_-]+\])?)\s*:\s*((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^\)]*?\)|[^};])+)/g;
 var sizzleAttr = /^sizzle-\d+/i;
 var scriptAttr = /^k-script-/i;
 var onerrorRe = /\s*onerror\s*=\s*(?:'|")?([^'">\s]*)(?:'|")?/i;
@@ -104,15 +104,14 @@ var Serializer = {
         var browser = kendo.support.browser;
         var msie = browser.msie;
         var legacyIE = msie && browser.version < 9;
+        var originalSrc = "originalsrc";
+        var originalHref = "originalhref";
 
         html = Serializer.toEditableHtml(html);
 
         if (legacyIE) {
             // Internet Explorer removes comments from the beginning of the html
             html = "<br/>" + html;
-
-            var originalSrc = "originalsrc",
-                originalHref = "originalhref";
 
             // IE < 8 makes href and src attributes absolute
             html = html.replace(/href\s*=\s*(?:'|")?([^'">\s]*)(?:'|")?/, originalHref + '="$1"');
@@ -137,7 +136,7 @@ var Serializer = {
                 }
             });
         } else if (msie) {
-            // having unicode characters creates denormalized DOM tree in IE9
+            // unicode characters denormalize the DOM tree in IE9
             dom.normalize(root);
 
             Serializer._resetOrderedLists(root);
@@ -293,22 +292,18 @@ var Serializer = {
 
         function cssProperties(cssText) {
             var trim = $.trim;
-            var css = trim(cssText).split(';');
+            var css = trim(cssText);
             var match;
             var property, value;
             var properties = [];
-            var i, length;
 
-            for (i = 0, length = css.length; i < length; i++) {
-                if (!css[i].length) {
-                    continue;
-                }
+            cssDeclaration.lastIndex = 0;
 
-                match = cssDeclaration.exec(css[i]);
+            while (true) {
+                match = cssDeclaration.exec(css);
 
-                // IE8 does not provide a value for 'inherit'
                 if (!match) {
-                    continue;
+                    break;
                 }
 
                 property = trim(match[1].toLowerCase());
