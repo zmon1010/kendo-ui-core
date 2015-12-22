@@ -3,7 +3,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
 
-    <div class="chart-wrapper">
+    <div class="demo-section k-content wide">
         <h2>Sales statistics</h2>
         <kendo:chart name="chart-oct">
              <kendo:chart-title text="October" position="bottom" />
@@ -36,17 +36,17 @@
              <kendo:chart-tooltip visible="true" template="#= category #" />
          </kendo:chart>
     </div>
-    <div class="configuration-horizontal">
-        <div class="config-section">
-            <label class="configHead"><input type="checkbox" id="dynamicSlope"/> Dynamic Slope</label>
+    <div class="box wide">
+        <div class="box-col">
+            <h4><input type="checkbox" id="dynamicSlope"/> Dynamic Slope</h4>
             <i>The slope for each segment depends on the ratio between the current and the next value</i>
         </div>
-        <div class="config-section">
-            <label class="configHead"><input type="checkbox" id="dynamicHeight"/> Dynamic Height</label>
+        <div class="box-col">
+            <h4><input type="checkbox" id="dynamicHeight"/> Dynamic Height</h4>
             <i>The height of the segment is the overall percentage for that dataItem</i>
         </div>
-        <div class="config-section">
-            <span class="configHead">Neck Ratio</span>
+        <div class="box-col">
+            <h4>Neck Ratio</h4>
             <ul class="options">
                 <li><input id="neckSlider" value="0.3"/></li>
             </ul>
@@ -97,30 +97,25 @@
                 showButtons: false
             });
 
-            $('.configuration-horizontal').on('click', ':checkbox', refresh);
+            $('.box').on('click', ':checkbox', refresh);
         });
     </script>
 
     <style>
-        .config-section
-        {
-            width:125px;
-        }
-        .chart-wrapper {
-            height: 360px;
-            width:730px;
-            margin: 20px auto;
-        }
-        .chart-wrapper h2 {
-            padding: 20px 0 0 25px;
-        }
-        #chart-oct,
-        #chart-nov,
-        #chart-dec {
-            display: inline-block;
-            width: 180px;
-            height: 300px;
-            margin: 15px 25px;
-        }
+    .demo-section {
+        text-align: center;
+    }
+    #chart-oct,
+    #chart-nov,
+    #chart-dec {
+        display: inline-block;
+        width: 180px;
+        height: 300px;
+        margin: 15px 65px;
+    }
+    .box-col
+    {
+        width:25%;
+    }
      </style>
 <demo:footer />

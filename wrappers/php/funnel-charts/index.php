@@ -66,23 +66,23 @@ $chart_dec->title(array('position' => 'bottom', 'text' => 'December'))
       ->legend(array('visible' => false))
       ->tooltip(array('visible' => true, 'template' => '#=dataItem.category#'));
 ?>
-    <div class="chart-wrapper">
+    <div class="demo-section k-content wide">
         <h2>Sales statistics</h2>
         <?php echo $chart_oct->render() ?>
         <?php echo $chart_nov->render() ?>
         <?php echo $chart_dec->render() ?>
     </div>
-    <div class="configuration-horizontal">
-        <div class="config-section">
-            <label class="configHead"><input type="checkbox" id="dynamicSlope"/> Dynamic Slope</label> 
-            <i>The slope for each segment depends on the ratio between the current and the next value</i>           
+   <div class="box wide">
+        <div class="box-col">
+            <h4><input type="checkbox" id="dynamicSlope"/> Dynamic Slope</h4>
+            <i>The slope for each segment depends on the ratio between the current and the next value</i>
         </div>
-        <div class="config-section">
-            <label class="configHead"><input type="checkbox" id="dynamicHeight"/> Dynamic Height</label>
-            <i>The height of the segment is the overall percentage for that dataItem</i>  
+        <div class="box-col">
+            <h4><input type="checkbox" id="dynamicHeight"/> Dynamic Height</h4>
+            <i>The height of the segment is the overall percentage for that dataItem</i>
         </div>
-        <div class="config-section">
-            <span class="configHead">Neck Ratio</span>
+        <div class="box-col">
+            <h4>Neck Ratio</h4>
             <ul class="options">
                 <li><input id="neckSlider" value="0.3"/></li>
             </ul>
@@ -130,31 +130,26 @@ $chart_dec->title(array('position' => 'bottom', 'text' => 'December'))
                 showButtons: false
             });
 
-            $('.configuration-horizontal').on('click', ':checkbox', refresh);
+            $('.box').on('click', ':checkbox', refresh);
         });
 
     </script>
     <style>
-        .chart-wrapper {
-            height: 360px;
-            width:730px;
-            margin:20px auto;
-        }
-        .chart-wrapper h2 {
-            padding: 20px 0 0 25px;
-        }
-        #chart-oct,
-        #chart-nov,
-        #chart-dec {
-            display: inline-block;
-            width: 180px;
-            height: 300px;
-            margin: 15px 25px;
-        }
-        .config-section
-        {
-            width:125px;
-        }
+    .demo-section {
+        text-align: center;
+    }
+    #chart-oct,
+    #chart-nov,
+    #chart-dec {
+        display: inline-block;
+        width: 180px;
+        height: 300px;
+        margin: 15px 65px;
+    }
+    .box-col
+    {
+        width:25%;
+    }
     </style>
 
 <?php require_once '../include/footer.php'; ?>
