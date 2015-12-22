@@ -4,7 +4,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
 
-<div class="chart-wrapper">
+<div class="demo-section k-content">
     <kendo:chart name="chart">
         <kendo:chart-title text="The AIDA model" />
         <kendo:chart-legend position="top" />        
@@ -20,9 +20,9 @@
     </kendo:chart>
 </div>	
 
-<div class="configuration-horizontal">
-    <div class="config-section">
-        <span class="configHead">Show</span>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Show</h4>
         <ul class="options">
             <li>
                 <label>
@@ -33,11 +33,11 @@
                 <label>
                     <input id="showBorder" type="checkbox" checked="checked" /> Show border
                 </label>
-            </li>    
+            </li>
         </ul>
     </div>
-    <div class="config-section">
-        <span class="configHead">Align</span>
+    <div class="box-col">
+        <h4>Align</h4>
         <ul class="options">
             <li>
                 <label>
@@ -56,8 +56,8 @@
             </li>
         </ul>
     </div>
-    <div class="config-section">
-        <span class="configHead">Position</span>
+    <div class="box-col">
+        <h4>Position</h4>
         <ul class="options">
             <li>
                 <label>
@@ -76,15 +76,15 @@
             </li>
         </ul>
     </div>
-    <div class="config-section">
-        <span class="configHead">Font color</span>
+    <div class="box-col">
+        <h4>Font color</h4>
         <ul class="options">
             <li><label for="color"></label></li>
             <li><input id="color" /></li>
         </ul>
     </div>
-    <div class="config-section">
-        <span class="configHead">Font size</span>
+    <div class="box-col">
+        <h4>Font size</h4>
         <ul class="options">
             <li><input id="sizeSlider" value="15" /></li>
         </ul>
@@ -99,7 +99,7 @@ $(document).ready(function () {
         max: 40
     });
     $('#color').kendoColorPicker({ change: refresh, value: "#000", buttons: false });
-    $(".configuration-horizontal").on("change", ":checkbox,:radio", refresh);    
+    $(".box").on("change", ":checkbox,:radio", refresh);
 });
 
 function refresh() {
@@ -153,14 +153,4 @@ function refresh() {
 }
 </script>
 
-<style>
-    .chart-wrapper #chart {
-        width: 400px;
-        height: 410px;
-        margin: 0 auto;
-    }
-    .configuration-horizontal .config-section {
-        min-width: 120px;
-    }
-</style>
 <demo:footer />
