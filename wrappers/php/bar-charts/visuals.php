@@ -34,10 +34,12 @@ $chart->addSeriesItem($total, $unique)
       ->seriesDefaults(array('type' => 'column', 'stack' => true, 'visual' => new \Kendo\JavaScriptFunction('columnVisual'), 'highlight' => array('toggle' => new \Kendo\JavaScriptFunction('toggleHandler'))))
       ->title(array('text' => 'Site Visitors Stats /thousands/'))
       ->tooltip($tooltip);
-
+?>
+ <div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
-
+</div>
 <script>
     var drawing = kendo.drawing;
     var geometry = kendo.geometry;
