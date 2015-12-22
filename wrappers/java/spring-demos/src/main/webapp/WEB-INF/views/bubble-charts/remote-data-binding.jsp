@@ -3,15 +3,15 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url value="/bubble-charts/remote-data/read" var="readUrl" />
+<c:url value="/resources/dataviz/js/crime-stats.json" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-legend visible="false" />
              <kendo:dataSource>
                  <kendo:dataSource-transport>
-                     <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" />
+                     <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="GET" contentType="application/json" />
                  </kendo:dataSource-transport>
              </kendo:dataSource>
              <kendo:chart-series>
@@ -32,14 +32,4 @@
              <kendo:chart-tooltip visible="true" format="{3}: Population {2:N0}" />
          </kendo:chart>
     </div>
-    <style>
-	    .chart-wrapper .bubble {
-	        padding-top: 50px;
-	    }
-	    
-	    .chart-wrapper .bubble {
-	        width: 530px;
-	        height: 380px;
-	    }
-	</style>
 <demo:footer />

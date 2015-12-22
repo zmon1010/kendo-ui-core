@@ -1,18 +1,4 @@
-@section HeadContent {
-<style>
-    .chart-wrapper .bubble 
-    {
-        padding-top: 50px;
-    }
-    .chart-wrapper .bubble 
-    {
-        width: 530px;
-        height: 380px;
-    }
-</style>
-}
-
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     @(Html.Kendo().Chart<Kendo.Mvc.Examples.Models.CrimeData>()
         .Name("chart")
         .Legend(false)

@@ -1,22 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master"
          Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-<style>
-    .chart-wrapper .bubble 
-    {
-        padding-top: 50px;
-    }
-    .chart-wrapper .bubble 
-    {
-        width: 530px;
-        height: 380px;
-    }
-</style>
-</asp:Content>
-
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart<Kendo.Mvc.Examples.Models.CrimeData>()
         .Name("chart")
         .Legend(false)
