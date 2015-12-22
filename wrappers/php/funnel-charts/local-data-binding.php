@@ -54,26 +54,25 @@ $after->title(array('text' => 'After optimization'))
       ->tooltip(array('visible' => true, 'template' => '#= dataItem.description # #= kendo.format("{0:p}",data.value/dataItem.parent()[0].visitors)#'));
 ?>
 
-<div class="chart-wrapper">
-    <h2>Website optimization stats</h2>
+<div class="demo-section k-content wide">
+    <h4>Website optimization stats</h4>
     <?php echo $before->render();?>
     <?php echo $after->render();?>
 </div>
 
 <style>
-    .chart-wrapper {
-        height: 400px;
-        width:730px;
-        margin:20px auto;
+    .demo-section {
+        text-align: center;
     }
-    .chart-wrapper h2 {
-        padding: 20px 0 0 25px;
-    }
-    .chart-wrapper .k-chart {
+
+    .k-chart {
         display: inline-block;
-        width: 290px;
+        width: 30%;
         height: 350px;
-        margin: 0 30px 0 20px;
+    }
+
+    #before {
+        margin-right: 20px;
     }
 </style>
 

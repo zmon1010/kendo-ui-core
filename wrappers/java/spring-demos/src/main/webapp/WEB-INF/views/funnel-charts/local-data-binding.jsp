@@ -2,8 +2,8 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-     <div class="chart-wrapper">
-     	 <h2>Website optimization stats</h2>
+    <div class="demo-section k-content wide">
+    	<h4>Website optimization stats</h4>
      	 
          <kendo:chart name="before">
              <kendo:chart-title text="Before optimization" align="left">
@@ -39,17 +39,18 @@
     </div>
 
     <style>
-        .chart-wrapper {
-            height: 400px;
+        .demo-section {
+            text-align: center;
         }
-        .chart-wrapper h2 {
-            padding: 20px 0 0 25px;
-        }
-        .chart-wrapper .k-chart {
+
+        .k-chart {
             display: inline-block;
-            width: 290px;
+            width: 30%;
             height: 350px;
-            margin: 0 30px 0 20px;
+        }
+
+        #before {
+            margin-right: 20px;
         }
     </style>
 <demo:footer />
