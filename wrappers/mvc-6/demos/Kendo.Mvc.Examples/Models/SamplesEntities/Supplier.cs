@@ -1,11 +1,5 @@
-// 
-// Generated code
-// 
-
 using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
 
 namespace Kendo.Mvc.Examples.Models
 {
@@ -15,9 +9,8 @@ namespace Kendo.Mvc.Examples.Models
         {
             Products = new HashSet<Product>();
         }
-        
-        // Properties
-        public int SupplierID { get; set; }
+
+        public long SupplierID { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string CompanyName { get; set; }
@@ -29,8 +22,7 @@ namespace Kendo.Mvc.Examples.Models
         public string Phone { get; set; }
         public string PostalCode { get; set; }
         public string Region { get; set; }
-        
-        // Navigation Properties
+
         public virtual ICollection<Product> Products { get; set; }
     }
 }

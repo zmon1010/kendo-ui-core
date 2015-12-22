@@ -1,11 +1,5 @@
-// 
-// Generated code
-// 
-
 using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
 
 namespace Kendo.Mvc.Examples.Models
 {
@@ -15,8 +9,7 @@ namespace Kendo.Mvc.Examples.Models
         {
             MeetingAttendees = new HashSet<MeetingAttendee>();
         }
-        
-        // Properties
+
         public int MeetingID { get; set; }
         public string Description { get; set; }
         public DateTime End { get; set; }
@@ -29,9 +22,9 @@ namespace Kendo.Mvc.Examples.Models
         public DateTime Start { get; set; }
         public string StartTimezone { get; set; }
         public string Title { get; set; }
-        
-        // Navigation Properties
+
         public virtual ICollection<MeetingAttendee> MeetingAttendees { get; set; }
         public virtual Meeting Recurrence { get; set; }
+        public virtual ICollection<Meeting> InverseRecurrence { get; set; }
     }
 }

@@ -1,32 +1,21 @@
-// 
-// Generated code
-// 
-
 using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
 
 namespace Kendo.Mvc.Examples.Models
 {
     public partial class GanttTask
     {
-        public GanttTask()
-        {
-        }
-        
-        // Properties
-        public int ID { get; set; }
-        public DateTime End { get; set; }
-        public bool Expanded { get; set; }
-        public int OrderID { get; set; }
-        public int? ParentID { get; set; }
-        public decimal PercentComplete { get; set; }
-        public DateTime Start { get; set; }
-        public bool Summary { get; set; }
+        public long ID { get; set; }
+        public string End { get; set; }
+        public string Expanded { get; set; }
+        public long OrderID { get; set; }
+        public long? ParentID { get; set; }
+        public double PercentComplete { get; set; }
+        public string Start { get; set; }
+        public string Summary { get; set; }
         public string Title { get; set; }
-        
-        // Navigation Properties
+
         public virtual GanttTask Parent { get; set; }
+        public virtual ICollection<GanttTask> InverseParent { get; set; }
     }
 }

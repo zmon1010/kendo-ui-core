@@ -1,18 +1,811 @@
-using System;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata;
 using System.IO;
 
 namespace Kendo.Mvc.Examples.Models
 {
     public partial class SampleEntitiesDataContext : DbContext
     {
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            var dataDirectory = Path.Combine(Startup.WebRootPath, "App_Data");            
+            options.UseSqlite(@"Data Source=" + dataDirectory + @"\sample.db;");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.ForSqliteToTable("Categories");
+
+                entity.HasKey(e => e.CategoryID);
+
+                entity.HasIndex(e => e.CategoryName).HasName("Categories_CategoryName");
+
+                entity.Property(e => e.CategoryName)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(15)");
+            });
+
+            modelBuilder.Entity<CustomerCustomerDemo>(entity =>
+            {
+                entity.ForSqliteToTable("CustomerCustomerDemo");
+
+                entity.HasKey(e => new { e.CustomerID, e.CustomerTypeID });
+
+                entity.Property(e => e.CustomerID).HasColumnType("CHAR(5)");
+
+                entity.Property(e => e.CustomerTypeID).HasColumnType("CHAR(10)");
+
+                entity.HasOne(d => d.Customer).WithMany(p => p.CustomerCustomerDemo).HasForeignKey(d => d.CustomerID).OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.CustomerType).WithMany(p => p.CustomerCustomerDemo).HasForeignKey(d => d.CustomerTypeID).OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<CustomerDemographic>(entity =>
+            {
+                entity.ForSqliteToTable("CustomerDemographics");
+                entity.HasKey(e => e.CustomerTypeID);
+
+                entity.Property(e => e.CustomerTypeID).HasColumnType("CHAR(10)");
+            });
+
+            modelBuilder.Entity<Customer>(entity =>
+            {
+                entity.ForSqliteToTable("Customers");
+
+                entity.HasKey(e => e.CustomerID);
+
+                entity.HasIndex(e => e.City).HasName("Customers_City");
+
+                entity.HasIndex(e => e.CompanyName).HasName("Customers_CompanyName");
+
+                entity.HasIndex(e => e.PostalCode).HasName("Customers_PostalCode");
+
+                entity.HasIndex(e => e.Region).HasName("Customers_Region");
+
+                entity.Property(e => e.CustomerID).HasColumnType("CHAR(5)");
+
+                entity.Property(e => e.Address)
+                    .HasColumnType("NVARCHAR(60)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Bool)
+                    .HasColumnType("BOOLEAN")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.City)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.CompanyName)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(40)");
+
+                entity.Property(e => e.ContactName)
+                    .HasColumnType("NVARCHAR(30)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ContactTitle)
+                    .HasColumnType("NVARCHAR(30)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Country)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Fax)
+                    .HasColumnType("NVARCHAR(24)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Phone)
+                    .HasColumnType("NVARCHAR(24)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.PostalCode)
+                    .HasColumnType("NVARCHAR(10)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Region)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+            });
+
+            modelBuilder.Entity<EmployeeDirectory>(entity =>
+            {
+                entity.ForSqliteToTable("EmployeeDirectories");
+
+                entity.HasKey(e => e.EmployeeID);
+
+                entity.Property(e => e.Address)
+                    .HasColumnType("VARCHAR(255)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.BirthDate)
+                    .HasColumnType("DATETIME")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.City)
+                    .HasColumnType("VARCHAR(255)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Country)
+                    .HasColumnType("VARCHAR(100)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Extension)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.FirstName)
+                    .HasColumnType("VARCHAR(255)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.HireDate)
+                    .HasColumnType("DATETIME")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.LastName)
+                    .HasColumnType("VARCHAR(255)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Phone)
+                    .HasColumnType("VARCHAR(100)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Position)
+                    .HasColumnType("NVARCHAR(255)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ReportsTo)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.HasOne(d => d.ReportsToNavigation).WithMany(p => p.InverseReportsToNavigation).HasForeignKey(d => d.ReportsTo);
+            });
+
+            modelBuilder.Entity<EmployeeTerritory>(entity =>
+            {
+                entity.ForSqliteToTable("EmployeeTerritories");
+
+                entity.HasKey(e => new { e.EmployeeID, e.TerritoryID });
+
+                entity.Property(e => e.EmployeeID).HasColumnType("INT");
+
+                entity.Property(e => e.TerritoryID).HasColumnType("NVARCHAR(20)");
+
+                entity.HasOne<Employee>(d => d.Employee).WithMany(p => p.EmployeeTerritories).HasForeignKey(d => d.EmployeeID).OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.Territory).WithMany(p => p.EmployeeTerritories).HasForeignKey(d => d.TerritoryID).OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Employee>(entity =>
+            {
+                entity.ForSqliteToTable("Employees");
+
+                entity.HasKey(e => e.EmployeeID);
+
+                entity.HasIndex(e => e.LastName).HasName("Employees_LastName");
+
+                entity.HasIndex(e => e.PostalCode).HasName("Employees_PostalCode");
+
+                entity.Property(e => e.Address)
+                    .HasColumnType("NVARCHAR(60)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.BirthDate)
+                    .HasColumnType("DATETIME")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.City)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Country)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Extension)
+                    .HasColumnType("NVARCHAR(4)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(10)");
+
+                entity.Property(e => e.HireDate)
+                    .HasColumnType("DATETIME")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.HomePhone)
+                    .HasColumnType("NVARCHAR(24)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(20)");
+
+                entity.Property(e => e.PhotoPath)
+                    .HasColumnType("NVARCHAR(255)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.PostalCode)
+                    .HasColumnType("NVARCHAR(10)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Region)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ReportsTo)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Title)
+                    .HasColumnType("NVARCHAR(30)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.TitleOfCourtesy)
+                    .HasColumnType("NVARCHAR(25)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.HasOne(d => d.ReportsToNavigation).WithMany(p => p.InverseReportsToNavigation).HasForeignKey(d => d.ReportsTo);
+            });
+
+            modelBuilder.Entity<GanttDependency>(entity =>
+            {
+                entity.ForSqliteToTable("GanttDependencies");
+
+                entity.Property(e => e.PredecessorID).HasColumnType("INT");
+
+                entity.Property(e => e.SuccessorID).HasColumnType("INT");
+
+                entity.Property(e => e.Type).HasColumnType("INT");
+            });
+
+            modelBuilder.Entity<GanttResourceAssignment>(entity =>
+            {
+                entity.ForSqliteToTable("GanttResourceAssignments");
+
+                entity.Property(e => e.ResourceID).HasColumnType("INT");
+
+                entity.Property(e => e.TaskID).HasColumnType("INT");
+
+                entity.Property(e => e.Units).HasColumnType("FLOAT(5,2)");
+            });
+
+            modelBuilder.Entity<GanttResource>(entity =>
+            {
+                entity.ForSqliteToTable("GanttResources");
+
+                entity.Property(e => e.Color)
+                    .HasColumnType("CHAR(10)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(50)");
+            });
+
+            modelBuilder.Entity<GanttTask>(entity =>
+            {
+                entity.ForSqliteToTable("GanttTasks");
+
+                entity.Property(e => e.End)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(e => e.Expanded)
+                    .IsRequired()
+                    .HasColumnType("BOOLEAN");
+
+                entity.Property(e => e.OrderID).HasColumnType("INT");
+
+                entity.Property(e => e.ParentID)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.PercentComplete).HasColumnType("FLOAT(5,2)");
+
+                entity.Property(e => e.Start)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(e => e.Summary)
+                    .IsRequired()
+                    .HasColumnType("BOOLEAN");
+
+                entity.Property(e => e.Title).IsRequired();
+
+                entity.HasOne(d => d.Parent).WithMany(p => p.InverseParent).HasForeignKey(d => d.ParentID);
+            });
+
+            modelBuilder.Entity<Intraday>(entity =>
+            {
+                entity.ForSqliteToTable("Intraday");
+
+                entity.HasIndex(e => e.Date).HasName("IX_Intraday_Date");
+
+                entity.Property(e => e.Close).HasColumnType("FLOAT(9,3)");
+
+                entity.Property(e => e.Date)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(e => e.High).HasColumnType("FLOAT(9,3)");
+
+                entity.Property(e => e.Low).HasColumnType("FLOAT(9,3)");
+
+                entity.Property(e => e.Open).HasColumnType("FLOAT(9,3)");
+
+                entity.Property(e => e.Symbol)
+                    .IsRequired()
+                    .HasColumnType("VARCHAR(10)");
+
+                entity.Property(e => e.Volume).HasColumnType("INT");
+            });
+
+            modelBuilder.Entity<MeetingAttendee>(entity =>
+            {
+                entity.ForSqliteToTable("MeetingAttendees");
+
+                entity.HasKey(e => new { e.MeetingID, e.AttendeeID });
+
+                entity.Property(e => e.MeetingID).HasColumnType("INT");
+
+                entity.Property(e => e.AttendeeID).HasColumnType("INT");
+
+                entity.HasOne(d => d.Meeting).WithMany(p => p.MeetingAttendees).HasForeignKey(d => d.MeetingID).OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Meeting>(entity =>
+            {
+                entity.ForSqliteToTable("Meetings");
+
+                entity.HasKey(e => e.MeetingID);
+
+                entity.Property(e => e.End)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(e => e.IsAllDay)
+                    .IsRequired()
+                    .HasColumnType("BOOLEAN");
+
+                entity.Property(e => e.RecurrenceID)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.RoomID)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Start)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(e => e.Title).IsRequired();
+
+                entity.HasOne(d => d.Recurrence).WithMany(p => p.InverseRecurrence).HasForeignKey(d => d.RecurrenceID);
+            });
+
+            modelBuilder.Entity<OrderDetail>(entity =>
+            {
+                entity.ForSqliteToTable("OrderDetails");
+
+                entity.HasKey(e => new { e.OrderID, e.ProductID });
+
+                entity.HasIndex(e => e.OrderID).HasName("Order_Details_OrdersOrder_Details");
+
+                entity.HasIndex(e => e.ProductID).HasName("Order_Details_ProductsOrder_Details");
+
+                entity.Property(e => e.OrderID).HasColumnType("INT");
+
+                entity.Property(e => e.ProductID).HasColumnType("INT");
+
+                entity.Property(e => e.Discount)
+                    .HasColumnType("REAL(24,0)")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.Quantity)
+                    .HasColumnType("SMALLINT")
+                    .HasDefaultValueSql("1");
+
+                entity.Property(e => e.UnitPrice)
+                    .HasColumnType("FLOAT(5,2)")
+                    .HasDefaultValueSql("0");
+
+                entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails).HasForeignKey(d => d.OrderID).OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails).HasForeignKey(d => d.ProductID).OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.ForSqliteToTable("Orders");
+
+                entity.HasKey(e => e.OrderID);
+
+                entity.HasIndex(e => e.CustomerID).HasName("Orders_CustomersOrders");
+
+                entity.HasIndex(e => e.EmployeeID).HasName("Orders_EmployeesOrders");
+
+                entity.HasIndex(e => e.OrderDate).HasName("Orders_OrderDate");
+
+                entity.HasIndex(e => e.ShipPostalCode).HasName("Orders_ShipPostalCode");
+
+                entity.HasIndex(e => e.ShipVia).HasName("Orders_ShippersOrders");
+
+                entity.HasIndex(e => e.ShippedDate).HasName("Orders_ShippedDate");
+
+                entity.Property(e => e.CustomerID)
+                    .HasColumnType("CHAR(5)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.EmployeeID)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Freight)
+                    .HasColumnType("FLOAT(6,2)")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.OrderDate)
+                    .HasColumnType("DATETIME")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.RequiredDate)
+                    .HasColumnType("DATETIME")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ShipAddress)
+                    .HasColumnType("NVARCHAR(60)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ShipCity)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ShipCountry)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ShipName)
+                    .HasColumnType("NVARCHAR(40)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ShippedDate)
+                    .HasColumnType("DATETIME")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ShipPostalCode)
+                    .HasColumnType("NVARCHAR(10)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ShipRegion)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ShipVia)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.HasOne(d => d.Customer).WithMany(p => p.Orders).HasForeignKey(d => d.CustomerID);
+
+                entity.HasOne<Employee>(d => d.Employee).WithMany(p => p.Orders).HasForeignKey(d => d.EmployeeID);
+
+                entity.HasOne(d => d.ShipViaNavigation).WithMany(p => p.Orders).HasForeignKey(d => d.ShipVia);
+            });
+
+            modelBuilder.Entity<OrgChartConnection>(entity =>
+            {
+                entity.ForSqliteToTable("OrgChartConnections");
+
+                entity.Property(e => e.FromPointX)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.FromPointY)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.FromShapeId)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ToPointX)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ToPointY)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ToShapeId)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+            });
+
+            modelBuilder.Entity<OrgChartShape>(entity =>
+            {
+                entity.ForSqliteToTable("OrgChartShapes");
+
+                entity.Property(e => e.Color)
+                    .HasColumnType("NVARCHAR(50)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.JobTitle)
+                    .HasColumnType("NVARCHAR(200)")
+                    .HasDefaultValueSql("NULL");
+            });
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.ForSqliteToTable("Products");
+
+                entity.HasKey(e => e.ProductID);
+
+                entity.HasIndex(e => e.CategoryID).HasName("Products_CategoryID");
+
+                entity.HasIndex(e => e.ProductName).HasName("Products_ProductName");
+
+                entity.HasIndex(e => e.SupplierID).HasName("Products_SuppliersProducts");
+
+                entity.Property(e => e.CategoryID)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Discontinued)
+                    .IsRequired()
+                    .HasColumnType("BOOLEAN")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.ProductName)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(40)");
+
+                entity.Property(e => e.QuantityPerUnit)
+                    .HasColumnType("NVARCHAR(20)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ReorderLevel)
+                    .HasColumnType("SMALLINT")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.SupplierID)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.UnitPrice)
+                    .HasColumnType("FLOAT(5,2)")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.UnitsInStock)
+                    .HasColumnType("SMALLINT")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.UnitsOnOrder)
+                    .HasColumnType("SMALLINT")
+                    .HasDefaultValueSql("0");
+
+                entity.HasOne<Category>(d => d.Category).WithMany(p => p.Products).HasForeignKey(d => d.CategoryID);
+
+                entity.HasOne(d => d.Supplier).WithMany(p => p.Products).HasForeignKey(d => d.SupplierID);
+            });
+
+            modelBuilder.Entity<Region>(entity =>
+            {
+                entity.ForSqliteToTable("Regions");
+
+                entity.Property(e => e.RegionID).HasColumnType("INT");
+
+                entity.Property(e => e.RegionDescription)
+                    .IsRequired()
+                    .HasColumnType("CHAR(50)");
+            });
+
+            modelBuilder.Entity<Shipper>(entity =>
+            {
+                entity.ForSqliteToTable("Shippers");
+
+                entity.HasKey(e => e.ShipperID);
+
+                entity.Property(e => e.CompanyName)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(40)");
+
+                entity.Property(e => e.Phone)
+                    .HasColumnType("NVARCHAR(24)")
+                    .HasDefaultValueSql("NULL");
+            });
+
+            modelBuilder.Entity<Stock>(entity =>
+            {
+                entity.ForSqliteToTable("Stocks");
+
+                entity.HasIndex(e => e.Date).HasName("IX_Stock_Date");
+
+                entity.Property(e => e.Close).HasColumnType("FLOAT(9,3)");
+
+                entity.Property(e => e.Date)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(e => e.High).HasColumnType("FLOAT(9,3)");
+
+                entity.Property(e => e.Low).HasColumnType("FLOAT(9,3)");
+
+                entity.Property(e => e.Open).HasColumnType("FLOAT(9,3)");
+
+                entity.Property(e => e.Symbol)
+                    .IsRequired()
+                    .HasColumnType("VARCHAR(10)");
+
+                entity.Property(e => e.Volume).HasColumnType("INT");
+            });
+
+            modelBuilder.Entity<Supplier>(entity =>
+            {
+                entity.ForSqliteToTable("Suppliers");
+
+                entity.HasKey(e => e.SupplierID);
+
+                entity.HasIndex(e => e.CompanyName).HasName("Suppliers_CompanyName");
+
+                entity.HasIndex(e => e.PostalCode).HasName("Suppliers_PostalCode");
+
+                entity.Property(e => e.Address)
+                    .HasColumnType("NVARCHAR(60)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.City)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.CompanyName)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(40)");
+
+                entity.Property(e => e.ContactName)
+                    .HasColumnType("NVARCHAR(30)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.ContactTitle)
+                    .HasColumnType("NVARCHAR(30)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Country)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Fax)
+                    .HasColumnType("NVARCHAR(24)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Phone)
+                    .HasColumnType("NVARCHAR(24)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.PostalCode)
+                    .HasColumnType("NVARCHAR(10)")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Region)
+                    .HasColumnType("NVARCHAR(15)")
+                    .HasDefaultValueSql("NULL");
+            });
+
+            modelBuilder.Entity<Task>(entity =>
+            {
+                entity.ForSqliteToTable("Tasks");
+
+                entity.HasKey(e => e.TaskID);
+
+                entity.Property(e => e.End)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(e => e.IsAllDay)
+                    .IsRequired()
+                    .HasColumnType("BOOLEAN");
+
+                entity.Property(e => e.OwnerID)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.RecurrenceID)
+                    .HasColumnType("INT")
+                    .HasDefaultValueSql("NULL");
+
+                entity.Property(e => e.Start)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(e => e.Title).IsRequired();
+
+                entity.HasOne(d => d.Recurrence).WithMany(p => p.InverseRecurrence).HasForeignKey(d => d.RecurrenceID);
+            });
+
+            modelBuilder.Entity<Territory>(entity =>
+            {
+                entity.ForSqliteToTable("Territories");
+
+                entity.HasKey(e => e.TerritoryID);
+
+                entity.Property(e => e.TerritoryID).HasColumnType("NVARCHAR(20)");
+
+                entity.Property(e => e.RegionID).HasColumnType("INT");
+
+                entity.Property(e => e.TerritoryDescription)
+                    .IsRequired()
+                    .HasColumnType("CHAR(50)");
+
+                entity.HasOne(d => d.Region).WithMany(p => p.Territories).HasForeignKey(d => d.RegionID).OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<UrbanArea>(entity =>
+            {
+                entity.ForSqliteToTable("UrbanAreas");
+
+                entity.Property(e => e.City)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(256)");
+
+                entity.Property(e => e.Country)
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR(256)");
+
+                entity.Property(e => e.Country_ISO3)
+                    .IsRequired()
+                    .HasColumnType("CHAR(3)");
+
+                entity.Property(e => e.Latitude).HasColumnType("FLOAT(9,6)");
+
+                entity.Property(e => e.Longitude).HasColumnType("FLOAT(9,6)");
+
+                entity.Property(e => e.Pop1950).HasColumnType("INT");
+
+                entity.Property(e => e.Pop1955).HasColumnType("INT");
+
+                entity.Property(e => e.Pop1960).HasColumnType("INT");
+
+                entity.Property(e => e.Pop1965).HasColumnType("INT");
+
+                entity.Property(e => e.Pop1970).HasColumnType("INT");
+
+                entity.Property(e => e.Pop1975).HasColumnType("INT");
+
+                entity.Property(e => e.Pop1980).HasColumnType("INT");
+
+                entity.Property(e => e.Pop1985).HasColumnType("INT");
+
+                entity.Property(e => e.Pop1990).HasColumnType("INT");
+
+                entity.Property(e => e.Pop1995).HasColumnType("INT");
+
+                entity.Property(e => e.Pop2000).HasColumnType("INT");
+
+                entity.Property(e => e.Pop2005).HasColumnType("INT");
+
+                entity.Property(e => e.Pop2010).HasColumnType("INT");
+
+                entity.Property(e => e.Pop2015).HasColumnType("INT");
+
+                entity.Property(e => e.Pop2020).HasColumnType("INT");
+
+                entity.Property(e => e.Pop2025).HasColumnType("INT");
+
+                entity.Property(e => e.Pop2050).HasColumnType("INT");
+            });
+        }
+
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CustomerCustomerDemo> CustomerCustomerDemo { get; set; }
         public virtual DbSet<CustomerDemographic> CustomerDemographics { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<EmployeeDirectory> EmployeeDirectories { get; set; }
+        public virtual DbSet<EmployeeTerritory> EmployeeTerritories { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<EmployeeTerritories> EmployeeTerritories { get; set; }
         public virtual DbSet<GanttDependency> GanttDependencies { get; set; }
         public virtual DbSet<GanttResourceAssignment> GanttResourceAssignments { get; set; }
         public virtual DbSet<GanttResource> GanttResources { get; set; }
@@ -20,7 +813,7 @@ namespace Kendo.Mvc.Examples.Models
         public virtual DbSet<Intraday> Intraday { get; set; }
         public virtual DbSet<MeetingAttendee> MeetingAttendees { get; set; }
         public virtual DbSet<Meeting> Meetings { get; set; }
-        public virtual DbSet<Order_Detail> Order_Details { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrgChartConnection> OrgChartConnections { get; set; }
         public virtual DbSet<OrgChartShape> OrgChartShapes { get; set; }
@@ -32,383 +825,7 @@ namespace Kendo.Mvc.Examples.Models
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Territory> Territories { get; set; }
         public virtual DbSet<UrbanArea> UrbanAreas { get; set; }
-        public virtual DbSet<Weather> Weather { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // Should be a better way to obtain the webroot path here
-            var dataDirectory = Path.Combine(Startup.WebRootPath, "App_Data");
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;AttachDbFilename=" + dataDirectory + @"\Sample.mdf;Integrated Security=True;");
-
-            base.OnConfiguring(optionsBuilder);
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Category>(entity =>
-            {
-                entity.ForSqlServerToTable("Categories");
-                entity.HasKey(e => e.CategoryID);
-                
-                entity.Property(e => e.CategoryID)
-                      .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<CustomerCustomerDemo>(entity =>
-            {
-                entity.HasKey(e => new { e.CustomerID, e.CustomerTypeID });
-            });
-            
-            modelBuilder.Entity<CustomerDemographic>(entity =>
-            {
-                entity.ForSqlServerToTable("CustomerDemographics");
-                entity.HasKey(e => e.CustomerTypeID);
-            });
-            
-            modelBuilder.Entity<Customer>(entity =>
-            {
-                entity.ForSqlServerToTable("Customers");
-                entity.HasKey(e => e.CustomerID);
-            });
-            
-            modelBuilder.Entity<EmployeeDirectory>(entity =>
-            {
-                entity.HasKey(e => e.EmployeeID);
-                
-                entity.Property(e => e.EmployeeID)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<Employee>(entity =>
-            {
-                entity.ForSqlServerToTable("Employees");
-
-                entity.HasKey(e => e.EmployeeID);
-                
-                entity.Property(e => e.EmployeeID)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<EmployeeTerritories>(entity =>
-            {
-                entity.HasKey(e => new { e.EmployeeID, e.TerritoryID });
-            });
-            
-            modelBuilder.Entity<GanttDependency>(entity =>
-            {
-                entity.ForSqlServerToTable("GanttDependencies");
-
-                entity.Property(e => e.ID)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<GanttResourceAssignment>(entity =>
-            {
-                entity.ForSqlServerToTable("GanttResourceAssignments");
-
-                entity.Property(e => e.ID)
-                    .UseSqlServerIdentityColumn();
-                
-                entity.Property(e => e.Units)
-                      .HasColumnType("decimal(5, 2)");
-            });
-            
-            modelBuilder.Entity<GanttResource>(entity =>
-            {
-                entity.ForSqlServerToTable("GanttResources");
-
-                entity.Property(e => e.ID)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<GanttTask>(entity =>
-            {
-                entity.ForSqlServerToTable("GanttTasks");
-
-                entity.Property(e => e.ID)
-                    .UseSqlServerIdentityColumn();
-                
-                entity.Property(e => e.PercentComplete)
-                    .HasColumnType("decimal(5, 2)");
-            });
-            
-            modelBuilder.Entity<Intraday>(entity =>
-            {
-                entity.Property(e => e.ID)
-                    .UseSqlServerIdentityColumn();
-                
-                entity.Property(e => e.Close)
-                    .HasColumnType("decimal(9, 3)");
-                
-                entity.Property(e => e.High)
-                    .HasColumnType("decimal(9, 3)");
-                
-                entity.Property(e => e.Low)
-                    .HasColumnType("decimal(9, 3)");
-                
-                entity.Property(e => e.Open)
-                    .HasColumnType("decimal(9, 3)");
-            });
-            
-            modelBuilder.Entity<MeetingAttendee>(entity =>
-            {
-                entity.ForSqlServerToTable("MeetingAttendees");
-                entity.HasKey(e => new { e.MeetingID, e.AttendeeID });
-            });
-            
-            modelBuilder.Entity<Meeting>(entity =>
-            {
-                entity.ForSqlServerToTable("Meetings");
-
-                entity.HasKey(e => e.MeetingID);
-                
-                entity.Property(e => e.MeetingID)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<Order_Detail>(entity =>
-            {
-                entity.HasKey(e => new { e.OrderID, e.ProductID });
-                
-                entity.ForSqlServerToTable("Order Details");
-                
-                entity.Property(e => e.Discount)
-                    .Metadata.SqlServer().DefaultValue = 0D;
-                
-                entity.Property(e => e.Quantity)
-                    .Metadata.SqlServer().DefaultValue = 1;
-                
-                entity.Property(e => e.UnitPrice)
-                    .HasColumnType("decimal(5, 2)");
-                
-                entity.Property(e => e.UnitPrice)
-                    .Metadata.SqlServer().DefaultValue = 0m;
-            });
-            
-            modelBuilder.Entity<Order>(entity =>
-            {
-                entity.ForSqlServerToTable("Orders");
-                entity.HasKey(e => e.OrderID);
-                
-                entity.Property(e => e.OrderID)
-                    .UseSqlServerIdentityColumn();
-                
-                entity.Property(e => e.Freight)
-                    .HasColumnType("decimal(6, 2)");
-                
-                entity.Property(e => e.Freight)
-                    .Metadata.SqlServer().DefaultValue = 0m;
-            });
-            
-            modelBuilder.Entity<OrgChartConnection>(entity =>
-            {
-                entity.ForSqlServerToTable("OrgChartConnections");
-
-                entity.Property(e => e.Id)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<OrgChartShape>(entity =>
-            {
-                entity.ForSqlServerToTable("OrgChartShapes");
-
-                entity.Property(e => e.Id)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<Product>(entity =>
-            {
-                entity.ForSqlServerToTable("Products");
-
-                entity.HasKey(e => e.ProductID);
-                
-                entity.Property(e => e.ProductID)
-                    .UseSqlServerIdentityColumn();
-                
-                entity.Property(e => e.Discontinued)
-                    .Metadata.SqlServer().DefaultValue = false;
-                
-                entity.Property(e => e.ReorderLevel)
-                    .Metadata.SqlServer().DefaultValue = 0;
-                
-                entity.Property(e => e.UnitPrice)
-                    .HasColumnType("decimal(5, 2)");
-                
-                entity.Property(e => e.UnitPrice)
-                    .Metadata.SqlServer().DefaultValue = 0m;
-                
-                entity.Property(e => e.UnitsInStock)
-                    .Metadata.SqlServer().DefaultValue = 0;
-                
-                entity.Property(e => e.UnitsOnOrder)
-                    .Metadata.SqlServer().DefaultValue = 0;
-            });
-            
-            modelBuilder.Entity<Region>(entity =>
-            {
-            });
-            
-            modelBuilder.Entity<Shipper>(entity =>
-            {
-                entity.ForSqlServerToTable("Shippers");
-                entity.HasKey(e => e.ShipperID);
-                
-                entity.Property(e => e.ShipperID)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<Stock>(entity =>
-            {
-                entity.Property(e => e.ID)
-                    .UseSqlServerIdentityColumn();
-                
-                entity.Property(e => e.Close)
-                    .HasColumnType("decimal(9, 3)");
-                
-                entity.Property(e => e.High)
-                    .HasColumnType("decimal(9, 3)");
-                
-                entity.Property(e => e.Low)
-                    .HasColumnType("decimal(9, 3)");
-                
-                entity.Property(e => e.Open)
-                    .HasColumnType("decimal(9, 3)");
-            });
-            
-            modelBuilder.Entity<Supplier>(entity =>
-            {
-                entity.ForSqlServerToTable("Suppliers");
-                entity.HasKey(e => e.SupplierID);
-                
-                entity.Property(e => e.SupplierID)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<Task>(entity =>
-            {
-                entity.ForSqlServerToTable("Tasks");
-
-                entity.HasKey(e => e.TaskID);
-                
-                entity.Property(e => e.TaskID)
-                    .UseSqlServerIdentityColumn();
-            });
-            
-            modelBuilder.Entity<Territory>(entity =>
-            {
-                entity.ForSqlServerToTable("Territories");
-
-                entity.HasKey(e => e.TerritoryID);
-            });
-            
-            modelBuilder.Entity<UrbanArea>(entity =>
-            {
-                entity.ForSqlServerToTable("UrbanAreas");
-
-                entity.Property(e => e.ID)
-                    .UseSqlServerIdentityColumn();
-                
-                entity.Property(e => e.Latitude)
-                    .HasColumnType("decimal(9, 6)");
-                
-                entity.Property(e => e.Longitude)
-                    .HasColumnType("decimal(9, 6)");
-            });
-            
-            modelBuilder.Entity<Weather>(entity =>
-            {
-                entity.Property(e => e.ID)
-                    .UseSqlServerIdentityColumn();
-                
-                entity.Property(e => e.Gust)
-                    .HasColumnType("decimal(5, 2)");
-                
-                entity.Property(e => e.Rain)
-                    .HasColumnType("decimal(5, 2)");
-                
-                entity.Property(e => e.Snow)
-                    .HasColumnType("decimal(5, 2)");
-                
-                entity.Property(e => e.TMax)
-                    .HasColumnType("decimal(5, 2)");
-                
-                entity.Property(e => e.TMin)
-                    .HasColumnType("decimal(5, 2)");
-                
-                entity.Property(e => e.Wind)
-                    .HasColumnType("decimal(5, 2)");
-            });
-            
-            modelBuilder.Entity<CustomerCustomerDemo>(entity =>
-            {
-                entity.HasOne(d => d.Customer).WithMany(p => p.CustomerCustomerDemo).HasForeignKey(d => d.CustomerID);                
-                entity.HasOne(d => d.CustomerType).WithMany(p => p.CustomerCustomerDemo).HasForeignKey(d => d.CustomerTypeID);
-            });
-            
-            modelBuilder.Entity<EmployeeDirectory>(entity =>
-            {                
-                entity.HasOne(d => d.EmployeeDirectory2).WithMany(p => p.EmployeeDirectory1).HasForeignKey(d => d.ReportsTo);
-            });
-            
-            modelBuilder.Entity<Employee>(entity =>
-            {
-                entity.HasOne(d => d.ReportsToNavigation).WithOne().HasForeignKey<Employee>(d => d.ReportsTo);
-            });
-            
-            modelBuilder.Entity<EmployeeTerritories>(entity =>
-            {
-                entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeTerritories).HasForeignKey(d => d.EmployeeID);
-                
-                entity.HasOne(d => d.Territory).WithMany(p => p.EmployeeTerritories).HasForeignKey(d => d.TerritoryID);
-            });
-            
-            modelBuilder.Entity<GanttTask>(entity =>
-            {
-                entity.HasOne(d => d.Parent).WithOne().HasForeignKey<GanttTask>(d => d.ParentID);
-            });
-            
-            modelBuilder.Entity<MeetingAttendee>(entity =>
-            {
-                entity.HasOne(d => d.Meeting).WithMany(p => p.MeetingAttendees).HasForeignKey(d => d.MeetingID);
-            });
-            
-            modelBuilder.Entity<Meeting>(entity =>
-            {
-                entity.HasOne(d => d.Recurrence).WithOne().HasForeignKey<Meeting>(d => d.RecurrenceID);
-            });
-            
-            modelBuilder.Entity<Order_Detail>(entity =>
-            {
-                entity.HasOne(d => d.Order).WithMany(p => p.Order_Details).HasForeignKey(d => d.OrderID);
-                
-                entity.HasOne(d => d.Product).WithMany(p => p.Order_Details).HasForeignKey(d => d.ProductID);
-            });
-            
-            modelBuilder.Entity<Order>(entity =>
-            {
-                entity.HasOne(d => d.Customer).WithMany(p => p.Orders).HasForeignKey(d => d.CustomerID);
-                
-                entity.HasOne(d => d.Employee).WithMany(p => p.Orders).HasForeignKey(d => d.EmployeeID);
-                
-                entity.HasOne(d => d.ShipViaNavigation).WithMany(p => p.Orders).HasForeignKey(d => d.ShipVia);
-            });
-            
-            modelBuilder.Entity<Product>(entity =>
-            {
-                entity.HasOne(d => d.Category).WithMany(p => p.Products).HasForeignKey(d => d.CategoryID);
-                
-                entity.HasOne(d => d.Supplier).WithMany(p => p.Products).HasForeignKey(d => d.SupplierID);
-            });
-            
-            modelBuilder.Entity<Task>(entity =>
-            {
-                entity.HasOne(d => d.Recurrence).WithOne().HasForeignKey<Task>(d => d.RecurrenceID);
-            });
-            
-            modelBuilder.Entity<Territory>(entity =>
-            {
-                entity.HasOne(d => d.Region).WithMany(p => p.Territories).HasForeignKey(d => d.RegionID);
-            });
-        }
+        // Unable to generate entity type for table 'Weather'. Please see the warning messages.
     }
 }

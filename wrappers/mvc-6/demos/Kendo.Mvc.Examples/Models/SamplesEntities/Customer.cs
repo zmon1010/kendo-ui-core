@@ -1,11 +1,5 @@
-// 
-// Generated code
-// 
-
 using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
 
 namespace Kendo.Mvc.Examples.Models
 {
@@ -16,11 +10,10 @@ namespace Kendo.Mvc.Examples.Models
             CustomerCustomerDemo = new HashSet<CustomerCustomerDemo>();
             Orders = new HashSet<Order>();
         }
-        
-        // Properties
+
         public string CustomerID { get; set; }
         public string Address { get; set; }
-        public bool? Bool { get; set; }
+        public bool Bool { get; set; }
         public string City { get; set; }
         public string CompanyName { get; set; }
         public string ContactName { get; set; }
@@ -30,8 +23,7 @@ namespace Kendo.Mvc.Examples.Models
         public string Phone { get; set; }
         public string PostalCode { get; set; }
         public string Region { get; set; }
-        
-        // Navigation Properties
+
         public virtual ICollection<CustomerCustomerDemo> CustomerCustomerDemo { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }

@@ -1,30 +1,17 @@
-// 
-// Generated code
-// 
-
 using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
 
 namespace Kendo.Mvc.Examples.Models
 {
     public partial class Intraday
     {
-        public Intraday()
-        {
-        }
-        
-        // Properties
-        public int ID { get; set; }
-        public decimal Close { get; set; }
-        public DateTime Date { get; set; }
-        public decimal High { get; set; }
-        public decimal Low { get; set; }
-        public decimal Open { get; set; }
+        public long ID { get; set; }
+        public double Close { get; set; }
+        public string Date { get; set; }
+        public double High { get; set; }
+        public double Low { get; set; }
+        public double Open { get; set; }
         public string Symbol { get; set; }
         public long Volume { get; set; }
-        
-        // Navigation Properties
     }
 }

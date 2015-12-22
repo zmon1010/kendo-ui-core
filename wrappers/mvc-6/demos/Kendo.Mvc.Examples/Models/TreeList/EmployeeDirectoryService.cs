@@ -24,7 +24,7 @@
                 Phone = employee.Phone,
                 Position = employee.Position,
                 Extension = employee.Extension,
-                hasChildren = employee.EmployeeDirectory1.Any()
+                hasChildren = employee.InverseReportsToNavigation.Any()
             };
         }
 
@@ -51,7 +51,7 @@
                 Phone = employee.Phone,
                 Position = employee.Position,
                 Extension = employee.Extension,
-                hasChildren = employee.EmployeeDirectory1.Any(predicate)
+                hasChildren = employee.InverseReportsToNavigation.Any(predicate)
             };
         }
     }
@@ -74,7 +74,7 @@
         {
             var employees = db.EmployeeDirectories.ToList();
             employees.Each(e => {
-                e.EmployeeDirectory1 = employees.Where(ee => ee.ReportsTo == e.EmployeeID).ToList();                
+                e.InverseReportsToNavigation = employees.Where(ee => ee.ReportsTo == e.EmployeeID).ToList();                
             });
 
             return employees.AsQueryable();

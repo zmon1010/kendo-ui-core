@@ -1,10 +1,11 @@
 {
   "webroot": "wwwroot",
   "version": "1.0.0-*",
-  "dependencies": {    
+  "dependencies": {
     "EntityFramework.Relational": "7.0.0-rc1-final",
-    "EntityFramework.Commands": "7.0.0-rc1-final",
-    "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
+    "EntityFramework.Commands": "7.0.0-rc1-final",    
+    "EntityFramework.Sqlite": "7.0.0-rc1-final",
+    "EntityFramework.Sqlite.Design": "7.0.0-rc1-final",
     "EntityFramework.Core": "7.0.0-rc1-final",
     "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",
     "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-rc1-final",
