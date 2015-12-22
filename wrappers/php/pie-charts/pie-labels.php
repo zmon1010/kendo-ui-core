@@ -26,12 +26,15 @@ $chart->title(array('text' => 'What is you favourite sport?'))
               'background' => 'transparent'
           )
       ));
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
-<div class="configuration-horizontal">
-    <div class="config-section">
-        <span class="configHead">Labels Configuration</span>
+</div>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Labels Configuration</h4>
         <ul class="options">
             <li>
                 <input id="labels" checked="checked" type="checkbox" autocomplete="off" />
@@ -52,7 +55,7 @@ echo $chart->render();
 </div>
 <script>
 $(document).ready(function() {
-    $(".configuration-horizontal").bind("change", refresh);
+    $(".box").bind("change", refresh);
 });
 
 function refresh() {

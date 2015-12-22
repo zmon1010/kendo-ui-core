@@ -26,7 +26,10 @@ $chart->title(array('position' => 'bottom', 'text' => 'Share of Internet Populat
       ->addSeriesItem($series)
       ->legend(array('visible' => false))
       ->tooltip(array('visible' => true, 'template' => '#= category # (#= series.name #): #= value #%'));
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

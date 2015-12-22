@@ -1,4 +1,4 @@
-<div class="chart-wrapper">
+<div class="demo-section k-content wide" >
     @(Html.Kendo().Chart()
         .Name("chart")
                 .Title(title => title
@@ -7,6 +7,7 @@
         .Legend(legend => legend
             .Visible(false)
         )
+        .HtmlAttributes(new { style="background: center no-repeat url(" + @Url.Content("~/Content/shared/world-map.png")})
         .Series(series => {
             series.Pie(new dynamic[] {
                 new {category="Asia",value=53.8,color="#9de219"},
