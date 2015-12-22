@@ -1,30 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-<style>       
-    .k-chart {
-        height: 280px;
-        padding: 37px;
-        margin: 0 0 50px 0;
-        width: 390px;
-    }
-</style>
-</asp:Content>
-
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="configuration k-widget k-header" style="width: 80px">
-    <span class="configHead">Gap and spacing</span>
-    <ul class="options">
-        <li>
-            <button id="getGap" class="k-button">Set gap</button>
-            <input id="gap" type="number" value="1.5" step="0.1" style="width: 60px;" />
-        </li>
-        <li>
-            <button id="getSpacing" class="k-button">Set spacing</button>
-            <input id="spacing" type="number" value="0.4" step="0.1" style="width: 60px;" />
-        </li>
-    </ul>
-</div>
+<div class="demo-section k-content wide">
 <%= Html.Kendo().Chart()
         .Name("chart")
         .Title("Internet Users")
@@ -44,6 +21,27 @@
             .Format("{0}%")
         )
 %>
+</div>
+<div class="box wide">
+    <div class="box-col">
+        <h4>Gap</h4>
+        <ul class="options">
+            <li>
+                <input id="gap" type="number" value="1.5" step="0.1" style="width: 80px;" />
+                <button id="getGap" class="k-button">Set gap</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <h4>Spacing</h4>
+        <ul class="options">
+            <li>
+                <input id="spacing" type="number" value="0.4" step="0.1" style="width: 80px;" />
+                <button id="getSpacing" class="k-button">Set spacing</button>
+            </li>
+        </ul>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         var chart = $("#chart").data("kendoChart"),

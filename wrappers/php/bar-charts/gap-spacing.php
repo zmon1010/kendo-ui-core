@@ -31,28 +31,31 @@ $chart->addSeriesItem($total, $unique)
       ->chartArea(array('background' => 'transparent'))
       ->title(array('text' => 'Site Visitors Stats /thousands/'))
       ->tooltip($tooltip);
-
+?>
+<div class="demo-section k-content wide">
+<?php 
 echo $chart->render();
 ?>
-<div class="configuration-horizontal">
-    <div class="config-section">
-        <span class="configHead">Gap</span>
-        <ul class="options">
-            <li>
-                <input id="gap" type="number" value="1.5" step="0.1" style="width: 60px;" />
-                <button id="getGap" class="k-button">Set gap</button
-            </li>
-        </ul>
-    </div>
-    <div class="config-section">
-        <span class="configHead">Spacing</span>
-        <ul class="options">
-            <li>
-                <input id="spacing" type="number" value="0.4" step="0.1" style="width: 60px;" />
-                <button id="getSpacing" class="k-button">Set spacing</button>
-            </li>
-        </ul>
-    </div>
+</div>
+<div class="box wide">
+        <div class="box-col">
+            <h4>Gap</h4>
+            <ul class="options">
+                <li>
+                    <input id="gap" type="number" value="1.5" step="0.1" style="width: 80px;" />
+                    <button id="getGap" class="k-button">Set gap</button>
+                </li>
+            </ul>
+        </div>
+        <div class="box-col">
+            <h4>Spacing</h4>
+            <ul class="options">
+                <li>
+                    <input id="spacing" type="number" value="0.4" step="0.1" style="width: 80px;" />
+                    <button id="getSpacing" class="k-button">Set spacing</button>
+                </li>
+            </ul>
+        </div>
 </div>
 <script>
 $(document).ready(function () {
