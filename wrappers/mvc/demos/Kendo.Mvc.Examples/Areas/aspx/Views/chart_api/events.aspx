@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
     <%= Html.Kendo().Chart<Kendo.Mvc.Examples.Models.ElectricityProduction>()
         .Name("chart")
         .Title("Spain electricity production (GWh)")
@@ -117,6 +117,9 @@
     }
 </script>
 
-<div class="console"></div>
+<div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
 </asp:Content>

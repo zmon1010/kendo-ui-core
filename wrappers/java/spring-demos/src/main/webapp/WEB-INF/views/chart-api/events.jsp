@@ -7,7 +7,7 @@
 <c:url value="/chart-api/events/read" var="readUrl" />
 
 <demo:header />
-    <div class="chart-wrapper">
+    <div class="demo-section k-content wide">
     	 <kendo:chart name="chart" seriesClick="onSeriesClick" seriesHover="onSeriesHover"
     	 			  dataBound="onDataBound"
     	 			  axisLabelClick="onAxisLabelClick"
@@ -47,7 +47,10 @@
     	 	 <kendo:chart-tooltip visible="true" format="{0}%" />
     	 </kendo:chart>
     </div>
-    <div class="console"></div>
+    <div class="box wide">
+        <h4>Console log</h4>
+        <div class="console"></div>
+    </div>
     <script>
 	    function onSeriesClick(e) {
 	        kendoConsole.log(kendo.format("Series click :: {0} ({1}): {2}",
