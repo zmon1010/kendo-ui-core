@@ -574,4 +574,35 @@ test("Exporter generate cells using data item.value", function() {
     });
 });
 
+test("Export of non-numeric value", function() {
+    var testValue = "some value";
+
+    var columns = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
+    ];
+
+    var rows = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
+    ];
+
+    var data = [
+        { value: testValue  }
+    ];
+
+    var pivotgrid = createPivot({
+        autoBind: false,
+        dataSource: createDataSource(columns, rows, data)
+    });
+
+    var options = {
+        widget: pivotgrid
+    };
+
+    testWorkbook(options, function(book) {
+        var data_cell = book.sheets[0].rows[1].cells[1];
+
+        equal(data_cell.value, testValue);
+    });
+});
+
 }());

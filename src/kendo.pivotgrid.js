@@ -5021,7 +5021,7 @@ var __meta__ = { // jshint ignore:line
                     value = Number(cell.value);
 
                     if (isNaN(value)) {
-                        value = "";
+                        value = cell.value;
                     }
 
                     row.push({
