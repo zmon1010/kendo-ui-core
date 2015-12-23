@@ -24,6 +24,7 @@ $chart = new \Kendo\Dataviz\UI\Chart('chart');
 
 $chart->title(array('position' => 'bottom', 'text' => 'Share of Internet Population Growth, 2007 - 2012'))
       ->addSeriesItem($series)
+      ->chartArea(array('background' => 'transparent'))
       ->legend(array('visible' => false))
       ->tooltip(array('visible' => true, 'template' => '#= category # (#= series.name #): #= value #%'));
 ?>
@@ -32,4 +33,9 @@ $chart->title(array('position' => 'bottom', 'text' => 'Share of Internet Populat
 echo $chart->render();
 ?>
 </div>
+<style type="text/css">
+    #chart {
+        background: center no-repeat url('../content/shared/styles/world-map.png');
+    }
+</style>    
 <?php require_once '../include/footer.php'; ?>

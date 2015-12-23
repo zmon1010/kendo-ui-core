@@ -18,6 +18,9 @@
         .Legend(legend => legend
             .Visible(false)
         )
+        .ChartArea(chart => chart
+            .Background("transparent")
+         )
         .Series(series =>
         {
             series.Pie(new dynamic[] {

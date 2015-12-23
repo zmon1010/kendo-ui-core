@@ -7,6 +7,9 @@
         .Legend(legend => legend
             .Visible(false)
         )
+        .ChartArea(chart => chart
+            .Background("transparent")
+         )
         .HtmlAttributes(new { style="background: center no-repeat url(" + @Url.Content("~/Content/shared/world-map.png")})
         .Series(series => {
             series.Pie(new dynamic[] {
