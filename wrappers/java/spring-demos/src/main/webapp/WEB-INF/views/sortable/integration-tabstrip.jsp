@@ -5,8 +5,7 @@
 
 <demo:header />
 
-<div class="demo-section">
-<h3>TabStrip with images</h3>
+<div class="demo-section k-content wide">
 
 <kendo:tabStrip name="tabstrip" animation="false">
 	<kendo:tabStrip-items>
@@ -22,7 +21,7 @@
         </kendo:tabStrip-item>
         <kendo:tabStrip-item text="Swimming" imageUrl="../resources/shared/icons/sports/swimming.png">
             <kendo:tabStrip-item-content>
-                Swimming has been recorded since prehistoric times; the earliest recording of swimming dates back to Stone Age paintings from around 7,000 years ago. Written references date from 2000 BC. Some of the earliest references to swimming include the Gilgamesh, the Iliad, the Odyssey, the Bible, Beowulf, and other sagas. In 1578, Nikolaus Wynmann, a German professor of languages, wrote the first swimming book, The Swimmer or A Dialogue on the Art of Swimming (Der Schwimmer oder ein Zwiegespräch über die Schwimmkunst). Competitive swimming in Europe started around 1800, mostly using breaststroke.
+                Swimming has been recorded since prehistoric times; the earliest recording of swimming dates back to Stone Age paintings from around 7,000 years ago. Written references date from 2000 BC. Some of the earliest references to swimming include the Gilgamesh, the Iliad, the Odyssey, the Bible, Beowulf, and other sagas. In 1578, Nikolaus Wynmann, a German professor of languages, wrote the first swimming book, The Swimmer or A Dialogue on the Art of Swimming (Der Schwimmer oder ein Zwiegesprï¿½ch ï¿½ber die Schwimmkunst). Competitive swimming in Europe started around 1800, mostly using breaststroke.
             </kendo:tabStrip-item-content>    
         </kendo:tabStrip-item>
         <kendo:tabStrip-item text="Snowboarding" imageUrl="../resources/shared/icons/sports/snowboarding.png">
@@ -60,31 +59,24 @@
 </script>
 
 <style>
-.demo-section {
-	margin: 30px auto;
-}
 
-h3 {
-	font-weight: normal;
-	padding: 0 0 1em 0;
-}
+    h3 {
+        font-weight: normal;
+        padding: 0 0 1em 0;
+    }
 
-.demo-section {
-	width: 500px;
-}
+    .k-tabstrip .k-content {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 
-.k-tabstrip .k-content {
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
+    #hint {
+        border: none;
+    }
 
-#hint {
-	border: none;
-}
-
-#hint .k-tabstrip-items {
-	padding: 0;
-}
+    #hint .k-tabstrip-items {
+        padding: 0;
+    }
 </style>
 
 <demo:footer />

@@ -1,9 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="dash-head"></div>
-    <div class="panel-wrap">
+    <div class="dash-head hidden-on-narrow"></div>
+    <div class="panel-wrap hidden-on-narrow">
         <div id="sidebar">
             <div id="profile" class="widget">
                 <h3>Profile <span class="collapse k-icon k-i-arrowhead-n"></span></h3>
@@ -67,6 +67,8 @@
         </div>
     </div>
 
+    <div class="responsive-message"></div>
+    
     <%:Html.Kendo().Sortable()
         .For("#sidebar")
         .Filter(">div")
@@ -118,7 +120,7 @@
                         .width(element.width());
         }
     </script>
-
+        
     <style>
         #example {
             -webkit-user-select: none;
@@ -128,15 +130,15 @@
         }
 
         .dash-head {
-            width: 902px;
+            width: 970px;
             height: 80px;
-            background: url('<%=Url.Content("~/content/web/sortable/dashboard-head.png")%>') no-repeat 50% 50% #222222;  
+            background: url('<%=Url.Content("~/content/web/sortable/dashboard-head.png")%>') no-repeat 50% 50% #222222; 
         }
 
         .panel-wrap {
             display: table;
             margin: 0 0 20px;
-            width: 900px;
+            width: 968px;
             background-color: #f5f5f5;
             border: 1px solid #e5e5e5;
         }
@@ -153,7 +155,7 @@
             display: table-cell;
             margin: 0;
             padding: 20px;
-            width: 600px;
+            width: 680px;
             vertical-align: top;
         }
 
@@ -301,6 +303,7 @@
         .team-mate p {
             margin: 0;
         }
+
         .team-mate img {
             float: left;
             margin: 0 15px 0 0;

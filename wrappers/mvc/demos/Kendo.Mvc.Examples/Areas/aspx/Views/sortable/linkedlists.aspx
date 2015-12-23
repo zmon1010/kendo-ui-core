@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <div class="demo-section one-way">
+    <div class="demo-section hidden-on-narrow one-way wide">
         <div class="list-wrapper">
             <ul id="sortable-listA">
                 <li class="list-item">Apples</li>
@@ -30,7 +30,7 @@
         .Cursor("url('" + Url.Content("~/content/web/sortable/grabbing.cur") + "'), default")
     %>
 
-    <div class="demo-section two-way">
+    <div class="demo-section hidden-on-narrow two-way wide">
         <div class="list-wrapper">
             <ul id="sortable-listC" style="min-height: 110px;">
                 <li class="list-item">Cherries</li>
@@ -45,6 +45,8 @@
             </ul>
         </div>
     </div>
+        
+    <div class="responsive-message"></div>
 
     <%:Html.Kendo().Sortable()
         .For("#sortable-listC")
@@ -79,11 +81,11 @@
         }
 
         .one-way {
-            background: url('<%=Url.Content("~/content/web/sortable/one-way.png")%>') no-repeat 50% 50%;
+            background: url('/Content/web/sortable/one-way.png') no-repeat 50% 50%;
         }
 
         .two-way {
-            background: url('<%=Url.Content("~/content/web/sortable/two-way.png")%>') no-repeat 50% 50%;
+            background: url('/Content/web/sortable/two-way.png') no-repeat 50% 50%;
         }
 
         .list-wrapper {
@@ -116,7 +118,7 @@
             background-color: #222222;
             color: #ffffff;
             border-radius: 3px;
-            cursor: url('<%=Url.Content("~/content/web/sortable/grab.cur")%>'), default;
+            cursor: move;
         }
 
         #sortable-listA .list-item {

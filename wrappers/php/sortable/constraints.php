@@ -13,10 +13,8 @@ $sortable->axis('x')
 echo $sortable->render();
 ?>
 
-    <div class="demo-section" style="margin-top: 50px;">
-        <h3 class="title">Rearrange the photos</h3>
-    </div>
-    <div class="demo-section" style="margin-bottom: 50px;">
+    <div class="demo-section hidden-on-narrow k-content wide" style="min-width: 910px;">
+        <h4>Rearrange the photos</h4>
         <div id="sortable-horizontal">
             <img src="../content/web/sortable/1.jpg" /><img
             src="../content/web/sortable/2.jpg" /><img
@@ -26,11 +24,14 @@ echo $sortable->render();
         </div>
     </div>
 
+    <div class="responsive-message"></div>
+
     <script>
         function hint(element) {
             return element.clone().addClass("tooltip");
         }
     </script>
+
 
     <style>
         #example {
@@ -40,30 +41,26 @@ echo $sortable->render();
             user-select: none;
         }
 
-        .demo-section .title {
-            margin: 0;
-        }
-
         #sortable-horizontal {
             overflow: hidden;
-            width: 878px;
+            width: 930px;
             text-align: center;
         }
 
         #sortable-horizontal img {
-            width: 155px;
-            margin: 10px;
+            width: 166px;
+            margin: 10px 20px 10px 0;
             vertical-align: middle;
             cursor: move;
         }
 
         .placeholder {
             display: inline-block;
-            width: 153px;
-            height: 115px;
+            width: 164px;
+            height: 123px;
             border: 1px dashed #ddd;
             background-color: #f3f5f7;
-            margin: 10px;
+            margin: 10px 20px 10px 0;
             font-size: 1.3em;
             font-weight: bold;
             line-height: 125px;

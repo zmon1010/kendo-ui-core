@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="demo-section">
+    <div class="demo-section k-content wide">
         <% Html.Kendo().TabStrip()
               .Name("tabstrip")
               .Animation(false)
@@ -74,9 +74,6 @@
             padding: 0 0 1em 0;
         }
                 
-        .demo-section {
-            width: 500px;
-        }
 
         .k-tabstrip .k-content {
             padding-top: 10px;

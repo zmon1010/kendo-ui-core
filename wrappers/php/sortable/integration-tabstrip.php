@@ -5,8 +5,7 @@ require_once '../lib/Kendo/Autoload.php';
 
 ?>
 
-<div class="demo-section">
-    <h3>TabStrip with images</h3>
+<div class="demo-section k-content wide">
 <?php
     $tabstrip = new \Kendo\UI\TabStrip('tabstrip');
 
@@ -80,13 +79,10 @@ require_once '../lib/Kendo/Autoload.php';
 </div>
 
 <style>
+
     h3 {
         font-weight: normal;
         padding: 0 0 1em 0;
-    }
-
-    .demo-section {
-        width: 500px;
     }
 
     .k-tabstrip .k-content {

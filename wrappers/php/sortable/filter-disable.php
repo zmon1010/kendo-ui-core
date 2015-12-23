@@ -15,7 +15,7 @@ echo $sortableFilter->render();
 ?>
 
     <div class="demo-section sortable-wrapper">
-        <h3>Disable</h3>
+        <h4>Disable</h4>
         <p>Disabled items cannot be dragged but are valid drop targets.</p>
         <div id="sortable-disable">
             <div class="sortable disabled">Disabled item 1</div>
@@ -28,7 +28,7 @@ echo $sortableFilter->render();
     </div>
 
     <div class="demo-section sortable-wrapper">
-        <h3>Filter</h3>
+        <h4>Filter</h4>
         <p>Filtered items cannot be dragged and are not valid drop targets.</p>
         <div id="sortable-filter">
             <div class="not-sortable">Not sortable item 1</div>
@@ -49,7 +49,7 @@ echo $sortableFilter->render();
         }
 
         .sortable-wrapper {
-            width: 35%;
+            width: 37%;
             margin: 20px 40px;
             padding: 20px;
             float: left;
@@ -62,13 +62,14 @@ echo $sortableFilter->render();
         .sortable, .not-sortable {
             padding: 10px 0;
             margin: 1px 0;
-            width: 315px;
+            width: 358px;
             text-align: center;
             color: #ffffff;
         }
 
         .sortable {
             background-color: #51A0ED;
+            cursor: move;
         }
 
         .not-sortable {
@@ -79,7 +80,7 @@ echo $sortableFilter->render();
         .disabled {
             background-color: #FF0000;
             opacity: 0.5;
+            cursor: auto;
         }
-
     </style>
 <?php require_once '../include/footer.php'; ?>

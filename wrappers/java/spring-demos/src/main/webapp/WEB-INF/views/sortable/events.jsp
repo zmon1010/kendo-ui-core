@@ -18,24 +18,24 @@
 	end="onEnd" change="onChange" cancel="onCancel">
 </kendo:sortable>
 
-<div class="demo-section list-wrapper">
-	<h3 class="title">Reorder Items</h3>
-	<ul id="sortable-left" style="min-height: 41px;">
-		<li class="list-left">Item 1</li>
-		<li class="list-left">Item 2</li>
-		<li class="list-left">Item 3</li>
-	</ul>
+<div class="demo-section k-content list-wrapper">
+    <h4>Reorder Items</h4>
+    <ul id="sortable-left" style="min-height: 41px;">
+        <li class="list-left">Item 1</li>
+        <li class="list-left">Item 2</li>
+        <li class="list-left">Item 3</li>
+    </ul>
 
-	<ul id="sortable-right" style="min-height: 41px;">
-		<li class="list-right">Item 1</li>
-		<li class="list-right">Item 2</li>
-		<li class="list-right">Item 3</li>
-	</ul>
+    <ul id="sortable-right" style="min-height: 41px;">
+        <li class="list-right">Item 1</li>
+        <li class="list-right">Item 2</li>
+        <li class="list-right">Item 3</li>
+    </ul>
 </div>
 
-<div class="demo-section">
-	<h3 class="title">Console log</h3>
-	<div class="console"></div>
+<div class="box">
+    <h4>Console log</h4>
+    <div class="console"></div>
 </div>
 
 <script>
@@ -83,64 +83,55 @@
 </script>
 
 <style>
-.demo-section {
-	width: 600px;
-	text-align: center;
-}
+    #example {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
 
-.console {
-	margin: 0;
-}
+    .list-wrapper {
+        overflow: hidden;
+    }
 
-#example {
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
+    #sortable-left, #sortable-right {
+        width: 200px;
+        margin-right: 30px;
+        padding: 0;
+        float: left;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
 
-.list-wrapper {
-	overflow: hidden;
-}
+    .list-right, .list-left {
+        list-style-type: none;
+        margin: 5px;
+        width: 168px;
+        padding: 8px 10px;
+        text-align: center;
+        color: #ffffff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: move;
+    }
 
-#sortable-left,#sortable-right {
-	width: 200px;
-	margin-left: 70px;
-	padding: 0;
-	float: left;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
+    .list-left {
+        background-color: #52aef7;
+    }
 
-.list-right,.list-left {
-	list-style-type: none;
-	margin: 5px;
-	width: 168px;
-	padding: 8px 10px;
-	text-align: center;
-	color: #ffffff;
-	border: 1px solid transparent;
-	border-radius: 4px;
-	cursor: url('../resources/web/sortable/grab.cur'), default;
-}
+    .list-right {
+        background-color: #e62757;
+    }
 
-.list-left {
-	background-color: #52aef7;
-}
+    .placeholder {
+        border: 1px dashed #ccc;
+        background-color: #fff;
+        color: #333;
+    }
 
-.list-right {
-	background-color: #e62757;
-}
-
-.placeholder {
-	border: 1px dashed #ccc;
-	background-color: #fff;
-	color: #333;
-}
-
-.hint {
-	opacity: 0.4;
-}
+    .hint {
+        opacity: 0.4;
+    }
 </style>
 
 <demo:footer />

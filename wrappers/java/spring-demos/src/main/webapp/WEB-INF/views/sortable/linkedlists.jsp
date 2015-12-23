@@ -12,7 +12,7 @@
 <kendo:sortable name="#sortable-listC" connectWith="#sortable-listD" placeholder="placeholder" cursor="url('../resources/web/sortable/grabbing.cur'), default"></kendo:sortable>
 <kendo:sortable name="#sortable-listD" connectWith="#sortable-listC" placeholder="placeholder" cursor="url('../resources/web/sortable/grabbing.cur'), default"></kendo:sortable>
 
-<div class="demo-section one-way">
+<div class="demo-section hidden-on-narrow one-way wide">
 	<div class="list-wrapper">
 		<ul id="sortable-listA">
 			<li class="list-item">Apples</li>
@@ -28,7 +28,7 @@
 	</div>
 </div>
 
-<div class="demo-section two-way">
+<div class="demo-section hidden-on-narrow two-way wide">
 	<div class="list-wrapper">
 		<ul id="sortable-listC" style="min-height: 110px;">
 			<li class="list-item">Cherries</li>
@@ -43,6 +43,8 @@
 		</ul>
 	</div>
 </div>
+
+<div class="responsive-message"></div>
 
 <script>
 	function placeholder(element) {

@@ -1,12 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <div class="demo-section list-wrapper">
-        <h3 class="title">Reorder Items
-        </h3>
+    <div class="demo-section k-content list-wrapper">
+        <h4>Reorder Items</h4>
         <ul id="sortable-left" style="min-height: 41px;">
             <li class="list-left">Item 1</li>
             <li class="list-left">Item 2</li>
@@ -18,6 +17,11 @@
             <li class="list-right">Item 2</li>
             <li class="list-right">Item 3</li>
         </ul>
+    </div>
+
+    <div class="box">
+        <h4>Console log</h4>
+        <div class="console"></div>
     </div>
 
     <%:Html.Kendo().Sortable()
@@ -37,12 +41,6 @@
         .Cursor("url('" + Url.Content("~/content/web/sortable/grabbing.cur") + "'), default")
         .Events(events => events.Start("onStart").Move("onMove").End("onEnd").Change("onChange").Cancel("onCancel"))
     %>
-            
-    <div class="demo-section">                
-        <h3 class="title">Console log
-        </h3>
-        <div class="console"></div>
-    </div>
 
     <script>
 
@@ -91,15 +89,6 @@
     </script>
 
     <style>
-        .demo-section {
-            width: 600px;
-            text-align: center;
-        }
-
-        .console {
-            margin: 0;
-        }
-
         #example {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -113,7 +102,7 @@
 
         #sortable-left, #sortable-right {
             width: 200px;
-            margin-left: 70px;
+            margin-right: 30px;
             padding: 0;
             float: left;
             border: 1px solid #ccc;
@@ -129,7 +118,7 @@
             color: #ffffff;
             border: 1px solid transparent;
             border-radius: 4px;
-            cursor: url('<%=Url.Content("~/content/web/sortable/grab.cur")%>'), default;
+            cursor: move;
         }
 
         .list-left {

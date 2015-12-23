@@ -30,9 +30,8 @@ $sortableRight->connectWith('#sortable-left')
 echo $sortableRight->render();
 ?>
 
-    <div class="demo-section list-wrapper">
-        <h3 class="title">Reorder Items
-        </h3>
+    <div class="demo-section k-content list-wrapper">
+        <h4>Reorder Items</h4>
         <ul id="sortable-left" style="min-height: 41px;">
             <li class="list-left">Item 1</li>
             <li class="list-left">Item 2</li>
@@ -45,10 +44,9 @@ echo $sortableRight->render();
             <li class="list-right">Item 3</li>
         </ul>
     </div>
-    
-    <div class="demo-section">
-        <h3 class="title">Console log
-        </h3>
+
+    <div class="box">
+        <h4>Console log</h4>
         <div class="console"></div>
     </div>
 
@@ -100,15 +98,6 @@ echo $sortableRight->render();
     </script>
 
     <style>
-        .demo-section {
-            width: 600px;
-            text-align: center;
-        }
-
-        .console {
-            margin: 0;
-        }
-
         #example {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -122,7 +111,7 @@ echo $sortableRight->render();
 
         #sortable-left, #sortable-right {
             width: 200px;
-            margin-left: 70px;
+            margin-right: 30px;
             padding: 0;
             float: left;
             border: 1px solid #ccc;
@@ -138,7 +127,7 @@ echo $sortableRight->render();
             color: #ffffff;
             border: 1px solid transparent;
             border-radius: 4px;
-            cursor: url('../content/web/sortable/grab.cur'), default;
+            cursor: move;
         }
 
         .list-left {
@@ -157,9 +146,6 @@ echo $sortableRight->render();
 
         .hint {
             opacity: 0.4;
-            cursor: -webkit-grabbing;
-            cursor: -moz-grabbing;
-            cursor: url(https://mail.google.com/mail/images/2/closehand.cur) 8, 8, move;
         }
     </style>
         

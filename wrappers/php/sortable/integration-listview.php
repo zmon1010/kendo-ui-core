@@ -25,7 +25,7 @@ require_once '../include/header.php';
     </div>
 </script>
 
-<div class="demo-section">
+
 <?php
     $transport = new \Kendo\Data\DataSourceTransport();
 
@@ -62,7 +62,7 @@ require_once '../include/header.php';
 
     $dataSource->transport($transport)
                ->schema($schema)
-               ->pageSize(15);
+               ->pageSize(21);
 
     $listview = new \Kendo\UI\ListView('listView');
     $listview->dataSource($dataSource)
@@ -80,7 +80,7 @@ require_once '../include/header.php';
 
     echo $sortable->render();
 ?>
-</div>
+
 
 <script>
     function placeholder(element) {
@@ -105,29 +105,28 @@ require_once '../include/header.php';
 </script>
 
 <style>
-    .demo-section {
-        padding: 30px;
-        width: 577px;
-    }
+
     #listView {
-        padding: 10px;
-	    margin-bottom: -1px;
-	    min-width: 555px;
-	    min-height: 510px;
+        padding: 10px 5px;
+        margin-bottom: -1px;
+        min-height: 400px;
     }
+
     .product {
         float: left;
         position: relative;
         width: 111px;
         height: 170px;
-        margin: 0;
+        margin: 0 5px;
         padding: 0;
         cursor: move;
     }
+
     .product img {
         width: 110px;
         height: 110px;
     }
+
     .product h3 {
         margin: 0;
         padding: 3px 5px 0 0;
@@ -137,12 +136,13 @@ require_once '../include/header.php';
         font-size: .9em;
         font-weight: normal;
         text-transform: uppercase;
-        color: #999;
     }
+
     .product p {
         visibility: hidden;
     }
-    .product:hover p {
+
+    #listView .product:hover p {
         visibility: visible;
         position: absolute;
         width: 110px;
@@ -160,7 +160,8 @@ require_once '../include/header.php';
         -webkit-transition: background .2s linear, color .2s linear;
         -o-transition: background .2s linear, color .2s linear;
     }
-    .k-listview:after, .product dl:after {
+
+    .k-listview:after {
         content: ".";
         display: block;
         height: 0;

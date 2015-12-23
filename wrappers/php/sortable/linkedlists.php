@@ -32,7 +32,7 @@ echo $sortableListD->render();
 
 ?>
 
-    <div class="demo-section one-way">
+    <div class="demo-section hidden-on-narrow one-way wide">
         <div class="list-wrapper">
             <ul id="sortable-listA">
                 <li class="list-item">Apples</li>
@@ -48,7 +48,7 @@ echo $sortableListD->render();
         </div>
     </div>
 
-    <div class="demo-section two-way">
+    <div class="demo-section hidden-on-narrow two-way wide">
         <div class="list-wrapper">
             <ul id="sortable-listC" style="min-height: 110px;">
                 <li class="list-item">Cherries</li>
@@ -63,6 +63,8 @@ echo $sortableListD->render();
             </ul>
         </div>
     </div>
+
+    <div class="responsive-message"></div>
 
     <script>
         function placeholder(element) {

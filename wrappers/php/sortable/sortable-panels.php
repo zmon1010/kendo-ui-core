@@ -21,8 +21,8 @@ $sortableMain->connectWith('#sidebar')
 echo $sortableMain->render();
 ?>
 
-    <div class="dash-head"></div>
-    <div class="panel-wrap">
+    <div class="dash-head hidden-on-narrow"></div>
+    <div class="panel-wrap hidden-on-narrow">
         <div id="sidebar">
             <div id="profile" class="widget">
                 <h3>Profile <span class="collapse k-icon k-i-arrowhead-n"></span></h3>
@@ -85,6 +85,8 @@ echo $sortableMain->render();
             </div>
         </div>
     </div>
+    
+    <div class="responsive-message"></div>
 
     <script>
         $(document).ready(function() {
@@ -127,18 +129,21 @@ echo $sortableMain->render();
             -ms-user-select: none;
             user-select: none;
         }
+
         .dash-head {
-            width: 902px;
+            width: 970px;
             height: 80px;
             background: url('../content/web/sortable/dashboard-head.png') no-repeat 50% 50% #222222;  
         }
+
         .panel-wrap {
             display: table;
             margin: 0 0 20px;
-            width: 900px;
+            width: 968px;
             background-color: #f5f5f5;
             border: 1px solid #e5e5e5;
         }
+
         #sidebar {
             display: table-cell;
             margin: 0;
@@ -146,13 +151,15 @@ echo $sortableMain->render();
             width: 220px;
             vertical-align: top;
         }
+
         #main-content {
             display: table-cell;
             margin: 0;
             padding: 20px;
-            width: 600px;
+            width: 680px;
             vertical-align: top;
         }
+
         .widget.placeholder {
             opacity: 0.4;
             border: 1px dashed #a6a6a6;
@@ -167,23 +174,28 @@ echo $sortableMain->render();
             border-radius: 3px;
             cursor: move;
         }
+
         .widget:hover {
             background-color: #fcfcfc;
             border-color: #cccccc;
         }
+
         .widget div {
             padding: 10px;
             min-height: 50px;
         }
+
         .widget h3 {
             font-size: 12px;
             padding: 8px 10px;
             text-transform: uppercase;
             border-bottom: 1px solid #e7e7e7;
         }
+
         .widget h3 span {
             float: right;
         }
+
         .widget h3 span:hover {
             cursor: pointer;
             background-color: #e7e7e7;
@@ -199,15 +211,18 @@ echo $sortableMain->render();
             border: 1px solid #e7e7e7;
             background: url('../content/web/Customers/ISLAT.jpg') no-repeat 50% 50%;
         }
+
         #profile div {
             text-align: center;
         }
+
         #profile h4 {
             width: auto;
             margin: 0 0 5px;
             font-size: 1.2em;
             color: #1f97f7;
         }
+
         #profile p {
             margin: 0 0 10px;
         }
@@ -217,6 +232,7 @@ echo $sortableMain->render();
         #news div {
             padding: 0 20px 20px;
         }
+
         #teammates h4,
         #blogs h4,
         #news h4 {
@@ -226,25 +242,31 @@ echo $sortableMain->render();
             color: #1f97f7;
             font-weight: normal;
         }
+
         .blog-info {
             margin: 0 0 10px;
             font-size: .9em;
             color: #787878;
         }
+
         #sidebar #blogs h4 {
             font-size: 1em;
         }
+
         #sidebar #blogs p {
             display: none;
         }
+
         #sidebar #blogs .blog-info {
             display: block;
         }
+
         #main-content #news h4 {
             font-size: 1.2em;
             line-height: 1.4em;
             height: 40px;
         }
+
         #main-content #news h4 span {
             display: block;
             float: left;
@@ -252,9 +274,11 @@ echo $sortableMain->render();
             height: 40px;
             color: #000;
         }
+
         #sidebar #news h4 {
             font-size: 1em;
         }
+
         #sidebar #news h4 span {
             display: block;
             margin-bottom: 3px;
@@ -270,25 +294,30 @@ echo $sortableMain->render();
             clear: both;
             visibility: hidden;
         }
+
         #teammates .team-mate h4 {
             font-size: 1.4em;
             font-weight: normal;
             margin-top: 12px;
         }
+
         .team-mate p {
             margin: 0;
         }
+
         .team-mate img {
             float: left;
             margin: 0 15px 0 0;
             border: 1px solid #e7e7e7;
             border-radius: 60px;
         }
+
         .hint {
             width: 250px;
             height: 100px;
             overflow: hidden;
         }
+
         .hint > h3 {
             padding-left: 20px;
         }
