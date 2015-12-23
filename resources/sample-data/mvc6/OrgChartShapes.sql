@@ -1,0 +1,13 @@
+BEGIN TRANSACTION;
+CREATE TABLE "OrgChartShapes" ("Id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL  ,"JobTitle" NVARCHAR(200)  NULL DEFAULT NULL ,"Color" NVARCHAR(50)  NULL DEFAULT NULL );
+INSERT INTO `OrgChartShapes` VALUES (1,'President','');
+INSERT INTO `OrgChartShapes` VALUES (2,'VP Finance','#3399cc');
+INSERT INTO `OrgChartShapes` VALUES (3,'VP Customer Relations','#3399cc');
+INSERT INTO `OrgChartShapes` VALUES (4,'VP Human Resources','#3399cc');
+INSERT INTO `OrgChartShapes` VALUES (5,'Accountant','#ff9900');
+INSERT INTO `OrgChartShapes` VALUES (6,'Budget Analyst','#ff9900');
+INSERT INTO `OrgChartShapes` VALUES (7,'Relations Manager','#ff9900');
+INSERT INTO `OrgChartShapes` VALUES (8,'Technical Support Manager','#ff9900');
+INSERT INTO `OrgChartShapes` VALUES (9,'Compensation Manager','#ff9900');
+INSERT INTO `OrgChartShapes` VALUES (10,'Payroll Specialist','#ff9900');
+COMMIT;
