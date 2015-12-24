@@ -34,6 +34,8 @@
         .LoadContentFrom("ajaxcontent1", "window")
 %>
 
+<div class="responsive-message"></div>
+
 <script>
     $(document).ready(function() {
         var myWindow = $("#window");

@@ -56,17 +56,25 @@
     .Draggable()
     .Resizable()
     .Width(500)
+    .Events(ev => ev.Close("onClose"))
     .Render();
 %>
 
-<span id="undo" class="k-button">Click here to open the window</span>
+<span id="undo" style="display: none;" class="k-button hide-on-narrow">Click here to open the window</span>
+
+<div class="responsive-message"></div>
 
 <script>
+    function onClose() {
+        $("#undo").show();
+    }
+    
     $(function () {
         var dialog = $("#window");
 
         $("#undo").bind("click", function () {
             dialog.data("kendoWindow").open();
+            $("#undo").hide();
         });
 
         dialog.data("kendoWindow").wrapper.find(".k-i-custom").click(function (e) {
@@ -94,6 +102,12 @@
     .armchair img {
         display: block;
         margin-bottom: 10px;
+    }
+    
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>
 </asp:Content>

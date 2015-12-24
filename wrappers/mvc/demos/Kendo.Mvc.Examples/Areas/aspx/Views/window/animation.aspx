@@ -87,7 +87,9 @@
         .Render();
 %>
 
- <span id="undo" style="display:none" class="k-group">Click here to open the window.</span>
+<span id="undo" style="display:none" class="k-button hidden-onnarrow">Click here to open the window.</span>
+
+<div class="responsive-message"></div>
 
 <script type="text/javascript">
     function close() {

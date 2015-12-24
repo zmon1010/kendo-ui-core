@@ -26,6 +26,8 @@
 
 <span id="undo" class="k-button">Click here to open the window.</span>
 
+<div class="responsive-message"></div>
+
 <script>
     function onOpen(e) {
         kendoConsole.log("event :: open");

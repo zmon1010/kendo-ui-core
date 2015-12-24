@@ -46,20 +46,28 @@
     </text>)
     .Draggable()
     .Resizable()
+    .Events(ev => ev.Close("onClose"))
     .Width(500)
 )
 
-<span id="undo" class="k-button">Click to open the window</span>
+<span id="undo" style="display: none;" class="k-button">Click to open the window</span>
+
+<div class="responsive-message"></div>
 
 <script>
-    $(document).ready(function() {
+    function onClose() {
+        $("#undo").show();
+    }
+    
+    $(function () {
         var dialog = $("#window");
 
-        $("#undo").bind("click", function() {
+        $("#undo").bind("click", function () {
             dialog.data("kendoWindow").open();
+            $("#undo").hide();
         });
 
-        dialog.data("kendoWindow").wrapper.find(".k-i-custom").click(function(e){
+        dialog.data("kendoWindow").wrapper.find(".k-i-custom").click(function (e) {
             alert("Custom action button clicked");
             e.preventDefault();
         });
@@ -70,15 +78,25 @@
     #example {
         min-height:500px;
     }
-        
+
+    #undo {
+        position: absolute;
+    }
+
     .armchair {
         float: left;
         margin: 20px 30px;
         text-align: center;
     }
-        
+
     .armchair img {
         display: block;
         margin-bottom: 10px;
+    }
+
+    @@media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>

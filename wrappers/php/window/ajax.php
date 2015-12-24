@@ -15,7 +15,9 @@ $window->title('Rams\'s Ten Principles of Good Design')
     echo $window->render();
 ?>
 
-<span id="undo" style="display:none" class="k-button">Click here to open the window.</span>
+<span id="undo" style="display:none" class="k-button hide-on-narrow">Click here to open the window.</span>
+
+<div class="responsive-message"></div>
 
 <script>
     function onClose() {
@@ -48,6 +50,12 @@ $window->title('Rams\'s Ten Principles of Good Design')
         border-style: solid;
         padding: 2em;
         cursor: pointer;
+    }
+    
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>
 <?php require_once '../include/footer.php'; ?>

@@ -52,7 +52,9 @@
     .Render();
 %>
 
-<span id="undo" style="display:none" class="k-button">Click here to open the window.</span>
+<span id="undo" style="display:none" class="k-button hide-on-narrow">Click here to open the window.</span>
+
+<div class="responsive-message"></div>
 
 <script>
     function onClose() {
@@ -68,8 +70,7 @@
 </script>
 
 <style>
-    #example 
-    {
+    #example {
         min-height:500px;
     }
 
@@ -88,6 +89,11 @@
     .armchair img {
         display: block;
         margin-bottom: 10px;
+    }
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>
 </asp:Content>

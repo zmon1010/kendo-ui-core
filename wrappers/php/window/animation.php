@@ -4,8 +4,8 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 
 ?>
-<div class="configuration k-widget k-header">
-    <span class="configHead">Animation Settings</span>
+<div class="box hidden-on-narrow">
+    <h4>Animation Settings</h4>
     <ul class="options">
         <li>
             <input id="default" name="animation" type="radio" checked="checked" /> <label for="default">default/zoom animation</label>
@@ -40,7 +40,9 @@ require_once '../lib/Kendo/Autoload.php';
     echo $window->render();
 ?>
 
-<span id="undo" style="display:none" class="k-group">Click here to open the window.</span>
+<span id="undo" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
+
+<div class="responsive-message"></div>
 
 <script>
     function onClose() {
@@ -50,7 +52,7 @@ require_once '../lib/Kendo/Autoload.php';
     $(document).ready(function() {
         var original = $("#window").clone(true);
 
-        $(".configuration input").change( function() {
+        $(".box input").change( function() {
             var clone = original.clone(true);
 
             $("#undo").hide();
@@ -79,15 +81,17 @@ require_once '../lib/Kendo/Autoload.php';
                 windowOptions.animation = { open: { effects: getEffects() }, close: { effects: getEffects(), reverse: true } };
 
             $("#window").kendoWindow(windowOptions);
-
+            
             $("#undo")
-                .bind("click", function() {
-                    window.open();
-                    undo.fadeOut(300);
+                .bind("click", function () {
+                    $("#window").data("kendoWindow").open();
+                    $("#undo").fadeOut(300);
                 });
 
             $("#window").data("kendoWindow").open();
         }
+        
+        initWindow();
     });
 </script>
 
@@ -104,6 +108,12 @@ require_once '../lib/Kendo/Autoload.php';
         border-style: solid;
         padding: 2em;
         cursor: pointer;
+    }
+
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>
 

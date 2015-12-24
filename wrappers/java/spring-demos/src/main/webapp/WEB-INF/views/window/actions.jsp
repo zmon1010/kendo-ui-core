@@ -48,7 +48,9 @@
 		</kendo:window-content>	
 	</kendo:window>    
 	
-	<span id="undo" style="display:none" class="k-button">Click here to open the window.</span>
+	<span id="undo" style="display:none" class="k-button hide-on-narrow">Click here to open the window.</span>
+	
+	<div class="responsive-message"></div>
 
 	<script>
 	    function onClose() {
@@ -69,26 +71,29 @@
 	</script>	
 	
 	<style>
-         #example 
-         {
-             min-height:500px;
-         }
-
-         #undo {
-             text-align: center;
-             position: absolute;
-             white-space: nowrap;
-             padding: 1em;
-             cursor: pointer;
-         }
-         .armchair {
-         	float: left;
-         	margin: 30px 30px 120px 30px;
-         	text-align: center;
-         }
-         .armchair img {
-             display: block;
-             margin-bottom: 10px;
-         }
-     </style>
+    	#example {
+	        min-height:500px;
+	    }
+	        
+	    #undo {
+	        position: absolute;
+	    }
+	        
+	    .armchair {
+	        float: left;
+	        margin: 20px 30px;
+	        text-align: center;
+	    }
+	        
+	    .armchair img {
+	        display: block;
+	        margin-bottom: 10px;
+	    }
+	    
+	    @media screen and (max-width: 1023px) {
+	        div.k-window {
+	            display: none !important;
+	        }
+	    }
+	</style>
 <demo:footer />

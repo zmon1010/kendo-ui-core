@@ -44,7 +44,9 @@ $window->title('About Alvar Aalto')
     echo $window->render();
 ?>
 
-<span id="undo" style="display:none" class="k-button">Click here to open the window.</span>
+<span id="undo" style="display:none" class="k-button hide-on-narrow">Click here to open the window.</span>
+
+<div class="responsive-message"></div>
 
 <script>
     function onClose() {
@@ -60,8 +62,7 @@ $window->title('About Alvar Aalto')
 </script>
 
 <style>
-    #example
-    {
+    #example {
         min-height:500px;
     }
 
@@ -80,6 +81,11 @@ $window->title('About Alvar Aalto')
     .armchair img {
         display: block;
         margin-bottom: 10px;
+    }
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>
 <?php require_once '../include/footer.php'; ?>

@@ -4,6 +4,8 @@
             <div id="window"></div>
 
             <span id="undo" style="display:none" class="k-button">Click here to open the window.</span>
+            
+            <div class="responsive-message"></div>
 
             <script>
                 $(document).ready(function() {
@@ -29,7 +31,6 @@
             </script>
 
             <style>
-
                 #example {
                     min-height: 840px;
                 }
@@ -43,5 +44,11 @@
                     padding: 2em;
                     cursor: pointer;
                 }
-            </style>
+
+                @@media screen and (max-width: 1023px) {
+                    div.k-window {
+                        display: none !important;
+                    }
+                }
+            </style>  
         </div>

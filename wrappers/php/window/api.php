@@ -29,6 +29,8 @@ require_once '../lib/Kendo/Autoload.php';
     echo $window->render();
 ?>
 
+<div class="responsive-message"></div>
+
 <script>
     $(document).ready(function() {
         var myWindow = $("#window");
