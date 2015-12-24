@@ -45,7 +45,7 @@ $window->attr("class", "k-rtl")
     echo $window->render();
 ?>
 
-<span id="undo" style="display:none" class="k-button hidden-onnarrow">Click here to open the window.</span>
+<span id="undo" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
 
 <div class="responsive-message"></div>
 
@@ -63,8 +63,9 @@ $window->attr("class", "k-rtl")
 </script>
 
 <style>
+
     #example {
-        min-height: 500px;
+        min-height:500px;
     }
 
     #undo {
@@ -75,13 +76,19 @@ $window->attr("class", "k-rtl")
         cursor: pointer;
     }
     .armchair {
-        float: left;
-        margin: 30px 30px 120px 30px;
-        text-align: center;
+      float: left;
+      margin: 30px 30px 120px 30px;
+      text-align: center;
     }
     .armchair img {
         display: block;
         margin-bottom: 10px;
+    }
+    
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>
 <?php require_once '../include/footer.php'; ?>

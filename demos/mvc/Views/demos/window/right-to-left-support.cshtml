@@ -11,7 +11,9 @@
                 <p>Source: <a href="http://www.aalto.com/about-alvar-aalto.html" title="About Alvar Aalto">www.aalto.com</a></p>
             </div>
 
-            <span id="undo" style="display:none" class="k-button">Click here to open the window.</span>
+            <span id="undo" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
+            
+            <div class="responsive-message"></div>
 
             <script>
                 $(document).ready(function () {
@@ -19,7 +21,7 @@
                         undo = $("#undo");
 
                     undo.click(function () {
-                        mywindow.data("kendoWindow").open();
+                        myWindow.data("kendoWindow").open();
                         undo.fadeOut();
                     });
 
@@ -56,13 +58,19 @@
                     cursor: pointer;
                 }
                 .armchair {
-                    float: left;
-                    margin: 30px 30px 120px 30px;
-                    text-align: center;
+                	float: left;
+                	margin: 30px 30px 120px 30px;
+                	text-align: center;
                 }
                 .armchair img {
                     display: block;
                     margin-bottom: 10px;
+                }
+                
+                @@media screen and (max-width: 1023px) {
+                    div.k-window {
+                        display: none !important;
+                    }
                 }
             </style>
         </div>

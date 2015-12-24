@@ -1,9 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<% using (Html.BeginForm("Animation", "Window", FormMethod.Post, new { @class = "configuration k-widget k-header" }))
+<% using (Html.BeginForm("Animation", "Window", FormMethod.Post, new { @class = "box hidden-on-narrow" }))
  {%>     
-    <span class="configHead">Animation Settings</span>
+    <h4>Animation Settings</h4>
      <ul class="options">
         <li>
             <%=Html.RadioButton("animation", "zoom")%>
@@ -87,7 +87,7 @@
         .Render();
 %>
 
-<span id="undo" style="display:none" class="k-button hidden-onnarrow">Click here to open the window.</span>
+<span id="undo" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
 
 <div class="responsive-message"></div>
 
@@ -105,7 +105,9 @@
 </script>
 
 <style>
-    #example {
+
+    #example
+    {
         min-height:400px;
     }
 
@@ -113,10 +115,14 @@
         text-align: center;
         position: absolute;
         white-space: nowrap;
-        border-width: 1px;
-        border-style: solid;
-        padding: 2em;
+        padding: 1em;
         cursor: pointer;
+    }
+
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>
 

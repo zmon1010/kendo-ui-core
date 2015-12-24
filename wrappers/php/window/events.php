@@ -2,7 +2,14 @@
 
 require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
+?>
 
+<div class="box hidden-on-narrow" style="margin-bottom: 30px;">                
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
+
+<?php
     $window = new \Kendo\UI\Window('window');
 
     $window->title('Rams\'s Ten Principles of Good Design')
@@ -23,7 +30,7 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 
 
-<span id="undo" style="display:none" class="k-button hidden-onnarrow">Click here to open the window.</span>
+<span id="undo" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
 
 <div class="responsive-message"></div>
 
@@ -69,22 +76,26 @@ require_once '../lib/Kendo/Autoload.php';
 </script>
 
 <style>
-    .console {
-        margin-top: 400px;
+
+    #example
+    {
+        min-height:600px;
     }
 
     #undo {
         text-align: center;
         position: absolute;
         white-space: nowrap;
-        border-width: 1px;
-        border-style: solid;
-        padding: 2em;
+        padding: 1em;
         cursor: pointer;
     }
-</style>
 
-<br/>
-<div class="console"></div>
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
+    }
+
+</style>
 
 <?php require_once '../include/footer.php'; ?>

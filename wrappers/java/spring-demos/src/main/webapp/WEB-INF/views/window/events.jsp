@@ -6,25 +6,30 @@
 <c:url value="/window/content1" var="remoteUrl" />
 
 <demo:header />
-	<div class="wrap">
-		<kendo:window name="window" title="Rams's Ten Principles of Good Design" draggable="true" 
-			width="630"
-			height="315"  
-			content="${remoteUrl}"
-			actions="<%=new String[] { \"Refresh\", \"Close\" } %>"
-			close="onClose"
-			open="onOpen"
-			refresh="onRefresh" 	
-			activate="onActivate" 
-			deactivate="onDeactivate" 
-			resize="onResize" 
-			dragstart="onDragStart" 
-			dragend="onDragEnd">			
-		</kendo:window>
+
+    <div class="box hidden-on-narrow" style="margin-bottom: 30px;">                
+        <h4>Console log</h4>
+        <div class="console"></div>
+    </div>
+    
+	<kendo:window name="window" title="Rams's Ten Principles of Good Design" draggable="true" 
+		width="630"
+		height="315"  
+		content="${remoteUrl}"
+		actions="<%=new String[] { \"Refresh\", \"Close\" } %>"
+		close="onClose"
+		open="onOpen"
+		refresh="onRefresh" 	
+		activate="onActivate" 
+		deactivate="onDeactivate" 
+		resize="onResize" 
+		dragstart="onDragStart" 
+		dragend="onDragEnd">			
+	</kendo:window>
+
+	<span id="undo" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
 	
-		<span id="undo" style="display:none" class="k-button">Click here to open the window.</span>
-	</div>
-	<div class="console"></div>
+	<div class="responsive-message"></div>
 
 	<script>
 	
@@ -70,21 +75,25 @@
 	    
 	</script>
 
-	<br/>
-	
 	<style>
-         .wrap 
-         {
-             min-height:400px;
-         }   
-         #undo {
-             text-align: center;
-             position: absolute;
-             white-space: nowrap;
-             border-width: 1px;
-             border-style: solid;
-             padding: 2em;
-             cursor: pointer;
-       	}     
-     </style>
+
+        #example
+        {
+            min-height:600px;
+        }
+
+        #undo {
+            text-align: center;
+            position: absolute;
+            white-space: nowrap;
+            padding: 1em;
+            cursor: pointer;
+        }
+        
+        @media screen and (max-width: 1023px) {
+            div.k-window {
+                display: none !important;
+            }
+        }
+    </style>
 <demo:footer />

@@ -4,6 +4,12 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+
+<div class="box hidden-on-narrow" style="margin-bottom: 30px;">                
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
+
 <%= Html.Kendo().Window()
         .Name("window")
         .Width(630)
@@ -24,7 +30,7 @@
         )
 %>
 
-<span id="undo" class="k-button">Click here to open the window.</span>
+<span id="undo" class="k-button hidden-on-narrow">Click here to open the window.</span>
 
 <div class="responsive-message"></div>
 
@@ -68,13 +74,25 @@
     });
 </script>
 
-<br/>
-<div class="console"></div>
-
 <style>
-    #example 
+
+    #example
     {
-        min-height: 400px;
+        min-height:600px;
+    }
+
+    #undo {
+        text-align: center;
+        position: absolute;
+        white-space: nowrap;
+        padding: 1em;
+        cursor: pointer;
+    }
+
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>
 </asp:Content>

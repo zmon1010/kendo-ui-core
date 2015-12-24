@@ -7,8 +7,8 @@
 
 <demo:header />
 
-	<form class="configuration k-widget k-header" method="Post">
-	    <span class="configHead">Animation Settings</span>
+	<form class="box hidden-on-narrow" method="Post">
+	    <h4>Animation Settings</h4>
 	    <ul class="options">
 	        <li>
 	            <input id="zoom" name="animation" type="radio" ${ animation == "zoom" ? "checked=\"checked\"" : "" } value="zoom" /> <label for="zoom">default/zoom animation</label>
@@ -41,7 +41,9 @@
                </div>		            
 		</kendo:window-content>	
 	</kendo:window>    	
-	<span id="undo" style="display:none" class="k-group">Click here to open the window.</span>
+	<span id="undo" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
+	
+	<div class="responsive-message"></div>
 
 	<script>
 	    function onClose() {
@@ -57,7 +59,9 @@
 	</script>	
 	
 	<style>
-        #example {
+
+        #example
+        {
             min-height:400px;
         }
 
@@ -65,10 +69,14 @@
             text-align: center;
             position: absolute;
             white-space: nowrap;
-            border-width: 1px;
-            border-style: solid;
-            padding: 2em;
+            padding: 1em;
             cursor: pointer;
+        }
+        
+        @media screen and (max-width: 1023px) {
+            div.k-window {
+                display: none !important;
+            }
         }
     </style>
 <demo:footer />

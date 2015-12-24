@@ -4,31 +4,42 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="configuration k-widget k-header" style="z-index: 10000">
-    <span class="configHead">API Functions</span>
+<div class="box wide hidden-on-narrow" style="z-index:10000">
+    <div class="box-col">
+    <h4>API Functions</h4>
     <ul class="options">
         <li>
-            <button id="open" class="k-button">Open</button> / <button id="close" class="k-button">Close</button>
+             <button id="open" class="k-button">Open</button>
+            <button id="close" class="k-button">Close</button>
         </li>
+    </ul>
+    </div>
+    <div class="box-col">
+    <h4>&nbsp;</h4>
+    <ul class="options">
         <li>
             <button id="refresh" class="k-button">Refresh</button>
-        </li>
-        <li>
             <button id="center" class="k-button">Center</button>
         </li>
+    </ul>
+    </div>
+    <div class="box-col">
+    <h4>&nbsp;</h4>
+    <ul class="options">
         <li>
             <button id="pin" class="k-button">Pin</button>
-        </li>
-        <li>
             <button id="unpin" class="k-button">Unpin</button>
         </li>
     </ul>
+    </div>
 </div>
     
 <%= Html.Kendo().Window()
         .Name("window")
         .Width(630)
         .Height(315)
+        .Draggable()
+        .Resizable()
         .Title("Rams's Ten Principles of Good Design")
         .Actions(actions => actions.Pin().Refresh().Maximize().Close())
         .LoadContentFrom("ajaxcontent1", "window")
@@ -67,9 +78,16 @@
 </script>
 
 <style>
-    #example 
-    {
-        min-height: 360px;
+
+    #example {
+         min-height: 600px;
     }
+
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
+    }
+
 </style>
 </asp:Content>
