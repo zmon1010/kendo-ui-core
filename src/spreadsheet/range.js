@@ -640,6 +640,33 @@
             }.bind(this), { recalc: true });
         },
 
+        _adjustRowHeight: function() {
+            var sheet = this._sheet;
+            var state = this.getState();
+            var mergedCells = [];
+
+            for (var i = 0; i < state.mergedCells.length; i++) {
+                mergedCells.push(sheet.range(state.mergedCells[i]));
+            }
+
+            this.forEachRow(function(row) {
+                var maxHeight = row.sheet().rowHeight(row.topLeft().row);
+                row.forEachCell(function(rowIndex, colIndex, cell) {
+                    var cellRange = sheet.range(rowIndex, colIndex);
+                    var totalWidth = 0;
+                    for (var i = 0; i < mergedCells.length; i++) {
+                        if (cellRange._ref.intersects(mergedCells[i]._ref)) {
+                            totalWidth += cell.width;
+                            break;
+                        }
+                    }
+                    var width = Math.max(sheet.columnWidth(colIndex), totalWidth);
+                    maxHeight = Math.max(maxHeight, kendo.spreadsheet.util.getTextHeight(cell.value, width, cell.fontSize, cell.wrap));
+                });
+                sheet.rowHeight(row.topLeft().row, Math.max(sheet.rowHeight(row.topLeft().row), maxHeight));
+            });
+        },
+
         forEachCell: function(callback) {
             this._ref.forEach(function(ref) {
                 this._sheet.forEach(ref.toRangeRef(), callback.bind(this));
