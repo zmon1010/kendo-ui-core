@@ -10,14 +10,11 @@ $window->title('About Alvar Aalto')
        ->close('onClose')
        ->startContent();
 ?>
-    <div class="armchair">
-        Artek Alvar Aalto - Armchair 402
-    </div>
     <p>
         Alvar Aalto is one of the greatest names in modern architecture and design.
         Glassblowers at the iittala factory still meticulously handcraft the legendary
         vases that are variations on one theme, fluid organic shapes that let the end user
-        ecide the use. Interpretations of the shape in new colors and materials add to the
+        decide the use. Interpretations of the shape in new colors and materials add to the
         growing Alvar Aalto Collection that remains true to his original design.
     </p>
     <p>
@@ -32,21 +29,18 @@ $window->title('About Alvar Aalto')
         Major architectural works include the Finlandia Hall in Helsinki, Finland,
         and the campus of Helsinki University of Technology.
     </p>
-    <p>
-        Source:
-        <a href="http://www.aalto.com/about-alvar-aalto.html" title="About Alvar Aalto">www.aalto.com</a>
-    </p>
 <?php
     $window->endContent();
 
     echo $window->render();
 ?>
 
-<span id="undo" style="display:none" class="k-button hidden-onnarrow">Click here to open the window.</span>
+<span id="undo" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
 
-<div class="responsive-message"></div>
 
-<div class="keyboard-nav">
+<div class="box wide hidden-on-narrow">
+    <div class="box-col">   
+    <h4>Supported keys and user actions</h4>
     <ul class="keyboard-legend">
         <li>
             <span class="button-preview">
@@ -54,12 +48,9 @@ $window->title('About Alvar Aalto')
                 <span class="key-button">w</span>
             </span>
             <span class="button-descr">
-                focuses first splitbar
+                focuses window
             </span>
         </li>
-    </ul>
-
-    <ul class="keyboard-legend">
         <li>
             <span class="button-preview">
                 <span class="key-button">esc</span>
@@ -100,6 +91,12 @@ $window->title('About Alvar Aalto')
                 moves window down
             </span>
         </li>
+    </ul>
+    </div>
+        
+    <div class="box-col">   
+    <h4>&nbsp;</h4>
+    <ul class="keyboard-legend">
         <li>
             <span class="button-preview">
                 <span class="key-button">ctrl</span>
@@ -137,8 +134,11 @@ $window->title('About Alvar Aalto')
             </span>
         </li>
     </ul>
+    </div>
 
 </div>
+
+<div class="responsive-message"></div>
 
 <script>
     function onClose() {
@@ -160,20 +160,17 @@ $window->title('About Alvar Aalto')
 </script>
 
 <style>
-    #example {
-        min-height:500px;
-    }
-
-    #undo {
-        position: absolute;
-    }
-
-    .keyboard-nav {
+    #example .box {
         margin-top: 350px;
     }
-
     .button-container {
         position: absolute;
+    }
+    
+    @media screen and (max-width: 1023px) {
+        div.k-window {
+            display: none !important;
+        }
     }
 </style>
 

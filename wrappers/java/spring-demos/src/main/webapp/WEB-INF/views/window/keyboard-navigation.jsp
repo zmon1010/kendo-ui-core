@@ -16,9 +16,12 @@
 		</kendo:window-content>	
 	</kendo:window>    
 	
-	<span id="undo" style="display:none" class="k-button">Click here to open the window.</span>
+	<span id="undo" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
 
-	   <div class="keyboard-nav">
+
+            <div class="box wide hidden-on-narrow">
+                <div class="box-col">   
+                <h4>Supported keys and user actions</h4>
                 <ul class="keyboard-legend">
                     <li>
                         <span class="button-preview">
@@ -26,12 +29,9 @@
                             <span class="key-button">w</span>
                         </span>
                         <span class="button-descr">
-                            focuses first splitbar
+                            focuses window
                         </span>
                     </li>
-                </ul>
-
-                <ul class="keyboard-legend">
                     <li>
                         <span class="button-preview">
                             <span class="key-button">esc</span>
@@ -72,6 +72,12 @@
                             moves window down
                         </span>
                     </li>
+                </ul>
+                </div>
+                    
+                <div class="box-col">   
+                <h4>&nbsp;</h4>
+                <ul class="keyboard-legend">
                     <li>
                         <span class="button-preview">
                             <span class="key-button">ctrl</span>
@@ -109,8 +115,11 @@
                         </span>
                     </li>
                 </ul>
+                </div>
 
             </div>
+            
+            <div class="responsive-message"></div>
             
 	<script>
 	    function onClose() {
@@ -133,27 +142,17 @@
 	</script>	
 	
 	<style>
-         #example 
-         {
-             min-height:500px;
-         }
-
-         #undo {
-             text-align: center;
-             position: absolute;
-             white-space: nowrap;
-             padding: 1em;
-             cursor: pointer;
-         }
-         
-         .keyboard-nav
-         {
-             margin-top: 350px;
-         }
-
-         .button-container
-         {
-             position: absolute;
-         }
-     </style>
+        #example .box {
+            margin-top: 350px;
+        }
+        .button-container {
+            position: absolute;
+        }
+        
+        @media screen and (max-width: 1023px) {
+            div.k-window {
+                display: none !important;
+            }
+        }
+    </style>
 <demo:footer />
