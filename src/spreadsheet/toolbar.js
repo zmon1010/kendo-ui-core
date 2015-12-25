@@ -1145,6 +1145,8 @@
             }).insertBefore(this.wrapper);
 
             this.quickAccessToolBar.on("click", ".k-button", function(e) {
+                e.preventDefault();
+
                 var action = $(e.currentTarget).attr("title").toLowerCase();
                 this.action({ action: action });
             }.bind(this));
