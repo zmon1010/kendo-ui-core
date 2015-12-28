@@ -88,6 +88,14 @@
         ok(aggregate !== series.data[0]);
     });
 
+    test("fields from first dataItem are accessible (date value)", function() {
+        series.data[0].value = new Date();
+        series.data[1].value = new Date();
+        series.data[0].bar = true;
+
+        equal(aggregate(series).bar, true);
+    });
+
     test("returns empty aggregate for empty source points array", function() {
         var sa = new SeriesAggregator(series, binder, defaults);
 

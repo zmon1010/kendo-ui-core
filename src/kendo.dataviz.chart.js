@@ -12762,7 +12762,7 @@ var __meta__ = { // jshint ignore:line
                 srcValues = sa._bindField(data.values, field.canonicalName);
                 value = field.transform(srcValues, series, data.dataItems, group);
 
-                if (value !== null && typeof value === OBJECT && !defined(value.length)) {
+                if (value !== null && typeof value === OBJECT && !defined(value.length) && !(value instanceof Date)) {
                     result = value;
                     break;
                 } else {
