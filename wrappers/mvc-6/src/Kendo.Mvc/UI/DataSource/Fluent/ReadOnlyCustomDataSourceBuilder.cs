@@ -7,7 +7,17 @@
     {
         public ReadOnlyCustomDataSourceBuilder(DataSource dataSource, ViewContext viewContext, IUrlGenerator urlGenerator)
             : base(dataSource, viewContext, urlGenerator)
-        { 
+        {
+        }
+
+        /// <summary>
+        /// Configures the initial group.
+        /// </summary>
+        public virtual ReadOnlyCustomDataSourceBuilder Group(Action<ReadOnlyCustomDataSourceGroupDescriptorFactory> configurator)
+        {
+            configurator(new ReadOnlyCustomDataSourceGroupDescriptorFactory(dataSource.Groups));
+
+            return this;
         }
 
         /// <summary>
