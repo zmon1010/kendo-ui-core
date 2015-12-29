@@ -28,7 +28,10 @@ $chart->title(array('text' => 'Nutrient balance: Apples, raw'))
       ->addSeriesItem($nutrients)
       ->addCategoryAxisItem($categoryAxis)
       ->addValueAxisItem($valueAxis);
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
