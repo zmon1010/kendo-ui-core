@@ -6,7 +6,7 @@
 <c:url value="/scatter-charts/date-axis/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+      <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Closing stock prices" />
              <kendo:dataSource>

@@ -47,7 +47,10 @@ $chart->title(array('text' => 'Closing stock prices'))
           )
       ))
       ->seriesDefaults(array('type' => 'scatterLine', 'markers' => array('size' => 6)));
-
+?>
+ <div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
