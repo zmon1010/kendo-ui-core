@@ -3,19 +3,20 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url value="/radar-charts/remote-data/read" var="readUrl" />
+<c:url value="/resources/dataviz/js/budget-report.json" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+    <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Budget report" />
+             <kendo:chart-legend position="bottom" />
              <kendo:dataSource>
                  <kendo:dataSource-transport>
-                     <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" />
+                     <kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="GET" contentType="application/json" />
                  </kendo:dataSource-transport>
              </kendo:dataSource>             
              <kendo:chart-series>
-                <kendo:chart-seriesItem type="radarLine" style="smooth" field="budget" />
+                <kendo:chart-seriesItem type="radarLine" style="smooth" field="budget"  />
                 <kendo:chart-seriesItem type="radarLine" style="smooth" field="spending" />
              </kendo:chart-series>
              <kendo:chart-categoryAxis>

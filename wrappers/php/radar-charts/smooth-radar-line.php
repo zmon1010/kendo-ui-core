@@ -34,12 +34,16 @@ $dataSource->transport($transport);
 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
 $chart->title(array('text' => 'Budget report'))
+	  ->legend(array('position' => 'right'))
       ->dataSource($dataSource)
       ->addSeriesItem($budget, $spending)
       ->addValueAxisItem($valueAxis)
       ->addCategoryAxisItem($categoryAxis)
       ->seriesDefaults(array('type' => 'radarLine', 'style' => 'smooth'));
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
