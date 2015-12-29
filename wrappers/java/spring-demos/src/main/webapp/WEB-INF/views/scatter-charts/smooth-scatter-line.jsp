@@ -6,7 +6,7 @@
 <c:url value="/scatter-charts/remote-data/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+      <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Charge current vs. charge time" />
              <kendo:chart-series>
