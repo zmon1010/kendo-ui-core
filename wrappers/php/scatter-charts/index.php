@@ -51,7 +51,10 @@ $chart->title(array('text' => 'Rainfall - Wind Speed'))
       ->addXAxisItem($xAxis)
       ->addYAxisItem($yAxis)
       ->addSeriesItem($series2008, $series2009, $series2010);
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
