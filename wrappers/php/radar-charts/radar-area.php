@@ -32,7 +32,10 @@ $chart->title(array('text' => 'Employment candidate review'))
       ->addSeriesItem($andrew, $margaret, $nancy)
       ->addCategoryAxisItem($categoryAxis)
       ->addValueAxisItem($valueAxis);
-
+?>
+ <div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
