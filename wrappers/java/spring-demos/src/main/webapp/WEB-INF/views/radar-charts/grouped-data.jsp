@@ -6,7 +6,7 @@
 <c:url value="/radar-charts/grouped-data/read" var="readUrl" />
 
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <% 
              String[] seriesColors = {
         		 "#1b79e4", "#3b6ad3", "#5d5ac2",

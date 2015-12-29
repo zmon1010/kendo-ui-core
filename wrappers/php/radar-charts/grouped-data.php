@@ -48,7 +48,10 @@ $chart->title(array('text' => 'Wind Rose'))
       ->tooltip(array(
           'template' => '#= category # (#= dataItem.categoryText # m/s) #= value #%',
           'visible' => true));
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
