@@ -4,12 +4,12 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="chart-wrapper">
+ <div class="demo-section k-content wide">
     <%= Html.Kendo().Chart<Kendo.Mvc.Examples.Models.BudgetReportItem>()
         .Name("chart")
         .Title("Budget report")
         .Legend(legend => legend
-            .Position(ChartLegendPosition.Bottom)
+            .Position(ChartLegendPosition.Right)
         )
         .DataSource(ds => ds.Read(read => read.Action("_BudgetReport", "Radar_Charts")))
         .Series(series =>
