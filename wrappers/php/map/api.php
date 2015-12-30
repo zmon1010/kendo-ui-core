@@ -18,13 +18,10 @@ $map->center(array(30.2681, -97.7448))
 
 ?>
 
-<div id="example" class="k-content absConf">
-    <div class="map-wrapper" style="margin: auto;">
-        <?php echo $map->render(); ?>
-    </div>
-    <div class="configuration-horizontal" id="mapConfig">
-        <div class="config-section">
-            <span class="configHead">Center</span>
+<div id="example">
+    <div class="box wide" id="mapConfig">
+        <div class="box-col">
+            <h4>Center</h4>
             <ul class="options">
                 <li>
                     <input id="centerLat" data-role="numerictextbox"
@@ -35,8 +32,8 @@ $map->center(array(30.2681, -97.7448))
                 </li>
             </ul>
         </div>
-        <div class="config-section">
-            <span class="configHead">Zoom level</span>
+        <div class="box-col">
+            <h4>Zoom level</h4>
             <ul class="options">
                 <li>
                    <select id="zoomLevel" data-role="dropdownlist">
@@ -64,6 +61,8 @@ $map->center(array(30.2681, -97.7448))
             </ul>
         </div>
     </div>
+    <?php echo $map->render(); ?>
+
     <script>
         $(document).ready(function() {
             kendo.init($("#mapConfig"));
@@ -93,10 +92,5 @@ $map->center(array(30.2681, -97.7448))
             }
         }
     </script>
-    <style>
-        .demo-section {
-            width: 700px;
-        }
-    </style>
 </div>
 <?php require_once '../include/footer.php'; ?>

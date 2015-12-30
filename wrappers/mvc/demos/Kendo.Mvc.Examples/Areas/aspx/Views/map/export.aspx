@@ -1,6 +1,6 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="box">
+<div class="box wide">
     <h4>Export options</h4>
     <div class="box-col">
         <button class='export-pdf k-button'>Export as PDF</button>
@@ -12,7 +12,6 @@
         <button class='export-svg k-button'>Export as SVG</button>
     </div>
 </div>
-<div class="demo-section k-header" style="padding: 1em;">
 <%: Html.Kendo().Map()
       .Name("map")
       .Center(30.2681, -97.7448)
@@ -33,7 +32,7 @@
            .ShapeMouseLeave("onShapeMouseLeave")
         )
 %>
-</div>
+
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
 <script src="<%= Url.Content("~/Scripts/pako.min.js") %>"></script>
@@ -44,7 +43,7 @@
 <script>
     $(".export-pdf").click(function () {
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($(".demo-section"))
+        kendo.drawing.drawDOM($("#map"))
         .then(function (group) {
             // Render the result as a PDF file
             return kendo.drawing.exportPDF(group, {
@@ -64,7 +63,7 @@
 
     $(".export-img").click(function () {
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($(".demo-section"))
+        kendo.drawing.drawDOM($("#map"))
         .then(function (group) {
             // Render the result as a PNG image
             return kendo.drawing.exportImage(group);
@@ -81,7 +80,7 @@
 
     $(".export-svg").click(function () {
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($(".demo-section"))
+        kendo.drawing.drawDOM($("#map"))
         .then(function (group) {
             // Render the result as a SVG document
             return kendo.drawing.exportSVG(group);

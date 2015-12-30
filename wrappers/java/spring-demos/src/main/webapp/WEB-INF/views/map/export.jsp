@@ -9,7 +9,7 @@
 <c:url value="/resources/shared/js/pako.min.js" var="pako" />
 <c:url value="/map/export/save" var="saveUrl" />
 
-<div class="box">
+<div class="box wide">
     <h4>Export options</h4>
     <div class="box-col">
         <button class='export-pdf k-button'>Export as PDF</button>
@@ -22,25 +22,25 @@
     </div>
 </div>
 
-<div class="demo-section k-header" style="padding: 1em;">
-	<kendo:map name="map" center="<%= new double[] {30.2681, -97.7448} %>" zoom="3"
-	           shapeCreated="onShapeCreated"
-	           shapeMouseEnter="onShapeMouseEnter"
-	           shapeMouseLeave="onShapeMouseLeave">
-	    <kendo:map-layers>
-	        <kendo:map-layer type="shape">
-	            <kendo:dataSource type="geojson">
-	                <kendo:dataSource-transport>
-	                    <kendo:dataSource-transport-read url="${readUrl}" />
-	                </kendo:dataSource-transport>
-	            </kendo:dataSource>
-	            <kendo:map-layer-style>
-	                <kendo:map-layer-style-fill opacity="0.7"/>
-	            </kendo:map-layer-style>
-	        </kendo:map-layer>
-	    </kendo:map-layers>
-	</kendo:map>
-</div>
+
+<kendo:map name="map" center="<%= new double[] {30.2681, -97.7448} %>" zoom="3"
+           shapeCreated="onShapeCreated"
+           shapeMouseEnter="onShapeMouseEnter"
+           shapeMouseLeave="onShapeMouseLeave">
+    <kendo:map-layers>
+        <kendo:map-layer type="shape">
+            <kendo:dataSource type="geojson">
+                <kendo:dataSource-transport>
+                    <kendo:dataSource-transport-read url="${readUrl}" />
+                </kendo:dataSource-transport>
+            </kendo:dataSource>
+            <kendo:map-layer-style>
+                <kendo:map-layer-style-fill opacity="0.7"/>
+            </kendo:map-layer-style>
+        </kendo:map-layer>
+    </kendo:map-layers>
+</kendo:map>
+
 
 <!-- Chroma.js used to colorize the map in the demo -->
 <script src="${chroma}"></script>
@@ -51,7 +51,7 @@
 <script>
 $(".export-pdf").click(function() {
     // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-    kendo.drawing.drawDOM($(".demo-section"))
+    kendo.drawing.drawDOM($("#map"))
     .then(function(group) {
         // Render the result as a PDF file
         return kendo.drawing.exportPDF(group, {
@@ -71,7 +71,7 @@ $(".export-pdf").click(function() {
 
 $(".export-img").click(function() {
     // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-    kendo.drawing.drawDOM($(".demo-section"))
+    kendo.drawing.drawDOM($("#map"))
     .then(function(group) {
         // Render the result as a PNG image
         return kendo.drawing.exportImage(group);
@@ -88,7 +88,7 @@ $(".export-img").click(function() {
 
 $(".export-svg").click(function() {
     // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-    kendo.drawing.drawDOM($(".demo-section"))
+    kendo.drawing.drawDOM($("#map"))
     .then(function(group) {
         // Render the result as a SVG document
         return kendo.drawing.exportSVG(group);

@@ -2,6 +2,7 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 <%: Html.Kendo().Map()
       .Name("map")
+      .HtmlAttributes(new { style = "height: 300px;" })
       .Center(39.6924, -97.3370)
       .Zoom(4)
       .Layers(layers => 
@@ -31,7 +32,10 @@
       )
 %>
 
-<div class="console"></div>
+<div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 
 <script>
     function onClick(e) {

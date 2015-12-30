@@ -1,52 +1,24 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-<style>
-    .demo-section {
-        width: 700px;
-    }
-</style>
-</asp:Content>
-
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="map-wrapper" style="margin: auto;">
-    <%: Html.Kendo().Map()
-        .Name("map")
-        .Center(30.268107, -97.744821)
-        .Zoom(3)
-        .Layers(layers =>
-        {
-            layers.Add()
-                .Type(MapLayerType.Tile)
-                .UrlTemplate("http://tile2.opencyclemap.org/transport/#= zoom #/#= x #/#= y #.png")
-                .Subdomains("a", "b", "c")
-                .Attribution("&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>." +
-                                "Tiles courtesy of <a href='http://www.opencyclemap.org/'>Andy Allan</a>");
-        })
-        .Events(e => e
-            .PanEnd("updateControls")
-            .ZoomEnd("updateControls")
-        )
-    %>
-</div>
-<div class="configuration-horizontal" id="mapConfig">
-    <div class="config-section">
-        <span class="configHead">Center</span>
+<div class="box wide" id="mapConfig">
+    <div class="box-col">
+        <h4>Center</h4>
         <ul class="options">
             <li>
                 <input id="centerLat" data-role="numerictextbox"
-                        data-format="N4" value="30.2681" data-decimals="4" />
+                       data-format="N4" value="30.2681" data-decimals="4" />
                 <input id="centerLng" data-role="numerictextbox"
-                        data-format="N4" value="-97.7448" data-decimals="4" />
+                       data-format="N4" value="-97.7448" data-decimals="4" />
                 <button id="center" class="k-button">center()</button>
             </li>
         </ul>
     </div>
-    <div class="config-section">
-        <span class="configHead">Zoom level</span>
+    <div class="box-col">
+        <h4>Zoom level</h4>
         <ul class="options">
             <li>
-                <select id="zoomLevel" data-role="dropdownlist">
+               <select id="zoomLevel" data-role="dropdownlist">
                     <option value="1">1 (min)</option>
                     <option value="2">2</option>
                     <option value="3" selected="selected">3</option>
@@ -71,6 +43,25 @@
         </ul>
     </div>
 </div>
+<%: Html.Kendo().Map()
+    .Name("map")
+    .Center(30.268107, -97.744821)
+    .Zoom(3)
+    .Layers(layers =>
+    {
+        layers.Add()
+            .Type(MapLayerType.Tile)
+            .UrlTemplate("http://tile2.opencyclemap.org/transport/#= zoom #/#= x #/#= y #.png")
+            .Subdomains("a", "b", "c")
+            .Attribution("&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>." +
+                            "Tiles courtesy of <a href='http://www.opencyclemap.org/'>Andy Allan</a>");
+    })
+    .Events(e => e
+        .PanEnd("updateControls")
+        .ZoomEnd("updateControls")
+    )
+%>
+
 <script>
     function updateControls() {
         var map = $("#map").data("kendoMap");

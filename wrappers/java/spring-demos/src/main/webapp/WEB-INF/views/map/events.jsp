@@ -6,7 +6,7 @@
 
 <c:url value="/resources/dataviz/map/us.geo.json" var="readUrl" />
 
-<kendo:map name="map" center="<%= new double[] {39.6924, -97.3370} %>" zoom="4"
+<kendo:map name="map" style="height: 300px" center="<%= new double[] {39.6924, -97.3370} %>" zoom="4"
     click="onClick"
     reset="onReset"
     pan="onPan"
@@ -32,7 +32,10 @@
     </kendo:map-layers>
 </kendo:map>
 
-<div class="console"></div>
+<div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 <script>
 function onClick(e) {
     kendoConsole.log("Click at ...");

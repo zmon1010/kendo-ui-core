@@ -18,6 +18,7 @@ $layer->type("shape")
 $map = new \Kendo\Dataviz\UI\Map('map');
 $map->center(array(39.6924, -97.3370))
     ->zoom(4)
+    ->attr('style', 'height: 300px;')
     ->addLayer($layer)
     ->click('onClick')
     ->reset('onReset')
@@ -32,7 +33,10 @@ $map->center(array(39.6924, -97.3370))
 
 echo $map->render();
 ?>
-<div class="console"></div>
+<div class="box wide">
+    <h4>Console log</h4>
+    <div class="console"></div>
+</div>
 <script>
 function onClick(e) {
     kendoConsole.log("Click at ...");

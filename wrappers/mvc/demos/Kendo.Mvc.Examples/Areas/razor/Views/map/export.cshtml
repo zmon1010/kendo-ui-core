@@ -1,4 +1,4 @@
-<div class="box">
+<div class="box wide">
     <h4>Export options</h4>
     <div class="box-col">
         <button class='export-pdf k-button'>Export as PDF</button>
@@ -10,28 +10,27 @@
         <button class='export-svg k-button'>Export as SVG</button>
     </div>
 </div>
-<div class="demo-section k-header" style="padding: 1em;">
-    @(Html.Kendo().Map()
-          .Name("map")
-          .Center(30.2681, -97.7448)
-          .Zoom(3)
-          .Layers(layers =>
-           {
-               layers.Add()
-                  .Style(style => style.Fill(fill => fill.Opacity(0.7)))
-                  .Type(MapLayerType.Shape)
-                  .DataSource(dataSource => dataSource
-                      .GeoJson()
-                      .Read(read => read.Url(Url.Content("~/Content/dataviz/map/countries-users.geo.json")))
-                  );
-           })
-           .Events(events => events
-               .ShapeCreated("onShapeCreated")
-               .ShapeMouseEnter("onShapeMouseEnter")
-               .ShapeMouseLeave("onShapeMouseLeave")
-            )
-    )
-</div>
+@(Html.Kendo().Map()
+      .Name("map")
+      .Center(30.2681, -97.7448)
+      .Zoom(3)
+      .Layers(layers =>
+       {
+           layers.Add()
+              .Style(style => style.Fill(fill => fill.Opacity(0.7)))
+              .Type(MapLayerType.Shape)
+              .DataSource(dataSource => dataSource
+                  .GeoJson()
+                  .Read(read => read.Url(Url.Content("~/Content/dataviz/map/countries-users.geo.json")))
+              );
+       })
+       .Events(events => events
+           .ShapeCreated("onShapeCreated")
+           .ShapeMouseEnter("onShapeMouseEnter")
+           .ShapeMouseLeave("onShapeMouseLeave")
+        )
+)
+
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
 <script src="@Url.Content("~/Scripts/pako.min.js")"></script>
@@ -42,7 +41,7 @@
 <script>
     $(".export-pdf").click(function () {
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($(".demo-section"))
+        kendo.drawing.drawDOM($("#map"))
         .then(function (group) {
             // Render the result as a PDF file
             return kendo.drawing.exportPDF(group, {
@@ -62,7 +61,7 @@
 
     $(".export-img").click(function () {
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($(".demo-section"))
+        kendo.drawing.drawDOM($("#map"))
         .then(function (group) {
             // Render the result as a PNG image
             return kendo.drawing.exportImage(group);
@@ -79,7 +78,7 @@
 
     $(".export-svg").click(function () {
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($(".demo-section"))
+        kendo.drawing.drawDOM($("#map"))
         .then(function (group) {
             // Render the result as a SVG document
             return kendo.drawing.exportSVG(group);

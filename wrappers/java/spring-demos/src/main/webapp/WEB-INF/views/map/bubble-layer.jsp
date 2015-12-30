@@ -7,8 +7,7 @@
 
 <demo:header />
 
-<div class="box">
-    <div id="info" class="box-col"></div>
+<div class="box wide">
     <div class="box-col select-col">
         <h4>Bubble symbol</h4>
         <ul id="select-symbol">
@@ -16,6 +15,7 @@
             <li>Square</li>
         </ul>
     </div>
+    <div id="info" class="box-col"></div>
 </div>
 
 
@@ -78,16 +78,5 @@
         index: 0
     });
 </script>
-
-<style>
-    .select-col {
-        float: right;
-    }
-    
-    #example .box,
-   .demo-section {
-        margin: 1em auto;
-    }
-</style>
 
 <demo:footer />

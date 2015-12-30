@@ -18,8 +18,8 @@ $tile_layer = new \Kendo\Dataviz\UI\MapLayer();
 $tile_layer->type("tile")
       ->urlTemplate("http://#= subdomain #.tile2.opencyclemap.org/transport/#= zoom #/#= x #/#= y #.png")
       ->subdomains(array('a', 'b', 'c'))
-      ->attribution("&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>." +
-                    "Tiles courtesy of <a href='http://www.opencyclemap.org/'>Andy Allan</a>");
+      ->attribution("&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>.
+                    Tiles courtesy of <a href='http://www.opencyclemap.org/'>Andy Allan</a>");
 
 $transport = new \Kendo\Data\DataSourceTransport();
 $transport->read(array('url' => 'remote-markers.php', 'type' => 'POST', 'dataType' => 'json'));

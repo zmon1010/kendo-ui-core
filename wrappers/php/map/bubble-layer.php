@@ -66,8 +66,7 @@ $map->center(array(45, 45))
     ->reset('onReset');
 
 ?>
-<div class="box">
-    <div id="info" class="box-col"></div>
+<div class="box wide">
     <div class="box-col select-col">
         <h4>Bubble symbol</h4>
         <ul id="select-symbol">
@@ -75,6 +74,7 @@ $map->center(array(45, 45))
             <li>Square</li>
         </ul>
     </div>
+    <div id="info" class="box-col"></div>
 </div>
 
 <?php echo $map->render(); ?>
@@ -117,14 +117,5 @@ $("#select-symbol").kendoMobileButtonGroup({
     index: 0
 });
 </script>
-<style>
-    .select-col {
-        float: right;
-    }
 
-    #example .box,
-   .demo-section {
-        margin: 1em auto;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>

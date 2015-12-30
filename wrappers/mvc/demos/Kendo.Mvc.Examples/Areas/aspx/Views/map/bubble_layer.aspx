@@ -1,21 +1,7 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-<style>
-    .select-col {
-        float: right;
-    }
-
-    #example .box,
-    .demo-section {
-        margin: 1em auto;
-    }
-</style>
-</asp:Content>
-
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <div class="box">
-        <div id="info" class="box-col"></div>
+    <div class="box wide">
         <div class="box-col select-col">
             <h4>Bubble symbol</h4>
             <ul id="select-symbol">
@@ -23,6 +9,7 @@
                 <li>Square</li>
             </ul>
         </div>
+        <div id="info" class="box-col"></div>
     </div>
     <%: Html.Kendo().Map()
         .Name("map")
