@@ -4,10 +4,11 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<div class="demo-section" style="width: 250px;">
-    <label for="products">Select product:</label>
+<div class="demo-section k-content">
+    <h4>Products</h4>
     <%= Html.Kendo().DropDownList()
           .Name("products")
+          .HtmlAttributes(new { style = "width: 100%;" })
           .DataTextField("ProductName")
           .DataValueField("ProductID")
           .Filter("contains")
