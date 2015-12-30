@@ -83,10 +83,10 @@ config.Routes.MapHttpRoute(
         dataSource: {
             type: "webapi", <#=Editable ? EditMode.Equals(batchEditMode) ? "" + newLine + "\t\t\tbatch:true," : "" : "" #>
             transport: {
+                idField: "<#= PrimaryKeyName#>",
                 read: {
                      url: "/api/<#= entitySetName #>"
                 }<# RenderCRUDOptions(entitySetName, ControllerRootName); #>
-            idField: "<#= PrimaryKeyName#>",
             schema: {
                 data: "Data",
                 total: "Total", 
