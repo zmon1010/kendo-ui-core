@@ -30,7 +30,10 @@ $chart->dataSource($dataSource)
       ))
       ->pannable(true)
       ->zoomable(true);
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
