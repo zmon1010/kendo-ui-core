@@ -55,7 +55,10 @@ $chart->title(array('text' => 'Stock Prices'))
       ->addSeriesItem($series)
       ->addXAxisItem($xAxis)
       ->addYAxisItem($yAxis);
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
