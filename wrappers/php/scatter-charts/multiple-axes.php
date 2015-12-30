@@ -64,7 +64,10 @@ $chart->title(array('text' => 'Dyno run results'))
           'title' => array('text' => 'Torque (lb-ft)')
       ))
       ->seriesDefaults(array('type' => 'scatterLine', 'scatterLine' => array('width' => 2)));
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>
