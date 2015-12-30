@@ -2,7 +2,9 @@
 require_once '../lib/Kendo/Autoload.php';
 require_once '../include/chart_data.php';
 require_once '../include/header.php';
-
+?>
+<div class="demo-section k-content wide">
+<?php
 $requestData = array(
     array('caption' => 'DNS Lookup', 'elapsed' => 20),
     array('caption' => 'Connecting', 'elapsed' => 122),
@@ -34,7 +36,9 @@ $chart->title(array('text' => 'Request latency breakdown'))
       ->addValueAxisItem($valueAxis);
 
 echo $chart->render();
-
+?>
+</div>
+<?php
 require_once '../include/footer.php';
 ?>
 <script>

@@ -2,7 +2,7 @@
 <%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%>
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <demo:header />
-     <div class="chart-wrapper">
+     <div class="demo-section k-content wide">
          <kendo:chart name="chart">
              <kendo:chart-title text="Request latency breakdown" />
              <kendo:chart-legend visible="false" />
@@ -20,8 +20,14 @@
              <kendo:chart-valueAxis>
                 <kendo:chart-valueAxisItem>
                     <kendo:chart-valueAxisItem-labels format="{0} ms" />
+                    <kendo:chart-valueAxisItem-majorGridLines visible="false" />
                 </kendo:chart-valueAxisItem>
              </kendo:chart-valueAxis>
+             <kendo:chart-categoryAxis>
+                <kendo:chart-categoryAxisItem>
+                    <kendo:chart-categoryAxisItem-majorGridLines visible="false" />
+                </kendo:chart-categoryAxisItem>
+             </kendo:chart-categoryAxis>
          </kendo:chart>
      </div>
 <demo:footer />

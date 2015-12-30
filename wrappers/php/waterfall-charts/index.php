@@ -2,7 +2,11 @@
 require_once '../lib/Kendo/Autoload.php';
 
 require_once '../include/header.php';
+?>
 
+<div class="demo-section k-content wide">
+ 
+<?php
 $series = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $series->type('waterfall')
        ->data(array(180, -60, -20, 10, 30))
@@ -19,6 +23,8 @@ $chart->addSeriesItem($series)
       ->axisDefaults(array('majorGridLines' => array('visible' => false)));
 
 echo $chart->render();
-
+?>
+</div>
+<?php
 require_once '../include/footer.php';
 ?>

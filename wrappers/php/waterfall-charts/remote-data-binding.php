@@ -24,7 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 require_once '../include/header.php';
+?>
 
+<div class="demo-section k-content wide">
+<?php
 $transport = new \Kendo\Data\DataSourceTransport();
 $transport->read(array('url' => 'remote-data-binding.php', 'type' => 'POST', 'dataType' => 'json'));
 
@@ -50,7 +53,9 @@ $chart->title(array('text' => '"Pocket price" waterfall'))
       ->addValueAxisItem($valueAxis);
 
 echo $chart->render();
-
+?>
+</div>
+<?php
 require_once '../include/footer.php';
 ?>
 <script>

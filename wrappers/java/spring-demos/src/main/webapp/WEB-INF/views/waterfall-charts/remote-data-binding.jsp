@@ -6,7 +6,7 @@
 <c:url value="/waterfall-charts/remote-data-binding/read" var="readUrl" />
 
 <demo:header />
-<div class="chart-wrapper">
+<div class="demo-section k-content wide">
 	<kendo:chart name="chart">
 		<kendo:chart-title text="\"Pocket price\" waterfall" />
 		<kendo:chart-legend visible="false" />
@@ -33,7 +33,7 @@
 				        }
 				    }
                 	</kendo:chart-seriesItem-color>
-				<kendo:chart-seriesItem-labels format="C" position="insideEnd" visible="true" />
+				<kendo:chart-seriesItem-labels format="C" position="outsideEnd" visible="true" />
 			</kendo:chart-seriesItem>
 		</kendo:chart-series>
 		<kendo:chart-valueAxis>
