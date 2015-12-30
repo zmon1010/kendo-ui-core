@@ -1,4 +1,4 @@
-<div class="box">
+<div class="box wide">
     <h4>Export Stock Chart</h4>
     <div class="box-col">
         <button class='export-pdf k-button'>Save as PDF</button>
@@ -47,6 +47,10 @@
                 DateTime.Parse("2011/10/07")
             )
         )
-        .HtmlAttributes(new { style = "height:600px;" })
     )
 </div>
+<style>
+    #stockChart {
+        height: 600px;
+    }
+</style>

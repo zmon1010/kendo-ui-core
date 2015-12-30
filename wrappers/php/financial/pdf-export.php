@@ -27,12 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 ?>
 
-<div class="box">
+<div class="box wide">
     <h4>Export Stock Chart</h4>
     <div class="box-col">
         <button class='export-pdf k-button'>Save as PDF</button>
     </div>
 </div>
+
 
 <script>
     $(".export-pdf").click(function() {
@@ -85,10 +86,12 @@ $chart->pdf($pdf)
           array('name' => 'volumeAxis', 'pane' => 'volumePane', 'visible' => false))
       ->addSeriesItem($stock, $volume)
       ->navigator($navigator);
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
-
+</div>
 <style>
 .k-chart {
     height: 600px;
