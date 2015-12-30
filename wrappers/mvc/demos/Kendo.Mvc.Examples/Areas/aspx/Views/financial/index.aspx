@@ -4,6 +4,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+ <div class="demo-section k-content wide">
     <%= Html.Kendo().StockChart<Kendo.Mvc.Examples.Models.StockDataPoint>()
         .Name("stockChart")
         .Title("The Boeing Company \n (NYSE:BA)")
@@ -24,4 +25,5 @@
             )
         )
     %>
+ </div>
 </asp:Content>

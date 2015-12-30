@@ -39,7 +39,10 @@ $chart->dataSource($dataSource)
       ->dateField('Date')
       ->addSeriesItem($series)
       ->navigator($navigator);
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <?php require_once '../include/footer.php'; ?>

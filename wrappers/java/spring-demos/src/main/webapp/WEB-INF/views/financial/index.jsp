@@ -6,6 +6,7 @@
 <c:url value="/financial/index/read" var="readUrl" />
 
 <demo:header />
+  <div class="demo-section k-content wide">
      <kendo:stockChart name="stockChart" dateField="date">
         <kendo:stockChart-title text="The Boeing Company \n (NYSE:BA)" />
         <kendo:dataSource>
@@ -23,4 +24,5 @@
             <kendo:stockChart-navigator-select from="${from}" to="${to}" />
         </kendo:stockChart-navigator>
      </kendo:stockChart>
+   </div>
 <demo:footer />
