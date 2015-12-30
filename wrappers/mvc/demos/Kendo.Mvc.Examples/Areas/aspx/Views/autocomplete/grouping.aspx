@@ -10,7 +10,6 @@
     <%= Html.Kendo().AutoComplete()
           .Name("customers")
           .DataTextField("ContactName")
-          .MinLength(2)
           .Height(400)
           .HtmlAttributes(new { style = "width:100%" })
           .Placeholder("Type a customer name")

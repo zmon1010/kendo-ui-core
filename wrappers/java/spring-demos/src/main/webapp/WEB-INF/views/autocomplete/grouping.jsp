@@ -4,7 +4,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:url value="/autocomplete/customers/" var="readUrl" />
+<c:url value="/autocomplete/customers/read" var="readUrl" />
 
 <demo:header />
 	<div class="demo-section k-content">
