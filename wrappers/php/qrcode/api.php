@@ -3,17 +3,26 @@ require_once '../lib/Kendo/Autoload.php';
 require_once '../include/header.php';
 ?>
 
-<div class="configuration-horizontal" id="qrConfig">
-    <div class="config-section">
-        <span class="configHead">Value</span>
+<div class="demo-section k-content">
+    <?php
+        $qrCode = new \Kendo\Dataviz\UI\QRCode('qrCode');
+        $qrCode->size(200);
+
+        echo $qrCode->render();
+    ?>
+</div>
+
+<div class="box wide" id="qrConfig">
+    <div class="box-col">
+        <h4>Value</h4>
         <ul class="options">
             <li>
                 <textarea id="qrValue" class="k-textbox" data-bind="value: qrValue" rows="5" cols="20"></textarea>
             </li>
         </ul>
     </div>
-    <div class="config-section">
-        <span class="configHead">Options</span>
+    <div class="box-col">
+        <h4>Options</h4>
         <ul class="options">
             <li>
                <label for="errorCorrection">Error correction level:</label>
@@ -30,7 +39,7 @@ require_once '../include/header.php';
                     <option value="ISO_8859_1">ISO_8859_1</option>
                     <option value="UTF_8">UTF_8</option>
                 </select>
-            </li>             
+            </li>
             <li>
                 <label for="size">Size:</label>
                 <input id="size" data-bind="value: qrOptions.size" data-role="numerictextbox"
@@ -43,8 +52,8 @@ require_once '../include/header.php';
             </li>
         </ul>
     </div>
-    <div class="config-section">
-        <span class="configHead">Colors</span>
+    <div class="box-col">
+        <h4>Colors</h4>
         <ul class="options">
             <li>
                 <label for="borderColor">Border color:</label>
@@ -60,14 +69,6 @@ require_once '../include/header.php';
             </li>
         </ul>
     </div>
-</div>
-<div class="demo-section">
-    <?php
-        $qrCode = new \Kendo\Dataviz\UI\QRCode('qrCode');
-        $qrCode->size(200);
-
-        echo $qrCode->render();
-    ?>
 </div>
 
 <script type="text/javascript">
@@ -126,18 +127,6 @@ require_once '../include/header.php';
         height: 100px;
     }
 
-    .configuration-horizontal .options li {
-        padding: 3px 0;
-    }
-
-    .configuration-horizontal .config-section
-    {
-        min-width: 100px;
-    }
-
-    .configuration-horizontal .k-textbox {
-         margin-left: 0;
-    }
     .options label {
          display: inline-block;
          width: 120px;

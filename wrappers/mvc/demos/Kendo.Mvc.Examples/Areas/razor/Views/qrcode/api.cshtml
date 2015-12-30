@@ -1,18 +1,26 @@
-<div class="configuration-horizontal" id="qrConfig">
-    <div class="config-section">
-        <span class="configHead">Value</span>
+<div class="demo-section">
+    @(
+        Html.Kendo().QRCode()
+            .Name("qrCode")
+            .Size(200)
+    )
+</div>
+
+<div class="box wide" id="qrConfig">
+    <div class="box-col">
+        <h4>Value</h4>
         <ul class="options">
             <li>
                 <textarea id="qrValue" class="k-textbox" data-bind="value: qrValue" rows="5" cols="20"></textarea>
             </li>
         </ul>
     </div>
-    <div class="config-section">
-        <span class="configHead">Options</span>
+    <div class="box-col">
+        <h4>Options</h4>
         <ul class="options">
             <li>
-                <label for="errorCorrection">Error correction level:</label>
-                <select id="errorCorrection" data-role="dropdownlist" data-bind="value: qrOptions.errorCorrection">
+               <label for="errorCorrection">Error correction level:</label>
+               <select id="errorCorrection" data-role="dropdownlist" data-bind="value: qrOptions.errorCorrection">
                     <option value="L">L</option>
                     <option value="M">M</option>
                     <option value="Q">Q</option>
@@ -20,8 +28,8 @@
                 </select>
             </li>
             <li>
-                <label for="encoding">Encoding:</label>
-                <select id="encoding" data-role="dropdownlist" data-bind="value: qrOptions.encoding">
+               <label for="encoding">Encoding:</label>
+               <select id="encoding" data-role="dropdownlist" data-bind="value: qrOptions.encoding">
                     <option value="ISO_8859_1">ISO_8859_1</option>
                     <option value="UTF_8">UTF_8</option>
                 </select>
@@ -38,8 +46,8 @@
             </li>
         </ul>
     </div>
-    <div class="config-section">
-        <span class="configHead">Colors</span>
+    <div class="box-col">
+        <h4>Colors</h4>
         <ul class="options">
             <li>
                 <label for="borderColor">Border color:</label>
@@ -55,13 +63,6 @@
             </li>
         </ul>
     </div>
-</div>
-<div class="demo-section">
-    @(
-        Html.Kendo().QRCode()
-            .Name("qrCode")
-            .Size(200)
-    )
 </div>
 
 <script type="text/javascript">
@@ -120,18 +121,6 @@
         height: 100px;
     }
 
-    .configuration-horizontal .options li {
-        padding: 3px 0;
-    }
-
-    .configuration-horizontal .config-section
-    {
-        min-width: 100px;
-    }
-
-    .configuration-horizontal .k-textbox {
-         margin-left: 0;
-    }
     .options label {
          display: inline-block;
          width: 120px;
