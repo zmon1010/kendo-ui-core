@@ -24,8 +24,7 @@
                     <%:Html.Kendo()
                               .DropDownList()
                               .Name("time")
-                              .HtmlAttributes(new { required = "required", data_required_msg = "Select start time", style = "width: 200px" })
-                              .OptionLabel("Select start time")
+                              .HtmlAttributes(new { required = "required", data_required_msg = "Select start time", style = "width: 220px" })
                               .BindTo(new[] {
                                   new SelectListItem { Text="14:00" },
                                   new SelectListItem { Text="15:30" },

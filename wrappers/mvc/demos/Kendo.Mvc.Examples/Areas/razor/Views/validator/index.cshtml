@@ -13,7 +13,7 @@
                     <label for="search" class="required">Movie</label>
                     @(Html.Kendo().TextBox()
                               .Name("search")
-                              .HtmlAttributes(new { type = "search", placeholder = "Full name", required = "required", validationmessage = "Select movie", style = "width:220px" })
+                              .HtmlAttributes(new { type = "search", required = "required", validationmessage = "Select movie", style = "width:220px" })
                         )
                     <span class="k-invalid-msg" data-for="search"></span>
                 </li>
@@ -23,7 +23,6 @@
                               .DropDownList()
                               .Name("time")
                               .HtmlAttributes(new { required = "required", data_required_msg = "Select start time", style = "width: 220px" })
-                              .OptionLabel("Select start time")
                               .BindTo(new[] {
                                   new SelectListItem { Text="14:00" },
                                   new SelectListItem { Text="15:30" },
