@@ -6,6 +6,7 @@
 <c:url value="/financial/index/read" var="readUrl" />
 
 <demo:header />
+	<div class="demo-section k-content wide">
      <kendo:stockChart name="stockChart" dateField="date">
         <kendo:dataSource>
              <kendo:dataSource-transport>
@@ -39,6 +40,7 @@
             <kendo:stockChart-navigator-select from="${from}" to="${to}" />
         </kendo:stockChart-navigator>
      </kendo:stockChart>
+    </div>
      <style>
 	    #stockChart {
 	    	height: 600px;

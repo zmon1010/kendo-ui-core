@@ -52,11 +52,14 @@ $chart->dataSource($dataSource)
           array('name' => 'volumeAxis', 'pane' => 'volumePane', 'visible' => false))
       ->addSeriesItem($stock, $volume)
       ->navigator($navigator);
-
+?>
+<div class="demo-section k-content wide">
+<?php
 echo $chart->render();
 ?>
+</div>
 <style>
-.k-chart {
+#stock-chart {
     height: 600px;
 }
 </style>
