@@ -3,7 +3,7 @@
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
     <style>
         #gauge-container {
-            background: transparent url(<%= Url.Content("~/Content/dataviz/gauge/gauge-container-partial.png") %>) no-repeat 50% 50%;
+            background: transparent url(<%= Url.Content("~/Content/dataviz/gauge/gauge-container.png") %>) no-repeat 50% 50%;
             width: 404px;
             height: 404px;
             text-align: center;

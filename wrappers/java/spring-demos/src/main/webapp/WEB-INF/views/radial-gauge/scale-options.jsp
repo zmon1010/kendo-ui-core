@@ -3,48 +3,56 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <demo:header />
-     <div class="configuration k-widget k-header" style="width:190px;">
-        <span class="configHead">Gauge</span>
-        <ul class="options">
-            <li>
-                <input id="labels" checked="checked" type="checkbox" autocomplete="off" />
-                <label for="labels">Show labels</label>
-            </li>
-    
-            <li>
-                <input id="labels-inside" type="radio" value="inside" name="labels-position" checked="checked" />
-                <label for="labels-inside">- inside the gauge</label>
-            </li>
-    
-            <li>
-                <input id="labels-outside" type="radio" value="outside" name="labels-position">
-                <label for="labels-outside">- outside of the gauge</label>
-            </li>
-    
-            <li>
-                <input id="ranges" checked="checked" type="checkbox" autocomplete="off" />
-                <label for="ranges">Show ranges</label>
-            </li>
-        </ul>
-     </div>
-     <div id="gauge-container">
-         <kendo:radialGauge name="gauge">
-            <kendo:radialGauge-pointer>
-            	<kendo:radialGauge-pointerItem value="65" />
-            </kendo:radialGauge-pointer>
-            <kendo:radialGauge-scale minorUnit="5" startAngle="-60" endAngle="240" max="180">
-                <kendo:radialGauge-scale-labels position="inside" />
-                <kendo:radialGauge-scale-ranges>
-                    <kendo:radialGauge-scale-range from="80" to="120" color="#ffc700" />
-                    <kendo:radialGauge-scale-range from="120" to="150" color="#ff7a00" />
-                    <kendo:radialGauge-scale-range from="150" to="180" color="#c20000" />
-                </kendo:radialGauge-scale-ranges>
-            </kendo:radialGauge-scale>
-         </kendo:radialGauge>
-     </div>
+
+    <div id="gauge-container">
+        <kendo:radialGauge name="gauge">
+           <kendo:radialGauge-pointer>
+           	<kendo:radialGauge-pointerItem value="65" />
+           </kendo:radialGauge-pointer>
+           <kendo:radialGauge-scale minorUnit="5" startAngle="-30" endAngle="210" max="180">
+               <kendo:radialGauge-scale-labels position="inside" />
+               <kendo:radialGauge-scale-ranges>
+                   <kendo:radialGauge-scale-range from="80" to="120" color="#ffc700" />
+                   <kendo:radialGauge-scale-range from="120" to="150" color="#ff7a00" />
+                   <kendo:radialGauge-scale-range from="150" to="180" color="#c20000" />
+               </kendo:radialGauge-scale-ranges>
+           </kendo:radialGauge-scale>
+        </kendo:radialGauge>
+    </div>
+     
+    <div class="box">
+	    <div class="box-col">
+	        <h4>Gauge Labels</h4>
+	        <ul class="options">
+	            <li>
+	                <input id="labels" checked="checked" type="checkbox" autocomplete="off">
+	                <label for="labels">Show labels</label>
+	            </li>
+	    
+	            <li>
+	                <input id="labels-inside" type="radio" value="inside" name="labels-position" checked="checked">
+	                <label for="labels-inside">- inside the gauge</label>
+	            </li>
+	    
+	            <li>
+	                <input id="labels-outside" type="radio" value="outside" name="labels-position">
+	                <label for="labels-outside">- outside of the gauge</label>
+	            </li>
+	        </ul>
+	    </div>
+	    <div class="box-col">
+	        <h4>Gauge Ranges</h4>
+	        <ul class="options">
+	            <li>
+	                <input id="ranges" checked="checked" type="checkbox" autocomplete="off">
+	                <label for="ranges">Show ranges</label>
+	            </li>
+	        </ul>
+	    </div>
+	</div>
 	<script type="text/javascript">
 	    $(document).ready(function () {
-	        $(".configuration").bind("change", refresh);
+	        $(".box").bind("change", refresh);
 	
 	        window.configuredRanges = $("#gauge").data("kendoRadialGauge").options.scale.ranges;
 	    });
@@ -72,18 +80,13 @@
             width: 404px;
             height: 404px;
             text-align: center;
-            margin: auto;
-            padding-top: 27px;
+            margin: 0 auto 30px auto;
         }
 
         #gauge {
             width: 330px;
             height: 330px;
             margin: 0 auto 0;
-        }
-
-        #gauge svg {
-            left: 0 !important;
         }
     </style>
 <demo:footer />

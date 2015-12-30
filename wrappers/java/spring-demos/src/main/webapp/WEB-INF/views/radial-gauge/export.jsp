@@ -15,7 +15,7 @@
             <button class='export-svg k-button'>Export as SVG</button>
         </div>
     </div>
-	<div id="gauge-container">
+	<div id="gauge-container" class="demo-section">
          <kendo:radialGauge name="gauge">
             <kendo:radialGauge-pointer>
             	<kendo:radialGauge-pointerItem value="20" color="#c20000">
