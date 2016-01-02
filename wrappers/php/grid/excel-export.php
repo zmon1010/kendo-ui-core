@@ -114,7 +114,7 @@ $unitsOnOrder->field('UnitsOnOrder')
 
 $unitsInStock = new \Kendo\UI\GridColumn();
 $unitsInStock->field('UnitsInStock')
-          ->width(150)
+          ->width(300)
           ->footerTemplate('Min: #= min # Max: #= max #')
           ->groupHeaderTemplate('Units In Stock: #= value # (Count: #= count#)')
           ->title('Units In Stock');
@@ -127,7 +127,6 @@ $excel->fileName('Kendo UI Grid Export.xlsx')
 $grid->addColumn($productName, $unitPrice, $unitsOnOrder, $unitsInStock)
      ->addToolbarItem(new \Kendo\UI\GridToolbarItem('excel'))
      ->excel($excel)
-     ->attr('style', 'width: 900px')
      ->dataSource($dataSource)
      ->sortable(true)
      ->columnMenu(true)

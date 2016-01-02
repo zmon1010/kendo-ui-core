@@ -11,7 +11,7 @@
 
 <demo:header />
   
-    <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" groupable="true" reorderable="true" resizable="true" columnMenu="true" style="width:900px">
+    <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" groupable="true" reorderable="true" resizable="true" columnMenu="true">
         <kendo:grid-toolbar>
         	<kendo:grid-toolbarItem name="excel"></kendo:grid-toolbarItem>
         </kendo:grid-toolbar>        

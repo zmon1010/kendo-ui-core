@@ -6,7 +6,6 @@
 
 <%: Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()    
     .Name("grid")    
-    .HtmlAttributes( new { style = "width: 900px" } )
     .Columns(columns => {
         columns.Bound(p => p.ProductName).Width(300).Locked()
                .ClientFooterTemplate("Total Count: #=count#")
@@ -22,7 +21,6 @@
     .ToolBar(tools => tools.Excel())
     .Pageable()
     .Sortable()
-    .Scrollable()
     .Groupable()
     .Excel(excel => excel
         .FileName("Kendo UI Grid Export.xlsx")
