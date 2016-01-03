@@ -302,7 +302,9 @@ var __meta__ = { // jshint ignore:line
                 userOptions.dataSource = dataSource;
             }
 
-            chart._initDataSource(userOptions);
+            preloadFonts(userOptions, function() {
+                chart._initDataSource(userOptions);
+            });
 
             kendo.notify(chart, dataviz.ui);
         },
@@ -1557,7 +1559,11 @@ var __meta__ = { // jshint ignore:line
                 dataSource = chart.dataSource;
 
             chart.element.off(NS);
-            dataSource.unbind(CHANGE, chart._dataChangeHandler);
+
+            if (dataSource) {
+                dataSource.unbind(CHANGE, chart._dataChangeHandler);
+            }
+
             $(document).off(MOUSEMOVE_TRACKING);
 
             if (chart._userEvents) {
@@ -13599,6 +13605,32 @@ var __meta__ = { // jshint ignore:line
         var key = (mouseKey || "").toLowerCase();
         var accept = (key == "none" && !(e.ctrlKey || e.shiftKey || e.altKey)) || e[key + "Key"];
         return accept;
+    }
+
+    function preloadFonts(options, callback) {
+        var fonts = [];
+        fetchFonts(options, fonts);
+
+        kendo.util.loadFonts(fonts, callback);
+    }
+
+    function fetchFonts(options, fonts) {
+        if (!options) {
+            return;
+        }
+
+        Object.keys(options).forEach(function(key) {
+            var value = options[key];
+            if (key === "dataSource" || !value) {
+                return;
+            }
+
+            if (key === "font") {
+                fonts.push(value);
+            } else if (typeof value === "object") {
+                fetchFonts(value, fonts);
+            }
+        });
     }
 
     // Exports ================================================================

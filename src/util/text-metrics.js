@@ -149,9 +149,32 @@
         return TextMetrics.current.measure(text, style, measureBox);
     }
 
+    // Preloads specified fonts and calls callback when:
+    // a) done
+    // b) not supported
+    function loadFonts(fonts, callback) {
+        var promises = [];
+
+        if (fonts.length > 0 && document.fonts) {
+            try {
+                promises = fonts.map(function(font) {
+                    return document.fonts.load(font);
+                });
+            } catch(e) {
+                // Silence font-loading errors
+                kendo.logToConsole(e);
+            }
+
+            Promise.all(promises).then(callback, callback);
+        } else {
+            callback();
+        }
+    }
+
     // Exports ================================================================
     kendo.util.TextMetrics = TextMetrics;
     kendo.util.LRUCache = LRUCache;
+    kendo.util.loadFonts = loadFonts;
     kendo.util.measureText = measureText;
 
 })(window.kendo.jQuery);

@@ -84,6 +84,7 @@
     "globals": {
       "JSON": true,
       "QUnit": true,
+      "Promise": true,
       "test": true,
       "asyncTest": true,
       "module": true,

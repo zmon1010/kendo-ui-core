@@ -1160,4 +1160,47 @@
 
     })();
 
+    // ------------------------------------------------------------
+    (function() {
+        module("Custom fonts", {
+            setup: function() {
+            },
+            teardown: function() {
+                destroyChart();
+            }
+        });
+
+        test("loads custom fonts", function() {
+            var font = "16px Deja Mu";
+
+            stubMethod(kendo.util, "loadFonts", function(fonts) {
+                deepEqual(fonts, [font]);
+            }, function() {
+                createChart({
+                    categoryAxis: {
+                        labels: {
+                            font: font
+                        }
+                    }
+                });
+            });
+        });
+
+        test("does not crash with complex options", function() {
+            stubMethod(kendo.util, "loadFonts", function() {
+                ok(true)
+            }, function() {
+                createChart({
+                    dataSource: new kendo.data.DataSource(),
+                    foo: null,
+                    series: [{
+                        visual: function(e) {
+                            return e.createVisual();
+                        }
+                    }]
+                });
+            });
+        });
+    })();
+
 })();

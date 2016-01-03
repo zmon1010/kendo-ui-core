@@ -301,6 +301,10 @@ function clickChart(chart, element, x, y) {
     chart._userEvents.end(x || 0, y || 0);
 }
 
+kendo.util.loadFonts = function(fonts, callback) {
+    callback();
+}
+
 kendo.drawing.util.TextMetrics.current = {
     measure: function(text, style) {
         return {
