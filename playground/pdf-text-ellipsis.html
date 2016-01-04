@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <style type="text/css">
+      body {
+        font-family: "DejaVu Serif";
+      }
+      .test {
+        margin: 2em;
+        text-overflow: ellipsis;
+        width: 4em;
+        border: 1px solid #000;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="pdf('#test1')">PDF</button>
+    <button onclick="draw('#test1', 'svg')">SVG</button>
+    <button onclick="draw('#test1', 'canvas')">Canvas</button>
+    <button onclick="h2c('#test1')">html2canvas</button>
+
+    <div id="test1">
+      <div class="test">Some long text</div>
+      <div style="margin-left: 2em; border: 1px solid red; width: 5em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Another long text</div>
+    </div>
+  </body>
+</html>
