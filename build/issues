@@ -139,7 +139,7 @@ current = issues(CURRENT_ISSUES_OPTIONS) do |issues|
     issues.group_by do |issue|
         label = issue.labels.find { |label| label.name =~ /Sev: (Low|Medium|High|Critical|Blocking)/i }
         unless label
-            p "Invalid issue - #{issue.url}"
+            puts "Invalid issue - #{issue.html_url}"
         end
         label ? label.name[/Low|Medium|High|Critical|Blocking/i].downcase : "default"
     end
