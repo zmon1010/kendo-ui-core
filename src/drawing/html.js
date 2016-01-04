@@ -2489,6 +2489,21 @@
         var isJustified = align == "justify";
         var whiteSpace = getPropertyValue(style, "white-space");
 
+        // IE shrinks the text with text-overflow: ellipsis,
+        // apparently because the returned bounding box for the range
+        // is limited to the visible area minus space for the dots,
+        // instead of being the full width of the text.
+        //
+        // https://github.com/telerik/kendo/issues/5232
+        var textOverflow, saveTextOverflow;
+        if (browser.msie) {
+            textOverflow = style.textOverflow;             // computed style
+            if (textOverflow == "ellipsis") {
+                saveTextOverflow = element.style.textOverflow; // own style.
+                element.style.textOverflow = "clip";
+            }
+        }
+
         // A line of 500px, with a font of 12px, contains an average of 80 characters, but since we
         // err, we'd like to guess a bigger number rather than a smaller one.  Multiplying by 5
         // seems to be a good option.
@@ -2498,6 +2513,10 @@
         }
 
         while (!doChunk()) {}
+
+        if (browser.msie && textOverflow == "ellipsis") {
+            element.style.textOverflow = saveTextOverflow;
+        }
 
         return;                 // only function declarations after this line
 
