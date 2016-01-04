@@ -1049,13 +1049,18 @@
             // Workaround browser bugs: IE and Chrome would sometimes
             // return 0 or 1-width rectangles before or after the main
             // one.  https://github.com/telerik/kendo/issues/4674
-            // These are probably not the only cases.
-            var a = range.getClientRects();
-            if (a.length == 2 && a[1].width <= 1) {
-                return a[0];
-            }
-            if (a.length == 3 && a[0].width <= 1 && a[2].width <= 1) {
-                return a[1];
+            var a = range.getClientRects(), box, count = 0;
+            if (a.length <= 3) {
+                for (var i = 0; i < a.length; ++i) {
+                    if (a[i].width <= 1) {
+                        count++;
+                    } else {
+                        box = a[i];
+                    }
+                }
+                if (count == a.length - 1) {
+                    return box;
+                }
             }
         }
         return range.getBoundingClientRect();
@@ -2536,7 +2541,7 @@
             // will be essential for us to figure out where the next line begins.
             range.setStart(node, start);
             range.setEnd(node, start + 1);
-            box = range.getBoundingClientRect();
+            box = actuallyGetRangeBoundingRect(range);
 
             // for justified text we must split at each space, because space has variable width.
             var found = false;
@@ -2852,8 +2857,11 @@
         //drawDebugBox(element.getBoundingClientRect(), container);
     }
 
-    // function drawDebugBox(box, group) {
+    // function drawDebugBox(box, group, color) {
     //     var path = drawing.Path.fromRect(new geo.Rect([ box.left, box.top ], [ box.width, box.height ]));
+    //     if (color) {
+    //         path.stroke(color);
+    //     }
     //     group.append(path);
     // }
 

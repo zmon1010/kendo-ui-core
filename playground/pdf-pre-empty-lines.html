@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <style type="text/css">
+      body {
+        font-family: "DejaVu Serif";
+      }
+      pre {
+        font-family: "DejaVu Mono";
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="pdf('#test1')">PDF</button>
+    <button onclick="draw('#test1', 'svg')">SVG</button>
+    <button onclick="draw('#test1', 'canvas')">Canvas</button>
+    <button onclick="h2c('#test1')">html2canvas</button>
+
+    <div id="test1">
+<pre>foo {
+}
+
+bar</pre>
+    </div>
+  </body>
+</html>
