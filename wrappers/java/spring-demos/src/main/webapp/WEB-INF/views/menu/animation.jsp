@@ -4,9 +4,63 @@
 
 <demo:header />
 
-<form class="configuration k-widget k-header" method="Post">
-    <span class="configHead">Animation Settings</span>
-    <ul class="options">
+<div class="demo-section k-content">
+	<kendo:menu name="menu" hoverDelay="${delay}">
+		<kendo:menu-animation>
+			<kendo:menu-animation-open effects="${animationConfig}"/>
+		</kendo:menu-animation>	
+	    <kendo:menu-items>
+	        <kendo:menu-item text="Furniture">
+	            <kendo:menu-items>
+	                <kendo:menu-item text="Tables & Chairs"></kendo:menu-item>
+	                <kendo:menu-item text="Sofas"></kendo:menu-item>
+	                <kendo:menu-item text="Occasional Furniture"></kendo:menu-item>
+	                <kendo:menu-item text="Childerns Furniture"></kendo:menu-item>
+	                <kendo:menu-item text="Beds"></kendo:menu-item>
+	            </kendo:menu-items>
+	        </kendo:menu-item>
+	        <kendo:menu-item text="Decor">
+	            <kendo:menu-items>
+	                <kendo:menu-item text="Bed Linen"></kendo:menu-item>
+	                <kendo:menu-item text="Throws"></kendo:menu-item>
+	                <kendo:menu-item text="Curtains & Blinds"></kendo:menu-item>
+	                <kendo:menu-item text="Rugs"></kendo:menu-item>
+	                <kendo:menu-item text="Carpets"></kendo:menu-item>
+	            </kendo:menu-items>
+	        </kendo:menu-item>               
+	        <kendo:menu-item text="Storage">
+	            <kendo:menu-items>
+	                <kendo:menu-item text="Wall Shelving"></kendo:menu-item>
+	                <kendo:menu-item text="Kids Storage"></kendo:menu-item>
+	                <kendo:menu-item text="Baskets"></kendo:menu-item>
+	                <kendo:menu-item text="Multimedia Storage"></kendo:menu-item>
+	                <kendo:menu-item text="Floor Shelving"></kendo:menu-item>
+	                <kendo:menu-item text="Toilet Roll Holders"></kendo:menu-item>
+	                <kendo:menu-item text="Storage Jars"></kendo:menu-item>
+	                <kendo:menu-item text="Drawers"></kendo:menu-item>
+	                <kendo:menu-item text="Boxes"></kendo:menu-item>
+	            </kendo:menu-items>
+	        </kendo:menu-item>
+	        <kendo:menu-item text="Lights">
+	            <kendo:menu-items>
+	                <kendo:menu-item text="Ceiling"></kendo:menu-item>
+	                <kendo:menu-item text="Table"></kendo:menu-item>
+	                <kendo:menu-item text="Floor"></kendo:menu-item>
+	                <kendo:menu-item text="Shades"></kendo:menu-item>
+	                <kendo:menu-item text="Wall Lights"></kendo:menu-item>
+	                <kendo:menu-item text="Spotlights"></kendo:menu-item>
+	                <kendo:menu-item text="Push Light"></kendo:menu-item>
+	                <kendo:menu-item text="String Lights"></kendo:menu-item>
+	            </kendo:menu-items>
+	        </kendo:menu-item>      
+	    </kendo:menu-items>
+	</kendo:menu>
+</div>
+
+<form method="Post">
+   <div class="box">
+       <h4>Animation Settings</h4>
+       <ul class="options">
         <li>
             <input id="toggle" name="animation" type="radio" ${ animation == "toggle" ? "checked=\"checked\"" : "" } value="toggle" /> <label for="toggle">toggle animation</label>
         </li>
@@ -26,69 +80,6 @@
     </ul>
 
     <button class="k-button">Apply</button>
+  </div>
 </form>
-
-<kendo:menu name="menu" hoverDelay="${delay}">
-	<kendo:menu-animation>
-		<kendo:menu-animation-open effects="${animationConfig}"/>
-	</kendo:menu-animation>	
-    <kendo:menu-items>
-        <kendo:menu-item text="Furniture">
-            <kendo:menu-items>
-                <kendo:menu-item text="Tables & Chairs"></kendo:menu-item>
-                <kendo:menu-item text="Sofas"></kendo:menu-item>
-                <kendo:menu-item text="Occasional Furniture"></kendo:menu-item>
-                <kendo:menu-item text="Childerns Furniture"></kendo:menu-item>
-                <kendo:menu-item text="Beds"></kendo:menu-item>
-            </kendo:menu-items>
-        </kendo:menu-item>
-        <kendo:menu-item text="Decor">
-            <kendo:menu-items>
-                <kendo:menu-item text="Bed Linen"></kendo:menu-item>
-                <kendo:menu-item text="Throws"></kendo:menu-item>
-                <kendo:menu-item text="Curtains & Blinds"></kendo:menu-item>
-                <kendo:menu-item text="Rugs"></kendo:menu-item>
-                <kendo:menu-item text="Carpets"></kendo:menu-item>
-            </kendo:menu-items>
-        </kendo:menu-item>               
-        <kendo:menu-item text="Storage">
-            <kendo:menu-items>
-                <kendo:menu-item text="Wall Shelving"></kendo:menu-item>
-                <kendo:menu-item text="Kids Storage"></kendo:menu-item>
-                <kendo:menu-item text="Baskets"></kendo:menu-item>
-                <kendo:menu-item text="Multimedia Storage"></kendo:menu-item>
-                <kendo:menu-item text="Floor Shelving"></kendo:menu-item>
-                <kendo:menu-item text="Toilet Roll Holders"></kendo:menu-item>
-                <kendo:menu-item text="Storage Jars"></kendo:menu-item>
-                <kendo:menu-item text="Drawers"></kendo:menu-item>
-                <kendo:menu-item text="Boxes"></kendo:menu-item>
-            </kendo:menu-items>
-        </kendo:menu-item>
-        <kendo:menu-item text="Lights">
-            <kendo:menu-items>
-                <kendo:menu-item text="Ceiling"></kendo:menu-item>
-                <kendo:menu-item text="Table"></kendo:menu-item>
-                <kendo:menu-item text="Floor"></kendo:menu-item>
-                <kendo:menu-item text="Shades"></kendo:menu-item>
-                <kendo:menu-item text="Wall Lights"></kendo:menu-item>
-                <kendo:menu-item text="Spotlights"></kendo:menu-item>
-                <kendo:menu-item text="Push Light"></kendo:menu-item>
-                <kendo:menu-item text="String Lights"></kendo:menu-item>
-            </kendo:menu-items>
-        </kendo:menu-item>      
-    </kendo:menu-items>
-</kendo:menu>
-
-<style>
-    .configuration .k-textbox
-    {
-        margin-top: -3px;
-    }
-
-    .k-menu
-    {
-        margin-right: 220px;
-    }
-</style>
-
 <demo:footer />
