@@ -6831,6 +6831,8 @@ var __meta__ = { // jshint ignore:line
             group.find("td[aria-expanded='true']:first").attr("aria-expanded", false);
             group = group.nextAll("tr");
 
+            var toHide = [];
+
             for (idx = 0, length = group.length; idx < length; idx ++ ) {
                 tr = group.eq(idx);
                 offset = tr.find(".k-group-cell").length;
@@ -6845,9 +6847,13 @@ var __meta__ = { // jshint ignore:line
                     break;
                 }
 
-                tr.hide();
-                relatedGroup.eq(idx).hide();
+                if (relatedGroup.length) {
+                    toHide.push(relatedGroup[0]);
+                }
+                toHide.push(tr[0]);
             }
+
+            $(toHide).hide();
         },
 
         expandGroup: function(group) {
