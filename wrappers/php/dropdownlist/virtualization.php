@@ -100,6 +100,7 @@ echo $dropDownList->render();
     }
 
     function convertValues(value) {
+       
         var data = {};
 
         value = $.isArray(value) ? value : [value];
@@ -107,7 +108,7 @@ echo $dropDownList->render();
         for (var idx = 0; idx < value.length; idx++) {
             data["values[" + idx + "]"] = value[idx];
         }
-
+         debugger;
         return data;
     }
 </script>

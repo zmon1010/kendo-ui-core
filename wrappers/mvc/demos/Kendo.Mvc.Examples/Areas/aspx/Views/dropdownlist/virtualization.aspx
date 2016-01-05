@@ -15,6 +15,7 @@
           .HtmlAttributes(new { style = "width:100%" })
           .Template("#= OrderID # | For: #= ShipName #, #= ShipCountry #")
           .Height(290)
+          .Filter(FilterType.Contains)
           .DataSource(source => {
               source.Custom()
                   .ServerFiltering(true)
