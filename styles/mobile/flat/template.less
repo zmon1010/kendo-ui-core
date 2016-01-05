@@ -11,7 +11,7 @@
 @flat-light-shadow: rgba(255,255,255,.2);
 @flat-overlay-background: rgba(0,0,0,.4);
 
-@error: #ef470a;
+@warning: #ef470a;
 
 .km-flat,
 .km-flat .km-navbar,
@@ -394,10 +394,10 @@
 .km-flat .km-list > li label.km-invalid,
 .km-flat .km-list fieldset .km-legend-button.km-invalid,
 .km-flat .km-list > li label.km-invalid.km-required:after {
-    color: @error;
+    color: @warning;
 }
 
 .km-flat .km-invalid-msg {
     color: @flat-active-color;
-    background: @error;
+    background: @warning;
 }
