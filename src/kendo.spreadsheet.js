@@ -330,7 +330,7 @@
                     author    : null,
                     subject   : null,
                     keywords  : null,
-                    creator   : "Kendo UI PDF Generator",
+                    creator   : "Kendo UI PDF Generator v." + kendo.version,
                     // Creation Date; defaults to new Date()
                     date      : null
                 }

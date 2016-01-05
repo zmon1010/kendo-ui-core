@@ -5,7 +5,9 @@
     var geo = kendo.geometry;
 
     module("pdf-core", {
-
+        setup: function() {
+            kendo.version = "1.2.3";
+        }
     });
 
     test("[PDF] basic sanity checking", function(){
@@ -14,7 +16,7 @@
         var data = pdf.render();
         var text = data.readString(data.length());
         checkDocumentStructure(data);
-        infoOK(text, "Producer", "Kendo UI PDF Generator");
+        infoOK(text, "Producer", "Kendo UI PDF Generator v.1.2.3");
     });
 
     test("[PDF] options make it into the document", function(){
@@ -48,6 +50,18 @@
         // page is translated by paper size/margins and clipped to content box
         var pageText = getPageText(page);
         commandsOK(pageText, "1 0 0 -1 0 200 cm 1 0 0 1 50 50 cm 0 0 200 100 re W n", "paper translation/margins");
+    });
+
+    test("[PDF] options defaults", function(){
+        var pdf = new PDF.Document({ });
+        var page = pdf.addPage();
+        var data = pdf.render();
+        var text = data.readString(data.length());
+
+        checkDocumentStructure(data);
+
+        infoOK(text, "Producer", "Kendo UI PDF Generator v.1.2.3");
+        infoOK(text, "Creator", "Kendo UI PDF Generator v.1.2.3");
     });
 
     // this one is rather pointless.  the output will be completely
@@ -280,7 +294,7 @@
 
     function infoOK(text, header, content) {
         var rx = new RegExp("\\/" + header + "\\s*\\(" + content + "\\)");
-        ok(rx.test(text));
+        ok(rx.test(text), content + " not matched" + text);
     }
 
     function commandsOK(text, sequence, msg) {
