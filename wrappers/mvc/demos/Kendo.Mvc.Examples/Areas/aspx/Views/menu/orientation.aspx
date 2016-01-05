@@ -4,33 +4,9 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-<% Html.BeginForm(); %>
-    <text>
-    <div class="configuration k-widget k-header">
-        <span class="configHead">Orientation Settings</span>
-        <ul class="options">
-            <li>
-                <label for="orientation">orientation</label>
-
-                <%= Html.Kendo().DropDownList()
-                      .Name("orientation")
-                      .Items(items =>
-                            {
-                                items.Add().Text("Horizontal").Value("horizontal");
-                                items.Add().Text("Vertical").Value("vertical");
-                            })
-                      .SelectedIndex(Model == MenuOrientation.Horizontal ? 0 : 1)
-                %>
-            </li>
-        </ul>
-        <button class="k-button">Apply</button>
-    </div>
-    </text>
-<% Html.EndForm(); %>
-
+<div class="demo-section k-content">
 <%= Html.Kendo().Menu()
       .Name("menu")
-      .HtmlAttributes(new { style = "margin-right: 220px; width: 300px;" })
       .Items(items =>
       {
           items.Add()
@@ -173,4 +149,28 @@
       })
       .Orientation(Model)
 %>
+</div>
+<% Html.BeginForm(); %>
+    <text>
+    <div class="box">
+                <h4>Orientation Settings</h4>
+                <ul class="options">
+                    <li>      
+                        <label for="orientation">Orientation:</label> 
+
+                <%= Html.Kendo().DropDownList()
+                      .Name("orientation")
+                      .Items(items =>
+                            {
+                                items.Add().Text("Horizontal").Value("horizontal");
+                                items.Add().Text("Vertical").Value("vertical");
+                            })
+                      .SelectedIndex(Model == MenuOrientation.Horizontal ? 0 : 1)
+                %>
+            </li>
+        </ul>
+        <button class="k-button" style="width: 80px;">Apply</button>
+    </div>
+    </text>
+<% Html.EndForm(); %>
 </asp:Content>
