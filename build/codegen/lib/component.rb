@@ -48,7 +48,11 @@ module CodeGen
             directory = 'data' if @full_name.start_with?('kendo.data.')
             directory = 'dataviz/ui' if @full_name.start_with?('kendo.dataviz')
 
-            "/api/javascript/#{directory}/#{name.downcase}"
+            "/api/javascript/#{directory}/#{js_name.downcase}"
+        end
+
+        def js_name
+            name
         end
 
         def widget?
