@@ -226,7 +226,7 @@
 
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
-                var text = item.text.toLowerCase();
+                var text = item.text.toString().toLowerCase();
                 var itemVisible = query === true || query === "" || text.indexOf(query) >= 0;
 
                 var anyVisibleChildren = filter(item.children, itemVisible || query); // pass true if parent matches
