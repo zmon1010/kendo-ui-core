@@ -393,7 +393,7 @@
         });
     });
 
-    function indludesValue(range, value) {
+    function includesValue(range, value) {
         var values = range.values();
         values = [].concat.apply([], values);
         return values.indexOf(value) >= 0;
@@ -404,10 +404,10 @@
 
         filterMenu.bind("action", function(e) {
             var range = e.options.operatingRange;
-            ok(!indludesValue(range, "A1"), "header sorted");
-            ok(!indludesValue(range, "B1"), "header sorted");
-            ok(indludesValue(range, "A2"));
-            ok(indludesValue(range, "B3"));
+            ok(!includesValue(range, "A1"), "header sorted");
+            ok(!includesValue(range, "B1"), "header sorted");
+            ok(includesValue(range, "A2"));
+            ok(includesValue(range, "B3"));
         });
 
         filterMenu.menu.trigger("select", {
@@ -424,8 +424,8 @@
             ok(e.options.valueFilter.values[0], "A1");
             var range = e.options.operatingRange;
             ok(range instanceof kendo.spreadsheet.Range);
-            ok(indludesValue(range, "A1"));
-            ok(indludesValue(range, "B2"));
+            ok(includesValue(range, "A1"));
+            ok(includesValue(range, "B2"));
         });
 
         var tree = filterMenu.valuesTreeView;
