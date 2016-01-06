@@ -14,6 +14,8 @@
 <kendo:spreadsheet name="spreadsheet" style="width:100%">
 	<kendo:spreadsheet-sheets>
 		<kendo:spreadsheet-sheet name="Food Order" mergedCells="<%=mergedCells%>">
+			<kendo:spreadsheet-sheet-filter ref="A3:G49">
+			</kendo:spreadsheet-sheet-filter>
 			<kendo:spreadsheet-sheet-rows>
 				<kendo:spreadsheet-sheet-row  height='50' >
 				    <kendo:spreadsheet-sheet-row-cells>
@@ -33,19 +35,19 @@
 				<kendo:spreadsheet-sheet-row >
 				    <kendo:spreadsheet-sheet-row-cells>
 				        <kendo:spreadsheet-sheet-row-cell
-				         value='ID'  textAlign='center'  background='rgb(236,239,241)'  color='black' />
+				         value='ID'  textAlign='center'  background='rgb(236,239,241)'  bold='true' color='black' />
 				        <kendo:spreadsheet-sheet-row-cell
-				         value='DATE'  textAlign='center'  background='rgb(236,239,241)'  color='black' />
+				         value='DATE'  textAlign='center'  background='rgb(236,239,241)'  bold='true'  color='black' />
 				        <kendo:spreadsheet-sheet-row-cell
-				         value='TIME'  textAlign='center'  background='rgb(236,239,241)'  color='black' />
+				         value='TIME'  textAlign='center'  background='rgb(236,239,241)'  bold='true'  color='black' />
 				        <kendo:spreadsheet-sheet-row-cell
-				         value='CLIENT'  textAlign='center'  background='rgb(236,239,241)'  color='black' />
+				         value='CLIENT'  textAlign='center'  background='rgb(236,239,241)'  bold='true'  color='black' />
 				        <kendo:spreadsheet-sheet-row-cell
-				         value='COMPANY'  textAlign='center'  background='rgb(236,239,241)'  color='black' />
+				         value='COMPANY'  textAlign='center'  background='rgb(236,239,241)'  bold='true'  color='black' />
 				        <kendo:spreadsheet-sheet-row-cell
-				         value='SHIPPING'  textAlign='center'  background='rgb(236,239,241)'  color='black' />
+				         value='SHIPPING'  textAlign='center'  background='rgb(236,239,241)'  bold='true'  color='black' />
 				        <kendo:spreadsheet-sheet-row-cell
-				         value='DISCOUNT'  textAlign='center'  background='rgb(236,239,241)'  color='black' />
+				         value='DISCOUNT'  textAlign='center'  background='rgb(236,239,241)'  bold='true'  color='black' />
 				      </kendo:spreadsheet-sheet-row-cells>
 			      </kendo:spreadsheet-sheet-row>
 			    
@@ -924,12 +926,13 @@
 			      </kendo:spreadsheet-sheet-row>
 			</kendo:spreadsheet-sheet-rows>
 			<kendo:spreadsheet-sheet-columns>
+				<kendo:spreadsheet-sheet-column width="80"/>
 				<kendo:spreadsheet-sheet-column width="100"/>
-				<kendo:spreadsheet-sheet-column width="215"/>
-				<kendo:spreadsheet-sheet-column width="115"/>
-				<kendo:spreadsheet-sheet-column width="115"/>
-				<kendo:spreadsheet-sheet-column width="115"/>
-				<kendo:spreadsheet-sheet-column width="155"/>
+				<kendo:spreadsheet-sheet-column width="100"/>
+				<kendo:spreadsheet-sheet-column width="150"/>
+				<kendo:spreadsheet-sheet-column width="150"/>
+				<kendo:spreadsheet-sheet-column width="130"/>
+				<kendo:spreadsheet-sheet-column width="130"/>
 			</kendo:spreadsheet-sheet-columns>
 		</kendo:spreadsheet-sheet>
 	</kendo:spreadsheet-sheets>

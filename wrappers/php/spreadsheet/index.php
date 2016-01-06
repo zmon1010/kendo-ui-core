@@ -29,6 +29,8 @@ require_once '../include/header.php';
 
 $spreadsheet = new \Kendo\UI\Spreadsheet('spreadsheet');
 
+$spreadsheet->attr('style', 'width: 100%;');
+
 $excel = new \Kendo\UI\SpreadsheetExcel();
 $excel->fileName('Kendo UI Spreadsheet Export.xlsx')
       ->proxyURL('index.php?type=save');

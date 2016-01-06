@@ -11,7 +11,7 @@
 	String[] mergedCells = { "A1:G1", "C15:E15" };
 %>
 
-<kendo:spreadsheet name="spreadsheet">
+<kendo:spreadsheet name="spreadsheet" style="width: 100%">
 	<kendo:spreadsheet-sheets>
         <kendo:spreadsheet-excel fileName="Kendo UI Spreadsheet Export.xlsx" proxyURL="${saveUrl}" />
         <kendo:spreadsheet-pdf fileName="Kendo UI Spreadsheet Export.pdf" proxyURL="${saveUrl}" />
