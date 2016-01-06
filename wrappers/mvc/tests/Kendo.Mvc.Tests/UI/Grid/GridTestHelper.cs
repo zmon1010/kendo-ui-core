@@ -37,6 +37,16 @@ namespace Kendo.Mvc.UI.Tests
             
             var htmlBuilderFactory = new Mock<IGridHtmlBuilderFactory>();
 
+            var gridHtmlBuilder = new Mock<IGridHtmlBuilder>();
+            gridHtmlBuilder.Setup(builder => builder.CreateGrid(
+                It.IsAny<IDictionary<string, object>>(),
+                It.IsAny<GridFunctionalData>(),
+                It.IsAny<GridRenderingData>()
+                )
+            ).Returns(new Mock<IHtmlNode>().Object);
+
+            htmlBuilderFactory.Setup(builder => builder.CreateBuilder(It.IsAny<bool>())).Returns(gridHtmlBuilder.Object);
+
             Grid<T> grid = new Grid<T>(viewContext, initializer.Object, urlGenerator.Object, htmlBuilderFactory.Object) { Name = "Grid" };
 
             return grid;

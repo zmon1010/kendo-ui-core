@@ -36,6 +36,13 @@ namespace Kendo.Mvc.UI
             {
                 json["showFooter"] = ShowFooter;
             }
+
+            json["enabled"] = Enabled;
+        }
+
+        public bool ShouldSerialize()
+        {
+            return Enabled || ShowFooter;
         }
     }
 }

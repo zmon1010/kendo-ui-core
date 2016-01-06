@@ -778,7 +778,7 @@ namespace Kendo.Mvc.UI
                 options["columns"] = columns;
             }
             
-            if (Grouping.Enabled)
+            if (Grouping.ShouldSerialize())
             {
                 options["groupable"] = Grouping.ToJson();
             }
