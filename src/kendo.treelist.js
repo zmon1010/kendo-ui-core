@@ -1614,7 +1614,7 @@ var __meta__ = { // jshint ignore:line
 
             this.wrapper = element.addClass(classNames.wrapper);
 
-            layout = "<div class='#= gridHeader #' style=\"padding-right: " + kendo.support.scrollbar() + "px;\">";
+            layout = "<div class='#= gridHeader #'>";
 
             if (this._hasLockedColumns) {
                 layout += "<div class='k-grid-header-locked'>" +
@@ -1671,6 +1671,14 @@ var __meta__ = { // jshint ignore:line
 
             var header = element.find(DOT + classNames.gridHeader).find("thead").addBack().filter("thead");
             this.thead = header.last();
+
+            if (this.options.scrollable) {
+                var rtl = kendo.support.isRtl(element);
+
+                element.find("div." + classNames.gridHeader)
+                    .css(rtl ? "padding-left" : "padding-right", kendo.support.scrollbar());
+            }
+
 
             var content = element.find(DOT + classNames.gridContentWrap);
             if (!content.length) {

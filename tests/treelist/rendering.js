@@ -44,6 +44,25 @@
         ok(instance.thead);
     });
 
+    test("offsets header element with scrollbar width", function() {
+        var scrollWidth = kendo.support.scrollbar();
+
+        createTreeList();
+
+        equal(dom.find(".k-grid-header").css("padding-right"), scrollWidth + "px");
+    });
+
+    test("reverses header element offset in rtl mode", function() {
+        var scrollWidth = kendo.support.scrollbar();
+
+        dom.addClass("k-rtl");
+        dom = $("<div />").appendTo(dom);
+
+        createTreeList();
+
+        equal(dom.find(".k-grid-header").css("padding-left"), scrollWidth + "px");
+    });
+
     test("renders dataSource items initially", function() {
         createTreeList();
 
