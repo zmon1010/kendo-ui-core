@@ -52,6 +52,8 @@ namespace Kendo.Mvc.UI
         public DiagramLayoutType? Type { get; set; }
         
         public DiagramLayoutSubtype? Subtype { get; set; }
+
+        public int? TipOverTreeStartLevel { get; set; }
         
         //<< Fields
 
@@ -132,6 +134,11 @@ namespace Kendo.Mvc.UI
             if (Subtype.HasValue)
             {
                 json["subtype"] = Subtype;
+            }
+
+            if (TipOverTreeStartLevel.HasValue)
+            {
+                json["tipOverTreeStartLevel"] = TipOverTreeStartLevel;
             }
                 
         //<< Serialization

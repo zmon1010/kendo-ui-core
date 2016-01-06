@@ -185,8 +185,19 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
         //<< Fields
+
+        /// <summary>
+        /// Specifies the start level when the subtype is TipOver.
+        /// </summary>
+        /// <param name="value">The start level when the subtype is TipOver.</param>
+        public DiagramLayoutSettingsBuilder<TShapeModel, TConnectionModel> TipOverTreeStartLevel(int value)
+        {
+            container.TipOverTreeStartLevel = value;
+
+            return this;
+        }
     }
 }
 
