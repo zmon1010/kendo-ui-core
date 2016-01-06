@@ -599,7 +599,7 @@
                 } else if (this.viewModel.active === "custom") {
                     customFilter = this.viewModel.customFilter.toJSON();
 
-                    if (customFilter.criteria.length) {
+                    if (customFilter.criteria.length && customFilter.criteria[0].value !== null) {
                         options.customFilter = customFilter;
                     }
                 }
