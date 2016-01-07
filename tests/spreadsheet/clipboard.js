@@ -4,7 +4,6 @@
     var sheet;
     var clipboard;
     var defaults = {"prefix":"","name":"Spreadsheet","toolbar":true,"rows":200,"columns":10,"rowHeight":20,"columnWidth":64,"headerHeight":20,"headerWidth":32};
-    var range;
 
     module("Clipboard API", {
         setup: function() {
@@ -13,7 +12,6 @@
             workbook = new kendo.spreadsheet.Workbook(defaults, view);
             sheet = workbook.activeSheet();
             clipboard = workbook.clipboard();
-            range = sheet.range(0, 0);
         },
         teardown: function() {
             sheet.unbind();
@@ -48,7 +46,7 @@
         sheet.range("A1:C1,B2").select();
         clipboard.copy();
 
-        ok(!clipboard.canCopy().canCopy)
+        ok(!clipboard.canCopy().canCopy);
     });
 
     test("canPaste returns false if merged cells are partially overlapped", function() {
@@ -58,7 +56,7 @@
         sheet.range("D1:F1").merge();
         sheet.range("C1").select();
         clipboard.menuInvoked = false;
-        ok(!clipboard.canPaste().canPaste)
+        ok(!clipboard.canPaste().canPaste);
     });
 
     test("canPaste returns true if no merged cells are affected", function() {
@@ -93,7 +91,7 @@
         });
         var newState = {};
         delete state.ref;
-        Object.keys(state).sort().forEach(function(key, i){
+        Object.keys(state).sort().forEach(function(key){
             if(key != "mergedCells"){
                 newState[key] = {value: state[key].value};
             }else{
@@ -122,14 +120,14 @@
             }
         };
         var expected = {};
-        Object.keys(targetState).sort().forEach(function(key, i){
+        Object.keys(targetState).sort().forEach(function(key){
             if(key != "mergedCells"){
                 expected[key] = {value: targetState[key].value};
             }else{
                 expected[key] = targetState[key];
             }
         });
-        
+
         equal(JSON.stringify(newState), JSON.stringify(expected));
     });
     test("parseHTML handles merged cells with colspan", function() {
@@ -138,7 +136,7 @@
         });
         var newState = {};
         delete state.ref;
-        Object.keys(state).sort().forEach(function(key, i){
+        Object.keys(state).sort().forEach(function(key){
             if(key != "mergedCells"){
                 newState[key] = {value: state[key].value};
             }else{
@@ -174,14 +172,14 @@
         };
 
         var expected = {};
-        Object.keys(targetState).sort().forEach(function(key, i){
+        Object.keys(targetState).sort().forEach(function(key){
             if(key != "mergedCells"){
                 expected[key] = {value: targetState[key].value};
             }else{
                 expected[key] = targetState[key];
             }
         });
-        
+
         equal(JSON.stringify(newState), JSON.stringify(expected));
     });
     test("parseHTML handles merged cells with colspan and rowspan", function() {
@@ -190,7 +188,7 @@
         });
         var newState = {};
         delete state.ref;
-        Object.keys(state).sort().forEach(function(key, i){
+        Object.keys(state).sort().forEach(function(key){
             if(key != "mergedCells"){
                 newState[key] = {value: state[key].value};
             }else{
@@ -200,43 +198,43 @@
         var targetState = {
             "mergedCells" : ["B1:C3"],
             "0,0" : {
-                "value" : "0,0" 
+                "value" : "0,0"
             },
             "1,0" : {
-                "value" : "1,0" 
+                "value" : "1,0"
             },
             "2,0" : {
-                "value" : "2,0" 
+                "value" : "2,0"
             },
             "0,1" : {
-                "value" : "0,1-0,2:2,1-2,2" 
+                "value" : "0,1-0,2:2,1-2,2"
             },
             "1,1" : {
-                "value" : null 
+                "value" : null
             },
             "2,1" : {
-                "value" : null 
+                "value" : null
             },
             "0,2" : {
-                "value" : null 
+                "value" : null
             },
             "1,2" : {
-                "value" : null 
+                "value" : null
             },
             "2,2" : {
-                "value" : null 
+                "value" : null
             }
         };
 
         var expected = {};
-        Object.keys(targetState).sort().forEach(function(key, i){
+        Object.keys(targetState).sort().forEach(function(key){
             if(key != "mergedCells"){
                 expected[key] = {value: targetState[key].value};
             }else{
                 expected[key] = targetState[key];
             }
         });
-        
+
         equal(JSON.stringify(newState), JSON.stringify(expected));
     });
 })();
