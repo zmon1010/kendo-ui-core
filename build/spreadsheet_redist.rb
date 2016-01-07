@@ -46,7 +46,7 @@ namespace :spreadsheet do
             source = "#{src_root}\\bin\\#{configuration}"
             dest = "#{redist_dir}\\#{configuration}"
 
-            puts "xcopy #{source} #{dest} /d /y > nul"
+            system "xcopy #{source} #{dest} /d /y > nul"
         end
     end
 
