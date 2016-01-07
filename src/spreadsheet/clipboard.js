@@ -122,8 +122,7 @@
             }
             var pasteRef = this.pasteRef();
             sheet.range(pasteRef).clear().setState(state);
-            sheet.triggerChange({recalc: true});
-
+            sheet.triggerChange({ recalc: true, ref: pasteRef });
         },
 
         external: function(data) {
