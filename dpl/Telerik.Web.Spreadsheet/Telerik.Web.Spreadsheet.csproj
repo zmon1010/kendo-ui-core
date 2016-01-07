@@ -128,9 +128,6 @@
     <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf">
       <HintPath>..\lib\NET40\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Maths">
-      <HintPath>..\lib\NET40\Telerik.Windows.Maths.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.Windows.Zip">
       <HintPath>..\lib\NET40\Telerik.Windows.Zip.dll</HintPath>
     </Reference>
@@ -156,9 +153,6 @@
     </Reference>
     <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf">
       <HintPath>..\lib\NET45\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Maths">
-      <HintPath>..\lib\NET45\Telerik.Windows.Maths.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Windows.Zip">
       <HintPath>..\lib\NET45\Telerik.Windows.Zip.dll</HintPath>
@@ -186,9 +180,6 @@
     <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf">
       <HintPath>..\lib\NET40-Trial\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Maths">
-      <HintPath>..\lib\NET40-Trial\Telerik.Windows.Maths.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.Windows.Zip">
       <HintPath>..\lib\NET40-Trial\Telerik.Windows.Zip.dll</HintPath>
     </Reference>
@@ -214,9 +205,6 @@
     </Reference>
     <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf">
       <HintPath>..\lib\NET45-Trial\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Maths">
-      <HintPath>..\lib\NET45-Trial\Telerik.Windows.Maths.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Windows.Zip">
       <HintPath>..\lib\NET45-Trial\Telerik.Windows.Zip.dll</HintPath>

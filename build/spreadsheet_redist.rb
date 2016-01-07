@@ -5,7 +5,7 @@ DPL_DIST = "\\\\telerik.com\\distributions\\DailyBuilds\\DocumentProcessing"
 def copy_dpl_binaries
     branch = BETA ? 'Dev' : 'Release'
     source_dir = "#{DPL_DIST}\\#{branch}\\Binaries"
-    puts "Copying DPL Binaries from #{source_dir}. Should be either Dev or Release."
+    puts "Copying DPL Binaries from #{source_dir}."
 
     {'WPF40' => { :dest => 'NET40' }, 'WPF45' => { :dest => 'NET45' }}.each do |key, value|
         ['Dev', 'Trial'].each do |license|
