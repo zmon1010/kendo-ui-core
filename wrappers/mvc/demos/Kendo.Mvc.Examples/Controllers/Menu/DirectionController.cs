@@ -7,11 +7,17 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class MenuController : Controller
     {
-        public ActionResult Direction(int? direction)
+        public ActionResult Direction(String directionString)
         {
-            direction = direction ?? 0;
-
-            return View((MenuDirection)direction);
+            if (string.IsNullOrEmpty(directionString))
+            {
+                ViewBag.Direction = "bottom";
+            }
+            else
+            {
+                ViewBag.Direction = directionString;
+            }
+            return View();
         }
     }
 }

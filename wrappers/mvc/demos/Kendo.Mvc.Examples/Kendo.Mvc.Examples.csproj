@@ -3351,6 +3351,7 @@
     <Content Include="Areas\razor\Views\datetimepicker\disable_dates.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\validation.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\disabled_cells.cshtml" />
+    <Content Include="Areas\razor\Views\grid\EditorTemplates\foo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
