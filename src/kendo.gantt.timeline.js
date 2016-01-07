@@ -2417,7 +2417,7 @@ var __meta__ = { // jshint ignore:line
                     originalHandle.parent().addClass(styles.origin);
 
                     var elementOffset = originalHandle.offset();
-                    var tablesOffset = $(DOT + styles.tasksWrapper).offset();
+                    var tablesOffset = that.wrapper.find(DOT + styles.tasksWrapper).offset();
 
                     startX = Math.round(elementOffset.left - tablesOffset.left + (originalHandle.outerHeight() / 2));
                     startY = Math.round(elementOffset.top - tablesOffset.top + (originalHandle.outerWidth() / 2));
@@ -2433,7 +2433,7 @@ var __meta__ = { // jshint ignore:line
                     that.view()._removeDependencyDragHint();
 
                     var target = $(kendo.elementUnderCursor(e));
-                    var tablesOffset = $(DOT + styles.tasksWrapper).offset();
+                    var tablesOffset = that.wrapper.find(DOT + styles.tasksWrapper).offset();
                     var currentX = e.x.location - tablesOffset.left;
                     var currentY = e.y.location - tablesOffset.top;
 
