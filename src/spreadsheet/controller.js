@@ -464,15 +464,15 @@
             var showUnhide = false;
             var showUnmerge = false;
 
-            if (object.type === "cell") {
-                menu = this.cellContextMenu;
-                showUnmerge = this.navigator.selectionIncludesMergedCells();
-            } else if (object.type == "columnheader") {
+            if (object.type == "columnheader") {
                 menu = this.colHeaderContextMenu;
                 showUnhide = !isComposite && this.axisManager.selectionIncludesHiddenColumns();
             } else if (object.type == "rowheader") {
                 menu = this.rowHeaderContextMenu;
                 showUnhide = !isComposite && this.axisManager.selectionIncludesHiddenRows();
+            } else {
+                menu = this.cellContextMenu;
+                showUnmerge = this.navigator.selectionIncludesMergedCells();
             }
 
             menu.element.find(COMPOSITE_UNAVAILABLE_ACTION_SELECTORS).toggle(!isComposite);
