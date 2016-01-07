@@ -923,32 +923,6 @@
         ok(cell.find("span.k-dirty").length);
     });
 
-    test("addrow with createAt=bottom scrolls the locked and unlocked content to the bottom", function() {
-        var grid = setup({
-            columns: [
-                { field: "foo", locked: true },
-                { field: "name" }
-            ],
-            height: 300,
-            editable: { createAt: "bottom" },
-            dataSource: new DataSource({
-                schema: {
-                    model: {
-                        id: "foo",
-                        fields: {
-                            foo: "foo"
-                        }
-                    }
-                },
-                data: $.map(new Array(300), function() { return { foo: "bar", name: "tom" }; })
-            })
-        });
-
-        grid.addRow();
-
-        equal(grid.content[0].scrollTop, grid.content[0].offsetHeight);
-    });
-
     test("editCell destroyes previous editor", function() {
         var grid = setup();
 

@@ -3477,7 +3477,7 @@ var __meta__ = { // jshint ignore:line
 
                 if (createAt.toLowerCase() == "bottom" && that.lockedContent) {
                     //scroll the containers to the bottom
-                    that.lockedContent[0].scrollTop = that.content[0].scrollTop = that.content[0].offsetHeight;
+                    that.lockedContent[0].scrollTop = that.content[0].scrollTop = that.table[0].offsetHeight;
                 }
             }
         },
