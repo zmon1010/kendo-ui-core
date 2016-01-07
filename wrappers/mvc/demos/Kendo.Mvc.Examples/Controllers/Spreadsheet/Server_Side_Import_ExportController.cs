@@ -12,7 +12,7 @@ namespace Kendo.Mvc.Examples.Controllers
     {
         public ActionResult Server_Side_Import_Export()
         {
-            var path = Server.MapPath("~/Content/web/spreadsheet/prices.json");
+            var path = Server.MapPath("~/Content/web/spreadsheet/products.json");
 
             ViewBag.Sheets = JsonConvert.DeserializeObject<IEnumerable<SpreadsheetSheet>>(System.IO.File.ReadAllText(path));
 

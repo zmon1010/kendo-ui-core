@@ -19,7 +19,7 @@
     </ul>
     </div>
 </div>
-<kendo:spreadsheet name="spreadsheet">
+<kendo:spreadsheet name="spreadsheet" style="width: 100%;">
 	<kendo:spreadsheet-sheets>
 		<kendo:spreadsheet-sheet name="Food Order"
 			mergedCells="<%=mergedCells%>">

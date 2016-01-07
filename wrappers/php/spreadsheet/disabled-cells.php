@@ -1,3 +1,15 @@
+<?php
+
+ini_set('display_startup_errors',1);
+ini_set('display_errors',1);
+error_reporting(-1);
+
+require_once '../lib/Kendo/Autoload.php';
+
+require_once '../include/header.php';
+
+
+?>
 <div class="box wide">
     <div class="box-col">
     <h4>Disable cells</h4>
@@ -9,16 +21,9 @@
     </div>
 </div>
 <?php
-
-ini_set('display_startup_errors',1);
-ini_set('display_errors',1);
-error_reporting(-1);
-
-require_once '../lib/Kendo/Autoload.php';
-
-require_once '../include/header.php';
-
 $spreadsheet = new \Kendo\UI\Spreadsheet('spreadsheet');
+
+$spreadsheet->attr('style', 'width: 100%;');
 
 $sheet = new \Kendo\UI\SpreadsheetSheet();
 $sheet->name("Food Order")

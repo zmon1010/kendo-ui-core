@@ -6,6 +6,7 @@
 
 <%: Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
+    .HtmlAttributes(new { style = "width:100%;" })
     .Events(events => events.Render("onRender").ExcelExport("onExcelExport"))
     .Sheets(sheets =>
     {
@@ -26,43 +27,35 @@
                 rows.Add().Height(50).Cells(cells =>
                 {
                     cells.Add()
-                        .Value("My Company")
+                        .Value("Invoice #1")
                         .FontSize(25)
-                        .Background("rgb(142,196,65)")
-                        .TextAlign(SpreadsheetTextAlign.Center)
-                        .Color("white");
+                        .TextAlign(SpreadsheetTextAlign.Center);
                 });
                 
                 rows.Add().Height(25).Cells(cells =>
                 {
                     cells.Add()
                         .Value("ID")
-                        .Background("rgb(212,223,50)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Product")
-                        .Background("rgb(212,223,50)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Quantity")
-                        .Background("rgb(212,223,50)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Price")
-                        .Background("rgb(212,223,50)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Tax")
-                        .Background("rgb(212,223,50)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Amount")
-                        .Background("rgb(212,223,50)")
                         .TextAlign(SpreadsheetTextAlign.Center);
                 });
                 
@@ -95,30 +88,25 @@
                 {
                     cells.Add()
                         .Value(546897)        
-                        .Background("rgb(234,240,186)")
+                        
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
-                        .Value("Margarita")        
-                        .Background("rgb(234,240,186)");
+                        .Value("Margarita");
 
                     cells.Add()
                         .Value(2)
-                        .Background("rgb(234,240,186)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(8.79)
-                        .Background("rgb(234,240,186)")
                         .Format("$#,##0.00");
 
                     cells.Add()
-                        .Background("rgb(234,240,186)")
                         .Formula("C4*D4*0.2")
                         .Format("$#,##0.00");
 
                     cells.Add()
-                        .Background("rgb(234,240,186)")
                         .Formula("C4*D4+E4")
                         .Format("$#,##0.00");
                 });
@@ -152,30 +140,25 @@
                 {
                     cells.Add()
                         .Value(455873)
-                        .Background("rgb(234,240,186)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Greek Salad")
-                        .Background("rgb(234,240,186)");
+                        ;
 
                     cells.Add()
                         .Value(1)
-                        .Background("rgb(234,240,186)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(9.49)
-                        .Background("rgb(234,240,186)")
                         .Format("$#,##0.00");
 
                     cells.Add()
-                        .Background("rgb(234,240,186)")
                         .Formula("C6*D6*0.2")
                         .Format("$#,##0.00");
 
                     cells.Add()
-                        .Background("rgb(234,240,186)")
                         .Formula("C6*D6+E6")
                         .Format("$#,##0.00");
                 });
@@ -209,30 +192,25 @@
                 {
                     cells.Add()
                         .Value(546564)
-                        .Background("rgb(234,240,186)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Rigoletto")
-                        .Background("rgb(234,240,186)");
+                        ;
 
                     cells.Add()
                         .Value(1)
-                        .Background("rgb(234,240,186)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(10.99)
-                        .Background("rgb(234,240,186)")
                         .Format("$#,##0.00");
 
                     cells.Add()
-                        .Background("rgb(234,240,186)")
                         .Formula("C8*D8*0.2")
                         .Format("$#,##0.00");
 
                     cells.Add()
-                        .Background("rgb(234,240,186)")
                         .Formula("C8*D8+E8")
                         .Format("$#,##0.00");
                 });
@@ -266,30 +244,25 @@
                 {
                     cells.Add()
                         .Value(123002)
-                        .Background("rgb(234,240,186)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value("Radeberger Beer")
-                        .Background("rgb(234,240,186)");
+                        ;
 
                     cells.Add()
                         .Value(4)
-                        .Background("rgb(234,240,186)")
                         .TextAlign(SpreadsheetTextAlign.Center);
 
                     cells.Add()
                         .Value(4.99)
-                        .Background("rgb(234,240,186)")
                         .Format("$#,##0.00");
 
                     cells.Add()
-                        .Background("rgb(234,240,186)")
                         .Formula("C10*D10*0.2")
                         .Format("$#,##0.00");
 
                     cells.Add()
-                        .Background("rgb(234,240,186)")
                         .Formula("C10*D10+E10")
                         .Format("$#,##0.00");
                 });
@@ -322,23 +295,21 @@
                 rows.Add().Index(13).Cells(cells =>
                 {
                     cells.Add()
-                        .Background("rgb(212,223,50)");
+                        ;
 
                     cells.Add()
-                        .Background("rgb(212,223,50)");
+                        ;
 
                     cells.Add()
-                        .Background("rgb(212,223,50)");
+                        ;
 
                     cells.Add()
-                        .Background("rgb(212,223,50)");
+                        ;
 
                     cells.Add()
-                        .Background("rgb(212,223,50)")
                         .TextAlign(SpreadsheetTextAlign.Right);
 
                     cells.Add()
-                        .Background("rgb(212,223,50)")
                         .Formula("SUM(F3:F11)*0.1")
                         .Format("$#,##0.00");
                 });
@@ -346,25 +317,21 @@
                 rows.Add().Index(14).Height(50).Cells(cells =>
                 {
                     cells.Add()
-                        .Index(0)
-                        .Background("rgb(142,196,65)");
+                        .Index(0);
+                        
 
                     cells.Add()
-                        .Index(1)
-                        .Background("rgb(142,196,65)");
+                        .Index(1);
+                        
 
                     cells.Add()
                         .Value("Total Amount")                        
                         .Index(2)
                         .TextAlign(SpreadsheetTextAlign.Right)
-                        .Color("white")
-                        .FontSize(20)
-                        .Background("rgb(142,196,65)");
+                        .FontSize(20);
 
                     cells.Add()
                         .Index(5)
-                        .Background("rgb(142,196,65)")
-                        .Color("white")
                         .Formula("SUM(F3:F14)")
                         .Format("$#,##0.00");
                 });
@@ -372,17 +339,10 @@
     })
 %>
 
- <div class="demo-section">
-    <h3 class="title">Console log</h3>
+ <div class="box wide">
+    <h4>Console log</h4>
     <div class="console"></div>
 </div>
-<style>
-    
-    .demo-section {
-        width: 600px;
-    }    
-        
-</style>
 
 <script>
     function onRender(arg) {

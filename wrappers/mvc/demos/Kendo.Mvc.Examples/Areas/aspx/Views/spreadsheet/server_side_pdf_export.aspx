@@ -118,6 +118,7 @@
 
 <%: Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
+    .HtmlAttributes(new { style = "width:100%;" })
     .Sheets(sheets =>
     {
         sheets.Add()

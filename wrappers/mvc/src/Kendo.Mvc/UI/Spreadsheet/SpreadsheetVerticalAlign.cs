@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI
         
         Bottom ,
         
-        Middle 
+        Center 
         
     }
 }
