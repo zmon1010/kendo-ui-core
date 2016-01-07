@@ -15,8 +15,8 @@
                  </kendo:dataSource-transport>
              </kendo:dataSource>
              <kendo:chart-series>
-                <kendo:chart-seriesItem type="radarLine" field="budget" />
-                <kendo:chart-seriesItem type="radarLine" field="spending" />
+                <kendo:chart-seriesItem type="radarLine" field="budget" name="Budget" />
+                <kendo:chart-seriesItem type="radarLine" field="spending" name="Spending" />
              </kendo:chart-series>
              <kendo:chart-categoryAxis>
                 <kendo:chart-categoryAxisItem field="unit" />
