@@ -1,4 +1,3 @@
-DPL_DIST = "\\\\telerik.com\\distributions\\DailyBuilds\\XAML\\Release\\Binaries"
 DPL_FILES = [
     'Telerik.Windows.Documents.Core',
     'Telerik.Windows.Documents.Fixed',
@@ -7,9 +6,11 @@ DPL_FILES = [
     'Telerik.Windows.Documents.Spreadsheet',
     'Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml',
     'Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf',
-    'Telerik.Windows.Maths',
     'Telerik.Windows.Zip'
 ].flat_map { |file| ["#{file}.dll", "#{file}.xml"] }
+
+SPREADSHEET_ROOT = 'dpl'
+SPREADSHEET_SRC_ROOT = File.join(SPREADSHEET_ROOT, '/Telerik.Web.Spreadsheet')
 
 def spreadsheet_dll_for(configuration)
     FileList['Telerik.Web.Spreadsheet.dll']
@@ -20,8 +21,8 @@ def spreadsheet_dll_for(configuration)
             .pathmap(SPREADSHEET_SRC_ROOT + "/bin/#{configuration}/%f")
 end
 
-SPREADSHEET_ROOT = 'dpl'
-SPREADSHEET_SRC_ROOT = SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet'
+SPREADSHEET_REDIST_BRANCH = BETA ? 'Stable' : 'Production'
+SPREADSHEET_REDIST_ROOT = ARCHIVE_ROOT + "/Telerik.Web.Spreadsheet/#{SPREADSHEET_REDIST_BRANCH}"
 SPREADSHEET_REDIST_NET40 = spreadsheet_dll_for('Release')
 SPREADSHEET_REDIST_NET45 = spreadsheet_dll_for('Release-NET45')
 SPREADSHEET_REDIST_NET40_TRIAL = spreadsheet_dll_for('Release-Trial')
@@ -30,50 +31,27 @@ SPREADSHEET_REDIST = FileList[SPREADSHEET_REDIST_NET40 + SPREADSHEET_REDIST_NET4
                               SPREADSHEET_REDIST_NET40_TRIAL + SPREADSHEET_REDIST_NET45_TRIAL]
 SPREADSHEET_ASSEMBLY_INFO = SPREADSHEET_SRC_ROOT + '/Properties/AssemblyInfo.cs'
 
-CLEAN.include(FileList[SPREADSHEET_ROOT + '/**/Telerik.Web.Spreadsheet.dll'])
+CLEAN.include(FileList[
+    SPREADSHEET_SRC_ROOT + '/bin/**/*',
+    SPREADSHEET_ROOT + '/lib/NET*/**/*'
+])
 rule 'Telerik.Web.Spreadsheet.xml' => SPREADSHEET_SRC_ROOT + '/bin/Release/Telerik.Web.Spreadsheet.dll'
 
 if PLATFORM =~ /linux|darwin/
     # Copy pre-built binaries
     SPREADSHEET_REDIST.each do |file|
         file_copy :to => file,
-                  :from => file.sub(SPREADSHEET_SRC_ROOT + '/bin', 'dist/binaries/spreadsheet')
+                  :from => file.sub(SPREADSHEET_SRC_ROOT + '/bin', SPREADSHEET_REDIST_ROOT)
     end
 
     DPL_FILES.each do |file|
         file_copy :to => SPREADSHEET_ROOT + '/lib/NET40/' + file,
-                  :from => 'dist/binaries/spreadsheet/Release/' + file
+                  :from => SPREADSHEET_REDIST_ROOT + '/Release/' + file
     end
 
     DPL_FILES.each do |file|
         file_copy :to => SPREADSHEET_ROOT + '/lib/NET45/' + file,
-                  :from => 'dist/binaries/spreadsheet/Release-NET45/' + file
-    end
-else
-    ['Release', 'Release-NET45', 'Release-Trial', 'Release-NET45-Trial'].each do |configuration|
-        # Build Telerik.Web.Spreadsheet
-        file SPREADSHEET_SRC_ROOT + "/bin/#{configuration}/Telerik.Web.Spreadsheet.dll" => 'spreadsheet:assembly_version' do
-            copy_dpl_binaries
-            msbuild SPREADSHEET_SRC_ROOT + '/Telerik.Web.Spreadsheet.csproj', "/p:Configuration=#{configuration}"
-        end
-    end
-
-    tree :to => 'dist/binaries/spreadsheet',
-         :from => SPREADSHEET_REDIST,
-         :root => SPREADSHEET_SRC_ROOT + '/bin'
-end
-
-def copy_dpl_binaries
-    {'WPF40' => { :dest => 'NET40' }, 'WPF45' => { :dest => 'NET45' }}.each do |key, value|
-        ['Dev', 'Trial'].each do |license|
-            suffix = license == 'Trial' ? '-Trial' : '';
-            dest = "dpl\\lib\\#{value[:dest]}#{suffix}\\"
-
-            DPL_FILES.each do |file|
-                source = "#{DPL_DIST}\\#{key}\\Dev\\#{file}"
-                system("xcopy #{source} #{dest} /d /y > nul")
-            end
-        end
+                  :from => SPREADSHEET_REDIST_ROOT + '/Release-NET45/' + file
     end
 end
 
@@ -113,9 +91,6 @@ end
          :root => SPREADSHEET_ROOT + "/lib"
 end
 
-# Update AssemblyInfo.cs whenever the VERSION constant changes
-assembly_info_file SPREADSHEET_ASSEMBLY_INFO
-
 namespace :spreadsheet do
     desc('Build Telerik.Web.Spreadsheet binaries')
     task :binaries => [
@@ -140,7 +115,4 @@ namespace :spreadsheet do
             end
         end
     end
-
-    desc('Update AssemblyInfo.cs with current VERSION')
-    task :assembly_version => SPREADSHEET_ASSEMBLY_INFO
 end
