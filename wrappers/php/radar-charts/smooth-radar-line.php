@@ -15,10 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 
 $budget = new \Kendo\Dataviz\UI\ChartSeriesItem();
-$budget->field('budget');
+$budget->field('budget')
+       ->name('Budget');
 
 $spending = new \Kendo\Dataviz\UI\ChartSeriesItem();
-$spending->field('spending');
+$spending->field('spending')
+         ->name('Spending');
 
 $categoryAxis = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
 $categoryAxis->field('unit');
