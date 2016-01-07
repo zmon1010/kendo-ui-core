@@ -15,29 +15,40 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public ActionResult EditingCustomValidation_Read([DataSourceRequest] DataSourceRequest request)
         {
-            return Json(productService.Read()
-                .Select(p => new CustomValidationProductViewModel {
-                    ProductID = p.ProductID,
-                    ProductName = p.ProductName,
-                    UnitPrice = p.UnitPrice
-                }).ToDataSourceResult(request)
-            );
+            return Json(productService.Read().ToDataSourceResult(request));
         }       
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditingCustomValidation_Update([DataSourceRequest] DataSourceRequest request, CustomValidationProductViewModel product)
+        public ActionResult EditingCustomValidation_Update([DataSourceRequest] DataSourceRequest request, ProductViewModel product)
         {
             if (product != null && ModelState.IsValid)
             {
-                productService.Update(new ProductViewModel
-                {
-                    ProductID = product.ProductID,
-                    ProductName = product.ProductName,
-                    UnitPrice = product.UnitPrice
-                });
-            }            
+                productService.Update(product);
+            }
 
-            return Json(new[]{product}.ToDataSourceResult(request,ModelState));
-        }        
+            return Json(new[] { product }.ToDataSourceResult(request, ModelState));
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditingCustomValidation_Create([DataSourceRequest] DataSourceRequest request, ProductViewModel product)
+        {
+            if (product != null && ModelState.IsValid)
+            {
+                productService.Create(product);
+            }
+
+            return Json(new[] { product }.ToDataSourceResult(request, ModelState));
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditingCustomValidation_Destroy([DataSourceRequest] DataSourceRequest request, ProductViewModel product)
+        {
+            if (product != null)
+            {
+                productService.Destroy(product);
+            }
+
+            return Json(new[] { product }.ToDataSourceResult(request, ModelState));
+        }
     }
 }
