@@ -48,8 +48,7 @@ a:hover
 
 .page
 {
-    width:72%;
-    min-width: 960px;
+    max-width:72%;
     margin: 2% auto;
     padding: 3% 5% 0;
     background: #fff;
@@ -672,8 +671,16 @@ ul.keyboard-legend li a {
 }
 
 @media screen and (max-width: 1023px) {
+  .page {
+    max-width:100%;
+    margin: 0;
+    padding: 10px;
+    background: #fff;
+    border: 0;
+  }
+  
   .hidden-on-narrow {
-      display: none !important;
+    display: none !important;
   }
   .responsive-message {
     display: block;
