@@ -8,8 +8,9 @@ namespace Kendo.Mvc.Examples.Models
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            var dataDirectory = Path.Combine(Startup.WebRootPath, "App_Data");            
-            options.UseSqlite(@"Data Source=" + dataDirectory + @"\sample.db;");
+            var dataDirectory = Path.Combine(Startup.WebRootPath, "App_Data");
+
+            options.UseSqlite(@"Data Source=" + dataDirectory + System.IO.Path.DirectorySeparatorChar + @"sample.db;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
