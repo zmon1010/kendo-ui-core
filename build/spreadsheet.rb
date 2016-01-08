@@ -6,7 +6,8 @@ DPL_FILES = [
     'Telerik.Windows.Documents.Spreadsheet',
     'Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml',
     'Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf',
-    'Telerik.Windows.Zip'
+    'Telerik.Windows.Zip',
+    'Telerik.Windows.Zip.Extensions.dll'
 ].flat_map { |file| ["#{file}.dll", "#{file}.xml"] }
 
 SPREADSHEET_ROOT = 'dpl'
@@ -35,17 +36,6 @@ CLEAN.include(FileList[
     SPREADSHEET_SRC_ROOT + '/bin/**/*',
     SPREADSHEET_ROOT + '/lib/NET*/**/*'
 ])
-
-# Copy pre-built binaries
-if PLATFORM =~ /linux|darwin/
-    tree :to => SPREADSHEET_SRC_ROOT + '/bin',
-        :from => SPREADSHEET_REDIST_ROOT,
-        :root => SPREADSHEET_REDIST_ROOT
-else
-    src = SPREADSHEET_REDIST_ROOT.gsub('/', '\\')
-    dst = "#{SPREADSHEET_SRC_ROOT}/bin".gsub('/', '\\')
-    system "xcopy #{src} #{dst} /s /i /d /y"
-end
 
 ['commercial', 'internal.commercial'].each do |bundle|
     # Copy Source.snk as Kendo.snk (the original Kendo.snk should not be distributed)
@@ -85,7 +75,17 @@ end
 
 namespace :spreadsheet do
     desc('Build Telerik.Web.Spreadsheet binaries')
-    task :binaries => SPREADSHEET_REDIST
+    task :binaries do
+        if PLATFORM =~ /linux|darwin/
+            src = SPREADSHEET_REDIST_ROOT
+            dst = "#{SPREADSHEET_SRC_ROOT}/bin"
+            system "cp -r #{src} #{dst}"
+        else
+            src = SPREADSHEET_REDIST_ROOT.gsub('/', '\\')
+            dst = "#{SPREADSHEET_SRC_ROOT}/bin".gsub('/', '\\')
+            system "xcopy #{src} #{dst} /s /i /d /y"
+        end
+    end
 
     desc('Replace commercial binaries with trials')
     task :copy_trials => ['spreadsheet:binaries'] do
