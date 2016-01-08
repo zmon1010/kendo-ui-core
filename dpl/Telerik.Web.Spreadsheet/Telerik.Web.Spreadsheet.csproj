@@ -65,7 +65,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-NET45|AnyCPU'">
     <OutputPath>bin\Release-NET45\</OutputPath>
     <DefineConstants>TRACE;NET45</DefineConstants>
-    <DocumentationFile>bin\Release\Telerik.Web.Spreadsheet.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Telerik.Web.Spreadsheet.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>pdbonly</DebugType>
@@ -78,7 +78,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-NET45-Trial|AnyCPU'">
     <OutputPath>bin\Release-NET45-Trial\</OutputPath>
     <DefineConstants>TRACE;TRIAL;NET45</DefineConstants>
-    <DocumentationFile>bin\Release\Telerik.Web.Spreadsheet.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Telerik.Web.Spreadsheet.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>pdbonly</DebugType>
