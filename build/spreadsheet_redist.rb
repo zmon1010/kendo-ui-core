@@ -14,7 +14,7 @@ def copy_dpl_binaries
 
             DPL_FILES.each do |file|
                 source = "#{source_dir}\\#{key}\\#{license}\\#{file}"
-                system("xcopy #{source} #{dest} /d /y > nul")
+                system("xcopy #{source} #{dest} /y")
             end
         end
     end
