@@ -353,11 +353,11 @@
         exec: function() {
             var status = this._clipboard.canPaste();
             this._clipboard.menuInvoked = true;
-            if(!status.canPaste) {
-                if(status.menuInvoked) {
+            if (!status.canPaste) {
+                if (status.menuInvoked) {
                     return { reason: "useKeyboard" };
                 }
-                if(status.pasteOnMerged) {
+                if (status.pasteOnMerged) {
                     return { reason: "modifyMerged" };
                 }
                 return;
@@ -382,7 +382,7 @@
 
     kendo.spreadsheet.ToolbarPasteCommand = Command.extend({
         exec: function() {
-            if(kendo.support.clipboard.paste) {
+            if (kendo.support.clipboard.paste) {
                 this._workbook._view.clipboard.focus().select();
                 //reason : focusclipbord
                 document.execCommand('paste');
@@ -401,10 +401,10 @@
         exec: function() {
             var status = this._clipboard.canCopy();
             this._clipboard.menuInvoked = true;
-            if(!status.canCopy) {
-                if(status.menuInvoked) {
+            if (!status.canCopy) {
+                if (status.menuInvoked) {
                     return { reason: "useKeyboard" };
-                } else if(status.multiSelection) {
+                } else if (status.multiSelection) {
                     return { reason: "unsupportedSelection" };
                 }
                 return;
@@ -420,7 +420,7 @@
         },
         undo: $.noop,
         exec: function() {
-            if(kendo.support.clipboard.copy) {
+            if (kendo.support.clipboard.copy) {
                 var clipboard = this._workbook._view.clipboard;
                 var textarea = document.createElement('textarea');
                 $(textarea).addClass("k-spreadsheet-clipboard").val(clipboard.html()).appendTo(document.body).focus().select();
@@ -439,7 +439,7 @@
             this._clipboard = options.workbook.clipboard();
         },
         exec: function() {
-            if(this._clipboard.canCopy()) {
+            if (this._clipboard.canCopy()) {
                 this.getState();
                 this._clipboard.cut();
             }
@@ -465,7 +465,7 @@
             this._clipboard = options.workbook.clipboard();
         },
         exec: function() {
-            if(kendo.support.clipboard.copy) {
+            if (kendo.support.clipboard.copy) {
                 var clipboard = this._workbook._view.clipboard;
                 var textarea = document.createElement('textarea');
                 $(textarea).val(clipboard.html()).appendTo(document.body).focus().select();
@@ -723,11 +723,11 @@
     kendo.spreadsheet.SaveAsCommand = Command.extend({
         exec: function() {
             var fileName = this.options.name + this.options.extension;
-            if(this.options.extension === ".xlsx") {
+            if (this.options.extension === ".xlsx") {
                 this.options.workbook.saveAsExcel({
                     fileName: fileName
                 });
-            } else if(this.options.extension === ".pdf") {
+            } else if (this.options.extension === ".pdf") {
                 this.options.workbook.saveAsPDF($.extend(this.options.pdf, {workbook: this.options.workbook, fileName: fileName}));
             }
         }

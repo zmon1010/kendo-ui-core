@@ -33,7 +33,7 @@
                 status.canCopy = false;
                 status.multiSelection = true;
             }
-            if(this.menuInvoked) {
+            if (this.menuInvoked) {
                 status.canCopy = false;
                 status.menuInvoked = true;
             }
@@ -44,17 +44,17 @@
             var sheet = this.workbook.activeSheet();
             var ref = this.pasteRef();
             var status = {canPaste: true};
-            if(ref === kendo.spreadsheet.NULLREF) {
+            if (ref === kendo.spreadsheet.NULLREF) {
                 var external = this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
                 status.pasteOnMerged = this.intersectsMerged();
                 status.canPaste = status.pasteOnMerged ? false : external;
                 return status;
             }
-            if(!ref.eq(sheet.unionWithMerged(ref))) {
+            if (!ref.eq(sheet.unionWithMerged(ref))) {
                 status.canPaste = false;
                 status.pasteOnMerged = true;
             }
-            if(this.menuInvoked) {
+            if (this.menuInvoked) {
                 status.canPaste = false;
                 status.menuInvoked = true;
             }
@@ -114,7 +114,7 @@
         paste: function() {
             var state = {};
             var sheet = this.workbook.activeSheet();
-            if(this._isInternal()) {
+            if (this._isInternal()) {
                 state = this.contents;
             } else {
                 state = this.parse(this._external);
@@ -135,13 +135,13 @@
 
         parse: function(data) {
             var state = {ref:  new CellRef(0,0,0), mergedCells: []};
-            if(data.html) {
+            if (data.html) {
                 var doc = this.iframe.contentWindow.document;
                 doc.open();
                 doc.write(data.html);
                 doc.close();
                 var table = $(doc).find("table:first");
-                if(table.length) {
+                if (table.length) {
                     state = this._parseHTML(table.find("tbody:first"));
                 } else {
                     if (!data.plain) {
@@ -167,29 +167,29 @@
                     var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
                     var blankCell = "<td/>";
                     var ci;
-                    if(rowspan){
+                    if (rowspan){
                         var endRow = rowIndex + rowspan;
-                        for(var ri = rowIndex; ri <= endRow; ri++) {
+                        for (var ri = rowIndex; ri <= endRow; ri++) {
                             var row = tbody.find("tr").eq(ri);
-                            if(ri > rowIndex) {
+                            if (ri > rowIndex) {
                                 blankCell = "<td class='rowspan'></td>";
-                                if(colIndex === 0) {
+                                if (colIndex === 0) {
                                     row.find("td").eq(colIndex).after(blankCell);
                                 } else {
                                     var last = Math.min(row.find("td").length, colIndex);
                                     row.find("td").eq(last - 1).after(blankCell);
                                 }
                             }
-                            if(colspan) {
-                                for(ci = colIndex; ci < colspan + colIndex; ci++) {
+                            if (colspan) {
+                                for (ci = colIndex; ci < colspan + colIndex; ci++) {
                                     blankCell = "<td class='rowspan colspan'></td>";
                                     row.find("td").eq(ci).after(blankCell);
                                 }
                             }
                         }
                     } else {
-                        if(colspan) {
-                            for(ci = colIndex; ci < colspan + colIndex; ci++) {
+                        if (colspan) {
+                            for (ci = colIndex; ci < colspan + colIndex; ci++) {
                                 blankCell = "<td class='colspan'></td>";
                                 $(tr).find("td").eq(ci).after(blankCell);
                             }
@@ -207,7 +207,7 @@
 
                     state[key] = cellState;
 
-                    if(rowspan || colspan) {
+                    if (rowspan || colspan) {
                         var startCol = String.fromCharCode(65 + colIndex);
                         var endCol = String.fromCharCode(65 + colIndex + colspan);
                         var address = startCol + (rowIndex + 1) + ":" + endCol + (rowIndex + 1 + rowspan);
@@ -221,15 +221,15 @@
 
         _parseTSV: function(data) {
             var state = {ref:  new CellRef(0,0,0), mergedCells: []};
-            if(data.indexOf("\t") === -1 && data.indexOf("\n") == -1) {
+            if (data.indexOf("\t") === -1 && data.indexOf("\n") == -1) {
                 state["0,0"] = {
                     value: data
                 };
             } else {
                 var rows = data.split("\n");
-                for(var ri = 0; ri < rows.length; ri++) {
+                for (var ri = 0; ri < rows.length; ri++) {
                     var cols = rows[ri].split("\t");
-                    for(var ci = 0; ci < cols.length; ci++) {
+                    for (var ci = 0; ci < cols.length; ci++) {
                         state[ri + "," + ci] = {value: cols[ci]};
                     }
                 }
@@ -238,12 +238,12 @@
         },
 
         _isInternal: function() {
-            if(this._external.html === undefined) {
+            if (this._external.html === undefined) {
                 return true;
             }
             var internalHTML = $("<div/>").html(this._external.html).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
             var internalPlain = $("<div/>").html(this._external.plain).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
-            if(internalHTML || internalPlain) {
+            if (internalHTML || internalPlain) {
                 return true;
             }
             return false;
@@ -262,28 +262,28 @@
                 fontSize : parseInt(styles["font-size"], 10)
             };
 
-            if(styles["background-color"] !== "rgb(0, 0, 0)" && styles["background-color"] !== "rgba(0, 0, 0, 0)") {
+            if (styles["background-color"] !== "rgb(0, 0, 0)" && styles["background-color"] !== "rgba(0, 0, 0, 0)") {
                 state.background = styles["background-color"];
             }
-            if(styles.color !== "rgb(0, 0, 0)" && styles.color !== "rgba(0, 0, 0, 0)") {
+            if (styles.color !== "rgb(0, 0, 0)" && styles.color !== "rgba(0, 0, 0, 0)") {
                 state.color = styles.color;
             }
-            if(styles["text-decoration"] == "underline") {
+            if (styles["text-decoration"] == "underline") {
                 state.underline = true;
             }
-            if(styles["font-style"] == "italic") {
+            if (styles["font-style"] == "italic") {
                 state.italic = true;
             }
-            if(styles["font-weight"] == "bold") {
+            if (styles["font-weight"] == "bold") {
                 state.bold = true;
             }
-            if(this._strippedStyle(styles["text-align"]) !== "right") {
+            if (this._strippedStyle(styles["text-align"]) !== "right") {
                 state.textAlign = this._strippedStyle(styles["text-align"]);
             }
-            if(styles["vertical-align"] !== "middle") {
+            if (styles["vertical-align"] !== "middle") {
                 state.verticalAlign = styles["vertical-align"];
             }
-            if(styles["word-wrap"] !== "normal" ) {
+            if (styles["word-wrap"] !== "normal" ) {
                 state.wrap = true;
             }
 
@@ -313,7 +313,7 @@
             ];
 
             borders.forEach(function(key) {
-                if(styles[key + "Style"] == "none") {
+                if (styles[key + "Style"] == "none") {
                     borderObject[key] = null;
                     return;
                 }
