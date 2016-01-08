@@ -46,7 +46,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Release\Telerik.Web.Spreadsheet.xml</DocumentationFile>
+    <DocumentationFile>bin\Release-Trial\Telerik.Web.Spreadsheet.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
@@ -65,7 +65,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-NET45|AnyCPU'">
     <OutputPath>bin\Release-NET45\</OutputPath>
     <DefineConstants>TRACE;NET45</DefineConstants>
-    <DocumentationFile>bin\Release\Telerik.Web.Spreadsheet.xml</DocumentationFile>
+    <DocumentationFile>bin\Release-NET45\Telerik.Web.Spreadsheet.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>pdbonly</DebugType>
@@ -78,7 +78,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-NET45-Trial|AnyCPU'">
     <OutputPath>bin\Release-NET45-Trial\</OutputPath>
     <DefineConstants>TRACE;TRIAL;NET45</DefineConstants>
-    <DocumentationFile>bin\Release\Telerik.Web.Spreadsheet.xml</DocumentationFile>
+    <DocumentationFile>bin\Release-NET45-Trial\Telerik.Web.Spreadsheet.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>pdbonly</DebugType>
