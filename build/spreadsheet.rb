@@ -35,24 +35,16 @@ CLEAN.include(FileList[
     SPREADSHEET_SRC_ROOT + '/bin/**/*',
     SPREADSHEET_ROOT + '/lib/NET*/**/*'
 ])
-rule 'Telerik.Web.Spreadsheet.xml' => SPREADSHEET_SRC_ROOT + '/bin/Release/Telerik.Web.Spreadsheet.dll'
 
+# Copy pre-built binaries
 if PLATFORM =~ /linux|darwin/
-    # Copy pre-built binaries
-    SPREADSHEET_REDIST.each do |file|
-        file_copy :to => file,
-                  :from => file.sub(SPREADSHEET_SRC_ROOT + '/bin', SPREADSHEET_REDIST_ROOT)
-    end
-
-    DPL_FILES.each do |file|
-        file_copy :to => SPREADSHEET_ROOT + '/lib/NET40/' + file,
-                  :from => SPREADSHEET_REDIST_ROOT + '/Release/' + file
-    end
-
-    DPL_FILES.each do |file|
-        file_copy :to => SPREADSHEET_ROOT + '/lib/NET45/' + file,
-                  :from => SPREADSHEET_REDIST_ROOT + '/Release-NET45/' + file
-    end
+    tree :to => SPREADSHEET_SRC_ROOT + '/bin',
+        :from => SPREADSHEET_REDIST_ROOT,
+        :root => SPREADSHEET_REDIST_ROOT
+else
+    src = SPREADSHEET_REDIST_ROOT.gsub('/', '\\')
+    dst = "#{SPREADSHEET_SRC_ROOT}/bin".gsub('/', '\\')
+    system "xcopy #{src} #{dst} /s /i /d /y"
 end
 
 ['commercial', 'internal.commercial'].each do |bundle|
@@ -93,13 +85,7 @@ end
 
 namespace :spreadsheet do
     desc('Build Telerik.Web.Spreadsheet binaries')
-    task :binaries => [
-        SPREADSHEET_SRC_ROOT + '/bin/Release/Telerik.Web.Spreadsheet.dll',
-        SPREADSHEET_SRC_ROOT + '/bin/Release-NET45/Telerik.Web.Spreadsheet.dll',
-        SPREADSHEET_SRC_ROOT + '/bin/Release-Trial/Telerik.Web.Spreadsheet.dll',
-        SPREADSHEET_SRC_ROOT + '/bin/Release-NET45-Trial/Telerik.Web.Spreadsheet.dll',
-        'dist/binaries/spreadsheet'
-    ]
+    task :binaries => SPREADSHEET_REDIST
 
     desc('Replace commercial binaries with trials')
     task :copy_trials => ['spreadsheet:binaries'] do
