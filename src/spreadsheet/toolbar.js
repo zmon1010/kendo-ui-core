@@ -694,19 +694,21 @@
             DropDownTool.fn.init.call(this, options, toolbar);
 
             var ddl = this.dropDownList;
+            var icon = "<span class='k-icon k-font-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>";
             ddl.bind("change", this._revertTitle.bind(this));
             ddl.bind("dataBound", this._revertTitle.bind(this));
             ddl.setOptions({
                 dataValueField: "format",
                 dataTextField: "name",
                 dataValuePrimitive: true,
-                valueTemplate: "<span class='k-icon k-font-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>",
+                valueTemplate: icon,
                 template:
                     "# if (data.sample) { #" +
                         "<span class='k-spreadsheet-sample'>#: data.sample #</span>" +
                     "# } #" +
                     "#: data.name #"
             });
+            ddl.text(icon);
             ddl.setDataSource([
                 { format: defaultFormats.automatic, name: MESSAGES.formatTypes.automatic },
                 { format: defaultFormats.number, name: MESSAGES.formatTypes.number , sample: "1,499.99" },
