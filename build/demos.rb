@@ -215,7 +215,6 @@ if PLATFORM =~ /linux|darwin|bsd/
     end
 else
     file 'demos/mvc/bin/Kendo.dll' => ["spreadsheet:binaries"] do |t|
-        copy_dpl_binaries
         system("xcopy dpl\\lib\\NET40\\* demos\\mvc\\bin\\ /d /y > nul")
         msbuild 'demos/mvc/Kendo-Windows.sln', "/p:Configuration=Release"
     end
@@ -362,7 +361,6 @@ namespace :demos do
         if PLATFORM =~ /linux|darwin|bsd/
             msbuild t.prerequisites[0], "/p:Configuration=Debug"
         else
-            copy_dpl_binaries
             system("xcopy dpl\\lib\\NET40\\* demos\\mvc\\bin\\ /d /y > nul")
             msbuild 'demos/mvc/Kendo-Windows.sln', "/p:Configuration=Debug"
         end
