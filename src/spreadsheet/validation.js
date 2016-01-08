@@ -3,6 +3,8 @@
 })(function(){
     "use strict";
 
+    var $ = kendo.jQuery;
+
     if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
         return;
     }
