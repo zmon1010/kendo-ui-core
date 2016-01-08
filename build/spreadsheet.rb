@@ -7,7 +7,7 @@ DPL_FILES = [
     'Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml',
     'Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf',
     'Telerik.Windows.Zip',
-    'Telerik.Windows.Zip.Extensions.dll'
+    'Telerik.Windows.Zip.Extensions'
 ].flat_map { |file| ["#{file}.dll", "#{file}.xml"] }
 
 SPREADSHEET_ROOT = 'dpl'
