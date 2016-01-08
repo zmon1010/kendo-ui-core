@@ -1334,7 +1334,6 @@
             var sheet = this._sheet;
             var children = [];
             var classNames = View.classNames;
-            var index = 0;
             var filter = sheet.filter();
 
             function icon(className) {
@@ -1359,7 +1358,7 @@
 
                 var button = kendo.dom.element(
                     "span",
-                    { className: classes, style: style, "data-column": index },
+                    { className: classes, style: style },
                     [ icon(classNames.iconFilterDefault) ]
                 );
 
@@ -1373,8 +1372,8 @@
             sheet.forEachFilterHeader(this._currentView.ref, function(ref) {
                 var rect = this._rectangle(ref);
                 var position = this.filterIconRect(rect);
-                var button = filterButton(classNames, position, index);
-                index++;
+                var column = this._sheet.filterColumn(ref);
+                var button = filterButton(classNames, position, column);
 
                 children.push(button);
             }.bind(this));

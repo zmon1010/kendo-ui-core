@@ -1310,6 +1310,11 @@
             }, { layout: true, filter: true });
         },
 
+        filterColumn: function(ref) {
+            var filterRef = this.filter().ref;
+            return ref.toRangeRef().topLeft.col - filterRef.topLeft.col;
+        },
+
         filter: function() {
             return this._filter;
         },

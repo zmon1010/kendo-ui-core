@@ -765,8 +765,10 @@
         },
 
         openFilterMenu: function(target) {
-            var button = $(target).closest(".k-spreadsheet-filter");
-            var filterMenu = this.view.createFilterMenu(button.data("column"));
+            var object = this.objectAt(event);
+            var sheet = this._workbook.activeSheet();
+            var column = sheet.filterColumn(object.ref);
+            var filterMenu = this.view.createFilterMenu(column);
 
             filterMenu.bind("action", this.onCommandRequest.bind(this));
             filterMenu.bind("action", filterMenu.close.bind(filterMenu));
