@@ -131,6 +131,9 @@
     <Reference Include="Telerik.Windows.Zip">
       <HintPath>..\lib\NET40\Telerik.Windows.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Windows.Zip.Extensions">
+      <HintPath>..\lib\NET40\Telerik.Windows.Zip.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-NET45|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release-NET45|AnyCPU'">
     <Reference Include="Telerik.Windows.Documents.Core">
@@ -156,6 +159,9 @@
     </Reference>
     <Reference Include="Telerik.Windows.Zip">
       <HintPath>..\lib\NET45\Telerik.Windows.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip.Extensions">
+      <HintPath>..\lib\NET45\Telerik.Windows.Zip.Extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Trial|AnyCPU'">
@@ -183,6 +189,9 @@
     <Reference Include="Telerik.Windows.Zip">
       <HintPath>..\lib\NET40-Trial\Telerik.Windows.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Windows.Zip.Extensions">
+      <HintPath>..\lib\NET40-Trial\Telerik.Windows.Zip.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Release-NET45-Trial|AnyCPU'">
     <Reference Include="Telerik.Windows.Documents.Core">
@@ -208,6 +217,9 @@
     </Reference>
     <Reference Include="Telerik.Windows.Zip">
       <HintPath>..\lib\NET45-Trial\Telerik.Windows.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip.Extensions">
+      <HintPath>..\lib\NET45-Trial\Telerik.Windows.Zip.Extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
