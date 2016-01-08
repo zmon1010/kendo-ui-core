@@ -85,6 +85,18 @@ namespace :spreadsheet do
             dst = "#{SPREADSHEET_SRC_ROOT}/bin".gsub('/', '\\')
             system "xcopy #{src} #{dst} /s /i /d /y"
         end
+
+        {
+            'Release' => 'NET40',
+            'Release-Trial' => 'NET40-Trial',
+            'Release-NET45' => 'NET45',
+            'Release-NET45-Trial' => 'NET45-Trial'
+        }.each do |build, target|
+            src = SPREADSHEET_SRC_ROOT + "/bin/#{build}/Telerik.Windows.*"
+            dest = SPREADSHEET_ROOT + "/lib/#{target}"
+            mkdir_p dest
+            Dir.glob(src).each { |f| cp f, dest }
+        end
     end
 
     desc('Replace commercial binaries with trials')
