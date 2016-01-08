@@ -1,3 +1,4 @@
+require 'pathname'
 require 'zip'
 
 class SZipTask < ZipTask
@@ -9,7 +10,8 @@ class SZipTask < ZipTask
 
         $stderr.puts("Creating #{name}") if VERBOSE
 
-        sh "7zr a #{name} #{dir}"
+        file_name = Pathname.new(name).relative_path_from(Pathname.new(dir))
+        sh "cd #{dir} && 7zr a #{file_name} ."
     end
 end
 
