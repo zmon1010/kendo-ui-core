@@ -35,12 +35,7 @@ namespace :spreadsheet do
         redist_dir = SPREADSHEET_REDIST_ROOT.gsub('/', '\\')
         src_root = SPREADSHEET_SRC_ROOT.gsub('/', '\\')
 
-        ['Release', 'Release-NET45', 'Release-Trial', 'Release-NET45-Trial'].each do |configuration|
-            source = "#{src_root}\\bin\\#{configuration}"
-            dest = "#{redist_dir}\\#{configuration}"
-
-            system "xcopy #{source} #{dest} /i /d /y"
-        end
+        puts "xcopy #{src_root}\\bin #{redist_dir} /e /i /d /y"
     end
 
     desc('Update AssemblyInfo.cs with current VERSION')
