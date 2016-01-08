@@ -362,8 +362,8 @@
             $(iframe)
                 .css("display", "")
                 .addClass("k-content")
+                .attr("tabindex", textarea[0].tabIndex)
                 .insertBefore(textarea);
-
 
             iframe.src = src;
 

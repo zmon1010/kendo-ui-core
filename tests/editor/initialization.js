@@ -69,6 +69,13 @@ test("tool options are passed to toolbar", function() {
     equal($(".k-tool").attr("title"), "foo");
 });
 
+test("editor iframe copies the textarea tabIndex", function () {
+    textarea[0].tabIndex = 2;
+    setup("", {});
+
+    equal(editor.wrapper.find("iframe")[0].tabIndex, textarea[0].tabIndex);
+});
+
 module("initialization from div[contentEditable]", {
     teardown: function() {
         kendo.destroy(QUnit.fixture);
