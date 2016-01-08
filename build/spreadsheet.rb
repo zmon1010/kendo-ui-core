@@ -78,7 +78,7 @@ namespace :spreadsheet do
     task :binaries do
         if PLATFORM =~ /linux|darwin/
             src = SPREADSHEET_REDIST_ROOT
-            dst = "#{SPREADSHEET_SRC_ROOT}/bin"
+            dst = "#{SPREADSHEET_SRC_ROOT}/bin/"
             system "cp -r #{src} #{dst}"
         else
             src = SPREADSHEET_REDIST_ROOT.gsub('/', '\\')
