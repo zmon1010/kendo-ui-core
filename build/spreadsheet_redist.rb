@@ -35,7 +35,7 @@ namespace :spreadsheet do
         redist_dir = SPREADSHEET_REDIST_ROOT.gsub('/', '\\')
         src_root = SPREADSHEET_SRC_ROOT.gsub('/', '\\')
 
-        system "xcopy #{src_root}\\bin #{redist_dir} /e /i /d /y"
+        system "xcopy #{src_root}\\bin #{redist_dir} /e /i /y"
     end
 
     desc('Update AssemblyInfo.cs with current VERSION')
