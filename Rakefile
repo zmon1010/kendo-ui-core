@@ -547,6 +547,7 @@ bundle :name => 'aspnetmvc.trial',
        :post_build => ['mvc:copy_trials', 'mvc_6:update_demo_deps_trial', 'spreadsheet:copy_trials'],
        :prerequisites => [
            'mvc:assets',
+           'spreadsheet:binaries',
            'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples.sln',
@@ -598,6 +599,7 @@ bundle :name => 'aspnetmvc.hotfix.trial',
        :post_build => ['mvc:copy_trials', 'spreadsheet:copy_trials'],
        :prerequisites => [
            'mvc:assets',
+           'spreadsheet:binaries',
            'type_script:master:test'
        ]
 
@@ -686,6 +688,7 @@ bundle :name => 'aspnetmvc.commercial',
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
+           'spreadsheet:binaries',
            'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
            'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc.sln',
            'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
@@ -740,6 +743,7 @@ bundle :name => 'aspnetmvc.internal.commercial',
        }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
        :prerequisites => [
            'mvc:assets',
+           'spreadsheet:binaries',
            'type_script:master:test',
            'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc.sln',
            'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
