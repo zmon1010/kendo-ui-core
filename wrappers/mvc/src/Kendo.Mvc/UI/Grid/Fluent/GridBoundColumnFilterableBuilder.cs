@@ -120,6 +120,24 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Controls whether to show a search box when checkbox filtering is enabled.
+        /// </summary>
+        public GridBoundColumnFilterableBuilder Search(bool value)
+        {
+            settings.Search = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Toggles between case-insensitive (default) and case-sensitive searching.
+        /// </summary>
+        public GridBoundColumnFilterableBuilder IgnoreCase(bool value)
+        {
+            settings.IgnoreCase = value;
+            return this;
+        }
+
+        /// <summary>
         /// Provide IEnumerable that will be used as DataSource for Multi CheckBox filtering on this column
         /// </summary>
         public GridBoundColumnFilterableBuilder BindTo(System.Collections.IEnumerable dataSource)
