@@ -21283,6 +21283,12 @@ for all columns when filtering is enabled via the filterable option.Can be set t
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>Toggles between case-insensitive (default) and case-sensitive searching.</description>
+            <name>ignoreCase</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Allows customization on the logic that renderes the checkboxes when using checkbox filtering.</description>
             <name>itemTemplate</name>
             <rtexprvalue>true</rtexprvalue>
@@ -21291,6 +21297,12 @@ for all columns when filtering is enabled via the filterable option.Can be set t
         <attribute>
             <description>Use this options to enable the MultiCheck filtering support for that column.</description>
             <name>multi</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Controls whether to show a search box when checkbox filtering is enabled.</description>
+            <name>search</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
