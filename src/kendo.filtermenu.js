@@ -897,16 +897,28 @@ var __meta__ = { // jshint ignore:line
                 .bind("progress", this._progressHandler)
                 .bind("change", this._progressHideHandler);
         },
+
         _input: function () {
             var that = this;
-            clearTimeout(that._typingTimeout);
-            that._typingTimeout = setTimeout(function () { that.search(); });
+            that._clearTypingTimeout();
+            that._typingTimeout = setTimeout(function () { that.search(); }, 100);
+        },
+
+        _clearTypingTimeout: function() {
+            if (this._typingTimeout) {
+                clearTimeout(this._typingTimeout);
+                this._typingTimeout = null;
+            }
         },
 
         search: function () {
             var ignoreCase = this.options.ignoreCase;
-            var searchString = ignoreCase ? this.searchTextBox[0].value.toLowerCase() : this.searchTextBox[0].value;
+            var searchString = this.searchTextBox[0].value;
             var labels = this.container.find("label");
+
+            if (ignoreCase) {
+                searchString = searchString.toLowerCase();
+            }
 
             for (var i = this.options.checkAll ? 1 : 0 ; i < labels.length ; i++) {
                 var label = labels[i];
@@ -922,7 +934,7 @@ var __meta__ = { // jshint ignore:line
             var options = this.options;
             var html = "";
 
-            if (options.search) {
+            if (!this._isMobile && options.search) {
                 html += "<div class='k-textbox k-space-right'>" +
                     "<input placeholder='" + options.messages.search + "'/>" +
                     "<span class='k-icon k-font-icon k-i-search' />" +
@@ -933,6 +945,7 @@ var __meta__ = { // jshint ignore:line
 
             this.form = $('<form class="k-filter-menu"/>').html(html);
             this.container = this.form.find(".k-multicheck-wrap");
+
             if (options.search) {
                 this.searchTextBox = this.form.find(".k-textbox > input");
                 this.searchTextBox.on("input", proxy(this._input, this));
@@ -1101,8 +1114,6 @@ var __meta__ = { // jshint ignore:line
         destroy: function() {
             var that = this;
 
-            clearTimeout(that._typingTimeout);
-
             Widget.fn.destroy.call(that);
 
             if (that.form) {
@@ -1149,6 +1160,9 @@ var __meta__ = { // jshint ignore:line
             if (that._progressHideHandler) {
                 that.checkSource.unbind("change", that._progressHideHandler);
             }
+
+            this._clearTypingTimeout();
+            this.searchTextBox = null;
 
             that.element = that.checkSource = that.container = that.checkBoxAll = that._link = that._refreshHandler = that.checkAllHandler = null;
         },
