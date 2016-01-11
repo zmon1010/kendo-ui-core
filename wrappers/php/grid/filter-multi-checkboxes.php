@@ -116,7 +116,7 @@ $dataSource->transport($transport)
 $client = new \Kendo\UI\Grid('client');
 
 $columnFilterable = new \Kendo\UI\GridColumnFilterable();
-$columnFilterable->multi(true);
+$columnFilterable->multi(true)->search(true);
 
 $productName = new \Kendo\UI\GridColumn();
 $productName->field('ProductName')

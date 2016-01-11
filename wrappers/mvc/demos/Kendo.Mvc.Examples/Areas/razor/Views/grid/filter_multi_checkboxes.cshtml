@@ -4,7 +4,7 @@
             .Name("client")
             .Columns(columns =>
             {
-                columns.Bound(p => p.ProductName).Filterable(ftb => ftb.Multi(true));
+                columns.Bound(p => p.ProductName).Filterable(ftb => ftb.Multi(true).Search(true));
                 columns.Bound(p => p.UnitPrice).Width(140).Filterable(ftb => ftb.Multi(true)).Format("{0:c}");
                 columns.Bound(p => p.UnitsInStock).Width(140).Filterable(ftb => ftb.Multi(true));
                 columns.Bound(p => p.Discontinued).Width(100).Filterable(ftb => ftb.Multi(true));

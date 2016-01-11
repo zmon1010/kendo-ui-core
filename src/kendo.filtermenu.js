@@ -898,12 +898,58 @@ var __meta__ = { // jshint ignore:line
                 .bind("change", this._progressHideHandler);
         },
 
+        _input: function () {
+            var that = this;
+            that._clearTypingTimeout();
+            that._typingTimeout = setTimeout(function () { that.search(); }, 100);
+        },
+
+        _clearTypingTimeout: function() {
+            if (this._typingTimeout) {
+                clearTimeout(this._typingTimeout);
+                this._typingTimeout = null;
+            }
+        },
+
+        search: function () {
+            var ignoreCase = this.options.ignoreCase;
+            var searchString = this.searchTextBox[0].value;
+            var labels = this.container.find("label");
+
+            if (ignoreCase) {
+                searchString = searchString.toLowerCase();
+            }
+
+            for (var i = this.options.checkAll ? 1 : 0 ; i < labels.length ; i++) {
+                var label = labels[i];
+                var labelText = label.textContent || label.innerText;
+                if (ignoreCase) {
+                    labelText = labelText.toLowerCase();
+                }
+                label.style.display = labelText.indexOf(searchString) >= 0 ? "" : "none";
+            }
+        },
+
         _createForm: function() {
             var options = this.options;
-            var html = "<ul class='k-reset k-multicheck-wrap'></ul><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
+            var html = "";
+
+            if (!this._isMobile && options.search) {
+                html += "<div class='k-textbox k-space-right'>" +
+                    "<input placeholder='" + options.messages.search + "'/>" +
+                    "<span class='k-icon k-font-icon k-i-search' />" +
+                    "</div>";
+            }
+            html += "<ul class='k-reset k-multicheck-wrap'></ul><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
             html += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
+
             this.form = $('<form class="k-filter-menu"/>').html(html);
             this.container = this.form.find(".k-multicheck-wrap");
+
+            if (options.search) {
+                this.searchTextBox = this.form.find(".k-textbox > input");
+                this.searchTextBox.on("input", proxy(this._input, this));
+            }
 
             if (this._isMobile) {
                 this.view = this.pane.append(this.form.addClass('k-mobile-list').wrap("<div/>").parent().html());
@@ -1115,6 +1161,9 @@ var __meta__ = { // jshint ignore:line
                 that.checkSource.unbind("change", that._progressHideHandler);
             }
 
+            this._clearTypingTimeout();
+            this.searchTextBox = null;
+
             that.element = that.checkSource = that.container = that.checkBoxAll = that._link = that._refreshHandler = that.checkAllHandler = null;
         },
         options: {
@@ -1141,11 +1190,14 @@ var __meta__ = { // jshint ignore:line
                         "</li>";
             },
             checkAll: true,
+            search: false,
+            ignoreCase: true,
             appendToElement: false,
             messages: {
                 checkAll: "Select All",
                 clear: "Clear",
-                filter: "Filter"
+                filter: "Filter",
+                search: "Search"
             },
             forceUnique: true,
             animations: {

@@ -78,6 +78,14 @@ public class ColumnFilterableTag extends  BaseTag implements DataBoundWidget /* 
         setProperty("dataSource", dataSource);
     }
 
+    public boolean getIgnoreCase() {
+        return (Boolean)getProperty("ignoreCase");
+    }
+
+    public void setIgnoreCase(boolean value) {
+        setProperty("ignoreCase", value);
+    }
+
     public String getItemTemplate() {
         Function property = ((Function)getProperty("itemTemplate"));
         if (property != null) {
@@ -96,6 +104,14 @@ public class ColumnFilterableTag extends  BaseTag implements DataBoundWidget /* 
 
     public void setMulti(boolean value) {
         setProperty("multi", value);
+    }
+
+    public boolean getSearch() {
+        return (Boolean)getProperty("search");
+    }
+
+    public void setSearch(boolean value) {
+        setProperty("search", value);
     }
 
     public java.lang.String getUi() {

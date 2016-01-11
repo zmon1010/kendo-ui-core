@@ -56,6 +56,24 @@ class GridColumnFilterable extends \Kendo\SerializableObject {
     }
 
     /**
+    * Controls whether to show a search box when checkbox filtering is enabled.
+    * @param boolean $value
+    * @return \Kendo\UI\GridColumnFilterable
+    */
+    public function search($value) {
+        return $this->setProperty('search', $value);
+    }
+
+    /**
+    * Toggles between case-insensitive (default) and case-sensitive searching.
+    * @param boolean $value
+    * @return \Kendo\UI\GridColumnFilterable
+    */
+    public function ignoreCase($value) {
+        return $this->setProperty('ignoreCase', $value);
+    }
+
+    /**
     * The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\UI\GridColumnFilterable

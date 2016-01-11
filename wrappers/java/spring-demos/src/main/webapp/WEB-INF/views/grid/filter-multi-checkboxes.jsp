@@ -26,7 +26,7 @@
         </kendo:grid-toolbar>
         <kendo:grid-columns>
             <kendo:grid-column title="Product Name" field="productName" >
-            	<kendo:grid-column-filterable multi="true"/>
+            	<kendo:grid-column-filterable multi="true" search="true" />
             </kendo:grid-column>
             <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" >
             	<kendo:grid-column-filterable multi="true"/>

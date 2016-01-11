@@ -30,6 +30,8 @@ namespace Kendo.Mvc.UI
         public DataSource DataSource { get; set; }
         public bool Multi { get; set; }
         public bool CheckAll { get; set; }
+        public bool? Search { get; set; }
+        public bool? IgnoreCase { get; set; }
 
         public GridColumnFilterableCellSettings CellSettings { get; set; }
 
@@ -50,6 +52,17 @@ namespace Kendo.Mvc.UI
             {
                 json["multi"] = Multi;
             }
+
+            if (Search.HasValue)
+            {
+                json["search"] = Search;
+            }
+
+            if (IgnoreCase.HasValue)
+            {
+                json["ignoreCase"] = IgnoreCase;
+            }
+
             if (ItemTemplate.HasValue())
             {
                 json["itemTemplate"] = ItemTemplate;
