@@ -98,12 +98,12 @@ namespace Kendo.Mvc.Examples.Models
 
             entities.Products.Remove(entity);
 
-            //var orderDetails = entities.Order_Details.Where(pd => pd.ProductID == entity.ProductID);
+            var orderDetails = entities.OrderDetails.Where(pd => pd.ProductID == entity.ProductID);
 
-            //foreach (var orderDetail in orderDetails)
-            //{
-            //    entities.Order_Details.Remove(orderDetail);
-            //}
+            foreach (var orderDetail in orderDetails)
+            {
+                entities.OrderDetails.Remove(orderDetail);
+            }
 
             entities.SaveChanges();
         }

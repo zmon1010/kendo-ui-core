@@ -10,7 +10,7 @@ namespace Kendo.Mvc.Examples.Models
             Orders = new HashSet<Order>();
         }
 
-        public long ShipperID { get; set; }
+        public int ShipperID { get; set; }
         public string CompanyName { get; set; }
         public string Phone { get; set; }
 

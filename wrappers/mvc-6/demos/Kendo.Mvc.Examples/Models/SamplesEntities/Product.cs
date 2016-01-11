@@ -15,8 +15,8 @@ namespace Kendo.Mvc.Examples.Models
         public bool Discontinued { get; set; }
         public string ProductName { get; set; }
         public string QuantityPerUnit { get; set; }
-        public long? ReorderLevel { get; set; }
-        public long? SupplierID { get; set; }
+        public int? ReorderLevel { get; set; }
+        public int? SupplierID { get; set; }
         public decimal? UnitPrice { get; set; }
         public int? UnitsInStock { get; set; }
         public int? UnitsOnOrder { get; set; }

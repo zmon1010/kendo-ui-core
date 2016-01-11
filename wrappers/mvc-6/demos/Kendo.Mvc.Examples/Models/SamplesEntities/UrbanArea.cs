@@ -5,7 +5,7 @@ namespace Kendo.Mvc.Examples.Models
 {
     public partial class UrbanArea
     {
-        public long ID { get; set; }
+        public int ID { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public string Country_ISO3 { get; set; }

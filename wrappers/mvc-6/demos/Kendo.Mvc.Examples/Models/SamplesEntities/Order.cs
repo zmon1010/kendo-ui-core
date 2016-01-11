@@ -23,7 +23,7 @@ namespace Kendo.Mvc.Examples.Models
         public DateTime? ShippedDate { get; set; }
         public string ShipPostalCode { get; set; }
         public string ShipRegion { get; set; }
-        public long? ShipVia { get; set; }
+        public int? ShipVia { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual Customer Customer { get; set; }

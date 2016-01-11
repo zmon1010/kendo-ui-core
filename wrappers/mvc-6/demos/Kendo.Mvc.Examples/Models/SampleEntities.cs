@@ -114,7 +114,7 @@ namespace Kendo.Mvc.Examples.Models
 
             modelBuilder.Entity<EmployeeDirectory>(entity =>
             {
-                entity.ForSqliteToTable("EmployeeDirectories");
+                entity.ForSqliteToTable("EmployeeDirectory");
 
                 entity.HasKey(e => e.EmployeeID);
 

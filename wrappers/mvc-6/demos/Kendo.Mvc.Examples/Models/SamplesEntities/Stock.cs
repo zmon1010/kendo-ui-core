@@ -5,7 +5,7 @@ namespace Kendo.Mvc.Examples.Models
 {
     public partial class Stock
     {
-        public long ID { get; set; }
+        public int ID { get; set; }
         public double Close { get; set; }
         public string Date { get; set; }
         public double High { get; set; }

@@ -5,7 +5,7 @@ namespace Kendo.Mvc.Examples.Models
 {
     public partial class MeetingAttendee
     {
-        public long MeetingID { get; set; }
+        public int MeetingID { get; set; }
         public int AttendeeID { get; set; }
 
         public virtual Meeting Meeting { get; set; }

@@ -5,7 +5,7 @@ namespace Kendo.Mvc.Examples.Models
 {
     public partial class EmployeeTerritory
     {
-        public long EmployeeID { get; set; }
+        public int EmployeeID { get; set; }
         public string TerritoryID { get; set; }
 
         public virtual Employee Employee { get; set; }

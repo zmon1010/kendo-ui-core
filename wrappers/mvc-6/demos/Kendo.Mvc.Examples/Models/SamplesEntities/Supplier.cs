@@ -10,7 +10,7 @@ namespace Kendo.Mvc.Examples.Models
             Products = new HashSet<Product>();
         }
 
-        public long SupplierID { get; set; }
+        public int SupplierID { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string CompanyName { get; set; }

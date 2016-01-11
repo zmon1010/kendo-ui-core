@@ -10,7 +10,7 @@ namespace Kendo.Mvc.Examples.Models
             Territories = new HashSet<Territory>();
         }
 
-        public long RegionID { get; set; }
+        public int RegionID { get; set; }
         public string RegionDescription { get; set; }
 
         public virtual ICollection<Territory> Territories { get; set; }
