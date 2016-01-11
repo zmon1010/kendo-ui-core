@@ -62,7 +62,7 @@
                         height: 550,
                         toolbar: ["create", "save", "cancel"],
                         columns: [
-                            { field: "ProductName", filterable: { multi: true } },
+                            { field: "ProductName", filterable: { multi: true, search: true } },
                             { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: 120, filterable: { multi: true } },
                             { field: "UnitsInStock", title: "Units In Stock", width: 120, filterable: { multi: true } },
                             { field: "Discontinued", width: 120, filterable: { multi: true, dataSource: [{ Discontinued: true }, { Discontinued: false }]} },
