@@ -151,7 +151,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The series color when open value is smoller then close value.** Available for candlestick series only **
+    * The series color when the open value is greater than the close value.** Available for candlestick series only **
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\Dataviz\UI\StockChartSeriesItem
     */
@@ -160,7 +160,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The data field containing the body color.** Available for candlestick series only **
+    * The data field containing the color applied when the open value is greater than the close value.** Available for candlestick series only **
     * @param string $value
     * @return \Kendo\Dataviz\UI\StockChartSeriesItem
     */
