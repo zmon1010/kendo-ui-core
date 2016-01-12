@@ -38,7 +38,7 @@ class TelerikDownloadBuilderBot
     end
 
     def wait_for_element(css)
-        Selenium::WebDriver::Wait.new(:timeout => 30).until { driver.find_element(:css, css) }
+        Selenium::WebDriver::Wait.new(:timeout => 60).until { driver.find_element(:css, css) }
         rescue
         screenshot("Browser_Timeout_On_Element_Wait")
         puts "Time out waiting for element '#{css}'"
@@ -62,10 +62,9 @@ class TelerikDownloadBuilderBot
     def execute_script(script)
       #output filename and code line number as part of the screenshot name
       caller_array = caller.first.split(":")
-      file_name = caller_array[1].split("/")[6] 
+      file_name = caller_array[1].split("/")[6]
       driver.execute_script(script)
-      rescue 
-      screenshot("Script_Execution_Failed_In_" + file_name + "_line_" + caller_array[2])
+      rescue
       puts "Script Execution Failed in '#{file_name}'"
       exit -1
     end
@@ -84,7 +83,7 @@ def upload_download_builder_files()
     url = SITE_URL + "/sitefinity"
     bot.login (url)
 
-    ['www1', 'www2', 'www3'].each do |host|
+    ['www1', 'www2', 'www3', 'www4'].each do |host|
         bot.driver.get(url.sub('www.', host + '.'))
 
         bot.click_element(bot.driver.find_element(:xpath, "//span[contains(text(), 'Administration')]"))
@@ -92,35 +91,41 @@ def upload_download_builder_files()
         sleep(3)
 
         if SERVICE_PACK_NUMBER != nil
-            archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}/changelogs"
+            archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}/download-builder"
         else
-            archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR}/#{VERSION.gsub('.', '_')}/changelogs"
+            archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR}/#{VERSION.gsub('.', '_')}/download-builder"
         end
 
         versioned_bundle_archive_path = File.join(RELEASE_ROOT, VERSION_YEAR.to_s, archive_folder_name)
 
         puts versioned_bundle_archive_path
-        #upload_files_and_test(bot, versioned_bundle_archive_path)
+        upload_files(bot, versioned_bundle_archive_path)
     end
 end
-def upload_files_and_test(bot, archive_path)
-  if ENV["DRY_RUN"]
-    return if !bot.execute_script("if($find($telerik.$('[id$=\"_ddlAvailableVersions\"]').attr('id')).get_text() == '2014.1 318'){ return true;}")
-  else
-    return if !bot.execute_script("if($find($telerik.$('[id$=\"_ddlAvailableVersions\"]').attr('id')).get_text() == '#{VERSION}'){ return true;}")
-  end
+def upload_files(bot, archive_path)
       version_string = VERSION.split(".")
       version_for_db = version_string[0] + "." + version_string[1] + " " + version_string[2]
 
-      #upload zip file  
+      if ENV["DRY_RUN"]
+          version_for_db = '2014.1 318'
+      end
+
+      if !bot.execute_script("if($find($telerik.$('[id$=\"_ddlAvailableVersions\"]').attr('id')).get_text() == '#{version_for_db}'){ return true;}")
+          puts "Unable to locate #{version_for_db} in version selector"
+          exit -1
+      end
+
+      #upload zip file
       full_path = File.expand_path(archive_path + "/#{version_for_db}.zip", File.join(File.dirname(__FILE__), ".."))
+
+      puts full_path
 
       element = bot.driver.find_element(:xpath, "//div[contains(@id,'ruUploadPackage')]")
       upload_id = element.attribute("id")
 
       upload_db_file(bot, upload_id, full_path)
 
-      #upload js config file 
+      #upload js config file
       full_path = File.expand_path(archive_path + "/kendo-config.#{version_for_db}.js", File.join(File.dirname(__FILE__), ".."))
 
       element = bot.driver.find_element(:xpath, "//div[contains(@id,'ruUploadJsConfigs')]")
@@ -131,8 +136,6 @@ def upload_files_and_test(bot, archive_path)
       bot.click_element(bot.find("[value='Upload']"))
       sleep(20)
       bot.wait_for_validation("//div[contains(text(), 'successfully')]")
-      sleep(7)
-      bot.click_element(bot.driver.find_element(:xpath, "//input[contains(@id, '_btnDownload')]"))
 end
 def upload_db_file(bot, upload_id, full_path)
     bot.execute_script("
