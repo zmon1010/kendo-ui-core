@@ -229,7 +229,7 @@
             classNames.push("k-spreadsheet-merged-cell");
         }
 
-        var verticalAlign = cell.verticalAlign || "center"; // Excel defaults to "bottom" actually
+        var verticalAlign = cell.verticalAlign || "bottom";
 
         if (verticalAlign && data) {
             data = kendo.dom.element("div", { className: "k-vertical-align-" + verticalAlign }, [ data ]);

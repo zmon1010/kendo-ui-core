@@ -474,11 +474,12 @@
         group.append(cont);
         var vtrans = 0;
         switch (cell.verticalAlign) {
-          case undefined:
-          case null:
           case "center":
             vtrans = (rect_height - text_height) >> 1;
             break;
+
+          case undefined:
+          case null:
           case "bottom":
             vtrans = (rect_height - text_height);
             break;
