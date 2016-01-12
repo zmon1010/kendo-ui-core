@@ -23,7 +23,7 @@ namespace Telerik.Web.Spreadsheet
                 case RadVerticalAlignment.Bottom:
                     return "bottom";
                 default:
-                    return "middle";
+                    return "center";
             }
         }
 
