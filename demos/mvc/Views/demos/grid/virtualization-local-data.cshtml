@@ -38,9 +38,11 @@
                             virtual: true
                         },
                         pageable: {
-                            info: true,
                             numeric: false,
-                            previousNext: false
+                            previousNext: false,
+                            messages: {
+                                display: "Showing {2} data items"
+                            }
                         },
                         columns: [
                             { field: "Id", title: "ID", width: "110px" },
