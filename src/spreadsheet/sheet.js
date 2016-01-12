@@ -237,7 +237,7 @@
         _adjustReferences: function(operation, start, delta, mergedCells) {
             this._mergedCells = mergedCells.reduce(function(a, ref){
                 ref = ref.adjust(null, null, null, null, operation == "row", start, delta);
-                if (ref !== kendo.spreadsheet.NULLREF) {
+                if (ref instanceof RangeRef) {
                     a.push(ref);
                 }
                 return a;
