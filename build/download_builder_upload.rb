@@ -8,13 +8,13 @@ class TelerikDownloadBuilderBot
     attr_reader :driver
 
     def initialize
-
+        Selenium::WebDriver::Firefox::Binary.path='/usr/bin/firefox'
         @driver = Selenium::WebDriver.for(:firefox)
-        @driver.get(SITE_URL + "/sitefinity")
+    end
 
-        #driver.find_element(:xpath, "//input[contains(@id,'_UserName')]").send_keys SITE_LOGIN
-        #driver.find_element(:xpath, "//input[contains(@id,'_Password')]").send_keys SITE_DOWNLOAD_BUILDER_UPLOAD_PASS
-        #click_and_wait("Log in with Telerik", "Legacy Dashboard")
+    def login (url)
+        @driver.get(url)
+
         driver.find_element(:xpath, "//input[contains(@id,'username')]").send_keys SITE_LOGIN
         driver.find_element(:xpath, "//input[contains(@id,'password')]").send_keys SITE_DOWNLOAD_BUILDER_UPLOAD_PASS
         click_element(driver.find_element(:xpath, "//button[contains(@id,'LoginButton')]"))
@@ -24,36 +24,32 @@ class TelerikDownloadBuilderBot
         driver.find_element(:css, selector)
         rescue
         screenshot("No_such_element_" + selector)
-        return false
+        puts "No such element'#{selector}'"
+        exit -1
     end
 
     def click_element(element)
       element.click
       rescue
-      screenshot("Click_Element_Failed_For_" + element.attribute("id"))
+      id = element.attribute("id")
+      screenshot("Click_Element_Failed_For_" + id)
+      puts "Click failed for '#{id}'"
+      exit -1
     end
 
-    def click_and_wait(link, title)
-        driver.find_element(:link, link).click
-        wait_for_title(title)
-        rescue
-        screenshot("Click_Element_Failed_For_" + element.attribute("id"))
-    end
-
-    def wait_for_title(title)
-        Selenium::WebDriver::Wait.new(:timeout => 30).until { driver.title.downcase.start_with? title }
-        rescue
-        screenshot("Browser_Timeout_On_Page_Title_Wait")
-    end
     def wait_for_element(css)
         Selenium::WebDriver::Wait.new(:timeout => 30).until { driver.find_element(:css, css) }
         rescue
         screenshot("Browser_Timeout_On_Element_Wait")
+        puts "Time out waiting for element '#{css}'"
+        exit -1
     end
     def wait_for_validation(element_path)
         Selenium::WebDriver::Wait.new(:timeout => 30).until { driver.find_element(:xpath, element_path) }
         rescue
         screenshot("Browser_Timeout_On_Validation")
+        puts "Time out waiting for validation '#{element_path}'"
+        exit -1
     end
     def screenshot(failed_operation)
       if failed_operation.nil?
@@ -70,31 +66,42 @@ class TelerikDownloadBuilderBot
       driver.execute_script(script)
       rescue 
       screenshot("Script_Execution_Failed_In_" + file_name + "_line_" + caller_array[2])
+      puts "Script Execution Failed in '#{file_name}'"
+      exit -1
     end
     def set_upload_path(element, path)
       element.send_keys(path)
       rescue
       screenshot("Upload_Path_Setting_Failed_For_" + path)
+      puts "Setting Upload Path Failed on '#{element}' for path '#{path}'"
+      exit -1
     end
 end
 
 def upload_download_builder_files()
-
     bot = TelerikDownloadBuilderBot.instance
- 
-    bot.click_element(bot.driver.find_element(:xpath, "//span[contains(text(), 'Administration')]"))
-    bot.click_element(bot.driver.find_element(:xpath, "//span[contains(text(), 'Upload Custom Downloads package')]"))
-    bot.wait_for_title("Upload Custom Downloads package")
 
-    if SERVICE_PACK_NUMBER != nil
-        archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}/changelogs"
-    else
-        archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR}/#{VERSION.gsub('.', '_')}/changelogs"
+    url = SITE_URL + "/sitefinity"
+    bot.login (url)
+
+    ['www1', 'www2', 'www3'].each do |host|
+        bot.driver.get(url.sub('www.', host + '.'))
+
+        bot.click_element(bot.driver.find_element(:xpath, "//span[contains(text(), 'Administration')]"))
+        bot.click_element(bot.driver.find_element(:xpath, "//span[contains(text(), 'Upload Custom Downloads package')]"))
+        sleep(3)
+
+        if SERVICE_PACK_NUMBER != nil
+            archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}/changelogs"
+        else
+            archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR}/#{VERSION.gsub('.', '_')}/changelogs"
+        end
+
+        versioned_bundle_archive_path = File.join(RELEASE_ROOT, VERSION_YEAR.to_s, archive_folder_name)
+
+        puts versioned_bundle_archive_path
+        #upload_files_and_test(bot, versioned_bundle_archive_path)
     end
-
-    versioned_bundle_archive_path = File.join(RELEASE_ROOT, VERSION_YEAR.to_s, archive_folder_name)
-
-    upload_files_and_test(bot, versioned_bundle_archive_path)
 end
 def upload_files_and_test(bot, archive_path)
   if ENV["DRY_RUN"]
