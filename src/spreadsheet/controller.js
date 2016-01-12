@@ -425,7 +425,7 @@
             }
 
             if (object.type === "filtericon") {
-                this.openFilterMenu(event.target);
+                this.openFilterMenu(event);
                 event.preventDefault();
                 return;
             }
@@ -764,7 +764,7 @@
             this._scrollInterval = null;
         },
 
-        openFilterMenu: function(target) {
+        openFilterMenu: function(event) {
             var object = this.objectAt(event);
             var sheet = this._workbook.activeSheet();
             var column = sheet.filterColumn(object.ref);
@@ -773,7 +773,7 @@
             filterMenu.bind("action", this.onCommandRequest.bind(this));
             filterMenu.bind("action", filterMenu.close.bind(filterMenu));
 
-            filterMenu.openFor(target);
+            filterMenu.openFor(event.target);
         },
 
 ////////////////////////////////////////////////////////////////////
