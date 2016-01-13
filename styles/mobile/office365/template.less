@@ -30,6 +30,8 @@
 
 @office365-selected-color: #004578;
 
+@error: #f44336;
+
 /*listview*/
 @office365-list-background: #fff;
 @office365-list-hover-background: #fff;
@@ -268,7 +270,8 @@
     border-color: currentcolor;
 }
 
-.km-office365 .km-group-title
+.km-office365 .km-group-title,
+.km-office365 .km-list fieldset legend
 {
     background: @office365-list-group-background;
     border-color: @office365-list-group-background @office365-border-color @office365-border-color;
@@ -301,6 +304,10 @@
     border-color: #000;
 }
 
+.km-office365 .km-legend-button {
+    color: @office365-button-primary-background;
+}
+
 /* ScrollView */
 
 .km-office365 .km-pages li
@@ -310,6 +317,19 @@
 }
 
 /* Forms */
+.km-office365 .km-label-above,
+.km-office365 .km-icon-label,
+.km-office365 .km-list>li label,
+.km-office365 .km-list fieldset textarea,
+.km-office365 .km-list fieldset input,
+.km-office365 .km-checkbox-label,
+.km-office365 .km-radio-label {
+    color: @office365-list-group-text;
+}
+
+.km-office365 input.km-checkbox:checked + .km-checkbox-label:after {
+    background-color: @office365-list-group-text;
+}
 
 .km-office365 .km-list input[type=password],
 .km-office365 .km-list input[type=search],
@@ -527,4 +547,8 @@
 .km-office365 .km-rowdelete
 {
     background: @office365-button-primary-background;
+}
+
+.km-office365 label.km-required:after {
+    color: @error;
 }
