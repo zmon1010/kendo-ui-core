@@ -2525,4 +2525,16 @@
 
         equal(view.element.find("div.k-event>div").length, 0);
     });
+
+    test("normalizes start/end time options", 2, function() {
+        var startTime = new Date(2000, 10, 10, 10, 30, 0, 333);
+        var endTime = new Date(2000, 10, 10, 19, 30, 0, 111);
+        var view = setup({
+            startTime: startTime,
+            endTime: endTime
+        });
+
+        equal(view.options.startTime.getMilliseconds(), 0);
+        equal(view.options.endTime.getMilliseconds(), 0);
+    });
 })();

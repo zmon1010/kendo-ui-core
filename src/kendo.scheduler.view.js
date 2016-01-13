@@ -1064,6 +1064,8 @@ var __meta__ = { // jshint ignore:line
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
 
+            this._normalizeOptions();
+
             this._scrollbar = scrollbar();
             this._isRtl = kendo.support.isRtl(element);
             this._resizeHint = $();
@@ -1071,6 +1073,26 @@ var __meta__ = { // jshint ignore:line
             this._cellId = kendo.guid();
             this._resourcesForGroups();
             this._selectedSlots = [];
+        },
+
+        _normalizeOptions: function() {
+            var options = this.options;
+
+            if (options.startTime) {
+                options.startTime.setMilliseconds(0);
+            }
+
+            if (options.endTime) {
+                options.endTime.setMilliseconds(0);
+            }
+
+            if (options.workDayStart) {
+                options.workDayStart.setMilliseconds(0);
+            }
+
+            if (options.workDayEnd) {
+                options.workDayEnd.setMilliseconds(0);
+            }
         },
 
         _isMobile: function() {
