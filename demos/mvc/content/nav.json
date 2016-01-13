@@ -366,6 +366,7 @@
   {
     "text": "Calendar",
     "name": "calendar",
+    "new": "true",
     "api": "web/calendar",
     "documentation": {
        "kendo-ui": "getting-started/web/calendar/overview",
@@ -421,7 +422,8 @@
         "meta": {
             "kendo-ui": "This demo shows how Kendo UI Calendar allows you to disable dates.",
             "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to disable dates"
-        }
+        },
+        "new": "true"
       },
       {
         "text": "Events",
@@ -2552,7 +2554,7 @@
     "text": "Spreadsheet",
     "name": "spreadsheet",
     "pro": "true",
-    "beta": "true",
+    "new": "true",
     "api": "web/spreadsheet",
     "documentation": {
        "kendo-ui": "getting-started/web/spreadsheet/overview",
@@ -4266,7 +4268,6 @@
       {
        "text": "Column resizing",
        "url": "gantt/column-resizing",
-       "new": "true",
        "title": {
             "kendo-ui": "Columns resizing in Kendo UI Gantt control | Kendo UI Web demo",
             "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC Gantt"
