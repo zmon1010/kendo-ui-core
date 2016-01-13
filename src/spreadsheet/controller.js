@@ -634,7 +634,12 @@
                     var table = this.clipboardElement.find("table.kendo-clipboard-"+ this.clipboard._uid).detach();
                     this.clipboardElement.empty();
                     setTimeout(function() {
-                        this.clipboard.external({html: this.clipboardElement.html(), plain: window.clipboardData.getData("Text").trim()});
+                        var html = this.clipboardElement.html();
+                        var plain = window.clipboardData.getData("Text").trim();
+                        if(!html && !plain) {
+                            return;
+                        }
+                        this.clipboard.external({html: html, plain: plain});
                         this.clipboardElement.empty().append(table);
                         this._execute({
                             command: "PasteCommand",
@@ -654,6 +659,9 @@
                 }
             }
 
+            if(!html && !plain) {
+                return;
+            }
             this.clipboard.external({html: html, plain:plain});
             this._execute({
                 command: "PasteCommand",
