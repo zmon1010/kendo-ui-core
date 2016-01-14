@@ -712,7 +712,9 @@ var __meta__ = { // jshint ignore:line
                     filter:  ".k-scheduler-content td",
                     tap: function(e) {
                         if (!$(e.target).parent().hasClass("k-scheduler-header-all-day")) {
-                            var slot = that._slotByPosition(e.x.location, e.y.location);
+                            var x = e.x.location !== undefined ? e.x.location : e.x;
+                            var y = e.y.location !== undefined ? e.y.location : e.y;
+                            var slot = that._slotByPosition(x, y);
 
                             if (slot) {
                                 var resourceInfo = that._resourceBySlot(slot);
@@ -728,7 +730,9 @@ var __meta__ = { // jshint ignore:line
                     threshold: threshold,
                     filter: ".k-scheduler-header-all-day td",
                     tap: function(e) {
-                        var slot = that._slotByPosition(e.x.location, e.y.location);
+                        var x = e.x.location !== undefined ? e.x.location : e.x;
+                        var y = e.y.location !== undefined ? e.y.location : e.y;
+                        var slot = that._slotByPosition(x, y);
 
                         if (slot) {
                             var resourceInfo = that._resourceBySlot(slot);

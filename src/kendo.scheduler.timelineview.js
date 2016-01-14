@@ -285,7 +285,9 @@ var __meta__ = { // jshint ignore:line
                     threshold: threshold,
                     filter:  ".k-scheduler-content td",
                     tap: function(e) {
-                        var slot = that._slotByPosition(e.x.location, e.y.location);
+                        var x = e.x.location !== undefined ? e.x.location : e.x;
+                        var y = e.y.location !== undefined ? e.y.location : e.y;
+                        var slot = that._slotByPosition(x, y);
 
                         if (slot) {
                             var resourceInfo = that._resourceBySlot(slot);
