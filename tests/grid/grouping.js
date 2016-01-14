@@ -646,7 +646,14 @@
         grid.dataSource.group({ field: "bar" });
         grid.wrapper.find(".k-grid-content-locked tr.k-grouping-row:first > td:first a").click();
 
-        equal(grid.items().first().css("display"), "none");
+        var items = grid.items();
+
+        equal(items.eq(0).css("display"), "none");
+        equal(items.eq(1).css("display"), "none");
+
+        var relatedRows = grid.wrapper.find(".k-grid-content tr:not(.k-grouping-row)");
+        equal(relatedRows.eq(0).css("display"), "none");
+        equal(relatedRows.eq(1).css("display"), "none");
     });
 
     test("expand collapse handlers are not attached multiple times if bound through mvvm and groupable is false", 1, function() {

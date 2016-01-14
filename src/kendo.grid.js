@@ -6850,7 +6850,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (relatedGroup.length) {
-                    toHide.push(relatedGroup[0]);
+                    toHide.push(relatedGroup[idx]);
                 }
                 toHide.push(tr[0]);
             }
