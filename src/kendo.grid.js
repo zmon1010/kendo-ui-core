@@ -2643,6 +2643,8 @@ var __meta__ = { // jshint ignore:line
                 };
 
             if (editable) {
+                this.wrapper.addClass("k-editable");
+
                 var mode = that._editMode();
                 if (mode === "incell") {
                     if (editable.update !== false) {
