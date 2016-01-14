@@ -772,7 +772,6 @@
     test("agenda displays only one task for event ending at midnight", function() {
         var agenda = agendaView({ date: new Date("2013/06/07 00:00") });
 
-        debugger;
         agenda.render([
             new Event({
                 start: new Date("2013/06/06 14:00"),
