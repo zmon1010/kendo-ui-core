@@ -2,7 +2,7 @@ require 'tasks'
 
 TESTS = FileList["tests/**/*"]
 DEPS = [FileList["src/**/*.js"], FileList['styles/**/*.*'], KENDO_CONFIG_FILE, TESTS].flatten
-SUPPORTED_JQUERY_VERSIONS = ["1.11.3", "2.1.4"]
+SUPPORTED_JQUERY_VERSIONS = ["1.12.0", "2.2.0", "3.0.0-beta1"]
 JSHINT_FILES = FileList[JSON.parse(File.read("package.json"))['jshintFiles']]
 
 scripts_arg =  "--scripts=kendo.{all,aspnetmvc}.js"
