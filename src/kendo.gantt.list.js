@@ -822,6 +822,10 @@ var __meta__ = { // jshint ignore:line
                 });
             };
             var defineAction = function(coordinate) {
+                if (!dropTarget) {
+                    return;
+                }
+
                 var location = coordinate.location;
                 var className = listStyles.dropAdd;
                 var command = "add";
