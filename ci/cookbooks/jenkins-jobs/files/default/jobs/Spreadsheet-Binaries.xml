@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Uploads Bower packages			</description>
+  <description>&lt;p&gt;Builds Telerik.Web.Spreadsheet and drop it to  &lt;pre&gt;\\telerik.com\Distributions\DailyBuilds\KendoUI\BUILDS\Telerik.Web.Spreadsheet\Stable&lt;/pre&gt;&lt;/p&gt;&#xd;
+&lt;p&gt;DPL assemblies will be taken from &lt;pre&gt;\\telerik.com\Distributions\DailyBuilds\DocumentProcessing\Dev\Binaries&lt;/pre&gt;&lt;/p&gt;</description>
   <logRotator class="hudson.tasks.LogRotator">
-    <daysToKeep>-1</daysToKeep>
+    <daysToKeep>2</daysToKeep>
     <numToKeep>10</numToKeep>
-    <artifactDaysToKeep>-1</artifactDaysToKeep>
-    <artifactNumToKeep>-1</artifactNumToKeep>
+    <artifactDaysToKeep>2</artifactDaysToKeep>
+    <artifactNumToKeep>10</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -18,12 +19,12 @@
       <token></token>
       <room></room>
       <startNotification>false</startNotification>
-      <notifySuccess>true</notifySuccess>
+      <notifySuccess>false</notifySuccess>
       <notifyAborted>false</notifyAborted>
       <notifyNotBuilt>false</notifyNotBuilt>
       <notifyUnstable>false</notifyUnstable>
-      <notifyFailure>true</notifyFailure>
-      <notifyBackToNormal>true</notifyBackToNormal>
+      <notifyFailure>false</notifyFailure>
+      <notifyBackToNormal>false</notifyBackToNormal>
       <notifyRepeatedFailure>false</notifyRepeatedFailure>
       <includeTestSummary>false</includeTestSummary>
       <showCommitList>false</showCommitList>
@@ -38,7 +39,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>production</name>
+        <name>master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -49,14 +50,14 @@
         <disableSubmodules>false</disableSubmodules>
         <recursiveSubmodules>true</recursiveSubmodules>
       </hudson.plugins.git.extensions.impl.SubmoduleOption>
-      <hudson.plugins.git.extensions.impl.PerBuildTag/>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <reference></reference>
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
-  <canRoam>true</canRoam>
+  <assignedNode>windows</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
@@ -64,16 +65,13 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>xvfb-run -e xvfb-run.log -a ./build/run-build-task bower:official</command>
+      <command>BETA=true ./build/run-build-task spreadsheet:redist</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
-      <teamDomain>kendoui</teamDomain>
-      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
-      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
-      <room></room>
-    </jenkins.plugins.slack.SlackNotifier>
+    <hudson.plugins.chucknorris.CordellWalkerRecorder plugin="chucknorris@0.5">
+      <factGenerator/>
+    </hudson.plugins.chucknorris.CordellWalkerRecorder>
   </publishers>
   <buildWrappers/>
 </project>

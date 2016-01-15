@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><project>
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
   <actions/>
   <description>		</description>
-  <logRotator>
+  <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>10</daysToKeep>
     <numToKeep>20</numToKeep>
     <artifactDaysToKeep>10</artifactDaysToKeep>
@@ -9,16 +10,29 @@
   </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.5">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.8">
       <projectUrl>https://github.com/telerik/kendo-functional-tests/</projectUrl>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.7">
+      <teamDomain></teamDomain>
+      <token></token>
+      <room></room>
+      <startNotification>false</startNotification>
+      <notifySuccess>false</notifySuccess>
+      <notifyAborted>false</notifyAborted>
+      <notifyNotBuilt>false</notifyNotBuilt>
+      <notifyUnstable>false</notifyUnstable>
+      <notifyFailure>false</notifyFailure>
+      <notifyBackToNormal>false</notifyBackToNormal>
+      <notifyRepeatedFailure>false</notifyRepeatedFailure>
+      <includeTestSummary>false</includeTestSummary>
+      <showCommitList>false</showCommitList>
+    </jenkins.plugins.slack.SlackNotifier_-SlackJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@1.1.26">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.0.4">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <name/>
-        <refspec/>
         <url>git@github.com:telerik/kendo-functional-tests.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -27,56 +41,35 @@
         <name>master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
-    <disableSubmodules>false</disableSubmodules>
-    <recursiveSubmodules>false</recursiveSubmodules>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <authorOrCommitter>false</authorOrCommitter>
-    <clean>false</clean>
-    <wipeOutWorkspace>false</wipeOutWorkspace>
-    <pruneBranches>false</pruneBranches>
-    <remotePoll>false</remotePoll>
-    <ignoreNotifyCommit>false</ignoreNotifyCommit>
-    <useShallowClone>false</useShallowClone>
-    <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
-    <gitTool>Default</gitTool>
-    <browser class="hudson.plugins.git.browser.GithubWeb">
-      <url>https://github.com/telerik/kendo-functional-tests/</url>
-    </browser>
+    <browser class="hudson.plugins.git.browser.GithubWeb"/>
     <submoduleCfg class="list"/>
     <extensions>
-        <hudson.plugins.git.extensions.impl.SubmoduleOption>
-            <disableSubmodules>false</disableSubmodules>
-            <recursiveSubmodules>true</recursiveSubmodules>
-        </hudson.plugins.git.extensions.impl.SubmoduleOption>
+      <hudson.plugins.git.extensions.impl.SubmoduleOption>
+        <disableSubmodules>false</disableSubmodules>
+        <recursiveSubmodules>true</recursiveSubmodules>
+      </hudson.plugins.git.extensions.impl.SubmoduleOption>
+      <hudson.plugins.git.extensions.impl.PerBuildTag/>
     </extensions>
-    <relativeTargetDir/>
-    <reference/>
-    <excludedRegions/>
-    <excludedUsers/>
-    <gitConfigName/>
-    <gitConfigEmail/>
-    <skipTag>false</skipTag>
-    <includedRegions/>
-    <scmName/>
   </scm>
   <assignedNode>master</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers class="vector">
-    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.5">
-      <spec/>
+  <triggers>
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.8">
+      <spec></spec>
     </com.cloudbees.jenkins.GitHubPushTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>rsync -avc KendoCustom/KendoCustomSites/* /var/www/functional-tests/custom-sites/</command>
+      <command>rsync --delete -avc KendoCustom/KendoCustomSites/* /var/www/functional-tests/custom-sites/</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.plugins.chucknorris.CordellWalkerRecorder plugin="chucknorris@0.4">
+    <hudson.plugins.chucknorris.CordellWalkerRecorder plugin="chucknorris@0.5">
       <factGenerator/>
     </hudson.plugins.chucknorris.CordellWalkerRecorder>
   </publishers>

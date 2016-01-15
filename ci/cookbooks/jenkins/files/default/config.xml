@@ -288,7 +288,9 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[4]/jobNames/comparator"/>
-        <string>Upload-bundles</string>
+        <string>Spreadsheet-Binaries</string>
+        <string>Spreadsheet-Binaries-production</string>
+        <string>Upload-Bundles</string>
         <string>Upload-CDN</string>
         <string>Upload-Release-Notes</string>
       </jobNames>
@@ -312,6 +314,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[4]/jobNames/comparator"/>
+        <string>Spreadsheet-Binaries-production</string>
         <string>Upload-App-Builder-Verified-Bundle-production</string>
         <string>Upload-Bower-production</string>
         <string>Upload-Bundles-production</string>
@@ -319,8 +322,6 @@
         <string>Upload-Docs-Full</string>
         <string>Upload-Download-Builder-production</string>
         <string>Upload-NuGet-production</string>
-        <string>Upload-Production-PHASE-1</string>
-        <string>Upload-Production-PHASE-2</string>
         <string>Upload-Release-Notes-production</string>
         <string>Upload-Theme-Builder</string>
       </jobNames>

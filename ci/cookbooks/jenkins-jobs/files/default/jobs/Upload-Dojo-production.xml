@@ -38,7 +38,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>stable</name>
+        <name>master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -60,7 +60,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>npm install &amp;&amp; xvfb-run -a env MODULUS_TOKEN=099a26f9-146f-4d24-82ff-4940ce443708 node_modules/.bin/grunt deploy:remote:production</command>
+      <command>./run-build-task.sh env MODULUS_TOKEN=099a26f9-146f-4d24-82ff-4940ce443708 node_modules/.bin/grunt deploy:remote:production</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

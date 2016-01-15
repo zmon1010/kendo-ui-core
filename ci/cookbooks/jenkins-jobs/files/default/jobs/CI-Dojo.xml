@@ -63,13 +63,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>npm install; 
-cd ./editor;
-npm install;
-cd ../runner;
-npm install;
-cd ..
-xvfb-run -a node_modules/.bin/grunt ci</command>
+      <command>./run-build-task.sh node_modules/.bin/grunt ci</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>git push --force origin HEAD:stable</command>

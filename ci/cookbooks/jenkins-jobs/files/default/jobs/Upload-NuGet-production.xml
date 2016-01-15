@@ -50,6 +50,10 @@
         <recursiveSubmodules>true</recursiveSubmodules>
       </hudson.plugins.git.extensions.impl.SubmoduleOption>
       <hudson.plugins.git.extensions.impl.PerBuildTag/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>true</shallow>
+        <reference></reference>
+      </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
   <canRoam>true</canRoam>

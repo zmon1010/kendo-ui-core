@@ -37,7 +37,7 @@ See &lt;a href=&quot;https://github.com/telerik/kendo/wiki/Release-Checklist#int
     <org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteBuildConfiguration plugin="Parameterized-Remote-Trigger@2.1.3">
       <token></token>
       <remoteJenkinsName>VSX_Jenkins</remoteJenkinsName>
-      <job>Kendo_Production_Internal_AutomaticUpload</job>
+      <job>Kendo_Upload_Production_Internal</job>
       <shouldNotFailBuild>false</shouldNotFailBuild>
       <pollInterval>60</pollInterval>
       <connectionRetryLimit>5</connectionRetryLimit>

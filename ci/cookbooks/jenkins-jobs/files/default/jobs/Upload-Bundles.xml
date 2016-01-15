@@ -3,7 +3,23 @@
   <actions/>
   <description>Triggers the Kendo_Stable_AutomaticUpload on VSX Jenkins</description>
   <keepDependencies>false</keepDependencies>
-  <properties/>
+  <properties>
+    <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.7">
+      <teamDomain></teamDomain>
+      <token></token>
+      <room></room>
+      <startNotification>false</startNotification>
+      <notifySuccess>false</notifySuccess>
+      <notifyAborted>false</notifyAborted>
+      <notifyNotBuilt>false</notifyNotBuilt>
+      <notifyUnstable>false</notifyUnstable>
+      <notifyFailure>false</notifyFailure>
+      <notifyBackToNormal>false</notifyBackToNormal>
+      <notifyRepeatedFailure>false</notifyRepeatedFailure>
+      <includeTestSummary>false</includeTestSummary>
+      <showCommitList>false</showCommitList>
+    </jenkins.plugins.slack.SlackNotifier_-SlackJobProperty>
+  </properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
@@ -15,7 +31,7 @@
     <org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteBuildConfiguration plugin="Parameterized-Remote-Trigger@2.1.3">
       <token></token>
       <remoteJenkinsName>VSX_Jenkins</remoteJenkinsName>
-      <job>Kendo_Stable_AutomaticUpload</job>
+      <job>Kendo_Upload_Stable</job>
       <shouldNotFailBuild>false</shouldNotFailBuild>
       <pollInterval>10</pollInterval>
       <connectionRetryLimit>5</connectionRetryLimit>
