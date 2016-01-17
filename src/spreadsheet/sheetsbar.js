@@ -297,7 +297,7 @@
                     axis: "x",
                     animation: false,
                     ignore: "input",
-                    end: function (e) {
+                    end: function () {
                         if (this.draggable.hint) {
                             this.draggable.hint.remove();
                         }
