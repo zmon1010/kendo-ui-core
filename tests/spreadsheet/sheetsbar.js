@@ -307,7 +307,7 @@
         ok(!buttons.eq(1).is(".k-tabstrip-next:visible"));
     });
 
-    test('scrolling buttons are rendered if sheet tabs do not fit', 3, function () {
+    test('scrolling buttons are rendered if sheet tabs do not fit', 5, function () {
         var sheets = [
             {name: function() {return "Sheet1"}},
             {name: function() {return "Sheet2"}},
@@ -334,5 +334,31 @@
         equal(buttons.length, 2);
         ok(buttons.eq(0).is(".k-tabstrip-prev"));
         ok(buttons.eq(1).is(".k-tabstrip-next"));
+
+        sheetsBar.renderSheets([{name: function() {return "Sheet1"}}], 3);
+
+        ok(!buttons.eq(0).is(".k-tabstrip-prev:visible"));
+        ok(!buttons.eq(1).is(".k-tabstrip-next:visible"));
+    });
+
+    test('margin is applied correctly to the', 2, function () {
+        var generateSheets = function(namePrefix, number) {
+            var sheets = [];
+
+            for (var i = 1; i < number; i++) {
+                sheets.push({name: function() {return namePrefix + i}});
+            }
+
+            return sheets;
+        };
+
+        createSheetsBar();
+
+        sheetsBar.renderSheets(generateSheets("SheetsWithLongNames", 12), 3);
+
+        notEqual(sheetsBar._sheetsGroup().css("margin-left"), "0px");
+        sheetsBar.renderSheets(generateSheets("AnotherRandomSheets", 2), 6);
+        notEqual(sheetsBar._sheetsGroup().css("margin-left"), "0px");
+
     });
 })();
