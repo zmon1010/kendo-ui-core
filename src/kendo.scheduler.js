@@ -2529,9 +2529,11 @@ var __meta__ = { // jshint ignore:line
                         e.currentTarget.addClass("k-event-active");
                     });
 
-                    that._moveDraggable.userEvents.bind("press", function(e) {
-                        e.preventDefault();
-                    });
+                    if (!kendo.support.mobileOS.android) {
+                        that._moveDraggable.userEvents.bind("press", function(e) {
+                            e.preventDefault();
+                        });
+                    }
                 }
             }
         },
