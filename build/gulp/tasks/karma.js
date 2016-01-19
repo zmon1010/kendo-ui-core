@@ -111,7 +111,7 @@ for (var flavour in flavours) {
         gulp.task('karma-' + flavour, function(done) {
             new karma.Server(
                 Object.assign({}, defaultOptions, flavours[flavour]),
-                () => done() // preserve callback context
+                (exitCode) => done(exitCode ? "Tests failed" : null)
             ).start();
         });
     })(flavour);
