@@ -6829,7 +6829,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             level = group.find(".k-group-cell").length;
-            group.find(".k-icon").addClass("k-i-expand").removeClass("k-i-collapse");
+            group.find(".k-i-collapse").addClass("k-i-expand").removeClass("k-i-collapse");
             group.find("td[aria-expanded='true']:first").attr("aria-expanded", false);
             group = group.nextAll("tr");
 
@@ -6882,7 +6882,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             level = group.find(".k-group-cell").length;
-            group.find(".k-icon").addClass("k-i-collapse").removeClass("k-i-expand");
+            group.find(".k-i-expand").addClass("k-i-collapse").removeClass("k-i-expand");
             group.find("td[aria-expanded='false']:first").attr("aria-expanded", true);
             group = group.nextAll("tr");
 
