@@ -103,26 +103,16 @@ var flavours = {
             TESTS.afterTestFiles,
             tests
         )
-    },
-
-    legacyUnit: {
-        browsers: browserOption ? [ browserOption ] : [],
-
-        files: [].concat(
-            TESTS.beforeTestFiles,
-            allKendoFiles,
-            TESTS.afterTestFiles,
-            tests
-        ).filter(function(x) {
-            return !/(themeuilder|less)\.js|angular/i.test(x);
-        })
     }
 };
 
 for (var flavour in flavours) {
     (function(flavour) {
         gulp.task('karma-' + flavour, function(done) {
-            new karma.Server(Object.assign({}, defaultOptions, flavours[flavour]), done).start();
+            new karma.Server(
+                Object.assign({}, defaultOptions, flavours[flavour]),
+                () => done() // preserve callback context
+            ).start();
         });
     })(flavour);
 }
