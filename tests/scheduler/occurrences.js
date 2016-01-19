@@ -2473,4 +2473,32 @@
         equal(occurrence.recurrenceRule, event.recurrenceRule);
         equal(occurrence.recurrenceException, event.recurrenceException);
     });
+
+    test("Remove an exception event even when BYSETPOS is defined", function() {
+        var expDate2 = new Date(2012, 1, 1, 10, 30);
+
+        expDate2 = timezone.apply(expDate2, 0);
+
+        //SHOULD update dates here to match the test demo!
+        var exception = kendo.toString(expDate2, "yyyyMMddTHHmmssZ") + ";";
+
+        var event = new SchedulerEvent({
+            id: 1,
+            title: "Title",
+            start: new Date(2012, 0, 1, 10, 30),
+            end: new Date(2012, 0, 1, 11, 30),
+            recurrenceRule: "FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=1",
+            recurrenceException: exception
+        });
+
+        var events = occurrences(event, new Date(2012, 0, 1), new Date(2012, 2, 30));
+
+        equal(events.length, 2);
+
+        deepEqual(events[0].start, new Date(2012, 0, 2, 10, 30));
+        deepEqual(events[0].end, new Date(2012, 0, 2, 11, 30));
+
+        deepEqual(events[1].start, new Date(2012, 2, 1, 10, 30));
+        deepEqual(events[1].end, new Date(2012, 2, 1, 11, 30));
+    });
 })();

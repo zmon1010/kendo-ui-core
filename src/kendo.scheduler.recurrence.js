@@ -984,11 +984,9 @@ var __meta__ = { // jshint ignore:line
         return date;
     }
 
-    function normalizeEventsByPosition(events, start, rule) {
-        var periodEvents = events.slice(rule._startIdx);
+    function eventsByPosition(periodEvents, start, positions) {
         var periodEventsLength = periodEvents.length;
-        var positions = rule.positions;
-        var list = [];
+        var events = [];
         var position;
         var event;
 
@@ -1004,13 +1002,23 @@ var __meta__ = { // jshint ignore:line
             event = periodEvents[position];
 
             if (event && event.start >= start) {
-                list.push(event);
+                events.push(event);
             }
         }
 
-        events = events.slice(0, rule._startIdx).concat(list);
+        return events;
+    }
 
-        rule._startIdx = events.length;
+    function removeExceptionDates(periodEvents, exceptionDates, zone) {
+        var events = [];
+        var event;
+
+        for (var idx = 0; idx < periodEvents.length; idx++) {
+            event = periodEvents[idx];
+            if (!isException(exceptionDates, event.start, zone)) {
+                events.push(event);
+            }
+        }
 
         return events;
     }
@@ -1028,7 +1036,8 @@ var __meta__ = { // jshint ignore:line
             eventStart,
             count, freq,
             positions,
-            current,
+            currentIdx,
+            periodEvents,
             events = [];
 
         if (!rule) {
@@ -1036,7 +1045,7 @@ var __meta__ = { // jshint ignore:line
         }
 
         positions = rule.positions;
-        current = positions ? 0 : 1;
+        currentIdx = positions ? 0 : 1;
 
         ruleStart = rule.start;
         ruleEnd = rule.end;
@@ -1109,7 +1118,6 @@ var __meta__ = { // jshint ignore:line
 
             rule._startPeriod = new Date(start);
             rule._endPeriod = endPeriodByFreq(start, rule);
-            rule._startIdx = 0;
         }
 
         durationMS = event.duration();
@@ -1150,23 +1158,25 @@ var __meta__ = { // jshint ignore:line
                 freq.limit(start, end, rule);
 
                 if (start > rule._endPeriod) {
-                    events = normalizeEventsByPosition(events, eventStart, rule);
+                    periodEvents = eventsByPosition(events.slice(currentIdx), eventStart, positions);
+                    periodEvents = removeExceptionDates(periodEvents, exceptionDates, zone);
+                    events = events.slice(0, currentIdx).concat(periodEvents);
 
                     rule._endPeriod = endPeriodByFreq(start, rule);
 
-                    current = events.length;
+                    currentIdx = events.length;
                 }
 
-                if (count && count === current) {
+                if (count && count === currentIdx) {
                     break;
                 }
 
             } else {
-                if (count && count === current) {
+                if (count && count === currentIdx) {
                     break;
                 }
 
-                current++;
+                currentIdx += 1;
                 freq.next(start, rule);
                 freq.limit(start, end, rule);
             }
