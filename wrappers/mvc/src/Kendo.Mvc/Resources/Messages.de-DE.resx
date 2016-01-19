@@ -181,7 +181,7 @@
     <value>Numerierte Liste</value>
   </data>
   <data name="Editor_InsertUnorderedList" xml:space="preserve">
-    <value>Aufzählliste</value>
+    <value>Unsortierte Liste</value>
   </data>
   <data name="Editor_InvalidFileType" xml:space="preserve">
     <value>Die ausgewählte Datei  "{0}" ist ungültig. Unterstützte Dateitypen sind {1}.</value>
@@ -259,58 +259,58 @@
     <value>Löschen</value>
   </data>
   <data name="Filter_DateIsEqualTo" xml:space="preserve">
-    <value>Ist gleich</value>
+    <value>gleich sind</value>
   </data>
   <data name="Filter_DateIsGreaterThan" xml:space="preserve">
-    <value>Ist nach</value>
+    <value>später sind als</value>
   </data>
   <data name="Filter_DateIsGreaterThanOrEqualTo" xml:space="preserve">
-    <value>Ist nach oder gleich</value>
+    <value>gleich oder später sind als</value>
   </data>
   <data name="Filter_DateIsLessThan" xml:space="preserve">
-    <value>Ist vor</value>
+    <value>früher sind als</value>
   </data>
   <data name="Filter_DateIsLessThanOrEqualTo" xml:space="preserve">
-    <value>Ist vor oder gleich</value>
+    <value>früher oder gleich sind</value>
   </data>
   <data name="Filter_DateIsNotEqualTo" xml:space="preserve">
-    <value>Ist nicht gleich</value>
+    <value>ist nicht gleich</value>
   </data>
   <data name="Filter_EnumIsEqualTo" xml:space="preserve">
-    <value>Ist gleich</value>
+    <value>gleich sind</value>
   </data>
   <data name="Filter_EnumIsNotEqualTo" xml:space="preserve">
-    <value>Ist nicht gleich</value>
+    <value>nicht gleich sind</value>
   </data>
   <data name="Filter_Filter" xml:space="preserve">
-    <value>Filter</value>
+    <value>Filtern</value>
   </data>
   <data name="Filter_Info" xml:space="preserve">
-    <value>Zeigt Zeilen mit Werten, die</value>
+    <value>Zeilen mit Werten anzeigen, die</value>
   </data>
   <data name="Filter_IsFalse" xml:space="preserve">
-    <value>ist falsch</value>
+    <value>falsch</value>
   </data>
   <data name="Filter_IsTrue" xml:space="preserve">
-    <value>ist richtig</value>
+    <value>richtig</value>
   </data>
   <data name="Filter_NumberIsEqualTo" xml:space="preserve">
-    <value>Ist gleich</value>
+    <value>gleich sind</value>
   </data>
   <data name="Filter_NumberIsGreaterThan" xml:space="preserve">
-    <value>Ist größer als</value>
+    <value>größer als sind</value>
   </data>
   <data name="Filter_NumberIsGreaterThanOrEqualTo" xml:space="preserve">
-    <value>Ist größer als oder gleich</value>
+    <value>größer als oder gleich sind</value>
   </data>
   <data name="Filter_NumberIsLessThan" xml:space="preserve">
-    <value>Ist kleiner</value>
+    <value>kleiner sind</value>
   </data>
   <data name="Filter_NumberIsLessThanOrEqualTo" xml:space="preserve">
-    <value>Ist kleiner als oder gleich</value>
+    <value>kleiner als oder gleich sind</value>
   </data>
   <data name="Filter_NumberIsNotEqualTo" xml:space="preserve">
-    <value>Ist nicht gleich</value>
+    <value>nicht gleich sind</value>
   </data>
   <data name="Filter_Or" xml:space="preserve">
     <value>Oder</value>
@@ -319,22 +319,22 @@
     <value>-Wählen Sie-</value>
   </data>
   <data name="Filter_StringContains" xml:space="preserve">
-    <value>Beinhaltet</value>
+    <value>beinhalten</value>
   </data>
   <data name="Filter_StringDoesNotContain" xml:space="preserve">
-    <value>Beinhaltet nicht</value>
+    <value>nicht beinhalten</value>
   </data>
   <data name="Filter_StringEndsWith" xml:space="preserve">
-    <value>Endet mit</value>
+    <value>enden mit</value>
   </data>
   <data name="Filter_StringIsEqualTo" xml:space="preserve">
-    <value>Ist gleich</value>
+    <value>gleich sind</value>
   </data>
   <data name="Filter_StringIsNotEqualTo" xml:space="preserve">
-    <value>Ist nicht gleich</value>
+    <value>nicht gleich sind</value>
   </data>
   <data name="Filter_StringStartsWith" xml:space="preserve">
-    <value>Beginnt mit</value>
+    <value>beginnen mit</value>
   </data>
   <data name="Grid_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
@@ -370,28 +370,28 @@
     <value>Absteigend sortieren</value>
   </data>
   <data name="Grid_Update" xml:space="preserve">
-    <value>Aktualisiere</value>
+    <value>Aktualisieren</value>
   </data>
   <data name="Group_Empty" xml:space="preserve">
     <value>Ziehen Sie eine Spaltenüberschrift hierher, um nach dieser Spalte zu gruppieren</value>
   </data>
   <data name="Pager_Display" xml:space="preserve">
-    <value>Anzeigen der Elemente {0} - {1} von {2}</value>
+    <value>Einträge {0} - {1} von {2}</value>
   </data>
   <data name="Pager_Empty" xml:space="preserve">
     <value>keine Daten</value>
   </data>
   <data name="Pager_First" xml:space="preserve">
-    <value>Gehen Sie zur ersten Seite</value>
+    <value>Zur ersten Seite</value>
   </data>
   <data name="Pager_ItemsPerPage" xml:space="preserve">
     <value>Elemente pro Seite</value>
   </data>
   <data name="Pager_Last" xml:space="preserve">
-    <value>Gehen Sie zur letzten Seite</value>
+    <value>Zur letzten Seite</value>
   </data>
   <data name="Pager_Next" xml:space="preserve">
-    <value>Gehen Sie zur nächsten Seite</value>
+    <value>Zur nächsten Seite</value>
   </data>
   <data name="Pager_Of" xml:space="preserve">
     <value>von {0}</value>
@@ -400,7 +400,7 @@
     <value>Seite</value>
   </data>
   <data name="Pager_Previous" xml:space="preserve">
-    <value>Gehen Sie zur vorherigen Seite</value>
+    <value>Zur vorherigen Seite</value>
   </data>
   <data name="Pager_Refresh" xml:space="preserve">
     <value>Aktualisieren</value>
@@ -424,7 +424,7 @@
     <value>nicht erfolgreich</value>
   </data>
   <data name="Upload_StatusUploaded" xml:space="preserve">
-    <value>hochgeladet</value>
+    <value>hochgeladen</value>
   </data>
   <data name="Upload_StatusUploading" xml:space="preserve">
     <value>hochladen</value>
@@ -661,13 +661,13 @@
     <value>Abbrechen</value>
   </data>
   <data name="Grid_ColumnSettings" xml:space="preserve">
-    <value>Column Einstellungen</value>
+    <value>Einstellungen zu Spalten</value>
   </data>
   <data name="Grid_ConfirmDelete" xml:space="preserve">
     <value>Löschen</value>
   </data>
   <data name="Grid_Done" xml:space="preserve">
-    <value>Geschehen</value>
+    <value>Erledigt</value>
   </data>
   <data name="Scheduler_Recurrence_Editor_Weekdays_Day" xml:space="preserve">
     <value>Tag</value>
@@ -679,13 +679,13 @@
     <value>Tag am Wochenende</value>
   </data>
   <data name="Editor_DropFilesHere" xml:space="preserve">
-    <value>drop files here to upload</value>
+    <value>Dateien hier fallen lassen zum hochladen</value>
   </data>
   <data name="Upload_HeaderStatusUploaded" xml:space="preserve">
-    <value>Done</value>
+    <value>Hochgeladen</value>
   </data>
   <data name="Upload_HeaderStatusUploading" xml:space="preserve">
-    <value>Uploading...</value>
+    <value>Hochladen...</value>
   </data>
   <data name="Editor_Formatting" xml:space="preserve">
     <value>Format</value>
@@ -697,16 +697,16 @@
     <value>Sperren</value>
   </data>
   <data name="Grid_Unlock" xml:space="preserve">
-    <value>Aufschließen</value>
+    <value>Entsperren</value>
   </data>
   <data name="Editor_ViewHtml" xml:space="preserve">
     <value>View HTML</value>
   </data>
   <data name="Editor_DialogUpdate" xml:space="preserve">
-    <value>Update</value>
+    <value>Aktualisieren</value>
   </data>
   <data name="Scheduler_Editor_NoTimezone" xml:space="preserve">
-    <value>No timezone</value>
+    <value>Keine Zeitzone</value>
   </data>
   <data name="Scheduler_View_WorkWeek" xml:space="preserve">
     <value>Arbeitswoche</value>
@@ -715,55 +715,55 @@
     <value>Ends</value>
   </data>
   <data name="Editor_InsertFile" xml:space="preserve">
-    <value>Insert file</value>
+    <value>Datei einfügen</value>
   </data>
   <data name="PivotConfigurator_Columns" xml:space="preserve">
-    <value>Drop Column Fields Here</value>
+    <value>Hier Spaltenfelder fallen lassen</value>
   </data>
   <data name="PivotConfigurator_ColumnsLabel" xml:space="preserve">
-    <value>Columns</value>
+    <value>Spaltenbezeichnung</value>
   </data>
   <data name="PivotConfigurator_FieldsLabel" xml:space="preserve">
-    <value>Fields</value>
+    <value>Feldbezeichnung</value>
   </data>
   <data name="PivotConfigurator_Measures" xml:space="preserve">
-    <value>Drop Data Fields Here</value>
+    <value>Hier Datenfelder fallen lassen</value>
   </data>
   <data name="PivotConfigurator_MeasuresLabel" xml:space="preserve">
-    <value>Measures</value>
+    <value>Einheiten</value>
   </data>
   <data name="PivotConfigurator_Rows" xml:space="preserve">
-    <value>Drop Rows Fields Here</value>
+    <value>Hier Zeilenfelder fallen lassen</value>
   </data>
   <data name="PivotConfigurator_RowsLabel" xml:space="preserve">
-    <value>Rows</value>
+    <value>Zeilen</value>
   </data>
   <data name="PivotFieldMenu_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="PivotFieldMenu_Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>Löschen</value>
   </data>
   <data name="PivotFieldMenu_Filter" xml:space="preserve">
-    <value>Filter</value>
+    <value>Filtern</value>
   </data>
   <data name="PivotFieldMenu_FilterFields" xml:space="preserve">
-    <value>Fields Filter</value>
+    <value>Filterkriterien</value>
   </data>
   <data name="PivotFieldMenu_Include" xml:space="preserve">
-    <value>Include Fields...</value>
+    <value>Felder einbeziehen...</value>
   </data>
   <data name="PivotFieldMenu_Info" xml:space="preserve">
-    <value>Show items with value that:</value>
+    <value>Einträge anzeigen mit Werten, die</value>
   </data>
   <data name="PivotFieldMenu_Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="PivotFieldMenu_Title" xml:space="preserve">
-    <value>Fields to include</value>
+    <value>Felder aufnehmen</value>
   </data>
   <data name="Scheduler_DefaultRowText" xml:space="preserve">
-    <value>All events</value>
+    <value>Alle Termine</value>
   </data>
   <data name="Grid_Excel" xml:space="preserve">
     <value>Export nach Excel</value>
@@ -772,36 +772,36 @@
     <value>Keine Aufzeichnungen zur Verfügung.</value>
   </data>
   <data name="Pager_AllPages" xml:space="preserve">
-    <value>All</value>
+    <value>Alle</value>
   </data>
   <data name="Filter_StringIsEmpty" xml:space="preserve">
-    <value>Is empty</value>
+    <value>leer sind</value>
   </data>
   <data name="Filter_StringIsNotEmpty" xml:space="preserve">
-    <value>Is not empty</value>
+    <value>nicht leer sind</value>
   </data>
   <data name="Filter_StringIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>ist angegeben </value>
   </data>
   <data name="Filter_StringIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>ist nicht angegeben</value>
   </data>
   <data name="Filter_NumberIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>ist angegeben</value>
   </data>
   <data name="Filter_NumberIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>ist nicht angegeben</value>
   </data>
   <data name="Filter_DateIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>ist angegeben</value>
   </data>
   <data name="Filter_DateIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>ist nicht angegeben</value>
   </data>
   <data name="Filter_EnumIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>ist angegeben</value>
   </data>
   <data name="Filter_EnumIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>ist nicht angegeben</value>
   </data>
 </root>
