@@ -1117,7 +1117,7 @@
         exception = scheduler.dataSource.at(1);
 
         ok(origin.recurrenceException);
-        equal(origin.recurrenceException, kendo.toString(exception.start, "yyyyMMddTHHmmssZ") + ";");
+        equal(origin.recurrenceException, kendo.toString(exception.start, "yyyyMMddTHHmmssZ"));
     });
 
     test("creating exception sets event exception property", function() {
@@ -1139,7 +1139,7 @@
         exception = scheduler.dataSource.at(1);
 
         ok(origin.recurrenceException);
-        equal(origin.recurrenceException, kendo.toString(kendo.timezone.apply(exception.start, 0), "yyyyMMddTHHmmssZ") + ";");
+        equal(origin.recurrenceException, kendo.toString(kendo.timezone.apply(exception.start, 0), "yyyyMMddTHHmmssZ"));
     });
 
     test("created exception has no id and recurrenceRule property", function() {
@@ -1191,8 +1191,8 @@
 
         scheduler.saveEvent();
 
-        var result = kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(1).start, 0), "yyyyMMddTHHmmssZ") + ";" +
-                     kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(2).start, 0), "yyyyMMddTHHmmssZ") + ";";
+        var result = kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(1).start, 0), "yyyyMMddTHHmmssZ") + "," +
+                     kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(2).start, 0), "yyyyMMddTHHmmssZ");
 
         equal(origin.recurrenceException, result);
     });
@@ -1246,7 +1246,7 @@
         exception = scheduler.dataSource.at(1);
 
         ok(origin.recurrenceException);
-        equal(origin.recurrenceException, kendo.toString(kendo.timezone.apply(exception.start, 0), "yyyyMMddTHHmmssZ") + ";");
+        equal(origin.recurrenceException, kendo.toString(kendo.timezone.apply(exception.start, 0), "yyyyMMddTHHmmssZ"));
     });
 
     test("Normalize model if create exception from origin", function() {
@@ -1266,7 +1266,7 @@
         exception = scheduler.dataSource.at(1);
 
         ok(origin.recurrenceException);
-        equal(origin.recurrenceException, kendo.toString(kendo.timezone.apply(exception.start, 0), "yyyyMMddTHHmmssZ") + ";");
+        equal(origin.recurrenceException, kendo.toString(kendo.timezone.apply(exception.start, 0), "yyyyMMddTHHmmssZ"));
         equal(origin.id, exception.recurrenceId);
     });
 
@@ -1329,7 +1329,7 @@
         var date = new Date(2013, 10, 10, 15, 0, 0),
             exceptionDate = new Date(2013, 10, 12, 15, 0, 0),
             exceptionDate = kendo.timezone.apply(exceptionDate, 0),
-            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ") + ";";
+            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ");
 
         var scheduler = setup({
             views: ["week"],
@@ -1352,7 +1352,7 @@
         var date = new Date(2013, 10, 10, 15, 0, 0),
             exceptionDate = new Date(2013, 10, 12, 15, 0, 0),
             exceptionDate = kendo.timezone.apply(exceptionDate, 0),
-            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ") + ";";
+            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ");
 
         var scheduler = setup({
             views: ["week"],
@@ -1373,7 +1373,7 @@
         var date = new Date(2013, 10, 10, 15, 0, 0),
             exceptionDate = new Date(2013, 10, 12, 15, 0, 0),
             exceptionDate = kendo.timezone.apply(exceptionDate, 0),
-            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ") + ";";
+            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ");
 
         var scheduler = setup({
             views: ["week"],
@@ -1398,7 +1398,7 @@
         var date = new Date(2013, 10, 10, 15, 0, 0),
             exceptionDate = new Date(2013, 10, 12, 15, 0, 0),
             exceptionDate = kendo.timezone.apply(exceptionDate, 0),
-            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ") + ";";
+            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ");
 
         var scheduler = setup({
             views: ["week"],
@@ -1420,7 +1420,7 @@
     test("delete created exception", function() {
         var date = new Date(2013, 10, 10, 15, 0, 0),
             nextDate = new Date(2013, 10, 11, 15, 0, 0),
-            recurrenceException = kendo.toString(kendo.timezone.apply(nextDate, 0), "yyyyMMddTHHmmssZ") + ";";
+            recurrenceException = kendo.toString(kendo.timezone.apply(nextDate, 0), "yyyyMMddTHHmmssZ");
 
         var scheduler = setup({
             views: ["week"],
@@ -1449,7 +1449,7 @@
     test("deleting series wll delete all exceptions", function() {
         var date = new Date(2013, 10, 10, 15, 0, 0),
             nextDate = new Date(2013, 10, 11, 15, 0, 0),
-            recurrenceException = kendo.toString(kendo.timezone.apply(nextDate, 0), "yyyyMMddTHHmmssZ") + ";";
+            recurrenceException = kendo.toString(kendo.timezone.apply(nextDate, 0), "yyyyMMddTHHmmssZ");
 
         var scheduler = setup({
             views: ["week"],
@@ -1476,7 +1476,7 @@
     test("recurrenceRule is persisted after delete cancellation", function() {
         var date = new Date(2013, 10, 10, 15, 0, 0),
             nextDate = new Date(2013, 10, 11, 15, 0, 0),
-            recurrenceException = kendo.toString(kendo.timezone.apply(nextDate, 0), "yyyyMMddTHHmmssZ") + ";";
+            recurrenceException = kendo.toString(kendo.timezone.apply(nextDate, 0), "yyyyMMddTHHmmssZ");
 
         var scheduler = setup({
             views: ["week"],

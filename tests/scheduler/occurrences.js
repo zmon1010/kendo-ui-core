@@ -2416,10 +2416,9 @@
             recurrenceRule: "EXDATE:" + exception + " FREQ=DAILY"
         });
 
-        exception = exception.replace(",", ";");
         event.expand();
 
-        equal(event.recurrenceException, exception + ";");
+        equal(event.recurrenceException, exception);
     });
 
     test("Remove event which exist in EXDATE rule", function() {

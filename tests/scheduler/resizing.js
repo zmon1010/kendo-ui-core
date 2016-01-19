@@ -1530,7 +1530,7 @@
         equal(scheduler.dataSource.at(1).start.getMinutes(), 0);
         equal(scheduler.dataSource.at(1).start.getDate(), 3);
         equal(scheduler.dataSource.at(1).start.getMonth(), 5);
-        equal(scheduler.dataSource.at(0).recurrenceException, kendo.toString(kendo.timezone.apply(new Date("2013/6/3 11:30"), 0), "yyyyMMddTHHmmssZ") + ";");
+        equal(scheduler.dataSource.at(0).recurrenceException, kendo.toString(kendo.timezone.apply(new Date("2013/6/3 11:30"), 0), "yyyyMMddTHHmmssZ"));
     });
 
     test("dragging the west handle of the occurrence creates an exception if the edit occurrence button is clicked", function() {

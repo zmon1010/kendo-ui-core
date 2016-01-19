@@ -1308,7 +1308,7 @@
         var event = dataSource.insert(1, dataSource.data()[0]);
         var head = dataSource.data()[0];
 
-        equal(head.recurrenceException, kendo.toString(kendo.timezone.apply(event.start, 0), "yyyyMMddTHHmmssZ") + ";");
+        equal(head.recurrenceException, kendo.toString(kendo.timezone.apply(event.start, 0), "yyyyMMddTHHmmssZ"));
     });
 
     test("SchedulerDataSource remove method removes recurrence head and its exceptions", function() {
@@ -1359,7 +1359,7 @@
 
     test("SchedulerDataSource remove method removes exception event and preserves recurrenceException", function() {
         var date = new Date(2013, 1, 1, 16, 30);
-        var recurrenceException = kendo.toString(kendo.timezone.apply(date, "Etc/UTC"), "yyyyMMddTHHmmssZ") + ";";
+        var recurrenceException = kendo.toString(kendo.timezone.apply(date, "Etc/UTC"), "yyyyMMddTHHmmssZ");
         var dataSource = createDataSource([
             new SchedulerEvent({
                 id: 1,
@@ -1429,7 +1429,7 @@
 
     test("SchedulerDataSource cancelChanges method update recurrenceException field of the head", function() {
         var date = new Date(2013, 1, 2, 16, 30);
-        var recurrenceException = kendo.toString(kendo.timezone.apply(date, "Etc/UTC"), "yyyyMMddTHHmmssZ") + ";";
+        var recurrenceException = kendo.toString(kendo.timezone.apply(date, "Etc/UTC"), "yyyyMMddTHHmmssZ");
         var dataSource = createDataSource([
             {
                 id: 1,
@@ -1485,7 +1485,7 @@
 
     test("SchedulerDataSource pushState method updates recurrence head if an occurrence is added", function() {
         var date = new Date(2013, 1, 1, 16, 30);
-        var recurrenceException = kendo.toString(kendo.timezone.apply(date, "Etc/UTC"), "yyyyMMddTHHmmssZ") + ";";
+        var recurrenceException = kendo.toString(kendo.timezone.apply(date, "Etc/UTC"), "yyyyMMddTHHmmssZ");
         var dataSource = createDataSource([
             {
                 id: 1,

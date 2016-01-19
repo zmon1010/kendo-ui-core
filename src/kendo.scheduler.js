@@ -78,6 +78,7 @@ var __meta__ = { // jshint ignore:line
         EDIT = "edit",
         valueStartEndBoundRegex = /(?:value:start|value:end)(?:,|$)/,
         TODAY = getDate(new Date()),
+        EXCEPTION_SEPARATOR = ",",
         RECURRENCE_EXCEPTION = "recurrenceException",
         DELETECONFIRM = "Are you sure you want to delete this event?",
         DELETERECURRING = "Do you want to delete only this event occurrence or the whole series?",
@@ -729,8 +730,9 @@ var __meta__ = { // jshint ignore:line
 
                 if (head) {
                     var start = model.start;
+                    var replaceRegExp = new RegExp("(\\" + EXCEPTION_SEPARATOR + "?)" + recurrence.toExceptionString(start, this.reader.timezone));
 
-                    head.set(RECURRENCE_EXCEPTION, head.recurrenceException.replace(recurrence.toExceptionString(start, this.reader.timezone), ""));
+                    head.set(RECURRENCE_EXCEPTION, head.recurrenceException.replace(replaceRegExp, ""));
                 }
             }
         },
@@ -740,9 +742,11 @@ var __meta__ = { // jshint ignore:line
             var zone = this.reader.timezone;
             var head = this.get(model.recurrenceId);
             var recurrenceException = head.recurrenceException || "";
+            var newException;
 
             if (!recurrence.isException(recurrenceException, start, zone)) {
-                head.set(RECURRENCE_EXCEPTION, recurrenceException + recurrence.toExceptionString(start, zone));
+                newException = recurrence.toExceptionString(start, zone);
+                head.set(RECURRENCE_EXCEPTION, recurrenceException + (recurrenceException && newException ? EXCEPTION_SEPARATOR : "") + newException);
             }
         }
     });

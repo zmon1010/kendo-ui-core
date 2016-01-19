@@ -869,7 +869,7 @@ var __meta__ = { // jshint ignore:line
             dates = [];
 
         if (exceptions) {
-            exceptions = exceptions.split(";");
+            exceptions = exceptions.split(exceptions.indexOf(";") !== -1 ? ";" : ",");
             length = exceptions.length;
 
             for (; idx < length; idx++) {
@@ -910,7 +910,7 @@ var __meta__ = { // jshint ignore:line
             result[idx] = kendo.toString(date, RECURRENCE_DATE_FORMAT);
         }
 
-        return result.join(";") + ";";
+        return result.join(",");
     }
 
     function startPeriodByFreq(start, rule) {
