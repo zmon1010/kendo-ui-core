@@ -77,7 +77,7 @@
     test("extends link lists", function() {
         var element = fromHtml("<ul><li><a href='#foo'>foo</a></li></ul>");
 
-        equal(element.find("a.k-in").length, 1);
+        equal(element.find("a.k-in.k-link").length, 1);
     });
 
     test("extends link lists with sprites", function() {
@@ -216,7 +216,15 @@
             { text: "foo", url: "http://kendoui.com/" }
         ]);
 
-        equal(treeview.find("a.k-in[href='http://kendoui.com/']").length, 1);
+        equal(treeview.find("a.k-in.k-link[href='http://kendoui.com/']").length, 1);
+    });
+
+    test("does not render link class on non-links", function() {
+        treeview.kendoTreeView([
+            { text: "foo" }
+        ]);
+
+        equal(treeview.find(".k-link").length, 0);
     });
 
     test("renders disabled state on disabled items", function() {

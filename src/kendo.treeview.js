@@ -159,7 +159,7 @@ var __meta__ = { // jshint ignore:line
         }
 
         if (!innerWrapper.length) {
-            innerWrapper = node.children("a").eq(0).addClass("k-in");
+            innerWrapper = node.children("a").eq(0).addClass("k-in k-link");
 
             if (!innerWrapper.length) {
                 innerWrapper = $("<span class='k-in' />");
@@ -495,8 +495,12 @@ var __meta__ = { // jshint ignore:line
 
                     return result;
                 },
-                textClass: function(item) {
+                textClass: function(item, isLink) {
                     var result = "k-in";
+
+                    if (isLink) {
+                        result += " k-link";
+                    }
 
                     if (item.enabled === false) {
                         result += " k-state-disabled";
@@ -579,7 +583,7 @@ var __meta__ = { // jshint ignore:line
                         "# var tag = url ? 'a' : 'span'; #" +
                         "# var textAttr = url ? ' href=\\'' + url + '\\'' : ''; #" +
 
-                        "<#=tag#  class='#= r.textClass(item) #'#= textAttr #>" +
+                        "<#=tag# class='#= r.textClass(item, !!url) #'#= textAttr #>" +
                             "#= r.itemContent(data) #" +
                         "</#=tag#>" +
                     "</div>"
@@ -1256,9 +1260,11 @@ var __meta__ = { // jshint ignore:line
             wrapper.removeClass("k-top k-mid k-bot")
                    .addClass(templates.cssClass(groupData, nodeData));
 
-            // span
-            wrapper.children(".k-in").removeClass("k-in k-state-default k-state-disabled")
-                .addClass(templates.textClass(nodeData));
+            // span / a
+            var textWrap = wrapper.children(".k-in");
+            var isLink = textWrap[0] && textWrap[0].nodeName.toLowerCase() == "a";
+            textWrap.removeClass("k-in k-link k-state-default k-state-disabled")
+                .addClass(templates.textClass(nodeData, isLink));
 
             // toggle button
             if (group.length || node.attr("data-hasChildren") == "true") {
