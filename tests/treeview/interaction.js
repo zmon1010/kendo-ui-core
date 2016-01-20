@@ -1222,6 +1222,21 @@
         equal(treeview.find(".k-state-focused").text(), "bar");
     });
 
+    test("select method moves focus to item", function() {
+        createTreeView({
+            dataSource: [
+                { text: "foo" },
+                { text: "bar" }
+            ]
+        });
+
+        treeview.find(".k-in:first").trigger("mousedown");
+        treeviewObject.select(treeview.find(".k-in:last"));
+        treeview.focus();
+
+        equal(treeview.find(".k-state-focused").text(), "bar");
+    });
+
     test("failed requests remove loading icon", function() {
         createTreeView({
             dataSource: {

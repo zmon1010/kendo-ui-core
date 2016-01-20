@@ -1715,6 +1715,7 @@ var __meta__ = { // jshint ignore:line
 
             if (node.length) {
                 that.dataItem(node).set("selected", true);
+                that._clickTarget = node;
             }
 
             that.trigger(CHANGE);
