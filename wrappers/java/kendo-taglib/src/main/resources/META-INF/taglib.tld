@@ -15977,14 +15977,14 @@ units are "mm", "cm", "in" and "pt" (default).</description>
     </tag>
 
     <tag>
-        <description>Defines the connectors the shape owns.You can easily define your own custom connectors or mix-match with the above defined custom connectors.Example - custom shape with custom connectorsThe following defines a custom shape with connectors adapted to the shape's outline. Note in particular the various helpful methods (right(), left(), top()) to define positions relative to the shape.</description>
+        <description>Defines the connectors the shape owns.You can define your own custom connectors or use the predefined types.</description>
         <name>diagram-shapeDefaults-connectors</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Defines the connectors the shape owns.You can easily define your own custom connectors or mix-match with the above defined custom connectors.Example - custom shape with custom connectorsThe following defines a custom shape with connectors adapted to the shape's outline. Note in particular the various helpful methods (right(), left(), top()) to define positions relative to the shape.</description>
+        <description>Defines the connectors the shape owns.You can define your own custom connectors or use the predefined types.</description>
         <name>diagram-shapeDefaults-connector</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorTag</tag-class>
 
