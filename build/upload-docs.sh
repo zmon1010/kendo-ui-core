@@ -31,11 +31,18 @@ put default.json
 mirror --reverse --delete $MIRROR_OPTIONS --no-perms --verbose .
 "
 
+function log {
+    echo "[$(date +%T)] $1"
+}
+
+log "Generating documentation"
 # Generate docs
 (cd docs && bundle --without development --path ~/gems && bundle exec jekyll build)
 
 # Clean-up generated wrappers
 rm -rf docs/api/wrappers/*
+
+log "Uploading documentation to $HOST"
 
 lftp -e "
 $HELLO
@@ -50,3 +57,5 @@ $MIRROR
 bye
 " &
 wait
+
+log "Done"
