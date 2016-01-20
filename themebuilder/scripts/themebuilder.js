@@ -505,12 +505,7 @@
                 }
 
                 if (format == "string") {
-                    result =
-                        "// Kendo UI theme for data visualization widgets\n" +
-                        "// Use as theme: 'newTheme' in configuration options (or change the name)\n" +
-                        "kendo.dataviz.ui.registerTheme('newTheme', " +
-                            JSON.stringify(result, null, 4) +
-                        ");";
+                    result = JSON.stringify(result, null, 4);
                 }
 
                 callback(result);
@@ -519,7 +514,7 @@
             },
 
             sources: function() {
-                return [ [ "kendo.custom.js", this.source("string") ] ];
+                return [ [ "kendo.custom.dataviz.json", this.source("string") ] ];
             },
 
             applyTheme: function(targetDocument) {
