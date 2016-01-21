@@ -1,5 +1,12 @@
 (function(f, define){
-    define([ "./kendo.data", "./kendo.userevents", "./kendo.dataviz.core", "./kendo.drawing", "./kendo.dataviz.themes" ], f);
+    define([
+        "./kendo.color",
+        "./kendo.data",
+        "./kendo.dataviz.core",
+        "./kendo.dataviz.themes",
+        "./kendo.drawing",
+        "./kendo.userevents"
+    ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
