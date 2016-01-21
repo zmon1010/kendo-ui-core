@@ -18,6 +18,10 @@
         ok(measure("Foo").width > measure("Fo").width);
     });
 
+    test("empty text measures as 0", function() {
+        equal(measure("").width, 0);
+    });
+
     test("width varies with font size", function() {
         ok(measure("Foo", { font: "12px Arial" }).width >
            measure("Foo", { font: "10px Arial" }).width);

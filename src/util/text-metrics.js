@@ -77,6 +77,10 @@
                       "padding: 0 !important; margin: 0 !important; border: 0 !important;" +
                       "line-height: normal !important; visibility: hidden !important; white-space: nowrap!important;' />")[0];
 
+    function zeroSize() {
+        return { width: 0, height: 0, baseline: 0 };
+    }
+
     var TextMetrics = Class.extend({
         init: function(options) {
             this._cache = new LRUCache(1000);
@@ -88,6 +92,10 @@
         },
 
         measure: function(text, style, box) {
+            if (!text) {
+                return zeroSize();
+            }
+
             var styleKey = util.objectKey(style),
                 cacheKey = util.hashKey(text + styleKey),
                 cachedResult = this._cache.get(cacheKey);
@@ -96,8 +104,7 @@
                 return cachedResult;
             }
 
-            var size = { width: 0, height: 0, baseline: 0 };
-
+            var size = zeroSize();
             var measureBox = box ? box : defaultMeasureBox;
             var baselineMarker = this._baselineMarker().cloneNode(false);
 
