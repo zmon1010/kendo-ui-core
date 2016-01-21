@@ -11040,7 +11040,8 @@ var __meta__ = { // jshint ignore:line
 
         updateAxisOptions: function(axis, options) {
             var vertical = axis.options.vertical;
-            var index = indexOf(axis, [].concat(vertical ? this.axisY : this.axisX));
+            var axes = this.groupAxes(this.panes);
+            var index = indexOf(axis, vertical ? axes.y : axes.x);
             var axisOptions = ([].concat(vertical ? this.options.yAxis : this.options.xAxis))[index];
             deepExtend(axisOptions, options);
         }
@@ -13748,6 +13749,7 @@ var __meta__ = { // jshint ignore:line
         WaterfallChart: WaterfallChart,
         WaterfallSegment: WaterfallSegment,
         XYPlotArea: XYPlotArea,
+        MousewheelZoom: MousewheelZoom,
 
         addDuration: addDuration,
         areNumbers: areNumbers,
