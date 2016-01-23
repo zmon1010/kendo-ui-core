@@ -400,7 +400,7 @@ For additional information check the [<%= name %>](<%= owner.api_link %>#events-
     <%= owner.variable %>-><%= php_name %>('on<%= name.pascalize %>');
     ?>
 
-#### Example - using [\\Kendo\\JavaScriptFunction](/api/php/kendo/javascriptfunction)
+#### Example - using \\Kendo\\JavaScriptFunction
 
     <?php
     <%= owner.variable %> = <%= owner.value %>;
