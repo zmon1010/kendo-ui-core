@@ -911,6 +911,28 @@
             grid.select(grid.items().eq(0));
     });
 
+    ngTest("Grid k-on-change sets data items to undefined when usnelect", 3, function(){
+        angular.module("kendo.tests").controller("mine", function($scope) {
+                $scope.options = {
+                    dataSource: fixtureData,
+                    columns: [ { field: "text" }, { field: "id" } ],
+                    selectable: true
+                };
+                $scope.check = function(kendoEvent, selected, data, dataItem) {
+                    var grid = $scope.grid;
+                    equal(kendoEvent.sender, grid);
+                    equal(selected.sel, undefined);
+                    equal(data, undefined);
+                    start();
+                };
+        });
+        $("<div ng-controller=mine><div kendo-grid='grid' k-options='options' k-on-change='check(kendoEvent, { sel: selected }, data, dataItem)'></div></div>").appendTo(QUnit.fixture);
+        }, function () {
+            stop();
+            var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
+            grid.selectable.trigger("change");
+    });
+
     ngTest("Grid (multiple selection) k-on-change puts the right information in scope", 4, function(){
         angular.module("kendo.tests").controller("mine", function($scope) {
             $scope.options = {
