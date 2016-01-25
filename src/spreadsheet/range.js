@@ -650,6 +650,10 @@
             }
 
             this.forEachRow(function(row) {
+                //check the sheet boundries first
+                if(row.topLeft().row >= row.sheet()._rows._count) {
+                   return;
+                }
                 var maxHeight = row.sheet().rowHeight(row.topLeft().row);
                 row.forEachCell(function(rowIndex, colIndex, cell) {
                     var cellRange = sheet.range(rowIndex, colIndex);
