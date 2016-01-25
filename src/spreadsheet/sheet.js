@@ -1161,11 +1161,11 @@
         },
 
         _compileValidation: function(row, col, validation) {
-            if (validation.from) {
+            if (validation.from !== null || validation.from !== undefined) {
                 validation.from = (validation.from + "").replace(/^=/, "");
             }
 
-            if (validation.to) {
+            if (validation.to !== null || validation.to !== undefined) {
                 validation.to = (validation.to + "").replace(/^=/, "");
             }
 

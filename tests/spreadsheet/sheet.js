@@ -578,6 +578,28 @@
         equal(validation.to, 20);
     });
 
+    test("validation method accepts 0 as value for from/to", 5, function() {
+        sheet.range("A1").validation({
+            from: 0,
+            to: 0,
+            comparerType: "lessThan",
+            dataType: "number",
+            type:"reject",
+            allowNulls: true
+        });
+
+        var range = sheet.range("A1");
+        var validation = range.validation();
+        var validationState = range.getState()["0,0"].validation;
+
+        equal(validation.comparerType, "lessThan");
+        equal(validation.from, 0);
+        equal(validation.to, 0);
+
+        ok(validationState.from instanceof kendo.spreadsheet.calc.runtime.Formula);
+        ok(validationState.to instanceof kendo.spreadsheet.calc.runtime.Formula);
+    });
+
     module("Sheet trimming", {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
