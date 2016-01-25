@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Untitled</title>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="./loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js"
+      ]);
+    </script>
+    <style>
+      body, input, button, select {
+        font: 12px "DejaVu Serif";
+      }
+    </style>
+  </head>
+  <body>
+    <div id="fw1" style="max-width: 40em">
+      <div>
+        <table>
+          <tr>
+            <td>Input
+            </td>
+            <td>
+              <input type="text" value="foo" style="text-align: center" />
+            </td>
+          </tr>
+          <tr>
+            <td>aasdasdasdasdsad
+            </td>
+            <td>
+              <input type="text" value="bar" style="text-align: right" />
+            </td>
+          </tr>
+          <tr>
+            <td>Telerik
+            </td>
+            <td>
+              <input type="text" />
+
+            </td>
+          </tr>
+        </table>
+
+      </div>
+      <div class="fwfooterleft">
+        <input type="button" value="Button1" />
+      </div>
+      <div class="fwfooterright" style="text-align: center;">
+        Foo Bar
+        <input type="text" value="test" />
+        <input type="button" value="Button2" />
+      </div>
+    </div>
+    <button onclick="draw()">Draw</button>
+    <script>
+      function draw(){
+        var draw = kendo.drawing;
+
+        draw.drawDOM($("#fw1"))
+          .then(function(root) {
+          return draw.exportPDF(root);
+        })
+          .done(function(data) {
+          kendo.saveAs({
+            dataURI: data,
+            fileName: "test.pdf"
+          });
+        });
+      };
+    </script>
+  </body>
+</html>

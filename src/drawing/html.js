@@ -2381,7 +2381,13 @@
         p.insertBefore(el, element);
         el.scrollLeft = element.scrollLeft;
         el.scrollTop = element.scrollTop;
+
+        // must temporarily hide the original element, otherwise it
+        // may affect layout of the fake element we want to render.
+        element.style.display = "none";
+
         renderContents(el, group);
+        element.style.display = "";
         p.removeChild(el);
     }
 
