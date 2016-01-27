@@ -448,4 +448,89 @@
         equal(chkbxs.eq(0).closest("label").text(), "new string");
     });
 
+    test("checkboxes are filtered case sensitive", function() {
+        widget = setup({
+            dataSource: new kendo.data.DataSource({
+                data: [
+                    { foo: "some string" },
+                    { foo: "sOme String" },
+                    { foo: "other string" }
+                ]
+            }),
+            checkAll:true,
+            search: true,
+            ignoreCase: false
+        });
+        var chkbxs = widget.container.find(":checkbox:not(.k-check-all)");
+        equal(chkbxs.length,3);
+        
+		widget.searchTextBox[0].value = "striNg";
+        widget.search();		
+        equal(widget.container.find("li").length , 4);
+        equal(widget.container.find("li[style*='display: none']").length , 3);
+        
+		widget.searchTextBox[0].value = "some";
+        widget.search();
+        equal(widget.container.find("li[style*='display: none']").length , 2);
+        
+		widget.searchTextBox[0].value = "tring";
+        widget.search();
+        equal(widget.container.find("li[style*='display: none']").length , 0);
+        
+		widget.searchTextBox[0].value = "me";
+        widget.search();
+        equal(widget.container.find("li[style*='display: none']").length , 1);
+    });
+	
+	test("checkboxes are filtered case insensitive", function(){
+        widget = setup({
+            dataSource: new kendo.data.DataSource({
+                data: [
+                    { foo: "some string" },
+                    { foo: "sOme String" },
+                    { foo: "other string" }
+                ]
+            }),
+            checkAll:false,
+            search: true,
+            ignoreCase: true
+        });
+        var chkbxs = widget.container.find(":checkbox");
+        equal(chkbxs.length,3);
+        
+		widget.searchTextBox[0].value = "striNg";
+        widget.search();		
+        equal(widget.container.find("li").length , 3);
+        equal(widget.container.find("li[style*='display: none']").length , 0);
+		
+		widget.searchTextBox[0].value = "Some";
+        widget.search();
+        equal(widget.container.find("li[style*='display: none']").length , 1);
+		
+		widget.searchTextBox[0].value = "other";
+        widget.search();
+        equal(widget.container.find("li[style*='display: none']").length , 2);
+	});
+	
+	test("checkboxes are visible after Clear filter", function(){
+        widget = setup({
+            dataSource: new kendo.data.DataSource({
+                data: [
+                    { foo: "value1" },
+                    { foo: "value2" },
+                    { foo: "value3" }
+                ]
+            }),
+            checkAll:true,
+            search: true,
+            ignoreCase: true
+        });        
+		widget.searchTextBox[0].value = "2";
+        widget.search();		
+        equal(widget.container.find("li").length , 4);
+        equal(widget.container.find("li[style*='display: none']").length , 2);		
+        widget._reset();
+		equal(widget.container.find("li").length , 4);
+        equal(widget.container.find("li[style*='display: none']").length , 0);		
+	});	
 })();
