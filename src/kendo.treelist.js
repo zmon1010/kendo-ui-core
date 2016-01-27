@@ -1770,7 +1770,7 @@ var __meta__ = { // jshint ignore:line
 
             var messages = this.options.messages;
             var data = this.dataSource.rootNodes();
-            var selected = this.select().map(function(_, row) {
+            var selected = this.select().removeClass("k-state-selected").map(function(_, row) {
                 return $(row).attr(kendo.attr("uid"));
             });
 
