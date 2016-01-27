@@ -7,8 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-require 'version'
-
 #================ VARIABLES ==================
 new_line = "\n"
 tab = "\t"
@@ -16,6 +14,12 @@ kendoDirName = "/kendo/"
 root = File.absolute_path(File.dirname(__FILE__)).split(kendoDirName)[0] + kendoDirName
 mvc_demos_path = root + "wrappers/mvc-6/demos/Kendo.Mvc.Examples/"
 docker_image_name = "telerik/kendo_offline_demos"
+
+#Change context dir to kendo root, required by print_version
+Dir.chdir(root)
+
+#Add KENDO_VERSION Global variable
+require './build/print-version'
 
 #================ INSTALL DOCKER ==================
 #ruby_block 'fstab' do
@@ -79,7 +83,7 @@ docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line +
 	'ENTRYPOINT ["dnx", "-p", "project.json", "kestrel"]'
 
 #======FOR TEST PURPOSS ONLY - IMAGE WITH ENTRYPOINT ONLY
-	docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line + "ENTRYPOINT echo"
+	docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line + "ENTRYPOINT echo" + KENDO_VERSION
 #======
 
 #file mvc_demos_path + 'Dockerfile' do
@@ -129,12 +133,12 @@ docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line +
 
 #======== WORKAROUND:
 #execute 'docker-push-image' do
-#  command 'docker push ' + docker_image_name
+#  command 'docker push ' + docker_image_name + ':' + KENDO_VERSION
 #  action :run
 #end
 
 #=========DEBUG
-#version =
+#version = KENDO_VERSION
 #=========
 
 #================ LOGOUT OF DOCKER HUB ==================
