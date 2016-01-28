@@ -25,10 +25,19 @@ function selectAll(editor) {
     return range;
 }
 
-function cleanedContent(html, select) {
+function cleanedContent(html) {
     editor.value(html);
 
-    var range = (select || selectAll)(editor);
+    var range = selectAll(editor);
+
+    var command = cleanCommand(range);
+    command.exec();
+
+    return editor.value();
+}
+
+function cleanMarkedContent(html) {
+    var range = createRangeFromText(editor, html);
 
     var command = cleanCommand(range);
     command.exec();
@@ -66,18 +75,12 @@ test("removes style attributes", function() {
 
 test("removes style attributes of fully selected nodes", function() {
     equal(
-        cleanedContent(
-            '<p style="color: #f00;">foo</p>' +
-            '<p style="color: #00f;">bar</p>',
-        function(editor) {
-            var range = editor.createRange();
-            var p = $("p", editor.body);
+        cleanMarkedContent(
+            '<p style="color: #f00;">|foo</p>' +
+            '<p style="color: #00f;">bar|</p>'
+        ),
 
-            range.setStart(p[0].firstChild, 0);
-            range.setEnd(p[1].firstChild, 3);
-
-            return range;
-        }), '<p>foo</p><p>bar</p>'
+        '<p>foo</p><p>bar</p>'
     );
 });
 
@@ -104,6 +107,18 @@ test("unwraps lists", function() {
 
     equal(cleanedContent('<ol><li>foo</li></ol>'), '<p>foo</p>');
     equal(cleanedContent('<ol><li>foo</li><li>bar</li></ol>'), '<p>foo</p><p>bar</p>');
+});
+
+test("clean single list items", function() {
+    equal(cleanMarkedContent('<ul><li>f|o|o</li><li>bar</li></ul>'), '<p>foo</p><ul><li>bar</li></ul>');
+});
+
+test("clean two list items", function() {
+    equal(cleanMarkedContent('<ol><li>f|oo</li><li>ba|r</li></ol>'), '<p>foo</p><p>bar</p>');
+});
+
+test("clean multiple list items", function() {
+    equal(cleanMarkedContent('<ul><li>f|oo</li><li>bar</li><li>ba|s</li></ul>'), '<p>foo</p><p>bar</p><p>bas</p>');
 });
 
 test("unwraps blockquotes", function() {

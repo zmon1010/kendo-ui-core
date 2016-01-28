@@ -436,4 +436,14 @@ test("isEndOf after elements", function() {
     ok(utils.isEndOf(range, p));
 });
 
+var W3CRange = kendo.ui.editor.W3CRange;
+
+test("create from node", function() {
+    var node = document.createElement("b");
+    var range = W3CRange.fromNode(node);
+
+    equal(range.ownerDocument, document);
+    ok(range instanceof W3CRange);
+});
+
 }());

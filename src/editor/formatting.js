@@ -238,6 +238,8 @@ var CleanFormatCommand = Command.extend({
 
                 node.removeAttribute("style");
                 node.removeAttribute("class");
+            } else {
+                unwrapListItem(node);
             }
 
             if ($.inArray(name, remove) > -1) {
@@ -248,6 +250,16 @@ var CleanFormatCommand = Command.extend({
         this.releaseRange(range);
     }
 });
+
+    function unwrapListItem(node) {
+        var li = dom.closestEditableOfType(node, ["li"]);
+        if (li) {
+            var listFormatter = new Editor.ListFormatter(dom.name(li.parentNode));
+            var range = kendo.ui.editor.W3CRange.fromNode(node);
+            range.selectNode(li);
+            listFormatter.toggle(range);
+        }
+    }
 
 $.extend(Editor, {
     FormattingTool: FormattingTool,

@@ -215,6 +215,10 @@ var W3CRange = Class.extend({
     }
 });
 
+W3CRange.fromNode = function(node) {
+    return new W3CRange(node.ownerDocument);
+};
+
 /* can be used in Range.compareBoundaryPoints if we need it one day */
 function compareBoundaries(start, end, startOffset, endOffset) {
     if (start == end) {
