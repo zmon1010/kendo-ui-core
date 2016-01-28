@@ -1,78 +1,101 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<head>
+    <meta charset="utf-8" />
+    <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 
-        <link rel="stylesheet" href="../dist/styles/web/kendo.common.css">
-        <link rel="stylesheet" href="../dist/styles/web/kendo.default.css">
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css">
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css">
 
-        <script src="loader.js"></script>
-        <script>
-            requireSync([
-            "../src/jquery.js",
-            "../src/kendo.all.js"
-            ]);
-        </script>
-    </head>
-    <body>
-        <div id="grid"></div>
-        <script>
-            var telerikWebServiceBase = "//demos.telerik.com/kendo-ui/service/";
+    <script src="loader.js"></script>
+    <script>
+        requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js"
+        ]);
+    </script>
+    <style>
+    .km-pane-wrapper .km-pane .k-mobile-list.k-filter-menu .k-space-right > input {
+        float: none;
+        background: #fff;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        border-radius: 3px;
+        border-color: gray;
+        text-indent: 10px;
+    }
 
-            $("#grid").kendoGrid({
-                dataSource: {
-                    transport: {
-                        read:  {
-                            url: telerikWebServiceBase + "/Products",
-                            dataType: "jsonp"
-                        },
-                        update: {
-                            url: telerikWebServiceBase + "/Products/Update",
-                            dataType: "jsonp"
-                        },
-                        destroy: {
-                            url: telerikWebServiceBase + "/Products/Destroy",
-                            dataType: "jsonp"
-                        },
-                        create: {
-                            url: telerikWebServiceBase + "/Products/Create",
-                            dataType: "jsonp"
-                        },
-                        parameterMap: function(options, operation) {
-                            if (operation !== "read" && options.models) {
-                                return {models: kendo.stringify(options.models)};
-                            }
-                        }
+    .k-filter-menu .k-space-right {
+        background: grey;
+        padding: 10px;
+    }
+
+    .k-filter-menu .k-font-icon {
+        position: absolute;
+        right: 10px;
+        z-index: 1;
+    }
+</style>
+</head>
+<body>
+    <div id="grid"></div>
+    <script>
+        var telerikWebServiceBase = "//demos.telerik.com/kendo-ui/service/";
+
+        $("#grid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read:  {
+                        url: telerikWebServiceBase + "/Products",
+                        dataType: "jsonp"
                     },
-                    batch: true,
-                    pageSize: 20,
-                    schema: {
-                        model: {
-                            id: "ProductID",
-                            fields: {
-                                ProductID: { editable: false, nullable: true },
-                                ProductName: { validation: { required: true } },
-                                UnitPrice: { type: "number", validation: { required: true, min: 1} },
-                                Discontinued: { type: "boolean" },
-                                UnitsInStock: { type: "number", validation: { min: 0, required: true } }
-                            }
+                    update: {
+                        url: telerikWebServiceBase + "/Products/Update",
+                        dataType: "jsonp"
+                    },
+                    destroy: {
+                        url: telerikWebServiceBase + "/Products/Destroy",
+                        dataType: "jsonp"
+                    },
+                    create: {
+                        url: telerikWebServiceBase + "/Products/Create",
+                        dataType: "jsonp"
+                    },
+                    parameterMap: function(options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return {models: kendo.stringify(options.models)};
                         }
                     }
                 },
-                filterable: true,
-                pageable: true,
-                height: 550,
-                toolbar: ["create", "save", "cancel"],
-                mobile: true,
-                columns: [
-                { field: "ProductName", filterable: { multi: true, search: true } },
-                { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: 120, filterable: { multi: true } },
-                { field: "UnitsInStock", title: "Units In Stock", width: 120, filterable: { multi: true } },
-                { field: "Discontinued", width: 120, filterable: { multi: true, dataSource: [{ Discontinued: true }, { Discontinued: false }]} },
-                { command: "destroy", title: "&nbsp;", width: 150}],
-                editable: true
-            });
-        </script>
-    </body>
+                batch: true,
+                pageSize: 20,
+                schema: {
+                    model: {
+                        id: "ProductID",
+                        fields: {
+                            ProductID: { editable: false, nullable: true },
+                            ProductName: { validation: { required: true } },
+                            UnitPrice: { type: "number", validation: { required: true, min: 1} },
+                            Discontinued: { type: "boolean" },
+                            UnitsInStock: { type: "number", validation: { min: 0, required: true } }
+                        }
+                    }
+                }
+            },
+            filterable: true,
+            pageable: true,
+            height: 550,
+            toolbar: ["create", "save", "cancel"],
+            mobile: true,
+            columns: [
+            { field: "ProductName", filterable: { multi: true, search: true } },
+            { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: 120, filterable: { multi: true } },
+            { field: "UnitsInStock", title: "Units In Stock", width: 120, filterable: { multi: true } },
+            { field: "Discontinued", width: 120, filterable: { multi: true, dataSource: [{ Discontinued: true }, { Discontinued: false }]} },
+            { command: "destroy", title: "&nbsp;", width: 150}],
+            editable: true
+        });
+    </script>
+</body>
 </html>
