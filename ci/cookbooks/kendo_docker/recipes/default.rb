@@ -22,35 +22,42 @@ Dir.chdir(root)
 require './build/print-version'
 
 #================ INSTALL DOCKER ==================
-#ruby_block 'fstab' do
-#    block do
-#        line_for_insert = new_line + "\#Docker interface with custom IP" + new_line +
-#	"auto docker0" + new_line +
-#	"iface docker0 inet static" + new_line +
-#        	tab + "address 10.1.0.1" + new_line +
-#	        tab + "netmask 255.255.255.0" + new_line +
-#        	tab + "bridge_ports dummy0" + new_line +
-#	        tab + "bridge_stp off" + new_line +
-#	        tab + "bridge_fd 0" + new_line
-#        file = Chef::Util::FileEdit.new('/etc/network/interfaces')
-#        file.insert_line_if_no_match(/docker0/, line_for_insert)
-#        file.write_file
-#    end
-#end
+ruby_block 'fstab' do
+    block do
+        line_for_insert = new_line + "\#Docker interface with custom IP" + new_line +
+	"auto docker0" + new_line +
+	"iface docker0 inet static" + new_line +
+                tab + "address 10.1.0.1" + new_line +
+                tab + "netmask 255.255.255.0" + new_line +
+                tab + "bridge_ports dummy0" + new_line +
+	        tab + "bridge_stp off" + new_line +
+	        tab + "bridge_fd 0" + new_line
+        file = Chef::Util::FileEdit.new('/etc/network/interfaces')
+        file.insert_line_if_no_match(/docker0/, line_for_insert)
+        file.write_file
+    end
+end
 
+execute 'docker-install' do
+  command 'curl -sSL "https://get.docker.com/" | sh'
+  action :run
+end
+#for uninstall: sudo apt-get purge docker-engine
+
+#=========DOES NOT WORK, REQUIRE CHEF12
 #docker_installation_script 'default' do
 #  repo 'main'
 #  script_url 'https://get.docker.com/'
 #  action :create
 #end
 
-#================ RUN DOCKER IMAGE SECTION ==================
+#================ RUN DOCKER IMAGE - OPTIONAL ==================
+#=========DOES NOT WORK, REQUIRE CHEF12
 #test docker image:
 #docker_image docker_image_name do
 #        tag 'v3'----set dynamic versiob
 #        action :pull
 #end
-
 #optionally add tag after docker image name
 #docker_container docker_image_name do
 #        detach true
@@ -62,14 +69,7 @@ require './build/print-version'
 #end
 
 #================ CREATE DOCKER FILE ==================
-#directory mvc_demos_path do
-#  owner 'root'
-#  group 'root'
-#  mode '0755'
-#  action :create
-#  recursive true
-#end
-
+#IMPORTANT: RESTORE WILL FAIL BEHIND CORPORATE FIREWALL! USE BUILD MACHINES
 docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line +
 	new_line +
 	"COPY project.json /app/" + new_line +
@@ -83,48 +83,46 @@ docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line +
 	'ENTRYPOINT ["dnx", "-p", "project.json", "kestrel"]'
 
 #======FOR TEST PURPOSS ONLY - IMAGE WITH ENTRYPOINT ONLY
-	docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line + "ENTRYPOINT echo" + KENDO_VERSION
+#	docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line + "ENTRYPOINT echo" + KENDO_VERSION
 #======
 
-#file mvc_demos_path + 'Dockerfile' do
-#  content docker_contents
-#  owner 'root'
-#  group 'root'
-#  mode '0755'
-#end
-
-#================ TODO: GET VERSION ==================
-#apply to projec.json
-#apply to image tag
-#VERSION IS HARDCODED FOR TEST PURPOSES:
-#version = "2016.1.112"
+file mvc_demos_path + 'Dockerfile' do
+  content docker_contents
+  owner 'root'
+  group 'root'
+  mode '0755'
+end
 
 #================ BUILD DOCKER IMAGE ==================
-
+#=========DOES NOT WORK, REQUIRE CHEF12
 #docker_image docker_image_name do
-#       tag version
+#       tag KENDO_VERSION
 #	force true
 #	source mvc_demos_path + 'Dockerfile'
 #       action :build
 #end
 
+execute 'docker-build-image' do
+  command 'docker build -t ' + docker_image_name + ':' + KENDO_VERSION + ' ' + mvc_demos_path
+  action :run
+end
+
 #================ LOGIN TO DOCKER HUB ==================
-#=========DOES NOT WORK
+#=========DOES NOT WORK, BUG
 #docker_registry 'https://index.docker.io/v1/' do
 #  username 'telerik'
-#========== store in databag ============
 #  password 'kendorullz'
 #  email 'kendouiteam@telerik.com'
 #end
 
 #======== WORKAROUND:
-#execute 'docker-login' do
-#  command 'docker login --email="kendouiteam@telerik.com" --username="telerik" --password="kendorullz"'
-#  action :run
-#end
+execute 'docker-login' do
+  command 'docker login --email="kendouiteam@telerik.com" --username="telerik" --password="kendorullz"'
+  action :run
+end
 
 #================ PUSH DOCKER IMAGE ==================
-#========DOES NOT WORK
+#========DOES NOT WORK, BUG
 #docker_image docker_image_name do
 #	repo docker_image_name
 #	tag version
@@ -132,20 +130,16 @@ docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line +
 #end
 
 #======== WORKAROUND:
-#execute 'docker-push-image' do
-#  command 'docker push ' + docker_image_name + ':' + KENDO_VERSION
-#  action :run
-#end
-
-#=========DEBUG
-#version = KENDO_VERSION
-#=========
+execute 'docker-push-image' do
+  command 'docker push ' + docker_image_name + ':' + KENDO_VERSION
+  action :run
+end
 
 #================ LOGOUT OF DOCKER HUB ==================
 #======== WORKAROUND:
-#execute 'docker-logout' do
-#  command 'docker logout'
-#  action :run
-#end
+execute 'docker-logout' do
+  command 'docker logout'
+  action :run
+end
 
 
