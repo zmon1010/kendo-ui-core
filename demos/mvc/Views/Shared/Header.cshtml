@@ -12,9 +12,9 @@
 <div id="header">
 
 @*    <div id="webinar-banner">
-        Kendo UI turns four! Sign up for the celebratory webinar
-        <a href="http://www.telerik.com/campaigns/kendo-ui/september-2015-release">Happy Birthday to UI</a>
-        to see the freshly released bits in action.
+        Kendo UI Q1 16 Release Webinar is near!
+        <a href="http://www.telerik.com/campaigns/kendo-ui/february-2016-release">Sign up</a>
+        to watch technical demos of the freshly released bits and win awesome prizes.
         <span class="close"></span>
     </div>
 
@@ -24,21 +24,21 @@
             var banner = $("#webinar-banner");
             var bannerLink = banner.find("a");
             var trackingAttribute = "data-gtm-event";
-            var uniqueLocalStorageBannerKey = "KendoUIQ32015ReleaseWebinarBannerDisabled";
+            var uniqueLocalStorageBannerKey = "KendoUIQ12016ReleaseWebinarBannerDisabled";
+            var bannerExpiresAt = Date.UTC(2016, 1, 17, 18, 0);
             var showWebinarBanner = true;
             var suites = {
                 // "suite": "trackingAttribute"
-                // comment out what's not necessary
-                "kendo-ui": "yellow-strip, KendoUIQ32015Release, kendo-demos-page",
-                "aspnet-mvc": "yellow-strip, KendoUIQ32015Release, mvc-demos-page",
-                "php-ui": "yellow-strip, KendoUIQ32015Release, php-demos-page",
-                "jsp-ui": "yellow-strip, KendoUIQ32015Release, jsp-demos-page"
+                "kendo-demos": "yellow-strip, KendoUIQ12016Release, kendo-demos-page",
+                "aspnet-mvc": "yellow-strip, KendoUIQ12016Release, mvc-demos-page",
+                "php-ui": "yellow-strip, KendoUIQ12016Release, php-demos-page",
+                "jsp-ui": "yellow-strip, KendoUIQ12016Release, jsp-demos-page"
             };
 
             for (var j in suites) {
                 if (location.href.indexOf(j) > 0) {
                     try {
-                        showWebinarBanner = "1" !== localStorage.getItem(uniqueLocalStorageBannerKey);
+                        showWebinarBanner = (typeof bannerExpiresAt == "undefined" || bannerExpiresAt > (new Date()).getTime()) && ("1" !== localStorage.getItem(uniqueLocalStorageBannerKey));
                     } catch (e) {
                     }
                     if (showWebinarBanner) {
