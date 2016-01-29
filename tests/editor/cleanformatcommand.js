@@ -119,6 +119,11 @@ test("clean two list items", function() {
 
 test("clean multiple list items", function() {
     equal(cleanMarkedContent('<ul><li>f|oo</li><li>bar</li><li>ba|s</li></ul>'), '<p>foo</p><p>bar</p><p>bas</p>');
+    equal(cleanMarkedContent('<ul> <li>f|oo</li> <li>ba|r</li> <li>bas</li></ul> '), '<p>foo</p><p>bar</p><ul><li>bas</li></ul>');
+});
+
+test("clean inline formatting in list", function() {
+    equal(cleanMarkedContent('<ol><li>f|o<strong>o</strong></li><li>ba|r</li></ol>'), '<p>foo</p><p>bar</p>');
 });
 
 test("unwraps blockquotes", function() {

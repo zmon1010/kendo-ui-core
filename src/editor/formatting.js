@@ -204,52 +204,59 @@ var FormattingTool = DelayedExecutionTool.extend({
 
 var CleanFormatCommand = Command.extend({
     exec: function() {
-        var listFormatter = new Editor.ListFormatter('ul');
         var range = this.lockRange(true);
-        var remove = this.options.remove || "strong,em,span,sup,sub,del,b,i,u,font".split(",");
+        this.tagsToClean = this.options.remove || "strong,em,span,sup,sub,del,b,i,u,font".split(",");
 
         RangeUtils.wrapSelectedElements(range);
 
-        var iterator = new Editor.RangeIterator(range);
-
-        iterator.traverse(function clean(node) {
-            if (!node || dom.isMarker(node)) {
-                return;
-            }
-
-            var name = dom.name(node);
-
-            if (name == "ul" || name == "ol") {
-                var prev = node.previousSibling;
-                var next = node.nextSibling;
-
-                listFormatter.unwrap(node);
-
-                // clean contents
-                for (; prev && prev != next; prev = prev.nextSibling) {
-                    clean(prev);
-                }
-            } else if (name == "blockquote") {
-                dom.changeTag(node, "p");
-            } else if (node.nodeType == 1 && !dom.insignificant(node)) {
-                for (var i = node.childNodes.length-1; i >= 0; i--) {
-                    clean(node.childNodes[i]);
-                }
-
-                node.removeAttribute("style");
-                node.removeAttribute("class");
-            } else {
-                unwrapListItem(node);
-            }
-
-            if ($.inArray(name, remove) > -1) {
-                dom.unwrap(node);
-            }
+        var nodes = RangeUtils.mapAll(range, function(node) {
+            return node;
         });
 
+
+        for(var c = nodes.length - 1; c >= 0; c--) {
+            this.clean(nodes[c]);
+        }
+
         this.releaseRange(range);
+    },
+    clean: function(node) {
+        if (!node || dom.isMarker(node)) {
+            return;
+        }
+
+        var name = dom.name(node);
+
+        if (name == "ul" || name == "ol") {
+            var listFormatter = new Editor.ListFormatter(name);
+            var prev = node.previousSibling;
+            var next = node.nextSibling;
+
+            listFormatter.unwrap(node);
+
+            // clean contents
+            for (; prev && prev != next; prev = prev.nextSibling) {
+                this.clean(prev);
+            }
+        } else if (name == "blockquote") {
+            dom.changeTag(node, "p");
+        } else if (node.nodeType == 1 && !dom.insignificant(node)) {
+            for (var i = node.childNodes.length-1; i >= 0; i--) {
+                this.clean(node.childNodes[i]);
+            }
+
+            node.removeAttribute("style");
+            node.removeAttribute("class");
+        } else {
+            unwrapListItem(node);
+        }
+
+        if ($.inArray(name, this.tagsToClean) > -1) {
+            dom.unwrap(node);
+        }
     }
 });
+
 
     function unwrapListItem(node) {
         var li = dom.closestEditableOfType(node, ["li"]);
