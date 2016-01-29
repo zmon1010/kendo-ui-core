@@ -42,14 +42,20 @@
         }
     });
 
+    function ownerFactory(options) {
+        return $.extend(true, {}, {
+               bind: $.noop,
+               unbind: $.noop,
+               _muteAngularRebind: $.noop
+        }, options);
+    }
+
     function setup(options) {
         options = $.extend(true, {}, {
             dataSource: dataSource,
-            owner: {
+            owner:  ownerFactory({
                 columns: [{ field: "foo" }, { field: "bar", hidden: true}],
-                bind: $.noop,
-                unbind: $.noop
-            }
+            })
         }, options);
 
         var menu = new ColumnMenu(dom, options);
@@ -512,11 +518,9 @@
     test("menu is created after link is clicked", function() {
         var columnMenu = new ColumnMenu(dom, {
             dataSource: dataSource,
-            owner: {
-                columns: [{ field: "foo" }, { field: "bar", hidden: true}],
-                bind: $.noop,
-                unbind: $.noop
-            }
+            owner: ownerFactory({
+                columns: [{ field: "foo" }, { field: "bar", hidden: true}]
+            })
         });
         columnMenu.link.click();
 
@@ -526,11 +530,9 @@
     test("single menu instance is created on multiple link clicks", function() {
         var columnMenu = new ColumnMenu(dom, {
             dataSource: dataSource,
-            owner: {
+            owner: ownerFactory({
                 columns: [{ field: "foo" }, { field: "bar", hidden: true}],
-                bind: $.noop,
-                unbind: $.noop
-            }
+            })
         });
         columnMenu.link.click();
         var menu = columnMenu.menu;
@@ -543,11 +545,9 @@
     test("init event is raised when initialized", 2, function() {
         var columnMenu = new ColumnMenu(dom, {
             dataSource: dataSource,
-            owner: {
+            owner: ownerFactory({
                 columns: [{ field: "foo" }, { field: "bar", hidden: true}],
-                bind: $.noop,
-                unbind: $.noop
-            }
+            })
         });
 
         columnMenu.bind("init", function(e) {
