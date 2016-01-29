@@ -104,7 +104,9 @@ var __meta__ = { // jshint ignore:line
                 that._createMenu();
             }
 
-            that._angularItems("compile");
+            that.owner._muteAngularRebind(function() {
+                that._angularItems("compile");
+            });
 
             that._sort();
 
