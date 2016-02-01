@@ -278,4 +278,16 @@ test("paste method does not require focus of inline editor", function() {
     equal(editor.value(), "<p>foo</p>");
 });
 
+test("inline Editor toolbar does not show on focus when widget is readonly", function () {
+    var editor = new kendo.ui.Editor("#inline");
+
+    editor.value('<a href="#" tabindex="1" id="focusable-link">focusable link</a>');
+
+    editor.body.removeAttribute("contenteditable");
+
+    document.getElementById("focusable-link").focus();
+
+    ok(!editor.toolbar.element.is(":visible"));
+});
+
 })();

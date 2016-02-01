@@ -585,9 +585,11 @@
                 .on("cut" + NS + " copy" + NS + " paste" + NS, function (e) {
                     editor.clipboard["on" + e.type](e);
                 })
-                .on("focusin" + NS, function() {
-                    $(this).addClass("k-state-active");
-                    editor.toolbar.show();
+                .on("focusin" + NS, function () {
+                    if (editor.body.hasAttribute("contenteditable")) {
+                        $(this).addClass("k-state-active");
+                        editor.toolbar.show();
+                    }
                 })
                 .on("focusout" + NS, function() {
                     setTimeout(function() {
