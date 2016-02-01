@@ -368,6 +368,16 @@
         equal(grid.cellIndex(cells.eq(1)), 1);
     });
 
+    test("render correct col elements with locked columns", function() {
+        var grid = new Grid(table, {
+            columns: [{ title: "master", locked: true, columns: [{ title: "child" }, { title: "child2" }] }, { title: "master2", locked: true }, { title: "master3" }]
+        });
+
+        var cols = grid.lockedHeader.find("col");
+
+        equal(cols.length, 3);
+    });
+
     test("k-first class is added to the first header cell of the child rows", function() {
         var grid = new Grid(table, {
             dataSource: {

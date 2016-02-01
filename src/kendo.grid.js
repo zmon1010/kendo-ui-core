@@ -6387,7 +6387,7 @@ var __meta__ = { // jshint ignore:line
                     leafColumnsCount = leafColumns(columns[idx].columns || []).length;
 
                     if (isVisible(columns[idx])) {
-                        var colSpan;
+                        var colSpan = null;
 
                         if (columns[idx].columns) {
                             colSpan = leafColumnsCount - hiddenLeafColumnsCount(columns[idx].columns);
