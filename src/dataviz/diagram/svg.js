@@ -1231,7 +1231,7 @@
                     childBoundingBox = visual.drawingContainer().clippedBBox(null);
                     if (childBoundingBox) {
                         if (boundingBox) {
-                            boundingBox = Rect.union(boundingBox, childBoundingBox);
+                            boundingBox = g.Rect.union(boundingBox, childBoundingBox);
                         } else {
                             boundingBox = childBoundingBox;
                         }

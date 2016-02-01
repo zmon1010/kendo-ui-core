@@ -5,10 +5,10 @@
         Rect = dataviz.diagram.Rect,
         diagram;
 
-    function createDiagram() {
+    function createDiagram(options) {
         diagram = $('<div id="diagram" style="width: 800px; height: 600px;" />')
             .appendTo(QUnit.fixture)
-            .kendoDiagram({
+            .kendoDiagram(kendo.deepExtend({
                 shapes: [{
                     id: "shape1"
                 },{
@@ -23,14 +23,14 @@
                 connectionDefaults: {
                     type: "polyline"
                 }
-            })
+            }, options))
             .getKendoDiagram();
 
         return diagram;
     }
 
     /*-----------------------------------------------*/
-    module("Diagram connections / configuration", {
+    module("Diagram connections", {
         setup: function () {
             createDiagram();
         },
@@ -42,6 +42,28 @@
     test("type polyline", function () {
         $.each(diagram.connections, function(index, item) {
             equal(this.options.type, "polyline");
+        });
+    });
+
+    test("content visual with shape group", 0, function() {
+        createDiagram({
+            connectionDefaults: {
+                content: {
+                    visual: function(e) {
+                        var g = new dataviz.diagram.Group();
+
+                        g.append(new dataviz.diagram.TextBlock({
+                            text: "Foo"
+                        }));
+
+                        g.append(new dataviz.diagram.TextBlock({
+                            text: "Bar"
+                        }));
+
+                        return g;
+                    }
+                }
+            }
         });
     });
 })();
