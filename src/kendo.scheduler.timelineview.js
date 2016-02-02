@@ -22,6 +22,10 @@ var __meta__ = { // jshint ignore:line
         getMilliseconds = kendo.date.getMilliseconds,
         MS_PER_DAY = kendo.date.MS_PER_DAY,
         MS_PER_MINUTE = kendo.date.MS_PER_MINUTE,
+        CURRENT_TIME_MARKER_CLASS = "k-current-time",
+        CURRENT_TIME_MARKER_ARROW_CLASS = "k-current-time-arrow",
+        SCHEDULER_HEADER_WRAP_CLASS = "k-scheduler-header-wrap",
+        BORDER_SIZE_COEFF = 0.8666,
         NS = ".kendoTimelineView";
 
     var EVENT_TEMPLATE = kendo.template('<div>' +
@@ -170,7 +174,8 @@ var __meta__ = { // jshint ignore:line
             var currentTime = new Date();
             var options = this.options;
 
-            this.datesHeader.find(".k-current-time").remove();
+            this.datesHeader.find("." + CURRENT_TIME_MARKER_CLASS).remove();
+            this.content.find("." + CURRENT_TIME_MARKER_CLASS).remove();
 
             if (!this._isInDateSlot({start: currentTime, end:currentTime })) {
                 return;
@@ -200,11 +205,19 @@ var __meta__ = { // jshint ignore:line
                 var slotElement = collection.slotByStartDate(currentTime);
 
                 if(slotElement) {
-                    var element = $("<div class='k-current-time'></div>");
-                    var datesHeader = this.datesHeader;
+                    var elementHtml = "<div class='" + CURRENT_TIME_MARKER_CLASS + "'></div>";
+                    var headerWrap = this.datesHeader.find("." + SCHEDULER_HEADER_WRAP_CLASS);
                     var left = Math.round(ranges[0].innerRect(currentTime, new Date(currentTime.getTime() + 1), false).left);
+                    var timesTableMarker = $(elementHtml)
+                            .prependTo(headerWrap)
+                            .addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-down");
 
-                    element.appendTo(datesHeader.find(".k-scheduler-header-wrap")).css({
+                    timesTableMarker.css({
+                        left: this._adjustLeftPosition(left - (timesTableMarker.outerWidth() * BORDER_SIZE_COEFF / 2)),
+                        top: headerWrap.find("tr:last").prev().position().top
+                    });
+
+                    $(elementHtml).prependTo(this.content).css({
                         left: this._adjustLeftPosition(left),
                         width: "1px",
                         bottom: "1px",

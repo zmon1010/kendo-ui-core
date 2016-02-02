@@ -1370,7 +1370,37 @@
 
         var scheduler = element.data("kendoScheduler");
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
+        equal(timeElementsCount,2);
+    });
+
+    test("Current time marker arrow is rendered when horizontal grouping is applied", function() {
+        var viewName = "week";
+        var element = $("<div>").appendTo(QUnit.fixture);
+
+        setupGroupedScheduler(element, "horizontal", viewName, {
+            date: new Date(),
+            startTime: new Date("2013/6/6 01:00"),
+            endTime: new Date("2013/6/6 00:59"),
+        });
+
+        var scheduler = element.data("kendoScheduler");
+        var timeElementsCount = scheduler.view().element.find(".k-current-time-arrow-right").length;
         equal(timeElementsCount,1);
+    });
+
+    test("Current time marker arrow is positioned correctly", function() {
+        var viewName = "week";
+        var element = $("<div>").appendTo(QUnit.fixture);
+
+        setupGroupedScheduler(element, "horizontal", viewName, {
+            date: new Date(),
+            startTime: new Date("2013/6/6 01:00"),
+            endTime: new Date("2013/6/6 00:59"),
+        });
+
+        var scheduler = element.data("kendoScheduler");
+        var arrowLeftPosition = scheduler.view().element.find(".k-current-time-arrow-right").position().left;
+        equal(scheduler.view().times.find("tr:first th:last").position().left,arrowLeftPosition);
     });
 
     test("Current time marker is rendered when vertical grouping is applied", function() {
@@ -1385,6 +1415,21 @@
 
         var scheduler = element.data("kendoScheduler");
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
+        equal(timeElementsCount,8);
+    });
+
+    test("Current time marker arrow is rendered when vertical grouping is applied", function() {
+        var viewName = "week";
+        var element = $("<div>").appendTo(QUnit.fixture);
+
+        setupGroupedScheduler(element, "vertical", viewName, {
+            date: new Date(),
+            startTime: new Date("2013/6/6 01:00"),
+            endTime: new Date("2013/6/6 00:59"),
+        });
+
+        var scheduler = element.data("kendoScheduler");
+        var timeElementsCount = scheduler.view().element.find(".k-current-time-arrow-right").length;
         equal(timeElementsCount,4);
     });
 

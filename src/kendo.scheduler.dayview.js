@@ -21,6 +21,9 @@ var __meta__ = { // jshint ignore:line
         getDate = kendo.date.getDate,
         MS_PER_MINUTE = kendo.date.MS_PER_MINUTE,
         MS_PER_DAY = kendo.date.MS_PER_DAY,
+        CURRENT_TIME_MARKER_CLASS = "k-current-time",
+        CURRENT_TIME_MARKER_ARROW_CLASS = "k-current-time-arrow",
+        BORDER_SIZE_COEFF = 0.8666,
         getMilliseconds = kendo.date.getMilliseconds,
         NS = ".kendoMultiDayView";
 
@@ -209,24 +212,45 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
-            this.times.find(".k-current-time").remove();
+            this.times.find("." + CURRENT_TIME_MARKER_CLASS).remove();
+            this.content.find("." + CURRENT_TIME_MARKER_CLASS).remove();
 
             var groupsCount = !options.group || options.group.orientation == "horizontal" ? 1 : this.groups.length;
+            var firstTimesCell = this.times.find("tr:first th:first");
+            var lastTimesCell = this.times.find("tr:first th:last");
 
             for(var groupIndex = 0; groupIndex < groupsCount; groupIndex++) {
                 var currentGroup = this.groups[groupIndex];
                 var utcCurrentTime = kendo.date.toUtcTime(currentTime);
                 var ranges = currentGroup.timeSlotRanges(utcCurrentTime, utcCurrentTime + 1);
+
                 if(ranges.length === 0) {
                     return;
                 }
+
                 var collection = ranges[0].collection;
                 var slotElement = collection.slotByStartDate(currentTime);
 
                 if(slotElement) {
-                    var element = $("<div class='k-current-time'></div>");
-                    element.appendTo(this.times).css({
-                        top: Math.round(ranges[0].innerRect(currentTime, new Date(currentTime.getTime() + 1), false).top),
+                    var elementHtml = "<div class='" + CURRENT_TIME_MARKER_CLASS + "'></div>";
+                    var timesTableMarker = $(elementHtml).prependTo(this.times);
+                    var markerTopPosition = Math.round(ranges[0].innerRect(currentTime, new Date(currentTime.getTime() + 1), false).top);
+                    var timesTableMarkerCss = {};
+
+                    if (this._isRtl) {
+                        timesTableMarkerCss.right = firstTimesCell.position().left + firstTimesCell.outerHeight() - lastTimesCell.outerHeight();
+                        timesTableMarker.addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-left");
+                    } else {
+                        timesTableMarkerCss.left = lastTimesCell.position().left;
+                        timesTableMarker.addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-right");
+                    }
+
+                    timesTableMarkerCss.top = markerTopPosition - (timesTableMarker.outerWidth() * BORDER_SIZE_COEFF / 2);
+
+                    timesTableMarker.css(timesTableMarkerCss);
+
+                    $(elementHtml).prependTo(this.content).css({
+                        top: markerTopPosition,
                         height: "1px",
                         right: "1px",
                         left: 0

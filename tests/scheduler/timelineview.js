@@ -403,7 +403,23 @@
         var view = setup({ date: new Date() });
 
         var timeElementsCount = view.element.find(".k-current-time").length;
+        equal(timeElementsCount,2);
+    });
+
+    test("Current time marker arrow is rendered correctly", function() {
+        var view = setup({ date: new Date() });
+
+        var timeElementsCount = view.element.find(".k-current-time-arrow-down").length;
         equal(timeElementsCount,1);
+    });
+
+    test("Current time marker arrow is positioned correctly", function() {
+        var view = setup({ date: new Date() });
+
+        var headerWrap = view.datesHeader.find(".k-scheduler-header-wrap");
+
+        var arrowTopPosition = view.element.find(".k-current-time-arrow-down").position().top;
+        equal(arrowTopPosition, headerWrap.find("tr:last").prev().position().top);
     });
 
     test("Current time marker is not rendered when the option is set to false", function() {
@@ -440,7 +456,7 @@
         });
 
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
-        equal(timeElementsCount,1);
+        equal(timeElementsCount,2);
     });
 
     test("non-overlapping events are not rendered on different rows", function() {
