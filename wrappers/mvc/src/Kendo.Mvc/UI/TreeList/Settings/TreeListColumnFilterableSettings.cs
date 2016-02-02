@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
         public TreeListColumnFilterableSettings()
         {
             Enabled = true;
+
+            Ui = new ClientHandlerDescriptor();
         
             //>> Initialization
         
@@ -21,7 +23,7 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
-        public string Ui { get; set; }
+        public ClientHandlerDescriptor Ui { get; set; }
         
         //<< Fields
 

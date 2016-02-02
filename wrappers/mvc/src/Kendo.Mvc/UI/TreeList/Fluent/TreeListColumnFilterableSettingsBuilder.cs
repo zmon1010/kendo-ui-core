@@ -15,17 +15,28 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListColumnFilterableSettingsBuilder(TreeListColumnFilterableSettings settings)
         {
             container = settings;
-        }
+        }     
 
         //>> Fields
         
         /// <summary>
         /// The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.
         /// </summary>
-        /// <param name="value">The value that configures the ui.</param>
-        public TreeListColumnFilterableSettingsBuilder<T> Ui(string value)
+        /// <param name="value">The value that configures the ui action.</param>
+        public TreeListColumnFilterableSettingsBuilder<T> Ui(Func<object, object> handler)
         {
-            container.Ui = value;
+            container.Ui.TemplateDelegate = handler;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.
+        /// </summary>
+        /// <param name="value">The value that configures the ui action.</param>
+        public TreeListColumnFilterableSettingsBuilder<T> Ui(string handler)
+        {
+            container.Ui.HandlerName = handler;
 
             return this;
         }

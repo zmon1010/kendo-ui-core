@@ -32,6 +32,7 @@ module CodeGen::MVC::Wrappers
         'toolbar.items.buttons.click' => 'ClientHandlerDescriptor',
         'toolbar.items.buttons.toggle' => 'ClientHandlerDescriptor',
         'treelist.columns.command.click' => 'ClientHandlerDescriptor',
+        'treelist.columns.filterable.ui' => 'ClientHandlerDescriptor',
 
         'spreadsheet.sheets.frozencolumns' => 'int',
         'spreadsheet.sheets.frozenrows' => 'int',
