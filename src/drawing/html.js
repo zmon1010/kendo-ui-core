@@ -355,7 +355,7 @@
                 if (options.keepTogether && jqel.is(options.keepTogether)) {
                     return true;
                 }
-                return (jqel.data("kendoChart") || /^(?:img|tr|iframe|svg|object|canvas|input|textarea|select|video|h[1-6])/i.test(jqel[0].tagName));
+                return (jqel.data("kendoChart") || /^(?:img|tr|thead|th|tfoot|iframe|svg|object|canvas|input|textarea|select|video|h[1-6])/i.test(jqel[0].tagName));
             }
 
             function splitElement(element) {
@@ -430,15 +430,34 @@
                 if (el.nodeType == 1 && el !== copy && firstInParent(el)) {
                     return breakAtElement(el.parentNode);
                 }
-                var colgroup = $(el).closest("table").find("colgroup");
+                var table, colgroup, thead, grid, gridHead;
+                table = $(el).closest("table");
+                colgroup = table.find("colgroup:first");
+                if (options.repeatHeaders) {
+                    thead = table.find("thead:first");
+                    grid = $(el).closest(".k-grid[data-role=\"grid\"]");
+                    gridHead = grid.find(".k-grid-header:first");
+                }
                 var page = makePage();
                 var range = doc.createRange();
                 range.setStartBefore(copy);
                 range.setEndBefore(el);
                 page.appendChild(range.extractContents());
                 copy.parentNode.insertBefore(page, copy);
-                if (colgroup[0]) {
-                    colgroup.clone().prependTo($(el).closest("table"));
+                if (table[0]) {
+                    table = $(el).closest("table"); // that's the <table> on next page!
+                    if (options.repeatHeaders && thead[0]) {
+                        thead.clone().prependTo(table);
+                    }
+                    if (colgroup[0]) {
+                        colgroup.clone().prependTo(table);
+                    }
+                }
+                if (options.repeatHeaders && grid[0]) {
+                    grid = $(el).closest(".k-grid[data-role=\"grid\"]");
+                    if (gridHead[0]) {
+                        gridHead.clone().prependTo(grid);
+                    }
                 }
             }
 
