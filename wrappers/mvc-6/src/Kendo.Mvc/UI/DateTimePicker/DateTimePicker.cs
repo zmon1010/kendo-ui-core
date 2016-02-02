@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI
 {
@@ -38,6 +39,10 @@ namespace Kendo.Mvc.UI
                 return info;
             }
         }
+
+        public IEnumerable<string> DisableDates { get; set; } = new string[] { };
+
+        public ClientHandlerDescriptor DisableDatesHandler { get; set; }
 
         public bool Enabled
         {
@@ -87,6 +92,16 @@ namespace Kendo.Mvc.UI
 			{
 				settings["animation"] = animation["animation"];
 			}
+
+            if (DisableDatesHandler?.HasValue() == true)
+            {
+                settings["disableDates"] = DisableDatesHandler;
+
+            }
+            else if (DisableDates.Any())
+            {
+                settings["disableDates"] = DisableDates;
+            }
 
 			if (EnableFooter)
 			{

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -44,6 +45,10 @@ namespace Kendo.Mvc.UI
                 return info;
             }
         }
+
+        public IEnumerable<string> DisableDates { get; set; } = new string[] { };
+
+        public ClientHandlerDescriptor DisableDatesHandler { get; set; }
 
         public bool Enabled
         {
@@ -109,6 +114,16 @@ namespace Kendo.Mvc.UI
             if (Culture.HasValue())
             {
                 settings["culture"] = Culture;
+            }
+
+            if (DisableDatesHandler?.HasValue() == true)
+            {
+                settings["disableDates"] = DisableDatesHandler;
+
+            }
+            else if (DisableDates.Any())
+            {
+                settings["disableDates"] = DisableDates;
             }
 
             if (EnableFooter)

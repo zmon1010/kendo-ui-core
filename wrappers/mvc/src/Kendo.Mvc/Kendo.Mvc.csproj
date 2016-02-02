@@ -256,6 +256,7 @@
     <Compile Include="..\shared\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Extensions\TreeDataSourceExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\MemberExpressionExtensions.cs" />
@@ -2665,4 +2666,10 @@
     <Compile Include="UI\Spreadsheet\Settings\SpreadsheetSheetRowCellValidationSettings.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetSheetRowCellValidationSettingsBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\Spreadsheet\Settings\SpreadsheetPdfSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetPdfSettingsBuilder.cs" /><Compile Include="UI\Spreadsheet\Settings\SpreadsheetPdfMarginSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetPdfMarginSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Spreadsheet\Settings\SpreadsheetPdfSettings.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetPdfSettingsBuilder.cs" />
+    <Compile Include="UI\Spreadsheet\Settings\SpreadsheetPdfMarginSettings.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetPdfMarginSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>

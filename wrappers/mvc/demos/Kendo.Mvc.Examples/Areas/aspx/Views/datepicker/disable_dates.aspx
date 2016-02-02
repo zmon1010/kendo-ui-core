@@ -10,7 +10,7 @@
         <h4>Disable weekends</h4>
         <%= Html.Kendo().DatePicker()
                 .Name("weekend-date-picker")
-                .DisableDates(new string[] { "sa", "su" })
+                .DisableDates(DayOfWeek.Saturday, DayOfWeek.Sunday)
             %>
 
         <h4 style="margin-top: 1em">Disable Federal Holidays in USA in 2015</h4>

@@ -1,9 +1,11 @@
 namespace Kendo.Mvc.UI.Fluent
 {
+    using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Infrastructure;
     using Kendo.Mvc.Resources;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
 
     /// <summary>
     /// Defines the fluent interface for configuring the <see cref="TimePicker"/> component.
@@ -267,24 +269,32 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-        /// <summary>
-        /// Specifies the disabled dates in the DateTimePicker widget.
-        /// </summary>
-        /// <example>
-        /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().DateTimePicker()
-        ///             .Name("DateTimePicker")
-        ///             .DisableDates(new string [] {"mo", "tu"})
-        /// %&gt;
-        /// </code>
-        /// </example>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public DateTimePickerBuilder DisableDates(IEnumerable<string> disableDates)
         {
             Component.DisableDates = disableDates;
 
             return this;
         }
+                
+        /// <summary>
+        /// Specifies the disabled dates in the DateTimePicker widget.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().DateTimePicker()
+        ///             .Name("DateTimePicker")
+        ///             .DisableDates(DayofWeek.Saturday, DayOfWeek.Sunday)
+        /// )
+        /// </code>
+        /// </example>
+        public DateTimePickerBuilder DisableDates(params DayOfWeek[] days)
+        {
+            Component.DisableDates = days.ToAbbrev();
 
+            return this;
+        }
+        
         /// <summary>
         /// Specifies the disabled dates in the DateTimePicker widget using a function.
         /// </summary>

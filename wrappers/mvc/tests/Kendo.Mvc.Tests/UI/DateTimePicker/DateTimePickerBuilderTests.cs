@@ -16,6 +16,48 @@ namespace Kendo.Mvc.UI.Tests
             dateTimePicker = DateTimePickerTestHelper.CreateDateTimePicker(null);
             builder = new DateTimePickerBuilder(dateTimePicker);
         }
+                
+        [Fact]
+        public void DisableDates_sets_strings()
+        {
+            var values = new string[] { "foo", "bar" };
+
+            builder.DisableDates(values);
+            
+            dateTimePicker.DisableDates.ShouldEqual(values);
+        }
+
+        [Fact]
+        public void DisableDates_with_strings_returns_builder()
+        {
+            builder.DisableDates(new string[] { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void DisableDates_sets_days_of_week()
+        {
+            builder.DisableDates(DayOfWeek.Thursday, DayOfWeek.Saturday);
+            dateTimePicker.DisableDates.ShouldEqual(new string[] { "th", "sa" });
+        }
+
+        [Fact]
+        public void DisableDates_with_days_of_week_returns_builder()
+        {
+            builder.DisableDates(new DayOfWeek[] { DayOfWeek.Thursday, DayOfWeek.Saturday }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void DisableDates_sets_handler()
+        {
+            builder.DisableDates("handler");
+            dateTimePicker.DisableDatesHandler.HandlerName.ShouldEqual("handler");
+        }
+
+        [Fact]
+        public void DisableDates_with_handler_returns_builder()
+        {
+            builder.DisableDates("handler").ShouldBeSameAs(builder);
+        }
 
         [Fact]
         public void Footer_method_sets_footer_template()

@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI.Fluent
@@ -11,6 +14,51 @@ namespace Kendo.Mvc.UI.Fluent
     {
         public CalendarBuilder(Calendar component) : base(component)
         {
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public CalendarBuilder DisableDates(IEnumerable<string> disableDates)
+        {
+            Component.DisableDates = disableDates;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the disabled dates in the Calendar widget using a function.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Calendar()
+        ///             .Name("calendar")
+        ///             .DisableDates(DayofWeek.Saturday, DayOfWeek.Sunday)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public CalendarBuilder DisableDates(params DayOfWeek[] days)
+        {
+            Component.DisableDates = days.ToAbbrev();
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the disabled dates in the Calendar widget using a function.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Calendar()
+        ///             .Name("calendar")
+        ///             .DisableDates("disableDates")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public CalendarBuilder DisableDates(string handler)
+        {
+            var handlerDescription = new ClientHandlerDescriptor { HandlerName = handler };
+            Component.DisableDatesHandler = handlerDescription;
+
+            return this;
         }
 
         /// <summary>

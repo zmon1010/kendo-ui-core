@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI.Fluent
@@ -55,6 +57,51 @@ namespace Kendo.Mvc.UI.Fluent
         {
 
             animationAction(new PopupAnimationBuilder(Component.Animation));
+
+            return this;
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DatePickerBuilder DisableDates(IEnumerable<string> disableDates)
+        {
+            Component.DisableDates = disableDates;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the disabled dates in the DatePicker widget.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().DatePicker()
+        ///             .Name("datePicker")
+        ///             .DisableDates(DayofWeek.Saturday, DayOfWeek.Sunday)
+        /// )
+        /// </code>
+        /// </example>
+        public DatePickerBuilder DisableDates(params DayOfWeek[] days)
+        {
+            Component.DisableDates = days.ToAbbrev();
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the disabled dates in the DatePicker widget using a function.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        /// @( Html.Kendo().DatePicker()
+        ///             .Name("datePicker")
+        ///             .DisableDates("disableDates")
+        /// )
+        /// </code>
+        /// </example>
+        public DatePickerBuilder DisableDates(string handler)
+        {
+            var handlerDescription = new ClientHandlerDescriptor { HandlerName = handler };
+            Component.DisableDatesHandler = handlerDescription;
 
             return this;
         }

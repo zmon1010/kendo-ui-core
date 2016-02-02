@@ -2,6 +2,8 @@ using System;
 using Kendo.Mvc.Resources;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -80,6 +82,51 @@ namespace Kendo.Mvc.UI.Fluent
 
 			return this;
 		}
+                
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimePickerBuilder DisableDates(IEnumerable<string> disableDates)
+        {
+            Component.DisableDates = disableDates;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the disabled dates in the DateTimePicker widget.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().DateTimePicker()
+        ///             .Name("dateTimePicker")
+        ///             .DisableDates(DayofWeek.Saturday, DayOfWeek.Sunday)
+        /// )
+        /// </code>
+        /// </example>
+        public DateTimePickerBuilder DisableDates(params DayOfWeek[] days)
+        {
+            Component.DisableDates = days.ToAbbrev();
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the disabled dates in the DateTimePicker widget using a function.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        /// @( Html.Kendo().DateTimePicker()
+        ///             .Name("dateTimePicker")
+        ///             .DisableDates("disableDates")
+        /// )
+        /// </code>
+        /// </example>
+        public DateTimePickerBuilder DisableDates(string handler)
+        {
+            var handlerDescription = new ClientHandlerDescriptor { HandlerName = handler };
+            Component.DisableDatesHandler = handlerDescription;
+
+            return this;
+        }
 
 		/// <summary>
 		/// Sets the value of the picker input

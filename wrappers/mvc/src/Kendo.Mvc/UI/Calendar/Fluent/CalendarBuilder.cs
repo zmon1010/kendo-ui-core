@@ -1,8 +1,10 @@
 namespace Kendo.Mvc.UI.Fluent
 {
-    using Kendo.Mvc.Resources;
-    using System;
+	using Kendo.Mvc.Extensions;
+	using Kendo.Mvc.Resources;
+	using System;
     using System.Collections.Generic;
+	using System.ComponentModel;
 
     /// <summary>
     /// Defines the fluent interface for configuring the <see cref="Calendar"/>.
@@ -310,20 +312,28 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public CalendarBuilder DisableDates(IEnumerable<string> disableDates)
+        {
+            Component.DisableDates = disableDates;
+
+            return this;
+        }
+
         /// <summary>
-        /// Specifies the disabled dates in the Calendar widget.
+        /// Specifies the disabled dates in the Calendar widget using a function.
         /// </summary>
         /// <example>
         /// <code lang="CS">
         ///  &lt;%= Html.Kendo().Calendar()
         ///             .Name("calendar")
-        ///             .DisableDates(new string [] {"mo", "tu"})
+        ///             .DisableDates(DayofWeek.Saturday, DayOfWeek.Sunday)
         /// %&gt;
         /// </code>
         /// </example>
-        public CalendarBuilder DisableDates(IEnumerable<string> disableDates)
+        public CalendarBuilder DisableDates(params DayOfWeek[] days)
         {
-            Component.DisableDates = disableDates;
+            Component.DisableDates = days.ToAbbrev();
 
             return this;
         }

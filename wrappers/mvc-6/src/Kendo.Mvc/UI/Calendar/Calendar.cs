@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 using Kendo.Mvc.Resources;
 using Microsoft.AspNet.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI
 {
     /// <summary>
     /// Kendo UI Calendar component
     /// </summary>
-    public partial class Calendar : WidgetBase       
+    public partial class Calendar : WidgetBase
     {
         public Calendar(ViewContext viewContext) : base(viewContext)
         {
@@ -25,6 +26,10 @@ namespace Kendo.Mvc.UI
         public bool EnableFooter { get; set; } = true;
 
         public CalendarSelectionSettings SelectionSettings { get; } = new CalendarSelectionSettings();
+
+        public IEnumerable<string> DisableDates { get; set; } = new string[] { };
+
+        public ClientHandlerDescriptor DisableDatesHandler { get; set; }
 
         protected override void WriteHtml(TextWriter writer)
         {
@@ -91,8 +96,17 @@ namespace Kendo.Mvc.UI
                 settings["url"] = url;
             }
 
+            if (DisableDatesHandler?.HasValue() == true)
+            {
+                settings["disableDates"] = DisableDatesHandler;
+
+            }
+            else if (DisableDates.Any())
+            {
+                settings["disableDates"] = DisableDates;
+            }
+
             writer.Write(Initializer.Initialize(Selector, "Calendar", settings));
         }
     }
 }
-

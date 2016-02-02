@@ -8,13 +8,13 @@ namespace Kendo.Mvc.UI.Tests
 
     public class DatePickerBuilderTests
     {
-        private readonly DatePicker datePicker;
+        private readonly DatePicker component;
         private readonly DatePickerBuilder builder;
 
         public DatePickerBuilderTests()
         {
-            datePicker = new DatePicker(TestHelper.CreateViewContext());
-            builder = new DatePickerBuilder(datePicker);
+            component = new DatePicker(TestHelper.CreateViewContext());
+            builder = new DatePickerBuilder(component);
         }
 
         [Fact]
@@ -22,7 +22,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Animation(false);
 
-            datePicker.Animation.Enabled.ShouldEqual(false);
+            component.Animation.Enabled.ShouldEqual(false);
         }
 
         [Fact]
@@ -30,8 +30,8 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Animation(b => b.Open(o => o.Duration(200).Expand()));
 
-            datePicker.Animation.Open.Duration.ShouldEqual(200);
-            datePicker.Animation.Open.Container[0].ShouldEqual("expand");
+            component.Animation.Open.Duration.ShouldEqual(200);
+            component.Animation.Open.Container[0].ShouldEqual("expand");
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Events(b => b.Change("change"));
 
-            var @event = datePicker.Events["change"] as ClientHandlerDescriptor;
+            var @event = component.Events["change"] as ClientHandlerDescriptor;
 
             Assert.NotNull(@event);
 
@@ -63,7 +63,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Enable(false);
 
-            datePicker.Enabled.ShouldEqual(false);
+            component.Enabled.ShouldEqual(false);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Kendo.Mvc.UI.Tests
             
             builder.Format(format);
 
-            datePicker.Format.ShouldEqual(format);
+            component.Format.ShouldEqual(format);
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Footer(template);
 
-            datePicker.Footer.ShouldEqual(template);
+            component.Footer.ShouldEqual(template);
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Depth(CalendarView.Year);
 
-            datePicker.Depth.Value.ShouldEqual(CalendarView.Year);            
+            component.Depth.Value.ShouldEqual(CalendarView.Year);            
         }
 
         [Fact]
@@ -123,7 +123,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Start(CalendarView.Year);
 
-            datePicker.Start.Value.ShouldEqual(CalendarView.Year);
+            component.Start.Value.ShouldEqual(CalendarView.Year);
         }
 
         [Fact]
@@ -137,7 +137,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.MonthTemplate("#= test #");
 
-            datePicker.MonthTemplate.Content.ShouldEqual("#= test #");
+            component.MonthTemplate.Content.ShouldEqual("#= test #");
         }
 
         [Fact]
@@ -145,8 +145,8 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.MonthTemplate(month => month.Empty("empty").Content("content"));
 
-            datePicker.MonthTemplate.Empty.ShouldEqual("empty");
-            datePicker.MonthTemplate.Content.ShouldEqual("content");
+            component.MonthTemplate.Empty.ShouldEqual("empty");
+            component.MonthTemplate.Content.ShouldEqual("content");
         }
 
         [Fact]
@@ -155,7 +155,7 @@ namespace Kendo.Mvc.UI.Tests
             builder.ParseFormats(new string[] { "mm/dd/yyy" });
             builder.ParseFormats(new string[] { "mm/DD/yyyy" });
 
-            datePicker.ParseFormats.Length.ShouldEqual(1);
+            component.ParseFormats.Length.ShouldEqual(1);
         }
 
         [Fact]
@@ -171,7 +171,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Value(date);
 
-            datePicker.Value.ShouldEqual(date);
+            component.Value.ShouldEqual(date);
         }
 
         [Fact]
@@ -179,7 +179,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Value("10/10/2000");
 
-            datePicker.Value.Value.Year.ShouldEqual(2000);
+            component.Value.Value.Year.ShouldEqual(2000);
         }
         
         [Fact]
@@ -195,7 +195,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Min(date);
 
-            datePicker.Min.ShouldEqual(date);
+            component.Min.ShouldEqual(date);
         }
 
         [Fact]
@@ -203,7 +203,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Min("10/10/2000");
 
-            datePicker.Min.Value.Year.ShouldEqual(2000);
+            component.Min.Value.Year.ShouldEqual(2000);
         }
 
         [Fact]
@@ -219,7 +219,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Max(date);
 
-            datePicker.Max.ShouldEqual(date);
+            component.Max.ShouldEqual(date);
         }
 
         [Fact]
@@ -227,13 +227,54 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Max("10/10/2000");
 
-            datePicker.Max.Value.Year.ShouldEqual(2000);
+            component.Max.Value.Year.ShouldEqual(2000);
         }
 
         [Fact]
         public void Max_method_returns_DatePickerBuilder()
         {
             builder.Max(DateTime.Today).ShouldBeType<DatePickerBuilder>();
+        }
+
+        [Fact]
+        public void DisableDates_sets_strings()
+        {
+            var values = new string[] { "foo", "bar" };
+
+            builder.DisableDates(values);
+            component.DisableDates.ShouldEqual(values);
+        }
+
+        [Fact]
+        public void DisableDates_with_strings_returns_builder()
+        {
+            builder.DisableDates(new string[] { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void DisableDates_sets_days()
+        {
+            builder.DisableDates(DayOfWeek.Thursday, DayOfWeek.Saturday);
+            component.DisableDates.ShouldEqual(new string[] { "th", "sa" });
+        }
+
+        [Fact]
+        public void DisableDates_with_days_returns_builder()
+        {
+            builder.DisableDates(new DayOfWeek[] { DayOfWeek.Thursday, DayOfWeek.Saturday }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void DisableDates_sets_handler()
+        {
+            builder.DisableDates("foo");
+            component.DisableDatesHandler.HandlerName.ShouldEqual("foo");
+        }
+
+        [Fact]
+        public void DisableDates_with_handler_returns_builder()
+        {
+            builder.DisableDates("foo").ShouldBeSameAs(builder);
         }
     }
 }

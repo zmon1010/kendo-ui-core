@@ -3,6 +3,7 @@
 - autocomplete.popup
 - barcode.type
 - button.content
+- calendar.disabledates
 - calendar.month
 - chart.axisdefaults
 - chart.categoryaxis.notes.data
@@ -18,8 +19,10 @@
 - contextmenu.items
 - contextmenu.popupcollision
 - datepicker.animation
+- datepicker.disabledates
 - datepicker.month
 - datetimepicker.animation
+- datetimepicker.disabledates
 - datetimepicker.month
 - dropdownlist.animation
 - dropdownlist.datasource
