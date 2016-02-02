@@ -1323,7 +1323,7 @@
         }).data("kendoScheduler");
 
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
-        equal(timeElementsCount,1);
+        equal(timeElementsCount,2);
     });
 
     test("Current time marker is not rendered when the option is set to false", function() {

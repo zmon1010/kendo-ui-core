@@ -47,7 +47,7 @@
         var slot = scheduler.slotByPosition($(".k-current-time").offset().left, top);
 
         ok(slot.startDate <= date);
-        equal(timeElementsCount,1);
+        equal(timeElementsCount,2);
     });
 
     test("two events are positioned according to top right edge of the slot in day view", function() {
