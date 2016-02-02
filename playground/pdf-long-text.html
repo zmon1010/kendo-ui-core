@@ -107,6 +107,14 @@
       <option value="50px">50px</option>
     </select>
 
+    <select class="scale">
+      <option value="1">Scale: 1x</option>
+      <option value="0.5">Scale: 0.5x</option>
+      <option value="0.7" selected>Scale: 0.7x</option>
+      <option value="1.2">Scale: 1.2x</option>
+      <option value="1.2">Scale: 1.5x</option>
+    </select>
+
     <label>white-space: nowrap <input type="checkbox" /></label>
 
     <script type="x/kendo-template" id="page-template">
@@ -129,7 +137,9 @@
             paperSize: $(".paper").val(),
             margin: $(".margin").val(),
             forcePageBreak: ".page-break",
-            template: $("#page-template").html()
+            template: $("#page-template").html(),
+            keepTogether: ".pdf-keep-together",
+            scale: parseFloat($(".scale").val())
           })
         });
         $("select.width").kendoDropDownList({
@@ -232,7 +242,7 @@ which you can then render with one of the supported backends into SVG, PDF, HTML
 
         <h2>I don't know what I'm doing ☺</h2>
 
-        <p><em>Nam <b>dapibus velit nisl</b>, ut lacinia dui auctor id. In convallis erat ut dolor bibendum, non sagittis leo placerat.</em> Mauris quis augue facilisis, molestie sem condimentum, pretium ligula. Vivamus id vestibulum tortor, vitae blandit sem. Ut non risus justo. Maecenas sit amet placerat felis. Aliquam erat volutpat. Morbi ac interdum sem, eu tristique urna. Praesent auctor molestie volutpat.</p>
+        <p class="pdf-keep-together"><em>Nam <b>dapibus velit nisl</b>, ut lacinia dui auctor id. In convallis erat ut dolor bibendum, non sagittis leo placerat.</em> Mauris quis augue facilisis, molestie sem condimentum, pretium ligula. Vivamus id vestibulum tortor, vitae blandit sem. Ut non risus justo. Maecenas sit amet placerat felis. Aliquam erat volutpat. Morbi ac interdum sem, eu tristique urna. Praesent auctor molestie volutpat.</p>
 
         <p>Donec <em>interdum vel nibh et maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla non ullamcorper libero, vel bibendum purus. Sed interdum pretium odio, a tincidunt nibh pharetra in. Donec scelerisque nulla nec sagittis hendrerit. Proin et mattis purus, eget vestibulum mi. Sed interdum vulputate tortor semper dictum. Suspendisse vitae laoreet ex, vel pretium lectus. In eleifend eleifend iaculis.</em> Pellentesque ipsum risus, hendrerit sed erat a, porttitor lacinia turpis. Sed scelerisque pharetra magna vitae suscipit.</p>
 
