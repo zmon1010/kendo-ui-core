@@ -134,12 +134,13 @@
       $(document).ready(function(){
         $("button").click(function(){
           pdfPages('#test1', {
-            paperSize: $(".paper").val(),
-            margin: $(".margin").val(),
-            forcePageBreak: ".page-break",
-            template: $("#page-template").html(),
-            keepTogether: ".pdf-keep-together",
-            scale: parseFloat($(".scale").val())
+            paperSize      : $(".paper").val(),
+            margin         : $(".margin").val(),
+            forcePageBreak : ".page-break",
+            template       : $("#page-template").html(),
+            keepTogether   : ".pdf-keep-together",
+            scale          : parseFloat($(".scale").val()),
+            repeatHeaders  : true
           })
         });
         $("select.width").kendoDropDownList({
@@ -237,6 +238,32 @@ which you can then render with one of the supported backends into SVG, PDF, HTML
         <p>Cras eu rhoncus tellus. Curabitur suscipit ipsum congue porttitor malesuada. Aenean non pellentesque tellus. Maecenas sit amet felis in tortor commodo sagittis. Aliquam at blandit diam. Nunc quis magna eu metus tincidunt dapibus. Sed bibendum urna ut elementum volutpat. Sed nisl purus, iaculis quis felis ut, pulvinar convallis ligula. Vestibulum sit amet tellus viverra, aliquet lorem ac, cursus neque. Etiam maximus orci a venenatis convallis.</p>
 
         <div id="chart1" style="width: 400px; margin: 1em auto"></div>
+
+        <table style="width: 80%" align="center" border="1">
+          <thead>
+            <tr><th>Column 1</th><th>Column 2</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>foo</td><td>bar</td></tr>
+            <tr><td>1</td><td>2</td></tr>
+            <tr><td>foo</td><td>bar</td></tr>
+            <tr><td>1</td><td>2</td></tr>
+            <tr><td>foo</td><td>bar</td></tr>
+            <tr><td>1</td><td>2</td></tr>
+            <tr><td>foo</td><td>bar</td></tr>
+            <tr><td>1</td><td>2</td></tr>
+            <tr><td>foo</td><td>bar</td></tr>
+            <tr><td>1</td><td>2</td></tr>
+            <tr><td>foo</td><td>bar</td></tr>
+            <tr><td>1</td><td>2</td></tr>
+            <tr><td>foo</td><td>bar</td></tr>
+            <tr><td>1</td><td>2</td></tr>
+            <tr><td>foo</td><td>bar</td></tr>
+            <tr><td>1</td><td>2</td></tr>
+            <tr><td>foo</td><td>bar</td></tr>
+            <tr><td>1</td><td>2</td></tr>
+          </tbody>
+        </table>
 
         <p>Mauris scelerisque consequat leo at lobortis. Cras efficitur dui quis massa tempor, quis efficitur sem malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dolor turpis, pellentesque quis est vitae, sodales interdum turpis. Praesent in neque vel nulla sagittis fermentum vel quis risus. Integer sapien elit, sagittis at tellus ut, elementum malesuada enim. Nunc ut suscipit quam. Integer ut magna pulvinar risus faucibus lobortis sit amet eget nisi. In hac habitasse platea dictumst. Donec tempus dignissim sapien ut ullamcorper.</p>
 
