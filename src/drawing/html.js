@@ -52,6 +52,16 @@
 
     /* -----[ exports ]----- */
 
+    function getXY(thing) {
+        if (typeof thing == "number") {
+            return { x: thing, y: thing };
+        }
+        if (Array.isArray(thing)) {
+            return { x: thing[0], y: thing[1] };
+        }
+        return { x: thing.x, y: thing.y };
+    }
+
     function drawDOM(element, options) {
         if (!options) {
             options = {};
@@ -71,12 +81,21 @@
             kendo.pdf.defineFont(getFontFaces(element.ownerDocument));
         }
 
+        var scale = getXY(options.scale || 1);
+
         function doOne(element) {
             var group = new drawing.Group();
 
             // translate to start of page
             var pos = element.getBoundingClientRect();
-            setTransform(group, [ 1, 0, 0, 1, -pos.left, -pos.top ]);
+            setTransform(group, [
+                scale.x,
+                0,
+                0,
+                scale.y,
+                (-pos.left * scale.x),
+                (-pos.top * scale.y)
+            ]);
 
             nodeInfo._clipbox = false;
             nodeInfo._matrix = geo.Matrix.unit();
@@ -111,6 +130,17 @@
                 if (!margin) {
                     margin = { left: 0, top: 0, right: 0, bottom: 0 };
                 }
+
+                // we want paper size and margin to be unaffected by
+                // scaling in the output, so we have to reverse-scale
+                // before our calculations begin.
+                if (pageWidth)  { pageWidth  /= scale.x; }
+                if (pageHeight) { pageHeight /= scale.y; }
+                margin.left   /= scale.x;
+                margin.right  /= scale.x;
+                margin.top    /= scale.y;
+                margin.bottom /= scale.y;
+
                 var group = new drawing.Group({
                     pdf: {
                         multiPage : true,
