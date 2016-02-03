@@ -1098,6 +1098,20 @@
         ok(ds.get(2).loaded(), "Change handler did not update correct model");
     });
 
+    test("loading nodes with zero as id", function() {
+        var read = controlledRead();
+        var ds = new TreeListDataSource({ transport: { read: read } });
+
+        ds.read();
+        read.resolve([ { id: 0, hasChildren: true } ]);
+
+        ds.load(ds.get(0));
+        read.resolve([ { id: 1, hasChildren: true } ]);
+
+        equal(ds.data().length, 2);
+        ok(ds.get(0));
+    });
+
     test("load returns promise", function() {
         var ds = new TreeListDataSource({
             data: [ { id: 1 } ]

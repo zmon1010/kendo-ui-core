@@ -495,7 +495,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         success: function(data, requestParams) {
-            if (!requestParams || !requestParams.id) {
+            if (!requestParams || typeof requestParams.id == "undefined") {
                 this._data = this._observe([]);
             }
 
