@@ -758,6 +758,30 @@
         ok(row.data("kendoEditable"));
     });
 
+    test("adding child item doesn't change parent isNew state", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    fields: {
+                        parentId: { defaultValue: 0, type: "number" }
+                    }
+                }
+            },
+            data: [
+                { id: 1, parentId: 0, expanded: false }
+            ]
+        });
+
+        createTreeList({
+            dataSource: ds
+        });
+
+        instance.addRow(ds.get(1));
+
+        var items = instance.dataSource.rootNodes();
+        ok(!items[0].isNew(), "parent item is marked as new");
+    });
+
     test("adding child item to not loaded parent", function() {
         var data = [
             { id: 1, parentId: 0, expanded: false, hasChildren: true },

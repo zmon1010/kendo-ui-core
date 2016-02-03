@@ -1395,6 +1395,7 @@ var __meta__ = { // jshint ignore:line
         ],
 
         _toggle: function(model, expand) {
+            var defaultPromise = $.Deferred().resolve().promise();
             var loaded = model.loaded();
 
             // reset error state
@@ -1405,7 +1406,7 @@ var __meta__ = { // jshint ignore:line
 
             // do not load items that are currently loading
             if (!loaded && model.expanded) {
-                return;
+                return defaultPromise;
             }
 
             // toggle expanded state
@@ -1416,7 +1417,7 @@ var __meta__ = { // jshint ignore:line
             model.expanded = expand;
 
             if (!loaded) {
-                this.dataSource.load(model)
+                defaultPromise = this.dataSource.load(model)
                     .always(proxy(function() {
                         this._render();
                         this._syncLockedContentHeight();
@@ -1425,14 +1426,16 @@ var __meta__ = { // jshint ignore:line
 
             this._render();
             this._syncLockedContentHeight();
+
+            return defaultPromise;
         },
 
         expand: function(row) {
-            this._toggle(this.dataItem(row), true);
+            return this._toggle(this.dataItem(row), true);
         },
 
         collapse: function(row) {
-            this._toggle(this.dataItem(row), false);
+            return this._toggle(this.dataItem(row), false);
         },
 
         _toggleChildren: function(e) {
@@ -2756,6 +2759,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         dataItem: function(element) {
+            if (element instanceof TreeListModel) {
+                return element;
+            }
+
             var row = $(element).closest("tr");
             var model = this.dataSource.getByUid(row.attr(kendo.attr("uid")));
 
@@ -2844,9 +2851,8 @@ var __meta__ = { // jshint ignore:line
 
                 model[parent.parentIdField] = parent.id;
                 index = this.dataSource.indexOf(parent) + 1;
-                parent.set("expanded", true);
 
-                this.dataSource.load(parent).then(proxy(this._insertAt, this, model, index));
+                this.expand(parent).then(proxy(this._insertAt, this, model, index));
 
                 return;
             }
