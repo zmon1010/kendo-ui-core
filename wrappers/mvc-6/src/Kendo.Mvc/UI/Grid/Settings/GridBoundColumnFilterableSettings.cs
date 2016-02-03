@@ -26,7 +26,8 @@ namespace Kendo.Mvc.UI
 		public bool Multi { get; set; }
 		public ClientHandlerDescriptor ItemTemplate { get; set; }
 		public bool CheckAll { get; set; }
-		public GridColumnFilterableCellSettings CellSettings { get; }
+        public bool Search { get; set; }
+        public GridColumnFilterableCellSettings CellSettings { get; }
 		public DataSource DataSource { get; set; }
 
 		protected override void Serialize(IDictionary<string, object> json)
@@ -69,6 +70,10 @@ namespace Kendo.Mvc.UI
 			{
 				json["checkAll"] = CheckAll;
 			}
+            if (Search)
+            {
+                json["search"] = Search;
+            }
 
 		}
     }

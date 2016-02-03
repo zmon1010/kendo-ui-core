@@ -5,10 +5,10 @@
             .Name("client")
             .Columns(columns =>
             {
-                columns.Bound(p => p.ProductName).Filterable(ftb => ftb.Multi(true));
+                columns.Bound(p => p.ProductName).Filterable(ftb => ftb.Multi(true).Search(true));
                 columns.Bound(p => p.UnitPrice).Width(140).Filterable(ftb => ftb.Multi(true)).Format("{0:c}");
-                columns.Bound(p => p.UnitsInStock).Width(140).Filterable(ftb => ftb.Multi(true));
-                columns.Bound(p => p.Discontinued).Width(100).Filterable(ftb => ftb.Multi(true));
+                columns.Bound(p => p.UnitsInStock).Width(140).Filterable(ftb => ftb.Multi(true).CheckAll(true));
+                columns.Bound(p => p.Discontinued).Width(100).Filterable(ftb => ftb.Multi(true).CheckAll(false));
                 columns.Command(command => command.Destroy()).Width(110);
             })
             .ToolBar(toolbar =>
@@ -41,7 +41,7 @@
             .Columns(columns =>
             {
                 //when ServerOperations of the Grid is enabled, dataSource should be provided for all the Filterable Multi Check columns
-                columns.Bound(e => e.FirstName).Width(220).Filterable(ftb => ftb.Multi(true)
+                columns.Bound(e => e.FirstName).Width(220).Filterable(ftb => ftb.Multi(true).Search(true)
                     .DataSource(ds => ds.Read(r => r.Action("Unique", "Grid").Data("{ field: 'FirstName' }")))
                 );
                 columns.Bound(e => e.LastName).Width(220).Filterable(ftb => ftb.Multi(true)
