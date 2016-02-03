@@ -646,7 +646,7 @@ var RangeEnumerator = Class.extend({
             var nodes = [];
 
             function visit(node) {
-                if (dom.is(node, "img") || (node.nodeType == 3 && (!dom.isWhitespace(node) || node.nodeValue == "\ufeff"))) {
+                if (dom.is(node, "img") || (node.nodeType == 3 && (!dom.isEmptyspace(node) || node.nodeValue == "\ufeff"))) {
                     nodes.push(node);
                 } else {
                     node = node.firstChild;

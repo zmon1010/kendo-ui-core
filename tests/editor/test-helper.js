@@ -86,6 +86,10 @@ function rangeFromHtml(html) {
     return range;
 }
 
+function contentEqual(content) {
+    equal(editor.value(), content);
+}
+
 window.EditorHelpers = {
     serialize: function(dom) {
         return kendo.ui.editor.Serializer.domToXhtml(dom);

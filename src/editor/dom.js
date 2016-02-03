@@ -64,6 +64,7 @@ if (browser.msie && browser.version >= 8) {
 }
 
 var whitespace = /^\s+$/,
+    emptyspace = /^[\n\r\t]+$/,
     rgb = /rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/i,
     bom = /\ufeff/g,
     whitespaceOrBom = /^(\s+|\ufeff)$/,
@@ -349,6 +350,10 @@ var Dom = {
 
     isWhitespace: function(node) {
         return whitespace.test(node.nodeValue);
+    },
+
+    isEmptyspace: function(node) {
+        return emptyspace.test(node.nodeValue);
     },
 
     isBlock: function(node) {

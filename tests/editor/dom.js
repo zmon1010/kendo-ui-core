@@ -318,4 +318,23 @@ test("emptyNode returns false for text node", function() {
     ok(!Dom.emptyNode(document.createTextNode("foo")));
 });
 
+    test("emptyspace nodes", function () {
+        var emptySpaceText = ["\n", "\r", "\t", "\r\n", "\t\t\t\r\n"];
+        $(emptySpaceText).each(function() {
+            var node = document.createTextNode(this);
+            ok(Dom.isEmptyspace(node));
+        });
+    });
+
+    test("not emptyspace nodes", function() {
+        var nodes = ["a", "text\n", " ", "\t \n"];
+        $(nodes).each(function() {
+            var node = document.createTextNode(this);
+            ok(!Dom.isEmptyspace(node));
+        });
+    });
+
+    test("signicant nodes are not emptyspace", function() {
+        ok(!Dom.isEmptyspace(document.createElement("span")));
+    });
 }());

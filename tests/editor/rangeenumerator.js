@@ -68,6 +68,14 @@ test('enumerate skips white space nodes', function() {
     assertArrayEquals(result, [p.firstChild]);
 });
 
+    test("enumerate space nodes", function () {
+        var range = createRangeFromText(editor, "| |");
+        var result = enumerateRange(range);
+
+        equal(result.length, 1);
+        ok(result[0].nodeValue, " ");
+    })
+
 test('enumerate returns images', function() {
     var range = createRangeFromText(editor, '|<img />|');
     var result = enumerateRange(range);

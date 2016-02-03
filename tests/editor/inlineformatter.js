@@ -293,4 +293,17 @@ test("BOM nodes are not accumulated when executing sequential commands", functio
     equal($("strong", editor.body)[0].childNodes.length, 1);
 });
 
+    test("format whitespace content", function() {
+        editor.value("some content");
+        var text = editor.body.firstChild;
+        var range = editor.createRange();
+        range.setStart(text, 4);
+        range.setEnd(text, 5);
+        editor.selectRange(range);
+
+        editor.exec("bold");
+
+        contentEqual("some<strong> </strong>content");
+    });
+
 }());
