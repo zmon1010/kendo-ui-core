@@ -352,7 +352,7 @@
             }
 
             function keepTogether(jqel) {
-                if (options.keepTogether && jqel.is(options.keepTogether)) {
+                if (options.keepTogether && jqel.is(options.keepTogether) && jqel.height() <= pageHeight - adjust) {
                     return true;
                 }
                 return (jqel.data("kendoChart") || /^(?:img|tr|thead|th|tfoot|iframe|svg|object|canvas|input|textarea|select|video|h[1-6])/i.test(jqel[0].tagName));
