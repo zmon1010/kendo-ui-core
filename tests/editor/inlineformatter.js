@@ -303,7 +303,7 @@ test("BOM nodes are not accumulated when executing sequential commands", functio
 
         editor.exec("bold");
 
-        contentEqual("some<strong> </strong>content");
+        contentEqual(editor, "some<strong> </strong>content");
     });
 
 }());

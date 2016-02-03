@@ -86,7 +86,8 @@ function rangeFromHtml(html) {
     return range;
 }
 
-function contentEqual(content) {
+/* exported contentEqual */
+function contentEqual(editor, content) {
     equal(editor.value(), content);
 }
 
