@@ -287,7 +287,7 @@ var __meta__ = { // jshint ignore:line
                     urlJoin = "&";
                 }
 
-                thumbnailUrl = thumbnailUrl + urlJoin + "path=" + that.path() + encodeURIComponent(name);
+                thumbnailUrl = thumbnailUrl + urlJoin + "path=" + encodeURIComponent(that.path() + name);
                 if (dataItem._forceReload) {
                     thumbnailUrl += "&_=" + new Date().getTime();
                     delete dataItem._forceReload;

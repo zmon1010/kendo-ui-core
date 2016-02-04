@@ -693,6 +693,16 @@
         ok(model._forceReload === undefined);
     });
 
+    test("loadImage encodes path", function() {
+        var browser = setup({ transport: { thumbnailUrl: "foo" } }, [{ name: "foo", type: "f" }]);
+        var item = browser._tiles.eq(0);
+
+        browser._path = "für";
+        browser._loadImage(item);
+        var url = item.find("img").attr("src");
+        equal(url, "foo?path=f%C3%BCr%2Ffoo");
+    });
+
     test("value custom formating is applied", function() {
         var browser = setup({
             transport: {
