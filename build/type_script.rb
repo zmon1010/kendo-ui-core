@@ -50,8 +50,8 @@ module CodeGen::TypeScript
             'sheets' => 'WorkbookSheet[]'
         },
         'Diagram' => {
-            'shapes' => 'DiagramShape[]',
-            'connections' => 'DiagramConnection[]'
+            'shapes' => 'kendo.dataviz.diagram.Shape[]',
+            'connections' => 'kendo.dataviz.diagram.Connection[]'
         }
     }
 
