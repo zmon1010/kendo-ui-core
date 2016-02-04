@@ -42,7 +42,7 @@ namespace :generate do
     end
 
     desc 'Generate all server wrappers and their API reference'
-    task :all => [:php, :jsp, 'mvc:wrappers']
+    task :all => [:php, :jsp, 'mvc:wrappers', 'mvc_6:wrappers']
 
     namespace :aspx do
 
