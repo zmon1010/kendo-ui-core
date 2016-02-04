@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Format string for the text of the tooltip. Note: The applied
 		/// format will also influence the appearance of the Slider
-		/// tick labels.
+		/// tick labels.The slider widget supports precision of up-to 10 digits after the decimals point.
         /// </summary>
         /// <param name="value">The value for Format</param>
         public SliderTooltipSettingsBuilder<T> Format(string value)

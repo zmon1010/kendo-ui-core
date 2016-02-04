@@ -40,7 +40,8 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies a list of dates, which will be passed to the month template of the DateView. All dates, which match the date portion of the selected date will be used to re-bind the TimeView.
+        /// Specifies a list of dates, which will be passed to the month template of the DateView.
+		/// All dates, which match the date portion of the selected date will be used to re-bind the TimeView.
         /// </summary>
         /// <param name="value">The value for Dates</param>
         public DateTimePickerBuilder Dates(params DateTime[] value)

@@ -475,6 +475,28 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Fired when navigatable is enabled and the user change current item with either\n\t\t/// mouse or keyboard interaction.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the navigate event.</param>
+        public GridEventBuilder Navigate(string handler)
+        {
+            Handler("navigate", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when navigatable is enabled and the user change current item with either\n\t\t/// mouse or keyboard interaction.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public GridEventBuilder Navigate(Func<object, object> handler)
+        {
+            Handler("navigate", handler);
+
+            return this;
+        }
+
     }
 }
 

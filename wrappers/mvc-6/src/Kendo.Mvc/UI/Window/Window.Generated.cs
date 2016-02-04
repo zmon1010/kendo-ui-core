@@ -31,6 +31,8 @@ namespace Kendo.Mvc.UI
 
         public WindowPositionSettings Position { get; } = new WindowPositionSettings();
 
+        public bool? Scrollable { get; set; }
+
         public string Title { get; set; }
 
         public bool? Visible { get; set; }
@@ -93,6 +95,11 @@ namespace Kendo.Mvc.UI
             if (position.Any())
             {
                 settings["position"] = position;
+            }
+
+            if (Scrollable.HasValue)
+            {
+                settings["scrollable"] = Scrollable;
             }
 
             if (Title?.HasValue() == true)

@@ -22,7 +22,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         /// <summary>
         /// The selected files will be uploaded in separate requests, if this is supported by the browser.
-		/// You can change this behavior by setting batch to true.The batch mode applies to multiple files, which are selected at the same time.
+		/// You can change this behavior by setting batch to true, in which case all selected files will be uploaded in one request.The batch mode applies to multiple files, which are selected at the same time.
 		/// Files selected one after the other will be uploaded in separate requests.
         /// </summary>
         /// <param name="value">The value for Batch</param>
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         /// <summary>
         /// The selected files will be uploaded in separate requests, if this is supported by the browser.
-		/// You can change this behavior by setting batch to true.The batch mode applies to multiple files, which are selected at the same time.
+		/// You can change this behavior by setting batch to true, in which case all selected files will be uploaded in one request.The batch mode applies to multiple files, which are selected at the same time.
 		/// Files selected one after the other will be uploaded in separate requests.
         /// </summary>
         public UploadAsyncSettingsBuilder Batch()

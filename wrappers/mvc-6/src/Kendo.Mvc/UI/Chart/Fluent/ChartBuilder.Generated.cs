@@ -63,6 +63,39 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies if the chart can be panned.
+        /// </summary>
+        /// <param name="configurator">The configurator for the pannable setting.</param>
+        public ChartBuilder Pannable(Action<ChartPannableSettingsBuilder> configurator)
+        {
+            Container.Pannable.Enabled = true;
+
+            Container.Pannable.Chart = Container;
+            configurator(new ChartPannableSettingsBuilder(Container.Pannable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies if the chart can be panned.
+        /// </summary>
+        public ChartBuilder Pannable()
+        {
+            Container.Pannable.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies if the chart can be panned.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the pannable option.</param>
+        public ChartBuilder Pannable(bool enabled)
+        {
+            Container.Pannable.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// Configures the export settings for the saveAsPDF method.
         /// </summary>
         /// <param name="configurator">The configurator for the pdf setting.</param>
@@ -157,6 +190,39 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartBuilder Transitions(bool value)
         {
             Container.Transitions = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies if the chart can be zoomed.
+        /// </summary>
+        /// <param name="configurator">The configurator for the zoomable setting.</param>
+        public ChartBuilder Zoomable(Action<ChartZoomableSettingsBuilder> configurator)
+        {
+            Container.Zoomable.Enabled = true;
+
+            Container.Zoomable.Chart = Container;
+            configurator(new ChartZoomableSettingsBuilder(Container.Zoomable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies if the chart can be zoomed.
+        /// </summary>
+        public ChartBuilder Zoomable()
+        {
+            Container.Zoomable.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies if the chart can be zoomed.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the zoomable option.</param>
+        public ChartBuilder Zoomable(bool enabled)
+        {
+            Container.Zoomable.Enabled = enabled;
             return this;
         }
 

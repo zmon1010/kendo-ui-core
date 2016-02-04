@@ -131,6 +131,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Enables (true) or disables (false) the ability for users to scroll the window contents.
+        /// </summary>
+        /// <param name="value">The value for Scrollable</param>
+        public WindowBuilder Scrollable(bool value)
+        {
+            Container.Scrollable = value;
+            return this;
+        }
+
+        /// <summary>
         /// The text in the window title bar. If false, the window will be displayed without a title bar. Note that this will prevent the window from being dragged, and the window titlebar buttons will not be shown.
         /// </summary>
         /// <param name="value">The value for Title</param>

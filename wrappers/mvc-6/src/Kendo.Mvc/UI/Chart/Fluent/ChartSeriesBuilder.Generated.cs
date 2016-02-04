@@ -772,7 +772,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A value indicating whether to show the point category name (for bubble, donut and pie series)
+        /// A value indicating whether to show the point category name (for funnel, donut and pie series)
 		/// or series name (for other available series types) in the legend.
         /// </summary>
         /// <param name="value">The value for VisibleInLegend</param>
@@ -793,7 +793,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the points. Applicable for bar, column, rangeBar, rangeColumn and waterfall series. The available argument fields are:
+        /// A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are:
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
         public ChartSeriesBuilder Visual(string handler)
@@ -803,7 +803,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A function that can be used to create a custom visual for the points. Applicable for bar, column, rangeBar, rangeColumn and waterfall series. The available argument fields are:
+        /// A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are:
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public ChartSeriesBuilder Visual(Func<object, object> handler)

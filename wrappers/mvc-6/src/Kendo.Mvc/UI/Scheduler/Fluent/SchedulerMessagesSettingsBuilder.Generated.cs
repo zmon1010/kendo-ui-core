@@ -161,6 +161,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The configuration of the scheduler editable messages. Use this option to customize or localize the scheduler editable messages.
+        /// </summary>
+        /// <param name="configurator">The configurator for the editable setting.</param>
+        public SchedulerMessagesSettingsBuilder<T> Editable(Action<SchedulerMessagesEditableSettingsBuilder<T>> configurator)
+        {
+
+            Container.Editable.Scheduler = Container.Scheduler;
+            configurator(new SchedulerMessagesEditableSettingsBuilder<T>(Container.Editable));
+
+            return this;
+        }
+
+        /// <summary>
         /// The configuration of the scheduler editor messages. Use this option to customize or localize the scheduler editor messages.
         /// </summary>
         /// <param name="configurator">The configurator for the editor setting.</param>

@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
 
         public List<ChartPane> Panes { get; set; } = new List<ChartPane>();
 
+        public ChartPannableSettings Pannable { get; } = new ChartPannableSettings();
+
         public ChartPdfSettings Pdf { get; } = new ChartPdfSettings();
 
         public ChartPlotAreaSettings PlotArea { get; } = new ChartPlotAreaSettings();
@@ -42,6 +44,8 @@ namespace Kendo.Mvc.UI
         public List<ChartXAxis> XAxis { get; set; } = new List<ChartXAxis>();
 
         public List<ChartYAxis> YAxis { get; set; } = new List<ChartYAxis>();
+
+        public ChartZoomableSettings Zoomable { get; } = new ChartZoomableSettings();
 
         public RenderingMode? RenderAs { get; set; }
 
@@ -77,6 +81,16 @@ namespace Kendo.Mvc.UI
             if (panes.Any())
             {
                 settings["panes"] = panes;
+            }
+
+            var pannable = Pannable.Serialize();
+            if (pannable.Any())
+            {
+                settings["pannable"] = pannable;
+            }
+            else if (Pannable.Enabled == true)
+            {
+                settings["pannable"] = true;
             }
 
             var pdf = Pdf.Serialize();
@@ -140,6 +154,16 @@ namespace Kendo.Mvc.UI
             if (yAxis.Any())
             {
                 settings["yAxis"] = yAxis;
+            }
+
+            var zoomable = Zoomable.Serialize();
+            if (zoomable.Any())
+            {
+                settings["zoomable"] = zoomable;
+            }
+            else if (Zoomable.Enabled == true)
+            {
+                settings["zoomable"] = true;
             }
 
             if (RenderAs.HasValue)

@@ -69,12 +69,6 @@ namespace Kendo.Mvc.UI
 
 		public WindowResizingSettings ResizingSettings { get; } = new WindowResizingSettings();
 
-		public bool Scrollable
-		{
-			get;
-			set;
-		}
-
 		protected override void WriteHtml(TextWriter writer)
         {			
             var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
@@ -124,7 +118,6 @@ namespace Kendo.Mvc.UI
 				}
 			}
 
-			settings.Add("scrollable", Scrollable);
 			settings.Add("content", ContentUrl);
 
             if (!string.IsNullOrEmpty(AppendTo))

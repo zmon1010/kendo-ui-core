@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public bool? Enable { get; set; }
 
+        public bool? Hidden { get; set; }
+
         public string Icon { get; set; }
 
         public string Id { get; set; }
@@ -42,6 +44,11 @@ namespace Kendo.Mvc.UI
             if (Enable.HasValue)
             {
                 settings["enable"] = Enable;
+            }
+
+            if (Hidden.HasValue)
+            {
+                settings["hidden"] = Hidden;
             }
 
             if (Icon?.HasValue() == true)

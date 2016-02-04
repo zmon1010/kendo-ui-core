@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
 
         public string Group { get; set; }
 
+        public bool? Hidden { get; set; }
+
         public string Icon { get; set; }
 
         public string Id { get; set; }
@@ -90,6 +92,11 @@ namespace Kendo.Mvc.UI
             if (Group?.HasValue() == true)
             {
                 settings["group"] = Group;
+            }
+
+            if (Hidden.HasValue)
+            {
+                settings["hidden"] = Hidden;
             }
 
             if (Icon?.HasValue() == true)

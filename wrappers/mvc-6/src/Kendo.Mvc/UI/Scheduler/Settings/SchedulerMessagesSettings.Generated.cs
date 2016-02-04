@@ -41,6 +41,8 @@ namespace Kendo.Mvc.UI
 
         public string Today { get; set; }
 
+        public SchedulerMessagesEditableSettings<T> Editable { get; } = new SchedulerMessagesEditableSettings<T>();
+
         public SchedulerMessagesEditorSettings<T> Editor { get; } = new SchedulerMessagesEditorSettings<T>();
 
         public SchedulerMessagesRecurrenceEditorSettings<T> RecurrenceEditor { get; } = new SchedulerMessagesRecurrenceEditorSettings<T>();
@@ -129,6 +131,12 @@ namespace Kendo.Mvc.UI
             if (Today?.HasValue() == true)
             {
                 settings["today"] = Today;
+            }
+
+            var editable = Editable.Serialize();
+            if (editable.Any())
+            {
+                settings["editable"] = editable;
             }
 
             var editor = Editor.Serialize();

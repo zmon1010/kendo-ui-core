@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public string Author { get; set; }
 
+        public bool? AvoidLinks { get; set; }
+
         public string Creator { get; set; }
 
         public DateTime? Date { get; set; }
@@ -50,6 +52,11 @@ namespace Kendo.Mvc.UI
             if (Author?.HasValue() == true)
             {
                 settings["author"] = Author;
+            }
+
+            if (AvoidLinks.HasValue)
+            {
+                settings["avoidLinks"] = AvoidLinks;
             }
 
             if (Creator?.HasValue() == true)
