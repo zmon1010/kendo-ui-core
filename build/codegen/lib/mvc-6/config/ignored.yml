@@ -26,6 +26,7 @@
 - datetimepicker.month
 - dropdownlist.animation
 - dropdownlist.datasource
+- dropdownlist.popup
 - grid.altrowtemplate
 - grid.columnmenu.messages
 - grid.columns
