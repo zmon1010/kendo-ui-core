@@ -43,7 +43,7 @@ var BlockFormatFinder = Class.extend({
 
         for (i = 0, len = nodes.length; i < len; i++) {
             for (var f = format.length - 1; f >= 0; f--) {
-                candidate = dom.ofType(nodes[i], format[f].tags) ? nodes[i] : dom.parentOfType(nodes[i], format[f].tags);
+                candidate = dom.ofType(nodes[i], format[f].tags) ? nodes[i] : dom.closestEditableOfType(nodes[i], format[f].tags);
                 if (candidate) {
                     break;
                 }

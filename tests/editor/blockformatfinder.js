@@ -164,4 +164,16 @@ test("getFormat returns false despite of inline editor wrapper", function() {
     ok(!finder.isFormatted([inline]));
 });
 
+    test("list item, containing editor, is not found", function () {
+        var inline = QUnit.fixture.find("#inline").wrap("<ul><li>item</li></ul>");
+        var editor = new kendo.ui.Editor(inline);
+        var finder = new BlockFormatFinder(justifyCenter);
+
+        editor.value("<p>content</p>");
+        var p = editor.body.firstChild;
+
+        var suitable = finder.findSuitable([p.firstChild]);
+
+        equal(suitable[0], editor.body.firstChild);
+    });
 }());
