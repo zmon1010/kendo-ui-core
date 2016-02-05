@@ -224,6 +224,7 @@ namespace :generate do
                 'docs/api/javascript/dataviz/ui/chart.md',
                 'docs/api/javascript/dataviz/ui/lineargauge.md',
                 'docs/api/javascript/dataviz/ui/radialgauge.md',
+                'docs/api/javascript/dataviz/ui/treemap.md',
                 'docs/api/javascript/dataviz/ui/qrcode.md',
                 'docs/api/javascript/ui/autocomplete.md',
                 'docs/api/javascript/ui/button.md',

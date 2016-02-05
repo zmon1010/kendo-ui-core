@@ -82,6 +82,7 @@
 - treelist.editable.window
 - treelist.pdf.margin
 - treelist.pdf.papersize
+- treemap.datasource
 - upload.enabled
 - upload.localization
 - window.actions

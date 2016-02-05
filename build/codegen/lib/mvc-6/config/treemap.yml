@@ -1,0 +1,4 @@
+:options:
+    - :name: colors
+      :merge: true
+      :type: String[]
