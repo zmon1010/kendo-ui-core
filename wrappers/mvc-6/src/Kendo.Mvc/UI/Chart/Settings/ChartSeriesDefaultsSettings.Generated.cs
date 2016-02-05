@@ -1,72 +1,150 @@
-using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Kendo UI ChartTitleSettings class
+    /// Defines the Chart series defaults settings
     /// </summary>
-    public partial class ChartSeriesDefaultsSettings 
+    public partial class ChartSeriesDefaultsSettings
     {
+        /// <summary>
+        /// The Area series default settings.
+        /// </summary>
         public ChartSeries Area { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Bar series default settings.
+        /// </summary>
         public ChartSeries Bar { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Column series default settings.
+        /// </summary>
         public ChartSeries Column { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Line series default settings.
+        /// </summary>
         public ChartSeries Line { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The VerticalArea series default settings.
+        /// </summary>
         public ChartSeries VerticalArea { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The VerticalLine series default settings.
+        /// </summary>
         public ChartSeries VerticalLine { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The RadarArea series default settings.
+        /// </summary>
         public ChartSeries RadarArea { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The RadarColumn series default settings.
+        /// </summary>
         public ChartSeries RadarColumn { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The RadarLine series default settings.
+        /// </summary>
         public ChartSeries RadarLine { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The BoxPlot series default settings.
+        /// </summary>
         public ChartSeries BoxPlot { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Bubble series default settings.
+        /// </summary>
         public ChartSeries Bubble { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Bullet series default settings.
+        /// </summary>
         public ChartSeries Bullet { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The VerticalBullet series default settings.
+        /// </summary>
         public ChartSeries VerticalBullet { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Candlestick series default settings.
+        /// </summary>
         public ChartSeries Candlestick { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The OHLC series default settings.
+        /// </summary>
         public ChartSeries OHLC { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Funnel series default settings.
+        /// </summary>
         public ChartSeries Funnel { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The RangeColumn series default settings.
+        /// </summary>
         public ChartSeries RangeColumn { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The RangeBar series default settings.
+        /// </summary>
         public ChartSeries RangeBar { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Pie series default settings.
+        /// </summary>
         public ChartSeries Pie { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Donut series default settings.
+        /// </summary>
         public ChartSeries Donut { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Scatter series default settings.
+        /// </summary>
         public ChartSeries Scatter { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The ScatterLine series default settings.
+        /// </summary>
         public ChartSeries ScatterLine { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The PolarArea series default settings.
+        /// </summary>
         public ChartSeries PolarArea { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The PolarLine series default settings.
+        /// </summary>
         public ChartSeries PolarLine { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The PolarScatter series default settings.
+        /// </summary>
         public ChartSeries PolarScatter { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The Waterfall series default settings.
+        /// </summary>
         public ChartSeries Waterfall { get; } = new ChartSeries();
 
+        /// <summary>
+        /// The HorizontalWaterfall series default settings.
+        /// </summary>
         public ChartSeries HorizontalWaterfall { get; } = new ChartSeries();
 
 
-        public Dictionary<string, object> Serialize()
+        public IDictionary<string, object> Serialize()
         {
             var settings = new Dictionary<string, object>();
 
@@ -154,10 +232,10 @@ namespace Kendo.Mvc.UI
                 settings["candlestick"] = candlestick;
             }
 
-            var ohlc = OHLC.Serialize();
-            if (ohlc.Any())
+            var oHLC = OHLC.Serialize();
+            if (oHLC.Any())
             {
-                settings["ohlc"] = ohlc;
+                settings["oHLC"] = oHLC;
             }
 
             var funnel = Funnel.Serialize();
@@ -231,6 +309,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["horizontalWaterfall"] = horizontalWaterfall;
             }
+
 
             return settings;
         }

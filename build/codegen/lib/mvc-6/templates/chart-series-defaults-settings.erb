@@ -1,0 +1,35 @@
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Kendo.Mvc.UI
+{
+    /// <summary>
+    /// Defines the Chart series defaults settings
+    /// </summary>
+    public partial class ChartSeriesDefaultsSettings
+    {
+% CHART_SERIES.each do |type|
+        /// <summary>
+        /// The <%= type %> series default settings.
+        /// </summary>
+        public ChartSeries <%= type %> { get; } = new ChartSeries();
+
+% end
+
+        public IDictionary<string, object> Serialize()
+        {
+            var settings = new Dictionary<string, object>();
+
+% CHART_SERIES.each do |type|
+            var <%= type.camelize %> = <%= type %>.Serialize();
+            if (<%= type.camelize %>.Any())
+            {
+                settings["<%= type.camelize %>"] = <%= type.camelize %>;
+            }
+
+% end
+
+            return settings;
+        }
+    }
+}
