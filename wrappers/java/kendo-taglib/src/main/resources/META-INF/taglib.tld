@@ -13993,6 +13993,18 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>The height of the handle elements.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The width of the handle elements.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
 
     </tag>
 
@@ -14755,6 +14767,18 @@ data source is fired. By default the widget will bind to the data source specifi
             <name>fill</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The height of the handle elements.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The width of the handle elements.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
         </attribute>
 
     </tag>
@@ -44197,7 +44221,7 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The default colors for the treemap tiles. When all colors are used, new colors are pulled from the start again. Can be set to array of specific colors or array of color ranges.</description>
+            <description>The default colors for the TreeMap items (tiles). Can be set to array of specific colors or array of color ranges. For more information on the widget behavior, see the Colors section on the TreeMap Overview page.</description>
             <name>colors</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>

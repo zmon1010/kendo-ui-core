@@ -67,6 +67,22 @@ public class ConnectionSelectionHandlesTag extends  BaseTag  /* interfaces */ /*
         setProperty("fill", value);
     }
 
+    public float getHeight() {
+        return (Float)getProperty("height");
+    }
+
+    public void setHeight(float value) {
+        setProperty("height", value);
+    }
+
+    public float getWidth() {
+        return (Float)getProperty("width");
+    }
+
+    public void setWidth(float value) {
+        setProperty("width", value);
+    }
+
 //<< Attributes
 
 }

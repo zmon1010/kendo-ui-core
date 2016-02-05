@@ -101,7 +101,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The default colors for the treemap tiles. When all colors are used, new colors are pulled from the start again. Can be set to array of specific colors or array of color ranges.
+        /// The default colors for the TreeMap items (tiles). Can be set to array of specific colors or array of color ranges. For more information on the widget behavior, see the Colors section on the TreeMap Overview page.
         /// </summary>
         /// <param name="value">The value that configures the colors.</param>
         public TreeMapBuilder Colors(params string[] value)
