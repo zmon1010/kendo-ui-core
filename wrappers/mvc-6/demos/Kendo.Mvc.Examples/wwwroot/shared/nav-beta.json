@@ -479,100 +479,100 @@
     },
     "spriteCssClass": "calendarIcon",
     "items": [
-        {
-            "text": "Basic usage",
-            "url": "calendar/index",
-            "title": {
-                "kendo-ui": "Example of Kendo UI jQuery-based Calendar",
-                "aspnet-mvc": "Example of ASP.NET MVC Calendar"
-            },
-            "meta": {
-                "kendo-ui": "Explore the example of HTML5 calendar widget, included in Kendo UI Web, to find how easy it is to add a calendar to your website or web app.",
-                "aspnet-mvc": "Explore the example of ASP.NET MVC calendar control to find how easy it is to add a calendar to your website or web app."
-            }
+      {
+        "text": "Basic usage",
+        "url": "calendar/index",
+        "title": {
+          "kendo-ui": "Example of Kendo UI jQuery-based Calendar",
+          "aspnet-mvc": "Example of ASP.NET MVC Calendar"
         },
-        {
-            "text": "Customizing templates",
-            "url": "calendar/template",
-            "title": {
-                "kendo-ui": "Customize the template of Kendo UI Calendar widget | Kendo UI Web demos",
-                "aspnet-mvc": "Custom templates for ASP.NET MVC Calendar | ASP.NET MVC demos"
-            },
-            "meta": {
-                "kendo-ui": "This demo shows how Kendo UI Calendar allows you to customize the content in your template.",
-                "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to customize the content in your template."
-            }
-        },
-        {
-            "text": "Disable dates",
-            "url": "calendar/disable-dates",
-            "title": {
-                "kendo-ui": "Disable dates in the Kendo UI Calendar widget | Kendo UI Web demos",
-                "aspnet-mvc": "Disable dates in the ASP.NET MVC Calendar | ASP.NET MVC demos"
-            },
-            "meta": {
-                "kendo-ui": "This demo shows how Kendo UI Calendar allows you to disable dates.",
-                "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to disable dates"
-            },
-            "new": "true"
-        },
-        {
-            "text": "Events",
-            "url": "calendar/events",
-            "title": {
-                "kendo-ui": "Events, triggered in Kendo UI Calendar | Kendo UI Web Demos",
-                "aspnet-mvc": "Events, triggered in ASP.NET MVC Calendar | ASP.NET MVC Demos"
-            },
-            "meta": {
-                "kendo-ui": "This example of Kendo UI Calendar widget shows events which are available in the component.",
-                "aspnet-mvc": "This example of ASP.NET MVC Calendar control shows events which are available in the component."
-            }
-        },
-        {
-            "text": "API",
-            "url": "calendar/api",
-            "title": {
-                "kendo-ui": "Demo for Kendo UI Calendar Widget API",
-                "aspnet-mvc": "Demo for ASP.NET MVC Calendar Control API"
-            },
-            "meta": {
-                "kendo-ui": "This demo shows how Kendo UI Calendar Widget API works and what kind of functions it supports.",
-                "aspnet-mvc": "This demo shows how the ASP.NET MVC Calendar API works and what kind of functions it supports."
-            }
-        },
-        {
-            "packages": [
-                "mvc-offline"
-            ],
-            "text": "Globalization",
-            "url": "calendar/globalization"
-        },
-        {
-            "text": "RTL support",
-            "disableInMobile": true,
-            "url": "calendar/right-to-left-support",
-            "title": {
-                "kendo-ui": "Right-to-left functionality, enabled in Kendo UI Calendar widget",
-                "aspnet-mvc": "Right-to-left functionality, enabled in ASP.NET MVC Calendar"
-            },
-            "meta": {
-                "kendo-ui": "Kendo UI Calendar component supports RTL functionality. Look at the demo to see how to easily apply RTL support to the widget.",
-                "aspnet-mvc": "ASP.NET MVC Calendar component supports RTL functionality. Look at the demo to see how to easily apply RTL support to the control."
-            }
-        },
-        {
-            "text": "Keyboard navigation",
-            "disableInMobile": true,
-            "url": "calendar/keyboard-navigation",
-            "title": {
-                "kendo-ui": "Keyboard navigation demo for Kendo UI Calendar widget",
-                "aspnet-mvc": "Keyboard navigation demo for ASP.NET MVC Calendar"
-            },
-            "meta": {
-                "kendo-ui": "You can easily navigate in Kendo UI Calendar by using the keyboard. This demo shows the functionality, just look at the notes and play with the example.",
-                "aspnet-mvc": "You can easily navigate in ASP.NET MVC Calendar by using the keyboard. This demo shows the functionality, just look at the notes and play with the example."
-            }
+        "meta": {
+          "kendo-ui": "Explore the example of HTML5 calendar widget, included in Kendo UI Web, to find how easy it is to add a calendar to your website or web app.",
+          "aspnet-mvc": "Explore the example of ASP.NET MVC calendar control to find how easy it is to add a calendar to your website or web app."
         }
+      },
+      {
+        "text": "Customizing templates",
+        "url": "calendar/template",
+        "title": {
+          "kendo-ui": "Customize the template of Kendo UI Calendar widget | Kendo UI Web demos",
+          "aspnet-mvc": "Custom templates for ASP.NET MVC Calendar | ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how Kendo UI Calendar allows you to customize the content in your template.",
+          "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to customize the content in your template."
+        }
+      },
+      {
+        "text": "Disable dates",
+        "url": "calendar/disable-dates",
+        "title": {
+          "kendo-ui": "Disable dates in the Kendo UI Calendar widget | Kendo UI Web demos",
+          "aspnet-mvc": "Disable dates in the ASP.NET MVC Calendar | ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how Kendo UI Calendar allows you to disable dates.",
+          "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to disable dates"
+        },
+        "new": "true"
+      },
+      {
+        "text": "Events",
+        "url": "calendar/events",
+        "title": {
+          "kendo-ui": "Events, triggered in Kendo UI Calendar | Kendo UI Web Demos",
+          "aspnet-mvc": "Events, triggered in ASP.NET MVC Calendar | ASP.NET MVC Demos"
+        },
+        "meta": {
+          "kendo-ui": "This example of Kendo UI Calendar widget shows events which are available in the component.",
+          "aspnet-mvc": "This example of ASP.NET MVC Calendar control shows events which are available in the component."
+        }
+      },
+      {
+        "text": "API",
+        "url": "calendar/api",
+        "title": {
+          "kendo-ui": "Demo for Kendo UI Calendar Widget API",
+          "aspnet-mvc": "Demo for ASP.NET MVC Calendar Control API"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how Kendo UI Calendar Widget API works and what kind of functions it supports.",
+          "aspnet-mvc": "This demo shows how the ASP.NET MVC Calendar API works and what kind of functions it supports."
+        }
+      },
+      {
+        "packages": [
+          "mvc-offline"
+        ],
+        "text": "Globalization",
+        "url": "calendar/globalization"
+      },
+      {
+        "text": "RTL support",
+        "disableInMobile": true,
+        "url": "calendar/right-to-left-support",
+        "title": {
+          "kendo-ui": "Right-to-left functionality, enabled in Kendo UI Calendar widget",
+          "aspnet-mvc": "Right-to-left functionality, enabled in ASP.NET MVC Calendar"
+        },
+        "meta": {
+          "kendo-ui": "Kendo UI Calendar component supports RTL functionality. Look at the demo to see how to easily apply RTL support to the widget.",
+          "aspnet-mvc": "ASP.NET MVC Calendar component supports RTL functionality. Look at the demo to see how to easily apply RTL support to the control."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "disableInMobile": true,
+        "url": "calendar/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard navigation demo for Kendo UI Calendar widget",
+          "aspnet-mvc": "Keyboard navigation demo for ASP.NET MVC Calendar"
+        },
+        "meta": {
+          "kendo-ui": "You can easily navigate in Kendo UI Calendar by using the keyboard. This demo shows the functionality, just look at the notes and play with the example.",
+          "aspnet-mvc": "You can easily navigate in ASP.NET MVC Calendar by using the keyboard. This demo shows the functionality, just look at the notes and play with the example."
+        }
+      }
     ],
     "category": "Scheduling"
   },
@@ -743,111 +743,111 @@
     },
     "spriteCssClass": "datePickerIcon",
     "items": [
-        {
-            "text": "Basic usage",
-            "url": "datepicker/index",
-            "title": {
-                "kendo-ui": "Kendo UI jQuery DatePicker Demo",
-                "aspnet-mvc": "ASP.NET MVC DatePicker sample"
-            },
-            "meta": {
-                "kendo-ui": "The demo shows how users can efforight-to-left-supportessly edit and select dates in the calendar. Combine date editing functionality and animated dropdown in a jQuery Datepicker control for your web app.",
-                "aspnet-mvc": "This example shows Telerik DatePicker basic features to select dates and times in ASP.NET MVC application."
-            }
+      {
+        "text": "Basic usage",
+        "url": "datepicker/index",
+        "title": {
+          "kendo-ui": "Kendo UI jQuery DatePicker Demo",
+          "aspnet-mvc": "ASP.NET MVC DatePicker sample"
         },
-        {
-            "text": "Range selection",
-            "url": "datepicker/rangeselection",
-            "title": {
-                "kendo-ui": "Range selection in Kendo UI DatePicker | Kendo UI Web Demos",
-                "aspnet-mvc": "Range selection in ASP.NET MVC DatePicker | ASP.NET MVC Demos"
-            },
-            "meta": {
-                "kendo-ui": "This demo shows how the Datepicker component works for range selections. You can easily enable users to select a date range in a handy manner.",
-                "aspnet-mvc": "This demo shows how the ASP.NET MVC Datepicker component works for range selections. You can easily enable users to select a date range in a handy manner."
-            }
-        },
-        {
-            "text": "Customizing templates",
-            "url": "datepicker/template",
-            "title": {
-                "kendo-ui": "Demo for customizing the template of Kendo UI DatePicker control",
-                "aspnet-mvc": "Demo for customizing the template of ASP.NET MVC DatePicker"
-            },
-            "meta": {
-                "kendo-ui": "This example demonstrates how you can use a custom template for your jQuery Kendo UI DatePicker control in your web app. Easily apply a special style for your template.",
-                "aspnet-mvc": "This example demonstrates how you can use a custom template for your ASP.NET MVC DatePicker control in your web app. Easily apply a special style for your template."
-            }
-        },
-        {
-            "text": "Disable dates",
-            "url": "datepicker/disable-dates",
-            "title": {
-                "kendo-ui": "Disable dates in the Kendo UI DatePicker widget | Kendo UI Web demos",
-                "aspnet-mvc": "Disable dates in the ASP.NET MVC DatePicker | ASP.NET MVC demos"
-            },
-            "meta": {
-                "kendo-ui": "This demo shows how Kendo UI DatePicker allows you to disable dates.",
-                "aspnet-mvc": "This demo shows how ASP.NET MVC DatePicker allows you to disable dates"
-            }
-        },
-        {
-            "text": "Events",
-            "url": "datepicker/events",
-            "title": {
-                "kendo-ui": "Attach an event to Kendo UI jQuery DatePicker | Kendo UI Web Demos",
-                "aspnet-mvc": "Attach an event to ASP.NET MVC DatePicker | ASP.NET MVC Demos"
-            },
-            "meta": {
-                "kendo-ui": "This sample shows how to access the events, attached to a date, as well as use Kendo UI Date Picker widget to pick a date or change it manually from the dropdown calendar.",
-                "aspnet-mvc": "This sample shows how to access the events, attached to a date, as well as use ASP.NET MVC Date Picker to pick a date or change it manually from a dropdown calendar."
-            }
-        },
-        {
-            "text": "API",
-            "url": "datepicker/api",
-            "title": {
-                "kendo-ui": "Kendo UI DatePicker API Demo",
-                "aspnet-mvc": "API ASP.NET MVC Datepicker example"
-            },
-            "meta": {
-                "kendo-ui": "DatePicker API example shows how the API functions can be used to apply enable/disable functionality to jQuery-powered date picker control or open/close the calendar.",
-                "aspnet-mvc": "This example demonstrates how the API of Telerik ASP.NET MVC Datepicker can be configured to modify the features of the extension."
-            }
-        },
-        {
-            "packages": [
-                "mvc-offline"
-            ],
-            "text": "Globalization",
-            "url": "datepicker/globalization"
-        },
-        {
-            "text": "RTL support",
-            "disableInMobile": true,
-            "url": "datepicker/right-to-left-support",
-            "title": {
-                "kendo-ui": "RTL support in Kendo UI DatePicker widget | Kendo UI Demo",
-                "aspnet-mvc": "RTL support in ASP.NET MVC DatePicker control | ASP.NET MVC Demo"
-            },
-            "meta": {
-                "kendo-ui": "See how Kendo UI DatePicker component supports RTL functionality.",
-                "aspnet-mvc": "See how ASP.NET MVC DatePicker component supports RTL functionality."
-            }
-        },
-        {
-            "text": "Keyboard navigation",
-            "disableInMobile": true,
-            "url": "datepicker/keyboard-navigation",
-            "title": {
-                "kendo-ui": "Keyboard navigation in Kendo UI DatePicker",
-                "aspnet-mvc": "Keyboard navigation in ASP.NET MVC DatePicker"
-            },
-            "meta": {
-                "kendo-ui": "This example shows how the keyboard navigation functionality is supported in Kendo UI DatePicker widget.",
-                "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in ASP.NET MVC DatePicker control."
-            }
+        "meta": {
+          "kendo-ui": "The demo shows how users can efforight-to-left-supportessly edit and select dates in the calendar. Combine date editing functionality and animated dropdown in a jQuery Datepicker control for your web app.",
+          "aspnet-mvc": "This example shows Telerik DatePicker basic features to select dates and times in ASP.NET MVC application."
         }
+      },
+      {
+        "text": "Range selection",
+        "url": "datepicker/rangeselection",
+        "title": {
+          "kendo-ui": "Range selection in Kendo UI DatePicker | Kendo UI Web Demos",
+          "aspnet-mvc": "Range selection in ASP.NET MVC DatePicker | ASP.NET MVC Demos"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how the Datepicker component works for range selections. You can easily enable users to select a date range in a handy manner.",
+          "aspnet-mvc": "This demo shows how the ASP.NET MVC Datepicker component works for range selections. You can easily enable users to select a date range in a handy manner."
+        }
+      },
+      {
+        "text": "Customizing templates",
+        "url": "datepicker/template",
+        "title": {
+          "kendo-ui": "Demo for customizing the template of Kendo UI DatePicker control",
+          "aspnet-mvc": "Demo for customizing the template of ASP.NET MVC DatePicker"
+        },
+        "meta": {
+          "kendo-ui": "This example demonstrates how you can use a custom template for your jQuery Kendo UI DatePicker control in your web app. Easily apply a special style for your template.",
+          "aspnet-mvc": "This example demonstrates how you can use a custom template for your ASP.NET MVC DatePicker control in your web app. Easily apply a special style for your template."
+        }
+      },
+      {
+        "text": "Disable dates",
+        "url": "datepicker/disable-dates",
+        "title": {
+          "kendo-ui": "Disable dates in the Kendo UI DatePicker widget | Kendo UI Web demos",
+          "aspnet-mvc": "Disable dates in the ASP.NET MVC DatePicker | ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how Kendo UI DatePicker allows you to disable dates.",
+          "aspnet-mvc": "This demo shows how ASP.NET MVC DatePicker allows you to disable dates"
+        }
+      },
+      {
+        "text": "Events",
+        "url": "datepicker/events",
+        "title": {
+          "kendo-ui": "Attach an event to Kendo UI jQuery DatePicker | Kendo UI Web Demos",
+          "aspnet-mvc": "Attach an event to ASP.NET MVC DatePicker | ASP.NET MVC Demos"
+        },
+        "meta": {
+          "kendo-ui": "This sample shows how to access the events, attached to a date, as well as use Kendo UI Date Picker widget to pick a date or change it manually from the dropdown calendar.",
+          "aspnet-mvc": "This sample shows how to access the events, attached to a date, as well as use ASP.NET MVC Date Picker to pick a date or change it manually from a dropdown calendar."
+        }
+      },
+      {
+        "text": "API",
+        "url": "datepicker/api",
+        "title": {
+          "kendo-ui": "Kendo UI DatePicker API Demo",
+          "aspnet-mvc": "API ASP.NET MVC Datepicker example"
+        },
+        "meta": {
+          "kendo-ui": "DatePicker API example shows how the API functions can be used to apply enable/disable functionality to jQuery-powered date picker control or open/close the calendar.",
+          "aspnet-mvc": "This example demonstrates how the API of Telerik ASP.NET MVC Datepicker can be configured to modify the features of the extension."
+        }
+      },
+      {
+        "packages": [
+          "mvc-offline"
+        ],
+        "text": "Globalization",
+        "url": "datepicker/globalization"
+      },
+      {
+        "text": "RTL support",
+        "disableInMobile": true,
+        "url": "datepicker/right-to-left-support",
+        "title": {
+          "kendo-ui": "RTL support in Kendo UI DatePicker widget | Kendo UI Demo",
+          "aspnet-mvc": "RTL support in ASP.NET MVC DatePicker control | ASP.NET MVC Demo"
+        },
+        "meta": {
+          "kendo-ui": "See how Kendo UI DatePicker component supports RTL functionality.",
+          "aspnet-mvc": "See how ASP.NET MVC DatePicker component supports RTL functionality."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "disableInMobile": true,
+        "url": "datepicker/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard navigation in Kendo UI DatePicker",
+          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC DatePicker"
+        },
+        "meta": {
+          "kendo-ui": "This example shows how the keyboard navigation functionality is supported in Kendo UI DatePicker widget.",
+          "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in ASP.NET MVC DatePicker control."
+        }
+      }
     ],
     "category": "Editors"
   },
@@ -915,12 +915,12 @@
         "text": "Disable dates",
         "url": "datetimepicker/disable-dates",
         "title": {
-            "kendo-ui": "Disable dates in the Kendo UI DateTimePicker widget | Kendo UI Web demos",
-            "aspnet-mvc": "Disable dates in the ASP.NET MVC DateTimePicker | ASP.NET MVC demos"
+          "kendo-ui": "Disable dates in the Kendo UI DateTimePicker widget | Kendo UI Web demos",
+          "aspnet-mvc": "Disable dates in the ASP.NET MVC DateTimePicker | ASP.NET MVC demos"
         },
         "meta": {
-            "kendo-ui": "This demo shows how Kendo UI DateTimePicker allows you to disable dates.",
-            "aspnet-mvc": "This demo shows how ASP.NET MVC DateTImePicker allows you to disable dates"
+          "kendo-ui": "This demo shows how Kendo UI DateTimePicker allows you to disable dates.",
+          "aspnet-mvc": "This demo shows how ASP.NET MVC DateTImePicker allows you to disable dates"
         }
       },
       {
@@ -1870,6 +1870,153 @@
     ],
     "category": "Editors"
   },
+
+  {
+    "text": "ListView",
+    "name": "listview",
+    "api": "web/listview",
+    "documentation": {
+      "kendo-ui": "getting-started/web/listview/overview",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/listview/overview",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/listview/overview",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/listview/overview"
+    },
+    "forum": {
+      "kendo-ui": "kendo-ui/listview",
+      "aspnet-mvc": "aspnet-mvc/listview",
+      "jsp-ui": "jsp/listview",
+      "php-ui": "php/listview"
+    },
+    "sources": {
+      "kendo-ui": [
+        {
+          "name": "Sample service",
+          "url": "~/content/service.html"
+        }
+      ]
+    },
+    "codelibrary": {
+      "kendo-ui": "kendo-ui/listview",
+      "aspnet-mvc": "aspnet-mvc/listview",
+      "jsp-ui": "jsp/listview",
+      "php-ui": "php/listview"
+    },
+    "spriteCssClass": "listViewIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "listview/index",
+        "title": {
+          "kendo-ui": "jQuery ListView control example| KendoListView Demo",
+          "aspnet-mvc": "ASP.NET MVC Listview demo | Telerik UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "This KendoListView example demonstrates the basic functionality of the widget. With jQuery-based ListView widget in Kendo UI, you can specify custom layout for the items in the control.",
+          "aspnet-mvc": "Play with this basic example of Telerik Listview in ASP.NET MVC and find all features of the helper for Kendo UI Listview."
+        }
+      },
+      {
+        "text": "Binding to remote data",
+        "url": "listview/remote-data-binding",
+        "title": {
+          "kendo-ui": "Example for Jquery Listview binding to remote data | Kendo UI demos"
+        },
+        "meta": {
+          "kendo-ui": "This Kendo UI ListView demo shows how the control can be bound to remote data by using Kendo UI DataSource component."
+        },
+        "packages": [
+          "!mvc"
+        ]
+      },
+      {
+        "text": "Custom data source",
+        "url": "listview/custom-datasource",
+        "packages": [
+          "mvc-offline"
+        ]
+      },
+      {
+        "text": "Editing",
+        "url": "listview/editing",
+        "title": {
+          "kendo-ui": "Editing records in Kendo UI ListView widget",
+          "aspnet-mvc": "Editing records in ASP.NET MVC ListView control"
+        },
+        "meta": {
+          "kendo-ui": "This example demonstrates the option to easily edit records in Kendo UI ListView widget. Learn how to edit records and manipulate the behavior of the contents.",
+          "aspnet-mvc": "This example demonstrates the option to easily edit records in ASP.NET MVC ListView component. Learn how to edit records and manipulate the behavior of the contents."
+        }
+      },
+      {
+        "text": "Selection",
+        "url": "listview/selection",
+        "title": {
+          "kendo-ui": "Items selection demo for Kendo UI ListView widget",
+          "aspnet-mvc": "Items selection demo for ASP.NET MVC ListView control"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows items in KendoListView can be selected. Find how to select multiple items and configure the behavior of the widget.",
+          "aspnet-mvc": "This demo shows how items in ASP.NET MVC ListView can be selected. Find how to select multiple items and configure the behavior of the control."
+        }
+      },
+      {
+        "text": "RTL support",
+        "url": "listview/right-to-left-support",
+        "title": {
+          "kendo-ui": "RTL support in Kendo UI ListView",
+          "aspnet-mvc": "RTL support in ASP.NET MVC ListView"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how the right-to-left feature is supported in Kendo UI ListView component.",
+          "aspnet-mvc": "This demo shows how the right-to-left feature is supported in ASP.NET MVC ListView component."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "listview/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard navigation in Kendo UI ListView widget",
+          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC ListView"
+        },
+        "meta": {
+          "kendo-ui": "In this example we will look at the supported keys and user actions in Kendo UI ListView control.",
+          "aspnet-mvc": "In this example we will look at the supported keys and user actions in ASP.NET MVC ListView control."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "listview/mvvm",
+        "title": {
+          "kendo-ui": "MVVM support in Kendo UI ListView"
+        },
+        "meta": {
+          "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI ListView"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "listview/angular",
+        "title": {
+          "kendo-ui": "AngularJS support in Kendo UI ListView"
+        },
+        "meta": {
+          "kendo-ui": "AngularJS directive support for Kendo UI ListView"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Data Management"
+  },
+
   {
     "text": "MaskedTextBox",
     "name": "maskedtextbox",
