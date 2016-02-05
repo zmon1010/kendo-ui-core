@@ -505,4 +505,21 @@
         equal(filterCell.wrapper.find(":radio:checked").length, 0);
     });
 
+    test("when isnull is selected, value of the input element is empty", function() {
+        var dataSource = new kendo.data.DataSource({
+        });
+
+        filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
+        filterCell.viewModel.set("operator", "isnull");
+        var filter = dataSource.filter();
+        ok(filter.filters);
+        equal(filter.logic, "and");
+        var filters = filter.filters;
+        equal(filters.length, 1);
+        equal(filters[0].value, undefined);
+        equal(filters[0].field, "foo");
+        equal(filters[0].operator, "isnull");
+
+        equal(filterCell.wrapper.find("input").val(), "");
+    });
 })();

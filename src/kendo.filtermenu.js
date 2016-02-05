@@ -262,7 +262,7 @@ var __meta__ = { // jshint ignore:line
             that.model = that.dataSource.reader.model;
 
             that._parse = function(value) {
-                 return value + "";
+                 return value != null ? (value + "") : value;
             };
 
             if (that.model && that.model.fields) {

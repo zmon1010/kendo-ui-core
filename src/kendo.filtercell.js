@@ -127,7 +127,8 @@ var __meta__ = { // jshint ignore:line
             }
 
             that._parse = function(value) {
-                 return value + "";
+                /*jshint eqnull: true */
+                return value != null ? (value + "") : value;
             };
 
             if (that.model && that.model.fields) {
