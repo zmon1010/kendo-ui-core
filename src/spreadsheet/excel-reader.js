@@ -200,6 +200,7 @@
     function readSheet(zip, file, sheet, strings, styles) {
         var ref, type, value, formula, formulaRange;
         var nCols = sheet._columns._count;
+        var prevCellRef = null;
         parse(zip, "xl/" + file, {
             enter: function(tag, attrs) {
                 if (this.is(SEL_CELL)) {
@@ -207,6 +208,19 @@
                     formula = null;
                     formulaRange = null;
                     ref = attrs.r;
+
+                    if (ref == null) {
+                        // apparently some tools omit the `r` for
+                        // consecutive cells in a row, so we'll figure
+                        // it out from the previous cell's reference.
+                        // XXX: this could be slightly optimized by
+                        // keeping it parsed instead of stringifying
+                        // it to parse it again later.
+                        ref = parseReference(prevCellRef);
+                        ref.col++;
+                        ref = ref.toString();
+                    }
+                    prevCellRef = ref;
 
                     // XXX: can't find no type actually, so everything is
                     // interpreted as string.  Additionally, cells having
