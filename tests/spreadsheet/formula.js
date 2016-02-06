@@ -1177,6 +1177,20 @@
         });
     });
 
+    test("SUMPRODUCT", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: 1, B1: 2, A2: 3, B2: 4,
+            A5: 4, B5: 3, A6: 2, B6: 1,
+            A8: '=SUMPRODUCT(A1:B2, A5:B6)'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A8: 20
+            });
+        });
+    });
+
     // https://support.office.com/en-sg/article/IS-functions-490afee4-fd91-4839-89d4-1257a21b4e25
     test("ISERROR, IS*", function(){
         var ss = new Spreadsheet();

@@ -381,12 +381,12 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
-    defineFunction("sumproduct", function(a) {
+    defineFunction("sumproduct", function(first, rest) {
         var sum = 0;
-        a[0].each(function(p, row, col){
+        first.each(function(p, row, col){
             if (typeof p == "number") {
-                for (var i = 1; i < a.length; ++i) {
-                    var v = a[i].get(row, col);
+                for (var i = 0; i < rest.length; ++i) {
+                    var v = rest[i].get(row, col);
                     if (typeof v != "number") {
                         return;
                     }
