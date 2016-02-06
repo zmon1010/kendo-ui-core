@@ -290,6 +290,13 @@
             }
         }
 
+        // skip BOM
+        var tmp = [];
+        readChar(tmp);
+        if (tmp[0] != 65279) {
+            index = 0;
+        }
+
         while (index < data.length) {
             skipWhitespace();
             skip(LESS_THAN);
