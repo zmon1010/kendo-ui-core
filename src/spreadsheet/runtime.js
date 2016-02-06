@@ -1254,9 +1254,11 @@
 
     /* -----[ Excel operators ]----- */
 
+    var NUMBER_OR_ZERO = [ "or", "number", [ "null", 0 ] ];
+
     var ARGS_NUMERIC = [
-        [ "*a", "number" ],
-        [ "*b", "number" ]
+        [ "*a", NUMBER_OR_ZERO ],
+        [ "*b", NUMBER_OR_ZERO ]
     ];
 
     var ARGS_ANYVALUE = [
@@ -1279,7 +1281,7 @@
     defineFunction("binary/", function(a, b){
         return a / b;
     }).args([
-        [ "*a", "number" ],
+        [ "*a", NUMBER_OR_ZERO ],
         [ "*b", "divisor" ]
     ]);
 
@@ -1323,19 +1325,19 @@
     defineFunction("unary+", function(a){
         return a;
     }).args([
-        [ "*a", "number" ]
+        [ "*a", NUMBER_OR_ZERO ]
     ]);
 
     defineFunction("unary-", function(a){
         return -a;
     }).args([
-        [ "*a", "number" ]
+        [ "*a", NUMBER_OR_ZERO ]
     ]);
 
     defineFunction("unary%", function(a){
         return a / 100;
     }).args([
-        [ "*a", "number" ]
+        [ "*a", NUMBER_OR_ZERO ]
     ]);
 
     // range operator
