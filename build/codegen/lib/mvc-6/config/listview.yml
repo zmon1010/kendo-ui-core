@@ -1,12 +1,11 @@
 :options:
-
     - :name: selectable
-      :description: Specifies whether TreeList selection is allowed. By default selection is disabled
+      :description: Specifies whether item selection is allowed. By default selection is disabled
       :default: false
       :type:
           - Object
           - Boolean
-
+          
     - :name: selectable.mode
       :type: String
       :enum_type: ListViewSelectionMode

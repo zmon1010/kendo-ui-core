@@ -3,9 +3,11 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Infrastructure;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
-using System;
+using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Kendo.Mvc.UI
 {
@@ -18,7 +20,6 @@ namespace Kendo.Mvc.UI
         public ListView(ViewContext viewContext) : base(viewContext)
         {
             ActionBindingContext = GetService<IActionBindingContextAccessor>().ActionBindingContext;
-            //Selectable = new ListViewSelectionSettings();
 
             DataSource = new DataSource(ModelMetadataProvider)
             {
@@ -75,6 +76,7 @@ namespace Kendo.Mvc.UI
                 }
                 settings["selectable"] = selectable;
             }
+            SerializeEditTemplate(settings);
 
             writer.Write(Initializer.Initialize(Selector, "ListView", settings));
         }
@@ -110,6 +112,20 @@ namespace Kendo.Mvc.UI
             }
         }
 
+        private void SerializeEditTemplate(IDictionary<string, object> options)
+        {
+            InitializeEditor();
+            if (Editable.Enabled && !string.IsNullOrEmpty(EditorHtml))
+            {
+                var html = EditorHtml.Trim()
+                                .EscapeHtmlEntities()
+                                .Replace("\r\n", string.Empty)
+                                .Replace("jQuery(\"#", "jQuery(\"\\#");
+
+                options["editTemplate"] = html;
+            }
+        }
+
         private void ProcessDataSource()
         {
             if (Pageable.Enabled && DataSource.PageSize == 0)
@@ -129,6 +145,35 @@ namespace Kendo.Mvc.UI
 
             DataSource.Process((DataSourceRequest)bindingContext.Model, true/*!EnableCustomBinding*/);
         }
+        private void InitializeEditor()
+        {
+            if (Editable.Enabled)
+            {
+                var popupSlashes = new Regex("(?<=data-val-regex-pattern=\")([^\"]*)", RegexOptions.Multiline);
+                var htmlHelper = ViewContext.CreateHtmlHelper<T>();
+
+                var viewContext = ViewContext.ViewContextForType<T>(ModelMetadataProvider);
+                ((ICanHasViewContext)htmlHelper).Contextualize(viewContext);
+
+                var sb = new StringBuilder();
+                using (var writer = new StringWriter(sb))
+                {
+                    if (Editable.TemplateName.HasValue())
+                    {
+                        htmlHelper.EditorForModel(Editable.TemplateName).WriteTo(writer, HtmlEncoder);
+                    }
+                    else
+                    {
+                        htmlHelper.EditorForModel().WriteTo(writer, HtmlEncoder);
+                    }
+                }
+                EditorHtml = popupSlashes.Replace(sb.ToString(), match =>
+                {
+                    return match.Groups[0].Value.Replace("\\", IsInClientTemplate ? "\\\\\\\\" : "\\\\");
+                });
+            }
+        }
+
         public ActionBindingContext ActionBindingContext
         {
             get;
@@ -151,6 +196,13 @@ namespace Kendo.Mvc.UI
             set;
         }
         public PageableSettings Pageable { get; } = new PageableSettings();
+
+        public ListViewEditingSettings<T> Editable { get; } = new ListViewEditingSettings<T>();
+        public string EditorHtml
+        {
+            get;
+            set;
+        }
     }
 }
 

@@ -50,7 +50,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies whether TreeList selection is allowed. By default selection is disabled
+        /// Specifies whether item selection is allowed. By default selection is disabled
         /// </summary>
         /// <param name="configurator">The configurator for the selectable setting.</param>
         public ListViewBuilder<T> Selectable(Action<ListViewSelectableSettingsBuilder<T>> configurator)
@@ -64,7 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies whether TreeList selection is allowed. By default selection is disabled
+        /// Specifies whether item selection is allowed. By default selection is disabled
         /// </summary>
         /// <param name="enabled">Enables or disables the selectable option.</param>
         public ListViewBuilder<T> Selectable(bool enabled)

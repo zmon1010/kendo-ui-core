@@ -109,6 +109,56 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Selectable.Mode = mode;
             return this;
         }
+        /// <summary>
+        /// Enables single item selection.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ListView()
+        ///             .Name("ListView")
+        ///             .Selectable()
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ListViewBuilder<T> Selectable()
+        {
+            Component.Selectable.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the ListView editing settings.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ListView()
+        ///             .Name("ListView")
+        ///             .Editable(settings => settings.Enabled(true))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ListViewBuilder<T> Editable(Action<ListViewEditingSettingsBuilder<T>> configurator)
+        {
+            configurator(new ListViewEditingSettingsBuilder<T>(Component.Editable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Enables ListView editing.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ListView()
+        ///             .Name("ListView")
+        ///             .Editable()
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ListViewBuilder<T> Editable()
+        {
+            return Editable(settings => settings.Enabled(true));
+        }
     }
 
 }

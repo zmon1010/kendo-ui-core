@@ -1,26 +1,24 @@
-@model IEnumerable<Kendo.Mvc.Examples.Models.ProductViewModel>
-
 <div class="demo-section k-content wide k-rtl">
 
     <script type="text/x-kendo-tmpl" id="template">
         <div class="product">
-            <img src="@(Url.Content("~/content/web/foods/"))#:ProductID#.jpg" alt="#:ProductName# image" />
+            <img src="@(Url.Content("~/shared/web/foods/"))#:ProductID#.jpg" alt="#:ProductName# image" />
             <h3>#:ProductName#</h3>
         </div>
     </script>
 
-    @(Html.Kendo().ListView<Kendo.Mvc.Examples.Models.ProductViewModel>(Model)
+    @(Html.Kendo().ListView<Kendo.Mvc.Examples.Models.ProductViewModel>()
         .Name("listView")
         .TagName("div")
         .ClientTemplateId("template")
-        .DataSource(dataSource => {
-            dataSource.Read(read => read.Action("Products_Read", "ListView"));
-            dataSource.PageSize(15);
-        })
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("Products_Read", "ListView"))
+            .PageSize(15)
+        )
         .Pageable()
         .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Multiple))
     )
-
 </div>
 
 <style>
