@@ -49,7 +49,7 @@ var __meta__ = { // jshint ignore:line
                                 '# } #' +
                             '</div>' +
                             '<div class="k-tiles-arrange">' +
-                                '<label>#=messages.orderBy#: <select /></label></a>' +
+                                '<label>#=messages.orderBy#: <select /></label>' +
                             '</div>' +
                         '</div>';
 
