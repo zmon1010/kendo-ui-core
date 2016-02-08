@@ -533,12 +533,19 @@ var Worksheet = kendo.Class.extend({
         var columns = this.options.columns || [];
 
         var column = columns[cellIndex];
+        var type = typeof value;
 
         if (column && column.autoWidth) {
-            column.width = Math.max(column.width || 0, ("" + value).length);
-        }
+            var displayValue = value;
 
-        var type = typeof value;
+            if (type === "number") {
+                // kendo.toString will not behave exactly like the Excel format
+                // Still, it's the best we have available for estimating the character count.
+                displayValue = kendo.toString(value, data.format);
+            }
+
+            column.width = Math.max(column.width || 0, (displayValue + "").length);
+        }
 
         if (type === "string") {
             value = this._lookupString(value);

@@ -713,6 +713,20 @@ test("toXML calculates the 'width' attribute based on string length", function()
     equal(Math.round(dom.find("col").attr("width")), 4);
 });
 
+test("toXML calculates the 'width' attribute based on formatted string length", function() {
+    var worksheet = Worksheet({
+        columns: [{
+           autoWidth: true
+        }],
+        rows: [
+            { cells: [ { value: 100, format: "$#####.00" }] }
+        ]
+    });
+
+    var dom = $($.parseXML(worksheet.toXML()));
+    equal(Math.round(dom.find("col").attr("width")), 8);
+});
+
 test("toXML creates the 'mergeCell' element for cells with colSpan", function() {
     var worksheet = Worksheet([
         { cells: [{ colSpan: 2 }] }
