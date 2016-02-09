@@ -20,6 +20,25 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Enables or disables selection.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ListView(Model)
+        ///             .Name("ListView")
+        ///             .Selectable(selection => selection.Enabled((bool)ViewData["enableSelection"]))
+        /// %&gt;
+        /// </code>
+        /// </example>        
+        public ListViewSelectableSettingsBuilder<T> Enabled(bool value)
+        {
+            Container.Enabled = value;
+            if (!Container.Mode.HasValue)
+            {
+                Container.Mode = ListViewSelectionMode.Single;
+            }
+            return this;
+        }
     }
 }

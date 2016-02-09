@@ -27,6 +27,27 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Binds the ListView to a list of objects
+        /// </summary>
+        /// <typeparam name="T">The type of the data item</typeparam>
+        /// <param name="dataSource">The data source.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ListView&lt;Order&gt;()
+        ///             .Name("Orders")        
+        ///             .BindTo((IEnumerable)ViewData["Orders"]);
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ListViewBuilder<T> BindTo(IEnumerable dataSource)
+        {
+            Component.DataSource.Data = dataSource;
+
+            return this;
+        }
+
         /// <summary>
         /// Specifies ListView item template.
         /// </summary>      
@@ -123,6 +144,10 @@ namespace Kendo.Mvc.UI.Fluent
         public ListViewBuilder<T> Selectable()
         {
             Component.Selectable.Enabled = true;
+            if (!Component.Selectable.Mode.HasValue)
+            {
+                Component.Selectable.Mode = ListViewSelectionMode.Single;
+            }
             return this;
         }
 

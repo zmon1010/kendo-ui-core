@@ -1,9 +1,11 @@
 using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Resources;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Infrastructure;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -15,10 +17,13 @@ namespace Kendo.Mvc.UI
     /// Kendo UI ListView component
     /// </summary>
     public partial class ListView<T> : WidgetBase where T : class
-
     {
+        private readonly ListViewSettingsSerializer<T> settingsSerializer;
+
         public ListView(ViewContext viewContext) : base(viewContext)
         {
+            settingsSerializer = new ListViewSettingsSerializer<T>(this);
+
             ActionBindingContext = GetService<IActionBindingContextAccessor>().ActionBindingContext;
 
             DataSource = new DataSource(ModelMetadataProvider)
@@ -62,68 +67,10 @@ namespace Kendo.Mvc.UI
             {
                 ProcessDataSource();
             }
-            
-            SerializeClientTemplate(settings);
-
-            SerializePaging(settings);
-
-            if (Selectable.Enabled)
-            {
-                var selectable = "single";
-                if (Selectable.Mode.HasValue)
-                {
-                    selectable = Selectable.Mode.Value.Serialize();
-                }
-                settings["selectable"] = selectable;
-            }
-            SerializeEditTemplate(settings);
+            InitializeEditor();
+            settingsSerializer.Serialize(settings);
 
             writer.Write(Initializer.Initialize(Selector, "ListView", settings));
-        }
-        private void SerializeClientTemplate(IDictionary<string, object> options)
-        {
-            var idPrefix = "#";
-
-            if (IsInClientTemplate)
-            {
-                idPrefix = "\\" + idPrefix;
-            }
-
-            if (!string.IsNullOrEmpty(ClientTemplateId))
-            {
-                options["template"] = new ClientHandlerDescriptor { HandlerName = string.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, ClientTemplateId) };
-            }
-
-            if (!string.IsNullOrEmpty(ClientAltTemplateId))
-            {
-                options["altTemplate"] = new ClientHandlerDescriptor { HandlerName = string.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, ClientAltTemplateId) };
-            }
-        }
-
-        private void SerializePaging(IDictionary<string, object> options)
-        {
-            if (Pageable.Enabled)
-            {
-                AutoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true);
-                Pageable.AutoBind = AutoBind.Value;
-                var paging = Pageable.ToJson();
-                paging.Add("pagerId", Id + "_pager");
-                options["pageable"] = paging;
-            }
-        }
-
-        private void SerializeEditTemplate(IDictionary<string, object> options)
-        {
-            InitializeEditor();
-            if (Editable.Enabled && !string.IsNullOrEmpty(EditorHtml))
-            {
-                var html = EditorHtml.Trim()
-                                .EscapeHtmlEntities()
-                                .Replace("\r\n", string.Empty)
-                                .Replace("jQuery(\"#", "jQuery(\"\\#");
-
-                options["editTemplate"] = html;
-            }
         }
 
         private void ProcessDataSource()
@@ -171,6 +118,41 @@ namespace Kendo.Mvc.UI
                 {
                     return match.Groups[0].Value.Replace("\\", IsInClientTemplate ? "\\\\\\\\" : "\\\\");
                 });
+            }
+        }
+
+        public override void VerifySettings()
+        {
+            base.VerifySettings();
+
+            if (string.IsNullOrEmpty(ClientTemplateId))
+            {
+                throw new NotSupportedException(string.Format(Exceptions.CannotBeNullOrEmpty, "ClientTemplateId"));
+            }
+
+            if (string.IsNullOrEmpty(TagName))
+            {
+                throw new NotSupportedException(string.Format(Exceptions.CannotBeNullOrEmpty, "TagName"));
+            }
+
+            if (Editable.Enabled && DataSource.Schema.Model.Id == null)
+            {
+                throw new NotSupportedException(Exceptions.DataKeysEmpty);
+            }
+
+            if (AutoBind.HasValue)
+            {
+                if (!IsClientBinding || (IsClientBinding && DataSource.Data != null))
+                {
+                    throw new NotSupportedException(Exceptions.CannotSetAutoBindIfBoundDuringInitialization);
+                }
+            }
+        }
+        private bool IsClientBinding
+        {
+            get
+            {
+                return DataSource.Type == DataSourceType.Ajax || DataSource.Type == DataSourceType.WebApi || DataSource.Type == DataSourceType.Custom;
             }
         }
 
