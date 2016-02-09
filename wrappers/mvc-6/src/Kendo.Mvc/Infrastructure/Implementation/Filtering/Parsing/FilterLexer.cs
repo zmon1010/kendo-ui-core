@@ -182,7 +182,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
                 return Function(result);
             }
 
-            if (result == "null")
+            if (result == "null" || result == "undefined")
             {
                 return Null(result);
             }
