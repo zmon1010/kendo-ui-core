@@ -1,0 +1,21 @@
+:options:
+    - :name: selectable
+      :description: Specifies whether item selection is allowed. By default selection is disabled
+      :default: false
+      :type:
+          - Object
+          - Boolean
+          
+    - :name: selectable.mode
+      :type: String
+      :enum_type: ListViewSelectionMode
+      :description: Represents the selection modes supported by Kendo UI ListView for ASP.NET MVC
+      :values:
+          - :value: single
+            :member: Single
+            :description: Single item selection.
+
+          - :value: multiple
+            :member: Multiple
+            :description: Multiple item selection.
+ 

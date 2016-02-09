@@ -23,6 +23,8 @@
 - treelist.selectable.mode
 - treelist.selectable.type
 - treelist.editable.templateName
+- listview.selectable
+- listview.selectable.mode
 - datepicker.footer
 - datepicker.monthTemplate
 - datepicker.monthTemplate.content

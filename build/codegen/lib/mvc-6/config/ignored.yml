@@ -47,6 +47,11 @@
 - grid.selectable
 - grid.sortable.mode
 - grid.toolbar
+- listview.datasource
+- listview.template
+- listview.edittemplate
+- listview.alttemplate
+- listview.pageable
 - maskedtextbox.rules
 - notification.animation
 - notification.templates
