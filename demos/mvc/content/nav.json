@@ -2610,6 +2610,10 @@
           "packages": [
               "!offline"
           ],
+          "description": {
+            "kendo-ui": "<p>Kendo UI Complete ships a .NET based server-side module established on Telerik RadSpreadProcessing, part of the Document Processing Library.</p><p>See <a href='http://docs.telerik.com/kendo-ui/controls/data-management/spreadsheet/import-and-export-data/server-side-processing'>Server-Side Processing</a> for details.<p>",
+            "aspnet-mvc": "<p>Kendo UI Complete ships a .NET based server-side module established on Telerik RadSpreadProcessing, part of the Document Processing Library.</p><p>See <a href='http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/spreadsheet/spreadsheet-processing'>Spreadsheet Processing</a> for details.</p>"
+        },
           "sources": {
               "kendo-ui": [{
                   "name": "Sheets settings",
