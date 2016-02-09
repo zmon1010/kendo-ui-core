@@ -240,9 +240,11 @@
 
     test("when viewModel is changed the filter of the dataSource is updated", function() {
         filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
-        equal(filterCell.viewModel.set("value", "someValue"));
+        filterCell.viewModel.set("value", "someValue");
+
         var filter = dataSource.filter();
         equal(filter.filters.length, 1);
+
         filter = filter.filters[0];
         equal(filter.value, "someValue");
         equal(filter.field, "foo");
@@ -252,10 +254,12 @@
     test("when viewModel is changed the filter of the dataSource is updated and other filters are preserved", function() {
         dataSource.filter({ field: "bar", value: "someBarvalue", operator: "neq"});
         filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
-        equal(filterCell.viewModel.set("value", "someValue"));
+        filterCell.viewModel.set("value", "someValue");
+
         var filter = dataSource.filter();
         ok(filter.filters);
         equal(filter.logic, "and");
+
         var filters = filter.filters;
         equal(filters[0].value, "someBarvalue");
         equal(filters[0].field, "bar");
