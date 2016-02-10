@@ -343,11 +343,14 @@
                 }
 
                 function next() {
-                    // allow another timeout here to make sure the images
-                    // are rendered in the new DOM nodes.
-                    setTimeout(function(){
+                    // Even though we already cached images, they simply won't be available
+                    // immediately in the newly created DOM.  Previously we'd allow a 10ms timeout,
+                    // but that's arbitrary and clearly not working in all cases
+                    // (https://github.com/telerik/kendo/issues/5399), so this function will wait
+                    // for their .complete attribute.
+                    whenImagesAreActuallyLoaded(pages, function(){
                         callback({ pages: pages, container: container });
-                    }, 10);
+                    });
                 }
             }
 
@@ -947,6 +950,28 @@
             }
         }
         return color;
+    }
+
+    function whenImagesAreActuallyLoaded(elements, callback) {
+        var pending = 0;
+        elements.forEach(function(el){
+            var images = el.querySelectorAll("img");
+            for (var i = 0; i < images.length; ++i) {
+                var img = images[i];
+                if (!img.complete) {
+                    pending++;
+                    img.onload = img.onerror = next;
+                }
+            }
+        });
+        if (!pending) {
+            next();
+        }
+        function next() {
+            if (--pending <= 0) {
+                callback();
+            }
+        }
     }
 
     function cacheImages(element, callback) {
