@@ -109,6 +109,24 @@
         ok(plotArea.categoryAxis.options.flag);
     });
 
+    test("min greater than the category count is ignored", 0, function() {
+        setupChart({
+            series: [{ type: "line" }],
+            categoryAxis: {
+                min: 2
+            }
+        });
+    });
+
+    test("max greater than the category count is ignored", 0, function() {
+        setupChart({
+            series: [{ type: "line" }],
+            categoryAxis: {
+                max: 2
+            }
+        });
+    });
+
     test("valueAxes alias overrides valueAxis", function() {
         setupChart({
             valueAxis: {},

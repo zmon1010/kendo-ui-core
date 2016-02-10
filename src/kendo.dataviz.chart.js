@@ -10132,8 +10132,9 @@ var __meta__ = { // jshint ignore:line
             currentSeries = deepExtend({}, currentSeries);
 
             if (outOfRangePoints) {
-                if (range.min - 1 >= 0) {
-                    categoryIx = range.min - 1;
+                var minCategory = range.min - 1;
+                if (minCategory >= 0 && minCategory < currentSeries.data.length) {
+                    categoryIx = minCategory;
                     currentSeries._outOfRangeMinPoint = {
                         item: currentSeries.data[categoryIx],
                         category: categoryAxis.options.srcCategories[categoryIx],
