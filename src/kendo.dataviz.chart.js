@@ -13614,21 +13614,26 @@ var __meta__ = { // jshint ignore:line
         kendo.util.loadFonts(fonts, callback);
     }
 
-    function fetchFonts(options, fonts) {
-        if (!options) {
+    function fetchFonts(options, fonts, state) {
+        var MAX_DEPTH = 5;
+
+        state = state || { depth: 0 };
+        if (!options || state.depth > MAX_DEPTH) {
             return;
         }
 
         Object.keys(options).forEach(function(key) {
             var value = options[key];
-            if (key === "dataSource" || !value) {
+            if (key === "dataSource" || key[0] === "$" || !value) {
                 return;
             }
 
             if (key === "font") {
                 fonts.push(value);
             } else if (typeof value === "object") {
-                fetchFonts(value, fonts);
+                state.depth++;
+                fetchFonts(value, fonts, state);
+                state.depth--;
             }
         });
     }
