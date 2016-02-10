@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartValueAxisLabelsBorderSettings class
     /// </summary>
-    public partial class ChartValueAxisLabelsBorderSettings 
+    public partial class ChartValueAxisLabelsBorderSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

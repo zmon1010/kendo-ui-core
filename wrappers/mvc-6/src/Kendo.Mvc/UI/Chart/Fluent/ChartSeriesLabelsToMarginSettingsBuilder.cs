@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesLabelsToMarginSettings
     /// </summary>
-    public partial class ChartSeriesLabelsToMarginSettingsBuilder
-        
+    public partial class ChartSeriesLabelsToMarginSettingsBuilder<T>
+        where T : class 
     {
-        public ChartSeriesLabelsToMarginSettingsBuilder(ChartSeriesLabelsToMarginSettings container)
+        public ChartSeriesLabelsToMarginSettingsBuilder(ChartSeriesLabelsToMarginSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesLabelsToMarginSettings Container
+        protected ChartSeriesLabelsToMarginSettings<T> Container
         {
             get;
             private set;

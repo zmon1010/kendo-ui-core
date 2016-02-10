@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartValueAxis class
     /// </summary>
-    public partial class ChartValueAxis 
+    public partial class ChartValueAxis<T> where T : class 
     {
         public object[] AxisCrossingValue { get; set; }
 
@@ -17,13 +17,13 @@ namespace Kendo.Mvc.UI
 
         public string Color { get; set; }
 
-        public ChartValueAxisCrosshairSettings Crosshair { get; } = new ChartValueAxisCrosshairSettings();
+        public ChartValueAxisCrosshairSettings<T> Crosshair { get; } = new ChartValueAxisCrosshairSettings<T>();
 
-        public ChartValueAxisLabelsSettings Labels { get; } = new ChartValueAxisLabelsSettings();
+        public ChartValueAxisLabelsSettings<T> Labels { get; } = new ChartValueAxisLabelsSettings<T>();
 
-        public ChartValueAxisLineSettings Line { get; } = new ChartValueAxisLineSettings();
+        public ChartValueAxisLineSettings<T> Line { get; } = new ChartValueAxisLineSettings<T>();
 
-        public ChartValueAxisMajorGridLinesSettings MajorGridLines { get; } = new ChartValueAxisMajorGridLinesSettings();
+        public ChartValueAxisMajorGridLinesSettings<T> MajorGridLines { get; } = new ChartValueAxisMajorGridLinesSettings<T>();
 
         public double? MajorUnit { get; set; }
 
@@ -31,11 +31,11 @@ namespace Kendo.Mvc.UI
 
         public double? Min { get; set; }
 
-        public ChartValueAxisMinorGridLinesSettings MinorGridLines { get; } = new ChartValueAxisMinorGridLinesSettings();
+        public ChartValueAxisMinorGridLinesSettings<T> MinorGridLines { get; } = new ChartValueAxisMinorGridLinesSettings<T>();
 
-        public ChartValueAxisMajorTicksSettings MajorTicks { get; } = new ChartValueAxisMajorTicksSettings();
+        public ChartValueAxisMajorTicksSettings<T> MajorTicks { get; } = new ChartValueAxisMajorTicksSettings<T>();
 
-        public ChartValueAxisMinorTicksSettings MinorTicks { get; } = new ChartValueAxisMinorTicksSettings();
+        public ChartValueAxisMinorTicksSettings<T> MinorTicks { get; } = new ChartValueAxisMinorTicksSettings<T>();
 
         public double? MinorUnit { get; set; }
 
@@ -45,20 +45,20 @@ namespace Kendo.Mvc.UI
 
         public string Pane { get; set; }
 
-        public List<ChartValueAxisPlotBand> PlotBands { get; set; } = new List<ChartValueAxisPlotBand>();
+        public List<ChartValueAxisPlotBand<T>> PlotBands { get; set; } = new List<ChartValueAxisPlotBand<T>>();
 
         public bool? Reverse { get; set; }
 
-        public ChartValueAxisTitleSettings Title { get; } = new ChartValueAxisTitleSettings();
+        public ChartValueAxisTitleSettings<T> Title { get; } = new ChartValueAxisTitleSettings<T>();
 
         public string Type { get; set; }
 
         public bool? Visible { get; set; }
 
-        public ChartValueAxisNotesSettings Notes { get; } = new ChartValueAxisNotesSettings();
+        public ChartValueAxisNotesSettings<T> Notes { get; } = new ChartValueAxisNotesSettings<T>();
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

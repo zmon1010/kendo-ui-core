@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesLabelsToSettings
     /// </summary>
-    public partial class ChartSeriesLabelsToSettingsBuilder
-        
+    public partial class ChartSeriesLabelsToSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the to labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartSeriesLabelsToSettingsBuilder Background(string value)
+        public ChartSeriesLabelsToSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the to labels.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartSeriesLabelsToSettingsBuilder Border(Action<ChartSeriesLabelsToBorderSettingsBuilder> configurator)
+        public ChartSeriesLabelsToSettingsBuilder<T> Border(Action<ChartSeriesLabelsToBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartSeriesLabelsToBorderSettingsBuilder(Container.Border));
+            configurator(new ChartSeriesLabelsToBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text color of the to labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartSeriesLabelsToSettingsBuilder Color(string value)
+        public ChartSeriesLabelsToSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The font style of the to labels.
         /// </summary>
         /// <param name="value">The value for Font</param>
-        public ChartSeriesLabelsToSettingsBuilder Font(string value)
+        public ChartSeriesLabelsToSettingsBuilder<T> Font(string value)
         {
             Container.Font = value;
             return this;
@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The format of the to labels. Uses kendo.format.
         /// </summary>
         /// <param name="value">The value for Format</param>
-        public ChartSeriesLabelsToSettingsBuilder Format(string value)
+        public ChartSeriesLabelsToSettingsBuilder<T> Format(string value)
         {
             Container.Format = value;
             return this;
@@ -67,11 +67,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the to labels. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartSeriesLabelsToSettingsBuilder Margin(Action<ChartSeriesLabelsToMarginSettingsBuilder> configurator)
+        public ChartSeriesLabelsToSettingsBuilder<T> Margin(Action<ChartSeriesLabelsToMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartSeriesLabelsToMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartSeriesLabelsToMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -80,11 +80,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the to labels. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartSeriesLabelsToSettingsBuilder Padding(Action<ChartSeriesLabelsToPaddingSettingsBuilder> configurator)
+        public ChartSeriesLabelsToSettingsBuilder<T> Padding(Action<ChartSeriesLabelsToPaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartSeriesLabelsToPaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartSeriesLabelsToPaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }
@@ -93,7 +93,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The position of the to labels.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public ChartSeriesLabelsToSettingsBuilder Position(string value)
+        public ChartSeriesLabelsToSettingsBuilder<T> Position(string value)
         {
             Container.Position = value;
             return this;
@@ -103,7 +103,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the chart series to label.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for Template</param>
-        public ChartSeriesLabelsToSettingsBuilder Template(string value)
+        public ChartSeriesLabelsToSettingsBuilder<T> Template(string value)
         {
             Container.Template = value;
             return this;
@@ -113,7 +113,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the chart series to label.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
-        public ChartSeriesLabelsToSettingsBuilder TemplateId(string templateId)
+        public ChartSeriesLabelsToSettingsBuilder<T> TemplateId(string templateId)
         {
             Container.TemplateId = templateId;
             return this;
@@ -123,7 +123,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the series to labels. By default chart series to labels are not displayed.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartSeriesLabelsToSettingsBuilder Visible(bool value)
+        public ChartSeriesLabelsToSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -132,7 +132,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will display the series to labels. By default chart series to labels are not displayed.
         /// </summary>
-        public ChartSeriesLabelsToSettingsBuilder Visible()
+        public ChartSeriesLabelsToSettingsBuilder<T> Visible()
         {
             Container.Visible = true;
             return this;

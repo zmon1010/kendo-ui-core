@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartValueAxisNotesLabelSettings
     /// </summary>
-    public partial class ChartValueAxisNotesLabelSettingsBuilder
-        
+    public partial class ChartValueAxisNotesLabelSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the label. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartValueAxisNotesLabelSettingsBuilder Background(string value)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the label.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartValueAxisNotesLabelSettingsBuilder Border(Action<ChartValueAxisNotesLabelBorderSettingsBuilder> configurator)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> Border(Action<ChartValueAxisNotesLabelBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartValueAxisNotesLabelBorderSettingsBuilder(Container.Border));
+            configurator(new ChartValueAxisNotesLabelBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text color of the label. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartValueAxisNotesLabelSettingsBuilder Color(string value)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The font style of the label.
         /// </summary>
         /// <param name="value">The value for Font</param>
-        public ChartValueAxisNotesLabelSettingsBuilder Font(string value)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> Font(string value)
         {
             Container.Font = value;
             return this;
@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the labels.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for Template</param>
-        public ChartValueAxisNotesLabelSettingsBuilder Template(string value)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> Template(string value)
         {
             Container.Template = value;
             return this;
@@ -67,7 +67,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the labels.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
-        public ChartValueAxisNotesLabelSettingsBuilder TemplateId(string templateId)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> TemplateId(string templateId)
         {
             Container.TemplateId = templateId;
             return this;
@@ -77,7 +77,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the value axis notes label. By default the value axis notes label are visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartValueAxisNotesLabelSettingsBuilder Visible(bool value)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -87,7 +87,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The rotation angle of the label. By default the label are not rotated.
         /// </summary>
         /// <param name="value">The value for Rotation</param>
-        public ChartValueAxisNotesLabelSettingsBuilder Rotation(double value)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> Rotation(double value)
         {
             Container.Rotation = value;
             return this;
@@ -97,7 +97,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The format used to display the notes label. Uses kendo.format. Contains one placeholder ("{0}") which represents the axis value.
         /// </summary>
         /// <param name="value">The value for Format</param>
-        public ChartValueAxisNotesLabelSettingsBuilder Format(string value)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> Format(string value)
         {
             Container.Format = value;
             return this;
@@ -107,7 +107,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The position of the labels.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public ChartValueAxisNotesLabelSettingsBuilder Position(string value)
+        public ChartValueAxisNotesLabelSettingsBuilder<T> Position(string value)
         {
             Container.Position = value;
             return this;

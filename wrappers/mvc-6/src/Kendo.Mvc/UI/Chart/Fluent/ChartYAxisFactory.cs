@@ -4,17 +4,17 @@ using System.Collections.Generic;
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
-    /// Defines the fluent API for configuring List<ChartYAxis>
+    /// Defines the fluent API for configuring List<ChartYAxis<T>>
     /// </summary>
-    public partial class ChartYAxisFactory
-        
+    public partial class ChartYAxisFactory<T>
+        where T : class 
     {
-        public ChartYAxisFactory(List<ChartYAxis> container)
+        public ChartYAxisFactory(List<ChartYAxis<T>> container)
         {
             Container = container;
         }
 
-        protected List<ChartYAxis> Container
+        protected List<ChartYAxis<T>> Container
         {
             get;
             private set;

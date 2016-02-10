@@ -9,13 +9,13 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeries class
     /// </summary>
-    public partial class ChartSeries 
+    public partial class ChartSeries<T> where T : class 
     {
         public string Aggregate { get; set; }
 
         public string Axis { get; set; }
 
-        public ChartSeriesBorderSettings Border { get; } = new ChartSeriesBorderSettings();
+        public ChartSeriesBorderSettings<T> Border { get; } = new ChartSeriesBorderSettings<T>();
 
         public string CategoryField { get; set; }
 
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI
 
         public string ColorField { get; set; }
 
-        public ChartSeriesConnectorsSettings Connectors { get; } = new ChartSeriesConnectorsSettings();
+        public ChartSeriesConnectorsSettings<T> Connectors { get; } = new ChartSeriesConnectorsSettings<T>();
 
         public string CurrentField { get; set; }
 
@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI
 
         public bool? DynamicHeight { get; set; }
 
-        public ChartSeriesErrorBarsSettings ErrorBars { get; } = new ChartSeriesErrorBarsSettings();
+        public ChartSeriesErrorBarsSettings<T> ErrorBars { get; } = new ChartSeriesErrorBarsSettings<T>();
 
         public string ErrorLowField { get; set; }
 
@@ -87,23 +87,23 @@ namespace Kendo.Mvc.UI
 
         public string HighField { get; set; }
 
-        public ChartSeriesHighlightSettings Highlight { get; } = new ChartSeriesHighlightSettings();
+        public ChartSeriesHighlightSettings<T> Highlight { get; } = new ChartSeriesHighlightSettings<T>();
 
         public double? HoleSize { get; set; }
 
-        public ChartSeriesLabelsSettings Labels { get; } = new ChartSeriesLabelsSettings();
+        public ChartSeriesLabelsSettings<T> Labels { get; } = new ChartSeriesLabelsSettings<T>();
 
-        public ChartSeriesLineSettings Line { get; } = new ChartSeriesLineSettings();
+        public ChartSeriesLineSettings<T> Line { get; } = new ChartSeriesLineSettings<T>();
 
         public string LowField { get; set; }
 
-        public ChartSeriesMarginSettings Margin { get; } = new ChartSeriesMarginSettings();
+        public ChartSeriesMarginSettings<T> Margin { get; } = new ChartSeriesMarginSettings<T>();
 
-        public ChartSeriesMarkersSettings Markers { get; } = new ChartSeriesMarkersSettings();
+        public ChartSeriesMarkersSettings<T> Markers { get; } = new ChartSeriesMarkersSettings<T>();
 
-        public ChartSeriesOutliersSettings Outliers { get; } = new ChartSeriesOutliersSettings();
+        public ChartSeriesOutliersSettings<T> Outliers { get; } = new ChartSeriesOutliersSettings<T>();
 
-        public ChartSeriesExtremesSettings Extremes { get; } = new ChartSeriesExtremesSettings();
+        public ChartSeriesExtremesSettings<T> Extremes { get; } = new ChartSeriesExtremesSettings<T>();
 
         public double? MaxSize { get; set; }
 
@@ -117,13 +117,13 @@ namespace Kendo.Mvc.UI
 
         public string NegativeColor { get; set; }
 
-        public ChartSeriesNegativeValuesSettings NegativeValues { get; } = new ChartSeriesNegativeValuesSettings();
+        public ChartSeriesNegativeValuesSettings<T> NegativeValues { get; } = new ChartSeriesNegativeValuesSettings<T>();
 
         public double? Opacity { get; set; }
 
         public string OpenField { get; set; }
 
-        public ChartSeriesOverlaySettings Overlay { get; } = new ChartSeriesOverlaySettings();
+        public ChartSeriesOverlaySettings<T> Overlay { get; } = new ChartSeriesOverlaySettings<T>();
 
         public double? Padding { get; set; }
 
@@ -133,15 +133,15 @@ namespace Kendo.Mvc.UI
 
         public double? Spacing { get; set; }
 
-        public ChartSeriesStackSettings Stack { get; } = new ChartSeriesStackSettings();
+        public ChartSeriesStackSettings<T> Stack { get; } = new ChartSeriesStackSettings<T>();
 
         public double? StartAngle { get; set; }
 
-        public ChartSeriesTargetSettings Target { get; } = new ChartSeriesTargetSettings();
+        public ChartSeriesTargetSettings<T> Target { get; } = new ChartSeriesTargetSettings<T>();
 
         public string TargetField { get; set; }
 
-        public ChartSeriesTooltipSettings Tooltip { get; } = new ChartSeriesTooltipSettings();
+        public ChartSeriesTooltipSettings<T> Tooltip { get; } = new ChartSeriesTooltipSettings<T>();
 
         public string Type { get; set; }
 
@@ -163,12 +163,12 @@ namespace Kendo.Mvc.UI
 
         public string YField { get; set; }
 
-        public ChartSeriesNotesSettings Notes { get; } = new ChartSeriesNotesSettings();
+        public ChartSeriesNotesSettings<T> Notes { get; } = new ChartSeriesNotesSettings<T>();
 
         public double? ZIndex { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

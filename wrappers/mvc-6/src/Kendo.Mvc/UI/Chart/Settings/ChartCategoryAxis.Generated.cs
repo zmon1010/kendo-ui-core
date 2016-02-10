@@ -9,9 +9,9 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxis class
     /// </summary>
-    public partial class ChartCategoryAxis 
+    public partial class ChartCategoryAxis<T> where T : class 
     {
-        public ChartCategoryAxisAutoBaseUnitStepsSettings AutoBaseUnitSteps { get; } = new ChartCategoryAxisAutoBaseUnitStepsSettings();
+        public ChartCategoryAxisAutoBaseUnitStepsSettings<T> AutoBaseUnitSteps { get; } = new ChartCategoryAxisAutoBaseUnitStepsSettings<T>();
 
         public object[] AxisCrossingValue { get; set; }
 
@@ -25,19 +25,19 @@ namespace Kendo.Mvc.UI
 
         public string Color { get; set; }
 
-        public ChartCategoryAxisCrosshairSettings Crosshair { get; } = new ChartCategoryAxisCrosshairSettings();
+        public ChartCategoryAxisCrosshairSettings<T> Crosshair { get; } = new ChartCategoryAxisCrosshairSettings<T>();
 
         public string Field { get; set; }
 
         public bool? Justified { get; set; }
 
-        public ChartCategoryAxisLabelsSettings Labels { get; } = new ChartCategoryAxisLabelsSettings();
+        public ChartCategoryAxisLabelsSettings<T> Labels { get; } = new ChartCategoryAxisLabelsSettings<T>();
 
-        public ChartCategoryAxisLineSettings Line { get; } = new ChartCategoryAxisLineSettings();
+        public ChartCategoryAxisLineSettings<T> Line { get; } = new ChartCategoryAxisLineSettings<T>();
 
-        public ChartCategoryAxisMajorGridLinesSettings MajorGridLines { get; } = new ChartCategoryAxisMajorGridLinesSettings();
+        public ChartCategoryAxisMajorGridLinesSettings<T> MajorGridLines { get; } = new ChartCategoryAxisMajorGridLinesSettings<T>();
 
-        public ChartCategoryAxisMajorTicksSettings MajorTicks { get; } = new ChartCategoryAxisMajorTicksSettings();
+        public ChartCategoryAxisMajorTicksSettings<T> MajorTicks { get; } = new ChartCategoryAxisMajorTicksSettings<T>();
 
         public object Max { get; set; }
 
@@ -45,25 +45,25 @@ namespace Kendo.Mvc.UI
 
         public object Min { get; set; }
 
-        public ChartCategoryAxisMinorGridLinesSettings MinorGridLines { get; } = new ChartCategoryAxisMinorGridLinesSettings();
+        public ChartCategoryAxisMinorGridLinesSettings<T> MinorGridLines { get; } = new ChartCategoryAxisMinorGridLinesSettings<T>();
 
-        public ChartCategoryAxisMinorTicksSettings MinorTicks { get; } = new ChartCategoryAxisMinorTicksSettings();
+        public ChartCategoryAxisMinorTicksSettings<T> MinorTicks { get; } = new ChartCategoryAxisMinorTicksSettings<T>();
 
         public string Name { get; set; }
 
         public string Pane { get; set; }
 
-        public List<ChartCategoryAxisPlotBand> PlotBands { get; set; } = new List<ChartCategoryAxisPlotBand>();
+        public List<ChartCategoryAxisPlotBand<T>> PlotBands { get; set; } = new List<ChartCategoryAxisPlotBand<T>>();
 
         public bool? Reverse { get; set; }
 
         public bool? RoundToBaseUnit { get; set; }
 
-        public ChartCategoryAxisSelectSettings Select { get; } = new ChartCategoryAxisSelectSettings();
+        public ChartCategoryAxisSelectSettings<T> Select { get; } = new ChartCategoryAxisSelectSettings<T>();
 
         public double? StartAngle { get; set; }
 
-        public ChartCategoryAxisTitleSettings Title { get; } = new ChartCategoryAxisTitleSettings();
+        public ChartCategoryAxisTitleSettings<T> Title { get; } = new ChartCategoryAxisTitleSettings<T>();
 
         public string Type { get; set; }
 
@@ -71,10 +71,10 @@ namespace Kendo.Mvc.UI
 
         public double? WeekStartDay { get; set; }
 
-        public ChartCategoryAxisNotesSettings Notes { get; } = new ChartCategoryAxisNotesSettings();
+        public ChartCategoryAxisNotesSettings<T> Notes { get; } = new ChartCategoryAxisNotesSettings<T>();
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

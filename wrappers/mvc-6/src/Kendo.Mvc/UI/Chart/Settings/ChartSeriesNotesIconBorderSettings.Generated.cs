@@ -9,14 +9,14 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesNotesIconBorderSettings class
     /// </summary>
-    public partial class ChartSeriesNotesIconBorderSettings 
+    public partial class ChartSeriesNotesIconBorderSettings<T> where T : class 
     {
         public string Color { get; set; }
 
         public double? Width { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

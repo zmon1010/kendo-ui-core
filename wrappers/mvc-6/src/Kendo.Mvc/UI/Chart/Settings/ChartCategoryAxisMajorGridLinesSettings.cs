@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisMajorGridLinesSettings class
     /// </summary>
-    public partial class ChartCategoryAxisMajorGridLinesSettings 
+    public partial class ChartCategoryAxisMajorGridLinesSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

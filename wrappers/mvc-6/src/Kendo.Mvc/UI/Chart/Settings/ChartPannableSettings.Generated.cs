@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartPannableSettings class
     /// </summary>
-    public partial class ChartPannableSettings 
+    public partial class ChartPannableSettings<T> where T : class 
     {
         public string Key { get; set; }
 
@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
 
         public bool? Enabled { get; set; }
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

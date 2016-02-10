@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartXAxisLabelsDateFormatsSettings class
     /// </summary>
-    public partial class ChartXAxisLabelsDateFormatsSettings 
+    public partial class ChartXAxisLabelsDateFormatsSettings<T> where T : class 
     {
         public string Days { get; set; }
 
@@ -22,7 +22,7 @@ namespace Kendo.Mvc.UI
         public string Years { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

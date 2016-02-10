@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartYAxisNotesIconSettings class
     /// </summary>
-    public partial class ChartYAxisNotesIconSettings 
+    public partial class ChartYAxisNotesIconSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

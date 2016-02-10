@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisNotesIconBorderSettings
     /// </summary>
-    public partial class ChartYAxisNotesIconBorderSettingsBuilder
-        
+    public partial class ChartYAxisNotesIconBorderSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The border color of the icon.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartYAxisNotesIconBorderSettingsBuilder Color(string value)
+        public ChartYAxisNotesIconBorderSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border width of the icon.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartYAxisNotesIconBorderSettingsBuilder Width(double value)
+        public ChartYAxisNotesIconBorderSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;

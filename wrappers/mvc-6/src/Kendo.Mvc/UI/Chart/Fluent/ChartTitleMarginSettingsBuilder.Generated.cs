@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartTitleMarginSettings
     /// </summary>
-    public partial class ChartTitleMarginSettingsBuilder
-        
+    public partial class ChartTitleMarginSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The bottom margin of the title.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public ChartTitleMarginSettingsBuilder Bottom(double value)
+        public ChartTitleMarginSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left margin of the title.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public ChartTitleMarginSettingsBuilder Left(double value)
+        public ChartTitleMarginSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right margin of the title.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public ChartTitleMarginSettingsBuilder Right(double value)
+        public ChartTitleMarginSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top margin of the title.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public ChartTitleMarginSettingsBuilder Top(double value)
+        public ChartTitleMarginSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

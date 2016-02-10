@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxis
     /// </summary>
-    public partial class ChartCategoryAxisBuilder
-        
+    public partial class ChartCategoryAxisBuilder<T>
+        where T : class 
     {
-        public ChartCategoryAxisBuilder(ChartCategoryAxis container)
+        public ChartCategoryAxisBuilder(ChartCategoryAxis<T> container)
         {
             Container = container;
         }
 
-        protected ChartCategoryAxis Container
+        protected ChartCategoryAxis<T> Container
         {
             get;
             private set;
@@ -23,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Sets the axis type to date.
         /// </summary>
-        public ChartCategoryAxisBuilder Date()
+        public ChartCategoryAxisBuilder<T> Date()
         {
             Container.Type = "date";
             return this;

@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring the Kendo UI Chart
     /// </summary>
-    public partial class ChartBuilder
-        
+    public partial class ChartBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
 		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
         /// <param name="value">The value for AutoBind</param>
-        public ChartBuilder AutoBind(bool value)
+        public ChartBuilder<T> AutoBind(bool value)
         {
             Container.AutoBind = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart area configuration options. Represents the entire visible area of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the chartarea setting.</param>
-        public ChartBuilder ChartArea(Action<ChartChartAreaSettingsBuilder> configurator)
+        public ChartBuilder<T> ChartArea(Action<ChartChartAreaSettingsBuilder<T>> configurator)
         {
 
             Container.ChartArea.Chart = Container;
-            configurator(new ChartChartAreaSettingsBuilder(Container.ChartArea));
+            configurator(new ChartChartAreaSettingsBuilder<T>(Container.ChartArea));
 
             return this;
         }
@@ -37,11 +37,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart legend configuration options.
         /// </summary>
         /// <param name="configurator">The configurator for the legend setting.</param>
-        public ChartBuilder Legend(Action<ChartLegendSettingsBuilder> configurator)
+        public ChartBuilder<T> Legend(Action<ChartLegendSettingsBuilder<T>> configurator)
         {
 
             Container.Legend.Chart = Container;
-            configurator(new ChartLegendSettingsBuilder(Container.Legend));
+            configurator(new ChartLegendSettingsBuilder<T>(Container.Legend));
 
             return this;
         }
@@ -51,10 +51,10 @@ namespace Kendo.Mvc.UI.Fluent
 		/// Axis that don't have specified pane are placed in the top (default) pane.Series are moved to the desired pane by associating them with an axis.
         /// </summary>
         /// <param name="configurator">The configurator for the panes setting.</param>
-        public ChartBuilder Panes(Action<ChartPaneFactory> configurator)
+        public ChartBuilder<T> Panes(Action<ChartPaneFactory<T>> configurator)
         {
 
-            configurator(new ChartPaneFactory(Container.Panes)
+            configurator(new ChartPaneFactory<T>(Container.Panes)
             {
                 Chart = Container
             });
@@ -66,12 +66,12 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies if the chart can be panned.
         /// </summary>
         /// <param name="configurator">The configurator for the pannable setting.</param>
-        public ChartBuilder Pannable(Action<ChartPannableSettingsBuilder> configurator)
+        public ChartBuilder<T> Pannable(Action<ChartPannableSettingsBuilder<T>> configurator)
         {
             Container.Pannable.Enabled = true;
 
             Container.Pannable.Chart = Container;
-            configurator(new ChartPannableSettingsBuilder(Container.Pannable));
+            configurator(new ChartPannableSettingsBuilder<T>(Container.Pannable));
 
             return this;
         }
@@ -79,7 +79,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Specifies if the chart can be panned.
         /// </summary>
-        public ChartBuilder Pannable()
+        public ChartBuilder<T> Pannable()
         {
             Container.Pannable.Enabled = true;
             return this;
@@ -89,7 +89,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies if the chart can be panned.
         /// </summary>
         /// <param name="enabled">Enables or disables the pannable option.</param>
-        public ChartBuilder Pannable(bool enabled)
+        public ChartBuilder<T> Pannable(bool enabled)
         {
             Container.Pannable.Enabled = enabled;
             return this;
@@ -99,11 +99,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// Configures the export settings for the saveAsPDF method.
         /// </summary>
         /// <param name="configurator">The configurator for the pdf setting.</param>
-        public ChartBuilder Pdf(Action<ChartPdfSettingsBuilder> configurator)
+        public ChartBuilder<T> Pdf(Action<ChartPdfSettingsBuilder<T>> configurator)
         {
 
             Container.Pdf.Chart = Container;
-            configurator(new ChartPdfSettingsBuilder(Container.Pdf));
+            configurator(new ChartPdfSettingsBuilder<T>(Container.Pdf));
 
             return this;
         }
@@ -112,11 +112,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The plot area configuration options. The plot area is the area which displays the series.
         /// </summary>
         /// <param name="configurator">The configurator for the plotarea setting.</param>
-        public ChartBuilder PlotArea(Action<ChartPlotAreaSettingsBuilder> configurator)
+        public ChartBuilder<T> PlotArea(Action<ChartPlotAreaSettingsBuilder<T>> configurator)
         {
 
             Container.PlotArea.Chart = Container;
-            configurator(new ChartPlotAreaSettingsBuilder(Container.PlotArea));
+            configurator(new ChartPlotAreaSettingsBuilder<T>(Container.PlotArea));
 
             return this;
         }
@@ -126,10 +126,10 @@ namespace Kendo.Mvc.UI.Fluent
 		/// If a type value is missing, the type is assumed to be the one specified in seriesDefaults.
         /// </summary>
         /// <param name="configurator">The configurator for the series setting.</param>
-        public ChartBuilder Series(Action<ChartSeriesFactory> configurator)
+        public ChartBuilder<T> Series(Action<ChartSeriesFactory<T>> configurator)
         {
 
-            configurator(new ChartSeriesFactory(Container.Series)
+            configurator(new ChartSeriesFactory<T>(Container.Series)
             {
                 Chart = Container
             });
@@ -141,7 +141,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The default colors for the chart's series. When all colors are used, new colors are pulled from the start again.
         /// </summary>
         /// <param name="value">The value for SeriesColors</param>
-        public ChartBuilder SeriesColors(params String[] value)
+        public ChartBuilder<T> SeriesColors(params String[] value)
         {
             Container.SeriesColors = value;
             return this;
@@ -151,7 +151,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart theme.The supported values are:
         /// </summary>
         /// <param name="value">The value for Theme</param>
-        public ChartBuilder Theme(string value)
+        public ChartBuilder<T> Theme(string value)
         {
             Container.Theme = value;
             return this;
@@ -161,11 +161,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart title configuration options or text.
         /// </summary>
         /// <param name="configurator">The configurator for the title setting.</param>
-        public ChartBuilder Title(Action<ChartTitleSettingsBuilder> configurator)
+        public ChartBuilder<T> Title(Action<ChartTitleSettingsBuilder<T>> configurator)
         {
 
             Container.Title.Chart = Container;
-            configurator(new ChartTitleSettingsBuilder(Container.Title));
+            configurator(new ChartTitleSettingsBuilder<T>(Container.Title));
 
             return this;
         }
@@ -174,11 +174,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series tooltip configuration options.
         /// </summary>
         /// <param name="configurator">The configurator for the tooltip setting.</param>
-        public ChartBuilder Tooltip(Action<ChartTooltipSettingsBuilder> configurator)
+        public ChartBuilder<T> Tooltip(Action<ChartTooltipSettingsBuilder<T>> configurator)
         {
 
             Container.Tooltip.Chart = Container;
-            configurator(new ChartTooltipSettingsBuilder(Container.Tooltip));
+            configurator(new ChartTooltipSettingsBuilder<T>(Container.Tooltip));
 
             return this;
         }
@@ -187,7 +187,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will play animations when displaying the series. By default animations are enabled.
         /// </summary>
         /// <param name="value">The value for Transitions</param>
-        public ChartBuilder Transitions(bool value)
+        public ChartBuilder<T> Transitions(bool value)
         {
             Container.Transitions = value;
             return this;
@@ -197,12 +197,12 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies if the chart can be zoomed.
         /// </summary>
         /// <param name="configurator">The configurator for the zoomable setting.</param>
-        public ChartBuilder Zoomable(Action<ChartZoomableSettingsBuilder> configurator)
+        public ChartBuilder<T> Zoomable(Action<ChartZoomableSettingsBuilder<T>> configurator)
         {
             Container.Zoomable.Enabled = true;
 
             Container.Zoomable.Chart = Container;
-            configurator(new ChartZoomableSettingsBuilder(Container.Zoomable));
+            configurator(new ChartZoomableSettingsBuilder<T>(Container.Zoomable));
 
             return this;
         }
@@ -210,7 +210,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Specifies if the chart can be zoomed.
         /// </summary>
-        public ChartBuilder Zoomable()
+        public ChartBuilder<T> Zoomable()
         {
             Container.Zoomable.Enabled = true;
             return this;
@@ -220,7 +220,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies if the chart can be zoomed.
         /// </summary>
         /// <param name="enabled">Enables or disables the zoomable option.</param>
-        public ChartBuilder Zoomable(bool enabled)
+        public ChartBuilder<T> Zoomable(bool enabled)
         {
             Container.Zoomable.Enabled = enabled;
             return this;
@@ -230,7 +230,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the preferred widget rendering mode.
         /// </summary>
         /// <param name="value">The value for RenderAs</param>
-        public ChartBuilder RenderAs(RenderingMode value)
+        public ChartBuilder<T> RenderAs(RenderingMode value)
         {
             Container.RenderAs = value;
             return this;
@@ -252,7 +252,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// )
         /// </code>
         /// </example>
-        public ChartBuilder Events(Action<ChartEventBuilder> configurator)
+        public ChartBuilder<T> Events(Action<ChartEventBuilder> configurator)
         {
             configurator(new ChartEventBuilder(Container.Events));
             return this;

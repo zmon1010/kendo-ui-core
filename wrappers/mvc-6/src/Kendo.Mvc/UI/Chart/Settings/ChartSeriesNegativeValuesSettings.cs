@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesNegativeValuesSettings class
     /// </summary>
-    public partial class ChartSeriesNegativeValuesSettings 
+    public partial class ChartSeriesNegativeValuesSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

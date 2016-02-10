@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisNotesLineSettings
     /// </summary>
-    public partial class ChartYAxisNotesLineSettingsBuilder
-        
+    public partial class ChartYAxisNotesLineSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The line width of the notes.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartYAxisNotesLineSettingsBuilder Width(double value)
+        public ChartYAxisNotesLineSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The line color of the notes.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartYAxisNotesLineSettingsBuilder Color(string value)
+        public ChartYAxisNotesLineSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The length of the connecting lines in pixels.
         /// </summary>
         /// <param name="value">The value for Length</param>
-        public ChartYAxisNotesLineSettingsBuilder Length(double value)
+        public ChartYAxisNotesLineSettingsBuilder<T> Length(double value)
         {
             Container.Length = value;
             return this;

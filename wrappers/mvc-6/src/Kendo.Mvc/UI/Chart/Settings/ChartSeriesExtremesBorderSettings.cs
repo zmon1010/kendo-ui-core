@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesExtremesBorderSettings class
     /// </summary>
-    public partial class ChartSeriesExtremesBorderSettings 
+    public partial class ChartSeriesExtremesBorderSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

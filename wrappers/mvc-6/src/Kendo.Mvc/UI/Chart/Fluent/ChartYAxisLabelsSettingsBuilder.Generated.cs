@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisLabelsSettings
     /// </summary>
-    public partial class ChartYAxisLabelsSettingsBuilder
-        
+    public partial class ChartYAxisLabelsSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartYAxisLabelsSettingsBuilder Background(string value)
+        public ChartYAxisLabelsSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the labels.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartYAxisLabelsSettingsBuilder Border(Action<ChartYAxisLabelsBorderSettingsBuilder> configurator)
+        public ChartYAxisLabelsSettingsBuilder<T> Border(Action<ChartYAxisLabelsBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartYAxisLabelsBorderSettingsBuilder(Container.Border));
+            configurator(new ChartYAxisLabelsBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text color of the labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartYAxisLabelsSettingsBuilder Color(string value)
+        public ChartYAxisLabelsSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The culture to use when formatting date values. See the globalization overview for more information.
         /// </summary>
         /// <param name="value">The value for Culture</param>
-        public ChartYAxisLabelsSettingsBuilder Culture(string value)
+        public ChartYAxisLabelsSettingsBuilder<T> Culture(string value)
         {
             Container.Culture = value;
             return this;
@@ -57,11 +57,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The format used to display the labels when the x values are dates. Uses kendo.format. Contains one placeholder ("{0}") which represents the category value.
         /// </summary>
         /// <param name="configurator">The configurator for the dateformats setting.</param>
-        public ChartYAxisLabelsSettingsBuilder DateFormats(Action<ChartYAxisLabelsDateFormatsSettingsBuilder> configurator)
+        public ChartYAxisLabelsSettingsBuilder<T> DateFormats(Action<ChartYAxisLabelsDateFormatsSettingsBuilder<T>> configurator)
         {
 
             Container.DateFormats.Chart = Container.Chart;
-            configurator(new ChartYAxisLabelsDateFormatsSettingsBuilder(Container.DateFormats));
+            configurator(new ChartYAxisLabelsDateFormatsSettingsBuilder<T>(Container.DateFormats));
 
             return this;
         }
@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The font style of the labels.
         /// </summary>
         /// <param name="value">The value for Font</param>
-        public ChartYAxisLabelsSettingsBuilder Font(string value)
+        public ChartYAxisLabelsSettingsBuilder<T> Font(string value)
         {
             Container.Font = value;
             return this;
@@ -80,7 +80,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The format used to display the labels. Uses kendo.format. Contains one placeholder ("{0}") which represents the category value.
         /// </summary>
         /// <param name="value">The value for Format</param>
-        public ChartYAxisLabelsSettingsBuilder Format(string value)
+        public ChartYAxisLabelsSettingsBuilder<T> Format(string value)
         {
             Container.Format = value;
             return this;
@@ -90,11 +90,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the labels. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartYAxisLabelsSettingsBuilder Margin(Action<ChartYAxisLabelsMarginSettingsBuilder> configurator)
+        public ChartYAxisLabelsSettingsBuilder<T> Margin(Action<ChartYAxisLabelsMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartYAxisLabelsMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartYAxisLabelsMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -103,7 +103,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will mirror the axis labels and ticks. If the labels are normally on the left side of the axis, mirroring the axis will render them to the right.
         /// </summary>
         /// <param name="value">The value for Mirror</param>
-        public ChartYAxisLabelsSettingsBuilder Mirror(bool value)
+        public ChartYAxisLabelsSettingsBuilder<T> Mirror(bool value)
         {
             Container.Mirror = value;
             return this;
@@ -113,11 +113,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the labels. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartYAxisLabelsSettingsBuilder Padding(Action<ChartYAxisLabelsPaddingSettingsBuilder> configurator)
+        public ChartYAxisLabelsSettingsBuilder<T> Padding(Action<ChartYAxisLabelsPaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartYAxisLabelsPaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartYAxisLabelsPaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }
@@ -126,11 +126,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The rotation angle of the labels. By default the labels are not rotated.
         /// </summary>
         /// <param name="configurator">The configurator for the rotation setting.</param>
-        public ChartYAxisLabelsSettingsBuilder Rotation(Action<ChartYAxisLabelsRotationSettingsBuilder> configurator)
+        public ChartYAxisLabelsSettingsBuilder<T> Rotation(Action<ChartYAxisLabelsRotationSettingsBuilder<T>> configurator)
         {
 
             Container.Rotation.Chart = Container.Chart;
-            configurator(new ChartYAxisLabelsRotationSettingsBuilder(Container.Rotation));
+            configurator(new ChartYAxisLabelsRotationSettingsBuilder<T>(Container.Rotation));
 
             return this;
         }
@@ -139,7 +139,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The number of labels to skip.
         /// </summary>
         /// <param name="value">The value for Skip</param>
-        public ChartYAxisLabelsSettingsBuilder Skip(double value)
+        public ChartYAxisLabelsSettingsBuilder<T> Skip(double value)
         {
             Container.Skip = value;
             return this;
@@ -149,7 +149,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The label rendering step - render every n-th label. By default every label is rendered.
         /// </summary>
         /// <param name="value">The value for Step</param>
-        public ChartYAxisLabelsSettingsBuilder Step(double value)
+        public ChartYAxisLabelsSettingsBuilder<T> Step(double value)
         {
             Container.Step = value;
             return this;
@@ -159,7 +159,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the labels.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for Template</param>
-        public ChartYAxisLabelsSettingsBuilder Template(string value)
+        public ChartYAxisLabelsSettingsBuilder<T> Template(string value)
         {
             Container.Template = value;
             return this;
@@ -169,7 +169,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the labels.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
-        public ChartYAxisLabelsSettingsBuilder TemplateId(string templateId)
+        public ChartYAxisLabelsSettingsBuilder<T> TemplateId(string templateId)
         {
             Container.TemplateId = templateId;
             return this;
@@ -179,7 +179,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the y axis labels. By default the y axis labels are visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartYAxisLabelsSettingsBuilder Visible(bool value)
+        public ChartYAxisLabelsSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -189,7 +189,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the labels. The available argument fields are:
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
-        public ChartYAxisLabelsSettingsBuilder Visual(string handler)
+        public ChartYAxisLabelsSettingsBuilder<T> Visual(string handler)
         {
             Container.Visual = new ClientHandlerDescriptor { HandlerName = handler };
             return this;
@@ -199,7 +199,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the labels. The available argument fields are:
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ChartYAxisLabelsSettingsBuilder Visual(Func<object, object> handler)
+        public ChartYAxisLabelsSettingsBuilder<T> Visual(Func<object, object> handler)
         {
             Container.Visual = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;

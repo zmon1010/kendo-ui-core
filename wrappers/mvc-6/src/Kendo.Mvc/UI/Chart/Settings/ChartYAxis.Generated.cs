@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartYAxis class
     /// </summary>
-    public partial class ChartYAxis 
+    public partial class ChartYAxis<T> where T : class 
     {
         public object[] AxisCrossingValue { get; set; }
 
@@ -19,19 +19,19 @@ namespace Kendo.Mvc.UI
 
         public string Color { get; set; }
 
-        public ChartYAxisCrosshairSettings Crosshair { get; } = new ChartYAxisCrosshairSettings();
+        public ChartYAxisCrosshairSettings<T> Crosshair { get; } = new ChartYAxisCrosshairSettings<T>();
 
-        public ChartYAxisLabelsSettings Labels { get; } = new ChartYAxisLabelsSettings();
+        public ChartYAxisLabelsSettings<T> Labels { get; } = new ChartYAxisLabelsSettings<T>();
 
-        public ChartYAxisLineSettings Line { get; } = new ChartYAxisLineSettings();
+        public ChartYAxisLineSettings<T> Line { get; } = new ChartYAxisLineSettings<T>();
 
-        public ChartYAxisMajorGridLinesSettings MajorGridLines { get; } = new ChartYAxisMajorGridLinesSettings();
+        public ChartYAxisMajorGridLinesSettings<T> MajorGridLines { get; } = new ChartYAxisMajorGridLinesSettings<T>();
 
-        public ChartYAxisMinorGridLinesSettings MinorGridLines { get; } = new ChartYAxisMinorGridLinesSettings();
+        public ChartYAxisMinorGridLinesSettings<T> MinorGridLines { get; } = new ChartYAxisMinorGridLinesSettings<T>();
 
-        public ChartYAxisMinorTicksSettings MinorTicks { get; } = new ChartYAxisMinorTicksSettings();
+        public ChartYAxisMinorTicksSettings<T> MinorTicks { get; } = new ChartYAxisMinorTicksSettings<T>();
 
-        public ChartYAxisMajorTicksSettings MajorTicks { get; } = new ChartYAxisMajorTicksSettings();
+        public ChartYAxisMajorTicksSettings<T> MajorTicks { get; } = new ChartYAxisMajorTicksSettings<T>();
 
         public double? MajorUnit { get; set; }
 
@@ -47,20 +47,20 @@ namespace Kendo.Mvc.UI
 
         public string Pane { get; set; }
 
-        public List<ChartYAxisPlotBand> PlotBands { get; set; } = new List<ChartYAxisPlotBand>();
+        public List<ChartYAxisPlotBand<T>> PlotBands { get; set; } = new List<ChartYAxisPlotBand<T>>();
 
         public bool? Reverse { get; set; }
 
-        public ChartYAxisTitleSettings Title { get; } = new ChartYAxisTitleSettings();
+        public ChartYAxisTitleSettings<T> Title { get; } = new ChartYAxisTitleSettings<T>();
 
         public string Type { get; set; }
 
         public bool? Visible { get; set; }
 
-        public ChartYAxisNotesSettings Notes { get; } = new ChartYAxisNotesSettings();
+        public ChartYAxisNotesSettings<T> Notes { get; } = new ChartYAxisNotesSettings<T>();
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

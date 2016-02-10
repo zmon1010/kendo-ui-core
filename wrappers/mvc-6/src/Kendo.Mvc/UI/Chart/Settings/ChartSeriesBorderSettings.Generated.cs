@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesBorderSettings class
     /// </summary>
-    public partial class ChartSeriesBorderSettings 
+    public partial class ChartSeriesBorderSettings<T> where T : class 
     {
         public string Color { get; set; }
 
@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI
         public double? Width { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

@@ -9,20 +9,20 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartYAxisCrosshairSettings class
     /// </summary>
-    public partial class ChartYAxisCrosshairSettings 
+    public partial class ChartYAxisCrosshairSettings<T> where T : class 
     {
         public string Color { get; set; }
 
         public double? Opacity { get; set; }
 
-        public ChartYAxisCrosshairTooltipSettings Tooltip { get; } = new ChartYAxisCrosshairTooltipSettings();
+        public ChartYAxisCrosshairTooltipSettings<T> Tooltip { get; } = new ChartYAxisCrosshairTooltipSettings<T>();
 
         public bool? Visible { get; set; }
 
         public double? Width { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

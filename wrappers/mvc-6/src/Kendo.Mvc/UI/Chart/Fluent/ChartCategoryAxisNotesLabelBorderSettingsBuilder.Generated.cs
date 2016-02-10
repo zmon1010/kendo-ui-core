@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisNotesLabelBorderSettings
     /// </summary>
-    public partial class ChartCategoryAxisNotesLabelBorderSettingsBuilder
-        
+    public partial class ChartCategoryAxisNotesLabelBorderSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The color of the border. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartCategoryAxisNotesLabelBorderSettingsBuilder Color(string value)
+        public ChartCategoryAxisNotesLabelBorderSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The dash type of the border.The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartCategoryAxisNotesLabelBorderSettingsBuilder DashType(ChartDashType value)
+        public ChartCategoryAxisNotesLabelBorderSettingsBuilder<T> DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The width of the border in pixels. By default the border width is set to zero which means that the border will not appear.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartCategoryAxisNotesLabelBorderSettingsBuilder Width(double value)
+        public ChartCategoryAxisNotesLabelBorderSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;

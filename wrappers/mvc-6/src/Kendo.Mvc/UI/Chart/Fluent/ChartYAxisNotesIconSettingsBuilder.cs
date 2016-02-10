@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisNotesIconSettings
     /// </summary>
-    public partial class ChartYAxisNotesIconSettingsBuilder
-        
+    public partial class ChartYAxisNotesIconSettingsBuilder<T>
+        where T : class 
     {
-        public ChartYAxisNotesIconSettingsBuilder(ChartYAxisNotesIconSettings container)
+        public ChartYAxisNotesIconSettingsBuilder(ChartYAxisNotesIconSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartYAxisNotesIconSettings Container
+        protected ChartYAxisNotesIconSettings<T> Container
         {
             get;
             private set;

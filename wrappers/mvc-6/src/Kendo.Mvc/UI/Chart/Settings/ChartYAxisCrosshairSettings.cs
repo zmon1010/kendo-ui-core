@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartYAxisCrosshairSettings class
     /// </summary>
-    public partial class ChartYAxisCrosshairSettings 
+    public partial class ChartYAxisCrosshairSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

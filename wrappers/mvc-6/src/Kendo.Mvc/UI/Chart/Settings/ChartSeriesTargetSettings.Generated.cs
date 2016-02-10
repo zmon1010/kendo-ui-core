@@ -9,16 +9,16 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesTargetSettings class
     /// </summary>
-    public partial class ChartSeriesTargetSettings 
+    public partial class ChartSeriesTargetSettings<T> where T : class 
     {
-        public ChartSeriesTargetBorderSettings Border { get; } = new ChartSeriesTargetBorderSettings();
+        public ChartSeriesTargetBorderSettings<T> Border { get; } = new ChartSeriesTargetBorderSettings<T>();
 
         public string Color { get; set; }
 
-        public ChartSeriesTargetLineSettings Line { get; } = new ChartSeriesTargetLineSettings();
+        public ChartSeriesTargetLineSettings<T> Line { get; } = new ChartSeriesTargetLineSettings<T>();
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

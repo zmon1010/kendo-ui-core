@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartTooltipBorderSettings class
     /// </summary>
-    public partial class ChartTooltipBorderSettings 
+    public partial class ChartTooltipBorderSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

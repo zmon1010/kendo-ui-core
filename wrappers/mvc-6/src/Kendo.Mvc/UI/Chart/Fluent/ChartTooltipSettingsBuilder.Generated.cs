@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartTooltipSettings
     /// </summary>
-    public partial class ChartTooltipSettingsBuilder
-        
+    public partial class ChartTooltipSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the tooltip. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartTooltipSettingsBuilder Background(string value)
+        public ChartTooltipSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border configuration options.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartTooltipSettingsBuilder Border(Action<ChartTooltipBorderSettingsBuilder> configurator)
+        public ChartTooltipSettingsBuilder<T> Border(Action<ChartTooltipBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartTooltipBorderSettingsBuilder(Container.Border));
+            configurator(new ChartTooltipBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text color of the tooltip. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartTooltipSettingsBuilder Color(string value)
+        public ChartTooltipSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The tooltip font.
         /// </summary>
         /// <param name="value">The value for Font</param>
-        public ChartTooltipSettingsBuilder Font(string value)
+        public ChartTooltipSettingsBuilder<T> Font(string value)
         {
             Container.Font = value;
             return this;
@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The format of the labels. Uses kendo.format.Format placeholders:
         /// </summary>
         /// <param name="value">The value for Format</param>
-        public ChartTooltipSettingsBuilder Format(string value)
+        public ChartTooltipSettingsBuilder<T> Format(string value)
         {
             Container.Format = value;
             return this;
@@ -67,11 +67,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the tooltip. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartTooltipSettingsBuilder Padding(Action<ChartTooltipPaddingSettingsBuilder> configurator)
+        public ChartTooltipSettingsBuilder<T> Padding(Action<ChartTooltipPaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartTooltipPaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartTooltipPaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }
@@ -80,7 +80,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display a single tooltip for every category.
         /// </summary>
         /// <param name="value">The value for Shared</param>
-        public ChartTooltipSettingsBuilder Shared(bool value)
+        public ChartTooltipSettingsBuilder<T> Shared(bool value)
         {
             Container.Shared = value;
             return this;
@@ -89,7 +89,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will display a single tooltip for every category.
         /// </summary>
-        public ChartTooltipSettingsBuilder Shared()
+        public ChartTooltipSettingsBuilder<T> Shared()
         {
             Container.Shared = true;
             return this;
@@ -99,7 +99,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the shared tooltip.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for SharedTemplate</param>
-        public ChartTooltipSettingsBuilder SharedTemplate(string value)
+        public ChartTooltipSettingsBuilder<T> SharedTemplate(string value)
         {
             Container.SharedTemplate = value;
             return this;
@@ -109,7 +109,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the shared tooltip.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The ID of the template element for SharedTemplate</param>
-        public ChartTooltipSettingsBuilder SharedTemplateId(string templateId)
+        public ChartTooltipSettingsBuilder<T> SharedTemplateId(string templateId)
         {
             Container.SharedTemplateId = templateId;
             return this;
@@ -119,7 +119,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the tooltip.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for Template</param>
-        public ChartTooltipSettingsBuilder Template(string value)
+        public ChartTooltipSettingsBuilder<T> Template(string value)
         {
             Container.Template = value;
             return this;
@@ -129,7 +129,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the tooltip.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
-        public ChartTooltipSettingsBuilder TemplateId(string templateId)
+        public ChartTooltipSettingsBuilder<T> TemplateId(string templateId)
         {
             Container.TemplateId = templateId;
             return this;
@@ -139,7 +139,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the series tooltip. By default the series tooltip is not displayed.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartTooltipSettingsBuilder Visible(bool value)
+        public ChartTooltipSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -148,7 +148,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will display the series tooltip. By default the series tooltip is not displayed.
         /// </summary>
-        public ChartTooltipSettingsBuilder Visible()
+        public ChartTooltipSettingsBuilder<T> Visible()
         {
             Container.Visible = true;
             return this;

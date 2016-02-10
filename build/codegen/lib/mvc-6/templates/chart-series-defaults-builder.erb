@@ -5,14 +5,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring Chart series defaults settings
     /// </summary>
-    public partial class ChartSeriesDefaultsSettingsBuilder
+    public partial class ChartSeriesDefaultsSettingsBuilder<T> where T : class
     {
-        public ChartSeriesDefaultsSettingsBuilder(ChartSeriesDefaultsSettings container)
+        public ChartSeriesDefaultsSettingsBuilder(ChartSeriesDefaultsSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesDefaultsSettings Container
+        protected ChartSeriesDefaultsSettings<T> Container
         {
             get;
             private set;
@@ -23,12 +23,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The <%= type %> series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the <%= type %> series settings.</param>
-        public ChartSeriesBuilder <%= type %>()
+        public ChartSeriesBuilder<T> <%= type %>()
         {
-            return new ChartSeriesBuilder(Container.<%= type %>);
+            return new ChartSeriesBuilder<T>(Container.<%= type %>);
         }
 
 % end
     }
 }
-

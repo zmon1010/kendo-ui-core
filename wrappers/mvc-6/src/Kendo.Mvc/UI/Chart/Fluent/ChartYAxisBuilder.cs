@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxis
     /// </summary>
-    public partial class ChartYAxisBuilder
-        
+    public partial class ChartYAxisBuilder<T>
+        where T : class 
     {
-        public ChartYAxisBuilder(ChartYAxis container)
+        public ChartYAxisBuilder(ChartYAxis<T> container)
         {
             Container = container;
         }
 
-        protected ChartYAxis Container
+        protected ChartYAxis<T> Container
         {
             get;
             private set;
@@ -23,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Sets the axis type to date.
         /// </summary>
-        public ChartYAxisBuilder Date()
+        public ChartYAxisBuilder<T> Date()
         {
             Container.Type = "date";
             return this;
@@ -32,7 +32,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Sets the axis type to logarithmic.
         /// </summary>
-        public ChartYAxisBuilder Logarithmic()
+        public ChartYAxisBuilder<T> Logarithmic()
         {
             Container.Type = "log";
             return this;
@@ -41,7 +41,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Sets the axis type to numeric.
         /// </summary>
-        public ChartYAxisBuilder Numeric()
+        public ChartYAxisBuilder<T> Numeric()
         {
             Container.Type = "numeric";
             return this;
@@ -50,7 +50,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Sets the axis type to polar.
         /// </summary>
-        public ChartYAxisBuilder Polar()
+        public ChartYAxisBuilder<T> Polar()
         {
             Container.Type = "polar";
             return this;

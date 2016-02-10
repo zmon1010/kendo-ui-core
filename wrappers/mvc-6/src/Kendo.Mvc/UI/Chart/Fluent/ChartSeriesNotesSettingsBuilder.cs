@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesNotesSettings
     /// </summary>
-    public partial class ChartSeriesNotesSettingsBuilder
-        
+    public partial class ChartSeriesNotesSettingsBuilder<T>
+        where T : class 
     {
-        public ChartSeriesNotesSettingsBuilder(ChartSeriesNotesSettings container)
+        public ChartSeriesNotesSettingsBuilder(ChartSeriesNotesSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesNotesSettings Container
+        protected ChartSeriesNotesSettings<T> Container
         {
             get;
             private set;

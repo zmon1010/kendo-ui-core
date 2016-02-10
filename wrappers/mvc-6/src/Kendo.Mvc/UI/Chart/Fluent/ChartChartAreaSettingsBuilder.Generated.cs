@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartChartAreaSettings
     /// </summary>
-    public partial class ChartChartAreaSettingsBuilder
-        
+    public partial class ChartChartAreaSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the chart area. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartChartAreaSettingsBuilder Background(string value)
+        public ChartChartAreaSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the chart area.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartChartAreaSettingsBuilder Border(Action<ChartChartAreaBorderSettingsBuilder> configurator)
+        public ChartChartAreaSettingsBuilder<T> Border(Action<ChartChartAreaBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartChartAreaBorderSettingsBuilder(Container.Border));
+            configurator(new ChartChartAreaBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The height of the chart area.
         /// </summary>
         /// <param name="value">The value for Height</param>
-        public ChartChartAreaSettingsBuilder Height(double value)
+        public ChartChartAreaSettingsBuilder<T> Height(double value)
         {
             Container.Height = value;
             return this;
@@ -47,11 +47,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the chart area. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartChartAreaSettingsBuilder Margin(Action<ChartChartAreaMarginSettingsBuilder> configurator)
+        public ChartChartAreaSettingsBuilder<T> Margin(Action<ChartChartAreaMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartChartAreaMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartChartAreaMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The background opacity of the chart area. By default the background is opaque.
         /// </summary>
         /// <param name="value">The value for Opacity</param>
-        public ChartChartAreaSettingsBuilder Opacity(double value)
+        public ChartChartAreaSettingsBuilder<T> Opacity(double value)
         {
             Container.Opacity = value;
             return this;
@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The width of the chart area.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartChartAreaSettingsBuilder Width(double value)
+        public ChartChartAreaSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;

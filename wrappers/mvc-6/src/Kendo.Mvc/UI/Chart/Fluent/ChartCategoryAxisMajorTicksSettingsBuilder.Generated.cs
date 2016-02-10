@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisMajorTicksSettings
     /// </summary>
-    public partial class ChartCategoryAxisMajorTicksSettingsBuilder
-        
+    public partial class ChartCategoryAxisMajorTicksSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The color of the category axis major ticks lines. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartCategoryAxisMajorTicksSettingsBuilder Color(string value)
+        public ChartCategoryAxisMajorTicksSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The length of the tick line in pixels.
         /// </summary>
         /// <param name="value">The value for Size</param>
-        public ChartCategoryAxisMajorTicksSettingsBuilder Size(double value)
+        public ChartCategoryAxisMajorTicksSettingsBuilder<T> Size(double value)
         {
             Container.Size = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the category axis major ticks. By default the category axis major ticks are visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartCategoryAxisMajorTicksSettingsBuilder Visible(bool value)
+        public ChartCategoryAxisMajorTicksSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The width of the major ticks in pixels.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartCategoryAxisMajorTicksSettingsBuilder Width(double value)
+        public ChartCategoryAxisMajorTicksSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;
@@ -54,7 +54,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The step of the category axis major ticks.
         /// </summary>
         /// <param name="value">The value for Step</param>
-        public ChartCategoryAxisMajorTicksSettingsBuilder Step(double value)
+        public ChartCategoryAxisMajorTicksSettingsBuilder<T> Step(double value)
         {
             Container.Step = value;
             return this;
@@ -64,7 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The skip of the category axis major ticks.
         /// </summary>
         /// <param name="value">The value for Skip</param>
-        public ChartCategoryAxisMajorTicksSettingsBuilder Skip(double value)
+        public ChartCategoryAxisMajorTicksSettingsBuilder<T> Skip(double value)
         {
             Container.Skip = value;
             return this;

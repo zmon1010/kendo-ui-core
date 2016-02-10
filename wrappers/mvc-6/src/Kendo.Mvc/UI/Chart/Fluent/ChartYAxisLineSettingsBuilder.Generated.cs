@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisLineSettings
     /// </summary>
-    public partial class ChartYAxisLineSettingsBuilder
-        
+    public partial class ChartYAxisLineSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The color of the lines. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartYAxisLineSettingsBuilder Color(string value)
+        public ChartYAxisLineSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The dash type of the line.The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartYAxisLineSettingsBuilder DashType(ChartDashType value)
+        public ChartYAxisLineSettingsBuilder<T> DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the y axis lines. By default the y axis lines are visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartYAxisLineSettingsBuilder Visible(bool value)
+        public ChartYAxisLineSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// #### Example - set the scatter chart y axis line width
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartYAxisLineSettingsBuilder Width(double value)
+        public ChartYAxisLineSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;

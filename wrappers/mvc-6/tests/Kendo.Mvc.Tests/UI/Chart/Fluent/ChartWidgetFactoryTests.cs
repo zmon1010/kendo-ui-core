@@ -8,13 +8,13 @@ namespace Kendo.Mvc.UI.Tests
 {
     public class ChartSeriesFactoryTests
 	{
-        private readonly Chart chart;
-		private readonly ChartSeriesFactory factory;
+        private readonly Chart<object> chart;
+		private readonly ChartSeriesFactory<object> factory;
 
 		public ChartSeriesFactoryTests()
 		{
-            chart = new Chart(TestHelper.CreateViewContext());
-            factory = new ChartSeriesFactory(chart.Series);
+            chart = new Chart<object>(TestHelper.CreateViewContext());
+            factory = new ChartSeriesFactory<object>(chart.Series);
 		}
 
 		[Fact]

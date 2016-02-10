@@ -7,15 +7,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeries
     /// </summary>
-    public partial class ChartSeriesBuilder
-        
+    public partial class ChartSeriesBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The aggregate function to apply for date series.This function is used when a category (an year, month, etc.) contains two or more points.
 		/// The function return value is displayed instead of the individual points.The supported values are:
         /// </summary>
         /// <param name="value">The value for Aggregate</param>
-        public ChartSeriesBuilder Aggregate(string value)
+        public ChartSeriesBuilder<T> Aggregate(string value)
         {
             Container.Aggregate = value;
             return this;
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the value axis to use.
         /// </summary>
         /// <param name="value">The value for Axis</param>
-        public ChartSeriesBuilder Axis(string value)
+        public ChartSeriesBuilder<T> Axis(string value)
         {
             Container.Axis = value;
             return this;
@@ -35,11 +35,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the chart series.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartSeriesBuilder Border(Action<ChartSeriesBorderSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Border(Action<ChartSeriesBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartSeriesBorderSettingsBuilder(Container.Border));
+            configurator(new ChartSeriesBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -48,7 +48,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the category name or date.
         /// </summary>
         /// <param name="value">The value for CategoryField</param>
-        public ChartSeriesBuilder CategoryField(string value)
+        public ChartSeriesBuilder<T> CategoryField(string value)
         {
             Container.CategoryField = value;
             return this;
@@ -58,7 +58,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data field containing the close value.
         /// </summary>
         /// <param name="value">The value for CloseField</param>
-        public ChartSeriesBuilder CloseField(string value)
+        public ChartSeriesBuilder<T> CloseField(string value)
         {
             Container.CloseField = value;
             return this;
@@ -68,7 +68,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The series base color. The supported values are:
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartSeriesBuilder Color(string value)
+        public ChartSeriesBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -78,7 +78,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series color.
         /// </summary>
         /// <param name="value">The value for ColorField</param>
-        public ChartSeriesBuilder ColorField(string value)
+        public ChartSeriesBuilder<T> ColorField(string value)
         {
             Container.ColorField = value;
             return this;
@@ -88,11 +88,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The label connectors options.
         /// </summary>
         /// <param name="configurator">The configurator for the connectors setting.</param>
-        public ChartSeriesBuilder Connectors(Action<ChartSeriesConnectorsSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Connectors(Action<ChartSeriesConnectorsSettingsBuilder<T>> configurator)
         {
 
             Container.Connectors.Chart = Container.Chart;
-            configurator(new ChartSeriesConnectorsSettingsBuilder(Container.Connectors));
+            configurator(new ChartSeriesConnectorsSettingsBuilder<T>(Container.Connectors));
 
             return this;
         }
@@ -101,7 +101,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field containing the current value.
         /// </summary>
         /// <param name="value">The value for CurrentField</param>
-        public ChartSeriesBuilder CurrentField(string value)
+        public ChartSeriesBuilder<T> CurrentField(string value)
         {
             Container.CurrentField = value;
             return this;
@@ -111,7 +111,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The dash type of line chart.The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartSeriesBuilder DashType(ChartDashType value)
+        public ChartSeriesBuilder<T> DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;
@@ -121,7 +121,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The series color when the open value is greater than the close value.
         /// </summary>
         /// <param name="value">The value for DownColor</param>
-        public ChartSeriesBuilder DownColor(string value)
+        public ChartSeriesBuilder<T> DownColor(string value)
         {
             Container.DownColor = value;
             return this;
@@ -131,7 +131,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data field containing the color applied when the open value is greater than the close value.
         /// </summary>
         /// <param name="value">The value for DownColorField</param>
-        public ChartSeriesBuilder DownColorField(string value)
+        public ChartSeriesBuilder<T> DownColorField(string value)
         {
             Container.DownColorField = value;
             return this;
@@ -141,7 +141,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The space in pixels between the different segments of the funnel chart.
         /// </summary>
         /// <param name="value">The value for SegmentSpacing</param>
-        public ChartSeriesBuilder SegmentSpacing(double value)
+        public ChartSeriesBuilder<T> SegmentSpacing(double value)
         {
             Container.SegmentSpacing = value;
             return this;
@@ -152,7 +152,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// Summary columns are optional and can be one of two types:
         /// </summary>
         /// <param name="value">The value for SummaryField</param>
-        public ChartSeriesBuilder SummaryField(string value)
+        public ChartSeriesBuilder<T> SummaryField(string value)
         {
             Container.SummaryField = value;
             return this;
@@ -162,7 +162,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// specifies the ratio top-base/bottom-base of the whole chart. neckRatio set to three means the top base is three times smaller than the bottom base.
         /// </summary>
         /// <param name="value">The value for NeckRatio</param>
-        public ChartSeriesBuilder NeckRatio(double value)
+        public ChartSeriesBuilder<T> NeckRatio(double value)
         {
             Container.NeckRatio = value;
             return this;
@@ -173,7 +173,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// The last element is always created like a rectangle since there is no following element.
         /// </summary>
         /// <param name="value">The value for DynamicSlope</param>
-        public ChartSeriesBuilder DynamicSlope(bool value)
+        public ChartSeriesBuilder<T> DynamicSlope(bool value)
         {
             Container.DynamicSlope = value;
             return this;
@@ -183,7 +183,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// When set to true the ratio of the bases of each segment is calculated based on the ratio of currentDataItem.value/nextDataItem.value
 		/// The last element is always created like a rectangle since there is no following element.
         /// </summary>
-        public ChartSeriesBuilder DynamicSlope()
+        public ChartSeriesBuilder<T> DynamicSlope()
         {
             Container.DynamicSlope = true;
             return this;
@@ -193,7 +193,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// When set to false all segments become with the same height, otherwise the height of each segment is based on its value.
         /// </summary>
         /// <param name="value">The value for DynamicHeight</param>
-        public ChartSeriesBuilder DynamicHeight(bool value)
+        public ChartSeriesBuilder<T> DynamicHeight(bool value)
         {
             Container.DynamicHeight = value;
             return this;
@@ -203,11 +203,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The error bars of the chart series.
         /// </summary>
         /// <param name="configurator">The configurator for the errorbars setting.</param>
-        public ChartSeriesBuilder ErrorBars(Action<ChartSeriesErrorBarsSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> ErrorBars(Action<ChartSeriesErrorBarsSettingsBuilder<T>> configurator)
         {
 
             Container.ErrorBars.Chart = Container.Chart;
-            configurator(new ChartSeriesErrorBarsSettingsBuilder(Container.ErrorBars));
+            configurator(new ChartSeriesErrorBarsSettingsBuilder<T>(Container.ErrorBars));
 
             return this;
         }
@@ -216,7 +216,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series.errorBars low value.
         /// </summary>
         /// <param name="value">The value for ErrorLowField</param>
-        public ChartSeriesBuilder ErrorLowField(string value)
+        public ChartSeriesBuilder<T> ErrorLowField(string value)
         {
             Container.ErrorLowField = value;
             return this;
@@ -226,7 +226,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series.errorBars high value.
         /// </summary>
         /// <param name="value">The value for ErrorHighField</param>
-        public ChartSeriesBuilder ErrorHighField(string value)
+        public ChartSeriesBuilder<T> ErrorHighField(string value)
         {
             Container.ErrorHighField = value;
             return this;
@@ -236,7 +236,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series.errorBars xAxis low value.
         /// </summary>
         /// <param name="value">The value for XErrorLowField</param>
-        public ChartSeriesBuilder XErrorLowField(string value)
+        public ChartSeriesBuilder<T> XErrorLowField(string value)
         {
             Container.XErrorLowField = value;
             return this;
@@ -246,7 +246,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series.errorBars xAxis high value.
         /// </summary>
         /// <param name="value">The value for XErrorHighField</param>
-        public ChartSeriesBuilder XErrorHighField(string value)
+        public ChartSeriesBuilder<T> XErrorHighField(string value)
         {
             Container.XErrorHighField = value;
             return this;
@@ -256,7 +256,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series.errorBars yAxis low value.
         /// </summary>
         /// <param name="value">The value for YErrorLowField</param>
-        public ChartSeriesBuilder YErrorLowField(string value)
+        public ChartSeriesBuilder<T> YErrorLowField(string value)
         {
             Container.YErrorLowField = value;
             return this;
@@ -266,7 +266,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series.errorBars yAxis high value.
         /// </summary>
         /// <param name="value">The value for YErrorHighField</param>
-        public ChartSeriesBuilder YErrorHighField(string value)
+        public ChartSeriesBuilder<T> YErrorHighField(string value)
         {
             Container.YErrorHighField = value;
             return this;
@@ -276,7 +276,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains a boolean value indicating whether the sector is exploded.
         /// </summary>
         /// <param name="value">The value for ExplodeField</param>
-        public ChartSeriesBuilder ExplodeField(string value)
+        public ChartSeriesBuilder<T> ExplodeField(string value)
         {
             Container.ExplodeField = value;
             return this;
@@ -286,7 +286,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series value.
         /// </summary>
         /// <param name="value">The value for Field</param>
-        public ChartSeriesBuilder Field(string value)
+        public ChartSeriesBuilder<T> Field(string value)
         {
             Container.Field = value;
             return this;
@@ -296,7 +296,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series from value.
         /// </summary>
         /// <param name="value">The value for FromField</param>
-        public ChartSeriesBuilder FromField(string value)
+        public ChartSeriesBuilder<T> FromField(string value)
         {
             Container.FromField = value;
             return this;
@@ -306,7 +306,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series to value.
         /// </summary>
         /// <param name="value">The value for ToField</param>
-        public ChartSeriesBuilder ToField(string value)
+        public ChartSeriesBuilder<T> ToField(string value)
         {
             Container.ToField = value;
             return this;
@@ -316,7 +316,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series note text.
         /// </summary>
         /// <param name="value">The value for NoteTextField</param>
-        public ChartSeriesBuilder NoteTextField(string value)
+        public ChartSeriesBuilder<T> NoteTextField(string value)
         {
             Container.NoteTextField = value;
             return this;
@@ -326,7 +326,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series lower value.
         /// </summary>
         /// <param name="value">The value for LowerField</param>
-        public ChartSeriesBuilder LowerField(string value)
+        public ChartSeriesBuilder<T> LowerField(string value)
         {
             Container.LowerField = value;
             return this;
@@ -336,7 +336,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series q1 value.
         /// </summary>
         /// <param name="value">The value for Q1Field</param>
-        public ChartSeriesBuilder Q1Field(string value)
+        public ChartSeriesBuilder<T> Q1Field(string value)
         {
             Container.Q1Field = value;
             return this;
@@ -346,7 +346,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series median value.
         /// </summary>
         /// <param name="value">The value for MedianField</param>
-        public ChartSeriesBuilder MedianField(string value)
+        public ChartSeriesBuilder<T> MedianField(string value)
         {
             Container.MedianField = value;
             return this;
@@ -356,7 +356,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series q3 value.
         /// </summary>
         /// <param name="value">The value for Q3Field</param>
-        public ChartSeriesBuilder Q3Field(string value)
+        public ChartSeriesBuilder<T> Q3Field(string value)
         {
             Container.Q3Field = value;
             return this;
@@ -366,7 +366,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series upper value.
         /// </summary>
         /// <param name="value">The value for UpperField</param>
-        public ChartSeriesBuilder UpperField(string value)
+        public ChartSeriesBuilder<T> UpperField(string value)
         {
             Container.UpperField = value;
             return this;
@@ -376,7 +376,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series mean value.
         /// </summary>
         /// <param name="value">The value for MeanField</param>
-        public ChartSeriesBuilder MeanField(string value)
+        public ChartSeriesBuilder<T> MeanField(string value)
         {
             Container.MeanField = value;
             return this;
@@ -386,7 +386,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the series outliers value.
         /// </summary>
         /// <param name="value">The value for OutliersField</param>
-        public ChartSeriesBuilder OutliersField(string value)
+        public ChartSeriesBuilder<T> OutliersField(string value)
         {
             Container.OutliersField = value;
             return this;
@@ -396,7 +396,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The distance between categories expressed as a percentage of the bar width.See the related spacing setting.
         /// </summary>
         /// <param name="value">The value for Gap</param>
-        public ChartSeriesBuilder Gap(double value)
+        public ChartSeriesBuilder<T> Gap(double value)
         {
             Container.Gap = value;
             return this;
@@ -406,7 +406,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data field containing the high value.
         /// </summary>
         /// <param name="value">The value for HighField</param>
-        public ChartSeriesBuilder HighField(string value)
+        public ChartSeriesBuilder<T> HighField(string value)
         {
             Container.HighField = value;
             return this;
@@ -416,11 +416,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series highlighting configuration options.
         /// </summary>
         /// <param name="configurator">The configurator for the highlight setting.</param>
-        public ChartSeriesBuilder Highlight(Action<ChartSeriesHighlightSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Highlight(Action<ChartSeriesHighlightSettingsBuilder<T>> configurator)
         {
 
             Container.Highlight.Chart = Container.Chart;
-            configurator(new ChartSeriesHighlightSettingsBuilder(Container.Highlight));
+            configurator(new ChartSeriesHighlightSettingsBuilder<T>(Container.Highlight));
 
             return this;
         }
@@ -429,7 +429,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The diameter of the donut hole in pixels.
         /// </summary>
         /// <param name="value">The value for HoleSize</param>
-        public ChartSeriesBuilder HoleSize(double value)
+        public ChartSeriesBuilder<T> HoleSize(double value)
         {
             Container.HoleSize = value;
             return this;
@@ -439,11 +439,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series label configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the labels setting.</param>
-        public ChartSeriesBuilder Labels(Action<ChartSeriesLabelsSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Labels(Action<ChartSeriesLabelsSettingsBuilder<T>> configurator)
         {
 
             Container.Labels.Chart = Container.Chart;
-            configurator(new ChartSeriesLabelsSettingsBuilder(Container.Labels));
+            configurator(new ChartSeriesLabelsSettingsBuilder<T>(Container.Labels));
 
             return this;
         }
@@ -452,11 +452,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart line configuration options.
         /// </summary>
         /// <param name="configurator">The configurator for the line setting.</param>
-        public ChartSeriesBuilder Line(Action<ChartSeriesLineSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Line(Action<ChartSeriesLineSettingsBuilder<T>> configurator)
         {
 
             Container.Line.Chart = Container.Chart;
-            configurator(new ChartSeriesLineSettingsBuilder(Container.Line));
+            configurator(new ChartSeriesLineSettingsBuilder<T>(Container.Line));
 
             return this;
         }
@@ -465,7 +465,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data field containing the low value.
         /// </summary>
         /// <param name="value">The value for LowField</param>
-        public ChartSeriesBuilder LowField(string value)
+        public ChartSeriesBuilder<T> LowField(string value)
         {
             Container.LowField = value;
             return this;
@@ -475,11 +475,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin around each donut series (ring). A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartSeriesBuilder Margin(Action<ChartSeriesMarginSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Margin(Action<ChartSeriesMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartSeriesMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartSeriesMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -488,11 +488,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series marker configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the markers setting.</param>
-        public ChartSeriesBuilder Markers(Action<ChartSeriesMarkersSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Markers(Action<ChartSeriesMarkersSettingsBuilder<T>> configurator)
         {
 
             Container.Markers.Chart = Container.Chart;
-            configurator(new ChartSeriesMarkersSettingsBuilder(Container.Markers));
+            configurator(new ChartSeriesMarkersSettingsBuilder<T>(Container.Markers));
 
             return this;
         }
@@ -501,11 +501,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series outliers configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the outliers setting.</param>
-        public ChartSeriesBuilder Outliers(Action<ChartSeriesOutliersSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Outliers(Action<ChartSeriesOutliersSettingsBuilder<T>> configurator)
         {
 
             Container.Outliers.Chart = Container.Chart;
-            configurator(new ChartSeriesOutliersSettingsBuilder(Container.Outliers));
+            configurator(new ChartSeriesOutliersSettingsBuilder<T>(Container.Outliers));
 
             return this;
         }
@@ -514,11 +514,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series extremes configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the extremes setting.</param>
-        public ChartSeriesBuilder Extremes(Action<ChartSeriesExtremesSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Extremes(Action<ChartSeriesExtremesSettingsBuilder<T>> configurator)
         {
 
             Container.Extremes.Chart = Container.Chart;
-            configurator(new ChartSeriesExtremesSettingsBuilder(Container.Extremes));
+            configurator(new ChartSeriesExtremesSettingsBuilder<T>(Container.Extremes));
 
             return this;
         }
@@ -527,7 +527,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The maximum size of the chart bubble series marker.
         /// </summary>
         /// <param name="value">The value for MaxSize</param>
-        public ChartSeriesBuilder MaxSize(double value)
+        public ChartSeriesBuilder<T> MaxSize(double value)
         {
             Container.MaxSize = value;
             return this;
@@ -537,7 +537,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The minimum size of the chart bubble series marker.
         /// </summary>
         /// <param name="value">The value for MinSize</param>
-        public ChartSeriesBuilder MinSize(double value)
+        public ChartSeriesBuilder<T> MinSize(double value)
         {
             Container.MinSize = value;
             return this;
@@ -547,7 +547,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The behavior for handling missing values. The supported values are:
         /// </summary>
         /// <param name="value">The value for MissingValues</param>
-        public ChartSeriesBuilder MissingValues(string value)
+        public ChartSeriesBuilder<T> MissingValues(string value)
         {
             Container.MissingValues = value;
             return this;
@@ -557,7 +557,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The supported values are:
         /// </summary>
         /// <param name="value">The value for Style</param>
-        public ChartSeriesBuilder Style(string value)
+        public ChartSeriesBuilder<T> Style(string value)
         {
             Container.Style = value;
             return this;
@@ -567,7 +567,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the chart series which is visible in the legend.
         /// </summary>
         /// <param name="value">The value for Name</param>
-        public ChartSeriesBuilder Name(string value)
+        public ChartSeriesBuilder<T> Name(string value)
         {
             Container.Name = value;
             return this;
@@ -577,7 +577,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The color to use for bar, column or waterfall series with negative values. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for NegativeColor</param>
-        public ChartSeriesBuilder NegativeColor(string value)
+        public ChartSeriesBuilder<T> NegativeColor(string value)
         {
             Container.NegativeColor = value;
             return this;
@@ -587,11 +587,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The options for displaying the chart negative bubble values.
         /// </summary>
         /// <param name="configurator">The configurator for the negativevalues setting.</param>
-        public ChartSeriesBuilder NegativeValues(Action<ChartSeriesNegativeValuesSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> NegativeValues(Action<ChartSeriesNegativeValuesSettingsBuilder<T>> configurator)
         {
 
             Container.NegativeValues.Chart = Container.Chart;
-            configurator(new ChartSeriesNegativeValuesSettingsBuilder(Container.NegativeValues));
+            configurator(new ChartSeriesNegativeValuesSettingsBuilder<T>(Container.NegativeValues));
 
             return this;
         }
@@ -600,7 +600,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The series opacity. By default the series are opaque.
         /// </summary>
         /// <param name="value">The value for Opacity</param>
-        public ChartSeriesBuilder Opacity(double value)
+        public ChartSeriesBuilder<T> Opacity(double value)
         {
             Container.Opacity = value;
             return this;
@@ -610,7 +610,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data field containing the open value.
         /// </summary>
         /// <param name="value">The value for OpenField</param>
-        public ChartSeriesBuilder OpenField(string value)
+        public ChartSeriesBuilder<T> OpenField(string value)
         {
             Container.OpenField = value;
             return this;
@@ -620,11 +620,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series overlay options.
         /// </summary>
         /// <param name="configurator">The configurator for the overlay setting.</param>
-        public ChartSeriesBuilder Overlay(Action<ChartSeriesOverlaySettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Overlay(Action<ChartSeriesOverlaySettingsBuilder<T>> configurator)
         {
 
             Container.Overlay.Chart = Container.Chart;
-            configurator(new ChartSeriesOverlaySettingsBuilder(Container.Overlay));
+            configurator(new ChartSeriesOverlaySettingsBuilder<T>(Container.Overlay));
 
             return this;
         }
@@ -633,7 +633,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding around the chart (equal on all sides).
         /// </summary>
         /// <param name="value">The value for Padding</param>
-        public ChartSeriesBuilder Padding(double value)
+        public ChartSeriesBuilder<T> Padding(double value)
         {
             Container.Padding = value;
             return this;
@@ -643,7 +643,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The or radius of the chart donut series in pixels. If not set, the available space is split evenly between the series.
         /// </summary>
         /// <param name="value">The value for Size</param>
-        public ChartSeriesBuilder Size(double value)
+        public ChartSeriesBuilder<T> Size(double value)
         {
             Container.Size = value;
             return this;
@@ -653,7 +653,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data field containing the bubble size value.
         /// </summary>
         /// <param name="value">The value for SizeField</param>
-        public ChartSeriesBuilder SizeField(string value)
+        public ChartSeriesBuilder<T> SizeField(string value)
         {
             Container.SizeField = value;
             return this;
@@ -663,7 +663,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The distance between series points within a category. Expressed as a percentage of the bar width.See the related gap setting.
         /// </summary>
         /// <param name="value">The value for Spacing</param>
-        public ChartSeriesBuilder Spacing(double value)
+        public ChartSeriesBuilder<T> Spacing(double value)
         {
             Container.Spacing = value;
             return this;
@@ -674,12 +674,12 @@ namespace Kendo.Mvc.UI.Fluent
 		/// A string value is interpreted as series.stack.group.
         /// </summary>
         /// <param name="configurator">The configurator for the stack setting.</param>
-        public ChartSeriesBuilder Stack(Action<ChartSeriesStackSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Stack(Action<ChartSeriesStackSettingsBuilder<T>> configurator)
         {
             Container.Stack.Enabled = true;
 
             Container.Stack.Chart = Container.Chart;
-            configurator(new ChartSeriesStackSettingsBuilder(Container.Stack));
+            configurator(new ChartSeriesStackSettingsBuilder<T>(Container.Stack));
 
             return this;
         }
@@ -688,7 +688,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A boolean value indicating if the series should be stacked.
 		/// A string value is interpreted as series.stack.group.
         /// </summary>
-        public ChartSeriesBuilder Stack()
+        public ChartSeriesBuilder<T> Stack()
         {
             Container.Stack.Enabled = true;
             return this;
@@ -699,7 +699,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// A string value is interpreted as series.stack.group.
         /// </summary>
         /// <param name="enabled">Enables or disables the stack option.</param>
-        public ChartSeriesBuilder Stack(bool enabled)
+        public ChartSeriesBuilder<T> Stack(bool enabled)
         {
             Container.Stack.Enabled = enabled;
             return this;
@@ -709,7 +709,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The start angle (degrees) of the first donut or pie segment.Angles increase clockwise and zero is to the left. Negative values are acceptable.
         /// </summary>
         /// <param name="value">The value for StartAngle</param>
-        public ChartSeriesBuilder StartAngle(double value)
+        public ChartSeriesBuilder<T> StartAngle(double value)
         {
             Container.StartAngle = value;
             return this;
@@ -719,11 +719,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The configuration options of the target
         /// </summary>
         /// <param name="configurator">The configurator for the target setting.</param>
-        public ChartSeriesBuilder Target(Action<ChartSeriesTargetSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Target(Action<ChartSeriesTargetSettingsBuilder<T>> configurator)
         {
 
             Container.Target.Chart = Container.Chart;
-            configurator(new ChartSeriesTargetSettingsBuilder(Container.Target));
+            configurator(new ChartSeriesTargetSettingsBuilder<T>(Container.Target));
 
             return this;
         }
@@ -732,7 +732,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field containing the target value.
         /// </summary>
         /// <param name="value">The value for TargetField</param>
-        public ChartSeriesBuilder TargetField(string value)
+        public ChartSeriesBuilder<T> TargetField(string value)
         {
             Container.TargetField = value;
             return this;
@@ -742,11 +742,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series tooltip configuration options.
         /// </summary>
         /// <param name="configurator">The configurator for the tooltip setting.</param>
-        public ChartSeriesBuilder Tooltip(Action<ChartSeriesTooltipSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Tooltip(Action<ChartSeriesTooltipSettingsBuilder<T>> configurator)
         {
 
             Container.Tooltip.Chart = Container.Chart;
-            configurator(new ChartSeriesTooltipSettingsBuilder(Container.Tooltip));
+            configurator(new ChartSeriesTooltipSettingsBuilder<T>(Container.Tooltip));
 
             return this;
         }
@@ -755,7 +755,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The type of the series.The supported values are:
         /// </summary>
         /// <param name="value">The value for Type</param>
-        public ChartSeriesBuilder Type(string value)
+        public ChartSeriesBuilder<T> Type(string value)
         {
             Container.Type = value;
             return this;
@@ -765,7 +765,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the visible property of a chart series
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartSeriesBuilder Visible(bool value)
+        public ChartSeriesBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -776,7 +776,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// or series name (for other available series types) in the legend.
         /// </summary>
         /// <param name="value">The value for VisibleInLegend</param>
-        public ChartSeriesBuilder VisibleInLegend(bool value)
+        public ChartSeriesBuilder<T> VisibleInLegend(bool value)
         {
             Container.VisibleInLegend = value;
             return this;
@@ -786,7 +786,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which indicates whether to show the point category name in the legend.
         /// </summary>
         /// <param name="value">The value for VisibleInLegendField</param>
-        public ChartSeriesBuilder VisibleInLegendField(string value)
+        public ChartSeriesBuilder<T> VisibleInLegendField(string value)
         {
             Container.VisibleInLegendField = value;
             return this;
@@ -796,7 +796,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are:
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
-        public ChartSeriesBuilder Visual(string handler)
+        public ChartSeriesBuilder<T> Visual(string handler)
         {
             Container.Visual = new ClientHandlerDescriptor { HandlerName = handler };
             return this;
@@ -806,7 +806,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the points. Applicable for bar, column, pie, donut, funnel, rangeBar, rangeColumn and waterfall series. The available argument fields are:
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ChartSeriesBuilder Visual(Func<object, object> handler)
+        public ChartSeriesBuilder<T> Visual(Func<object, object> handler)
         {
             Container.Visual = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
@@ -815,7 +815,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The line width.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartSeriesBuilder Width(double value)
+        public ChartSeriesBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;
@@ -825,7 +825,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the X axis to use.For polar series the xAxis range is expressed in degrees.
         /// </summary>
         /// <param name="value">The value for XAxis</param>
-        public ChartSeriesBuilder XAxis(string value)
+        public ChartSeriesBuilder<T> XAxis(string value)
         {
             Container.XAxis = value;
             return this;
@@ -835,7 +835,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field containing the X value.
         /// </summary>
         /// <param name="value">The value for XField</param>
-        public ChartSeriesBuilder XField(string value)
+        public ChartSeriesBuilder<T> XField(string value)
         {
             Container.XField = value;
             return this;
@@ -845,7 +845,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the Y axis to use.** Available for bubble, scatter, scatterLine and polar series. **
         /// </summary>
         /// <param name="value">The value for YAxis</param>
-        public ChartSeriesBuilder YAxis(string value)
+        public ChartSeriesBuilder<T> YAxis(string value)
         {
             Container.YAxis = value;
             return this;
@@ -855,7 +855,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field containing the Y value.
         /// </summary>
         /// <param name="value">The value for YField</param>
-        public ChartSeriesBuilder YField(string value)
+        public ChartSeriesBuilder<T> YField(string value)
         {
             Container.YField = value;
             return this;
@@ -865,11 +865,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The series notes configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the notes setting.</param>
-        public ChartSeriesBuilder Notes(Action<ChartSeriesNotesSettingsBuilder> configurator)
+        public ChartSeriesBuilder<T> Notes(Action<ChartSeriesNotesSettingsBuilder<T>> configurator)
         {
 
             Container.Notes.Chart = Container.Chart;
-            configurator(new ChartSeriesNotesSettingsBuilder(Container.Notes));
+            configurator(new ChartSeriesNotesSettingsBuilder<T>(Container.Notes));
 
             return this;
         }
@@ -879,7 +879,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// For example line series will be on top with bar and area following below.
         /// </summary>
         /// <param name="value">The value for ZIndex</param>
-        public ChartSeriesBuilder ZIndex(double value)
+        public ChartSeriesBuilder<T> ZIndex(double value)
         {
             Container.ZIndex = value;
             return this;

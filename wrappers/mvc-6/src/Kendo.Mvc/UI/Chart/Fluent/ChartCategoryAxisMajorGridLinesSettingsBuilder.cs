@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisMajorGridLinesSettings
     /// </summary>
-    public partial class ChartCategoryAxisMajorGridLinesSettingsBuilder
-        
+    public partial class ChartCategoryAxisMajorGridLinesSettingsBuilder<T>
+        where T : class 
     {
-        public ChartCategoryAxisMajorGridLinesSettingsBuilder(ChartCategoryAxisMajorGridLinesSettings container)
+        public ChartCategoryAxisMajorGridLinesSettingsBuilder(ChartCategoryAxisMajorGridLinesSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartCategoryAxisMajorGridLinesSettings Container
+        protected ChartCategoryAxisMajorGridLinesSettings<T> Container
         {
             get;
             private set;

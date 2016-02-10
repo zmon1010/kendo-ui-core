@@ -9,13 +9,13 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesLabelsSettings class
     /// </summary>
-    public partial class ChartSeriesLabelsSettings 
+    public partial class ChartSeriesLabelsSettings<T> where T : class 
     {
         public string Align { get; set; }
 
         public string Background { get; set; }
 
-        public ChartSeriesLabelsBorderSettings Border { get; } = new ChartSeriesLabelsBorderSettings();
+        public ChartSeriesLabelsBorderSettings<T> Border { get; } = new ChartSeriesLabelsBorderSettings<T>();
 
         public string Color { get; set; }
 
@@ -25,9 +25,9 @@ namespace Kendo.Mvc.UI
 
         public string Format { get; set; }
 
-        public ChartSeriesLabelsMarginSettings Margin { get; } = new ChartSeriesLabelsMarginSettings();
+        public ChartSeriesLabelsMarginSettings<T> Margin { get; } = new ChartSeriesLabelsMarginSettings<T>();
 
-        public ChartSeriesLabelsPaddingSettings Padding { get; } = new ChartSeriesLabelsPaddingSettings();
+        public ChartSeriesLabelsPaddingSettings<T> Padding { get; } = new ChartSeriesLabelsPaddingSettings<T>();
 
         public string Position { get; set; }
 
@@ -39,12 +39,12 @@ namespace Kendo.Mvc.UI
 
         public ClientHandlerDescriptor Visual { get; set; }
 
-        public ChartSeriesLabelsFromSettings From { get; } = new ChartSeriesLabelsFromSettings();
+        public ChartSeriesLabelsFromSettings<T> From { get; } = new ChartSeriesLabelsFromSettings<T>();
 
-        public ChartSeriesLabelsToSettings To { get; } = new ChartSeriesLabelsToSettings();
+        public ChartSeriesLabelsToSettings<T> To { get; } = new ChartSeriesLabelsToSettings<T>();
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

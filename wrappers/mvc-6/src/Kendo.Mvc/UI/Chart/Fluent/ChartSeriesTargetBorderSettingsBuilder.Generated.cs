@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesTargetBorderSettings
     /// </summary>
-    public partial class ChartSeriesTargetBorderSettingsBuilder
-        
+    public partial class ChartSeriesTargetBorderSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The color of the border.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartSeriesTargetBorderSettingsBuilder Color(string value)
+        public ChartSeriesTargetBorderSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartSeriesTargetBorderSettingsBuilder DashType(ChartDashType value)
+        public ChartSeriesTargetBorderSettingsBuilder<T> DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The width of the border in pixels. By default the border width is set to zero which means that the border will not appear.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartSeriesTargetBorderSettingsBuilder Width(double value)
+        public ChartSeriesTargetBorderSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;

@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartPdfSettings class
     /// </summary>
-    public partial class ChartPdfSettings 
+    public partial class ChartPdfSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

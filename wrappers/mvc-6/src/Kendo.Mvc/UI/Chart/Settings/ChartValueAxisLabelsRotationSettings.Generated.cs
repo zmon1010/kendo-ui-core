@@ -9,14 +9,14 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartValueAxisLabelsRotationSettings class
     /// </summary>
-    public partial class ChartValueAxisLabelsRotationSettings 
+    public partial class ChartValueAxisLabelsRotationSettings<T> where T : class 
     {
         public string Align { get; set; }
 
         public double? Angle { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

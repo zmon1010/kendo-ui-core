@@ -9,22 +9,22 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartLegendLabelsSettings class
     /// </summary>
-    public partial class ChartLegendLabelsSettings 
+    public partial class ChartLegendLabelsSettings<T> where T : class 
     {
         public string Color { get; set; }
 
         public string Font { get; set; }
 
-        public ChartLegendLabelsMarginSettings Margin { get; } = new ChartLegendLabelsMarginSettings();
+        public ChartLegendLabelsMarginSettings<T> Margin { get; } = new ChartLegendLabelsMarginSettings<T>();
 
-        public ChartLegendLabelsPaddingSettings Padding { get; } = new ChartLegendLabelsPaddingSettings();
+        public ChartLegendLabelsPaddingSettings<T> Padding { get; } = new ChartLegendLabelsPaddingSettings<T>();
 
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

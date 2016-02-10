@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartLegendPaddingSettings
     /// </summary>
-    public partial class ChartLegendPaddingSettingsBuilder
-        
+    public partial class ChartLegendPaddingSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The bottom padding of the chart legend.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public ChartLegendPaddingSettingsBuilder Bottom(double value)
+        public ChartLegendPaddingSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left padding of the chart legend.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public ChartLegendPaddingSettingsBuilder Left(double value)
+        public ChartLegendPaddingSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right padding of the chart legend.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public ChartLegendPaddingSettingsBuilder Right(double value)
+        public ChartLegendPaddingSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top padding of the chart legend.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public ChartLegendPaddingSettingsBuilder Top(double value)
+        public ChartLegendPaddingSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

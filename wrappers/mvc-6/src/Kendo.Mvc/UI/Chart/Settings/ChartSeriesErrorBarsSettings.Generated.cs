@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesErrorBarsSettings class
     /// </summary>
-    public partial class ChartSeriesErrorBarsSettings 
+    public partial class ChartSeriesErrorBarsSettings<T> where T : class 
     {
         public string Value { get; set; }
 
@@ -23,10 +23,10 @@ namespace Kendo.Mvc.UI
 
         public string Color { get; set; }
 
-        public ChartSeriesErrorBarsLineSettings Line { get; } = new ChartSeriesErrorBarsLineSettings();
+        public ChartSeriesErrorBarsLineSettings<T> Line { get; } = new ChartSeriesErrorBarsLineSettings<T>();
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

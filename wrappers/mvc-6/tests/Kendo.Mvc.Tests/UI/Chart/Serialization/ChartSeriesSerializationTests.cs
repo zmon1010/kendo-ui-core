@@ -8,11 +8,11 @@ namespace Kendo.Mvc.UI.Tests
 {
     public class ChartSeriesSerializationTests
 	{
-		private readonly ChartSeries series;
+		private readonly ChartSeries<object> series;
 
 		public ChartSeriesSerializationTests()
 		{
-            series = new ChartSeries();
+            series = new ChartSeries<object>();
 		}
 
 		[Fact]

@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisLineSettings
     /// </summary>
-    public partial class ChartYAxisLineSettingsBuilder
-        
+    public partial class ChartYAxisLineSettingsBuilder<T>
+        where T : class 
     {
-        public ChartYAxisLineSettingsBuilder(ChartYAxisLineSettings container)
+        public ChartYAxisLineSettingsBuilder(ChartYAxisLineSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartYAxisLineSettings Container
+        protected ChartYAxisLineSettings<T> Container
         {
             get;
             private set;

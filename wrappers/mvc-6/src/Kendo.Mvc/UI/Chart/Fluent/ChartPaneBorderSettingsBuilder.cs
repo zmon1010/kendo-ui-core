@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartPaneBorderSettings
     /// </summary>
-    public partial class ChartPaneBorderSettingsBuilder
-        
+    public partial class ChartPaneBorderSettingsBuilder<T>
+        where T : class 
     {
-        public ChartPaneBorderSettingsBuilder(ChartPaneBorderSettings container)
+        public ChartPaneBorderSettingsBuilder(ChartPaneBorderSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartPaneBorderSettings Container
+        protected ChartPaneBorderSettings<T> Container
         {
             get;
             private set;

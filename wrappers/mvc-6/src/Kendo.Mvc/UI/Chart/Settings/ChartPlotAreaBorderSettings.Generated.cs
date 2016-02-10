@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartPlotAreaBorderSettings class
     /// </summary>
-    public partial class ChartPlotAreaBorderSettings 
+    public partial class ChartPlotAreaBorderSettings<T> where T : class 
     {
         public string Color { get; set; }
 
@@ -18,7 +18,7 @@ namespace Kendo.Mvc.UI
         public ChartDashType? DashType { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

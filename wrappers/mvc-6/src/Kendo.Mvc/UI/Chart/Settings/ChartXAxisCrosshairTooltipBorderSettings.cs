@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartXAxisCrosshairTooltipBorderSettings class
     /// </summary>
-    public partial class ChartXAxisCrosshairTooltipBorderSettings 
+    public partial class ChartXAxisCrosshairTooltipBorderSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

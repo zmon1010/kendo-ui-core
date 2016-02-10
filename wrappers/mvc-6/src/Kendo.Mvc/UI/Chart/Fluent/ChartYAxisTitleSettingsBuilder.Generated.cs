@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisTitleSettings
     /// </summary>
-    public partial class ChartYAxisTitleSettingsBuilder
-        
+    public partial class ChartYAxisTitleSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the title. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartYAxisTitleSettingsBuilder Background(string value)
+        public ChartYAxisTitleSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the title.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartYAxisTitleSettingsBuilder Border(Action<ChartYAxisTitleBorderSettingsBuilder> configurator)
+        public ChartYAxisTitleSettingsBuilder<T> Border(Action<ChartYAxisTitleBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartYAxisTitleBorderSettingsBuilder(Container.Border));
+            configurator(new ChartYAxisTitleBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text color of the title. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartYAxisTitleSettingsBuilder Color(string value)
+        public ChartYAxisTitleSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The font style of the title.
         /// </summary>
         /// <param name="value">The value for Font</param>
-        public ChartYAxisTitleSettingsBuilder Font(string value)
+        public ChartYAxisTitleSettingsBuilder<T> Font(string value)
         {
             Container.Font = value;
             return this;
@@ -57,11 +57,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the title. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartYAxisTitleSettingsBuilder Margin(Action<ChartYAxisTitleMarginSettingsBuilder> configurator)
+        public ChartYAxisTitleSettingsBuilder<T> Margin(Action<ChartYAxisTitleMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartYAxisTitleMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartYAxisTitleMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -70,11 +70,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the title. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartYAxisTitleSettingsBuilder Padding(Action<ChartYAxisTitlePaddingSettingsBuilder> configurator)
+        public ChartYAxisTitleSettingsBuilder<T> Padding(Action<ChartYAxisTitlePaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartYAxisTitlePaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartYAxisTitlePaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }
@@ -83,7 +83,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The position of the title.The supported values are:
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public ChartYAxisTitleSettingsBuilder Position(string value)
+        public ChartYAxisTitleSettingsBuilder<T> Position(string value)
         {
             Container.Position = value;
             return this;
@@ -93,7 +93,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The rotation angle of the title. By default the title is not rotated.
         /// </summary>
         /// <param name="value">The value for Rotation</param>
-        public ChartYAxisTitleSettingsBuilder Rotation(double value)
+        public ChartYAxisTitleSettingsBuilder<T> Rotation(double value)
         {
             Container.Rotation = value;
             return this;
@@ -103,7 +103,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text of the title.
         /// </summary>
         /// <param name="value">The value for Text</param>
-        public ChartYAxisTitleSettingsBuilder Text(string value)
+        public ChartYAxisTitleSettingsBuilder<T> Text(string value)
         {
             Container.Text = value;
             return this;
@@ -113,7 +113,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the scatter chart y axis title. By default the scatter chart y axis title is visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartYAxisTitleSettingsBuilder Visible(bool value)
+        public ChartYAxisTitleSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -123,7 +123,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the title. The available argument fields are:
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
-        public ChartYAxisTitleSettingsBuilder Visual(string handler)
+        public ChartYAxisTitleSettingsBuilder<T> Visual(string handler)
         {
             Container.Visual = new ClientHandlerDescriptor { HandlerName = handler };
             return this;
@@ -133,7 +133,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the title. The available argument fields are:
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ChartYAxisTitleSettingsBuilder Visual(Func<object, object> handler)
+        public ChartYAxisTitleSettingsBuilder<T> Visual(Func<object, object> handler)
         {
             Container.Visual = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;

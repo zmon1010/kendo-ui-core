@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartValueAxisMinorGridLinesSettings
     /// </summary>
-    public partial class ChartValueAxisMinorGridLinesSettingsBuilder
-        
+    public partial class ChartValueAxisMinorGridLinesSettingsBuilder<T>
+        where T : class 
     {
-        public ChartValueAxisMinorGridLinesSettingsBuilder(ChartValueAxisMinorGridLinesSettings container)
+        public ChartValueAxisMinorGridLinesSettingsBuilder(ChartValueAxisMinorGridLinesSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartValueAxisMinorGridLinesSettings Container
+        protected ChartValueAxisMinorGridLinesSettings<T> Container
         {
             get;
             private set;

@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesErrorBarsLineSettings
     /// </summary>
-    public partial class ChartSeriesErrorBarsLineSettingsBuilder
-        
+    public partial class ChartSeriesErrorBarsLineSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The width of the line.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartSeriesErrorBarsLineSettingsBuilder Width(double value)
+        public ChartSeriesErrorBarsLineSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The dash type of the error bars line.The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartSeriesErrorBarsLineSettingsBuilder DashType(ChartDashType value)
+        public ChartSeriesErrorBarsLineSettingsBuilder<T> DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;

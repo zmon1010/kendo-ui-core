@@ -9,14 +9,14 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisSelectMousewheelSettings class
     /// </summary>
-    public partial class ChartCategoryAxisSelectMousewheelSettings 
+    public partial class ChartCategoryAxisSelectMousewheelSettings<T> where T : class 
     {
         public bool? Reverse { get; set; }
 
         public string Zoom { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

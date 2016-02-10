@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisTitleBorderSettings
     /// </summary>
-    public partial class ChartYAxisTitleBorderSettingsBuilder
-        
+    public partial class ChartYAxisTitleBorderSettingsBuilder<T>
+        where T : class 
     {
-        public ChartYAxisTitleBorderSettingsBuilder(ChartYAxisTitleBorderSettings container)
+        public ChartYAxisTitleBorderSettingsBuilder(ChartYAxisTitleBorderSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartYAxisTitleBorderSettings Container
+        protected ChartYAxisTitleBorderSettings<T> Container
         {
             get;
             private set;

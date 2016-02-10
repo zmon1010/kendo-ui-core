@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisMinorTicksSettings
     /// </summary>
-    public partial class ChartYAxisMinorTicksSettingsBuilder
-        
+    public partial class ChartYAxisMinorTicksSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The color of the y axis minor ticks lines. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartYAxisMinorTicksSettingsBuilder Color(string value)
+        public ChartYAxisMinorTicksSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The length of the tick line in pixels.
         /// </summary>
         /// <param name="value">The value for Size</param>
-        public ChartYAxisMinorTicksSettingsBuilder Size(double value)
+        public ChartYAxisMinorTicksSettingsBuilder<T> Size(double value)
         {
             Container.Size = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the y axis minor ticks. By default the y axis minor ticks are not visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartYAxisMinorTicksSettingsBuilder Visible(bool value)
+        public ChartYAxisMinorTicksSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will display the y axis minor ticks. By default the y axis minor ticks are not visible.
         /// </summary>
-        public ChartYAxisMinorTicksSettingsBuilder Visible()
+        public ChartYAxisMinorTicksSettingsBuilder<T> Visible()
         {
             Container.Visible = true;
             return this;
@@ -53,7 +53,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The width of the minor ticks in pixels.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartYAxisMinorTicksSettingsBuilder Width(double value)
+        public ChartYAxisMinorTicksSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;
@@ -63,7 +63,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The step of the y axis minor ticks.
         /// </summary>
         /// <param name="value">The value for Step</param>
-        public ChartYAxisMinorTicksSettingsBuilder Step(double value)
+        public ChartYAxisMinorTicksSettingsBuilder<T> Step(double value)
         {
             Container.Step = value;
             return this;
@@ -73,7 +73,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The skip of the y axis minor ticks.
         /// </summary>
         /// <param name="value">The value for Skip</param>
-        public ChartYAxisMinorTicksSettingsBuilder Skip(double value)
+        public ChartYAxisMinorTicksSettingsBuilder<T> Skip(double value)
         {
             Container.Skip = value;
             return this;

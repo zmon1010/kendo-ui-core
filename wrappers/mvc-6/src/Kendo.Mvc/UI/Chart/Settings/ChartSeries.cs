@@ -1,16 +1,12 @@
-using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
     /// <summary>
     /// Kendo UI ChartSeries class
     /// </summary>
-    public partial class ChartSeries
+    public partial class ChartSeries<T> where T : class 
     {
         public IEnumerable Data { get; set; }
 

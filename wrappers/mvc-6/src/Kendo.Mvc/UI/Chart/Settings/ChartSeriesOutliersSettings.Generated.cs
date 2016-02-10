@@ -9,11 +9,11 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesOutliersSettings class
     /// </summary>
-    public partial class ChartSeriesOutliersSettings 
+    public partial class ChartSeriesOutliersSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartSeriesOutliersBorderSettings Border { get; } = new ChartSeriesOutliersBorderSettings();
+        public ChartSeriesOutliersBorderSettings<T> Border { get; } = new ChartSeriesOutliersBorderSettings<T>();
 
         public double? Size { get; set; }
 
@@ -22,7 +22,7 @@ namespace Kendo.Mvc.UI
         public double? Rotation { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

@@ -9,13 +9,13 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesHighlightSettings class
     /// </summary>
-    public partial class ChartSeriesHighlightSettings 
+    public partial class ChartSeriesHighlightSettings<T> where T : class 
     {
-        public ChartSeriesHighlightBorderSettings Border { get; } = new ChartSeriesHighlightBorderSettings();
+        public ChartSeriesHighlightBorderSettings<T> Border { get; } = new ChartSeriesHighlightBorderSettings<T>();
 
         public string Color { get; set; }
 
-        public ChartSeriesHighlightLineSettings Line { get; } = new ChartSeriesHighlightLineSettings();
+        public ChartSeriesHighlightLineSettings<T> Line { get; } = new ChartSeriesHighlightLineSettings<T>();
 
         public double? Opacity { get; set; }
 
@@ -26,7 +26,7 @@ namespace Kendo.Mvc.UI
         public ClientHandlerDescriptor Visual { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

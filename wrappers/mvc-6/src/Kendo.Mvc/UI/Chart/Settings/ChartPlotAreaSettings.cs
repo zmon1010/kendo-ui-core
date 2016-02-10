@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartPlotAreaSettings class
     /// </summary>
-    public partial class ChartPlotAreaSettings 
+    public partial class ChartPlotAreaSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

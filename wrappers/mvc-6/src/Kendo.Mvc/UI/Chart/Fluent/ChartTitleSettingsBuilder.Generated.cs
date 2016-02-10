@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartTitleSettings
     /// </summary>
-    public partial class ChartTitleSettingsBuilder
-        
+    public partial class ChartTitleSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The alignment of the title.
         /// </summary>
         /// <param name="value">The value for Align</param>
-        public ChartTitleSettingsBuilder Align(string value)
+        public ChartTitleSettingsBuilder<T> Align(string value)
         {
             Container.Align = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The background color of the title. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartTitleSettingsBuilder Background(string value)
+        public ChartTitleSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -34,11 +34,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the series.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartTitleSettingsBuilder Border(Action<ChartTitleBorderSettingsBuilder> configurator)
+        public ChartTitleSettingsBuilder<T> Border(Action<ChartTitleBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartTitleBorderSettingsBuilder(Container.Border));
+            configurator(new ChartTitleBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text color of the title. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartTitleSettingsBuilder Color(string value)
+        public ChartTitleSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The font of the title.
         /// </summary>
         /// <param name="value">The value for Font</param>
-        public ChartTitleSettingsBuilder Font(string value)
+        public ChartTitleSettingsBuilder<T> Font(string value)
         {
             Container.Font = value;
             return this;
@@ -67,11 +67,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the title. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartTitleSettingsBuilder Margin(Action<ChartTitleMarginSettingsBuilder> configurator)
+        public ChartTitleSettingsBuilder<T> Margin(Action<ChartTitleMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartTitleMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartTitleMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -80,11 +80,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the title. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartTitleSettingsBuilder Padding(Action<ChartTitlePaddingSettingsBuilder> configurator)
+        public ChartTitleSettingsBuilder<T> Padding(Action<ChartTitlePaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartTitlePaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartTitlePaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }
@@ -93,7 +93,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The position of the title.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public ChartTitleSettingsBuilder Position(string value)
+        public ChartTitleSettingsBuilder<T> Position(string value)
         {
             Container.Position = value;
             return this;
@@ -103,7 +103,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text of the chart title. You can also set the text directly for a title with default options.
         /// </summary>
         /// <param name="value">The value for Text</param>
-        public ChartTitleSettingsBuilder Text(string value)
+        public ChartTitleSettingsBuilder<T> Text(string value)
         {
             Container.Text = value;
             return this;
@@ -113,7 +113,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the title. By default the title is not displayed.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartTitleSettingsBuilder Visible(bool value)
+        public ChartTitleSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -122,7 +122,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will display the title. By default the title is not displayed.
         /// </summary>
-        public ChartTitleSettingsBuilder Visible()
+        public ChartTitleSettingsBuilder<T> Visible()
         {
             Container.Visible = true;
             return this;

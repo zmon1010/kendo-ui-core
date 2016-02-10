@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisLabelsDateFormatsSettings
     /// </summary>
-    public partial class ChartYAxisLabelsDateFormatsSettingsBuilder
-        
+    public partial class ChartYAxisLabelsDateFormatsSettingsBuilder<T>
+        where T : class 
     {
-        public ChartYAxisLabelsDateFormatsSettingsBuilder(ChartYAxisLabelsDateFormatsSettings container)
+        public ChartYAxisLabelsDateFormatsSettingsBuilder(ChartYAxisLabelsDateFormatsSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartYAxisLabelsDateFormatsSettings Container
+        protected ChartYAxisLabelsDateFormatsSettings<T> Container
         {
             get;
             private set;

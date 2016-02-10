@@ -8,13 +8,13 @@ namespace Kendo.Mvc.UI.Tests
 {
     public class ChartBuilderTests
 	{
-        private readonly Chart chart;
-		private readonly ChartBuilder builder;
+        private readonly Chart<object> chart;
+		private readonly ChartBuilder<object> builder;
 
 		public ChartBuilderTests()
 		{
-            chart = new Chart(TestHelper.CreateViewContext());
-            builder = new ChartBuilder(chart);
+            chart = new Chart<object>(TestHelper.CreateViewContext());
+            builder = new ChartBuilder<object>(chart);
 		}
 
 		[Fact]

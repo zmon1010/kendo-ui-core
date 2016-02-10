@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartTooltipPaddingSettings
     /// </summary>
-    public partial class ChartTooltipPaddingSettingsBuilder
-        
+    public partial class ChartTooltipPaddingSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The bottom padding of the tooltip.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public ChartTooltipPaddingSettingsBuilder Bottom(double value)
+        public ChartTooltipPaddingSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left padding of the tooltip.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public ChartTooltipPaddingSettingsBuilder Left(double value)
+        public ChartTooltipPaddingSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right padding of the tooltip.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public ChartTooltipPaddingSettingsBuilder Right(double value)
+        public ChartTooltipPaddingSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top padding of the tooltip.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public ChartTooltipPaddingSettingsBuilder Top(double value)
+        public ChartTooltipPaddingSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesHighlightBorderSettings
     /// </summary>
-    public partial class ChartSeriesHighlightBorderSettingsBuilder
-        
+    public partial class ChartSeriesHighlightBorderSettingsBuilder<T>
+        where T : class 
     {
-        public ChartSeriesHighlightBorderSettingsBuilder(ChartSeriesHighlightBorderSettings container)
+        public ChartSeriesHighlightBorderSettingsBuilder(ChartSeriesHighlightBorderSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesHighlightBorderSettings Container
+        protected ChartSeriesHighlightBorderSettings<T> Container
         {
             get;
             private set;

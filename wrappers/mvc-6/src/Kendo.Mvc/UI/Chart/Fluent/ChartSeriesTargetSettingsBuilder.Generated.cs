@@ -7,18 +7,18 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesTargetSettings
     /// </summary>
-    public partial class ChartSeriesTargetSettingsBuilder
-        
+    public partial class ChartSeriesTargetSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The border of the target.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartSeriesTargetSettingsBuilder Border(Action<ChartSeriesTargetBorderSettingsBuilder> configurator)
+        public ChartSeriesTargetSettingsBuilder<T> Border(Action<ChartSeriesTargetBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartSeriesTargetBorderSettingsBuilder(Container.Border));
+            configurator(new ChartSeriesTargetBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The target color.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartSeriesTargetSettingsBuilder Color(string value)
+        public ChartSeriesTargetSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -37,11 +37,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The target line options.
         /// </summary>
         /// <param name="configurator">The configurator for the line setting.</param>
-        public ChartSeriesTargetSettingsBuilder Line(Action<ChartSeriesTargetLineSettingsBuilder> configurator)
+        public ChartSeriesTargetSettingsBuilder<T> Line(Action<ChartSeriesTargetLineSettingsBuilder<T>> configurator)
         {
 
             Container.Line.Chart = Container.Chart;
-            configurator(new ChartSeriesTargetLineSettingsBuilder(Container.Line));
+            configurator(new ChartSeriesTargetLineSettingsBuilder<T>(Container.Line));
 
             return this;
         }

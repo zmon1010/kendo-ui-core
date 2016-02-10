@@ -9,22 +9,22 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartChartAreaSettings class
     /// </summary>
-    public partial class ChartChartAreaSettings 
+    public partial class ChartChartAreaSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartChartAreaBorderSettings Border { get; } = new ChartChartAreaBorderSettings();
+        public ChartChartAreaBorderSettings<T> Border { get; } = new ChartChartAreaBorderSettings<T>();
 
         public double? Height { get; set; }
 
-        public ChartChartAreaMarginSettings Margin { get; } = new ChartChartAreaMarginSettings();
+        public ChartChartAreaMarginSettings<T> Margin { get; } = new ChartChartAreaMarginSettings<T>();
 
         public double? Opacity { get; set; }
 
         public double? Width { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

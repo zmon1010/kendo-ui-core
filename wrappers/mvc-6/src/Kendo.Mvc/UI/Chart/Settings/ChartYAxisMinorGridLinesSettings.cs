@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartYAxisMinorGridLinesSettings class
     /// </summary>
-    public partial class ChartYAxisMinorGridLinesSettings 
+    public partial class ChartYAxisMinorGridLinesSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

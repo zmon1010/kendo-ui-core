@@ -9,12 +9,12 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesOverlaySettings class
     /// </summary>
-    public partial class ChartSeriesOverlaySettings 
+    public partial class ChartSeriesOverlaySettings<T> where T : class 
     {
         public string Gradient { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

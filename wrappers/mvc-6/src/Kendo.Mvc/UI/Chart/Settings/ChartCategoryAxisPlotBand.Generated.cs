@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisPlotBand class
     /// </summary>
-    public partial class ChartCategoryAxisPlotBand 
+    public partial class ChartCategoryAxisPlotBand<T> where T : class 
     {
         public string Color { get; set; }
 
@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI
         public double? To { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

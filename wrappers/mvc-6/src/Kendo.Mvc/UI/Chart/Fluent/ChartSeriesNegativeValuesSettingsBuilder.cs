@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesNegativeValuesSettings
     /// </summary>
-    public partial class ChartSeriesNegativeValuesSettingsBuilder
-        
+    public partial class ChartSeriesNegativeValuesSettingsBuilder<T>
+        where T : class 
     {
-        public ChartSeriesNegativeValuesSettingsBuilder(ChartSeriesNegativeValuesSettings container)
+        public ChartSeriesNegativeValuesSettingsBuilder(ChartSeriesNegativeValuesSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesNegativeValuesSettings Container
+        protected ChartSeriesNegativeValuesSettings<T> Container
         {
             get;
             private set;

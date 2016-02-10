@@ -9,17 +9,17 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartPaneTitleSettings class
     /// </summary>
-    public partial class ChartPaneTitleSettings 
+    public partial class ChartPaneTitleSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartPaneTitleBorderSettings Border { get; } = new ChartPaneTitleBorderSettings();
+        public ChartPaneTitleBorderSettings<T> Border { get; } = new ChartPaneTitleBorderSettings<T>();
 
         public string Color { get; set; }
 
         public string Font { get; set; }
 
-        public ChartPaneTitleMarginSettings Margin { get; } = new ChartPaneTitleMarginSettings();
+        public ChartPaneTitleMarginSettings<T> Margin { get; } = new ChartPaneTitleMarginSettings<T>();
 
         public string Position { get; set; }
 
@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI
         public ClientHandlerDescriptor Visual { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

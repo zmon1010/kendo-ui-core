@@ -6,13 +6,13 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Defines the Chart series defaults settings
     /// </summary>
-    public partial class ChartSeriesDefaultsSettings
+    public partial class ChartSeriesDefaultsSettings<T> where T : class
     {
 % CHART_SERIES.each do |type|
         /// <summary>
         /// The <%= type %> series default settings.
         /// </summary>
-        public ChartSeries <%= type %> { get; } = new ChartSeries();
+        public ChartSeries<T> <%= type %> { get; } = new ChartSeries<T>();
 
 % end
 

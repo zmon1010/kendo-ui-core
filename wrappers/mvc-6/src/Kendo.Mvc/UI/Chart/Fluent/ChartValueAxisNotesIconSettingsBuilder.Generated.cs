@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartValueAxisNotesIconSettings
     /// </summary>
-    public partial class ChartValueAxisNotesIconSettingsBuilder
-        
+    public partial class ChartValueAxisNotesIconSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the notes icon.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartValueAxisNotesIconSettingsBuilder Background(string value)
+        public ChartValueAxisNotesIconSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the icon.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartValueAxisNotesIconSettingsBuilder Border(Action<ChartValueAxisNotesIconBorderSettingsBuilder> configurator)
+        public ChartValueAxisNotesIconSettingsBuilder<T> Border(Action<ChartValueAxisNotesIconBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartValueAxisNotesIconBorderSettingsBuilder(Container.Border));
+            configurator(new ChartValueAxisNotesIconBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The size of the icon.
         /// </summary>
         /// <param name="value">The value for Size</param>
-        public ChartValueAxisNotesIconSettingsBuilder Size(double value)
+        public ChartValueAxisNotesIconSettingsBuilder<T> Size(double value)
         {
             Container.Size = value;
             return this;
@@ -51,7 +51,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// * "cross" - the marker shape is cross.
         /// </summary>
         /// <param name="value">The value for Type</param>
-        public ChartValueAxisNotesIconSettingsBuilder Type(string value)
+        public ChartValueAxisNotesIconSettingsBuilder<T> Type(string value)
         {
             Container.Type = value;
             return this;
@@ -61,7 +61,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The icon visibility.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartValueAxisNotesIconSettingsBuilder Visible(bool value)
+        public ChartValueAxisNotesIconSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;

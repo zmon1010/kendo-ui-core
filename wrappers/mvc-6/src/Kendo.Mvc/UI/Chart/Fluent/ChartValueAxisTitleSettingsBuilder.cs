@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartValueAxisTitleSettings
     /// </summary>
-    public partial class ChartValueAxisTitleSettingsBuilder
-        
+    public partial class ChartValueAxisTitleSettingsBuilder<T>
+        where T : class 
     {
-        public ChartValueAxisTitleSettingsBuilder(ChartValueAxisTitleSettings container)
+        public ChartValueAxisTitleSettingsBuilder(ChartValueAxisTitleSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartValueAxisTitleSettings Container
+        protected ChartValueAxisTitleSettings<T> Container
         {
             get;
             private set;

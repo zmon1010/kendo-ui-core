@@ -1,3 +1,7 @@
+:chart:
+    - :name: T
+      :constraint: class
+
 :diagram:
     - :name: TShapeModel
       :constraint: class

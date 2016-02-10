@@ -6,142 +6,142 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Defines the Chart series defaults settings
     /// </summary>
-    public partial class ChartSeriesDefaultsSettings
+    public partial class ChartSeriesDefaultsSettings<T> where T : class
     {
         /// <summary>
         /// The Area series default settings.
         /// </summary>
-        public ChartSeries Area { get; } = new ChartSeries();
+        public ChartSeries<T> Area { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Bar series default settings.
         /// </summary>
-        public ChartSeries Bar { get; } = new ChartSeries();
+        public ChartSeries<T> Bar { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Column series default settings.
         /// </summary>
-        public ChartSeries Column { get; } = new ChartSeries();
+        public ChartSeries<T> Column { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Line series default settings.
         /// </summary>
-        public ChartSeries Line { get; } = new ChartSeries();
+        public ChartSeries<T> Line { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The VerticalArea series default settings.
         /// </summary>
-        public ChartSeries VerticalArea { get; } = new ChartSeries();
+        public ChartSeries<T> VerticalArea { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The VerticalLine series default settings.
         /// </summary>
-        public ChartSeries VerticalLine { get; } = new ChartSeries();
+        public ChartSeries<T> VerticalLine { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The RadarArea series default settings.
         /// </summary>
-        public ChartSeries RadarArea { get; } = new ChartSeries();
+        public ChartSeries<T> RadarArea { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The RadarColumn series default settings.
         /// </summary>
-        public ChartSeries RadarColumn { get; } = new ChartSeries();
+        public ChartSeries<T> RadarColumn { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The RadarLine series default settings.
         /// </summary>
-        public ChartSeries RadarLine { get; } = new ChartSeries();
+        public ChartSeries<T> RadarLine { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The BoxPlot series default settings.
         /// </summary>
-        public ChartSeries BoxPlot { get; } = new ChartSeries();
+        public ChartSeries<T> BoxPlot { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Bubble series default settings.
         /// </summary>
-        public ChartSeries Bubble { get; } = new ChartSeries();
+        public ChartSeries<T> Bubble { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Bullet series default settings.
         /// </summary>
-        public ChartSeries Bullet { get; } = new ChartSeries();
+        public ChartSeries<T> Bullet { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The VerticalBullet series default settings.
         /// </summary>
-        public ChartSeries VerticalBullet { get; } = new ChartSeries();
+        public ChartSeries<T> VerticalBullet { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Candlestick series default settings.
         /// </summary>
-        public ChartSeries Candlestick { get; } = new ChartSeries();
+        public ChartSeries<T> Candlestick { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The OHLC series default settings.
         /// </summary>
-        public ChartSeries OHLC { get; } = new ChartSeries();
+        public ChartSeries<T> OHLC { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Funnel series default settings.
         /// </summary>
-        public ChartSeries Funnel { get; } = new ChartSeries();
+        public ChartSeries<T> Funnel { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The RangeColumn series default settings.
         /// </summary>
-        public ChartSeries RangeColumn { get; } = new ChartSeries();
+        public ChartSeries<T> RangeColumn { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The RangeBar series default settings.
         /// </summary>
-        public ChartSeries RangeBar { get; } = new ChartSeries();
+        public ChartSeries<T> RangeBar { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Pie series default settings.
         /// </summary>
-        public ChartSeries Pie { get; } = new ChartSeries();
+        public ChartSeries<T> Pie { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Donut series default settings.
         /// </summary>
-        public ChartSeries Donut { get; } = new ChartSeries();
+        public ChartSeries<T> Donut { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Scatter series default settings.
         /// </summary>
-        public ChartSeries Scatter { get; } = new ChartSeries();
+        public ChartSeries<T> Scatter { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The ScatterLine series default settings.
         /// </summary>
-        public ChartSeries ScatterLine { get; } = new ChartSeries();
+        public ChartSeries<T> ScatterLine { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The PolarArea series default settings.
         /// </summary>
-        public ChartSeries PolarArea { get; } = new ChartSeries();
+        public ChartSeries<T> PolarArea { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The PolarLine series default settings.
         /// </summary>
-        public ChartSeries PolarLine { get; } = new ChartSeries();
+        public ChartSeries<T> PolarLine { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The PolarScatter series default settings.
         /// </summary>
-        public ChartSeries PolarScatter { get; } = new ChartSeries();
+        public ChartSeries<T> PolarScatter { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Waterfall series default settings.
         /// </summary>
-        public ChartSeries Waterfall { get; } = new ChartSeries();
+        public ChartSeries<T> Waterfall { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The HorizontalWaterfall series default settings.
         /// </summary>
-        public ChartSeries HorizontalWaterfall { get; } = new ChartSeries();
+        public ChartSeries<T> HorizontalWaterfall { get; } = new ChartSeries<T>();
 
 
         public IDictionary<string, object> Serialize()

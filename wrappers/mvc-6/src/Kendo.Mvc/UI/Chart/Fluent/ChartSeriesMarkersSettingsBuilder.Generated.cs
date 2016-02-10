@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesMarkersSettings
     /// </summary>
-    public partial class ChartSeriesMarkersSettingsBuilder
-        
+    public partial class ChartSeriesMarkersSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the series markers.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartSeriesMarkersSettingsBuilder Background(string value)
+        public ChartSeriesMarkersSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the markers.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartSeriesMarkersSettingsBuilder Border(Action<ChartSeriesMarkersBorderSettingsBuilder> configurator)
+        public ChartSeriesMarkersSettingsBuilder<T> Border(Action<ChartSeriesMarkersBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartSeriesMarkersBorderSettingsBuilder(Container.Border));
+            configurator(new ChartSeriesMarkersBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The marker size in pixels.
         /// </summary>
         /// <param name="value">The value for Size</param>
-        public ChartSeriesMarkersSettingsBuilder Size(double value)
+        public ChartSeriesMarkersSettingsBuilder<T> Size(double value)
         {
             Container.Size = value;
             return this;
@@ -51,7 +51,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// * "cross" - the marker shape is cross.
         /// </summary>
         /// <param name="value">The value for Type</param>
-        public ChartSeriesMarkersSettingsBuilder Type(string value)
+        public ChartSeriesMarkersSettingsBuilder<T> Type(string value)
         {
             Container.Type = value;
             return this;
@@ -61,7 +61,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the series markers. By default chart series markers are not displayed.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartSeriesMarkersSettingsBuilder Visible(bool value)
+        public ChartSeriesMarkersSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will display the series markers. By default chart series markers are not displayed.
         /// </summary>
-        public ChartSeriesMarkersSettingsBuilder Visible()
+        public ChartSeriesMarkersSettingsBuilder<T> Visible()
         {
             Container.Visible = true;
             return this;
@@ -80,7 +80,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the markers. The available argument fields are:
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
-        public ChartSeriesMarkersSettingsBuilder Visual(string handler)
+        public ChartSeriesMarkersSettingsBuilder<T> Visual(string handler)
         {
             Container.Visual = new ClientHandlerDescriptor { HandlerName = handler };
             return this;
@@ -90,7 +90,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the markers. The available argument fields are:
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ChartSeriesMarkersSettingsBuilder Visual(Func<object, object> handler)
+        public ChartSeriesMarkersSettingsBuilder<T> Visual(Func<object, object> handler)
         {
             Container.Visual = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
@@ -99,7 +99,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The rotation angle of the markers.
         /// </summary>
         /// <param name="value">The value for Rotation</param>
-        public ChartSeriesMarkersSettingsBuilder Rotation(double value)
+        public ChartSeriesMarkersSettingsBuilder<T> Rotation(double value)
         {
             Container.Rotation = value;
             return this;

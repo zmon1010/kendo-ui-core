@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesLabelsFromPaddingSettings
     /// </summary>
-    public partial class ChartSeriesLabelsFromPaddingSettingsBuilder
-        
+    public partial class ChartSeriesLabelsFromPaddingSettingsBuilder<T>
+        where T : class 
     {
-        public ChartSeriesLabelsFromPaddingSettingsBuilder(ChartSeriesLabelsFromPaddingSettings container)
+        public ChartSeriesLabelsFromPaddingSettingsBuilder(ChartSeriesLabelsFromPaddingSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesLabelsFromPaddingSettings Container
+        protected ChartSeriesLabelsFromPaddingSettings<T> Container
         {
             get;
             private set;

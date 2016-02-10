@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisMajorTicksSettings
     /// </summary>
-    public partial class ChartYAxisMajorTicksSettingsBuilder
-        
+    public partial class ChartYAxisMajorTicksSettingsBuilder<T>
+        where T : class 
     {
-        public ChartYAxisMajorTicksSettingsBuilder(ChartYAxisMajorTicksSettings container)
+        public ChartYAxisMajorTicksSettingsBuilder(ChartYAxisMajorTicksSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartYAxisMajorTicksSettings Container
+        protected ChartYAxisMajorTicksSettings<T> Container
         {
             get;
             private set;

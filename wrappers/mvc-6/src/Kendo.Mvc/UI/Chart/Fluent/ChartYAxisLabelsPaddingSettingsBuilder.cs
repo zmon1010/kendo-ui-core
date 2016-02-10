@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisLabelsPaddingSettings
     /// </summary>
-    public partial class ChartYAxisLabelsPaddingSettingsBuilder
-        
+    public partial class ChartYAxisLabelsPaddingSettingsBuilder<T>
+        where T : class 
     {
-        public ChartYAxisLabelsPaddingSettingsBuilder(ChartYAxisLabelsPaddingSettings container)
+        public ChartYAxisLabelsPaddingSettingsBuilder(ChartYAxisLabelsPaddingSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartYAxisLabelsPaddingSettings Container
+        protected ChartYAxisLabelsPaddingSettings<T> Container
         {
             get;
             private set;
