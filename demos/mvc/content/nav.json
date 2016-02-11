@@ -1623,25 +1623,6 @@
         }
       },
       {
-        "text": "Localization",
-        "url": "editor/localization",
-        "title": {
-            "kendo-ui": "Localization support in Kendo UI Editor"
-        },
-        "meta": {
-            "kendo-ui": "With Kendo UI Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the localization support in the widget."
-        },
-        "description": {
-            "kendo-ui": "<p>The Telerik Kendo UI Editor supports localization by specifying messages for its toolbar elements in the corresponding languages. You can apply these messages either directly through the editor messages attributes collection, or via kendo.messages.[language_abbreviation] file as presented in this example.</p> <p>More information about the localization support (by means of messages definitions) for the editor can be found in <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-messages\" target=\"_blank\"> this section of the documentation</a> </p>"
-        },
-        "group": "Accessibility and Internationalization",
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
         "text": "RTL support",
         "url": "editor/right-to-left-support",
         "title": {
@@ -1653,7 +1634,7 @@
             "aspnet-mvc": "With ASP.NET MVC Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the RTL support in the component."
         },
         "group": "Accessibility and Internationalization",
-		"description": {
+        "description": {
             "kendo-ui": "<p>The Telerik Kendo UI Editor supports right-to-left languages and rendering. All you have to do is register the <strong>kendo.rtl.min.css</strong> file (located in the /styles installation folder) and wrap the editor in a container element with <strong>k-rtl </strong>class set for it, as demonstrated in this example.</p> <p>More information on the right-to-left support of the Kendo UI widgets can be found in <a href=\"http://docs.telerik.com/kendo-ui/accessibility/supporting-rtl-languages\" target=\"_blank\">this topic</a>.</p>",
             "aspnet-mvc": "<p>The Telerik MVC Editor supports right-to-left languages and rendering. All you have to do is to register the <strong>kendo.rtl.min.css</strong> file (located at Kendo.Mvc.Examples\\Content\\web installation folder) and wrap the editor in a container element with <strong>k-rtl </strong>class set for it, as demonstrated in this example.</p> <p>More information on the right-to-left support of the components can be found in <a href=\"http://docs.telerik.com/kendo-ui/accessibility/supporting-rtl-languages\" target=\"_blank\">this topic</a>.</p>"
         }
@@ -1666,6 +1647,9 @@
         },
         "meta": {
             "kendo-ui": "With Kendo UI Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the localization support in the widget."
+        },
+        "description": {
+            "kendo-ui": "<p>The Telerik Kendo UI Editor supports localization by specifying messages for its toolbar elements in the corresponding languages. You can apply these messages either directly through the editor messages attributes collection, or via kendo.messages.[language_abbreviation] file as presented in this example.</p> <p>More information about the localization support (by means of messages definitions) for the editor can be found in <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-messages\" target=\"_blank\"> this section of the documentation</a> </p>"
         },
         "packages": [
           "!mvc",
@@ -1749,7 +1733,7 @@
             "kendo-ui": "This demo shows how jQuery Grid widget in Kendo UI Web displays tabular data once the grid is created from HTML5 element with defined columns and table elements."
         },
         "description": {
-            "kendo-ui": "<p>When grid is initialized from an existing HTML table, this table is presumably already populated with data. This improves accessibility and SEO, and warrants the data will be visible even when JavaScript is disabled or there's a JavaScript error on the page.</p> <p>Note that the Grid uses a Kendo UI DataSource instance even when it is created from a table. The cell content is \"fetched\" and thus the DataSource is fed with data. The data field names in the DataSource are either created from the header cell content or the data-field attributes of the header cells. The data field names should be valid Javascript identifiers, that's why it is recommended to use data-field attributes, otherwise the header cell content must obey several limitations:</p> <ul> <li>no spaces</li> <li>no special characters</li> <li>the first character should be a letter</li> </ul> <p>When creating the Grid from an existing table, the column settings can be defined via HTML attributes. <br /> <br /> More information regarding Kendo UI grid creation from data table can be found in the documentation <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/controls/data-management/grid/overview#from-html-table\">here</a>.</p>\n"
+            "kendo-ui": "<p>When grid is initialized from an existing HTML table, this table is presumably already populated with data. This improves accessibility and SEO, and warrants the data will be visible even when JavaScript is disabled or there's a JavaScript error on the page.</p> <p>Note that the Grid uses a Kendo UI DataSource instance even when it is created from a table. The cell content is \"fetched\" and thus the DataSource is fed with data. The data field names in the DataSource are either created from the header cell content or the data-field attributes of the header cells. The data field names should be valid Javascript identifiers, that's why it is recommended to use data-field attributes, otherwise the header cell content must obey several limitations:</p> <ul> <li>no spaces</li> <li>no special characters</li> <li>the first character should be a letter</li> </ul> <p>When creating the Grid from an existing table, the column settings can be defined via HTML attributes. <br /> <br /> More information regarding Kendo UI grid creation from data table can be found in the documentation <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/web/grid/introduction#create-a-grid-from-an-existing-html-table\">here</a>.</p>\n"
         },
         "packages": [
           "!mvc",
@@ -1785,7 +1769,7 @@
             "kendo-ui": "AngularJS directive support for Kendo UI Grid"
         },
         "description": {
-           "kendo-ui": "<p>The Kendo UI grid features inherent integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p>&nbsp;angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our grid for apps which could benefit from such integrations. Further, you can specify the grid options as a field in the $scope and then associate them via the options attribute of the grid Angular definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use the Kendo UI grid with AngularJS you can gather from <a href=\"http://docs.telerik.com/kendo-ui/AngularJS/the-grid-widget\" target=\"_blank\">this help resource</a>.</p>"
+           "kendo-ui": "<p><a href=\"http://www.telerik.com/kendo-ui/grid\" target=\"_blank\">The Kendo UI grid</a> features inherent integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p>&nbsp;angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our grid for apps which could benefit from such integrations. Further, you can specify the grid options as a field in the $scope and then associate them via the options attribute of the grid Angular definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use the Kendo UI grid with AngularJS you can gather from <a href=\"http://docs.telerik.com/kendo-ui/AngularJS/the-grid-widget\" target=\"_blank\">this help resource</a>.</p>"
         },
         "packages": [
           "!mvc",
@@ -2610,10 +2594,6 @@
           "packages": [
               "!offline"
           ],
-          "description": {
-            "kendo-ui": "<p>Kendo UI Complete ships a .NET based server-side module established on Telerik RadSpreadProcessing, part of the Document Processing Library.</p><p>See <a href='http://docs.telerik.com/kendo-ui/controls/data-management/spreadsheet/import-and-export-data/server-side-processing'>Server-Side Processing</a> for details.<p>",
-            "aspnet-mvc": "<p>Kendo UI Complete ships a .NET based server-side module established on Telerik RadSpreadProcessing, part of the Document Processing Library.</p><p>See <a href='http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/spreadsheet/spreadsheet-processing'>Spreadsheet Processing</a> for details.</p>"
-        },
           "sources": {
               "kendo-ui": [{
                   "name": "Sheets settings",
