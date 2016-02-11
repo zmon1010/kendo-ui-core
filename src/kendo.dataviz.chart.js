@@ -10133,11 +10133,12 @@ var __meta__ = { // jshint ignore:line
 
             if (outOfRangePoints) {
                 var minCategory = range.min - 1;
+                var srcCategories = categoryAxis.options.srcCategories || [];
                 if (minCategory >= 0 && minCategory < currentSeries.data.length) {
                     categoryIx = minCategory;
                     currentSeries._outOfRangeMinPoint = {
                         item: currentSeries.data[categoryIx],
-                        category: categoryAxis.options.srcCategories[categoryIx],
+                        category: srcCategories[categoryIx],
                         categoryIx: -1
                     };
                 }
@@ -10146,7 +10147,7 @@ var __meta__ = { // jshint ignore:line
                     categoryIx = range.max;
                     currentSeries._outOfRangeMaxPoint = {
                         item: currentSeries.data[categoryIx],
-                        category: categoryAxis.options.srcCategories[categoryIx],
+                        category: srcCategories[categoryIx],
                         categoryIx: range.max - range.min
                     };
                 }

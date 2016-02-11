@@ -118,6 +118,15 @@
         });
     });
 
+    test("min greater than the category count is ignored (with data)", 0, function() {
+        setupChart({
+            series: [{ type: "line", data: [1, 2, 3, 4, 5] }],
+            categoryAxis: {
+                min: 2
+            }
+        });
+    });
+
     test("max greater than the category count is ignored", 0, function() {
         setupChart({
             series: [{ type: "line" }],
