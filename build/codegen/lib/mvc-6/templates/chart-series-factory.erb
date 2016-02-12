@@ -1,0 +1,65 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Kendo.Mvc.Extensions;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for configuring List<ChartSeries<T>>
+    /// </summary>
+    public partial class ChartSeriesFactory<T> where T : class
+    {
+% CHART_SERIES.each do |series|
+        /// <summary>
+        /// Defines <%= series[:name] %> series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> <%= series[:type] %>(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Type = "<%= series[:name] %>",
+                Data = data
+            };
+
+            item.Chart = Chart;
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+<%= series[:expression_overloads] %>
+
+        /// <summary>
+        /// Defines bound <%= series[:name] %> series.
+        /// </summary>
+% series[:fields].each do |field|
+        /// <param name="<%= field[:member] %>">
+        /// The name of the <%= field[:description] %> member.<%= ' Optional.' if field[:optional] %>
+        /// </param>
+% end
+        public virtual ChartSeriesBuilder<T> <%= series[:type] %>(
+            <%= series[:fields].map { |field| "string #{field[:member]}#{ ' = null' if field[:optional] }" }.join(',
+            ') %>)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "<%= series[:name] %>",
+                Name = <%= series[:required_fields].map { |field| "#{field[:member]}.AsTitle()" }.join(' + ", " + ') %>,
+                <%= series[:fields].map { |field|
+                    "#{field[:name]} = #{field[:member]}" }.join(',
+                ')
+                %>
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+% end
+    }
+}

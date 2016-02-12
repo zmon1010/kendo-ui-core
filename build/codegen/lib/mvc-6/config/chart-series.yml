@@ -1,27 +1,15 @@
-- Area
-- Bar
-- Column
-- Line
-- VerticalArea
-- VerticalLine
-- RadarArea
-- RadarColumn
-- RadarLine
-- BoxPlot
-- Bubble
-- Bullet
-- VerticalBullet
-- Candlestick
-- OHLC
-- Funnel
-- RangeColumn
-- RangeBar
-- Pie
-- Donut
-- Scatter
-- ScatterLine
-- PolarArea
-- PolarLine
-- PolarScatter
-- Waterfall
-- HorizontalWaterfall
+- :name: area
+  :type: Area
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expression
+        :member: memberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: category
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName

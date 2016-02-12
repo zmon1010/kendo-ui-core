@@ -18,16 +18,15 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-% CHART_SERIES.each do |type|
+% CHART_SERIES.each do |series|
         /// <summary>
-        /// The <%= type %> series default settings.
+        /// The <%= series[:name] %> series default settings.
         /// </summary>
-        /// <param name="configurator">The configurator for the <%= type %> series settings.</param>
-        public ChartSeriesBuilder<T> <%= type %>()
+        /// <param name="configurator">The configurator for the <%= series[:name] %> series settings.</param>
+        public ChartSeriesBuilder<T> <%= series[:type] %>()
         {
-            return new ChartSeriesBuilder<T>(Container.<%= type %>);
+            return new ChartSeriesBuilder<T>(Container.<%= series[:type] %>);
         }
-
 % end
     }
 }
