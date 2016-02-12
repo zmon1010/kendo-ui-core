@@ -2439,7 +2439,6 @@
         var el = doc.createElement(KENDO_PSEUDO_ELEMENT);
         var option;
         el.style.cssText = getCssText(getComputedStyle(element));
-        el.style.display = "inline-block";
         if (tag == "input") {
             el.style.whiteSpace = "pre";
         }
