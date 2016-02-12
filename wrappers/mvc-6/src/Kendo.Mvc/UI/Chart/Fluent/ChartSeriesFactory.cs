@@ -55,13 +55,45 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual ChartSeriesBuilder<T> Area<TValue>(
             Expression<Func<T, TValue>> expression)
         {
+            return Area(expression.MemberWithoutInstance());
+        }
+
+        /// <summary>
+        /// Defines bound area series.
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the chart model.
+        /// </param>
+        /// <param name="noteTextExpression">
+        /// The expression used to extract the note text from the chart model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Area<TValue, TCategory>(
+            Expression<Func<T, TValue>> expression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            return Area(expression.MemberWithoutInstance(), categoryExpression?.MemberWithoutInstance());
+        }
+
+        /// <summary>
+        /// Defines bound area series.
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the chart model.
+        /// </param>
+        /// <param name="noteTextExpression">
+        /// The expression used to extract the note text from the chart model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Area(string memberName, string categoryMemberName = null)
+        {
             var item = new ChartSeries<T>()
             {
                 Type = "area",
-                Field = expression.MemberWithoutInstance()
+                Name = memberName.AsTitle(),
+                Field = memberName,
+                CategoryField = categoryMemberName,
+                Chart = Chart
             };
-
-            item.Chart = Chart;
+            
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);

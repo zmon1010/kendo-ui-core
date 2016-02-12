@@ -29,5 +29,47 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return new ChartBuilder<T>(new Chart<T>(HtmlHelper.ViewContext));
         }
+
+        /// <summary>
+        /// Creates a new <see cref="Kendo.Mvc.UI.Chart{T}"/> bound to the specified data source.
+        /// </summary>
+        /// <typeparam name="T">The type of the data item</typeparam>
+        /// <param name="data">The data source.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Chart(Model)
+        ///             .Name("Chart")
+        /// )
+        /// </code>
+        /// </example>
+        public virtual ChartBuilder<T> Chart<T>(IEnumerable<T> data) where T : class
+        {
+            ChartBuilder<T> builder = Chart<T>();
+
+            builder.Component.Data = data;
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Kendo.Mvc.UI.Chart{T}"/> bound an item in ViewData.
+        /// </summary>
+        /// <typeparam name="T">Type of the data item</typeparam>
+        /// <param name="dataSourceViewDataKey">The data source view data key.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Chart&lt;SalesData&gt;("sales")
+        ///             .Name("Chart")
+        /// )
+        /// </code>
+        /// </example>
+        public virtual ChartBuilder<T> Chart<T>(string dataSourceViewDataKey) where T : class
+        {
+            ChartBuilder<T> builder = Chart<T>();
+
+            builder.Component.Data = HtmlHelper.ViewContext.ViewData.Eval(dataSourceViewDataKey) as IEnumerable<T>;
+
+            return builder;
+        }
     }
 }

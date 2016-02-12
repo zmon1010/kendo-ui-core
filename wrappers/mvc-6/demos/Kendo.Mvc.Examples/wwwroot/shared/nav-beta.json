@@ -222,7 +222,25 @@
           "kendo-ui": "This demo illustrates how Kendo UI Area Charts component can be added to your web page in order to visualize quantitive data. Learn how to define your area chart.",
           "aspnet-mvc": "This example shows how to use Telerik ASP.NET MVC Area Charts extension to visualize filled areas on a diagram. "
         }
-      }
+      }, 
+      {
+        "text": "Binding to remote data",
+        "url": "area-charts/remote-data-binding",
+        "title": {
+            "kendo-ui": "Example of jQuery & HTML5 Kendo UI Area Chart bound to remote data",
+            "aspnet-mvc": "Example of ASP.NET MVC Area Chart bound to remote data"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how Kendo UI Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.",
+          "aspnet-mvc": "See how the ASP.NET MVC Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data."
+        },
+        "description": {
+            "kendo-ui": "<p>The data in the Kendo UI chart can be streamed from a local or remote storage, thus being flexible enough to visualize information from any data storage.</p> <p>For remote data binding you need to specify a remote endpoint or web service (REST) returning data in JSON/JSONP format and utilize the Kendo UI DataSource in-between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>In this example we demonstrate how Kendo UI chart can be bound to remote data by configuring the DataSource transport, which defines how the DataSource interacts with remote data.</p> <p>Discover more information about the data-binding capabilities of the chart widget in this <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\">help article</a>.</p>",
+            "aspnet-mvc": "<p>The Telerik MVC Chart offers two ways of data-binding:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\" target=\"_blank\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\" target=\"_blank\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>For remote data binding you need to specify a remote endpoint or web service returning data in JSON/JSONP format and utilize the DataSource as a mediator between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>You can see in this demo how the ASP.NET MVC Area chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.</p> <p>You can find more information about the data-binding capabilities of the MVC chart in this <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">help article</a>.</p>"
+        },
+        "group": "Data Binding",
+        "requiresServer": "true"
+      },
     ],
     "category": "Charts"
   },

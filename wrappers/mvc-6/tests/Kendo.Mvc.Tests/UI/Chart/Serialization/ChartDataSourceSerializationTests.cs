@@ -22,20 +22,7 @@ namespace Kendo.Mvc.UI.Tests
                 settings.ContainsKey("dataSource").ShouldBeFalse();
             });
         }
-
-        [Fact]
-        public void Setting_custom_type_to_dataSource_should_set_dataSource_data()
-        {
-            chart.Data = SalesDataBuilder.GetCollection();
-
-            chart.DataSource.Type = DataSourceType.Custom;
-
-            chart.AssertSettings(settings =>
-            {
-                chart.DataSource.Data.ShouldEqual(chart.Data);
-            });
-        }
-
+        
         [Fact]
         public void Setting_custom_type_to_dataSource_should_serialize_dataSource()
         {

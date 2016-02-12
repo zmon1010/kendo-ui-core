@@ -70,13 +70,6 @@ namespace Kendo.Mvc.UI
         {
             if (DataSource.Type == DataSourceType.Custom)
             {
-                DataSource.Data = Data;
-
-                if (DataSource.CustomType == "aspnetmvc-ajax" && DataSource.Data != null)
-                {
-                    ProcessDataSource();
-                }
-                
                 settings["dataSource"] = DataSource.ToJson();
             }
             else if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url))
@@ -100,12 +93,6 @@ namespace Kendo.Mvc.UI
                 result.Remove("transport");
                 settings["dataSource"] = result;
             }
-        }
-
-        private void ProcessDataSource()
-        {
-            var request = new DataSourceRequest();
-            DataSource.Process(request, true);
         }
     }
 }

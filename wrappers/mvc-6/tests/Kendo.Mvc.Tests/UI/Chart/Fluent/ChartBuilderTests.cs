@@ -29,5 +29,11 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Title("Foo").ShouldBeSameAs(builder);
         }
+        
+        [Fact]
+        public void DataSource_should_return_builder()
+        {
+            builder.DataSource(delegate { }).ShouldBeSameAs(builder);
+        }
     }
 }
