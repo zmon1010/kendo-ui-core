@@ -224,6 +224,11 @@
                 }
                 if (/^canvas$/i.test(el.tagName)) {
                     clone.getContext("2d").drawImage(el, 0, 0);
+                } else if (/^input$/i.test(el.tagName)) {
+                    // drop the name attributes so that we don't affect the selection of the
+                    // original nodes (i.e. checked status of radio buttons) when we insert our copy
+                    // into the DOM.  https://github.com/telerik/kendo/issues/5409
+                    el.removeAttribute("name");
                 } else {
                     for (i = el.firstChild; i; i = i.nextSibling) {
                         clone.appendChild(cloneNodes(i));
