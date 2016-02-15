@@ -418,6 +418,77 @@
 
     });
 
+    test("k-first class is added to the first header cell of the child rows with single root column", function() {
+        var grid = new Grid(table, {
+            columns: [
+                { title: "master",
+                    columns: [
+                        { title: "child" },
+                        { title: "child2",
+                            columns: [
+                                { title: "child2_child" }
+                            ] }
+                    ]
+                }
+            ]
+        });
+
+        var trs = grid.thead.find("tr");
+
+        ok(!trs.first().children().first().hasClass("k-first"), "first row");
+        ok(!trs.eq(1).children().first().hasClass("k-first"), "second row");
+        ok(trs.eq(2).children().first().hasClass("k-first"), "third row");
+        equal(trs.find("th.k-first").length, 1);
+    });
+
+    test("k-first class is not added to the first header cell of the child rows with single root column - first child has single 3rd level child", function() {
+        var grid = new Grid(table, {
+            columns: [
+                { title: "master",
+                    columns: [
+                        { title: "child",
+                            columns: [
+                                { title: "child_child" }
+                            ]
+                        },
+                        { title: "child1" }
+                    ]
+                }
+            ]
+        });
+
+        var trs = grid.thead.find("tr");
+
+        ok(!trs.first().children().first().hasClass("k-first"), "first row");
+        ok(!trs.eq(1).children().first().hasClass("k-first"), "second row");
+        ok(!trs.eq(2).children().first().hasClass("k-first"), "third row");
+        equal(trs.find("th.k-first").length, 0);
+    });
+
+    test("k-first class is not added to the first header cell of the child rows with single root column - first child has multiple children", function() {
+        var grid = new Grid(table, {
+            columns: [
+                { title: "master",
+                    columns: [
+                        { title: "child",
+                            columns: [
+                                { title: "child_child1" },
+                                { title: "child_child2" }
+                            ]
+                        },
+                        { title: "child1" }
+                    ]
+                }
+            ]
+        });
+
+        var trs = grid.thead.find("tr");
+
+        ok(!trs.first().children().first().hasClass("k-first"), "first row");
+        ok(!trs.eq(1).children().first().hasClass("k-first"), "second row");
+        ok(!trs.eq(2).children().first().hasClass("k-first"), "third row");
+        equal(trs.find("th.k-first").length, 0);
+    });
     test("k-first class is not added to the first header cell of the child rows if details are set", function() {
         var grid = new Grid(table, {
             detailTemplate: "foo",
