@@ -23,7 +23,7 @@ namespace KendoScaffolder
             version: new Version(2015, 2, 624), //Update version in source.extension.vsixmanifest too!
             id: typeof(KendoScaffolderCodeGenerator).Name,
             icon: ToImageSource(Resources.ScaffolderIcon),
-            gestures: new[] { "Controller", "View", "Area" },
+            gestures: new[] { "Controller", "View" },
             categories: new[] { Categories.Common, Categories.MvcController, Categories.MvcView, Categories.Other });
 
         public KendoScaffolderCodeGeneratorFactory()
