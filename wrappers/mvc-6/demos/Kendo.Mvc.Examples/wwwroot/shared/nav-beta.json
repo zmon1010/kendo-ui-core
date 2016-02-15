@@ -1068,6 +1068,16 @@
           "kendo-ui": "The dropdown list of Kendo HTML5 widget can load data from a remote source. This example shows binding to remote data functionality of the component.",
           "aspnet-mvc": "The dropdown list of ASP.NET MVC drop down list control can load data from a remote source. This example shows binding to remote data functionality of the component."
         }
+      },
+      {
+        "text": "Server filtering",
+        "url": "dropdownlist/server_filtering",
+        "title": {
+          "kendo-ui": "Example of Server filtering in Kendo UI DropDownList widget"
+        },
+        "meta": {
+          "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI DropDownList is filtered on the the server based on the input."
+        }
       }
     ],
     "category": "Editors"

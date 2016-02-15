@@ -1,4 +1,6 @@
 ﻿using Kendo.Mvc.Examples.Models;
+using Kendo.Mvc.UI;
+using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Mvc;
 using System.Collections.Generic;
@@ -21,7 +23,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return View();
         }
 
-        public IEnumerable<ProductViewModel> GetProducts(string text)
+        public ActionResult GetProducts([DataSourceRequest]DataSourceRequest request)
         {
             var northwind = new SampleEntitiesDataContext();
 
@@ -35,12 +37,7 @@ namespace Kendo.Mvc.Examples.Controllers
                 Discontinued = product.Discontinued
             });
 
-            if (!string.IsNullOrEmpty(text))
-            {
-                products = products.Where(p => p.ProductName.Contains(text));
-            }
-
-            return products;
+            return Json(products.ToDataSourceResult(request));
         }
 
         public IEnumerable<CustomerViewModel> GetCustomers()

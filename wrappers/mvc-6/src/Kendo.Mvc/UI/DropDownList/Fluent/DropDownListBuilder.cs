@@ -89,6 +89,24 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Use it to enable filtering of items.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .Filter(FilterType.Contains);
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public DropDownListBuilder Filter(FilterType filter)
+        {
+            Component.Filter = filter.ToString().ToLower();
+
+            return this;
+        }
     }
 }
 
