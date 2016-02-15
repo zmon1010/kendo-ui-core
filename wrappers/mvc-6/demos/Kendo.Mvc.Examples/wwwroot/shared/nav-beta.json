@@ -1078,6 +1078,142 @@
         "meta": {
           "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI DropDownList is filtered on the the server based on the input."
         }
+      },
+      {
+        "text": "Virtualization",
+        "url": "dropdownlist/virtualization",
+        "title": {
+          "kendo-ui": "Example of virtualization in Kendo UI DropDownList widget"
+        },
+        "meta": {
+          "kendo-ui": "See how the virtual dropdown list of Kendo UI DropDownList is filtered on the the server based on the input."
+        }
+      },
+      {
+        "text": "Grouping",
+        "url": "dropdownlist/grouping",
+        "title": {
+          "kendo-ui": "Example of grouping in Kendo UI DropDownList widget"
+        },
+        "meta": {
+          "kendo-ui": "See how the virtual dropdown list of Kendo UI DropDownList is grouped."
+        }
+      },
+      {
+        "packages": [
+          "mvc-offline"
+        ],
+        "text": "Client filtering",
+        "url": "dropdownlist/client_filtering"
+      },
+      {
+        "text": "Customizing templates",
+        "url": "dropdownlist/template",
+        "title": {
+          "kendo-ui": "Customize items in Kendo UI DropDownList component",
+          "aspnet-mvc": "Customize items in ASP.NET MVC DropDownList component"
+        },
+        "meta": {
+          "kendo-ui": "This example shows how you can customize the appearance of the items and easily customize templates in jQuery-based Kendo UI DropDownList widget.",
+          "aspnet-mvc": "This example shows how you can customize the appearance of the items and easily customize templates in ASP.NET MVC DropDownList control."
+        }
+      },
+      {
+        "text": "Cascading DropDownList",
+        "url": "dropdownlist/cascading_dropdownlist",
+        "title": {
+          "kendo-ui": "Example of cascading DropDownList | Kendo UI Dropdownlist Demo",
+          "aspnet-mvc": "Example of cascading DropDownList | ASP.NET MVC Dropdownlist Demo"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how the cascading jQuery dropdown works in Kendo UI DropDownList widget.",
+          "aspnet-mvc": "This demo shows how the cascading ASP.NET MVC dropdown works in UI for ASP.NET MVC DropDownList control."
+        }
+      },
+      {
+        "text": "Custom data source",
+        "url": "dropdownlist/custom-datasource",
+        "packages": [
+          "mvc-offline"
+        ]
+      },
+      {
+        "text": "Events",
+        "url": "dropdownlist/events",
+        "title": {
+          "kendo-ui": "Demo for events in Kendo UI DropDownList component",
+          "aspnet-mvc": "Demo for events in ASP.NET MVC DropDownList component"
+        },
+        "meta": {
+          "kendo-ui": "This demo explains how the cascading jQuery dropdown works in Kendo UI DropDownList widget.",
+          "aspnet-mvc": "Take a look at this ASP.NET MVC DropDownList example to find out how events are triggered in the drop down listcontrol."
+        }
+      },
+      {
+        "text": "API",
+        "url": "dropdownlist/api",
+        "title": {
+          "kendo-ui": "Example of Kendo UI jQuery DropDownList API",
+          "aspnet-mvc": "Example of ASP.NET MVC DropDownList API"
+        },
+        "meta": {
+          "kendo-ui": "Explore API functions of Kendo UI DropDownList to find how to enable or disable the dropdown list, open and close it or just manipulate the items.",
+          "aspnet-mvc": "Explore API functions of ASP.NET MVC DropDownList to find how to enable or disable the dropdown list, open and close it or just manipulate the items."
+        }
+      },
+      {
+        "text": "RTL support",
+        "url": "dropdownlist/right-to-left-support",
+        "title": {
+          "kendo-ui": "RTL feature in Kendo UI DropDownList",
+          "aspnet-mvc": "RTL feature in ASP.NET MVC DropDownList"
+        },
+        "meta": {
+          "kendo-ui": "In this Kendo UI demo, we illustrate how the RTL support is enabled in Kendo UI DropDownList component.",
+          "aspnet-mvc": "In this ASP.NET MVC demo, we illustrate how the RTL support is enabled in ASP.NET MVC DropDownList component."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "dropdownlist/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Kendo UI DropdownList | Keyboard navigation demo",
+          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC DropDownList control"
+        },
+        "meta": {
+          "kendo-ui": "Kendo UI DropDownList supports keyboard navigation that lets you efforight-to-left-supportessly navigate in the dropdown widget by using the keyboard.",
+          "aspnet-mvc": "Look at this ASP.NET MVC demo which illustrates how the keyboard navigation feature is supported in ASP.NET MVC DropDownList component."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "dropdownlist/mvvm",
+        "title": {
+          "kendo-ui": "MVVM support in Kendo UI DropDownList"
+        },
+        "meta": {
+          "kendo-ui": "Enabled, events, source, value and visible MVVM binding support in Kendo UI DropDownList"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "dropdownlist/angular",
+        "title": {
+          "kendo-ui": "AngularJS support in Kendo UI DropDownList"
+        },
+        "meta": {
+          "kendo-ui": "AngularJS directive support for Kendo UI DropDownList"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       }
     ],
     "category": "Editors"
