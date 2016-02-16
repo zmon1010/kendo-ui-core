@@ -42,6 +42,7 @@ namespace Kendo.Mvc.Rendering
 		   IDictionary<string, object> htmlAttributes)
 		{
 			var tagBuilder = GenerateTag("input", viewContext, id, name, htmlAttributes);
+            tagBuilder.TagRenderMode = TagRenderMode.SelfClosing;
 			tagBuilder.MergeAttribute("type", type);
 
 			var fullName = tagBuilder.Attributes["name"];

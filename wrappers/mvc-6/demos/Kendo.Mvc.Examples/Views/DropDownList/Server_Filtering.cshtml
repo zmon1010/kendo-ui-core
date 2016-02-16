@@ -1,12 +1,13 @@
-<div class="demo-section k-content">
-    <h4>Find a product</h4>
-    @(Html.Kendo().AutoComplete()
+﻿<div class="demo-section k-content">
+    <h4>Products</h4>
+    @(Html.Kendo().DropDownList()
           .Name("products")
           .DataTextField("ProductName")
-          .Filter("contains")
-          .MinLength(3)
+          .DataValueField("ProductID")
           .HtmlAttributes(new { style = "width:100%" })
-          .DataSource(source => {
+          .Filter(FilterType.Contains)
+          .DataSource(source =>
+          {
               source
                   .Ajax()
                   .Read(read =>
@@ -15,5 +16,4 @@
                   });
           })
     )
-    <div class="demo-hint">Hint: type "che"</div>
 </div>
