@@ -5,7 +5,7 @@
           .HtmlAttributes(new { style = "width: 100%;" })
           .DataTextField("ProductName")
           .DataValueField("ProductID")
-          .Filter("contains")
+          .Filter(FilterType.Contains)
           .DataSource(source => {
               source.Read(read =>
               {

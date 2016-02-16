@@ -25,8 +25,6 @@ namespace Kendo.Mvc.UI
 
         public bool? Enable { get; set; }
 
-        public string Filter { get; set; }
-
         public string FixedGroupTemplate { get; set; }
 
         public string FixedGroupTemplateId { get; set; }
@@ -69,6 +67,8 @@ namespace Kendo.Mvc.UI
 
         public DropDownListVirtualSettings Virtual { get; } = new DropDownListVirtualSettings();
 
+        public FilterType? Filter { get; set; }
+
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -107,11 +107,6 @@ namespace Kendo.Mvc.UI
             if (Enable.HasValue)
             {
                 settings["enable"] = Enable;
-            }
-
-            if (Filter?.HasValue() == true)
-            {
-                settings["filter"] = Filter;
             }
 
             if (FixedGroupTemplateId.HasValue())
@@ -240,6 +235,11 @@ namespace Kendo.Mvc.UI
             else if (Virtual.Enabled == true)
             {
                 settings["virtual"] = true;
+            }
+
+            if (Filter.HasValue)
+            {
+                settings["filter"] = Filter?.Serialize();
             }
 
             return settings;

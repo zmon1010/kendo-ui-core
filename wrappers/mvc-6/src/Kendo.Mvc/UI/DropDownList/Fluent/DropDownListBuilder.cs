@@ -2,6 +2,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Kendo.Mvc.UI.Fluent
@@ -91,20 +92,14 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Use it to enable filtering of items.
+        /// The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
+		/// The supported filter values are startswith, endswith and contains.
         /// </summary>
-        /// <example>
-        /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().DropDownList()
-        ///             .Name("DropDownList")
-        ///             .Filter(FilterType.Contains);
-        /// %&gt;
-        /// </code>
-        /// </example>
-        public DropDownListBuilder Filter(FilterType filter)
+        /// <param name="value">The value for Filter</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DropDownListBuilder Filter(string value)
         {
-            Component.Filter = filter.ToString().ToLower();
-
+            Container.Filter = (FilterType)Enum.Parse(typeof(FilterType), value, true);
             return this;
         }
     }

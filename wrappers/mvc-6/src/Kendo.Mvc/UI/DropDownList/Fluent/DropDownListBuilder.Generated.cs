@@ -82,17 +82,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
-		/// The supported filter values are startswith, endswith and contains.
-        /// </summary>
-        /// <param name="value">The value for Filter</param>
-        public DropDownListBuilder Filter(string value)
-        {
-            Container.Filter = value;
-            return this;
-        }
-
-        /// <summary>
         /// The template used to render the fixed header group. By default the widget displays only the value of the current group.
         /// </summary>
         /// <param name="value">The value for FixedGroupTemplate</param>
@@ -332,6 +321,16 @@ namespace Kendo.Mvc.UI.Fluent
         public DropDownListBuilder Virtual(bool enabled)
         {
             Container.Virtual.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
+        /// The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
+        /// </summary>
+        /// <param name="value">The value for Filter</param>
+        public DropDownListBuilder Filter(FilterType value)
+        {
+            Container.Filter = value;
             return this;
         }
 
