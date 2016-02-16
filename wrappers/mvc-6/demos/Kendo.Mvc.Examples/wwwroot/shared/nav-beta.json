@@ -720,6 +720,53 @@
     "category": "Editors"
   },
   {
+    "text": "ComboBox",
+    "name": "combobox",
+    "api": "web/combobox",
+    "documentation": {
+      "kendo-ui": "getting-started/web/combobox/overview",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/combobox/overview",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/combobox/overview",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/combobox/overview"
+    },
+    "forum": {
+      "kendo-ui": "kendo-ui/combobox",
+      "aspnet-mvc": "aspnet-mvc/combobox",
+      "jsp-ui": "jsp/combobox",
+      "php-ui": "php/combobox"
+    },
+    "sources": {
+      "kendo-ui": [
+        {
+          "name": "Sample service",
+          "url": "~/content/service.html"
+        }
+      ]
+    },
+    "codelibrary": {
+      "kendo-ui": "kendo-ui/combobox",
+      "aspnet-mvc": "aspnet-mvc/combobox",
+      "jsp-ui": "jsp/combobox",
+      "php-ui": "php/combobox"
+    },
+    "spriteCssClass": "comboBoxIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "combobox/index",
+        "title": {
+          "kendo-ui": "jQuery-based Combobox widget Demo | Kendo UI Web Demos",
+          "aspnet-mvc": "ASP.NET MVC Combobox control Demo | UI for ASP.NET MVC Demos"
+        },
+        "meta": {
+          "kendo-ui": "This Combobox UI example shows how you can easily apply an editable text box with flexible auto-searchable functionality of the dropdown list into your web app.",
+          "aspnet-mvc": "This ASP.NET MVC Combobox UI demo shows how to easily apply an editable text box with flexible auto-searchable functionality of the dropdown list into your web app."
+        }
+      }
+    ],
+    "category": "Editors"
+  },
+  {
     "text": "DatePicker",
     "name": "datepicker",
     "api": "web/datepicker",
@@ -3757,79 +3804,82 @@
     "spriteCssClass": "treemapIcon",
     "api": "dataviz/treemap",
     "documentation": {
-       "kendo-ui": "getting-started/dataviz/treemap/overview",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treemap/overview",
-       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/treemap/overview",
-       "php-ui": "getting-started/using-kendo-with/php/widgets/treemap/overview"
+      "kendo-ui": "getting-started/dataviz/treemap/overview",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treemap/overview",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/treemap/overview",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/treemap/overview"
     },
     "forum": {
-       "kendo-ui": "kendo-ui/treemap",
-       "aspnet-mvc": "aspnet-mvc/treemap",
-       "jsp-ui": "jsp/treemap",
-       "php-ui": "php/treemap"
+      "kendo-ui": "kendo-ui/treemap",
+      "aspnet-mvc": "aspnet-mvc/treemap",
+      "jsp-ui": "jsp/treemap",
+      "php-ui": "php/treemap"
     },
     "codelibrary": {
-       "kendo-ui": "kendo-ui/treemap",
-       "aspnet-mvc": "aspnet-mvc/treemap",
-       "jsp-ui": "jsp/treemap",
-       "php-ui": "php/treemap"
+      "kendo-ui": "kendo-ui/treemap",
+      "aspnet-mvc": "aspnet-mvc/treemap",
+      "jsp-ui": "jsp/treemap",
+      "php-ui": "php/treemap"
     },
     "items": [
       {
         "text": "Basic usage",
         "url": "treemap/index",
         "title": {
-            "kendo-ui": "Kendo UI TreeMap Demo"
+          "kendo-ui": "Kendo UI TreeMap Demo"
         },
         "meta": {
-            "kendo-ui": ""
+          "kendo-ui": ""
         },
         "description": {
-            "kendo-ui": "<p>The Kendo UI TreeMap widget suits perfectly for visualization of hierarchical data in a traditional tree structure. The extension provides three options (squarified, horizontal and vertical) for displaying data, which could be managed by the type argument value of the treemap&rsquo;s <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/treemap#methods-setOptions\">setOptions method.</a></p> <p>The main advantages of the control are that you could:</p> <ul> <li>Visualize huge data in a meaningful and colorized way (i.e. files system structure divided by size; the popularity of different tech devices on the market, and other)</li> <li>Optimize space on your web page by its compact structure</li> </ul> <p>You can learn how to initialize the widget and more in the documentation: <a href=\"http://docs.telerik.com/kendo-ui/dataviz/treemap/overview\" target=\"_blank\">TreeMap</a>.</p>",
-            "aspnet-mvc": "<p>The Telerik MVC TreeMap component suits perfectly for visualization of hierarchical data in a traditional tree structure. The extension provides three options (Squarified, Horizontal and Vertical) for displaying the data, which could be managed by the Type treemap setting.</p> <p>The main advantages of the control are that you could:</p> <ul> <li>Visualize huge data in a meaningful and colorized way (i.e. files system structure divided by size; the popularity of different tech devices on the market, and other)</li> <li>Optimize space on your web page by its compact structure</li> </ul> <p>You can learn more in the documentation: <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/treemap/overview\" target=\"_blank\">TreeMap</a>.</p>"
+          "kendo-ui": "<p>The Kendo UI TreeMap widget suits perfectly for visualization of hierarchical data in a traditional tree structure. The extension provides three options (squarified, horizontal and vertical) for displaying data, which could be managed by the type argument value of the treemap&rsquo;s <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/treemap#methods-setOptions\">setOptions method.</a></p> <p>The main advantages of the control are that you could:</p> <ul> <li>Visualize huge data in a meaningful and colorized way (i.e. files system structure divided by size; the popularity of different tech devices on the market, and other)</li> <li>Optimize space on your web page by its compact structure</li> </ul> <p>You can learn how to initialize the widget and more in the documentation: <a href=\"http://docs.telerik.com/kendo-ui/dataviz/treemap/overview\" target=\"_blank\">TreeMap</a>.</p>",
+          "aspnet-mvc": "<p>The Telerik MVC TreeMap component suits perfectly for visualization of hierarchical data in a traditional tree structure. The extension provides three options (Squarified, Horizontal and Vertical) for displaying the data, which could be managed by the Type treemap setting.</p> <p>The main advantages of the control are that you could:</p> <ul> <li>Visualize huge data in a meaningful and colorized way (i.e. files system structure divided by size; the popularity of different tech devices on the market, and other)</li> <li>Optimize space on your web page by its compact structure</li> </ul> <p>You can learn more in the documentation: <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/treemap/overview\" target=\"_blank\">TreeMap</a>.</p>"
         }
-      },{
+      },
+      {
         "text": "Events",
         "url": "treemap/events",
         "title": {
-            "kendo-ui": "Events in Kendo UI TreeMap"
+          "kendo-ui": "Events in Kendo UI TreeMap"
         },
         "meta": {
-            "kendo-ui": ""
+          "kendo-ui": ""
         },
         "description": {
-            "kendo-ui": "<p>The sample demonstrates the usage of the itemCreated and dataBound events of the Kendo UI Treemap. The itemCreated event is fired when a tile has been created, while the dataBound one is triggered when the widget is bound to data from its dataSource.</p>",
-            "aspnet-mvc": "<p>The sample demonstrates the usage of the ItemCreated and DataBound events of the MVC Treemap helper. The ItemCreated event is fired when a tile has been created, while the DataBound one is triggered when the widget is bound to data from its DataSource.</p>"
+          "kendo-ui": "<p>The sample demonstrates the usage of the itemCreated and dataBound events of the Kendo UI Treemap. The itemCreated event is fired when a tile has been created, while the dataBound one is triggered when the widget is bound to data from its dataSource.</p>",
+          "aspnet-mvc": "<p>The sample demonstrates the usage of the ItemCreated and DataBound events of the MVC Treemap helper. The ItemCreated event is fired when a tile has been created, while the DataBound one is triggered when the widget is bound to data from its DataSource.</p>"
         }
-      },{
+      },
+      {
         "text": "MVVM",
         "url": "treemap/mvvm",
         "title": {
-            "kendo-ui": "MVVM support in Kendo UI TreeMap"
+          "kendo-ui": "MVVM support in Kendo UI TreeMap"
         },
         "meta": {
-            "kendo-ui": ""
+          "kendo-ui": ""
         },
-        "description":{
-           "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI treemap to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel</strong> instance (with <strong>kendo.observable</strong> call) which wraps the treemap data source, and instantiate the widget, its attributes and binding definition using <strong>data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the treemap, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter</a> of the documentation.</p>"
+        "description": {
+          "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI treemap to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel</strong> instance (with <strong>kendo.observable</strong> call) which wraps the treemap data source, and instantiate the widget, its attributes and binding definition using <strong>data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the treemap, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter</a> of the documentation.</p>"
         },
         "packages": [
-            "!mvc",
-            "!jsp",
-            "!php"
+          "!mvc",
+          "!jsp",
+          "!php"
         ]
-      },{
+      },
+      {
         "text": "AngularJS",
         "url": "treemap/angular",
         "title": {
-            "kendo-ui": "AngularJS support in Kendo UI TreeMap"
+          "kendo-ui": "AngularJS support in Kendo UI TreeMap"
         },
         "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI TreeMap"
+          "kendo-ui": "AngularJS directive support for Kendo UI TreeMap"
         },
-        "description":{
-           "kendo-ui": "<p>The Kendo UI TreeMap features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <strong>k-</strong> treemap Angular attribute definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
-          },
+        "description": {
+          "kendo-ui": "<p>The Kendo UI TreeMap features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p> <p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p> <p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <strong>k-</strong> treemap Angular attribute definition. This is demonstrated in the demo at hand.</p> <p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
+        },
         "packages": [
           "!mvc",
           "!jsp",
