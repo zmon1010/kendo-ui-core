@@ -33,5 +33,23 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.BindTo(new List<string>()).ShouldBeType<DropDownListBuilder>();
         }
+
+
+        [Fact]
+        public void Items_method_sets_datasource_data_property()
+        {
+            builder.Items(items => {
+                items.Add().Text("item 1");
+                items.Add().Text("item 2");
+            });
+
+            component.DataSource.Data.ShouldNotBeEmpty();
+        }
+
+        [Fact]
+        public void Items_method_returns_DropDownListBuilder()
+        {
+            builder.Items(items => items.Add().Text("item 1")).ShouldBeType<DropDownListBuilder>();
+        }
     }
 }

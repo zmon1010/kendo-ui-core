@@ -81,6 +81,31 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Defines the items in the DropDownList
+        /// </summary>
+        /// <param name="addAction">The add action.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Telerik().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .Items(items =>
+        ///             {
+        ///                 items.Add().Text("First Item");
+        ///                 items.Add().Text("Second Item");
+        ///             })
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public DropDownListBuilder Items(Action<SelectListItemFactory> addAction)
+        {
+            var items = new List<SelectListItem>();
+
+            addAction(new SelectListItemFactory(items));
+
+            return BindTo(items);
+        }
+
+        /// <summary>
         /// Sets the data source configuration of the DropDownList.
         /// </summary>
         /// <param name="configurator">The lambda which configures the data source</param>
