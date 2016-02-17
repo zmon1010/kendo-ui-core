@@ -35,5 +35,21 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.DataSource(delegate { }).ShouldBeSameAs(builder);
         }
+        
+        [Fact]
+        public void Chart_should_set_categoryAxis_categories()
+        {
+            var categories = new string[] { "category1", "category2" };
+
+            builder.CategoryAxis(axis => axis.Categories(categories));
+
+            chart.CategoryAxis[0].Categories.ShouldEqual(categories);
+        }
+
+        [Fact]
+        public void CategoryAxis_should_return_builder()
+        {
+            builder.CategoryAxis(delegate { }).ShouldBeSameAs(builder);
+        }
     }
 }

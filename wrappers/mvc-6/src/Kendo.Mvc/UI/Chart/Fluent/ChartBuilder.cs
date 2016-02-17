@@ -28,15 +28,29 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
-        /// Configures the default category axis or adds a new one
+        /// Configures the category axis
         /// </summary>
-        /// <param name="configurator">The configurator for the axis</param>
-        /// <returns></returns>
+        /// <param name="configurator">The configurator</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Chart(Model)
+        ///             .Name("Chart")
+        ///             .CategoryAxis(axis => axis
+        ///                 .Categories(s => s.DateString)
+        ///             )
+        /// )
+        /// </code>
+        /// </example>
         public ChartBuilder<T> CategoryAxis(Action<ChartCategoryAxisBuilder<T>> configurator)
         {
-            configurator(new ChartCategoryAxisFactory<T>(Container.CategoryAxis).Add());
+            var item = new ChartCategoryAxis<T>()
+            {
+                Chart = Container
+            };
+            Container.CategoryAxis.Add(item);
+            configurator(new ChartCategoryAxisBuilder<T>(item));
             return this;
         }
 
