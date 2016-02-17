@@ -23,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="dataSource">The data source.</param>
         /// <example>
         /// <code lang="CS">
-        ///  &lt;%= Html.Telerik().DropDownList()
+        ///  &lt;%= Html.Kendo().DropDownList()
         ///             .Name("DropDownList")
         ///             .DataTextField("CompanyName")
         ///             .DataValueField("CompanyID")
@@ -54,7 +54,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="dataSource">The data source.</param>
         /// <example>
         /// <code lang="CS">
-        ///  &lt;%= Html.Telerik().DropDownList()
+        ///  &lt;%= Html.Kendo().DropDownList()
         ///             .Name("DropDownList")
         ///             .BindTo(new List<SelectListItem>
         ///             {
@@ -86,7 +86,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="addAction">The add action.</param>
         /// <example>
         /// <code lang="CS">
-        ///  &lt;%= Html.Telerik().DropDownList()
+        ///  &lt;%= Html.Kendo().DropDownList()
         ///             .Name("DropDownList")
         ///             .Items(items =>
         ///             {
