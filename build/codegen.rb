@@ -250,6 +250,7 @@ namespace :generate do
                 'docs/api/javascript/ui/sortable.md',
                 'docs/api/javascript/ui/timepicker.md',
                 'docs/api/javascript/ui/treelist.md',
+                'docs/api/javascript/ui/treeview.md',
                 'docs/api/javascript/ui/toolbar.md',
                 'docs/api/javascript/ui/tooltip.md',
                 'docs/api/javascript/ui/upload.md',

@@ -95,6 +95,9 @@
 - treelist.pdf.margin
 - treelist.pdf.papersize
 - treemap.datasource
+- treeview.animation
+- treeview.datasource
+- treeview.items
 - upload.enabled
 - upload.localization
 - window.actions
