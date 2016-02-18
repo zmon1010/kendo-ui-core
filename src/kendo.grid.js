@@ -7627,9 +7627,83 @@ var __meta__ = { // jshint ignore:line
    if (kendo.PDFMixin) {
        kendo.PDFMixin.extend(Grid.prototype);
 
-       Grid.prototype._drawPDF = function(progress) {
-           var result = new $.Deferred();
+       Grid.prototype._drawPDF_autoPageBreak = function(progress) {
            var grid = this;
+           var result = new $.Deferred();
+           var dataSource = grid.dataSource;
+           var allPages = grid.options.pdf.allPages;
+           var origBody = grid.wrapper.find(".k-grid-content tbody");
+           var cont = $("<div>")
+               .css({ position: "absolute", left: -10000, top: -10000 });
+           var clone = grid.wrapper.clone().css({
+               height: "auto", width: "auto"
+           }).appendTo(cont);
+           clone.find(".k-grid-content").css({ height: "auto", width: "auto" });
+           clone.find(".k-grid-pager, .k-grid-toolbar, .k-grouping-header").remove();
+
+           this._initPDFProgress(progress);
+
+           var body = clone.find(".k-grid-content tbody").empty();
+           var startingPage = dataSource.page();
+
+           function resolve() {
+               if (allPages && startingPage !== undefined) {
+                   dataSource.unbind("change", exportPage);
+                   dataSource.one("change", draw);
+
+                   dataSource.page(startingPage);
+               } else {
+                   draw();
+               }
+           }
+
+           function draw() {
+               cont.appendTo(document.body);
+               kendo.drawing.drawDOM(clone, grid.options.pdf)
+                   .then(function(group){
+                       cont.remove();
+                       result.resolve(group);
+                   })
+                   .fail(function(err){
+                       result.reject(err);
+                   });
+           }
+
+           function exportPage() {
+               var pageNum = dataSource.page();
+               var totalPages = allPages ? dataSource.totalPages() : 1;
+               body.append(origBody.find("tr"));
+               var args = {
+                   pageNumber: pageNum,
+                   progress: pageNum / totalPages,
+                   totalPages: totalPages
+               };
+               progress.notify(args);
+               if (pageNum < totalPages) {
+                   dataSource.page(pageNum + 1);
+               } else {
+                   resolve();
+               }
+           }
+
+           if (allPages) {
+               dataSource.bind("change", exportPage);
+               dataSource.page(1);
+           } else {
+               exportPage();
+           }
+
+           return result.promise();
+       };
+
+       Grid.prototype._drawPDF = function(progress) {
+           var grid = this;
+
+           if (grid.options.pdf.paperSize && grid.options.pdf.paperSize != "auto") {
+               return grid._drawPDF_autoPageBreak(progress);
+           }
+
+           var result = new $.Deferred();
            var dataSource = grid.dataSource;
            var allPages = grid.options.pdf.allPages;
 
