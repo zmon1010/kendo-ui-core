@@ -7638,8 +7638,9 @@ var __meta__ = { // jshint ignore:line
            var clone = grid.wrapper.clone().css({
                height: "auto", width: "auto"
            }).appendTo(cont);
-           clone.find(".k-grid-content").css({ height: "auto", width: "auto" });
+           clone.find(".k-grid-content").css({ height: "auto", width: "auto", overflow: "visible" });
            clone.find(".k-grid-pager, .k-grid-toolbar, .k-grouping-header").remove();
+           clone.find(".k-grid-header").css({ paddingRight: 0 });
 
            this._initPDFProgress(progress);
 
