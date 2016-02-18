@@ -23,7 +23,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return View();
         }
 
-        public ActionResult GetProducts([DataSourceRequest]DataSourceRequest request)
+        public JsonResult GetProducts(string text)
         {
             var northwind = new SampleEntitiesDataContext();
 
@@ -37,7 +37,12 @@ namespace Kendo.Mvc.Examples.Controllers
                 Discontinued = product.Discontinued
             });
 
-            return Json(products.ToDataSourceResult(request));
+            if (!string.IsNullOrEmpty(text))
+            {
+                products = products.Where(p => p.ProductName.Contains(text));
+            }
+
+            return Json(products);
         }
 
         public IEnumerable<CustomerViewModel> GetCustomers()

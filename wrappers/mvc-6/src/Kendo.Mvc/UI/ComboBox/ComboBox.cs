@@ -1,6 +1,7 @@
 using Microsoft.AspNet.Mvc.Rendering;
 using System.IO;
 using Kendo.Mvc.Extensions;
+using System.Text.RegularExpressions;
 
 namespace Kendo.Mvc.UI
 {
@@ -8,8 +9,9 @@ namespace Kendo.Mvc.UI
     /// Kendo UI ComboBox component
     /// </summary>
     public partial class ComboBox : WidgetBase
-
     {
+        private static readonly Regex EscapeRegex = new Regex(@"([;&,\.\+\*~'\:\""\!\^\$\[\]\(\)\|\/])", RegexOptions.Compiled);
+
         public DataSource DataSource
         {
             get;
@@ -38,6 +40,15 @@ namespace Kendo.Mvc.UI
 
         public override void WriteInitializationScript(TextWriter writer)
         {
+            if (DataSource.ServerFiltering && !DataSource.Transport.Read.Data.HasValue() &&
+                DataSource.Type != DataSourceType.Custom && DataSource.Type != DataSourceType.Ajax)
+            {
+                DataSource.Transport.Read.Data = new ClientHandlerDescriptor
+                {
+                    HandlerName = "function() { return kendo.ui.ComboBox.requestData(jQuery(\"" + EscapeRegex.Replace(Selector, @"\\$1") + "\")); }"
+                };
+            }
+
             var settings = SerializeSettings();
 
             if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) ||

@@ -762,6 +762,158 @@
           "kendo-ui": "This Combobox UI example shows how you can easily apply an editable text box with flexible auto-searchable functionality of the dropdown list into your web app.",
           "aspnet-mvc": "This ASP.NET MVC Combobox UI demo shows how to easily apply an editable text box with flexible auto-searchable functionality of the dropdown list into your web app."
         }
+      },
+      {
+        "text": "Server filtering",
+        "url": "combobox/server_filtering",
+        "title": {
+          "kendo-ui": "Server filtering in Kendo UI ComboBox",
+          "aspnet-mvc": "Server filtering in ASP.NET MVC ComboBox"
+        },
+        "meta": {
+          "kendo-ui": "Check out this demo to see how the server filtering functionality works in Kendo UI ComboBox.",
+          "aspnet-mvc": "Check out this demo to see how the server filtering functionality works in ASP.NET MVC ComboBox."
+        }
+      },
+      {
+        "text": "Virtualization",
+        "url": "combobox/virtualization",
+        "title": {
+          "kendo-ui": "Virtualization in Kendo UI ComboBox",
+          "aspnet-mvc": "Virtualization in ASP.NET MVC ComboBox"
+        },
+        "meta": {
+          "kendo-ui": "Check out this demo to see how the virtualization functionality works in Kendo UI ComboBox.",
+          "aspnet-mvc": "Check out this demo to see how the virtualization functionality works in ASP.NET MVC ComboBox."
+        }
+      },
+      {
+        "text": "Grouping",
+        "url": "combobox/grouping",
+        "title": {
+          "kendo-ui": "Grouping in Kendo UI ComboBox",
+          "aspnet-mvc": "Grouping in ASP.NET MVC ComboBox"
+        },
+        "meta": {
+          "kendo-ui": "Check out this demo to see how the grouping functionality works in Kendo UI ComboBox.",
+          "aspnet-mvc": "Check out this demo to see how the grouping functionality works in ASP.NET MVC ComboBox."
+        }
+      },
+      {
+        "packages": [
+          "mvc-offline"
+        ],
+        "text": "Client filtering",
+        "url": "combobox/client_filtering"
+      },
+      {
+        "text": "Customizing templates",
+        "url": "combobox/template",
+        "title": {
+          "kendo-ui": "Demo for customizing jQuery ComboBox Templates | Kendo UI Web Demos",
+          "aspnet-mvc": "Demo for customizing ASP.NET MVC ComboBox Templates"
+        },
+        "meta": {
+          "kendo-ui": "This Kendo UI ComboBox demo shows how the template of the control can be customized to change the appearance of items in the auto-searchable list.",
+          "aspnet-mvc": "This ASP.NET MVC ComboBox demo shows how the template of the control can be customized to change the appearance of items in the auto-searchable list."
+        }
+      },
+      {
+        "text": "Cascading ComboBox",
+        "url": "combobox/cascading_combobox",
+        "title": {
+          "kendo-ui": "Cascading jQuery ComboBox sample | Kendo UI Web demos",
+          "aspnet-mvc": "Cascading ASP.NET MVC ComboBox sample | UI for ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how the cascading Kendo UI ComboBox control would fit any web application or website.",
+          "aspnet-mvc": "This demo shows how the cascading ASP.NET MVC ComboBox control would fit any web application or website."
+        }
+      },
+      {
+        "text": "Custom data source",
+        "url": "combobox/custom-datasource",
+        "packages": [
+          "mvc-offline"
+        ]
+      },
+      {
+        "text": "Events",
+        "url": "combobox/events",
+        "title": {
+          "kendo-ui": "Examples of events in Kendo UI jQuery ComboBox component",
+          "aspnet-mvc": "Examples of events in ASP.NET MVC ComboBox component"
+        },
+        "meta": {
+          "kendo-ui": "This demo demonstrates useful events which are triggered in Kendo UI ComboBox upon user's selection of an item from the drop-down list.",
+          "aspnet-mvc": "This demo demonstrates useful events which are triggered in ASP.NET MVC ComboBox upon user's selection of an item from the drop-down list."
+        }
+      },
+      {
+        "text": "API",
+        "url": "combobox/api",
+        "title": {
+          "kendo-ui": "Demo for Kendo UI ComboBox widget API",
+          "aspnet-mvc": "Demo for ASP.NET MVC ComboBox control API"
+        },
+        "meta": {
+          "kendo-ui": "This sample shows all API functions for Kendo UI ComboBox widget.",
+          "aspnet-mvc": "This sample shows all API functions for Telerik ASP.NET MVC ComboBox control."
+        }
+      },
+      {
+        "text": "RTL support",
+        "url": "combobox/right-to-left-support",
+        "title": {
+          "kendo-ui": "Right-to-left support in Kendo UI ComboBox widget",
+          "aspnet-mvc": "Right-to-left support in ASP.NET MVC ComboBox control"
+        },
+        "meta": {
+          "kendo-ui": "Build your app with Kendo UI ComboBox. This demo shows how RTL feature is supported in the component.",
+          "aspnet-mvc": "Build your app with ASP.NET MVC ComboBox. This demo shows how RTL feature is supported in the component."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "combobox/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard nagivation in Kendo UI ComboBox | Kendo UI Web demos",
+          "aspnet-mvc": "Keyboard nagivation in ASP.NET MVC ComboBox | ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "Kendo UI ComboBox widget for web app development supports easy keyboard navigation. Play with the demo to explore the functionality.",
+          "aspnet-mvc": "ASP.NET MVC ComboBox control for web app development supports easy keyboard navigation. Play with the demo to explore the functionality."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "combobox/mvvm",
+        "title": {
+          "kendo-ui": "MVVM support in Kendo UI ComboBox"
+        },
+        "meta": {
+          "kendo-ui": "Enabled, events, source, value and visible MVVM binding support in Kendo UI ComboBox"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "combobox/angular",
+        "title": {
+          "kendo-ui": "AngularJS support in Kendo UI ComboBox"
+        },
+        "meta": {
+          "kendo-ui": "AngularJS directive support for Kendo UI  ComboBox"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       }
     ],
     "category": "Editors"

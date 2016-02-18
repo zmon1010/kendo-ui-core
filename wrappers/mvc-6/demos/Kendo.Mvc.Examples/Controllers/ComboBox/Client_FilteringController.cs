@@ -1,10 +1,8 @@
-﻿using Kendo.Mvc.Examples.Models;
-using Microsoft.AspNet.Mvc;
-using System.Linq;
+﻿using Microsoft.AspNet.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class DropDownListController : Controller
+    public partial class ComboBoxController : Controller
     {
         public ActionResult Client_Filtering()
         {
