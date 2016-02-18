@@ -1,0 +1,5 @@
+:options:
+    - :name: filter
+      :description: The filtering method used to determine the suggestions for the current value.
+      :type: String
+      :enum_type: FilterType
