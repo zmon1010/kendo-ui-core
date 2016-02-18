@@ -20,6 +20,8 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public int? SelectedIndex { get; set; }
+
         public DropDownList(ViewContext viewContext) : base(viewContext)
         {
             DataSource = new DataSource(ModelMetadataProvider);
@@ -61,6 +63,11 @@ namespace Kendo.Mvc.UI
             else if (DataSource.Data != null)
             {
                 settings["dataSource"] = DataSource.Data;
+            }
+
+            if (SelectedIndex.HasValue && SelectedIndex > -1)
+            {
+                settings["index"] = SelectedIndex;
             }
 
             writer.Write(Initializer.Initialize(Selector, "DropDownList", settings));

@@ -127,6 +127,24 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Filter = (FilterType)Enum.Parse(typeof(FilterType), value, true);
             return this;
         }
+
+        /// <summary>
+        /// Use it to set selected item index
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .SelectedIndex(0);
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public DropDownListBuilder SelectedIndex(int value)
+        {
+            Container.SelectedIndex = value;
+            return this;
+        }
     }
 }
 
