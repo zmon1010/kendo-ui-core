@@ -784,6 +784,34 @@
         equal(editable.options.fields.field, "name");
     });
 
+    test("editRow sets the first editable cell in edit mode with grouping", function() {
+        var grid = setup({
+                columns: ["foo", "name"],
+                editable: true ,
+                dataSource: {
+                    schema: {
+                        model: {
+                            id: "foo",
+                            fields: {
+                                foo: { editable: false },
+                                name: "name"
+                            }
+                        }
+                    },
+                    group: { field: "foo" },
+                    data: [{ foo: "bar", name: "tom" }, { foo: "baz", name: "jerry" }]
+                }
+            }),
+            tr = grid.items().first();
+
+        grid.editRow(tr);
+
+        var editable = tr.find("td:last").data("kendoEditable");
+
+        equal(editable.options.fields.field, "name");
+    });
+
+
     test("addRow insert item at the end of the first page", function() {
         var grid = setup({
             editable: { createAt : "bottom" }

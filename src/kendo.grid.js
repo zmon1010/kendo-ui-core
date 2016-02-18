@@ -2987,7 +2987,7 @@ var __meta__ = { // jshint ignore:line
                 } else if (mode === "incell") {
                     $(row).children(DATA_CELL).each(function() {
                         var cell = $(this);
-                        var column = leafColumns(that.columns)[cell.index()];
+                        var column = leafColumns(that.columns)[that.cellIndex(cell)];
 
                         model = that._modelForContainer(cell);
 
