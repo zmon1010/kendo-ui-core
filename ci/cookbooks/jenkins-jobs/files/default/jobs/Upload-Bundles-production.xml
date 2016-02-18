@@ -37,9 +37,9 @@
       <connectionRetryLimit>5</connectionRetryLimit>
       <preventRemoteBuildQueue>false</preventRemoteBuildQueue>
       <blockBuildUntilComplete>true</blockBuildUntilComplete>
-      <parameters></parameters>
+      <parameters>SkipUploadOnUAT=true,SkipUploadOnLIVE=false</parameters>
       <parameterList>
-        <string></string>
+        <string>SkipUploadOnUAT=true,SkipUploadOnLIVE=false</string>
       </parameterList>
       <overrideAuth>false</overrideAuth>
       <auth>

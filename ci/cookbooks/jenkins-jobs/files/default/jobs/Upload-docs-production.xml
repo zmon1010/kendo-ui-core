@@ -3,8 +3,8 @@
   <actions/>
   <description>Deploy the documentation production branch to live server</description>
   <logRotator class="hudson.tasks.LogRotator">
-    <daysToKeep>5</daysToKeep>
-    <numToKeep>5</numToKeep>
+    <daysToKeep>7</daysToKeep>
+    <numToKeep>20</numToKeep>
     <artifactDaysToKeep>10</artifactDaysToKeep>
     <artifactNumToKeep>20</artifactNumToKeep>
   </logRotator>
