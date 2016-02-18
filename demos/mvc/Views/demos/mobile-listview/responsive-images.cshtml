@@ -7,7 +7,7 @@
 
 <script id="listview-template" type="text/x-kendo-template">
     <div data-bind="events: { click: onItemClick }">
-        <img data-src="#= CoverURL #" width="30%" class="resimgs item-cover" />
+        <img data-src="#= CoverURL #" width="30%" data-responsive class="resimgs item-cover" />
         <h4>#: Name #</h4>
         <p>#: Published() #</p>
     </div>
@@ -24,17 +24,19 @@
         </div>
     </header>
 
-    <img id="detailedImage" data-bind="attr: { data-src: CoverURL }" width="100%" class="resimgs" />
+    <img id="detailedImage" data-bind="attr: { data-src: CoverURL }" data-responsive width="100%" class="resimgs" />
 </div>
 
 <script src="../content/shared/js/everlive.all.js"></script>
-<script src="../content/shared/js/everlive.images.js"></script>
+
 
 <script>
     // initialize the Backend Services SDK with an API Key
-    var apiKey = "3q4sHgIqESXbpvOp";
-    new Everlive(apiKey);
-    everliveImages.init(apiKey);
+    var el = new Everlive({
+        appId: "3q4sHgIqESXbpvOp",
+        scheme: "https"
+    });
+   
 
     // retrieve the Image URL from the Files table using expand
     var expandExpression = {
@@ -57,9 +59,9 @@
         transport: {
             typeName: "Magazines",
             read: {
-                beforeSend: function (xhr) {
-                   xhr.setRequestHeader("X-Everlive-Expand", JSON.stringify(expandExpression));
-                   xhr.setRequestHeader("X-Everlive-Fields", JSON.stringify(filterExpression));
+                headers: {
+                    "X-Everlive-Fields": JSON.stringify(filterExpression),
+                    "X-Everlive-Expand": JSON.stringify(expandExpression)
                 }
             }
         },
@@ -78,7 +80,7 @@
             dataSource: dataSource,
             template: $("#listview-template").html(),
             dataBound: function (e) {
-               everliveImages.responsiveAll();
+                el.helpers.html.processAll();
             },
             click: function(e) {
                 app.navigate("#singleItem?uid=" + e.dataItem.uid);
@@ -92,7 +94,7 @@
 
         kendo.bind(e.view.element, viewModel);
 
-        everliveImages.responsiveAll();
+        el.helpers.html.processAll();
     }
 
 </script>
