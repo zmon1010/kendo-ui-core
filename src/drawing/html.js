@@ -243,7 +243,7 @@
             var template = makeTemplate(options.template);
             var doc = element.ownerDocument;
             var pages = [];
-            var copy = cloneNodes(element);
+            var copy = options._destructive ? element : cloneNodes(element);
             var container = doc.createElement("KENDO-PDF-DOCUMENT");
             var adjust = 0;
 
@@ -301,8 +301,8 @@
                 $(copy).css({ overflow: "hidden" });
             }
 
-            container.appendChild(copy);
             element.parentNode.insertBefore(container, element);
+            container.appendChild(copy);
 
             // we need the timeouts here, so that images dimensions are
             // properly computed in DOM when we start our thing.

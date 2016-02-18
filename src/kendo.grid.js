@@ -7659,7 +7659,8 @@ var __meta__ = { // jshint ignore:line
 
            function draw() {
                cont.appendTo(document.body);
-               kendo.drawing.drawDOM(clone, grid.options.pdf)
+               var options = $.extend(grid.options.pdf, { _destructive: true });
+               kendo.drawing.drawDOM(clone, options)
                    .then(function(group){
                        cont.remove();
                        result.resolve(group);
