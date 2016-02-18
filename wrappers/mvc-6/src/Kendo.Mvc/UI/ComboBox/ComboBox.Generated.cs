@@ -39,8 +39,6 @@ namespace Kendo.Mvc.UI
 
         public bool? IgnoreCase { get; set; }
 
-        public double? Index { get; set; }
-
         public double? MinLength { get; set; }
 
         public string Placeholder { get; set; }
@@ -144,11 +142,6 @@ namespace Kendo.Mvc.UI
             if (IgnoreCase.HasValue)
             {
                 settings["ignoreCase"] = IgnoreCase;
-            }
-
-            if (Index.HasValue)
-            {
-                settings["index"] = Index;
             }
 
             if (MinLength.HasValue)

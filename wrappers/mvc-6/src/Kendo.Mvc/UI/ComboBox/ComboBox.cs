@@ -15,6 +15,7 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
+        public int? SelectedIndex { get; set; }
 
         public ComboBox(ViewContext viewContext) : base(viewContext)
         {
@@ -48,6 +49,11 @@ namespace Kendo.Mvc.UI
             else if (DataSource.Data != null)
             {
                 settings["dataSource"] = DataSource.Data;
+            }
+
+            if (SelectedIndex.HasValue && SelectedIndex > -1)
+            {
+                settings["index"] = SelectedIndex;
             }
 
             writer.Write(Initializer.Initialize(Selector, "ComboBox", settings));

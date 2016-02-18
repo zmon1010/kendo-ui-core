@@ -152,16 +152,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The index of the initially selected item. The index is 0 based.
-        /// </summary>
-        /// <param name="value">The value for Index</param>
-        public ComboBoxBuilder Index(double value)
-        {
-            Container.Index = value;
-            return this;
-        }
-
-        /// <summary>
         /// The minimum number of characters the user must type before a search is performed. Set to higher value than 1 if the search could match a lot of items.
         /// </summary>
         /// <param name="value">The value for MinLength</param>
