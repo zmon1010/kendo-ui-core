@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js"
+      ]);
+    </script>
+    <style>
+        body, .k-widget {
+          font-family: "DejaVu Serif";
+          font-size: 12px;
+        }
+    </style>
+  </head>
+  <body>
+      <div id="grid"></div>
+      <script>
+          $(document).ready(function () {
+              $("#grid").kendoGrid({
+                  toolbar: ["pdf"],
+                  pdf: {
+                      allPages: true,
+                      avoidLinks: true,
+                      paperSize: "A4",
+                      margin: "1cm",
+                      landscape: true,
+                      repeatHeaders: true
+                  },
+                  pdfExport: function(e) {
+                      e.promise.progress(function(e) {
+                          //e.content = formatPage(e.content);
+                          console.log(kendo.format("{0:P}", e.progress));
+                      });
+                  },
+                  dataSource: {
+                      type: "odata",
+                      serverPaging: true,
+                      transport: {
+                          read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                      },
+                      pageSize: 20
+                  },
+                  height: 550,
+                  groupable: true,
+                  sortable: true,
+                  pageable: {
+                      refresh: true,
+                      pageSizes: true,
+                      buttonCount: 5
+                  },
+                  columns: [{
+                      field: "ContactName",
+                      title: "Contact Name",
+                      width: 200
+                      }, {
+                      field: "ContactTitle",
+                      title: "Contact Title"
+                      }, {
+                      field: "CompanyName",
+                      title: "Company Name"
+                      }, {
+                      field: "Country",
+                      width: 150
+                  }]
+              });
+
+              window.grid = $("#grid").data("kendoGrid");
+          });
+      </script>
+  </body>
+</html>
