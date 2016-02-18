@@ -143,8 +143,9 @@
 
                 var group = new drawing.Group({
                     pdf: {
-                        multiPage : true,
-                        paperSize : hasPaperSize ? paperOptions.paperSize : "auto"
+                        multiPage     : true,
+                        paperSize     : hasPaperSize ? paperOptions.paperSize : "auto",
+                        _ignoreMargin : true // HACK!  see exportPDF in pdf/drawing.js
                     }
                 });
                 handlePageBreaks(
