@@ -81,6 +81,31 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Defines the items in the ComboBox
+        /// </summary>
+        /// <param name="addAction">The add action.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ComboBox()
+        ///             .Name("ComboBox")
+        ///             .Items(items =>
+        ///             {
+        ///                 items.Add().Text("First Item");
+        ///                 items.Add().Text("Second Item");
+        ///             })
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ComboBoxBuilder Items(Action<SelectListItemFactory> addAction)
+        {
+            var items = new List<SelectListItem>();
+
+            addAction(new SelectListItemFactory(items));
+
+            return BindTo(items);
+        }
+
+        /// <summary>
         /// Sets the data source configuration of the ComboBox.
         /// </summary>
         /// <param name="configurator">The lambda which configures the data source</param>
