@@ -25383,13 +25383,6 @@ A zero value means that a request will be made as soon as the user focuses the w
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The options that will be used for the popup initialization. For more details about the available options
-refer to Popup documentation.</description>
-            <name>popup</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
-        </attribute>
-        <attribute>
             <description>The mode used to render the selected tags. The available modes are:
 - multiple - renders a tag for every selected value
 - single - renders only one tag that shows the number of the selected values</description>
@@ -25506,6 +25499,50 @@ refer to Popup documentation.</description>
 
     </tag>
 
+
+
+
+    <tag>
+        <description>The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.</description>
+        <name>multiSelect-popup</name>
+        <tag-class>com.kendoui.taglib.multiselect.PopupTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines a jQuery selector that will be used to find a container element, where the popup will be appended to.</description>
+            <name>appendTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies how to position the popup element based on achor point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>origin</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies which point of the popup element to attach to the anchor's origin point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
 
 
 
