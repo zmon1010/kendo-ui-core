@@ -18,6 +18,50 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Use to enable or disable animation of the popup element.
+        /// </summary>
+        /// <param name="enable">The boolean value.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().ComboBox()
+        ///	           .Name("ComboBox")
+        ///	           .Animation(false) //toggle effect
+        ///	%&gt;
+        /// </code>
+        /// </example>
+        public ComboBoxBuilder Animation(bool enable)
+        {
+            Component.Animation.Enabled = enable;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the animation effects of the widget.
+        /// </summary>
+        /// <param name="animationAction">The action which configures the animation effects.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().ComboBox()
+        ///	           .Name("ComboBox")
+        ///	           .Animation(animation =>
+        ///	           {
+        ///		            animation.Open(open =>
+        ///		            {
+        ///		                open.SlideIn(SlideDirection.Down);
+        ///		            }
+        ///	           })
+        ///	%&gt;
+        /// </code>
+        /// </example>
+        public ComboBoxBuilder Animation(Action<PopupAnimationBuilder> animationAction)
+        {
+            animationAction(new PopupAnimationBuilder(Component.Animation));
+
+            return this;
+        }
+
+        /// <summary>
         /// Binds the ComboBox to an IEnumerable list.
         /// </summary>
         /// <param name="dataSource">The data source.</param>

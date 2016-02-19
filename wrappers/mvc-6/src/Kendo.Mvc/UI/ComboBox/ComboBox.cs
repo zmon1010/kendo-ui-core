@@ -2,6 +2,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 using System.IO;
 using Kendo.Mvc.Extensions;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
@@ -17,11 +18,16 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
+
         public int? SelectedIndex { get; set; }
+
+        public PopupAnimation Animation { get; private set; }
 
         public ComboBox(ViewContext viewContext) : base(viewContext)
         {
             DataSource = new DataSource(ModelMetadataProvider);
+
+            Animation = new PopupAnimation();
         }
 
         protected override void WriteHtml(TextWriter writer)
@@ -50,6 +56,12 @@ namespace Kendo.Mvc.UI
             }
 
             var settings = SerializeSettings();
+
+            var animation = Animation.ToJson();
+            if (animation.Keys.Any())
+            {
+                settings["animation"] = animation["animation"];
+            }
 
             if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) ||
                 !string.IsNullOrEmpty(DataSource.Transport.Read.ActionName) ||

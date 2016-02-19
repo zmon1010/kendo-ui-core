@@ -51,5 +51,45 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Items(items => items.Add().Text("item 1")).ShouldBeType<ComboBoxBuilder>();
         }
+
+        [Fact]
+        public void Animation_bool_method_sets_animation_Enabled_property()
+        {
+            builder.Animation(false);
+
+            component.Animation.Enabled.ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Animation_bool_method_returns_ComboBoxBuilder()
+        {
+            builder.Animation(false).ShouldBeType<ComboBoxBuilder>();
+        }
+
+        [Fact]
+        public void Animation_settings_method_sets_animation_properties()
+        {
+            builder.Animation(animation =>
+            {
+                animation.Open(open =>
+                {
+                    open.SlideIn(SlideDirection.Down);
+                });
+            });
+
+            component.Animation.Open.Container.Count.ShouldEqual(1);
+        }
+
+        [Fact]
+        public void Animation_settings_method_returns_ComboBoxBuilder()
+        {
+            builder.Animation(animation =>
+            {
+                animation.Open(open =>
+                {
+                    open.SlideIn(SlideDirection.Down);
+                });
+            }).ShouldBeType<ComboBoxBuilder>();
+        }
     }
 }
