@@ -25355,7 +25355,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <description>If set to false case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.</description>
             <name>ignoreCase</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>The template used to render the items in the popup list.</description>

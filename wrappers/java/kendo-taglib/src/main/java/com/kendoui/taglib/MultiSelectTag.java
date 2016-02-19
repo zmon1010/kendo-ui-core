@@ -189,11 +189,11 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setProperty("highlightFirst", value);
     }
 
-    public java.lang.String getIgnoreCase() {
-        return (java.lang.String)getProperty("ignoreCase");
+    public boolean getIgnoreCase() {
+        return (Boolean)getProperty("ignoreCase");
     }
 
-    public void setIgnoreCase(java.lang.String value) {
+    public void setIgnoreCase(boolean value) {
         setProperty("ignoreCase", value);
     }
 
