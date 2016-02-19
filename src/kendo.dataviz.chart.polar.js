@@ -1271,6 +1271,7 @@ var __meta__ = { // jshint ignore:line
             plotArea.polarAxis = categoryAxis;
             plotArea.categoryAxis = categoryAxis;
             plotArea.appendAxis(categoryAxis);
+            plotArea.aggregateCategories();
         },
 
         valueAxisOptions: function(defaults) {
@@ -1294,6 +1295,17 @@ var __meta__ = { // jshint ignore:line
         },
 
         appendChart: CategoricalPlotArea.fn.appendChart,
+        aggregateSeries: CategoricalPlotArea.fn.aggregateSeries,
+
+        aggregateCategories: function() {
+            // No separate panes in radar charts
+            CategoricalPlotArea.fn.aggregateCategories.call(this, this.panes);
+        },
+
+        filterSeries: function(currentSeries) {
+            // Not supported for radar charts
+            return currentSeries;
+        },
 
         createCharts: function() {
             var plotArea = this,
