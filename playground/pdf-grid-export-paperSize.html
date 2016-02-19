@@ -69,43 +69,100 @@
                       template: $("#page-template").html(),
                       scale: 0.8
                   },
-                  pdfExport: function(e) {
-                      e.promise.progress(function(e) {
-                          //e.content = formatPage(e.content);
-                          console.log(kendo.format("{0:P}", e.progress));
-                      });
-                  },
                   dataSource: {
                       type: "odata",
-                      serverPaging: true,
                       transport: {
-                          read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                          read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
                       },
-                      pageSize: 20
+                      schema: {
+                          model: {
+                              fields: {
+                                  OrderID: { type: "number" },
+                                  Freight: { type: "number" },
+                                  ShipName: { type: "string" },
+                                  OrderDate: { type: "date" },
+                                  ShipCity: { type: "string" }
+                              }
+                          }
+                      },
+                      pageSize: 20,
+                      serverPaging: true,
+                      serverFiltering: true,
+                      serverSorting: true
                   },
                   height: 550,
-                  groupable: true,
+                  filterable: true,
                   sortable: true,
-                  pageable: {
-                      refresh: true,
-                      pageSizes: true,
-                      buttonCount: 5
-                  },
-                  columns: [{
-                      field: "ContactName",
-                      title: "Contact Name",
-                      width: 200
+                  pageable: true,
+                  columns: [
+                      {
+                          field:"OrderID",
+                          filterable: false
+                      },
+                      "Freight",
+                      {
+                          field: "OrderDate",
+                          title: "Order Date",
+                          format: "{0:MM/dd/yyyy}"
                       }, {
-                      field: "ContactTitle",
-                      title: "Contact Title"
+                          field: "ShipName",
+                          title: "Ship Name"
                       }, {
-                      field: "CompanyName",
-                      title: "Company Name"
-                      }, {
-                      field: "Country",
-                      width: 150
-                  }]
+                          field: "ShipCity",
+                          title: "Ship City"
+                      }
+                  ]
               });
+
+              <!-- $("#grid").kendoGrid({ -->
+              <!--     toolbar: ["pdf"], -->
+              <!--     pdf: { -->
+              <!--         allPages: true, -->
+              <!--         avoidLinks: true, -->
+              <!--         paperSize: "A4", -->
+              <!--         margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "2cm" }, -->
+              <!--         landscape: true, -->
+              <!--         repeatHeaders: true, -->
+              <!--         template: $("#page-template").html(), -->
+              <!--         scale: 0.8 -->
+              <!--     }, -->
+              <!--     pdfExport: function(e) { -->
+              <!--         e.promise.progress(function(e) { -->
+              <!--             //e.content = formatPage(e.content); -->
+              <!--             console.log(kendo.format("{0:P}", e.progress)); -->
+              <!--         }); -->
+              <!--     }, -->
+              <!--     dataSource: { -->
+              <!--         type: "odata", -->
+              <!--         serverPaging: true, -->
+              <!--         transport: { -->
+              <!--             read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers" -->
+              <!--         }, -->
+              <!--         pageSize: 20 -->
+              <!--     }, -->
+              <!--     height: 550, -->
+              <!--     groupable: true, -->
+              <!--     sortable: true, -->
+              <!--     pageable: { -->
+              <!--         refresh: true, -->
+              <!--         pageSizes: true, -->
+              <!--         buttonCount: 5 -->
+              <!--     }, -->
+              <!--     columns: [{ -->
+              <!--         field: "ContactName", -->
+              <!--         title: "Contact Name", -->
+              <!--         width: 200 -->
+              <!--         }, { -->
+              <!--         field: "ContactTitle", -->
+              <!--         title: "Contact Title" -->
+              <!--         }, { -->
+              <!--         field: "CompanyName", -->
+              <!--         title: "Company Name" -->
+              <!--         }, { -->
+              <!--         field: "Country", -->
+              <!--         width: 150 -->
+              <!--     }] -->
+              <!-- }); -->
 
               window.grid = $("#grid").data("kendoGrid");
           });
