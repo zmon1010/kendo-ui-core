@@ -39,6 +39,8 @@ namespace Kendo.Mvc.UI
 
         public double? MinLength { get; set; }
 
+        public DropDownListPopupSettings Popup { get; } = new DropDownListPopupSettings();
+
         public object OptionLabel { get; set; }
 
         public string OptionLabelTemplate { get; set; }
@@ -146,6 +148,12 @@ namespace Kendo.Mvc.UI
             if (MinLength.HasValue)
             {
                 settings["minLength"] = MinLength;
+            }
+
+            var popup = Popup.Serialize();
+            if (popup.Any())
+            {
+                settings["popup"] = popup;
             }
 
             if (OptionLabel != null)

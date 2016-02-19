@@ -30,7 +30,6 @@
 - dropdownlist.animation
 - dropdownlist.datasource
 - dropdownlist.index
-- dropdownlist.popup
 - grid.altrowtemplate
 - grid.columnmenu.messages
 - grid.columns

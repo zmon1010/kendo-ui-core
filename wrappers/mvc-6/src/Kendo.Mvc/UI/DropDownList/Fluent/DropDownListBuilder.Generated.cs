@@ -152,6 +152,20 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The options that will be used for the popup initialization. For more details about the available options
+		/// refer to Popup documentation.
+        /// </summary>
+        /// <param name="configurator">The configurator for the popup setting.</param>
+        public DropDownListBuilder Popup(Action<DropDownListPopupSettingsBuilder> configurator)
+        {
+
+            Container.Popup.DropDownList = Container;
+            configurator(new DropDownListPopupSettingsBuilder(Container.Popup));
+
+            return this;
+        }
+
+        /// <summary>
         /// Define the text of the default empty item. If the value is an object, then the widget will use it as a valid data item.
 		///  Note that the optionLabel will not be available if the widget is empty.
         /// </summary>
