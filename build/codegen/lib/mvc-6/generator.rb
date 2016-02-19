@@ -3,11 +3,13 @@ module CodeGen::MVC6::Wrappers
     class Generator
         include Rake::DSL
         include CodeGen::MVC6::Wrappers::ChartGenerator
-
+        include CodeGen::MVC6::Wrappers::EnumGenerator
+        
         def initialize(path)
             @path = path
 
             generate_chart
+            generate_enums
         end
 
         def component(component)

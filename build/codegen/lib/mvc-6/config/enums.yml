@@ -1,0 +1,14 @@
+- :type: FilterType
+  :description: The filtering method used to determine the suggestions for the current value.
+  :values:
+      - :value: startswith
+        :member: StartsWith
+        :description: Matches values starting with the typed string
+
+      - :value: endswith
+        :member: EndsWith
+        :description: Matches values ending with the typed string
+
+      - :value: contains
+        :member: Contains
+        :description: Matches values containing the typed string

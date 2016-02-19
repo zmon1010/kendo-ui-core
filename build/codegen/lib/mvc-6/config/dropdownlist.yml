@@ -7,15 +7,3 @@
       :description: The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
       :type: String
       :enum_type: FilterType
-      :values:
-          - :value: startswith
-            :member: StartsWith
-            :description: Matches items starting with the typed string
-
-          - :value: endswith
-            :member: EndsWith
-            :description: Matches items ending with the typed string
-
-          - :value: contains
-            :member: Contains
-            :description: Matches items containing the typed string
