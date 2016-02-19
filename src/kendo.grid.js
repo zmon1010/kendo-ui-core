@@ -7649,18 +7649,26 @@ var __meta__ = { // jshint ignore:line
 
            function resolve() {
                if (allPages && startingPage !== undefined) {
-                   dataSource.unbind("change", exportPage);
+                   dataSource.unbind("change", renderPage);
                    dataSource.one("change", draw);
-
                    dataSource.page(startingPage);
                } else {
+                   grid.refresh();
                    draw();
                }
            }
 
            function draw() {
                cont.appendTo(document.body);
-               var options = $.extend({}, grid.options.pdf, { _destructive: true });
+               var options = $.extend({}, grid.options.pdf, {
+                   _destructive: true,
+                   progress: function(p) {
+                       progress.notify({
+                           pageNumber: p.pageNum,
+                           progress: 0.5 + p.pageNum / p.totalPages / 2
+                       });
+                   }
+               });
                kendo.drawing.drawDOM(clone, options)
                    .then(function(group){
                        cont.remove();
@@ -7671,13 +7679,13 @@ var __meta__ = { // jshint ignore:line
                    });
            }
 
-           function exportPage() {
+           function renderPage() {
                var pageNum = dataSource.page();
                var totalPages = allPages ? dataSource.totalPages() : 1;
                body.append(origBody.find("tr"));
                var args = {
                    pageNumber: pageNum,
-                   progress: pageNum / totalPages,
+                   progress: pageNum / totalPages / 2,
                    totalPages: totalPages
                };
                progress.notify(args);
@@ -7689,10 +7697,10 @@ var __meta__ = { // jshint ignore:line
            }
 
            if (allPages) {
-               dataSource.bind("change", exportPage);
+               dataSource.bind("change", renderPage);
                dataSource.page(1);
            } else {
-               exportPage();
+               renderPage();
            }
 
            return result.promise();
