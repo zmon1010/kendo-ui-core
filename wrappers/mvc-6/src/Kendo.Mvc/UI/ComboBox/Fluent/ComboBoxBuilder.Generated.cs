@@ -172,6 +172,20 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The options that will be used for the popup initialization. For more details about the available options
+		/// refer to Popup documentation.
+        /// </summary>
+        /// <param name="configurator">The configurator for the popup setting.</param>
+        public ComboBoxBuilder Popup(Action<ComboBoxPopupSettingsBuilder> configurator)
+        {
+
+            Container.Popup.ComboBox = Container;
+            configurator(new ComboBoxPopupSettingsBuilder(Container.Popup));
+
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the widget will automatically use the first suggestion as its value.
         /// </summary>
         /// <param name="value">The value for Suggest</param>

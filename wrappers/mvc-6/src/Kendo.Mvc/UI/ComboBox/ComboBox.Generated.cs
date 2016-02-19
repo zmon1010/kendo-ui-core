@@ -43,6 +43,8 @@ namespace Kendo.Mvc.UI
 
         public string Placeholder { get; set; }
 
+        public ComboBoxPopupSettings Popup { get; } = new ComboBoxPopupSettings();
+
         public bool? Suggest { get; set; }
 
         public string HeaderTemplate { get; set; }
@@ -152,6 +154,12 @@ namespace Kendo.Mvc.UI
             if (Placeholder?.HasValue() == true)
             {
                 settings["placeholder"] = Placeholder;
+            }
+
+            var popup = Popup.Serialize();
+            if (popup.Any())
+            {
+                settings["popup"] = popup;
             }
 
             if (Suggest.HasValue)
