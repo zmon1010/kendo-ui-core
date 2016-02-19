@@ -207,7 +207,7 @@ The supported filter values are startswith, endswith and contains.
     /**
     * The options that will be used for the popup initialization. For more details about the available options
 refer to Popup documentation.
-    * @param  $value
+    * @param \Kendo\UI\ComboBoxPopup|array $value
     * @return \Kendo\UI\ComboBox
     */
     public function popup($value) {

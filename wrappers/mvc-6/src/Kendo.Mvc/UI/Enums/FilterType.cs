@@ -1,20 +1,20 @@
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
+    /// The filtering method used to determine the suggestions for the current value.
     /// </summary>
     public enum FilterType
     {
         /// <summary>
-        /// Matches items starting with the typed string
+        /// Matches values starting with the typed string
         /// </summary>
         StartsWith,
         /// <summary>
-        /// Matches items ending with the typed string
+        /// Matches values ending with the typed string
         /// </summary>
         EndsWith,
         /// <summary>
-        /// Matches items containing the typed string
+        /// Matches values containing the typed string
         /// </summary>
         Contains
     }

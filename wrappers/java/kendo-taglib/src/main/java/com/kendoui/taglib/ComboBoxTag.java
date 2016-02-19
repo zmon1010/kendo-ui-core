@@ -58,6 +58,10 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("animation", value);
     }
 
+    public void setPopup(com.kendoui.taglib.combobox.PopupTag value) {
+        setProperty("popup", value);
+    }
+
     public void setVirtual(com.kendoui.taglib.combobox.VirtualTag value) {
         setProperty("virtual", value);
     }
@@ -228,14 +232,6 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setPlaceholder(java.lang.String value) {
         setProperty("placeholder", value);
-    }
-
-    public java.lang.Object getPopup() {
-        return (java.lang.Object)getProperty("popup");
-    }
-
-    public void setPopup(java.lang.Object value) {
-        setProperty("popup", value);
     }
 
     public boolean getSuggest() {
