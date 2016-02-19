@@ -3,6 +3,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Kendo.Mvc.UI
@@ -22,9 +23,13 @@ namespace Kendo.Mvc.UI
 
         public int? SelectedIndex { get; set; }
 
+        public PopupAnimation Animation { get; private set; }
+
         public DropDownList(ViewContext viewContext) : base(viewContext)
         {
             DataSource = new DataSource(ModelMetadataProvider);
+
+            Animation = new PopupAnimation();
         }
 
         protected override void WriteHtml(TextWriter writer)
@@ -53,6 +58,12 @@ namespace Kendo.Mvc.UI
             }
 
             var settings = SerializeSettings();
+
+            var animation = Animation.ToJson();
+            if (animation.Keys.Any())
+            {
+                settings["animation"] = animation["animation"];
+            }
 
             if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) ||
                 !string.IsNullOrEmpty(DataSource.Transport.Read.ActionName) ||
