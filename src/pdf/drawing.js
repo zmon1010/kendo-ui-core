@@ -530,6 +530,13 @@
         var defer = $.Deferred();
 
         for (var i in options) {
+            if (i == "margin" && group.options.pdf._ignoreMargin) {
+                // This hackish option is set by the page breaking code in drawDOM.  The idea is
+                // that margin is already taken into account there (that's required to do proper
+                // page breaking) and we don't want to set it again here, as it would double the
+                // top-left margin, and truncate the content on bottom/right.
+                continue;
+            }
             group.options.set("pdf." + i, options[i]);
         }
 
