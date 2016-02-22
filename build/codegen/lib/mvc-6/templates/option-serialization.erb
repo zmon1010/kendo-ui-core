@@ -35,7 +35,7 @@
 %else
             if (<%= csharp_name %>.HasValue)
             {
-                settings["<%= serialize_as %>"] = <%= csharp_name %>;
+                settings["<%= serialize_as.camelize %>"] = <%= csharp_name %>;
             }
 %end
 
