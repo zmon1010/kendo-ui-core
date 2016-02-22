@@ -13370,7 +13370,9 @@ var __meta__ = { // jshint ignore:line
                         options[property] = valueOrDefault(propValue(context), defaults[property]);
                     }
                 } else if (typeof propValue === OBJECT) {
-                    state.defaults = defaults[property];
+                    if (!dryRun) {
+                        state.defaults = defaults[property];
+                    }
                     state.depth++;
                     needsEval = evalOptions(propValue, context, state, dryRun) || needsEval;
                     state.depth--;
