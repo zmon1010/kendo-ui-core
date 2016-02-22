@@ -57,6 +57,9 @@
 - listview.alttemplate
 - listview.pageable
 - maskedtextbox.rules
+- multiselect.animation
+- multiselect.datasource
+- multiselect.value
 - notification.animation
 - notification.templates
 - progressbar.value

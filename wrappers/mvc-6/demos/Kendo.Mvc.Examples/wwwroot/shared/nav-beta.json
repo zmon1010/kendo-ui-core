@@ -2019,6 +2019,198 @@
     "category": "Gauges"
   },
   {
+    "text": "MultiSelect",
+    "name": "multiselect",
+    "api": "web/multiselect",
+    "documentation": {
+      "kendo-ui": "getting-started/web/multiselect/overview",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/multiselect/overview",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/multiselect/overview",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/multiselect/overview"
+    },
+    "forum": {
+      "kendo-ui": "kendo-ui/multi-select",
+      "aspnet-mvc": "aspnet-mvc/multi-select",
+      "jsp-ui": "jsp/multi-select",
+      "php-ui": "php/multi-select"
+    },
+    "sources": {
+      "kendo-ui": [
+        {
+          "name": "Sample service",
+          "url": "~/content/service.html"
+        }
+      ]
+    },
+    "codelibrary": {
+      "kendo-ui": "kendo-ui/multiselect",
+      "aspnet-mvc": "aspnet-mvc/multiselect",
+      "jsp-ui": "jsp/multiselect",
+      "php-ui": "php/multiselect"
+    },
+    "spriteCssClass": "multiselectIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "multiselect/index",
+        "title": {
+          "kendo-ui": "Kendo UI MultiSelect widget demo | Kendo UI Web Demos",
+          "aspnet-mvc": "ASP.NET MVC MultiSelect control demo | UI for ASP.NET MVC Demos"
+        },
+        "meta": {
+          "kendo-ui": "Play with this demo to see the core functionality of Kendo UI MultiSelect component in Kendo UI Web framework.",
+          "aspnet-mvc": "Play with this demo to see the core functionality of Telerik ASP.NET MVC MultiSelect control."
+        }
+      },
+      {
+        "text": "Server filtering",
+        "url": "multiselect/server_filtering",
+        "title": {
+          "kendo-ui": "Example of Server filtering in Kendo UI MultiSelect widget",
+          "aspnet-mvc": "Example of Server filtering in ASP.NET MVC MultiSelect control"
+        },
+        "meta": {
+          "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI MultiSelect is filtered on the the server based on the input.",
+          "aspnet-mvc": "See how the auto-searchable dropdown list of ASP.NET MVC MultiSelect is filtered on the the server based on the input."
+        }
+      },
+      {
+        "text": "Virtualization",
+        "url": "multiselect/virtualization",
+        "title": {
+          "kendo-ui": "Example of virtualization in Kendo UI MultiSelect widget",
+          "aspnet-mvc": "Example of virtualization in ASP.NET MVC MultiSelect control"
+        },
+        "meta": {
+          "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI MultiSelect is virtualized.",
+          "aspnet-mvc": "See how the auto-searchable dropdown list of ASP.NET MVC MultiSelect is virtualized."
+        }
+      },
+      {
+        "text": "Grouping",
+        "url": "multiselect/grouping",
+        "title": {
+          "kendo-ui": "Example of grouping in Kendo UI MultiSelect widget",
+          "aspnet-mvc": "Example of grouping in ASP.NET MVC MultiSelect control"
+        },
+        "meta": {
+          "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI MultiSelect displays grouped data.",
+          "aspnet-mvc": "See how the auto-searchable dropdown list of ASP.NET MVC MultiSelect displays grouped data."
+        }
+      },
+      {
+        "packages": [
+          "mvc-offline"
+        ],
+        "text": "Client filtering",
+        "url": "multiselect/client_filtering"
+      },
+      {
+        "text": "Customizing templates",
+        "url": "multiselect/template",
+        "title": {
+          "kendo-ui": "Templates customization of Kendo UI MultiSelect widget",
+          "aspnet-mvc": "Templates customization of ASP.NET MVC MultiSelect control"
+        },
+        "meta": {
+          "kendo-ui": "This Kendo UI MultiSelect demo shows how the template of the widget can be customized to change the appearance of items and tags.",
+          "aspnet-mvc": "This ASP.NET MVC MultiSelect demo shows how the template of the control can be customized to change the appearance of items and tags."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "multiselect/events",
+        "title": {
+          "kendo-ui": "Events in Kendo UI MultiSelect Component | Kendo UI Demo",
+          "aspnet-mvc": "Events in ASP.NET MVC MultiSelect Component | ASP.NET MVC Demo"
+        },
+        "meta": {
+          "kendo-ui": "This demo demonstrates the events which are triggered in Kendo UI MultiSelect upon user's selection of an item from the drop-down list.",
+          "aspnet-mvc": "This demo demonstrates the events which are triggered in ASP.NET MVC MultiSelect upon user's selection of an item from the drop-down list."
+        }
+      },
+      {
+        "text": "API",
+        "url": "multiselect/api",
+        "title": {
+          "kendo-ui": "API of Kendo UI MultiSelect component | Kendo UI Demo",
+          "aspnet-mvc": "API of ASP.NET MVC MultiSelect control | ASP.NET MVC Demo"
+        },
+        "meta": {
+          "kendo-ui": "In this demo you will find more about the API functions of Kendo UI MultiSelect widget.",
+          "aspnet-mvc": "In this demo you will find more about the API functions of ASP.NET MVC MultiSelect control."
+        }
+      },
+      {
+        "text": "Tag mode",
+        "url": "multiselect/tag-mode",
+        "title": {
+          "kendo-ui": "Tag mode of Kendo UI MultiSelect component | Kendo UI Demo",
+          "aspnet-mvc": "Tag mode of ASP.NET MVC MultiSelect control | ASP.NET MVC Demo"
+        },
+        "meta": {
+          "kendo-ui": "In this demo you will find more about the Tag mode feature of Kendo UI MultiSelect widget.",
+          "aspnet-mvc": "In this demo you will find more about the Tag mode feature of ASP.NET MVC MultiSelect control."
+        }
+      },
+      {
+        "text": "RTL support",
+        "url": "multiselect/right-to-left-support",
+        "title": {
+          "kendo-ui": "RTL support in Kendo UI MultiSelect widget | Kendo UI Web demo",
+          "aspnet-mvc": "RTL support in ASP.NET MVC MultiSelect control | ASP.NET MVC demo"
+        },
+        "meta": {
+          "kendo-ui": "This example shows how RTL support is enabled in Kendo UI MultiSelect. Any application or mobile website will be now intuitive for RTL language users.",
+          "aspnet-mvc": "This example shows how RTL support is enabled in ASP.NET MVC MultiSelect. Any application or mobile website will be now intuitive for RTL language users."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "multiselect/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard navigation in Kendo UI MultiSelect component | Kendo UI Web demo",
+          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC MultiSelect component"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how the keyboard navigation for Kendo UI MultiSelect widget works. Learn more how to use the keyboard shortcuts for easier navigation.",
+          "aspnet-mvc": "This demo demostrates the keyboard navigation for ASP.NET MVC MultiSelect control. Learn more about how you can use the keyboard shortcuts for easier navigation."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "multiselect/mvvm",
+        "title": {
+          "kendo-ui": "MVVM support in Kendo UI MultiSelect"
+        },
+        "meta": {
+          "kendo-ui": "Enabled, events, source, value and visible MVVM binding support in Kendo UI MultiSelect"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "multiselect/angular",
+        "title": {
+          "kendo-ui": "AngularJS support in Kendo UI MultiSelect"
+        },
+        "meta": {
+          "kendo-ui": "AngularJS directive support for Kendo UI MultiSelect"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Editors"
+  },
+  {
     "text": "Notification",
     "name": "notification",
     "api": "web/notification",

@@ -240,6 +240,7 @@ namespace :generate do
                 'docs/api/javascript/ui/grid.md',
                 'docs/api/javascript/ui/listview.md',
                 'docs/api/javascript/ui/maskedtextbox.md',
+                'docs/api/javascript/ui/multiselect.md',
                 'docs/api/javascript/ui/notification.md',
                 'docs/api/javascript/ui/numerictextbox.md',
                 'docs/api/javascript/ui/progressbar.md',
