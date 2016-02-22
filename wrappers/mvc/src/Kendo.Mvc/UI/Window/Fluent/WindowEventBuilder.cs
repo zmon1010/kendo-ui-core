@@ -351,5 +351,81 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        ///  Defines the name of the JavaScript function that will handle the the Minimize client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Window()
+        ///             .Name("Window")
+        ///             .Events(events => events.Minimize("onMinimize"))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public WindowEventBuilder Minimize(string handler)
+        {
+            Handler("minimize", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        ///  Defines the name of the JavaScript function that will handle the the Minimize client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Window()
+        ///             .Name("Window")
+        ///             .Events(events => events.Minimize("onMinimize"))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public WindowEventBuilder Minimize(Func<object, object> handler)
+        {
+            Handler("minimize", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        ///  Defines the name of the JavaScript function that will handle the the Maximize client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Window()
+        ///             .Name("Window")
+        ///             .Events(events => events.Maximize("onMaximize"))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public WindowEventBuilder Maximize(string handler)
+        {
+            Handler("maximize", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        ///  Defines the name of the JavaScript function that will handle the the Maximize client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Window()
+        ///             .Name("Window")
+        ///             .Events(events => events.Maximize("onMaximize"))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public WindowEventBuilder Maximize(Func<object, object> handler)
+        {
+            Handler("maximize", handler);
+
+            return this;
+        }
     }
 }
