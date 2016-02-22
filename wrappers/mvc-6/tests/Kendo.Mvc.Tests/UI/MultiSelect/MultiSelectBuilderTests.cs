@@ -3,6 +3,7 @@ using Xunit;
 using Kendo.Mvc.UI.Fluent;
 using Kendo.Mvc.Tests;
 using System.Collections.Generic;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Kendo.Mvc.UI.Tests
 {
@@ -32,6 +33,22 @@ namespace Kendo.Mvc.UI.Tests
         public void BindTo_IEnumerable_method_returns_MultiSelectBuilder()
         {
             builder.BindTo(new List<string>()).ShouldBeType<MultiSelectBuilder>();
+        }
+
+        [Fact]
+        public void BindTo_IEnumerable_SelectListItem_method_returns_Sets_DataTextField_If_Not_Set()
+        {
+            builder.BindTo(new List<SelectListItem>());
+
+            component.DataTextField.ShouldEqual("Text");
+        }
+
+        [Fact]
+        public void BindTo_IEnumerable_SelectListItem_method_returns_Sets_DataValueField_If_Not_Set()
+        {
+            builder.BindTo(new List<SelectListItem>());
+
+            component.DataValueField.ShouldEqual("Value");
         }
 
 
