@@ -1067,7 +1067,7 @@
             this._title = options.attributes.title;
             this._reset();
         },
-        _reset: function(e) {
+        _reset: function() {
             this.element.remove("input");
 
             $("<input type='file' autocomplete='off' accept='.xlsx'/>")
