@@ -245,7 +245,7 @@
 
         function maybeFraction(fmt, tok) {
             if (tok.fraction) {
-                fmt += "." + padLeft("", "0", tok.fraction);
+                fmt += "." + padLeft("", tok.fraction, "0");
             }
             return fmt;
         }
