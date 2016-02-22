@@ -1,0 +1,19 @@
+:options:
+    - :name: filter
+      :description: The filtering method used to determine the suggestions for the current value.
+      :type: String
+      :enum_type: FilterType
+      
+    - :name: tagmode
+      :description: Represents available tag modes of MultiSelect.
+      :type: String
+      :merge: true
+      :enum_type: MultiSelectTagMode
+      :values:
+          - :value: multiple
+            :member: Multiple
+            :description: Renders a tag for each selected value
+
+          - :value: single
+            :member: Single
+            :description: Renders a single tag

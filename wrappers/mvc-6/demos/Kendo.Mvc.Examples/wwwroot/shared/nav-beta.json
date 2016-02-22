@@ -2019,6 +2019,53 @@
     "category": "Gauges"
   },
   {
+    "text": "MultiSelect",
+    "name": "multiselect",
+    "api": "web/multiselect",
+    "documentation": {
+      "kendo-ui": "getting-started/web/multiselect/overview",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/multiselect/overview",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/multiselect/overview",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/multiselect/overview"
+    },
+    "forum": {
+      "kendo-ui": "kendo-ui/multi-select",
+      "aspnet-mvc": "aspnet-mvc/multi-select",
+      "jsp-ui": "jsp/multi-select",
+      "php-ui": "php/multi-select"
+    },
+    "sources": {
+      "kendo-ui": [
+        {
+          "name": "Sample service",
+          "url": "~/content/service.html"
+        }
+      ]
+    },
+    "codelibrary": {
+      "kendo-ui": "kendo-ui/multiselect",
+      "aspnet-mvc": "aspnet-mvc/multiselect",
+      "jsp-ui": "jsp/multiselect",
+      "php-ui": "php/multiselect"
+    },
+    "spriteCssClass": "multiselectIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "multiselect/index",
+        "title": {
+          "kendo-ui": "Kendo UI MultiSelect widget demo | Kendo UI Web Demos",
+          "aspnet-mvc": "ASP.NET MVC MultiSelect control demo | UI for ASP.NET MVC Demos"
+        },
+        "meta": {
+          "kendo-ui": "Play with this demo to see the core functionality of Kendo UI MultiSelect component in Kendo UI Web framework.",
+          "aspnet-mvc": "Play with this demo to see the core functionality of Telerik ASP.NET MVC MultiSelect control."
+        }
+      }
+    ],
+    "category": "Editors"
+  },
+  {
     "text": "Notification",
     "name": "notification",
     "api": "web/notification",

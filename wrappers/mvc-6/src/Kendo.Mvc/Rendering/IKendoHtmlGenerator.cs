@@ -68,7 +68,14 @@ namespace Kendo.Mvc.Rendering
 			string format,
 			IDictionary<string, object> htmlAttributes);
 
-		TagBuilder GenerateTag(
+        TagBuilder GenerateMultiSelect(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string id,
+            string name,
+            IDictionary<string, object> htmlAttributes);
+
+        TagBuilder GenerateTag(
             string tagName,
             ViewContext viewContext,
             string id,
