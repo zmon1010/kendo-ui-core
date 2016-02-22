@@ -34196,6 +34196,11 @@ and is about to render it.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.</description>
+            <name>change</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Triggered after the widget has completed rendering.</description>
             <name>render</name>
             <rtexprvalue>true</rtexprvalue>
@@ -34946,6 +34951,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
 
+    <tag>
+        <description>Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.</description>
+        <name>spreadsheet-change</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.ChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>Triggered after the widget has completed rendering.</description>
         <name>spreadsheet-render</name>
@@ -45307,6 +45318,16 @@ Note that this does not constrain the window dragging within the given element.<
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1</description>
+            <name>maximize</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1</description>
+            <name>minimize</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Triggered when a Window is opened (i.e. the open() method is called).</description>
             <name>open</name>
             <rtexprvalue>true</rtexprvalue>
@@ -45439,6 +45460,18 @@ will disable all animations in the widget.</description>
         <description>Triggered when an AJAX request for content fails.</description>
         <name>window-error</name>
         <tag-class>com.kendoui.taglib.window.ErrorFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1</description>
+        <name>window-maximize</name>
+        <tag-class>com.kendoui.taglib.window.MaximizeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1</description>
+        <name>window-minimize</name>
+        <tag-class>com.kendoui.taglib.window.MinimizeFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

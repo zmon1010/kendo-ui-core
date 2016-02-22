@@ -284,6 +284,34 @@ Note that this does not constrain the window dragging within the given element.
     }
 
     /**
+    * Sets the maximize event of the Window.
+    * Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Window
+    */
+    public function maximize($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('maximize', $value);
+    }
+
+    /**
+    * Sets the minimize event of the Window.
+    * Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Window
+    */
+    public function minimize($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('minimize', $value);
+    }
+
+    /**
     * Sets the open event of the Window.
     * Triggered when a Window is opened (i.e. the open() method is called).
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.

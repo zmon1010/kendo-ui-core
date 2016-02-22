@@ -90,6 +90,14 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("error", value.getBody());
     }
 
+    public void setMaximize(MaximizeFunctionTag value) {
+        setEvent("maximize", value.getBody());
+    }
+
+    public void setMinimize(MinimizeFunctionTag value) {
+        setEvent("minimize", value.getBody());
+    }
+
     public void setOpen(OpenFunctionTag value) {
         setEvent("open", value.getBody());
     }
@@ -316,6 +324,30 @@ public class WindowTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setError(String value) {
         setProperty("error", new Function(value));
+    }
+
+    public String getMaximize() {
+        Function property = ((Function)getProperty("maximize"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setMaximize(String value) {
+        setProperty("maximize", new Function(value));
+    }
+
+    public String getMinimize() {
+        Function property = ((Function)getProperty("minimize"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setMinimize(String value) {
+        setProperty("minimize", new Function(value));
     }
 
     public String getOpen() {
