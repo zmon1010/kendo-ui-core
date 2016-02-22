@@ -2,6 +2,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+
 <%:Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
     .HtmlAttributes(new { style = "width: 100%" })
