@@ -1064,10 +1064,16 @@
                                  "<span class='k-icon k-font-icon k-i-folder-open' />" +
                              "</div>").data("instance", this);
 
+            this._title = options.attributes.title;
+            this._reset();
+        },
+        _reset: function(e) {
+            this.element.remove("input");
+
             $("<input type='file' autocomplete='off' accept='.xlsx'/>")
-                .attr("title", options.attributes.title)
-                .bind("change", this._change.bind(this))
-                .appendTo($("<form>").appendTo(this.element));
+                .attr("title", this._title)
+                .one("change", this._change.bind(this))
+                .appendTo(this.element);
         },
         _change: function(e) {
             this.toolbar.action({
@@ -1077,7 +1083,7 @@
                 }
             });
 
-            e.target.parentNode.reset();
+            this._reset();
         }
     });
     kendo.toolbar.registerComponent("open", Open);
