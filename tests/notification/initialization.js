@@ -515,11 +515,18 @@
     test("down static stacking is applied by default", 2, function() {
         createNotification({
             appendTo: QUnit.fixture,
-            autoHideAfter: 0
+            autoHideAfter: 0,
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">foo</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">bar</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
-        notification.show('<span id="bar">bar</span>');
+        notification.show("foo", "foo");
+        notification.show("bar", "bar");
 
         equal(QUnit.fixture.children(".k-notification").first().find("#foo").length, 1);
         equal(QUnit.fixture.children(".k-notification").last().find("#bar").length, 1);
@@ -529,11 +536,18 @@
         createNotification({
             appendTo: QUnit.fixture,
             autoHideAfter: 0,
-            stacking: "right"
+            stacking: "right",
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">foo</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">bar</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
-        notification.show('<span id="bar">bar</span>');
+        notification.show("foo", "foo");
+        notification.show("bar", "bar");
 
         equal(QUnit.fixture.children(".k-notification").first().find("#foo").length, 1);
         equal(QUnit.fixture.children(".k-notification").last().find("#bar").length, 1);
@@ -543,11 +557,18 @@
         createNotification({
             appendTo: QUnit.fixture,
             autoHideAfter: 0,
-            stacking: "up"
+            stacking: "up",
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">foo</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">bar</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
-        notification.show('<span id="bar">bar</span>');
+        notification.show("foo", "foo");
+        notification.show("bar", "bar");
 
         equal(QUnit.fixture.children(".k-notification").last().find("#foo").length, 1);
         equal(QUnit.fixture.children(".k-notification").first().find("#bar").length, 1);
@@ -557,11 +578,18 @@
         createNotification({
             appendTo: QUnit.fixture,
             autoHideAfter: 0,
-            stacking: "left"
+            stacking: "left",
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">foo</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">bar</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
-        notification.show('<span id="bar">bar</span>');
+        notification.show("foo", "foo");
+        notification.show("bar", "bar");
 
         equal(QUnit.fixture.children(".k-notification").last().find("#foo").length, 1);
         equal(QUnit.fixture.children(".k-notification").first().find("#bar").length, 1);
@@ -569,13 +597,20 @@
 
     test("up popup stacking is applied by default", 2, function() {
         createNotification({
-            autoHideAfter: 0
+            autoHideAfter: 0,
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">#: content #</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">#: content #</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
+        notification.show("foo", "foo");
         var fooNotificationWrapper = $("#foo").closest(".k-notification").parent();
 
-        notification.show('<span id="bar">bar bar</span>');
+        notification.show("bar bar", "bar");
         var barNotificationWrapper = $("#bar").closest(".k-notification").parent();
 
         ok(parseInt(fooNotificationWrapper.css("top"), 10) > parseInt(barNotificationWrapper.css("top"), 10));
@@ -585,13 +620,20 @@
     test("down popup stacking is applied", 2, function() {
         createNotification({
             autoHideAfter: 0,
-            stacking: "down"
+            stacking: "down",
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">#: content #</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">#: content #</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
+        notification.show("foo", "foo");
         var fooNotificationWrapper = $("#foo").closest(".k-notification").parent();
 
-        notification.show('<span id="bar">bar bar</span>');
+        notification.show("bar bar", "bar");
         var barNotificationWrapper = $("#bar").closest(".k-notification").parent();
 
         ok(parseInt(fooNotificationWrapper.css("top"), 10) < parseInt(barNotificationWrapper.css("top"), 10));
@@ -603,13 +645,20 @@
             autoHideAfter: 0,
             position: {
                 top: 1
-            }
+            },
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">#: content #</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">#: content #</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
+        notification.show("foo", "foo");
         var fooNotificationWrapper = $("#foo").closest(".k-notification").parent();
 
-        notification.show('<span id="bar">bar bar</span>');
+        notification.show("bar bar", "bar");
         var barNotificationWrapper = $("#bar").closest(".k-notification").parent();
 
         ok(parseInt(fooNotificationWrapper.css("top"), 10) < parseInt(barNotificationWrapper.css("top"), 10));
@@ -619,13 +668,20 @@
     test("right popup stacking is applied", 2, function() {
         createNotification({
             autoHideAfter: 0,
-            stacking: "right"
+            stacking: "right",
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">foo</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">bar</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
+        notification.show("foo", "foo");
         var fooNotificationWrapper = $("#foo").closest(".k-notification").parent();
 
-        notification.show('<span id="bar">bar</span>');
+        notification.show("bar", "bar");
         var barNotificationWrapper = $("#bar").closest(".k-notification").parent();
 
         ok(fooNotificationWrapper.offset().left < barNotificationWrapper.offset().left);
@@ -635,13 +691,20 @@
     test("left popup stacking is applied", 2, function() {
         createNotification({
             autoHideAfter: 0,
-            stacking: "left"
+            stacking: "left",
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">foo</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">bar</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
+        notification.show("foo", "foo");
         var fooNotificationWrapper = $("#foo").closest(".k-notification").parent();
 
-        notification.show('<span id="bar">bar</span>');
+        notification.show("bar", "bar");
         var barNotificationWrapper = $("#bar").closest(".k-notification").parent();
 
         ok(parseInt(fooNotificationWrapper.css("left"), 10) > parseInt(barNotificationWrapper.css("left"), 10));
@@ -653,13 +716,20 @@
             autoHideAfter: 0,
             position: {
                 left: 1
-            }
+            },
+            templates: [{
+                type: "foo",
+                template: "<span id=\"foo\">#: content #</span>"
+            }, {
+                type: "bar",
+                template: "<span id=\"bar\">#: content #</span>"
+            }]
         });
 
-        notification.show('<span id="foo">foo</span>');
+        notification.show("foo", "foo");
         var fooNotificationWrapper = $("#foo").closest(".k-notification").parent();
 
-        notification.show('<span id="bar">bar bar</span>');
+        notification.show("bar bar", "bar");
         var barNotificationWrapper = $("#bar").closest(".k-notification").parent();
 
         equal(fooNotificationWrapper.css("left"), barNotificationWrapper.css("left"));
