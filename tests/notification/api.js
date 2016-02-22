@@ -155,15 +155,12 @@
         equal($(document.body).find("div.k-widget.k-notification").length, 1);
     });
 
-    test("show method escapes passed markup content", function() {
+    test("show method renders passed string content", function() {
         createNotification();
 
-        notification.show("<span>Foo</span>");
+        notification.show("<span id='foo'></span>");
 
-        contains(
-            $(document.body).find("div.k-widget.k-notification").html(),
-            "&lt;span&gt;Foo&lt;/span&gt;"
-        );
+        equal($(document.body).find("div.k-widget.k-notification").find("#foo").length, 1);
     });
 
     test("show method renders passed object content", function() {
@@ -182,13 +179,13 @@
     test("show method renders passed function content", function() {
         createNotification();
 
-        var content = 'foo';
+        var html = '<div id="foo"></div>';
 
         notification.show(function(){
-            return content;
+            return html;
         });
 
-        contains($(document.body).find("div.k-widget.k-notification").html(), content);
+        ok($(document.body).find("div.k-widget.k-notification").html().indexOf(html) > -1);
     });
 
     test("show method renders passed function object content", function() {
