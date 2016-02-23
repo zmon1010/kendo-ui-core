@@ -170,20 +170,35 @@ namespace Kendo.Mvc.UI.Tests
             builder.Field("value").ShouldBeSameAs(builder);
         }
 
+         [Fact]
+        public void Builder_should_set_default_Justify()
+        {
+            builder.Justify();
+
+            categoryAxis.Justify.ShouldEqual(true);
+        }
+
+
         [Fact]
-        public void Builder_should_set_Justified()
+        public void Builder_should_set_Justify()
         {
             var value = true;
 
-            builder.Justified(value);
+            builder.Justify(value);
 
-            categoryAxis.Justified.ShouldEqual(value);
+            categoryAxis.Justify.ShouldEqual(value);
         }
 
         [Fact]
-        public void Justified_should_return_builder()
+        public void Justify_default_should_return_builder()
         {
-            builder.Justified(true).ShouldBeSameAs(builder);
+            builder.Justify().ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Justify_should_return_builder()
+        {
+            builder.Justify(true).ShouldBeSameAs(builder);
         }
 
         [Fact]

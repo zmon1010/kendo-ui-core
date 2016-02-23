@@ -29,7 +29,7 @@ namespace Kendo.Mvc.UI
 
         public string Field { get; set; }
 
-        public bool? Justified { get; set; }
+        public bool? Justify { get; set; }
 
         public ChartCategoryAxisLabelsSettings<T> Labels { get; } = new ChartCategoryAxisLabelsSettings<T>();
 
@@ -127,9 +127,9 @@ namespace Kendo.Mvc.UI
                 settings["field"] = Field;
             }
 
-            if (Justified.HasValue)
+            if (Justify.HasValue)
             {
-                settings["justified"] = Justified;
+                settings["justified"] = Justify;
             }
 
             var labels = Labels.Serialize();

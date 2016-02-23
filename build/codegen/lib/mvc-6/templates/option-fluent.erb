@@ -54,7 +54,7 @@
         }
 
 % end
-% if csharp_type.eql?('bool') && default.eql?('false')
+% if csharp_type.eql?('bool') && (default.eql?('false') || default.eql?(false))
         /// <summary>
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>

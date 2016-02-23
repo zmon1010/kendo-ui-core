@@ -119,10 +119,19 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will position categories and series points on major ticks. This removes the empty space before and after the series.The default value is false except for "area" and "verticalArea".
         /// </summary>
-        /// <param name="value">The value for Justified</param>
-        public ChartCategoryAxisBuilder<T> Justified(bool value)
+        /// <param name="value">The value for Justify</param>
+        public ChartCategoryAxisBuilder<T> Justify(bool value)
         {
-            Container.Justified = value;
+            Container.Justify = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the chart will position categories and series points on major ticks. This removes the empty space before and after the series.The default value is false except for "area" and "verticalArea".
+        /// </summary>
+        public ChartCategoryAxisBuilder<T> Justify()
+        {
+            Container.Justify = true;
             return this;
         }
 

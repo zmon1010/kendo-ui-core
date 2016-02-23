@@ -43,6 +43,11 @@
       :merge: true
       :type: object[]
 
+    - :name: categoryAxis.justified
+      :merge: true
+      :type: bool
+      :default: false
+
     - :name: categoryAxis.max
       :merge: true
       :type: object
@@ -194,4 +199,3 @@
     - :name: yAxis.max
       :merge: true
       :type: object
-
