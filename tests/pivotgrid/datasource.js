@@ -2362,7 +2362,7 @@
         });
     });
 
-    test("schemaMembers returns distint values when client cube is used", 15, function() {
+    test("schemaMembers returns distinct values when client cube is used", 15, function() {
         var data = [
             { FirstName: "Name1", LastName: "Last1" },
             { FirstName: "Name2", LastName: "Last2" },
@@ -2379,6 +2379,55 @@
                 }
             },
             schema: {
+                cube: {
+                    dimensions: {
+                        FirstName: { caption: "All First Names" },
+                        LastName: { caption: "All Last Names" }
+                    }
+                }
+            }
+        });
+
+        var restrictions = {
+            memberUniqueName: "FirstName",
+            treeOp: 1
+        };
+
+        dataSource.read();
+
+        dataSource.schemaMembers(restrictions).done(function(data) {
+            equal(data.length, 2);
+
+            for (var idx = 0; idx < data.length; idx++) {
+                equal(data[idx].caption, "Name" + (idx + 1));
+                equal(data[idx].childrenCardinality, 0);
+                equal(data[idx].dimensionUniqueName, 'FirstName');
+                equal(data[idx].hierarchyUniqueName, 'FirstName');
+                equal(data[idx].levelUniqueName, 'FirstName');
+                equal(data[idx].name, "Name" + (idx + 1));
+                equal(data[idx].uniqueName, "Name" + (idx + 1));
+            }
+        });
+    });
+
+    test("schemaMembers returns distinct values when client cube is used and schema.data is defined", 15, function() {
+        var data = {
+            Data: [
+                { FirstName: "Name1", LastName: "Last1" },
+                { FirstName: "Name2", LastName: "Last2" },
+                { FirstName: "Name1", LastName: "Last3" },
+                { FirstName: "", LastName: "Last4" }
+            ],
+            Total: 4
+        };
+
+        var dataSource = new PivotDataSource({
+            columns: ["FirstName"],
+            rows: ["LastName"],
+            data: data,
+            schema: {
+                data: "Data",
+                total: "Total",
                 cube: {
                     dimensions: {
                         FirstName: { caption: "All First Names" },
