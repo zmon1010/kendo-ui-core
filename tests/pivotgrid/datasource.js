@@ -882,8 +882,8 @@
         };
 
         var dataSource = new PivotDataSource({
-            columns: [{ name:"[foo]", expand: true}, "[bar]"],
-            rows: [{ name: "baz", expand: true }],
+            columns: [{ name:"level 0", expand: true}, "level 0"],
+            rows: [{ name: "row level 0", expand: true }, "row level 0"],
             schema: {
                 axes: "axes",
                 data: "data"
@@ -1029,6 +1029,93 @@
         }
 
         dataSource.filter({ field: "foo", operator: "eq", value: "bar" });
+    });
+
+    test("sort updates current axes data from root", 6, function() {
+        var result = {
+            axes: {
+                columns: {
+                    tuples: [
+                        { members: [ { name: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.1", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.2", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.3", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.4", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] }
+                    ]
+                },
+                rows: {
+                    tuples: [
+                        { members: [ { name: "row level 0", children: [] }, { name: "row level 0", children: [] } ] }
+                    ]
+                }
+            },
+            data: [
+                { value: 5, ordinal: 0 },
+                { value: 1, ordinal: 1 },
+                { value: 2, ordinal: 2 },
+                { value: 3, ordinal: 3 },
+                { value: 4, ordinal: 4 }
+            ]
+        };
+
+        var sorted = {
+            axes: {
+                columns: {
+                    tuples: [
+                        { members: [ { name: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.4", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.3", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.2", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.1", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                    ]
+                },
+                rows: {
+                    tuples: [
+                        { members: [ { name: "row level 0", children: [] }, { name: "row level 0", children: [] } ] }
+                    ]
+                }
+            },
+            data: [
+                { value: 5, ordinal: 0 },
+                { value: 4, ordinal: 4 },
+                { value: 3, ordinal: 3 },
+                { value: 2, ordinal: 2 },
+                { value: 1, ordinal: 1 }
+            ]
+        };
+
+        var response = [
+            result,
+            sorted
+        ];
+
+        var dataSource = new PivotDataSource({
+            columns: [{ name:"level 0", expand: true}, { name:"level 0", expand: true}],
+            columns: [{ name:"level 0", expand: true}, { name:"level 0", expand: true}],
+            rows: [{ name: "baz", expand: true }],
+            serverSorting: true,
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success(response.shift());
+                }
+            }
+        });
+
+        dataSource.read();
+        dataSource.sort({ field: "level 0", dir: "desc" });
+
+        var data = dataSource.data();
+
+        equal(data.length, 5);
+        equal(data[0].value, 5);
+        equal(data[1].value, 4);
+        equal(data[2].value, 3);
+        equal(data[3].value, 2);
+        equal(data[4].value, 1);
     });
 
     test("columnsAxisDescriptors returns columns state", 3, function() {

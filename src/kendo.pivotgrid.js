@@ -1610,7 +1610,9 @@ var __meta__ = { // jshint ignore:line
             var axes = this.axes();
             var startIndex, tuples;
 
+            var oldRowsLength = membersCount(axes.rows.tuples, rowMeasures);
             var newRowsLength = sourceAxes.rows.tuples.length;
+
             var oldColumnsLength = membersCount(axes.columns.tuples, columnMeasures);
             var newColumnsLength = sourceAxes.columns.tuples.length;
 
@@ -1641,15 +1643,14 @@ var __meta__ = { // jshint ignore:line
                 startIndex = mergedColumns.index + findDataIndex(mergedColumns.parsedRoot, mergedColumns.memberIndex, columnMeasures);
                 var offset = oldColumnsLength + newColumnsLength;
                 data = this._mergeColumnData(data, startIndex, newRowsLength, newColumnsLength, offset);
-            } else {
+            } else if (oldRowsLength !== membersCount(axes.rows.tuples, rowMeasures)) {
                 //rows are expanded
                 startIndex = mergedRows.index + findDataIndex(mergedRows.parsedRoot, mergedRows.memberIndex, rowMeasures);
-
-                //var colLength = findDataIndex(mergedColumns.parsedRoot, mergedColumns.parsedRoot.members.length, columnMeasures);
-                //startIndex = (startIndex + 1) * colLength;
-
-                //: start index should be 8... current index * columns length
                 data = this._mergeRowData(data, startIndex, newRowsLength, newColumnsLength);
+            }
+
+            if (axes.columns.tuples.length === 0 && axes.rows.tuples.length === 0) {
+                data = [];
             }
 
             return {
