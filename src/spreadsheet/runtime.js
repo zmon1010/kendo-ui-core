@@ -1167,8 +1167,8 @@
                         t.hours, t.minutes, t.seconds, t.milliseconds);
     }
 
-    function packTime(hours, minutes, seconds, ms) {
-        return (hours + minutes/60 + seconds/3600 + ms/3600000) / 24;
+    function packTime(hh, mm, ss, ms) {
+        return (hh+(mm+(ss+ms/1000)/60)/60)/24;
     }
 
     function dateToSerial(date) {

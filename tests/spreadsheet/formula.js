@@ -309,6 +309,45 @@
 
     /* -----[ parser tests ]----- */
 
+    test("parse hh:mm", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "24:00");
+        equal(exp.format, "hh:mm");
+        equal(exp.value, 1);    // 24 hours == 1 day
+    });
+
+    test("parse hh:mm:ss", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "1:2:3");
+        equal(exp.format, "hh:mm:ss");
+        equal(exp.value, runtime.packTime(1, 2, 3, 0));
+    });
+
+    test("parse mm:ss.00", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "00:22.30");
+        equal(exp.format, "mm:ss.00");
+        equal(exp.value, runtime.packTime(0, 0, 22, 300));
+    });
+
+    test("parse hh:mm:ss.00", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "10:20:15.45");
+        equal(exp.format, "hh:mm:ss.00");
+        equal(exp.value, runtime.packTime(10, 20, 15, 450));
+    });
+
+    test("parse number with thousands separator", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "1,234.50");
+        equal(exp.format, "#,#.00");
+        equal(exp.value, 1234.50);
+    });
+
+    test("parse number with currency", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "$ 1234.50");
+        equal(exp.format, '"$ "#,#.00');
+        equal(exp.value, 1234.50);
+        var exp = calc.parse(Sheet1, 0, 0, "1234.50 $");
+        equal(exp.format, '#,#.00" $"');
+        equal(exp.value, 1234.50);
+    });
+
     test("cell reference", function(){
         var exp = calc.parse(Sheet1, 0, 0, "=G5");
         hasProps(exp, {

@@ -153,6 +153,8 @@
                     var formula = null;
                     if (x.type == "exp") {
                         formula = kendo.spreadsheet.calc.compile(x);
+                    } else if (x.format) {
+                        this.format(x.format);
                     } else if (x.type == "date") {
                         this.format(toExcelFormat(kendo.culture().calendar.patterns.d));
                     } else if (x.type == "percent") {

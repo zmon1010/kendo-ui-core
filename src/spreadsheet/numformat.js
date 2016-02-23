@@ -451,7 +451,7 @@
             code += "var intPart = runtime.formatInt(culture, value, " + JSON.stringify(intFormat) + ", " + declen + ", " + separeThousands + "); ";
         }
         if (decFormat.length) {
-            code += "var decPart = runtime.formatDec(culture, value, " + JSON.stringify(decFormat) + ", " + declen + "); ";
+            code += "var decPart = runtime.formatDec(value, " + JSON.stringify(decFormat) + ", " + declen + "); ";
         }
         if (intFormat.length || decFormat.length) {
             code += "type = 'number'; ";
@@ -699,7 +699,7 @@
         // for decimal part we walk in normal direction and pad on the
         // right if required (for '0' or '?' chars).
 
-        formatDec: function(culture, value, parts, declen) {
+        formatDec: function(value, parts, declen) {
             value = value.toFixed(declen);
             var pos = value.indexOf(".");
             if (pos >= 0) {
