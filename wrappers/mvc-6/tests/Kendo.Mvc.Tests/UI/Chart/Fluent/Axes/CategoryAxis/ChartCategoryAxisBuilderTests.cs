@@ -105,15 +105,54 @@ namespace Kendo.Mvc.UI.Tests
             builder.BaseUnitStep(1).ShouldBeSameAs(builder);
         }
 
-
         [Fact]
-        public void Builder_should_set_Categories()
+        public void Builder_should_set_Categories_with_strings()
         {
             var value = new string[] { "category1", "category2" };
 
             builder.Categories(value);
 
-            categoryAxis.Categories.ShouldEqual(value);
+            categoryAxis.Categories.ShouldEqual<object>(value);
+        }
+
+        [Fact]
+        public void Builder_should_set_Categories_with_numeric_data()
+        {
+            var value = new object[] { 1, 2, 3 };
+
+            builder.Categories(value);
+
+            categoryAxis.Categories.ShouldEqual<object>(value);
+        }
+
+        [Fact]
+        public void Builder_should_set_Categories_with_DateTime()
+        {
+            var value = new object[] { new DateTime(2016, 1, 1), new DateTime(2016, 1, 2) };
+
+            builder.Categories(value);
+
+            categoryAxis.Categories.ShouldEqual<object>(value);
+        }
+
+        [Fact]
+        public void Builder_with_Categories_expression_should_set_Field()
+        {
+            builder.Categories(x => x.TotalSales);
+
+            categoryAxis.Field.ShouldEqual("TotalSales");
+        }
+
+        [Fact]
+        public void Builder_with_invalid_Categories_expression_should_throw_an_error()
+        {
+            Assert.Throws<InvalidOperationException>(() => builder.Categories(x => new object()));
+        }
+        
+        [Fact]
+        public void Builder_with_Categories_expression_should_return_builder()
+        {
+            builder.Categories(x => x.TotalSales).ShouldBeSameAs(builder);
         }
 
         [Fact]
@@ -170,7 +209,7 @@ namespace Kendo.Mvc.UI.Tests
             builder.Field("value").ShouldBeSameAs(builder);
         }
 
-         [Fact]
+        [Fact]
         public void Builder_should_set_default_Justify()
         {
             builder.Justify();
@@ -413,16 +452,6 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Type("red").ShouldBeSameAs(builder);
         }
-
-        //        [Fact]
-        //public void Builder_should_set_PlotBands()
-        //{
-        //    var value = true;
-
-        //    builder.PlotBands(x => x.Visible(value));
-
-        //    categoryAxis.PlotBands.Visible.ShouldEqual(value);
-        //}
 
         [Fact]
         public void PlotBands_should_return_builder()

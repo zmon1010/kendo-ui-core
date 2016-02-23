@@ -8,6 +8,7 @@
 	"aliases": [
 		{ "from": "System.Web", "to": "Microsoft.AspNet" },
 		{ "from": "<T>", "to": "" },
+		{ "from": "<TModel>", "to": "" },
 		{ "from": "`1", "to": "" },
 		{ "from": "Action<.+>", "to": "Action", "regex": true },
 		{ "from": ".+PdfSettingsBuilder", "to": "PDFSettingsBuilder", "regex": true },
