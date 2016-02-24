@@ -199,6 +199,45 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+        
+        /// <summary>
+        /// Set this to true to repeat the grid headers on each page.
+        /// </summary>
+        /// <param name="value">The value for RepeatHeaders</param>
+        public PDFSettingsBuilder RepeatHeaders(bool value)
+        {
+            pdf.RepeatHeaders = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Set this to true to repeat the grid headers on each page.
+        /// </summary>
+        public PDFSettingsBuilder RepeatHeaders()
+        {
+            pdf.RepeatHeaders = true;
+            return this;
+        }
+
+        /// <summary>
+        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.
+        /// </summary>
+        /// <param name="value">The value for Template</param>
+        public PDFSettingsBuilder Template(string value)
+        {
+            pdf.Template = value;
+            return this;
+        }
+
+        /// <summary>
+        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.
+        /// </summary>
+        /// <param name="value">The ID of the template element for Template</param>
+        public PDFSettingsBuilder TemplateId(string templateId)
+        {
+            pdf.TemplateId = templateId;
+            return this;
+        }
 
         /// <summary>
         /// Sets the creator of the PDF document.

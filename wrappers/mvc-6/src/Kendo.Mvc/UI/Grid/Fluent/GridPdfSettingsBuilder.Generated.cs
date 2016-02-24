@@ -137,6 +137,55 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.
+        /// </summary>
+        /// <param name="value">The value for Template</param>
+        public GridPdfSettingsBuilder<T> Template(string value)
+        {
+            Container.Template = value;
+            return this;
+        }
+
+        /// <summary>
+        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.
+        /// </summary>
+        /// <param name="value">The ID of the template element for Template</param>
+        public GridPdfSettingsBuilder<T> TemplateId(string templateId)
+        {
+            Container.TemplateId = templateId;
+            return this;
+        }
+
+        /// <summary>
+        /// Set this to true to repeat the grid headers on each page.
+        /// </summary>
+        /// <param name="value">The value for RepeatHeaders</param>
+        public GridPdfSettingsBuilder<T> RepeatHeaders(bool value)
+        {
+            Container.RepeatHeaders = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Set this to true to repeat the grid headers on each page.
+        /// </summary>
+        public GridPdfSettingsBuilder<T> RepeatHeaders()
+        {
+            Container.RepeatHeaders = true;
+            return this;
+        }
+
+        /// <summary>
+        /// A scale factor.  In many cases, text size on screen will be too big for print, so you can use this option to scale down the output in PDF.  See the documentation in drawDOM.
+        /// </summary>
+        /// <param name="value">The value for Scale</param>
+        public GridPdfSettingsBuilder<T> Scale(double value)
+        {
+            Container.Scale = value;
+            return this;
+        }
+
+        /// <summary>
         /// The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
 		/// attachment; filename="&lt;fileName.pdf&gt;".
         /// </summary>
