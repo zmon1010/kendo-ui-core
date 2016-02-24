@@ -202,6 +202,9 @@
                     return function(data) {
                         var el = template(data);
                         if (el) {
+                            if (typeof el == "string") {
+                                el = el.replace(/^\s+|\s+$/g, "");
+                            }
                             return $(el)[0];
                         }
                     };
@@ -1695,7 +1698,7 @@
                 // are useful to fill the box correctly.
                 var ri = {
                     x: r.x - Wright,
-                    y: r.y - Wtop
+                    y: r.y - Wtop
                 };
 
                 var path = new drawing.Path({
