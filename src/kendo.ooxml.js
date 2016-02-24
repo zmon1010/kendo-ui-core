@@ -384,7 +384,7 @@ var Worksheet = kendo.Class.extend({
         });
 
         var filter = this.options.filter;
-        if (filter) {
+        if (filter && (typeof filter.from === "number") && (typeof filter.to === "number")) {
             filter = {
                 from: ref(filterRowIndex(this.options), filter.from),
                 to: ref(filterRowIndex(this.options), filter.to)
