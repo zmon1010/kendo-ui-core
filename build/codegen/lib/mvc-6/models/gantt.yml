@@ -1,0 +1,25 @@
+- :type: GanttTask
+  :members:
+      - :name: Title
+        :type: String
+        
+      - :name: Start
+        :type: Date
+        
+      - :name: End
+        :type: Date
+        
+      - :name: PercentComplete
+        :type: Number
+        
+      - :name: OrderId
+        :type: Number
+        
+      - :name: ParentId
+        :type: Number
+        
+      - :name: Summary
+        :type: Boolean
+        
+      - :name: Expanded
+        :type: Boolean
