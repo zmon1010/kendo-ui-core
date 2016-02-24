@@ -143,8 +143,9 @@
 
                 var group = new drawing.Group({
                     pdf: {
-                        multiPage : true,
-                        paperSize : hasPaperSize ? paperOptions.paperSize : "auto"
+                        multiPage     : true,
+                        paperSize     : hasPaperSize ? paperOptions.paperSize : "auto",
+                        _ignoreMargin : true // HACK!  see exportPDF in pdf/drawing.js
                     }
                 });
                 handlePageBreaks(
@@ -201,6 +202,9 @@
                     return function(data) {
                         var el = template(data);
                         if (el) {
+                            if (typeof el == "string") {
+                                el = el.replace(/^\s+|\s+$/g, "");
+                            }
                             return $(el)[0];
                         }
                     };
@@ -224,6 +228,11 @@
                 }
                 if (/^canvas$/i.test(el.tagName)) {
                     clone.getContext("2d").drawImage(el, 0, 0);
+                } else if (/^input$/i.test(el.tagName)) {
+                    // drop the name attributes so that we don't affect the selection of the
+                    // original nodes (i.e. checked status of radio buttons) when we insert our copy
+                    // into the DOM.  https://github.com/telerik/kendo/issues/5409
+                    el.removeAttribute("name");
                 } else {
                     for (i = el.firstChild; i; i = i.nextSibling) {
                         clone.appendChild(cloneNodes(i));
@@ -237,7 +246,7 @@
             var template = makeTemplate(options.template);
             var doc = element.ownerDocument;
             var pages = [];
-            var copy = cloneNodes(element);
+            var copy = options._destructive ? element : cloneNodes(element);
             var container = doc.createElement("KENDO-PDF-DOCUMENT");
             var adjust = 0;
 
@@ -295,8 +304,8 @@
                 $(copy).css({ overflow: "hidden" });
             }
 
-            container.appendChild(copy);
             element.parentNode.insertBefore(container, element);
+            container.appendChild(copy);
 
             // we need the timeouts here, so that images dimensions are
             // properly computed in DOM when we start our thing.
@@ -343,11 +352,14 @@
                 }
 
                 function next() {
-                    // allow another timeout here to make sure the images
-                    // are rendered in the new DOM nodes.
-                    setTimeout(function(){
+                    // Even though we already cached images, they simply won't be available
+                    // immediately in the newly created DOM.  Previously we'd allow a 10ms timeout,
+                    // but that's arbitrary and clearly not working in all cases
+                    // (https://github.com/telerik/kendo/issues/5399), so this function will wait
+                    // for their .complete attribute.
+                    whenImagesAreActuallyLoaded(pages, function(){
                         callback({ pages: pages, container: container });
-                    }, 10);
+                    });
                 }
             }
 
@@ -949,6 +961,28 @@
         return color;
     }
 
+    function whenImagesAreActuallyLoaded(elements, callback) {
+        var pending = 0;
+        elements.forEach(function(el){
+            var images = el.querySelectorAll("img");
+            for (var i = 0; i < images.length; ++i) {
+                var img = images[i];
+                if (!img.complete) {
+                    pending++;
+                    img.onload = img.onerror = next;
+                }
+            }
+        });
+        if (!pending) {
+            next();
+        }
+        function next() {
+            if (--pending <= 0) {
+                callback();
+            }
+        }
+    }
+
     function cacheImages(element, callback) {
         var urls = [];
         function add(url) {
@@ -1444,17 +1478,15 @@
                 psel.style.cssText = getCssText(style);
                 psel.textContent = evalPseudoElementContent(element, style.content);
                 element.insertBefore(psel, place);
-                if (kind == ":before" && !(/absolute|fixed/.test(getPropertyValue(psel.style, "position")))) {
-                    // we need to shift the "pseudo element" to the left by its width, because we
-                    // created it as a real node and it'll overlap the host element position.
-                    psel.style.marginLeft = parseFloat(getPropertyValue(psel.style, "margin-left")) - psel.offsetWidth + "px";
-                }
                 fake.push(psel);
             }
         }
         pseudo(":before", element.firstChild);
         pseudo(":after", null);
+        var saveClass = element.className;
+        element.className += " kendo-pdf-hide-pseudo-elements";
         _renderElement(element, group);
+        element.className = saveClass;
         fake.forEach(function(el){ element.removeChild(el); });
     }
 
@@ -1666,7 +1698,7 @@
                 // are useful to fill the box correctly.
                 var ri = {
                     x: r.x - Wright,
-                    y: r.y - Wtop
+                    y: r.y - Wtop
                 };
 
                 var path = new drawing.Path({
@@ -2409,7 +2441,6 @@
         var el = doc.createElement(KENDO_PSEUDO_ELEMENT);
         var option;
         el.style.cssText = getCssText(getComputedStyle(element));
-        el.style.display = "inline-block";
         if (tag == "input") {
             el.style.whiteSpace = "pre";
         }

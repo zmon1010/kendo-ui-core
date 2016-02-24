@@ -214,6 +214,13 @@
         equal(json.rows[0].cells[0].background, "#ff0000");
     });
 
+    test("toJSON serializes cells with rgba background", function() {
+        sheet.range("B2").background("rgba(128, 128, 128, 1)");
+        var json = sheet.toJSON();
+
+        equal(json.rows[0].cells[0].background, "#808080");
+    });
+
     test("toJSON doesn't serialize null value", function() {
         sheet.range("B2").background("red");
         var json = sheet.toJSON();

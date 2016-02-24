@@ -51,6 +51,158 @@ The proper way to handle such unevaluated templates is to use a custom AngularJS
 
 Fore more details, refer to the [article on the priorities of AngularJS directives](https://docs.angularjs.org/api/ng/service/$compile).
 
+### Widgets with ng-model Directives Reflect No Model Value
+
+As of Angular 1.4.9 widgets initialized from the `SELECT` element do not reflect changes to the model field. This is due to a change in the Angular implementation related to `ngModel.$render`. In the new Angular versions, that method is overridden in favor of a custom Angular implementation that supports adding custom `OPTION` elements. This enhancement, however, breaks the Kendo UI `ngModel` support, because it also depends on the `ngModel.$render` method to reflect any changes done in the model.
+
+Basically, the Kendo UI [`ngModel.$render`](https://github.com/telerik/kendo-ui-core/blob/master/src/kendo.angular.js#L388) is directly overridden by the Angular new function.
+
+**Solution**
+
+The available workarounds in this case are:
+
+- Use the `k-ng-model` directive instead. Check the [corresponding documentation]({% slug angularjs_integration_directives %}#scope-bindings) for more details.
+- Use `k-ng-delay` mapped to the `ng-model` model field. The purpose of this code is to postpone the `ngModel.$render` set on the Kendo UI side, hence it will win over the Angular `ngModel.$render` custom method.
+
+The example below demonstrates how to use the `ng-model` directive.
+
+###### Example
+
+```
+<div id="example" ng-app="KendoDemos">
+    <div class="demo-section k-content" ng-controller="MyCtrl">
+
+    <h4 style="padding-top: 2em;">Remote data</h4>
+    <select kendo-drop-down-list
+            k-data-text-field="'ProductName'"
+            k-data-value-field="'ProductID'"
+            k-data-source="productsDataSource"
+            ng-model="selectedProductId"
+            k-ng-delay="selectedProductId"
+            style="width: 100%"></select>
+
+      <h4 style="padding-top: 2em;">Selected Product Id</h4>
+      <em>{{selectedProductId}}</em>
+
+</div>
+</div>
+
+<script>
+  angular.module("KendoDemos", [ "kendo.directives" ])
+      .controller("MyCtrl", function($scope, $timeout){
+          $scope.productsDataSource = {
+            type: "odata",
+            serverFiltering: true,
+            transport: {
+                read: {
+                    url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                }
+            }
+        };
+
+    $scope.selectedProductId = null;
+
+    //simulate delay to fetch selectedID
+    $timeout(function(){
+      $scope.selectedProductId = 2;
+    },2000);
+
+  })
+</script>
+```
+
+### MultiSelects Throw Exceptions
+
+MultiSelect widgets sometimes throw an exception stating that it cannot `get length from undefined` (or similar). The most common reason for such an error is that the field set to the `k-ng-model` directive is `undefined`.
+
+The example below demonstrates an incorrect definition of the `k-ng-model` field.
+
+###### Example
+
+```
+<div id="example" ng-app="KendoDemos">
+    <div class="demo-section k-content" ng-controller="MyCtrl">
+        <h4>Select product</h4>
+        <select kendo-multi-select k-options="selectOptions" k-ng-model="selectedIds"></select>
+        <p ng-show="selectedIds.length" style="padding-top: 1em;">Selected: {{ selectedIds }}</p>
+    </div>
+</div>
+
+<script>
+  angular.module("KendoDemos", [ "kendo.directives" ])
+    .controller("MyCtrl", function($scope){
+        $scope.selectOptions = {
+            placeholder: "Select products...",
+            dataTextField: "ProductName",
+            dataValueField: "ProductID",
+            valuePrimitive: true,
+            autoBind: false,
+            dataSource: {
+                type: "odata",
+                serverFiltering: true,
+                transport: {
+                    read: {
+                        url: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                    }
+                }
+            }
+        };
+
+        //$scope.selectedIds is undefined
+      })
+</script>
+```
+
+**Solution**
+
+Define the `k-ng-model` field to an empty array.
+
+The example below demonstrates the correct definition of the `k-ng-model` field.
+
+###### Example
+
+```
+<div id="example" ng-app="KendoDemos">
+    <div class="demo-section k-content" ng-controller="MyCtrl">
+        <h4>Select product</h4>
+        <select kendo-multi-select k-options="selectOptions" k-ng-model="selectedIds"></select>
+        <p ng-show="selectedIds.length" style="padding-top: 1em;">Selected: {{ selectedIds }}</p>
+    </div>
+</div>
+
+<script>
+  angular.module("KendoDemos", [ "kendo.directives" ])
+    .controller("MyCtrl", function($scope){
+        $scope.selectOptions = {
+            placeholder: "Select products...",
+            dataTextField: "ProductName",
+            dataValueField: "ProductID",
+            valuePrimitive: true,
+            autoBind: false,
+            dataSource: {
+                type: "odata",
+                serverFiltering: true,
+                transport: {
+                    read: {
+                        url: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                    }
+                }
+            }
+        };
+
+        $scope.selectedIds = [];
+      })
+</script>
+```
+
+### Widget Loses Its Value
+
+When the `ng-model` and `k-ng-model` directives are applied together, there is a chance for the widget to lose its value. This is due the fact that both directives update the element value simultaneously, which results in a conflict issue.
+
+**Solution**
+
+Use only one of the two directives&mdash;either `k-ng-model` or `ng-model`.
+
 ## See Also
 
 Other articles on AngularJS directives and integration with Kendo UI:

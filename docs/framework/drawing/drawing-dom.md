@@ -198,7 +198,7 @@ If the algorithm decides to move a node to the next page, all the DOM nodes whic
 
 It can happen that this element ends up in a position where all the text fits on the current page, but the image is higher and would fall on the boundary. In this case, the image and some text after will move to the next page.
 
-### Page Template: Headers and Footers
+### Template: Headers and Footers
 
 When multi-page output is requested via `forcePageBreak` or `paperSize`, you can additionally specify a page template. This template will be inserted into each page before producing the output. You can easily position it relatively to the page via CSS. The template can be a function, or a Kendo UI template, and it receives the number of the current page and the total number of pages.
 
@@ -424,6 +424,7 @@ The HTML renderer has been tested in recent versions of Chrome, Firefox, Safari,
 - Images hosted on different domains might not be rendered, unless permissive [Cross-Origin HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image) are provided by the server. Similarly, fonts might not be possible to load cross-domain. Even with the proper CORS headers, Internet Explorer 9 will not be able to load images or fonts from another domain, and could raise an uncatchable security exception. If you need to support Internet Explorer 9, make sure to host images and fonts on the same domain as the application.
 - The content of the `<iframe>` and `<svg>` elements is not rendered. A `<canvas>` will be rendered as an image, but only if it is non-tainted, meaning if it does not display images from another domain.
 - CSS box-shadow, text-shadow, and radial gradients are omitted. Linear gradients are supported.
+- Using browser zoom other than 100% is not supported.
 - Only border-style `solid` is rendered.
 - Maximum document size is limited to 5080x5080mm (200x200 inches) by the PDF 1.5 specification. Larger files might not open in some viewers.
 - Shadow DOM is not rendered.

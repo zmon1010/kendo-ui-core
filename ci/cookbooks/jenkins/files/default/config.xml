@@ -117,6 +117,7 @@
         <string>CI-Download-Builder</string>
         <string>CI-Download-Builder-production</string>
         <string>CI-Firefox</string>
+        <string>CI-jQuery-3</string>
         <string>CI-Multiple-jQuery</string>
         <string>CI-Production</string>
         <string>CI-Wrappers-Generation</string>
@@ -318,6 +319,7 @@
         <string>Upload-App-Builder-Verified-Bundle-production</string>
         <string>Upload-Bower-production</string>
         <string>Upload-Bundles-production</string>
+        <string>Upload-Bundles-production-test</string>
         <string>Upload-CDN-production</string>
         <string>Upload-Docs-Full</string>
         <string>Upload-Download-Builder-production</string>

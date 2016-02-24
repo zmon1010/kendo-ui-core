@@ -1,6 +1,6 @@
 ---
 title: Overview
-page_title: Overview | Kendo UI Editor Widget
+page_title: Overview | Kendo UI Editor
 description: "Learn how to initialize and configure the Kendo UI Editor widget."
 slug: overview_kendoui_editor_widget
 position: 1
@@ -52,7 +52,7 @@ The inline Editor is not able to post its value and [this is something you must 
 
 The Editor tools can be configured through the [`tools` configuration option](/api/web/editor#tools).
 
-### Specify Set of Editor Tools
+### Define Sets of Editor Tools
 
 ###### Example
 
@@ -278,5 +278,5 @@ Other articles on Kendo UI Editor:
 * [How to Show Editor in Full Screen]({% slug howto_show_infull_screen_editor %})
 * [How to Use Inline Editor inside Windows]({% slug howto_use_inline_editor_inside_windows_editor %})
 * [Overview of the ASP.NET MVC HtmlHelper Extension of the Editor Widget](/aspnet-mvc/helpers/editor/overview)
-* [Overview of the Editor JSP Tag](/jsp/tags/editor/overview)
+* [Overview of the Editor JSP Tag]({% slug overview_editor_uiforjsp %})
 * [Overview of the Editor PHP Class](/php/widgets/editor/overview)

@@ -99,6 +99,20 @@
         /// <summary>
         /// Use it to configure SignalR binding.
         /// </summary>
+        public ReadOnlyAjaxDataSourceBuilder<Object> Ajax()
+        {
+            dataSource.Type = DataSourceType.Ajax;
+            dataSource.Schema.Data = "Data";
+            dataSource.Schema.Total = "Total";
+
+            var builder = new ReadOnlyAjaxDataSourceBuilder<Object>(dataSource, viewContext, urlGenerator);
+
+            return builder.ServerOperation(true);
+        }
+
+        /// <summary>
+        /// Use it to configure SignalR binding.
+        /// </summary>
         public SignalRDataSourceBuilder<Object> SignalR()
         {
             dataSource.Type = DataSourceType.Custom;

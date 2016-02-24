@@ -1,5 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
+<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="< %>"Url.Content("~/Scripts/pako.min.js")"></script>
+</asp:Content>
+
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
 <div class="box wide">
@@ -30,8 +35,14 @@
             fill: dataItem.ColorScheme
         }));
 
+        /*
+            Use the DejaVu Sans font for display and embedding in the PDF file.
+            The standard PDF fonts have no support for Unicode characters.
+        */
         g.append(new dataviz.diagram.TextBlock({
             text: dataItem.FirstName + " " + dataItem.LastName,
+            fontFamily: "DejaVu Sans",
+            fontSize: "14px",
             x: 85,
             y: 20,
             color: "#fff"
@@ -39,6 +50,8 @@
 
         g.append(new dataviz.diagram.TextBlock({
             text: dataItem.Title,
+            fontFamily: "DejaVu Sans",
+            fontSize: "14px",
             x: 85,
             y: 40,
             color: "#fff"

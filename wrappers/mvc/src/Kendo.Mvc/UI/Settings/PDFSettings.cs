@@ -33,6 +33,12 @@ namespace Kendo.Mvc.UI
 
         public bool Landscape { get; set; }
 
+        public string Template { get; set; }
+
+        public string TemplateId { get; set; }
+
+        public bool? RepeatHeaders { get; set; }
+
         public IDictionary<string, object> Margin { get; set; }
 
         public bool ForceProxy
@@ -111,6 +117,25 @@ namespace Kendo.Mvc.UI
             if (Date != null)
             {
                 json["date"] = Date;
+            }
+
+            if (TemplateId.HasValue())
+            {
+                json["template"] = new ClientHandlerDescriptor
+                {
+                    HandlerName = string.Format(
+                        "jQuery('#{0}').html()", TemplateId
+                    )
+                };
+            }
+            else if (Template.HasValue())
+            {
+                json["template"] = Template;
+            }
+
+            if (RepeatHeaders.HasValue)
+            {
+                json["repeatHeaders"] = RepeatHeaders;
             }
 
             if (ForceProxy)

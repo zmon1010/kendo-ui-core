@@ -146,6 +146,50 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the maximize event.</param>
+        public WindowEventBuilder Maximize(string handler)
+        {
+            Handler("maximize", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public WindowEventBuilder Maximize(Func<object, object> handler)
+        {
+            Handler("maximize", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the minimize event.</param>
+        public WindowEventBuilder Minimize(string handler)
+        {
+            Handler("minimize", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public WindowEventBuilder Minimize(Func<object, object> handler)
+        {
+            Handler("minimize", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Triggered when a Window is opened (i.e. the open() method is called).
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the open event.</param>

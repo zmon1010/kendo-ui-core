@@ -4,6 +4,7 @@ module CodeGen::MVC6::Wrappers::Options
     IGNORED = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored.yml")).map(&:downcase)
     IGNORED_SERIALIZATION = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_serialization.yml")).map(&:downcase)
     IGNORED_FLUENT = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_fluent.yml")).map(&:downcase)
+    NAME_MAP = YAML.load(File.read("build/codegen/lib/mvc-6/config/name_map.yml"))
 
     CSHARP_TYPES = {
         'Number' => 'double',
@@ -80,7 +81,21 @@ module CodeGen::MVC6::Wrappers::Options
     end
 
     def csharp_name
+        property_to_override = NAME_MAP != false ? NAME_MAP[full_name] : nil
+
+        return property_to_override["name"] unless property_to_override.nil?
+
         name.to_csharp_name
+    end
+
+    def serialize_as
+        property_to_override = NAME_MAP != false ? NAME_MAP[full_name] : nil
+
+        return csharp_name if property_to_override.nil?
+
+        result = property_to_override["serialize_as"]
+
+        result
     end
 
     def var_name

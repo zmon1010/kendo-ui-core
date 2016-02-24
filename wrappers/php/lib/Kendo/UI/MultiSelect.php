@@ -158,7 +158,7 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * If set to false case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.
-    * @param string $value
+    * @param boolean $value
     * @return \Kendo\UI\MultiSelect
     */
     public function ignoreCase($value) {
@@ -196,7 +196,7 @@ A zero value means that a request will be made as soon as the user focuses the w
     /**
     * The options that will be used for the popup initialization. For more details about the available options
 refer to Popup documentation.
-    * @param  $value
+    * @param \Kendo\UI\MultiSelectPopup|array $value
     * @return \Kendo\UI\MultiSelect
     */
     public function popup($value) {

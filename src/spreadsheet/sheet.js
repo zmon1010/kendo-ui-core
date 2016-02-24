@@ -10,7 +10,6 @@
     var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
     var Range = kendo.spreadsheet.Range;
-    var Color = kendo.Color;
 
     var Selection = kendo.Class.extend({
         init: function(sheet) {
@@ -927,27 +926,27 @@
                 }
 
                 if (cell.color) {
-                    cell.color = new Color(cell.color).toHex();
+                    cell.color = kendo.parseColor(cell.color).toCss();
                 }
 
                 if (cell.background) {
-                    cell.background = new Color(cell.background).toHex();
+                    cell.background = kendo.parseColor(cell.background).toCss();
                 }
 
                 if (cell.borderTop && cell.borderTop.color) {
-                    cell.borderTop.color = new Color(cell.borderTop.color).toHex();
+                    cell.borderTop.color = kendo.parseColor(cell.borderTop.color).toCss();
                 }
 
                 if (cell.borderBottom && cell.borderBottom.color) {
-                    cell.borderBottom.color = new Color(cell.borderBottom.color).toHex();
+                    cell.borderBottom.color = kendo.parseColor(cell.borderBottom.color).toCss();
                 }
 
                 if (cell.borderRight && cell.borderRight.color) {
-                    cell.borderRight.color = new Color(cell.borderRight.color).toHex();
+                    cell.borderRight.color = kendo.parseColor(cell.borderRight.color).toCss();
                 }
 
                 if (cell.borderLeft && cell.borderLeft.color) {
-                    cell.borderLeft.color = new Color(cell.borderLeft.color).toHex();
+                    cell.borderLeft.color = kendo.parseColor(cell.borderLeft.color).toCss();
                 }
 
                 row.cells.push(cell);

@@ -13,7 +13,7 @@
         return chart._segments[idx || 0].visual.children[0];
     }
 
-    function createChart(series, options) {
+    function createRadarAreaChart(series, options) {
         plotArea = new dataviz.RadarPlotArea(series,
             kendo.deepExtend({
                 valueAxis: {
@@ -43,7 +43,7 @@
     // ------------------------------------------------------------
     module("Radar Area Chart / Positive values", {
         setup: function() {
-            createChart([{
+            createRadarAreaChart([{
                 type: "radarArea",
                 data: [1, 2, 1]
             }]);
@@ -59,7 +59,7 @@
     // ------------------------------------------------------------
     module("Radar Area Chart / Positive values / Stacked", {
         setup: function() {
-            createChart([{
+            createRadarAreaChart([{
                 type: "radarArea",
                 data: [1, 2, 1],
                 stack: true
@@ -75,6 +75,51 @@
             [400, 168], [630, 433], [285, 366], [400, 168],
             [400, 234], [343, 333], [515, 366], [400, 234]
         ], TOLERANCE);
+    });
+
+    // ------------------------------------------------------------
+    module("Radar Area Chart / Category binding", {
+        setup: function() {
+            chart = createChart({
+              seriesDefaults: {
+                type: "radarArea",
+              },
+              series: [{
+                field: "Count",
+                categoryField: "Category",
+                data: [
+                  {"Category": "A", "Count": 1},
+                  {"Category": "B", "Count": 2},
+                  {"Category": "C", "Count": 3}
+                ]
+              }, {
+                field: "Count",
+                categoryField: "Category",
+                data: [
+                  {"Category": "B", "Count": 4},
+                  {"Category": "C", "Count": 5},
+                  {"Category": "D", "Count": 6}
+                ]
+              }]
+            });
+        },
+        teardown: function() {
+            destroyChart();
+        }
+    });
+
+    test("stacked series close around inner series", function() {
+        var points = chart._plotArea.charts[0].points;
+        var ref = $.map(points, function(p) {
+            return [[p.value, p.category]];
+        });
+
+        deepEqual(ref, [
+            [1, "A"], [0, "A"],
+            [2, "B"], [4, "B"],
+            [3, "C"], [5, "C"],
+            [0, "D"], [6, "D"]
+        ]);
     });
 
     // ------------------------------------------------------------

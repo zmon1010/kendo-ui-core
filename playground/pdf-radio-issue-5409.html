@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+  </head>
+  <body>
+    Kendo:
+    <button onclick="pdf('#test1')">PDF</button>
+    <button onclick="draw('#test1', 'svg')">SVG</button>
+    <button onclick="draw('#test1', 'canvas')">Canvas</button>
+    |
+    <button onclick="h2c('#test1')">html2canvas</button>
+    <div id="test1" style="padding: 2em; background: #ffc">
+
+      <div id="content"><form>
+        Radio  0
+        <input class="form-control" id="Radio" name="Radio" type="radio" value="0" checked="checked" />
+        Radio  1
+        <input class="form-control" id="Radio" name="Radio" type="radio" value="1" />
+      </form></div>
+
+      <script>
+        setTimeout(function(){
+          kendo.drawing.drawDOM("#content", {
+              paperSize: "A4"
+            }).then(function(group){
+              kendo.drawing.pdf.saveAs(group, "filename.pdf");
+            });
+        }, 1000);
+      </script>
+
+    </div>
+  </body>
+</html>

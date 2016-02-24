@@ -739,10 +739,6 @@ var __meta__ = { // jshint ignore:line
                     .attr(kendo.attr("dateCompare-msg"), validation.message);
             }
 
-            if (this.trigger("edit", { model: model, cell: cell })) {
-                this._closeCell(true);
-            }
-
             this.editable.bind("validate", function(e) {
                 var focusable = this.element.find(":kendoFocusable:first").focus();
 
@@ -752,6 +748,10 @@ var __meta__ = { // jshint ignore:line
 
                 e.preventDefault();
             });
+
+            if (this.trigger("edit", { model: model, cell: cell })) {
+                this._closeCell(true);
+            }
         },
 
         _closeCell: function(cancelUpdate) {

@@ -1199,6 +1199,12 @@
 
     //// exports
 
+    var FORMAT_PARSERS = [];
+
+    var registerFormatParser = exports.registerFormatParser = function(p) {
+        FORMAT_PARSERS.push(p);
+    };
+
     exports.parse = function(sheet, row, col, input) {
         if (input instanceof Date) {
             return { type: "date", value: runtime.dateToSerial(input) };
@@ -1235,6 +1241,12 @@
                     type: "string",
                     value: "=" + input
                 };
+            }
+        }
+        for (var i = 0; i < FORMAT_PARSERS.length; ++i) {
+            var result = FORMAT_PARSERS[i](input);
+            if (result) {
+                return result;
             }
         }
         if (input.toLowerCase() == "true") {
@@ -1301,5 +1313,98 @@
     exports.InputStream = InputStream;
     exports.ParseError = ParseError;
     exports.tokenize = tokenize;
+
+    /* -----[ a few special formats ]----- */
+
+    // various time formats
+    registerFormatParser(function(input){
+        var m;
+        // hh:mm
+        if ((m = /^(\d+):(\d+)$/.exec(input))) {
+            var hh = parseInt(m[1], 10);
+            var mm = parseInt(m[2], 10);
+            return {
+                type   : "date",
+                format : "hh:mm",
+                value  : runtime.packTime(hh, mm, 0, 0)
+            };
+        }
+        // mm:ss.ms
+        if ((m = /^(\d+):(\d+)(\.\d+)$/.exec(input))) {
+            var mm = parseInt(m[1], 10);
+            var ss = parseInt(m[2], 10);
+            var ms = parseFloat(m[3]) * 1000;
+            return {
+                type   : "date",
+                format : "mm:ss.00",
+                value  : runtime.packTime(0, mm, ss, ms)
+            };
+        }
+        // hh:mm:ss
+        if ((m = /^(\d+):(\d+):(\d+)$/.exec(input))) {
+            var hh = parseInt(m[1], 10);
+            var mm = parseInt(m[2], 10);
+            var ss = parseInt(m[3], 10);
+            return {
+                type   : "date",
+                format : "hh:mm:ss",
+                value  : runtime.packTime(hh, mm, ss, 0)
+            };
+        }
+        // hh:mm:ss.ms
+        if ((m = /^(\d+):(\d+):(\d+)(\.\d+)$/.exec(input))) {
+            var hh = parseInt(m[1], 10);
+            var mm = parseInt(m[2], 10);
+            var ss = parseInt(m[3], 10);
+            var ms = parseFloat(m[4]) * 1000;
+            return {
+                type   : "date",
+                format : "hh:mm:ss.00",
+                value  : runtime.packTime(hh, mm, ss, ms)
+            };
+        }
+    });
+
+    // Support numeric formats with thousands separator and/or currency symbol, like `1,234,567.00`,
+    // `$1234`, `123,456.78 $` etc.  I apologize for this code.
+    registerFormatParser(function(input){
+        var m;
+        var culture = kendo.culture();
+        var comma = culture.numberFormat[","];
+        var dot = culture.numberFormat["."];
+        var currency = culture.numberFormat.currency.symbol;
+        var rx = new RegExp("^(\\" + currency + "\\s*)?(\\d+(\\" + comma + "\\d{3})*(\\" + dot + "\\d+)?)(\\s*\\" + currency + ")?$");
+        if ((m = rx.exec(input))) {
+            var value = m[2]
+                .replace(new RegExp("\\" + comma, "g"), "")
+                .replace(dot, "."); // depending on culture, dot might be ','
+            var format = "#";
+            if (m[1] || m[3] || m[5]) {
+                format += ",#";
+            }
+            if (m[4]) {
+                format += "." + repeat("0", m[1] || m[5] ? 2 : m[4].length - 1);
+            }
+            if (m[1]) {
+                format = '"' + m[1] + '"' + format;
+            }
+            if (m[5]) {
+                format = format + '"' + m[5] + '"';
+            }
+            return {
+                type   : "number",
+                format : format,
+                value  : parseFloat(value)
+            };
+        }
+    });
+
+    function repeat(str, len) {
+        var out = "";
+        while (len-- > 0) {
+            out += str;
+        }
+        return out;
+    }
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

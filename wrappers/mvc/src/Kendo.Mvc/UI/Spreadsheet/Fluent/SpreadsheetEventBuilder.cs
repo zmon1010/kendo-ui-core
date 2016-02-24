@@ -16,6 +16,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Handlers
         
         /// <summary>
+        /// Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
+        public SpreadsheetEventBuilder Change(string handler)
+        {
+            Handler("change", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Triggered after the widget has completed rendering.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the render event.</param>

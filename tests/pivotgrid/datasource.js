@@ -882,8 +882,8 @@
         };
 
         var dataSource = new PivotDataSource({
-            columns: [{ name:"[foo]", expand: true}, "[bar]"],
-            rows: [{ name: "baz", expand: true }],
+            columns: [{ name:"level 0", expand: true}, "level 0"],
+            rows: [{ name: "row level 0", expand: true }, "row level 0"],
             schema: {
                 axes: "axes",
                 data: "data"
@@ -1029,6 +1029,93 @@
         }
 
         dataSource.filter({ field: "foo", operator: "eq", value: "bar" });
+    });
+
+    test("sort updates current axes data from root", 6, function() {
+        var result = {
+            axes: {
+                columns: {
+                    tuples: [
+                        { members: [ { name: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.1", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.2", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.3", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.4", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] }
+                    ]
+                },
+                rows: {
+                    tuples: [
+                        { members: [ { name: "row level 0", children: [] }, { name: "row level 0", children: [] } ] }
+                    ]
+                }
+            },
+            data: [
+                { value: 5, ordinal: 0 },
+                { value: 1, ordinal: 1 },
+                { value: 2, ordinal: 2 },
+                { value: 3, ordinal: 3 },
+                { value: 4, ordinal: 4 }
+            ]
+        };
+
+        var sorted = {
+            axes: {
+                columns: {
+                    tuples: [
+                        { members: [ { name: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.4", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.3", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.2", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                        { members: [ { name: "level 0.1", parentName: "level 0", children: [] }, { name: "level 0", children: [] } ] },
+                    ]
+                },
+                rows: {
+                    tuples: [
+                        { members: [ { name: "row level 0", children: [] }, { name: "row level 0", children: [] } ] }
+                    ]
+                }
+            },
+            data: [
+                { value: 5, ordinal: 0 },
+                { value: 4, ordinal: 4 },
+                { value: 3, ordinal: 3 },
+                { value: 2, ordinal: 2 },
+                { value: 1, ordinal: 1 }
+            ]
+        };
+
+        var response = [
+            result,
+            sorted
+        ];
+
+        var dataSource = new PivotDataSource({
+            columns: [{ name:"level 0", expand: true}, { name:"level 0", expand: true}],
+            columns: [{ name:"level 0", expand: true}, { name:"level 0", expand: true}],
+            rows: [{ name: "baz", expand: true }],
+            serverSorting: true,
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success(response.shift());
+                }
+            }
+        });
+
+        dataSource.read();
+        dataSource.sort({ field: "level 0", dir: "desc" });
+
+        var data = dataSource.data();
+
+        equal(data.length, 5);
+        equal(data[0].value, 5);
+        equal(data[1].value, 4);
+        equal(data[2].value, 3);
+        equal(data[3].value, 2);
+        equal(data[4].value, 1);
     });
 
     test("columnsAxisDescriptors returns columns state", 3, function() {
@@ -2362,7 +2449,7 @@
         });
     });
 
-    test("schemaMembers returns distint values when client cube is used", 15, function() {
+    test("schemaMembers returns distinct values when client cube is used", 15, function() {
         var data = [
             { FirstName: "Name1", LastName: "Last1" },
             { FirstName: "Name2", LastName: "Last2" },
@@ -2379,6 +2466,55 @@
                 }
             },
             schema: {
+                cube: {
+                    dimensions: {
+                        FirstName: { caption: "All First Names" },
+                        LastName: { caption: "All Last Names" }
+                    }
+                }
+            }
+        });
+
+        var restrictions = {
+            memberUniqueName: "FirstName",
+            treeOp: 1
+        };
+
+        dataSource.read();
+
+        dataSource.schemaMembers(restrictions).done(function(data) {
+            equal(data.length, 2);
+
+            for (var idx = 0; idx < data.length; idx++) {
+                equal(data[idx].caption, "Name" + (idx + 1));
+                equal(data[idx].childrenCardinality, 0);
+                equal(data[idx].dimensionUniqueName, 'FirstName');
+                equal(data[idx].hierarchyUniqueName, 'FirstName');
+                equal(data[idx].levelUniqueName, 'FirstName');
+                equal(data[idx].name, "Name" + (idx + 1));
+                equal(data[idx].uniqueName, "Name" + (idx + 1));
+            }
+        });
+    });
+
+    test("schemaMembers returns distinct values when client cube is used and schema.data is defined", 15, function() {
+        var data = {
+            Data: [
+                { FirstName: "Name1", LastName: "Last1" },
+                { FirstName: "Name2", LastName: "Last2" },
+                { FirstName: "Name1", LastName: "Last3" },
+                { FirstName: "", LastName: "Last4" }
+            ],
+            Total: 4
+        };
+
+        var dataSource = new PivotDataSource({
+            columns: ["FirstName"],
+            rows: ["LastName"],
+            data: data,
+            schema: {
+                data: "Data",
+                total: "Total",
                 cube: {
                     dimensions: {
                         FirstName: { caption: "All First Names" },

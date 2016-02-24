@@ -170,7 +170,7 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * If set to false case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.
-    * @param string $value
+    * @param boolean $value
     * @return \Kendo\UI\ComboBox
     */
     public function ignoreCase($value) {
@@ -207,7 +207,7 @@ The supported filter values are startswith, endswith and contains.
     /**
     * The options that will be used for the popup initialization. For more details about the available options
 refer to Popup documentation.
-    * @param  $value
+    * @param \Kendo\UI\ComboBoxPopup|array $value
     * @return \Kendo\UI\ComboBox
     */
     public function popup($value) {

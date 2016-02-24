@@ -8,7 +8,7 @@
         $(document).ready(function() {
             $("#orders").kendoMultiSelect({
                 placeholder: "Select addresses...",
-                template: '<span class="order-id">#= OrderID #</span> #= ShipName #, #= ShipCountry #',
+                itemTemplate: '<span class="order-id">#= OrderID #</span> #= ShipName #, #= ShipCountry #',
                 dataTextField: "ShipName",
                 dataValueField: "OrderID",
                 height: 520,

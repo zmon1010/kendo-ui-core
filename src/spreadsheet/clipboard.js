@@ -119,9 +119,10 @@
             } else {
                 state = this.parse(this._external);
                 this.origin = this.stateRangeRef(state);
+                sheet.range(this.pasteRef()).clear();
             }
             var pasteRef = this.pasteRef();
-            sheet.range(pasteRef).clear().setState(state);
+            sheet.range(pasteRef).setState(state);
             sheet.triggerChange({ recalc: true, ref: pasteRef });
         },
 

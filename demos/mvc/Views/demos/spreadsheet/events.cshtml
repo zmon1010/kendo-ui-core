@@ -11,12 +11,17 @@
             kendoConsole.log("Spreadsheet is rendered");
         }
 
+        function onChange(arg) {
+            kendoConsole.log("Spreadsheet change, new value: " + arg.range.value());
+        }
+
         function onExcelExport(arg) {
             kendoConsole.log("Spreadsheet is exported to Excel");
         }
 
         $(function() {
             $("#spreadsheet").kendoSpreadsheet({
+                change: onChange,
                 render: onRender,
                 excelExport: onExcelExport,
                 sheets: [

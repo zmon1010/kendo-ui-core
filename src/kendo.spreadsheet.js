@@ -116,6 +116,12 @@
                 if (this._autoRefresh) {
                     this.refresh(e);
                 }
+
+                if (e.recalc && e.ref) {
+                    var range = new kendo.spreadsheet.Range(e.ref, this.activeSheet());
+
+                    this.trigger("change", { range: range });
+                }
             },
 
             activeSheet: function(sheet) {
@@ -340,6 +346,7 @@
                 "pdfExport",
                 "excelExport",
                 "excelImport",
+                "change",
                 "render"
             ]
         });

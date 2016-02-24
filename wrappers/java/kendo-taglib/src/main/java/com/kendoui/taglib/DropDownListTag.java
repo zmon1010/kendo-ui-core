@@ -58,6 +58,10 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("animation", value);
     }
 
+    public void setPopup(com.kendoui.taglib.dropdownlist.PopupTag value) {
+        setProperty("popup", value);
+    }
+
     public void setVirtual(com.kendoui.taglib.dropdownlist.VirtualTag value) {
         setProperty("virtual", value);
     }
@@ -228,14 +232,6 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
 
     public void setOptionLabelTemplate(java.lang.String value) {
         setProperty("optionLabelTemplate", value);
-    }
-
-    public java.lang.Object getPopup() {
-        return (java.lang.Object)getProperty("popup");
-    }
-
-    public void setPopup(java.lang.Object value) {
-        setProperty("popup", value);
     }
 
     public java.lang.String getTemplate() {

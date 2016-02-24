@@ -412,8 +412,8 @@ var __meta__ = { // jshint ignore:line
                             .click(proxy(that._click, that))
                             .on(HOVEREVENTS, that._toggleHover);
 
-            that.angular("compile", function(){
-                return { elements: that.optionLabel };
+            that.angular("compile", function() {
+                return { elements: that.optionLabel, data: [{ dataItem: that._optionLabelDataItem() }] };
             });
         },
 
@@ -1162,7 +1162,7 @@ var __meta__ = { // jshint ignore:line
 
             that.valueTemplate = template;
 
-            if (that.hasOptionLabel()) {
+            if (that.hasOptionLabel() && !that.options.optionLabelTemplate) {
                 try {
                     that.valueTemplate(that._optionLabelDataItem());
                 } catch(e) {

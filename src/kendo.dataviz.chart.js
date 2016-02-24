@@ -302,9 +302,7 @@ var __meta__ = { // jshint ignore:line
                 userOptions.dataSource = dataSource;
             }
 
-            preloadFonts(userOptions, function() {
-                chart._initDataSource(userOptions);
-            });
+            chart._initDataSource(userOptions);
 
             kendo.notify(chart, dataviz.ui);
         },
@@ -352,8 +350,10 @@ var __meta__ = { // jshint ignore:line
                 chart._hasDataSource = true;
             }
 
-            chart._redraw();
-            chart._attachEvents();
+            preloadFonts(userOptions, function() {
+                chart._redraw();
+                chart._attachEvents();
+            });
 
             if (dataSource) {
                 if (chart.options.autoBind) {
@@ -10132,11 +10132,13 @@ var __meta__ = { // jshint ignore:line
             currentSeries = deepExtend({}, currentSeries);
 
             if (outOfRangePoints) {
-                if (range.min - 1 >= 0) {
-                    categoryIx = range.min - 1;
+                var minCategory = range.min - 1;
+                var srcCategories = categoryAxis.options.srcCategories || [];
+                if (minCategory >= 0 && minCategory < currentSeries.data.length) {
+                    categoryIx = minCategory;
                     currentSeries._outOfRangeMinPoint = {
                         item: currentSeries.data[categoryIx],
-                        category: categoryAxis.options.srcCategories[categoryIx],
+                        category: srcCategories[categoryIx],
                         categoryIx: -1
                     };
                 }
@@ -10145,7 +10147,7 @@ var __meta__ = { // jshint ignore:line
                     categoryIx = range.max;
                     currentSeries._outOfRangeMaxPoint = {
                         item: currentSeries.data[categoryIx],
-                        category: categoryAxis.options.srcCategories[categoryIx],
+                        category: srcCategories[categoryIx],
                         categoryIx: range.max - range.min
                     };
                 }
@@ -13368,7 +13370,9 @@ var __meta__ = { // jshint ignore:line
                         options[property] = valueOrDefault(propValue(context), defaults[property]);
                     }
                 } else if (typeof propValue === OBJECT) {
-                    state.defaults = defaults[property];
+                    if (!dryRun) {
+                        state.defaults = defaults[property];
+                    }
                     state.depth++;
                     needsEval = evalOptions(propValue, context, state, dryRun) || needsEval;
                     state.depth--;
@@ -13614,21 +13618,26 @@ var __meta__ = { // jshint ignore:line
         kendo.util.loadFonts(fonts, callback);
     }
 
-    function fetchFonts(options, fonts) {
-        if (!options) {
+    function fetchFonts(options, fonts, state) {
+        var MAX_DEPTH = 5;
+
+        state = state || { depth: 0 };
+        if (!options || state.depth > MAX_DEPTH) {
             return;
         }
 
         Object.keys(options).forEach(function(key) {
             var value = options[key];
-            if (key === "dataSource" || !value) {
+            if (key === "dataSource" || key[0] === "$" || !value) {
                 return;
             }
 
             if (key === "font") {
                 fonts.push(value);
             } else if (typeof value === "object") {
-                fetchFonts(value, fonts);
+                state.depth++;
+                fetchFonts(value, fonts, state);
+                state.depth--;
             }
         });
     }

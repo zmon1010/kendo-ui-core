@@ -193,6 +193,22 @@
         htmlEqual(format(1.158333333), "27 hours and 48 minutes");
     });
 
+    test("mm before ss displays minutes, not month", function(){
+        var format = F.compile('mm:ss');
+        htmlEqual(format(30586.524988425925), "35:59");
+
+        var format = F.compile('m "minutes and" s "seconds"');
+        htmlEqual(format(30586.524988425925), "35 minutes and 59 seconds");
+    });
+
+    test("display milliseconds - ss.00", function(){
+        var format = F.compile('ss.00');
+        htmlEqual(format(0.05025810185), "22.30");
+
+        var format = F.compile('[ss].000');
+        htmlEqual(format(0.05025810185), "4342.300");
+    });
+
     test("num+ and text sections", function(){
         var format = F.compile('[Red]+0.0;;;"Some text:" @');
         htmlEqual(format(10), "<span style=\"color: red\">+10.0</span>");

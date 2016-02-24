@@ -8,7 +8,7 @@
         .Width(630)
         .Height(315)
         .Title("Rams's Ten Principles of Good Design")
-        .Actions(actions => actions.Refresh().Close())
+        .Actions(actions => actions.Refresh().Minimize().Maximize().Close())
         .LoadContentFrom("ajaxcontent1", "window")
         .Draggable()
         .Events(events => events
@@ -20,6 +20,8 @@
             .DragStart("onDragStart")
             .DragEnd("onDragEnd")
             .Deactivate("onDeactivate")
+            .Minimize("onMinimize")
+            .Maximize("onMaximize")
         )
 )
 
@@ -58,6 +60,14 @@
 
     function onDragEnd(e) {
         kendoConsole.log("event :: dragend");
+    }
+
+    function onMinimize(e) {
+        kendoConsole.log("event :: minimize");
+    }
+
+    function onMaximize(e) {
+        kendoConsole.log("event :: maximize");
     }
 
     $(document).ready(function() {

@@ -3,8 +3,8 @@
   <head>
     <style>html { font-size: 12px; font-family: Arial, Helvetica, sans-serif; }</style>
     <title></title>
-    <link rel="stylesheet" href="../styles/web/kendo.common.css" />
-    <link rel="stylesheet" href="../styles/web/kendo.default.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
 
     <script src="loader.js"></script>
     <script>
@@ -16,11 +16,10 @@
   </head>
 
   <body>
-    <button>Export to PDF</button>
     <div id="example">
       <div id="target"></div>
       <textarea id="editor" rows="10" cols="30" style="height:440px">
-        <p style="text-align: center"><img src="kendo-ui-web.png" alt="Editor for ASP.NET MVC logo" /></p>
+        <p style="text-align: center"><img src="http://kendo.local:1337/?sleep=100" alt="Editor for ASP.NET MVC logo" /></p>
         <p style="text-align: justify">
           Kendo UI Editor allows your users to edit HTML in a familiar,
           user-friendly way.<br />  In this version, the Editor provides the
@@ -47,43 +46,22 @@
       </textarea>
 
       <script>
-
-        function exportToPDF(){
-            var editor = $("#editor").getKendoEditor();
-            var doc = editor.body.ownerDocument;
-            var drawing = kendo.drawing;
-
-            <!-- var cont = doc.createElement("kendo-pdf-container"); -->
-            <!-- $(cont).html(editor.body.innerHTML); -->
-            <!-- editor.body.appendChild(cont); -->
-
-            drawing.drawDOM(editor.body, {
-                forcePageBreak: ".pageBreak"
-            })
-            .then(function(root) {
-                <!-- $(cont).remove(); -->
-                return drawing.exportPDF(root, {
-                    multiPage: true,
-                    paperSize: "a4"
-                });
-            })
-            .done(function(data) {
-                kendo.saveAs({
-                    dataURI: data,
-                    fileName: "editor.pdf",
-                    proxyURL: "http://kendo.local:7569/"
-                });
-            });
-        }
-
-        $("button").click(function() {
-            exportToPDF();
-        });
-
         $(document).ready(function() {
-            window.editor = $("#editor").kendoEditor({
-                stylesheets: [ "./pdf-editor-2.css" ]
+            var editor = window.editor = $("#editor").kendoEditor({
+                tools: [ "pdf" ],
+                stylesheets: [ "./pdf-editor-2.css" ],
+                pdf: {
+                    fileName: "NewDocument.pdf",
+                    paperSize: "a4",
+                    margin: {
+                        bottom: 20,
+                        left: 20,
+                        right: 20,
+                        top: 20
+                    }
+                }
             }).getKendoEditor();
+            //editor.saveAsPDF();
         });
       </script>
     </div>

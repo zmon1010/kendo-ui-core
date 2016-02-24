@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+
+</title>
+    <link href="http://aspnet-skins.telerikstatic.com/ajaxz/2016.1.113/Common/fonticons.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
+    <link href="http://aspnet-skins.telerikstatic.com/ajaxz/2016.1.113/MenuLite.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
+    <link href="http://aspnet-skins.telerikstatic.com/ajaxz/2016.1.113/DefaultLite/Menu.Default.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
+    <link href="http://aspnet-skins.telerikstatic.com/ajaxz/2016.1.113/GridLite.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
+    <link href="http://aspnet-skins.telerikstatic.com/ajaxz/2016.1.113/DefaultLite/Grid.Default.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
+    <link href="http://aspnet-skins.telerikstatic.com/ajaxz/2016.1.113/ComboBoxLite.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
+    <link href="http://aspnet-skins.telerikstatic.com/ajaxz/2016.1.113/DefaultLite/ComboBox.Default.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
+
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js"
+      ]);
+    </script>
+
+    <style>
+
+    </style>
+</head>
+<body>
+    <form method="post" action="./Default4.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE3MDg0MzU2NjdkZEwKjmB3M+aTHnOHJbOLgx7+L8zzPGgXX0OAqBpOX5OB" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="9F8C8DBC" />
+</div>
+        <script>
+            kendo.pdf.defineFont({
+                "TelerikWebUI": "//aspnet-skins.telerikstatic.com/ajaxz/2016.1.113/Common/TelerikWebUI.ttf"
+            });
+
+            function printGrid() {
+                kendo.drawing.drawDOM($(".RadGrid").get(0))
+                .then(function (root) {
+                    kendo.drawing.pdf.saveAs(root, "test.pdf");
+                });
+            }
+        </script>
+        <input type="button" name="printButton" value="Print grid" onclick="printGrid();" />
+        <div id="RadGrid1" class="RadGrid RadGrid_Default" style="width: 1122px;" tabindex="0">
+
+            <!-- 2016.2.504.0 -->
+            <table class="rgMasterTable" id="RadGrid1_ctl00" style="width: 100%; table-layout: auto; empty-cells: show;">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr class="rgCommandRow">
+                        <td class="rgCommandCell" colspan="6">
+                            <div class="rgCommandCellLeft">
+                                <button type="button" name="RadGrid1$ctl00$ctl02$ctl00$AddNewRecordButton" value="Add new record" onclick="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl00$AddNewRecordButton','')" id="RadGrid1_ctl00_ctl02_ctl00_AddNewRecordButton" title="Add new record" class="rgActionButton rgAdd"><span class="rgIcon rgAddIcon"></span><span class="rgButtonText">Add new record</span></button>
+                            </div>
+                            <div class="rgCommandCellRight">
+                                <button type="button" name="RadGrid1$ctl00$ctl02$ctl00$RefreshButton" value="Refresh" onclick="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl00$RefreshButton','')" id="RadGrid1_ctl00_ctl02_ctl00_RefreshButton" title="Refresh" class="rgActionButton rgRefresh"><span class="rgIcon rgRefreshIcon"></span><span class="rgButtonText">Refresh</span></button>
+                                <button type="button" name="RadGrid1$ctl00$ctl02$ctl00$ExportToExcelButton" value="Export to Excel" onclick="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl00$ExportToExcelButton','')" id="RadGrid1_ctl00_ctl02_ctl00_ExportToExcelButton" title="Export to Excel" class="rgActionButton rgExpXLS"><span class="rgIcon rgExpXLSIcon"></span></button>
+                                <button type="button" name="RadGrid1$ctl00$ctl02$ctl00$ExportToPdfButton" value="Export to PDF" onclick="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl00$ExportToPdfButton','')" id="RadGrid1_ctl00_ctl02_ctl00_ExportToPdfButton" title="Export to PDF" class="rgActionButton rgExpPDF"><span class="rgIcon rgExpPDFIcon"></span></button>
+                                <button type="button" name="RadGrid1$ctl00$ctl02$ctl00$ExportToCsvButton" value="Export to CSV" onclick="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl00$ExportToCsvButton','')" id="RadGrid1_ctl00_ctl02_ctl00_ExportToCsvButton" title="Export to CSV" class="rgActionButton rgExpCSV"><span class="rgIcon rgExpCSVIcon"></span></button>
+                                <button type="button" name="RadGrid1$ctl00$ctl02$ctl00$ExportToWordButton" value="Export to Word" onclick="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl00$ExportToWordButton','')" id="RadGrid1_ctl00_ctl02_ctl00_ExportToWordButton" title="Export to Word" class="rgActionButton rgExpDOC"><span class="rgIcon rgExpDOCIcon"></span></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col" class="rgHeader"><a onclick="Telerik.Web.UI.Grid.Sort($find('RadGrid1_ctl00'), 'CustomerID'); return false;" title="Click here to sort" href="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl02$ctl00','')">Customer ID</a></th>
+                        <th scope="col" class="rgHeader"><a onclick="Telerik.Web.UI.Grid.Sort($find('RadGrid1_ctl00'), 'CompanyName'); return false;" title="Click here to sort" href="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl02$ctl01','')">Company Name</a></th>
+                        <th scope="col" class="rgHeader"><a onclick="Telerik.Web.UI.Grid.Sort($find('RadGrid1_ctl00'), 'ContactName'); return false;" title="Click here to sort" href="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl02$ctl02','')">Contact Name</a></th>
+                        <th scope="col" class="rgHeader"><a onclick="Telerik.Web.UI.Grid.Sort($find('RadGrid1_ctl00'), 'ContactTitle'); return false;" title="Click here to sort" href="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl02$ctl03','')">Contact Title</a></th>
+                        <th scope="col" class="rgHeader"><a onclick="Telerik.Web.UI.Grid.Sort($find('RadGrid1_ctl00'), 'Address'); return false;" title="Click here to sort" href="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl02$ctl04','')">Address</a></th>
+                        <th scope="col" class="rgHeader"><a onclick="Telerik.Web.UI.Grid.Sort($find('RadGrid1_ctl00'), 'PostalCode'); return false;" title="Click here to sort" href="javascript:__doPostBack('RadGrid1$ctl00$ctl02$ctl02$ctl05','')">Postal Code</a></th>
+                    </tr>
+                    <tr class="rgFilterRow">
+                        <td style="white-space: nowrap;">
+                            <input name="RadGrid1$ctl00$ctl02$ctl03$FilterTextBox_CustomerID" type="text" size="10" id="RadGrid1_ctl00_ctl02_ctl03_FilterTextBox_CustomerID" class="rgFilterBox" alt="Filter CustomerID column" onkeypress="if((event.keyCode == 13)) return false;">
+                            <button type="submit" name="RadGrid1$ctl00$ctl02$ctl03$Filter_CustomerID" value="Filter" onclick="$find(&quot;RadGrid1&quot;)._showFilterMenu(&quot;RadGrid1_ctl00&quot;, &quot;CustomerID&quot;, event); return false;" id="RadGrid1_ctl00_ctl02_ctl03_Filter_CustomerID" title="Filter" class="rgActionButton rgFilter"><span class="rgIcon rgFilterIcon"></span></button>
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <input name="RadGrid1$ctl00$ctl02$ctl03$FilterTextBox_CompanyName" type="text" size="10" id="RadGrid1_ctl00_ctl02_ctl03_FilterTextBox_CompanyName" class="rgFilterBox" alt="Filter CompanyName column" onkeypress="if((event.keyCode == 13)) return false;">
+                            <button type="submit" name="RadGrid1$ctl00$ctl02$ctl03$Filter_CompanyName" value="Filter" onclick="$find(&quot;RadGrid1&quot;)._showFilterMenu(&quot;RadGrid1_ctl00&quot;, &quot;CompanyName&quot;, event); return false;" id="RadGrid1_ctl00_ctl02_ctl03_Filter_CompanyName" title="Filter" class="rgActionButton rgFilter"><span class="rgIcon rgFilterIcon"></span></button>
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <input name="RadGrid1$ctl00$ctl02$ctl03$FilterTextBox_ContactName" type="text" size="10" id="RadGrid1_ctl00_ctl02_ctl03_FilterTextBox_ContactName" class="rgFilterBox" alt="Filter ContactName column" onkeypress="if((event.keyCode == 13)) return false;">
+                            <button type="submit" name="RadGrid1$ctl00$ctl02$ctl03$Filter_ContactName" value="Filter" onclick="$find(&quot;RadGrid1&quot;)._showFilterMenu(&quot;RadGrid1_ctl00&quot;, &quot;ContactName&quot;, event); return false;" id="RadGrid1_ctl00_ctl02_ctl03_Filter_ContactName" title="Filter" class="rgActionButton rgFilter"><span class="rgIcon rgFilterIcon"></span></button>
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <input name="RadGrid1$ctl00$ctl02$ctl03$FilterTextBox_ContactTitle" type="text" size="10" id="RadGrid1_ctl00_ctl02_ctl03_FilterTextBox_ContactTitle" class="rgFilterBox" alt="Filter ContactTitle column" onkeypress="if((event.keyCode == 13)) return false;">
+                            <button type="submit" name="RadGrid1$ctl00$ctl02$ctl03$Filter_ContactTitle" value="Filter" onclick="$find(&quot;RadGrid1&quot;)._showFilterMenu(&quot;RadGrid1_ctl00&quot;, &quot;ContactTitle&quot;, event); return false;" id="RadGrid1_ctl00_ctl02_ctl03_Filter_ContactTitle" title="Filter" class="rgActionButton rgFilter"><span class="rgIcon rgFilterIcon"></span></button>
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <input name="RadGrid1$ctl00$ctl02$ctl03$FilterTextBox_Address" type="text" size="10" id="RadGrid1_ctl00_ctl02_ctl03_FilterTextBox_Address" class="rgFilterBox" alt="Filter Address column" onkeypress="if((event.keyCode == 13)) return false;">
+                            <button type="submit" name="RadGrid1$ctl00$ctl02$ctl03$Filter_Address" value="Filter" onclick="$find(&quot;RadGrid1&quot;)._showFilterMenu(&quot;RadGrid1_ctl00&quot;, &quot;Address&quot;, event); return false;" id="RadGrid1_ctl00_ctl02_ctl03_Filter_Address" title="Filter" class="rgActionButton rgFilter"><span class="rgIcon rgFilterIcon"></span></button>
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <input name="RadGrid1$ctl00$ctl02$ctl03$FilterTextBox_PostalCode" type="text" size="10" id="RadGrid1_ctl00_ctl02_ctl03_FilterTextBox_PostalCode" class="rgFilterBox" alt="Filter PostalCode column" onkeypress="if((event.keyCode == 13)) return false;">
+                            <button type="submit" name="RadGrid1$ctl00$ctl02$ctl03$Filter_PostalCode" value="Filter" onclick="$find(&quot;RadGrid1&quot;)._showFilterMenu(&quot;RadGrid1_ctl00&quot;, &quot;PostalCode&quot;, event); return false;" id="RadGrid1_ctl00_ctl02_ctl03_Filter_PostalCode" title="Filter" class="rgActionButton rgFilter"><span class="rgIcon rgFilterIcon"></span></button>
+                        </td>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr class="rgPager">
+                        <td class="rgPagerCell" colspan="6">
+                            <div class="NextPrevAndNumeric">
+                                <div class="rgWrap rgArrPart1">
+                                    <button type="submit" name="RadGrid1$ctl00$ctl03$ctl01$ctl02" value=" " onclick="return false;" title="First Page" class="rgActionButton rgPageFirst"><span class="rgIcon"></span></button>
+                                    <button type="submit" name="RadGrid1$ctl00$ctl03$ctl01$ctl03" value=" " onclick="return false;" title="Previous Page" class="rgActionButton rgPagePrev"><span class="rgIcon"></span></button>
+                                </div>
+                                <div class="rgWrap rgNumPart">
+                                    <a onclick="return false;" class="rgCurrentPage" href="javascript:__doPostBack('RadGrid1$ctl00$ctl03$ctl01$ctl05','')">1</a><a href="javascript:__doPostBack('RadGrid1$ctl00$ctl03$ctl01$ctl06','')">2</a><a href="javascript:__doPostBack('RadGrid1$ctl00$ctl03$ctl01$ctl07','')">3</a><a href="javascript:__doPostBack('RadGrid1$ctl00$ctl03$ctl01$ctl08','')">4</a>
+                                </div>
+                                <div class="rgWrap rgArrPart2">
+                                    <button type="button" name="RadGrid1$ctl00$ctl03$ctl01$ctl10" value=" " onclick="javascript:__doPostBack('RadGrid1$ctl00$ctl03$ctl01$ctl10','')" title="Next Page" class="rgActionButton rgPageNext"><span class="rgIcon"></span></button>
+                                    <button type="button" name="RadGrid1$ctl00$ctl03$ctl01$ctl11" value=" " onclick="javascript:__doPostBack('RadGrid1$ctl00$ctl03$ctl01$ctl11','')" title="Last Page" class="rgActionButton rgPageLast"><span class="rgIcon"></span></button>
+                                </div>
+                                <div class="rgWrap rgAdvPart">
+                                    <span id="RadGrid1_ctl00_ctl03_ctl01_ChangePageSizeLabel" class="rgPagerLabel">Page size:</span><div id="RadGrid1_ctl00_ctl03_ctl01_PageSizeComboBox" class="RadComboBox RadComboBox_Default" style="width: 4em; white-space: normal;">
+                                        <span class="rcbInner rcbReadOnly">
+                                            <input name="RadGrid1$ctl00$ctl03$ctl01$PageSizeComboBox" type="text" class="rcbInput radPreventDecorate" id="RadGrid1_ctl00_ctl03_ctl01_PageSizeComboBox_Input" value="15" readonly="readonly" autocomplete="off">
+                                            <button class="rcbActionButton" tabindex="-1" type="button"><span id="RadGrid1_ctl00_ctl03_ctl01_PageSizeComboBox_Arrow" class="t-fi t-i-arrow-down"></span><span class="rcbButtonText">select</span></button></span><div class="rcbSlide" style="z-index: 6000; display: none;">
+                                                <div id="RadGrid1_ctl00_ctl03_ctl01_PageSizeComboBox_DropDown" class="RadComboBoxDropDown RadComboBoxDropDown_Default ">
+                                                    <div class="rcbScroll rcbWidth">
+                                                        <ul class="rcbList">
+                                                            <li class="rcbItem">10</li>
+                                                            <li class="rcbItem">15</li>
+                                                            <li class="rcbItem">20</li>
+                                                            <li class="rcbItem">50</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <input id="RadGrid1_ctl00_ctl03_ctl01_PageSizeComboBox_ClientState" name="RadGrid1_ctl00_ctl03_ctl01_PageSizeComboBox_ClientState" type="hidden" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="rgWrap rgInfoPart">
+                                    &nbsp;<strong>50</strong> items in <strong>4</strong> pages
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr class="rgRow" id="RadGrid1_ctl00__0">
+                        <td>CustomerID0</td>
+                        <td>Company0</td>
+                        <td>Name0</td>
+                        <td>Title0</td>
+                        <td>Address0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr class="rgAltRow" id="RadGrid1_ctl00__1">
+                        <td>CustomerID1</td>
+                        <td>Company1</td>
+                        <td>Name1</td>
+                        <td>Title1</td>
+                        <td>Address1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="rgRow" id="RadGrid1_ctl00__2">
+                        <td>CustomerID2</td>
+                        <td>Company2</td>
+                        <td>Name2</td>
+                        <td>Title2</td>
+                        <td>Address2</td>
+                        <td>2</td>
+                    </tr>
+                    <tr class="rgAltRow" id="RadGrid1_ctl00__3">
+                        <td>CustomerID3</td>
+                        <td>Company3</td>
+                        <td>Name3</td>
+                        <td>Title3</td>
+                        <td>Address3</td>
+                        <td>3</td>
+                    </tr>
+                    <tr class="rgRow" id="RadGrid1_ctl00__4">
+                        <td>CustomerID4</td>
+                        <td>Company4</td>
+                        <td>Name4</td>
+                        <td>Title4</td>
+                        <td>Address4</td>
+                        <td>4</td>
+                    </tr>
+                    <tr class="rgAltRow" id="RadGrid1_ctl00__5">
+                        <td>CustomerID5</td>
+                        <td>Company5</td>
+                        <td>Name5</td>
+                        <td>Title5</td>
+                        <td>Address5</td>
+                        <td>5</td>
+                    </tr>
+                    <tr class="rgRow" id="RadGrid1_ctl00__6">
+                        <td>CustomerID6</td>
+                        <td>Company6</td>
+                        <td>Name6</td>
+                        <td>Title6</td>
+                        <td>Address6</td>
+                        <td>6</td>
+                    </tr>
+                    <tr class="rgAltRow" id="RadGrid1_ctl00__7">
+                        <td>CustomerID7</td>
+                        <td>Company7</td>
+                        <td>Name7</td>
+                        <td>Title7</td>
+                        <td>Address7</td>
+                        <td>7</td>
+                    </tr>
+                    <tr class="rgRow" id="RadGrid1_ctl00__8">
+                        <td>CustomerID8</td>
+                        <td>Company8</td>
+                        <td>Name8</td>
+                        <td>Title8</td>
+                        <td>Address8</td>
+                        <td>8</td>
+                    </tr>
+                    <tr class="rgAltRow" id="RadGrid1_ctl00__9">
+                        <td>CustomerID9</td>
+                        <td>Company9</td>
+                        <td>Name9</td>
+                        <td>Title9</td>
+                        <td>Address9</td>
+                        <td>9</td>
+                    </tr>
+                    <tr class="rgRow" id="RadGrid1_ctl00__10">
+                        <td>CustomerID10</td>
+                        <td>Company10</td>
+                        <td>Name10</td>
+                        <td>Title10</td>
+                        <td>Address10</td>
+                        <td>10</td>
+                    </tr>
+                    <tr class="rgAltRow" id="RadGrid1_ctl00__11">
+                        <td>CustomerID11</td>
+                        <td>Company11</td>
+                        <td>Name11</td>
+                        <td>Title11</td>
+                        <td>Address11</td>
+                        <td>11</td>
+                    </tr>
+                    <tr class="rgRow" id="RadGrid1_ctl00__12">
+                        <td>CustomerID12</td>
+                        <td>Company12</td>
+                        <td>Name12</td>
+                        <td>Title12</td>
+                        <td>Address12</td>
+                        <td>12</td>
+                    </tr>
+                    <tr class="rgAltRow" id="RadGrid1_ctl00__13">
+                        <td>CustomerID13</td>
+                        <td>Company13</td>
+                        <td>Name13</td>
+                        <td>Title13</td>
+                        <td>Address13</td>
+                        <td>13</td>
+                    </tr>
+                    <tr class="rgRow" id="RadGrid1_ctl00__14">
+                        <td>CustomerID14</td>
+                        <td>Company14</td>
+                        <td>Name14</td>
+                        <td>Title14</td>
+                        <td>Address14</td>
+                        <td>14</td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <div id="RadGrid1_SharedCalendarContainer" style="display: none;">
+            </div>
+            <div id="RadGrid1_rfltMenu" style="display: none; visibility: visible; z-index: 7000;">
+                <div class="RadMenu RadMenu_Default RadMenu_Context RadMenu_Default_Context" style="display: none; visibility: visible; z-index: 7000;" id="RadGrid1_rfltMenu_detached">
+                    <ul class="rmActive rmVertical rmGroup rmLevel1" style="float: left;">
+                        <li class="rmItem rmFirst"><span class="rmLink" tabindex="0">NoFilter</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">Contains</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">DoesNotContain</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">StartsWith</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">EndsWith</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">EqualTo</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">NotEqualTo</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">GreaterThan</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">LessThan</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">GreaterThanOrEqualTo</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">LessThanOrEqualTo</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">Between</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">NotBetween</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">IsEmpty</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">NotIsEmpty</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">IsNull</span></li>
+                        <li class="rmItem "><span class="rmLink" tabindex="0">NotIsNull</span></li>
+                        <li class="rmItem rmLast"><span class="rmLink" tabindex="0">Custom</span></li>
+                    </ul>
+                </div>
+                <input id="RadGrid1_rfltMenu_ClientState" name="RadGrid1_rfltMenu_ClientState" type="hidden" autocomplete="off">
+            </div>
+            <input id="RadGrid1_ClientState" name="RadGrid1_ClientState" type="hidden" autocomplete="off">
+        </div>
+    </form>
+</body>
+</html>

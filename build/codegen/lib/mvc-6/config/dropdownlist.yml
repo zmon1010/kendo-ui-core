@@ -2,3 +2,8 @@
     - :name: optionLabel
       :merge: true
       :type: object
+
+    - :name: filter
+      :description: The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
+      :type: String
+      :enum_type: FilterType

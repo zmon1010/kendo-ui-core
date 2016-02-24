@@ -1,14 +1,14 @@
 ---
 title: Walkthrough
-page_title: Walkthrough | Kendo UI Grid Widget
+page_title: Walkthrough | Kendo UI Grid
 description: "Learn how to create a grid, add an HTML table and control the features of the Kendo UI Grid widget."
 slug: walkthrough_kendoui_grid_widget
-position: 1
+position: 2
 ---
 
 # Walkthrough
 
-[Kendo UI Grid widget](http://demos.telerik.com/kendo-ui/grid/index) is a powerful piece of the Kendo UI framework and an essential part of almost any user interface. The Grid control is quick to set up and is packed with features like sorting, grouping, paging, and editing.
+The [Kendo UI Grid widget](http://demos.telerik.com/kendo-ui/grid/index) is a powerful piece of the Kendo UI framework and an essential part of almost any user interface. The Grid control is quick to set up and is packed with features like [sorting](/api/javascript/ui/grid#configuration-sortable), [grouping](/api/javascript/ui/grid#configuration-groupable), [paging](/api/javascript/ui/grid#configuration-pageable), and [editing](/api/javascript/ui/grid#events-edit).
 
 ## Initialize the Grid
 

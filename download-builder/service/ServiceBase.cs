@@ -1,10 +1,12 @@
-﻿using System.IO;
-using System.Web;
-using System.Text.RegularExpressions;
 using System;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace Download
 {
+
     public abstract class ServiceBase : IHttpHandler
     {
         const string COMPONENTS_KEY = "c";
@@ -31,8 +33,7 @@ namespace Download
             var jsRoot = Path.Combine(versionRoot, minified ? "js" : "source/js");
             var suffix = (minified ? ".min" : "") + ".js";
 
-            var combinedScript = "";
-            string scriptContent;
+            var combinedScript = new StringBuilder();
             var index = 0;
             foreach (var name in components)
             {
@@ -41,19 +42,19 @@ namespace Download
                     var fullName = Path.Combine(jsRoot, "kendo." + name + suffix);
                     if (Path.GetDirectoryName(fullName) == jsRoot)
                     {
-                        scriptContent = System.IO.File.ReadAllText(fullName);
+                        var scriptContent = System.IO.File.ReadAllText(fullName);
                         if (index++ > 0)
                         {
                             // Strip license from all files, except the first
                             scriptContent = CommentRegex.Replace(scriptContent, "");
                         }
 
-                        combinedScript += scriptContent + ";";
+                        combinedScript.AppendFormat("{0};", scriptContent);
                     }
                 }
             }
 
-            ProcessScripts(combinedScript, minified, context.Response);
+            ProcessScripts(combinedScript.ToString(), minified, context.Response);
             SetCachePolicy(context.Response);
         }
 

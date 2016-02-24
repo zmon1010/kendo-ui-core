@@ -9,6 +9,7 @@ module CodeGen::MVC6::Wrappers::Options
         ENUM = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-enum.erb"), 0, '%<>')
         FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-fluent.erb"), 0, '%<>')
         SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-serialization.erb"), 0, '%<>')
+        NAME_MAP = YAML.load(File.read("build/codegen/lib/mvc-6/config/name_map.yml"))
 
         def struct?
             STRUCT_TYPES.include?(csharp_type) || enum?
@@ -21,7 +22,21 @@ module CodeGen::MVC6::Wrappers::Options
         def csharp_name
             prefix = (name == 'attributes') ? "Html" : ""
 
+            property_to_override = NAME_MAP != false ? NAME_MAP[full_name] : nil
+
+            return (prefix + property_to_override["name"]) unless property_to_override.nil?
+
             prefix + name.to_csharp_name
+        end
+
+        def full_name
+            name = @name
+
+            if !@owner.nil?
+                name = @owner.full_name + '.' + name
+            end
+
+            name.downcase
         end
 
         def to_declaration

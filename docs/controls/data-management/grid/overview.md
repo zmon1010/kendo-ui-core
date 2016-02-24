@@ -1,10 +1,10 @@
 ---
 title: Overview
-page_title: Overview | Kendo UI Grid Widget
+page_title: Overview | Kendo UI Grid
 description: "Learn how to create, initialize, and enable the Kendo UI Grid widget."
 previous_url: /web/grid/introduction
 slug: overview_kendoui_grid_widget
-position: 2
+position: 1
 ---
 
 # Grid Overview
@@ -195,7 +195,7 @@ Other articles on Kendo UI Grid:
 * [Export the Grid in PDF]({% slug exporting_pdf_kendoui_grid_widget %})
 * [Print the Grid]({% slug exporting_pdf_kendoui_grid_widget %})
 * [Overview of the ASP.NET MVC HtmlHelper Extension for the Grid Widget](/aspnet-mvc/helpers/grid/overview)
-* [Overview of the Grid JSP Tag](/jsp/tags/grid/overview)
+* [Overview of the Grid JSP Tag]({% slug overview_grid_uiforjsp %})
 * [Overview of the Grid PHP Class](/php/widgets/grid/overview)
 
 For how-to examples on the Kendo UI Grid widget, browse [its How-to section]({% slug howto_bindto_telerik_backend_services_grid %}).

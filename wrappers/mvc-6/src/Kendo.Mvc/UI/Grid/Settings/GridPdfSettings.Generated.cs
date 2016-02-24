@@ -29,6 +29,14 @@ namespace Kendo.Mvc.UI
 
         public bool? Landscape { get; set; }
 
+        public string Template { get; set; }
+
+        public string TemplateId { get; set; }
+
+        public bool? RepeatHeaders { get; set; }
+
+        public double? Scale { get; set; }
+
         public string ProxyURL { get; set; }
 
         public string ProxyTarget { get; set; }
@@ -87,6 +95,29 @@ namespace Kendo.Mvc.UI
             if (Landscape.HasValue)
             {
                 settings["landscape"] = Landscape;
+            }
+
+            if (TemplateId.HasValue())
+            {
+                settings["template"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", Grid.IdPrefix, TemplateId
+                    )
+                };
+            }
+            else if (Template.HasValue())
+            {
+                settings["template"] = Template;
+            }
+
+            if (RepeatHeaders.HasValue)
+            {
+                settings["repeatHeaders"] = RepeatHeaders;
+            }
+
+            if (Scale.HasValue)
+            {
+                settings["scale"] = Scale;
             }
 
             if (ProxyURL?.HasValue() == true)

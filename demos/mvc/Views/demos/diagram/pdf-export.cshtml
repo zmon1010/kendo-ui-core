@@ -76,8 +76,14 @@
                     fill: dataItem.colorScheme
                 }));
 
+                /*
+                    Use the DejaVu Sans font for display and embedding in the PDF file.
+                    The standard PDF fonts have no support for Unicode characters.
+                */
                 g.append(new dataviz.diagram.TextBlock({
                     text: dataItem.firstName + " " + dataItem.lastName,
+                    fontFamily: "DejaVu Sans",
+                    fontSize: "14px",
                     x: 85,
                     y: 20,
                     fill: "#fff"
@@ -85,6 +91,8 @@
 
                 g.append(new dataviz.diagram.TextBlock({
                     text: dataItem.title,
+                    fontFamily: "DejaVu Sans",
+                    fontSize: "14px",
                     x: 85,
                     y: 40,
                     fill: "#fff"
@@ -131,4 +139,20 @@
         $(document).ready(createDiagram);
         $(document).bind("kendo:skinChange", createDiagram);
     </script>
+
+    <script>
+        // Import DejaVu Sans font for embedding
+
+        // NOTE: Only required if the Kendo UI stylesheets are loaded
+        // from a different origin, e.g. cdn.kendostatic.com
+        kendo.pdf.defineFont({
+            "DejaVu Sans"             : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
+            "DejaVu Sans|Bold"        : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+            "DejaVu Sans|Bold|Italic" : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "DejaVu Sans|Italic"      : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+        });
+    </script>
+
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="@Url.Script("pako_deflate.min.js")"></script>
 </div>

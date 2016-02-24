@@ -1,4 +1,6 @@
 ﻿using Kendo.Mvc.Examples.Models;
+using Kendo.Mvc.UI;
+using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Mvc;
 using System.Collections.Generic;
@@ -21,7 +23,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return View();
         }
 
-        public IEnumerable<ProductViewModel> GetProducts(string text)
+        public JsonResult GetProducts(string text)
         {
             var northwind = new SampleEntitiesDataContext();
 
@@ -40,7 +42,7 @@ namespace Kendo.Mvc.Examples.Controllers
                 products = products.Where(p => p.ProductName.Contains(text));
             }
 
-            return products;
+            return Json(products);
         }
 
         public IEnumerable<CustomerViewModel> GetCustomers()

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>#5410</title>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.rtl.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.silver.css" />
+    <link rel="stylesheet" href="../dist/styles/mobile/kendo.mobile.all.css" />
+    <link rel="stylesheet" href="./bootstrap.min.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+  </head>
+  <body>
+    <style>
+      /*
+      Use the DejaVu Sans font for display and embedding in the PDF file.
+      The standard PDF fonts have no support for Unicode characters.
+      */
+      body {
+        font-family: "DejaVu Sans", "Arial", sans-serif;
+      }
+
+
+      /* Set width on the form input elements since they're 100% wide by default */
+      input,
+      select,
+      textarea {
+        max-width: 280px;
+      }
+
+    </style>
+
+    <button onclick="render()">Render</button>
+
+    <div id="content" class="form-horizontal margin-top-20" style="margin-top:70px;">
+        Name:<input class="form-control" id="Name" name="Name" type="text" value="Foo Bar Baz" /><br />
+        Desc:<textarea class="form-control" cols="20" id="Description" name="Description" rows="2">Foo Bar Baz</textarea>
+    </div>
+
+    <script type="text/javascript">
+    function render() {
+      kendo.drawing.drawDOM($("#content"))
+        .then(function (group) {
+        return kendo.drawing.exportPDF(group, {
+          paperSize: "auto",
+          margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+        });
+      })
+        .done(function (data) {
+        kendo.saveAs({
+          dataURI: data,
+          fileName: "Test.pdf",
+        });
+      });
+    }
+    render();
+    </script>
+  </body>
+</html>

@@ -381,7 +381,7 @@
             $("input", element).trigger(CHANGE);
         });
 
-        test("open resets the parent form", function() {
+        test("open resets the file input", function() {
             var FILE = { name: "foo.xlsx" };
             var CHANGE = $.Event("change", {
                 target: {
@@ -394,7 +394,10 @@
                 }
             });
 
-            $("input", element).trigger(CHANGE);
+            var input = $("input", element);
+            input.trigger(CHANGE);
+
+            ok(input != element);
         });
     })();
 })();

@@ -26,7 +26,7 @@
 
     function parse(input) {
         input = calc.InputStream(input);
-        var sections = [], haveTimePart = false, haveConditional = false, decimalPart;
+        var sections = [], haveConditional = false, decimalPart;
 
         while (!input.eof()) {
             var sec = readSection();
@@ -109,11 +109,41 @@
         }
 
         function readFormat() {
-            var format = [], tok;
-            LOOP: while (!input.eof() && (tok = readNext())) {
+            var format = [], tok, prev = null;
+            while (!input.eof() && (tok = readNext())) {
+                // disambiguate: m/mm might mean month or minutes depending on surrounding context.
+                if (tok.type == "date") {
+                    if (prev && /^(el)?time$/.test(prev.type) && prev.part == "h"
+                        && tok.part == "m" && tok.format < 3) {
+                        // m or mm that follows hours should display minutes
+                        tok.type = "time";
+                    }
+                } else if (/^(el)?time$/.test(tok.type) && tok.part == "s") {
+                    if (prev && prev.type == "date" && prev.part == "m"
+                        && prev.format < 3) {
+                        // m or mm followed by seconds should display minutes
+                        prev.type = "time";
+                    }
+                }
+                if (!(/^(?:str|space|fill)$/.test(tok.type))) {
+                    prev = tok;
+                }
                 format.push(tok);
             }
             return format;
+        }
+
+        function maybeFraction(tok) {
+            if (tok.type != "date" || (tok.part == "m" && tok.format < 3)) {
+                var m = input.skip(/^\.(0+)/);
+                if (m) {
+                    tok.fraction = m[1].length;
+                    if (tok.type == "date") {
+                        tok.type = "time";
+                    }
+                }
+            }
+            return tok;
         }
 
         function readNext() {
@@ -133,28 +163,18 @@
             }
             // dates
             if ((m = input.skip(/^(d{1,4}|m{1,5}|yyyy|yy)/i))) {
-                // Disambiguate between month/minutes.  This means
-                // there is no way to display minutes before hours or
-                // seconds.  Dear whoever-invented-this format, you
-                // are an idiot.
-                var type = "date", m = m[1].toLowerCase();
-                if (haveTimePart && (m == "m" || m == "mm")) {
-                    type = "time";
-                }
-                haveTimePart = false;
-                return { type: type, part: m.charAt(0), format: m.length };
+                m = m[1].toLowerCase();
+                return maybeFraction({ type: "date", part: m.charAt(0), format: m.length });
             }
             // time (interpret as a date)
             if ((m = input.skip(/^(hh?|ss?)/i))) { // m and mm are handled above
-                haveTimePart = true;
                 m = m[1].toLowerCase();
-                return { type: "time", part: m.charAt(0), format: m.length };
+                return maybeFraction({ type: "time", part: m.charAt(0), format: m.length });
             }
             // elapsed time (interpret as interval of days)
             if ((m = input.skip(/^\[(hh?|mm?|ss?)\]/i))) {
-                haveTimePart = true;
                 m = m[1].toLowerCase();
-                return { type: "eltime", part: m.charAt(0), format: m.length };
+                return maybeFraction({ type: "eltime", part: m.charAt(0), format: m.length });
             }
             if ((m = input.skip(/^(am\/pm|a\/p)/i))) {
                 m = m[1].split("/");
@@ -223,6 +243,13 @@
             return out;
         }
 
+        function maybeFraction(fmt, tok) {
+            if (tok.fraction) {
+                fmt += "." + padLeft("", tok.fraction, "0");
+            }
+            return fmt;
+        }
+
         function printToken(tok) {
             if (tok.type == "digit") {
                 if (tok.sep) {
@@ -235,7 +262,10 @@
                 return tok.ch + tok.sign;
             }
             else if (tok.type == "date" || tok.type == "time") {
-                return padLeft("", tok.format, tok.part);
+                return maybeFraction(padLeft("", tok.format, tok.part), tok);
+            }
+            else if (tok.type == "eltime") {
+                return maybeFraction("[" + padLeft("", tok.format, tok.part) + "]", tok);
             }
             else if (tok.type == "ampm") {
                 return tok.am + "/" + tok.pm;
@@ -421,7 +451,7 @@
             code += "var intPart = runtime.formatInt(culture, value, " + JSON.stringify(intFormat) + ", " + declen + ", " + separeThousands + "); ";
         }
         if (decFormat.length) {
-            code += "var decPart = runtime.formatDec(culture, value, " + JSON.stringify(decFormat) + ", " + declen + "); ";
+            code += "var decPart = runtime.formatDec(value, " + JSON.stringify(decFormat) + ", " + declen + "); ";
         }
         if (intFormat.length || decFormat.length) {
             code += "type = 'number'; ";
@@ -478,12 +508,12 @@
                     + JSON.stringify(tok.part) + ", " + tok.format + "); ";
             }
             else if (tok.type == "time") {
-                code += "output += runtime.time(culture, time, "
-                    + JSON.stringify(tok.part) + ", " + tok.format + ", " + hasAmpm + "); ";
+                code += "output += runtime.time(time, "
+                    + JSON.stringify(tok.part) + ", " + tok.format + ", " + hasAmpm + ", " + tok.fraction + "); ";
             }
             else if (tok.type == "eltime") {
-                code += "output += runtime.eltime(culture, value, "
-                    + JSON.stringify(tok.part) + ", " + tok.format + "); ";
+                code += "output += runtime.eltime(value, "
+                    + JSON.stringify(tok.part) + ", " + tok.format + ", " + tok.fraction + "); ";
             }
             else if (tok.type == "ampm") {
                 // XXX: should use culture?  As per the "spec", Excel
@@ -552,49 +582,55 @@
             return "##";
         },
 
-        time: function(culture, t, part, length, ampm) {
+        time: function(t, part, length, ampm, fraclen) {
+            var ret, fraction;
             switch (part) {
               case "h":
-                var h = ampm ? t.hours % 12 || 12 : t.hours;
-                switch (length) {
-                  case 1: return h;
-                  case 2: return padLeft(h, 2, "0");
+                ret = padLeft(ampm ? t.hours % 12 || 12 : t.hours, length, "0");
+                if (fraclen) {
+                    fraction = (t.minutes + (t.seconds + t.milliseconds / 1000) / 60) / 60;
                 }
                 break;
               case "m":
-                switch (length) {
-                  case 1: return t.minutes;
-                  case 2: return padLeft(t.minutes, 2, "0");
+                ret = padLeft(t.minutes, length, "0");
+                if (fraclen) {
+                    fraction = (t.seconds + t.milliseconds / 1000) / 60;
                 }
                 break;
               case "s":
-                switch (length) {
-                  case 1: return t.seconds;
-                  case 2: return padLeft(t.seconds, 2, "0");
+                ret = padLeft(t.seconds, length, "0");
+                if (fraclen) {
+                    fraction = t.milliseconds / 1000;
                 }
                 break;
             }
-            return "##";
+            if (fraction) {
+                ret += fraction.toFixed(fraclen).replace(/^0+/, "");
+            }
+            return ret;
         },
 
-        eltime: function(culture, value, part, length) {
+        eltime: function(value, part, length, fraclen) {
+            var ret, fraction;
             switch (part) {
               case "h":
-                value = value * 24;
+                ret = value * 24;
                 break;
               case "m":
-                value = value * 24 * 60;
+                ret = value * 24 * 60;
                 break;
               case "s":
-                value = value * 24 * 60 * 60;
+                ret = value * 24 * 60 * 60;
                 break;
             }
-            value |= 0;
-            switch (length) {
-              case 1: return value;
-              case 2: return padLeft(value, 2, "0");
+            if (fraclen) {
+                fraction = ret - (ret | 0);
             }
-            return "##";
+            ret = padLeft(ret | 0, length, "0");
+            if (fraction) {
+                ret += fraction.toFixed(fraclen).replace(/^0+/, "");
+            }
+            return ret;
         },
 
         fill: function(ch) {
@@ -663,7 +699,7 @@
         // for decimal part we walk in normal direction and pad on the
         // right if required (for '0' or '?' chars).
 
-        formatDec: function(culture, value, parts, declen) {
+        formatDec: function(value, parts, declen) {
             value = value.toFixed(declen);
             var pos = value.indexOf(".");
             if (pos >= 0) {

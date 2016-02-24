@@ -11,6 +11,7 @@
 		{ "from": "`1", "to": "" },
 		{ "from": "Action<.+>", "to": "Action", "regex": true },
 		{ "from": ".+PdfSettingsBuilder", "to": "PDFSettingsBuilder", "regex": true },
-		{ "from": "ListViewSelectionSettingsBuilder", "to": "ListViewSelectableSettingsBuilder"}
+		{ "from": "ListViewSelectionSettingsBuilder", "to": "ListViewSelectableSettingsBuilder"},
+		{ "from": "TreeViewCheckboxesBuilder", "to": "TreeViewCheckboxesSettingsBuilder"}
 	]
 }

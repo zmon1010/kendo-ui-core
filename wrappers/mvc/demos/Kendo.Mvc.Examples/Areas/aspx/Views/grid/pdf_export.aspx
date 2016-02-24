@@ -1,4 +1,5 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master"
+    Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductViewModel>>" %>
     
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
@@ -27,119 +28,135 @@
 <div class="box wide">
     <p style="margin-bottom: 1em"><b>Important:</b></p>
 
-    <p style="margin-bottom: 1em">This page loads pako_deflate.min.js.  This enables compression
-    in the PDF, and it is required if your dataset is very large.
-    Chrome is known to crash on grids with lots of pages when pako is
-    not loaded.</p>
+    <p style="margin-bottom: 1em">
+        This page loads
+        <a href="https://github.com/nodeca/pako">pako zlib library</a> (pako_deflate.min.js)
+        to enable compression in the PDF. This is highly recommended as it improves
+        performance and rises the limit on the size of the content that can be exported.
+    </p>
 
-    <p>In order for the output to be precise, and for Unicode support,
-    you must declare TrueType fonts.  Please read the information about
-    fonts
-    <a href="http://docs.telerik.com/kendo-ui/framework/drawing/drawing-dom#custom-fonts-and-pdf">here</a>
-    and <a href="http://docs.telerik.com/kendo-ui/framework/drawing/pdf-output#using-custom-fonts">here</a>.
-    This demo renders the grid in "DejaVu Sans" font family, which is
-    declared in kendo.common.css, but it also declares the paths to the
-    font files using <tt>kendo.pdf.defineFont</tt>, because the
-    stylesheet is hosted on a different domain.
+    <p>
+        The Standard PDF fonts do not include Unicode support.
+
+        In order for the output to match what you see in the browser
+        you must provide source files for TrueType fonts for embedding.
+
+        Please read the documentation about
+        <a href="http://docs.telerik.com/kendo-ui/framework/drawing/drawing-dom#custom-fonts-and-pdf">custom fonts</a>
+        and
+        <a href="http://docs.telerik.com/kendo-ui/framework/drawing/pdf-output#using-custom-fonts">drawing</a>.
     </p>
 </div>
 
-<%: Html.Kendo().Grid<Kendo.Mvc.Examples.Models.EmployeeViewModel>()    
-    .Name("grid")    
-    .HtmlAttributes( new { style = "height: 500px;" } )
-    .Columns(columns =>
-    {
-        columns.Bound(e => e.EmployeeID).Width(140).Title("Picture");
-        columns.Bound(e => e.Title).Width(350).Title("Details");
-        columns.Bound(e => e.Title).Title("Country");
-        columns.Bound(e => e.EmployeeID).Title("EmployeeID");
-    })
-    .ClientRowTemplate(
-        "<tr data-uid='#: uid #'>" +
-            "<td class='photo'>" +
-               "<img src='" + Url.Content("~/Content/web/Employees/") +"#:data.EmployeeID#.jpg' alt='#: data.EmployeeID #' />" +
-            "</td>" +
-            "<td class='details'>" +
-                "<span class='name'>#: FirstName# #: LastName#</span>" +
-                "<span class='title'>Title: #: Title #</span>" +
-            "</td>" +
-            "<td class='country'>" +
-                "#: Country #" +
-            "</td>" +
-            "<td class='employeeID'>" +
-                "#: EmployeeID #" +
-            "</td>" +
-         "</tr>"       
-    )
-    .ClientAltRowTemplate(
-        "<tr class='k-alt' data-uid='#: uid #'>" +
-            "<td class='photo'>" +
-                "<img src='" + Url.Content("~/Content/web/Employees/") + "#:data.EmployeeID#.jpg' alt='#: data.EmployeeID #' />" +
-            "</td>" +
-            "<td class='details'>" +
-                "<span class='name'>#: FirstName# #: LastName#</span>" +
-                "<span class='title'>Title: #: Title #</span>" +
-            "</td>" +
-            "<td class='country'>" +
-                "#: Country #" +
-            "</td>" +
-            "<td class='employeeID'>" +
-                "#: EmployeeID #" +
-            "</td>" +
-            "</tr>"
-    )
-    .ToolBar(tools => tools.Pdf())
-    .Pdf(pdf => pdf
-        .AllPages()
-        .FileName("Kendo UI Grid Export.pdf")
-        .ProxyURL(Url.Action("Pdf_Export_Save", "Grid"))
-    )
-    .DataSource(dataSource => dataSource
-        .Ajax()                 
-        .Read(read => read.Action("Pdf_Export_Read", "Grid"))
-        .PageSize(5)
-    )
-    .Scrollable()
-    .Pageable()
+<script type="x/kendo-template" id="page-template">
+    <div class="page-template">
+        <div class="header">
+            <div style="float: right">Page #: pageNum # of #: totalPages #</div>
+            Multi-page grid with automatic page breaking
+        </div>
+        <div class="watermark">KENDO UI</div>
+        <div class="footer">
+            Page #: pageNum # of #: totalPages #
+        </div>
+    </div>
+</script>
+
+<%: Html.Kendo().Grid<Kendo.Mvc.Examples.Models.CustomerViewModel>()
+        .Name("grid")
+        .ToolBar(tools => tools.Pdf())
+        .Pdf(pdf => pdf
+            .AllPages()
+            .AvoidLinks()
+            .PaperSize("A4")
+            .Margin("2cm", "1cm", "1cm", "1cm")
+            .Landscape()
+            .RepeatHeaders()
+            .TemplateId("page-template")
+            .FileName("Kendo UI Grid Export.pdf")
+            .ProxyURL(Url.Action("Pdf_Export_Save", "Grid"))
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.ContactName).ClientTemplate(
+                    @"<div class='customer-photo'
+                        style='background-image: url(../../content/web/Customers/#:data.CustomerID#.jpg);'></div>
+                    <div class='customer-name'>#: ContactName #</div>")
+              .Width(240);
+            columns.Bound(c => c.ContactTitle);
+            columns.Bound(c => c.CompanyName);
+            columns.Bound(c => c.Country).Width(150);
+        })
+        .HtmlAttributes(new { style = "height: 550px;" })
+        .Scrollable()
+        .Groupable()
+        .Sortable()
+        .Pageable(pageable => pageable
+            .Refresh(true)
+            .PageSizes(true)
+            .ButtonCount(5))
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("Customers_Read", "Grid"))
+            .PageSize(20)
+        )
 %>
 
 <style>
-    .employeeID,
-    .country {
-        font-size: 50px;
-        font-weight: bold;
-        color: #898989;
+    /* Page Template for the exported PDF */
+    .page-template {
+        font-family: "DejaVu Sans", "Arial", sans-serif;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
     }
-    .name {
-        display: block;
-        font-size: 1.6em;
+    .page-template .header {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        right: 30px;
+        border-bottom: 1px solid #888;
+        color: #888;
     }
-    .title {
-        display: block;
-        padding-top: 1.6em;
-    }
-    td.photo, .employeeID {
+    .page-template .footer {
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+        right: 30px;
+        border-top: 1px solid #888;
         text-align: center;
+        color: #888;
     }
-    .k-grid-header .k-header {
-        padding: 10px 20px;
+    .page-template .watermark {
+        font-weight: bold;
+        font-size: 400%;
+        text-align: center;
+        margin-top: 30%;
+        color: #aaaaaa;
+        opacity: 0.1;
+        transform: rotate(-35deg) scale(1.7, 1.5);
     }
-    .k-grid tr {
-        background: -moz-linear-gradient(top,  rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.05)), color-stop(100%,rgba(0,0,0,0.15)));
-        background: -webkit-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-        background: -o-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-        background: -ms-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-        background: linear-gradient(to bottom,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-        padding: 20px;
+
+    /* Content styling */
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
     }
-    .k-grid tr.k-alt {
-        background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.1)));
-        background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-        background: -o-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-        background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-        background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
     }
 </style>
 </asp:Content>

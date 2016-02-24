@@ -42,6 +42,7 @@ namespace Kendo.Mvc.Rendering
 		   IDictionary<string, object> htmlAttributes)
 		{
 			var tagBuilder = GenerateTag("input", viewContext, id, name, htmlAttributes);
+            tagBuilder.TagRenderMode = TagRenderMode.SelfClosing;
 			tagBuilder.MergeAttribute("type", type);
 
 			var fullName = tagBuilder.Attributes["name"];
@@ -67,7 +68,32 @@ namespace Kendo.Mvc.Rendering
 			return tagBuilder;
 		}
 
-		public virtual TagBuilder GenerateColorInput(
+        private TagBuilder GenerateSelect(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string id,
+            string name,
+            string multiple,
+            IDictionary<string, object> htmlAttributes)
+        {
+            var tagBuilder = GenerateTag("select", viewContext, id, name, htmlAttributes);
+            tagBuilder.MergeAttribute("multiple", multiple);
+
+            var fullName = tagBuilder.Attributes["name"];
+
+            // If there are any errors for a named field, we add the CSS attribute.
+            ModelStateEntry modelState;
+            if (viewContext.ViewData.ModelState.TryGetValue(fullName, out modelState) && modelState.Errors.Count > 0)
+            {
+                tagBuilder.AddCssClass(HtmlHelper.ValidationInputCssClassName);
+            }
+
+            tagBuilder.MergeAttributes(GetValidationAttributes(viewContext, metadata, name));
+
+            return tagBuilder;
+        }
+
+        public virtual TagBuilder GenerateColorInput(
 			ViewContext viewContext,
 			ModelMetadata metadata,
 			string id,
@@ -136,6 +162,16 @@ namespace Kendo.Mvc.Rendering
 		{			
 			return GenerateInput(viewContext, metadata, id, name, value, format, "number", htmlAttributes);
 		}
+
+        public virtual TagBuilder GenerateMultiSelect(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string id,
+            string name,
+            IDictionary<string, object> htmlAttributes)
+        {
+            return GenerateSelect(viewContext, metadata, id, name, "multiple", htmlAttributes);
+        }
 
         public virtual TagBuilder GenerateTag(
             string tagName,            

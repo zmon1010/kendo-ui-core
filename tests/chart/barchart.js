@@ -194,4 +194,33 @@
             });
         })();
     })();
+
+    // ------------------------------------------------------------
+    (function() {
+        module("Bar Chart / Configuration", {
+            setup: function() {
+
+            },
+            teardown: function() {
+                destroyChart();
+            }
+        });
+
+        test("applies default color when color function returns undefined", function() {
+            var chart = createChart({
+                seriesColors: ["red", "green"],
+                series: [{
+                    data: [1, 2],
+                    color: function() { }
+                }]
+            });
+
+            var barChart = chart._plotArea.charts[0];
+            var colors = $.map(barChart.points, function(p) {
+                return p.color || "UNDEFINED";
+            });
+
+            deepEqual(colors, ["red", "red"]);
+        });
+    })();
 })();

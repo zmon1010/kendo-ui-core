@@ -117,6 +117,20 @@ class Spreadsheet extends \Kendo\UI\Widget {
     }
 
     /**
+    * Sets the change event of the Spreadsheet.
+    * Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function change($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('change', $value);
+    }
+
+    /**
     * Sets the render event of the Spreadsheet.
     * Triggered after the widget has completed rendering.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.

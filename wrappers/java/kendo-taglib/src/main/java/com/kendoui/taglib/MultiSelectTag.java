@@ -57,6 +57,10 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setProperty("animation", value);
     }
 
+    public void setPopup(com.kendoui.taglib.multiselect.PopupTag value) {
+        setProperty("popup", value);
+    }
+
     public void setVirtual(com.kendoui.taglib.multiselect.VirtualTag value) {
         setProperty("virtual", value);
     }
@@ -185,11 +189,11 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setProperty("highlightFirst", value);
     }
 
-    public java.lang.String getIgnoreCase() {
-        return (java.lang.String)getProperty("ignoreCase");
+    public boolean getIgnoreCase() {
+        return (Boolean)getProperty("ignoreCase");
     }
 
-    public void setIgnoreCase(java.lang.String value) {
+    public void setIgnoreCase(boolean value) {
         setProperty("ignoreCase", value);
     }
 
@@ -223,14 +227,6 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setPlaceholder(java.lang.String value) {
         setProperty("placeholder", value);
-    }
-
-    public java.lang.Object getPopup() {
-        return (java.lang.Object)getProperty("popup");
-    }
-
-    public void setPopup(java.lang.Object value) {
-        setProperty("popup", value);
     }
 
     public java.lang.String getTagMode() {

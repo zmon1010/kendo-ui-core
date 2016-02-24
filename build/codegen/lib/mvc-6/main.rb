@@ -7,4 +7,5 @@ end
 
 require 'codegen/lib/mvc-6/component'
 require 'codegen/lib/mvc-6/chart-generator'
+require 'codegen/lib/mvc-6/enum-generator'
 require 'codegen/lib/mvc-6/generator'

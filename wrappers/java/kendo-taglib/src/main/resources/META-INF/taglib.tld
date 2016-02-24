@@ -11623,7 +11623,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <description>If set to false case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.</description>
             <name>ignoreCase</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>The index of the initially selected item. The index is 0 based.</description>
@@ -11642,13 +11642,6 @@ The supported filter values are startswith, endswith and contains.</description>
             <name>placeholder</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The options that will be used for the popup initialization. For more details about the available options
-refer to Popup documentation.</description>
-            <name>popup</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>If set to true the widget will automatically use the first suggestion as its value.</description>
@@ -11776,6 +11769,50 @@ refer to Popup documentation.</description>
 
     </tag>
 
+
+
+
+    <tag>
+        <description>The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.</description>
+        <name>comboBox-popup</name>
+        <tag-class>com.kendoui.taglib.combobox.PopupTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines a jQuery selector that will be used to find a container element, where the popup will be appended to.</description>
+            <name>appendTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies how to position the popup element based on achor point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>origin</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies which point of the popup element to attach to the anchor's origin point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
 
 
 
@@ -17657,13 +17694,6 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The options that will be used for the popup initialization. For more details about the available options
-refer to Popup documentation.</description>
-            <name>popup</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
-        </attribute>
-        <attribute>
             <description>The template used to render the items. By default the widget displays only the text of the data item (configured via dataTextField).</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
@@ -17789,6 +17819,50 @@ refer to Popup documentation.</description>
 
     </tag>
 
+
+
+
+    <tag>
+        <description>The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.</description>
+        <name>dropDownList-popup</name>
+        <tag-class>com.kendoui.taglib.dropdownlist.PopupTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines a jQuery selector that will be used to find a container element, where the popup will be appended to.</description>
+            <name>appendTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies how to position the popup element based on achor point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>origin</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies which point of the popup element to attach to the anchor's origin point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
 
 
 
@@ -22326,8 +22400,26 @@ attachment; filename="&lt;fileName.pdf&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Set this to true to repeat the grid headers on each page.</description>
+            <name>repeatHeaders</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A scale factor.  In many cases, text size on screen will be too big for print, so you can use this option to scale down the output in PDF.  See the documentation in drawDOM.</description>
+            <name>scale</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>Sets the subject of the PDF file.</description>
             <name>subject</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.</description>
+            <name>template</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -25281,7 +25373,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <description>If set to false case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.</description>
             <name>ignoreCase</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>The template used to render the items in the popup list.</description>
@@ -25307,13 +25399,6 @@ A zero value means that a request will be made as soon as the user focuses the w
             <name>placeholder</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The options that will be used for the popup initialization. For more details about the available options
-refer to Popup documentation.</description>
-            <name>popup</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The mode used to render the selected tags. The available modes are:
@@ -25432,6 +25517,50 @@ refer to Popup documentation.</description>
 
     </tag>
 
+
+
+
+    <tag>
+        <description>The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.</description>
+        <name>multiSelect-popup</name>
+        <tag-class>com.kendoui.taglib.multiselect.PopupTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines a jQuery selector that will be used to find a container element, where the popup will be appended to.</description>
+            <name>appendTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies how to position the popup element based on achor point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>origin</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies which point of the popup element to attach to the anchor's origin point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
 
 
 
@@ -34085,6 +34214,11 @@ and is about to render it.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.</description>
+            <name>change</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Triggered after the widget has completed rendering.</description>
             <name>render</name>
             <rtexprvalue>true</rtexprvalue>
@@ -34835,6 +34969,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
 
+    <tag>
+        <description>Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.</description>
+        <name>spreadsheet-change</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.ChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>Triggered after the widget has completed rendering.</description>
         <name>spreadsheet-render</name>
@@ -45196,6 +45336,16 @@ Note that this does not constrain the window dragging within the given element.<
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1</description>
+            <name>maximize</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1</description>
+            <name>minimize</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Triggered when a Window is opened (i.e. the open() method is called).</description>
             <name>open</name>
             <rtexprvalue>true</rtexprvalue>
@@ -45328,6 +45478,18 @@ will disable all animations in the widget.</description>
         <description>Triggered when an AJAX request for content fails.</description>
         <name>window-error</name>
         <tag-class>com.kendoui.taglib.window.ErrorFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1</description>
+        <name>window-maximize</name>
+        <tag-class>com.kendoui.taglib.window.MaximizeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1</description>
+        <name>window-minimize</name>
+        <tag-class>com.kendoui.taglib.window.MinimizeFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
