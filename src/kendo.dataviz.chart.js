@@ -12340,10 +12340,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         _slot: function(value) {
-            var that = this,
-                categoryAxis = this.categoryAxis;
+            var categoryAxis = this.categoryAxis;
+            var index = this._index(value);
 
-            return categoryAxis.getSlot(that._index(value));
+            return categoryAxis.getSlot(index, index, true);
         },
 
         move: function(from, to) {
