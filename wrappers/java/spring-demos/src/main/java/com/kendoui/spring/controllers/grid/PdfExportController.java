@@ -27,13 +27,6 @@ public class PdfExportController {
         return "grid/pdf-export";
     }
 
-    @RequestMapping(value = "/pdf-export/read", method = RequestMethod.POST)
-    public @ResponseBody
-    DataSourceResult read(@RequestBody DataSourceRequest request) {
-
-        return employee.getList(request);
-    }
-
     @RequestMapping(value = "/pdf-export/save", method = RequestMethod.POST)
     public @ResponseBody
     void save(String fileName, String base64, String contentType,

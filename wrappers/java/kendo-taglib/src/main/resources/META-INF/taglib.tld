@@ -22400,8 +22400,26 @@ attachment; filename="&lt;fileName.pdf&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Set this to true to repeat the grid headers on each page.</description>
+            <name>repeatHeaders</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A scale factor.  In many cases, text size on screen will be too big for print, so you can use this option to scale down the output in PDF.  See the documentation in drawDOM.</description>
+            <name>scale</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>Sets the subject of the PDF file.</description>
             <name>subject</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.</description>
+            <name>template</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>

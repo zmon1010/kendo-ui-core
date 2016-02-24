@@ -11,6 +11,8 @@ import com.kendoui.taglib.GridTag;
 
 
 
+import com.kendoui.taglib.json.Function;
+
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
@@ -28,6 +30,12 @@ public class PdfTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
 //<< doEndTag
 
+        String template;
+        if (isSet("template")) {
+            template = "kendo.template(jQuery(\"#" + getTemplate() + "\").html())";
+            setProperty("template", new Function(template));
+        }
+        
         return super.doEndTag();
     }
 
@@ -153,12 +161,36 @@ public class PdfTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("proxyURL", value);
     }
 
+    public boolean getRepeatHeaders() {
+        return (Boolean)getProperty("repeatHeaders");
+    }
+
+    public void setRepeatHeaders(boolean value) {
+        setProperty("repeatHeaders", value);
+    }
+
+    public java.lang.Object getScale() {
+        return (java.lang.Object)getProperty("scale");
+    }
+
+    public void setScale(java.lang.Object value) {
+        setProperty("scale", value);
+    }
+
     public java.lang.String getSubject() {
         return (java.lang.String)getProperty("subject");
     }
 
     public void setSubject(java.lang.String value) {
         setProperty("subject", value);
+    }
+
+    public java.lang.String getTemplate() {
+        return (java.lang.String)getProperty("template");
+    }
+
+    public void setTemplate(java.lang.String value) {
+        setProperty("template", value);
     }
 
     public java.lang.String getTitle() {
