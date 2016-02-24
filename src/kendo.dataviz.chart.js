@@ -302,9 +302,7 @@ var __meta__ = { // jshint ignore:line
                 userOptions.dataSource = dataSource;
             }
 
-            preloadFonts(userOptions, function() {
-                chart._initDataSource(userOptions);
-            });
+            chart._initDataSource(userOptions);
 
             kendo.notify(chart, dataviz.ui);
         },
@@ -352,8 +350,10 @@ var __meta__ = { // jshint ignore:line
                 chart._hasDataSource = true;
             }
 
-            chart._redraw();
-            chart._attachEvents();
+            preloadFonts(userOptions, function() {
+                chart._redraw();
+                chart._attachEvents();
+            });
 
             if (dataSource) {
                 if (chart.options.autoBind) {
