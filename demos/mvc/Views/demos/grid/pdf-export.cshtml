@@ -3,20 +3,23 @@
     <div class="box wide">
         <p style="margin-bottom: 1em"><b>Important:</b></p>
 
-        <p style="margin-bottom: 1em">This page loads pako_deflate.min.js.  This enables compression
-        in the PDF, and it is required if your dataset is very large.
-        Chrome is known to crash on grids with lots of pages when pako is
-        not loaded.</p>
+        <p style="margin-bottom: 1em">
+            This page loads
+            <a href="https://github.com/nodeca/pako">pako zlib library</a> (pako_deflate.min.js)
+            to enable compression in the PDF. This is highly recommended as it improves
+            performance and rises the limit on the size of the content that can be exported.
+        </p>
 
-        <p>In order for the output to be precise, and for Unicode support,
-        you must declare TrueType fonts.  Please read the information about
-        fonts
-        <a href="http://docs.telerik.com/kendo-ui/framework/drawing/drawing-dom#custom-fonts-and-pdf">here</a>
-        and <a href="http://docs.telerik.com/kendo-ui/framework/drawing/pdf-output#using-custom-fonts">here</a>.
-        This demo renders the grid in "DejaVu Sans" font family, which is
-        declared in kendo.common.css, but it also declares the paths to the
-        font files using <tt>kendo.pdf.defineFont</tt>, because the
-        stylesheet is hosted on a different domain.
+        <p>
+            The Standard PDF fonts do not include Unicode support.
+
+            In order for the output to match what you see in the browser
+            you must provide source files for TrueType fonts for embedding.
+
+            Please read the documentation about
+            <a href="http://docs.telerik.com/kendo-ui/framework/drawing/drawing-dom#custom-fonts-and-pdf">custom fonts</a>
+            and
+            <a href="http://docs.telerik.com/kendo-ui/framework/drawing/pdf-output#using-custom-fonts">drawing</a>.
         </p>
     </div>
 
@@ -33,10 +36,12 @@
     </style>
 
     <script>
-        // Import DejaVu Sans font for embedding
-
-        // NOTE: Only required if the Kendo UI stylesheets are loaded
-        // from a different origin, e.g. cdn.kendostatic.com
+        /*
+            This demo renders the grid in "DejaVu Sans" font family, which is
+            declared in kendo.common.css. It also declares the paths to the
+            fonts below using <tt>kendo.pdf.defineFont</tt>, because the
+            stylesheet is hosted on a different domain.
+        */
         kendo.pdf.defineFont({
             "DejaVu Sans"             : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
             "DejaVu Sans|Bold"        : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
@@ -48,6 +53,19 @@
     <!-- Load Pako ZLIB library to enable PDF compression -->
     <script src="@Url.Script("pako_deflate.min.js")"></script>
 
+    <script type="x/kendo-template" id="page-template">
+      <div class="page-template">
+        <div class="header">
+          <div style="float: right">Page #: pageNum # of #: totalPages #</div>
+          Multi-page grid with automatic page breaking
+        </div>
+        <div class="watermark">KENDO UI</div>
+        <div class="footer">
+          Page #: pageNum # of #: totalPages #
+        </div>
+      </div>
+    </script>
+
     <script>
         $(document).ready(function () {
             $("#grid").kendoGrid({
@@ -56,7 +74,7 @@
                     allPages: true,
                     avoidLinks: true,
                     paperSize: "A4",
-                    margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "2cm" },
+                    margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "1cm" },
                     landscape: true,
                     repeatHeaders: true,
                     template: $("#page-template").html(),
@@ -97,22 +115,8 @@
         });
     </script>
 
-    <script type="x/kendo-template" id="page-template">
-      <div class="page-template">
-        <div class="header">
-          <div style="float: right">Page #: pageNum # of #: totalPages #</div>
-          Multi-page grid with automatic page breaking
-        </div>
-        <div class="watermark">♥ Kendo ☺</div>
-        <div class="footer">
-          Das footer.
-          Page #: pageNum # of #: totalPages #
-        </div>
-      </div>
-    </script>
-
     <style>
-        /* the template elements will appear only in PDF */
+        /* Page Template for the exported PDF */
         .page-template {
           font-family: "DejaVu Sans", "Arial", sans-serif;
           position: absolute;
@@ -140,13 +144,15 @@
         }
         .page-template .watermark {
           font-weight: bold;
-          font-size: 600%;
+          font-size: 400%;
           text-align: center;
           margin-top: 30%;
-          color: #00b312;
+          color: #aaaaaa;
           opacity: 0.1;
           transform: rotate(-35deg) scale(1.7, 1.5);
         }
+
+        /* Content styling */
         .customer-photo {
           display: inline-block;
           width: 32px;
