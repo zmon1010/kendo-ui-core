@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $result = new DataSourceResult('sqlite:..//sample.db');
 
-        echo json_encode($result->read('Employees', array('EmployeeID', 'FirstName', 'LastName', 'Title', 'Country'), $request), JSON_NUMERIC_CHECK);
+        echo json_encode($result->read('Customers', array('CustomerID', 'ContactName', 'ContactTitle', 'CompanyName', 'Country'), $request));
     }
 
     exit;
@@ -35,103 +35,128 @@ $transport = new \Kendo\Data\DataSourceTransport();
 
 $read = new \Kendo\Data\DataSourceTransportRead();
 
-$read->url('pdf-export.php?type=read')
+$read->url('index.php')
      ->contentType('application/json')
      ->type('POST');
 
-$transport->read($read)
+$transport ->read($read)
           ->parameterMap('function(data) {
               return kendo.stringify(data);
           }');
 
 $model = new \Kendo\Data\DataSourceSchemaModel();
 
-$employeeIDField = new \Kendo\Data\DataSourceSchemaModelField('EmployeeID');
-$employeeIDField->type('number');
+$contactNameField = new \Kendo\Data\DataSourceSchemaModelField('ContactName');
+$contactNameField->type('string');
 
-$firstNameField = new \Kendo\Data\DataSourceSchemaModelField('FirstName');
-$firstNameField->type('string');
+$contactTitleField = new \Kendo\Data\DataSourceSchemaModelField('ContactTitle');
+$contactTitleField->type('string');
 
-$lastNameField = new \Kendo\Data\DataSourceSchemaModelField('LastName');
-$lastNameField->type('string');
+$companyNameField = new \Kendo\Data\DataSourceSchemaModelField('CompanyName');
+$companyNameField->type('string');
 
 $countryField = new \Kendo\Data\DataSourceSchemaModelField('Country');
 $countryField->type('string');
 
-$photoField = new \Kendo\Data\DataSourceSchemaModelField('Photo');
-$photoField->type('string');
-
-$model->addField($employeeIDField)
-      ->addField($firstNameField)
-      ->addField($lastNameField)
-      ->addField($countryField)
-      ->addField($photoField);
+$model->addField($contactNameField)
+      ->addField($contactTitleField)
+      ->addField($companyNameField)
+      ->addField($countryField);
 
 $schema = new \Kendo\Data\DataSourceSchema();
 $schema->data('data')
+       ->errors('errors')
+       ->groups('groups')
        ->model($model)
        ->total('total');
 
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->schema($schema)
-           ->pageSize(5);
-
-$picture = new \Kendo\UI\GridColumn();
-$picture->field('EmployeeID')
-        ->width(140)
-        ->title('Picture');
-
-$details = new \Kendo\UI\GridColumn();
-$details->width(350)
-        ->title('Details');
-
-$country = new \Kendo\UI\GridColumn();
-$country->field('Country')
-        ->title('Country');
-
-$id = new \Kendo\UI\GridColumn();
-$id->title('EmployeeID');
-
-$pdf = new \Kendo\UI\GridPdf();
-$pdf->allPages(true)
-    ->fileName('Kendo UI Grid Export.pdf')
-    ->proxyURL('pdf-export.php?type=save');
+           ->pageSize(10)
+           ->serverPaging(true)
+           ->serverSorting(true)
+           ->serverGrouping(true)
+           ->schema($schema);
 
 $grid = new \Kendo\UI\Grid('grid');
 
-$grid->dataSource($dataSource)
+$contactName = new \Kendo\UI\GridColumn();
+$contactName->field('ContactName')
+            ->template("<div class='customer-photo'style='background-image: url(../content/web/Customers/#:data.CustomerID#.jpg);'></div><div class='customer-name'>#: ContactName #</div>")
+            ->title('Contact Name')
+            ->width(240);
+
+$contactTitle = new \Kendo\UI\GridColumn();
+$contactTitle->field('ContactTitle')
+            ->title('Contact Title');
+
+$companyName = new \Kendo\UI\GridColumn();
+$companyName->field('CompanyName')
+            ->title('Company Name');
+
+$Country = new \Kendo\UI\GridColumn();
+$Country->field('Country')
+        ->width(150);
+
+$pageable = new Kendo\UI\GridPageable();
+$pageable->refresh(true)
+      ->pageSizes(true)
+      ->buttonCount(5);
+
+$margin = new \Kendo\UI\GridPdfMargin();
+$margin->top("2cm")
+       ->left("1cm")
+       ->right("1cm")
+       ->bottom("1cm");
+
+$pdf = new \Kendo\UI\GridPdf();
+$pdf->allPages(true)
+    ->avoidLinks(true)
+    ->paperSize("A4")
+    ->margin($margin)
+    ->landscape(true)
+    ->repeatHeaders(true)
+    ->templateId("page-template")
+    ->scale(0.8)
+    ->fileName('Kendo UI Grid Export.pdf')
+    ->proxyURL('pdf-export.php?type=save');
+
+$grid->addColumn($contactName, $contactTitle, $companyName, $Country)
      ->addToolbarItem(new \Kendo\UI\GridToolbarItem('pdf'))
-     ->addColumn($picture, $details, $country, $id)
      ->pdf($pdf)
-     ->height(500)
-     ->scrollable(true)
-     ->pageable(true)
-     ->rowTemplateId('row-template')
-     ->altRowTemplateId('alt-row-template');
+     ->dataSource($dataSource)
+     ->sortable(true)
+     ->groupable(true)
+     ->pageable($pageable)
+     ->attr('style', 'height:550px');
 ?>
+
 <div class="box wide">
-      <p style="margin-bottom: 1em"><b>Important:</b></p>
+    <p style="margin-bottom: 1em"><b>Important:</b></p>
 
-      <p style="margin-bottom: 1em">This page loads pako_deflate.min.js.  This enables compression
-      in the PDF, and it is required if your dataset is very large.
-      Chrome is known to crash on grids with lots of pages when pako is
-      not loaded.</p>
+    <p style="margin-bottom: 1em">
+        This page loads
+        <a href="https://github.com/nodeca/pako">pako zlib library</a> (pako_deflate.min.js)
+        to enable compression in the PDF. This is highly recommended as it improves
+        performance and rises the limit on the size of the content that can be exported.
+    </p>
 
-      <p>In order for the output to be precise, and for Unicode support,
-      you must declare TrueType fonts.  Please read the information about
-      fonts
-      <a href="http://docs.telerik.com/kendo-ui/framework/drawing/drawing-dom#custom-fonts-and-pdf">here</a>
-      and <a href="http://docs.telerik.com/kendo-ui/framework/drawing/pdf-output#using-custom-fonts">here</a>.
-      This demo renders the grid in "DejaVu Sans" font family, which is
-      declared in kendo.common.css, but it also declares the paths to the
-      font files using <tt>kendo.pdf.defineFont</tt>, because the
-      stylesheet is hosted on a different domain.
-      </p>
-  </div>
+    <p>
+        The Standard PDF fonts do not include Unicode support.
+
+        In order for the output to match what you see in the browser
+        you must provide source files for TrueType fonts for embedding.
+
+        Please read the documentation about
+        <a href="http://docs.telerik.com/kendo-ui/framework/drawing/drawing-dom#custom-fonts-and-pdf">custom fonts</a>
+        and
+        <a href="http://docs.telerik.com/kendo-ui/framework/drawing/pdf-output#using-custom-fonts">drawing</a>.
+    </p>
+</div>
+
 <?php
-echo $grid->render();
+    echo $grid->render();
 ?>
 
 <style>
@@ -154,80 +179,75 @@ echo $grid->render();
 <!-- Load Pako ZLIB library to enable PDF compression -->
 <script src="../content/shared/js/pako.min.js"></script>
 
-<script id="row-template" type="text/x-kendo-template">
-  <tr data-uid="#: uid #">
-    <td class="photo">
-      <img src="../content/web/Employees/#:EmployeeID#.jpg" alt="#: EmployeeID #" />
-    </td>
-    <td class="details">
-       <span class="name">#: FirstName# #: LastName# </span>
-       <span class="title">Title: #: Title #</span>
-    </td>
-    <td class="country">
-      #: Country #
-    </td>
-    <td class="employeeID">
-      #: EmployeeID #
-    </td>
-  </tr>
+<script type="x/kendo-template" id="page-template">
+  <div class="page-template">
+    <div class="header">
+      <div style="float: right">Page #: pageNum # of #: totalPages #</div>
+      Multi-page grid with automatic page breaking
+    </div>
+    <div class="watermark">KENDO UI</div>
+    <div class="footer">
+      Page #: pageNum # of #: totalPages #
+    </div>
+  </div>
 </script>
 
-<script id="alt-row-template" type="text/x-kendo-template">
-  <tr class="k-alt" data-uid="#: uid #">
-    <td class="photo">
-      <img src="../content/web/Employees/#:EmployeeID#.jpg" alt="#: EmployeeID #" />
-    </td>
-    <td class="details">
-       <span class="name">#: FirstName# #: LastName# </span>
-       <span class="title">Title: #: Title #</span>
-    </td>
-    <td class="country">
-      #: Country #
-    </td>
-    <td class="employeeID">
-      #: EmployeeID #
-    </td>
-  </tr>
-</script>
+<style type="text/css">
+    /* Page Template for the exported PDF */
+    .page-template {
+      font-family: "DejaVu Sans", "Arial", sans-serif;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+    .page-template .header {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      right: 30px;
+      border-bottom: 1px solid #888;
+      color: #888;
+    }
+    .page-template .footer {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      right: 30px;
+      border-top: 1px solid #888;
+      text-align: center;
+      color: #888;
+    }
+    .page-template .watermark {
+      font-weight: bold;
+      font-size: 400%;
+      text-align: center;
+      margin-top: 30%;
+      color: #aaaaaa;
+      opacity: 0.1;
+      transform: rotate(-35deg) scale(1.7, 1.5);
+    }
 
-<style>
-    .employeeID,
-    .country {
-        font-size: 50px;
-        font-weight: bold;
-        color: #898989;
+    /* Content styling */
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
     }
-    .name {
-        display: block;
-        font-size: 1.6em;
-    }
-    .title {
-        display: block;
-        padding-top: 1.6em;
-    }
-    td.photo, .employeeID {
-        text-align: center;
-    }
-    .k-grid-header .k-header {
-        padding: 10px 20px;
-    }
-    .k-grid tr {
-        background: -moz-linear-gradient(top,  rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.05)), color-stop(100%,rgba(0,0,0,0.15)));
-        background: -webkit-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-        background: -o-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-        background: -ms-linear-gradient(top,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-        background: linear-gradient(to bottom,  rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.15) 100%);
-        padding: 20px;
-    }
-    .k-grid tr.k-alt {
-        background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.1)));
-        background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-        background: -o-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-        background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
-        background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
     }
 </style>
 
-<?php require_once '../include/footer.php'; ?>

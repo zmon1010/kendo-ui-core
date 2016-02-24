@@ -107,6 +107,46 @@ The default "auto" means paper size is determined by content.Supported values:
     }
 
     /**
+    * Sets the template option of the GridPdf.
+    * A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\GridPdf
+    */
+    public function templateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('template', $value);
+    }
+
+    /**
+    * Sets the template option of the GridPdf.
+    * A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.
+    * @param string $value The template content.
+    * @return \Kendo\UI\GridPdf
+    */
+    public function template($value) {
+        return $this->setProperty('template', $value);
+    }
+
+    /**
+    * Set this to true to repeat the grid headers on each page.
+    * @param boolean $value
+    * @return \Kendo\UI\GridPdf
+    */
+    public function repeatHeaders($value) {
+        return $this->setProperty('repeatHeaders', $value);
+    }
+
+    /**
+    * A scale factor.  In many cases, text size on screen will be too big for print, so you can use this option to scale down the output in PDF.  See the documentation in drawDOM.
+    * @param float|array| $value
+    * @return \Kendo\UI\GridPdf
+    */
+    public function scale($value) {
+        return $this->setProperty('scale', $value);
+    }
+
+    /**
     * The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
 attachment; filename="<fileName.pdf>".
     * @param string $value
