@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -164,8 +164,14 @@ namespace Kendo.Extensions
 
         public static IHtmlString StyleLink(this HtmlHelper html, string styleName, string theme, string common) {
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
+            var disabled = "";
+            if (common == "common-empty" && (
+                  styleName.Contains("CURRENT_COMMON") ||
+                  styleName.Contains("CURRENT_THEME.mobile"))) {
+              disabled = "-disabled";
+            }
             var url = urlHelper.Style(styleName, theme, common);
-            return html.Raw("<link href=\"" + url + "\" rel=\"" + html.StyleRel(styleName) + "\" />");
+            return html.Raw("<link href=\"" + url + "\" rel=\"" + html.StyleRel(styleName) + disabled + "\" />");
         }
 
         public static string NavigationWrapperClass(this HtmlHelper html, string category)

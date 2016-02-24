@@ -86,17 +86,26 @@
             return this.dataSource.getByUid(uid);
         },
         _updateTheme: function(e) {
+            var selection = this.select();
+
+            if (!selection.length) {
+              return;
+            }
+
             // make the item available to event listeners
-            e.item = this.dataItem(this.select());
+            e.item = this.dataItem(selection);
 
             // change theme
             var themeName = e.item.value;
             var commonFile = ThemeChooser.getCommonUrl();
 
-            if (/material/i.test(themeName) && !/material/i.test(commonFile)) {
+            if (/default-v2/i.test(themeName) || /bootstrap-v4/i.test(themeName)) {
+                // hack: SASS themes do not need a common file, it will be skipped
+                commonFile = "common-empty";
+            } else if (/material/i.test(themeName) && !/material/i.test(commonFile)) {
                 commonFile = "common-material";
             } else if (/bootstrap/i.test(themeName) && !/bootstrap/i.test(commonFile)) {
-                commonFile = "common-bootstrap";
+                commonFile = "common-" + themeName;
             } else if (/fiori/i.test(themeName) && !/fiori/i.test(commonFile)) {
                 commonFile = "common-fiori";
             } else if (/office365/i.test(themeName) && !/office365/i.test(commonFile)) {
@@ -107,13 +116,20 @@
                 commonFile = "common";
             }
 
+            this.element.siblings("[data-role='themechooser']").each(function() {
+                var instance = $(this).data("kendoThemeChooser");
+                if (instance) {
+                    instance.clearSelection();
+                }
+            });
+
             ThemeChooser.changeThemePair(themeName, commonFile, true)
                 .then(proxy(this.trigger, this, "transition"));
         },
         value: function(value) {
             if (!arguments.length) {
                 var dataItem = this.dataItem(this.select());
-                return dataItem.name;
+                return dataItem && dataItem.name;
             }
 
             var data = this.dataSource.data();
@@ -128,10 +144,14 @@
     });
 
     var ThemeChooserViewModel = kendo.observable({
+        sassThemes: [
+            { value: "default-v2", name: "Default v2", colors: [ "#ff6358", "#eb5b51", "#fff" ]  },
+            { value: "bootstrap-v4", name: "Bootstrap v4", colors: [ "#0275d8", "#67afe9", "#fff" ]  },
+        ],
         themes: [
             { value: "black", name: "Black", colors: [ "#0167cc", "#4698e9", "#272727" ]  },
             { value: "blueopal", name: "Blue Opal", colors: [ "#076186", "#7ed3f6", "#94c0d2" ]  },
-            { value: "bootstrap", name: "Bootstrap", colors: [ "#3276b1", "#67afe9", "#fff" ]  },
+            { value: "bootstrap", name: "Bootstrap v3", colors: [ "#3276b1", "#67afe9", "#fff" ]  },
             { value: "default", name: "Default", colors: [ "#ef6f1c", "#e24b17", "#5a4b43" ]  },
             { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] },
             { value: "flat", name: "Flat", colors: [ "#363940", "#2eb3a6", "#fff" ]  },
@@ -146,16 +166,9 @@
             { value: "silver", name: "Silver", colors: [ "#298bc8", "#515967", "#eaeaec" ]  },
             { value: "uniform", name: "Uniform", colors: [ "#666", "#ccc", "#fff" ]  }
         ],
-        sizes: [
-            { name: "Standard", value: "common" },
-            { name: "Bootstrap", value: "common-bootstrap", relativity: "larger" },
-            { name: "Material", value: "common-material", relativity: "bold" },
-            { name: "Nova", value: "common-nova", relativity: "bold" },
-            { name: "Fiori", value: "common-fiori", relativity: "larger" },
-            { name: "Office365", value: "common-office365", relativity: "bold" }
-        ],
 
         selectedTheme: window.kendoTheme,
+        selectedSassTheme: window.kendoTheme,
         selectedSize: window.kendoCommonFile
     });
 
@@ -168,6 +181,10 @@
 
     extend(ThemeChooser, {
         preloadStylesheet: function (file, callback) {
+            if (/common-empty/i.test(file)) {
+              return $.Deferred().resolve().promise();
+            }
+
             var deferred = $.Deferred();
             var element = $("<link rel='stylesheet' media='print' href='" + file + "' />");
             element.appendTo("head");
@@ -215,8 +232,12 @@
 
         updateLink: function(link, url) {
             var exampleElement = $("#example");
+            var rel = link.eq(0).attr("rel").replace(/-disabled/i, "");
+            var disabledRel = rel + "-disabled";
 
-            link.eq(0).attr("href", url);
+            link.eq(0)
+              .attr("rel", /common-empty/.test(url) ? disabledRel : rel)
+              .attr("href", url);
 
             if (exampleElement.length) {
                 exampleElement[0].style.cssText = exampleElement[0].style.cssText;
@@ -256,6 +277,10 @@
         },
 
         currentlyUsing: function(href) {
+            if (/common-empty/.test(href)) {
+                return true;
+            }
+
             if (/common/.test(href)) {
                 return ThemeChooser.getCurrentCommonLink().attr("href") == href;
             } else {
@@ -263,24 +288,26 @@
             }
         },
 
-        animateCssChange: function(options) {
-            options = $.extend({ complete: $.noop, replace: $.noop }, options);
-
-            var prefetch = options.prefetch;
-
-            if (!$.isArray(prefetch)) {
-                prefetch = [prefetch];
+        prefetch: function(files) {
+            if (!$.isArray(files)) {
+                files = [files];
             }
 
-            prefetch = $.grep(prefetch, function(x) {
+            files = $.grep(files, function(x) {
                 return !ThemeChooser.currentlyUsing(x);
             });
 
-            if (!prefetch.length) {
-                return;
+            if (!files.length) {
+                return $.Deferred().resolve().promise();
             }
 
-            $.when.apply($, $.map(prefetch, ThemeChooser.preloadStylesheet)).then(function() {
+            return $.when.apply($, $.map(files, ThemeChooser.preloadStylesheet));
+        },
+
+        animateCssChange: function(options) {
+            options = $.extend({ complete: $.noop, replace: $.noop }, options);
+
+            ThemeChooser.prefetch(options.prefetch).then(function() {
                 var example = $("#example");
 
                 example.kendoStop().kendoAnimate(extend({}, animation.hide, {
@@ -296,7 +323,7 @@
                                     .kendoStop()
                                     .kendoAnimate(animation.show);
 
-                                if (prefetch.join(":").indexOf("common") > -1) {
+                                if (options.prefetch.join(":").indexOf("common") > -1) {
                                     kendo.resize(example, true);
                                 }
 

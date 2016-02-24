@@ -29,6 +29,8 @@ src/*.min.js.map
 styles/web/*.css
 styles/mobile/*.css
 styles/dataviz/*.min.css
+styles/web/kendo.default-v2.less
+styles/web/kendo.bootstrap-v4.less
 !styles/web/kendo.rtl.css
 /node_modules
 ./tags

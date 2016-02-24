@@ -11,6 +11,7 @@ var plumber = require('gulp-plumber');
 var filter = require('gulp-filter');
 var sourcemaps = require('gulp-sourcemaps');
 var gulpIf = require('gulp-if');
+var rename = require('gulp-rename');
 var jshint = require("gulp-jshint");
 var replace = require("gulp-replace");
 var rename = require("gulp-rename");
@@ -48,7 +49,7 @@ gulp.task("css-assets", function() {
         .pipe(gulp.dest("dist/styles"));
 });
 
-gulp.task("build-skin", ["css-assets"], function() {
+gulp.task("build-skin", [ "import-dependencies", "css-assets" ], function() {
     var resumeOnErrors = lazypipe()
         .pipe(plumber, {
             errorHandler: function (err) {
@@ -76,7 +77,7 @@ gulp.task("build-skin", ["css-assets"], function() {
         .pipe(browserSync.stream({ match: '**/*.css' }));
 });
 
-gulp.task("less",function() {
+gulp.task("less", [ "import-dependencies" ], function() {
     var css = gulp.src(`styles/${argv.styles || '**/kendo*.less'}`, { base: "styles" })
         .pipe(license())
         .pipe(cssUtils.fromLess());
@@ -90,11 +91,33 @@ gulp.task("less",function() {
         .pipe(gulp.dest('dist/styles'));
 });
 
+const CSS_DEPENDENCIES = [
+    "node_modules/@telerik/kendo-theme-*/dist/all.css"
+];
+
+gulp.task("import-dependencies", function() {
+    return gulp.src(CSS_DEPENDENCIES)
+        .pipe(rename(function(path) {
+          if (/bootstrap/.test(path.dirname)) {
+            path.basename = "kendo.bootstrap-v4";
+          } else {
+            path.basename = "kendo.default-v2";
+          }
+
+          path.extname = ".less";
+          path.dirname = "";
+        }))
+        .pipe(gulp.dest("styles/web/"))
+        .pipe(browserSync.stream({ match: '**/*.css' }));
+});
+
 gulp.task("styles", [ "less", "css-assets" ]);
 
 gulp.task("watch-styles", [ "build-skin", "css-assets" ], function() {
     browserSync.init({ proxy: "localhost", open: false });
-    return gulp.watch("styles/**/*.less", [ "build-skin" ]);
+
+    gulp.watch("styles/**/*.less", [ "build-skin" ]);
+    gulp.watch(CSS_DEPENDENCIES, [ "import-dependencies" ]);
 });
 
 // cloning those somehow fails, I think that it is due to the RTL symbols in the culture
