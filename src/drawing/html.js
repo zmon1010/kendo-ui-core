@@ -1475,17 +1475,15 @@
                 psel.style.cssText = getCssText(style);
                 psel.textContent = evalPseudoElementContent(element, style.content);
                 element.insertBefore(psel, place);
-                if (kind == ":before" && !(/absolute|fixed/.test(getPropertyValue(psel.style, "position")))) {
-                    // we need to shift the "pseudo element" to the left by its width, because we
-                    // created it as a real node and it'll overlap the host element position.
-                    psel.style.marginLeft = parseFloat(getPropertyValue(psel.style, "margin-left")) - psel.offsetWidth + "px";
-                }
                 fake.push(psel);
             }
         }
         pseudo(":before", element.firstChild);
         pseudo(":after", null);
+        var saveClass = element.className;
+        element.className += " kendo-pdf-hide-pseudo-elements";
         _renderElement(element, group);
+        element.className = saveClass;
         fake.forEach(function(el){ element.removeChild(el); });
     }
 
