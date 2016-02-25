@@ -946,7 +946,8 @@
                                 var xargs = [];
                                 for (var i = 0; i < args.length; ++i) {
                                     if (x.arrays[i]) {
-                                        xargs[i] = args[i].get(row, col);
+                                        var m = args[i];
+                                        xargs[i] = m.get(row % m.height, col % m.width);
                                     } else {
                                         xargs[i] = args[i];
                                     }
@@ -992,7 +993,8 @@
                                 var xargs = [];
                                 for (var i = 0; i < args.length; ++i) {
                                     if (x.arrays[i]) {
-                                        xargs[i] = args[i].get(row, col);
+                                        var m = args[i];
+                                        xargs[i] = m.get(row % m.height, col % m.width);
                                     } else {
                                         xargs[i] = args[i];
                                     }
