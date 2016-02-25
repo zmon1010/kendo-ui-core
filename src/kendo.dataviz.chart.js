@@ -13622,7 +13622,7 @@ var __meta__ = { // jshint ignore:line
         var MAX_DEPTH = 5;
 
         state = state || { depth: 0 };
-        if (!options || state.depth > MAX_DEPTH) {
+        if (!options || state.depth > MAX_DEPTH || !document.fonts) {
             return;
         }
 
