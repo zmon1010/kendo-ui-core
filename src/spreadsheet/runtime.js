@@ -1264,8 +1264,8 @@
     ];
 
     var ARGS_ANYVALUE = [
-        [ "*a", "anyvalue" ],
-        [ "*b", "anyvalue" ]
+        [ "*a", [ "or", "anyvalue", [ "null", 0 ] ] ],
+        [ "*b", [ "or", "anyvalue", [ "null", 0 ] ] ]
     ];
 
     defineFunction("binary+", function(a, b){
