@@ -655,7 +655,9 @@
                         var thmatrix = self.asMatrix(th);
                         var elmatrix = self.asMatrix(el);
                         callback(comatrix.map(function(val, row, col){
-                            if (self.bool(val)) {
+                            if (val instanceof CalcError) {
+                                return val;
+                            } else if (self.bool(val)) {
                                 return thmatrix ? thmatrix.get(row, col) : th;
                             } else {
                                 return elmatrix ? elmatrix.get(row, col) : el;
@@ -664,7 +666,10 @@
                     });
                 });
             } else {
-                if (self.bool(co)) {
+                co = this.force(co);
+                if (co instanceof CalcError) {
+                    callback(co);
+                } else if (self.bool(co)) {
                     th(callback);
                 } else {
                     el(callback);
@@ -1372,7 +1377,7 @@
     defineFunction("not", function(a){
         return !this.bool(a);
     }).args([
-        [ "*a", "anyvalue" ]
+        [ "*a", [ "or", "anyvalue", [ "null", 0 ] ] ]
     ]);
 
     /* -----[ the IS* functions ]----- */
