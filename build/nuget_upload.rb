@@ -8,7 +8,7 @@ def archive_path
         archive_folder = "Q#{VERSION_Q} #{VERSION_YEAR}/BETA"
     else
       if SERVICE_PACK_NUMBER != nil
-        archive_folder = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}"
+        archive_folder = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}/#{VERSION.gsub('.', '_')}"
       else
         archive_folder = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR}/#{VERSION.gsub('.', '_')}"
       end
