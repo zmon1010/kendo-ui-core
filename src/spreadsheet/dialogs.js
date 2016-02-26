@@ -138,6 +138,9 @@
         modifyMergedDialog: {
             errorMessage: "Cannot change part of a merged cell."
         },
+        overflowDialog: {
+            errorMessage: "Cannot paste, because the copy area and the paste area are not the same size and shape."
+        },
         useKeyboardDialog: {
             title: "Copying and pasting",
             errorMessage: "These actions cannot be invoked through the menu. Please use the keyboard shortcuts instead:",
@@ -1425,6 +1428,20 @@
     });
 
     kendo.spreadsheet.dialogs.register("modifyMerged", ModifyMergedDialog);
+
+    var OverflowDialog = MessageDialog.extend({
+        init: function(options) {
+            SpreadsheetDialog.fn.init.call(this, options);
+        },
+        options: {
+            template: MESSAGES.overflowDialog.errorMessage +
+                '<div class="k-action-buttons">' +
+                "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
+                "</div>"
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("overflow", OverflowDialog);
 
     var UseKeyboardDialog = MessageDialog.extend({
         init: function(options) {

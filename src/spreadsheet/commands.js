@@ -360,13 +360,17 @@
                 if (status.pasteOnMerged) {
                     return { reason: "modifyMerged" };
                 }
-                return;
+                if (status.overflow) {
+                    return { reason: "overflow" };
+                }
+                return {};
             }
             this.getState();
             this._clipboard.paste();
 
             var range = this._workbook.activeSheet().range(this._clipboard.pasteRef());
             range._adjustRowHeight();
+            return {};
         }
     });
 

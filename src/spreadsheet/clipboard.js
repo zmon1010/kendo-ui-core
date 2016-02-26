@@ -58,6 +58,10 @@
                 status.canPaste = false;
                 status.menuInvoked = true;
             }
+            if (ref.bottomRight.row >= sheet._rows._count || ref.bottomRight.col >= sheet._columns._count) {
+                status.canPaste = false;
+                status.overflow = true;
+            }
             return status;
         },
 
