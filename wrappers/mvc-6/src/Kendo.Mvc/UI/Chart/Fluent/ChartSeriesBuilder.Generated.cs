@@ -11,17 +11,6 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The aggregate function to apply for date series.This function is used when a category (an year, month, etc.) contains two or more points.
-		/// The function return value is displayed instead of the individual points.The supported values are:
-        /// </summary>
-        /// <param name="value">The value for Aggregate</param>
-        public ChartSeriesBuilder<T> Aggregate(string value)
-        {
-            Container.Aggregate = value;
-            return this;
-        }
-
-        /// <summary>
         /// The name of the value axis to use.
         /// </summary>
         /// <param name="value">The value for Axis</param>
@@ -70,7 +59,29 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value for Color</param>
         public ChartSeriesBuilder<T> Color(string value)
         {
+            Container.ColorHandler = null;
             Container.Color = value;
+            return this;
+        }
+        /// <summary>
+        /// The series base color. The supported values are:
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesBuilder<T> ColorHandler(string handler)
+        {
+            Container.Color = null;
+            Container.ColorHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The series base color. The supported values are:
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesBuilder<T> ColorHandler(Func<object, object> handler)
+        {
+            Container.Color = null;
+            Container.ColorHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -123,7 +134,29 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value for DownColor</param>
         public ChartSeriesBuilder<T> DownColor(string value)
         {
+            Container.DownColorHandler = null;
             Container.DownColor = value;
+            return this;
+        }
+        /// <summary>
+        /// The series color when the open value is greater than the close value.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesBuilder<T> DownColorHandler(string handler)
+        {
+            Container.DownColor = null;
+            Container.DownColorHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The series color when the open value is greater than the close value.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesBuilder<T> DownColorHandler(Func<object, object> handler)
+        {
+            Container.DownColor = null;
+            Container.DownColorHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -882,6 +915,38 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartSeriesBuilder<T> ZIndex(double value)
         {
             Container.ZIndex = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the preferred series aggregate.
+        /// </summary>
+        /// <param name="value">The value for Aggregate</param>
+        public ChartSeriesBuilder<T> Aggregate(ChartSeriesAggregate value)
+        {
+            Container.AggregateHandler = null;
+            Container.Aggregate = value;
+            return this;
+        }
+        /// <summary>
+        /// Specifies the preferred series aggregate.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesBuilder<T> AggregateHandler(string handler)
+        {
+            Container.Aggregate = null;
+            Container.AggregateHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the preferred series aggregate.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesBuilder<T> AggregateHandler(Func<object, object> handler)
+        {
+            Container.Aggregate = null;
+            Container.AggregateHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 

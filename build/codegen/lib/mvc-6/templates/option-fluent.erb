@@ -1,3 +1,50 @@
+% if string_and_function?
+% csharp_types_and_names.each do |type, propertyName|
+% if !type.eql?("ClientHandlerDescriptor")
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        /// <param name="value">The value for <%= propertyName %></param>
+        public <%= csharp_owner_builder_name %> <%= propertyName %>(<%= type %> value)
+        {
+            Container.<%= csharp_types_and_names["ClientHandlerDescriptor"] %> = null;
+            Container.<%= propertyName %> = value;
+            return this;
+        }
+%else
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public <%= csharp_owner_builder_name %> <%= csharp_types_and_names[type] %>(string handler)
+        {
+% csharp_types_and_names.each do |type, propertyName|
+% if !type.eql?("ClientHandlerDescriptor")
+            Container.<%= csharp_types_and_names[type] %> = null;
+% end
+% end
+            Container.<%= csharp_types_and_names[type] %> = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public <%= csharp_owner_builder_name %> <%= csharp_types_and_names[type] %>(Func<object, object> handler)
+        {
+% csharp_types_and_names.each do |type, propertyName|
+% if !type.eql?("ClientHandlerDescriptor")
+            Container.<%= csharp_types_and_names[type] %> = null;
+% end
+% end
+            Container.<%= csharp_types_and_names[type] %> = new ClientHandlerDescriptor { TemplateDelegate = handler };
+            return this;
+        }
+
+% end
+% end
+% else
 % if handler?
         /// <summary>
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
@@ -64,4 +111,5 @@
             return this;
         }
 
+% end
 % end

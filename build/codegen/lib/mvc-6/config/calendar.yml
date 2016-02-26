@@ -12,6 +12,10 @@
       :enum_type: CalendarView
       :description: Specifies the navigation depth.
 
+    - :name: footer
+      :merge: true
+      :type: string
+
     - :name: monthTemplate
       :type: Object
 

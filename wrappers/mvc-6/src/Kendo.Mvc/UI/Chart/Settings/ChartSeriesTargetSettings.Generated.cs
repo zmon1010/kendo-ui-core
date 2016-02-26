@@ -14,6 +14,7 @@ namespace Kendo.Mvc.UI
         public ChartSeriesTargetBorderSettings<T> Border { get; } = new ChartSeriesTargetBorderSettings<T>();
 
         public string Color { get; set; }
+        public ClientHandlerDescriptor ColorHandler { get; set; }
 
         public ChartSeriesTargetLineSettings<T> Line { get; } = new ChartSeriesTargetLineSettings<T>();
 
@@ -30,10 +31,15 @@ namespace Kendo.Mvc.UI
                 settings["border"] = border;
             }
 
-            if (Color?.HasValue() == true)
+            if (ColorHandler?.HasValue() == true)
             {
-                settings["color"] = Color;
+                settings["color"] = ColorHandler;
             }
+            else if (Color?.HasValue() == true)
+            {
+               settings["color"] = Color;
+            }
+
 
             var line = Line.Serialize();
             if (line.Any())

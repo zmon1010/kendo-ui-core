@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartSeries<T> where T : class 
     {
-        public string Aggregate { get; set; }
-
         public string Axis { get; set; }
 
         public ChartSeriesBorderSettings<T> Border { get; } = new ChartSeriesBorderSettings<T>();
@@ -22,6 +20,7 @@ namespace Kendo.Mvc.UI
         public string CloseField { get; set; }
 
         public string Color { get; set; }
+        public ClientHandlerDescriptor ColorHandler { get; set; }
 
         public string ColorField { get; set; }
 
@@ -32,6 +31,7 @@ namespace Kendo.Mvc.UI
         public ChartDashType? DashType { get; set; }
 
         public string DownColor { get; set; }
+        public ClientHandlerDescriptor DownColorHandler { get; set; }
 
         public string DownColorField { get; set; }
 
@@ -167,17 +167,15 @@ namespace Kendo.Mvc.UI
 
         public double? ZIndex { get; set; }
 
+        public ChartSeriesAggregate? Aggregate { get; set; }
+        public ClientHandlerDescriptor AggregateHandler { get; set; }
+
 
         public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            if (Aggregate?.HasValue() == true)
-            {
-                settings["aggregate"] = Aggregate;
-            }
 
             if (Axis?.HasValue() == true)
             {
@@ -200,10 +198,15 @@ namespace Kendo.Mvc.UI
                 settings["closeField"] = CloseField;
             }
 
-            if (Color?.HasValue() == true)
+            if (ColorHandler?.HasValue() == true)
             {
-                settings["color"] = Color;
+                settings["color"] = ColorHandler;
             }
+            else if (Color?.HasValue() == true)
+            {
+               settings["color"] = Color;
+            }
+
 
             if (ColorField?.HasValue() == true)
             {
@@ -226,10 +229,15 @@ namespace Kendo.Mvc.UI
                 settings["dashType"] = DashType?.Serialize();
             }
 
-            if (DownColor?.HasValue() == true)
+            if (DownColorHandler?.HasValue() == true)
             {
-                settings["downColor"] = DownColor;
+                settings["downColor"] = DownColorHandler;
             }
+            else if (DownColor?.HasValue() == true)
+            {
+               settings["downColor"] = DownColor;
+            }
+
 
             if (DownColorField?.HasValue() == true)
             {
@@ -583,6 +591,16 @@ namespace Kendo.Mvc.UI
             {
                 settings["zIndex"] = ZIndex;
             }
+
+            if (AggregateHandler?.HasValue() == true)
+            {
+                settings["aggregate"] = AggregateHandler;
+            }
+            else if (Aggregate.HasValue)
+            {
+                settings["aggregate"] = Aggregate?.Serialize();
+            }
+
 
             return settings;
         }

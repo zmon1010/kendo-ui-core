@@ -12,8 +12,10 @@ namespace Kendo.Mvc.UI
     public partial class ChartSeriesBorderSettings<T> where T : class 
     {
         public string Color { get; set; }
+        public ClientHandlerDescriptor ColorHandler { get; set; }
 
         public ChartDashType? DashType { get; set; }
+        public ClientHandlerDescriptor DashTypeHandler { get; set; }
 
         public double? Opacity { get; set; }
 
@@ -26,15 +28,25 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Color?.HasValue() == true)
+            if (ColorHandler?.HasValue() == true)
             {
-                settings["color"] = Color;
+                settings["color"] = ColorHandler;
+            }
+            else if (Color?.HasValue() == true)
+            {
+               settings["color"] = Color;
             }
 
-            if (DashType.HasValue)
+
+            if (DashTypeHandler?.HasValue() == true)
+            {
+                settings["dashType"] = DashTypeHandler;
+            }
+            else if (DashType.HasValue)
             {
                 settings["dashType"] = DashType?.Serialize();
             }
+
 
             if (Opacity.HasValue)
             {

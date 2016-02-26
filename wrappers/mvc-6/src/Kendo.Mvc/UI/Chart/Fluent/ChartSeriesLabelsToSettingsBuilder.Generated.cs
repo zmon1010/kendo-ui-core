@@ -16,7 +16,29 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value for Background</param>
         public ChartSeriesLabelsToSettingsBuilder<T> Background(string value)
         {
+            Container.BackgroundHandler = null;
             Container.Background = value;
+            return this;
+        }
+        /// <summary>
+        /// The background color of the to labels. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> BackgroundHandler(string handler)
+        {
+            Container.Background = null;
+            Container.BackgroundHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The background color of the to labels. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> BackgroundHandler(Func<object, object> handler)
+        {
+            Container.Background = null;
+            Container.BackgroundHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -39,7 +61,29 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value for Color</param>
         public ChartSeriesLabelsToSettingsBuilder<T> Color(string value)
         {
+            Container.ColorHandler = null;
             Container.Color = value;
+            return this;
+        }
+        /// <summary>
+        /// The text color of the to labels. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> ColorHandler(string handler)
+        {
+            Container.Color = null;
+            Container.ColorHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The text color of the to labels. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> ColorHandler(Func<object, object> handler)
+        {
+            Container.Color = null;
+            Container.ColorHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -49,7 +93,29 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value for Font</param>
         public ChartSeriesLabelsToSettingsBuilder<T> Font(string value)
         {
+            Container.FontHandler = null;
             Container.Font = value;
+            return this;
+        }
+        /// <summary>
+        /// The font style of the to labels.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> FontHandler(string handler)
+        {
+            Container.Font = null;
+            Container.FontHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The font style of the to labels.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> FontHandler(Func<object, object> handler)
+        {
+            Container.Font = null;
+            Container.FontHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -59,7 +125,29 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value for Format</param>
         public ChartSeriesLabelsToSettingsBuilder<T> Format(string value)
         {
+            Container.FormatHandler = null;
             Container.Format = value;
+            return this;
+        }
+        /// <summary>
+        /// The format of the to labels. Uses kendo.format.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> FormatHandler(string handler)
+        {
+            Container.Format = null;
+            Container.FormatHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The format of the to labels. Uses kendo.format.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> FormatHandler(Func<object, object> handler)
+        {
+            Container.Format = null;
+            Container.FormatHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -95,7 +183,29 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value for Position</param>
         public ChartSeriesLabelsToSettingsBuilder<T> Position(string value)
         {
+            Container.PositionHandler = null;
             Container.Position = value;
+            return this;
+        }
+        /// <summary>
+        /// The position of the to labels.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> PositionHandler(string handler)
+        {
+            Container.Position = null;
+            Container.PositionHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The position of the to labels.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsToSettingsBuilder<T> PositionHandler(Func<object, object> handler)
+        {
+            Container.Position = null;
+            Container.PositionHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 

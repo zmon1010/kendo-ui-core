@@ -12,6 +12,7 @@ namespace Kendo.Mvc.UI
     public partial class ChartSeriesMarkersBorderSettings<T> where T : class 
     {
         public string Color { get; set; }
+        public ClientHandlerDescriptor ColorHandler { get; set; }
 
         public double? Width { get; set; }
 
@@ -22,10 +23,15 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Color?.HasValue() == true)
+            if (ColorHandler?.HasValue() == true)
             {
-                settings["color"] = Color;
+                settings["color"] = ColorHandler;
             }
+            else if (Color?.HasValue() == true)
+            {
+               settings["color"] = Color;
+            }
+
 
             if (Width.HasValue)
             {

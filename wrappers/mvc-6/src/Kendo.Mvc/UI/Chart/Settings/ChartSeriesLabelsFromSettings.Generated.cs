@@ -12,20 +12,25 @@ namespace Kendo.Mvc.UI
     public partial class ChartSeriesLabelsFromSettings<T> where T : class 
     {
         public string Background { get; set; }
+        public ClientHandlerDescriptor BackgroundHandler { get; set; }
 
         public ChartSeriesLabelsFromBorderSettings<T> Border { get; } = new ChartSeriesLabelsFromBorderSettings<T>();
 
         public string Color { get; set; }
+        public ClientHandlerDescriptor ColorHandler { get; set; }
 
         public string Font { get; set; }
+        public ClientHandlerDescriptor FontHandler { get; set; }
 
         public string Format { get; set; }
+        public ClientHandlerDescriptor FormatHandler { get; set; }
 
         public ChartSeriesLabelsFromMarginSettings<T> Margin { get; } = new ChartSeriesLabelsFromMarginSettings<T>();
 
         public ChartSeriesLabelsFromPaddingSettings<T> Padding { get; } = new ChartSeriesLabelsFromPaddingSettings<T>();
 
         public string Position { get; set; }
+        public ClientHandlerDescriptor PositionHandler { get; set; }
 
         public string Template { get; set; }
 
@@ -40,10 +45,15 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Background?.HasValue() == true)
+            if (BackgroundHandler?.HasValue() == true)
             {
-                settings["background"] = Background;
+                settings["background"] = BackgroundHandler;
             }
+            else if (Background?.HasValue() == true)
+            {
+               settings["background"] = Background;
+            }
+
 
             var border = Border.Serialize();
             if (border.Any())
@@ -51,20 +61,35 @@ namespace Kendo.Mvc.UI
                 settings["border"] = border;
             }
 
-            if (Color?.HasValue() == true)
+            if (ColorHandler?.HasValue() == true)
             {
-                settings["color"] = Color;
+                settings["color"] = ColorHandler;
+            }
+            else if (Color?.HasValue() == true)
+            {
+               settings["color"] = Color;
             }
 
-            if (Font?.HasValue() == true)
+
+            if (FontHandler?.HasValue() == true)
             {
-                settings["font"] = Font;
+                settings["font"] = FontHandler;
+            }
+            else if (Font?.HasValue() == true)
+            {
+               settings["font"] = Font;
             }
 
-            if (Format?.HasValue() == true)
+
+            if (FormatHandler?.HasValue() == true)
             {
-                settings["format"] = Format;
+                settings["format"] = FormatHandler;
             }
+            else if (Format?.HasValue() == true)
+            {
+               settings["format"] = Format;
+            }
+
 
             var margin = Margin.Serialize();
             if (margin.Any())
@@ -78,10 +103,15 @@ namespace Kendo.Mvc.UI
                 settings["padding"] = padding;
             }
 
-            if (Position?.HasValue() == true)
+            if (PositionHandler?.HasValue() == true)
             {
-                settings["position"] = Position;
+                settings["position"] = PositionHandler;
             }
+            else if (Position?.HasValue() == true)
+            {
+               settings["position"] = Position;
+            }
+
 
             if (TemplateId.HasValue())
             {

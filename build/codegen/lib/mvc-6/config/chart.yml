@@ -151,6 +151,41 @@
       :merge: true
       :enum_type: ChartDashType
 
+    - :name: series.aggregate
+      :description: Specifies the preferred series aggregate.
+      :type:
+          - String
+          - Function
+      :enum_type: ChartSeriesAggregate
+      :values:
+          - :value: avg
+            :member: Avg
+            :description: The average of all values for the date period.
+
+          - :value: count
+            :member: Count
+            :description: The number of values for the date period.
+
+          - :value: first
+            :member: First
+            :description: The first of all values for the date period.
+
+          - :value: max
+            :member: Max
+            :description: The highest value for the date period.
+
+          - :value: min
+            :member: Min
+            :description: The lowest value for the date period.
+
+          - :value: sum
+            :member: Sum
+            :description: The sum of all values for the date period.
+
+          - :value: sumOrNull
+            :member: SumOrNull
+            :description: The sum of all values for the date period. If there are not data for the current period of time the aggregate will return 'null'(instead of 'zero' for the sum aggregate).
+
     - :name: series.line.style
       :description: Specifies the preferred line rendering style.
       :type: String

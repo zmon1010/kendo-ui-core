@@ -79,6 +79,14 @@ module CodeGen::MVC6::Wrappers::Options
         csharp_type.match(/\[\]$/)
     end
 
+    def string_and_function?
+        if type.length == 2 && !template? && type.include?("String") && type.include?("Function")
+            return true
+        end
+
+        false
+    end
+
     def csharp_name
         property_to_override = NAME_MAP != false ? NAME_MAP[full_name] : nil
 
@@ -196,5 +204,46 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         return_type
+    end
+
+    def csharp_types_and_names
+        types_and_names = {}
+
+        if type.respond_to?('each')
+            if type.length == 2 && type.include?("String") && type.include?("Function")
+                type.each do |t|
+                    types_and_names[convert_to_csharp_type(t)] = modify_csharp_name_by_type(csharp_name, t)
+                end
+            end
+        else
+            puts "Cannot match #{full_name} with type #{type}"
+        end
+
+        types_and_names
+    end
+
+    def convert_to_csharp_type(type)
+        return_type = ''
+
+        if type.eql?("String") && enum?
+            # Manually specified enum type as String in YML
+            return_type = enum_type
+        else
+            return_type = CSHARP_TYPES[type]
+        end
+
+        if return_type.nil? || return_type.empty?
+            raise "Unknown type mapping for #{full_name}, source type is #{type}"
+        end
+
+        return_type
+    end
+
+    def modify_csharp_name_by_type(name, type)
+        if type == "Function"
+            return name + "Handler"
+        end
+
+        name
     end
 end
