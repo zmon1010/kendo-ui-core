@@ -1,4 +1,4 @@
 {
-  "run_list": [ "recipe[kendo_docker]" ]
+  "run_list": [ "recipe[kendo_docker::default]" ]
 }
 

@@ -1,0 +1,4 @@
+{
+  "run_list": [ "recipe[kendo_docker::default]","recipe[kendo_docker::kendo_mvc6]" ]
+}
+
