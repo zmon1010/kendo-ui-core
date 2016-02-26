@@ -609,6 +609,9 @@ var __meta__ = { // jshint ignore:line
         _reset: function() {
             this.clear();
 
+            if (this.options.search){
+			    this.container.find("label").parent().show();
+            }
             this._closeForm();
         },
 
@@ -784,6 +787,27 @@ var __meta__ = { // jshint ignore:line
 
     var DataSource = kendo.data.DataSource;
 
+    var multiCkeckMobileTemplate =
+        '<div data-#=ns#role="view" data-#=ns#init-widgets="false" class="k-grid-filter-menu">' +
+            '<div data-#=ns#role="header" class="k-header">' +
+                '<button class="k-button k-cancel">#=messages.cancel#</button>' +
+                '#=title#' +
+                '<button type="submit" class="k-button k-submit">#=messages.filter#</button>' +
+            '</div>' +
+            '<form class="k-filter-menu k-mobile-list">' +
+                '#if(search){#' +
+                "<div class='k-textbox k-space-right'>" +
+                    "<input placeholder='#=messages.search#'/>" +
+                    "<span class='k-icon k-font-icon k-i-search' />" +
+                    "</div>" + 
+                '#}#' +
+                '<ul class="k-multicheck-wrap"></ul>' +
+                '</li><li class="k-button-container">' +
+                    '<button type="reset" class="k-button">#=messages.clear#</button>' +
+                '</li></ul>' +
+            '</form>' +
+        '</div>';
+
     var FilterMultiCheck = Widget.extend({
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
@@ -926,45 +950,49 @@ var __meta__ = { // jshint ignore:line
                 if (ignoreCase) {
                     labelText = labelText.toLowerCase();
                 }
-                label.style.display = labelText.indexOf(searchString) >= 0 ? "" : "none";
+                label.parentNode.style.display = labelText.indexOf(searchString) >= 0 ? "" : "none";
             }
         },
 
         _createForm: function() {
             var options = this.options;
             var html = "";
-
-            if (!this._isMobile && options.search) {
-                html += "<div class='k-textbox k-space-right'>" +
+            if (!this._isMobile) {
+                if (options.search) {
+                    html += "<div class='k-textbox k-space-right'>" +
                     "<input placeholder='" + options.messages.search + "'/>" +
                     "<span class='k-icon k-font-icon k-i-search' />" +
                     "</div>";
+                }
+                html += "<ul class='k-reset k-multicheck-wrap'></ul><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
+                html += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
+
+                this.form = $('<form class="k-filter-menu"/>').html(html);
+                this.container = this.form.find(".k-multicheck-wrap");
             }
-            html += "<ul class='k-reset k-multicheck-wrap'></ul><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
-            html += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
-
-            this.form = $('<form class="k-filter-menu"/>').html(html);
-            this.container = this.form.find(".k-multicheck-wrap");
-
-            if (options.search) {
-                this.searchTextBox = this.form.find(".k-textbox > input");
-                this.searchTextBox.on("input", proxy(this._input, this));
-            }
-
             if (this._isMobile) {
-                this.view = this.pane.append(this.form.addClass('k-mobile-list').wrap("<div/>").parent().html());
+                var that = this;
+                that.form = $("<div />")
+                    .html(kendo.template(multiCkeckMobileTemplate)({
+                        field: that.field,
+                        title: options.title || that.field,
+                        ns: kendo.ns,
+                        messages: options.messages,
+                        search: options.search
+                    }));
+
+                that.view = that.pane.append(that.form.html());
+                that.form = that.view.element.find("form");
                 var element = this.view.element;
-                this.form = element.find("form");
                 this.container = element.find(".k-multicheck-wrap");
 
-                var that = this;
                 element
-                    .on("click", ".k-primary", function(e) {
+                    .on("click", ".k-submit", function (e) {
                         that.form.submit();
                         e.preventDefault();
                     })
-                    .on("click", "[type=reset]", function(e) {
-                        that._reset();
+                    .on("click", ".k-cancel", function (e) {
+                        that._closeForm();
                         e.preventDefault();
                     });
             } else {
@@ -978,6 +1006,10 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
+            if (options.search) {
+                this.searchTextBox = this.form.find(".k-textbox > input");
+                this.searchTextBox.on("input", proxy(this._input, this));
+            }
         },
         createCheckAllItem: function () {
             var options = this.options;
@@ -1197,7 +1229,8 @@ var __meta__ = { // jshint ignore:line
                 checkAll: "Select All",
                 clear: "Clear",
                 filter: "Filter",
-                search: "Search"
+                search: "Search",
+                cancel: "Cancel"
             },
             forceUnique: true,
             animations: {

@@ -128,28 +128,37 @@ namespace Kendo.Mvc.UI.Fluent
 			return this;
 		}
 
-		/// <summary>
-		/// Configures the DataSource options.
-		/// </summary>
-		/// <param name="configurator">The DataSource configurator action.</param>
-		/// <example>
-		/// <code lang="CS">
-		///  &lt;%= Html.Kendo().Grid(Model)
-		///             .Name("Grid")
-		///             .Columns(columns =>
-		///                 columns.Bound(o => o.OrderDate)
-		///                        .Filterable(filterable =>
-		///                             filterable.Cell(cell =>
-		///                                     cell.DataSource(ds =>
-		///                                         ds.Read("someAction", "someController")
-		///                                     )
-		///                                 )
-		///                         )
-		///             )
-		/// %&gt;
-		/// </code>
-		/// </example>
-		public GridBoundColumnFilterableBuilder DataSource(Action<ReadOnlyDataSourceBuilder> configurator)
+        /// <summary>
+        /// Show / Hide the Search Box in the filter menu when Multi Checkbox filtering is enabled.
+        /// </summary>
+        public GridBoundColumnFilterableBuilder Search(bool value)
+        {
+            settings.Search = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the DataSource options.
+        /// </summary>
+        /// <param name="configurator">The DataSource configurator action.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Grid(Model)
+        ///             .Name("Grid")
+        ///             .Columns(columns =>
+        ///                 columns.Bound(o => o.OrderDate)
+        ///                        .Filterable(filterable =>
+        ///                             filterable.Cell(cell =>
+        ///                                     cell.DataSource(ds =>
+        ///                                         ds.Read("someAction", "someController")
+        ///                                     )
+        ///                                 )
+        ///                         )
+        ///             )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public GridBoundColumnFilterableBuilder DataSource(Action<ReadOnlyDataSourceBuilder> configurator)
 		{
 			configurator(new ReadOnlyDataSourceBuilder(settings.DataSource, this.viewContext, this.urlGenerator));
 
