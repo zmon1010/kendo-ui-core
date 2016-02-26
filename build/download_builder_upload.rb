@@ -91,7 +91,7 @@ def upload_download_builder_files()
         sleep(3)
 
         if SERVICE_PACK_NUMBER != nil
-            archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}/download-builder"
+            archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}/#{VERSION.gsub('.', '_')}/download-builder"
         else
             archive_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR}/#{VERSION.gsub('.', '_')}/download-builder"
         end
