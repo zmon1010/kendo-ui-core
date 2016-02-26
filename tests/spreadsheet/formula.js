@@ -1442,11 +1442,13 @@
         ss.fill({
             a4: '=index(a1:c3, 2, 2)',
             a5: '=index(a1:c3, 2)',
-            a6: '=index(a1:c3, , 2)'
+            a6: '=index(a1:c3, , 2)',
+            a7: '=index((a1:b2, b2:c3), 2, 2, 2)',
         });
         ss.recalculate(function(){
             ss.expectEqual({
                 a4: 5,
+                a7: 9,
             });
             equal(JSON.stringify(ss.$("a5").data), "[[4,5,6]]");
             equal(JSON.stringify(ss.$("a6").data), "[[2],[5],[8]]");

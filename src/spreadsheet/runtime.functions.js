@@ -1455,20 +1455,22 @@
         [ "approx", [ "or", "logical", [ "null", true ]]]
     ]);
 
-    defineFunction("index", function(m, row, col){
-        if (row == null && col == null) {
+    defineFunction("index", function(ref, row, col, areanum){
+        var m = ref instanceof UnionRef ? ref.refs[areanum - 1] : ref;
+        if ((!row && !col) || !m) {
             return new CalcError("N/A");
         }
+        m = this.asMatrix(m);
         if (m.width > 1 && m.height > 1) {
-            if (row != null && col != null) {
+            if (row && col) {
                 return m.get(row - 1, col - 1);
             }
-            if (row == null) {
+            if (!row) {
                 return m.mapRow(function(row){
                     return m.get(row, col - 1);
                 });
             }
-            if (col == null) {
+            if (!col) {
                 return m.mapCol(function(col){
                     return m.get(row - 1, col);
                 });
@@ -1482,9 +1484,10 @@
         }
         return new CalcError("REF");
     }).args([
-        [ "range", "matrix" ],
-        [ "row", [ "or", "integer++", "null" ]],
-        [ "col", [ "or", "integer++", "null" ]]
+        [ "range", [ "or", "matrix", "ref" ] ],
+        [ "row", [ "or", "integer+", "null" ] ],
+        [ "col", [ "or", "integer+", "null" ] ],
+        [ "areanum", [ "or", "integer++", [ "null", 1 ] ] ]
     ]);
 
     defineFunction("indirect", function(thing){
