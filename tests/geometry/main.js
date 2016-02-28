@@ -723,6 +723,18 @@
         ok(!rect.equals());
     });
 
+    test("contains point returns true if point is inside area", function() {
+        equal(rect.containsPoint(new Point(5, 5)), true);
+    });
+
+    test("contains point returns true if point is on path", function() {
+        equal(rect.containsPoint(new Point(5, 0)), true);
+    });
+
+    test("contains point returns false if point is outside", function() {
+        equal(rect.containsPoint(new Point(11, 5)), false);
+    });
+
     // ------------------------------------------------------------
     (function() {
         module("Rect / Class methods");

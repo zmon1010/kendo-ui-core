@@ -313,6 +313,12 @@
                 this.topLeft().transform(m),
                 this.bottomRight().transform(m)
             );
+        },
+
+        containsPoint: function(point) {
+            var origin = this.origin;
+            var bottomRight = this.bottomRight();
+            return !(point.x < origin.x || point.y < origin.y || bottomRight.x < point.x || bottomRight.y < point.y);
         }
     });
 
