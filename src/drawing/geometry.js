@@ -421,6 +421,13 @@
                 c.x - r * math.cos(angle),
                 c.y - r * math.sin(angle)
             );
+        },
+
+        containsPoint: function(point) {
+            var center = this.center;
+            var inCircle = math.pow(point.x - center.x, 2) +
+                math.pow(point.y - center.y, 2) <= math.pow(this.radius, 2);
+            return inCircle;
         }
     });
     defineAccessors(Circle.fn, ["radius"]);

@@ -887,6 +887,20 @@
         compareBoundingBox(rect, [-20,-10,20,10]);
     });
 
+    test("contains point returns true if point is inside area", function() {
+        equal(circle.containsPoint(new Point(5, 5)), true);
+    });
+
+    test("contains point returns true if point is on path", function() {
+        equal(circle.containsPoint(circle.pointAt(45)), true);
+    });
+
+    test("contains point returns false if point is outside", function() {
+        var point = circle.pointAt(45);
+        point.x++;
+        equal(rect.containsPoint(point), false);
+    });
+
     // ------------------------------------------------------------
     var arc,
         ARC_POINT_TOLERANCE = 0.1;
