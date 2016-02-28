@@ -581,6 +581,33 @@
             var radian = rad(angle);
 
             return new Point(-arc.radiusX * math.sin(radian), arc.radiusY * math.cos(radian));
+        },
+
+        containsPoint: function(point) {
+            var interval = this._arcInterval();
+            var intervalAngle = interval.endAngle - interval.startAngle;
+            var center = this.center;
+            var distance = center.distanceTo(point);
+            var angleRad = math.atan2(point.y - center.y, point.x - center.x);
+            var pointRadius = (this.radiusX * this.radiusY) /
+                math.sqrt(math.pow(this.radiusX, 2) * math.pow(math.sin(angleRad), 2) + math.pow(this.radiusY, 2) * math.pow(math.cos(angleRad), 2));
+            var startPoint = this.pointAt(this.startAngle);
+            var endPoint = this.pointAt(this.endAngle);
+            var intersection = lineIntersection(center, point, startPoint, endPoint);
+            var containsPoint;
+
+            if (intervalAngle < 180) {
+                containsPoint = intersection && closeOrLess(center.distanceTo(intersection), distance) && closeOrLess(distance, pointRadius);
+            } else {
+                var angle = calculateAngle(center.x, center.y, this.radiusX, this.radiusY, point.x, point.y);
+                if (angle != 360) {
+                    angle = (360 + angle) % 360;
+                }
+
+                var inAngleRange = interval.startAngle <= angle && angle <= interval.endAngle;
+                containsPoint = (inAngleRange && closeOrLess(distance, pointRadius)) || (!inAngleRange && (!intersection || intersection.equals(point)));
+            }
+            return containsPoint;
         }
     });
     defineAccessors(Arc.fn, ["radiusX", "radiusY", "startAngle", "endAngle", "anticlockwise"]);
