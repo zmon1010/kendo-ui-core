@@ -1050,6 +1050,41 @@
             compareBoundingBox(circle.rawBBox(), [-10, -10, 10, 10]);
         });
 
+
+        test("containsPoint returns false if circle is not filled", function() {
+            ok(!circle.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if circle is not visible", function() {
+            circle.fill("red");
+            circle.visible(false);
+            ok(!circle.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if point is out of circle", function() {
+            circle.fill("red");
+            equal(circle.containsPoint(new Point(15, 5)), false);
+        });
+
+        test("containsPoint returns true if point is in circle", function() {
+            circle.fill("red");
+            equal(circle.containsPoint(new Point(5, 5)), true);
+        });
+
+        test("containsPoint returns true if point is in transformed circle", function() {
+            circle.fill("red");
+            circle.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(circle.containsPoint(new Point(100, 100)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed circle", function() {
+            circle.fill("red");
+            circle.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(circle.containsPoint(new Point(5, 5)), false);
+        });
+
         shapeBaseTests(Circle, "Circle");
     })();
 

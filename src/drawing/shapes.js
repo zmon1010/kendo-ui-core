@@ -482,6 +482,10 @@
 
         rawBBox: function() {
             return this._geometry.bbox();
+        },
+
+        _containsPoint: function(point) {
+            return this.geometry().containsPoint(point);
         }
     });
     drawing.mixins.Paintable.extend(Circle.fn);
