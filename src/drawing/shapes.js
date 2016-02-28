@@ -650,6 +650,16 @@
                 min: min,
                 max: max
             };
+        },
+
+        _intersectionsTo: function(segment, point) {
+            var intersectionsCount;
+            if (this.controlOut() && segment.controlIn()) {
+                intersectionsCount = g.curveIntersectionsCount([this.anchor(), this.controlOut(), segment.controlIn(), segment.anchor()], point, this.bboxTo(segment));
+            } else {
+                intersectionsCount = g.lineIntersectionsCount(this.anchor(), segment.anchor(), point);
+            }
+            return intersectionsCount;
         }
     });
     definePointAccessors(Segment.fn, ["anchor", "controlIn", "controlOut"]);
@@ -766,6 +776,25 @@
 
         rawBBox: function() {
             return this._bbox();
+        },
+
+        _containsPoint: function(point) {
+            var segments = this.segments;
+            var length = segments.length;
+            var intersectionsCount = 0;
+            var previous, current;
+
+            for (var idx = 1; idx < length; idx++) {
+                previous = segments[idx - 1];
+                current = segments[idx];
+                intersectionsCount += previous._intersectionsTo(current, point);
+            }
+
+            if (this.options.closed || !segments[0].anchor().equals(segments[length - 1].anchor())) {
+                intersectionsCount += g.lineIntersectionsCount(segments[0].anchor(), segments[length - 1].anchor(), point);
+            }
+
+            return intersectionsCount % 2 !== 0;
         },
 
         _bbox: function(matrix) {

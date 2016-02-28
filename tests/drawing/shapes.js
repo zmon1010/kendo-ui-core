@@ -1838,6 +1838,82 @@
             compareBoundingBox(path.rawBBox(), [0, 0, 100, 100]);
         });
 
+        // ------------------------------------------------------------
+        module("Path / containsPoint", {
+            setup: function() {
+                path = new Path().fill("red");
+                path.moveTo(50, 50).lineTo(100, 100).lineTo(0, 100);
+            }
+        });
+
+        test("returns false if path is not filled", function() {
+            path.fill("none");
+            ok(!path.containsPoint(new Point(50, 80)));
+        });
+
+        test("returns false if path is not visible", function() {
+            path.visible(false);
+            ok(!path.containsPoint(new Point(50, 80)));
+        });
+
+        test("returns false if point is out of path", function() {
+            equal(path.containsPoint(new Point(80, 70)), false);
+        });
+
+        test("returns true if point is in path", function() {
+            equal(path.containsPoint(new Point(50, 80)), true);
+        });
+
+        test("detects points which ray passes through a vertex", function() {
+            path.moveTo(50, 50).lineTo(100, 50).lineTo(60, 80).lineTo(90, 100).lineTo(0, 100);
+            equal(path.containsPoint(new Point(90, 55)), true);
+        });
+
+        test("returns true if point is in transformed path", function() {
+            path.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(path.containsPoint(new Point(200, 115)), true);
+        });
+
+        test("returns false if point is outside of transformed path", function() {
+            path.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(path.containsPoint(new Point(50, 80)), false);
+        });
+
+
+        // ------------------------------------------------------------
+        module("Path / containsPoint / curves", {
+            setup: function() {
+                path = new Path().fill("red");
+                path.moveTo(200, 200)
+                    .curveTo(Point.create(210, 290),
+                        Point.create(250, 110),
+                        Point.create(245, 200))
+                    .curveTo(Point.create(250, 310),
+                        Point.create(300, 250),
+                        Point.create(250, 150));
+            }
+        });
+
+        test("detects points in curve segments", function() {
+            equal(path.containsPoint(new Point(260, 190)), true);
+        });
+
+        test("detects points in bbox but outside of closed area", function() {
+            equal(path.containsPoint(new Point(240, 190)), false);
+        });
+
+        test("detects points in transformed curve segments", function() {
+            path.transform(g.transform().translate(100, 100).rotate(-45));
+            equal(path.containsPoint(new Point(400, 90)), true);
+        });
+
+        test("detects points out of transformed curve segments", function() {
+            path.transform(g.transform().translate(100, 100).rotate(-45));
+            equal(path.containsPoint(new Point(400, 60)), false);
+        });
+
         shapeBaseTests(Path, "Path");
 
         // ------------------------------------------------------------

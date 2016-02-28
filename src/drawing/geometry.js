@@ -23,7 +23,8 @@
 
     var PI_DIV_2 = math.PI / 2,
         MIN_NUM = util.MIN_NUM,
-        MAX_NUM = util.MAX_NUM;
+        MAX_NUM = util.MAX_NUM,
+        PRECISION = 10;
 
     // Geometrical primitives =================================================
     var Point = Class.extend({
@@ -591,8 +592,8 @@
             var angleRad = math.atan2(point.y - center.y, point.x - center.x);
             var pointRadius = (this.radiusX * this.radiusY) /
                 math.sqrt(math.pow(this.radiusX, 2) * math.pow(math.sin(angleRad), 2) + math.pow(this.radiusY, 2) * math.pow(math.cos(angleRad), 2));
-            var startPoint = this.pointAt(this.startAngle);
-            var endPoint = this.pointAt(this.endAngle);
+            var startPoint = this.pointAt(this.startAngle).round(PRECISION);
+            var endPoint = this.pointAt(this.endAngle).round(PRECISION);
             var intersection = lineIntersection(center, point, startPoint, endPoint);
             var containsPoint;
 
@@ -976,12 +977,178 @@
         };
     }
 
+    var ComplexNumber = function(real, img) {
+        this.real  = real || 0;
+        this.img = img || 0;
+    };
+
+    ComplexNumber.fn = ComplexNumber.prototype = {
+        add: function(cNumber) {
+            return new ComplexNumber(round(this.real + cNumber.real, PRECISION), round(this.img + cNumber.img, PRECISION));
+        },
+
+        addConstant: function(value) {
+            return new ComplexNumber(this.real + value, this.img);
+        },
+
+        negate: function(){
+            return new ComplexNumber(-this.real, -this.img);
+        },
+
+        multiply: function(cNumber) {
+            return new ComplexNumber(this.real * cNumber.real - this.img * cNumber.img,
+                this.real * cNumber.img + this.img * cNumber.real);
+        },
+
+        multiplyConstant: function(value) {
+            return new ComplexNumber(this.real * value, this.img * value);
+        },
+
+        nthRoot: function(n) {
+            var rad = math.atan2(this.img, this.real),
+                r = math.sqrt(math.pow(this.img, 2) + math.pow(this.real, 2)),
+                nthR = math.pow(r, 1 / n);
+            return new ComplexNumber(nthR * math.cos(rad / n), nthR * math.sin(rad / n)); //Moivre's formula
+        },
+
+        equals: function(cNumber) {
+            return this.real === cNumber.real && this.img === cNumber.img;
+        },
+
+        isReal: function() {
+            return this.img === 0;
+        }
+    };
+
+    //Cardano's formula
+    function solveCubic(a, b, c, d) {
+        var p =  (3 * a * c - math.pow(b, 2)) / (3 * math.pow(a, 2)),
+            q =  (2 * math.pow(b, 3) - 9 * a * b * c + 27 * math.pow(a, 2) * d) / (27 * math.pow(a, 3)),
+            Q = math.pow(p / 3, 3) + math.pow(q / 2, 2),
+            i = new ComplexNumber(0,1),
+            b3a = -b / (3 * a),
+            x1, x2,
+            y1, y2, y3,
+            result = [],
+            z1, z2;
+
+        if (Q < 0) {
+            x1 = new ComplexNumber(-q / 2, math.sqrt(-Q)).nthRoot(3);
+            x2 = new ComplexNumber(-q / 2, - math.sqrt(-Q)).nthRoot(3);
+        } else {
+            x1 = -q / 2 + math.sqrt(Q);
+            x1 = new ComplexNumber(numberSign(x1) * math.pow(math.abs(x1), 1/3));
+            x2 = -q / 2 - math.sqrt(Q);
+            x2 = new ComplexNumber(numberSign(x2) * math.pow(math.abs(x2), 1/3));
+        }
+
+        y1 = x1.add(x2);
+
+        z1 = x1.add(x2).multiplyConstant(-1 / 2);
+        z2 = x1.add(x2.negate()).multiplyConstant(math.sqrt(3) / 2);
+
+        y2 = z1.add(i.multiply(z2));
+        y3 = z1.add(i.negate().multiply(z2));
+
+        if (y1.isReal()) {
+            result.push(round(y1.real + b3a, PRECISION));
+        }
+        if (y2.isReal()) {
+            result.push(round(y2.real + b3a, PRECISION));
+        }
+        if (y3.isReal()) {
+            result.push(round(y3.real + b3a, PRECISION));
+        }
+
+        return result;
+    }
+
+    function toCubicPolynomial(points, field) {
+        return [-points[0][field] + 3 * points[1][field] - 3 * points[2][field] + points[3][field],
+            3 * (points[0][field] - 2 * points[1][field] + points[2][field]),
+            3 * (-points[0][field] + points[1][field]),
+            points[0][field]
+        ];
+    }
+
+    function calculateCurveAt(t, field, points) {
+        var t1 = 1- t;
+        return math.pow(t1, 3) * points[0][field] +
+            3 * math.pow(t1, 2) * t * points[1][field] +
+            3 * math.pow(t, 2) * t1 * points[2][field] +
+            math.pow(t, 3) * points[3][field];
+    }
+
+    function curveIntersectionsCount(points, point, bbox) {
+        var polynomial = toCubicPolynomial(points, "x");
+        var roots = solveCubic(polynomial[0], polynomial[1], polynomial[2], polynomial[3] - point.x);
+        var count = 0;
+        var rayIntersection;
+        var intersectsRay;
+        for (var i = 0; i < roots.length ; i++) {
+            rayIntersection = calculateCurveAt(roots[i], "y", points);
+            intersectsRay = close(rayIntersection, point.y, PRECISION) || rayIntersection > point.y;
+            if (intersectsRay && (((roots[i] === 0 || roots[i] === 1) && bbox.bottomRight().x > point.x) || (0 < roots[i] && roots[i] < 1))) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    function lineIntersectionsCount(a, b, point) {
+        var intersects;
+        if (a.x != b.x) {
+            var minX = math.min(a.x, b.x),
+                maxX = math.max(a.x, b.x),
+                minY = math.min(a.y, b.y),
+                maxY = math.max(a.y, b.y),
+                inRange = minX <= point.x && point.x < maxX;
+
+            if (minY == maxY) {
+                intersects = point.y <= minY && inRange;
+            } else {
+                intersects = inRange && (((maxY - minY) * ((a.x - b.x) * (a.y - b.y) > 0 ? point.x - minX : maxX - point.x)) / (maxX - minX) + minY - point.y) >= 0;
+            }
+        }
+        return intersects ? 1 : 0;
+    }
+
+    function lineIntersection (p0, p1, p2, p3) {
+        var s1x = p1.x - p0.x;
+        var s2x = p3.x - p2.x;
+        var s1y = p1.y - p0.y;
+        var s2y = p3.y - p2.y;
+        var nx = p0.x - p2.x;
+        var ny = p0.y - p2.y;
+        var d = s1x * s2y - s2x * s1y;
+        var s = (s1x * ny - s1y * nx) / d;
+        var t = (s2x * ny - s2y * nx) / d;
+
+        if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
+            return new Point(p0.x + t * s1x, p0.y + t * s1y);
+        }
+    }
+
+    function close(a, b, tolerance) {
+        return round(math.abs(a - b), tolerance || PRECISION) === 0;
+    }
+
+    function closeOrLess(a, b, tolerance) {
+        return a < b || close(a, b, tolerance);
+    }
+
+    function numberSign(x) {
+        return x < 0 ? -1 : 1;
+    }
 
     // Exports ================================================================
     deepExtend(kendo, {
         geometry: {
             Arc: Arc,
             Circle: Circle,
+            curveIntersectionsCount: curveIntersectionsCount,
+            lineIntersectionsCount: lineIntersectionsCount,
             Matrix: Matrix,
             Point: Point,
             Rect: Rect,
