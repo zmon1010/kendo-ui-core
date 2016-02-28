@@ -2065,6 +2065,37 @@
             image.transform(g.transform().scale(2, 2));
             compareBoundingBox(image.rawBBox(), [0, 0, 100, 100]);
         });
+
+        test("containsPoint returns false if no source is set", function() {
+            image.src("");
+            ok(!image.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if image is not visible", function() {
+            image.visible(false);
+            ok(!image.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if point is out of image rect", function() {
+            equal(image.containsPoint(new Point(105, 5)), false);
+        });
+
+        test("containsPoint returns true if point is in image rect", function() {
+            equal(image.containsPoint(new Point(5, 5)), true);
+        });
+
+        test("containsPoint returns true if point is in transformed image", function() {
+            image.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(image.containsPoint(new Point(150, 100)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed image", function() {
+            image.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(image.containsPoint(new Point(5, 5)), false);
+        });
+
     })();
 
     // ------------------------------------------------------------
@@ -2177,7 +2208,41 @@
             compareBoundingBox(rect.rawBBox(), [0, 0, 10, 10]);
         });
 
-        shapeBaseTests(Circle, "Circle");
+        test("containsPoint returns false if rect is not filled", function() {
+            ok(!rect.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if rect is not visible", function() {
+            rect.fill("red");
+            rect.visible(false);
+            ok(!rect.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if point is out of rect", function() {
+            rect.fill("red");
+            equal(rect.containsPoint(new Point(15, 5)), false);
+        });
+
+        test("containsPoint returns true if point is in rect", function() {
+            rect.fill("red");
+            equal(rect.containsPoint(new Point(5, 5)), true);
+        });
+
+        test("containsPoint returns true if point is in transformed rect", function() {
+            rect.fill("red");
+            rect.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(rect.containsPoint(new Point(110, 100)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed rect", function() {
+            rect.fill("red");
+            rect.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(rect.containsPoint(new Point(5, 5)), false);
+        });
+
+        shapeBaseTests(Rect, "Rect");
     })();
 
     // ------------------------------------------------------------

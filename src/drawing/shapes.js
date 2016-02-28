@@ -157,6 +157,22 @@
             }
         },
 
+        containsPoint: function(point, parentTransform) {
+            if (this.visible() && this._hasFill()) {
+                var transform = this.currentTransform(parentTransform);
+                if (transform) {
+                    point = point.transformCopy(transform.matrix().invert());
+                }
+                return this._containsPoint(point);
+            }
+            return false;
+        },
+
+        _hasFill: function() {
+            var fill = this.options.fill;
+            return fill && !util.isTransparent(fill.color);
+        },
+
         _clippedBBox: function(transformation) {
             return this.bbox(transformation);
         }
@@ -890,6 +906,14 @@
 
         rawBBox: function() {
             return this._rect.bbox();
+        },
+
+        _containsPoint: function(point) {
+            return this._rect.containsPoint(point);
+        },
+
+        _hasFill: function() {
+            return this.src();
         }
     });
     defineGeometryAccessors(Image.fn, ["rect"]);
@@ -1058,6 +1082,10 @@
 
         rawBBox: function() {
             return this._geometry.bbox();
+        },
+
+        _containsPoint: function(point) {
+            return this._geometry.containsPoint(point);
         }
     });
 
