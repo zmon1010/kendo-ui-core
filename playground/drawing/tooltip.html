@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.common.min.css" rel="stylesheet" /><link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.rtl.min.css" rel="stylesheet" /><link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.default.min.css" rel="stylesheet" /><link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.default.mobile.min.css" rel="stylesheet" />
+
+    <script src="../../src/jquery.js"></script>
+    <script src="../../src/kendo.core.js"></script>
+    <script src="../../src/kendo.fx.js"></script>
+    <script src="../../src/kendo.popup.js"></script>
+    <script src="../../src/kendo.color.js"></script>
+    <script src="../../src/util/main.js"></script>
+    <script src="../../src/mixins/observers.js"></script>
+    <script src="../../src/drawing/geometry.js"></script>
+    <script src="../../src/drawing/core.js"></script>
+    <script src="../../src/drawing/mixins.js"></script>
+    <script src="../../src/util/text-metrics.js"></script>
+    <script src="../../src/drawing/shapes.js"></script>
+    <script src="../../src/drawing/search.js"></script>
+    <script src="../../src/drawing/animation.js"></script>
+    <script src="../../src/drawing/parser.js"></script>
+    <script src="../../src/drawing/svg.js"></script>
+    <script src="../../src/drawing/canvas.js"></script>
+    <script src="../../src/drawing/vml.js"></script>
+  </head>
+  <body>
+
+ <div id="container" style="margin-top:200px;border:1px solid black;"></div>
+
+        <script>
+            var TOLERANCE = 0.01,
+                PRECISION = 10,
+                math = Math,
+                Class = kendo.Class,
+                dataviz = kendo.dataviz,
+                Rect = dataviz.geometry.Rect,
+                round = kendo.util.round,
+                geometry = dataviz.geometry,
+                Point = geometry.Point,
+                Circle = geometry.Circle,
+                drawing = dataviz.drawing,
+                Path = drawing.Path,
+                Segment = drawing.Segment,
+                Surface = drawing.Surface,
+                container = $("#container"),
+                surface = Surface.create(container[0], {width: 700, height: 700, type: "canvas"}),
+                group = new drawing.Group(),
+                DEFAULT_OPACITY = 0.8,
+                options = {fill: {color: "red", opacity: DEFAULT_OPACITY}},
+                blueOptions = {fill: {color: "blue", opacity: DEFAULT_OPACITY}},
+                group = new drawing.Group(),
+                currentPath;
+
+            createPaths(group);
+            surface.draw(group);
+            surface.enableTracking();
+
+            appendPaths(group);
+
+            drawPaths();
+
+            surface.bind("mouseenter", function(e) {
+                //console.log("mouseenter", e);
+            });
+
+            surface.bind("mouseleave", function(e) {
+                //console.log("mouseleave", e);
+            });
+
+            surface.bind("click", function(e) {
+                //console.log("click", e);
+            });
+
+            function appendPaths(group) {
+                var arc = new drawing.Arc(new geometry.Arc([250, 300], {radiusX: 100, radiusY: 50, startAngle: 50, endAngle: 280}), $.extend(true, {}, options, {
+                    stroke: {
+                        color: "black",
+                        width: 1
+                    },
+                    fill: {
+                        color: "green"
+                    }
+                }));
+                arc.options.tooltip = {
+                    content: "New Path",
+                    position: "top"
+                };
+                group.append(arc);
+
+
+                group.append(new drawing.Circle(new geometry.Circle([250, 300], 5), blueOptions));
+            }
+
+            function drawPaths() {
+                var arc = new drawing.Arc(new geometry.Arc([350, 300], {radiusX: 100, radiusY: 50, startAngle: 0, endAngle: 360}), $.extend({}, options, {
+                    stroke: {
+                        color: "black",
+                        width: 1
+                    }
+                }));
+                arc.options.tooltip = {
+                    content: "New Draw",
+                    position: "cursor"
+                };
+
+                surface.draw(arc);
+            }
+
+            function createPaths(group) {
+
+                //M100 100 L 100 200 145 200 C 245 190 100 140 200 100 z
+                 var path0 = new Path(options);
+                 path0.moveTo(100, 100);
+                 path0.lineTo(100, 200);
+                 path0.lineTo(145, 200);
+                 path0.curveTo(Point.create(245, 190),
+                        Point.create(100, 140),
+                        Point.create(200,100));
+                path0.lineTo(100, 100);
+                group.append(path0);
+
+                //M50 200 C 150 190 150 130 70 80 L 50 100 z
+                var path1 = new Path(blueOptions);
+                path1.moveTo(50, 200);
+                path1.curveTo(Point.create(150, 190),
+                        Point.create(150, 130),
+                        Point.create(70, 80));
+                path1.lineTo(50, 100);
+                path1.lineTo(50, 200);
+                group.append(path1);
+
+                path1.options.tooltip = {
+                    content: "BOR",
+                    width: 200,
+                    height: 100
+                };
+                //M200 200 C 210 290 250 110 245 200 C 250 310 300 250 250 150 z
+                var path2 = new Path(options);
+                path2.moveTo(200, 200);
+                path2.curveTo(Point.create(210, 290),
+                    Point.create(250, 110),
+                    Point.create(245, 200));
+                path2.curveTo(Point.create(250, 310),
+                    Point.create(300, 250),
+                    Point.create(250, 150));
+                //path2.lineTo(200, 200);
+                group.append(path2);
+
+
+
+                //M300 300 L 300 400 C 310 300 350 300 380 400 L 380 300 z
+                var path3 = new Path(options);
+                path3.moveTo(300, 300);
+                path3.lineTo(300, 400);
+                path3.curveTo(Point.create(310, 300),
+                    Point.create(350, 300),
+                    Point.create(380, 400));
+                path3.lineTo(380, 300);
+                path3.lineTo(300, 300);
+                path3.transform(geometry.transform().translate(100, 100).rotate(-45));
+                group.append(path3);
+                path3.options.tooltip = {
+                    content: "CHVOR",
+                    position: "bottom"
+                };
+
+                var circle = new drawing.Circle(new geometry.Circle(new Point(150, 300), 50), options);
+                group.append(circle);
+                group.options.tooltip = {
+                    content: "KOR",
+                    position: "cursor"
+                };
+                circle.options.tooltip = {
+                    content: "MOR",
+                    position: "left"
+                };
+
+                group.append(new drawing.Circle(new geometry.Circle(new Point(170, 320), 30), blueOptions));
+
+                group.append(new drawing.Text("KOR", [200, 50], blueOptions));
+                var arc = new drawing.Arc(new geometry.Arc([150, 100], {radiusX: 50, radiusY: 100, startAngle: 0, endAngle: 130}), blueOptions);
+                arc.options.tooltip = {
+                    content: "BAR",
+                    position: "right"
+                };
+                group.append(arc);
+            }
+
+
+        </script>
+
+  </body>
+</html>
