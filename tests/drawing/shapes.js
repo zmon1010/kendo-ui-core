@@ -605,6 +605,43 @@
         });
 
         // ------------------------------------------------------------
+        module("Group / containsPoint", {
+            setup: function() {
+                var circle = new Circle(new g.Circle(new Point(0, 0), 10), {fill: { color: "red"}});
+                group = new Group();
+                group.append(circle);
+            }
+        });
+
+        test("containsPoint returns false if group is not visible", function() {
+            group.visible(false);
+            ok(!group.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if children do not contain point", function() {
+            equal(group.containsPoint(new Point(15, 5)), false);
+        });
+
+        test("containsPoint returns true if a child contains the point", function() {
+            equal(group.containsPoint(new Point(5, 5)), true);
+        });
+
+        test("containsPoint returns true if a transformed child contains the point", function() {
+            group.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(group.containsPoint(new Point(100, 100)), true);
+        });
+
+        test("containsPoint passes current transformation to children", function() {
+            var transform = g.transform().translate(100, 100).rotate(-45);
+            group.transform(transform);
+            group.children[0].containsPoint = function(point, currentTransform) {
+                ok(transform.equals(currentTransform));
+            };
+            group.containsPoint(new Point(5, 5))
+        });
+
+        // ------------------------------------------------------------
         module("Group / insertAt", {
             setup: function() {
                 group = new Group();

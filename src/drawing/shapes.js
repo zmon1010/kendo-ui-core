@@ -386,6 +386,19 @@
             return Element.fn.currentTransform.call(this, transformation) || null;
         },
 
+        containsPoint: function(point, parentTransform) {
+            if (this.visible()) {
+                var children = this.children;
+                var transform = this.currentTransform(parentTransform);
+                for (var idx = 0; idx < children.length; idx++) {
+                    if (children[idx].containsPoint(point, transform)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        },
+
         _reparent: function(elements, newParent) {
             for (var i = 0; i < elements.length; i++) {
                 var child = elements[i];
