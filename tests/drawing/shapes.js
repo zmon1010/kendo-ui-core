@@ -1050,7 +1050,6 @@
             compareBoundingBox(circle.rawBBox(), [-10, -10, 10, 10]);
         });
 
-
         test("containsPoint returns false if circle is not filled", function() {
             ok(!circle.containsPoint(new Point(5, 5)));
         });
@@ -1200,6 +1199,41 @@
 
             compareBoundingBox(arc.rawBBox(), [50, 100, 150, 200]);
         });
+
+        test("containsPoint returns false if arc is not filled", function() {
+            ok(!arc.containsPoint(new Point(100, 110)));
+        });
+
+        test("containsPoint returns false if arc is not visible", function() {
+            arc.fill("red");
+            arc.visible(false);
+            ok(!arc.containsPoint(new Point(100, 110)));
+        });
+
+        test("containsPoint returns false if point is out of arc", function() {
+            arc.fill("red");
+            equal(arc.containsPoint(new Point(100, 95)), false);
+        });
+
+        test("containsPoint returns true if point is in arc", function() {
+            arc.fill("red");
+            equal(arc.containsPoint(new Point(100, 110)), true);
+        });
+
+        test("containsPoint returns true if point is in transformed arc", function() {
+            arc.fill("red");
+            arc.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(arc.containsPoint(new Point(250, 150)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed arc", function() {
+            arc.fill("red");
+            arc.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(arc.containsPoint(new Point(100, 110)), false);
+        });
+
     })();
 
     // ------------------------------------------------------------

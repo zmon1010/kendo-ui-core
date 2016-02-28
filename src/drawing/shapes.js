@@ -532,6 +532,10 @@
             }
 
             return path;
+        },
+
+        _containsPoint: function(point) {
+            return this.geometry().containsPoint(point);
         }
     });
     drawing.mixins.Paintable.extend(Arc.fn);
