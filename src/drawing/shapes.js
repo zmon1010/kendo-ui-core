@@ -928,6 +928,17 @@
             return elementsBoundingBox(this.paths, false);
         },
 
+        _containsPoint: function(point) {
+            var paths = this.paths;
+
+            for (var idx = 0; idx < paths.length; idx++) {
+                if (paths[idx]._containsPoint(point)) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
         _clippedBBox: function(transformation) {
             return elementsClippedBoundingBox(this.paths, this.currentTransform(transformation));
         }

@@ -1881,7 +1881,6 @@
             equal(path.containsPoint(new Point(50, 80)), false);
         });
 
-
         // ------------------------------------------------------------
         module("Path / containsPoint / curves", {
             setup: function() {
@@ -2168,6 +2167,55 @@
             multiPath.transform(g.transform(Matrix.scale(2, 2)));
 
             compareBoundingBox(multiPath.rawBBox(), [50, 50, 200, 200]);
+        });
+
+        // ------------------------------------------------------------
+        module("MultiPath / containsPoint", {
+            setup: function() {
+                multiPath = new MultiPath();
+                multiPath.fill("red");
+                multiPath.moveTo(200, 200)
+                    .curveTo(Point.create(210, 290),
+                        Point.create(250, 110),
+                        Point.create(245, 200))
+                    .curveTo(Point.create(250, 310),
+                        Point.create(300, 250),
+                        Point.create(250, 150))
+
+
+                multiPath.moveTo(50, 50).lineTo(100, 100).lineTo(0, 100);
+            }
+        });
+
+        test("containsPoint returns false if path is not filled", function() {
+            multiPath.fill("none");
+            ok(!multiPath.containsPoint(new Point(50, 80)));
+        });
+
+        test("returns false if path is not visible", function() {
+            multiPath.visible(false);
+            ok(!multiPath.containsPoint(new Point(50, 80)));
+        });
+
+        test("returns false if point is out of path", function() {
+            equal(multiPath.containsPoint(new Point(80, 70)), false);
+        });
+
+        test("returns true if point is in one of the paths", function() {
+            equal(multiPath.containsPoint(new Point(50, 80)), true);
+            equal(multiPath.containsPoint(new Point(260, 190)), true);
+        });
+
+        test("returns true if point is in transformed path", function() {
+            multiPath.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(multiPath.containsPoint(new Point(200, 115)), true);
+        });
+
+        test("returns false if point is outside of transformed path", function() {
+            multiPath.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(multiPath.containsPoint(new Point(50, 80)), false);
         });
 
         shapeBaseTests(MultiPath, "MultiPath");
