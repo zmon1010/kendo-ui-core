@@ -908,6 +908,36 @@
             deepEqual(text.measure(), d.util.measureText("Foo", { font: "15px sans-serif" }));
         });
 
+        test("containsPoint returns false if text has no fill", function() {
+            text.fill("none");
+            ok(!text.containsPoint(new Point(105, 105)));
+        });
+
+        test("containsPoint returns false if text is not visible", function() {
+            text.visible(false);
+            ok(!text.containsPoint(new Point(105, 105)));
+        });
+
+        test("containsPoint returns false if point is out of text bounds", function() {
+            equal(text.containsPoint(new Point(125, 105)), false);
+        });
+
+        test("containsPoint returns true if point is in text bounds", function() {
+            equal(text.containsPoint(new Point(105, 105)), true);
+        });
+
+        test("containsPoint returns true if point is in transformed text", function() {
+            text.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(text.containsPoint(new Point(255, 100)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed text", function() {
+            text.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(text.containsPoint(new Point(105, 105)), false);
+        });
+
         shapeBaseTests(Text, "Text");
     })();
 

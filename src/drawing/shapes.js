@@ -448,6 +448,10 @@
 
         rawBBox: function() {
             return this.rect().bbox();
+        },
+
+        _containsPoint: function(point) {
+            return this.rect().containsPoint(point);
         }
     });
     drawing.mixins.Paintable.extend(Text.fn);
