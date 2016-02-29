@@ -2672,4 +2672,4 @@
     <Compile Include="UI\Spreadsheet\Settings\SpreadsheetPdfMarginSettings.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetPdfMarginSettingsBuilder.cs" />
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Include="UI\Spreadsheet\Settings\SpreadsheetToolbarSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetToolbarSettingsBuilder.cs" /></ItemGroup></Project>

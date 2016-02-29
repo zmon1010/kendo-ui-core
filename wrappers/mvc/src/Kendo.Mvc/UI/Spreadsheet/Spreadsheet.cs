@@ -25,6 +25,8 @@ namespace Kendo.Mvc.UI
                 
             Sheets = new List<SpreadsheetSheet>();
                 
+            Toolbar = new SpreadsheetToolbarSettings();
+                
         //<< Initialization
         }
 
@@ -64,7 +66,11 @@ namespace Kendo.Mvc.UI
         
         public bool? Sheetsbar { get; set; }
         
-        public bool? Toolbar { get; set; }
+        public SpreadsheetToolbarSettings Toolbar
+        {
+            get;
+            set;
+        }
         
         //<< Fields
 
@@ -131,11 +137,14 @@ namespace Kendo.Mvc.UI
                 json["sheetsbar"] = Sheetsbar;
             }
                 
-            if (Toolbar.HasValue)
+            var toolbar = Toolbar.ToJson();
+            if (toolbar.Any())
             {
-                json["toolbar"] = Toolbar;
+                json["toolbar"] = toolbar;
+            } else if (Toolbar.Enabled != true) {
+                json["toolbar"] = Toolbar.Enabled;
             }
-                
+
         //<< Serialization
 
             if (DplSettings != null)

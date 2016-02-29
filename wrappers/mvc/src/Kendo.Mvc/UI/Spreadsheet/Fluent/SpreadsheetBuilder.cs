@@ -140,14 +140,27 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+
         /// <summary>
         /// A boolean value indicating if the toolbar should be displayed.
         /// </summary>
-        /// <param name="value">The value that configures the toolbar.</param>
-        public SpreadsheetBuilder Toolbar(bool value)
+        /// <param name="enabled">Enables or disables the toolbar option.</param>
+        public SpreadsheetBuilder Toolbar(bool enabled)
         {
-            container.Toolbar = value;
+            container.Toolbar.Enabled = enabled;
+            return this;
+        }
 
+        
+        /// <summary>
+        /// A boolean value indicating if the toolbar should be displayed.
+        /// </summary>
+        /// <param name="configurator">The action that configures the toolbar.</param>
+        public SpreadsheetBuilder Toolbar(Action<SpreadsheetToolbarSettingsBuilder> configurator)
+        {
+            container.Toolbar.Enabled = true;
+            
+            configurator(new SpreadsheetToolbarSettingsBuilder(container.Toolbar));
             return this;
         }
         
