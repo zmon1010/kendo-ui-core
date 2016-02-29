@@ -194,6 +194,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_Date()
+        {
+            builder.Date();
+
+            categoryAxis.Type.ShouldEqual("date");
+        }
+
+        [Fact]
+        public void Date_should_return_builder()
+        {
+            builder.Date().ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Field()
         {
             var value = "value";
@@ -202,7 +216,7 @@ namespace Kendo.Mvc.UI.Tests
 
             categoryAxis.Field.ShouldEqual(value);
         }
-
+        
         [Fact]
         public void Field_should_return_builder()
         {

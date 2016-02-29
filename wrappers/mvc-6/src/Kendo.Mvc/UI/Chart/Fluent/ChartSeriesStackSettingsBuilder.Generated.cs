@@ -11,22 +11,22 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The type of stack to plot. The following types are supported:
-        /// </summary>
-        /// <param name="value">The value for Type</param>
-        public ChartSeriesStackSettingsBuilder<T> Type(string value)
-        {
-            Container.Type = value;
-            return this;
-        }
-
-        /// <summary>
         /// Indicates that the series should be stacked in a group with the specified name.
         /// </summary>
         /// <param name="value">The value for Group</param>
         public ChartSeriesStackSettingsBuilder<T> Group(string value)
         {
             Container.Group = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the preferred stack type.
+        /// </summary>
+        /// <param name="value">The value for Type</param>
+        public ChartSeriesStackSettingsBuilder<T> Type(ChartStackType value)
+        {
+            Container.Type = value;
             return this;
         }
 

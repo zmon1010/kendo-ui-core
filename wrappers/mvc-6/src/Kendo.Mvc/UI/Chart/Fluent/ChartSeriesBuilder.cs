@@ -21,5 +21,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         // Place custom settings here
+
+        /// <summary>
+        /// A boolean value indicating if the series should be stacked.
+        /// A string value is interpreted as series.stack.group.
+        /// </summary>
+        /// <param name="configurator">The configurator for the stack setting.</param>
+        public ChartSeriesBuilder<T> Stack(ChartStackType value)
+        {
+            Container.Stack.Type = value;
+
+            return this;
+        }
     }
 }

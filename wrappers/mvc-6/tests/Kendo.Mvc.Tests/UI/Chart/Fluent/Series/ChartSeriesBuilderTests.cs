@@ -120,5 +120,21 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.DashType(ChartDashType.Dot).ShouldBeSameAs(builder);
         }
+
+        [Fact]
+        public void StackType_should_set_series_DashType()
+        {
+            var value = ChartStackType.Stack100;
+
+            builder.Stack(value);
+
+            series.Stack.Type.ShouldEqual(value);
+        }
+        
+        [Fact]
+        public void StackType_should_return_builder()
+        {
+            builder.Stack(ChartStackType.Stack100).ShouldBeSameAs(builder);
+        }
     }
 }
