@@ -542,7 +542,14 @@ module CodeGen::TypeScript
 
             if description =~ /Gets?\/Sets?/i || description =~ /gets?\s+or\s+sets?/i
 
-                settings[:result] = nil
+                if description !~ /supports? chaining/i
+                    settings[:result] = nil
+                else
+                    settings[:result] = {
+                        :type => @full_name,
+                        :description => 'The widget instance to support chaining'
+                    }
+                end
 
                 getter = super(
                     :description => description,
