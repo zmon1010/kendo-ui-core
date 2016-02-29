@@ -33,6 +33,8 @@ namespace Kendo.Mvc.UI
 
         public string ListWidth { get; set; }
 
+        public GanttPdfSettings<TTaskModel, TDependenciesModel> Pdf { get; } = new GanttPdfSettings<TTaskModel, TDependenciesModel>();
+
         public bool? Resizable { get; set; }
 
         public bool? Selectable { get; set; }
@@ -111,6 +113,12 @@ namespace Kendo.Mvc.UI
             if (ListWidth?.HasValue() == true)
             {
                 settings["listWidth"] = ListWidth;
+            }
+
+            var pdf = Pdf.Serialize();
+            if (pdf.Any())
+            {
+                settings["pdf"] = pdf;
             }
 
             if (Resizable.HasValue)

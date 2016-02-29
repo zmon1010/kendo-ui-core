@@ -37,7 +37,6 @@
 - gantt.dependencies
 - gantt.editable
 - gantt.messages
-- gantt.pdf
 - gantt.resources
 - grid.altrowtemplate
 - grid.columnmenu.messages

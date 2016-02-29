@@ -130,6 +130,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Configures the Kendo UI Gantt PDF export settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the pdf setting.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Pdf(Action<GanttPdfSettingsBuilder<TTaskModel, TDependenciesModel>> configurator)
+        {
+
+            Container.Pdf.Gantt = Container;
+            configurator(new GanttPdfSettingsBuilder<TTaskModel, TDependenciesModel>(Container.Pdf));
+
+            return this;
+        }
+
+        /// <summary>
         /// If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.
         /// </summary>
         /// <param name="value">The value for Resizable</param>
