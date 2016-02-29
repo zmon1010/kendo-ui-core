@@ -19,7 +19,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Aggregate_should_set_series_Aggregate()
+        public void Builder_should_set_series_Aggregate()
         {
             var value = ChartSeriesAggregate.Avg;
 
@@ -106,7 +106,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void DashType_should_set_series_DashType()
+        public void Builder_should_set_DashType()
         {
             var value = ChartDashType.Solid;
 
@@ -114,7 +114,7 @@ namespace Kendo.Mvc.UI.Tests
 
             series.DashType.ShouldEqual(value);
         }
-        
+
         [Fact]
         public void DashType_should_return_builder()
         {
@@ -122,7 +122,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void StackType_should_set_series_DashType()
+        public void Builder_should_set_Stack_Type()
         {
             var value = ChartStackType.Stack100;
 
@@ -130,11 +130,43 @@ namespace Kendo.Mvc.UI.Tests
 
             series.Stack.Type.ShouldEqual(value);
         }
-        
+
         [Fact]
         public void StackType_should_return_builder()
         {
             builder.Stack(ChartStackType.Stack100).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Style()
+        {
+            var value = ChartLineStyle.Smooth;
+
+            builder.Style(value);
+
+            series.Style.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Style_should_return_builder()
+        {
+            builder.Style(ChartLineStyle.Smooth).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Line_Style()
+        {
+            var value = ChartAreaStyle.Smooth;
+
+            builder.Line(x => x.Style(value));
+
+            series.Line.Style.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Line_Style_should_return_builder()
+        {
+            builder.Line(x => x.Style(ChartAreaStyle.Smooth)).ShouldBeSameAs(builder);
         }
     }
 }

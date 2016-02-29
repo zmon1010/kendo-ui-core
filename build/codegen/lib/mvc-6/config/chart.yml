@@ -186,10 +186,27 @@
             :member: SumOrNull
             :description: The sum of all values for the date period. If there are not data for the current period of time the aggregate will return 'null'(instead of 'zero' for the sum aggregate).
 
+    - :name: series.style
+      :description: Specifies the preferred rendering style.
+      :type: String
+      :enum_type: ChartLineStyle
+      :values:
+          - :value: normal
+            :member: Normal
+            :description: Points will be connected with straight line.
+
+          - :value: step
+            :member: Step
+            :description: Points will be connected with a line at right angles.
+
+          - :value: smooth
+            :member: Smooth
+            :description: Points will be connected with smooth line.
+
     - :name: series.line.style
       :description: Specifies the preferred line rendering style.
       :type: String
-      :enum_type: ChartLineStyle
+      :enum_type: ChartAreaStyle
       :values:
           - :value: normal
             :member: Normal

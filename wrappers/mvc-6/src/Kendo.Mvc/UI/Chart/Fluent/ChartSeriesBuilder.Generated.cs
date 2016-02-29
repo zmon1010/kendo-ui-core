@@ -587,16 +587,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The supported values are:
-        /// </summary>
-        /// <param name="value">The value for Style</param>
-        public ChartSeriesBuilder<T> Style(string value)
-        {
-            Container.Style = value;
-            return this;
-        }
-
-        /// <summary>
         /// The name of the chart series which is visible in the legend.
         /// </summary>
         /// <param name="value">The value for Name</param>
@@ -947,6 +937,16 @@ namespace Kendo.Mvc.UI.Fluent
         {
             Container.Aggregate = null;
             Container.AggregateHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the preferred rendering style.
+        /// </summary>
+        /// <param name="value">The value for Style</param>
+        public ChartSeriesBuilder<T> Style(ChartLineStyle value)
+        {
+            Container.Style = value;
             return this;
         }
 

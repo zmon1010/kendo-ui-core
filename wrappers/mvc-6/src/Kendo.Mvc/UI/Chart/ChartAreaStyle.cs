@@ -1,9 +1,9 @@
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Specifies the preferred rendering style.
+    /// Specifies the preferred line rendering style.
     /// </summary>
-    public enum ChartLineStyle
+    public enum ChartAreaStyle
     {
         /// <summary>
         /// Points will be connected with straight line.
@@ -19,17 +19,17 @@ namespace Kendo.Mvc.UI
         Smooth
     }
 
-    internal static class ChartLineStyleExtensions
+    internal static class ChartAreaStyleExtensions
     {
-        internal static string Serialize(this ChartLineStyle value)
+        internal static string Serialize(this ChartAreaStyle value)
         {
             switch (value)
             {
-                case ChartLineStyle.Normal:
+                case ChartAreaStyle.Normal:
                     return "normal";
-                case ChartLineStyle.Step:
+                case ChartAreaStyle.Step:
                     return "step";
-                case ChartLineStyle.Smooth:
+                case ChartAreaStyle.Smooth:
                     return "smooth";
             }
 

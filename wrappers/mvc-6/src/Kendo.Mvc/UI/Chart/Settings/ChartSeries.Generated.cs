@@ -111,8 +111,6 @@ namespace Kendo.Mvc.UI
 
         public string MissingValues { get; set; }
 
-        public string Style { get; set; }
-
         public string Name { get; set; }
 
         public string NegativeColor { get; set; }
@@ -169,6 +167,8 @@ namespace Kendo.Mvc.UI
 
         public ChartSeriesAggregate? Aggregate { get; set; }
         public ClientHandlerDescriptor AggregateHandler { get; set; }
+
+        public ChartLineStyle? Style { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -442,11 +442,6 @@ namespace Kendo.Mvc.UI
                 settings["missingValues"] = MissingValues;
             }
 
-            if (Style?.HasValue() == true)
-            {
-                settings["style"] = Style;
-            }
-
             if (Name?.HasValue() == true)
             {
                 settings["name"] = Name;
@@ -601,6 +596,11 @@ namespace Kendo.Mvc.UI
                 settings["aggregate"] = Aggregate?.Serialize();
             }
 
+
+            if (Style.HasValue)
+            {
+                settings["style"] = Style?.Serialize();
+            }
 
             return settings;
         }

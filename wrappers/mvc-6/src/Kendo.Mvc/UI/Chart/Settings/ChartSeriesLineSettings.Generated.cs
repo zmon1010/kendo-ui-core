@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
 
         public string Width { get; set; }
 
-        public ChartLineStyle? Style { get; set; }
+        public ChartAreaStyle? Style { get; set; }
 
 
         public Chart<T> Chart { get; set; }

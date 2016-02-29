@@ -6,11 +6,11 @@ using Kendo.Mvc.Tests;
 
 namespace Kendo.Mvc.UI.Tests
 {
-    public class ChartSeriesStackSettingsSerializationTests
+    public class StackSettingsSerializationTests
     {
         private readonly ChartSeriesStackSettings<object> settings;
 
-        public ChartSeriesStackSettingsSerializationTests()
+        public StackSettingsSerializationTests()
         {
             settings = new ChartSeriesStackSettings<object>();
         }

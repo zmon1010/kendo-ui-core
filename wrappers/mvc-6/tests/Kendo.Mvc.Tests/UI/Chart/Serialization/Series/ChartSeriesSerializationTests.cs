@@ -82,5 +82,19 @@ namespace Kendo.Mvc.UI.Tests
 
             series.Serialize()["dashType"].ShouldEqual("dot");
         }
+        
+        [Fact]
+        public void Default_Style_should_not_be_serialized()
+        {
+            series.Serialize().ContainsKey("style").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Style_should_be_serialized()
+        {
+            series.Style = ChartLineStyle.Smooth;
+
+            series.Serialize()["style"].ShouldEqual("smooth");
+        }
     }
 }
