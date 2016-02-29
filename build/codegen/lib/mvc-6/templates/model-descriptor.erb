@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
         {
         }
 
-% members.each do |member|
+% members.select{ |o| !o.interface.nil? }.each do |member|
         public string <%= member.name.pascalize %> { get; set; }
 % end
 
@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI
 
                 var currentMember = prop.Member;
 
-% members.each_with_index do |member, index|
+% members.select{ |o| !o.interface.nil? }.each_with_index do |member, index|
                 <%unless index == 0 %>else <%end%>if (<%= member.name.pascalize %>.HasValue() && currentMember == <%= member.name.pascalize %>)
                 {
                     fields["<%= member.name %>"] = field;

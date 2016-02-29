@@ -19,7 +19,7 @@ namespace Kendo.Mvc.UI.Fluent
             <%= type.camelize %>Model = model;
         }
 
-% members.each do |member|
+% members.select{ |o| !o.interface.nil? }.each do |member|
         /// <summary>
         /// Specify the member used for the <%= member.name %> field.
         /// </summary>

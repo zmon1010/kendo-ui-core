@@ -1,12 +1,13 @@
 class ModelMember
     include CodeGen::MVC6::Wrappers::Options
 
-    attr_reader :type, :name, :enum_type
+    attr_reader :type, :name, :enum_type, :interface
 
     def initialize(config)
         @type = config[:type]
         @name = config[:name]
         @enum_type = config[:enum_type]
+        @interface = config[:interface]
     end
 end
 

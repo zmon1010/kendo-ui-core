@@ -8,7 +8,7 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public interface I<%= type %>
     {
-% members.each do |member|
+% members.select{ |o| o.interface.nil? }.each do |member|
         <%= member.csharp_type %> <%= member.name.pascalize %> { get; set; }
 % end
     }
