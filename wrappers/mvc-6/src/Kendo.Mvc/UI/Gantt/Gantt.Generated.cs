@@ -49,6 +49,8 @@ namespace Kendo.Mvc.UI
 
         public GanttTooltipSettings<TTaskModel, TDependenciesModel> Tooltip { get; } = new GanttTooltipSettings<TTaskModel, TDependenciesModel>();
 
+        public List<GanttView<TTaskModel, TDependenciesModel>> Views { get; set; } = new List<GanttView<TTaskModel, TDependenciesModel>>();
+
         public double? RowHeight { get; set; }
 
 
@@ -154,6 +156,12 @@ namespace Kendo.Mvc.UI
             if (tooltip.Any())
             {
                 settings["tooltip"] = tooltip;
+            }
+
+            var views = Views.Select(i => i.Serialize());
+            if (views.Any())
+            {
+                settings["views"] = views;
             }
 
             if (RowHeight.HasValue)
