@@ -199,6 +199,22 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole Gantt Toolbar,
+		/// and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Gantt Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the Gantt Toolbar. Commands can be custom or built-in ("append", "pdf").The "append" command adds a new task to the gantt.The "pdf" command exports the gantt in PDF format.
+        /// </summary>
+        /// <param name="configurator">The configurator for the toolbar setting.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Toolbar(Action<GanttToolbarFactory<TTaskModel, TDependenciesModel>> configurator)
+        {
+
+            configurator(new GanttToolbarFactory<TTaskModel, TDependenciesModel>(Container.Toolbar)
+            {
+                Gantt = Container
+            });
+
+            return this;
+        }
+
+        /// <summary>
         /// The task tooltip configuration options.
         /// </summary>
         /// <param name="configurator">The configurator for the tooltip setting.</param>

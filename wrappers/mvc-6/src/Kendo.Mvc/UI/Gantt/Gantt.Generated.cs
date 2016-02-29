@@ -45,6 +45,8 @@ namespace Kendo.Mvc.UI
 
         public string TaskTemplateId { get; set; }
 
+        public List<GanttToolbar<TTaskModel, TDependenciesModel>> Toolbar { get; set; } = new List<GanttToolbar<TTaskModel, TDependenciesModel>>();
+
         public GanttTooltipSettings<TTaskModel, TDependenciesModel> Tooltip { get; } = new GanttTooltipSettings<TTaskModel, TDependenciesModel>();
 
         public double? RowHeight { get; set; }
@@ -140,6 +142,12 @@ namespace Kendo.Mvc.UI
             else if (TaskTemplate.HasValue())
             {
                 settings["taskTemplate"] = TaskTemplate;
+            }
+
+            var toolbar = Toolbar.Select(i => i.Serialize());
+            if (toolbar.Any())
+            {
+                settings["toolbar"] = toolbar;
             }
 
             var tooltip = Tooltip.Serialize();
