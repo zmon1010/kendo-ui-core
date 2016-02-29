@@ -39,7 +39,6 @@
 - gantt.messages
 - gantt.pdf
 - gantt.toolbar
-- gantt.tooltip
 - gantt.views
 - gantt.resources
 - grid.altrowtemplate

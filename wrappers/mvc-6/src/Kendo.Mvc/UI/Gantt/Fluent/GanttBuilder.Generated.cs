@@ -199,6 +199,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The task tooltip configuration options.
+        /// </summary>
+        /// <param name="configurator">The configurator for the tooltip setting.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Tooltip(Action<GanttTooltipSettingsBuilder<TTaskModel, TDependenciesModel>> configurator)
+        {
+
+            Container.Tooltip.Gantt = Container;
+            configurator(new GanttTooltipSettingsBuilder<TTaskModel, TDependenciesModel>(Container.Tooltip));
+
+            return this;
+        }
+
+        /// <summary>
         /// The height of the table rows. Numeric values are treated as pixels.
         /// </summary>
         /// <param name="value">The value for RowHeight</param>
