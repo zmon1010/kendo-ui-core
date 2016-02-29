@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Tests
         }
         
         [Fact]
-        public void Chart_should_set_categoryAxis_categories()
+        public void Builder_should_set_CategoryAxis_Categories()
         {
             var categories = new string[] { "category1", "category2" };
 
@@ -50,6 +50,22 @@ namespace Kendo.Mvc.UI.Tests
         public void CategoryAxis_should_return_builder()
         {
             builder.CategoryAxis(delegate { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_ValueAxis()
+        {
+            var value = "name";
+
+            builder.ValueAxis(axis => axis.Name(value));
+
+            chart.ValueAxis[0].Name.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void ValueAxis_should_return_builder()
+        {
+            builder.ValueAxis(delegate { }).ShouldBeSameAs(builder);
         }
     }
 }

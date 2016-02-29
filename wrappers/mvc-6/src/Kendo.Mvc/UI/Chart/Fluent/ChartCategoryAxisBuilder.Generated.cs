@@ -50,18 +50,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The base time interval for the date axis. The default base unit is determined automatically from the minimum difference
-		/// between subsequent categories.The supported values are:Setting baseUnit to "fit" will set such base unit and categoryAxis.baseUnitStep
-		/// that the total number of categories does not exceed categoryAxis.maxDateGroups.Series data is aggregated for the specified base unit using the series.aggregate function.
-        /// </summary>
-        /// <param name="value">The value for BaseUnit</param>
-        public ChartCategoryAxisBuilder<T> BaseUnit(string value)
-        {
-            Container.BaseUnit = value;
-            return this;
-        }
-
-        /// <summary>
         /// The step (interval) between categories in base units. Setting it to "auto" will set the step to such value
 		/// that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".
         /// </summary>
@@ -355,16 +343,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The category axis type.The supported values are:
-        /// </summary>
-        /// <param name="value">The value for Type</param>
-        public ChartCategoryAxisBuilder<T> Type(string value)
-        {
-            Container.Type = value;
-            return this;
-        }
-
-        /// <summary>
         /// If set to true the chart will display the category axis. By default the category axis is visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
@@ -394,6 +372,26 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Notes.Chart = Container.Chart;
             configurator(new ChartCategoryAxisNotesSettingsBuilder<T>(Container.Notes));
 
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the base time interval for the axis.
+        /// </summary>
+        /// <param name="value">The value for BaseUnit</param>
+        public ChartCategoryAxisBuilder<T> BaseUnit(ChartAxisBaseUnit value)
+        {
+            Container.BaseUnit = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the category axis type.
+        /// </summary>
+        /// <param name="value">The value for Type</param>
+        public ChartCategoryAxisBuilder<T> Type(ChartCategoryAxisType value)
+        {
+            Container.Type = value;
             return this;
         }
 

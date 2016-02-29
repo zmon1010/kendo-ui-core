@@ -83,7 +83,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// <returns></returns>
         public ChartBuilder<T> ValueAxis(Action<ChartValueAxisBuilder<T>> configurator)
         {
-            configurator(new ChartValueAxisFactory<T>(Container.ValueAxis).Add());
+            var axis = new ChartValueAxis<T>();
+            configurator(new ChartValueAxisBuilder<T>(axis));
+            Component.ValueAxis.Add(axis);
             return this;
         }
 

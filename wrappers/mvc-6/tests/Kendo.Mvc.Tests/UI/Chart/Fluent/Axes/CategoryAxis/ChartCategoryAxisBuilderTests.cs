@@ -1,18 +1,19 @@
 ﻿using Xunit;
 using Kendo.Mvc.UI.Fluent;
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Tests
 {
     public class ChartCategoryAxisBuilderTests
     {
-        private readonly ChartCategoryAxis<SalesData> categoryAxis;
+        private readonly ChartCategoryAxis<SalesData> axis;
         private readonly ChartCategoryAxisBuilder<SalesData> builder;
 
         public ChartCategoryAxisBuilderTests()
         {
-            categoryAxis = new ChartCategoryAxis<SalesData>();
-            builder = new ChartCategoryAxisBuilder<SalesData>(categoryAxis);
+            axis = new ChartCategoryAxis<SalesData>();
+            builder = new ChartCategoryAxisBuilder<SalesData>(axis);
         }
 
         [Fact]
@@ -22,7 +23,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.AutoBaseUnitSteps(steps => steps.Seconds(1, 2, 3));
 
-            categoryAxis.AutoBaseUnitSteps.Seconds.ShouldEqual<object>(value);
+            axis.AutoBaseUnitSteps.Seconds.ShouldEqual<object>(value);
         }
 
         [Fact]
@@ -38,7 +39,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.AxisCrossingValue(value);
 
-            categoryAxis.AxisCrossingValue.ShouldEqual<object>(value);
+            axis.AxisCrossingValue.ShouldEqual<object>(value);
         }
 
         [Fact]
@@ -48,7 +49,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.AxisCrossingValue(value);
 
-            categoryAxis.AxisCrossingValue.ShouldEqual<object>(value);
+            axis.AxisCrossingValue.ShouldEqual<object>(value);
         }
 
         [Fact]
@@ -64,7 +65,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Background(value);
 
-            categoryAxis.Background.ShouldEqual(value);
+            axis.Background.ShouldEqual(value);
         }
 
         [Fact]
@@ -76,17 +77,17 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_BaseUnit()
         {
-            var value = "day";
+            var value = ChartAxisBaseUnit.Days;
 
             builder.BaseUnit(value);
 
-            categoryAxis.BaseUnit.ShouldEqual(value);
+            axis.BaseUnit.ShouldEqual(value);
         }
 
         [Fact]
         public void BaseUnit_should_return_builder()
         {
-            builder.BaseUnit("day").ShouldBeSameAs(builder);
+            builder.BaseUnit(ChartAxisBaseUnit.Days).ShouldBeSameAs(builder);
         }
 
         [Fact]
@@ -96,7 +97,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.BaseUnitStep(value);
 
-            categoryAxis.BaseUnitStep.ShouldEqual(value);
+            axis.BaseUnitStep.ShouldEqual(value);
         }
 
         [Fact]
@@ -108,11 +109,19 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_Categories_with_strings()
         {
-            var value = new string[] { "category1", "category2" };
+            builder.Categories("value1", "value2");
+
+            axis.Categories.ShouldEqual(new string[] { "value1", "value2" });
+        }
+
+        [Fact]
+        public void Builder_should_set_Categories_with_array_of_strings()
+        {
+            var value = new string[] { "value1", "value2" };
 
             builder.Categories(value);
 
-            categoryAxis.Categories.ShouldEqual<object>(value);
+            axis.Categories.ShouldEqual(value);
         }
 
         [Fact]
@@ -122,7 +131,13 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Categories(value);
 
-            categoryAxis.Categories.ShouldEqual<object>(value);
+            axis.Categories.ShouldEqual<object>(value);
+        }
+
+        [Fact]
+        public void Categories_with_strings_should_return_builder()
+        {
+            builder.Categories("valuee1", "value2").ShouldBeSameAs(builder);
         }
 
         [Fact]
@@ -132,15 +147,15 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Categories(value);
 
-            categoryAxis.Categories.ShouldEqual<object>(value);
+            axis.Categories.ShouldBeSameAs(value);
         }
-
+        
         [Fact]
         public void Builder_with_Categories_expression_should_set_Field()
         {
             builder.Categories(x => x.TotalSales);
 
-            categoryAxis.Field.ShouldEqual("TotalSales");
+            axis.Field.ShouldEqual("TotalSales");
         }
 
         [Fact]
@@ -154,12 +169,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Categories(x => x.TotalSales).ShouldBeSameAs(builder);
         }
-
-        [Fact]
-        public void Categories_should_return_builder()
-        {
-            builder.Categories(1, 2).ShouldBeSameAs(builder);
-        }
+        
 
         [Fact]
         public void Builder_should_set_Color()
@@ -168,7 +178,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Color(value);
 
-            categoryAxis.Color.ShouldEqual(value);
+            axis.Color.ShouldEqual(value);
         }
 
         [Fact]
@@ -184,7 +194,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Crosshair(x => x.Visible(value));
 
-            categoryAxis.Crosshair.Visible.ShouldEqual(value);
+            axis.Crosshair.Visible.ShouldEqual(value);
         }
 
         [Fact]
@@ -198,7 +208,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Date();
 
-            categoryAxis.Type.ShouldEqual("date");
+            axis.Type.ShouldEqual(ChartCategoryAxisType.Date);
         }
 
         [Fact]
@@ -214,7 +224,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Field(value);
 
-            categoryAxis.Field.ShouldEqual(value);
+            axis.Field.ShouldEqual(value);
         }
         
         [Fact]
@@ -228,7 +238,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Justify();
 
-            categoryAxis.Justify.ShouldEqual(true);
+            axis.Justify.ShouldEqual(true);
         }
 
 
@@ -239,7 +249,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Justify(value);
 
-            categoryAxis.Justify.ShouldEqual(value);
+            axis.Justify.ShouldEqual(value);
         }
 
         [Fact]
@@ -261,7 +271,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Labels(x => x.Visible(value));
 
-            categoryAxis.Labels.Visible.ShouldEqual(value);
+            axis.Labels.Visible.ShouldEqual(value);
         }
 
         [Fact]
@@ -277,7 +287,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Line(x => x.Visible(value));
 
-            categoryAxis.Line.Visible.ShouldEqual(value);
+            axis.Line.Visible.ShouldEqual(value);
         }
 
         [Fact]
@@ -293,7 +303,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.MajorGridLines(x => x.Visible(value));
 
-            categoryAxis.MajorGridLines.Visible.ShouldEqual(value);
+            axis.MajorGridLines.Visible.ShouldEqual(value);
         }
 
         [Fact]
@@ -309,7 +319,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.MajorTicks(x => x.Visible(value));
 
-            categoryAxis.MajorTicks.Visible.ShouldEqual(value);
+            axis.MajorTicks.Visible.ShouldEqual(value);
         }
 
         [Fact]
@@ -325,7 +335,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Max(value);
 
-            categoryAxis.Max.ShouldEqual(value);
+            axis.Max.ShouldEqual(value);
         }
 
         [Fact]
@@ -335,7 +345,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Max(value);
 
-            categoryAxis.Max.ShouldEqual(value);
+            axis.Max.ShouldEqual(value);
         }
 
         [Fact]
@@ -351,7 +361,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.MaxDateGroups(value);
 
-            categoryAxis.MaxDateGroups.ShouldEqual(value);
+            axis.MaxDateGroups.ShouldEqual(value);
         }
 
         [Fact]
@@ -368,7 +378,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Min(value);
 
-            categoryAxis.Min.ShouldEqual(value);
+            axis.Min.ShouldEqual(value);
         }
 
         [Fact]
@@ -378,7 +388,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Min(value);
 
-            categoryAxis.Min.ShouldEqual(value);
+            axis.Min.ShouldEqual(value);
         }
 
         [Fact]
@@ -394,7 +404,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.MinorGridLines(x => x.Visible(value));
 
-            categoryAxis.MinorGridLines.Visible.ShouldEqual(value);
+            axis.MinorGridLines.Visible.ShouldEqual(value);
         }
 
         [Fact]
@@ -410,7 +420,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.MinorTicks(x => x.Visible(value));
 
-            categoryAxis.MinorTicks.Visible.ShouldEqual(value);
+            axis.MinorTicks.Visible.ShouldEqual(value);
         }
 
         [Fact]
@@ -426,7 +436,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Name(value);
 
-            categoryAxis.Name.ShouldEqual(value);
+            axis.Name.ShouldEqual(value);
         }
 
         [Fact]
@@ -442,7 +452,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Pane(value);
 
-            categoryAxis.Pane.ShouldEqual(value);
+            axis.Pane.ShouldEqual(value);
         }
 
         [Fact]
@@ -454,17 +464,17 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_Type()
         {
-            var value = "red";
+            var value = ChartCategoryAxisType.Date;
 
             builder.Type(value);
 
-            categoryAxis.Type.ShouldEqual(value);
+            axis.Type.ShouldEqual(value);
         }
 
         [Fact]
         public void Type_should_return_builder()
         {
-            builder.Type("red").ShouldBeSameAs(builder);
+            builder.Type(ChartCategoryAxisType.Date).ShouldBeSameAs(builder);
         }
 
         [Fact]
@@ -478,7 +488,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Reverse();
 
-            categoryAxis.Reverse.ShouldEqual(true);
+            axis.Reverse.ShouldEqual(true);
         }
 
         [Fact]
@@ -494,7 +504,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Reverse(value);
 
-            categoryAxis.Reverse.ShouldEqual(value);
+            axis.Reverse.ShouldEqual(value);
         }
 
         [Fact]
@@ -510,7 +520,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.RoundToBaseUnit(value);
 
-            categoryAxis.RoundToBaseUnit.ShouldEqual(value);
+            axis.RoundToBaseUnit.ShouldEqual(value);
         }
 
         [Fact]
@@ -526,7 +536,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Select(x => x.Min(value));
 
-            categoryAxis.Select.Min.ShouldEqual(value);
+            axis.Select.Min.ShouldEqual(value);
         }
 
         [Fact]
@@ -542,7 +552,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.StartAngle(value);
 
-            categoryAxis.StartAngle.ShouldEqual(value);
+            axis.StartAngle.ShouldEqual(value);
         }
 
         [Fact]
@@ -558,7 +568,17 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Title(x => x.Visible(value));
 
-            categoryAxis.Title.Visible.ShouldEqual(value);
+            axis.Title.Visible.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Builder_should_set_Title_with_string()
+        {
+            var value = "value";
+
+            builder.Title(value);
+
+            axis.Title.Text.ShouldEqual(value);
         }
 
         [Fact]
@@ -568,13 +588,19 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Title_with_string_should_return_builder()
+        {
+            builder.Title("value").ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Visible()
         {
             var value = true;
 
             builder.Visible(value);
 
-            categoryAxis.Visible.ShouldEqual(value);
+            axis.Visible.ShouldEqual(value);
         }
 
         [Fact]
@@ -591,7 +617,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.WeekStartDay(value);
 
-            categoryAxis.WeekStartDay.ShouldEqual(value);
+            axis.WeekStartDay.ShouldEqual(value);
         }
 
         [Fact]
@@ -607,7 +633,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.Notes(x => x.Position(value));
 
-            categoryAxis.Notes.Position.ShouldEqual(value);
+            axis.Notes.Position.ShouldEqual(value);
         }
 
         [Fact]

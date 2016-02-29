@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring ChartCategoryAxis
     /// </summary>
     public partial class ChartCategoryAxisBuilder<T>
-        where T : class 
+        where T : class
     {
         public ChartCategoryAxisBuilder(ChartCategoryAxis<T> container)
         {
@@ -29,10 +29,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public ChartCategoryAxisBuilder<T> Date()
         {
-            Container.Type = "date";
+            Container.Type = ChartCategoryAxisType.Date;
             return this;
         }
-        
+
         /// <summary>
         /// Defines bound categories.
         /// </summary>
@@ -47,6 +47,30 @@ namespace Kendo.Mvc.UI.Fluent
             }
 
             Container.Field = expression.MemberWithoutInstance();
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines categories.
+        /// </summary>
+        /// <param name="categories">
+        /// The list of categories
+        /// </param>
+        public ChartCategoryAxisBuilder<T> Categories(params string[] categories)
+        {
+            Container.Categories = categories;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the axis title.
+        /// </summary>
+        /// </example>
+        public ChartCategoryAxisBuilder<T> Title(string value)
+        {
+            Container.Title.Text = value;
 
             return this;
         }

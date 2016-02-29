@@ -43,7 +43,16 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public ChartValueAxisBuilder<T> Numeric()
         {
+            return Numeric(string.Empty);
+        }
+
+        /// <summary>
+        /// Defines a numeric value axis.
+        /// </summary>
+        public virtual ChartValueAxisBuilder<T> Numeric(string name)
+        {
             Container.Type = "numeric";
+            Container.Name = name;
             return this;
         }
 
@@ -53,6 +62,16 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartValueAxisBuilder<T> Polar()
         {
             Container.Type = "polar";
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the axis title.
+        /// </summary>
+        public ChartValueAxisBuilder<T> Title(string value)
+        {
+            Container.Title.Text = value;
+
             return this;
         }
     }

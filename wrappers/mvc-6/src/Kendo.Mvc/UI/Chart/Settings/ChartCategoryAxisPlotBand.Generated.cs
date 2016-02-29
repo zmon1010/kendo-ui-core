@@ -13,11 +13,11 @@ namespace Kendo.Mvc.UI
     {
         public string Color { get; set; }
 
-        public double? From { get; set; }
+        public object From { get; set; }
 
         public double? Opacity { get; set; }
 
-        public double? To { get; set; }
+        public object To { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI
                 settings["color"] = Color;
             }
 
-            if (From.HasValue)
+            if (From != null)
             {
                 settings["from"] = From;
             }
@@ -41,7 +41,7 @@ namespace Kendo.Mvc.UI
                 settings["opacity"] = Opacity;
             }
 
-            if (To.HasValue)
+            if (To != null)
             {
                 settings["to"] = To;
             }

@@ -35,6 +35,43 @@
       :merge: true
       :type: int[]
 
+    - :name: categoryAxis.baseUnit
+      :description: Specifies the base time interval for the axis.
+      :type: String
+      :enum_type: ChartAxisBaseUnit
+      :values:
+          - :value: seconds
+            :member: Seconds
+            :description: The time interval is seconds.
+
+          - :value: minutes
+            :member: Minutes
+            :description: The time interval is minutes.
+
+          - :value: hours
+            :member: Hours
+            :description: The time interval is hours.
+
+          - :value: days
+            :member: Days
+            :description: The time interval is days.
+
+          - :value: weeks
+            :member: Weeks
+            :description: The time interval is weeks.
+
+          - :value: months
+            :member: Months
+            :description: The time interval is months.
+
+          - :value: years
+            :member: Years
+            :description: The time interval is years.
+
+          - :value: fit
+            :member: Fit
+            :description: Automatic base unit based on limit set from MaxDateGroups. Note that the BaseUnitStep setting will be disregarded.
+
     - :name: categoryAxis.baseUnitStep
       :merge: true
       :type: int
@@ -56,6 +93,14 @@
       :merge: true
       :type: object
 
+    - :name: categoryAxis.plotBands.from
+      :merge: true
+      :type: object
+
+    - :name: categoryAxis.plotBands.to
+      :merge: true
+      :type: object
+
     - :name: categoryAxis.select.from
       :merge: true
       :type: object
@@ -71,6 +116,19 @@
     - :name: categoryAxis.select.max
       :merge: true
       :type: object
+
+    - :name: categoryAxis.type
+      :description: Specifies the category axis type.
+      :type: String
+      :enum_type: ChartCategoryAxisType
+      :values:
+          - :value: categoryAxis
+            :member: Category
+            :description: Discrete category axis.
+
+          - :value: date
+            :member: Date
+            :description: Specialized axis for displaying chronological data.
 
     - :name: legend.position
       :description: Specifies the legend position.
@@ -241,6 +299,14 @@
       :merge: true
       :type: object[]
 
+    - :name: valueAxis.plotBands.from
+      :merge: true
+      :type: object
+
+    - :name: valueAxis.plotBands.to
+      :merge: true
+      :type: object
+
     - :name: xAxis.axisCrossingValue
       :merge: true
       :type: object[]
@@ -253,6 +319,14 @@
       :merge: true
       :type: object
 
+    - :name: xAxis.plotBands.from
+      :merge: true
+      :type: object
+
+    - :name: xAxis.plotBands.to
+      :merge: true
+      :type: object
+
     - :name: yAxis.axisCrossingValue
       :merge: true
       :type: object[]
@@ -262,5 +336,13 @@
       :type: object
 
     - :name: yAxis.max
+      :merge: true
+      :type: object
+
+    - :name: yAxis.plotBands.from
+      :merge: true
+      :type: object
+
+    - :name: yAxis.plotBands.to
       :merge: true
       :type: object

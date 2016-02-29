@@ -17,8 +17,6 @@ namespace Kendo.Mvc.UI
 
         public string Background { get; set; }
 
-        public string BaseUnit { get; set; }
-
         public int? BaseUnitStep { get; set; }
 
         public object[] Categories { get; set; }
@@ -65,13 +63,15 @@ namespace Kendo.Mvc.UI
 
         public ChartCategoryAxisTitleSettings<T> Title { get; } = new ChartCategoryAxisTitleSettings<T>();
 
-        public string Type { get; set; }
-
         public bool? Visible { get; set; }
 
         public double? WeekStartDay { get; set; }
 
         public ChartCategoryAxisNotesSettings<T> Notes { get; } = new ChartCategoryAxisNotesSettings<T>();
+
+        public ChartAxisBaseUnit? BaseUnit { get; set; }
+
+        public ChartCategoryAxisType? Type { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -94,11 +94,6 @@ namespace Kendo.Mvc.UI
             if (Background?.HasValue() == true)
             {
                 settings["background"] = Background;
-            }
-
-            if (BaseUnit?.HasValue() == true)
-            {
-                settings["baseUnit"] = BaseUnit;
             }
 
             if (BaseUnitStep.HasValue)
@@ -226,11 +221,6 @@ namespace Kendo.Mvc.UI
                 settings["title"] = title;
             }
 
-            if (Type?.HasValue() == true)
-            {
-                settings["type"] = Type;
-            }
-
             if (Visible.HasValue)
             {
                 settings["visible"] = Visible;
@@ -245,6 +235,16 @@ namespace Kendo.Mvc.UI
             if (notes.Any())
             {
                 settings["notes"] = notes;
+            }
+
+            if (BaseUnit.HasValue)
+            {
+                settings["baseUnit"] = BaseUnit?.Serialize();
+            }
+
+            if (Type.HasValue)
+            {
+                settings["type"] = Type?.Serialize();
             }
 
             return settings;

@@ -1,18 +1,20 @@
-﻿using System;
-using Xunit;
-using Kendo.Mvc.UI;
-using Kendo.Mvc.UI.Fluent;
-using Kendo.Mvc.Tests;
+﻿using Xunit;
 
 namespace Kendo.Mvc.UI.Tests
 {
     public class ChartCategoryAxisSerializationTests
     {
-        private readonly ChartCategoryAxis<object> categoryAxis;
+        private readonly ChartCategoryAxis<object> axis;
 
         public ChartCategoryAxisSerializationTests()
         {
-            categoryAxis = new ChartCategoryAxis<object>();
+            axis = new ChartCategoryAxis<object>();
+        }
+
+        [Fact]
+        public void Default_Justify_should_not_be_serialized()
+        {
+            axis.Serialize().ContainsKey("justified").ShouldBeFalse();
         }
 
         [Fact]
@@ -20,9 +22,37 @@ namespace Kendo.Mvc.UI.Tests
         {
             var value = true;
 
-            categoryAxis.Justify = value;
+            axis.Justify = value;
 
-            categoryAxis.Serialize()["justified"].ShouldEqual(value);
+            axis.Serialize()["justified"].ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Default_BaseUnit_should_not_be_serialized()
+        {
+            axis.Serialize().ContainsKey("baseUnit").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void BaseUnit_should_be_serialized()
+        {
+            axis.BaseUnit = ChartAxisBaseUnit.Days;
+
+            axis.Serialize()["baseUnit"].ShouldEqual("days");
+        }
+
+        [Fact]
+        public void Default_Type_should_not_be_serialized()
+        {
+            axis.Serialize().ContainsKey("type").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Type_should_be_serialized()
+        {
+            axis.Type = ChartCategoryAxisType.Date;
+
+            axis.Serialize()["type"].ShouldEqual("date");
         }
     }
 }

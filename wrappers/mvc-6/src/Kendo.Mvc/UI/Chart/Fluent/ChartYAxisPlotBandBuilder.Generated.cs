@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The start position of the plot band in axis units.
         /// </summary>
         /// <param name="value">The value for From</param>
-        public ChartYAxisPlotBandBuilder<T> From(double value)
+        public ChartYAxisPlotBandBuilder<T> From(object value)
         {
             Container.From = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The end position of the plot band in axis units.
         /// </summary>
         /// <param name="value">The value for To</param>
-        public ChartYAxisPlotBandBuilder<T> To(double value)
+        public ChartYAxisPlotBandBuilder<T> To(object value)
         {
             Container.To = value;
             return this;

@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Type_Should_set_settings_Type()
+        public void Builder_should_set_Type()
         {
             var value = ChartStackType.Stack100;
 

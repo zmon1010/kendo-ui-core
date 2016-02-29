@@ -55,5 +55,16 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Type = "polar";
             return this;
         }
+
+        /// <summary>
+        /// Sets the axis title.
+        /// </summary>
+        /// </example>
+        public ChartYAxisBuilder<T> Title(string value)
+        {
+            Container.Title.Text = value;
+
+            return this;
+        }
     }
 }
