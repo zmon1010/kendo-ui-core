@@ -1,13 +1,13 @@
 class ModelMember
     include CodeGen::MVC6::Wrappers::Options
 
-    attr_reader :type, :name, :enum_type, :interface
+    attr_reader :type, :name, :enum_type, :public_interface
 
     def initialize(config)
         @type = config[:type]
         @name = config[:name]
         @enum_type = config[:enum_type]
-        @interface = config[:interface]
+        @public_interface = config[:public_interface]
     end
 end
 
@@ -32,12 +32,16 @@ module CodeGen::MVC6::Wrappers::ModelGenerator
 
     def write_models(component)
         @componentPath = component.path
-        models = YAML.load(File.read("build/codegen/lib/mvc-6/models/#{component.name.downcase}.yml"))
+        filename = "build/codegen/lib/mvc-6/models/#{component.name.downcase}.yml"
 
-        write_modelEnums(models)
-        write_interfaces(models)
-        write_modelDescriptors(models)
-        write_modelDescriptorFactories(models)
+        if File.exists?(filename)
+            models = YAML.load(File.read(filename))
+            
+            write_modelEnums(models)
+            write_interfaces(models)
+            write_modelDescriptors(models)
+            write_modelDescriptorFactories(models)
+        end
     end
 
     def write_modelEnums(models)

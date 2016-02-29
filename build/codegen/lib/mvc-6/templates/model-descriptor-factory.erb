@@ -19,24 +19,24 @@ namespace Kendo.Mvc.UI.Fluent
             <%= type.camelize %>Model = model;
         }
 
-% members.select{ |o| !o.interface.nil? }.each do |member|
+% members.select{ |o| !o.public_interface.nil? }.each do |member|
         /// <summary>
         /// Specify the member used for the <%= member.name %> field.
         /// </summary>
         /// <typeparam name="TValue">Type of the field</typeparam>
         /// <param name="expression">Member access expression which describes the member</param>
-        public void <%= member.name.pascalize %><TValue>(Expression<Func<TModel, TValue>> expression)
+        public void <%= member.name %><TValue>(Expression<Func<TModel, TValue>> expression)
         {
-            <%= type.camelize %>Model.<%= member.name.pascalize %> = expression.MemberWithoutInstance();
+            <%= type.camelize %>Model.<%= member.name %> = expression.MemberWithoutInstance();
         }
 
         /// <summary>
-        /// Specify the member used for the <%= member.name.pascalize %> field.
+        /// Specify the member used for the <%= member.name %> field.
         /// </summary>
         /// <param name="fieldName">The member name.</param>
-        public void <%= member.name.pascalize %>(string fieldName)
+        public void <%= member.name %>(string fieldName)
         {
-            <%= type.camelize %>Model.<%= member.name.pascalize %> = fieldName;
+            <%= type.camelize %>Model.<%= member.name %> = fieldName;
         }
 
 % end

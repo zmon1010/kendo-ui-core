@@ -1,0 +1,32 @@
+﻿@using Kendo.Mvc.Examples.Models.Gantt;
+
+@(Html.Kendo().Gantt<TaskViewModel, DependencyViewModel>()
+    .Name("gantt")
+    .Height(700)
+    .ShowWorkHours(false)
+    .ShowWorkDays(false)
+    .Snap(false)
+    .DataSource(d => d
+        .Model(m =>
+        {
+            m.Id(f => f.TaskID);
+            m.ParentId(f => f.ParentID);
+        })
+        .Read("ReadTasks", "Gantt")
+        .Create("CreateTask", "Gantt")
+        .Destroy("DestroyTask", "Gantt")
+        .Update("UpdateTask", "Gantt")
+    )
+    .DependenciesDataSource(d => d
+        .Model(m =>
+        {
+            m.Id(f => f.DependencyID);
+            m.PredecessorId(f => f.PredecessorID);
+            m.SuccessorId(f => f.SuccessorID);
+        })
+        .Read("ReadDependencies", "Gantt")
+        .Create("CreateDependency", "Gantt")
+        .Destroy("DestroyDependency", "Gantt")
+        .Update("UpdateDependency", "Gantt")
+    )
+)

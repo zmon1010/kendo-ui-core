@@ -13,8 +13,8 @@ namespace Kendo.Mvc.UI
         {
         }
 
-% members.select{ |o| !o.interface.nil? }.each do |member|
-        public string <%= member.name.pascalize %> { get; set; }
+% members.select{ |o| !o.public_interface.nil? }.each do |member|
+        public string <%= member.name %> { get; set; }
 % end
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -35,19 +35,19 @@ namespace Kendo.Mvc.UI
 
                 var currentMember = prop.Member;
 
-% members.select{ |o| !o.interface.nil? }.each_with_index do |member, index|
-                <%unless index == 0 %>else <%end%>if (<%= member.name.pascalize %>.HasValue() && currentMember == <%= member.name.pascalize %>)
-                {
-                    fields["<%= member.name %>"] = field;
-                    field["from"] = currentMember;
-                }
-% end
-                else if (modelInterface.GetProperty(currentMember) != null)
+                if (modelInterface.GetProperty(currentMember) != null)
                 {
                     var updatedMember = Char.ToLowerInvariant(currentMember[0]) + currentMember.Substring(1);
                     fields[updatedMember] = field;
                     field["from"] = currentMember;
                 }
+% members.select{ |o| !o.public_interface.nil? }.each_with_index do |member, index|
+                else if (<%= member.name %>.HasValue() && currentMember == <%= member.name %>)
+                {
+                    fields["<%= member.name.camelize %>"] = field;
+                    field["from"] = currentMember;
+                }
+% end
                 else
                 {
                     fields[currentMember] = field;

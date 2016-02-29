@@ -2,29 +2,29 @@
   :members:
       - :name: Title
         :type: string
-        
+
       - :name: Start
         :type: DateTime
-        
+
       - :name: End
         :type: DateTime
-        
+
       - :name: PercentComplete
         :type: decimal
-        
+
       - :name: OrderId
         :type: int
-        
+
       - :name: ParentId
         :type: object
-        :interface: false
-        
+        :public_interface: false
+
       - :name: Summary
         :type: bool
-        
+
       - :name: Expanded
         :type: bool
-        
+
 - :type: GanttDependency
   :members:
       - :name: Type
@@ -47,11 +47,11 @@
             - :value: startStart
               :member: StartStart
               :description: The task cannot start until the predecessor tasks starts, although it may start later.
-        
-      - :name: PredecessorID
+
+      - :name: PredecessorId
         :type: object
-        :interface: false
-        
-      - :name: SuccessorID
+        :public_interface: false
+
+      - :name: SuccessorId
         :type: object
-        :interface: false
+        :public_interface: false
