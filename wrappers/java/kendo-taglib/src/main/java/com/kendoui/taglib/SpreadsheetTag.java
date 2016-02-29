@@ -61,6 +61,10 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     }
 
+    public void setToolbar(com.kendoui.taglib.spreadsheet.ToolbarTag value) {
+        setProperty("toolbar", value);
+    }
+
     public void setChange(ChangeFunctionTag value) {
         setEvent("change", value.getBody());
     }

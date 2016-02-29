@@ -34970,6 +34970,35 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
     <tag>
+        <description>A boolean value indicating if the toolbar should be displayed.</description>
+        <name>spreadsheet-toolbar</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.ToolbarTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>A boolean value indicating if the "insert" tab should be displayed or a collection of tools that will be shown in the "insert" tab.The available tools are:</description>
+            <name>data</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>A boolean value indicating if the "home" tab should be displayed or a collection of tools that will be shown in the "home" tab.The available tools are:Those tools which are part of a tool group are defined as array. For example ["bold", "italic", "underline"]</description>
+            <name>home</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>A boolean value indicating if the "insert" tab should be displayed or a collection of tools that will be shown in the "insert" tab.The available tools are:Those tools which are part of a tool group are defined as array. For example ["deleteColumn", "deleteRow"]</description>
+            <name>insert</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.</description>
         <name>spreadsheet-change</name>
         <tag-class>com.kendoui.taglib.spreadsheet.ChangeFunctionTag</tag-class>
