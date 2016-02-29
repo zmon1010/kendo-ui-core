@@ -2794,6 +2794,28 @@
             equal(dateAxis.getMinorTickPositions().length, 21);
         });
 
+        test("Minor ticks are positioned correctly", function() {
+            createDateValueAxis(new Date("2012/02/01"), new Date("2012/02/03"), {
+                baseUnit: "hours",
+                majorUnit: 24,
+                minorUnit: 12
+            });
+
+            arrayClose(dateAxis.getMajorTickPositions(),
+                [0, 266, 533, 799], 1);
+        });
+
+        test("Minor ticks are positioned correctly", function() {
+            createDateValueAxis(new Date("2012/02/01"), new Date("2012/02/03"), {
+                baseUnit: "hours",
+                majorUnit: 24,
+                minorUnit: 12
+            });
+
+            arrayClose(dateAxis.getMinorTickPositions(),
+                [0, 133, 266, 400, 533, 665, 799], 1);
+        });
+
         test("User set empty base unit defaults to automatic", function() {
             createDateValueAxis(new Date("2012/02/01"), new Date("2012/02/06"), {
                 baseUnit: ""

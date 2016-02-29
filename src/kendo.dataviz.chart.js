@@ -3414,7 +3414,8 @@ var __meta__ = { // jshint ignore:line
 
             var positions = [start];
             for (var i = 1; i < divisions; i++) {
-                var date = addDuration(options.min, i * options.majorUnit, options.baseUnit);
+                var date = addDuration(options.min, i * step, options.baseUnit);
+
                 var pos = start + dateDiff(date, options.min) * scale * dir;
 
                 positions.push(round(pos, COORD_PRECISION));
