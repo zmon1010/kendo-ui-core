@@ -109,7 +109,7 @@ class Spreadsheet extends \Kendo\UI\Widget {
 
     /**
     * A boolean value indicating if the toolbar should be displayed.
-    * @param boolean $value
+    * @param boolean|\Kendo\UI\SpreadsheetToolbar|array $value
     * @return \Kendo\UI\Spreadsheet
     */
     public function toolbar($value) {
