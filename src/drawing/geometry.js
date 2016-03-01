@@ -637,6 +637,19 @@
                 containsPoint = (inAngleRange && closeOrLess(distance, pointRadius)) || (!inAngleRange && (!intersection || intersection.equals(point)));
             }
             return containsPoint;
+        },
+
+        _isOnPath: function(point, width) {
+            var interval = this._arcInterval();
+            var center = this.center;
+            var angle = calculateAngle(center.x, center.y, this.radiusX, this.radiusY, point.x, point.y);
+            if (angle != 360) {
+                angle = (360 + angle) % 360;
+            }
+
+            var inAngleRange = interval.startAngle <= angle && angle <= interval.endAngle;
+
+            return inAngleRange && this.pointAt(angle).distanceTo(point) <= width;
         }
     });
     defineAccessors(Arc.fn, ["radiusX", "radiusY", "startAngle", "endAngle", "anticlockwise"]);

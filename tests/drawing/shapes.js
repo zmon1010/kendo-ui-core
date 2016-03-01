@@ -1267,6 +1267,16 @@
             equal(arc.containsPoint(new Point(100, 110)), true);
         });
 
+        test("containsPoint returns true if stroked and point is on the path", function() {
+            arc.stroke("red", 2);
+            equal(arc.containsPoint(new Point(87, 197)), true);
+        });
+
+        test("containsPoint returns false if stroked and point is inside arc", function() {
+            arc.stroke("red", 2);
+            equal(arc.containsPoint(new Point(100, 110)), false);
+        });
+
         test("containsPoint returns true if point is in transformed arc", function() {
             arc.fill("red");
             arc.transform(g.transform().translate(100, 100).rotate(-45));
