@@ -35,7 +35,6 @@
 - gantt.currenttimemarker
 - gantt.datasource
 - gantt.dependencies
-- gantt.editable
 - gantt.resources
 - grid.altrowtemplate
 - grid.columnmenu.messages

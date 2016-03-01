@@ -31,6 +31,30 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to false the user won't be able to create, modify or delete tasks and dependencies.
+        /// </summary>
+        /// <param name="configurator">The configurator for the editable setting.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Editable(Action<GanttEditableSettingsBuilder<TTaskModel, TDependenciesModel>> configurator)
+        {
+            Container.Editable.Enabled = true;
+
+            Container.Editable.Gantt = Container;
+            configurator(new GanttEditableSettingsBuilder<TTaskModel, TDependenciesModel>(Container.Editable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// If set to false the user won't be able to create, modify or delete tasks and dependencies.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the editable option.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Editable(bool enabled)
+        {
+            Container.Editable.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the user could navigate the widget using the keyboard. By default keyboard navigation is disabled.
         /// </summary>
         /// <param name="value">The value for Navigatable</param>

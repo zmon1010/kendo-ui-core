@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public double? ColumnResizeHandleWidth { get; set; }
 
+        public GanttEditableSettings<TTaskModel, TDependenciesModel> Editable { get; } = new GanttEditableSettings<TTaskModel, TDependenciesModel>();
+
         public bool? Navigatable { get; set; }
 
         public DateTime? WorkDayStart { get; set; }
@@ -70,6 +72,16 @@ namespace Kendo.Mvc.UI
             if (ColumnResizeHandleWidth.HasValue)
             {
                 settings["columnResizeHandleWidth"] = ColumnResizeHandleWidth;
+            }
+
+            var editable = Editable.Serialize();
+            if (editable.Any())
+            {
+                settings["editable"] = editable;
+            }
+            else if (Editable.Enabled == true)
+            {
+                settings["editable"] = true;
             }
 
             if (Navigatable.HasValue)
