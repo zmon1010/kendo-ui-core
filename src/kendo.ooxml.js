@@ -171,6 +171,13 @@ var WORKSHEET = kendo.template(
        '</row>' +
    '# } #' +
    '</sheetData>' +
+   '# if (hyperlinks.length) { #' +
+   '<hyperlinks>' +
+       '# for (var hi = 0; hi < hyperlinks.length; hi++) { #' +
+       '<hyperlink ref="${hyperlinks[hi].ref}" r:id="rId${hi}"/>' +
+       '# } #' +
+   '</hyperlinks>' +
+   '# } #' +
    '# if (filter) { #' +
    '<autoFilter ref="${filter.from}:${filter.to}"/>' +
    '# } #' +
@@ -192,6 +199,14 @@ var WORKBOOK_RELS = kendo.template(
 '# } #' +
    '<Relationship Id="rId${count+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml" />' +
    '<Relationship Id="rId${count+2}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings" Target="sharedStrings.xml" />' +
+'</Relationships>');
+
+var WORKSHEET_RELS = kendo.template(
+'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n' +
+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+'# for (var i = 0; i < hyperlinks.length; i++) { #' +
+   '<Relationship Id="rId${i}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink" Target="${hyperlinks[i].target}" TargetMode="External" />' +
+'# } #' +
 '</Relationships>');
 
 var SHARED_STRINGS = kendo.template(
@@ -359,8 +374,17 @@ var Worksheet = kendo.Class.extend({
         this._styles = styles;
         this._borders = borders;
     },
+    relsToXML: function() {
+        var hyperlinks = this.options.hyperlinks || [];
+        if (!hyperlinks.length) {
+            return "";
+        }
+
+        return WORKSHEET_RELS({ hyperlinks: hyperlinks });
+    },
     toXML: function(index) {
         this._mergeCells = this.options.mergedCells || [];
+        this._hyperlinks = this.options.hyperlinks || [];
         this._rowsByIndex = [];
 
         var rows = this.options.rows || [];
@@ -401,7 +425,8 @@ var Worksheet = kendo.Class.extend({
             index: index,
             mergeCells: this._mergeCells,
             filter: filter,
-            showGridLines: this.options.showGridLines
+            showGridLines: this.options.showGridLines,
+            hyperlinks: this._hyperlinks
         });
     },
     _row: function(row) {
@@ -730,8 +755,18 @@ var Workbook = kendo.Class.extend({
 
         var worksheets = xl.folder("worksheets");
 
+        var sheetRels = worksheets.folder("_rels");
+
         for (var idx = 0; idx < sheetCount; idx++) {
-            worksheets.file(kendo.format("sheet{0}.xml", idx+1), this._sheets[idx].toXML(idx));
+            var sheet = this._sheets[idx];
+            var sheetName = kendo.format("sheet{0}.xml", idx+1);
+            var relsXml = sheet.relsToXML();
+
+            if (relsXml) {
+                sheetRels.file(sheetName + ".rels", relsXml);
+            }
+
+            worksheets.file(sheetName, sheet.toXML(idx));
         }
 
         var borders = $.map(this._borders, $.parseJSON);

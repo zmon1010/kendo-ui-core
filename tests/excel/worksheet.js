@@ -1357,4 +1357,53 @@ test("toXML has no side effects", function() {
     equal(worksheet.toXML(), worksheet.toXML());
 });
 
+test("toXML serializes hyperlinks in sheet", function() {
+    var worksheet = Worksheet({
+        hyperlinks: [
+            { ref: "A1", target: "http://example.com/foo" },
+            { ref: "B1", target: "http://example.com/bar" }
+        ],
+        rows: [{
+            cells: [{
+                value: "foo"
+            }, {
+                value: "bar"
+            }],
+        }]
+    });
+
+    var dom = $(worksheet.toXML());
+    var hyperlinks = dom.find("hyperlink");
+
+    equal(dom.find("hyperlinks").length, 1);
+    equal(hyperlinks.length, 2);
+    equal(hyperlinks.eq(0).attr("ref"), "A1");
+    equal(hyperlinks.eq(0).attr("r:id"), "rId0");
+    equal(hyperlinks.eq(1).attr("ref"), "B1");
+    equal(hyperlinks.eq(1).attr("r:id"), "rId1");
+});
+
+test("relsToXML serializes sheet hyperlinks", function() {
+    var worksheet = Worksheet({
+        hyperlinks: [
+            { ref: "A1", target: "http://example.com/foo" },
+            { ref: "B1", target: "http://example.com/bar" }
+        ],
+        rows: [{
+            cells: [{
+                value: "foo"
+            }, {
+                value: "bar"
+            }],
+        }]
+    });
+
+    var dom = $(worksheet.relsToXML());
+    var rels = dom.find("Relationship");
+
+    equal(rels.length, 2);
+    equal(rels.eq(0).attr("Target"), "http://example.com/foo");
+    equal(rels.eq(1).attr("Target"), "http://example.com/bar");
+});
+
 }());

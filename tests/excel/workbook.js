@@ -23,7 +23,6 @@ module("Workbook", {
     },
     teardown: function() {
         delete window.JSZip;
-
     }
 });
 
@@ -937,6 +936,19 @@ test("toDataUrl creates 'alignment' element and sets its 'vertical' attribute if
     var dom = $(JSZip.prototype.files["styles.xml"]);
 
     equal(dom.find("cellXfs > xf:last > alignment").attr("vertical"), "center");
+});
+
+test("toDataUrl creates relationships for hyperlink data", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [ { rows: [ { cells: [ { value: "foo" } ] } ] } ]
+    });
+
+    // sheets API mock
+    workbook._sheets[0].relsToXML = function() { return "foo"; };
+
+    workbook.toDataURL();
+
+    equal(JSZip.prototype.files["sheet1.xml.rels"], "foo");
 });
 
 }());
