@@ -130,6 +130,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The configuration of the Gantt messages. Use this option to customize or localize the Gantt messages.
+        /// </summary>
+        /// <param name="configurator">The configurator for the messages setting.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Messages(Action<GanttMessagesSettingsBuilder<TTaskModel, TDependenciesModel>> configurator)
+        {
+
+            Container.Messages.Gantt = Container;
+            configurator(new GanttMessagesSettingsBuilder<TTaskModel, TDependenciesModel>(Container.Messages));
+
+            return this;
+        }
+
+        /// <summary>
         /// Configures the Kendo UI Gantt PDF export settings.
         /// </summary>
         /// <param name="configurator">The configurator for the pdf setting.</param>

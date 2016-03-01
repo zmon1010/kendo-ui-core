@@ -33,6 +33,8 @@ namespace Kendo.Mvc.UI
 
         public string ListWidth { get; set; }
 
+        public GanttMessagesSettings<TTaskModel, TDependenciesModel> Messages { get; } = new GanttMessagesSettings<TTaskModel, TDependenciesModel>();
+
         public GanttPdfSettings<TTaskModel, TDependenciesModel> Pdf { get; } = new GanttPdfSettings<TTaskModel, TDependenciesModel>();
 
         public bool? Resizable { get; set; }
@@ -113,6 +115,12 @@ namespace Kendo.Mvc.UI
             if (ListWidth?.HasValue() == true)
             {
                 settings["listWidth"] = ListWidth;
+            }
+
+            var messages = Messages.Serialize();
+            if (messages.Any())
+            {
+                settings["messages"] = messages;
             }
 
             var pdf = Pdf.Serialize();
