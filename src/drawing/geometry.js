@@ -316,10 +316,30 @@
             );
         },
 
+        expand: function(x, y) {
+            this.size.width += 2 * x;
+            this.size.height += 2 * y;
+
+            this.origin.translate(-x, -y);
+
+            return this;
+        },
+
+        expandCopy: function(x, y) {
+            return this.clone().expand(x, y);
+        },
+
         containsPoint: function(point) {
             var origin = this.origin;
             var bottomRight = this.bottomRight();
             return !(point.x < origin.x || point.y < origin.y || bottomRight.x < point.x || bottomRight.y < point.y);
+        },
+
+        _isOnPath: function(point, width) {
+            var rectOuter = this.expandCopy(width, width);
+            var rectInner = this.expandCopy(-width, -width);
+
+            return rectOuter.containsPoint(point) && !rectInner.containsPoint(point);
         }
     });
 

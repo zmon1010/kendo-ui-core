@@ -956,7 +956,7 @@
         });
 
         test("containsPoint returns false if point is out of text bounds", function() {
-            equal(text.containsPoint(new Point(125, 105)), false);
+            ok(!text.containsPoint(new Point(125, 105)));
         });
 
         test("containsPoint returns true if point is in text bounds", function() {
@@ -972,7 +972,7 @@
         test("containsPoint returns false if point is outside of transformed text", function() {
             text.transform(g.transform().translate(100, 100).rotate(-45));
 
-            equal(text.containsPoint(new Point(105, 105)), false);
+            ok(!text.containsPoint(new Point(105, 105)));
         });
 
         shapeBaseTests(Text, "Text");
@@ -2337,7 +2337,7 @@
         });
 
         test("containsPoint returns false if point is out of image rect", function() {
-            equal(image.containsPoint(new Point(105, 5)), false);
+            ok(!image.containsPoint(new Point(105, 5)));
         });
 
         test("containsPoint returns true if point is in image rect", function() {
@@ -2353,7 +2353,7 @@
         test("containsPoint returns false if point is outside of transformed image", function() {
             image.transform(g.transform().translate(100, 100).rotate(-45));
 
-            equal(image.containsPoint(new Point(5, 5)), false);
+            ok(!image.containsPoint(new Point(5, 5)));
         });
 
     })();
@@ -2486,6 +2486,16 @@
         test("containsPoint returns true if point is in rect", function() {
             rect.fill("red");
             equal(rect.containsPoint(new Point(5, 5)), true);
+        });
+
+        test("containsPoint returns true if stroked and point is on the path", function() {
+            rect.stroke("red", 2);
+            equal(rect.containsPoint(new Point(11, 11)), true);
+        });
+
+        test("containsPoint returns false if stroked and point is inside rect", function() {
+            rect.stroke("red", 2);
+            equal(rect.containsPoint(new Point(8, 8)), false);
         });
 
         test("containsPoint returns true if point is in transformed rect", function() {

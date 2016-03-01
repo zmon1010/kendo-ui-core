@@ -158,12 +158,12 @@
         },
 
         containsPoint: function(point, parentTransform) {
-            if (this.visible() && this._hasFill()) {
+            if (this.visible()) {
                 var transform = this.currentTransform(parentTransform);
                 if (transform) {
                     point = point.transformCopy(transform.matrix().invert());
                 }
-                return this._containsPoint(point);
+                return (this._hasFill() && this._containsPoint(point)) || (this._isOnPath && this._hasStroke() &&  this._isOnPath(point));
             }
             return false;
         },
@@ -171,6 +171,11 @@
         _hasFill: function() {
             var fill = this.options.fill;
             return fill && !util.isTransparent(fill.color);
+        },
+
+        _hasStroke: function() {
+            var stroke = this.options.stroke;
+            return stroke && stroke.width > 0 && !util.isTransparent(stroke.color);
         },
 
         _clippedBBox: function(transformation) {
@@ -1151,6 +1156,10 @@
 
         _containsPoint: function(point) {
             return this._geometry.containsPoint(point);
+        },
+
+        _isOnPath: function(point) {
+            return this.geometry()._isOnPath(point, this.options.stroke.width / 2);
         }
     });
 
