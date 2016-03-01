@@ -32,7 +32,6 @@
 - dropdownlist.index
 - gantt.assignments
 - gantt.columns
-- gantt.currenttimemarker
 - gantt.datasource
 - gantt.dependencies
 - gantt.resources
