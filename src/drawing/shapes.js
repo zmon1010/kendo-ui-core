@@ -998,7 +998,12 @@
         },
 
         bbox: function(transformation) {
-            return elementsBoundingBox(this.paths, true, this.currentTransform(transformation));
+            var bbox = elementsBoundingBox(this.paths, true, this.currentTransform(transformation));
+            var strokeWidth = this.options.get("stroke.width");
+            if (strokeWidth) {
+                expandRect(bbox, strokeWidth / 2);
+            }
+            return bbox;
         },
 
         rawBBox: function() {
@@ -1010,6 +1015,18 @@
 
             for (var idx = 0; idx < paths.length; idx++) {
                 if (paths[idx]._containsPoint(point)) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
+        _isOnPath: function(point) {
+            var paths = this.paths;
+            var width = this.options.stroke.width;
+
+            for (var idx = 0; idx < paths.length; idx++) {
+                if (paths[idx]._isOnPath(point, width)) {
                     return true;
                 }
             }

@@ -2250,6 +2250,18 @@
             equal(multiPath.containsPoint(new Point(260, 190)), true);
         });
 
+        test("returns true if stroked and point is on the path", function() {
+            multiPath.fill("none");
+            multiPath.stroke("red", 20);
+            equal(multiPath.containsPoint(new Point(195, 206)), true);
+        });
+
+        test("returns false if stroked and point is inside path fill area", function() {
+            multiPath.fill("none");
+            multiPath.stroke("red", 20);
+            equal(multiPath.containsPoint(new Point(260, 224)), false);
+        });
+
         test("returns true if point is in transformed path", function() {
             multiPath.transform(g.transform().translate(100, 100).rotate(-45));
 
