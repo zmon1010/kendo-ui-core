@@ -1889,6 +1889,18 @@
             equal(path.containsPoint(new Point(90, 55)), true);
         });
 
+        test("returns true if stroked and point is on the path", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(73, 63)), true);
+        });
+
+        test("returns false if stroked and point is inside path fill area", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(65, 85)), false);
+        });
+
         test("returns true if point is in transformed path", function() {
             path.transform(g.transform().translate(100, 100).rotate(-45));
 
@@ -1931,6 +1943,18 @@
         test("detects points out of transformed curve segments", function() {
             path.transform(g.transform().translate(100, 100).rotate(-45));
             equal(path.containsPoint(new Point(400, 60)), false);
+        });
+
+        test("returns true if stroked and point is on the path", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(195, 206)), true);
+        });
+
+        test("returns false if stroked and point is inside path fill area", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(260, 224)), false);
         });
 
         shapeBaseTests(Path, "Path");

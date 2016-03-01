@@ -1196,7 +1196,10 @@
             Size: Size,
             Transformation: Transformation,
             transform: transform,
-            toMatrix: toMatrix
+            toMatrix: toMatrix,
+            solveCubic: solveCubic,
+            toCubicPolynomial: toCubicPolynomial,
+            calculateCurveAt: calculateCurveAt
         }
     });
 

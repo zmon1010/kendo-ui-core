@@ -673,8 +673,58 @@
                 intersectionsCount = g.lineIntersectionsCount(this.anchor(), segment.anchor(), point);
             }
             return intersectionsCount;
+        },
+
+        _hasRootsInRange: function(points, point, field, rootField, range) {
+            var polynomial = g.toCubicPolynomial(points, rootField);
+            var roots = g.solveCubic(polynomial[0], polynomial[1], polynomial[2], polynomial[3] - point[rootField]);
+            var intersection;
+
+            for (var idx = 0; idx < roots.length; idx++) {
+                if (0 <= roots[idx] && roots[idx] <= 1) {
+                    intersection = g.calculateCurveAt(roots[idx], field, points);
+                    if (math.abs(intersection - point[field]) <= range) {
+                        return true;
+                    }
+                }
+            }
+        },
+
+        _isOnCurveTo: function(segment, point, width) {
+            var halfWidth = width / 2;
+            var bbox = this.bboxTo(segment).expand(halfWidth, halfWidth);
+            if (bbox.containsPoint(point)) {
+                //the approach is not entirely correct but is close and the alternatives are solving a 6th degree polynomial or testing the segment points
+                // also need to test if the closest end point is on the same side of the plain as the control point
+                var points = [this.anchor(), this.controlOut(), segment.controlIn(), segment.anchor()];
+                if (this._hasRootsInRange(points, point, "x", "y", halfWidth) || this._hasRootsInRange(points, point, "y", "x", halfWidth)) {
+                    return true;
+                }
+                var rotation = g.transform().rotate(45, point);
+                var rotatedPoints = [points[0].transformCopy(rotation), points[1].transformCopy(rotation), points[2].transformCopy(rotation), points[3].transformCopy(rotation)];
+                return this._hasRootsInRange(rotatedPoints, point, "x", "y", halfWidth) || this._hasRootsInRange(rotatedPoints, point, "y", "x", halfWidth);
+            }
+        },
+
+        _isOnLineTo: function(segment, point, width) {
+            var p1 = this.anchor();
+            var p2 = segment.anchor();
+            var angle = util.deg(math.atan2(p2.y - p1.y, p2.x - p1.x));
+            var rect = new g.Rect([p1.x, p1.y - width / 2], [p1.distanceTo(p2), width]);
+            return rect.containsPoint(point.transformCopy(g.transform().rotate(-angle, p1)));
+        },
+
+        _isOnPathTo: function(segment, point, width) {
+            var isOnPath;
+            if (this.controlOut() && segment.controlIn()) {
+                isOnPath = this._isOnCurveTo(segment, point, width);
+            } else {
+                isOnPath = this._isOnLineTo(segment, point, width);
+            }
+            return isOnPath;
         }
     });
+
     definePointAccessors(Segment.fn, ["anchor", "controlIn", "controlOut"]);
     deepExtend(Segment.fn, ObserversMixin);
 
@@ -808,6 +858,20 @@
             }
 
             return intersectionsCount % 2 !== 0;
+        },
+
+        _isOnPath: function(point, width) {
+            var segments = this.segments;
+            var length = segments.length;
+            width = width || this.options.stroke.width;
+
+            for (var idx = 1; idx < length; idx++) {
+                if (segments[idx - 1]._isOnPathTo(segments[idx], point, width)) {
+                    return true;
+                }
+            }
+
+            return false;
         },
 
         _bbox: function(matrix) {
