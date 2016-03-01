@@ -449,6 +449,14 @@
             var inCircle = math.pow(point.x - center.x, 2) +
                 math.pow(point.y - center.y, 2) <= math.pow(this.radius, 2);
             return inCircle;
+        },
+
+        _isOnPath: function(point, width) {
+            var center = this.center;
+            var radius = this.radius;
+            var pointDistance = center.distanceTo(point);
+
+            return radius - width <= pointDistance && pointDistance <= radius + width;
         }
     });
     defineAccessors(Circle.fn, ["radius"]);

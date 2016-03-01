@@ -1107,6 +1107,16 @@
             equal(circle.containsPoint(new Point(5, 5)), true);
         });
 
+        test("containsPoint returns true if stroked and point is on the path", function() {
+            circle.stroke("red", 2);
+            equal(circle.containsPoint(new Point(9, 6)), true);
+        });
+
+        test("containsPoint returns false if stroked and point is inside circle", function() {
+            circle.stroke("red", 2);
+            equal(circle.containsPoint(new Point(5, 5)), false);
+        });
+
         test("containsPoint returns true if point is in transformed circle", function() {
             circle.fill("red");
             circle.transform(g.transform().translate(100, 100).rotate(-45));

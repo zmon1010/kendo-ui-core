@@ -504,6 +504,10 @@
 
         _containsPoint: function(point) {
             return this.geometry().containsPoint(point);
+        },
+
+        _isOnPath: function(point) {
+            return this.geometry()._isOnPath(point, this.options.stroke.width / 2);
         }
     });
     drawing.mixins.Paintable.extend(Circle.fn);
