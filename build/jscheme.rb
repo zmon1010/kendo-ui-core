@@ -3,8 +3,9 @@ require_relative('codegen/lib/options')
 require_relative('codegen/lib/markdown_parser')
 require_relative('codegen/lib/component')
 
-JSCHEME_DOC_TEMPLATE_CONTENTS = File.read(File.join(File.dirname(__FILE__), "jscheme.js.erb"))
+JSCHEME_DOC_TEMPLATE_CONTENTS = File.read(File.join(File.dirname(__FILE__), "/codegen/lib/jscheme/jscheme.json.erb"))
 JSCHEME_DOC_TEMPLATE = ERB.new JSCHEME_DOC_TEMPLATE_CONTENTS, 0, '%<>'
+COMPONENT = ERB.new File.read("build/codegen/lib/jscheme/component.json.erb"), 0, '%<>'
 
 module CodeGen::Jscheme
     class Component < CodeGen::Component
@@ -12,21 +13,13 @@ module CodeGen::Jscheme
         def real_class?
             @name =~ /[A-Z]\w+$/
         end
-
-        def plugin
-            'kendo' + "" + @name
-        end
-
-        def method_class
-            Method
-        end
-
-        def methods
+       
+        def options
             @methods.find_all { |m| !m.name.include?('.') }
         end
 
-        def redirect
-            "_#{full_name.downcase.gsub('.', '_')}"
+        def jscheme_class
+            Component.result(binding)
         end
 
         def namespace
@@ -34,28 +27,14 @@ module CodeGen::Jscheme
         end
     end
 
-    class Method < CodeGen::Method
+    class Option < CodeGen::Option
 
-        def parameters
-            @parameters.find_all { |p| !p.name.include?('.') }
-        end
-
-        def parameter_class
-            Parameter
-        end
-    end
-
-    class Parameter < CodeGen::Parameter
-        def jscheme_type
-            return 'Object' if @type.size > 1
-            @type[0]
-        end
     end
 end
 
 def get_jscheme(sources)
 
-    classes = sources.map do |source|
+    components = sources.map do |source|
         parser = CodeGen::MarkdownParser.new
 
         File.open(source, 'r:bom|utf-8') do |file|
@@ -63,7 +42,7 @@ def get_jscheme(sources)
         end
     end
 
-    classes.sort! {|a, b| a.full_name <=> b.full_name }
+    components.sort! {|a, b| a.full_name <=> b.full_name }
 
     JSCHEME_DOC_TEMPLATE.result(binding)
 end

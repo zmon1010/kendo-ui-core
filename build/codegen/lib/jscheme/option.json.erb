@@ -1,0 +1,12 @@
+"properties": {
+    <% the_class.options.each do |option| %>{
+        <% if option.class.name. == "CodeGen::Option" %>
+        "<%= option.name %>" : {
+            "type": "<%= option.type.first %>",
+            "description": "<%= option.description %>",
+            <% if option.name == "position" then puts option.class.name %> <% end %>
+        }
+        <% end %>
+    }<% if option != the_class.options.last %>, <% end %>
+    <% end %>
+}
