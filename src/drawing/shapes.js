@@ -675,34 +675,27 @@
             return intersectionsCount;
         },
 
-        _hasRootsInRange: function(points, point, field, rootField, range) {
-            var polynomial = g.toCubicPolynomial(points, rootField);
-            var roots = g.solveCubic(polynomial[0], polynomial[1], polynomial[2], polynomial[3] - point[rootField]);
-            var intersection;
-
-            for (var idx = 0; idx < roots.length; idx++) {
-                if (0 <= roots[idx] && roots[idx] <= 1) {
-                    intersection = g.calculateCurveAt(roots[idx], field, points);
-                    if (math.abs(intersection - point[field]) <= range) {
-                        return true;
-                    }
-                }
-            }
-        },
-
-        _isOnCurveTo: function(segment, point, width) {
-            var halfWidth = width / 2;
-            var bbox = this.bboxTo(segment).expand(halfWidth, halfWidth);
+        _isOnCurveTo: function(segment, point, width, endSegment) {
+            var bbox = this.bboxTo(segment).expand(width, width);
             if (bbox.containsPoint(point)) {
+                var p1 = this.anchor();
+                var p2 = this.controlOut();
+                var p3 = segment.controlIn();
+                var p4 = segment.anchor();
+                if (endSegment == "start" && p1.distanceTo(point) <= width) {
+                    return !g.isOutOfEndPoint(p1, p2, point);
+                } else if (endSegment == "end" && p4.distanceTo(point) <= width) {
+                    return !g.isOutOfEndPoint(p4, p3, point);
+                }
                 //the approach is not entirely correct but is close and the alternatives are solving a 6th degree polynomial or testing the segment points
-                // also need to test if the closest end point is on the same side of the plain as the control point
-                var points = [this.anchor(), this.controlOut(), segment.controlIn(), segment.anchor()];
-                if (this._hasRootsInRange(points, point, "x", "y", halfWidth) || this._hasRootsInRange(points, point, "y", "x", halfWidth)) {
+                var hasRootsInRange = g.hasRootsInRange;
+                var points = [p1, p2, p3, p4];
+                if (hasRootsInRange(points, point, "x", "y", width) || hasRootsInRange(points, point, "y", "x", width)) {
                     return true;
                 }
                 var rotation = g.transform().rotate(45, point);
-                var rotatedPoints = [points[0].transformCopy(rotation), points[1].transformCopy(rotation), points[2].transformCopy(rotation), points[3].transformCopy(rotation)];
-                return this._hasRootsInRange(rotatedPoints, point, "x", "y", halfWidth) || this._hasRootsInRange(rotatedPoints, point, "y", "x", halfWidth);
+                var rotatedPoints = [p1.transformCopy(rotation), p2.transformCopy(rotation), p3.transformCopy(rotation), p4.transformCopy(rotation)];
+                return hasRootsInRange(rotatedPoints, point, "x", "y", width) || hasRootsInRange(rotatedPoints, point, "y", "x", width);
             }
         },
 
@@ -714,10 +707,10 @@
             return rect.containsPoint(point.transformCopy(g.transform().rotate(-angle, p1)));
         },
 
-        _isOnPathTo: function(segment, point, width) {
+        _isOnPathTo: function(segment, point, width, endSegment) {
             var isOnPath;
             if (this.controlOut() && segment.controlIn()) {
-                isOnPath = this._isOnCurveTo(segment, point, width);
+                isOnPath = this._isOnCurveTo(segment, point, width / 2, endSegment);
             } else {
                 isOnPath = this._isOnLineTo(segment, point, width);
             }
@@ -865,12 +858,21 @@
             var length = segments.length;
             width = width || this.options.stroke.width;
 
-            for (var idx = 1; idx < length; idx++) {
-                if (segments[idx - 1]._isOnPathTo(segments[idx], point, width)) {
+            if (length > 1) {
+                if (segments[0]._isOnPathTo(segments[1], point, width, "start")) {
+                    return true;
+                }
+
+                for (var idx = 2; idx < length - 2; idx++) {
+                    if (segments[idx - 1]._isOnPathTo(segments[idx], point, width)) {
+                        return true;
+                    }
+                }
+
+                if (segments[length - 2]._isOnPathTo(segments[length - 1], point, width, "end")) {
                     return true;
                 }
             }
-
             return false;
         },
 
@@ -1709,6 +1711,10 @@
 
     function translateToPoint(point, bbox, element) {
         translate(point.x - bbox.origin.x, point.y - bbox.origin.y, element);
+    }
+
+    function numberSign(x) {
+        return x < 0 ? -1 : 1;
     }
 
     // Exports ================================================================

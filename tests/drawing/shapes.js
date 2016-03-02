@@ -1951,6 +1951,13 @@
             equal(path.containsPoint(new Point(195, 206)), true);
         });
 
+        test("returns false if point is in end point are but out of stroke area", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(200, 193)), false);
+            equal(path.containsPoint(new Point(250, 143)), false);
+        });
+
         test("returns false if stroked and point is inside path fill area", function() {
             path.fill("none");
             path.stroke("red", 20);

@@ -1128,7 +1128,7 @@
         var intersectsRay;
         for (var i = 0; i < roots.length ; i++) {
             rayIntersection = calculateCurveAt(roots[i], "y", points);
-            intersectsRay = close(rayIntersection, point.y, PRECISION) || rayIntersection > point.y;
+            intersectsRay = close(rayIntersection, point.y) || rayIntersection > point.y;
             if (intersectsRay && (((roots[i] === 0 || roots[i] === 1) && bbox.bottomRight().x > point.x) || (0 < roots[i] && roots[i] < 1))) {
                 count++;
             }
@@ -1183,6 +1183,28 @@
         return x < 0 ? -1 : 1;
     }
 
+    function isOutOfEndPoint(endPoint, controlPoint, point) {
+        var angle = util.deg(math.atan2(controlPoint.y - endPoint.y, controlPoint.x - endPoint.x));
+        var rotatedPoint = point.transformCopy(transform().rotate(-angle, endPoint));
+
+        return rotatedPoint.x < endPoint.x;
+    }
+
+    function hasRootsInRange(points, point, field, rootField, range) {
+        var polynomial = toCubicPolynomial(points, rootField);
+        var roots = solveCubic(polynomial[0], polynomial[1], polynomial[2], polynomial[3] - point[rootField]);
+        var intersection;
+
+        for (var idx = 0; idx < roots.length; idx++) {
+            if (0 <= roots[idx] && roots[idx] <= 1) {
+                intersection = calculateCurveAt(roots[idx], field, points);
+                if (math.abs(intersection - point[field]) <= range) {
+                    return true;
+                }
+            }
+        }
+    }
+
     // Exports ================================================================
     deepExtend(kendo, {
         geometry: {
@@ -1197,9 +1219,8 @@
             Transformation: Transformation,
             transform: transform,
             toMatrix: toMatrix,
-            solveCubic: solveCubic,
-            toCubicPolynomial: toCubicPolynomial,
-            calculateCurveAt: calculateCurveAt
+            isOutOfEndPoint: isOutOfEndPoint,
+            hasRootsInRange: hasRootsInRange
         }
     });
 
