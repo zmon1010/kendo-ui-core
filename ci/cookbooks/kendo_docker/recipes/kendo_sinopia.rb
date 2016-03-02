@@ -23,7 +23,7 @@ execute 'docker-stop-sinopia' do
 end
 
 execute 'docker-install-sinopia' do
-  command 'docker run --name sinopia -v /etc/sinopia.yaml:/opt/sinopia/config.yaml -d -p 80:80 keyvanfatehi/sinopia:latest'
+  command 'docker run --name sinopia -v /etc/sinopia.yaml:/opt/sinopia/config.yaml -d -p 80:4873 keyvanfatehi/sinopia:latest'
   not_if 'docker logs sinopia'
   action :run
 end
