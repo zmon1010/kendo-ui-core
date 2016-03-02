@@ -1,25 +1,39 @@
 require('erb')
+require('json')
 require_relative('codegen/lib/options')
+require_relative('codegen/lib/option')
+require_relative('codegen/lib/composite_option')
 require_relative('codegen/lib/markdown_parser')
 require_relative('codegen/lib/component')
 
 JSCHEME_DOC_TEMPLATE_CONTENTS = File.read(File.join(File.dirname(__FILE__), "/codegen/lib/jscheme/jscheme.json.erb"))
 JSCHEME_DOC_TEMPLATE = ERB.new JSCHEME_DOC_TEMPLATE_CONTENTS, 0, '%<>'
+
 COMPONENT = ERB.new File.read("build/codegen/lib/jscheme/component.json.erb"), 0, '%<>'
+OPTION = ERB.new File.read("build/codegen/lib/jscheme/option.json.erb"), 0, '%<>'
 
 module CodeGen::Jscheme
+    module Options
+
+        def option_class
+            Option
+        end
+
+        def composite_option_class
+            CompositeOption
+        end
+
+    end 
+
     class Component < CodeGen::Component
-
-        def real_class?
-            @name =~ /[A-Z]\w+$/
-        end
-       
-        def options
-            @methods.find_all { |m| !m.name.include?('.') }
-        end
-
+        include Options
         def jscheme_class
-            Component.result(binding)
+            #COMPONENT.result(binding)
+            JSON.pretty_generate(JSON.parse(COMPONENT.result(binding).gsub(/\r\n/,"")))
+        end
+
+        def options
+            @options.find_all { |option| !option.composite? }.sort {|a, b| a.name <=> b.name }
         end
 
         def namespace
@@ -28,12 +42,20 @@ module CodeGen::Jscheme
     end
 
     class Option < CodeGen::Option
+        def jscheme_def
+            OPTION.result(binding)
+        end
 
+    end
+
+    class CompositeOption < CodeGen::CompositeOption
+        def jscheme_def
+            OPTION.result(binding)
+        end
     end
 end
 
 def get_jscheme(sources)
-
     components = sources.map do |source|
         parser = CodeGen::MarkdownParser.new
 
@@ -47,19 +69,6 @@ def get_jscheme(sources)
     JSCHEME_DOC_TEMPLATE.result(binding)
 end
 
-class JschemeTask < Rake::FileTask
-    include Rake::DSL
-    def execute(args=nil)
-        mkdir_p File.dirname(name), :verbose => false
-
-        $stderr.puts("Creating #{name}") if VERBOSE
-
-        File.open(name, "w") do |file|
-            file.write get_jscheme(prerequisites)
-        end
-    end
-end
-
 def jscheme(*args, &block)
     JschemeTask.define_task(*args, &block)
 end
@@ -71,7 +80,6 @@ namespace :jscheme do
             task :test do
                 File.open("dist/kendo.jscheme-#{branch}.js", "w") do |f|
                     f.write get_jscheme(md_api_suite('all'))
-                    sh "node_modules/jshint/bin/jshint #{f.path}"
                 end
             end
         end
