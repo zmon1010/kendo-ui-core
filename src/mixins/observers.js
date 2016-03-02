@@ -53,11 +53,15 @@
         },
 
         optionsChange: function(e) {
+            e = e || {};
+            e.element = this;
             this.trigger("optionsChange", e);
         },
 
-        geometryChange: function(e) {
-            this.trigger("geometryChange", e);
+        geometryChange: function() {
+            this.trigger("geometryChange", {
+                element: this
+            });
         },
 
         suspend: function() {

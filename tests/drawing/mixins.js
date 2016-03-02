@@ -117,9 +117,9 @@
             element.geometryChange();
         });
 
-        test("calls observers geometryChange method with argument", function() {
-            element.geometryChange("foo");
-            equal(observer._geometryChange[0], "foo");
+        test("calls observers geometryChange method with argument that contains the element", function() {
+            element.geometryChange();
+            ok(observer._geometryChange[0].element === element);
         });
 
         test("does not call observers method if suspended", function() {
