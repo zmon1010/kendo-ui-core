@@ -12,7 +12,7 @@
                 .Labels(labels => labels.Format("{0}%").Visible(true));
         })
         .CategoryAxis(axis => axis
-            //.Categories(model => model.Year)
+            .Categories(model => model.Year)
             .MajorGridLines(lines => lines.Visible(false))
         )
         .ValueAxis(axis => axis.Numeric()

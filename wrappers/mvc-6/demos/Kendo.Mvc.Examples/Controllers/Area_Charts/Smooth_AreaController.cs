@@ -4,7 +4,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Area_ChartsController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Smooth_Area()
         {
             return View();
         }
