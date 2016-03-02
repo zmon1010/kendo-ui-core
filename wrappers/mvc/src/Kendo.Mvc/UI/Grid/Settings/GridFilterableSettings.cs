@@ -6,7 +6,6 @@ namespace Kendo.Mvc.UI
     {
         public GridFilterableSettings()
         {
-            Extra = true;
             Mode = GridFilterMode.Menu;
             Messages = new FilterableMessages();
             Operators = new FilterableOperators();
@@ -14,7 +13,7 @@ namespace Kendo.Mvc.UI
 
         public bool Enabled { get; set; }
 
-        public bool Extra { get; set; }
+        public bool? Extra { get; set; }
 
         public GridFilterMode Mode { get; set; }
 
@@ -24,9 +23,9 @@ namespace Kendo.Mvc.UI
 
         protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
         {
-            if (!Extra)
+            if (Extra.HasValue)
             {
-                json["extra"] = false;
+                json["extra"] = Extra;
             }
 
             if (Mode == (GridFilterMode.Row | GridFilterMode.Menu))
