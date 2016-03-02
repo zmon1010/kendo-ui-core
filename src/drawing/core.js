@@ -26,6 +26,7 @@
             this._click = this._handler("click");
             this._mouseenter = this._handler("mouseenter");
             this._mouseleave = this._handler("mouseleave");
+            this._mousemove = this._handler("mousemove");
 
             this._visual = new kendo.drawing.Group();
 
@@ -36,6 +37,8 @@
             if (this.options.height) {
                 this.element.css("height", this.options.height);
             }
+
+            this._enableTracking();
         },
 
         options: {
@@ -46,6 +49,7 @@
             "click",
             "mouseenter",
             "mouseleave",
+            "mousemove",
             "resize"
         ],
 
@@ -111,10 +115,36 @@
                 if (node) {
                     surface.trigger(event, {
                         element: node,
-                        originalEvent: e
+                        originalEvent: e,
+                        type: event
                     });
                 }
             };
+        },
+
+        _enableTracking: function() {
+
+        },
+
+        _elementOffset: function() {
+            var element = this.element;
+            var offset = element.offset();
+            var paddingLeft = parseInt(element.css("paddingLeft"), 10);
+            var paddingTop = parseInt(element.css("paddingTop"), 10);
+
+            return {
+                left: offset.left + paddingLeft,
+                top: offset.top + paddingTop
+            };
+        },
+
+        _surfacePoint: function (event) {
+            var offset = this._elementOffset();
+            var coord = eventCoordinates(event);
+            var x = coord.x - offset.left;
+            var y = coord.y - offset.top;
+
+            return new g.Point(x, y);
         }
     });
 

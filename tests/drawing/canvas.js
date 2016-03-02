@@ -56,15 +56,19 @@
             surface = new Surface(container, options);
         }
 
+        function setup() {
+            container = $("<div>").appendTo(QUnit.fixture);
+            createSurface();
+        }
+
+        function teardown() {
+            surface.destroy();
+            container.remove();
+        }
+
         module("Surface / Canvas", {
-            setup: function() {
-                container = $("<div>").appendTo(QUnit.fixture);
-                createSurface();
-            },
-            teardown: function() {
-                surface.destroy();
-                container.remove();
-            }
+            setup: setup,
+            teardown: teardown
         });
 
         test("reports actual surface type", function() {
@@ -105,6 +109,193 @@
 
             surface.destroy();
         });
+
+        // ------------------------------------------------------------
+        module("Surface / Canvas / mouse tracking", {
+            setup: setup,
+            teardown: teardown
+        });
+
+        test("inits search tree", function() {
+            ok(surface._searchTree instanceof d.ShapesQuadTree);
+        });
+
+        test("draw adds element to tree", function() {
+            var path = new d.Path();
+            surface._searchTree.add = function(elements) {
+                ok(path === elements[0]);
+            };
+            surface.draw(path);
+        });
+
+        test("clear clears tree", function() {
+            surface._searchTree.clear = function() {
+                ok(true);
+            };
+            surface.clear();
+        });
+
+        test("destroy clears tree", function() {
+            surface._searchTree.clear = function() {
+                ok(true);
+            };
+            surface.destroy();
+        });
+
+        test("passes surface point to tree", function() {
+            surface._searchTree.pointShape = function(point) {
+                var offset = surface.element.offset();
+                equal(point.x, -offset.left);
+                equal(point.y, -offset.top);
+            };
+            surface.element.trigger("click");
+        });
+
+        // ------------------------------------------------------------
+        module("Surface / Canvas / mouse tracking / click", {
+            setup: setup,
+            teardown: teardown
+        });
+
+        test("triggers the surface click event with the shape returned from the tree", function() {
+            var path = new d.Path();
+            surface._searchTree.pointShape = function() {
+                return path;
+            };
+            surface.bind("click", function(e) {
+                ok(e.element === path);
+                equal(e.type, "click");
+            });
+            surface.element.trigger("click");
+        });
+
+        test("does not trigger the surface click event if the tree returns no shape", 0, function() {
+            surface._searchTree.pointShape = $.noop;
+            surface.bind("click", function(e) {
+                ok(false);
+            });
+            surface.element.trigger("click");
+        });
+
+        // ------------------------------------------------------------
+        module("Surface / Canvas / mouse tracking / mousemove", {
+            setup: setup,
+            teardown: teardown
+        });
+
+        test("triggers the surface mousemove event with the shape returned from the tree", function() {
+            var path = new d.Path();
+            surface._searchTree.pointShape = function() {
+                return path;
+            };
+            surface.bind("mousemove", function(e) {
+                ok(e.element === path);
+                equal(e.type, "mousemove");
+            });
+            surface.element.trigger("mousemove");
+        });
+
+        test("triggers the surface mousemove event if the tree returns no shape", function() {
+            surface._searchTree.pointShape = $.noop;
+
+            surface.bind("mousemove", function(e) {
+                ok(!e.element);
+                equal(e.type, "mousemove");
+            });
+            surface.element.trigger("mousemove");
+        });
+
+        test("triggers the surface mouseenter event with the shape returned from the tree", function() {
+            var path = new d.Path();
+            surface._searchTree.pointShape = function() {
+                return path;
+            };
+            surface.bind("mouseenter", function(e) {
+                ok(e.element === path);
+                equal(e.type, "mouseenter");
+            });
+            surface.element.trigger("mousemove");
+        });
+
+        test("does not trigger the surface mouseenter event if the tree returns no shape", 0, function() {
+            surface._searchTree.pointShape = $.noop;
+            surface.bind("mouseenter", function(e) {
+                ok(false);
+            });
+            surface.element.trigger("mousemove");
+        });
+
+        test("does not trigger the surface mouseenter event if the tree returns the same shape", 1, function() {
+            var path = new d.Path();
+            surface._searchTree.pointShape = function() {
+                return path;
+            };
+            surface.bind("mouseenter", function(e) {
+                ok(true);
+            });
+            surface.element.trigger("mousemove");
+            surface.element.trigger("mousemove");
+        });
+
+        test("triggers the surface mouseleave event if the tree returns no shape", function() {
+            var path = new d.Path();
+            var first = true;
+            surface._searchTree.pointShape = function() {
+                if (first) {
+                    first = false;
+                    return path;
+                }
+            };
+            surface.bind("mouseleave", function(e) {
+                ok(e.element === path);
+                equal(e.type, "mouseleave");
+            });
+            surface.element.trigger("mousemove");
+            surface.element.trigger("mousemove");
+        });
+
+        test("triggers the surface mouseleave event if the tree returns different shape", function() {
+            var path = new d.Path();
+            var otherPath = new d.Path();
+            var first = true;
+            surface._searchTree.pointShape = function() {
+                if (first) {
+                    first = false;
+                    return path;
+                }
+                return otherPath;
+            };
+            surface.bind("mouseleave", function(e) {
+                ok(e.element === path);
+                equal(e.type, "mouseleave");
+            });
+            surface.element.trigger("mousemove");
+            surface.element.trigger("mousemove");
+        });
+
+        test("does not trigger the surface mouseleave event if there is no current shape", 0, function() {
+            var path = new d.Path();
+            surface._searchTree.pointShape = function() {
+                return path;
+            };
+            surface.bind("mouseleave", function(e) {
+                ok(false);
+            });
+            surface.element.trigger("mousemove");
+        });
+
+        test("does not trigger the surface mouseleave event if the shape is the same", 0, function() {
+            var path = new d.Path();
+            surface._searchTree.pointShape = function() {
+                return path;
+            };
+            surface.bind("mouseleave", function(e) {
+                ok(false);
+            });
+            surface.element.trigger("mousemove");
+            surface.element.trigger("mousemove");
+        });
+
     })();
 
     // ------------------------------------------------------------
