@@ -179,10 +179,6 @@ var __meta__ = { // jshint ignore:line
                 }
             });
 
-            if (status == "k-denied" && this._lastHover) {
-                this._lastHover.removeClass(KSTATEHOVER);
-            }
-
             if (status.indexOf("k-insert") !== 0) {
                 this.dropHint.css(VISIBILITY, "hidden");
             }
