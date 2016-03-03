@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-<link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.common.min.css" rel="stylesheet" /><link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.rtl.min.css" rel="stylesheet" /><link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.default.min.css" rel="stylesheet" /><link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.default.mobile.min.css" rel="stylesheet" />
+<link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.common.min.css" rel="stylesheet" />
+<link href="//kendo.cdn.telerik.com/2016.1.112/styles/kendo.flat.min.css" rel="stylesheet" />
 
     <script src="../../src/jquery.js"></script>
     <script src="../../src/kendo.core.js"></script>
@@ -23,8 +24,7 @@
     <script src="../../src/drawing/vml.js"></script>
   </head>
   <body>
-
- <div id="container" style="margin-top:200px;border:1px solid black;"></div>
+ <div id="container" style="margin-top:200px;border:1px solid black;padding-top:20px;"></div>
 
         <script>
             var TOLERANCE = 0.01,
@@ -42,7 +42,23 @@
                 Segment = drawing.Segment,
                 Surface = drawing.Surface,
                 container = $("#container"),
-                surface = Surface.create(container[0], {width: 700, height: 700, type: "canvas"}),
+                surface = Surface.create(container[0], {
+                    width: 700, 
+                    height: 700, 
+                    type: "canvas", 
+                    tooltip: {
+                        animation: {
+                            open: {
+                                effects: "zoom:in",
+                                duration: 500
+                            },
+                            close: {
+                                effects: "zoom:out"
+                            }
+                        },
+                        appendTo: "body"
+                    }
+                }),
                 group = new drawing.Group(),
                 DEFAULT_OPACITY = 0.8,
                 options = {fill: {color: "red", opacity: DEFAULT_OPACITY}},
@@ -52,23 +68,80 @@
 
             createPaths(group);
             surface.draw(group);
-            surface.enableTracking();
 
             appendPaths(group);
 
             drawPaths();
-
-            surface.bind("mouseenter", function(e) {
-                //console.log("mouseenter", e);
+            createTest();
+            surface.bind("tooltipShow", function(e) {
+                // debugger;
             });
 
-            surface.bind("mouseleave", function(e) {
-                //console.log("mouseleave", e);
+            surface.bind("tooltipHide", function(e) {
+                 // debugger;
             });
 
             surface.bind("click", function(e) {
                 //console.log("click", e);
             });
+            
+            function test(x, y) {
+                var p1 = new Point(300, 100);
+                var p2 = new Point(400, 200);
+                var p = !x ? new Point(310, 105) : new Point(x, y);
+                
+                var angle = -kendo.util.deg(Math.atan2(p2.y - p1.y, p2.x - p1.x));
+                var transform = geometry.transform().rotate(angle, p1);
+                var p21 = p2.transformCopy(transform);
+                var pT = p.transformCopy(transform);
+
+            }
+            
+            function createTest() {
+                path = new drawing.Path().stroke("red", 10);
+                path.moveTo(200, 100).lineTo(300, 200);
+
+              // path.transform(geometry.transform().translate(100, 100).rotate(-45));
+                var circle = new drawing.Circle(new geometry.Circle(new Point(370, 150), 50)).stroke("red", 10);
+               
+                group.append(path);
+                group.append(circle);
+                var arc = new drawing.Arc(new geometry.Arc([150, 400], {radiusX: 50, radiusY: 100, startAngle: 0, endAngle: 130})).stroke("red", 10);
+                var rect = new drawing.Rect(new Rect([250, 400], [100, 200])).stroke("red", 10);
+                
+                group.append(rect);
+                
+                group.append(arc);
+                
+                var path2 = new drawing.MultiPath().stroke("red", 20);
+                path2.transform(geometry.transform().translate(400, 100));
+                path2.moveTo(200, 200);
+                path2.curveTo(Point.create(210, 290),
+                    Point.create(250, 110),
+                    Point.create(245, 200));
+                path2.curveTo(Point.create(250, 310),
+                    Point.create(300, 250),
+                    Point.create(250, 150));
+                    
+                // var g1 = new drawing.Group();
+                // g1.transform(geometry.transform().translate(400, 100));
+                // g1.append(new drawing.Circle(new geometry.Circle(new Point(210, 290), 2)).fill("green"));
+                // g1.append(new drawing.Circle(new geometry.Circle(new Point(250, 110), 2)).fill("blue"));
+                // g1.append(new drawing.Circle(new geometry.Circle(new Point(245, 200), 2)).fill("black"));
+                //group.append(g1);
+
+                path2.moveTo(50, 50).lineTo(100, 100).lineTo(0, 100);
+                
+                var pathTest = new Path().stroke("black", 1);
+                pathTest.moveTo(636, 300).lineTo(656, 300);
+
+                console.log(path2.containsPoint(new Point(640, 300)));
+
+
+                group.append(path2);
+                // group.append(pathTest);
+                
+            }
 
             function appendPaths(group) {
                 var arc = new drawing.Arc(new geometry.Arc([250, 300], {radiusX: 100, radiusY: 50, startAngle: 50, endAngle: 280}), $.extend(true, {}, options, {
@@ -142,7 +215,7 @@
                 path2.curveTo(Point.create(250, 310),
                     Point.create(300, 250),
                     Point.create(250, 150));
-                //path2.lineTo(200, 200);
+                // path2.lineTo(200, 200);
                 group.append(path2);
 
 
@@ -166,7 +239,9 @@
                 var circle = new drawing.Circle(new geometry.Circle(new Point(150, 300), 50), options);
                 group.append(circle);
                 group.options.tooltip = {
-                    content: "KOR",
+                    content: function(e) {
+                        return e.target.nodeType;
+                    },
                     position: "cursor"
                 };
                 circle.options.tooltip = {
@@ -182,6 +257,19 @@
                     content: "BAR",
                     position: "right"
                 };
+
+                var groupTooltip = new drawing.Layout(null, {
+                    tooltip: {
+                        group: true,
+                        content: "Group Tooltip",
+                        autoHide: false
+                    }
+                });
+                groupTooltip.append(new drawing.Rect(new geometry.Rect([0, 0], [100, 100]), options));
+                groupTooltip.append(new drawing.Circle(new geometry.Circle([50, 50], 50), blueOptions));
+                groupTooltip.append(new drawing.Text("Group Text", [20, 40], {fill: {color: "white"}}));
+                groupTooltip.transform(geometry.transform().translate(400, 400));
+                group.append(groupTooltip);
                 group.append(arc);
             }
 

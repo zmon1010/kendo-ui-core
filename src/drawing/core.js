@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./geometry" ], f);
+    define([ "./geometry", "../kendo.popup" ], f);
 })(function(){
 
 (function ($) {
@@ -14,7 +14,17 @@
         deepExtend = kendo.deepExtend,
 
         util = kendo.util,
-        defined = util.defined;
+        defined = util.defined,
+
+        g = kendo.geometry,
+
+        proxy = $.proxy,
+
+        NS = ".kendo",
+        TOOLTIP_TEMPLATE = '<div class="k-tooltip">' +
+            '<div class="k-tooltip-content"></div>' +
+        '</div>',
+        TOOLTIP_CLOSE_TEMPLATE = '<div class="k-tooltip-button"><a href="\\#" class="k-icon k-i-close">close</a></div>';
 
     // Base drawing surface ==================================================
     var Surface = Widget.extend({
@@ -42,7 +52,8 @@
         },
 
         options: {
-            name: "Surface"
+            name: "Surface",
+            tooltip: {}
         },
 
         events: [
@@ -50,7 +61,9 @@
             "mouseenter",
             "mouseleave",
             "mousemove",
-            "resize"
+            "resize",
+            "tooltipOpen",
+            "tooltipClose"
         ],
 
         draw: function(element) {
@@ -63,6 +76,12 @@
 
         destroy: function() {
             this._visual = null;
+
+            if (this._tooltip) {
+                this._tooltip.destroy();
+                delete this._tooltip;
+            }
+
             Widget.fn.destroy.call(this);
         },
 
@@ -105,6 +124,18 @@
             }
         },
 
+        showTooltip: function(shape, options) {
+            if (this._tooltip) {
+                this._tooltip.show(shape, options);
+            }
+        },
+
+        hideTooltip: function() {
+            if (this._tooltip) {
+                this._tooltip.hide();
+            }
+        },
+
         _resize: noop,
 
         _handler: function(event) {
@@ -123,7 +154,7 @@
         },
 
         _enableTracking: function() {
-
+            this._tooltip = new SurfaceTooltip(this, this.options.tooltip || {});
         },
 
         _elementOffset: function() {
@@ -376,6 +407,292 @@
 
     SurfaceFactory.current = new SurfaceFactory();
 
+    //TO DO: delay?, callout?, ajax content?
+    SurfaceTooltip = Class.extend({
+        init: function(surface, options) {
+            this.element = $(TOOLTIP_TEMPLATE);
+            this.content = this.element.children(".k-tooltip-content");
+
+            options = options || {};
+
+            this.options = deepExtend({}, this.options, this._tooltipOptions(options));
+
+            this.popup = new kendo.ui.Popup(this.element, {
+                appendTo: options.appendTo,
+                animation: options.animation
+            });
+
+            this.surface = surface;
+            this._bindEvents();
+        },
+
+        options: {
+            position: "top",
+            showOn: "mouseenter",
+            offset: 5,
+            autoHide: true
+        },
+
+        _bindEvents: function() {
+            this._showHandler = proxy(this._showEvent, this);
+            this._surfaceLeaveHandler = proxy(this._surfaceLeave, this);
+            this._mouseleaveHandler = proxy(this._mouseleave, this);
+            this._mousemoveHandler = proxy(this._mousemove, this);
+
+            this.surface.bind("click", this._showHandler);
+            this.surface.bind("mouseenter", this._showHandler);
+            this.surface.bind("mouseleave", this._mouseleaveHandler);
+            this.surface.bind("mousemove", this._mousemoveHandler);
+
+            this.surface.element.on("mouseleave" + NS, this._surfaceLeaveHandler);
+
+            this.element.on("click" + NS, ".k-tooltip-button", proxy(this._hideClick, this));
+        },
+
+        destroy: function() {
+            var popup = this.popup;
+
+            this.surface.unbind("click", this._showHandler);
+            this.surface.unbind("mouseenter", this._showHandler);
+            this.surface.unbind("mouseleave", this._mouseleaveHandler);
+            this.surface.unbind("mousemove", this._mousemoveHandler);
+
+            this.surface.element.off("mouseleave" + NS, this._surfaceLeaveHandler);
+            this.element.off("click" + NS);
+
+            if (popup) {
+                popup.destroy();
+                delete this.popup;
+            }
+
+            clearTimeout(this._timeout);
+
+            delete this.popup;
+            delete this.element;
+            delete this.content;
+            delete this.surface;
+        },
+
+        _tooltipOptions: function(options) {
+            options = options || {};
+            return {
+                position: options.position,
+                showOn: options.showOn,
+                offset: options.offset,
+                autoHide: options.autoHide,
+                width: options.width,
+                height: options.height,
+                content: options.content,
+                group: options.group
+            };
+        },
+
+        _tooltipShape: function(shape) {
+            while(shape && !shape.options.tooltip) {
+                shape = shape.parent;
+            }
+            return shape;
+        },
+
+        _updateContent: function(target, shape, options) {
+            var content = options.content;
+            if (kendo.isFunction(content)) {
+                content = content({
+                    element: shape,
+                    target: target
+                });
+            }
+
+            if (content) {
+                this.content.html(content);
+                return true;
+            }
+        },
+
+        _position: function(shape, options, elementSize, event) {
+            var position = options.position;
+            var tooltipOffset = options.offset || 0;
+            var offset = this.surface._elementOffset();
+            var bbox = shape.bbox();
+            var width = elementSize.width;
+            var height = elementSize.height;
+            var left = 0, top = 0;
+
+            bbox.origin.translate(offset.left, offset.top);
+
+            if (position == "top" || !position) {
+                left = bbox.center().x - width / 2;
+                top = bbox.origin.y - height - tooltipOffset;
+            } else if (position == "cursor" && event) {
+                var coord = eventCoordinates(event);
+                left = coord.x - width / 2;
+                top = coord.y - height - tooltipOffset;
+            } else if (position == "left") {
+                left = bbox.origin.x - width - tooltipOffset;
+                top = bbox.center().y - height / 2;
+            } else if (position == "right") {
+                left = bbox.bottomRight().x + tooltipOffset;
+                top = bbox.center().y - height / 2;
+            } else if (position == "bottom") {
+                left = bbox.center().x - width / 2;
+                top = bbox.bottomRight().y + tooltipOffset;
+            }
+
+            return {
+                left: left,
+                top: top
+            };
+        },
+
+        show: function(shape, options) {
+            this._show(shape, shape, deepExtend({}, this.options, this._tooltipOptions(shape.options.tooltip), options));
+        },
+
+        hide: function() {
+            var current = this._current;
+            if (this.popup.visible() && current &&
+                !this.surface.trigger("tooltipClose", { element: current.shape, target: current.target, popup: this.popup})) {
+                delete this._current;
+                this.popup.close();
+            }
+        },
+
+        _hideClick: function(e) {
+            e.preventDefault();
+            this.hide();
+        },
+
+        _show: function(target, shape, options, event) {
+            var curent = this._current;
+
+            clearTimeout(this._timeout);
+
+            if (curent && options.group && curent.shape === shape) {
+                return;
+            }
+
+            if (!this.surface.trigger("tooltipOpen", { element: shape, target: target, popup: this.popup})
+                && this._updateContent(target, shape, options)) {
+
+                this._autoHide(options);
+                var elementSize = this._measure(options);
+                var position = this._position(options.group ? shape: target, options, elementSize, event);
+                var popup = this.popup;
+
+                if (popup.visible()) {
+                    popup.close(true);
+                    popup.element.kendoStop(true, true);
+                }
+
+                popup.open(position.left, position.top);
+                popup.wrapper.css({padding: 0});
+
+                this._current = {
+                    options: options,
+                    elementSize: elementSize,
+                    shape: shape,
+                    target: target
+                };
+            }
+        },
+
+        _autoHide: function(options) {
+            if (options.autoHide && this._closeButton) {
+                this.element.removeClass("k-tooltip-closable");
+                this._closeButton.remove();
+                delete this._closeButton;
+            }
+
+            if (!options.autoHide && !this._closeButton) {
+                this.element.addClass("k-tooltip-closable");
+                this._closeButton = $(TOOLTIP_CLOSE_TEMPLATE).prependTo(this.element);
+            }
+        },
+
+        _showEvent: function(e) {
+            var shape = this._tooltipShape(e.element);
+            if (shape) {
+                var options = deepExtend({}, this.options, this._tooltipOptions(shape.options.tooltip));
+
+                if (options && options.showOn == e.type) {
+                    this._show(e.element, shape, options, e.originalEvent);
+                }
+            }
+        },
+
+        _measure: function(options) {
+            var width, height;
+            if (options.width && options.height) {
+                width = options.width;
+                height = options.height;
+                this.element.css({
+                    width: options.width,
+                    height: options.height
+                });
+                width = this.element.outerWidth();
+                height = this.element.outerHeight();
+            } else {
+                this.element.css({
+                    width: "auto",
+                    height: "auto"
+                });
+
+                var visible = this.popup.visible();
+
+                if (!visible) {
+                    this.popup.wrapper.show();
+                }
+
+                width = this.element.outerWidth();
+                height = this.element.outerHeight();
+
+                if (!visible) {
+                    this.popup.wrapper.hide();
+                }
+            }
+
+            return {
+                width: width,
+                height: height
+            };
+        },
+
+        _mouseleave: function(e) {
+            var tooltip = this;
+            var current = tooltip._current;
+
+            if (current && current.options.autoHide) {
+                tooltip._timeout = setTimeout(function() {
+                    tooltip.hide();
+                }, 0);
+            }
+        },
+
+        _mousemove: function(e) {
+            var current = this._current;
+            if (current && e.element) {
+                var options = current.options;
+                if (options.position == "cursor") {
+                    var position = this._position(e.element, options, current.elementSize, e.originalEvent);
+                    this.popup.wrapper.css({left: position.left, top: position.top});
+                }
+            }
+        },
+
+        _surfaceLeave: function(e) {
+            if (!(e.relatedTarget && $(e.relatedTarget).closest(this.popup.wrapper).length)) {
+                this.hide();
+            }
+        }
+    });
+
+    function eventCoordinates(event) {
+        return {
+            x: event.pageX || event.clientX || 0,
+            y: event.pageY || event.clientY || 0
+        };
+    }
+
     // Exports ================================================================
     deepExtend(kendo, {
         drawing: {
@@ -392,7 +709,8 @@
             BaseNode: BaseNode,
             OptionsStore: OptionsStore,
             Surface: Surface,
-            SurfaceFactory: SurfaceFactory
+            SurfaceFactory: SurfaceFactory,
+            SurfaceTooltip: SurfaceTooltip
         }
     });
 

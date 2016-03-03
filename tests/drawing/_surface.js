@@ -230,4 +230,55 @@ function baseSurfaceEventTests(name, TSurface) {
         var e = { target: document.body };
         equal(surface.eventTarget(e), undefined);
     });
+
+    // ------------------------------------------------------------
+    var tooltip;
+
+    module("Surface Base Tests / " + name + " / tooltip", {
+        setup: function() {
+            container = $("<div>").appendTo(QUnit.fixture);
+            createSurface();
+            tooltip = surface._tooltip;
+        },
+        teardown: function() {
+            surface.destroy();
+            container.remove();
+        }
+    });
+
+    test("creates tooltip", function() {
+        ok(tooltip instanceof d.SurfaceTooltip);
+    });
+
+    test("destroys tooltip", function() {
+        var destroy = tooltip.destroy;
+        tooltip.destroy = function() {
+            ok(true);
+        };
+        try {
+            surface.destroy();
+        } finally {
+            tooltip.destroy = destroy;
+            tooltip.destroy();
+        }
+    });
+
+    test("showTooltip calls tooltip show method", function() {
+        var shape = "foo";
+        var options = "bar";
+        tooltip.show = function(shape, options) {
+            equal(shape, "foo");
+            equal(options, "bar");
+        };
+
+        surface.showTooltip(shape, options);
+    });
+
+    test("hideTooltip calls tooltip hide method", 1, function() {
+        tooltip.hide = function() {
+            ok(true);
+        };
+
+        surface.hideTooltip();
+    });
 }
