@@ -408,7 +408,7 @@
     SurfaceFactory.current = new SurfaceFactory();
 
     //TO DO: delay?, callout?, ajax content?
-    SurfaceTooltip = Class.extend({
+    var SurfaceTooltip = Class.extend({
         init: function(surface, options) {
             this.element = $(TOOLTIP_TEMPLATE);
             this.content = this.element.children(".k-tooltip-content");
@@ -571,8 +571,8 @@
                 return;
             }
 
-            if (!this.surface.trigger("tooltipOpen", { element: shape, target: target, popup: this.popup})
-                && this._updateContent(target, shape, options)) {
+            if (!this.surface.trigger("tooltipOpen", { element: shape, target: target, popup: this.popup}) &&
+                this._updateContent(target, shape, options)) {
 
                 this._autoHide(options);
                 var elementSize = this._measure(options);
@@ -657,7 +657,7 @@
             };
         },
 
-        _mouseleave: function(e) {
+        _mouseleave: function() {
             var tooltip = this;
             var current = tooltip._current;
 

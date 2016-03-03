@@ -9,7 +9,6 @@
         geometry = kendo.geometry,
 
         Class = kendo.Class,
-        Point = geometry.Point,
         Rect = geometry.Rect,
         deepExtend = kendo.deepExtend,
         isArray = $.isArray,
@@ -167,7 +166,6 @@
 
             pointShape: function(point) {
                 var size = this.ROOT_SIZE;
-                var sector = math.floor(point.x / size);
                 var result = this.root.pointShapes(point);
                 var sectorRoot = (this.rootMap[math.floor(point.x / size)] || {})[math.floor(point.y / size)];
 
@@ -180,7 +178,7 @@
                 result.sort(zIndexComparer);
                 for (var idx = 0; idx < result.length; idx++) {
                     if (result[idx].containsPoint(point)) {
-                        return result[idx]
+                        return result[idx];
                     }
                 }
             },
@@ -237,9 +235,8 @@
             },
 
             childrenChange: function(e) {
-                var idx, item;
                 if (e.action == "remove") {
-                    for (idx = 0; idx < e.items.length; idx++) {
+                    for (var idx = 0; idx < e.items.length; idx++) {
                         this.remove(e.items[idx]);
                     }
                 } else {

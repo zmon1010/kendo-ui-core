@@ -1713,10 +1713,6 @@
         translate(point.x - bbox.origin.x, point.y - bbox.origin.y, element);
     }
 
-    function numberSign(x) {
-        return x < 0 ? -1 : 1;
-    }
-
     // Exports ================================================================
     deepExtend(drawing, {
         align: align,
