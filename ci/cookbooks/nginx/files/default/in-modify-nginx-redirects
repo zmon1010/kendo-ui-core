@@ -1,0 +1,1 @@
+/var/www/kendo-ui/redirects.conf IN_MODIFY /etc/init.d/nginx reload
