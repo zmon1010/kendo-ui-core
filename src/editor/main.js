@@ -458,6 +458,8 @@
         },
 
         _registerHandler: function(element, type, handler) {
+            var NS = ".kendoEditor";
+
             element = $(element);
 
             if (!this._handlers) {
@@ -472,6 +474,8 @@
                         }
                     }
                 } else {
+                    type = type.split(" ").join(NS + " ")  + NS;
+
                     this._handlers.push({ element: element, type: type, handler: handler });
 
                     element.on(type, handler);
