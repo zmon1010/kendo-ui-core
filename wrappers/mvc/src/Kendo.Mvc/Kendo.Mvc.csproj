@@ -375,6 +375,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.ru-RU.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Messages.sk-SK.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.sk-SK.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Messages.sv-SE.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1985,6 +1990,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.ru-RU.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.sk-SK.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.sk-SK.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Messages.sv-SE.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.sv-SE.Designer.cs</LastGenOutput>
@@ -2672,4 +2681,8 @@
     <Compile Include="UI\Spreadsheet\Settings\SpreadsheetPdfMarginSettings.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetPdfMarginSettingsBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\Spreadsheet\Settings\SpreadsheetToolbarSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetToolbarSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Spreadsheet\Settings\SpreadsheetToolbarSettings.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetToolbarSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>
