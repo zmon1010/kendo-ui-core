@@ -88,7 +88,7 @@ namespace :jscheme do
                 schemas = get_jscheme(md_api_suite('all')).split("__SEPARATOR__")
                 begin
                     schemas.each do |schema|
-                        id = JSON.parse(schema)["id"]
+                        id = JSON.parse(schema)["id"].split(".").last
                         File.open("dist/json-scheme/#{id}.json", "w+") do |f|
                             f.write schema
                         end
