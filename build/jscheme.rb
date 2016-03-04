@@ -85,8 +85,16 @@ namespace :jscheme do
         namespace branch do
             desc "Test .jscheme generation"
             task :test do
-                File.open("dist/kendo.jscheme-#{branch}.js", "w") do |f|
-                    f.write get_jscheme(md_api_suite('all'))
+                schemas = get_jscheme(md_api_suite('all')).split("__SEPARATOR__")
+                begin
+                    schemas.each do |schema|
+                        id = JSON.parse(schema)["id"]
+                        File.open("dist/json-scheme/#{id}.json", "w+") do |f|
+                            f.write schema
+                        end
+                    end
+                rescue JSON::ParserError
+                    puts "Parsing failed"
                 end
             end
         end
