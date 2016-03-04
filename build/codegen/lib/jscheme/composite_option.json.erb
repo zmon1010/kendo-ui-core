@@ -1,5 +1,6 @@
 "<%= name %>" : {
     "type": "object",
+    "title": "<%= name.capitalize %>",
     "description": "",
     "properties": {<% options.each do |option| %>
         <%= option.jscheme_def %><% if option != options.last %>, <% end %>
