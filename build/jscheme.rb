@@ -11,10 +11,11 @@ JSCHEME_DOC_TEMPLATE = ERB.new JSCHEME_DOC_TEMPLATE_CONTENTS, 0, '%<>'
 
 COMPONENT = ERB.new File.read("build/codegen/lib/jscheme/component.json.erb"), 0, '%<>'
 OPTION = ERB.new File.read("build/codegen/lib/jscheme/option.json.erb"), 0, '%<>'
+COMPOSITE = ERB.new File.read("build/codegen/lib/jscheme/composite_option.json.erb"), 0, '%<>'
+ARRAY = ERB.new File.read("build/codegen/lib/jscheme/array_option.json.erb"), 0, '%<>'
 
 module CodeGen::Jscheme
     module Options
-
         def option_class
             Option
         end
@@ -23,17 +24,15 @@ module CodeGen::Jscheme
             CompositeOption
         end
 
+        def array_option_class
+            ArrayOption
+        end
     end 
 
     class Component < CodeGen::Component
-        include Options
+        prepend Options
         def jscheme_class
-            #COMPONENT.result(binding)
-            JSON.pretty_generate(JSON.parse(COMPONENT.result(binding).gsub(/\r\n/,"")))
-        end
-
-        def options
-            @options.find_all { |option| !option.composite? }.sort {|a, b| a.name <=> b.name }
+            JSON.pretty_generate(JSON.parse(COMPONENT.result(binding)))
         end
 
         def namespace
@@ -42,15 +41,23 @@ module CodeGen::Jscheme
     end
 
     class Option < CodeGen::Option
+        prepend Options
         def jscheme_def
             OPTION.result(binding)
         end
+    end
 
+    class ArrayOption < CodeGen::ArrayOption
+        prepend Options
+        def jscheme_def
+            ARRAY.result(binding)
+        end
     end
 
     class CompositeOption < CodeGen::CompositeOption
+        prepend Options
         def jscheme_def
-            OPTION.result(binding)
+            COMPOSITE.result(binding)
         end
     end
 end
