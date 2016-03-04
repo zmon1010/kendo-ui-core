@@ -1,6 +1,7 @@
 "<%= name %>" : {
     "type": "object",
     "description": "",
-    "properties": {
-    }
+    "properties": {<% options.each do |option| %>
+        <%= option.jscheme_def %><% if option != options.last %>, <% end %>
+    <% end %>}
 }
