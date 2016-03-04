@@ -8,6 +8,13 @@ var is = {
     }
 }
 
+// effects
+
+$(() => {
+    kendo.effects.disable();
+    kendo.effects.enable();
+});
+
 // TreeView
 $(() => {
     var treeview = <kendo.ui.TreeView>$("#treeview").data("kendoTreeView");
