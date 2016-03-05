@@ -430,7 +430,8 @@
             position: "top",
             showOn: "mouseenter",
             offset: 5,
-            autoHide: true
+            autoHide: true,
+            hideDelay: 0
         },
 
         _bindEvents: function() {
@@ -483,7 +484,8 @@
                 width: options.width,
                 height: options.height,
                 content: options.content,
-                group: options.group
+                group: options.group,
+                hideDelay: options.hideDelay
             };
         },
 
@@ -664,7 +666,7 @@
             if (current && current.options.autoHide) {
                 tooltip._timeout = setTimeout(function() {
                     tooltip.hide();
-                }, 0);
+                }, current.options.hideDelay || 0);
             }
         },
 

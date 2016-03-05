@@ -43,9 +43,9 @@
                 Surface = drawing.Surface,
                 container = $("#container"),
                 surface = Surface.create(container[0], {
-                    width: 700, 
-                    height: 700, 
-                    type: "canvas", 
+                    width: 700,
+                    height: 700,
+                    type: "canvas",
                     tooltip: {
                         animation: {
                             open: {
@@ -84,35 +84,35 @@
             surface.bind("click", function(e) {
                 //console.log("click", e);
             });
-            
+
             function test(x, y) {
                 var p1 = new Point(300, 100);
                 var p2 = new Point(400, 200);
                 var p = !x ? new Point(310, 105) : new Point(x, y);
-                
+
                 var angle = -kendo.util.deg(Math.atan2(p2.y - p1.y, p2.x - p1.x));
                 var transform = geometry.transform().rotate(angle, p1);
                 var p21 = p2.transformCopy(transform);
                 var pT = p.transformCopy(transform);
 
             }
-            
+
             function createTest() {
                 path = new drawing.Path().stroke("red", 10);
                 path.moveTo(200, 100).lineTo(300, 200);
 
               // path.transform(geometry.transform().translate(100, 100).rotate(-45));
                 var circle = new drawing.Circle(new geometry.Circle(new Point(370, 150), 50)).stroke("red", 10);
-               
+
                 group.append(path);
                 group.append(circle);
                 var arc = new drawing.Arc(new geometry.Arc([150, 400], {radiusX: 50, radiusY: 100, startAngle: 0, endAngle: 130})).stroke("red", 10);
                 var rect = new drawing.Rect(new Rect([250, 400], [100, 200])).stroke("red", 10);
-                
+
                 group.append(rect);
-                
+
                 group.append(arc);
-                
+
                 var path2 = new drawing.MultiPath().stroke("red", 20);
                 path2.transform(geometry.transform().translate(400, 100));
                 path2.moveTo(200, 200);
@@ -122,7 +122,7 @@
                 path2.curveTo(Point.create(250, 310),
                     Point.create(300, 250),
                     Point.create(250, 150));
-                    
+
                 // var g1 = new drawing.Group();
                 // g1.transform(geometry.transform().translate(400, 100));
                 // g1.append(new drawing.Circle(new geometry.Circle(new Point(210, 290), 2)).fill("green"));
@@ -131,7 +131,7 @@
                 //group.append(g1);
 
                 path2.moveTo(50, 50).lineTo(100, 100).lineTo(0, 100);
-                
+
                 var pathTest = new Path().stroke("black", 1);
                 pathTest.moveTo(636, 300).lineTo(656, 300);
 
@@ -140,7 +140,7 @@
 
                 group.append(path2);
                 // group.append(pathTest);
-                
+
             }
 
             function appendPaths(group) {
@@ -271,6 +271,33 @@
                 groupTooltip.transform(geometry.transform().translate(400, 400));
                 group.append(groupTooltip);
                 group.append(arc);
+
+                var group1Tooltip = new drawing.Layout(null, {
+                    tooltip: {
+                        group: true,
+                        content: "Group 1 Tooltip",
+                        hideDelay: 500
+                    }
+                });
+                group1Tooltip.append(new drawing.Path({stroke: { color: "red", width: 10}}).moveTo(0,0).lineTo(0, 100));
+                group1Tooltip.append(new drawing.Path({stroke: { color: "red", width: 10}}).moveTo(30,0).lineTo(30, 100));
+                group1Tooltip.append(new drawing.Path({stroke: { color: "red", width: 10}}).moveTo(60,0).lineTo(60, 100));
+                group1Tooltip.transform(geometry.transform().translate(550, 400));
+                group.append(group1Tooltip);
+
+                var multipathGroup = new drawing.MultiPath({
+                    tooltip: {
+                        group: true,
+                        content: "MultiPath Tooltip",
+                        hideDelay: 500
+                    },
+                    stroke: { color: "blue", width: 10}
+                });
+                multipathGroup.moveTo(0,0).lineTo(0, 100);
+                multipathGroup.moveTo(30,0).lineTo(30, 100);
+                multipathGroup.moveTo(60,0).lineTo(60, 100);
+                multipathGroup.transform(geometry.transform().translate(550, 550));
+                group.append(multipathGroup);
             }
 
 

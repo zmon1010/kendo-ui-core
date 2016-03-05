@@ -348,12 +348,22 @@
                 position: "left",
                 showOn: "click",
                 offset: 10,
-                autoHide: false
+                autoHide: false,
+                width: 100,
+                height: 50,
+                content: "foo",
+                group: true,
+                hideDelay: 100
             });
             equal(tooltip.options.position, "left");
             equal(tooltip.options.showOn, "click");
             equal(tooltip.options.offset, 10);
             equal(tooltip.options.autoHide, false);
+            equal(tooltip.options.width, 100);
+            equal(tooltip.options.height, 50);
+            equal(tooltip.options.content, "foo");
+            equal(tooltip.options.group, true);
+            equal(tooltip.options.hideDelay, 100);
         });
 
         test("inits elements", function() {
@@ -474,6 +484,20 @@
                 ok(tooltip.popup.visible());
                 start();
             }, 0);
+        });
+
+        asyncTest("does not hide tooltip on mouseleave before hideDelay expires", function() {
+            shape.options.tooltip = {
+                content: "foo",
+                autoHide: false,
+                hideDelay: 100
+            };
+            tooltip.show(shape);
+            surface.trigger("mouseleave", { element: shape, type: "mouseleave"});
+            setTimeout(function() {
+                ok(tooltip.popup.visible());
+                start();
+            }, 50);
         });
 
         asyncTest("does not hide element if the mouse moves from one element of a group to another from the same group", 1, function() {
