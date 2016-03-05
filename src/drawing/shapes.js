@@ -488,7 +488,7 @@
         },
 
         _bbox: function(matrix) {
-            return this._geometry.bbox(matrix);;
+            return this._geometry.bbox(matrix);
         },
 
         rawBBox: function() {
@@ -520,7 +520,7 @@
         },
 
         _bbox: function(matrix) {
-            return this._geometry.bbox(matrix);;
+            return this._geometry.bbox(matrix);
         },
 
         rawBBox: function() {
@@ -1428,13 +1428,6 @@
         }
 
         return boundingBox;
-    }
-
-    function expandRect(rect, value) {
-        rect.origin.x -= value;
-        rect.origin.y -= value;
-        rect.size.width += value * 2;
-        rect.size.height += value * 2;
     }
 
     function defineGeometryAccessors(fn, names) {

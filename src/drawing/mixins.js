@@ -109,7 +109,7 @@
             return bbox;
         },
 
-        geometryChange: function(e) {
+        geometryChange: function() {
             delete this._bboxCache;
             this.trigger("geometryChange", {
                 element: this
