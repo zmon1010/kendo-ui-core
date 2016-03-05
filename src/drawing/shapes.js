@@ -487,15 +487,8 @@
             }
         },
 
-        bbox: function(transformation) {
-            var combinedMatrix = toMatrix(this.currentTransform(transformation));
-            var rect = this._geometry.bbox(combinedMatrix);
-            var strokeWidth = this.options.get("stroke.width");
-            if (strokeWidth) {
-                expandRect(rect, strokeWidth / 2);
-            }
-
-            return rect;
+        _bbox: function(matrix) {
+            return this._geometry.bbox(matrix);;
         },
 
         rawBBox: function() {
@@ -511,6 +504,7 @@
         }
     });
     drawing.mixins.Paintable.extend(Circle.fn);
+    drawing.mixins.Measurable.extend(Circle.fn);
     defineGeometryAccessors(Circle.fn, ["geometry"]);
 
     var Arc = Element.extend({
@@ -525,16 +519,8 @@
             }
         },
 
-        bbox: function(transformation) {
-            var combinedMatrix = toMatrix(this.currentTransform(transformation));
-            var rect = this.geometry().bbox(combinedMatrix);
-            var strokeWidth = this.options.get("stroke.width");
-
-            if (strokeWidth) {
-                expandRect(rect, strokeWidth / 2);
-            }
-
-            return rect;
+        _bbox: function(matrix) {
+            return this._geometry.bbox(matrix);;
         },
 
         rawBBox: function() {
@@ -565,6 +551,7 @@
         }
     });
     drawing.mixins.Paintable.extend(Arc.fn);
+    drawing.mixins.Measurable.extend(Arc.fn);
     defineGeometryAccessors(Arc.fn, ["geometry"]);
 
     var GeometryElementsArray = ElementsArray.extend({
@@ -820,16 +807,6 @@
             return this;
         },
 
-        bbox: function(transformation) {
-            var combinedMatrix = toMatrix(this.currentTransform(transformation));
-            var boundingBox = this._bbox(combinedMatrix);
-            var strokeWidth = this.options.get("stroke.width");
-            if (strokeWidth) {
-                expandRect(boundingBox, strokeWidth / 2);
-            }
-            return boundingBox;
-        },
-
         rawBBox: function() {
             return this._bbox();
         },
@@ -899,6 +876,7 @@
         }
     });
     drawing.mixins.Paintable.extend(Path.fn);
+    drawing.mixins.Measurable.extend(Path.fn);
 
     Path.fromRect = function(rect, options) {
         return new Path(options)
@@ -999,13 +977,8 @@
             return this;
         },
 
-        bbox: function(transformation) {
-            var bbox = elementsBoundingBox(this.paths, true, this.currentTransform(transformation));
-            var strokeWidth = this.options.get("stroke.width");
-            if (strokeWidth) {
-                expandRect(bbox, strokeWidth / 2);
-            }
-            return bbox;
+        _bbox: function(matrix) {
+            return elementsBoundingBox(this.paths, true, matrix);
         },
 
         rawBBox: function() {
@@ -1040,6 +1013,7 @@
         }
     });
     drawing.mixins.Paintable.extend(MultiPath.fn);
+    drawing.mixins.Measurable.extend(MultiPath.fn);
 
     var Image = Element.extend({
         nodeType: "Image",
@@ -1230,15 +1204,8 @@
             }
         },
 
-        bbox: function(transformation) {
-            var combinedMatrix = toMatrix(this.currentTransform(transformation));
-            var rect = this._geometry.bbox(combinedMatrix);
-            var strokeWidth = this.options.get("stroke.width");
-            if (strokeWidth) {
-                expandRect(rect, strokeWidth / 2);
-            }
-
-            return rect;
+        _bbox: function(matrix) {
+            return this._geometry.bbox(matrix);
         },
 
         rawBBox: function() {
@@ -1255,6 +1222,7 @@
     });
 
     drawing.mixins.Paintable.extend(Rect.fn);
+    drawing.mixins.Measurable.extend(Rect.fn);
     defineGeometryAccessors(Rect.fn, ["geometry"]);
 
     var Layout = Group.extend({
@@ -1712,6 +1680,7 @@
     function translateToPoint(point, bbox, element) {
         translate(point.x - bbox.origin.x, point.y - bbox.origin.y, element);
     }
+
 
     // Exports ================================================================
     deepExtend(drawing, {

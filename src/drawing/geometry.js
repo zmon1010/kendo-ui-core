@@ -317,6 +317,9 @@
         },
 
         expand: function(x, y) {
+            if (!defined(y)) {
+                y = x;
+            }
             this.size.width += 2 * x;
             this.size.height += 2 * y;
 

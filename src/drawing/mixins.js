@@ -7,10 +7,12 @@
     // Imports ================================================================
     var kendo = window.kendo,
         deepExtend = kendo.deepExtend,
-        defined = kendo.util.defined;
+        defined = kendo.util.defined,
+        g = kendo.geometry;
 
     // Constants ==============================================================
         var GRADIENT = "gradient";
+        var IDENTITY_MATRIX_HASH = g.Matrix.IDENTITY.toString();
 
     // Mixins =================================================================
     var Paintable = {
@@ -80,11 +82,47 @@
         }
     };
 
+    var Measurable = {
+        extend: function(proto) {
+            proto.bbox = this.bbox;
+            proto.geometryChange = this.geometryChange;
+        },
+
+        bbox: function(transformation) {
+            var combinedMatrix = g.toMatrix(this.currentTransform(transformation));
+            var matrixHash = combinedMatrix ? combinedMatrix.toString() : IDENTITY_MATRIX_HASH;
+            var bbox;
+
+            if (this._bboxCache && this._matrixHash == matrixHash) {
+                bbox = this._bboxCache.clone();
+            } else {
+                bbox = this._bbox(combinedMatrix);
+                this._bboxCache = bbox ? bbox.clone() : null;
+                this._matrixHash = matrixHash;
+            }
+
+            var strokeWidth = this.options.get("stroke.width");
+            if (strokeWidth && bbox) {
+                bbox.expand(strokeWidth / 2);
+            }
+
+            return bbox;
+        },
+
+        geometryChange: function(e) {
+            delete this._bboxCache;
+            this.trigger("geometryChange", {
+                element: this
+            });
+        }
+    };
+
     // Exports ================================================================
     deepExtend(kendo.drawing, {
         mixins: {
             Paintable: Paintable,
-            Traversable: Traversable
+            Traversable: Traversable,
+            Measurable: Measurable
         }
     });
 

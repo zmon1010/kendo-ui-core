@@ -1081,6 +1081,36 @@
             circle.bbox();
         });
 
+        test("bbox returns cached rect", function() {
+            var boundingBox,
+                geometry = new g.Circle(new Point()),
+                count = 0;
+
+            geometry.bbox = function() {
+                count++;
+                return new g.Rect(new Point(50, 50), [100, 100]);
+            };
+            circle = new Circle(geometry, {stroke: {width: 5}});
+            circle.bbox();
+            boundingBox = circle.bbox();
+
+            equal(count, 1);
+            compareBoundingBox(boundingBox, [47.5, 47.5, 152.5, 152.5]);
+        });
+
+        test("bbox returns new rect after geometry change", function() {
+            var boundingBox,
+                geometry = new g.Circle([0, 0], 10),
+                count = 0;
+
+            circle = new Circle(geometry, {stroke: {width: 1}});
+            circle.bbox();
+            geometry.setRadius(5);
+
+            boundingBox = circle.bbox();
+            compareBoundingBox(boundingBox, [-5.5, -5.5, 5.5, 5.5]);
+        });
+
         test("rawBBox returns geometry bounding box with no transformation applied", function() {
             circle.transform(g.transform().scale(2,2));
 
@@ -1239,6 +1269,43 @@
             arc = new Arc(geometry, {stroke: {width: 5}});
             arcMatrix = arc.options.transform;
             arc.bbox();
+        });
+
+        test("bbox returns cached rect", function() {
+            var boundingBox,
+                geometry = new g.Arc(new Point()),
+                count = 0;
+
+            geometry.bbox = function() {
+                count++;
+                return new g.Rect(new Point(50, 50), [100, 100]);
+            };
+            arc = new Arc(geometry, {stroke: {width: 5}});
+
+            arc.bbox();
+            boundingBox = arc.bbox();
+
+            equal(count, 1);
+            compareBoundingBox(boundingBox, [47.5, 47.5, 152.5, 152.5]);
+        });
+
+        test("bbox returns new rect after geometry change", function() {
+            var boundingBox,
+                geometry = new g.Arc([0, 0], {
+                    startAngle: 0,
+                    endAngle: 360,
+                    radiusX: 10
+                }),
+                count = 0;
+
+            arc = new Arc(geometry, {stroke: {width: 1}});
+
+            arc.bbox();
+            geometry.setRadiusX(5);
+            geometry.setRadiusY(5);
+            boundingBox = arc.bbox();
+
+            compareBoundingBox(boundingBox, [-5.5, -5.5, 5.5, 5.5]);
         });
 
         test("rawBBox returns geometry bounding box with no transformation applied", function() {
@@ -1851,6 +1918,55 @@
             compareBoundingBox(boundingBox, [-10.7,-4.1,32.5,52.5], TOLERANCE);
         });
 
+        test("bbox returns cached rect", function() {
+            path.moveTo(0, 0);
+            path.lineTo(50, 50);
+
+            var segment = path.segments[0];
+            var count = 0;
+            segment.bboxTo = function() {
+                count++;
+                return new g.Rect([0, 0], [50, 50]);
+            };
+            path.bbox();
+            var bbox = path.bbox();
+            equal(count, 1);
+            compareBoundingBox(bbox, [0, 0, 50, 50], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after stroke width change", function() {
+            path.moveTo(0, 0);
+            path.lineTo(50, 50);
+
+            path.bbox();
+            path.stroke("red", 10);
+            var bbox = path.bbox();
+
+            compareBoundingBox(bbox, [-5, -5, 55, 55], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after transformation change", function() {
+            path.moveTo(0, 0);
+            path.lineTo(50, 50);
+
+            path.bbox();
+            path.transform(g.transform().translate(100, 100));
+            var bbox = path.bbox();
+
+            compareBoundingBox(bbox, [100, 100, 150, 150], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after geometry change", function() {
+            path.moveTo(0, 0);
+            path.lineTo(50, 50);
+
+            path.bbox();
+            path.segments[1].anchor().setX(100);
+            var bbox = path.bbox();
+
+            compareBoundingBox(bbox, [0, 0, 100, 50], TOLERANCE);
+        });
+
         test("rawBBox returns the bounding rect without transformation", function() {
             path.moveTo(0, 0);
             path.lineTo(100, 100);
@@ -2211,6 +2327,55 @@
             compareBoundingBox(boundingBox, [-16.3,-3.2,60,140], TOLERANCE);
         });
 
+        test("bbox returns cached rect", function() {
+            multiPath.moveTo(0, 0);
+            multiPath.lineTo(50, 50);
+
+            var path = multiPath.paths[0];
+            var count = 0;
+            path.bbox = function() {
+                count++;
+                return new g.Rect([0, 0], [50, 50]);
+            };
+            multiPath.bbox();
+            var bbox = multiPath.bbox();
+            equal(count, 1);
+            compareBoundingBox(bbox, [0, 0, 50, 50], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after stroke width change", function() {
+            multiPath.moveTo(0, 0);
+            multiPath.lineTo(50, 50);
+
+            multiPath.bbox();
+            multiPath.stroke("red", 10);
+            var bbox = multiPath.bbox();
+
+            compareBoundingBox(bbox, [-5, -5, 55, 55], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after transformation change", function() {
+            multiPath.moveTo(0, 0);
+            multiPath.lineTo(50, 50);
+
+            multiPath.bbox();
+            multiPath.transform(g.transform().translate(100, 100));
+            var bbox = multiPath.bbox();
+
+            compareBoundingBox(bbox, [100, 100, 150, 150], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after geometry change", function() {
+            multiPath.moveTo(0, 0);
+            multiPath.lineTo(50, 50);
+
+            multiPath.bbox();
+            multiPath.paths[0].segments[1].anchor().setX(100);
+            var bbox = multiPath.bbox();
+
+            compareBoundingBox(bbox, [0, 0, 100, 50], TOLERANCE);
+        });
+
         test("rawBBox return bounding box without transformation", function() {
             multiPath.moveTo(50, 50);
             multiPath.lineTo(100, 100);
@@ -2523,6 +2688,55 @@
             rect = new Rect(geometry, {stroke: {width: 5}, transform: g.transform(Matrix.unit())});
             rectMatrix = rect.options.transform.matrix();
             rect.bbox();
+        });
+
+        test("bbox returns cached rect", function() {
+            var geometry = new g.Rect(),
+                count = 0;
+            rect = new Rect(geometry);
+
+            geometry.bbox = function() {
+                count++;
+                return new g.Rect([50, 50], [100, 100]);
+            };
+
+            rect.bbox();
+            var bbox = rect.bbox();
+            equal(count, 1);
+            compareBoundingBox(bbox, [50, 50, 150, 150], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after stroke width change", function() {
+            var geometry = new g.Rect([50, 50], [100, 100]);
+            rect = new Rect(geometry);
+
+            rect.bbox();
+            rect.stroke("red", 10);
+            var bbox = rect.bbox();
+
+            compareBoundingBox(bbox, [45, 45, 155, 155], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after transformation change", function() {
+            var geometry = new g.Rect([50, 50], [100, 100]);
+            rect = new Rect(geometry);
+
+            rect.bbox();
+            rect.transform(g.transform().translate(100, 100));
+            var bbox = rect.bbox();
+
+            compareBoundingBox(bbox, [150, 150, 250, 250], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after geometry change", function() {
+            var geometry = new g.Rect([50, 50], [100, 100]);
+            rect = new Rect(geometry);
+
+            rect.bbox();
+            geometry.size.setWidth(200);
+            var bbox = rect.bbox();
+
+            compareBoundingBox(bbox, [50, 50, 250, 150], TOLERANCE);
         });
 
         test("rawBBox returns geometry bounding box with no transformation applied", function() {
