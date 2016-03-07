@@ -30,7 +30,7 @@ module CodeGen::Jscheme
     end 
 
     class Component < CodeGen::Component
-        prepend Options
+        include Options
         def jscheme_class
             JSON.pretty_generate(JSON.parse(COMPONENT.result(binding)))
         end
@@ -41,21 +41,21 @@ module CodeGen::Jscheme
     end
 
     class Option < CodeGen::Option
-        prepend Options
+        include Options
         def jscheme_def
             OPTION.result(binding)
         end
     end
 
     class ArrayOption < CodeGen::ArrayOption
-        prepend Options
+        include Options
         def jscheme_def
             ARRAY.result(binding)
         end
     end
 
     class CompositeOption < CodeGen::CompositeOption
-        prepend Options
+        include Options
         def jscheme_def
             COMPOSITE.result(binding)
         end
