@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public ClientHandlerDescriptor Compare { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public TreeList<T> TreeList { get; set; }
 

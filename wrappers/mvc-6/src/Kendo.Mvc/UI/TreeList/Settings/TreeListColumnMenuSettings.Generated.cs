@@ -19,7 +19,7 @@ namespace Kendo.Mvc.UI
 
         public TreeListColumnMenuMessagesSettings<T> Messages { get; } = new TreeListColumnMenuMessagesSettings<T>();
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public TreeList<T> TreeList { get; set; }
 

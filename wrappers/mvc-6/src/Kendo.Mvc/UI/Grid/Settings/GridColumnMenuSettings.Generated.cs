@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
 
         public bool? Sortable { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Grid<T> Grid { get; set; }
 

@@ -55,9 +55,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["checkboxes"] = checkboxes;
             }
-            else if (Checkboxes.Enabled == true)
+            else if (Checkboxes.Enabled.HasValue)
             {
-                settings["checkboxes"] = true;
+                settings["checkboxes"] = Checkboxes.Enabled;
             }
 
             if (DataImageUrlField?.HasValue() == true)

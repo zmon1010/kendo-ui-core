@@ -53,7 +53,7 @@ namespace Kendo.Mvc.UI
                 ProcessDataSource();
             }
 
-            if (Editable.Enabled)
+            if (Editable.Enabled == true)
             {
                 InitializeEditors();
             }
@@ -76,7 +76,7 @@ namespace Kendo.Mvc.UI
 
 			settings["dataSource"] = DataSource.ToJson();			
 
-			if (Selectable.Enabled)
+			if (Selectable.Enabled == true)
 			{
 				var selectable = "row";
 				if (Selectable.Mode.HasValue)

@@ -36,7 +36,7 @@ namespace Kendo.Mvc.UI
 
 		private void SerializeEditTemplate(IDictionary<string, object> options)
 		{
-			if (Enabled && EditorHtml.HasValue())
+			if (Enabled == true && EditorHtml.HasValue())
 			{
 				var html = EditorHtml.Trim()
 								.EscapeHtmlEntities()

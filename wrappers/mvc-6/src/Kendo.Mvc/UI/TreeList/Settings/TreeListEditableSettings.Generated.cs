@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
 
         public TreeListEditMode? Mode { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public TreeList<T> TreeList { get; set; }
 

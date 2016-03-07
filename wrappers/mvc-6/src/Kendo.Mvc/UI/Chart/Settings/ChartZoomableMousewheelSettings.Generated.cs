@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public string Lock { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Chart Chart { get; set; }
 

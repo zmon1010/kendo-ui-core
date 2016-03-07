@@ -93,9 +93,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["filterable"] = filterable;
             }
-            else if (Filterable.Enabled == true)
+            else if (Filterable.Enabled.HasValue)
             {
-                settings["filterable"] = true;
+                settings["filterable"] = Filterable.Enabled;
             }
 
             if (FooterTemplateId.HasValue())
@@ -144,9 +144,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["sortable"] = sortable;
             }
-            else if (Sortable.Enabled == true)
+            else if (Sortable.Enabled.HasValue)
             {
-                settings["sortable"] = true;
+                settings["sortable"] = Sortable.Enabled;
             }
 
             if (TemplateId.HasValue())

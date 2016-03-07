@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
 
         public TreeListSelectionType? Type { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public TreeList<T> TreeList { get; set; }
 

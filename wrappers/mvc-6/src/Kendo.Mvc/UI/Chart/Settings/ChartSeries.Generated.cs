@@ -496,9 +496,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["stack"] = stack;
             }
-            else if (Stack.Enabled == true)
+            else if (Stack.Enabled.HasValue)
             {
-                settings["stack"] = true;
+                settings["stack"] = Stack.Enabled;
             }
 
             if (StartAngle.HasValue)

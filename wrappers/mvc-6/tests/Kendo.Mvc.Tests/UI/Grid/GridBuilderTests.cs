@@ -53,7 +53,7 @@ namespace Kendo.Mvc.UI.Fluent.Tests
         public void Sortable_sets_the_corresponding_property()
         {
             builder.Sortable();
-            grid.Sortable.Enabled.ShouldBeTrue();
+            ((bool)grid.Sortable.Enabled).ShouldBeTrue();
         }        
 
         [Fact]

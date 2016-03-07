@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
 
         public TreeListFilterableMessagesSettings<T> Messages { get; } = new TreeListFilterableMessagesSettings<T>();
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public TreeList<T> TreeList { get; set; }
 

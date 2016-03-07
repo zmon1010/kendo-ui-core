@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
 
         public string Group { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Chart Chart { get; set; }
 

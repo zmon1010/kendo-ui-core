@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
 
         public GridSortMode? SortMode { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Grid<T> Grid { get; set; }
 

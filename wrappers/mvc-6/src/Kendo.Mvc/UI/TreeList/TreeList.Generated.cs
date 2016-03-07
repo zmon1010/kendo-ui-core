@@ -72,9 +72,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["columnMenu"] = columnMenu;
             }
-            else if (ColumnMenu.Enabled == true)
+            else if (ColumnMenu.Enabled.HasValue)
             {
-                settings["columnMenu"] = true;
+                settings["columnMenu"] = ColumnMenu.Enabled;
             }
 
             var editable = Editable.Serialize();
@@ -82,9 +82,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["editable"] = editable;
             }
-            else if (Editable.Enabled == true)
+            else if (Editable.Enabled.HasValue)
             {
-                settings["editable"] = true;
+                settings["editable"] = Editable.Enabled;
             }
 
             var excel = Excel.Serialize();
@@ -98,9 +98,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["filterable"] = filterable;
             }
-            else if (Filterable.Enabled == true)
+            else if (Filterable.Enabled.HasValue)
             {
-                settings["filterable"] = true;
+                settings["filterable"] = Filterable.Enabled;
             }
 
             if (Height.HasValue)
@@ -130,9 +130,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["sortable"] = sortable;
             }
-            else if (Sortable.Enabled == true)
+            else if (Sortable.Enabled.HasValue)
             {
-                settings["sortable"] = true;
+                settings["sortable"] = Sortable.Enabled;
             }
 
             var toolbar = Toolbar.Select(i => i.Serialize());

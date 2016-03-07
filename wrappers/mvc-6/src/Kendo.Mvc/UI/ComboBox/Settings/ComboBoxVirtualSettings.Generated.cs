@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
 
         public ClientHandlerDescriptor ValueMapper { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public ComboBox ComboBox { get; set; }
 

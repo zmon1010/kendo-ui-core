@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public ListViewSelectionMode? Mode { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public ListView<T> ListView { get; set; }
 

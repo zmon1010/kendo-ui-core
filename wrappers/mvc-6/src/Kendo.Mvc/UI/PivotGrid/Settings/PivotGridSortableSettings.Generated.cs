@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public bool? AllowUnsort { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public PivotGrid<T> PivotGrid { get; set; }
 

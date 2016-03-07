@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
 
         public bool? UseLocalTimezone { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Scheduler<T> Scheduler { get; set; }
 

@@ -14,9 +14,9 @@ namespace Kendo.Mvc.UI.Fluent.Tests
         }
 
         [Fact]
-        public void Initial_false_settings()
+        public void Initial_null_settings()
         {
-            Assert.False((new ListViewSelectableSettings<string>()).Enabled);
+            Assert.Null((new ListViewSelectableSettings<string>()).Enabled);
         }
 
         [Fact]

@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
 
         public ChartZoomableSelectionSettings Selection { get; } = new ChartZoomableSelectionSettings();
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Chart Chart { get; set; }
 
@@ -28,9 +28,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["mousewheel"] = mousewheel;
             }
-            else if (Mousewheel.Enabled == true)
+            else if (Mousewheel.Enabled.HasValue)
             {
-                settings["mousewheel"] = true;
+                settings["mousewheel"] = Mousewheel.Enabled;
             }
 
             var selection = Selection.Serialize();
@@ -38,9 +38,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["selection"] = selection;
             }
-            else if (Selection.Enabled == true)
+            else if (Selection.Enabled.HasValue)
             {
-                settings["selection"] = true;
+                settings["selection"] = Selection.Enabled;
             }
 
             return settings;

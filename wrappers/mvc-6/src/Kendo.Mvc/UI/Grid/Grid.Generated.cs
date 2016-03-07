@@ -41,9 +41,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["allowCopy"] = allowCopy;
             }
-            else if (AllowCopy.Enabled == true)
+            else if (AllowCopy.Enabled.HasValue)
             {
-                settings["allowCopy"] = true;
+                settings["allowCopy"] = AllowCopy.Enabled;
             }
 
             if (AutoBind.HasValue)
@@ -61,9 +61,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["columnMenu"] = columnMenu;
             }
-            else if (ColumnMenu.Enabled == true)
+            else if (ColumnMenu.Enabled.HasValue)
             {
-                settings["columnMenu"] = true;
+                settings["columnMenu"] = ColumnMenu.Enabled;
             }
 
             var excel = Excel.Serialize();
@@ -77,9 +77,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["groupable"] = groupable;
             }
-            else if (Groupable.Enabled == true)
+            else if (Groupable.Enabled.HasValue)
             {
-                settings["groupable"] = true;
+                settings["groupable"] = Groupable.Enabled;
             }
 
             if (Navigatable.HasValue)
@@ -92,9 +92,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["noRecords"] = noRecords;
             }
-            else if (NoRecords.Enabled == true)
+            else if (NoRecords.Enabled.HasValue)
             {
-                settings["noRecords"] = true;
+                settings["noRecords"] = NoRecords.Enabled;
             }
 
             var pdf = Pdf.Serialize();
@@ -108,9 +108,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["sortable"] = sortable;
             }
-            else if (Sortable.Enabled == true)
+            else if (Sortable.Enabled.HasValue)
             {
-                settings["sortable"] = true;
+                settings["sortable"] = Sortable.Enabled;
             }
 
             return settings;

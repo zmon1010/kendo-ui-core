@@ -88,9 +88,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["pannable"] = pannable;
             }
-            else if (Pannable.Enabled == true)
+            else if (Pannable.Enabled.HasValue)
             {
-                settings["pannable"] = true;
+                settings["pannable"] = Pannable.Enabled;
             }
 
             var pdf = Pdf.Serialize();
@@ -161,9 +161,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["zoomable"] = zoomable;
             }
-            else if (Zoomable.Enabled == true)
+            else if (Zoomable.Enabled.HasValue)
             {
-                settings["zoomable"] = true;
+                settings["zoomable"] = Zoomable.Enabled;
             }
 
             if (RenderAs.HasValue)

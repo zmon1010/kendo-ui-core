@@ -32,9 +32,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["sortable"] = sortable;
             }
-            else if (Sortable.Enabled == true)
+            else if (Sortable.Enabled.HasValue)
             {
-                settings["sortable"] = true;
+                settings["sortable"] = Sortable.Enabled;
             }
 
             if (Height.HasValue)

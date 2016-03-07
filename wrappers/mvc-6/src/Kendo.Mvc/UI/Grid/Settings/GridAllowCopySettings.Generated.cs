@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public string Delimeter { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Grid<T> Grid { get; set; }
 

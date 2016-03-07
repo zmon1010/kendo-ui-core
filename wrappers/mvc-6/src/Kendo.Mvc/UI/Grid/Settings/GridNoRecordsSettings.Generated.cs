@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
 
         public string TemplateId { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Grid<T> Grid { get; set; }
 

@@ -80,7 +80,7 @@
 
         private void SerializeSelection(IDictionary<string, object> options)
         {
-            if (listView.Selectable.Enabled)
+            if (listView.Selectable.Enabled == true)
             {
                 var selectable = "single";
                 if (listView.Selectable.Mode.HasValue)

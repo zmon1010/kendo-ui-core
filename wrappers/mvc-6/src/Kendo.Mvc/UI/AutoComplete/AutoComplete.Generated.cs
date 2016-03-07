@@ -175,9 +175,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["virtual"] = @virtual;
             }
-            else if (Virtual.Enabled == true)
+            else if (Virtual.Enabled.HasValue)
             {
-                settings["virtual"] = true;
+                settings["virtual"] = Virtual.Enabled;
             }
 
             return settings;

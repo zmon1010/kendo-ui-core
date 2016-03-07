@@ -116,9 +116,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["currentTimeMarker"] = currentTimeMarker;
             }
-            else if (CurrentTimeMarker.Enabled == true)
+            else if (CurrentTimeMarker.Enabled.HasValue)
             {
-                settings["currentTimeMarker"] = true;
+                settings["currentTimeMarker"] = CurrentTimeMarker.Enabled;
             }
 
             if (Date.HasValue)
@@ -162,9 +162,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["footer"] = footer;
             }
-            else if (Footer.Enabled == true)
+            else if (Footer.Enabled.HasValue)
             {
-                settings["footer"] = true;
+                settings["footer"] = Footer.Enabled;
             }
 
             if (Height.HasValue)
