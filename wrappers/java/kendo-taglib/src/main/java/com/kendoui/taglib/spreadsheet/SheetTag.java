@@ -123,6 +123,14 @@ public class SheetTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("selection", value);
     }
 
+    public boolean getShowGridLines() {
+        return (Boolean)getProperty("showGridLines");
+    }
+
+    public void setShowGridLines(boolean value) {
+        setProperty("showGridLines", value);
+    }
+
 //<< Attributes
 
 }

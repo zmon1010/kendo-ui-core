@@ -96,6 +96,15 @@ class SpreadsheetSheet extends \Kendo\SerializableObject {
     }
 
     /**
+    * A boolean value indicating if the sheet grid lines should be displayed.
+    * @param boolean $value
+    * @return \Kendo\UI\SpreadsheetSheet
+    */
+    public function showGridLines($value) {
+        return $this->setProperty('showGridLines', $value);
+    }
+
+    /**
     * Defines the sort criteria for the sheet.
     * @param \Kendo\UI\SpreadsheetSheetSort|array $value
     * @return \Kendo\UI\SpreadsheetSheet

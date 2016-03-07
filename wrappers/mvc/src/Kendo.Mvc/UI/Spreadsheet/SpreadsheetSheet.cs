@@ -55,6 +55,8 @@ namespace Kendo.Mvc.UI
         
         public string Selection { get; set; }
         
+        public bool? ShowGridLines { get; set; }
+        
         public SpreadsheetSheetSortSettings Sort
         {
             get;
@@ -112,6 +114,11 @@ namespace Kendo.Mvc.UI
                 json["selection"] = Selection;
             }
             
+            if (ShowGridLines.HasValue)
+            {
+                json["showGridLines"] = ShowGridLines;
+            }
+                
             var sort = Sort.ToJson();
             if (sort.Any())
             {

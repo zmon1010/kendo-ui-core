@@ -34478,6 +34478,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>A boolean value indicating if the sheet grid lines should be displayed.</description>
+            <name>showGridLines</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
     </tag>
 
     <tag>

@@ -116,6 +116,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// A boolean value indicating if the sheet grid lines should be displayed.
+        /// </summary>
+        /// <param name="value">The value that configures the showgridlines.</param>
+        public SpreadsheetSheetBuilder ShowGridLines(bool value)
+        {
+            container.ShowGridLines = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Defines the sort criteria for the sheet.
         /// </summary>
         /// <param name="configurator">The action that configures the sort.</param>
