@@ -12,7 +12,7 @@
 				  $("#weekend-calendar").kendoCalendar({
 					disableDates: ["sa", "su"]
 				  });
-			 
+
 				  $("#national-holidays").kendoCalendar({
 					dates: [
 					  new Date("1/1/2015"),
@@ -39,16 +39,16 @@
 					  }
 					}
 				  });
-			 
+
 				  function compareDates(date, dates) {
-					for (var i = 0; i < dates.length; i++) {
-						if (dates[i].getDate() == date.getDate() && 
-						  dates[i].getMonth() == date.getMonth() &&
-							dates[i].getYear() == date.getYear()) {
-						return true
+                      for (var i = 0; i < dates.length; i++) {
+						  if (dates[i].getDate() == date.getDate() &&
+                              dates[i].getMonth() == date.getMonth() &&
+							  dates[i].getYear() == date.getYear()) {
+						  return true
+					    }
 					  }
-					}
-				  }
-				});
+				    }
+     			  });
 			</script>
 		</div>
