@@ -3,6 +3,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
@@ -25,6 +26,10 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public GanttAssignmentsSettings Assignments { get; }
+
+        public GanttResourcesSettings Resources { get; }
+
         public Gantt(ViewContext viewContext) : base(viewContext)
         {
             DataSource = new DataSource(ModelMetadataProvider);
@@ -34,6 +39,10 @@ namespace Kendo.Mvc.UI
             DependenciesDataSource = new DataSource(ModelMetadataProvider);
             DependenciesDataSource.Type = DataSourceType.Ajax;
             DependenciesDataSource.Schema.Model = new GanttDependencyModelDescriptor(typeof(TDependenciesModel), ModelMetadataProvider);
+
+            Assignments = new GanttAssignmentsSettings(ModelMetadataProvider);
+
+            Resources = new GanttResourcesSettings(ModelMetadataProvider);
         }
 
         protected override void WriteHtml(TextWriter writer)
@@ -56,6 +65,18 @@ namespace Kendo.Mvc.UI
             ProcessDataSource(DependenciesDataSource);
 
             settings["dependencies"] = (Dictionary<string, object>)DependenciesDataSource.ToJson();
+
+            var assignments = Assignments.Serialize();
+            if (assignments.Any())
+            {
+                settings["assignments"] = assignments;
+            }
+
+            var resources = Resources.Serialize();
+            if (resources.Any())
+            {
+                settings["resources"] = resources;
+            }
 
             writer.Write(Initializer.Initialize(Selector, "Gantt", settings));
         }

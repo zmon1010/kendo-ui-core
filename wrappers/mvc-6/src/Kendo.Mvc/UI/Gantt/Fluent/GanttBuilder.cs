@@ -68,6 +68,30 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// The configuration of the assignments of the gantt resources. An assignment is a one-to-one mapping between a gantt task and a gantt resource containing the number of units for which a resource is assigned to a task.
+        /// </summary>
+        /// <param name="configurator">The configurator for the assignments setting.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Assignments<TAssingmentModel>(Action<GanttAssignmentsSettingsBuilder<TAssingmentModel>> configurator)
+            where TAssingmentModel : class
+        {
+            configurator(new GanttAssignmentsSettingsBuilder<TAssingmentModel>(Component.Assignments, Component.ViewContext, Component.UrlGenerator));
+
+            return this;
+        }
+
+        /// <summary>
+        /// The configuration of the gantt resource(s). A gantt resource is optional metadata that can be associated
+        /// with a gantt task.
+        /// </summary>
+        /// <param name="configurator">The configurator for the resources setting.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Resources(Action<GanttResourcesSettingsBuilder> configurator)
+        {
+            configurator(new GanttResourcesSettingsBuilder(Component.Resources, Component.ViewContext, Component.UrlGenerator));
+
+            return this;
+        }
     }
 }
 
