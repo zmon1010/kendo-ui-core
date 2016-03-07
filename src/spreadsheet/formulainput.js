@@ -137,12 +137,23 @@
                 end = begin;
             }
             if (begin && end) {
-                var r = document.createRange();
-                r.setStart(begin.node, begin.pos);
-                r.setEnd(end.node, end.pos);
+                var range = document.createRange();
+                range.setStart(begin.node, begin.pos);
+                range.setEnd(end.node, end.pos);
                 var sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(r);
+                var currentRange = sel.getRangeAt(0);
+                if (differ(range, currentRange))  {
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+            }
+            function differ(a, b) {
+                return (
+                    a.startOffset != b.startOffset ||
+                    a.endOffset != b.endOffset ||
+                    a.startContainer != b.endContainer ||
+                    a.endContainer != b.endContainer
+                );
             }
             function lookup(node, pos) {
                 try {
@@ -627,7 +638,9 @@
                 // if an user deleted the initial =, we should discard
                 // any highlighting.  we still need to restore caret
                 // position thereafter.
-                this.element.text(value);
+                if (this.element.html() != value) {
+                    this.element.text(value);
+                }
 
                 // also make sure the completion popup goes away
                 if (this.popup) {
