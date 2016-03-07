@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public double? UpdateInterval { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Gantt<TTaskModel, TDependenciesModel> Gantt { get; set; }
 

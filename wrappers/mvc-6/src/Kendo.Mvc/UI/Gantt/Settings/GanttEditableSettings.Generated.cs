@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
 
         public string TemplateId { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Gantt<TTaskModel, TDependenciesModel> Gantt { get; set; }
 

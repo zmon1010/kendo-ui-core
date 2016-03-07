@@ -81,9 +81,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["currentTimeMarker"] = currentTimeMarker;
             }
-            else if (CurrentTimeMarker.Enabled == true)
+            else if (CurrentTimeMarker.Enabled.HasValue)
             {
-                settings["currentTimeMarker"] = true;
+                settings["currentTimeMarker"] = CurrentTimeMarker.Enabled;
             }
 
             var editable = Editable.Serialize();
@@ -91,9 +91,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["editable"] = editable;
             }
-            else if (Editable.Enabled == true)
+            else if (Editable.Enabled.HasValue)
             {
-                settings["editable"] = true;
+                settings["editable"] = Editable.Enabled;
             }
 
             if (Navigatable.HasValue)
