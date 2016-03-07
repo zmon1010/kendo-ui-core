@@ -20,6 +20,12 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Adds an item for a custom action.
+        /// </summary>
+        public virtual GanttToolbarBuilder<TTaskModel, TDependenciesModel> Add()
+        {
+            return Custom();
+        }
     }
 }
