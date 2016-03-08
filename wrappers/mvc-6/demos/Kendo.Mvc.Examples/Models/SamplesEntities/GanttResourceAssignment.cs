@@ -8,6 +8,6 @@ namespace Kendo.Mvc.Examples.Models
         public int ID { get; set; }
         public int ResourceID { get; set; }
         public int TaskID { get; set; }
-        public double Units { get; set; }
+        public decimal Units { get; set; }
     }
 }

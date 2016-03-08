@@ -1,5 +1,25 @@
 ﻿@using Kendo.Mvc.Examples.Models.Gantt;
 
+@section HeadContent {
+    <style>
+        /*
+            Use the DejaVu Sans font for display and embedding in the PDF file.
+            The standard PDF fonts have no support for Unicode characters.
+        */
+        .k-gantt {
+            font-family: "DejaVu Sans", "Arial", sans-serif;
+        }
+
+        /* Hide toolbars during export */
+        .k-pdf-export .k-gantt-toolbar {
+            display: none;
+        }
+    </style>
+
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="@Url.Content("~/Scripts/pako.min.js")"></script>
+}
+
 @(Html.Kendo().Gantt<TaskViewModel, DependencyViewModel>()
     .Name("gantt")
     .Columns(columns =>
@@ -15,6 +35,15 @@
         views.WeekView(weekView => weekView.Selected(true));
         views.MonthView();
     })
+    .Toolbar(tb =>
+    {
+        tb.Append();
+        tb.Pdf();
+    })
+    .Pdf(pdf => pdf
+        .FileName("Kendo UI Gantt Export.pdf")
+        .ProxyURL(Url.Action("Pdf_Export_Save", "Gantt"))
+    )
     .Height(700)
     .ShowWorkHours(false)
     .ShowWorkDays(false)

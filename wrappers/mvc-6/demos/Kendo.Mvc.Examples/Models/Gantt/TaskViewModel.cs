@@ -2,7 +2,7 @@
 {
     using System;
     using Kendo.Mvc.UI;
-
+    using System.ComponentModel.DataAnnotations;
     public class TaskViewModel : IGanttTask
     {
         public int TaskID { get; set; }
@@ -11,6 +11,8 @@
         public string Title { get; set; }
 
         private DateTime start;
+        [Display(Name ="Start Time")]
+        [DisplayFormat(DataFormatString="{0:MM/dd/yyyy}")]
         public DateTime Start
         {
             get
@@ -24,6 +26,8 @@
         }
 
         private DateTime end;
+        [Display(Name = "End Time")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime End
         {
             get

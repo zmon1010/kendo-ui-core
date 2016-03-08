@@ -4,16 +4,14 @@
     .Name("gantt")
     .Columns(columns =>
     {
-        columns.Bound(c => c.TaskID).Title("ID").Width(50);
         columns.Bound(c => c.Title).Editable(true).Sortable(true);
-        columns.Bound(c => c.Start).Width(100).Editable(true).Sortable(true);
-        columns.Bound(c => c.End).Width(100).Editable(true).Sortable(true);
+        columns.Resources("resources").Editable(true).Title("Assigned Resources");
     })
     .Views(views =>
     {
         views.DayView();
-        views.WeekView(weekView => weekView.Selected(true));
-        views.MonthView();
+        views.WeekView();
+        views.MonthView(monthView => monthView.Selected(true));
     })
     .Height(700)
     .ShowWorkHours(false)
@@ -41,5 +39,36 @@
         .Read("ReadDependencies", "Gantt")
         .Create("CreateDependency", "Gantt")
         .Destroy("DestroyDependency", "Gantt")
+    )
+    .Resources(r => r
+        .Field("resources")
+        .DataColorField("Color")
+        .DataTextField("Name")
+        .DataSource(d => d
+            .Custom()
+            .Schema(s => s
+                .Model(m => m.Id("ID"))
+                .Data("Data")
+            )
+            .Transport(t =>
+            {
+                t.Read("ReadResources", "Gantt");
+            })
+        )
+    )
+    .Assignments<ResourceAssignmentViewModel>(a => a
+        .DataTaskIdField("TaskID")
+        .DataResourceIdField("ResourceID")
+        .DataValueField("Units")
+        .DataSource(d => d
+            .Model(m =>
+            {
+                m.Id(f => f.ID);
+            })
+            .Read("ReadAssignments", "Gantt")
+            .Create("CreateAssignment", "Gantt")
+            .Destroy("DestroyAssignment", "Gantt")
+            .Update("UpdateAssignment", "Gantt")
+        )
     )
 )

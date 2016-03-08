@@ -39,5 +39,15 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// The width of the column. Numeric values are treated as pixels.
+        /// </summary>
+        /// <param name="value">The value for Width</param>
+        public GanttColumnBuilder<TTaskModel, TDependenciesModel> Width(double value)
+        {
+            Container.Width = string.Format("{0}px", value);
+            return this;
+        }
     }
 }

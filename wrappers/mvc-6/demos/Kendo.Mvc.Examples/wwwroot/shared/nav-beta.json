@@ -2910,6 +2910,175 @@
         "meta": {
           "kendo-ui": "Explore the example of HTML5 gantt chart widget, included in Kendo UI Web, to find how easy it is to add a gantt chart to your website or web app."
         }
+      },
+      {
+        "text": "Column resizing",
+        "url": "gantt/column-resizing",
+        "title": {
+          "kendo-ui": "Columns resizing in Kendo UI Gantt control | Kendo UI Web demo",
+          "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC Gantt"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows the column resizing feature of the KendoGantt control.",
+          "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC Gantt."
+        }
+      },
+      {
+        "text": "Export to PDF",
+        "url": "gantt/pdf-export",
+        "title": {
+          "kendo-ui": "Exporting to PDF"
+        },
+        "meta": {
+          "kendo-ui": "Export Kendo UI gantt as PDF file"
+        },
+        "packages": [
+          "!offline"
+        ]
+      },
+      {
+        "text": "Resources",
+        "url": "gantt/resources",
+        "title": {
+          "kendo-ui": "Resources in Kendo UI Gantt"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how to assign resources to gantt tasks."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "gantt/events",
+        "title": {
+          "kendo-ui": "Example of using events in Kendo UI Gantt control"
+        },
+        "meta": {
+          "kendo-ui": "This example demonstrates different events which are available in KendoGantt widget and the code explains how you can use them for your project."
+        }
+      },
+      {
+        "text": "API",
+        "url": "gantt/api",
+        "title": {
+          "kendo-ui": "Kendo UI Gantt API Functions Example"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows API Functions of KendoGantt. Demo Source Code will show you how to call methods on the widget instance to script its behavior."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "gantt/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard navigation in Kendo UI Gantt"
+        },
+        "meta": {
+          "kendo-ui": "Look at this Kendo UI Gantt demo to learn how different keyboard combinations could be used to navigate in the component."
+        }
+      },
+      {
+        "text": "RTL Support",
+        "url": "gantt/right-to-left-support",
+        "title": {
+          "kendo-ui": "Right-to-left (RTL) support of Kendo UI Gantt"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows the Right-to-left (RTL) support of Kendo UI Gantt."
+        }
+      },
+      {
+        "text": "Task Template",
+        "url": "gantt/task-template",
+        "new": "true",
+        "title": {
+          "kendo-ui": "Task template support of Kendo UI Gantt"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows the Task template support of Kendo UI Gantt."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "gantt/mvvm",
+        "title": {
+          "kendo-ui": "MVVM support in Kendo UI Gantt"
+        },
+        "meta": {
+          "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI Gantt"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "Server binding",
+        "url": "gantt/server_binding",
+        "packages": [
+          "mvc-offline"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "gantt/angular",
+        "title": {
+          "kendo-ui": "AngularJS support in Kendo UI Gantt"
+        },
+        "meta": {
+          "kendo-ui": "AngularJS directive support for Kendo UI Gantt"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Scheduling"
+  },
+  {
+    "text": "Gantt",
+    "name": "gantt",
+    "api": "web/gantt",
+    "pro": "true",
+    "documentation": {
+      "kendo-ui": "getting-started/web/gantt/overview",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/gantt/overview",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/gantt/overview",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/gantt/overview"
+    },
+    "forum": {
+      "kendo-ui": "kendo-ui/gantt",
+      "aspnet-mvc": "aspnet-mvc/gantt",
+      "jsp-ui": "jsp/gantt",
+      "php-ui": "php/gantt"
+    },
+    "sources": {
+      "kendo-ui": [
+        {
+          "name": "Sample service",
+          "url": "~/content/service.html"
+        }
+      ]
+    },
+    "codelibrary": {
+      "kendo-ui": "kendo-ui/gantt",
+      "aspnet-mvc": "aspnet-mvc/gantt",
+      "jsp-ui": "jsp/gantt",
+      "php-ui": "php/gantt"
+    },
+    "spriteCssClass": "ganttIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "gantt/index",
+        "title": {
+          "kendo-ui": "Example of Kendo UI jQuery-based Gantt chart"
+        },
+        "meta": {
+          "kendo-ui": "Explore the example of HTML5 gantt chart widget, included in Kendo UI Web, to find how easy it is to add a gantt chart to your website or web app."
+        }
       }
     ],
     "category": "Scheduling"
@@ -3380,28 +3549,28 @@
     ],
     "category": "Gauges"
   },
-    {
+  {
     "text": "TreeView",
     "name": "treeview",
     "pro": "true",
     "api": "web/treeview",
     "documentation": {
-       "kendo-ui": "getting-started/web/treeview/overview",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treeview/overview",
-       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/treeview/overview",
-       "php-ui": "getting-started/using-kendo-with/php/widgets/treeview/overview"
+      "kendo-ui": "getting-started/web/treeview/overview",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treeview/overview",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/treeview/overview",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/treeview/overview"
     },
     "forum": {
-       "kendo-ui": "kendo-ui/treeview",
-       "aspnet-mvc": "aspnet-mvc/treeview",
-       "jsp-ui": "jsp/treeview",
-       "php-ui": "php/treeview"
+      "kendo-ui": "kendo-ui/treeview",
+      "aspnet-mvc": "aspnet-mvc/treeview",
+      "jsp-ui": "jsp/treeview",
+      "php-ui": "php/treeview"
     },
     "codelibrary": {
-       "kendo-ui": "kendo-ui/treeview",
-       "aspnet-mvc": "aspnet-mvc/treeview",
-       "jsp-ui": "jsp/treeview",
-       "php-ui": "php/treeview"
+      "kendo-ui": "kendo-ui/treeview",
+      "aspnet-mvc": "aspnet-mvc/treeview",
+      "jsp-ui": "jsp/treeview",
+      "php-ui": "php/treeview"
     },
     "spriteCssClass": "treeViewIcon",
     "items": [
@@ -3409,90 +3578,92 @@
         "text": "Basic usage",
         "url": "treeview/index",
         "title": {
-            "kendo-ui": "Kendo UI TreeView widget | Kendo UI Web demo",
-            "aspnet-mvc": "ASP.NET MVC TreeView control | UI for ASP.NET MVC demo"
+          "kendo-ui": "Kendo UI TreeView widget | Kendo UI Web demo",
+          "aspnet-mvc": "ASP.NET MVC TreeView control | UI for ASP.NET MVC demo"
         },
         "meta": {
-            "kendo-ui": "This demo illustrates the basic usage and functionality of Kendo UI jQuery Tree widget which represents items in a hierarchical tree structure.",
-            "aspnet-mvc": "This demo illustrates the basic usage and functionality of ASP.NET MVC Tree component which represents items in a hierarchical tree structure."
+          "kendo-ui": "This demo illustrates the basic usage and functionality of Kendo UI jQuery Tree widget which represents items in a hierarchical tree structure.",
+          "aspnet-mvc": "This demo illustrates the basic usage and functionality of ASP.NET MVC Tree component which represents items in a hierarchical tree structure."
         }
       },
       {
         "text": "Drag & drop",
         "url": "treeview/dragdrop",
         "title": {
-            "kendo-ui": "Drag & Drop feature in Kendo UI TreeView control",
-            "aspnet-mvc": "Drag & Drop support in ASP.NET MVC TreeView control"
+          "kendo-ui": "Drag & Drop feature in Kendo UI TreeView control",
+          "aspnet-mvc": "Drag & Drop support in ASP.NET MVC TreeView control"
         },
         "meta": {
-            "kendo-ui": "This example shows how items in Kendo TreeView can be dragged and dropped to a specific place. Use the demo source code to try this functionality of the HTML5 component.",
-            "aspnet-mvc": "This example shows how to drag and drop items in ASP.NET MVC TreeView. Use the demo source code and play with the demo."
+          "kendo-ui": "This example shows how items in Kendo TreeView can be dragged and dropped to a specific place. Use the demo source code to try this functionality of the HTML5 component.",
+          "aspnet-mvc": "This example shows how to drag and drop items in ASP.NET MVC TreeView. Use the demo source code and play with the demo."
         }
       },
       {
         "text": "Animation effects",
         "url": "treeview/animation",
         "title": {
-            "kendo-ui": "Animation effects sample for Kendo UI jQuery Tree component",
-            "aspnet-mvc": "Animation effects sample for ASP.NET MVC Treeview component"
+          "kendo-ui": "Animation effects sample for Kendo UI jQuery Tree component",
+          "aspnet-mvc": "Animation effects sample for ASP.NET MVC Treeview component"
         },
         "meta": {
-            "kendo-ui": "This sample shows how you can add animation effects and expand animation by setting the specific options for Kendo UI TreeView widget.",
-            "aspnet-mvc": "This sample shows how you can add animation effects and expand animation by setting the specific options for ASP.NET MVC TreeView component."
+          "kendo-ui": "This sample shows how you can add animation effects and expand animation by setting the specific options for Kendo UI TreeView widget.",
+          "aspnet-mvc": "This sample shows how you can add animation effects and expand animation by setting the specific options for ASP.NET MVC TreeView component."
         }
       },
       {
         "text": "Images",
         "url": "treeview/images",
         "title": {
-            "kendo-ui": "Example of customized Kendo UI TreeView using images",
-            "aspnet-mvc": "Example of customized ASP.NET MVC TreeView using image"
+          "kendo-ui": "Example of customized Kendo UI TreeView using images",
+          "aspnet-mvc": "Example of customized ASP.NET MVC TreeView using image"
         },
         "meta": {
-            "kendo-ui": "This demo shows you can add images to your Kendo UI TreeView control, as well as implement TreeView with sprites in your website or project.",
-            "aspnet-mvc": "This demo shows how you can add images to your ASP.NET MVC TreeView control, as well as implement TreeView with sprites in your website or project."
+          "kendo-ui": "This demo shows you can add images to your Kendo UI TreeView control, as well as implement TreeView with sprites in your website or project.",
+          "aspnet-mvc": "This demo shows how you can add images to your ASP.NET MVC TreeView control, as well as implement TreeView with sprites in your website or project."
         }
       },
       {
         "text": "Checkboxes",
         "url": "treeview/checkboxes",
         "title": {
-            "kendo-ui": "Creating tree nodes with checkboxes | Kendo UI TreeView Demo",
-            "aspnet-mvc": "Creating tree nodes with checkboxes | ASP.NET MVC TreeView Demo"
+          "kendo-ui": "Creating tree nodes with checkboxes | Kendo UI TreeView Demo",
+          "aspnet-mvc": "Creating tree nodes with checkboxes | ASP.NET MVC TreeView Demo"
         },
         "meta": {
-            "kendo-ui": "This sample illustrates how you can easily create tree nodes with checkboxes by simply setting the child item of the checkboxes to true.",
-            "aspnet-mvc": "This sample illustrates how you can easily create tree nodes with checkboxes in ASP.NET MVC Treeview by simply setting the child item of the checkboxes to true."
+          "kendo-ui": "This sample illustrates how you can easily create tree nodes with checkboxes by simply setting the child item of the checkboxes to true.",
+          "aspnet-mvc": "This sample illustrates how you can easily create tree nodes with checkboxes in ASP.NET MVC Treeview by simply setting the child item of the checkboxes to true."
         }
       },
       {
         "text": "Binding to local data",
         "url": "treeview/local-data-binding",
         "title": {
-            "kendo-ui": "Binding to local data demo for Kendo UI TreeView control",
-            "aspnet-mvc": "Binding to local data demo for ASP.NET MVC TreeView control"
+          "kendo-ui": "Binding to local data demo for Kendo UI TreeView control",
+          "aspnet-mvc": "Binding to local data demo for ASP.NET MVC TreeView control"
         },
         "meta": {
-            "kendo-ui": "This demo shows how items in the tree are displayed with the default settings of Kendo UI TreeView and how the component can be easily bound to local data.",
-            "aspnet-mvc": "This demo shows how items in the tree are displayed with the default settings of ASP.NET MVC TreeView and how the component can be easily bound to local data."
+          "kendo-ui": "This demo shows how items in the tree are displayed with the default settings of Kendo UI TreeView and how the component can be easily bound to local data.",
+          "aspnet-mvc": "This demo shows how items in the tree are displayed with the default settings of ASP.NET MVC TreeView and how the component can be easily bound to local data."
         }
       },
       {
         "text": "Binding to remote data",
         "url": "treeview/remote-data-binding",
         "title": {
-            "kendo-ui": "Binding Kendo UI tree component to remote data",
-            "aspnet-mvc": "Binding ASP.NET MVC tree component to remote data"
+          "kendo-ui": "Binding Kendo UI tree component to remote data",
+          "aspnet-mvc": "Binding ASP.NET MVC tree component to remote data"
         },
         "sources": {
-            "kendo-ui": [{
-                "name": "Sample service",
-                "url": "~/content/service.html"
-            }]
+          "kendo-ui": [
+            {
+              "name": "Sample service",
+              "url": "~/content/service.html"
+            }
+          ]
         },
         "meta": {
-            "kendo-ui": "This example illustrates how the hierarchical tree can be bound to remote data and thus the items in the tree are populated from the external source.",
-            "aspnet-mvc": "This example illustrates how the ASP.NET MVC hierarchical tree can be bound to remote data and the items in the tree populated from an external source."
+          "kendo-ui": "This example illustrates how the hierarchical tree can be bound to remote data and thus the items in the tree are populated from the external source.",
+          "aspnet-mvc": "This example illustrates how the ASP.NET MVC hierarchical tree can be bound to remote data and the items in the tree populated from an external source."
         }
       },
       {
@@ -3502,86 +3673,88 @@
         "text": "Binding to OData service",
         "url": "treeview/odata-binding",
         "title": {
-            "kendo-ui": "Example of binding Kendo UI TreeView to OData service"
+          "kendo-ui": "Example of binding Kendo UI TreeView to OData service"
         },
         "sources": {
-            "kendo-ui": [{
-                "name": "Sample service",
-                "url": "~/content/service.html"
-            }]
+          "kendo-ui": [
+            {
+              "name": "Sample service",
+              "url": "~/content/service.html"
+            }
+          ]
         },
         "meta": {
-            "kendo-ui": "This sample shows how Kendo UI TreeView widget can be bound to oData service."
+          "kendo-ui": "This sample shows how Kendo UI TreeView widget can be bound to oData service."
         }
       },
       {
         "text": "Templates",
         "url": "treeview/templates",
         "title": {
-            "kendo-ui": "Example of templates for Kendo UI TreeView",
-            "aspnet-mvc": "Example of templates for ASP.NET MVC TreeView"
+          "kendo-ui": "Example of templates for Kendo UI TreeView",
+          "aspnet-mvc": "Example of templates for ASP.NET MVC TreeView"
         },
         "meta": {
-            "kendo-ui": "This demo illustrates how tree nodes in Kendo UI TreeView component can be further customized by using templates.",
-            "aspnet-mvc": "This demo illustrates how tree nodes in ASP.NET MVC TreeView component can be further customized by using templates."
+          "kendo-ui": "This demo illustrates how tree nodes in Kendo UI TreeView component can be further customized by using templates.",
+          "aspnet-mvc": "This demo illustrates how tree nodes in ASP.NET MVC TreeView component can be further customized by using templates."
         }
       },
       {
         "text": "Events",
         "url": "treeview/events",
         "title": {
-            "kendo-ui": "Demo for Kendo UI TreeView widget events",
-            "aspnet-mvc": "Demo for ASP.NET MVC TreeView control events"
+          "kendo-ui": "Demo for Kendo UI TreeView widget events",
+          "aspnet-mvc": "Demo for ASP.NET MVC TreeView control events"
         },
         "meta": {
-            "kendo-ui": "This sample shows built-in events in Kendo jQuery tree widget. Events are triggered when the user selects, collapses, expands, adds or removes an item on the list.",
-            "aspnet-mvc": "This sample shows built-in events in ASP.NET MVC tree control. Events are triggered when the user selects, collapses, expands, adds or removes an item on the list."
+          "kendo-ui": "This sample shows built-in events in Kendo jQuery tree widget. Events are triggered when the user selects, collapses, expands, adds or removes an item on the list.",
+          "aspnet-mvc": "This sample shows built-in events in ASP.NET MVC tree control. Events are triggered when the user selects, collapses, expands, adds or removes an item on the list."
         }
       },
       {
         "text": "API",
         "url": "treeview/api",
         "title": {
-            "kendo-ui": "Kendo UI TreeView API Example",
-            "aspnet-mvc": "ASP.NET MVC TreeView API Example"
+          "kendo-ui": "Kendo UI TreeView API Example",
+          "aspnet-mvc": "ASP.NET MVC TreeView API Example"
         },
         "meta": {
-            "kendo-ui": "This demo shows the specific API functions, as well as DataSource interaction options, which control the behaviour of Kendo UI TreeView.",
-            "aspnet-mvc": "This demo shows the specific API functions, as well as DataSource interaction options, which control the behaviour of ASP.NET MVC TreeView."
+          "kendo-ui": "This demo shows the specific API functions, as well as DataSource interaction options, which control the behaviour of Kendo UI TreeView.",
+          "aspnet-mvc": "This demo shows the specific API functions, as well as DataSource interaction options, which control the behaviour of ASP.NET MVC TreeView."
         }
       },
       {
         "text": "RTL support",
         "url": "treeview/right-to-left-support",
         "title": {
-            "kendo-ui": "RTL Support in Kendo UI TreeView component",
-            "aspnet-mvc": "RTL Support in ASP.NET MVC TreeView component"
+          "kendo-ui": "RTL Support in Kendo UI TreeView component",
+          "aspnet-mvc": "RTL Support in ASP.NET MVC TreeView component"
         },
         "meta": {
-            "kendo-ui": "Get familiar with the RTL support in Kendo UI TreeView widget, look at the example and use the source code to play with the demo!",
-            "aspnet-mvc": "Get familiar with the RTL support in ASP.NET MVC TreeView component. Look at the example and use the source code to play with the demo."
+          "kendo-ui": "Get familiar with the RTL support in Kendo UI TreeView widget, look at the example and use the source code to play with the demo!",
+          "aspnet-mvc": "Get familiar with the RTL support in ASP.NET MVC TreeView component. Look at the example and use the source code to play with the demo."
         }
       },
       {
         "text": "Keyboard navigation",
         "url": "treeview/keyboard-navigation",
         "title": {
-            "kendo-ui": "Kendo UI TreeView control | Keyboard support demo",
-            "aspnet-mvc": "ASP.NET MVC TreeView control | Keyboard support demo"
+          "kendo-ui": "Kendo UI TreeView control | Keyboard support demo",
+          "aspnet-mvc": "ASP.NET MVC TreeView control | Keyboard support demo"
         },
         "meta": {
-            "kendo-ui": "Look at the source code and play with the demo to find out more about the keyboard support feature in Kendo UI TreeView.",
-            "aspnet-mvc": "Look at the source code and play with the demo to find out more about the keyboard support feature in ASP.NET MVC TreeView."
+          "kendo-ui": "Look at the source code and play with the demo to find out more about the keyboard support feature in Kendo UI TreeView.",
+          "aspnet-mvc": "Look at the source code and play with the demo to find out more about the keyboard support feature in ASP.NET MVC TreeView."
         }
       },
       {
         "text": "MVVM",
         "url": "treeview/mvvm",
         "title": {
-            "kendo-ui": "MVVM support in Kendo UI TreeView"
+          "kendo-ui": "MVVM support in Kendo UI TreeView"
         },
         "meta": {
-            "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI TreeView"
+          "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI TreeView"
         },
         "packages": [
           "!mvc",
@@ -3589,14 +3762,14 @@
           "!php"
         ]
       },
-{
+      {
         "text": "AngularJS",
         "url": "treeview/angular",
         "title": {
-            "kendo-ui": "AngularJS support in Kendo UI TreeView"
+          "kendo-ui": "AngularJS support in Kendo UI TreeView"
         },
         "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI TreeView"
+          "kendo-ui": "AngularJS directive support for Kendo UI TreeView"
         },
         "packages": [
           "!mvc",
