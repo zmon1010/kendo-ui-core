@@ -8,7 +8,7 @@
 #
 
 execute 'docker-pull-image' do
-  command 'docker pull keyvanfatehi/sinopia:latest'
+  command 'docker pull telerik/sinopia:latest'
   action :run
 end
 
@@ -18,13 +18,13 @@ end
 
 execute 'docker-stop-sinopia' do
   command 'docker stop sinopia'
-  only_if 'docker logs sinopia'
+  only_if 'docker ps | grep sinopia'
   action :run
 end
 
 execute 'docker-install-sinopia' do
-  command 'docker run --name sinopia --dns=192.168.0.172 -v /etc/sinopia.yaml:/opt/sinopia/config.yaml -d -p 4873:4873 keyvanfatehi/sinopia:latest'
-  not_if 'docker logs sinopia'
+  command 'docker run --name sinopia --dns=192.168.0.172 -v /etc/sinopia.yaml:/opt/sinopia/config.yaml -d -p 80:4873 telerik/sinopia:latest'
+  not_if 'docker ps -a | grep sinopia'
   action :run
 end
 
