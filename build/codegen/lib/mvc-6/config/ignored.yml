@@ -31,7 +31,6 @@
 - dropdownlist.datasource
 - dropdownlist.index
 - gantt.assignments
-- gantt.columns
 - gantt.datasource
 - gantt.dependencies
 - gantt.resources

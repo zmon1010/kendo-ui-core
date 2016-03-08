@@ -31,6 +31,22 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The configuration of the Gantt columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+		/// field to which the column is bound. The Gantt will create a column for every item of the array.
+        /// </summary>
+        /// <param name="configurator">The configurator for the columns setting.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> Columns(Action<GanttColumnFactory<TTaskModel, TDependenciesModel>> configurator)
+        {
+
+            configurator(new GanttColumnFactory<TTaskModel, TDependenciesModel>(Container.Columns)
+            {
+                Gantt = Container
+            });
+
+            return this;
+        }
+
+        /// <summary>
         /// If set to false the "current time" marker of the Gantt would not be displayed.
         /// </summary>
         /// <param name="configurator">The configurator for the currenttimemarker setting.</param>

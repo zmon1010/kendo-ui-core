@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public double? ColumnResizeHandleWidth { get; set; }
 
+        public List<GanttColumn<TTaskModel, TDependenciesModel>> Columns { get; set; } = new List<GanttColumn<TTaskModel, TDependenciesModel>>();
+
         public GanttCurrentTimeMarkerSettings<TTaskModel, TDependenciesModel> CurrentTimeMarker { get; } = new GanttCurrentTimeMarkerSettings<TTaskModel, TDependenciesModel>();
 
         public GanttEditableSettings<TTaskModel, TDependenciesModel> Editable { get; } = new GanttEditableSettings<TTaskModel, TDependenciesModel>();
@@ -74,6 +76,12 @@ namespace Kendo.Mvc.UI
             if (ColumnResizeHandleWidth.HasValue)
             {
                 settings["columnResizeHandleWidth"] = ColumnResizeHandleWidth;
+            }
+
+            var columns = Columns.Select(i => i.Serialize());
+            if (columns.Any())
+            {
+                settings["columns"] = columns;
             }
 
             var currentTimeMarker = CurrentTimeMarker.Serialize();
