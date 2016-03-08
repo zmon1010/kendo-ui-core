@@ -57,7 +57,7 @@ docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line +
 	tab + "sqlite3 libsqlite3-dev" + new_line +
 	new_line +
 	"EXPOSE 5000" + new_line +
-	'ENTRYPOINT ["dnx", "-p", "project.json", "kestrel"]'
+	'ENTRYPOINT ["dnx", "-p", "project.json", "web"]'
 
 #======FOR TEST PURPOSS ONLY - IMAGE WITH ENTRYPOINT ONLY
 #	docker_contents = "FROM microsoft/aspnet:1.0.0-rc1-final-coreclr" + new_line + "ENTRYPOINT echo" + KENDO_VERSION

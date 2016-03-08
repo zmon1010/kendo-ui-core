@@ -43,5 +43,12 @@ execute 'docker-install' do
   not_if { File.exists? '/usr/bin/docker' }
   action :run
 end
+
+execute 'docker-config-dns' do
+  command 'sudo sed -i \'$ a\DOCKER_OPTS="--dns 192.168.0.172 --dns 192.168.4.10"\' /etc/default/docker'
+  not_if { File.readlines("/etc/default/docker").grep(/--dns 192.168.0.172/).size > 0 }
+  action :run
+end
+
 #for uninstall: sudo apt-get purge docker-engine
 
