@@ -25,7 +25,7 @@
     <div id="menu">
         <div class="header">
             Diagram
-            <a id="about" href="http://www.telerik.com/kendo-ui" title="The Most Complete UI Framework to Speed Up Your HTML/JS Development">About Kendo UI</a>
+            <a id="about">About</a>
         </div>
         <ul></ul>
     </div>
@@ -592,7 +592,7 @@
             });
 
             $("#about").click(function() {
-                $(".about").getKendoWindow().center().open();
+                $("#window").getKendoWindow().center().open();
             });
 
             $("#shapesPanelBar .shapeItem").kendoDraggable({
