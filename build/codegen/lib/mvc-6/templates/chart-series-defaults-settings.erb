@@ -9,6 +9,7 @@ namespace Kendo.Mvc.UI
     public partial class ChartSeriesDefaultsSettings<T> where T : class
     {
 % CHART_SERIES.each do |series|
+
         /// <summary>
         /// The <%= series[:type] %> series default settings.
         /// </summary>
@@ -19,13 +20,15 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 % CHART_SERIES.each do |series|
+
             var <%= series[:type].camelize %> = <%= series[:type] %>.Serialize();
-            
+
             if (<%= series[:type].camelize %>.Any())
             {
                 settings["<%= series[:type].camelize %>"] = <%= series[:type].camelize %>;
             }
 % end
+
             return settings;
         }
     }

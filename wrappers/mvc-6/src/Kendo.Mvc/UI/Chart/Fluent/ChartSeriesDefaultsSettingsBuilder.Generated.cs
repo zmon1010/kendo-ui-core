@@ -26,5 +26,14 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return new ChartSeriesBuilder<T>(Container.Area);
         }
+
+        /// <summary>
+        /// The candlestick series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the candlestick series settings.</param>
+        public ChartSeriesBuilder<T> Candlestick()
+        {
+            return new ChartSeriesBuilder<T>(Container.Candlestick);
+        }
     }
 }

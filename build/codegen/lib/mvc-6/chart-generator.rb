@@ -26,9 +26,9 @@ module CodeGen::MVC6::Wrappers::ChartGenerator
         filename = "#{@path}/Chart/Fluent/ChartSeriesFactory.Generated.cs"
 
         CHART_SERIES.each do |series|
-            required_fields = series[:fields].select {|field| !field[:optional] }
+            required_fields = series[:fields].select { |field| !field[:optional] }
             overloads = series_overloads(series, required_fields)
-            has_optional_fields = series[:fields].length != series[:required_fields]
+            has_optional_fields = series[:fields].length != required_fields.length
 
             if has_optional_fields
                 overloads += series_overloads(series, series[:fields])

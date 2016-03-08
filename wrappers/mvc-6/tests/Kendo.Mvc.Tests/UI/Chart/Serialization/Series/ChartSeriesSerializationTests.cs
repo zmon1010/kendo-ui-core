@@ -54,6 +54,22 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_CloseField_should_not_be_serialized()
+        {
+            series.Serialize().ContainsKey("closeField").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void CloseField_should_be_serialized()
+        {
+            var value = "value";
+
+            series.CloseField = value;
+
+            series.Serialize()["closeField"].ShouldEqual(value);
+        }
+
+        [Fact]
         public void Default_Color_should_not_be_serialized()
         {
             series.Serialize().ContainsKey("color").ShouldBeFalse();
@@ -82,7 +98,55 @@ namespace Kendo.Mvc.UI.Tests
 
             series.Serialize()["dashType"].ShouldEqual("dot");
         }
-        
+
+        [Fact]
+        public void Default_HighField_should_not_be_serialized()
+        {
+            series.Serialize().ContainsKey("highField").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void HighField_should_be_serialized()
+        {
+            var value = "value";
+
+            series.HighField = value;
+
+            series.Serialize()["highField"].ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Default_LowField_should_not_be_serialized()
+        {
+            series.Serialize().ContainsKey("lowField").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void LowField_should_be_serialized()
+        {
+            var value = "value";
+
+            series.LowField = value;
+
+            series.Serialize()["lowField"].ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Default_OpenField_should_not_be_serialized()
+        {
+            series.Serialize().ContainsKey("openField").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void OpenField_should_be_serialized()
+        {
+            var value = "value";
+
+            series.OpenField = value;
+
+            series.Serialize()["openField"].ShouldEqual(value);
+        }
+
         [Fact]
         public void Default_Style_should_not_be_serialized()
         {

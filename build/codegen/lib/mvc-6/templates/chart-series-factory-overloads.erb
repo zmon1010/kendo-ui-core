@@ -7,7 +7,7 @@
         /// The expression used to extract the <%= field[:description] %> from the model.
         /// </param>
 % end
-        public virtual ChartSeriesBuilder<T>  <%= series[:type] %><<%= (fields.map { |field| field[:generic] }).join(', ') %>>(
+        public virtual ChartSeriesBuilder<T>  <%= series[:type] %><<%= (fields.map { |field| field[:generic] }.uniq).join(', ') %>>(
             <%= fields.map { |field| "Expression<Func<T, #{field[:generic]}>> #{field[:expression]}" }.join(',
             ') %>)
         {
