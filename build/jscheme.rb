@@ -89,13 +89,16 @@ namespace :jscheme do
                 begin
                     schemas.each do |schema|
                         id = JSON.parse(schema)["id"].split(".").last
-                        File.open("dist/json-scheme/#{id}.json", "w+") do |f|
+                        fileName = id[0].downcase + id[1, id.length]
+                        puts "Processing: " + id
+                        File.open("dist/json-scheme/#{fileName}.json", "w+") do |f|
                             f.write schema
                         end
                     end
                 rescue JSON::ParserError
-                    puts "Parsing failed"
+                    
                 end
+                puts "Success!"
             end
         end
     end
