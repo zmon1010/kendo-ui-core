@@ -79,6 +79,10 @@
        sheet.bind("change", success).frozenColumns(2);
     });
 
+    test("showGridLines triggers the change event", 1, function() {
+       sheet.bind("change", success).showGridLines(false);
+    });
+
     test("select triggers the change event", 1, function() {
        sheet.bind("change", success).range("A2").select();
     });

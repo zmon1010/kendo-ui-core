@@ -16,6 +16,7 @@
             name: () => options.name,
             suspendChanges: () => sheet,
             triggerChange: () => null,
+            showGridLines: () => null,
             _columns: {
                 values: {
                     value: () => null
@@ -950,6 +951,27 @@
         var sheet = mockSheet({
             frozenRows: rows => ok(false),
             frozenColumns: cols => ok(false)
+        });
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads showGridLines", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        const SHEET = `
+            <worksheet>
+              <sheetViews>
+                <sheetView showGridLines="0">
+                </sheetView>
+              </sheetViews>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+
+        var sheet = mockSheet({
+            showGridLines: show => equal(show, false)
         });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);

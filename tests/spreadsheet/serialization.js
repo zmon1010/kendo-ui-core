@@ -285,6 +285,18 @@
         equal(json.frozenRows, 1);
     });
 
+    test("toJSON serializes showGridLines", function() {
+        sheet.showGridLines(false);
+
+        var json = sheet.toJSON();
+        equal(json.showGridLines, false);
+    });
+
+    test("toJSON serializes default showGridLines", function() {
+        var json = sheet.toJSON();
+        equal(json.showGridLines, true);
+    });
+
     test("fromJSON loads column widths", function() {
         sheet.fromJSON({
             columns: [
@@ -446,6 +458,14 @@
 
         equal(sheet.frozenColumns(), 1);
         equal(sheet.frozenRows(), 1);
+    });
+
+    test("fromJSON loads showGridLines", function() {
+        sheet.fromJSON({
+            showGridLines: false
+        });
+
+        equal(sheet.showGridLines(), false);
     });
 
     test("fromJSON loads merged cells", function() {

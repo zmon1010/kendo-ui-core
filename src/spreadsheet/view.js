@@ -1252,7 +1252,7 @@
             });
             var rect = this._currentRect;
             var layout = kendo.spreadsheet.draw.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
-            var showGridLines = this._sheet.options.showGridLines;
+            var showGridLines = this._sheet._showGridLines;
             if (showGridLines) {
                 // draw axis first
                 prev = null;
