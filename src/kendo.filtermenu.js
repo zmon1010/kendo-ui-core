@@ -953,7 +953,9 @@ var __meta__ = { // jshint ignore:line
                 label.parentNode.style.display = labelText.indexOf(searchString) >= 0 ? "" : "none";
             }
         },
-
+        _activate: function() {
+            this.form.find(":kendoFocusable:first").focus();
+        },
         _createForm: function() {
             var options = this.options;
             var html = "";
@@ -998,7 +1000,8 @@ var __meta__ = { // jshint ignore:line
             } else {
                 if (!options.appendToElement) {
                     this.popup = this.form.kendoPopup({
-                        anchor: this._link
+                        anchor: this._link,
+                        activate: proxy(this._activate, this)
                     }).data(POPUP);
                 } else {
                     this.popup = this.element.closest(".k-popup").data(POPUP);
