@@ -281,7 +281,7 @@
                     }
                 }
                 else if (this.is(SEL_SHEET_VIEW)) {
-                    sheet.options.showGridLines = bool(attrs.showGridLines, true);
+                    sheet.showGridLines(bool(attrs.showGridLines, true));
                 }
             },
             leave: function(tag) {

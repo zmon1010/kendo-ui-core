@@ -108,6 +108,7 @@
             this._frozenColumns = 0;
             this._suspendChanges = false;
             this._filter = null;
+            this._showGridLines = true;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
             this._sheetRef = this._grid.normalize(kendo.spreadsheet.SHEETREF);
             this._properties = new kendo.spreadsheet.PropertyBag(cellCount);
@@ -118,10 +119,6 @@
             this._editSelection = new Selection(this);
 
             this._formulaSelections = [];
-
-            this.options = {
-                showGridLines: true
-            };
         },
 
         _selectionState: function() {
@@ -489,6 +486,10 @@
 
         frozenColumns: function(value) {
             return this._field("_frozenColumns", value, { layout: true });
+        },
+
+        showGridLines: function(value) {
+            return this._field("_showGridLines", value, { layout: true });
         },
 
         _ref: function(row, column, numRows, numColumns) {
@@ -960,6 +961,7 @@
                 activeCell: viewSelection.activeCell().toString(),
                 frozenRows: this.frozenRows(),
                 frozenColumns: this.frozenColumns(),
+                showGridLines: this.showGridLines(),
                 mergedCells: this._mergedCells.map(function(ref) {
                     return ref.toString();
                 })
@@ -1089,6 +1091,10 @@
 
                         this._refreshFilter();
                     }
+                }
+
+                if (json.showGridLines !== undefined) {
+                    this._showGridLines = json.showGridLines;
                 }
             });
         },
