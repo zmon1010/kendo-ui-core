@@ -21,7 +21,7 @@ rm -rf docs/api/wrappers/*
 for host in "${HOSTS[@]}"
 do
     log "Uploading documentation to $host"
-    $SYNC $USER@$host:$DEST
+    $SYNC _site $USER@$host:$DEST
 done
 
 log "Done"
