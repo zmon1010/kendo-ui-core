@@ -8,6 +8,6 @@ namespace Kendo.Mvc.Examples.Models
         public int ID { get; set; }
         public int PredecessorID { get; set; }
         public int SuccessorID { get; set; }
-        public long Type { get; set; }
+        public int Type { get; set; }
     }
 }

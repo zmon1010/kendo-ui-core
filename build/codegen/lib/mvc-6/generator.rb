@@ -4,6 +4,7 @@ module CodeGen::MVC6::Wrappers
         include Rake::DSL
         include CodeGen::MVC6::Wrappers::ChartGenerator
         include CodeGen::MVC6::Wrappers::EnumGenerator
+        include CodeGen::MVC6::Wrappers::ModelGenerator
         
         def initialize(path)
             @path = path
@@ -22,6 +23,7 @@ module CodeGen::MVC6::Wrappers
             write_events(component)
             write_builder(component)
             write_builder_settings(component)
+            write_models(component)
         end
 
         def write_component(component)

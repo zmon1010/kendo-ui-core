@@ -1,0 +1,57 @@
+- :type: GanttTask
+  :members:
+      - :name: Title
+        :type: string
+
+      - :name: Start
+        :type: DateTime
+
+      - :name: End
+        :type: DateTime
+
+      - :name: PercentComplete
+        :type: decimal
+
+      - :name: OrderId
+        :type: int
+
+      - :name: ParentId
+        :type: object
+        :public_interface: false
+
+      - :name: Summary
+        :type: bool
+
+      - :name: Expanded
+        :type: bool
+
+- :type: GanttDependency
+  :members:
+      - :name: Type
+        :type: DependencyType
+        :description: Represents the dependency types supported by Kendo UI Gantt for ASP.NET MVC.
+        :enum_type: DependencyType
+        :values:
+            - :value: finishFinish
+              :member: FinishFinish
+              :description: The task cannot end before its predecessor task ends, although it may end later.
+
+            - :value: finishStart
+              :member: FinishStart
+              :description: The task cannot start before its predecessor task ends, although it may start later.
+
+            - :value: startFinish
+              :member: StartFinish
+              :description: The task cannot end before its predecessor task starts, although it may end later.
+
+            - :value: startStart
+              :member: StartStart
+              :description: The task cannot start until the predecessor tasks starts, although it may start later.
+
+      - :name: PredecessorId
+        :type: object
+        :public_interface: false
+
+      - :name: SuccessorId
+        :type: object
+        :public_interface: false

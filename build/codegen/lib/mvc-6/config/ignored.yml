@@ -30,6 +30,10 @@
 - dropdownlist.animation
 - dropdownlist.datasource
 - dropdownlist.index
+- gantt.assignments
+- gantt.datasource
+- gantt.dependencies
+- gantt.resources
 - grid.altrowtemplate
 - grid.columnmenu.messages
 - grid.columns

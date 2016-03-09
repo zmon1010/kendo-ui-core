@@ -237,6 +237,7 @@ namespace :generate do
                 'docs/api/javascript/ui/datetimepicker.md',
                 'docs/api/javascript/ui/dropdownlist.md',
                 'docs/api/javascript/ui/flatcolorpicker.md',
+                'docs/api/javascript/ui/gantt.md',
                 'docs/api/javascript/ui/grid.md',
                 'docs/api/javascript/ui/listview.md',
                 'docs/api/javascript/ui/maskedtextbox.md',

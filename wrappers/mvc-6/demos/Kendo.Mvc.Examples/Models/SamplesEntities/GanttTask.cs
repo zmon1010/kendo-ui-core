@@ -6,13 +6,13 @@ namespace Kendo.Mvc.Examples.Models
     public partial class GanttTask
     {
         public int ID { get; set; }
-        public string End { get; set; }
-        public string Expanded { get; set; }
+        public DateTime End { get; set; }
+        public bool Expanded { get; set; }
         public int OrderID { get; set; }
         public int? ParentID { get; set; }
-        public double PercentComplete { get; set; }
-        public string Start { get; set; }
-        public string Summary { get; set; }
+        public decimal PercentComplete { get; set; }
+        public DateTime Start { get; set; }
+        public bool Summary { get; set; }
         public string Title { get; set; }
 
         public virtual GanttTask Parent { get; set; }
