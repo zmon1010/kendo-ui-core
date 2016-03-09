@@ -89,7 +89,7 @@ var __meta__ = { // jshint ignore:line
             '</div>';
 
         var defaultMobileTemplate =
-            '<div data-#=ns#role="view" data-#=ns#init-widgets="false" class="k-grid-filter-menu">'+
+            '<div data-#=ns#role="view" data-#=ns#init-widgets="false" data-#=ns#use-native-scrolling="true" class="k-grid-filter-menu">'+
                 '<div data-#=ns#role="header" class="k-header">'+
                     '<button class="k-button k-cancel">#=messages.cancel#</button>'+
                     '#=title#'+
@@ -155,7 +155,7 @@ var __meta__ = { // jshint ignore:line
             '</div>';
 
     var booleanMobileTemplate =
-            '<div data-#=ns#role="view" data-#=ns#init-widgets="false" class="k-grid-filter-menu">'+
+            '<div data-#=ns#role="view" data-#=ns#init-widgets="false" data-#=ns#use-native-scrolling="true" class="k-grid-filter-menu">'+
                 '<div data-#=ns#role="header" class="k-header">'+
                     '<button class="k-button k-cancel">#=messages.cancel#</button>'+
                     '#=title#'+

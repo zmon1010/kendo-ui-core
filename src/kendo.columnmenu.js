@@ -684,7 +684,7 @@ var __meta__ = { // jshint ignore:line
                     '</ul>';
 
     var mobileTemplate =
-            '<div data-#=ns#role="view" data-#=ns#init-widgets="false" class="k-grid-column-menu">'+
+            '<div data-#=ns#role="view" data-#=ns#init-widgets="false" data-#=ns#use-native-scrolling="true" class="k-grid-column-menu">'+
                 '<div data-#=ns#role="header" class="k-header">'+
                     '${messages.settings}'+
                     '<button class="k-button k-done">#=messages.done#</button>'+
