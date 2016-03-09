@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNet.Mvc.Rendering;
+using System.Collections;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -64,6 +65,17 @@ namespace Kendo.Mvc.UI.Fluent
         {
             Container.DataSource.Schema.Model = new ModelDescriptor(typeof(TAssingmentModel), Container.ModelMetaDataProvider);
             configurator(new GanttAssignmentsDataSourceBuilder<TAssingmentModel>(Container.DataSource, viewContext, urlGenerator));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Binds the gantt assignments to a list of objects
+        /// </summary>
+        /// <param name="dataSource">The dataSource</param>
+        public GanttAssignmentsSettingsBuilder<TAssingmentModel> BindTo(IEnumerable dataSource)
+        {
+            Container.DataSource.Data = dataSource;
 
             return this;
         }

@@ -1,5 +1,6 @@
 using Microsoft.AspNet.Mvc.Rendering;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
@@ -74,6 +75,17 @@ namespace Kendo.Mvc.UI.Fluent
         public GanttResourcesSettingsBuilder DataSource(Action<ReadOnlyAjaxDataSourceBuilder<object>> configurator)
         {
             configurator(new ReadOnlyAjaxDataSourceBuilder<object>(Container.DataSource, viewContext, urlGenerator));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Binds the gantt resources to a list of objects
+        /// </summary>
+        /// <param name="dataSource">The dataSource</param>
+        public GanttResourcesSettingsBuilder BindTo(IEnumerable dataSource)
+        {
+            Container.DataSource.Data = dataSource;
 
             return this;
         }
