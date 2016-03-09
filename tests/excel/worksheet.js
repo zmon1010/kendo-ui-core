@@ -131,6 +131,34 @@ test("toXML does not set the tabSelected attribute if the sheet is not first", f
     equal(dom.find("sheetView").attr("tabSelected"), null);
 });
 
+test("toXML does not set the tabSelected attribute if the sheet is not first", function() {
+    var worksheet = Worksheet();
+
+    var dom = $(worksheet.toXML(1));
+
+    equal(dom.find("sheetView").attr("tabSelected"), null);
+});
+
+test("toXML sets the showGridLines attribute to 0 if it's false", function() {
+    var worksheet = Worksheet({
+        showGridLines: false
+    });
+
+    var dom = $(worksheet.toXML(0));
+
+    equal(dom.find("sheetView").attr("showGridLines"), "0");
+});
+
+test("toXML does not set the showGridLines attribute to 0 if it's true", function() {
+    var worksheet = Worksheet({
+        showGridLines: true
+    });
+
+    var dom = $(worksheet.toXML(0));
+
+    equal(dom.find("sheetView").attr("showGridLines"), null);
+});
+
 test("toXML sets the 'r' attribute to the alphanumeric when index is greater than 26", function() {
     var cells = new Array(27);
 
