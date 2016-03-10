@@ -361,6 +361,27 @@
         equal(filterCell.input.val(), "");
     });
 
+    test("clear icon is hidden when isnull filter on  numeric value is removed", function() {
+        dataSource.filter({field: "bar", operator: "isnull", value: null })
+
+        filterCell = setup(dom, { dataSource: dataSource, field: "bar" });
+
+        equal(filterCell.input.val(), "");
+        filterCell.element.find(".k-icon.k-i-close").click();
+        ok(!filterCell.element.find(".k-icon.k-i-close").is(":visible"));
+    });
+
+    test("clear icon is hidden when isnull filter on string value is removed", function() {
+        dataSource.filter({field: "foo", operator: "isnull", value: undefined })
+
+        filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
+
+        equal(filterCell.input.val(), "");
+        filterCell.element.find(".k-icon.k-i-close").click();
+        ok(!filterCell.element.find(".k-icon.k-i-close").is(":visible"));
+    });
+
+
     test("suggest dataSource shows only unique records when inherited", function() {
         var ds = new kendo.data.DataSource({
             schema: {
