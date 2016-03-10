@@ -5423,8 +5423,7 @@ var __meta__ = { // jshint ignore:line
                 if (footerWrap) {
                     var offset = that.content.scrollLeft();
 
-                    var hasVirtualScroll = options.scrollable !== true && options.scrollable.virtual && !that.virtualScrollable;
-                    if(hasVirtualScroll){
+                    if (options.scrollable !== true && options.scrollable.virtual) {
                         offset = that.wrapper.find('.k-virtual-scrollable-wrap').scrollLeft();
                     }
                     footerWrap.scrollLeft(offset);
