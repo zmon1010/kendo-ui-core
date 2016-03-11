@@ -1645,7 +1645,7 @@ var __meta__ = { // jshint ignore:line
                             "</div>";
             }
 
-            layout += "<div class='#= gridContentWrap #'>" +
+            layout += "<div class='#= gridContentWrap # k-auto-scrollable'>" +
                             "<table role='treegrid' tabindex='0'>" +
                                 "<colgroup></colgroup>"+
                                 "<tbody />" +
