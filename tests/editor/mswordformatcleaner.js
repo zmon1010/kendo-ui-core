@@ -232,6 +232,11 @@ test("does not interpret all graphic chars as lists", function() {
             equal(clean(content), '<ol><li><span>item1</span></li><li><span>item2</span></li></ol>');
     });
 
+    test("two lists; second list has reset counting", function() {
+        var content = '<p class="MsoListParagraphCxSpFirst" style="text-indent:-18.0pt;mso-list:l1 level1 lfo1"><!--[if !supportLists]-->1.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->list1<o:p></o:p></p>' +
+                      '<p class="MsoListParagraphCxSpLast" style="text-indent:-18.0pt;mso-list:l0 level1 lfo2"><!--[if !supportLists]-->1.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->list2<o:p></o:p></p>';
+        equal(clean(content), '<ol><li>list1</li></ol><ol><li>list2</li></ol>');
+    });
 
 
 test("cleans word tables", function() {

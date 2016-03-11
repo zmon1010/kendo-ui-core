@@ -1059,6 +1059,7 @@ var MSWordFormatCleaner = Cleaner.extend({
         var blockChildren = $(placeholder).find(dom.blockElements.join(',')),
             lastMargin = -1,
             lastType,
+            lastListIndex,
             name,
             levels = {'ul':{}, 'ol':{}},
             li = placeholder,
@@ -1067,6 +1068,8 @@ var MSWordFormatCleaner = Cleaner.extend({
         for (i = 0; i < blockChildren.length; i++) {
             p = blockChildren[i];
             listData = $(p).data();
+            var listIndex = listData.list;
+            var level = listData.level;
 
             type = this.listType(p.innerHTML);
             name = dom.name(p);
@@ -1087,14 +1090,13 @@ var MSWordFormatCleaner = Cleaner.extend({
                 continue;
             }
 
-            var level = listData.level;
             margin = level === undefined ? parseFloat(p.style.marginLeft || 0) : level;
             list = levels[type][margin];
 
-            if (margin > lastMargin || !list) {
+            if (margin > lastMargin || !list || lastListIndex !== listIndex) {
                 list = dom.create(document, type);
 
-                if (li == placeholder) {
+                if (li == placeholder || lastListIndex !== listIndex) {
                     dom.insertBefore(list, p);
                 } else {
                     li.appendChild(list);
@@ -1118,6 +1120,7 @@ var MSWordFormatCleaner = Cleaner.extend({
             list.appendChild(li);
             lastMargin = margin;
             lastType = type;
+            lastListIndex = listIndex;
         }
     },
 
