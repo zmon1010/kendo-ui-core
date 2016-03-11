@@ -999,17 +999,21 @@ var MSWordFormatCleaner = Cleaner.extend({
         });
     },
 
-    listType: function(html) {
+    listType: function(html, listData) {
         var startingSymbol;
+        var matchSymbol = html.match(/^(?:<span [^>]*texhtml[^>]*>)?<span [^>]*(Symbol|Wingdings)[^>]*>([^<]+)/i);
+        var symbol = matchSymbol && matchSymbol[1];
+        var isNumber = /^[cdilmvx\d]/i.test(symbol);//including roman numerals
 
-        if (/^(<span [^>]*texhtml[^>]*>)?<span [^>]*(Symbol|Wingdings)[^>]*>/i.test(html)) {
+        if (matchSymbol) {
             startingSymbol = true;
         }
 
         html = html.replace(/<\/?\w+[^>]*>/g, '').replace(/&nbsp;/g, '\u00a0');
 
         if ((!startingSymbol && /^[\u2022\u00b7\u00a7\u00d8o]\u00a0+/.test(html)) ||
-            (startingSymbol && /^.\u00a0+/.test(html))) {
+            (startingSymbol && /^.\u00a0+/.test(html)) ||
+            (symbol && !isNumber && listData)) {
             return 'ul';
         }
 
@@ -1071,7 +1075,7 @@ var MSWordFormatCleaner = Cleaner.extend({
             var listIndex = listData.list;
             var level = listData.level;
 
-            type = this.listType(p.innerHTML);
+            type = this.listType(p.innerHTML, listData);
             name = dom.name(p);
 
 

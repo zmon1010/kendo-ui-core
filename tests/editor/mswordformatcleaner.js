@@ -226,10 +226,16 @@ test("does not interpret all graphic chars as lists", function() {
     equal(clean('<p class="MsoNormal">Foo <span style="font-family:Wingdings;mso-ascii-font-family: Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri; mso-hansi-theme-font:minor-latin;mso-char-type:symbol;mso-symbol-font-family: Wingdings">J</span> bar baz<o:p></o:p></p>'), '<p>Foo <span style="font-family:wingdings">J</span> bar baz</p>');
 });
 
-    test("lists without whitespace between numbers and content", function() {
+    test("ordered list without whitespace between numbers and content", function() {
             var content = '<p class="MsoListParagraphCxSpFirst" style="text-indent:-12.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="mso-fareast-font-family:Arial">1.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp; </span></span><!--[endif]--><span style="">item1<o:p></o:p></span></p>' +
                           '<p class="MsoListParagraphCxSpLast" style="text-indent:-12.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="mso-fareast-font-family:Arial">2.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp; </span></span><!--[endif]--><span style="">item2<o:p></o:p></span></p>';
             equal(clean(content), '<ol><li><span>item1</span></li><li><span>item2</span></li></ol>');
+    });
+
+    test("unordered list without whitespace between symbol and content", function() {
+        var content = '<p class="MsoListParagraphCxSpFirst" style="text-indent:-6.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family: Symbol">·<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';"> </span></span><!--[endif]-->item1<o:p></o:p></p>' +
+                      '<p class="MsoListParagraphCxSpLast" style="text-indent:-6.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family: Symbol">·<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';"> </span></span><!--[endif]-->item2<o:p></o:p></p>';
+        equal(clean(content), '<ul><li>item1</li><li>item2</li></ul>');
     });
 
     test("two lists; second list has reset counting", function() {
