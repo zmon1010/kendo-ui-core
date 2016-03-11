@@ -146,6 +146,7 @@
         },
 
         input: function(value) {
+            var existingFormat = this._get("format");
             if (value !== undefined) {
                 var tl = this._ref.toRangeRef().topLeft;
                 var x = kendo.spreadsheet.calc.parse(this._sheet.name(), tl.row, tl.col, value);
@@ -153,12 +154,12 @@
                     var formula = null;
                     if (x.type == "exp") {
                         formula = kendo.spreadsheet.calc.compile(x);
-                    } else if (x.format) {
-                        this.format(x.format);
                     } else if (x.type == "date") {
                         this.format(toExcelFormat(kendo.culture().calendar.patterns.d));
                     } else if (x.type == "percent") {
                         this.format(x.value*100 == (x.value*100|0) ? "0%" : "0.00%");
+                    } else if (x.format && !existingFormat) {
+                        this.format(x.format);
                     }
                     this.formula(formula);
                     if (!formula) {
@@ -173,9 +174,8 @@
                 return this;
             } else {
                 value = this._get("value");
-                var format = this._get("format");
                 var formula = this._get("formula");
-                var type = format && !formula && kendo.spreadsheet.formatting.type(value, format);
+                var type = existingFormat && !formula && kendo.spreadsheet.formatting.type(value, existingFormat);
 
                 if (formula) {
                     // it's a Formula object which stringifies to the
