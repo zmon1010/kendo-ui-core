@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
 
         public ChartStackType? Type { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public Chart<T> Chart { get; set; }
 

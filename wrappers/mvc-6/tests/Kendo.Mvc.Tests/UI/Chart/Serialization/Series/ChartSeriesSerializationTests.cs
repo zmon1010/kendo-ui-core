@@ -3,6 +3,7 @@ using Xunit;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.UI.Fluent;
 using Kendo.Mvc.Tests;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Tests
 {
@@ -51,6 +52,16 @@ namespace Kendo.Mvc.UI.Tests
             series.AggregateHandler = value;
 
             series.Serialize()["aggregate"].ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Aggregates_should_be_serialized()
+        {
+            var value = ChartSeriesAggregate.Avg;
+
+            series.Aggregates.Close = value;
+            
+            ((Dictionary<string, object>)series.Serialize()["aggregate"])["close"].ShouldEqual("avg");
         }
 
         [Fact]

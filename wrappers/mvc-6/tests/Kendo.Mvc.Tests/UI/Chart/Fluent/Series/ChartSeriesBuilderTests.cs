@@ -66,7 +66,14 @@ namespace Kendo.Mvc.UI.Tests
             builder.AggregateHandler(nullFunction).ShouldBeSameAs(builder);
         }
 
+        [Fact]
+        public void Builder_should_set_series_aggregates()
+        {
+            builder.Aggregate(x => x.Close(ChartSeriesAggregate.Avg));
 
+            series.Aggregates.Close.ShouldEqual(ChartSeriesAggregate.Avg);
+        }
+        
         [Fact]
         public void Color_should_reset_ColorHandler()
         {

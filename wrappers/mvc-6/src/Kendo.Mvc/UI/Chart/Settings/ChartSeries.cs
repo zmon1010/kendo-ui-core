@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
@@ -10,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartSeries<T> where T : class
     {
+        public ChartSeriesAggregateSettings<T> Aggregates { get; } = new ChartSeriesAggregateSettings<T>();
+
         [Obsolete("This property is obsolete. Please use the CloseField property instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string CloseMember
@@ -71,6 +74,12 @@ namespace Kendo.Mvc.UI
         public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
+
+            var aggregates = Aggregates.Serialize();
+            if (aggregates.Any())
+            {
+                settings["aggregate"] = aggregates;
+            }
 
             if (Data != null)
             {
