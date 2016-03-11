@@ -1045,19 +1045,32 @@ var MSWordFormatCleaner = Cleaner.extend({
         return dom.create(document, 'li', { innerHTML: content });
     },
 
+    extractListLevels: function(html) {
+        var msoListRegExp = /style=['"]?[^'"]*?mso-list:\s?[a-zA-Z]+(\d+)\s[a-zA-Z]+(\d+)\s(\w+)/gi;
+
+        html = html.replace(msoListRegExp, function(match, list, level) {
+            return kendo.format('data-list="{0}" data-level="{1}" {2}', list, level, match);
+        });
+
+        return html;
+    },
+
     lists: function(placeholder) {
-        var blockChildren = $(dom.blockElements.join(','), placeholder),
+        var blockChildren = $(placeholder).find(dom.blockElements.join(',')),
             lastMargin = -1,
             lastType,
             name,
             levels = {'ul':{}, 'ol':{}},
             li = placeholder,
-            i, p, type, margin, list, key, child;
+            i, p, type, margin, list, key, child, listData;
 
         for (i = 0; i < blockChildren.length; i++) {
             p = blockChildren[i];
+            listData = $(p).data();
+
             type = this.listType(p.innerHTML);
             name = dom.name(p);
+
 
             if (name == "td") {
                 continue;
@@ -1074,7 +1087,8 @@ var MSWordFormatCleaner = Cleaner.extend({
                 continue;
             }
 
-            margin = parseFloat(p.style.marginLeft || 0);
+            var level = listData.level;
+            margin = level === undefined ? parseFloat(p.style.marginLeft || 0) : level;
             list = levels[type][margin];
 
             if (margin > lastMargin || !list) {
@@ -1238,6 +1252,7 @@ var MSWordFormatCleaner = Cleaner.extend({
     clean: function(html) {
         var that = this, placeholder;
 
+        html = this.extractListLevels(html);
         html = Cleaner.fn.clean.call(that, html);
         html = that.stripEmptyAnchors(html);
 
