@@ -226,6 +226,14 @@ test("does not interpret all graphic chars as lists", function() {
     equal(clean('<p class="MsoNormal">Foo <span style="font-family:Wingdings;mso-ascii-font-family: Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri; mso-hansi-theme-font:minor-latin;mso-char-type:symbol;mso-symbol-font-family: Wingdings">J</span> bar baz<o:p></o:p></p>'), '<p>Foo <span style="font-family:wingdings">J</span> bar baz</p>');
 });
 
+    test("lists without whitespace between numbers and content", function() {
+            var content = '<p class="MsoListParagraphCxSpFirst" style="text-indent:-12.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="mso-fareast-font-family:Arial">1.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp; </span></span><!--[endif]--><span style="">item1<o:p></o:p></span></p>' +
+                          '<p class="MsoListParagraphCxSpLast" style="text-indent:-12.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="mso-fareast-font-family:Arial">2.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp; </span></span><!--[endif]--><span style="">item2<o:p></o:p></span></p>';
+            equal(clean(content), '<ol><li><span>item1</span></li><li><span>item2</span></li></ol>');
+    });
+
+
+
 test("cleans word tables", function() {
     equal(
         clean('<table class="MsoTableLightShadingAccent1" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none;mso-border-top-alt:solid #4F81BD 1.0pt;mso-border-top-themecolor:accent1;mso-border-bottom-alt:solid #4F81BD 1.0pt;mso-border-bottom-themecolor:accent1;mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt">' +

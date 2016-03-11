@@ -1013,7 +1013,7 @@ var MSWordFormatCleaner = Cleaner.extend({
             return 'ul';
         }
 
-        if (/^\s*\w+[\.\)]\u00a0{2,}/.test(html)) {
+        if (/^\s*\w+[\.\)][\u00a0 ]{2,}/.test(html)) {
             return 'ol';
         }
     },
