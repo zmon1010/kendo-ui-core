@@ -229,7 +229,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables the virtualization feature of the widget.
+        /// Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.
         /// </summary>
         /// <param name="configurator">The configurator for the virtual setting.</param>
         public AutoCompleteBuilder Virtual(Action<AutoCompleteVirtualSettingsBuilder> configurator)
@@ -243,7 +243,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables the virtualization feature of the widget.
+        /// Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.
         /// </summary>
         public AutoCompleteBuilder Virtual()
         {
@@ -252,7 +252,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables the virtualization feature of the widget.
+        /// Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.
         /// </summary>
         /// <param name="enabled">Enables or disables the virtual option.</param>
         public AutoCompleteBuilder Virtual(bool enabled)

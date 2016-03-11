@@ -136,7 +136,7 @@ refer to Popup documentation.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Enables the virtualization feature of the widget.</description>
+            <description>Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.</description>
             <name>virtual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -230,7 +230,7 @@ refer to Popup documentation.</description>
 
 
     <tag>
-        <description>Enables the virtualization feature of the widget.</description>
+        <description>Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.</description>
         <name>autoComplete-virtual</name>
         <tag-class>com.kendoui.taglib.autocomplete.VirtualTag</tag-class>
         <body-content>JSP</body-content>
@@ -11674,7 +11674,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Enables the virtualization feature of the widget.</description>
+            <description>Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.</description>
             <name>virtual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -11817,7 +11817,7 @@ space separated "y" plus "x" position.The available "y" positions are:
 
 
     <tag>
-        <description>Enables the virtualization feature of the widget.</description>
+        <description>Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.</description>
         <name>comboBox-virtual</name>
         <tag-class>com.kendoui.taglib.combobox.VirtualTag</tag-class>
         <body-content>JSP</body-content>
@@ -17724,7 +17724,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Enables the virtualization feature of the widget.</description>
+            <description>Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.</description>
             <name>virtual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -17867,7 +17867,7 @@ space separated "y" plus "x" position.The available "y" positions are:
 
 
     <tag>
-        <description>Enables the virtualization feature of the widget.</description>
+        <description>Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.</description>
         <name>dropDownList-virtual</name>
         <tag-class>com.kendoui.taglib.dropdownlist.VirtualTag</tag-class>
         <body-content>JSP</body-content>
@@ -25427,7 +25427,7 @@ A zero value means that a request will be made as soon as the user focuses the w
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Enables the virtualization feature of the widget.</description>
+            <description>Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.</description>
             <name>virtual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -25565,7 +25565,7 @@ space separated "y" plus "x" position.The available "y" positions are:
 
 
     <tag>
-        <description>Enables the virtualization feature of the widget.</description>
+        <description>Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.</description>
         <name>multiSelect-virtual</name>
         <tag-class>com.kendoui.taglib.multiselect.VirtualTag</tag-class>
         <body-content>JSP</body-content>

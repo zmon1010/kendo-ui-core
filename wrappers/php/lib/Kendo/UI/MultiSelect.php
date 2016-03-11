@@ -299,7 +299,7 @@ refer to Popup documentation.
     }
 
     /**
-    * Enables the virtualization feature of the widget.
+    * Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.
     * @param boolean|\Kendo\UI\MultiSelectVirtual|array $value
     * @return \Kendo\UI\MultiSelect
     */

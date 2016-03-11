@@ -284,7 +284,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables the virtualization feature of the widget.
+        /// Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.
         /// </summary>
         /// <param name="configurator">The configurator for the virtual setting.</param>
         public ComboBoxBuilder Virtual(Action<ComboBoxVirtualSettingsBuilder> configurator)
@@ -298,7 +298,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables the virtualization feature of the widget.
+        /// Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.
         /// </summary>
         public ComboBoxBuilder Virtual()
         {
@@ -307,7 +307,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Enables the virtualization feature of the widget.
+        /// Enables the virtualization feature of the widget. The configuration can be set on an object, which contains two properties - itemHeight and valueMapper.For detailed information, refer to the article on virtualization.
         /// </summary>
         /// <param name="enabled">Enables or disables the virtual option.</param>
         public ComboBoxBuilder Virtual(bool enabled)
