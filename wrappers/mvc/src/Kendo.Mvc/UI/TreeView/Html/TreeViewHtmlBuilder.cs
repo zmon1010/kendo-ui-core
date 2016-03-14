@@ -80,12 +80,17 @@ namespace Kendo.Mvc.UI
         public IHtmlNode CheckboxFor(TreeViewItem item)
         {
             var checkboxWrapper = new HtmlElement("span").AddClass("k-checkbox-wrapper");
-
+            
             new HtmlElement("input", TagRenderMode.SelfClosing)
+                .AddClass("k-checkbox")
                 .Attributes(new { type = "checkbox", name = Component.Checkboxes.Name })
                 .ToggleAttribute("value", item.Id, item.Id != null)
                 .ToggleAttribute("checked", "checked", item.Checked)
                 .ToggleAttribute("disabled", "disabled", !item.Enabled)
+                .AppendTo(checkboxWrapper);
+
+            new HtmlElement("label")
+                .AddClass("k-checkbox-label")
                 .AppendTo(checkboxWrapper);
 
             return checkboxWrapper;
