@@ -451,8 +451,7 @@
 
     var TextBlock = VisualBase.extend({
         init: function (options) {
-            this._textColor(options);
-
+            options = this._textColor(options);
             VisualBase.fn.init.call(this, options);
 
             this._font();
@@ -485,12 +484,13 @@
 
         _textColor: function(options) {
             if (options && options.color) {
-                deepExtend(options, {
+                options = deepExtend({}, options, {
                     fill: {
                         color: options.color
                     }
                 });
             }
+            return options;
         },
 
         _font: function() {
@@ -511,7 +511,7 @@
                 var sizeChanged = false;
                 var textOptions = this.options;
 
-                this._textColor(options);
+                options = this._textColor(options);
 
                 VisualBase.fn.redraw.call(this, options);
 

@@ -22,10 +22,10 @@
 
      <script src="../../src/util/main.js"></script>     
      <script src="../../src/mixins/observers.js"></script>
-     <script src="../../src/geometry/main.js"></script>
+     <script src="../../src/drawing/geometry.js"></script>
      <script src="../../src/drawing/core.js"></script>     
      <script src="../../src/drawing/mixins.js"></script>
-     <script src="../../src/drawing/text-metrics.js"></script>
+     <script src="../../src/util/text-metrics.js"></script>
      <script src="../../src/drawing/shapes.js"></script>
      <script src="../../src/drawing/parser.js"></script>
      <script src="../../src/drawing/svg.js"></script>
@@ -77,13 +77,26 @@
         },
 
         shapeDefaults: {
-            // type: "image",
-            // source: "http://demos.telerik.com/kendo-ui/content/web/foods/1.jpg"
-            //visual: visual,
-            type: "rectangle",
-            content: {
-                text: "KOR"
+            visual: function(options) {
+                var group = new kendo.dataviz.diagram.Group();
+                var rect = new kendo.dataviz.diagram.Rectangle({
+                    width: 100,
+                    height: 100,
+                    fill: options.fill
+                });                
+                var text = new kendo.dataviz.diagram.TextBlock({
+                    text: "FOO",
+                    color: "white",
+                    fill: options.fill
+                });
+                group.append(rect);
+                group.append(text);
+                return group;
             },
+            type: "rectangle",
+            // content: {
+                // text: "KOR"
+            // },
             width: 100,
             height: 200,
             hover: {
@@ -105,11 +118,11 @@
                 }
             }
         },
-            add: function(e) {
-       console.log("add", e);
-       if (e.connection) {
-        //e.connection.type("cascading");                    
-       }
+        add: function(e) {
+           console.log("add", e);
+           if (e.connection) {
+            //e.connection.type("cascading");                    
+           }
        // e.connection.type("polyline");                    
     },
     remove: function(e) {

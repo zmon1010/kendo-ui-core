@@ -1052,6 +1052,18 @@
             equal(textblock.options.fill.color, "#ff0000");
         });
 
+        test("does not modify passed object", function() {
+            var options = {
+                color: "foo",
+                fill: {
+                    color: "bar"
+                }
+            };
+            textblock = new TextBlock(options);
+            equal(options.color, "foo");
+            equal(options.fill.color, "bar");
+        });
+
         test("inits font", function() {
             equal(textblock.options.font, "10px " + SANS);
         });
