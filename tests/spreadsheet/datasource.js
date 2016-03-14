@@ -393,6 +393,21 @@
         equal(sheet.range("B1").value(), "bar");
     });
 
+    test("sheet setDataSource assigns dataSource", function() {
+        var dataSource = new kendo.data.DataSource({});
+
+        sheet.setDataSource(dataSource);
+
+        ok(sheet.dataSource instanceof kendo.data.DataSource);
+        strictEqual(sheet.dataSource, dataSource);
+    });
+
+    test("sheet dataSource is DataSource instance if array is passed", function() {
+        sheet.setDataSource({ dataSource: [ { foo: 1 } ] });
+
+        ok(sheet.dataSource instanceof kendo.data.DataSource);
+    });
+
     test("sheet setDataSource creates binder instance", function() {
         var dataSource = new kendo.data.DataSource({});
 

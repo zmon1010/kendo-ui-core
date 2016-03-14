@@ -201,6 +201,8 @@
                 sheet: this,
                 columns: columns
             });
+
+            this.dataSource = this.dataSourceBinder.dataSource;
         },
 
         hideColumn: function(columnIndex) {
