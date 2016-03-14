@@ -999,11 +999,18 @@ var MSWordFormatCleaner = Cleaner.extend({
         });
     },
 
-    listType: function(html, listData) {
+    listType: function(p, listData) {
+        var html = p.innerHTML;
+        var text = dom.innerText(p);
+
         var startingSymbol;
-        var matchSymbol = html.match(/^(?:<span [^>]*texhtml[^>]*>)?<span [^>]*(Symbol|Wingdings)[^>]*>([^<]+)/i);
+        var matchSymbol = html.match(/^(?:<span [^>]*texhtml[^>]*>)?<span [^>]*(?:Symbol|Wingdings)[^>]*>([^<]+)/i);
         var symbol = matchSymbol && matchSymbol[1];
         var isNumber = /^[cdilmvx\d]/i.test(symbol);//including roman numerals
+
+        var trimStartText = function(text) {
+            return text.replace(/^(?:&nbsp;|[\u00a0\n\r\s])+/, '');
+        };
 
         if (matchSymbol) {
             startingSymbol = true;
@@ -1014,11 +1021,17 @@ var MSWordFormatCleaner = Cleaner.extend({
         if ((!startingSymbol && /^[\u2022\u00b7\u00a7\u00d8o]\u00a0+/.test(html)) ||
             (startingSymbol && /^.\u00a0+/.test(html)) ||
             (symbol && !isNumber && listData)) {
-            return 'ul';
+            return {
+                tag: 'ul',
+                style: this._guessUnorderedListStyle(trimStartText(text))
+            };
         }
 
         if (/^\s*\w+[\.\)][\u00a0 ]{2,}/.test(html)) {
-            return 'ol';
+            return {
+                tag: 'ol',
+                style: this._guessOrderedListStyle(trimStartText(text))
+            };
         }
     },
 
@@ -1049,6 +1062,27 @@ var MSWordFormatCleaner = Cleaner.extend({
         return dom.create(document, 'li', { innerHTML: content });
     },
 
+    _guessUnorderedListStyle: function(symbol) {
+        if(/^[\u2022\u00b7\u00FC\u00D8\u002dv-]/.test(symbol)) {
+            return null;//return "disc"; //default CSS value
+        }
+        else if(/^o/.test(symbol)) {
+            return "circle";
+        }
+        else {
+            return "square";
+        }
+    },
+    _guessOrderedListStyle: function(symbol) {
+        var listType = null;
+        if (!/^\d/.test(symbol)) {
+            listType = (/^[a-z]/.test(symbol) ? 'lower-' : 'upper-') +
+                       (/^[ivxlcdm]/i.test(symbol) ? 'roman' : 'alpha');
+        }
+
+        return listType;
+    },
+
     extractListLevels: function(html) {
         var msoListRegExp = /style=['"]?[^'"]*?mso-list:\s?[a-zA-Z]+(\d+)\s[a-zA-Z]+(\d+)\s(\w+)/gi;
 
@@ -1067,56 +1101,62 @@ var MSWordFormatCleaner = Cleaner.extend({
             name,
             levels = {'ul':{}, 'ol':{}},
             li = placeholder,
-            i, p, type, margin, list, key, child, listData;
+            i, p, type, margin, list, listData;
+
+        var resetLevels = function(index) {
+            var lvl = {};
+            lvl['ul' + index] = {};
+            lvl['ol' + index] = {};
+
+            return lvl;
+        };
 
         for (i = 0; i < blockChildren.length; i++) {
             p = blockChildren[i];
             listData = $(p).data();
             var listIndex = listData.list;
             var level = listData.level;
-
-            type = this.listType(p.innerHTML, listData);
             name = dom.name(p);
-
 
             if (name == "td") {
                 continue;
             }
 
+            var listType = this.listType(p, listData);
+            type = listType && listType.tag;
+
             if (!type || name != 'p') {
                 if (!p.innerHTML) {
                     dom.remove(p);
                 } else {
-                    levels = {'ul':{}, 'ol':{}};
+                    levels = resetLevels(listIndex);//{'ul':{}, 'ol':{}};
                     li = placeholder;
                     lastMargin = -1;
                 }
                 continue;
             }
 
-            margin = level === undefined ? parseFloat(p.style.marginLeft || 0) : level;
-            list = levels[type][margin];
+            margin = parseFloat(p.style.marginLeft || 0);
 
-            if (margin > lastMargin || !list || lastListIndex !== listIndex) {
-                list = dom.create(document, type);
+            var levelType = type + listIndex;
+            if(!levels[levelType]) {
+                levels[levelType] = {};
+            }
 
-                if (li == placeholder || lastListIndex !== listIndex) {
+            list = levels[levelType][margin];
+
+            if (margin > lastMargin || !list) {
+                list = dom.create(document, type, {
+                    style: { listStyleType: listType.style }
+                });
+
+                if (li == placeholder || margin <= lastMargin) {
                     dom.insertBefore(list, p);
                 } else {
                     li.appendChild(list);
                 }
 
-                levels[type][margin] = list;
-            }
-
-            if (lastType != type) {
-                for (key in levels) {
-                    for (child in levels[key]) {
-                        if ($.contains(list, levels[key][child])) {
-                            delete levels[key][child];
-                        }
-                    }
-                }
+                levels[levelType][margin] = list;
             }
 
             li = this._convertToLi(p);
