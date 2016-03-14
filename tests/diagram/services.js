@@ -1352,6 +1352,63 @@
             moveToShape(connection, shape);
             ok(connection.target() === shape.getConnector("left"));
         });
+
+        test("uses source handle if the point is within a predefined distance from the source point", function() {
+            setupDiagram();
+
+            var connection = d.connect(new Point(0, 0), new Point(10, 10));
+
+            connection.select(true);
+            var adorner = connection.adorner;
+            var sourcePoint = connection.sourcePoint();
+            var point = new Point(sourcePoint.x - adorner.options.handles.width / 2 - 10, sourcePoint.y);
+
+            connection.adorner.start(point);
+            equal(connection.adorner.handle, -1);
+        });
+
+        test("uses source handle if the point is within a predefined distance from the source and target points but the source point is closer", function() {
+            setupDiagram();
+
+            var connection = d.connect(new Point(0, 10), new Point(10, 10));
+
+            connection.select(true);
+            var adorner = connection.adorner;
+            var sourcePoint = connection.sourcePoint();
+            var point = new Point(sourcePoint.x + 3, sourcePoint.y);
+
+            connection.adorner.start(point);
+            equal(connection.adorner.handle, -1);
+        });
+
+        test("uses target handle if the point is within a predefined distance from the target point", function() {
+            setupDiagram();
+
+            var connection = d.connect(new Point(0, 10), new Point(10, 10));
+
+            connection.select(true);
+            var adorner = connection.adorner;
+            var targetPoint = connection.targetPoint();
+            var point = new Point(targetPoint.x + adorner.options.handles.width / 2 + 10, targetPoint.y);
+
+            connection.adorner.start(point);
+            equal(connection.adorner.handle, 1);
+        });
+
+        test("uses target handle if the point is within a predefined distance from the source and target points but the target point is closer", function() {
+            setupDiagram();
+
+            var connection = d.connect(new Point(0, 10), new Point(10, 10));
+
+            connection.select(true);
+            var adorner = connection.adorner;
+            var targetPoint = connection.targetPoint();
+            var point = new Point(targetPoint.x - 3, targetPoint.y);
+
+            connection.adorner.start(point);
+            equal(connection.adorner.handle, 1);
+        });
+
     })();
 
     (function() {

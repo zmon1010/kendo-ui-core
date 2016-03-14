@@ -1582,15 +1582,24 @@
                 return new ConnectionEditUndoUnit(this.connection, this._initialSource, this._initialTarget);
             },
 
-            _hitTest: function (p) {
-                var sp = this.connection.sourcePoint(),
-                    tp = this.connection.targetPoint(),
-                    rx = this.options.handles.width / 2,
-                    ry = this.options.handles.height / 2,
-                    sb = new Rect(sp.x, sp.y).inflate(rx, ry),
-                    tb = new Rect(tp.x, tp.y).inflate(rx, ry);
+            _hitTest: function (point) {
+                var sourcePoint = this.connection.sourcePoint();
+                var targetPoint = this.connection.targetPoint();
+                var radiusX = this.options.handles.width / 2 + HIT_TEST_DISTANCE;
+                var radiusY = this.options.handles.height / 2 + HIT_TEST_DISTANCE;
+                var sourcePointDistance = sourcePoint.distanceTo(point);
+                var targetPointDistance = targetPoint.distanceTo(point);
+                var sourceHandle = new Rect(sourcePoint.x, sourcePoint.y).inflate(radiusX, radiusY).contains(point);
+                var targetHandle = new Rect(targetPoint.x, targetPoint.y).inflate(radiusX, radiusY).contains(point);
+                var handle = 0;
 
-                return sb.contains(p) ? -1 : (tb.contains(p) ? 1 : 0);
+                if (sourceHandle && (!targetHandle || sourcePointDistance < targetPointDistance)) {
+                    handle = -1;
+                } else if (targetHandle && (!sourceHandle || targetPointDistance < sourcePointDistance)) {
+                    handle = 1;
+                }
+
+                return handle;
             },
 
             refresh: function () {
