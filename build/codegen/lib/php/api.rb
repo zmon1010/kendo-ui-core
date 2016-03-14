@@ -485,7 +485,7 @@ Adds one or more <%= item.php_class %> to the <%= owner.php_class %>.
         end
 
         def write_markdown(component)
-            component_name = "#{component}/#{component.php_class}.md"
+            component_name = "#{component.path}/#{component.php_class}.md"
 
             [component_name, component_name.downcase].each do |name|
                 filename = "#{@path}#{name}"
