@@ -23,6 +23,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Default_configuration_outputs_empty_kendoTreeMap()
         {
+            treeMap.Name = "TreeMap";
             treeMap.WriteInitializationScript(textWriter);
 
             output.ToString().ShouldContain("jQuery(\"#TreeMap\").kendoTreeMap({});");

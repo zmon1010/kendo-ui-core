@@ -9,6 +9,8 @@ using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc.ModelBinding.Validation;
 using Microsoft.AspNet.Mvc.Infrastructure;
 using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.Extensions.OptionsModel;
+using System.Text;
 
 namespace Kendo.Mvc.Rendering
 {
@@ -24,14 +26,19 @@ namespace Kendo.Mvc.Rendering
         public KendoHtmlGenerator(
             IActionBindingContextAccessor actionBindingContextAccessor,
             IModelMetadataProvider metadataProvider,
-            IServiceProvider requestServices)
-
+            IServiceProvider requestServices,
+            IOptions<MvcViewOptions> optionsAccessor)
         {
             _actionBindingContext = actionBindingContextAccessor.ActionBindingContext;
             _metadataProvider = metadataProvider;
             _requestServices = requestServices;
+
+            IdAttributeDotReplacement = optionsAccessor.Value.HtmlHelperOptions.IdAttributeDotReplacement;
         }
-		private TagBuilder GenerateInput(
+
+        public string IdAttributeDotReplacement { get; }
+
+        private TagBuilder GenerateInput(
 		   ViewContext viewContext,
 		   ModelMetadata metadata,
 		   string id,
@@ -283,5 +290,56 @@ namespace Kendo.Mvc.Rendering
 		{
 			return GenerateInput(viewContext, metadata, id, name, value, format, "text", htmlAttributes);
 		}
-	}
+
+        private bool IsValidCharacter(char c)
+        {
+            if (c == '?' || c == '!' || c == '#' || c == '.' || c == '[' || c == ']')
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void ReplaceInvalidCharacters(string part, StringBuilder builder)
+        {
+            for (int i = 0; i < part.Length; i++)
+            {
+                char character = part[i];
+                if (IsValidCharacter(character))
+                {
+                    builder.Append(character);
+                }
+                else
+                {
+                    builder.Append(IdAttributeDotReplacement);
+                }
+            }
+        }
+
+        public string SanitizeId(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder(id.Length);
+            int startSharpIndex = id.IndexOf("#");
+            int endSharpIndex = id.LastIndexOf("#");
+
+            if (endSharpIndex > startSharpIndex)
+            {
+                ReplaceInvalidCharacters(id.Substring(0, startSharpIndex), builder);
+                builder.Append(id.Substring(startSharpIndex, endSharpIndex - startSharpIndex + 1));
+                ReplaceInvalidCharacters(id.Substring(endSharpIndex + 1), builder);
+            }
+            else
+            {
+                ReplaceInvalidCharacters(id, builder);
+            }
+
+            return builder.ToString();
+        }
+    }
 }

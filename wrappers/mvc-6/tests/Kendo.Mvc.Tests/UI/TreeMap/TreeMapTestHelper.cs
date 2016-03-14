@@ -6,10 +6,7 @@
     {
         public static TreeMap CreateTreeMap()
         {
-            return new TreeMap(TestHelper.CreateViewContext())
-            {
-                Name = "#TreeMap"
-            };
+            return new TreeMap(TestHelper.CreateViewContext());
         }
     }
 }

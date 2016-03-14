@@ -90,5 +90,7 @@ namespace Kendo.Mvc.Rendering
             ViewContext viewContext,
             ModelMetadata metadata,
             string name);
+
+        string SanitizeId(string id);
     }
 }

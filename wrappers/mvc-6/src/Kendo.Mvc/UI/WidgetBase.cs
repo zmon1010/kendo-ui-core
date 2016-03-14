@@ -48,7 +48,7 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-                return SanitizeId(HtmlAttributes.ContainsKey("id") ? (string) HtmlAttributes["id"] : ViewContext.GetFullHtmlFieldName(Name));
+                return Generator.SanitizeId(HtmlAttributes.ContainsKey("id") ? (string) HtmlAttributes["id"] : ViewContext.GetFullHtmlFieldName(Name));
             }
         }
 
@@ -278,57 +278,6 @@ namespace Kendo.Mvc.UI
             }
 
             scripts.Add(new KeyValuePair<string, string>(Name, script));
-        }
-
-        private bool IsValidCharacter(char c)
-        {
-            if (c == '?' || c == '!' || c == '#' || c == '.' || c == '[' || c == ']')
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private void ReplaceInvalidCharacters(string part, StringBuilder builder)
-        {
-            for (int i = 0; i < part.Length; i++)
-            {
-                char character = part[i];
-                if (IsValidCharacter(character))
-                {
-                    builder.Append(character);
-                }
-                else
-                {
-                    builder.Append(HtmlHelper.IdAttributeDotReplacement);
-                }
-            }
-        }
-
-        private string SanitizeId(string id)
-        {
-            if (string.IsNullOrWhiteSpace(id))
-            {
-                return string.Empty;
-            }
-
-            var builder = new StringBuilder(id.Length);
-            int startSharpIndex = id.IndexOf("#");
-            int endSharpIndex = id.LastIndexOf("#");
-
-            if (endSharpIndex > startSharpIndex)
-            {
-                ReplaceInvalidCharacters(id.Substring(0, startSharpIndex), builder);
-                builder.Append(id.Substring(startSharpIndex, endSharpIndex - startSharpIndex + 1));
-                ReplaceInvalidCharacters(id.Substring(endSharpIndex + 1), builder);
-            }
-            else
-            {
-                ReplaceInvalidCharacters(id, builder);
-            }
-
-            return builder.ToString();
         }
     }
 }

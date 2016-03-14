@@ -28,7 +28,10 @@ namespace Kendo.Mvc.Tests
 			var provider = new EmptyModelMetadataProvider();
 
 			var serviceProvider = new Mock<IServiceProvider>();
-			serviceProvider
+
+            kendoHtmlGenerator.Setup(s => s.SanitizeId(It.IsAny<string>())).Returns((string s) => s);
+
+            serviceProvider
 				.Setup(s => s.GetService(typeof(IModelMetadataProvider)))
 				.Returns(provider);
 
