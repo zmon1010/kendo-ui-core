@@ -220,11 +220,13 @@ PARAMETER = ERB.new(%{
             def component(component)
                 return if component.empty?
 
-                filename = "#{@path}#{component.namespace}/#{component.name}.md"
+                component_name = "#{component.namespace}/#{component.name}.md"
 
-                ensure_path(filename)
-
-                File.write(filename, component.to_markdown)
+                [component_name, component_name.downcase].each do |name|
+                    filename = "#{@path}#{name}"
+                    ensure_path(filename)
+                    File.write(filename, component.to_markdown)
+                end
             end
 
         end
