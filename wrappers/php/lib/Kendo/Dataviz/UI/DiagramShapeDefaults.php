@@ -15,6 +15,15 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
+    * Defines default options for the shape connectors.
+    * @param \Kendo\Dataviz\UI\DiagramShapeDefaultsConnectorDefaults|array $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
+    */
+    public function connectorDefaults($value) {
+        return $this->setProperty('connectorDefaults', $value);
+    }
+
+    /**
     * Defines the shapes content settings.
     * @param \Kendo\Dataviz\UI\DiagramShapeDefaultsContent|array $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults

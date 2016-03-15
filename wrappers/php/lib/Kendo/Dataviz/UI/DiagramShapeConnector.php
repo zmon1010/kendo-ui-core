@@ -37,6 +37,51 @@ class DiagramShapeConnector extends \Kendo\SerializableObject {
         return $this->setProperty('position', $value);
     }
 
+    /**
+    * Defines the width of the shape connectors.
+    * @param float $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeConnector
+    */
+    public function width($value) {
+        return $this->setProperty('width', $value);
+    }
+
+    /**
+    * Defines the height of the shape connectors.
+    * @param float $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeConnector
+    */
+    public function height($value) {
+        return $this->setProperty('height', $value);
+    }
+
+    /**
+    * Defines the hover configuration of the shape connectors.
+    * @param \Kendo\Dataviz\UI\DiagramShapeConnectorHover|array $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeConnector
+    */
+    public function hover($value) {
+        return $this->setProperty('hover', $value);
+    }
+
+    /**
+    * Defines the fill options of the shape connectors.
+    * @param string|\Kendo\Dataviz\UI\DiagramShapeConnectorFill|array $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeConnector
+    */
+    public function fill($value) {
+        return $this->setProperty('fill', $value);
+    }
+
+    /**
+    * Defines the stroke options of the shape connectors.
+    * @param string|\Kendo\Dataviz\UI\DiagramShapeConnectorStroke|array $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeConnector
+    */
+    public function stroke($value) {
+        return $this->setProperty('stroke', $value);
+    }
+
 //<< Properties
 }
 

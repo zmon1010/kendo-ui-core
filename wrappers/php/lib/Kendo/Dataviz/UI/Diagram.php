@@ -414,6 +414,20 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
+    * Sets the toolBarClick event of the Diagram.
+    * Fired when the user clicks an item in the toolbar.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\Diagram
+    */
+    public function toolBarClick($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('toolBarClick', $value);
+    }
+
+    /**
     * Sets the zoomEnd event of the Diagram.
     * Fired when the user changes the diagram zoom level.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.

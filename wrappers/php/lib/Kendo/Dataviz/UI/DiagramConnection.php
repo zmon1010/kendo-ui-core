@@ -6,7 +6,7 @@ class DiagramConnection extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Defines the shapes content settings.
+    * Defines the connection content settings.
     * @param \Kendo\Dataviz\UI\DiagramConnectionContent|array $value
     * @return \Kendo\Dataviz\UI\DiagramConnection
     */
