@@ -2168,6 +2168,10 @@ var __meta__ = { // jshint ignore:line
                         that._hideResizeHandle();
                     },
                     hint: function(target) {
+                        var title = target.attr(kendo.attr("title"));
+                        if (title) {
+                            title = kendo.htmlEncode(title);
+                        }
                         return $('<div class="k-header k-drag-clue" />')
                             .css({
                                 width: target.width(),
@@ -2177,7 +2181,7 @@ var __meta__ = { // jshint ignore:line
                                 paddingTop: target.css("paddingTop"),
                                 paddingBottom: target.css("paddingBottom")
                             })
-                            .html(target.attr(kendo.attr("title")) || target.attr(kendo.attr("field")) || target.text())
+                            .html(title || target.attr(kendo.attr("field")) || target.text())
                             .prepend('<span class="k-icon k-drag-status k-denied" />');
                     }
                 }).data("kendoDraggable");

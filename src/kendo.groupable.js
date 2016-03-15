@@ -36,7 +36,7 @@ var __meta__ = { // jshint ignore:line
                     paddingTop: target.css("paddingTop"),
                     paddingBottom: target.css("paddingBottom")
                 })
-                .html(target.attr(kendo.attr("title")) || target.attr(kendo.attr("field")))
+                .html(kendo.htmlEncode(target.attr(kendo.attr("title"))) || target.attr(kendo.attr("field")))
                 .prepend('<span class="k-icon k-drag-status k-denied" />');
         },
         dropCue = $('<div class="k-grouping-dropclue"/>');
