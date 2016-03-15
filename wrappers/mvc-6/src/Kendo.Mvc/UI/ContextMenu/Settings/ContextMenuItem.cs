@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Kendo.Mvc.UI
@@ -11,7 +12,7 @@ namespace Kendo.Mvc.UI
     {
         public ContextMenuItem()
         {
-            Items = new LinkedObjectCollection<ContextMenuItem>(this);
+            Items = new List<ContextMenuItem>();
         }
 
         public IList<ContextMenuItem> Items
@@ -24,46 +25,29 @@ namespace Kendo.Mvc.UI
 
         public ContextMenu ContextMenu { get; set; }
 
-        protected Dictionary<string, object> SerializeSettings()
+        public override IDictionary<string, object> Serialize()
         {
-            var settings = new Dictionary<string, object>();
+            if (Separator)
+            {
+                HtmlAttributes.Add("class", "k-separator");
+            }
 
-            //if (Text?.HasValue() == true)
-            //{
-            //    settings["text"] = Text;
-            //}
+            var json = base.Serialize();
 
-            //if (Url?.HasValue() == true)
-            //{
-            //    settings["url"] = Url;
-            //}
+            var items = Items.Select(c => c.Serialize());
 
-            //if (ImageUrl?.HasValue() == true)
-            //{
-            //    settings["imageUrl"] = ImageUrl;
-            //}
+            if (items.Any())
+            {
+                json["items"] = items;
+            }
 
-            //if (SpriteCssClasses?.HasValue() == true)
-            //{
-            //    settings["spriteCssClass"] = SpriteCssClasses;
-            //}
-
-            //if (Enabled)
-            //{
-            //    settings["enabled"] = Enabled;
-            //}
-
-            //if (Selected)
-            //{
-            //    settings["selected"] = Selected;
-            //}
-
-            return settings;
+            return json;
         }
 
         internal bool IsCurrent(ViewContext viewContext, IUrlGenerator urlGenerator)
         {
-            throw new NotImplementedException();
+            return false;
+            //throw new NotImplementedException();
         }
     }
 }

@@ -3311,6 +3311,55 @@
     "category": "Editors"
   },
   {
+    "text": "Menu",
+    "name": "menu",
+    "api": "web/menu",
+    "documentation": {
+       "kendo-ui": "getting-started/web/menu/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/menu/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/menu/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/menu/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/menu",
+       "aspnet-mvc": "aspnet-mvc/menu",
+       "jsp-ui": "jsp/menu",
+       "php-ui": "php/menu"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/menu",
+       "aspnet-mvc": "aspnet-mvc/menu",
+       "jsp-ui": "jsp/menu",
+       "php-ui": "php/menu"
+    },
+    "spriteCssClass": "menuIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "menu/index",
+        "title": {
+            "kendo-ui": "Basic usage of Kendo UI Menu Navigation widget | Kendo UI Web demo",
+            "aspnet-mvc": "Basic usage of ASP.NET MVC Menu Navigation | ASP.NET MVC demo"
+        },
+        "meta": {
+            "kendo-ui": "In this Kendo UI Menu demo we will demonstrates the rich features of the component and its basic usage for your app.",
+            "aspnet-mvc": "In this ASP.NET MVC Menu demo we will demonstrates the rich features of the component and its basic usage for your app."
+        }
+      },
+      {
+        "text": "Context Menu",
+        "url": "menu/context-menu",
+        "title": {
+            "kendo-ui": "Kendo UI Context Menu example"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates how to use a Kendo UI ContextMenu widget."
+        }
+      }
+    ],
+    "category": "Navigation"
+  },
+  {
     "text": "ProgressBar",
     "name": "progressbar",
     "api": "web/progressbar",

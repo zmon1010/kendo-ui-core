@@ -13,14 +13,14 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ContextMenu : WidgetBase, INavigationItemComponent<ContextMenuItem>
     {
-        internal bool isPathHighlighted;
+        //internal bool isPathHighlighted;
 
         public ContextMenu(ViewContext viewContext)
             : base(viewContext)
         {
             Animation = new PopupAnimation();
 
-            Items = new LinkedObjectCollection<ContextMenuItem>(null);
+            Items = new List<ContextMenuItem>();
 
             CloseOnClick = true;
             HighlightPath = true;
@@ -45,45 +45,48 @@ namespace Kendo.Mvc.UI
         {
             if (Items.Any())
             {
-                var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
+                var tag = Generator.GenerateTag("ul", ViewContext, Id, Name, HtmlAttributes);
 
-                if (HighlightPath.Value)
-                {
-                    Items.Each(HighlightSelectedItem); //TODO check
-                }
+                //if (HighlightPath.Value)
+                //{
+                //    Items.Each(HighlightSelectedItem); //TODO check
+                //}
 
-
+                tag.WriteTo(writer, HtmlEncoder);
             }
             
             base.WriteHtml(writer);
         }
 
-        private void HighlightSelectedItem(ContextMenuItem item)
-        {
-            if (item.IsCurrent(ViewContext, UrlGenerator))
-            {
-                isPathHighlighted = true;
+        //private void HighlightSelectedItem(ContextMenuItem item)
+        //{
+        //    if (item.IsCurrent(ViewContext, UrlGenerator))
+        //    {
+        //        isPathHighlighted = true;
 
-                item.Selected = item.Parent != null;
+        //        //item.Selected = item.Parent != null;
 
-                do
-                {
-                    if (!item.Selected)
-                    {
-                        item.HtmlAttributes.AppendInValue("class", " ", "k-state-highlight");
-                    }
-                    item = item.Parent;
-                }
-                while (item != null);
+        //        do
+        //        {
+        //            if (!item.Selected)
+        //            {
+        //                item.HtmlAttributes.AppendInValue("class", " ", "k-state-highlight");
+        //            }
+        //            //item = item.Parent;
+        //        }
+        //        while (item != null);
 
-                return;
-            }
-            item.Items.Each(HighlightSelectedItem);
-        }
+        //        return;
+        //    }
+        //    item.Items.Each(HighlightSelectedItem);
+        //}
 
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
+
+            var items = Items.Select(c => c.Serialize());
+            settings["dataSource"] = items;
 
             var animation = Animation.ToJson();
             if (animation.Keys.Any())
@@ -91,7 +94,7 @@ namespace Kendo.Mvc.UI
                 settings["animation"] = animation["animation"];
             }
 
-            if (AlignToAnchor.Value)
+            if (AlignToAnchor.HasValue && AlignToAnchor.Value == true)
             {
                 settings["alignToAnchor"] = true;
             }
@@ -101,12 +104,12 @@ namespace Kendo.Mvc.UI
                 settings["orientation"] = Orientation?.Serialize();
             }
 
-            if (OpenOnClick.Value)
+            if (OpenOnClick.HasValue && OpenOnClick.Value == true)
             {
                 settings["openOnClick"] = true;
             }
 
-            if (!CloseOnClick.Value)
+            if (CloseOnClick.HasValue && CloseOnClick.Value == false)
             {
                 settings["closeOnClick"] = false;
             }

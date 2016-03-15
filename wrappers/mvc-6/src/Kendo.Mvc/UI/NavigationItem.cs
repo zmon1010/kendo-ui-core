@@ -2,11 +2,13 @@
 {
     // using System.Web.Script.Serialization;
     using Kendo.Mvc;
+    using Kendo.Mvc.Extensions;
     using Microsoft.AspNet.Routing;
     using System;
     using System.Collections.Generic;
 
-    public abstract class NavigationItem<T> : LinkedObjectBase<T>, INavigatable, IHideObjectMembers, IHtmlAttributesContainer, IContentContainer where T : NavigationItem<T>
+    public abstract class NavigationItem<T> : LinkedObjectBase<T>, INavigatable, IHideObjectMembers, IHtmlAttributesContainer, IContentContainer
+        where T : NavigationItem<T>
     {
         private string text;
         private string routeName;
@@ -234,6 +236,48 @@
                 routeName = controllerName = actionName = null;
                 RouteValues.Clear();
             }
+        }
+
+        public virtual IDictionary<string, object> Serialize()
+        {
+            var json = new Dictionary<string, object>();
+
+            if (Text?.HasValue() == true)
+            {
+                json["text"] = Text;
+            }
+
+            if (Url?.HasValue() == true)
+            {
+                json["url"] = Url;
+            }
+
+            if (ImageUrl?.HasValue() == true)
+            {
+                json["imageUrl"] = ImageUrl;
+            }
+
+            if (SpriteCssClasses?.HasValue() == true)
+            {
+                json["spriteCssClass"] = SpriteCssClasses;
+            }
+
+            if (Enabled)
+            {
+                json["enabled"] = Enabled;
+            }
+
+            if (Selected)
+            {
+                json["selected"] = Selected;
+            }
+
+            if (HtmlAttributes.Count > 0)
+            {
+                json["attr"] = HtmlAttributes;
+            }
+
+            return json;
         }
     }
 }
