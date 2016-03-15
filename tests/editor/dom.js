@@ -337,4 +337,34 @@ test("emptyNode returns false for text node", function() {
     test("signicant nodes are not emptyspace", function() {
         ok(!Dom.isEmptyspace(document.createElement("span")));
     });
+
+    var node;
+    module("innerText(node); //", {
+        beforeEach: function() {
+            node = Dom.create(document, "div");
+        }
+    });
+
+    test("first child is text", function() {
+        node.appendChild(document.createTextNode("text"));
+        equal(Dom.innerText(node), "text");
+    });
+
+    test("has comments", function() {
+        node.appendChild(document.createComment("some comment"));
+        node.appendChild(document.createTextNode("text"));
+        equal(Dom.innerText(node), "text");
+    });
+
+    test("descendants", function() {
+        var grandChild = Dom.create(document, "div");
+        grandChild.appendChild(document.createTextNode("content"));
+        var child = Dom.create(document, "div");
+        child.appendChild(document.createTextNode("some "));
+        child.appendChild(grandChild);
+        node.appendChild(child);
+
+        equal(Dom.innerText(node), "some content");
+    })
+
 }());

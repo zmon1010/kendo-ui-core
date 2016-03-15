@@ -628,6 +628,14 @@ var Dom = {
         }
     },
 
+    innerText: function(node) {
+        var text = node.innerHTML;
+        text = text.replace(/<!--(.|\s)*?-->/gi, "");
+        text = text.replace(/<\/?[^>]+?\/?>/gm, "");
+
+        return text;
+    },
+
     removeClass: function(node, classNames) {
         var className = " " + node.className + " ",
             classes = classNames.split(" "),

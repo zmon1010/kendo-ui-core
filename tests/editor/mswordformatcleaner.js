@@ -53,7 +53,7 @@ test("strip comments regardles of version", function() {
 });
 
 test("unordered list", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p>'), '<ul><li>foo</li></ul>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p>'), '<ul style="list-style-type:circle"><li>foo</li></ul>');
 });
 
 test("class removed", function() {
@@ -81,11 +81,11 @@ test("remove mso style attributes", function() {
 });
 
 test("opening list when there is no comment", function() {
-    equal(clean('<p style="text-indent: -0.25in;" class="MsoListParagraphCxSpFirst"><span style="font-family: Symbol;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p>'), '<ul><li>foo</li></ul>');
+    equal(clean('<p style="text-indent: -0.25in;" class="MsoListParagraphCxSpFirst"><span style="font-family: Symbol;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p>'), '<ul style="list-style-type:circle"><li>foo</li></ul>');
 });
 
 test("list with letters", function() {
-    equal(clean('<p class="MsoNormal" style="text-align:justify;line-height:115%"><span lang="EN-GB" style="font-size:8.0pt;line-height:115%;mso-ansi-language:EN-GB">a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foo<o:p></o:p></span></p><p class="MsoNormal" style="text-align:justify;line-height:115%"><span lang="EN-GB" style="font-size:8.0pt;line-height:115%;mso-ansi-language:EN-GB">b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bar<o:p></o:p></span></p>'), '<ol><li>foo</li><li>bar</li></ol>');
+    equal(clean('<p class="MsoNormal" style="text-align:justify;line-height:115%"><span lang="EN-GB" style="font-size:8.0pt;line-height:115%;mso-ansi-language:EN-GB">a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foo<o:p></o:p></span></p><p class="MsoNormal" style="text-align:justify;line-height:115%"><span lang="EN-GB" style="font-size:8.0pt;line-height:115%;mso-ansi-language:EN-GB">b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bar<o:p></o:p></span></p>'), '<ol style="list-style-type:lower-alpha"><li>foo</li><li>bar</li></ol>');
 });
 
 test("comments removed", function() {
@@ -101,11 +101,11 @@ test("nested list with more than one root node", function() {
 });
 
 test("nested ordered lists", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]-->1.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Foo<o:p></o:p></p><p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;mso-add-space: auto;text-indent:-18.0pt;mso-list:l0 level2 lfo1"><!--[if !supportLists]-->a.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Bar<o:p></o:p></p><p class="MsoListParagraphCxSpMiddle" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]-->2.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Bar<o:p></o:p></p>'), '<ol><li>Foo<ol><li>Bar</li></ol></li><li>Bar</li></ol>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]-->1.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Foo<o:p></o:p></p><p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;mso-add-space: auto;text-indent:-18.0pt;mso-list:l0 level2 lfo1"><!--[if !supportLists]-->a.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Bar<o:p></o:p></p><p class="MsoListParagraphCxSpMiddle" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]-->2.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Bar<o:p></o:p></p>'), '<ol><li>Foo<ol style="list-style-type:lower-alpha"><li>Bar</li></ol></li><li>Bar</li></ol>');
 });
 
 test("orderd lists with roman numerals", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent:-36.0pt;mso-text-indent-alt: -18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>i.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Foo<o:p></o:p></p><p class="MsoListParagraphCxSpMiddle" style="text-indent:-36.0pt;mso-text-indent-alt: -18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ii.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Bar<o:p></o:p></p><p class="MsoListParagraphCxSpLast" style="text-indent:-36.0pt;mso-text-indent-alt: -18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>iii.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Baz<o:p></o:p></p>'), '<ol><li>Foo</li><li>Bar</li><li>Baz</li></ol>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent:-36.0pt;mso-text-indent-alt: -18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>i.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Foo<o:p></o:p></p><p class="MsoListParagraphCxSpMiddle" style="text-indent:-36.0pt;mso-text-indent-alt: -18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ii.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Bar<o:p></o:p></p><p class="MsoListParagraphCxSpLast" style="text-indent:-36.0pt;mso-text-indent-alt: -18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>iii.<span style="font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->Baz<o:p></o:p></p>'), '<ol style="list-style-type:lower-roman"><li>Foo</li><li>Bar</li><li>Baz</li></ol>');
 });
 
 test("titles converted to header", function() {
@@ -113,27 +113,27 @@ test("titles converted to header", function() {
 });
 
 test("list paragraph", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><p>bar</p>'), '<ul><li>foo</li></ul><p>bar</p>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><p>bar</p>'), '<ul style="list-style-type:circle"><li>foo</li></ul><p>bar</p>');
 });
 
 test("list paragraph list", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><p>bar</p><p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>baz</p>'), '<ul><li>foo</li></ul><p>bar</p><ul><li>baz</li></ul>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><p>bar</p><p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>baz</p>'), '<ul style="list-style-type:circle"><li>foo</li></ul><p>bar</p><ul style="list-style-type:circle"><li>baz</li></ul>');
 });
 
 test("nested list paragraph list", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><p class="MsoListParagraphCxSpFirst" style="margin-left:1in;"><span><span><span>o</span>&nbsp;</span></span>moo</p><p>bar</p><p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>baz</p>'), '<ul><li>foo<ul><li>moo</li></ul></li></ul><p>bar</p><ul><li>baz</li></ul>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><p class="MsoListParagraphCxSpFirst" style="margin-left:1in;"><span><span><span>o</span>&nbsp;</span></span>moo</p><p>bar</p><p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>baz</p>'), '<ul style="list-style-type:circle"><li>foo<ul style="list-style-type:circle"><li>moo</li></ul></li></ul><p>bar</p><ul style="list-style-type:circle"><li>baz</li></ul>');
 });
 
 test("list block element list", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><h1>bar</h1><p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>baz</p>'), '<ul><li>foo</li></ul><h1>bar</h1><ul><li>baz</li></ul>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><h1>bar</h1><p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>baz</p>'), '<ul style="list-style-type:circle"><li>foo</li></ul><h1>bar</h1><ul style="list-style-type:circle"><li>baz</li></ul>');
 });
 
 test("list when there is no class just margin", function() {
-    equal(clean('<p style="margin-left:1in;text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p>'), '<ul><li>foo</li></ul>');
+    equal(clean('<p style="margin-left:1in;text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p>'), '<ul style="list-style-type:circle"><li>foo</li></ul>');
 });
 
 test("empty block elements skipped", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><h1></h1><p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>baz</p>'), '<ul><li>foo</li><li>baz</li></ul>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>foo</p><h1></h1><p class="MsoListParagraphCxSpFirst"><span><span><span>o</span>&nbsp;</span></span>baz</p>'), '<ul style="list-style-type:circle"><li>foo</li><li>baz</li></ul>');
 });
 
 test("paragraph which contains o but not first is not suitable", function() {
@@ -145,15 +145,11 @@ test("paragraph which contains number but not first is not suitable", function()
 });
 
 test("nested lists", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1in; text-indent: -0.25in;"><span style="font-family: &quot;Courier New&quot;;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;</span></span></span>bar</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1.5in; text-indent: -0.25in;"><span style="font-family: Wingdings;"><span style="">§<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;</span></span></span>baz</p><p class="MsoListParagraphCxSpLast" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>moo</p>'), '<ul><li>foo<ul><li>bar<ul><li>baz</li></ul></li></ul></li><li>moo</li></ul>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1in; text-indent: -0.25in;"><span style="font-family: &quot;Courier New&quot;;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;</span></span></span>bar</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1.5in; text-indent: -0.25in;"><span style="font-family: Wingdings;"><span style="">§<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;</span></span></span>baz</p><p class="MsoListParagraphCxSpLast" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>moo</p>'), '<ul><li>foo<ul style="list-style-type:circle"><li>bar<ul style="list-style-type:square"><li>baz</li></ul></li></ul></li><li>moo</li></ul>');
 });
 
 test("unordered list with two nested spans", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>foo</p>'), '<ul><li>foo</li></ul>');
-});
-
-test("nested lists of different type and same margin", function() {
-    equal(clean('<p><span><span>1.</span>&nbsp;&nbsp;</span>foo</p><p><span><span>o</span>&nbsp;</span>bar</p>'), '<ol><li>foo<ul><li>bar</li></ul></li></ol>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>foo</p>'), '<ul style="list-style-type:circle"><li>foo</li></ul>');
 });
 
 test("mixed multi level lists setup 1", function() {
@@ -165,7 +161,7 @@ test("mixed multi level lists setup 2", function() {
 });
 
 test("three level lists", function() {
-    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1in; text-indent: -0.25in;"><span style="font-family: &quot;Courier New&quot;;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;</span></span></span>foo1</p><p class="MsoListParagraphCxSpMiddle" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>bar</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1in; text-indent: -0.25in;"><span style="font-family: &quot;Courier New&quot;;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;</span></span></span>bar1</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1.5in; text-indent: -0.25in;"><span style="font-family: Wingdings;"><span style="">§<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;</span></span></span>bar11</p><p class="MsoListParagraphCxSpLast" style="margin-left: 1in; text-indent: -0.25in;"><span style="font-family: &quot;Courier New&quot;;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;</span></span></span>bar2</p>'), '<ul><li>foo<ul><li>foo1</li></ul></li><li>bar<ul><li>bar1<ul><li>bar11</li></ul></li><li>bar2</li></ul></li></ul>');
+    equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1in; text-indent: -0.25in;"><span style="font-family: &quot;Courier New&quot;;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;</span></span></span>foo1</p><p class="MsoListParagraphCxSpMiddle" style="text-indent: -0.25in;"><span style="font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>bar</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1in; text-indent: -0.25in;"><span style="font-family: &quot;Courier New&quot;;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;</span></span></span>bar1</p><p class="MsoListParagraphCxSpMiddle" style="margin-left: 1.5in; text-indent: -0.25in;"><span style="font-family: Wingdings;"><span style="">§<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;</span></span></span>bar11</p><p class="MsoListParagraphCxSpLast" style="margin-left: 1in; text-indent: -0.25in;"><span style="font-family: &quot;Courier New&quot;;"><span style="">o<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;</span></span></span>bar2</p>'), '<ul><li>foo<ul style="list-style-type:circle"><li>foo1</li></ul></li><li>bar<ul style="list-style-type:circle"><li>bar1<ul style="list-style-type:square"><li>bar11</li></ul></li><li>bar2</li></ul></li></ul>');
 });
 
 test("three level mixed lists", function() {
@@ -173,11 +169,11 @@ test("three level mixed lists", function() {
 });
 
 test("mixed lists same margin", function() {
-    equal(clean('<p class="MsoNormal" style="margin: 3pt 0in 3pt 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;"><span style="">1.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;</span></span></span>foo</p><p class="MsoNormal" style="margin-left: 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>bar</p><p class="MsoNormal" style="margin: 3pt 0in 3pt 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;"><span style="">2.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;</span></span></span>baz</p>'), '<ol><li>foo<ul><li>bar</li></ul></li><li>baz</li></ol>');
+    equal(clean('<p class="MsoNormal" style="margin: 3pt 0in 3pt 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;"><span style="">1.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;</span></span></span>foo</p><p class="MsoNormal" style="margin-left: 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>bar</p><p class="MsoNormal" style="margin: 3pt 0in 3pt 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;"><span style="">2.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;</span></span></span>baz</p>'), '<ol><li>foo</li></ol><ul><li>bar</li></ul><ol><li>baz</li></ol>');
 });
 
 test("mixed nested lists same margin", function() {
-    equal(clean('<p class="MsoNormal" style="margin: 3pt 0in 3pt 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;"><span style="">1.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;</span></span></span>foo</p><p class="MsoNormal" style="margin-left: 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>bar</p><p class="MsoNormal" style="margin: 3pt 0in 3pt 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;"><span style="">2.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;</span></span></span>baz</p><p class="MsoNormal" style="margin-left: 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>bar</p>'), '<ol><li>foo<ul><li>bar</li></ul></li><li>baz<ul><li>bar</li></ul></li></ol>');
+    equal(clean('<p class="MsoNormal" style="margin: 3pt 0in 3pt 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;"><span style="">1.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;</span></span></span>foo</p><p class="MsoNormal" style="margin-left: 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>bar</p><p class="MsoNormal" style="margin: 3pt 0in 3pt 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;"><span style="">2.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;</span></span></span>baz</p><p class="MsoNormal" style="margin-left: 0.25in; text-align: justify; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Symbol;"><span style="">·<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>bar</p>'), '<ol><li>foo</li></ol><ul><li>bar</li></ul><ol><li>baz</li></ol><ul><li>bar</li></ul>');
 });
 
 test("ordered list from parenthesis", function() {
@@ -225,6 +221,29 @@ test("graphic lists", function() {
 test("does not interpret all graphic chars as lists", function() {
     equal(clean('<p class="MsoNormal">Foo <span style="font-family:Wingdings;mso-ascii-font-family: Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri; mso-hansi-theme-font:minor-latin;mso-char-type:symbol;mso-symbol-font-family: Wingdings">J</span> bar baz<o:p></o:p></p>'), '<p>Foo <span style="font-family:wingdings">J</span> bar baz</p>');
 });
+
+    test("ordered list without whitespace between numbers and content", function() {
+            var content = '<p class="MsoListParagraphCxSpFirst" style="text-indent:-12.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="mso-fareast-font-family:Arial">1.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp; </span></span><!--[endif]--><span style="">item1<o:p></o:p></span></p>' +
+                          '<p class="MsoListParagraphCxSpLast" style="text-indent:-12.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="mso-fareast-font-family:Arial">2.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp; </span></span><!--[endif]--><span style="">item2<o:p></o:p></span></p>';
+            equal(clean(content), '<ol><li><span>item1</span></li><li><span>item2</span></li></ol>');
+    });
+
+    test("unordered list without whitespace between symbol and content", function() {
+        var content = '<p class="MsoListParagraphCxSpFirst" style="text-indent:-6.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family: Symbol">·<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';"> </span></span><!--[endif]-->item1<o:p></o:p></p>' +
+                      '<p class="MsoListParagraphCxSpLast" style="text-indent:-6.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family: Symbol">·<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';"> </span></span><!--[endif]-->item2<o:p></o:p></p>';
+        equal(clean(content), '<ul><li>item1</li><li>item2</li></ul>');
+    });
+
+    test("two lists; second list has reset counting", function() {
+        var content = '<p class="MsoListParagraphCxSpFirst" style="text-indent:-18.0pt;mso-list:l1 level1 lfo1"><!--[if !supportLists]-->1.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->list1<o:p></o:p></p>' +
+                      '<p class="MsoListParagraphCxSpLast" style="text-indent:-18.0pt;mso-list:l0 level1 lfo2"><!--[if !supportLists]-->1.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!--[endif]-->list2<o:p></o:p></p>';
+        equal(clean(content), '<ol><li>list1</li></ol><ol><li>list2</li></ol>');
+    });
+
+    test("mixed lists in different levels", function() {
+        var content = '<p class="MsoListParagraphCxSpFirst" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1">1.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Item<o:p></o:p></p><p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;mso-add-space: auto;text-indent:-18.0pt;mso-list:l0 level2 lfo1">a.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Item<o:p></o:p></p><p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;mso-add-space: auto;text-indent:-18.0pt;mso-list:l0 level2 lfo1">b.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Item<o:p></o:p></p><p class="MsoListParagraphCxSpMiddle" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1">2.<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Item<o:p></o:p></p><p class="MsoListParagraphCxSpLast" style="text-indent:-18.0pt;mso-list:l1 level1 lfo2"><span style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family: Symbol">·<span style="font-stretch: normal; font-size: 7pt; font-family: \'Times New Roman\';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>item<o:p></o:p></p>';
+        equal(clean(content), '<ol><li>Item<ol style="list-style-type:lower-alpha"><li>Item</li><li>Item</li></ol></li><li>Item</li></ol><ul><li>item</li></ul>');
+    });
 
 test("cleans word tables", function() {
     equal(

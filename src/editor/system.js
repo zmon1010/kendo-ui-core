@@ -999,22 +999,39 @@ var MSWordFormatCleaner = Cleaner.extend({
         });
     },
 
-    listType: function(html) {
-        var startingSymbol;
+    listType: function(p, listData) {
+        var html = p.innerHTML;
+        var text = dom.innerText(p);
 
-        if (/^(<span [^>]*texhtml[^>]*>)?<span [^>]*(Symbol|Wingdings)[^>]*>/i.test(html)) {
+        var startingSymbol;
+        var matchSymbol = html.match(/^(?:<span [^>]*texhtml[^>]*>)?<span [^>]*(?:Symbol|Wingdings)[^>]*>([^<]+)/i);
+        var symbol = matchSymbol && matchSymbol[1];
+        var isNumber = /^[a-z\d]/i.test(symbol);//including alpha-numeric and roman numerals
+
+        var trimStartText = function(text) {
+            return text.replace(/^(?:&nbsp;|[\u00a0\n\r\s])+/, '');
+        };
+
+        if (matchSymbol) {
             startingSymbol = true;
         }
 
         html = html.replace(/<\/?\w+[^>]*>/g, '').replace(/&nbsp;/g, '\u00a0');
 
         if ((!startingSymbol && /^[\u2022\u00b7\u00a7\u00d8o]\u00a0+/.test(html)) ||
-            (startingSymbol && /^.\u00a0+/.test(html))) {
-            return 'ul';
+            (startingSymbol && /^.\u00a0+/.test(html)) ||
+            (symbol && !isNumber && listData)) {
+            return {
+                tag: 'ul',
+                style: this._guessUnorderedListStyle(trimStartText(text))
+            };
         }
 
-        if (/^\s*\w+[\.\)]\u00a0{2,}/.test(html)) {
-            return 'ol';
+        if (/^\s*\w+[\.\)][\u00a0 ]{2,}/.test(html)) {
+            return {
+                tag: 'ol',
+                style: this._guessOrderedListStyle(trimStartText(text))
+            };
         }
     },
 
@@ -1028,7 +1045,7 @@ var MSWordFormatCleaner = Cleaner.extend({
 
             // check for roman numerals
             if (p.firstChild.nodeType == 3) {
-                if (/^[ivx]+\.$/i.test(p.firstChild.nodeValue)) {
+                if (/^[ivxlcdm]+\.$/i.test(p.firstChild.nodeValue)) {
                     dom.remove(p.firstChild);
                 }
             }
@@ -1045,65 +1062,106 @@ var MSWordFormatCleaner = Cleaner.extend({
         return dom.create(document, 'li', { innerHTML: content });
     },
 
+    _guessUnorderedListStyle: function(symbol) {
+        if (/^[\u2022\u00b7\u00FC\u00D8\u002dv-]/.test(symbol)) {
+            return null;//return "disc"; //default CSS value
+        } else if (/^o/.test(symbol)) {
+            return "circle";
+        } else {
+            return "square";
+        }
+    },
+    _guessOrderedListStyle: function(symbol) {
+        var listType = null;
+        if (!/^\d/.test(symbol)) {
+            listType = (/^[a-z]/.test(symbol) ? 'lower-' : 'upper-') +
+                       (/^[ivxlcdm]/i.test(symbol) ? 'roman' : 'alpha');
+        }
+
+        return listType;
+    },
+
+    extractListLevels: function(html) {
+        var msoListRegExp = /style=['"]?[^'"]*?mso-list:\s?[a-zA-Z]+(\d+)\s[a-zA-Z]+(\d+)\s(\w+)/gi;
+
+        html = html.replace(msoListRegExp, function(match, list, level) {
+            return kendo.format('data-list="{0}" data-level="{1}" {2}', list, level, match);
+        });
+
+        return html;
+    },
+
     lists: function(placeholder) {
-        var blockChildren = $(dom.blockElements.join(','), placeholder),
+        var blockChildren = $(placeholder).find(dom.blockElements.join(',')),
             lastMargin = -1,
-            lastType,
             name,
-            levels = {'ul':{}, 'ol':{}},
+            levels = {},
             li = placeholder,
-            i, p, type, margin, list, key, child;
+            rootMargin,
+            listContainer,
+            i, p, type, margin, list, listData;
+
 
         for (i = 0; i < blockChildren.length; i++) {
             p = blockChildren[i];
-            type = this.listType(p.innerHTML);
+            listData = $(p).data();
+            var listIndex = listData.list;
             name = dom.name(p);
 
             if (name == "td") {
                 continue;
             }
 
+            var listType = this.listType(p, listData);
+            type = listType && listType.tag;
+
             if (!type || name != 'p') {
                 if (!p.innerHTML) {
                     dom.remove(p);
                 } else {
-                    levels = {'ul':{}, 'ol':{}};
-                    li = placeholder;
                     lastMargin = -1;
+                    li = placeholder;
                 }
                 continue;
             }
 
             margin = parseFloat(p.style.marginLeft || 0);
-            list = levels[type][margin];
+            if (rootMargin === undefined) {
+                rootMargin = margin;
+            }
+
+            var levelType = type + listIndex;
+            if (!levels[margin]) {
+                levels[margin] = {};
+            }
+
+            list = levels[margin][levelType];
 
             if (margin > lastMargin || !list) {
-                list = dom.create(document, type);
+                list = dom.create(document, type, {
+                    style: { listStyleType: listType.style }
+                });
 
-                if (li == placeholder) {
-                    dom.insertBefore(list, p);
+                if (li == placeholder || margin <= lastMargin) {
+                    if (listContainer && rootMargin !== margin) {
+                        listContainer.appendChild(list);
+                    } else {
+                        dom.insertBefore(list, p);
+                    }
+
+                    levels[margin] = {};
                 } else {
+                    listContainer = li;
                     li.appendChild(list);
                 }
 
-                levels[type][margin] = list;
-            }
-
-            if (lastType != type) {
-                for (key in levels) {
-                    for (child in levels[key]) {
-                        if ($.contains(list, levels[key][child])) {
-                            delete levels[key][child];
-                        }
-                    }
-                }
+                levels[margin][levelType] = list;
             }
 
             li = this._convertToLi(p);
-
             list.appendChild(li);
+
             lastMargin = margin;
-            lastType = type;
         }
     },
 
@@ -1238,6 +1296,7 @@ var MSWordFormatCleaner = Cleaner.extend({
     clean: function(html) {
         var that = this, placeholder;
 
+        html = this.extractListLevels(html);
         html = Cleaner.fn.clean.call(that, html);
         html = that.stripEmptyAnchors(html);
 
