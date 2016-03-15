@@ -31,10 +31,29 @@ module CodeGen::MVC6::Wrappers::Options
     def delete_ignored(ignored)
         return if @options.nil?
 
+        regular_expressions =  ignored.find_all { |element| element.instance_of?(Regexp) }
+        
         @options.delete_if do |option|
             option.delete_ignored(ignored)
-            ignored.include?(option.full_name)
+            ignored.include?(option.full_name) || ignore_by_regexp?(regular_expressions, option.full_name)
         end
+    end
+
+    def ignore_by_regexp?(regular_expressions, string)
+        # the two flags are necessary when "lookahead" for regular expressions is used
+        matched_by_some_regexp = false
+        not_matched_by_some_regexp = false
+
+        regular_expressions.each do |regexp|
+            if string.match(regexp) != nil
+                matched_by_some_regexp = true
+            else
+                not_matched_by_some_regexp = true
+            end
+        end
+
+        # the string should match all regular expressions to be ignored when "lookahead" is used
+        return matched_by_some_regexp && !not_matched_by_some_regexp
     end
 
     def option_class
