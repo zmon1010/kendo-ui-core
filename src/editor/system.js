@@ -1063,13 +1063,11 @@ var MSWordFormatCleaner = Cleaner.extend({
     },
 
     _guessUnorderedListStyle: function(symbol) {
-        if(/^[\u2022\u00b7\u00FC\u00D8\u002dv-]/.test(symbol)) {
+        if (/^[\u2022\u00b7\u00FC\u00D8\u002dv-]/.test(symbol)) {
             return null;//return "disc"; //default CSS value
-        }
-        else if(/^o/.test(symbol)) {
+        } else if (/^o/.test(symbol)) {
             return "circle";
-        }
-        else {
+        } else {
             return "square";
         }
     },
@@ -1120,8 +1118,7 @@ var MSWordFormatCleaner = Cleaner.extend({
             if (!type || name != 'p') {
                 if (!p.innerHTML) {
                     dom.remove(p);
-                }
-                else {
+                } else {
                     lastMargin = -1;
                     li = placeholder;
                 }
@@ -1129,12 +1126,12 @@ var MSWordFormatCleaner = Cleaner.extend({
             }
 
             margin = parseFloat(p.style.marginLeft || 0);
-            if(rootMargin === undefined) {
+            if (rootMargin === undefined) {
                 rootMargin = margin;
             }
 
             var levelType = type + listIndex;
-            if(!levels[margin]) {
+            if (!levels[margin]) {
                 levels[margin] = {};
             }
 
@@ -1146,16 +1143,14 @@ var MSWordFormatCleaner = Cleaner.extend({
                 });
 
                 if (li == placeholder || margin <= lastMargin) {
-                    if(listContainer && rootMargin !== margin) {
+                    if (listContainer && rootMargin !== margin) {
                         listContainer.appendChild(list);
-                    }
-                    else {
+                    } else {
                         dom.insertBefore(list, p);
                     }
 
                     levels[margin] = {};
-                }
-                else {
+                } else {
                     listContainer = li;
                     li.appendChild(list);
                 }
