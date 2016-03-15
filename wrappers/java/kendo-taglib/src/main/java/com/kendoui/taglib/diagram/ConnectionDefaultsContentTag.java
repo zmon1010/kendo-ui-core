@@ -59,6 +59,30 @@ public class ConnectionDefaultsContentTag extends  BaseTag  /* interfaces */ /* 
         setEvent("visual", value.getBody());
     }
 
+    public java.lang.String getColor() {
+        return (java.lang.String)getProperty("color");
+    }
+
+    public void setColor(java.lang.String value) {
+        setProperty("color", value);
+    }
+
+    public java.lang.String getFontFamily() {
+        return (java.lang.String)getProperty("fontFamily");
+    }
+
+    public void setFontFamily(java.lang.String value) {
+        setProperty("fontFamily", value);
+    }
+
+    public float getFontSize() {
+        return (Float)getProperty("fontSize");
+    }
+
+    public void setFontSize(float value) {
+        setProperty("fontSize", value);
+    }
+
     public java.lang.String getTemplate() {
         return (java.lang.String)getProperty("template");
     }

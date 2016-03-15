@@ -4,7 +4,7 @@ package com.kendoui.taglib.diagram;
 
 import com.kendoui.taglib.BaseTag;
 
-import com.kendoui.taglib.json.Function;
+
 
 
 
@@ -12,15 +12,17 @@ import com.kendoui.taglib.json.Function;
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
-public class ShapeConnectorTag extends  BaseTag  /* interfaces */ /* interfaces */ {
+public class ShapeDefaultsConnectorDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     
     @Override
     public int doEndTag() throws JspException {
 //>> doEndTag
 
-        ShapeConnectorsTag parent = (ShapeConnectorsTag)findParentWithClass(ShapeConnectorsTag.class);
 
-        parent.addConnector(this);
+        ShapeDefaultsTag parent = (ShapeDefaultsTag)findParentWithClass(ShapeDefaultsTag.class);
+
+
+        parent.setConnectorDefaults(this);
 
 //<< doEndTag
 
@@ -46,31 +48,19 @@ public class ShapeConnectorTag extends  BaseTag  /* interfaces */ /* interfaces 
 //>> Attributes
 
     public static String tagName() {
-        return "diagram-shape-connector";
+        return "diagram-shapeDefaults-connectorDefaults";
     }
 
-    public void setFill(com.kendoui.taglib.diagram.ShapeConnectorFillTag value) {
+    public void setFill(com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsFillTag value) {
         setProperty("fill", value);
     }
 
-    public void setHover(com.kendoui.taglib.diagram.ShapeConnectorHoverTag value) {
+    public void setHover(com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsHoverTag value) {
         setProperty("hover", value);
     }
 
-    public void setStroke(com.kendoui.taglib.diagram.ShapeConnectorStrokeTag value) {
+    public void setStroke(com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsStrokeTag value) {
         setProperty("stroke", value);
-    }
-
-    public void setPosition(ShapeConnectorPositionFunctionTag value) {
-        setEvent("position", value.getBody());
-    }
-
-    public java.lang.String getDescription() {
-        return (java.lang.String)getProperty("description");
-    }
-
-    public void setDescription(java.lang.String value) {
-        setProperty("description", value);
     }
 
     public java.lang.String getFill() {
@@ -87,26 +77,6 @@ public class ShapeConnectorTag extends  BaseTag  /* interfaces */ /* interfaces 
 
     public void setHeight(float value) {
         setProperty("height", value);
-    }
-
-    public java.lang.String getName() {
-        return (java.lang.String)getProperty("name");
-    }
-
-    public void setName(java.lang.String value) {
-        setProperty("name", value);
-    }
-
-    public String getPosition() {
-        Function property = ((Function)getProperty("position"));
-        if (property != null) {
-            return property.getBody();
-        }
-        return null;
-    }
-
-    public void setPosition(String value) {
-        setProperty("position", new Function(value));
     }
 
     public java.lang.String getStroke() {

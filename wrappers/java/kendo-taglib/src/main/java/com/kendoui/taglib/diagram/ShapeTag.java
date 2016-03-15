@@ -51,6 +51,10 @@ public class ShapeTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "diagram-shape";
     }
 
+    public void setConnectorDefaults(com.kendoui.taglib.diagram.ShapeConnectorDefaultsTag value) {
+        setProperty("connectorDefaults", value);
+    }
+
     public void setConnectors(ShapeConnectorsTag value) {
 
         setProperty("connectors", value.connectors());

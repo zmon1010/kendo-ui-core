@@ -49,8 +49,36 @@ public class ShapeDefaultsConnectorTag extends  BaseTag  /* interfaces */ /* int
         return "diagram-shapeDefaults-connector";
     }
 
+    public void setFill(com.kendoui.taglib.diagram.ShapeDefaultsConnectorFillTag value) {
+        setProperty("fill", value);
+    }
+
+    public void setHover(com.kendoui.taglib.diagram.ShapeDefaultsConnectorHoverTag value) {
+        setProperty("hover", value);
+    }
+
+    public void setStroke(com.kendoui.taglib.diagram.ShapeDefaultsConnectorStrokeTag value) {
+        setProperty("stroke", value);
+    }
+
     public void setPosition(ShapeDefaultsConnectorPositionFunctionTag value) {
         setEvent("position", value.getBody());
+    }
+
+    public java.lang.String getFill() {
+        return (java.lang.String)getProperty("fill");
+    }
+
+    public void setFill(java.lang.String value) {
+        setProperty("fill", value);
+    }
+
+    public float getHeight() {
+        return (Float)getProperty("height");
+    }
+
+    public void setHeight(float value) {
+        setProperty("height", value);
     }
 
     public java.lang.String getName() {
@@ -71,6 +99,22 @@ public class ShapeDefaultsConnectorTag extends  BaseTag  /* interfaces */ /* int
 
     public void setPosition(String value) {
         setProperty("position", new Function(value));
+    }
+
+    public java.lang.String getStroke() {
+        return (java.lang.String)getProperty("stroke");
+    }
+
+    public void setStroke(java.lang.String value) {
+        setProperty("stroke", value);
+    }
+
+    public float getWidth() {
+        return (Float)getProperty("width");
+    }
+
+    public void setWidth(float value) {
+        setProperty("width", value);
     }
 
 //<< Attributes

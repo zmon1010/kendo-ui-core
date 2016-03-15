@@ -151,6 +151,10 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
         setEvent("select", value.getBody());
     }
 
+    public void setToolBarClick(ToolBarClickFunctionTag value) {
+        setEvent("toolBarClick", value.getBody());
+    }
+
     public void setZoomEnd(ZoomEndFunctionTag value) {
         setEvent("zoomEnd", value.getBody());
     }
@@ -445,6 +449,18 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
 
     public void setSelect(String value) {
         setProperty("select", new Function(value));
+    }
+
+    public String getToolBarClick() {
+        Function property = ((Function)getProperty("toolBarClick"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setToolBarClick(String value) {
+        setProperty("toolBarClick", new Function(value));
     }
 
     public String getZoomEnd() {

@@ -13438,6 +13438,11 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when the user clicks an item in the toolbar.</description>
+            <name>toolBarClick</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the user changes the diagram zoom level.</description>
             <name>zoomEnd</name>
             <rtexprvalue>true</rtexprvalue>
@@ -13508,6 +13513,24 @@ data source is fired. By default the widget will bind to the data source specifi
         <body-content>JSP</body-content>
 
         <attribute>
+            <description>The color of the connection content text.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font family of the connection content text.</description>
+            <name>fontFamily</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font size of the connection content text.</description>
+            <name>fontSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The template which renders the labels.The fields which can be used in the template are:</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
@@ -13563,14 +13586,14 @@ data source is fired. By default the widget will bind to the data source specifi
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-connectionDefaults-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-connectionDefaults-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolTag</tag-class>
 
@@ -14239,11 +14262,29 @@ data source is fired. By default the widget will bind to the data source specifi
     </tag>
 
     <tag>
-        <description>Defines the shapes content settings.</description>
+        <description>Defines the connection content settings.</description>
         <name>diagram-connection-content</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionContentTag</tag-class>
         <body-content>JSP</body-content>
 
+        <attribute>
+            <description>The color of the connection content text.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font family of the connection content text.</description>
+            <name>fontFamily</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font size of the connection content text.</description>
+            <name>fontSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
         <attribute>
             <description>The template which renders the labels.The fields which can be used in the template are:</description>
             <name>template</name>
@@ -14288,14 +14329,14 @@ data source is fired. By default the widget will bind to the data source specifi
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-connection-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-connection-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolTag</tag-class>
 
@@ -15258,14 +15299,14 @@ data source is fired. By default the widget will bind to the data source specifi
 
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.EditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.EditableToolTag</tag-class>
 
@@ -16038,6 +16079,162 @@ units are "mm", "cm", "in" and "pt" (default).</description>
     </tag>
 
     <tag>
+        <description>Defines default options for the shape connectors.</description>
+        <name>diagram-shapeDefaults-connectorDefaults</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Defines the fill options of the shape connectors.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the height of the shape connectors.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Defines the stroke options of the shape connectors.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the width of the shape connectors.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Defines the fill options of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connectorDefaults-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the fill color of the shape connectors.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the fill opacity of the shape connectors.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Defines the hover configuration of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connectorDefaults-hover</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsHoverTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Defines the hover fill options of the shape connectors.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hover stroke options of the shape connectors.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Defines the hover fill options of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connectorDefaults-hover-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsHoverFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the hover fill color of the shape connectors.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hover fill opacity of the shape connectors.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Defines the hover stroke options of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connectorDefaults-hover-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsHoverStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the hover stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The hover stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the thickness or width of the shape connectors stroke on hover.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Defines the stroke options of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connectorDefaults-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorDefaultsStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the thickness or width of the shape connectors stroke.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>Defines the connectors the shape owns.You can define your own custom connectors or use the predefined types.</description>
         <name>diagram-shapeDefaults-connectors</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorsTag</tag-class>
@@ -16051,6 +16248,18 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
         <body-content>JSP</body-content>
         <attribute>
+            <description>Defines the fill options of the shape connectors.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the height of the shape connectors.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The connector name.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
@@ -16062,7 +16271,141 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Defines the stroke options of the shape connectors.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the width of the shape connectors.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
     </tag>
+
+    <tag>
+        <description>Defines the fill options of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connector-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the fill color of the shape connectors.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the fill opacity of the shape connectors.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Defines the hover configuration of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connector-hover</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorHoverTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Defines the hover fill options of the shape connectors.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hover stroke options of the shape connectors.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Defines the hover fill options of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connector-hover-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorHoverFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the hover fill color of the shape connectors.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hover fill opacity of the shape connectors.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Defines the hover stroke options of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connector-hover-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorHoverStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the hover stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The hover stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the thickness or width of the shape connectors stroke on hover.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Defines the stroke options of the shape connectors.</description>
+        <name>diagram-shapeDefaults-connector-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the thickness or width of the shape connectors stroke.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
 
 
     <tag>
@@ -16151,14 +16494,14 @@ units are "mm", "cm", "in" and "pt" (default).</description>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-shapeDefaults-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-shapeDefaults-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolTag</tag-class>
 
@@ -16796,6 +17139,162 @@ See visual.</description>
     </tag>
 
     <tag>
+        <description>Defines default options for the shape connectors.</description>
+        <name>diagram-shape-connectorDefaults</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorDefaultsTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Defines the fill options of the shape connectors.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the height of the shape connectors.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Defines the stroke options of the shape connectors.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the width of the shape connectors.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Defines the fill options of the shape connectors.</description>
+        <name>diagram-shape-connectorDefaults-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorDefaultsFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the fill color of the shape connectors.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the fill opacity of the shape connectors.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Defines the hover configuration of the shape connectors.</description>
+        <name>diagram-shape-connectorDefaults-hover</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorDefaultsHoverTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Defines the hover fill options of the shape connectors.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hover stroke options of the shape connectors.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Defines the hover fill options of the shape connectors.</description>
+        <name>diagram-shape-connectorDefaults-hover-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorDefaultsHoverFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the hover fill color of the shape connectors.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hover fill opacity of the shape connectors.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Defines the hover stroke options of the shape connectors.</description>
+        <name>diagram-shape-connectorDefaults-hover-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorDefaultsHoverStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the hover stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The hover stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the thickness or width of the shape connectors stroke on hover.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Defines the stroke options of the shape connectors.</description>
+        <name>diagram-shape-connectorDefaults-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorDefaultsStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the thickness or width of the shape connectors stroke.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>Defines the connectors the shape owns.</description>
         <name>diagram-shape-connectors</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeConnectorsTag</tag-class>
@@ -16815,6 +17314,18 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Defines the fill options of the shape connectors.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the height of the shape connectors.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The connector name. Predefined names include:</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
@@ -16826,7 +17337,141 @@ See visual.</description>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Defines the stroke options of the shape connectors.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the width of the shape connectors.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
     </tag>
+
+    <tag>
+        <description>Defines the fill options of the shape connectors.</description>
+        <name>diagram-shape-connector-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the fill color of the shape connectors.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the fill opacity of the shape connectors.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Defines the hover configuration of the shape connectors.</description>
+        <name>diagram-shape-connector-hover</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorHoverTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Defines the hover fill options of the shape connectors.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hover stroke options of the shape connectors.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Defines the hover fill options of the shape connectors.</description>
+        <name>diagram-shape-connector-hover-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorHoverFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the hover fill color of the shape connectors.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the hover fill opacity of the shape connectors.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Defines the hover stroke options of the shape connectors.</description>
+        <name>diagram-shape-connector-hover-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorHoverStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the hover stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The hover stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the thickness or width of the shape connectors stroke on hover.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Defines the stroke options of the shape connectors.</description>
+        <name>diagram-shape-connector-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeConnectorStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines the thickness or width of the shape connectors stroke.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
 
 
     <tag>
@@ -16903,14 +17548,14 @@ See visual.</description>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-shape-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Predefined tools are:</description>
+        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-shape-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolTag</tag-class>
 
@@ -17554,6 +18199,12 @@ See visual.</description>
         <description>Fired when the user selects one or more items.</description>
         <name>diagram-select</name>
         <tag-class>com.kendoui.taglib.diagram.SelectFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user clicks an item in the toolbar.</description>
+        <name>diagram-toolBarClick</name>
+        <tag-class>com.kendoui.taglib.diagram.ToolBarClickFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
