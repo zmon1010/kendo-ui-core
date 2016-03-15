@@ -485,16 +485,13 @@ Adds one or more <%= item.php_class %> to the <%= owner.php_class %>.
         end
 
         def write_markdown(component)
-            component_name = "#{component.path}/#{component.php_class}.md"
+            filename = "#{@path}#{component.path}/#{component.php_class}.md"
 
-            [component_name, component_name.downcase].each do |name|
-                filename = "#{@path}#{name}"
-                $stderr.puts("Updating #{filename}") if VERBOSE
+            $stderr.puts("Updating #{filename}") if VERBOSE
 
-                ensure_path(filename)
+            ensure_path(filename)
 
-                File.write(filename, component.to_markdown(@path.sub('docs', '')).dos)
-            end
+            File.write(filename, component.to_markdown(@path.sub('docs', '')).dos)
         end
 
         def composite_options(options)
