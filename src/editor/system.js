@@ -1006,7 +1006,7 @@ var MSWordFormatCleaner = Cleaner.extend({
         var startingSymbol;
         var matchSymbol = html.match(/^(?:<span [^>]*texhtml[^>]*>)?<span [^>]*(?:Symbol|Wingdings)[^>]*>([^<]+)/i);
         var symbol = matchSymbol && matchSymbol[1];
-        var isNumber = /^[cdilmvx\d]/i.test(symbol);//including roman numerals
+        var isNumber = /^[a-z\d]/i.test(symbol);//including alpha-numeric and roman numerals
 
         var trimStartText = function(text) {
             return text.replace(/^(?:&nbsp;|[\u00a0\n\r\s])+/, '');
@@ -1045,7 +1045,7 @@ var MSWordFormatCleaner = Cleaner.extend({
 
             // check for roman numerals
             if (p.firstChild.nodeType == 3) {
-                if (/^[ivx]+\.$/i.test(p.firstChild.nodeValue)) {
+                if (/^[ivxlcdm]+\.$/i.test(p.firstChild.nodeValue)) {
                     dom.remove(p.firstChild);
                 }
             }
@@ -1096,26 +1096,18 @@ var MSWordFormatCleaner = Cleaner.extend({
     lists: function(placeholder) {
         var blockChildren = $(placeholder).find(dom.blockElements.join(',')),
             lastMargin = -1,
-            lastType,
-            lastListIndex,
             name,
-            levels = {'ul':{}, 'ol':{}},
+            levels = {},
             li = placeholder,
+            rootMargin,
+            listContainer,
             i, p, type, margin, list, listData;
 
-        var resetLevels = function(index) {
-            var lvl = {};
-            lvl['ul' + index] = {};
-            lvl['ol' + index] = {};
-
-            return lvl;
-        };
 
         for (i = 0; i < blockChildren.length; i++) {
             p = blockChildren[i];
             listData = $(p).data();
             var listIndex = listData.list;
-            var level = listData.level;
             name = dom.name(p);
 
             if (name == "td") {
@@ -1128,22 +1120,25 @@ var MSWordFormatCleaner = Cleaner.extend({
             if (!type || name != 'p') {
                 if (!p.innerHTML) {
                     dom.remove(p);
-                } else {
-                    levels = resetLevels(listIndex);//{'ul':{}, 'ol':{}};
-                    li = placeholder;
+                }
+                else {
                     lastMargin = -1;
+                    li = placeholder;
                 }
                 continue;
             }
 
             margin = parseFloat(p.style.marginLeft || 0);
-
-            var levelType = type + listIndex;
-            if(!levels[levelType]) {
-                levels[levelType] = {};
+            if(rootMargin === undefined) {
+                rootMargin = margin;
             }
 
-            list = levels[levelType][margin];
+            var levelType = type + listIndex;
+            if(!levels[margin]) {
+                levels[margin] = {};
+            }
+
+            list = levels[margin][levelType];
 
             if (margin > lastMargin || !list) {
                 list = dom.create(document, type, {
@@ -1151,20 +1146,27 @@ var MSWordFormatCleaner = Cleaner.extend({
                 });
 
                 if (li == placeholder || margin <= lastMargin) {
-                    dom.insertBefore(list, p);
-                } else {
+                    if(listContainer && rootMargin !== margin) {
+                        listContainer.appendChild(list);
+                    }
+                    else {
+                        dom.insertBefore(list, p);
+                    }
+
+                    levels[margin] = {};
+                }
+                else {
+                    listContainer = li;
                     li.appendChild(list);
                 }
 
-                levels[levelType][margin] = list;
+                levels[margin][levelType] = list;
             }
 
             li = this._convertToLi(p);
-
             list.appendChild(li);
+
             lastMargin = margin;
-            lastType = type;
-            lastListIndex = listIndex;
         }
     },
 
