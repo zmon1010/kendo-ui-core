@@ -94,6 +94,7 @@
     });
 
     test("checkbox and label have the proper values for 'id' and 'for' attributes", function() {
+
         var dom = treeFromHtml(
             '<div class="k-widget k-treeview" id="treeview2">' +
                 '<ul class="k-group">' +
@@ -111,10 +112,13 @@
             '</div>', {
                 checkboxes: true
             }
-        );
+        ),
+        uid = dom.data("kendoTreeView").dataSource.at(0).uid,
+        checkboxId = "_" + uid;
 
-        equal(dom.find(".k-checkbox").attr('id'), dom.find(".k-checkbox-label").attr("for"));
-        equal("_" + dom.find(".k-item").data('uid'), dom.find(".k-checkbox-label").attr("for"));
+        equal(dom.find(".k-item").data("uid"), uid);
+        equal(dom.find(".k-checkbox").attr('id'), checkboxId);
+        equal(dom.find(".k-checkbox-label").attr('for'), checkboxId);
     });
 
     test("toggle buttons are rendered correctly when initializing from html", function() {
