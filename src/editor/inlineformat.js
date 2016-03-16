@@ -372,6 +372,7 @@ var FontTool = DelayedExecutionTool.extend({
 
         dataSource = defaultValue.concat(options.items ? options.items : (editor.options[toolName] || [] ));
 
+        ui.attr({ title: initOptions.title});
         ui[this.type]({
             dataTextField: "text",
             dataValueField: "value",
