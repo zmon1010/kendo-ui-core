@@ -117,8 +117,8 @@
         checkboxId = "_" + uid;
 
         equal(dom.find(".k-item").data("uid"), uid);
-        equal(dom.find(".k-checkbox").attr('id'), checkboxId);
-        equal(dom.find(".k-checkbox-label").attr('for'), checkboxId);
+        equal(dom.find(".k-checkbox").attr("id"), checkboxId);
+        equal(dom.find(".k-checkbox-label").attr("for"), checkboxId);
     });
 
     test("toggle buttons are rendered correctly when initializing from html", function() {
