@@ -1,0 +1,22 @@
+using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
+
+namespace Kendo.Mvc.TagHelpers
+{
+    public partial class <%= taghelper_class %>
+    {
+% unique_options.map { |o| o.to_declaration  }.each do |ser|
+% _erbout << ser
+%end
+
+        protected override Dictionary<string, object> SerializeSettings()
+        {
+            var settings = base.SerializeSettings();
+
+% unique_options.map { |o| o.to_serialization }.each do |ser|
+% _erbout << ser
+%end
+            return settings;
+        }
+    }
+}

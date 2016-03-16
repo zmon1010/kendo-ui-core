@@ -1,0 +1,23 @@
+using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
+
+namespace Kendo.Mvc.TagHelpers
+{
+    public partial class <%= taghelper_class %>
+    {
+% events.map { |event| event.to_tag_helper_event  }.each do |ser|
+% _erbout << ser
+%end
+
+        protected override Dictionary<string, object> SerializeEvents()
+        {
+            var settings = new Dictionary<string, object>();
+
+% events.map { |event| event.to_tag_helper_event_serialization }.each do |ser|
+% _erbout << ser
+%end
+            return settings;
+        }
+    }
+}
+

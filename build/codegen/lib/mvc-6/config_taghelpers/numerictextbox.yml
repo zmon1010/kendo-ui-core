@@ -1,0 +1,19 @@
+:options:
+    - :name: value
+      :merge: true
+      :type: object
+
+    - :name: step
+      :merge: true
+      :type: object
+
+    - :name: min
+      :merge: true
+      :type: object
+
+    - :name: max
+      :merge: true
+      :type: object
+
+    - :name: enable
+      :type: Boolean
