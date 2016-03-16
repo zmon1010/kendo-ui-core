@@ -45,3 +45,7 @@
 :rangeslider:
     - :name: T
       :constraint: struct, IComparable
+
+:stockchart:
+    - :name: T
+      :constraint: class

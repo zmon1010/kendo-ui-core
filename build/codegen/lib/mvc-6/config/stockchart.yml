@@ -1,0 +1,116 @@
+:options:
+    - :name: seriesColors
+      :merge: true
+      :type: String[]
+
+    - :name: navigator.categoryAxis.axisCrossingValue
+      :merge: true
+      :type: object[]
+
+    - :name: navigator.categoryAxis.autoBaseUnitSteps.days
+      :merge: true
+      :type: int[]
+
+    - :name: navigator.categoryAxis.autoBaseUnitSteps.hours
+      :merge: true
+      :type: int[]
+
+    - :name: navigator.categoryAxis.autoBaseUnitSteps.minutes
+      :merge: true
+      :type: int[]
+
+    - :name: navigator.categoryAxis.autoBaseUnitSteps.months
+      :merge: true
+      :type: int[]
+
+    - :name: navigator.categoryAxis.autoBaseUnitSteps.seconds
+      :merge: true
+      :type: int[]
+
+    - :name: navigator.categoryAxis.autoBaseUnitSteps.years
+      :merge: true
+      :type: int[]
+
+    - :name: navigator.categoryAxis.autoBaseUnitSteps.weeks
+      :merge: true
+      :type: int[]
+
+    - :name: navigator.categoryAxis.baseUnit
+      :description: Specifies the base time interval for the axis.
+      :type: String
+      :enum_type: ChartAxisBaseUnit
+
+    - :name: navigator.categoryAxis.baseUnitStep
+      :merge: true
+      :type: int
+
+    - :name: navigator.categoryAxis.categories
+      :merge: true
+      :type: object[]
+
+    - :name: navigator.categoryAxis.justified
+      :merge: true
+      :type: bool
+      :default: false
+
+    - :name: navigator.categoryAxis.max
+      :merge: true
+      :type: object
+
+    - :name: navigator.categoryAxis.min
+      :merge: true
+      :type: object
+
+    - :name: navigator.categoryAxis.type
+      :description: Specifies the category axis type.
+      :type: String
+      :enum_type: ChartCategoryAxisType
+
+    - :name: legend.position
+      :description: Specifies the legend position.
+      :type: String
+      :enum_type: ChartLegendPosition
+
+    - :name: plotArea.border.dashType
+      :description: Specifies the line dash type.
+      :type: String
+      :enum_type: ChartDashType
+
+    - :name: renderAs
+      :description: Specifies the preferred widget rendering mode.
+      :type: String
+      :enum_type: RenderingMode
+
+    - :name: !ruby/regexp '/.*dashType$/i'
+      :merge: true
+      :enum_type: ChartDashType
+
+    - :name: series.aggregate
+      :description: Specifies the preferred series aggregate.
+      :type:
+          - String
+          - Function
+      :enum_type: ChartSeriesAggregate
+
+    - :name: series.style
+      :description: Specifies the preferred rendering style.
+      :type: String
+      :enum_type: ChartLineStyle
+
+    - :name: series.line.style
+      :description: Specifies the preferred line rendering style.
+      :type: String
+      :enum_type: ChartAreaStyle
+
+    - :name: series.stack.type
+      :description: Specifies the preferred stack type.
+      :type: String
+      :enum_type: ChartStackType
+
+    - :name: series.target.line.width
+      :merge: true
+      :type: double
+
+    - :name: valueAxis.axisCrossingValue
+      :merge: true
+      :type: object[]

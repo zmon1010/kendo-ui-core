@@ -21,5 +21,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         // Place custom settings here
+
+        /// <summary>
+        /// The title configuration of the chart pane.
+        /// </summary>
+        /// <param name="configurator">The configurator for the title setting.</param>
+        public ChartPaneBuilder<T> Title(string value)
+        {
+            Container.Title.Text = value;
+            Container.Title.Chart = Container.Chart;
+
+            return this;
+        }
     }
 }

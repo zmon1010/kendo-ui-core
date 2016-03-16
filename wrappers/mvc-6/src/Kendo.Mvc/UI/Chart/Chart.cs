@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
     /// Kendo UI Chart component
     /// </summary>
     public partial class Chart<T> : WidgetBase
-        where T : class 
+        where T : class
     {
         public ChartSeriesDefaultsSettings<T> SeriesDefaults { get; } = new ChartSeriesDefaultsSettings<T>();
 
@@ -54,16 +54,23 @@ namespace Kendo.Mvc.UI
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
+            
+            // TODO: Manually serialized settings go here
+
+            SerializeCustomSettings(settings);
+
+            writer.Write(Initializer.Initialize(Selector, "Chart", settings));
+        }
+
+        protected virtual void SerializeCustomSettings(IDictionary<string, object> settings)
+        {
+            SerializeDataSource(settings);
 
             var seriesDefaults = SeriesDefaults.Serialize();
             if (seriesDefaults.Any())
             {
                 settings["seriesDefaults"] = seriesDefaults;
             }
-
-            SerializeDataSource(settings);
-
-            writer.Write(Initializer.Initialize(Selector, "Chart", settings));
         }
 
         protected virtual void SerializeDataSource(IDictionary<string, object> settings)

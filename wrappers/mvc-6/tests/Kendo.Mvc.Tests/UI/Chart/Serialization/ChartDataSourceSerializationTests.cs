@@ -22,7 +22,7 @@ namespace Kendo.Mvc.UI.Tests
                 settings.ContainsKey("dataSource").ShouldBeFalse();
             });
         }
-        
+
         [Fact]
         public void Setting_custom_type_to_dataSource_should_serialize_dataSource()
         {
@@ -58,7 +58,6 @@ namespace Kendo.Mvc.UI.Tests
             });
         }
 
-
         [Fact]
         public void Setting_dataSource_with_read_url_should_serialize_dataSource()
         {
@@ -74,7 +73,7 @@ namespace Kendo.Mvc.UI.Tests
         public void Setting_chart_data_should_not_serialize_dataSource_transport_settings()
         {
             chart.Data = SalesDataBuilder.GetCollection();
-            
+
             chart.AssertSettings(settings =>
             {
                 var dataSource = (IDictionary<string, object>) settings["dataSource"];
@@ -82,14 +81,14 @@ namespace Kendo.Mvc.UI.Tests
             });
         }
 
-            [Fact]
+        [Fact]
         public void Setting_chart_data_should_serialize_dataSource_data()
         {
             chart.Data = SalesDataBuilder.GetCollection();
-            
+
             chart.AssertSettings(settings =>
             {
-                 var dataSource = (IDictionary<string, object>) settings["dataSource"];
+                var dataSource = (IDictionary<string, object>) settings["dataSource"];
                 dataSource["data"].ShouldEqual(chart.Data);
             });
         }

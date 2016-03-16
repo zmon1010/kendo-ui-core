@@ -21,5 +21,20 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         // Place custom settings here
+
+        /// <summary>
+        /// Defines a named chart pane.
+        /// </summary>
+        /// <param name="name">
+        /// The unique pane name
+        /// </param>
+        public virtual ChartPaneBuilder<T> Add(string name)
+        {
+            var item = new ChartPane<T>();
+            item.Name = name;
+            Container.Add(item);
+
+            return new ChartPaneBuilder<T>(item);
+        }
     }
 }
