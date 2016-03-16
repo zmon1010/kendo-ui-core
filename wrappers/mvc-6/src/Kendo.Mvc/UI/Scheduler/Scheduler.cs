@@ -22,7 +22,8 @@ namespace Kendo.Mvc.UI
                     Modal = true,
                     Draggable = true,
                     Title = Kendo.Mvc.Resources.Messages.Scheduler_Editor_EditorTitle
-                }
+                },
+                HtmlEncoder = HtmlEncoder
             };
 
             Group = new SchedulerGroupSettings();

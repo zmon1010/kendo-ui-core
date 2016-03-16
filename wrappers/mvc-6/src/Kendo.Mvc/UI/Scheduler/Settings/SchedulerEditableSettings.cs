@@ -5,8 +5,11 @@
     using Microsoft.AspNet.Mvc.ModelBinding;
     using Microsoft.AspNet.Mvc.Rendering;
     using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
+    using Microsoft.Extensions.WebEncoders;
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     using System.Text.RegularExpressions;
 
     public class SchedulerEditableSettings<T> : SchedulerEditableSettingsBase
@@ -25,6 +28,12 @@
 
             Resize = true;
             Move = true;
+        }
+
+        public IHtmlEncoder HtmlEncoder
+        {
+            get;
+            set;
         }
 
         public string Template { get; set; }
@@ -192,9 +201,16 @@
                 var htmlHelper = viewContext.CreateHtmlHelper<T>();
                 ((ICanHasViewContext)htmlHelper).Contextualize(viewContextForType);
 
-                var html = htmlHelper.EditorForModel(TemplateName, AdditionalViewData).ToString();
+                var editorContent = htmlHelper.EditorForModel(TemplateName, AdditionalViewData);//.ToString();
 
-                EditorHtml = popupSlashes.Replace(html, match =>
+                var sb = new StringBuilder();
+
+                using (var writer = new StringWriter(sb))
+                {
+                    editorContent.WriteTo(writer, HtmlEncoder);
+                }
+
+                EditorHtml = popupSlashes.Replace(sb.ToString(), match =>
                 {
                     return match.Groups[0].Value.Replace("\\", "\\\\");
                 });
