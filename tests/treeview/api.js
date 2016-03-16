@@ -964,6 +964,23 @@
         equal(group.css("height"), group[0].scrollHeight + "px");
     });
 
+    test("expandPath expands loaded nodes", function() {
+        createTreeView([
+            { id: 1, text: "foo", items: [
+                { id: 2, text: "bar", items: [
+                    { id: 3, text: "baz" }
+                ] }
+            ] }
+        ]);
+
+        var dataSource = treeviewObject.dataSource;
+
+        treeviewObject.expandPath([ 1, 2 ]);
+
+        ok(dataSource.get(1).expanded);
+        ok(dataSource.get(2).expanded);
+    });
+
     module("expandPath async", {
         setup: function() {
             var id = 1;
