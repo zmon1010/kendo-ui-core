@@ -285,5 +285,33 @@ namespace Kendo.Mvc.UI.Tests
             IHtmlNode tag = renderer.ItemTag(item, false);
             Assert.Equal("true", tag.Attribute("data-hasChildren"));
         }
+
+        [Fact]
+        public void TreeViewStart_should_render_checkbox_wrapper()
+        {
+            IHtmlNode tag = renderer.CheckboxFor(item);
+
+            Assert.Equal("span", tag.TagName);
+            Assert.Equal("k-checkbox-wrapper", tag.Attribute("class"));
+        }
+
+        [Fact]
+        public void TreeViewStart_should_render_input_in_checkbox_wrapper()
+        {
+            IHtmlNode tag = renderer.CheckboxFor(item).Children[0];
+
+            Assert.Equal("input", tag.TagName);
+            Assert.Equal("checkbox", tag.Attribute("type"));
+            Assert.Equal("k-checkbox", tag.Attribute("class"));
+        }
+
+        [Fact]
+        public void TreeViewStart_should_render_label_in_checkbox_wrapper()
+        {
+            IHtmlNode tag = renderer.CheckboxFor(item).Children[1];
+
+            Assert.Equal("label", tag.TagName);
+            Assert.Equal("k-checkbox-label", tag.Attribute("class"));
+        }
     }
 }

@@ -291,27 +291,32 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _syncHtmlAndDataSource: function(root, dataSource) {
+        _syncHtmlAndDataSource: function (root, dataSource) {
             root = root || this.root;
             dataSource = dataSource || this.dataSource;
-
-            var data = dataSource.view();
-            var uidAttr = kendo.attr("uid");
-            var expandedAttr = kendo.attr("expanded");
-            var inferCheckedState = this.options.checkboxes;
-            var items = root.children("li");
-            var i, item, dataItem;
+            var data = dataSource.view(),
+                uidAttr = kendo.attr("uid"),
+                expandedAttr = kendo.attr("expanded"),
+                checkboxesEnabled = this.options.checkboxes,
+                items = root.children("li"),
+                i,
+                item,
+                dataItem,
+                uid,
+                itemCheckbox;
 
             for (i = 0; i < items.length; i++) {
                 dataItem = data[i];
-
+                uid = dataItem.uid;
                 item = items.eq(i);
-
-                item.attr("role", "treeitem").attr(uidAttr, dataItem.uid);
-
+                item.attr("role", "treeitem").attr(uidAttr, uid);
                 dataItem.expanded = item.attr(expandedAttr) === "true";
-                if (inferCheckedState) {
-                    dataItem.checked = checkboxes(item).prop(CHECKED);
+
+                if (checkboxesEnabled) {
+                    itemCheckbox = checkboxes(item);
+                    dataItem.checked = itemCheckbox.prop(CHECKED);
+                    itemCheckbox.attr("id", "_" + uid);
+                    itemCheckbox.next(".k-checkbox-label").attr("for", "_" + uid);
                 }
 
                 this._syncHtmlAndDataSource(item.children("ul"), dataItem.children);
