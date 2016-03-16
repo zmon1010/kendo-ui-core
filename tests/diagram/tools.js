@@ -15,10 +15,14 @@
     function createToolBar(options) {
         QUnit.fixture.html('<div id="diagram" />');
         diagram = {
-            element: $("#diagram")
+            element: $("#diagram"),
+            select: function() {
+                return [];
+            }
         };
 
         toolbar = new dataviz.diagram.DiagramToolBar(diagram, options || {});
+        diagram.element.append(toolbar.element);
     }
 
     // ------------------------------------------------------------
@@ -156,4 +160,48 @@
         connection.select(true);
         diagram.toolBar["delete"]();
     });
+
+    // ------------------------------------------------------------
+    module("ToolBar / events / click", {
+        teardown: function() {
+            toolbar.destroy();
+        }
+    });
+
+    test("passes event target element", function() {
+         createToolBar({ tools: [{ name: "foo", text: "bar", type: "button" }] });
+         var element = toolbar.element.find(":contains(bar)");
+         toolbar.bind("click", function(e) {
+           ok(e.target.is(element));
+         });
+         element.click();
+    });
+
+    test("passes tool name as action", function() {
+         createToolBar({ tools: [{ name: "foo", text: "bar", type: "button" }] });
+         var element = toolbar.element.find(":contains(bar)");
+         toolbar.bind("click", function(e) {
+            equal(e.action, "foo");
+         });
+         element.click();
+    });
+
+    test("passes selected shapes and connections", function() {
+         createToolBar({ tools: [{ name: "foo", text: "bar", type: "button" }] });
+         var shape = new dataviz.diagram.Shape();
+         var connection = new dataviz.diagram.Connection();
+         diagram.select = function() {
+            return [connection, shape];
+         };
+
+         var element = toolbar.element.find(":contains(bar)");
+         toolbar.bind("click", function(e) {
+            ok(e.shapes[0] === shape);
+            equal(e.shapes.length, 1);
+            ok(e.connections[0] === connection);
+            equal(e.connections.length, 1);
+         });
+         element.click();
+    });
+
 })();

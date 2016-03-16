@@ -4236,11 +4236,18 @@
             },
 
             createTool: function(tool) {
-                var toolName = (isPlainObject(tool) ? tool.name : tool) + "Tool";
+                if (!isPlainObject(tool)) {
+                    tool = {
+                        name: tool
+                    };
+                }
+                var toolName = tool.name + "Tool";
                 if (this[toolName]) {
                     this[toolName](tool);
                 } else {
-                    this._tools.push(tool);
+                    this._tools.push(deepExtend({}, tool, {
+                        attributes: this._setAttributes({action: tool.name})
+                    }));
                 }
             },
 
@@ -4391,27 +4398,32 @@
                 var attributes = this._getAttributes($(e.target));
                 var action = attributes.action;
 
-                if (action) {
+                if (action && this[action]) {
                     this[action](attributes);
                 }
 
-                this.trigger("click", this.eventData(action));
+                this.trigger("click", this.eventData(action, e.target));
             },
 
-            eventData: function(action) {
-                var element = this.selectedElements(),
-                    shapes = [], connections = [];
+            eventData: function(action, target) {
+                var elements = this.selectedElements(),
+                    length = elements.length,
+                    shapes = [], connections = [], element;
 
-                if (element instanceof Shape) {
-                    shapes.push(element);
-                } else {
-                    connections.push(element);
+                for (var idx = 0; idx < length; idx++) {
+                    element = elements[idx];
+                    if (element instanceof Shape) {
+                        shapes.push(element);
+                    } else {
+                        connections.push(element);
+                    }
                 }
 
                 return {
                     shapes: shapes,
                     connections: connections,
-                    action: action
+                    action: action,
+                    target: target
                 };
             },
 
