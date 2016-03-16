@@ -1044,4 +1044,19 @@
             ok(true);
         });
     });
+
+    test("expandPath does not leak bindings to dataSource.change", function() {
+        createTreeView([
+            { text: "foo", items: [
+                { text: "bar" }
+            ] }
+        ]);
+
+        var dataSource = treeviewObject.dataSource;
+        var handlerCount = dataSource._events.change.length;
+
+        treeviewObject.expandPath([ 1 ]);
+
+        equal(dataSource._events.change.length, handlerCount);
+    });
 })();

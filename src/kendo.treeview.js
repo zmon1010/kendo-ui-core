@@ -2035,10 +2035,31 @@ var __meta__ = { // jshint ignore:line
             var node = dataSource.get(path[0]);
             complete = complete || $.noop;
 
+            function expandLevel(e) {
+                // listen to the change event to know when the node has been loaded
+                var id = e.node && e.node.id;
+                var node;
+
+                // proceed if the change is caused by the last fetching
+                if (id && id === path[0]) {
+                    path.shift();
+
+                    if (path.length) {
+                        node = dataSource.get(path[0]);
+
+                        tryExpand(node, complete, treeview);
+                    } else {
+                        dataSource.unbind("change", expandLevel);
+                        complete.call(treeview);
+                    }
+                }
+            }
+
             function tryExpand(node, complete, context) {
                 if (node && !node.loaded()) {
                     node.set("expanded", true);
                 } else {
+                    dataSource.unbind("change", expandLevel);
                     complete.call(context);
                 }
             }
@@ -2055,24 +2076,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             // expand async nodes
-            dataSource.bind("change", function expandLevel(e) {
-                // listen to the change event to know when the node has been loaded
-                var id = e.node && e.node.id;
-                var node;
-
-                // proceed if the change is caused by the last fetching
-                if (id && id === path[0]) {
-                    path.shift();
-
-                    if (path.length) {
-                        node = dataSource.get(path[0]);
-
-                        tryExpand(node, complete, treeview);
-                    } else {
-                        complete.call(treeview);
-                    }
-                }
-            });
+            dataSource.bind("change", expandLevel);
 
             tryExpand(node, complete, treeview);
         },
