@@ -981,6 +981,20 @@
         ok(dataSource.get(2).expanded);
     });
 
+    asyncTest("expandPath calls callback on leaf nodes", function() {
+        createTreeView([
+            { id: 1, text: "foo", items: [
+                { id: 2, text: "bar" }
+            ] }
+        ]);
+
+        treeviewObject.expandPath([ 1, 2 ], function() {
+            start();
+
+            ok(true);
+        });
+    });
+
     module("expandPath async", {
         setup: function() {
             var id = 1;
