@@ -2029,54 +2029,49 @@ var __meta__ = { // jshint ignore:line
         },
 
         expandPath: function(path, complete) {
-            path = path.slice(0);
             var treeview = this;
-            var dataSource = this.dataSource;
-            var node = dataSource.get(path[0]);
+
+            path = path.slice(0);
             complete = complete || $.noop;
 
             function proceed() {
                 path.shift();
 
                 if (path.length) {
-                    node = dataSource.get(path[0]);
-
-                    loadAsync(node);
+                    expand(path[0]).then(proceed);
                 } else {
                     complete.call(treeview);
                 }
             }
 
-            function loadAsync(node) {
+            function expand(id) {
+                var result = $.Deferred();
+                var node = treeview.dataSource.get(id);
+
                 if (node) {
                     if (node.loaded()) {
                         node.set("expanded", true);
-                        proceed();
+                        result.resolve();
                     } else {
+                        // manually show progress of the node
+                        // should be moved to `refresh`
+                        // if the datasource starts triggering a `requestStart` event for nodes
                         treeview._progress(treeview.findByUid(node.uid), true);
+
                         node.load().then(function() {
                             node.set("expanded", true);
-                            proceed();
+                            result.resolve();
                         });
                     }
                 } else {
-                    proceed();
+                    result.resolve();
                 }
-            }
 
-            // expand loaded nodes
-            while (path.length > 0 && node && (node.expanded || node.loaded())) {
-                node.set("expanded", true);
-                path.shift();
-                node = dataSource.get(path[0]);
-            }
-
-            if (!path.length) {
-                return complete.call(treeview);
+                return result.promise();
             }
 
             // expand async nodes
-            loadAsync(node);
+            expand(path[0]).then(proceed);
         },
 
         _parentIds: function(node) {
