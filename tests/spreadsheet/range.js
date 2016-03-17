@@ -713,6 +713,21 @@
         equal(sheet.range("A1").input(), "1/1/2015");
     });
 
+    test("range.input handles time", function(){
+        var r = sheet.range("A1");
+        r.input("10:30");
+        equal(r.input(), "10:30");
+        equal(r.format(), "hh:mm");
+
+        r.input("10:30:50");
+        equal(r.input(), "10:30:50");
+        equal(r.format(), "hh:mm:ss");
+
+        r.input("10:30.55");
+        equal(r.input(), "10:30.55");
+        equal(r.format(), "mm:ss.00");
+    });
+
     test("range.input returns formula", function() {
         sheet.range("A1").formula("SUM(A1:A2)");
 

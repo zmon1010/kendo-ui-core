@@ -146,16 +146,16 @@
         },
 
         input: function(value) {
-            var existingFormat = this._get("format");
+            var existingFormat = this._get("format"), x;
             if (value !== undefined) {
                 var tl = this._ref.toRangeRef().topLeft;
-                var x = kendo.spreadsheet.calc.parse(this._sheet.name(), tl.row, tl.col, value);
+                x = kendo.spreadsheet.calc.parse(this._sheet.name(), tl.row, tl.col, value);
                 this._sheet.batch(function() {
                     var formula = null;
                     if (x.type == "exp") {
                         formula = kendo.spreadsheet.calc.compile(x);
                     } else if (x.type == "date") {
-                        this.format(toExcelFormat(kendo.culture().calendar.patterns.d));
+                        this.format(x.format || toExcelFormat(kendo.culture().calendar.patterns.d));
                     } else if (x.type == "percent") {
                         this.format(x.value*100 == (x.value*100|0) ? "0%" : "0.00%");
                     } else if (x.format && !existingFormat) {
@@ -181,15 +181,28 @@
                     // it's a Formula object which stringifies to the
                     // formula as text (without the starting `=`).
                     value = "=" + formula;
-                } else if (type === "date") {
-                    value = kendo.toString(kendo.spreadsheet.numberToDate(value), kendo.culture().calendar.patterns.d);
-                } else if (type === "percent") {
-                    value = (value * 100) + "%";
-                } else if (typeof value == "string" &&
-                           (/^[=']/.test(value) ||
-                            (/^(?:true|false)$/i).test(value) ||
-                            looksLikeANumber(value))) {
-                    value = "'" + value;
+                } else OUT: { // jshint ignore:line
+                    if (existingFormat) {
+                        // check if we could parse back the displayed value.
+                        // https://github.com/telerik/kendo/issues/5335
+                        var t1 = kendo.spreadsheet.formatting.text(value, existingFormat);
+                        x = kendo.spreadsheet.calc.parse(null, null, null, t1); // it's not a formula so we don't need sheet/row/col
+                        var t2 = kendo.spreadsheet.formatting.text(x.value, existingFormat);
+                        if (t1 == t2) {
+                            value = t1;
+                            break OUT; // jshint ignore:line
+                        }
+                    }
+                    if (type === "date") {
+                        value = kendo.toString(kendo.spreadsheet.numberToDate(value), kendo.culture().calendar.patterns.d);
+                    } else if (type === "percent") {
+                        value = (value * 100) + "%";
+                    } else if (typeof value == "string" &&
+                               (/^[=']/.test(value) ||
+                                (/^(?:true|false)$/i).test(value) ||
+                                looksLikeANumber(value))) {
+                        value = "'" + value;
+                    }
                 }
 
                 return value;
