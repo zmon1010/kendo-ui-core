@@ -4280,6 +4280,9 @@ var __meta__ = { // jshint ignore:line
 
             for (var i = 0; i < this.categoryPoints.length; i++) {
                 var categoryPts = this.categoryPoints[i];
+                if (!categoryPts) {
+                    continue;
+                }
 
                 for (var pIx = 0; pIx < categoryPts.length; pIx++) {
                     var point = categoryPts[pIx];
