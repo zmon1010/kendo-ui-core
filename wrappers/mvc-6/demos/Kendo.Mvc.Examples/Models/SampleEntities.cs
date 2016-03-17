@@ -821,7 +821,7 @@ namespace Kendo.Mvc.Examples.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Region> Region { get; set; }
         public virtual DbSet<Shipper> Shippers { get; set; }
-        public virtual DbSet<Stock> Stock { get; set; }
+        public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Territory> Territories { get; set; }
