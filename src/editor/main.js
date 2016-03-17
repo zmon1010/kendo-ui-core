@@ -758,7 +758,7 @@
         _focusOutside: function () {
             // move focus outside the Editor, see https://github.com/telerik/kendo/issues/3673
             if (kendo.support.browser.msie && this.textarea) {
-                var tempInput = $("<input style='position:absolute;left:-10px;top:-10px;width:1px;height:1px;font-size:0;border:0;' />").appendTo(document.body).focus();
+                var tempInput = $("<input style='position:fixed;left:1px;top:1px;width:1px;height:1px;font-size:0;border:0;opacity:0' />").appendTo(document.body).focus();
                 tempInput.blur().remove();
             }
         },
