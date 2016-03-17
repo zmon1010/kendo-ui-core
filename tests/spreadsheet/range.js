@@ -728,6 +728,13 @@
         equal(r.format(), "mm:ss.00");
     });
 
+    test("range.input handles '=foo+", function(){
+        var r = sheet.range("A1");
+        r.format("@");
+        r.input("'=foo+");
+        equal(r.input(), "'=foo+");
+    });
+
     test("range.input returns formula", function() {
         sheet.range("A1").formula("SUM(A1:A2)");
 
