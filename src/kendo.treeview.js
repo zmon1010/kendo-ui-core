@@ -1803,8 +1803,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         _expanded: function(node, value) {
-            var expandedAttr = kendo.attr("expanded"),
-                dataItem = this.dataItem(node);
+            var expandedAttr = kendo.attr("expanded");
+            var dataItem = this.dataItem(node);
+            var expanded = value;
 
             if (arguments.length == 1) {
                 return node.attr(expandedAttr) === "true" || (dataItem && dataItem.expanded);
@@ -1815,12 +1816,12 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (dataItem) {
-                dataItem.set("expanded", value);
+                dataItem.set("expanded", expanded);
                 // necessary when expanding an item yields an error and the item is not expanded as a result
-                value = dataItem.expanded;
+                expanded = dataItem.expanded;
             }
 
-            if (value) {
+            if (expanded) {
                 node.attr(expandedAttr, "true");
                 node.attr("aria-expanded", "true");
             } else {
@@ -2030,17 +2031,16 @@ var __meta__ = { // jshint ignore:line
 
         expandPath: function(path, complete) {
             var treeview = this;
-
-            path = path.slice(0);
-            complete = complete || $.noop;
+            var nodeIds = path.slice(0);
+            var callback = complete || $.noop;
 
             function proceed() {
-                path.shift();
+                nodeIds.shift();
 
-                if (path.length) {
-                    expand(path[0]).then(proceed);
+                if (nodeIds.length) {
+                    expand(nodeIds[0]).then(proceed);
                 } else {
-                    complete.call(treeview);
+                    callback.call(treeview);
                 }
             }
 
@@ -2071,7 +2071,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             // expand async nodes
-            expand(path[0]).then(proceed);
+            expand(nodeIds[0]).then(proceed);
         },
 
         _parentIds: function(node) {
