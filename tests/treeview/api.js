@@ -995,69 +995,16 @@
         });
     });
 
-    module("expandPath async", {
-        setup: function() {
-            var id = 1;
-
-            createTreeView({
-                dataSource: {
-                    transport: {
-                        read: function(options) {
-                            options.success([
-                                { id: id++, text: "foo", hasChildren: true }
-                            ]);
-                        }
-                    },
-                    schema: {
-                        model: {
-                            id: "id",
-                            hasChildren: "hasChildren"
-                        }
-                    }
-                }
-            });
-        },
-        teardown: TreeViewHelpers.destroy
-    });
-
-    asyncTest("expandPath loads async nodes", function() {
-        treeviewObject.expandPath([ 1 ], function() {
-            start();
-
-            ok(get(1).expanded);
-        });
-    });
-
-    asyncTest("expandPath loads multiple async nodes", function() {
-        treeviewObject.expandPath([ 1, 2, 3 ], function() {
-            start();
-
-            ok(get(3).expanded);
-        });
-    });
-
-    asyncTest("expandPath loads async nodes", function() {
-        treeviewObject.expandPath([ 1 ], function() {
-            start();
-
-            equal(this, treeviewObject);
-        });
-    });
-
-    asyncTest("expandPath calls callback if expanded node has no children", function() {
-        var calls = 0;
+    function createAsyncTreeView(read) {
+        var id = 1;
 
         createTreeView({
             dataSource: {
                 transport: {
-                    read: function(options) {
-                        if (!calls) {
-                            options.success([ { id: 1, text: "foo", hasChildren: true } ]);
-                        } else {
-                            options.success([]);
-                        }
-
-                        calls++;
+                    read: read || function(options) {
+                        options.success([
+                            { id: id++, text: "foo", hasChildren: true }
+                        ]);
                     }
                 },
                 schema: {
@@ -1067,6 +1014,74 @@
                     }
                 }
             }
+        });
+    }
+
+    asyncTest("expandPath loads async nodes", function() {
+        createAsyncTreeView();
+
+        treeviewObject.expandPath([ 1 ], function() {
+            start();
+
+            ok(get(1).expanded);
+            ok(get(1).loaded());
+        });
+    });
+
+    asyncTest("expandPath loads multiple async nodes", function() {
+        createAsyncTreeView();
+
+        treeviewObject.expandPath([ 1, 2, 3 ], function() {
+            start();
+
+            ok(get(3).expanded);
+            ok(get(3).loaded());
+        });
+    });
+
+    asyncTest("expandPath loads async nodes", function() {
+        createAsyncTreeView();
+
+        treeviewObject.expandPath([ 1 ], function() {
+            start();
+
+            equal(this, treeviewObject);
+        });
+    });
+
+    asyncTest("expandPath shows loading icon", function() {
+        var id = 1;
+
+        createAsyncTreeView(function(options) {
+            function respond() {
+                options.success([
+                    { id: id++, text: "foo", hasChildren: true }
+                ]);
+            }
+
+            if (options.data.id) {
+                setTimeout(respond, 10);
+            } else {
+                respond();
+            }
+        });
+
+        treeviewObject.expandPath([ 1 ], start);
+
+        ok(treeview.find(".k-loading").length);
+    });
+
+    asyncTest("expandPath calls callback if expanded node has no children", function() {
+        var calls = 0;
+
+        createAsyncTreeView(function(options) {
+            if (!calls) {
+                options.success([ { id: 1, text: "foo", hasChildren: true } ]);
+            } else {
+                options.success([]);
+            }
+
+            calls++;
         });
 
         treeviewObject.expandPath([ 1, 2 ], function() {

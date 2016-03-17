@@ -2053,6 +2053,7 @@ var __meta__ = { // jshint ignore:line
                         node.set("expanded", true);
                         proceed();
                     } else {
+                        treeview._progress(treeview.findByUid(node.uid), true);
                         node.load().then(function() {
                             node.set("expanded", true);
                             proceed();
