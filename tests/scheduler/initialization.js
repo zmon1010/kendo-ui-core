@@ -344,6 +344,29 @@
         ok(scheduler.view() instanceof MyCustomView);
     });
 
+    test("custom view with name same as default view is instantiated", function() {
+        var MyCustomView = kendo.ui.SchedulerView.extend({
+            renderLayout: $.noop,
+            dateForTitle: $.noop,
+            shortDateForTitle: $.noop,
+            render: $.noop,
+            startDate: $.noop,
+            endDate: $.noop
+        });
+
+        var scheduler = new Scheduler(container, {
+            views: [ {
+                name: "day",
+                title: "Day",
+                type: MyCustomView
+            }]
+        });
+
+        ok(scheduler.view() instanceof MyCustomView);
+        ok(scheduler.views["day"].name, "day");
+        ok(scheduler.views["day"].title, "Day");
+    });
+
     test("selected date is passed to view render method", 1, function() {
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 name: "foo",
@@ -894,7 +917,7 @@
             ]
         });
 
-        container.kendoScheduler({ 
+        container.kendoScheduler({
             date: new Date("2013/6/6"),
             dataSource: dataSource
         });
@@ -902,7 +925,7 @@
         try {
             container.data("kendoScheduler").destroy();
             container.empty();
-            container.kendoScheduler({ 
+            container.kendoScheduler({
                 date: new Date("2013/6/6"),
                 dataSource: dataSource
             });

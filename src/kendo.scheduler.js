@@ -3460,7 +3460,7 @@ var __meta__ = { // jshint ignore:line
                 if (isSettings) {
                     type = name = view.type ? view.type : view;
                     if (typeof type !== STRING) {
-                        name = view.title;
+                        name = view.name || view.title;
                         hasType = true;
                     }
                 } else {
