@@ -119,7 +119,7 @@ test("exec bold on empty range inserts tag", function() {
     editor.selectRange(range);
     editor.exec("bold");
 
-    equal(editor.value(), "foo");
+    equal(editor.value(), "foo<strong></strong>");
 
     editor.getRange().insertNode(editor.document.createElement("a"));
 

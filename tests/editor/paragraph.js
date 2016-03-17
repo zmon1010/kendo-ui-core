@@ -120,7 +120,7 @@ test('exec when in last li and it is empty', function() {
     range.selectNodeContents(editor.body.firstChild.lastChild);
     var command = createParagraphCommand(range);
     command.exec();
-    equal(editor.value(), '<ul><li>foo</li></ul><p></p>');
+    equal(editor.value(), '<ul><li>foo</li></ul><p>&nbsp;</p>');
 });
 
 test('exec in empty list item preserves line breaks in others', function() {
@@ -129,7 +129,7 @@ test('exec in empty list item preserves line breaks in others', function() {
     range.selectNodeContents(editor.body.firstChild.childNodes[1]);
     var command = createParagraphCommand(range);
     command.exec();
-    equal(editor.value(), '<ul><li>fo<br />o</li></ul><p></p><ul><li>ba<br />r</li></ul>');
+    equal(editor.value(), '<ul><li>fo<br />o</li></ul><p>&nbsp;</p><ul><li>ba<br />r</li></ul>');
 });
 
 test('exec when there is empty li', function() {
@@ -139,7 +139,7 @@ test('exec when there is empty li', function() {
     range.setEndAfter(editor.body.firstChild.firstChild.firstChild);
     var command = createParagraphCommand(range);
     command.exec();
-    equal(editor.value(), '<ul><li>foo</li><li></li><li></li></ul>');
+    equal(editor.value(), '<ul><li>foo</li><li>&nbsp;</li><li></li></ul>');
 });
 
 test('exec handles li containing br', function() {
@@ -192,7 +192,7 @@ test('exec deletes all contents', function() {
     var command = createParagraphCommand(range);
 
     command.exec();
-    equal(editor.value(), '<p></p><p></p>');
+    equal(editor.value(), '<p>&nbsp;</p><p>&nbsp;</p>');
 });
 
 test('exec caret at end of content', function() {
@@ -203,7 +203,7 @@ test('exec caret at end of content', function() {
     var command = createParagraphCommand(range);
     command.exec();
 
-    equal(editor.value(), '<p>foo</p><p></p>');
+    equal(editor.value(), '<p>foo</p><p>&nbsp;</p>');
 });
 
 test('undo reverts content', function() {
@@ -252,7 +252,7 @@ test('exec at end of text node wraps with paragraph and inserts new paragraph', 
     range.collapse(true);
     var command = createParagraphCommand(range);
     command.exec();
-    equal(editor.value(), '<p>foo</p><p></p>');
+    equal(editor.value(), '<p>foo</p><p>&nbsp;</p>');
 });
 
 test('exec in empty paragraph at middle of text adds more paragraphs', function() {
@@ -262,7 +262,7 @@ test('exec in empty paragraph at middle of text adds more paragraphs', function(
     range.collapse(true);
     var command = createParagraphCommand(range);
     command.exec();
-    equal(editor.value(), '<p>foo</p><p></p><p></p><p>bar</p>');
+    equal(editor.value(), '<p>foo</p><p>&nbsp;</p><p>&nbsp;</p><p>bar</p>');
 });
 
 test('exec at start of paragraph leaves selection in paragraph', function() {
@@ -277,7 +277,7 @@ test('exec at start of paragraph leaves selection in paragraph', function() {
 
     range.insertNode(editor.document.createElement('a'));
 
-    equal(editor.value(), '<p>foo</p><p></p><p><a></a>bar</p>');
+    equal(editor.value(), '<p>foo</p><p>&nbsp;</p><p><a></a>bar</p>');
 });
 
 test('exec in td', function() {
@@ -285,7 +285,7 @@ test('exec in td', function() {
     var command = createParagraphCommand(range);
     command.exec();
 
-    equal(editor.value(), '<table><tbody><tr><td><p></p><p>oo</p></td></tr></tbody></table>');
+    equal(editor.value(), '<table><tbody><tr><td><p>&nbsp;</p><p>oo</p></td></tr></tbody></table>');
 });
 
 function insertCaretAnchor() {
@@ -332,7 +332,7 @@ test('exec at beginning of header adds header above', function() {
 
     insertCaretAnchor();
 
-    equal(editor.value(), '<h1></h1><h1><a></a>foo</h1>');
+    equal(editor.value(), '<h1>&nbsp;</h1><h1><a></a>foo</h1>');
 });
 
 test("exec in header among BOMs goes in new paragraph", function() {
@@ -361,7 +361,7 @@ test('exec in list before image', function() {
 
     insertCaretAnchor();
 
-    equal(editor.value(), '<ul><li></li><li><a></a><img src="foo" /></li></ul>');
+    equal(editor.value(), '<ul><li>&nbsp;</li><li><a></a><img src="foo" /></li></ul>');
 });
 
 test('paragraph at start of formatted text', function() {
@@ -374,14 +374,9 @@ test('paragraph at start of formatted text', function() {
     var command = createParagraphCommand(range);
     command.exec();
 
-    if (!kendo.support.browser.msie) {
-        var br = editor.body.firstChild.firstChild.firstChild;
-        equal(br.nodeName.toLowerCase(), "br", "bogus br is present in non-ie browsers");
-    }
-
     insertCaretAnchor();
 
-    equal(editor.value(), '<p><strong></strong></p><p><strong><a></a>foo</strong></p>');
+    equal(editor.value(), '<p><strong>&nbsp;</strong></p><p><strong><a></a>foo</strong></p>');
 });
 
 test("paragraph at end of formatted text", function() {
@@ -409,14 +404,9 @@ test("paragraph discards preceding whitespace", function() {
     var command = createParagraphCommand(range);
     command.exec();
 
-    if (!kendo.support.browser.msie) {
-        var br = editor.body.childNodes[1].lastChild;
-        equal(br.nodeName.toLowerCase(), "br", "bogus br is present in non-ie browsers");
-    }
-
     insertCaretAnchor();
 
-    equal(editor.value(), '<p>foo</p><p></p><p><a></a>bar</p>');
+    equal(editor.value(), '<p>foo</p><p>&nbsp;</p><p><a></a>bar</p>');
 });
 
 test("does not break out of inline editor within list", function() {
@@ -479,7 +469,7 @@ test("paragraph before link does not remove it", function() {
 
     createParagraphCommand(range).exec();
 
-    equal(editor.value(), '<p></p><p><a href="foo">foo</a></p>');
+    equal(editor.value(), '<p>&nbsp;</p><p><a href="foo">foo</a></p>');
 });
 
 test("paragraph before input does not clone it", function() {
@@ -488,7 +478,7 @@ test("paragraph before input does not clone it", function() {
     createParagraphCommand(range).exec();
     createParagraphCommand(editor.getRange()).exec();
 
-    equal(editor.value(), '<p></p><p></p><p><input /></p>');
+    equal(editor.value(), '<p>&nbsp;</p><p>&nbsp;</p><p><input /></p>');
 });
 
 test("paragraph inside list link cleans link on new list item", function() {
@@ -496,15 +486,16 @@ test("paragraph inside list link cleans link on new list item", function() {
 
     createParagraphCommand(range).exec();
 
-    equal(editor.value(), '<ul><li><a href="http://foo">foo</a></li><li></li></ul>');
+    equal(editor.value(), '<ul><li><a href="http://foo">foo</a></li><li>&nbsp;</li></ul>');
 });
 
-test("paragraph after formatted text leaves only one system line break", function() {
+test("paragraph after formatted text keeps formatting in new paragraph", function() {
     var range = createRangeFromText(editor, '<p>foo <strong>bar||</strong>baz</p>');
 
     createParagraphCommand(range).exec();
 
-    equal($("p:last .k-br", editor.body).length, 1);
+    debugger
+    equal(editor.value(), '<p>foo <strong>bar</strong></p><p><strong></strong>baz</p>');
 });
 
 }());

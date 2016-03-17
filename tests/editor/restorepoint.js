@@ -52,7 +52,7 @@ test('restorePoint initializes for root node', function() {
     equal(restorePoint.startContainer.toString(), crossBrowserOffset('0,1,0'));
     equal(restorePoint.startOffset, 0);
     equal(restorePoint.endContainer.toString(), crossBrowserOffset('0,1,0'));
-    equal(restorePoint.endOffset, 2);
+    equal(restorePoint.endOffset, 1);
 });
 
 test('restorePoint initializes for root node contents', function() {
@@ -137,7 +137,7 @@ test('toRange returns root node', function() {
     equal(restorePointRange.startContainer, editor.body.firstChild);
     equal(restorePointRange.startOffset, 0);
     equal(restorePointRange.endContainer, editor.body.firstChild);
-    equal(restorePointRange.endOffset, 2);
+    equal(restorePointRange.endOffset, 1);
 });
 
 test('toRange returns root node contents', function() {

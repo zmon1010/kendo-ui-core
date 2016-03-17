@@ -112,11 +112,11 @@ test("shows popup toolbar within the viewport boundaries", 2, function () {
 });
 
 if (!kendo.support.browser.msie) {
-    test("processes value when initializing", function() {
+    test("processes value when initializing prepares content for editing", function() {
         var dom = $("<div contentEditable><p></p></div>").appendTo(QUnit.fixture);
         dom.kendoEditor();
 
-        equal(dom.find("br").length, 1);
+        equal(dom[0].firstChild.firstChild.nodeValue, '\ufeff');
     });
 }
 

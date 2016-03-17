@@ -409,11 +409,11 @@ test('nbsp escaped', function() {
 });
 
 if (!kendo.support.browser.msie) {
-    test('setting empty paragraphs adds line breaks', function() {
+    test('empty paragraphs are filled with content', function() {
         editor.value('<p> </p>');
 
         equal(editor.body.firstChild.childNodes.length, 1);
-        equal(editor.body.firstChild.firstChild.nodeName.toLowerCase(), 'br');
+        equal(editor.body.firstChild.firstChild.nodeValue, '\ufeff');
     });
 }
 

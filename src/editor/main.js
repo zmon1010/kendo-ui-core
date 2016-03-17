@@ -283,10 +283,6 @@
         },
 
         _selectionChange: function() {
-            if (!browser.msie) {
-                kendo.ui.editor.Dom.ensureTrailingBreaks(this.body);
-            }
-
             this._selectionStarted = false;
             this.saveSelection();
             this.trigger("select", {});
@@ -799,10 +795,6 @@
 
             editorNS.Serializer.htmlToDom(html, body);
 
-            if (!browser.msie) {
-                kendo.ui.editor.Dom.ensureTrailingBreaks(this.body);
-            }
-
             this.selectionRestorePoint = null;
             this.update();
 
@@ -1023,14 +1015,10 @@
     // Exports ================================================================
 
     var bomFill = browser.msie && browser.version < 9 ? '\ufeff' : '';
-    var emptyElementContent = '<br class="k-br" />';
+    var emptyElementContent = '\ufeff';
 
-    if (browser.msie) {
-        if (browser.version < 10) {
-            emptyElementContent = '\ufeff';
-        } else if (browser.version < 11) {
-            emptyElementContent = ' '; // allow up/down arrows to focus empty rows
-        }
+    if (browser.msie && browser.version == 10) {
+        emptyElementContent = ' '; // allow up/down arrows to focus empty rows
     }
 
     extend(kendo.ui, {

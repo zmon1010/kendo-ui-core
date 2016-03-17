@@ -68,14 +68,6 @@ test("value method passes serialization options to serializer", function() {
     equal(editor.value(), "foo ä bar");
 });
 
-test("value adds line breaks where necessary", function() {
-    var editor = new kendo.ui.Editor("#editor");
-
-    editor.value("<p>foo<br> </p><p>bar</p>");
-
-    ok(kendo.ui.editor.Dom.insignificant(editor.body.firstChild.lastChild));
-});
-
 test("value method refreshes toolbar tools", function() {
     var editor = new kendo.ui.Editor("#editor");
     var refreshSpy = spy(editor.toolbar, "refreshTools")

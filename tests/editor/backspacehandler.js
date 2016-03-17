@@ -224,25 +224,13 @@
         equal(editor.value(), "<p>foo<a></a></p>");
     });
 
-    test("removes k-br while joining", function() {
-        var range = createRangeFromText(editor, '<p>foo||</p><p>bar</p>');
-        editor.selectRange(range);
-
-        handleDelete();
-
-        var p = editor.body.firstChild;
-
-        equal($(".k-br", p).length, 1);
-        ok(p.lastChild.className == "k-br");
-    });
-
     test("fully removes paragraphs", function() {
         var range = createRangeFromText(editor, '<p></p><p></p><p>||</p>');
         editor.selectRange(range);
 
         handleBackspace();
 
-        equal(editor.value(), '<p></p><p></p>');
+        equal(editor.value(), '<p>&nbsp;</p><p>&nbsp;</p>');
     });
 
     test("unwraps empty list", function() {

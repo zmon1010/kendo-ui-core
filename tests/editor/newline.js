@@ -56,7 +56,8 @@ test("undo leaves normalized content", function() {
     var command = createNewLineCommand(range);
     command.exec();
     command.undo();
-    equal(editor.body.childNodes.length, 2); // #text + <br>
+    equal(editor.body.childNodes.length, 1);
+    equal(editor.value(), "foo");
 });
 
 test("redo", function() {

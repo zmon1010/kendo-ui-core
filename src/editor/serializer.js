@@ -14,7 +14,7 @@ var fontSizeMappings = 'xx-small,x-small,small,medium,large,x-large,xx-large'.sp
 var quoteRe = /"/g; //"
 var brRe = /<br[^>]*>/i;
 var pixelRe = /^\d+(\.\d*)?(px)?$/i;
-var emptyPRe = /<p><\/p>/i;
+var emptyPRe = /<p>(?:&nbsp;)?<\/p>/i;
 var cssDeclaration = /(\*?[-#\/\*\\\w]+(?:\[[0-9a-z_-]+\])?)\s*:\s*((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^\)]*?\)|[^};])+)/g;
 var sizzleAttr = /^sizzle-\d+/i;
 var scriptAttr = /^k-script-/i;
@@ -45,7 +45,7 @@ var Serializer = {
 
     _fillEmptyElements: function(body) {
         // fills empty elements to allow them to be focused
-        $(body).find("p").each(function() {
+        $(body).find("p,td").each(function() {
             var p = $(this);
             if (/^\s*$/g.test(p.text()) && !p.find("img,input").length) {
                 var node = this;
@@ -449,6 +449,21 @@ var Serializer = {
             return node.nodeValue.replace(/\ufeff/g, "");
         }
 
+        function isEmptyBomNode(node) {
+            if (node.nodeValue === '\ufeff') {
+                do {
+                    node = node.parentNode;
+                    if (dom.is(node, "td") || node.childNodes.length !== 1) {
+                        return false;
+                    }
+                } while(!dom.isBlock(node));
+
+                return true;
+            }
+
+            return false;
+        }
+
         function child(node, skip, skipEncoding) {
             var nodeType = node.nodeType,
                 tagName, mapper,
@@ -458,10 +473,6 @@ var Serializer = {
                 tagName = dom.name(node);
 
                 if (!tagName || dom.insignificant(node)) {
-                    return;
-                }
-
-                if (dom.isInline(node) && node.childNodes.length == 1 && node.firstChild.nodeType == 3&&  !text(node.firstChild)) {
                     return;
                 }
 
@@ -496,6 +507,11 @@ var Serializer = {
                     result.push('>');
                 }
             } else if (nodeType == 3) {
+                if(isEmptyBomNode(node)) {
+                    result.push('&nbsp;');
+                    return;
+                }
+
                 value = text(node);
 
                 if (!skip && supportsLeadingWhitespace) {

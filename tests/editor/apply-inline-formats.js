@@ -97,7 +97,8 @@ test('formatRange does not introduce blank text nodes', function() {
 
     formatRange(range, editor.options.formats.bold);
 
-    equal(editor.body.childNodes.length, 2);
+    equal(editor.body.childNodes.length, 1);
+    equal(editor.value(), "<strong>golgafrincham</strong>");
 });
 
 test('formatRange does honor block elements', function() {
