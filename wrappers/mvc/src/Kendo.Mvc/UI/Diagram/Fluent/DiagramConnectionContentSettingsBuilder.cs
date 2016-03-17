@@ -79,6 +79,39 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// The color of the connection content text.
+        /// </summary>
+        /// <param name="value">The value that configures the color.</param>
+        public DiagramConnectionContentSettingsBuilder<TShapeModel, TConnectionModel> Color(string value)
+        {
+            container.Color = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The font family of the connection content text.
+        /// </summary>
+        /// <param name="value">The value that configures the fontfamily.</param>
+        public DiagramConnectionContentSettingsBuilder<TShapeModel, TConnectionModel> FontFamily(string value)
+        {
+            container.FontFamily = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The font size of the connection content text.
+        /// </summary>
+        /// <param name="value">The value that configures the fontsize.</param>
+        public DiagramConnectionContentSettingsBuilder<TShapeModel, TConnectionModel> FontSize(double value)
+        {
+            container.FontSize = value;
+
+            return this;
+        }
         
         //<< Fields
     }

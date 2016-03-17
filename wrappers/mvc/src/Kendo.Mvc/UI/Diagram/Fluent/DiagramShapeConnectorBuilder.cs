@@ -19,8 +19,6 @@ namespace Kendo.Mvc.UI.Fluent
             container = settings;
         }
 
-        //>> Fields
-        
         /// <summary>
         /// The connector description.
         /// </summary>
@@ -70,8 +68,58 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
-        //<< Fields
+
+        /// <summary>
+        /// The connector width.
+        /// </summary>
+        /// <param name="value">The value that configures the width.</param>
+        public DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel> Width(double value)
+        {
+            container.Width = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The connector height.
+        /// </summary>
+        /// <param name="value">The value that configures the height.</param>
+        public DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel> Height(double value)
+        {
+            container.Height = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Connector's fill options.
+        /// </summary>
+        /// <param name="configurator">The action that configures the fill.</param>
+        public DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel> Fill(Action<DiagramFillSettingsBuilder<TShapeModel, TConnectionModel>> configurator)
+        {
+            configurator(new DiagramFillSettingsBuilder<TShapeModel, TConnectionModel>(container.Fill));
+            return this;
+        }
+
+        /// <summary>
+        /// Connector's stroke options.
+        /// </summary>
+        /// <param name="configurator">The action that configures the stroke.</param>
+        public DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel> Stroke(Action<DiagramStrokeSettingsBuilder<TShapeModel, TConnectionModel>> configurator)
+        {
+            configurator(new DiagramStrokeSettingsBuilder<TShapeModel, TConnectionModel>(container.Stroke));
+            return this;
+        }
+
+        /// <summary>
+        /// Connector's hover options.
+        /// </summary>
+        /// <param name="configurator">The action that configures the hover.</param>
+        public DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel> Hover(Action<DiagramHoverSettingsBuilder<TShapeModel, TConnectionModel>> configurator)
+        {
+            configurator(new DiagramHoverSettingsBuilder<TShapeModel, TConnectionModel>(container.Hover));
+            return this;
+        }
     }
 }
 

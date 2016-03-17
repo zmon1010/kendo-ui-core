@@ -807,6 +807,8 @@
     <Compile Include="UI\Diagram\DiagramConnectionType.cs" />
     <Compile Include="UI\Diagram\DiagramShapeDefaultsFillGradientSettingsStop.cs" />
     <Compile Include="UI\Diagram\DiagramShapeFillGradientSettingsStop.cs" />
+    <Compile Include="UI\Diagram\Fluent\DiagramFillSettingsBuilder.cs" />
+    <Compile Include="UI\Diagram\Fluent\DiagramHoverSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramPdfMarginSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramPdfSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramShapeDefaultsFillGradientSettingsBuilder.cs" />
@@ -815,9 +817,13 @@
     <Compile Include="UI\Diagram\Fluent\DiagramShapeFillGradientSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramShapeFillGradientSettingsStopBuilder.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramShapeFillGradientSettingsStopFactory.cs" />
+    <Compile Include="UI\Diagram\Fluent\DiagramStrokeSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramEditableResizeHandlesHoverStrokeSettings.cs" />
+    <Compile Include="UI\Diagram\Settings\DiagramFillSettings.cs" />
+    <Compile Include="UI\Diagram\Settings\DiagramHoverSettings.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramPdfMarginSettings.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramPdfSettings.cs" />
+    <Compile Include="UI\Diagram\Settings\DiagramStrokeSettings.cs" />
     <Compile Include="UI\DropDownListBase\Fluent\PopupSettingsBuilder.cs" />
     <Compile Include="UI\DropDownListBase\PopupSettings.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramShapeDefaultsFillGradientSettings.cs" />

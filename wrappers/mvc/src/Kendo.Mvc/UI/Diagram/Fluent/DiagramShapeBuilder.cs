@@ -20,6 +20,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         //>> Fields
+
+        /// <summary>
+        /// Defines the default options for the shape connectors.
+        /// </summary>
+        /// <param name="configurator">The action that configures the default options.</param>
+        public DiagramShapeBuilder<TShapeModel, TConnectionModel> ConnectorDefaults(Action<DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel>> configurator)
+        {
+            configurator(new DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel>(container.ConnectorDefaults));
+            return this;
+        }
         
         /// <summary>
         /// Defines the connectors the shape owns.

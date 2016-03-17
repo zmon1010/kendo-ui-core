@@ -20,14 +20,24 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         //>> Fields
+
+        /// <summary>
+        /// Defines the default options for the shape connectors.
+        /// </summary>
+        /// <param name="configurator">The action that configures the default options.</param>
+        public DiagramShapeDefaultsSettingsBuilder<TShapeModel, TConnectionModel> ConnectorDefaults(Action<DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel>> configurator)
+        {
+            configurator(new DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel>(container.ConnectorDefaults));
+            return this;
+        }
         
         /// <summary>
         /// Defines the connectors the shape owns.You can easily define your own custom connectors or mix-match with the above defined custom connectors.Example - custom shape with custom connectorsThe following defines a custom shape with connectors adapted to the shape's outline. Note in particular the various helpful methods (right(), left(), top()) to define positions relative to the shape.
         /// </summary>
         /// <param name="configurator">The action that configures the connectors.</param>
-        public DiagramShapeDefaultsSettingsBuilder<TShapeModel,TConnectionModel> Connectors(Action<DiagramShapeDefaultsSettingsConnectorFactory<TShapeModel,TConnectionModel>> configurator)
+        public DiagramShapeDefaultsSettingsBuilder<TShapeModel, TConnectionModel> Connectors(Action<DiagramShapeConnectorFactory<TShapeModel, TConnectionModel>> configurator)
         {
-            configurator(new DiagramShapeDefaultsSettingsConnectorFactory<TShapeModel,TConnectionModel>(container.Connectors));
+            configurator(new DiagramShapeConnectorFactory<TShapeModel, TConnectionModel>(container.Connectors));
             return this;
         }
         

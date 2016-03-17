@@ -223,6 +223,17 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Fired when the user clicks an item in the toolbar.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the toolBarClick event.</param>
+        public DiagramEventBuilder ToolBarClick(string handler)
+        {
+            Handler("toolBarClick", handler);
+
+            return this;
+        }
         
         //<< Handlers
     }

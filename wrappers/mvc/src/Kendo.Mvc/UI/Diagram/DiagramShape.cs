@@ -11,7 +11,9 @@ namespace Kendo.Mvc.UI
         public DiagramShape()
         {
             //>> Initialization
-        
+
+            ConnectorDefaults = new DiagramShapeConnector();
+
             Connectors = new List<DiagramShapeConnector>();
                 
             Content = new DiagramShapeContentSettings();
@@ -32,6 +34,12 @@ namespace Kendo.Mvc.UI
         }
 
         //>> Fields
+
+        public DiagramShapeConnector ConnectorDefaults
+        {
+            get;
+            set;
+        }
         
         public List<DiagramShapeConnector> Connectors
         {
@@ -102,7 +110,12 @@ namespace Kendo.Mvc.UI
         protected override void Serialize(IDictionary<string, object> json)
         {
             //>> Serialization
-        
+
+            var connectorDefaults = ConnectorDefaults.ToJson();
+            if (connectorDefaults.Any())
+            {
+                json["connectorDefaults"] = connectorDefaults;
+            }
             var connectors = Connectors.ToJson();
             if (connectors.Any())
             {

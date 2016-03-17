@@ -23,6 +23,12 @@ namespace Kendo.Mvc.UI
         
         public string Text { get; set; }
 
+        public string Color { get; set; }
+
+        public string FontFamily { get; set; }
+
+        public double? FontSize { get; set; }
+
         public ClientHandlerDescriptor Visual { get; set; }
         
         //<< Fields
@@ -53,6 +59,21 @@ namespace Kendo.Mvc.UI
             if (Visual != null)
             {
                 json["visual"] = Visual;
+            }
+
+            if (Color.HasValue())
+            {
+                json["color"] = Color;
+            }
+
+            if (FontFamily.HasValue())
+            {
+                json["fontFamily"] = FontFamily;
+            }
+
+            if (FontSize.HasValue)
+            {
+                json["fontSize"] = FontSize;
             }
             
         //<< Serialization
