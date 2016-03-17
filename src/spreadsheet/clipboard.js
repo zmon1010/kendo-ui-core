@@ -67,7 +67,7 @@
         intersectsMerged: function() {
             var sheet = this.workbook.activeSheet();
             var state = this.parse(this._external);
-            this.origin = this.stateRangeRef(state);
+            this.origin = state.origRef;
             var ref = this.pasteRef();
             return !ref.eq(sheet.unionWithMerged(ref));
         },
@@ -94,10 +94,6 @@
             return this.origin.relative(rowDelta, colDelta, 3);
         },
 
-        stateRangeRef: function(state) {
-            return state.origRef;
-        },
-
         destroy: function() {
             document.body.removeChild(this.iframe);
         },
@@ -109,7 +105,7 @@
                 state = this.contents;
             } else {
                 state = this.parse(this._external);
-                this.origin = this.stateRangeRef(state);
+                this.origin = state.origRef;
                 sheet.range(this.pasteRef()).clear();
             }
             var pasteRef = this.pasteRef();
@@ -134,97 +130,17 @@
                 doc.close();
                 var table = $(doc).find("table:first");
                 if (table.length) {
-                    state = this._parseHTML(table.find("tbody:first"));
+                    state = parseHTML(table.find("tbody:first"));
                 } else {
                     if (!data.plain) {
                         var element = $(doc.body).find(":not(style)");
-                        state["0,0"] = this._cellState(element.text());
+                        state["0,0"] = cellState(element.text());
                     } else {
-                        state = this._parseTSV(data.plain);
+                        state = parseTSV(data.plain);
                     }
                 }
             } else {
-                state = this._parseTSV(data.plain);
-            }
-            return state;
-        },
-
-        _parseHTML: function(tbody) {
-            var that = this;
-            var state = {ref:  new CellRef(0,0,0), mergedCells: []};
-
-            tbody.find("tr").each(function(rowIndex, tr) {
-                $(tr).find("td").each(function(colIndex, td) {
-                    var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
-                    var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
-                    var blankCell = "<td/>";
-                    var ci;
-                    if (rowspan){
-                        var endRow = rowIndex + rowspan;
-                        for (var ri = rowIndex; ri <= endRow; ri++) {
-                            var row = tbody.find("tr").eq(ri);
-                            if (ri > rowIndex) {
-                                blankCell = "<td class='rowspan'></td>";
-                                if (colIndex === 0) {
-                                    row.find("td").eq(colIndex).after(blankCell);
-                                } else {
-                                    var last = Math.min(row.find("td").length, colIndex);
-                                    row.find("td").eq(last - 1).after(blankCell);
-                                }
-                            }
-                            if (colspan) {
-                                for (ci = colIndex; ci < colspan + colIndex; ci++) {
-                                    blankCell = "<td class='rowspan colspan'></td>";
-                                    row.find("td").eq(ci).after(blankCell);
-                                }
-                            }
-                        }
-                    } else {
-                        if (colspan) {
-                            for (ci = colIndex; ci < colspan + colIndex; ci++) {
-                                blankCell = "<td class='colspan'></td>";
-                                $(tr).find("td").eq(ci).after(blankCell);
-                            }
-                        }
-                    }
-                });
-            });
-
-            tbody.find("tr").each(function(rowIndex, tr) {
-                $(tr).find("td").each(function(colIndex, td) {
-                    var key = rowIndex + "," + colIndex;
-                    var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
-                    var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
-                    var cellState = that._cellState($(td));
-
-                    state[key] = cellState;
-
-                    if (rowspan || colspan) {
-                        var startCol = String.fromCharCode(65 + colIndex);
-                        var endCol = String.fromCharCode(65 + colIndex + colspan);
-                        var address = startCol + (rowIndex + 1) + ":" + endCol + (rowIndex + 1 + rowspan);
-
-                        state.mergedCells.push(address);
-                    }
-                });
-            });
-            return state;
-        },
-
-        _parseTSV: function(data) {
-            var state = {ref:  new CellRef(0,0,0), mergedCells: []};
-            if (data.indexOf("\t") === -1 && data.indexOf("\n") == -1) {
-                state["0,0"] = {
-                    value: data
-                };
-            } else {
-                var rows = data.split("\n");
-                for (var ri = 0; ri < rows.length; ri++) {
-                    var cols = rows[ri].split("\t");
-                    for (var ci = 0; ci < cols.length; ci++) {
-                        state[ri + "," + ci] = {value: cols[ci]};
-                    }
-                }
+                state = parseTSV(data.plain);
             }
             return state;
         },
@@ -239,85 +155,146 @@
                 return true;
             }
             return false;
-        },
-
-        _cellState: function(element) {
-            var styles = window.getComputedStyle(element[0]);
-            var text = element.text();
-            var borders = this._borderObject(styles);
-            var state = {
-                value: text === "" ? null : text,
-                borderBottom : borders.borderBottom,
-                borderRight : borders.borderRight,
-                borderLeft : borders.borderLeft,
-                borderTop : borders.borderTop,
-                fontSize : parseInt(styles["font-size"], 10)
-            };
-
-            if (styles["background-color"] !== "rgb(0, 0, 0)" && styles["background-color"] !== "rgba(0, 0, 0, 0)") {
-                state.background = styles["background-color"];
-            }
-            if (styles.color !== "rgb(0, 0, 0)" && styles.color !== "rgba(0, 0, 0, 0)") {
-                state.color = styles.color;
-            }
-            if (styles["text-decoration"] == "underline") {
-                state.underline = true;
-            }
-            if (styles["font-style"] == "italic") {
-                state.italic = true;
-            }
-            if (styles["font-weight"] == "bold") {
-                state.bold = true;
-            }
-            if (this._strippedStyle(styles["text-align"]) !== "right") {
-                state.textAlign = this._strippedStyle(styles["text-align"]);
-            }
-            if (styles["vertical-align"] !== "middle") {
-                state.verticalAlign = styles["vertical-align"];
-            }
-            if (styles["word-wrap"] !== "normal" ) {
-                state.wrap = true;
-            }
-
-            return state;
-        },
-
-        _strippedStyle: function(style) {
-            var prefixes = [
-                "-ms-",
-                "-moz-",
-                "-webkit-"
-            ];
-
-            prefixes.forEach(function(prefix) {
-                style = style.replace(prefix, "");
-            });
-            return style;
-        },
-
-        _borderObject: function(styles) {
-            var borderObject = {};
-            var borders = [
-                "borderBottom",
-                "borderRight",
-                "borderLeft",
-                "borderTop"
-            ];
-
-            borders.forEach(function(key) {
-                if (styles[key + "Style"] == "none") {
-                    borderObject[key] = null;
-                    return;
-                }
-                borderObject[key] = {
-                    size: 1,
-                    color: styles[key + "Color"]
-                };
-            });
-
-            return borderObject;
         }
     });
     kendo.spreadsheet.Clipboard = Clipboard;
+
+    function stripStyle(style) {
+        return style.replace(/^-(?:ms|moz|webkit)-/, "");
+    }
+
+    function borderObject(styles) {
+        var obj = {};
+        [
+            "borderBottom",
+            "borderRight",
+            "borderLeft",
+            "borderTop"
+        ].forEach(function(key) {
+            obj[key] = styles[key + "Style"] == "none" ? null : {
+                size: 1,
+                color: styles[key + "Color"]
+            };
+        });
+        return obj;
+    }
+
+    function cellState(element) {
+        var styles = window.getComputedStyle(element[0]);
+        var text = element.text();
+        var borders = borderObject(styles);
+        var state = {
+            value: text === "" ? null : text,
+            borderBottom : borders.borderBottom,
+            borderRight : borders.borderRight,
+            borderLeft : borders.borderLeft,
+            borderTop : borders.borderTop,
+            fontSize : parseInt(styles["font-size"], 10)
+        };
+
+        if (styles["background-color"] !== "rgb(0, 0, 0)" && styles["background-color"] !== "rgba(0, 0, 0, 0)") {
+            state.background = styles["background-color"];
+        }
+        if (styles.color !== "rgb(0, 0, 0)" && styles.color !== "rgba(0, 0, 0, 0)") {
+            state.color = styles.color;
+        }
+        if (styles["text-decoration"] == "underline") {
+            state.underline = true;
+        }
+        if (styles["font-style"] == "italic") {
+            state.italic = true;
+        }
+        if (styles["font-weight"] == "bold") {
+            state.bold = true;
+        }
+        if (stripStyle(styles["text-align"]) !== "right") {
+            state.textAlign = stripStyle(styles["text-align"]);
+        }
+        if (styles["vertical-align"] !== "middle") {
+            state.verticalAlign = styles["vertical-align"];
+        }
+        if (styles["word-wrap"] !== "normal" ) {
+            state.wrap = true;
+        }
+
+        return state;
+    }
+
+    function parseHTML(tbody) {
+        var state = { ref: new CellRef(0,0,0), mergedCells: [] };
+
+        tbody.find("tr").each(function(rowIndex, tr) {
+            $(tr).find("td").each(function(colIndex, td) {
+                var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
+                var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
+                var blankCell = "<td/>";
+                var ci;
+                if (rowspan){
+                    var endRow = rowIndex + rowspan;
+                    for (var ri = rowIndex; ri <= endRow; ri++) {
+                        var row = tbody.find("tr").eq(ri);
+                        if (ri > rowIndex) {
+                            blankCell = "<td class='rowspan'></td>";
+                            if (colIndex === 0) {
+                                row.find("td").eq(colIndex).after(blankCell);
+                            } else {
+                                var last = Math.min(row.find("td").length, colIndex);
+                                row.find("td").eq(last - 1).after(blankCell);
+                            }
+                        }
+                        if (colspan) {
+                            for (ci = colIndex; ci < colspan + colIndex; ci++) {
+                                blankCell = "<td class='rowspan colspan'></td>";
+                                row.find("td").eq(ci).after(blankCell);
+                            }
+                        }
+                    }
+                } else {
+                    if (colspan) {
+                        for (ci = colIndex; ci < colspan + colIndex; ci++) {
+                            blankCell = "<td class='colspan'></td>";
+                            $(tr).find("td").eq(ci).after(blankCell);
+                        }
+                    }
+                }
+            });
+        });
+
+        tbody.find("tr").each(function(rowIndex, tr) {
+            $(tr).find("td").each(function(colIndex, td) {
+                var key = rowIndex + "," + colIndex;
+                var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
+                var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
+                state[key] = cellState($(td));
+                if (rowspan || colspan) {
+                    var startCol = String.fromCharCode(65 + colIndex);
+                    var endCol = String.fromCharCode(65 + colIndex + colspan);
+                    var address = startCol + (rowIndex + 1) + ":" + endCol + (rowIndex + 1 + rowspan);
+
+                    state.mergedCells.push(address);
+                }
+            });
+        });
+        return state;
+    }
+
+    function parseTSV(data) {
+        var state = {ref:  new CellRef(0,0,0), mergedCells: []};
+        if (data.indexOf("\t") === -1 && data.indexOf("\n") == -1) {
+            state["0,0"] = {
+                value: data
+            };
+        } else {
+            var rows = data.split("\n");
+            for (var ri = 0; ri < rows.length; ri++) {
+                var cols = rows[ri].split("\t");
+                for (var ci = 0; ci < cols.length; ci++) {
+                    state[ri + "," + ci] = {value: cols[ci]};
+                }
+            }
+        }
+        return state;
+    }
+
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
