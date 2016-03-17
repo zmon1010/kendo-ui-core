@@ -588,7 +588,12 @@
         },
 
         getState: function(propertyName) {
-            var state = {ref: this._ref.first()};
+            var topLeft = this._ref.first();
+            var state = {
+                ref     : topLeft,
+                data    : [],
+                origRef : this._ref.toRangeRef()
+            };
             var properties;
             if (!propertyName) {
                 properties = kendo.spreadsheet.ALL_PROPERTIES;
@@ -601,8 +606,15 @@
                 properties = [propertyName];
             }
 
+            var data = state.data;
             this.forEachCell(function(row, col, cell) {
                 var cellState = state[row + "," + col] = {};
+                var dr = row - topLeft.row;
+                var dc = col - topLeft.col;
+                if (!data[dr]) {
+                    data[dr] = [];
+                }
+                data[dr][dc] = cellState;
 
                 properties.forEach(function(property) {
                     cellState[property] = cell[property] || null;
@@ -612,7 +624,7 @@
             return state;
         },
 
-        setState: function(state) {
+        setState: function(state, isPaste) {
             var sheet = this._sheet;
             var origin = this._ref.first();
             var rowDelta = state.ref.row - origin.row;
@@ -623,27 +635,36 @@
                     this.unmerge();
                 }
 
-                this.forEachCell(function(row, col) {
-                    var cellState = state[(row + rowDelta)  + "," + (col + colDelta)];
-                    var range = sheet.range(row, col);
-
-                    for (var property in cellState) {
-                        if (property != "value") {
-                            // make sure value comes last (after the loop),
-                            // because if we set value here and get get to
-                            // formula later and cellState.formula is null,
-                            // it'll clear the value.
-                            range._set(property, cellState[property]);
+                var row = origin.row;
+                state.data.forEach(function(data, dr){
+                    if (isPaste && sheet.isHiddenRow(state.ref.row + dr)) {
+                        return;
+                    }
+                    var col = origin.col;
+                    data.forEach(function(cellState, dc){
+                        if (isPaste && sheet.isHiddenColumn(state.ref.col + dc)) {
+                            return;
                         }
-                    }
-
-                    if (!cellState.formula) {
-                        // only need to set the value if we don't have a
-                        // formula.  Go through the lower level setter rather
-                        // than range.value(...), because range.value will clear
-                        // the formula!  chicken and egg issues.
-                        range._set("value", cellState.value);
-                    }
+                        var range = sheet.range(row, col);
+                        for (var property in cellState) {
+                            if (property != "value") {
+                                // make sure value comes last (after the loop),
+                                // because if we set value here and get get to
+                                // formula later and cellState.formula is null,
+                                // it'll clear the value.
+                                range._set(property, cellState[property]);
+                            }
+                        }
+                        if (!cellState.formula) {
+                            // only need to set the value if we don't have a
+                            // formula.  Go through the lower level setter rather
+                            // than range.value(...), because range.value will clear
+                            // the formula!  chicken and egg issues.
+                            range._set("value", cellState.value);
+                        }
+                        col++;
+                    });
+                    row++;
                 });
 
                 if (state.mergedCells) {

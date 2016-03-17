@@ -8,7 +8,6 @@
     }
 
     var $ = kendo.jQuery;
-    var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
 
     var Clipboard = kendo.Class.extend({
@@ -96,19 +95,7 @@
         },
 
         stateRangeRef: function(state) {
-            var rows = [];
-            var cols = [];
-            for (var key in state) {
-                if (key === "mergedCells" || key === "ref") {
-                    continue;
-                }
-                var address = key.split(",");
-                rows.push(address[0]);
-                cols.push(address[1]);
-            }
-            var topLeft = new CellRef(Math.min.apply(null, rows), Math.min.apply(null, cols));
-            var bottomRight = new CellRef(Math.max.apply(null, rows), Math.max.apply(null, cols));
-            return new RangeRef(topLeft, bottomRight);
+            return state.origRef;
         },
 
         destroy: function() {
@@ -126,7 +113,7 @@
                 sheet.range(this.pasteRef()).clear();
             }
             var pasteRef = this.pasteRef();
-            sheet.range(pasteRef).setState(state);
+            sheet.range(pasteRef).setState(state, true);
             sheet.triggerChange({ recalc: true, ref: pasteRef });
         },
 
