@@ -5022,11 +5022,22 @@ var __meta__ = { // jshint ignore:line
                 var noRecordsElement = that.table.parent().children('.' + NORECORDSCLASS);
 
                 if (noRecordsElement.length) {
+                    that.angular("cleanup", function(){
+                        return { elements: noRecordsElement.get() };
+                    });
+
                     noRecordsElement.remove();
                 }
 
                 if (!that.dataSource || !that.dataSource.view().length) {
-                    $(that.noRecordsTemplate({})).insertAfter(that.table);
+                    noRecordsElement = $(that.noRecordsTemplate({})).insertAfter(that.table);
+
+                    that.angular("compile", function(){
+                        return {
+                            elements: noRecordsElement.get(),
+                            data: [{}]
+                        };
+                    });
                 }
             }
         },
