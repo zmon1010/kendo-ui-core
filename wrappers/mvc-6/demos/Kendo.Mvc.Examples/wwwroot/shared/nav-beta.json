@@ -4450,6 +4450,104 @@
     "category": "Layout"
   },
   {
+    "text": "Stock Charts",
+    "name": "financial",
+    "pro": "true",
+    "api": "dataviz/stock-chart",
+    "documentation": {
+       "kendo-ui": "getting-started/dataviz/stockchart/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/stockchart/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/stockchart/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/stockchart/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/charts",
+       "aspnet-mvc": "aspnet-mvc/chart",
+       "jsp-ui": "jsp/chart",
+       "php-ui": "php/chart"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/charts",
+       "aspnet-mvc": "aspnet-mvc/chart",
+       "jsp-ui": "jsp/chart",
+       "php-ui": "php/chart"
+    },
+    "spriteCssClass": "chartStockIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "financial/index",
+        "title": {
+            "kendo-ui": "Example of Kendo UI charts for stock analysis apps",
+            "aspnet-mvc": "Example of ASP.NET MVC charts for stock analysis apps"
+        },
+        "meta": {
+            "kendo-ui": "With this demo for a stock chart, built with Kendo UI, you will be able to find out how Kendo UI chart widgets can be implemented in a financial app.",
+            "aspnet-mvc": "See how you can implement ASP.NET MVC stock chart in your financial app."
+        },
+        "description": {
+            "kendo-ui": "<p> The Kendo UI chart is a powerful data visualization component, which allows you to graphically represent your data. It is useful when you would like to utilize modern browser technologies such as <a href=\"http://en.wikipedia.org/wiki/Scalable_Vector_Graphics\">SVG</a> or <a href=\"https://en.wikipedia.org/wiki/Canvas_element\">Canvas</a> (with a fallback to <a href=\"http://en.wikipedia.org/wiki/Vector_Markup_Language\">VML</a> for older IE versions) for interactive data visualizations. </p> <p>The component offers a variety of chart types such as area, bar, line, scatter, polar, radar, pie and donut, stock (OHLC) and many more.</p> <p>The Stock Chart type, demonstrated in this example, can visualize the price movements of any financial instrument over the time. The chart describes the high, low, opening and closing prices for a single day by combining the Bar and Line charts. The High price is represented by the top of the upper thin line, while the Low price by the bottom of the lower line. The Open and Close prices are represented by the wide part (the body) of the item. If the close price is higher than the open price, the body is hollowed (usually colored white or green), otherwise it is filled (usually colored black or red). <br /> <br /> The financial chart also offers zooming and scrolling functionality, which is exposed by the Navigator pane, located below the main chart.</p><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() function. As a result, the chart is registered as a standard jQuery plugin.</p> <p>The chart can fetch data for its series from either local or remote data source You can find more information about the Kendo UI chart in the <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">product documentation</a>.</p> ",
+            "aspnet-mvc": "<p>The Telerik ASP.NET MVC chart is a powerful data visualization component, which allows you to graphically represent your data. It is useful when you would like to utilize modern browser technologies such as <a href=\"http://en.wikipedia.org/wiki/Scalable_Vector_Graphics\">SVG</a> or <a href=\"https://en.wikipedia.org/wiki/Canvas_element\">Canvas</a> (with a fallback to <a href=\"http://en.wikipedia.org/wiki/Vector_Markup_Language\">VML</a> for older IE versions) for interactive data visualizations. </p> <p>The component offers a variety of chart types such as area, bar, line, scatter, polar, radar, pie and donut, stock (OHLC) and many more.</p> <p>The Stock Chart type, demonstrated in this example, can visualize the price movements of any financial instrument over the time. The chart describes the high, low, opening and closing prices for a single day by combining the Bar and Line charts. The High price is represented by the top of the upper thin line, while the Low price by the bottom of the lower line. The Open and Close prices are represented by the wide part (the body) of the item. If the close price is higher than the open price, the body is hollowed (usually colored white or green), otherwise it is filled (usually colored black or red). <br /> <br /> The financial chart also offers zooming and scrolling functionality, which is exposed by the Navigator pane, located below the main chart.</p> <p>The chart can fetch data for its series from either local or remote data source. You can find more information about the MVC chart in the <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">product documentation</a>.</p> <p><strong><br /> Key Features of Telerik MVC Charts</strong></p> <ul> <li>Various Chart Types</li> <li>A Number of Data Types</li> <li>High Performance</li> <li>Export to PDF</li> <li>Simple-to-Customize Look and Feel</li> <li>Rich Server and Client-side API</li> <li>Server and Client-side Data Binding</li> <li>Built-in Themes</li> <li>Intuitive Built-in Animations</li> <li>Multiple Series and Combination Charts</li> <li>Plot Bands</li> <li>Rich Cross-Browser and Mobile Support</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/charts\">Telerik MVC Charts</a>.</p>"
+        },
+        "requiresServer": "true"
+      },
+      {
+        "text": "Multiple panes",
+        "url": "financial/panes",
+        "title": {
+            "kendo-ui": "Multiple panes in Kendo UI stock chart",
+            "aspnet-mvc": "Multiple panes in ASP.NET MVC stock chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates the use of multiple graph panes in Kendo UI Stock chart.",
+            "aspnet-mvc": "This demo illustrates the use of multiple graph panes in ASP.NET MVC Stock chart."
+        },
+        "description": {
+            "kendo-ui": "<p>This demo illustrates the use of multiple graph panes in Kendo UI Stock chart. You can define a pane through the panes configuration setting and set it&rsquo;s title and height:<br /> <br /> panes: [{ title: \"Value\" }, { name: \"volumePane\", title: \"Volume\", height: 150&nbsp; }]<br /> <br /> If you want to render a specific axis inside the newly created pane with name volumePane use the valueAxis -&gt; pane setting: <br /> <br /> valueAxes: [{ // Default axis line: { visible: false } }, { name: \"volumeAxis\", pane: \"volumePane\", visible: false }] </p>",
+            "aspnet-mvc": "<p>This demo illustrates the use of multiple graph panes in ASP.NET MVC Stock chart. You can define a pane through the Panes collection and set it&rsquo;s a title and height:</p> <p>panes.Add(\"volumePane\").Title(\"Volume\").Height(150);</p> <p>If you want to render a specific axis inside the newly create pane with name volumePane use the ValueAxis -&gt; Pane setting: ValueAxis(axis =&gt; axis.Numeric(\"volumeAxis\").Pane(\"volumePane\").Visible(false))</p>"
+        },
+        "requiresServer": "true"
+      },
+      {
+        "text": "Virtualization",
+        "url": "financial/virtualization",
+        "title": {
+            "kendo-ui": "Virtualization in Kendo UI Stock Chart",
+            "aspnet-mvc": "Virtualization in ASP.NET MVC Stock Chart"
+        },
+        "sources": {
+            "kendo-ui": [{
+                "name": "Sample service",
+                "url": "~/content/service.html"
+            }]
+        },
+        "meta": {
+            "kendo-ui": "In this example we show you how the virtualization works in Kendo UI Stock Chart for rich data visualization.",
+            "aspnet-mvc": "In this example we show you how the virtualization works in ASP.NET MVC  Stock Chart for rich data visualization."
+        },
+        "description": {
+            "kendo-ui": "<p>In this example you can see how the virtualization works in Kendo UI Stock Chart for rich data visualization. To enable it set the dataSource -&gt; serverFiltering value to true.</p>",
+            "aspnet-mvc": "<p>In this example you can see how the virtualization works in ASP.NET MVC Stock Chart for rich data visualization. To enable it you have to set the true parameter of the DataSource -&gt; ServerOperation(true) method.</p>"
+        }
+      },
+      {
+        "text": "PDF Export",
+        "url": "financial/pdf-export",
+        "title": {
+            "kendo-ui": "Kendo UI StockChart saveAsPDF API method"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to save the Stock Chart as PDF directly in the browser."
+        },
+        "description": {
+            "kendo-ui": "<p>This example shows how to configure the PDF export settings of the Kendo UI Chart.</p> <p>You can specify the author, creator, date, fileName, pllPages, paperSize, proxyURL and other options, through the <strong>pdf</strong> setting of the UI component.</p><p>The <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-saveAsPDF\">saveAsPDF</a> or <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportPDF\">exportPDF</a> methods can be used to trigger export operation.</p>",
+            "aspnet-mvc": "<p>This example shows how to configure the PDF export settings of the Telerik MVC Charting helper. </p> <p>You can specify the Author, Creator, Date, FileName, AllPages, PaperSize, ProxyURL and other options, through the <strong>PDF</strong> property of the Chart helper.</p> The <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-saveAsPDF\">saveAsPDF</a> or <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportPDF\">exportPDF</a> methods can be used to trigger export operation.</p>"
+        }
+      }
+    ],
+    "category": "Charts"
+  },
+  {
     "text": "TimePicker",
     "name": "timepicker",
     "api": "web/timepicker",
