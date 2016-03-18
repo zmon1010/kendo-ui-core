@@ -330,6 +330,72 @@
         equal(td.text(), "baz");
     });
 
+    test("cancel editing rebinds the cells",2, function() {
+        $('<script id="columnTemplate" type="text/kendo-x-template"><button data-bind="events:{click: my}">button</button></script>').appendTo(QUnit.fixture);
+        var dom = $("<div data-role='grid' data-editable='inline' data-bind='source:dataSource' data-columns='[{ field: \"foo\" }, { \"template\": kendo.template($(\"#columnTemplate\").html()) } ]' />")
+            .appendTo(QUnit.fixture);
+
+        var observable = kendo.observable({
+            my: function() {
+                ok(true);
+            },
+            dataSource: new kendo.data.DataSource({
+                schema:{
+                    model:{
+                        id: "id"
+                    }
+                },
+                data: [ { id: 1, foo: "foo", bar: "bar" } ]
+            })
+        });
+
+        kendo.bind(dom, observable);
+
+        var grid = dom.data("kendoGrid");
+        var row = grid.items().first();
+
+        grid.editRow(row);
+        grid.dataSource.at(0).set("foo", 42);
+        grid.cancelRow();
+
+        equal(grid.dataSource.at(0).get("foo"), "foo");
+
+        grid.items().first().find("button").click();
+    });
+
+    test("cancel editing rebinds the cells - locked columns",2, function() {
+        $('<script id="columnTemplate" type="text/kendo-x-template"><button data-bind="events:{click: my}">button</button></script>').appendTo(QUnit.fixture);
+        var dom = $("<div data-role='grid' data-editable='inline' data-bind='source:dataSource' data-columns='[{ field: \"foo\" }, { \"locked\": true, \"template\": kendo.template($(\"#columnTemplate\").html()) } ]' />")
+            .appendTo(QUnit.fixture);
+
+        var observable = kendo.observable({
+            my: function() {
+                ok(true);
+            },
+            dataSource: new kendo.data.DataSource({
+                schema:{
+                    model:{
+                        id: "id"
+                    }
+                },
+                data: [ { id: 1, foo: "foo", bar: "bar" } ]
+            })
+        });
+
+        kendo.bind(dom, observable);
+
+        var grid = dom.data("kendoGrid");
+        var row = grid.items().first();
+
+        grid.editRow(row);
+        grid.dataSource.at(0).set("foo", 42);
+        grid.cancelRow();
+
+        equal(grid.dataSource.at(0).get("foo"), "foo");
+
+        grid.items().first().find("button").click();
+    });
+
 })();
 
 

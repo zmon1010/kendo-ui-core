@@ -3298,7 +3298,6 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     that._displayRow(that.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]"));
                 }
-
             }
         },
 
@@ -3336,6 +3335,12 @@ var __meta__ = { // jshint ignore:line
                 newRow = $((isAlt ? that.altRowTemplate : that.rowTemplate)(model));
                 row.replaceWith(newRow);
 
+                that.trigger("itemChange", { item: newRow, data: model, ns: ui });
+
+                if (related && related.length) {
+                    that.trigger("itemChange", { item: related, data: model, ns: ui });
+                }
+
                 var angularElements = newRow;
                 var angularData = [{ dataItem: model }];
 
@@ -3350,6 +3355,7 @@ var __meta__ = { // jshint ignore:line
                         data: angularData
                     };
                 });
+
 
                 if (isSelected && that.options.selectable) {
                     that.select(newRow.add(related));
