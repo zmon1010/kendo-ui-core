@@ -905,6 +905,60 @@ function baseLineChartTests(seriesName, TChart) {
     })();
 
     (function() {
+        var box = new Box2D(0, 0, 100, 100);
+        var point;
+
+        function setupChart(options) {
+            chart = createChart({
+                series: [kendo.deepExtend({
+                    name: "Value",
+                    type: seriesName,
+                    data: [{ value: 10, noteText: "A" }]
+                }, options)]
+            });
+
+            point = chart._plotArea.charts[0].points[0];
+        }
+
+         module(chartName + " / Note", {
+            setup: function() {
+
+            },
+            teardown: function() {
+                destroyChart();
+            }
+        });
+
+        test("reflows note in marker box", function() {
+            setupChart({
+                markers: {
+                    visible: true
+                }
+            });
+            point.note.reflow = function(targetBox) {
+                equal(point.markerBox().getHash(), targetBox.getHash());
+            };
+            point.reflow(box);
+        });
+
+        test("reflows note in marker center box if markers are not visible", function() {
+            setupChart({
+                markers: {
+                    visible: false
+                }
+            });
+            point.note.reflow = function(targetBox) {
+                var center = point.markerBox().center();
+
+                equal(new Box2D(center.x, center.y, center.x, center.y).getHash(), targetBox.getHash());
+            };
+            point.reflow(box);
+        });
+
+
+    })();
+
+    (function() {
         var CATEGORY_AXIS_Y = 2;
         var points;
         var getCategorySlot = function(categoryIndex) {

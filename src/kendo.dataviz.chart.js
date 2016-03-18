@@ -5642,7 +5642,7 @@ var __meta__ = { // jshint ignore:line
             if (point.note) {
                 var noteTargetBox = point.markerBox();
 
-                if (!point.marker) {
+                if (!(options.markers.visible && options.markers.size)) {
                     center = noteTargetBox.center();
                     noteTargetBox = Box2D(center.x, center.y, center.x, center.y);
                 }
