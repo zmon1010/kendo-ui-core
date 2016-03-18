@@ -42,7 +42,7 @@
 
         formulaInput.value("bar");
 
-        equal(element.html(), "bar");
+        equal(formulaInput.value(), "bar");
     });
 
     test("value gets element value", function() {

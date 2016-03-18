@@ -121,9 +121,10 @@
 
         activateEditor(editor, { rect: { top: 0, left: 0 } });
 
-        barInput.focus().html(value).trigger("input");
+        bar.formulaInput.value(value);
+        barInput.focus().trigger("input");
 
-        equal(input.element.html(), value);
+        equal(input.value(), value);
     });
 
     test("cellInput is synced with barInput when typing", function() {
@@ -135,9 +136,10 @@
         activateEditor(editor, { rect: { top: 0, left: 0 } });
         editor.focus();
 
-        cellInput.html(value).trigger("input");
+        input.value(value);
+        cellInput.trigger("input");
 
-        equal(barInput.html(), value);
+        equal(bar.formulaInput.value(), value);
     });
 
     test("toggleTooltip method shows formulainput tooltip", 2, function() {
