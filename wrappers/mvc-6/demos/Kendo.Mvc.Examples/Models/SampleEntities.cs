@@ -323,7 +323,7 @@ namespace Kendo.Mvc.Examples.Models
 
             modelBuilder.Entity<Intraday>(entity =>
             {
-                entity.ForSqliteToTable("Intraday");
+                entity.ForSqliteToTable("Intradays");
 
                 entity.HasIndex(e => e.Date).HasName("IX_Intraday_Date");
 
@@ -811,7 +811,7 @@ namespace Kendo.Mvc.Examples.Models
         public virtual DbSet<GanttResourceAssignment> GanttResourceAssignments { get; set; }
         public virtual DbSet<GanttResource> GanttResources { get; set; }
         public virtual DbSet<GanttTask> GanttTasks { get; set; }
-        public virtual DbSet<Intraday> Intraday { get; set; }
+        public virtual DbSet<Intraday> Intradays { get; set; }
         public virtual DbSet<MeetingAttendee> MeetingAttendees { get; set; }
         public virtual DbSet<Meeting> Meetings { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
