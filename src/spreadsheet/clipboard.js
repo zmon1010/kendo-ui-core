@@ -220,8 +220,17 @@
         return state;
     }
 
+    function setStateData(state, row, col, value) {
+        var data = state.data || (state.data = []);
+        if (!data[row]) {
+            data[row] = [];
+        }
+        data[row][col] = value;
+        state[row + "," + col] = value;
+    }
+
     function parseHTML(tbody) {
-        var state = { ref: new CellRef(0,0,0), mergedCells: [] };
+        var state = { ref: new CellRef(0,0,0), mergedCells: [], data: [], foreign: true };
 
         tbody.find("tr").each(function(rowIndex, tr) {
             $(tr).find("td").each(function(colIndex, td) {
@@ -262,10 +271,9 @@
 
         tbody.find("tr").each(function(rowIndex, tr) {
             $(tr).find("td").each(function(colIndex, td) {
-                var key = rowIndex + "," + colIndex;
                 var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
                 var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
-                state[key] = cellState($(td));
+                setStateData(state, rowIndex, colIndex, cellState($(td)));
                 if (rowspan || colspan) {
                     var startCol = String.fromCharCode(65 + colIndex);
                     var endCol = String.fromCharCode(65 + colIndex + colspan);
@@ -279,17 +287,15 @@
     }
 
     function parseTSV(data) {
-        var state = {ref:  new CellRef(0,0,0), mergedCells: []};
+        var state = { ref: new CellRef(0,0,0), mergedCells: [], data: [], foreign: true };
         if (data.indexOf("\t") === -1 && data.indexOf("\n") == -1) {
-            state["0,0"] = {
-                value: data
-            };
+            setStateData(state, 0, 0, { value: data });
         } else {
             var rows = data.split("\n");
             for (var ri = 0; ri < rows.length; ri++) {
                 var cols = rows[ri].split("\t");
                 for (var ci = 0; ci < cols.length; ci++) {
-                    state[ri + "," + ci] = {value: cols[ci]};
+                    setStateData(state, ri, ci, { value: cols[ci] });
                 }
             }
         }

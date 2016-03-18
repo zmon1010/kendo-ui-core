@@ -5,6 +5,22 @@
     var clipboard;
     var defaults = {"prefix":"","name":"Spreadsheet","toolbar":true,"rows":200,"columns":10,"rowHeight":20,"columnWidth":64,"headerHeight":20,"headerWidth":32};
 
+    // check for the existence of `props` in `obj` (deep).  does not
+    // mind if `obj` contains additional properties, but those
+    // specified in 'props' must be present and have same values.
+    function hasProps(obj, props) {
+        for (var i in props) {
+            if (Object.prototype.hasOwnProperty.call(props, i)) {
+                var val = props[i];
+                if (Array.isArray(val) || (typeof val == "object" && val != null)) {
+                    hasProps(obj[i], val);
+                } else {
+                    equal(obj[i], val);
+                }
+            }
+        }
+    }
+
     module("Clipboard API", {
         setup: function() {
             var element = $("<div>").appendTo(QUnit.fixture);
@@ -82,159 +98,44 @@
             html: "<table><trbody><tr><td style='font-size: 8px'>foo</td></tr></tbody></table>"
         });
 
-        equal(state["0,0"].fontSize, 8);
+        equal(state.data[0][0].fontSize, 8);
     });
 
     test("parseHTML handles merged cells with rowspan", function() {
         var state = clipboard.parse({
             html: '<table> <tbody> <tr> <td>0,0</td> <td rowspan="2">0,1 - 1,1</td> <td>0,2</td> </tr> <tr> <td>1,0</td> <td>1,2</td> </tr> </tbody> </table>'
         });
-        var newState = {};
-        delete state.ref;
-        Object.keys(state).sort().forEach(function(key){
-            if(key != "mergedCells"){
-                newState[key] = {value: state[key].value};
-            }else{
-                newState[key] = state[key];
-            }
+        hasProps(state, {
+            mergedCells: [ "B1:B2" ],
+            data: [
+                [ {value:"0,0"}, {value:"0,1 - 1,1"}, {value:"0,2"} ],
+                [ {value:"1,0"}, {value:null}, {value:"1,2"} ]
+            ]
         });
-        var targetState = {
-            "mergedCells" : ["B1:B2"],
-            "0,0" : {
-                "value" : "0,0",
-            },
-            "0,1" : {
-                "value" : "0,1 - 1,1",
-            },
-            "0,2" : {
-                "value" : "0,2",
-            },
-            "1,0" : {
-                "value" : "1,0",
-            },
-            "1,1" : {
-                "value" : null,
-            },
-            "1,2" : {
-                "value" : "1,2",
-            }
-        };
-        var expected = {};
-        Object.keys(targetState).sort().forEach(function(key){
-            if(key != "mergedCells"){
-                expected[key] = {value: targetState[key].value};
-            }else{
-                expected[key] = targetState[key];
-            }
-        });
-
-        equal(JSON.stringify(newState), JSON.stringify(expected));
     });
     test("parseHTML handles merged cells with colspan", function() {
         var state = clipboard.parse({
             html: '<table> <tbody> <tr><td>0,0</td><td colspan="2">0,1 - 0,2</td><td>0,3</td></tr><tr><td>1,0</td><td>1,1</td><td>1,2</td><td>1,3</td></tr> </tbody> </table>'
         });
-        var newState = {};
-        delete state.ref;
-        Object.keys(state).sort().forEach(function(key){
-            if(key != "mergedCells"){
-                newState[key] = {value: state[key].value};
-            }else{
-                newState[key] = state[key];
-            }
+        hasProps(state, {
+            mergedCells: [ "B1:C1" ],
+            data: [
+                [ {value:"0,0"}, {value:"0,1 - 0,2"}, {value:null}, {value:"0,3"} ],
+                [ {value:"1,0"}, {value:"1,1"}, {value: "1,2"}, {value:"1,3"} ],
+            ]
         });
-        var targetState = {
-            "mergedCells" : ["B1:C1"],
-            "0,0" : {
-                "value" : "0,0"
-            },
-            "1,0" : {
-                "value" : "1,0"
-            },
-            "0,1" : {
-                "value" : "0,1 - 0,2"
-            },
-            "1,1" : {
-                "value" : "1,1"
-            },
-            "0,2" : {
-                "value" : null
-            },
-            "1,2" : {
-                "value" : "1,2"
-            },
-            "0,3" : {
-                "value" : "0,3"
-            },
-            "1,3" : {
-                "value" : "1,3"
-            }
-        };
-
-        var expected = {};
-        Object.keys(targetState).sort().forEach(function(key){
-            if(key != "mergedCells"){
-                expected[key] = {value: targetState[key].value};
-            }else{
-                expected[key] = targetState[key];
-            }
-        });
-
-        equal(JSON.stringify(newState), JSON.stringify(expected));
     });
     test("parseHTML handles merged cells with colspan and rowspan", function() {
         var state = clipboard.parse({
             html: '<table> <td>0,0</td> <td colspan="2" rowspan="3">0,1-0,2:2,1-2,2</td> </tr> <tr> <td>1,0</td> </tr> <tr> <td >2,0</td> </tr> </tbody> </table>'
         });
-        var newState = {};
-        delete state.ref;
-        Object.keys(state).sort().forEach(function(key){
-            if(key != "mergedCells"){
-                newState[key] = {value: state[key].value};
-            }else{
-                newState[key] = state[key];
-            }
+        hasProps(state, {
+            mergedCells: [ "B1:C3" ],
+            data: [
+                [ {value:"0,0"}, {value:"0,1-0,2:2,1-2,2"}, {value:null} ],
+                [ {value:"1,0"}, {value:null}, {value:null} ],
+                [ {value:"2,0"}, {value:null}, {value:null} ]
+            ]
         });
-        var targetState = {
-            "mergedCells" : ["B1:C3"],
-            "0,0" : {
-                "value" : "0,0"
-            },
-            "1,0" : {
-                "value" : "1,0"
-            },
-            "2,0" : {
-                "value" : "2,0"
-            },
-            "0,1" : {
-                "value" : "0,1-0,2:2,1-2,2"
-            },
-            "1,1" : {
-                "value" : null
-            },
-            "2,1" : {
-                "value" : null
-            },
-            "0,2" : {
-                "value" : null
-            },
-            "1,2" : {
-                "value" : null
-            },
-            "2,2" : {
-                "value" : null
-            }
-        };
-
-        var expected = {};
-        Object.keys(targetState).sort().forEach(function(key){
-            if(key != "mergedCells"){
-                expected[key] = {value: targetState[key].value};
-            }else{
-                expected[key] = targetState[key];
-            }
-        });
-
-        equal(JSON.stringify(newState), JSON.stringify(expected));
     });
 })();
