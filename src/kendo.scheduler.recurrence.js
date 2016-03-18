@@ -432,7 +432,6 @@ var __meta__ = { // jshint ignore:line
                     kendoDate.setTime(date, -start, true);
 
                     diff = Math.ceil(date / kendoDate.MS_PER_DAY);
-                    //diff = Math.floor(date / kendoDate.MS_PER_DAY);
                     excess = intervalExcess(diff, interval);
 
                     if (excess !== 0) {
