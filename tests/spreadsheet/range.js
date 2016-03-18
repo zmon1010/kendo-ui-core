@@ -599,8 +599,8 @@
                 dataType: "number"
             });
 
-        var state = sheet.range("A1").getState()["0,0"];
-        var state2 = sheet.range("A2").getState()["1,0"];
+        var state = sheet.range("A1").getState().data[0][0];
+        var state2 = sheet.range("A2").getState().data[0][0];
 
 
         state.validation.value = false;
@@ -811,8 +811,8 @@
 
         var state = range.getState("input");
 
-        ok(state["0,0"].value !== undefined);
-        ok(state["0,0"].formula !== undefined);
+        ok(state.data[0][0].value !== undefined);
+        ok(state.data[0][0].formula !== undefined);
     });
 
     test("get state returns an object that may be restored", function() {

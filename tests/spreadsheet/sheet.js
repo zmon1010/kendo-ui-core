@@ -594,7 +594,7 @@
 
         var range = sheet.range("A1");
         var validation = range.validation();
-        var validationState = range.getState()["0,0"].validation;
+        var validationState = range.getState().data[0][0].validation;
 
         equal(validation.comparerType, "lessThan");
         equal(validation.from, 0);

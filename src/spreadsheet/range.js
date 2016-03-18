@@ -608,7 +608,7 @@
 
             var data = state.data;
             this.forEachCell(function(row, col, cell) {
-                var cellState = state[row + "," + col] = {};
+                var cellState = {};
                 var dr = row - topLeft.row;
                 var dc = col - topLeft.col;
                 if (!data[dr]) {

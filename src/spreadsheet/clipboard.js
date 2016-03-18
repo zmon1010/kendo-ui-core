@@ -67,7 +67,7 @@
         intersectsMerged: function() {
             var sheet = this.workbook.activeSheet();
             var state = this.parse(this._external);
-            this.origin = state.origRef;
+            this.origin = getSourceRef(state);
             var ref = this.pasteRef();
             return !ref.eq(sheet.unionWithMerged(ref));
         },
@@ -105,7 +105,7 @@
                 state = this.contents;
             } else {
                 state = this.parse(this._external);
-                this.origin = state.origRef;
+                this.origin = getSourceRef(state);
                 sheet.range(this.pasteRef()).clear();
             }
             var pasteRef = this.pasteRef();
@@ -122,7 +122,7 @@
         },
 
         parse: function(data) {
-            var state = {ref:  new CellRef(0,0,0), mergedCells: []};
+            var state = newState();
             if (data.html) {
                 var doc = this.iframe.contentWindow.document;
                 doc.open();
@@ -131,13 +131,11 @@
                 var table = $(doc).find("table:first");
                 if (table.length) {
                     state = parseHTML(table.find("tbody:first"));
+                } else if (!data.plain) {
+                    var element = $(doc.body).find(":not(style)");
+                    setStateData(state, 0, 0, cellState(element.text()));
                 } else {
-                    if (!data.plain) {
-                        var element = $(doc.body).find(":not(style)");
-                        state["0,0"] = cellState(element.text());
-                    } else {
-                        state = parseTSV(data.plain);
-                    }
+                    state = parseTSV(data.plain);
                 }
             } else {
                 state = parseTSV(data.plain);
@@ -158,6 +156,32 @@
         }
     });
     kendo.spreadsheet.Clipboard = Clipboard;
+
+    function newState() {
+        var ref = new CellRef(0, 0, 0);
+        return {
+            ref         : ref,
+            mergedCells : [],
+            data        : [],
+            foreign     : true,
+            origRef     : ref.toRangeRef()
+        };
+    }
+
+    function setStateData(state, row, col, value) {
+        var data = state.data || (state.data = []);
+        if (!data[row]) {
+            data[row] = [];
+        }
+        data[row][col] = value;
+        var br = state.origRef.bottomRight;
+        br.row = Math.max(br.row, row);
+        br.col = Math.max(br.col, col);
+    }
+
+    function getSourceRef(state) {
+        return state.origRef;
+    }
 
     function stripStyle(style) {
         return style.replace(/^-(?:ms|moz|webkit)-/, "");
@@ -220,17 +244,8 @@
         return state;
     }
 
-    function setStateData(state, row, col, value) {
-        var data = state.data || (state.data = []);
-        if (!data[row]) {
-            data[row] = [];
-        }
-        data[row][col] = value;
-        state[row + "," + col] = value;
-    }
-
     function parseHTML(tbody) {
-        var state = { ref: new CellRef(0,0,0), mergedCells: [], data: [], foreign: true };
+        var state = newState();
 
         tbody.find("tr").each(function(rowIndex, tr) {
             $(tr).find("td").each(function(colIndex, td) {
@@ -287,7 +302,7 @@
     }
 
     function parseTSV(data) {
-        var state = { ref: new CellRef(0,0,0), mergedCells: [], data: [], foreign: true };
+        var state = newState();
         if (data.indexOf("\t") === -1 && data.indexOf("\n") == -1) {
             setStateData(state, 0, 0, { value: data });
         } else {
