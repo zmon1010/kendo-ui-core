@@ -113,6 +113,7 @@
             ]
         });
     });
+
     test("parseHTML handles merged cells with colspan", function() {
         var state = clipboard.parse({
             html: '<table> <tbody> <tr><td>0,0</td><td colspan="2">0,1 - 0,2</td><td>0,3</td></tr><tr><td>1,0</td><td>1,1</td><td>1,2</td><td>1,3</td></tr> </tbody> </table>'
@@ -125,6 +126,7 @@
             ]
         });
     });
+
     test("parseHTML handles merged cells with colspan and rowspan", function() {
         var state = clipboard.parse({
             html: '<table> <td>0,0</td> <td colspan="2" rowspan="3">0,1-0,2:2,1-2,2</td> </tr> <tr> <td>1,0</td> </tr> <tr> <td >2,0</td> </tr> </tbody> </table>'
@@ -137,5 +139,23 @@
                 [ {value:"2,0"}, {value:null}, {value:null} ]
             ]
         });
+    });
+
+    test("Pasting from filtered range does not include hidden values", function(){
+        sheet.range("A1:A3").values([
+            [ 1 ], [ 2 ], [ 3 ]
+        ]).filter({
+            column: 0,
+            filter: new kendo.spreadsheet.CustomFilter({
+                criteria: [
+                    { operator: "neq", value: 2 }
+                ]
+            })
+        }).select();
+        clipboard.copy();
+        sheet.range("B1").select();
+        clipboard.paste();
+        equal(sheet.range("B1").value(), 1);
+        equal(sheet.range("B2").value(), 3);
     });
 })();
