@@ -185,7 +185,9 @@
             if (!this._dialog) {
                 this._dialog = $("<div class='k-spreadsheet-window k-action-window' />")
                     .addClass(this.options.className || "")
-                    .append(this.options.template)
+                    .append(kendo.template(this.options.template)({
+                        messages: kendo.spreadsheet.messages.dialogs || MESSAGES
+                    }))
                     .appendTo(document.body)
                     .kendoWindow({
                         scrollable: false,
@@ -394,8 +396,8 @@
                     "data-bind='source: formats, value: format' />" +
 
                 "<div class='k-action-buttons'>" +
-                    "<button class='k-button k-primary' data-bind='click: apply'>" + MESSAGES.apply + "</button>" +
-                    "<button class='k-button' data-bind='click: close'>" + MESSAGES.cancel + "</button>" +
+                    "<button class='k-button k-primary' data-bind='click: apply'>#: messages.apply #</button>" +
+                    "<button class='k-button' data-bind='click: close'>#: messages.cancel #</button>" +
                 "</div>"
         },
         _generateFormats: function() {
@@ -503,18 +505,28 @@
         options: {
             className: "k-spreadsheet-message",
             title: "",
+            messageId: "",
             text: "",
             template:
                 "<div class='k-spreadsheet-message-content' data-bind='text: text' />" +
                 "<div class='k-action-buttons'>" +
-                    "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
+                    "<button class='k-button k-primary' data-bind='click: close'>" +
+                        "#= messages.okText #" +
+                    "</button>" +
                 "</div>"
         },
         open: function() {
             SpreadsheetDialog.fn.open.call(this);
+
+            var options = this.options;
+            var text = options.text;
+
+            if (options.messageId) {
+                text = kendo.getter(options.messageId, true)(kendo.spreadsheet.messages.dialogs);
+            }
+
             kendo.bind(this.dialog().element, {
-                text: this.options.text,
-                okText: MESSAGES.okText,
+                text: text,
                 close: this.close.bind(this)
             });
         }
@@ -539,7 +551,7 @@
 
             this.list = new kendo.ui.StaticList(ul, {
                 dataSource: new kendo.data.DataSource({ data: fonts }),
-                template: "#:data#",
+                template: "#: data #",
                 value: defaultFont,
                 change: this.apply.bind(this)
             });
@@ -578,7 +590,7 @@
 
             this.list = new kendo.ui.StaticList(ul, {
                 dataSource: new kendo.data.DataSource({ data: sizes }),
-                template: "#:data#",
+                template: "#: data #",
                 value: defaultSize,
                 change: this.apply.bind(this)
             });
@@ -619,8 +631,8 @@
             width: 177,
             template:   "<div></div>" +
                         "<div class='k-action-buttons'>" +
-                            "<button class='k-button k-primary' data-bind='click: apply'>" + MESSAGES.apply + "</button>" +
-                            "<button class='k-button' data-bind='click: close'>" + MESSAGES.cancel + "</button>" +
+                            "<button class='k-button k-primary' data-bind='click: apply'>#: messages.apply #</button>" +
+                            "<button class='k-button' data-bind='click: close'>#: messages.cancel #</button>" +
                         "</div>"
         },
         apply: function() {
@@ -672,8 +684,8 @@
         options: {
             template:   "<div></div>" +
                         "<div class='k-action-buttons'>" +
-                            "<button class='k-button k-primary' data-bind='click: apply'>" + MESSAGES.apply + "</button>" +
-                            "<button class='k-button' data-bind='click: close'>" + MESSAGES.cancel + "</button>" +
+                            "<button class='k-button k-primary' data-bind='click: apply'>#: messages.apply #</button>" +
+                            "<button class='k-button' data-bind='click: close'>#: messages.cancel #</button>" +
                         "</div>"
         },
         apply: function() {
@@ -1064,7 +1076,7 @@
             '#=message#<div class="k-callout k-callout-n"></div></div>',
             template:
                 '<div class="k-edit-form-container">' +
-                    '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.criteria + ':</label></div>' +
+                    '<div class="k-edit-label"><label>#: messages.validationDialog.labels.criteria #:</label></div>' +
                     '<div class="k-edit-field">' +
                         '<select data-role="dropdownlist" ' +
                             'data-text-field="name" ' +
@@ -1073,75 +1085,75 @@
                     '</div>' +
 
                     '<div data-bind="visible: isNumber">' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.comparer + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.comparer #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.min + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.min #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="' + MESSAGES.validationDialog.labels.min + '" placeholder="e.g. 10" class="k-textbox" data-bind="value: from, enabled: isNumber" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.min #" placeholder="e.g. 10" class="k-textbox" data-bind="value: from, enabled: isNumber" required="required" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
-                            '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.max + ':</label></div>' +
+                            '<div class="k-edit-label"><label>#: messages.validationDialog.labels.max #:</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input name="' + MESSAGES.validationDialog.labels.max + '" placeholder="e.g. 100" class="k-textbox" data-bind="value: to, enabled: showToForNumber" required="required" />' +
+                                '<input name="#: messages.validationDialog.labels.max #" placeholder="e.g. 100" class="k-textbox" data-bind="value: to, enabled: showToForNumber" required="required" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isText">' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.comparer + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.comparer #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.value #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="' + MESSAGES.validationDialog.labels.value + '" class="k-textbox" data-bind="value: from, enabled: isText" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.value #" class="k-textbox" data-bind="value: from, enabled: isText" required="required" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isDate">' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.comparer + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.comparer #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<select data-role="dropdownlist" ' +
                                 'data-text-field="name" ' +
                                 'data-value-field="type" ' +
                                 'data-bind="value: comparer, source: comparers" />' +
                         '</div>' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.start + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.start #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="' + MESSAGES.validationDialog.labels.start + '" class="k-textbox" data-bind="value: from, enabled: isDate" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.start #" class="k-textbox" data-bind="value: from, enabled: isDate" required="required" />' +
                         '</div>' +
                         '<div data-bind="visible: showTo">' +
-                            '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.end + ':</label></div>' +
+                            '<div class="k-edit-label"><label>#: messages.validationDialog.labels.end #:</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input name="' + MESSAGES.validationDialog.labels.end + '" class="k-textbox" data-bind="value: to, enabled: showToForDate" required="required" />' +
+                                '<input name="#: messages.validationDialog.labels.end #" class="k-textbox" data-bind="value: to, enabled: showToForDate" required="required" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isCustom">' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.value #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="' + MESSAGES.validationDialog.labels.value + '" class="k-textbox" data-bind="value: from, enabled: isCustom" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.value #" class="k-textbox" data-bind="value: from, enabled: isCustom" required="required" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="visible: isList">' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.value + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.value #:</label></div>' +
                         '<div class="k-edit-field">' +
-                            '<input name="' + MESSAGES.validationDialog.labels.value + '" class="k-textbox" data-bind="value: from, enabled: isList" required="required" />' +
+                            '<input name="#: messages.validationDialog.labels.value #" class="k-textbox" data-bind="value: from, enabled: isList" required="required" />' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="invisible: isAny">' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.ignoreBlank + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.ignoreBlank #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input type="checkbox" name="ignoreBlank" id="ignoreBlank" class="k-checkbox" data-bind="checked: ignoreBlank"/>' +
                             '<label class="k-checkbox-label" for="ignoreBlank"></label>' +
@@ -1150,42 +1162,42 @@
 
                     '<div data-bind="invisible: isAny">' +
                         '<div class="k-action-buttons"></div>' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.onInvalidData + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.onInvalidData #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input type="radio" id="validationTypeReject" name="validationType" value="reject" data-bind="checked: type" class="k-radio" />' +
                             '<label for="validationTypeReject" class="k-radio-label">' +
-                                 MESSAGES.validationDialog.labels.rejectInput +
+                                 "#: messages.validationDialog.labels.rejectInput #" +
                             '</label> ' +
                             '<input type="radio" id="validationTypeWarning" name="validationType" value="warning" data-bind="checked: type" class="k-radio" />' +
                             '<label for="validationTypeWarning" class="k-radio-label">' +
-                                 MESSAGES.validationDialog.labels.showWarning +
+                                 "#: messages.validationDialog.labels.showWarning #" +
                             '</label>' +
                         '</div>' +
                     '</div>' +
 
                     '<div data-bind="invisible: isAny">' +
-                        '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.showHint + ':</label></div>' +
+                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.showHint #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input type="checkbox" name="useCustomMessages" id="useCustomMessages" class="k-checkbox" data-bind="checked: useCustomMessages" />' +
                             '<label class="k-checkbox-label" for="useCustomMessages"></label>' +
                         '</div>' +
 
                         '<div data-bind="visible: useCustomMessages">' +
-                            '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.hintTitle + ':</label></div>' +
+                            '<div class="k-edit-label"><label>#: messages.validationDialog.labels.hintTitle #:</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input class="k-textbox" placeholder="' + MESSAGES.validationDialog.placeholders.typeTitle + '" data-bind="value: hintTitle" />' +
+                                '<input class="k-textbox" placeholder="#: messages.validationDialog.placeholders.typeTitle #" data-bind="value: hintTitle" />' +
                             '</div>' +
-                            '<div class="k-edit-label"><label>' + MESSAGES.validationDialog.labels.hintMessage + ':</label></div>' +
+                            '<div class="k-edit-label"><label>#: messages.validationDialog.labels.hintMessage #:</label></div>' +
                             '<div class="k-edit-field">' +
-                                '<input class="k-textbox" placeholder="' + MESSAGES.validationDialog.placeholders.typeMessage + '" data-bind="value: hintMessage" />' +
+                                '<input class="k-textbox" placeholder="#: messages.validationDialog.placeholders.typeMessage #" data-bind="value: hintMessage" />' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
 
                     '<div class="k-action-buttons">' +
-                        '<button class="k-button" data-bind="visible: showRemove, click: remove">' + MESSAGES.remove + '</button>' +
-                        '<button class="k-button k-primary" data-bind="click: apply">' + MESSAGES.apply + '</button>' +
-                        '<button class="k-button" data-bind="click: close">' + MESSAGES.cancel + '</button>' +
+                        '<button class="k-button" data-bind="visible: showRemove, click: remove">#: messages.remove #</button>' +
+                        '<button class="k-button k-primary" data-bind="click: apply">#: messages.apply #</button>' +
+                        '<button class="k-button" data-bind="click: close">#: messages.cancel #</button>' +
                     "</div>" +
                 "</div>"
         },
@@ -1340,12 +1352,12 @@
             },
             width: 520,
             template:
-                "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.fileName + ":</label></div>" +
+                "<div class='k-edit-label'><label>#: messages.exportAsDialog.labels.fileName #:</label></div>" +
                 "<div class='k-edit-field'>" +
                     "<input class='k-textbox' data-bind='value: name' />" +
                 "</div>" +
                 "<div >" +
-                    "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.saveAsType + ":</label></div>" +
+                    "<div class='k-edit-label'><label>#: messages.exportAsDialog.labels.saveAsType #:</label></div>" +
                     "<div class='k-edit-field'>" +
                     "<select data-role='dropdownlist' class='k-file-format' " +
                         "data-text-field='description' " +
@@ -1354,21 +1366,21 @@
                     "</div>" +
                 "</div>" +
                 "<div class='export-config' data-bind='visible: showPdfOptions'>" +
-                    "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.exportArea + ":</label></div>" +
+                    "<div class='k-edit-label'><label>#: messages.exportAsDialog.labels.exportArea #:</label></div>" +
                     "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-text-field='text' " +
                             "data-value-field='area' " +
                             "data-bind='value: pdf.area, source: pdf.areas' />" +
                     "</div>" +
-                    "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.paperSize+ ":</label></div>" +
+                    "<div class='k-edit-label'><label>#: messages.exportAsDialog.labels.paperSize#:</label></div>" +
                     "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-text-field='text' " +
                             "data-value-field='value' " +
                             "data-bind='value: pdf.paperSize, source: pdf.paperSizes' />" +
                     "</div>" +
-                    "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.margins + ":</label></div>" +
+                    "<div class='k-edit-label'><label>#: messages.exportAsDialog.labels.margins #:</label></div>" +
                     "<div class='k-edit-field'>" +
                         "<select data-role='dropdownlist' class='k-file-format' " +
                             "data-value-primitive='true'" +
@@ -1376,23 +1388,23 @@
                             "data-value-field='value' " +
                             "data-bind='value: pdf.margin, source: pdf.margins' />" +
                       "</div>" +
-                      "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.orientation + ":</label></div>" +
+                      "<div class='k-edit-label'><label>#: messages.exportAsDialog.labels.orientation #:</label></div>" +
                       "<div class='k-edit-field'>" +
                           "<input type='radio' id='k-orientation-portrait' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='false' /><label class='k-orientation-label k-orientation-portrait-label' for='k-orientation-portrait'></label>" +
                           "<input type='radio' id='k-orientation-landscape' name='orientation' data-type='boolean' data-bind='checked: pdf.landscape' value='true' /><label class='k-orientation-label k-orientation-landscape-label' for='k-orientation-landscape'></label>" +
                      "</div>" +
-                     "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.print + ":</label></div>" +
+                     "<div class='k-edit-label'><label>#: messages.exportAsDialog.labels.print #:</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<input class='k-checkbox' id='guidelines' type='checkbox' data-bind='checked: pdf.guidelines'/><label class='k-checkbox-label' for='guidelines'>" + MESSAGES.exportAsDialog.labels.guidelines+ "</label>" +
+                         "<input class='k-checkbox' id='guidelines' type='checkbox' data-bind='checked: pdf.guidelines'/><label class='k-checkbox-label' for='guidelines'>#: messages.exportAsDialog.labels.guidelines#</label>" +
                      "</div>" +
-                     "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.scale+ ":</label></div>" +
+                     "<div class='k-edit-label'><label>#: messages.exportAsDialog.labels.scale #:</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<input class='k-checkbox' id='fitWidth' type='checkbox' data-bind='checked: pdf.fitWidth'/><label class='k-checkbox-label' for='fitWidth'>" + MESSAGES.exportAsDialog.labels.fit+ "</label>" +
+                         "<input class='k-checkbox' id='fitWidth' type='checkbox' data-bind='checked: pdf.fitWidth'/><label class='k-checkbox-label' for='fitWidth'>#: messages.exportAsDialog.labels.fit #</label>" +
                      "</div>" +
-                     "<div class='k-edit-label'><label>" + MESSAGES.exportAsDialog.labels.center+ ":</label></div>" +
+                     "<div class='k-edit-label'><label>#: messages.exportAsDialog.labels.center #:</label></div>" +
                      "<div class='k-edit-field'>" +
-                         "<input class='k-checkbox' id='hCenter' type='checkbox' data-bind='checked: pdf.hCenter'/><label class='k-checkbox-label' for='hCenter'>" + MESSAGES.exportAsDialog.labels.horizontally + "</label>" +
-                         "<input class='k-checkbox' id='vCenter' type='checkbox' data-bind='checked: pdf.vCenter'/><label class='k-checkbox-label' for='vCenter'>" + MESSAGES.exportAsDialog.labels.vertically +   "</label>" +
+                         "<input class='k-checkbox' id='hCenter' type='checkbox' data-bind='checked: pdf.hCenter'/><label class='k-checkbox-label' for='hCenter'>#: messages.exportAsDialog.labels.horizontally #</label>" +
+                         "<input class='k-checkbox' id='vCenter' type='checkbox' data-bind='checked: pdf.vCenter'/><label class='k-checkbox-label' for='vCenter'>#: messages.exportAsDialog.labels.vertically #</label>" +
                      "</div>" +
                      "<div class='k-page-orientation' data-bind='css: {k-page-landscape: pdf.landscape}'>" +
                          "<div class='k-margins-horizontal'></div>" +
@@ -1400,8 +1412,8 @@
                      "</div>" +
                    "</div>" +
                    "<div class='k-action-buttons'>" +
-                       "<button class='k-button k-primary' data-bind='click: apply'>" + MESSAGES.save + "</button>" +
-                       "<button class='k-button' data-bind='click: close'>" + MESSAGES.cancel + "</button>" +
+                       "<button class='k-button k-primary' data-bind='click: apply'>#: messages.save #</button>" +
+                       "<button class='k-button' data-bind='click: close'>#: messages.cancel #</button>" +
                 "</div>"
         },
         apply: function() {
@@ -1416,29 +1428,13 @@
     kendo.spreadsheet.dialogs.register("exportAs", ExportAsDialog);
 
     var ModifyMergedDialog = MessageDialog.extend({
-        init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
-        },
-        options: {
-            template: MESSAGES.modifyMergedDialog.errorMessage +
-                '<div class="k-action-buttons">' +
-                    "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
-                "</div>"
-        }
+        options: { messageId: "modifyMergedDialog.errorMessage" }
     });
 
     kendo.spreadsheet.dialogs.register("modifyMerged", ModifyMergedDialog);
 
     var OverflowDialog = MessageDialog.extend({
-        init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
-        },
-        options: {
-            template: MESSAGES.overflowDialog.errorMessage +
-                '<div class="k-action-buttons">' +
-                "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
-                "</div>"
-        }
+        options: { messageId: "overflowDialog.errorMessage" }
     });
 
     kendo.spreadsheet.dialogs.register("overflow", OverflowDialog);
@@ -1449,12 +1445,15 @@
         },
         options: {
             title: MESSAGES.useKeyboardDialog.title,
-            template: MESSAGES.useKeyboardDialog.errorMessage +
-                "<div>Ctrl+C " + MESSAGES.useKeyboardDialog.labels.forCopy + "</div>" +
-                "<div>Ctrl+X " + MESSAGES.useKeyboardDialog.labels.forCut + "</div>" +
-                "<div>Ctrl+V " + MESSAGES.useKeyboardDialog.labels.forPaste + "</div>" +
+            template:
+                "#: messages.useKeyboardDialog.errorMessage #" +
+                "<div>Ctrl+C #: messages.useKeyboardDialog.labels.forCopy #</div>" +
+                "<div>Ctrl+X #: messages.useKeyboardDialog.labels.forCut #</div>" +
+                "<div>Ctrl+V #: messages.useKeyboardDialog.labels.forPaste #</div>" +
                 '<div class="k-action-buttons">' +
-                    "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
+                    "<button class='k-button k-primary' data-bind='click: close'>" +
+                        "#= messages.okText #" +
+                    "</button>" +
                 "</div>"
         }
     });
@@ -1462,15 +1461,7 @@
     kendo.spreadsheet.dialogs.register("useKeyboard", UseKeyboardDialog);
 
     var UnsupportedSelectionDialog = MessageDialog.extend({
-        init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
-        },
-        options: {
-            template: MESSAGES.unsupportedSelectionDialog.errorMessage +
-                '<div class="k-action-buttons">' +
-                    "<button class='k-button k-primary' data-bind='click: close, text: okText' />" +
-                "</div>"
-        }
+        options: { messageId: "unsupportedSelectionDialog.errorMessage" }
     });
 
     kendo.spreadsheet.dialogs.register("unsupportedSelection", UnsupportedSelectionDialog);
