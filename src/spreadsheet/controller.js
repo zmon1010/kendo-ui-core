@@ -64,6 +64,7 @@
     var EDITOR_EVENTS = {
         "esc": "onEditorEsc",
         "enter": "onEditorBlur",
+        "alt+enter": "insertNewline",
         "shift+enter": "onEditorBlur",
         "tab": "onEditorBlur",
         "shift+tab": "onEditorBlur"
@@ -839,6 +840,10 @@
             this.editor.deactivate();
 
             this.clipboardElement.focus();
+        },
+
+        insertNewline: function() {
+            this.editor.insertNewline();
         },
 
         onEditorBlur: function(_, action) {

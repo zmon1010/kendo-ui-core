@@ -49,7 +49,8 @@
 
             element.addClass(FormulaInput.classNames.wrapper)
                 .attr("contenteditable", true)
-                .attr("spellcheck", false);
+                .attr("spellcheck", false)
+                .css("white-space", "pre");
 
             if (this.options.autoScale) {
                 element.on("input", this.scale.bind(this));
@@ -377,7 +378,7 @@
             computedStyles.top = -3333;
             computedStyles.left = -3333;
 
-            this._span = $("<span/>").css(computedStyles).insertAfter(this.element);
+            this._span = $("<span style='white-space: pre'/>").css(computedStyles).insertAfter(this.element);
         },
 
         _tooltip: function() {
@@ -584,28 +585,49 @@
 
         scale: function() {
             var element = this.element;
-            var width;
+            var width, height;
 
             if (!this._span) {
                 this._textContainer();
             }
 
-            this._span.html(element.html());
+            this._span.html("a" + element.html() + "a");
 
             width = this._span.width() + this.options.scalePadding;
+            height = this._span.height();
 
             if (width > element.width()) {
                 element.width(width);
             }
+            if (height > element.height()) {
+                element.height(height);
+            }
         },
 
         _value: function(value) {
-            this.element.text(value);
+            // HACK needed for https://github.com/telerik/kendo/issues/4953 — a
+            // final newline is invisible so if you type "foo\n" (press
+            // Alt-Enter to get the newline), the cursor will still stay on the
+            // same line.  Curiously, this happens both in FF and Chrome — must
+            // be one of those "essential complexity" bugs.
+            //
+            // The only way I could convince browsers to display the newline and
+            // move the cursor on the empty line, is to add something after it
+            // (must be text; an empty HTML element won't help).  We use the
+            // wonderful Unicode 200B (ZERO-WIDTH-SPACE).  The downsides are:
+            //
+            // 1. we have to discard this character in the getter (below), so
+            // users won't be able to actually input this character.
+            //
+            // 2. if the cursor moves past it, it'll require pressing left arrow
+            // twice to move back.
+            value = value == null ? "" : value + "";
+            this.element.text(value.replace(/\u200b/g, "") + "\u200b");
         },
 
         value: function(value) {
             if (value === undefined) {
-                return this.element.text();
+                return this.element.text().replace(/\u200b/g, "");
             }
 
             this._value(value);
@@ -638,9 +660,7 @@
                 // if an user deleted the initial =, we should discard
                 // any highlighting.  we still need to restore caret
                 // position thereafter.
-                if (this.element.html() != value) {
-                    this.element.text(value);
-                }
+                this._value(value);
 
                 // also make sure the completion popup goes away
                 if (this.popup) {

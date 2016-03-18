@@ -122,12 +122,16 @@
 
             e.mod = Mac ? e.metaKey : e.ctrlKey;
 
+            if (e.altKey) {
+                eventKey += "alt+";
+            }
+
             if (e.shiftKey) {
-               eventKey += "shift+";
+                eventKey += "shift+";
             }
 
             if (e.ctrlKey) {
-               eventKey += "ctrl+";
+                eventKey += "ctrl+";
             }
 
             eventKey += name;
