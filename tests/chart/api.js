@@ -1158,6 +1158,34 @@
             chart.toggleHighlight(showHighlight, "foo");
         });
 
+        test("toggles chart points highlight using function", 4, function() {
+            setupChart({
+                series: [{
+                    type: "column",
+                    name: "column",
+                    data: [1, 2]
+                }, {
+                    type: "line",
+                    name: "line",
+                    data: [3, 4]
+                }]
+            });
+
+            var showHighlight = true;
+            chart._highlight.togglePointHighlight = function(point, show) {
+                equal(point.value, 1);
+                equal(show, showHighlight);
+            };
+
+            chart.toggleHighlight(showHighlight, function(point) {
+                return point.value === 1;
+            });
+            showHighlight = false;
+            chart.toggleHighlight(showHighlight, function(point) {
+                return point.value === 1;
+            });
+        });
+
     })();
 
     // ------------------------------------------------------------

@@ -495,25 +495,29 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        toggleHighlight: function(show, options) {
+        toggleHighlight: function(show, filter) {
             var plotArea = this._plotArea;
             var highlight = this._highlight;
             var firstSeries = (plotArea.srcSeries || plotArea.series || [])[0];
             var seriesName, categoryName, points;
 
-            if (isPlainObject(options)) {
-                seriesName = options.series;
-                categoryName = options.category;
-            }  else {
-                seriesName = categoryName = options;
-            }
-
-            if (firstSeries.type === DONUT) {
-                points = pointByCategoryName(plotArea.pointsBySeriesName(seriesName), categoryName);
-            } else if (firstSeries.type === PIE || firstSeries.type === FUNNEL) {
-                points = pointByCategoryName((plotArea.charts[0] || {}).points, categoryName);
+            if (kendo.isFunction(filter)) {
+                points = plotArea.filterPoints(filter);
             } else {
-                points = plotArea.pointsBySeriesName(seriesName);
+                if (isPlainObject(filter)) {
+                    seriesName = filter.series;
+                    categoryName = filter.category;
+                }  else {
+                    seriesName = categoryName = filter;
+                }
+
+                if (firstSeries.type === DONUT) {
+                    points = pointByCategoryName(plotArea.pointsBySeriesName(seriesName), categoryName);
+                } else if (firstSeries.type === PIE || firstSeries.type === FUNNEL) {
+                    points = pointByCategoryName((plotArea.charts[0] || {}).points, categoryName);
+                } else {
+                    points = plotArea.pointsBySeriesName(seriesName);
+                }
             }
 
             if (points) {
@@ -9942,6 +9946,12 @@ var __meta__ = { // jshint ignore:line
         },
 
         pointsBySeriesName: function(name) {
+            return this.filterPoints(function(point) {
+                return point.series.name === name;
+            });
+        },
+
+        filterPoints: function(callback) {
             var charts = this.charts,
                 result = [],
                 points, point, i, j, chart;
@@ -9951,7 +9961,7 @@ var __meta__ = { // jshint ignore:line
                 points = chart.points;
                 for (j = 0; j < points.length; j++) {
                     point = points[j];
-                    if (point && point.series.name === name) {
+                    if (point && callback(point)) {
                         result.push(point);
                     }
                 }
