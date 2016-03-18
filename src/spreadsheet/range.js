@@ -592,7 +592,7 @@
             var state = {
                 ref     : topLeft,
                 data    : [],
-                origRef : this._ref.toRangeRef()
+                origRef : this._ref
             };
             var properties;
             if (!propertyName) {
@@ -645,7 +645,8 @@
                         if (isPaste && sheet.isHiddenColumn(state.ref.col + dc)) {
                             return;
                         }
-                        var range = sheet.range(row, col);
+                        var range = isPaste ? sheet.range(row, col)
+                            : sheet.range(origin.row + dr, origin.col + dc);
                         for (var property in cellState) {
                             if (property != "value") {
                                 // make sure value comes last (after the loop),
