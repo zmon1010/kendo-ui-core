@@ -368,6 +368,17 @@
             equal(dateAxis.categoryIndex(new Date("2012/02/05"), null, true), 4);
         });
 
+        tzTest("Sofia", "returns correct index for days baseUnit during DST", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2016/03/26"), new Date("2016/03/27"), new Date("2016/03/28")
+                ],
+                baseUnit: "days"
+            });
+
+            equal(dateAxis.categoryIndex(new Date("2016/03/28"), null), 2);
+        });
+
         // ------------------------------------------------------------
         module("Date Category Axis / Min-Max values", {
             setup: function() {

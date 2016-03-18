@@ -13215,17 +13215,19 @@ var __meta__ = { // jshint ignore:line
         if (baseUnit == MONTHS) {
             index = (date.getMonth() - startDate.getMonth() + (date.getFullYear() - startDate.getFullYear()) * 12) +
                 timeIndex(date,  new Date(date.getFullYear(), date.getMonth()), DAYS) / new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-        } else if (baseUnit === YEARS) {
+        } else if (baseUnit == YEARS) {
             index = date.getFullYear() - startDate.getFullYear() + dateIndex(date, new Date(date.getFullYear(), 0), MONTHS, 1)  / 12;
-        } else {
+        } else if (baseUnit == DAYS) {
             index = timeIndex(date, startDate, baseUnit);
+        } else {
+            index = dateDiff(date, start) /  TIME_PER_UNIT[baseUnit];
         }
 
         return index / baseUnitStep;
     }
 
     function timeIndex(date, start, baseUnit) {
-        return dateDiff(date, start) /  TIME_PER_UNIT[baseUnit];
+        return absoluteDateDiff(date, start) /  TIME_PER_UNIT[baseUnit];
     }
 
     function singleItemOrArray(array) {
