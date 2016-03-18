@@ -429,9 +429,10 @@ var __meta__ = { // jshint ignore:line
                         modified = true;
                     }
                 } else if (frequency === "daily") {
-                    kendoDate.setTime(date, -start);
+                    kendoDate.setTime(date, -start, true);
 
-                    diff = Math.floor(date / kendoDate.MS_PER_DAY);
+                    diff = Math.ceil(date / kendoDate.MS_PER_DAY);
+                    //diff = Math.floor(date / kendoDate.MS_PER_DAY);
                     excess = intervalExcess(diff, interval);
 
                     if (excess !== 0) {

@@ -623,6 +623,22 @@
         equal(events.length, 4);
     });
 
+    test("DAILY occurrences method honours INTERVAL=6 (DST change)", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "uid",
+            id: 1,
+            title: "Title",
+            start: new Date(2016, 0, 1, 5, 45),
+            end: new Date(2016, 0, 1, 5, 55),
+            recurrenceRule: "FREQ=DAILY;INTERVAL=6;UNTIL=20170101T000000Z"
+        });
+
+        var events = occurrences(schedulerEvent, new Date(2016, 1, 28), new Date(2016, 3, 9, 23, 59, 59));
+
+        equal(events.length, 7);
+        deepEqual(events[5].start, new Date(2016, 2, 31, 5, 45));
+    });
+
     test("DAILY occurrences method honours BYDAY and INTERVAL", function() {
         var schedulerEvent = new SchedulerEvent({
             uid: "id",
