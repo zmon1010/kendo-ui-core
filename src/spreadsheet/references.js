@@ -719,7 +719,10 @@
     var UnionRef = Ref.extend({
         init: function UnionRef(refs){
             this.refs = refs;
-            this.length = this.refs.length;
+            this.length = refs.length;
+        },
+        clone: function() {
+            return new UnionRef(this.refs.slice());
         },
         intersect: function(ref) {
             var a = [];

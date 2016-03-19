@@ -1181,7 +1181,6 @@
 
         _compileFormula: function(row, col, f) {
             f = f.replace(/^=/, "");
-
             f = kendo.spreadsheet.calc.parseFormula(this._name(), row, col, f);
             return kendo.spreadsheet.calc.compile(f);
         },
@@ -1190,48 +1189,86 @@
             var ci, start, end;
 
             for (ci = topLeft.col; ci <= bottomRight.col; ci++) {
+                if (this._skipHiddenCells && this.isHiddenColumn(ci)) {
+                    continue;
+                }
                 start = this._grid.index(topLeft.row, ci);
                 end = this._grid.index(bottomRight.row, ci);
-                for (var index = start, row = topLeft.row; index <= end; ++index, ++row) {
+                for (var index = start, ri = topLeft.row; index <= end; ++index, ++ri) {
+                    if (this._skipHiddenCells && this.isHiddenRow(ri)) {
+                        continue;
+                    }
                     // Even if it's the same formula in multiple cells, we
                     // need to have different Formula objects, hence cloning
                     // it.  Don't worry, clone() is fast.
-                    value = value.clone(this._name(), row, ci);
+                    value = value.clone(this._name(), ri, ci);
                     this._properties.set(property, index, index, value);
                 }
             }
-            return value;
         },
 
         _set: function(ref, name, value) {
-            var topLeft = this._grid.normalize(ref.topLeft);
-            var bottomRight = this._grid.normalize(ref.bottomRight);
-            var ci, start, end;
+            var self = this;
+            var topLeft = self._grid.normalize(ref.topLeft);
+            var bottomRight = self._grid.normalize(ref.bottomRight);
+            var ci;
+
+            function apply(start, end) {
+                self._properties.set(name, start, end, value);
+                if (name == "formula") {
+                    // removing a formula, must clear value.
+                    self._properties.set("value", start, end, null);
+                }
+            }
+
+            function namedFunctionBecauseJSHint(p) {
+                var start = self._grid.index(p.start, ci);
+                var end = self._grid.index(p.end, ci);
+                apply(start, end);
+            }
 
             if (value && name == "formula") {
                 if (typeof value == "string") {
                     // get Formula object.  we don't care about handling errors
                     // here since it won't be called interactively.
-                    value = this._compileFormula(topLeft.row, topLeft.col, value);
+                    value = self._compileFormula(topLeft.row, topLeft.col, value);
                 }
-
-                value = this._copyValuesInRange(topLeft, bottomRight, value, "formula");
-
+                self._copyValuesInRange(topLeft, bottomRight, value, "formula");
             } else if (value && name == "validation") {
-                value = this._compileValidation(topLeft.row, topLeft.col, value);
-                value = this._copyValuesInRange(topLeft, bottomRight, value, "validation");
-
+                value = self._compileValidation(topLeft.row, topLeft.col, value);
+                self._copyValuesInRange(topLeft, bottomRight, value, "validation");
             } else {
+                var part = self._skipHiddenCells &&
+                    self._partitionRows(topLeft.row, bottomRight.row);
                 for (ci = topLeft.col; ci <= bottomRight.col; ci++) {
-                    start = this._grid.index(topLeft.row, ci);
-                    end = this._grid.index(bottomRight.row, ci);
-                    this._properties.set(name, start, end, value);
-                    if (name == "formula") {
-                        // removing a formula, must clear value.
-                        this._properties.set("value", start, end, null);
+                    if (part) {
+                        if (self.isHiddenColumn(ci)) {
+                            continue;
+                        }
+                        part.forEach(namedFunctionBecauseJSHint);
+                    } else {
+                        apply(self._grid.index(topLeft.row, ci),
+                              self._grid.index(bottomRight.row, ci));
                     }
                 }
             }
+        },
+
+        _partitionRows: function(start, end) {
+            if (start > end) {
+                return [];
+            }
+            if (this.isHiddenRow(start)) {
+                return this._partitionRows(start + 1, end);
+            }
+            for (var i = start + 1; i <= end; ++i) {
+                if (this.isHiddenRow(i)) {
+                    return [
+                        { start: start, end: i - 1 }
+                    ].concat(this._partitionRows(i + 1, end));
+                }
+            }
+            return [{ start: start, end: end }];
         },
 
         _get: function(ref, name) {
@@ -1418,6 +1455,16 @@
             }, { activeCell: true, selection: true });
 
             return mergedRef;
+        },
+
+        withSkipHidden: function(skipHidden, f) {
+            var save = this._skipHiddenCells;
+            this._skipHiddenCells = skipHidden;
+            try {
+                return f();
+            } finally {
+                this._skipHiddenCells = save;
+            }
         }
     });
 

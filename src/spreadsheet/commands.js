@@ -24,7 +24,7 @@
         },
         range: function(range) {
             if (range !== undefined) {
-                this._range = range;
+                this._range = range.clone().skipHiddenCells();
             }
 
             return this._range;

@@ -30,24 +30,35 @@
             this._ref = ref;
         },
 
+        clone: function() {
+            return new Range(this._ref.clone(), this._sheet);
+        },
+
+        skipHiddenCells: function() {
+            this._skipHiddenCells = true;
+            return this;
+        },
+
         _normalize: function(ref) {
             return this._sheet._grid.normalize(ref);
         },
 
         _set: function(name, value, noTrigger) {
-            var sheet = this._sheet;
-            this._ref.forEach(function(ref) {
-                //TODO: set validation formula as OBJECT or JSON STRINGIFY?!!
-                sheet._set(ref.toRangeRef(), name, value);
+            var self = this;
+            var sheet = self._sheet;
+            sheet.withSkipHidden(self._skipHiddenCells, function(){
+                self._ref.forEach(function(ref) {
+                    sheet._set(ref.toRangeRef(), name, value);
+                });
             });
             if (!noTrigger) {
                 sheet.triggerChange({
                     recalc : name == "formula" || name == "value" || name == "validation",
                     value  : value,
-                    ref    : this._ref
+                    ref    : self._ref
                 });
             }
-            return this;
+            return self;
         },
 
         _get: function(name) {
