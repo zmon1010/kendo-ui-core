@@ -359,18 +359,22 @@
 
     var FormatCellsDialog = SpreadsheetDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.formatCellsDialog || MESSAGES;
+            var defaultOptions = {
+                title: messages.title,
+                categories: [
+                    { type: "number", name: messages.categories.number },
+                    { type: "currency", name: messages.categories.currency },
+                    { type: "date", name: messages.categories.date }
+                ]
+            };
+
+            SpreadsheetDialog.fn.init.call(this, $.extend(defaultOptions, options));
 
             this._generateFormats();
         },
         options: {
-            title: MESSAGES.formatCellsDialog.title,
             className: "k-spreadsheet-format-cells",
-            categories: [
-                { type: "number", name: MESSAGES.formatCellsDialog.categories.number },
-                { type: "currency", name: MESSAGES.formatCellsDialog.categories.currency },
-                { type: "date", name: MESSAGES.formatCellsDialog.categories.date }
-            ],
             template:
                 "<div class='k-root-tabs' data-role='tabstrip' " +
                      "data-text-field='name' " +
@@ -380,7 +384,7 @@
                 "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
 
                 "<script type='text/x-kendo-template' id='format-item-template'>" +
-                    "#: data.name #" +
+                    "\\#: data.name \\#" +
                 "</script>" +
 
                 "<select data-role='dropdownlist' class='k-format-filter' " +
@@ -536,12 +540,13 @@
 
     var FontFamilyDialog = SpreadsheetDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.fontFamilyDialog || MESSAGES;
+
+            SpreadsheetDialog.fn.init.call(this, $.extend({ title: messages.title }, options));
 
             this._list();
         },
         options: {
-            title: MESSAGES.fontFamilyDialog.title,
             template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
@@ -575,12 +580,13 @@
 
     var FontSizeDialog = SpreadsheetDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.fontSizeDialog || MESSAGES;
+
+            SpreadsheetDialog.fn.init.call(this, $.extend({ title: messages.title }, options));
 
             this._list();
         },
         options: {
-            title: MESSAGES.fontSizeDialog.title,
             template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
@@ -614,7 +620,9 @@
 
     var BordersDialog = SpreadsheetDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.bordersDialog || MESSAGES;
+
+            SpreadsheetDialog.fn.init.call(this, $.extend({ title: messages.title }, options));
 
             this.element = this.dialog().element;
             this._borderPalette();
@@ -627,7 +635,6 @@
             kendo.bind(this.element.find(".k-action-buttons"), this.viewModel);
         },
         options: {
-            title: MESSAGES.bordersDialog.title,
             width: 177,
             template:   "<div></div>" +
                         "<div class='k-action-buttons'>" +
@@ -751,22 +758,26 @@
 
     var AlignmentDialog = SpreadsheetDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.alignmentDialog || MESSAGES;
+            var defaultOptions = {
+                title: messages.title,
+                buttons: [
+                    { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: messages.buttons.justtifyLeft },
+                    { property: "textAlign",     value: "center",  iconClass: "justify-center", text: messages.buttons.justifyCenter },
+                    { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: messages.buttons.justifyRight },
+                    { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: messages.buttons.justifyFull },
+                    { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: messages.buttons.alignTop },
+                    { property: "verticalAlign", value: "center",  iconClass: "align-middle",   text: messages.buttons.alignMiddle },
+                    { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: messages.buttons.alignBottom }
+                ]
+            };
+
+            SpreadsheetDialog.fn.init.call(this, $.extend(defaultOptions, options));
 
             this._list();
         },
         options: {
-            title: "Alignment",
-            template: "<ul class='k-list k-reset'></ul>",
-            buttons: [
-                { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: MESSAGES.alignmentDialog.buttons.justtifyLeft },
-                { property: "textAlign",     value: "center",  iconClass: "justify-center", text: MESSAGES.alignmentDialog.buttons.justifyCenter },
-                { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: MESSAGES.alignmentDialog.buttons.justifyRight },
-                { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: MESSAGES.alignmentDialog.buttons.justifyFull },
-                { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: MESSAGES.alignmentDialog.buttons.alignTop },
-                { property: "verticalAlign", value: "center",  iconClass: "align-middle",   text: MESSAGES.alignmentDialog.buttons.alignMiddle },
-                { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: MESSAGES.alignmentDialog.buttons.alignBottom }
-            ]
+            template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
             var ul = this.dialog().element.find("ul");
@@ -800,19 +811,23 @@
 
     var MergeDialog = SpreadsheetDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.mergeDialog || MESSAGES;
+            var defaultOptions = {
+                title: messages.title,
+                buttons: [
+                    { value: "cells",        iconClass: "merge-cells",        text: messages.buttons.mergeCells },
+                    { value: "horizontally", iconClass: "merge-horizontally", text: messages.buttons.mergeHorizontally },
+                    { value: "vertically",   iconClass: "merge-vertically",   text: messages.buttons.mergeVertically },
+                    { value: "unmerge",      iconClass: "normal-layout",      text: messages.buttons.unmerge }
+                ]
+            };
+
+            SpreadsheetDialog.fn.init.call(this, $.extend(defaultOptions, options));
 
             this._list();
         },
         options: {
-            title: MESSAGES.mergeDialog.title,
-            template: "<ul class='k-list k-reset'></ul>",
-            buttons: [
-                { value: "cells",        iconClass: "merge-cells",        text: MESSAGES.mergeDialog.buttons.mergeCells },
-                { value: "horizontally", iconClass: "merge-horizontally", text: MESSAGES.mergeDialog.buttons.mergeHorizontally },
-                { value: "vertically",   iconClass: "merge-vertically",   text: MESSAGES.mergeDialog.buttons.mergeVertically },
-                { value: "unmerge",      iconClass: "normal-layout",      text: MESSAGES.mergeDialog.buttons.unmerge }
-            ]
+            template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
             var ul = this.dialog().element.find("ul");
@@ -844,19 +859,23 @@
 
     var FreezeDialog = SpreadsheetDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.freezeDialog || MESSAGES;
+            var defaultOptions = {
+                title: messages.title,
+                buttons: [
+                    { value: "panes",    iconClass: "freeze-panes",  text: messages.buttons.freezePanes },
+                    { value: "rows",     iconClass: "freeze-row",    text: messages.buttons.freezeRows },
+                    { value: "columns",  iconClass: "freeze-col",    text: messages.buttons.freezeColumns },
+                    { value: "unfreeze", iconClass: "normal-layout", text: messages.buttons.unfreeze }
+                ]
+            };
+
+            SpreadsheetDialog.fn.init.call(this, $.extend(defaultOptions, options));
 
             this._list();
         },
         options: {
-            title: MESSAGES.freezeDialog.title,
-            template: "<ul class='k-list k-reset'></ul>",
-            buttons: [
-                { value: "panes",    iconClass: "freeze-panes",  text: MESSAGES.freezeDialog.buttons.freezePanes },
-                { value: "rows",     iconClass: "freeze-row",    text: MESSAGES.freezeDialog.buttons.freezeRows },
-                { value: "columns",  iconClass: "freeze-col",    text: MESSAGES.freezeDialog.buttons.freezeColumns },
-                { value: "unfreeze", iconClass: "normal-layout", text: MESSAGES.freezeDialog.buttons.unfreeze }
-            ]
+            template: "<ul class='k-list k-reset'></ul>"
         },
         _list: function() {
             var ul = this.dialog().element.find("ul");
@@ -1042,38 +1061,43 @@
 
     var ValidationDialog = SpreadsheetDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.validationDialog || MESSAGES;
+            var defaultOptions = {
+                title: messages.title,
+                hintMessage: messages.hintMessage,
+                hintTitle: messages.hintTitle,
+                criteria: [
+                    { type: "any", name: messages.criteria.any },
+                    { type: "number", name: messages.criteria.number },
+                    { type: "text", name: messages.criteria.text },
+                    { type: "date", name: messages.criteria.date },
+                    { type: "custom", name: messages.criteria.custom },
+                    { type: "list", name: messages.criteria.list }
+                ],
+                comparers: [
+                    { type: "greaterThan", name: messages.comparers.greaterThan },
+                    { type: "lessThan",    name: messages.comparers.lessThan },
+                    { type: "between",     name: messages.comparers.between },
+                    { type: "notBetween",  name: messages.comparers.notBetween },
+                    { type: "equalTo",     name: messages.comparers.equalTo },
+                    { type: "notEqualTo",  name: messages.comparers.notEqualTo },
+                    { type: "greaterThanOrEqualTo", name: messages.comparers.greaterThanOrEqualTo },
+                    { type: "lessThanOrEqualTo",    name: messages.comparers.lessThanOrEqualTo }
+                ],
+                comparerMessages: messages.comparerMessages
+            };
+
+            SpreadsheetDialog.fn.init.call(this, $.extend(defaultOptions, options));
         },
         options: {
             width: 420,
-            title: MESSAGES.validationDialog.title,
             criterion: "any",
             type: "reject",
             ignoreBlank: true,
-            hintMessage: MESSAGES.validationDialog.hintMessage,
-            hintTitle: MESSAGES.validationDialog.hintTitle,
             useCustomMessages: false,
-            criteria: [
-                { type: "any", name: "Any value" },
-                { type: "number", name: "Number" },
-                { type: "text", name: "Text" },
-                { type: "date", name: "Date" },
-                { type: "custom", name: "Custom Formula" },
-                { type: "list", name: "List" }
-            ],
-            comparers: [
-                { type: "greaterThan", name: MESSAGES.validationDialog.comparers.greaterThan },
-                { type: "lessThan",    name: MESSAGES.validationDialog.comparers.lessThan },
-                { type: "between",     name: MESSAGES.validationDialog.comparers.between },
-                { type: "notBetween",  name: MESSAGES.validationDialog.comparers.notBetween },
-                { type: "equalTo",     name: MESSAGES.validationDialog.comparers.equalTo },
-                { type: "notEqualTo",  name: MESSAGES.validationDialog.comparers.notEqualTo },
-                { type: "greaterThanOrEqualTo", name: MESSAGES.validationDialog.comparers.greaterThanOrEqualTo },
-                { type: "lessThanOrEqualTo",    name: MESSAGES.validationDialog.comparers.lessThanOrEqualTo }
-            ],
-            comparerMessages: MESSAGES.validationDialog.comparerMessages,
-            errorTemplate: '<div class="k-widget k-tooltip k-tooltip-validation" style="margin:0.5em"><span class="k-icon k-warning"> </span>' +
-            '#=message#<div class="k-callout k-callout-n"></div></div>',
+            errorTemplate:
+                '<div class="k-widget k-tooltip k-tooltip-validation" style="margin:0.5em"><span class="k-icon k-warning"> </span>' +
+                '#= message #<div class="k-callout k-callout-n"></div></div>',
             template:
                 '<div class="k-edit-form-container">' +
                     '<div class="k-edit-label"><label>#: messages.validationDialog.labels.criteria #:</label></div>' +
@@ -1260,7 +1284,9 @@
 
     var ExportAsDialog = SpreadsheetDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.exportAsDialog || MESSAGES;
+
+            SpreadsheetDialog.fn.init.call(this, $.extend({ title: messages.title }, options));
 
             this.viewModel = kendo.observable({
                 title: this.options.title,
@@ -1293,15 +1319,16 @@
                 apply: this.apply.bind(this),
                 close: this.close.bind(this)
             });
+
             this.viewModel.bind("change", function(e) {
                 if(e.field === "extension") {
                     this.set("showPdfOptions", this.extension === ".pdf" ? true : false);
                 }
             });
+
             kendo.bind(this.dialog().element, this.viewModel);
         },
         options: {
-            title: MESSAGES.exportAsDialog.title,
             name: "Workbook",
             extension: ".xlsx",
             fileFormats: [{
@@ -1441,10 +1468,11 @@
 
     var UseKeyboardDialog = MessageDialog.extend({
         init: function(options) {
-            SpreadsheetDialog.fn.init.call(this, options);
+            var messages = kendo.spreadsheet.messages.dialogs.useKeyboardDialog || MESSAGES;
+
+            SpreadsheetDialog.fn.init.call(this, $.extend({ title: messages.title }, options));
         },
         options: {
-            title: MESSAGES.useKeyboardDialog.title,
             template:
                 "#: messages.useKeyboardDialog.errorMessage #" +
                 "<div>Ctrl+C #: messages.useKeyboardDialog.labels.forCopy #</div>" +
