@@ -297,9 +297,7 @@
                     } else if (value != null) {
                         var range = sheet.range(ref);
 
-                        if (type == "str") {
-                            range.formula(value);
-                        } else if (!range._get("formula")) {
+                        if (!range._get("formula")) {
                             // Check for "shared" formulas before applying a value.
                             if (!type || type == "n") {
                                 value = parseFloat(value);

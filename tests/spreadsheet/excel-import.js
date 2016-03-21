@@ -601,33 +601,6 @@
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
 
-    test("reads string formula", function() {
-        var STRINGS = [];
-        var STYLES = {};
-        var SHEET = `
-            <worksheet>
-              <sheetData>
-                <row r="1">
-                  <c r="B1" t="str">
-                    <v>SUM(A1:A1000)</v>
-                  </c>
-                </row>
-              </sheetData>
-            </worksheet>
-        `;
-
-        addFile("xl/worksheets/sheet1.xml", SHEET);
-        var sheet = mockSheet({
-            range: ref => ({
-                value: () => null,
-                formula: val => equal(val, "SUM(A1:A1000)"),
-                _get: () => true
-            })
-        });
-
-        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
-    });
-
     test("reads column widths", function() {
         var STRINGS = [];
         var STYLES = {};
