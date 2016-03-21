@@ -27681,6 +27681,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Configures the margins, which will be added to the popup size, if its position should end up being next to the viewport edges. By default, the adjustment amount in both dimensions is zero.The property takes effect only if collision is set to "fit" for the respective dimension (width or height).</description>
+            <name>adjustSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>Specifies the element that will be used as an anchor. The widget will open next to that element.</description>
             <name>anchor</name>
             <rtexprvalue>true</rtexprvalue>
@@ -27691,6 +27697,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <name>appendTo</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Configures how the popup should behave when it cannot be properly displayed and fully visible, if its origin and position settings are obeyed.Valid values are: "fit", "flip", "flip fit" and "fit flip". "Fit" allows the popup to be shifted (moved) until it is fully visible. "Flip" allows the popup to switch its position, according to its anchor. If two words are used, the first one applies to the horizontal dimension and the second one - to the vertical dimension. If one word is used, the setting is applied to both dimensions.</description>
+            <name>collision</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>Specifies how to position the popup element based on achor point. The value is

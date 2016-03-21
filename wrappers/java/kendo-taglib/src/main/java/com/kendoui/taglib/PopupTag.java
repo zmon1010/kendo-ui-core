@@ -67,6 +67,14 @@ public class PopupTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("open", value.getBody());
     }
 
+    public java.lang.Object getAdjustSize() {
+        return (java.lang.Object)getProperty("adjustSize");
+    }
+
+    public void setAdjustSize(java.lang.Object value) {
+        setProperty("adjustSize", value);
+    }
+
     public java.lang.Object getAnchor() {
         return (java.lang.Object)getProperty("anchor");
     }
@@ -81,6 +89,14 @@ public class PopupTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setAppendTo(java.lang.Object value) {
         setProperty("appendTo", value);
+    }
+
+    public java.lang.String getCollision() {
+        return (java.lang.String)getProperty("collision");
+    }
+
+    public void setCollision(java.lang.String value) {
+        setProperty("collision", value);
     }
 
     public java.lang.String getOrigin() {

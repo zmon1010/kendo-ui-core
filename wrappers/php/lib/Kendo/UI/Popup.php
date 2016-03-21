@@ -9,6 +9,15 @@ class Popup extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
+    * Configures the margins, which will be added to the popup size, if its position should end up being next to the viewport edges. By default, the adjustment amount in both dimensions is zero.The property takes effect only if collision is set to "fit" for the respective dimension (width or height).
+    * @param  $value
+    * @return \Kendo\UI\Popup
+    */
+    public function adjustSize($value) {
+        return $this->setProperty('adjustSize', $value);
+    }
+
+    /**
     * Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.
     * @param \Kendo\UI\PopupAnimation|array $value
     * @return \Kendo\UI\Popup
@@ -33,6 +42,15 @@ class Popup extends \Kendo\UI\Widget {
     */
     public function appendTo($value) {
         return $this->setProperty('appendTo', $value);
+    }
+
+    /**
+    * Configures how the popup should behave when it cannot be properly displayed and fully visible, if its origin and position settings are obeyed.Valid values are: "fit", "flip", "flip fit" and "fit flip". "Fit" allows the popup to be shifted (moved) until it is fully visible. "Flip" allows the popup to switch its position, according to its anchor. If two words are used, the first one applies to the horizontal dimension and the second one - to the vertical dimension. If one word is used, the setting is applied to both dimensions.
+    * @param string $value
+    * @return \Kendo\UI\Popup
+    */
+    public function collision($value) {
+        return $this->setProperty('collision', $value);
     }
 
     /**
