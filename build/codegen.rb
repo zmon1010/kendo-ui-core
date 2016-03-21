@@ -280,6 +280,7 @@ namespace :generate do
             markdown = FileList[
                 'docs/api/javascript/ui/button.md',
                 'docs/api/javascript/ui/datepicker.md',
+                'docs/api/javascript/ui/datetimepicker.md',
                 'docs/api/javascript/ui/numerictextbox.md',
                 'docs/api/javascript/ui/timepicker.md',
                 'docs/api/javascript/ui/window.md'
