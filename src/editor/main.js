@@ -270,6 +270,15 @@
             kendo.notify(that);
         },
 
+        setOptions: function(options) {
+            var editor = this;
+ 
+            Widget.fn.setOptions.call(editor, options);
+            if(options.tools) {
+                editor.toolbar.bindTo(editor);
+            }
+        },
+
         _endTyping: function() {
             var keyboard = this.keyboard;
 

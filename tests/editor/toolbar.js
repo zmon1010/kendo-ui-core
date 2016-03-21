@@ -8,6 +8,7 @@ editor_module("editor toolbar", {
     },
     teardown: function() {
         editor.trigger("select");
+        removeMocksIn(editor.toolbar);
     }
 }, {
     tools: [
@@ -182,6 +183,13 @@ test('formatting tool displays known values', function() {
     editor.trigger('select');
     equal($('.k-formatting').closest('.k-widget').find('.k-input').text(), 'Paragraph');
 });
+
+    test('toolbar is bound once again in new tools are provided', function () {
+        trackMethodCall(editor.toolbar, "bindTo");
+        editor.setOptions({tools: ["foreColor"]});
+
+        ok(editor.toolbar.bindTo.called);
+    });
 
 var toolbar;
 var dom;

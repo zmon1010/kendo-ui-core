@@ -96,3 +96,58 @@ window.EditorHelpers = {
         return kendo.ui.editor.Serializer.domToXhtml(dom);
     }
 };
+
+/* exported mockFunc */
+function mockFunc(obj, methodName, mockMethod, context) {
+    var method = obj[methodName];
+    var mock = function() {
+        mock.called = true;
+        mock.callCount++;
+        if (typeof(mockMethod) === "function") {
+            mockMethod.apply(context || obj, arguments);
+            if(mock.callbacks) {
+                for (var i = 0; i < mock.callbacks.length; i++) {
+                    mock.callbacks[i].apply(context || obj, arguments);
+                }
+            }
+        }
+    };
+
+    mock.called = false;
+    mock.callCount = 0;
+    mock.originalMethod = method;
+
+    mock.callbacks = [];
+    mock.addMethod = function(callback) {
+        mock.callbacks.push(callback);
+    };
+
+    obj[methodName] = mock;
+}
+
+/* exported removeMock */
+function removeMock(obj, methodName) {
+    var mock = obj[methodName];
+    var method = mock.originalMethod;
+
+    obj[methodName] = method;
+}
+
+/* exported isMockFunc */
+function isMockFunc(mock) {
+    return typeof(mock.originalMethod) === "function";
+}
+
+/* exported trackMethodCall */
+function trackMethodCall(obj, methodName) {
+    mockFunc(obj, methodName, obj[methodName]);
+}
+
+/* exported removeMocksIn */
+function removeMocksIn(obj) {
+    for (var propName in obj) {
+        if (isMockFunc(obj[propName])) {
+            removeMock(obj, propName);
+        }
+    }
+}
