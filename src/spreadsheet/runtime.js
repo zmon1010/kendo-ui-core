@@ -880,7 +880,7 @@
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && (($"+name+" |= 0 ) > 0) ? true : ((err = 'NUM'), false))";
             }
             if (type == "string") {
-                return "(typeof " + force() + " == 'string')";
+                return "((typeof " + force() + " == 'string' || typeof $"+name+" == 'boolean' || typeof $"+name+" == 'number') ? ($"+name+" += '', true) : ($"+name+" === undefined ? ($"+name+" = '', true) : false))";
             }
             if (type == "boolean") {
                 return "(typeof " + force() + " == 'boolean')";
