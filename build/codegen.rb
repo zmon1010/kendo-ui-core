@@ -281,6 +281,7 @@ namespace :generate do
                 'docs/api/javascript/ui/button.md',
                 'docs/api/javascript/ui/datepicker.md',
                 'docs/api/javascript/ui/numerictextbox.md',
+                'docs/api/javascript/ui/timepicker.md',
                 'docs/api/javascript/ui/window.md'
             ]
 

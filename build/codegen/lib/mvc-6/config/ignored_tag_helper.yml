@@ -1,4 +1,6 @@
 - datepicker.ariatemplate
 - datepicker.dates
 - datepicker.parseformats
+- timepicker.dates
+- timepicker.parseformats
 - window.position
