@@ -35,5 +35,14 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return new ChartSeriesBuilder<T>(Container.Candlestick);
         }
+
+        /// <summary>
+        /// The column series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the column series settings.</param>
+        public ChartSeriesBuilder<T> Column()
+        {
+            return new ChartSeriesBuilder<T>(Container.Column);
+        }
     }
 }

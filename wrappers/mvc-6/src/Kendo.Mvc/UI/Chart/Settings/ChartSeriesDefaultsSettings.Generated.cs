@@ -19,6 +19,11 @@ namespace Kendo.Mvc.UI
         /// </summary>
         public ChartSeries<T> Candlestick { get; } = new ChartSeries<T>();
 
+        /// <summary>
+        /// The Column series default settings.
+        /// </summary>
+        public ChartSeries<T> Column { get; } = new ChartSeries<T>();
+
         public IDictionary<string, object> Serialize()
         {
             var settings = new Dictionary<string, object>();
@@ -35,6 +40,13 @@ namespace Kendo.Mvc.UI
             if (candlestick.Any())
             {
                 settings["candlestick"] = candlestick;
+            }
+
+            var column = Column.Serialize();
+
+            if (column.Any())
+            {
+                settings["column"] = column;
             }
 
             return settings;

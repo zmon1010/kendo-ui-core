@@ -165,5 +165,79 @@ namespace Kendo.Mvc.UI.Fluent
 
             return new ChartSeriesBuilder<T>(item);
         }
+        /// <summary>
+        /// Defines column series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Column(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Type = "column",
+                Data = data
+            };
+
+            item.Chart = Chart;
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines column series bound to model member(s).
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Column<TValue>(
+            Expression<Func<T, TValue>> expression)
+        {
+            return Column(expression.MemberWithoutInstance());
+        }
+
+        /// <summary>
+        /// Defines column series bound to model member(s).
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the category from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Column<TValue, TCategory>(
+            Expression<Func<T, TValue>> expression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            return Column(expression.MemberWithoutInstance(), categoryExpression.MemberWithoutInstance());
+        }
+
+        /// <summary>
+        /// Defines bound column series.
+        /// </summary>
+        /// <param name="memberName">
+        /// The name of the value member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the category member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Column(
+            string memberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "column",
+                Name = memberName.AsTitle(),
+                Field = memberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
     }
 }
