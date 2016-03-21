@@ -327,6 +327,22 @@
         "requiresServer": "true"
       },
       {
+        "text": "Multi-axis",
+        "url": "area-charts/multiple-axes",
+        "title": {
+            "kendo-ui": "Multi-axis demo for Kendo UI Area Charts component",
+            "aspnet-mvc": "Multi-axis demo for ASP.NET MVC Area Chart"
+        },
+        "meta": {
+            "kendo-ui": "Ensure the best performance of HTML5 charting and visualize data on multiple axis with Kendo UI Area Charts  in order to provide solid business reports for end users.",
+            "aspnet-mvc": "Leverage the best charting performance and visualize data on multiple axis with ASP.NET MVC Area Charts to provide solid business reports for end users."
+        },
+		"description": {
+            "kendo-ui": "<p>The Kendo UI area chart supports multiple axis which is a feature applicable for a variety of scenarios. This helps you leverage the best charting performance and visualize data on any number axis to provide solid business reports for your users.</p> <p>The example above shows a hybrid car range report visualized through four value axes: <em>miles</em>, <em>km</em>, <em>miles per gallon</em> and <em>liters per 100km</em>. Note that each of them has an unique name which is set through the <strong>valueAxis.title</strong> property. You can also set the <strong>categoryAxis.axisCrossingValues</strong> array values to specify the alignment of the value axes.</p>",
+			      "aspnet-mvc": "<p>The Telerik ASP.NET MVC Area chart supports multiple axis. This helps you leverage the best charting performance and visualize data on any number axis to provide solid business reports for your users.</p> <p>The example above shows a hybrid car range report visualized through four value axes: <em>miles</em>, <em>km</em>, <em>miles per gallon</em> and <em>liters per 100km</em>. Note that each of them has unique name which is set through the <strong>ValueAxis.Title </strong>method. You can also set the <strong>CategoryAxis.AxisCrossingValue</strong> method to specify the alignment of the value axes.</p>"
+		}
+      },
+      {
         "text": "Error Bars",
         "url": "area-charts/error-bars",
         "title": {
