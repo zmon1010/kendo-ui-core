@@ -279,6 +279,7 @@ namespace :generate do
         task :taghelpers do
             markdown = FileList[
                 'docs/api/javascript/ui/button.md',
+                'docs/api/javascript/ui/datepicker.md',
                 'docs/api/javascript/ui/numerictextbox.md',
                 'docs/api/javascript/ui/window.md'
             ]

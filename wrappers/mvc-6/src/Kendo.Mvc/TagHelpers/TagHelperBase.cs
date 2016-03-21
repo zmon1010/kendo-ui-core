@@ -50,10 +50,17 @@ namespace Kendo.Mvc.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            VerifySettings();
+
             WriteHtml(output);
 
             WriteInitializationScript(output);
         }
+        protected virtual void VerifySettings()
+        {
+
+        }
+
         protected abstract void WriteHtml(TagHelperOutput output);
 
         protected abstract void WriteInitializationScript(TagHelperOutput output);
