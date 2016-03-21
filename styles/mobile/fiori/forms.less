@@ -8,7 +8,6 @@
 {
     border: 0;
     border-radius: 5em;
-    .box-shadow(0 0 0 3px currentcolor);
 }
 
 .km-fiori .k-slider-track
@@ -51,7 +50,9 @@
     padding: .4em;
     outline: none;
     background: transparent;
-    margin-top: -5px;
+    margin-top: 0;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
 }
 
 .km-fiori .km-list .k-dropdown-wrap
@@ -171,6 +172,7 @@
 .km-fiori .km-list .km-label-above textarea {
     width: 100%;
     right: 0;
+    margin-top: -5px;
     padding-left: 0;
     left: 1em;
     transform: translateY(0);
@@ -189,9 +191,13 @@
 .km-fiori .km-list fieldset .km-inline-field {
     margin-top: 0;
     margin-left: 0;
-    padding-left: 1.61em;
+    padding-left: 1.1em;
     border-right-width: 1px;
     border-right-style: solid;
+}
+
+.km-fiori .km-list fieldset .km-inline-field:first-of-type {
+    padding-left: 0;
 }
 
 .km-fiori .km-list .km-inline-field input[type=text]:not(.k-input),
@@ -244,9 +250,8 @@
 .km-fiori .km-list fieldset {
     border: none;
     padding: 0;
-    margin-top: -8px;
-    //padding: 0 1.61em;
-    //margin: -1.18em -1.61em;
+    padding: 0 1em;
+    margin: -0.5em -0.7em;
 }
 
 .km-fiori .km-list fieldset legend {
@@ -258,13 +263,8 @@
     padding: 0 1.61em 0;
     width: 100%;
     box-sizing: content-box;
-    background: pink;
-}
-
-.km-fiori .km-legend-button {
-    display: block;
-    padding: 1.17em 1.61em .39em;
-    margin: -1.17em -1.61em -.39em;
+    padding: .45em 1em;
+    margin: 0 -1em;
 }
 
 .km-fiori .km-list textarea,
@@ -339,7 +339,7 @@
 .km-fiori .km-list .km-full-width-slider {    
     position: relative;
     margin-top: 0;
-    padding: 1.55em 0;
+    padding: 1.3em 0;
     width: auto;
     display: block;
 }
@@ -395,6 +395,10 @@
     .box-sizing(content-box);
     border-radius: .5em;
     border-width: 0;
+}
+
+.km-fiori .km-full-width-slider .k-slider-track {
+    margin-top: 0;
 }
 
 .km-fiori .k-slider-selection {
