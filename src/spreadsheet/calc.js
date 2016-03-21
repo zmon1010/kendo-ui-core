@@ -1393,7 +1393,7 @@
             }
             return {
                 type   : "number",
-                format : format,
+                format : format == "#" ? null : format,
                 value  : parseFloat(value)
             };
         }
