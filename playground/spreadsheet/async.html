@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="../loader.js"></script>
+
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.min.css">
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.min.css">
+    <script src="../../src/jszip.js"></script>
+
+    <script>
+      requireSync([
+      "../../src/jquery.js",
+      "../../src/kendo.dom.js",
+      "../../src/kendo.ooxml.js",
+      "../../src/kendo.spreadsheet.js",
+      "../../src/kendo.pdf.js"
+      ]);
+    </script>
+    <script src="../pako.min.js"></script>
+  </head>
+
+  <body>
+    <div id="spreadsheet"></div>
+  </body>
+
+</html>
+
+<script>
+  function redrawSheet() {
+      $("#spreadsheet").getKendoSpreadsheet().activeSheet().batch(
+        function() {},
+        { layout: true }
+      );
+  }
+
+  kendo.spreadsheet.defineFunction("currency", function(callback, base, curr) {
+    setTimeout(function() {
+      callback(1.95);
+
+      // Workaround
+      // redrawSheet();
+    }, 1000);
+  }).argsAsync([
+    [ "base", "string" ],
+    [ "curr", "string" ]
+  ]);
+
+  // Result won't show until you navigate in another cell
+  $("#spreadsheet").kendoSpreadsheet({
+    sheets: [{
+      rows: [{
+        cells: [{
+          index: 1,
+          formula: 'CURRENCY("EUR", "BGN")'
+        }]
+      }]
+    }]
+  });
+</script>
