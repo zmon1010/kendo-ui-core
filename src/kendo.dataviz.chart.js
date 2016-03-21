@@ -12855,8 +12855,11 @@ var __meta__ = { // jshint ignore:line
             this._axis = axis;
         },
 
-        slot: function(from, to) {
-            return this._axis.slot(from, to);
+        slot: function(from, to, limit) {
+            if (!defined(limit)) {
+                limit = true;
+            }
+            return this._axis.slot(from, to, limit);
         },
 
         range: function() {

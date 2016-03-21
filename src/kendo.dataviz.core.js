@@ -2325,8 +2325,8 @@ var __meta__ = { // jshint ignore:line
             return text;
         },
 
-        slot: function(from , to) {
-            var slot = this.getSlot(from, to);
+        slot: function(from , to, limit) {
+            var slot = this.getSlot(from, to, limit);
             if (slot) {
                 return slot.toRect();
             }

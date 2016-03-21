@@ -880,6 +880,28 @@
             equal(slot.to, 2);
         });
 
+        test("slot limits range by default", function() {
+            chartAxis = new dataviz.ChartAxis({
+                slot: function(a, b, limit){
+                    equal(a, 1);
+                    equal(b, undefined);
+                    equal(limit, true);
+                }
+            });
+            var slot = chartAxis.slot(1);
+        });
+
+        test("slot passes user set limit value", function() {
+            chartAxis = new dataviz.ChartAxis({
+                slot: function(a, b, limit){
+                    equal(a, 1);
+                    equal(b, 2);
+                    equal(limit, false);
+                }
+            });
+            var slot = chartAxis.slot(1, 2, false);
+        });
+
         test("range returns axis range", function() {
             var range = chartAxis.range();
             equal(range, "foo");
