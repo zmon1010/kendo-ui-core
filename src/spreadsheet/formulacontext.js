@@ -160,6 +160,11 @@
                 sheet._value(row, col, value);
             }
 
+            clearTimeout(sheet._formulaContextRefresh);
+            sheet._formulaContextRefresh = setTimeout(function(){
+                sheet.batch(function(){}, { layout: true });
+            }, 50);
+
             return true;
         }
     });
