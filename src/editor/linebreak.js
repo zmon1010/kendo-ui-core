@@ -92,8 +92,10 @@ var ParagraphCommand = Command.extend({
             shouldTrim = this.shouldTrim(range);
 
         range.deleteContents();
-
         marker = this._insertMarker(doc, range);
+
+        dom.stripBomNode(marker.previousSibling);
+        dom.stripBomNode(marker.nextSibling);
 
         li = dom.closestEditableOfType(marker, ['li']);
         heading = dom.closestEditableOfType(marker, 'h1,h2,h3,h4,h5,h6'.split(','));
@@ -210,6 +212,7 @@ var NewLineCommand = Command.extend({
     },
 
     exec: function () {
+        debugger
         var range = this.getRange();
         var br = dom.create(RangeUtils.documentFromRange(range), 'br');
         var filler;

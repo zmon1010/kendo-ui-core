@@ -284,6 +284,12 @@ var Dom = {
         return (text || "").replace(bom, "");
     },
 
+    stripBomNode: function(node) {
+        if(node && node.nodeType === 3 && node.nodeValue === '\ufeff') {
+            node.parentNode.removeChild(node);
+        }
+    },
+
     insignificant: function(node) {
         var attr = node.attributes;
 
