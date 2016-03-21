@@ -212,7 +212,6 @@ var NewLineCommand = Command.extend({
     },
 
     exec: function () {
-        debugger
         var range = this.getRange();
         var br = dom.create(RangeUtils.documentFromRange(range), 'br');
         var filler;
