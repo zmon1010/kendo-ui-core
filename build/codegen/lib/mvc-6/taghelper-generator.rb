@@ -1,6 +1,6 @@
 module CodeGen::MVC6::Wrappers
 
-    IGNORED_TAG_HELPER = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_tag_helper.yml")).map(&:downcase)
+    IGNORED_TAG_HELPER = YAML.load(File.read("build/codegen/lib/mvc-6/config_taghelpers/ignored.yml")).map(&:downcase)
 
     class TagHelperGenerator
         include Rake::DSL
@@ -10,7 +10,6 @@ module CodeGen::MVC6::Wrappers
         end
 
         def tag_helper(component)
-            component.delete_ignored(IGNORED)
             component.delete_ignored(IGNORED_TAG_HELPER)
 
             write_tag_helper(component)

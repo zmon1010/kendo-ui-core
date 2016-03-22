@@ -2,6 +2,7 @@ using Microsoft.AspNet.Razor.TagHelpers;
 using Kendo.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.TagHelpers;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.TagHelpers
 {
@@ -11,6 +12,8 @@ namespace Kendo.Mvc.TagHelpers
     [HtmlTargetElement("kendo-window")]
     public partial class WindowTagHelper : TagHelperBase
     {
+        public string ContentUrl { get; set; }
+
         public WindowTagHelper(IKendoHtmlGenerator generator) : base(generator)
         {
         }
@@ -38,7 +41,10 @@ namespace Kendo.Mvc.TagHelpers
         {
             var settings = SerializeSettings();
 
-            // TODO: Manually serialized settings go here
+            if (ContentUrl?.HasValue() == true)
+            {
+                settings["content"] = new { url = ContentUrl };
+            }
 
             var initializationScript = Initializer.Initialize(Selector, "Window", settings);
 

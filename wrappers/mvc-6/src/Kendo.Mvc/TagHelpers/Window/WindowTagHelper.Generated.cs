@@ -35,6 +35,8 @@ namespace Kendo.Mvc.TagHelpers
 
         public double? Height { get; set; }
 
+        public bool? Resizable { get; set; }
+
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -108,6 +110,11 @@ namespace Kendo.Mvc.TagHelpers
             if (Height.HasValue)
             {
                 settings["height"] = Height;
+            }
+
+            if (Resizable.HasValue)
+            {
+                settings["resizable"] = Resizable;
             }
 
             return settings;
