@@ -20,6 +20,10 @@ var kendo = window.kendo,
     textNodes = RangeUtils.textNodes,
     registerTool = Editor.EditorUtils.registerTool;
 
+var HTTP_PROTOCOL = "http://";
+var protocolRegExp = /^\w*:\/\//;
+var linkWordRegExp = /\s?([\w\/$-_.+!*'(),\ufeff]+)$/i;
+
 var LinkFormatFinder = Class.extend({
     findSuitable: function (sourceNode) {
         return dom.parentOfType(sourceNode, ["a"]);
@@ -195,7 +199,7 @@ var LinkCommand = Command.extend({
         var title, text, target;
         var textInput = $("#k-editor-link-text", element);
 
-        if (href && href != "http://") {
+        if (href && href != HTTP_PROTOCOL) {
 
             if (href.indexOf("@") > 0 && !/^(\w+:)|(\/\/)/i.test(href)) {
                 href = "mailto:" + href;
@@ -245,7 +249,7 @@ var LinkCommand = Command.extend({
             return anchor.getAttribute("href", 2);
         }
 
-        return "http://";
+        return HTTP_PROTOCOL;
     },
 
     linkText: function (nodes) {
@@ -267,6 +271,68 @@ var LinkCommand = Command.extend({
     }
 
 });
+
+    var AutoLinkCommand = Command.extend({
+        exec: function () {
+            var cmd = this;
+            var range = cmd.getRange();
+            var node = range.startContainer;
+
+            this.lockRange();
+            if (node.nodeType === 3) {
+                var text = node.nodeValue.substring(0, range.startOffset);
+                var linkText = cmd._parseLink(text);
+                if(linkText) {
+                    var linkRange = cmd._markLink(range, linkText);
+                    cmd._formatLink(linkRange, linkText);
+                }
+            }
+            
+            this.releaseRange(range);
+        },
+
+        _parseLink: function (text) {
+            var wordMatch = text.match(linkWordRegExp);
+            if(!wordMatch) {
+                return;
+            }
+            var word = wordMatch[1];
+            var isLink = this._hasProtocolPrefix(word) || /^www/i.test(word);
+            return isLink && word;
+        },
+
+        _markLink: function (range, link) {
+            var node = range.startContainer;
+            var offset = range.startOffset;
+            var linkRange = range.cloneRange();
+
+            linkRange.setStart(node, offset - link.length);
+            linkRange.setEnd(node, offset);
+
+            return linkRange;
+        },
+
+        _formatLink: function (linkRange, linkText) {
+            var formatter = new LinkFormatter();
+            formatter.apply(linkRange, {
+                innerHTML: linkText,
+                href: this._ensureWebProtocol(linkText)
+            });
+        },
+        
+        _ensureWebProtocol: function (linkText) {
+            var hasProtocol = this._hasProtocolPrefix(linkText);
+            return hasProtocol ? linkText : this._prefixWithWebProtocol(linkText);
+        },
+        
+        _hasProtocolPrefix: function(linkText) {
+            return protocolRegExp.test(linkText);
+        },
+        
+        _prefixWithWebProtocol: function(linkText) {
+            return HTTP_PROTOCOL + linkText;
+        }
+    });
 
 var UnlinkTool = Tool.extend({
     init: function(options) {
@@ -292,6 +358,7 @@ extend(kendo.ui.editor, {
     LinkFormatter: LinkFormatter,
     UnlinkCommand: UnlinkCommand,
     LinkCommand: LinkCommand,
+    AutoLinkCommand: AutoLinkCommand,
     UnlinkTool: UnlinkTool
 });
 
