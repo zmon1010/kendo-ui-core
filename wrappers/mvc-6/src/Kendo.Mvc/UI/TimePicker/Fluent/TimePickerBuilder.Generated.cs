@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the interval, between values in the popup list, in minutes.
         /// </summary>
         /// <param name="value">The value for Interval</param>
-        public TimePickerBuilder Interval(double value)
+        public TimePickerBuilder Interval(int value)
         {
             Container.Interval = value;
             return this;
