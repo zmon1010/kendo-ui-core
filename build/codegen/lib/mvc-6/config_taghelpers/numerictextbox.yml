@@ -5,19 +5,19 @@
       
     - :name: value
       :merge: true
-      :type: object
+      :type: double
 
     - :name: step
       :merge: true
-      :type: object
+      :type: double
 
     - :name: min
       :merge: true
-      :type: object
+      :type: double
 
     - :name: max
       :merge: true
-      :type: object
+      :type: double
 
     - :name: enable
       :type: Boolean

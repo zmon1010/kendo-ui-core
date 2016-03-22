@@ -15,19 +15,19 @@ namespace Kendo.Mvc.TagHelpers
 
         public string Format { get; set; }
 
-        public object Max { get; set; }
+        public double? Max { get; set; }
 
-        public object Min { get; set; }
+        public double? Min { get; set; }
 
         public string Placeholder { get; set; }
 
         public bool? Spinners { get; set; }
 
-        public object Step { get; set; }
+        public double? Step { get; set; }
 
         public string UpArrowText { get; set; }
 
-        public object Value { get; set; }
+        public double? Value { get; set; }
 
         public bool? Enable { get; set; }
 
