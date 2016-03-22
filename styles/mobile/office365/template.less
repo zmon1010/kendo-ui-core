@@ -327,7 +327,8 @@
     color: @office365-list-group-text;
 }
 
-.km-office365 input.km-checkbox:checked + .km-checkbox-label:after {
+.km-office365 input.km-checkbox:checked + .km-checkbox-label:after,
+.km-office365 input.km-radio:checked + .km-radio-label:after {
     background-color: @office365-list-group-text;
 }
 
@@ -551,4 +552,15 @@
 
 .km-office365 label.km-required:after {
     color: @error;
+}
+
+.km-office365 {
+    .km-list {
+        fieldset {
+            legend,
+            .km-inline-field {
+                border-color: @office365-list-border;
+            }
+        }
+    }
 }

@@ -295,6 +295,7 @@
 .km-office365 .km-list fieldset > .k-dropdown-wrap {
     padding: 1.23em 0; 
     margin-top: 0;
+    right: auto;
 }
 
 .km-office365 .km-list fieldset legend {
@@ -402,9 +403,9 @@
 .km-office365 .km-checkbox-label:before,
 .km-office365 .km-checkbox-label:after {
     right: .7em;
-    width: 1.33rem;
-    height: 1.33rem;
-    border-width: 0.133rem;
+    width: 19px;
+    height: 19px;
+    border-width: 1px;
     border-style: solid;
     border-radius: 0;
     text-align: center;
@@ -413,27 +414,45 @@
 .km-office365 input.km-checkbox:checked + .km-checkbox-label:after {
     line-height: 1.2em;
     content: "";
-    width: .6em;
-    height: .6em;
-    margin-top: .3em;
-    margin-right: .3em;
+    width: 11px;
+    height: 11px;
+    margin-top: 4px;
+    margin-right: 4px;
 }
 
 //Radio buttons
 .km-office365 .km-radio-label {
+    position: relative;
     padding-left: 2.5em;
+    vertical-align: middle;
     line-height: 1.5em;  
 }
 
+.km-office365 .km-radio-label:before,
+.km-office365 .km-radio-label:after {
+    content: "";
+    position: absolute;
+    top: 0;
+}
+
 .km-office365 .km-radio-label:before {    
-    width: 1.35rem;
-    height: 1.35rem;
-    border-width: 0.133rem;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 18px;
+    height: 18px;
+    border-width: 1px;
     border-style: solid;
+    border-radius: 50%;
 }
 
 .km-office365 input.km-radio:checked + .km-radio-label:after {
-    width: .95rem;
-    height: .95rem;
-    left: 0.25rem;
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    border-radius: 50%;
 }
