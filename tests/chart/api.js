@@ -343,6 +343,24 @@
             });
         }
 
+        function createEventArg(options) {
+            return kendo.deepExtend({
+                event: { },
+                x: {
+                    startLocation: 0,
+                    location: 0,
+                    client: 0,
+                    initialDelta: 0
+                },
+                y: {
+                    startLocation: 0,
+                    initialDelta: 0,
+                    location: 0,
+                    client: 0
+                }
+            }, options);
+        }
+
         module("Events", {
             setup: function() {
                 setupChart({
@@ -405,6 +423,159 @@
             });
             triggerMousewheel(-10);
         });
+
+        // ------------------------------------------------------------
+        module("Events / zoom selection", {
+            setup: function() {
+                setupChart({
+                    series: [{}],
+                    valueAxis: { name: "value" },
+                    chartArea: { width: 600, height: 400 },
+                    zoomable: true
+                });
+
+                chart._plotArea.paneByPoint = function() {
+                    return chart._plotArea.panes[0];
+                };
+            },
+            teardown: destroyChart
+        });
+
+        test("zoom selection start triggers zoomStart event", function() {
+            chart.bind("zoomStart", function(e) {
+                ok(true)
+            });
+
+            chart._start(createEventArg({
+                event: {
+                    shiftKey:  true
+                }
+            }));
+        });
+
+        test("zoom selection end triggers zoom event", function() {
+            chart.bind("zoom", function(e) {
+                ok(true)
+            });
+
+            chart._start(createEventArg({
+                event: {
+                    shiftKey:  true
+                }
+            }));
+
+            chart._end(createEventArg({
+                event: {
+                    shiftKey:  true
+                }
+            }));
+        });
+
+        test("zoom event is preventable", 0, function() {
+            chart.bind("zoom", function(e) {
+                e.preventDefault();
+            });
+
+            chart._start(createEventArg({
+                event: {
+                    shiftKey:  true
+                }
+            }));
+
+            chart._plotArea.redraw = function() {
+                ok(false);
+            };
+
+            chart._end(createEventArg({
+                event: {
+                    shiftKey:  true
+                }
+            }));
+        });
+
+        test("zoom selection end triggers zoomEnd event", function() {
+            var redrawnPlotarea = false;
+            chart.bind("zoomEnd", function(e) {
+                ok(redrawnPlotarea);
+            });
+
+            chart._start(createEventArg({
+                event: {
+                    shiftKey:  true
+                }
+            }));
+
+            chart._plotArea.redraw = function() {
+                redrawnPlotarea = true;
+            };
+
+            chart._end(createEventArg({
+                event: {
+                    shiftKey:  true
+                }
+            }));
+        });
+
+        // ------------------------------------------------------------
+        module("Events / mousewheel zoom", {
+            setup: function() {
+                setupChart({
+                    series: [{}],
+                    categoryAxis: {
+                        categories: ["A", "B", "C", "D"],
+                        name: "foo",
+                        min: 1,
+                        max: 2
+                    },
+                    chartArea: { width: 600, height: 400 },
+                    zoomable: true
+                });
+            },
+            teardown: destroyChart
+        });
+
+        test("mousewheel triggers zoomStart", function() {
+            chart.bind("zoomStart", function(e) {
+                ok(true);
+            });
+            triggerMousewheel(10);
+        });
+
+        test("zoomStart is preventable", 0, function() {
+            chart.bind("zoomStart", function(e) {
+                e.preventDefault();
+            });
+            chart._plotArea.redraw = function() {
+                ok(false);
+            };
+            triggerMousewheel(10);
+        });
+
+        test("mousewheel triggers zoom with updated ranges", function() {
+            chart.bind("zoom", function(e) {
+                equal(e.axisRanges.foo.min, 0);
+                equal(e.axisRanges.foo.max, 4);
+            });
+            triggerMousewheel(10);
+        });
+
+        test("zoom event is preventable", 0, function() {
+            chart.bind("zoom", function(e) {
+                e.preventDefault();
+            });
+            chart._plotArea.redraw = function() {
+                ok(false);
+            };
+            triggerMousewheel(10);
+        });
+
+        test("mousewheel triggers zoomEnd event", function() {
+            chart.bind("zoomEnd", function(e) {
+                ok(true);
+            });
+            triggerMousewheel(10);
+        });
+
     })();
 
     (function() {

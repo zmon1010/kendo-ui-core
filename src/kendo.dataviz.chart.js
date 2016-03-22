@@ -841,7 +841,9 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (chart._zoomSelection) {
-                chart._zoomSelection.start(e);
+                if (chart._zoomSelection.start(e)) {
+                    this.trigger(ZOOM_START, { axisRanges: axisRanges(this._plotArea.axes), originalEvent: e });
+                }
             }
         },
 
@@ -897,6 +899,7 @@ var __meta__ = { // jshint ignore:line
                 var ranges = this._zoomSelection.end(e);
                 if (ranges && !this.trigger(ZOOM, { axisRanges: ranges, originalEvent: e })) {
                     this._zoomSelection.zoom();
+                    this.trigger(ZOOM_END, { axisRanges: ranges, originalEvent: e });
                 }
             }
 
@@ -920,12 +923,16 @@ var __meta__ = { // jshint ignore:line
                 mousewheelZoom = chart._mousewheelZoom;
 
             if (mousewheelZoom) {
-                e.preventDefault();
-                ranges = mousewheelZoom.updateRanges(delta);
-                if (ranges && !chart.trigger(ZOOM, { delta: delta, axisRanges: ranges, originalEvent: e })) {
-                    mousewheelZoom.zoom();
-                }
+                var args = { delta: delta, axisRanges: axisRanges(this._plotArea.axes), originalEvent: e };
+                if (!chart.trigger(ZOOM_START, args)) {
+                    e.preventDefault();
 
+                    args.axisRanges = ranges = mousewheelZoom.updateRanges(delta);
+                    if (ranges && !chart.trigger(ZOOM, args)) {
+                        mousewheelZoom.zoom();
+                        chart.trigger(ZOOM_END, args);
+                    }
+                }
             } else {
                 if (!state) {
                     prevented = chart._startNavigation(origEvent, ZOOM_START);
@@ -12550,7 +12557,7 @@ var __meta__ = { // jshint ignore:line
 
                 var point = chart._toModelCoordinates(e.x.client, e.y.client);
                 var zoomPane = this._zoomPane = chart._plotArea.paneByPoint(point);
-                if (zoomPane) {
+                if (zoomPane && zoomPane.clipBox()) {
                     var clipBox = zoomPane.clipBox().clone();
                     var elementOffset = this._elementOffset();
 
@@ -12565,8 +12572,10 @@ var __meta__ = { // jshint ignore:line
                             width: 0,
                             height: 0
                         });
+                    return true;
                 }
             }
+            return false;
         },
 
         _elementOffset: function() {
@@ -13817,6 +13826,8 @@ var __meta__ = { // jshint ignore:line
         WaterfallSegment: WaterfallSegment,
         XYPlotArea: XYPlotArea,
         MousewheelZoom: MousewheelZoom,
+        ZoomSelection: ZoomSelection,
+        Pannable: Pannable,
 
         addDuration: addDuration,
         areNumbers: areNumbers,
