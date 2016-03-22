@@ -1,7 +1,7 @@
 :options:
     - :name: decimals
       :merge: true
-      :type: int?
+      :type: int
       
     - :name: value
       :merge: true
