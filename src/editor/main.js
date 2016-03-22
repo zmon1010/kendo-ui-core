@@ -578,16 +578,23 @@
                         }
                     }
 
-                    var toolName = editor.keyboard.toolFromShortcut(editor.toolbar.tools, e);
-
+                    var tools = editor.toolbar.tools;
+                    var toolName = editor.keyboard.toolFromShortcut(tools, e);
                     if (toolName) {
-                        e.preventDefault();
-                        if (!/^(undo|redo)$/.test(toolName)) {
+                        var toolOptions = tools[toolName].options;
+                        var preventTyping = (toolOptions.preventTyping !== false);
+                        if (preventTyping) {
+                            e.preventDefault();
+                        }
+                        
+                        if (!/^(undo|redo)$/.test(toolName) && preventTyping) {
                             editor.keyboard.endTyping(true);
                         }
+                        
                         editor.trigger("keydown", e);
                         editor.exec(toolName);
-                        return false;
+                        
+                        return !preventTyping;
                     }
 
                     editor.keyboard.clearTimeout();

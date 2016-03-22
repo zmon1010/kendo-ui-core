@@ -273,22 +273,33 @@ var LinkCommand = Command.extend({
 });
 
     var AutoLinkCommand = Command.extend({
-        exec: function () {
-            var cmd = this;
-            var range = cmd.getRange();
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            
+            this.managesUndoRedo = !this.parseRange();
+        },
+        
+        parseRange: function (r) {
+            var range = r || this.getRange();
             var node = range.startContainer;
 
-            this.lockRange();
-            if (node.nodeType === 3) {
-                var text = node.nodeValue.substring(0, range.startOffset);
-                var linkText = cmd._parseLink(text);
-                if(linkText) {
-                    var linkRange = cmd._markLink(range, linkText);
-                    cmd._formatLink(linkRange, linkText);
-                }
+            if(node.nodeType !== 3) {
+                return false;
             }
-            
-            this.releaseRange(range);
+
+            var text = node.nodeValue.substring(0, range.startOffset);
+            return this._parseLink(text);
+        },
+        
+        exec: function () {
+            var range = this.getRange();
+            var linkText = this.parseRange(range);
+            if (linkText) {
+                this.lockRange();
+                var linkRange = this._markLink(range, linkText);
+                this._formatLink(linkRange, linkText);
+                this.releaseRange(range);
+            }
         },
 
         _parseLink: function (text) {
@@ -364,6 +375,7 @@ extend(kendo.ui.editor, {
 
 registerTool("createLink", new Tool({ key: "K", ctrl: true, command: LinkCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Create Link"})}));
 registerTool("unlink", new UnlinkTool({ key: "K", ctrl: true, shift: true, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Remove Link"})}));
+registerTool("autoLink", new Tool({ key: 32, preventTyping: false, command: AutoLinkCommand }));
 
 })(window.kendo.jQuery);
 
