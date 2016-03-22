@@ -908,10 +908,10 @@
         module("ConnectionEditTool / start", {
             setup: function() {
                 setupTool({});
-                connection = new diagram.Connection(new Point(), new Point(10, 10), {
+                connection = d.connect(new Point(), new Point(10, 10), {
                     editable: true
                 });
-                d.addConnection(connection);
+
                 connectionEditTool._c = connection;
             },
             teardown: teardown
@@ -924,6 +924,26 @@
             });
 
             connectionEditTool.start(new Point(), {});
+        });
+
+        test("triggers dragStart event with the connection handle name passed in the argument", 3, function() {
+            d.one("dragStart", function(e) {;
+                equal(e.connectionHandle, "source");
+            });
+
+            connectionEditTool.start(new Point(), {});
+
+            d.one("dragStart", function(e) {;
+                equal(e.connectionHandle, "target");
+            });
+
+            connectionEditTool.start(new Point(10, 10), {});
+
+            d.one("dragStart", function(e) {;
+                equal(e.connectionHandle, undefined);
+            });
+
+            connectionEditTool.start(new Point(100, 100), {});
         });
 
         test("dragStart event argument contains empty shapes array", 1, function() {
@@ -961,12 +981,11 @@
         module("ConnectionEditTool / move", {
             setup: function() {
                 setupTool({});
-                connection = new diagram.Connection(new Point(), new Point(10, 10), {
+                connection = d.connect(new Point(), new Point(10, 10), {
                     editable: true
                 });
-                d.addConnection(connection);
                 connectionEditTool._c = connection;
-                connectionEditTool.start(new Point(), {});
+                toolservice.startPoint = new Point();
             },
             teardown: teardown
         });
@@ -980,6 +999,32 @@
                 equal(source.y, 20);
             });
 
+            connectionEditTool.start(new Point(), {});
+            connectionEditTool.move(new Point(20, 20), {});
+        });
+
+        test("triggers drag event with the connection handle name passed in the argument", 3, function() {
+            d.one("drag", function(e) {;
+                equal(e.connectionHandle, "source");
+            });
+
+            connectionEditTool.start(new Point(), {});
+            connectionEditTool.move(new Point(20, 20), {});
+            connectionEditTool.end(new Point());
+
+            d.one("drag", function(e) {;
+                equal(e.connectionHandle, "target");
+            });
+
+            connectionEditTool.start(new Point(10, 10), {});
+            connectionEditTool.move(new Point(20, 20), {});
+            connectionEditTool.end(new Point(10, 10));
+
+            d.one("drag", function(e) {;
+                equal(e.connectionHandle, undefined);
+            });
+
+            connectionEditTool.start(new Point(100, 100), {});
             connectionEditTool.move(new Point(20, 20), {});
         });
 
@@ -987,10 +1032,9 @@
         module("ConnectionEditTool / end", {
             setup: function() {
                 setupTool({});
-                connection = new diagram.Connection(new Point(), new Point(10, 10), {
+                connection = d.connect(new Point(), new Point(10, 10), {
                     editable: true
                 });
-                d.addConnection(connection);
                 connectionEditTool._c = connection;
                 toolservice.startPoint = new Point();
                 connectionEditTool.start(new Point(), {});
@@ -1006,6 +1050,14 @@
                 var source = connection.source();
                 equal(source.x, 20);
                 equal(source.y, 20);
+            });
+
+            connectionEditTool.end(new Point(20, 20), {});
+        });
+
+        test("triggers dragEnd event with the moved connection handle passed in the event argument", 1, function() {
+            d.bind("dragEnd", function(e) {;
+                equal(e.connectionHandle, "source");
             });
 
             connectionEditTool.end(new Point(20, 20), {});
@@ -1180,6 +1232,13 @@
             connectionTool.start(new Point(), {});
         });
 
+        test("triggers dragStart with the target set for the connection handle", 1, function() {
+            d.bind("dragStart", function(e) {
+                equal(e.connectionHandle, "target");
+            });
+            connectionTool.start(new Point(), {});
+        });
+
         test("dragStart event argument contains an empty shapes array", 1, function() {
             d.bind("dragStart", function(e) {
                 equal(e.shapes.length, 0);
@@ -1228,6 +1287,14 @@
             connectionTool.move(new Point(10, 10), {});
         });
 
+        test("triggers drag with target set for the connection handle", 1, function() {
+            d.bind("drag", function(e) {
+                equal(e.connectionHandle, "target");
+            });
+
+            connectionTool.move(new Point(10, 10), {});
+        });
+
         test("triggers drag with the moved connection passed in the event argument", 4, function() {
             d.bind("drag", function(e) {
                 equal(e.connections.length, 1);
@@ -1266,6 +1333,14 @@
                 var target = e.connections[0].target();
                 equal(target.x, 10);
                 equal(target.y, 10);
+            });
+
+            connectionTool.end(new Point(10, 10), {});
+        });
+
+        test("triggers dragEnd with target set for the connection handle", 1, function() {
+            d.bind("dragEnd", function(e) {
+                equal(e.connectionHandle, "target");
             });
 
             connectionTool.end(new Point(10, 10), {});

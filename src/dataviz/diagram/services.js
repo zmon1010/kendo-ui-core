@@ -64,7 +64,13 @@
             VELOCITY_MULTIPLIER = 5,
             TRANSPARENT = "transparent",
             PAN = "pan",
-            ROTATED = "rotated";
+            ROTATED = "rotated",
+            SOURCE = "source",
+            TARGET = "target",
+            HANDLE_NAMES = {
+                "-1": SOURCE,
+                "1": TARGET
+            };
 
         diagram.Cursors = Cursors;
 
@@ -817,7 +823,7 @@
                     connector = this.toolService._hoveredConnector,
                     connection = diagram._createConnection({}, connector._c, p);
 
-                if (canDrag(connection) && !diagram.trigger(DRAG_START, { shapes: [], connections: [connection]}) && diagram._addConnection(connection)) {
+                if (canDrag(connection) && !diagram.trigger(DRAG_START, { shapes: [], connections: [connection], connectionHandle: TARGET }) && diagram._addConnection(connection)) {
                     this.toolService._connectionManipulation(connection, connector._c.shape, true);
                     this.toolService._removeHover();
                     selectSingle(this.toolService.activeConnection, meta);
@@ -832,7 +838,7 @@
                 var connection = toolService.activeConnection;
 
                 connection.target(p);
-                toolService.diagram.trigger(DRAG, { shapes: [], connections: [connection] });
+                toolService.diagram.trigger(DRAG, { shapes: [], connections: [connection], connectionHandle: TARGET  });
                 return true;
             },
 
@@ -858,7 +864,7 @@
 
                 connection.target(target);
 
-                if (!d.trigger(DRAG_END, { shapes: [], connections: [connection] })) {
+                if (!d.trigger(DRAG_END, { shapes: [], connections: [connection], connectionHandle: TARGET })) {
                     connection.updateModel();
                     d._syncConnectionChanges();
                 } else {
@@ -901,8 +907,15 @@
 
                 var adorner = connection.adorner;
 
-                if (canDrag(connection) && adorner && !this.toolService.diagram.trigger(DRAG_START, { shapes: [], connections: [connection] })) {
-                    this.handle = adorner._hitTest(p);
+                var handle, name;
+                if (adorner) {
+                    handle = adorner._hitTest(p);
+                    name = HANDLE_NAMES[handle];
+                }
+
+                if (canDrag(connection) && adorner && !this.toolService.diagram.trigger(DRAG_START, { shapes: [], connections: [connection], connectionHandle: name })) {
+                    this.handle = handle;
+                    this.handleName = name;
                     adorner.start(p);
                 } else {
                     this.toolService.startPoint = p;
@@ -914,7 +927,7 @@
                 var adorner = this._c.adorner;
                 if (canDrag(this._c) && adorner) {
                     adorner.move(this.handle, p);
-                    this.toolService.diagram.trigger(DRAG, { shapes: [], connections: [this._c] });
+                    this.toolService.diagram.trigger(DRAG, { shapes: [], connections: [this._c], connectionHandle: this.handleName });
 
                     return true;
                 }
@@ -930,7 +943,7 @@
                     toolService.triggerClick({item: connection, point: p, meta: meta});
                     if (canDrag(connection)) {
                         var unit = adorner.stop(p);
-                        if (!diagram.trigger(DRAG_END, { shapes: [], connections: [connection] })) {
+                        if (!diagram.trigger(DRAG_END, { shapes: [], connections: [connection], connectionHandle: this.handleName })) {
                             diagram.undoRedoService.add(unit, false);
                             connection.updateModel();
                             diagram._syncConnectionChanges();
