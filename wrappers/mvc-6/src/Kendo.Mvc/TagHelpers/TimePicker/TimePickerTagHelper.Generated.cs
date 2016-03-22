@@ -11,7 +11,7 @@ namespace Kendo.Mvc.TagHelpers
 
         public string Format { get; set; }
 
-        public double? Interval { get; set; }
+        public int? Interval { get; set; }
 
         public DateTime? Max { get; set; }
 
