@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public string Culture { get; set; }
 
-        public double? Decimals { get; set; }
+        public int? Decimals { get; set; }
 
         public string DownArrowText { get; set; }
 
