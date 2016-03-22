@@ -1827,8 +1827,6 @@
                 that._createHandlers();
 
                 that._initialize();
-                that._fetchFreshData();
-                that._createGlobalToolBar();
 
                 that._resizingAdorner = new ResizingAdorner(that, { editable: that.options.editable });
                 that._connectorsAdorner = new ConnectorsAdorner(that);
@@ -1841,6 +1839,10 @@
                 that._clipboard = [];
 
                 that.pauseMouseHandlers = false;
+
+                that._fetchFreshData();
+
+                that._createGlobalToolBar();
 
                 that._createOptionElements();
 

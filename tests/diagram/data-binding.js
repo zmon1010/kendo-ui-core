@@ -262,6 +262,23 @@
         ok(diagram.shapes[1].options.dataItem.foo);
     });
 
+    test("does not throw error if shapes rotation is set", function() {
+        diagram = createDiagram({
+            dataSource: {
+                data: [{
+                    id: "1"
+                }]
+            },
+            shapeDefaults: {
+                rotation: {
+                    angle: 45
+                }
+            }
+        });
+
+        ok(true);
+    });
+
     (function() {
         var shapesData = [{id: 1}, {id: 2}];
         var connectionsData = [{id: 1, from: 1, to: 2}];
