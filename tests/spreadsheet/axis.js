@@ -47,6 +47,12 @@
         equal(visibleValues.at(22), 15);
     });
 
+    test("returns a zero range for mismatched start / end", function() {
+        var visible = axis.visible(0, -20);
+
+        ok(visible);
+    });
+
     test("hiding updates total", function() {
         axis.hide(1);
 

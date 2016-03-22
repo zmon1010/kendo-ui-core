@@ -184,6 +184,10 @@
             startSegment = ranges[0];
             endSegment = ranges[ranges.length - 1];
 
+            if (!startSegment) {
+                return { values: this.values.iterator(0, 0), offset: 0 };
+            }
+
             var startOffset = start - startSegment.start;
 
             var startIndex = ((startOffset / startSegment.value.value) >> 0) + startSegment.value.start;
