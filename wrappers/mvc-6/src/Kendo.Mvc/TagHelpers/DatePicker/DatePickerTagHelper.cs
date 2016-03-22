@@ -38,6 +38,8 @@ namespace Kendo.Mvc.TagHelpers
                 {
                     Value = For.Model as DateTime?;
                 }
+
+                Format = ExtractEditFormat(For.ModelExplorer.Metadata.EditFormatString);
             }
 
             GenerateId(output);

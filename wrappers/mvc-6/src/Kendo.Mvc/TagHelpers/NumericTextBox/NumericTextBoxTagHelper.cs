@@ -36,6 +36,8 @@ namespace Kendo.Mvc.TagHelpers
                 {
                     Value = For.Model;
                 }
+
+                Format = ExtractEditFormat(For.ModelExplorer.Metadata.EditFormatString);
             }
 
             GenerateId(output);

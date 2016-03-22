@@ -5,11 +5,14 @@ using Microsoft.AspNet.Mvc.Rendering;
 using Kendo.Mvc.Rendering;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;
+using System.Text.RegularExpressions;
 
 namespace Kendo.Mvc.TagHelpers
 {
     public abstract class TagHelperBase : TagHelper
     {
+        private static readonly Regex StringFormatExpression = new Regex(@"(?<=\{\d:)(.)*(?=\})", RegexOptions.Compiled);
+
         [HtmlAttributeNotBound]
         [ViewContext]
         public ViewContext ViewContext { get; set; }
@@ -82,6 +85,16 @@ namespace Kendo.Mvc.TagHelpers
         protected ClientHandlerDescriptor CreateHandler(string handler)
         {
             return new ClientHandlerDescriptor { HandlerName = handler };
+        }
+
+        protected string ExtractEditFormat(string format)
+        {
+            if (string.IsNullOrEmpty(format))
+            {
+                return string.Empty;
+            }
+
+            return StringFormatExpression.Match(format).ToString();
         }
     }
 }
