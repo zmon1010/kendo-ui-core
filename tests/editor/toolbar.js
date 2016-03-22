@@ -7,8 +7,8 @@ editor_module("editor toolbar", {
         editor = $("#editor-fixture").data("kendoEditor");
     },
     teardown: function() {
-        editor.trigger("select");
         removeMocksIn(editor.toolbar);
+        editor.trigger("select");
     }
 }, {
     tools: [
@@ -36,12 +36,7 @@ editor_module("editor toolbar", {
     ]
 });
 
-var inline;
-
 var componentType = kendo.support.browser.msie || kendo.support.touch ? 'kendoDropDownList' : 'kendoComboBox';
-
-var Editor = kendo.ui.Editor;
-
 
 function value($ui) {
     if (kendo.support.browser.msie) {
@@ -185,7 +180,7 @@ test('formatting tool displays known values', function() {
 });
 
     test('toolbar is bound once again in new tools are provided', function () {
-        trackMethodCall(editor.toolbar, "bindTo");
+        mockFunc(editor.toolbar, "bindTo");
         editor.setOptions({tools: ["foreColor"]});
 
         ok(editor.toolbar.bindTo.called);
