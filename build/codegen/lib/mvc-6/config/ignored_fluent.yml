@@ -2,4 +2,5 @@
 - chart.valueaxis
 - chart.xaxis
 - chart.yaxis
+- numerictextbox.decimals
 - gantt.columns.format

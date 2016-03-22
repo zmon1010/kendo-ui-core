@@ -1,4 +1,8 @@
 :options:
+    - :name: decimals
+      :merge: true
+      :type: int?
+      
     - :name: value
       :merge: true
       :type: T?
