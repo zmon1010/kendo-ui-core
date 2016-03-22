@@ -5887,6 +5887,25 @@
         }
       },
       {
+        "text": "Localization",
+        "url": "treelist/localization",
+        "title": {
+            "kendo-ui": "Kendo UI TreeList localization demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how Kendo UI TreeList widget can be localized."
+        },
+        "group": "Accessibility and Internationalization",
+        "description": {
+           "kendo-ui": "<p>The Kendo UI treelist supports localization for the texts in its UI elements. You can either define the texts for these elements using the respective messages configuration via the API, or employ culture files for this purpose (which are shipped with the product distribution).</p>"
+        },
+        "packages": [
+          "!mvc",
+          "!php",
+          "!jsp"
+        ]
+      },
+      {
         "text": "Export to Excel",
         "url": "treelist/excel-export",
         "title": {
