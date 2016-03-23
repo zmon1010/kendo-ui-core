@@ -55,6 +55,10 @@ module CodeGen::TypeScript
         }
     }
 
+    ARRAY_TYPE_OVERRIDES = {
+        'grid.toolbar' => 'GridToolbarItem[] | any'
+    }
+
     UPLOAD_EVENT_OVERRIDES = {
         'files' => 'UploadFile[]'
     }
@@ -608,7 +612,10 @@ module CodeGen::TypeScript
         end
 
         def type_script_declaration
-            "#{name}?: #{item.type_script_type}[];"
+            key = "#{@owner.type_script_type}.#{@name}".downcase
+            type = ARRAY_TYPE_OVERRIDES[key] || "#{item.type_script_type}[]"
+
+            "#{name}?: #{type};"
         end
     end
 
