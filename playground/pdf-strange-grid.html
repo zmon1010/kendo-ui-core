@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <base href="http://demos.telerik.com/kendo-ui/grid/pdf-export"> -->
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title>Ticket 1018365</title>
+
+    <!-- <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.1.226/styles/kendo.common-material.min.css" /> -->
+    <!-- <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.1.226/styles/kendo.material.min.css" /> -->
+    <!-- <script src="//kendo.cdn.telerik.com/2016.1.226/js/jquery.min.js"></script> -->
+    <!-- <script src="//kendo.cdn.telerik.com/2016.1.226/js/jszip.min.js"></script> -->
+    <!-- <script src="//kendo.cdn.telerik.com/2016.1.226/js/kendo.all.min.js"></script> -->
+    <!-- <script> -->
+    <!--     // Import DejaVu Sans font for embedding -->
+    <!--     // NOTE: Only required if the Kendo UI stylesheets are loaded -->
+    <!--     // from a different origin, e.g. cdn.kendostatic.com -->
+    <!--     kendo.pdf.defineFont({ -->
+    <!--         "DejaVu Sans"             : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf", -->
+    <!--         "DejaVu Sans|Bold"        : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf", -->
+    <!--         "DejaVu Sans|Bold|Italic" : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf", -->
+    <!--         "DejaVu Sans|Italic"      : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf" -->
+    <!--     }); -->
+    <!-- </script> -->
+
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common-material.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.material.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js"
+      ]);
+    </script>
+
+  <style type="text/css">
+    #grid {
+      font-family: "DejaVu Sans";
+    }
+  </style>
+  </head>
+<body>
+
+      <div id="grid"></div>
+      <script>
+
+function onDataBound(arg) {
+return;
+    var grid = $("#grid").data("kendoGrid");
+    //var e = $(grid.element).find('#C1')[0];
+    $(grid.table).find('.c1-td').css('left','10px');
+    $(grid.table).find('.c2-td').css('left','200px');
+    $(grid.table).find('.c3-td').css('left','400px');
+    $(grid.table).find('.c4-td').css('left','600px');
+    $(grid.table).find('.c5-td').css('left','900px');
+    $(grid.table).find('.c6-td').css('left','1200px');
+}
+
+$(document).ready(function () {
+    $("#grid").kendoGrid({
+        toolbar: ["pdf"],
+        pdf: {
+            allPages: false,
+            paperSize : "A3",
+            landscape: true
+        },
+        dataSource: {
+            type: "odata",
+            serverPaging: true,
+            transport: {
+                read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+            },
+            pageSize: 20,
+            group: { field: "ContactName", aggregates: [
+                { field: "ContactName", aggregate: "count" }] },
+            aggregate: [ { field: "ContactName", aggregate: "count" }]
+        },
+        height: 550,
+	dataBound: onDataBound,
+        groupable: true,
+        sortable: true,
+        pageable: {
+            refresh: true,
+            pageSizes: true,
+            buttonCount: 5
+        },
+        columns: [{
+            field: "ContactName",
+            title: "Contact Name",
+            hidden: true,
+            groupHeaderTemplate: "<table style='position:relative'><tr><td>XName: #= value # (Count: #= count#)</td></tr><tr><td class='c1-td'>Name: #= value #</td><td class='c2-td'>Name: #= value #</td><td class='c3-td'>Name: #= value #</td><td class='c4-td'>Name: #= value #</td><td class='c5-td'>Name: #= value #</td><td class='c6-td'>Name: #= value #</td></tr></table>"
+        }, {
+            field: "ContactTitle",
+            title: "Contact Title",
+            width: 100
+        }, {
+            field: "CompanyName",
+            title: "Company Name",
+            width: 100
+        }, {
+            field: "Country",
+            width: 100
+        }, {
+            field: "ContactName",
+            title: "Contact Name",
+            width: 100
+        }, {
+            field: "CompanyName",
+            title: "Company Name",
+            width: 100
+        }, {
+            field: "Country",
+            width: 100
+        }]
+    });
+});
+  </script>
+  <stylex>
+    .k-grid {
+      position: relative;
+    }
+    .k-grid .c1-td{
+      padding-left: 2px;
+      left: 0px;
+      position: absolute;
+    }
+    .k-grid .c2-td{
+      padding-left: 2px;
+      left: 0px;
+      position: absolute;
+    }
+    .k-grid .c3-td{
+      padding-left: 2px;
+      left: 0px;
+      position: absolute;
+    }
+    .k-grid .c4-td{
+      padding-left: 2px;
+      left: 0px;
+      position: absolute;
+    }
+    .k-grid .c5-td{
+      padding-left: 2px;
+      left: 0px;
+      position: absolute;
+    }
+    .k-grid .c6-td{
+      padding-left: 2px;
+      left: 0px;
+      position: absolute;
+    }
+  </style>
+  </body>
+</html>
