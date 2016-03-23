@@ -11,8 +11,11 @@ namespace Kendo.Mvc.TagHelpers
     [HtmlTargetElement("kendo-button")]
     public partial class ButtonTagHelper : TagHelperBase
     {
+        public string Tag { get; set; }
+
         public ButtonTagHelper(IKendoHtmlGenerator generator) : base(generator)
         {
+            Tag = "button";
         }
 
         protected override void WriteHtml(TagHelperOutput output)
@@ -21,9 +24,11 @@ namespace Kendo.Mvc.TagHelpers
 
             var htmlAttributes = new Dictionary<string, object>();
 
-            var tagBuilder = Generator.GenerateTag("button", ViewContext, Id, Name, htmlAttributes);
+            htmlAttributes.Add("type", "button");
 
-            output.TagName = "button";
+            var tagBuilder = Generator.GenerateTag(Tag, ViewContext, Id, Name, htmlAttributes);
+
+            output.TagName = Tag;
 
             output.MergeAttributes(tagBuilder);
         }
