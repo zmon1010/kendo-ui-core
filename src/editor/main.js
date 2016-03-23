@@ -241,6 +241,8 @@
 
             that.undoRedoStack = new kendo.util.UndoRedoStack();
 
+            that._pendingKeyCommands = [];
+
             if (options && options.value) {
                 value = options.value;
             } else if (that.textarea) {
@@ -272,7 +274,7 @@
 
         setOptions: function(options) {
             var editor = this;
- 
+
             Widget.fn.setOptions.call(editor, options);
             if(options.tools) {
                 editor.toolbar.bindTo(editor);
@@ -582,24 +584,34 @@
                     var toolName = editor.keyboard.toolFromShortcut(tools, e);
                     if (toolName) {
                         var toolOptions = tools[toolName].options;
-                        var preventTyping = (toolOptions.preventTyping !== false);
-                        if (preventTyping) {
+                        var cmd = toolOptions.command && new toolOptions.command({range: editor.getRange()});
+                        var shouldEndTyping = cmd && (!cmd.changesContent || cmd.changesContent());
+                        var shouldPrevent = (toolOptions.preventTyping !== false);
+                        var isTyping = editor.keyboard.isTypingInProgress();
+                        if (shouldPrevent) {
                             e.preventDefault();
                         }
-                        
-                        if (!/^(undo|redo)$/.test(toolName) && preventTyping) {
+
+                        if (!/^(undo|redo)$/.test(toolName) && shouldEndTyping) {
                             editor.keyboard.endTyping(true);
                         }
-                        
+
                         editor.trigger("keydown", e);
                         editor.exec(toolName);
-                        
-                        return !preventTyping;
+
+                        if(isTyping) {
+                            return !shouldPrevent;
+                        }
                     }
 
                     editor.keyboard.clearTimeout();
 
                     editor.keyboard.keydown(e);
+                },
+                "keypress": function() {
+                    setTimeout(function() {
+                        editor.runPendingKeyCommands();
+                    }, 0);
                 },
                 "keyup": function (e) {
                     var selectionCodes = [8, 9, 33, 34, 35, 36, 37, 38, 39, 40, 40, 45, 46];
@@ -668,6 +680,32 @@
             }
         },
 
+        addPendingKeyCommand: function(cmd) {
+            this._pendingKeyCommands.push(cmd);
+        },
+
+        runPendingKeyCommands: function () {
+            var editor = this;
+            var pending = editor._pendingKeyCommands;
+            var count = pending.length;
+            var endOnce = true;
+
+            while(pending.length) {
+                var cmd = pending.shift();
+                if(endOnce) {
+                    editor.keyboard.endTyping(true);
+                    endOnce = false;
+                }
+
+                cmd.options.range = editor.getRange();
+                cmd.init(cmd.options);
+                editor.undoRedoStack.push(cmd);
+                cmd.editor = editor;
+                cmd.exec();
+            }
+
+            return count > 0;
+        },
 
         refresh: function() {
             var that = this;
