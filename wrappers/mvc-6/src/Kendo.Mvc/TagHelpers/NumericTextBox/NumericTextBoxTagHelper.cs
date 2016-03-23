@@ -68,6 +68,7 @@ namespace Kendo.Mvc.TagHelpers
                 Id, Name, Value, string.Empty, htmlAttributes);
 
             output.TagName = "input";
+            output.TagMode = TagMode.SelfClosing;
 
             output.MergeAttributes(tagBuilder);
         }
