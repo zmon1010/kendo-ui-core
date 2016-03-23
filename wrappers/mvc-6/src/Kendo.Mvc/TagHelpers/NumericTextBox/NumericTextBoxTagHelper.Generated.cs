@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using System.Linq;
 
 namespace Kendo.Mvc.TagHelpers
 {

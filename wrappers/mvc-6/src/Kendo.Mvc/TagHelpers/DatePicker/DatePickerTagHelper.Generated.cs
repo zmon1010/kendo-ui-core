@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using System.Linq;
 
 namespace Kendo.Mvc.TagHelpers
 {
@@ -16,6 +17,8 @@ namespace Kendo.Mvc.TagHelpers
         public DateTime? Max { get; set; }
 
         public DateTime? Min { get; set; }
+
+        public string[] ParseFormats { get; set; }
 
         public DateTime? Value { get; set; }
 
@@ -46,6 +49,11 @@ namespace Kendo.Mvc.TagHelpers
             if (Min.HasValue)
             {
                 settings["min"] = Min;
+            }
+
+            if (ParseFormats?.Any() == true)
+            {
+                settings["parseFormats"] = ParseFormats;
             }
 
             if (Value.HasValue)
