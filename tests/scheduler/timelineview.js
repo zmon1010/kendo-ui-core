@@ -458,6 +458,26 @@
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,2);
     });
+	
+	test("Current time marker is not rendered when no groups are available", function() {
+        setupScheduler({
+            group: {
+                resources: ["Rooms"],
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [],
+                    title: "Room"
+                }]
+
+        });
+
+        var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
+        equal(timeElementsCount,0);
+    });
 
     test("non-overlapping events are not rendered on different rows", function() {
         var view = setup({ date: new Date(2013, 1, 2) });
