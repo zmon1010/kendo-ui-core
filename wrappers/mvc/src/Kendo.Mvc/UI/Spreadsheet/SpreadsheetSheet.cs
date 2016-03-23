@@ -21,6 +21,16 @@ namespace Kendo.Mvc.UI
             Sort = new SpreadsheetSheetSortSettings();
                 
         //<< Initialization
+
+            DataSource = new DataSource()
+            {
+                Type = DataSourceType.Server,
+                ServerAggregates = true,
+                ServerFiltering = true,
+                ServerGrouping = true,
+                ServerPaging = true,
+                ServerSorting = true
+            };
         }
 
         //>> Fields
@@ -64,6 +74,12 @@ namespace Kendo.Mvc.UI
         }
         
         //<< Fields
+
+        public DataSource DataSource
+        {
+            get;
+            private set;
+        }
 
         protected override void Serialize(IDictionary<string, object> json)
         {
@@ -125,6 +141,8 @@ namespace Kendo.Mvc.UI
                 json["sort"] = sort;
             }
         //<< Serialization
+
+            json["dataSource"] = DataSource.ToJson();
         }
     }
 }

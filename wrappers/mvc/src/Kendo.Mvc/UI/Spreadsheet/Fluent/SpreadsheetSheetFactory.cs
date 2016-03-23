@@ -8,15 +8,16 @@ namespace Kendo.Mvc.UI.Fluent
     /// </summary>
     public class SpreadsheetSheetFactory : IHideObjectMembers
     {
-        private readonly List<SpreadsheetSheet> container;
+        private readonly Spreadsheet container;
 
-        public SpreadsheetSheetFactory(List<SpreadsheetSheet> container)
+        public SpreadsheetSheetFactory(Spreadsheet container)
         {
             this.container = container;
         }
 
         //>> Factory methods
-        
+        //<< Factory methods
+
         /// <summary>
         /// Adds an item to the collection
         /// </summary>
@@ -24,11 +25,10 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new SpreadsheetSheet();
 
-            container.Add(item);
+            container.Sheets.Add(item);
 
-            return new SpreadsheetSheetBuilder(item);
+            return new SpreadsheetSheetBuilder(item, container);
         }
-        //<< Factory methods
     }
 }
 

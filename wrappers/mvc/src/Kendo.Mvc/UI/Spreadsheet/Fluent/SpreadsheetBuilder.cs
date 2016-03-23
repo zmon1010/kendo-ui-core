@@ -120,16 +120,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// An array defining the document sheets and their content.
-        /// </summary>
-        /// <param name="configurator">The action that configures the sheets.</param>
-        public SpreadsheetBuilder Sheets(Action<SpreadsheetSheetFactory> configurator)
-        {
-            configurator(new SpreadsheetSheetFactory(container.Sheets));
-            return this;
-        }
-        
-        /// <summary>
         /// A boolean value indicating if the sheetsbar should be displayed.
         /// </summary>
         /// <param name="value">The value that configures the sheetsbar.</param>
@@ -178,6 +168,16 @@ namespace Kendo.Mvc.UI.Fluent
         {
             container.DplSettings = workbook;
 
+            return this;
+        }
+
+        /// <summary>
+        /// An array defining the document sheets and their content.
+        /// </summary>
+        /// <param name="configurator">The action that configures the sheets.</param>
+        public SpreadsheetBuilder Sheets(Action<SpreadsheetSheetFactory> configurator)
+        {
+            configurator(new SpreadsheetSheetFactory(container));
             return this;
         }
 

@@ -11,12 +11,10 @@ namespace Kendo.Mvc.UI
 
     public class Spreadsheet : WidgetBase
     {
-        private readonly IUrlGenerator urlGenerator;
-
         public Spreadsheet(ViewContext viewContext, IJavaScriptInitializer initializer, IUrlGenerator urlGenerator)
             : base(viewContext, initializer)
         {
-            this.urlGenerator = urlGenerator;
+            UrlGenerator = urlGenerator;
 //>> Initialization
         
             Excel = new SpreadsheetExcelSettings();
@@ -75,6 +73,12 @@ namespace Kendo.Mvc.UI
         //<< Fields
 
         internal Dictionary<string, object> DplSettings { get; set; }
+
+        public IUrlGenerator UrlGenerator
+        {
+            get;
+            private set;
+        }
 
         public override void WriteInitializationScript(TextWriter writer)
         {
