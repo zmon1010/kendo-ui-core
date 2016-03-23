@@ -11,10 +11,12 @@ namespace Kendo.Mvc.UI.Fluent
     public class SpreadsheetSheetBuilder: IHideObjectMembers
     {
         private readonly SpreadsheetSheet container;
+        private readonly Spreadsheet spreadsheet;
 
-        public SpreadsheetSheetBuilder(SpreadsheetSheet settings)
+        public SpreadsheetSheetBuilder(SpreadsheetSheet settings, Spreadsheet widget)
         {
             container = settings;
+            spreadsheet = widget;
         }
 
         //>> Fields
@@ -137,6 +139,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         //<< Fields
+
+        /// <summary>
+        /// Sets the data source configuration of the grid.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the data source</param>
+        public SpreadsheetSheetBuilder DataSource<T>(Action<DataSourceBuilder<T>> configurator)
+            where T : class
+        {
+            container.DataSource.ModelType(typeof(T));
+            configurator(new DataSourceBuilder<T>(container.DataSource, spreadsheet.ViewContext, spreadsheet.UrlGenerator));
+
+            return this;
+        }
     }
 }
 

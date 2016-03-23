@@ -76,6 +76,14 @@ module CodeGen::MVC::Wrappers
         'spreadsheet.sheets.filter.columns'
     ]
 
+    ITEM_FACTORY_SKIP_LIST = [
+        'spreadsheetsheet'
+    ]
+
+    FLUENT_BUILDER_SKIP_LIST = [
+        'spreadsheetsheetfactory'
+    ]
+
     INITIALIZATION_SKIP_LIST = [
         'map.markerdefaults',
         'map.layerdefaults',
@@ -580,7 +588,9 @@ module CodeGen::MVC::Wrappers
         end
 
         def to_fluent
-            FLUENT_COMPOSITE_FIELD_DECLARATION.result(binding)
+            if !FLUENT_BUILDER_SKIP_LIST.include?(csharp_builder_class.downcase)
+                FLUENT_COMPOSITE_FIELD_DECLARATION.result(binding)
+            end
         end
 
         def to_client_option
@@ -765,7 +775,10 @@ module CodeGen::MVC::Wrappers
 
             csharp = File.exists?(filename) ? File.read(filename) : ITEM_FACTORY.result(option.get_binding)
 
-            csharp = csharp.sub(/\/\/>> Factory methods(.|\n)*\/\/<< Factory methods/, NAMED_FACTORY_METHODS.result(option.get_binding))
+            if !ITEM_FACTORY_SKIP_LIST.include?(option.csharp_item_class.downcase)
+                csharp = csharp.sub(/\/\/>> Factory methods(.|\n)*\/\/<< Factory methods/, NAMED_FACTORY_METHODS.result(option.get_binding))
+            end
+
             csharp
         end
 
