@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Sets the title displayed in the header of the column.
+        /// Sets the title displayed in the header of the column. Any HTML entities or tags should be encoded.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <example>
