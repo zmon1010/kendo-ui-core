@@ -14,7 +14,7 @@ module CodeGen::MVC6::Wrappers
         end
 
         def component(component)
-            component.delete_ignored
+            component.delete_ignored(IGNORED)
 
             write_component(component)
             write_component_settings(component)

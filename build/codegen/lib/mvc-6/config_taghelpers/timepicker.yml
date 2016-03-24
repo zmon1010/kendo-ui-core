@@ -1,0 +1,8 @@
+:options:
+    - :name: interval
+      :merge: true
+      :type: int
+
+    - :name: parseFormats
+      :merge: true
+      :type: string[]

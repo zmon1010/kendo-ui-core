@@ -1,0 +1,12 @@
+:options:
+    - :name: start
+      :type: String
+      :enum_type: CalendarView
+
+    - :name: depth
+      :type: String
+      :enum_type: CalendarView
+
+    - :name: parseFormats
+      :merge: true
+      :type: string[]

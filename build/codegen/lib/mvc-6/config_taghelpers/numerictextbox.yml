@@ -1,0 +1,23 @@
+:options:
+    - :name: decimals
+      :merge: true
+      :type: int
+      
+    - :name: value
+      :merge: true
+      :type: double
+
+    - :name: step
+      :merge: true
+      :type: double
+
+    - :name: min
+      :merge: true
+      :type: double
+
+    - :name: max
+      :merge: true
+      :type: double
+
+    - :name: enable
+      :type: Boolean

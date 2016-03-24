@@ -1,7 +1,6 @@
 module CodeGen::MVC6::Wrappers::Options
 
     GENERIC_ARGS = YAML.load(File.read("build/codegen/lib/mvc-6/config/generics.yml"))
-    IGNORED = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored.yml")).map(&:downcase)
     IGNORED_SERIALIZATION = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_serialization.yml")).map(&:downcase)
     IGNORED_FLUENT = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_fluent.yml")).map(&:downcase)
     NAME_MAP = YAML.load(File.read("build/codegen/lib/mvc-6/config/name_map.yml"))
@@ -29,12 +28,12 @@ module CodeGen::MVC6::Wrappers::Options
         CompositeOption
     end
 
-    def delete_ignored
+    def delete_ignored(ignored)
         return if @options.nil?
 
         @options.delete_if do |option|
-            option.delete_ignored
-            IGNORED.include?(option.full_name)
+            option.delete_ignored(ignored)
+            ignored.include?(option.full_name)
         end
     end
 

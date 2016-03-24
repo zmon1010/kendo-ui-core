@@ -274,6 +274,29 @@ namespace :generate do
 
             factory_file = 'wrappers/mvc-6/src/Kendo.Mvc/UI/WidgetFactory.cs'
         end
+        
+        desc 'Generate MVC v6 Tag Helpers'
+        task :taghelpers do
+            markdown = FileList[
+                'docs/api/javascript/ui/button.md',
+                'docs/api/javascript/ui/datepicker.md',
+                'docs/api/javascript/ui/datetimepicker.md',
+                'docs/api/javascript/ui/numerictextbox.md',
+                'docs/api/javascript/ui/timepicker.md',
+                'docs/api/javascript/ui/window.md'
+            ]
+
+            components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }
+                .sort { |a, b| a.name <=> b.name }
+
+            generator = CodeGen::MVC6::Wrappers::TagHelperGenerator.new('wrappers/mvc-6/src/Kendo.Mvc/TagHelpers')
+            components.each do |component|
+                import_metadata(component)
+                import_metadata(component, "lib/mvc-6/config_taghelpers/")
+
+                generator.tag_helper(component)
+            end
+        end
     end
 
     desc 'Generate PHP wrappers'

@@ -1,0 +1,5 @@
+            if (<%= tag_helper_event_name %>?.HasValue() == true)
+            {
+                settings["<%= name %>"] = CreateHandler(<%= tag_helper_event_name %>);
+            }
+

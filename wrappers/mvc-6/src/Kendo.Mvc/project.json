@@ -10,6 +10,7 @@
     "tags": ["aspnet", "mvc", "aspnext", "vnext", "VS2015", "Kendo", "Kendo UI", "JavaScript", "UI"],
     "dependencies": {
       "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+      "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
       "Microsoft.Dnx.Compilation": "1.0.0-rc1-final",
       "EntityFramework.Commands": "7.0.0-rc1-final",
       "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final",

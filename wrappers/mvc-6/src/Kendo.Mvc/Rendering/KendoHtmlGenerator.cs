@@ -11,6 +11,7 @@ using Microsoft.AspNet.Mvc.Infrastructure;
 using Microsoft.AspNet.Mvc.ViewFeatures;
 using Microsoft.Extensions.OptionsModel;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kendo.Mvc.Rendering
 {
@@ -251,6 +252,31 @@ namespace Kendo.Mvc.Rendering
                 .Validators.OfType<IClientModelValidator>()
                 .SelectMany(v => v.GetClientValidationRules(
                     new ClientModelValidationContext(metadata, _metadataProvider, _requestServices)));
+        }
+
+        public RangeAttribute GetRangeValidationAttribute(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string name)
+        {
+            metadata = metadata ??
+                ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider).Metadata;
+
+            var validatorProviderContext = new ModelValidatorProviderContext(metadata);
+            _actionBindingContext.ValidatorProvider.GetValidators(validatorProviderContext);
+
+            DataAnnotationsModelValidator rangeValidationRule = validatorProviderContext
+                .Validators
+                .OfType<DataAnnotationsModelValidator>()
+                .Cast<DataAnnotationsModelValidator>()
+                .First(rule => rule.Attribute is RangeAttribute);
+
+            if (rangeValidationRule != null)
+            {
+                return rangeValidationRule.Attribute as RangeAttribute;
+            }
+
+            return null;
         }
 
         private static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)
