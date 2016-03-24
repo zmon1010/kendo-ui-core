@@ -100,16 +100,24 @@ window.EditorHelpers = {
 /* exported mockFunc */
 function mockFunc(obj, methodName, mockMethod, context) {
     var method = obj[methodName];
+    var mock = initMock(mockMethod, context || obj);
+    obj[methodName] = mock;
+}
+
+function initMock(callback, context) {
+    var method = callback || function() {};
     var mock = function() {
         mock.called = true;
         mock.callCount++;
-        if (typeof(mockMethod) === "function") {
-            mockMethod.apply(context || obj, arguments);
+        if (typeof(callback) === "function") {
+            var result = callback.apply(context || this, arguments);
             if(mock.callbacks) {
                 for (var i = 0; i < mock.callbacks.length; i++) {
-                    mock.callbacks[i].apply(context || obj, arguments);
+                    mock.callbacks[i].apply(context || this, arguments);
                 }
             }
+
+            return result;
         }
     };
 
@@ -122,7 +130,7 @@ function mockFunc(obj, methodName, mockMethod, context) {
         mock.callbacks.push(callback);
     };
 
-    obj[methodName] = mock;
+    return mock;
 }
 
 /* exported removeMock */

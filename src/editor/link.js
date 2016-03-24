@@ -23,6 +23,8 @@ var kendo = window.kendo,
 var HTTP_PROTOCOL = "http://";
 var protocolRegExp = /^\w*:\/\//;
 var linkWordRegExp = /\s?([\w\/$-_.+!*'(),\ufeff]+)$/i;
+var linkCharsRegExp = /[\w\/\$\-_\.\+!\*'\(\),]/i;
+var endLinkCharsRegExp = /[\w\/\$\-_\*\)]/i;
 
 var LinkFormatFinder = Class.extend({
     findSuitable: function (sourceNode) {
@@ -272,86 +274,30 @@ var LinkCommand = Command.extend({
 
 });
 
-    var AutoLinkDetection = Command.extend({
-        init: function(options) {
-            Command.fn.init.call(this, options);
-
-            this.managesUndoRedo = true;
-        },
-
-        parseRange: function (r) {
-            var range = r || this.getRange();
-            var node = range.startContainer;
-
-            if(node.nodeType !== 3) {
-                return false;
-            }
-
-            var text = node.nodeValue.substring(0, range.startOffset);
-            return this._parseLink(text);
-        },
-
-        changesContent: function() {
-            return !!this.parseRange(this.getRange());
-        },
-
+    var AutoLinkCommand = Command.extend({
         exec: function () {
             var range = this.getRange();
-            var linkText = this.parseRange(range);
-            if (linkText) {
-                var marker = this._markLink(range, linkText);
-                this._appendLinkCommandToEditor(marker, range, linkText);
-            }
-        },
-
-        _parseLink: function (text) {
-            var wordMatch = text.match(linkWordRegExp);
-            if(!wordMatch) {
-                return;
-            }
-            var word = wordMatch[1];
-            var isLink = this._hasProtocolPrefix(word) || /^w{3}\./i.test(word);
-            return isLink && word;
-        },
-
-        _markLink: function (range, link) {
-            var node = range.startContainer;
-            var offset = range.startOffset;
-            var linkRange = range.cloneRange();
-
-            linkRange.setStart(node, offset - link.length);
-            linkRange.setEnd(node, offset);
-
-            var marker = new kendo.ui.editor.Marker(linkRange);
-            marker.add(linkRange);
-
-            this._moveEditorRangeOutsideLink(range, marker);
-
-            return marker;
-        },
-
-        _moveEditorRangeOutsideLink: function (range, marker) {
-            var editor = this.editor;
-            var collapsed = range.collapsed;
-
-            var bomNode = document.createTextNode('\ufeff');
-            $(marker.end).after(bomNode);
-            range.setStart(bomNode, 1);
-            if(collapsed) {
-                range.collapse(true);
-            }
-            editor.selectRange(range);
-        },
-
-        _appendLinkCommandToEditor: function (marker, range, linkText) {
-            var linkCmd = new AutoLinkCommand({
-                marker: marker,
-                range: range,
-                innerHTML: linkText,
-                href: this._ensureWebProtocol(linkText)
+            var traverser = new LeftDomTextTraverser({
+                node: range.startContainer,
+                offset: range.startOffset
             });
+            var detection = new DomTextLinkDetection(traverser);
 
-            this.editor.addPendingKeyCommand(linkCmd);
+            var detectedLink = detection.detectLink();
+            if (detectedLink) {
+                var linkRange = range.cloneRange();
+                linkRange.setStart(detectedLink.start.node, detectedLink.start.offset);
+                linkRange.setEnd(detectedLink.end.node, detectedLink.end.offset);
+
+                range = this.lockRange();
+                var formatter = new LinkFormatter();
+                formatter.apply(linkRange, {
+                    href: this._ensureWebProtocol(detectedLink.text),
+                    innerHTML: detectedLink.text
+                });
+
+                this.releaseRange(range);
+            }
         },
 
         _ensureWebProtocol: function (linkText) {
@@ -365,27 +311,6 @@ var LinkCommand = Command.extend({
 
         _prefixWithWebProtocol: function(linkText) {
             return HTTP_PROTOCOL + linkText;
-        }
-    });
-
-    var AutoLinkCommand = Command.extend({
-        exec: function () {
-            var cmd = this;
-            var range = cmd.getRange().cloneRange();
-            var marker = cmd.options.marker;
-            var editorRange = this.lockRange();
-            
-            var next = marker.end.nextSibling;
-            next.data = dom.stripBom(next.data);
-            marker.remove(range);
-            cmd.applyLinkCommand(range);
-            
-            this.releaseRange(editorRange);
-        },
-
-        applyLinkCommand: function(range) {
-            var formatter = new LinkFormatter();
-            formatter.apply(range, this.options);
         }
     });
 
@@ -408,20 +333,138 @@ var UnlinkTool = Tool.extend({
     }
 });
 
+    var DomTextLinkDetection = Class.extend({
+        init: function (traverser) {
+            this.traverser = traverser;
+            this.start = DomPos();
+            this.end = DomPos();
+            this.text = "";
+            this.skippedSingleSpaceAtEnd = false;
+        },
+        detectLink: function() {
+            this.traverser.traverse($.proxy(this._detectEnd, this));
+            if (!this.end.blank()) {
+                this.traverser.init(this.end);
+                this.traverser.traverse($.proxy(this._detectStart, this));
+
+                if (!protocolRegExp.test(this.text) && !/^w{3}\./i.test(this.text)) {
+                    this.start = DomPos();
+                }
+            }
+
+            if (this.start.blank()) {
+                return null;
+            } else {
+                return {
+                    start: this.start,
+                    end: this.end,
+                    text: this.text
+                };
+            }
+        },
+
+        _detectEnd: function(text, node, offset) {
+            if(!this.skippedSingleSpaceAtEnd && /\s{2}$/.test(text)) {
+                return false;
+            }
+            this.skippedSingleSpaceAtEnd = true;
+            
+            var i = text.length;
+            while (i-- && !endLinkCharsRegExp.test(text[i])) {}
+
+            if(i > -1) {
+                this.end.node = node;
+                this.end.offset = i + 1;
+
+                return false;
+            }
+        },
+
+        _detectStart: function(text, node, offset) {
+            var i = text.length;
+            while (i-- && /\S/.test(text[i])) {
+                this.text = text[i] + this.text;
+            }
+
+            this.start.node = node;
+            this.start.offset = i + 1;
+
+            if (i > -1) {
+                return false;
+            }
+        }
+    });
+
+    var DomPos = function() {
+        return {
+            node: null,
+            offset: null,
+            blank: function() {
+                return this.node === null && this.offset === null;
+            }
+        };
+    }
+
+    var LeftDomTextTraverser = Class.extend({
+        init: function (options) {
+            this.node = options.node;
+            this.offset = options.offset || (dom.isDataNode(this.node) && this.node.length) || 0;
+        },
+
+        traverse: function (callback) {
+            if (!callback) {
+                return;
+            }
+            this.cancel = false;
+            this._traverse(callback, this.node, this.offset);
+        },
+
+        _traverse: function (callback, node, offset) {
+            if(!node || this.cancel) {
+                return;
+            }
+            if (node.nodeType === 3) {
+                var text = node.data;
+                if (offset !== undefined) {
+                    text = text.substring(0, offset);
+                }
+                this.cancel = (callback(text, node, offset) === false);
+            }
+            else {
+                this._traverseNodes(callback, node.childNodes);
+            }
+
+            this._traverse(callback, node.previousSibling);
+        },
+
+        _traverseNodes: function(callback, nodes) {
+            for (var i = nodes.length - 1; i >= 0; i--) {
+                var node = nodes[i];
+                if (node.nodeType === 3) {
+                    this._traverse(callback, node);
+                }
+                else {
+                    this._traverseNodes(callback, node.childNodes);
+                }
+            }
+        }
+    });
+
 extend(kendo.ui.editor, {
     LinkFormatFinder: LinkFormatFinder,
     LinkFormatter: LinkFormatter,
     UnlinkCommand: UnlinkCommand,
     LinkCommand: LinkCommand,
-    AutoLinkDetection: AutoLinkDetection,
     AutoLinkCommand: AutoLinkCommand,
-    UnlinkTool: UnlinkTool
+    UnlinkTool: UnlinkTool,
+    DomTextLinkDetection: DomTextLinkDetection,
+    LeftDomTextTraverser: LeftDomTextTraverser
 });
 
 registerTool("createLink", new Tool({ key: "K", ctrl: true, command: LinkCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Create Link"})}));
 registerTool("unlink", new UnlinkTool({ key: "K", ctrl: true, shift: true, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Remove Link"})}));
-registerTool("autoLinkDetection", new Tool({ key: 32, preventTyping: false, command: AutoLinkDetection }));
-registerTool("autoLink", new Tool({ command: AutoLinkCommand }));
+// registerTool("autoLinkDetection", new Tool({ key: 32, preventTyping: false, command: AutoLinkDetection }));
+registerTool("autoLink", new Tool({ key: 32, keyPressCommand: true, command: AutoLinkCommand }));
 
 })(window.kendo.jQuery);
 

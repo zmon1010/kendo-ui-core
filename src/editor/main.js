@@ -582,36 +582,33 @@
 
                     var tools = editor.toolbar.tools;
                     var toolName = editor.keyboard.toolFromShortcut(tools, e);
-                    if (toolName) {
-                        var toolOptions = tools[toolName].options;
-                        var cmd = toolOptions.command && new toolOptions.command({range: editor.getRange()});
-                        var shouldEndTyping = cmd && (!cmd.changesContent || cmd.changesContent());
-                        var shouldPrevent = (toolOptions.preventTyping !== false);
-                        var isTyping = editor.keyboard.isTypingInProgress();
-                        if (shouldPrevent) {
-                            e.preventDefault();
-                        }
+                    if (toolName && toolName !== "autoLink") {
+                        editor._execTool = true;
 
-                        if (!/^(undo|redo)$/.test(toolName) && shouldEndTyping) {
+                        if (!/^(undo|redo)$/.test(toolName)) {
                             editor.keyboard.endTyping(true);
                         }
 
                         editor.trigger("keydown", e);
                         editor.exec(toolName);
 
-                        if(isTyping) {
-                            return !shouldPrevent;
-                        }
+                        return;
                     }
 
+                    editor._execTool = false;
                     editor.keyboard.clearTimeout();
 
                     editor.keyboard.keydown(e);
                 },
-                "keypress": function() {
+                "keypress": function(e) {
                     setTimeout(function() {
-                        editor.runPendingKeyCommands();
+                        editor.runPendingKeyCommands(e);
                     }, 0);
+
+                    if(editor._execTool) {
+                        e.preventDefault();
+                        return false;
+                    }
                 },
                 "keyup": function (e) {
                     var selectionCodes = [8, 9, 33, 34, 35, 36, 37, 38, 39, 40, 40, 45, 46];
@@ -684,27 +681,13 @@
             this._pendingKeyCommands.push(cmd);
         },
 
-        runPendingKeyCommands: function () {
-            var editor = this;
-            var pending = editor._pendingKeyCommands;
-            var count = pending.length;
-            var endOnce = true;
-
-            while(pending.length) {
-                var cmd = pending.shift();
-                if(endOnce) {
-                    editor.keyboard.endTyping(true);
-                    endOnce = false;
-                }
-
-                cmd.options.range = editor.getRange();
-                cmd.init(cmd.options);
-                editor.undoRedoStack.push(cmd);
-                cmd.editor = editor;
-                cmd.exec();
+        runPendingKeyCommands: function (e) {
+            var tools = this.toolbar.tools;
+            var toolName = this.keyboard.toolFromShortcut(tools, e);
+            if (toolName) {
+                this.keyboard.endTyping(true);
+                this.exec(toolName);
             }
-
-            return count > 0;
         },
 
         refresh: function() {
