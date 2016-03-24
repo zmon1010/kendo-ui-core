@@ -5,6 +5,8 @@ using Kendo.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.TagHelpers;
 using System.Collections.Generic;
 using Kendo.Mvc.Extensions;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kendo.Mvc.TagHelpers
 {
@@ -32,12 +34,17 @@ namespace Kendo.Mvc.TagHelpers
                 metadata = For.Metadata;
                 Name = For.Name;
 
-                if (Value == null)
-                {
-                    Value = (double?)For.Model;
-                }
+                Value = Value ?? (double?)For.Model;
 
                 Format = ExtractEditFormat(For.ModelExplorer.Metadata.EditFormatString);
+
+                RangeAttribute rangeAttribute = Generator.GetRangeValidationAttribute(ViewContext, metadata, Name);
+
+                if (rangeAttribute != null)
+                {
+                    Min = Min ?? (double)Convert.ChangeType(rangeAttribute.Minimum, typeof(double));
+                    Max = Max ?? (double)Convert.ChangeType(rangeAttribute.Maximum, typeof(double));
+                }
             }
 
             GenerateId(output);

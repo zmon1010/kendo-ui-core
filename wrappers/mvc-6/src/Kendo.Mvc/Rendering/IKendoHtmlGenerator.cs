@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kendo.Mvc.Rendering
 {
@@ -92,5 +94,10 @@ namespace Kendo.Mvc.Rendering
             string name);
 
         string SanitizeId(string id);
+
+        RangeAttribute GetRangeValidationAttribute(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string name);
     }
 }
