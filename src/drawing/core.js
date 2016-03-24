@@ -419,7 +419,9 @@
 
             this.popup = new kendo.ui.Popup(this.element, {
                 appendTo: options.appendTo,
-                animation: options.animation
+                animation: options.animation,
+                copyAnchorStyles: false,
+                collision: "fit fit"
             });
 
             this.surface = surface;
@@ -429,7 +431,7 @@
         options: {
             position: "top",
             showOn: "mouseenter",
-            offset: 5,
+            offset: 7,
             autoHide: true,
             hideDelay: 0
         },
@@ -587,7 +589,6 @@
                 }
 
                 popup.open(position.left, position.top);
-                popup.wrapper.css({padding: 0});
 
                 this._current = {
                     options: options,
@@ -624,33 +625,25 @@
 
         _measure: function(options) {
             var width, height;
-            if (options.width && options.height) {
-                width = options.width;
-                height = options.height;
-                this.element.css({
-                    width: options.width,
-                    height: options.height
-                });
-                width = this.element.outerWidth();
-                height = this.element.outerHeight();
-            } else {
-                this.element.css({
-                    width: "auto",
-                    height: "auto"
-                });
+            this.element.css({
+                width: "auto",
+                height: "auto"
+            });
+            var visible = this.popup.visible();
+            if (!visible) {
+                this.popup.wrapper.show();
+            }
 
-                var visible = this.popup.visible();
+            this.element.css({
+                width: defined(options.width) ? options.width : "auto",
+                height: defined(options.height) ? options.height : "auto"
+            });
 
-                if (!visible) {
-                    this.popup.wrapper.show();
-                }
+            width = this.element.outerWidth();
+            height = this.element.outerHeight();
 
-                width = this.element.outerWidth();
-                height = this.element.outerHeight();
-
-                if (!visible) {
-                    this.popup.wrapper.hide();
-                }
+            if (!visible) {
+                this.popup.wrapper.hide();
             }
 
             return {

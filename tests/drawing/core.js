@@ -582,8 +582,8 @@
         test("Applies top position by default", function() {
             tooltip.show(shape);
             var position = getPopupPosition();
-            equal(position.left, 125);
-            equal(position.top, 80);
+            equal(position.left, 119);
+            equal(position.top, 70);
         });
 
         test("Applies top position with offset", function() {
@@ -591,8 +591,8 @@
                 offset: 10
             });
             var position = getPopupPosition();
-            equal(position.left, 125);
-            equal(position.top, 70);
+            equal(position.left, 119);
+            equal(position.top, 60);
         });
 
         test("Applies left position", function() {
@@ -600,8 +600,8 @@
                 position: "left"
             });
             var position = getPopupPosition();
-            equal(position.left, 50);
-            equal(position.top, 140);
+            equal(position.left, 39);
+            equal(position.top, 135);
         });
 
         test("Applies left position with offset", function() {
@@ -610,8 +610,8 @@
                 offset: 10
             });
             var position = getPopupPosition();
-            equal(position.left, 40);
-            equal(position.top, 140);
+            equal(position.left, 29);
+            equal(position.top, 135);
         });
 
         test("Applies right position", function() {
@@ -620,7 +620,7 @@
             });
             var position = getPopupPosition();
             equal(position.left, 200);
-            equal(position.top, 140);
+            equal(position.top, 135);
         });
 
         test("Applies right position with offset", function() {
@@ -630,7 +630,7 @@
             });
             var position = getPopupPosition();
             equal(position.left, 210);
-            equal(position.top, 140);
+            equal(position.top, 135);
         });
 
         test("Applies bottom position", function() {
@@ -638,7 +638,7 @@
                 position: "bottom"
             });
             var position = getPopupPosition();
-            equal(position.left, 125);
+            equal(position.left, 119);
             equal(position.top, 200);
         });
 
@@ -648,7 +648,7 @@
                 offset: 10
             });
             var position = getPopupPosition();
-            equal(position.left, 125);
+            equal(position.left, 119);
             equal(position.top, 210);
         });
 
@@ -664,8 +664,8 @@
                 clientY: 250
             });
             var position = getPopupPosition();
-            equal(position.left, 275);
-            equal(position.top, 230);
+            equal(position.left, 269);
+            equal(position.top, 220);
         });
 
         test("Applies cursor position with offset", function() {
@@ -680,8 +680,8 @@
                 clientY: 250
             });
             var position = getPopupPosition();
-            equal(position.left, 275);
-            equal(position.top, 220);
+            equal(position.left, 269);
+            equal(position.top, 210);
         });
 
         test("uses group bbox if group is set to true", function() {
@@ -694,8 +694,8 @@
             };
             tooltip.show(group);
             var position = getPopupPosition();
-            equal(position.left, 175);
-            equal(position.top, 80);
+            equal(position.left, 169);
+            equal(position.top, 70);
         });
 
         // ------------------------------------------------------------
