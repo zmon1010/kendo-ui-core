@@ -625,7 +625,7 @@
                 math.sqrt(math.pow(this.radiusX, 2) * math.pow(math.sin(angleRad), 2) + math.pow(this.radiusY, 2) * math.pow(math.cos(angleRad), 2));
             var startPoint = this.pointAt(this.startAngle).round(PRECISION);
             var endPoint = this.pointAt(this.endAngle).round(PRECISION);
-            var intersection = lineIntersection(center, point, startPoint, endPoint);
+            var intersection = lineIntersection(center, point.round(PRECISION), startPoint, endPoint);
             var containsPoint;
 
             if (intervalAngle < 180) {

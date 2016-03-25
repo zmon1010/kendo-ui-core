@@ -1108,7 +1108,7 @@
     // ------------------------------------------------------------
     module("Arc / containsPoint / large arc", {
         setup: function() {
-             arc = new Arc(new Point(100, 100), {
+            arc = new Arc(new Point(100, 100), {
                 startAngle: 0,
                 endAngle: 270,
                 radiusX: 50,
@@ -1143,7 +1143,7 @@
     });
 
     test("returns false if point is in the ellipse but not in the arc area", function() {
-        ok(!arc.containsPoint(new Point(125, 50)));
+        ok(!arc.containsPoint(new Point(125, 45)));
     });
 
 
