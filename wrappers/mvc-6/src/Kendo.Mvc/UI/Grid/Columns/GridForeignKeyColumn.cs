@@ -29,8 +29,8 @@ namespace Kendo.Mvc.UI
 
             json["values"] = Data.Select(i => new { text = i.Text, value = i.Value });            
         }
-
-        protected void AppendSelectList(IDictionary<string, object> viewData, object dataItem)
+        
+        protected override void AppendAdditionalViewData(IDictionary<string, object> viewData, object dataItem)
         {        
             object selectedValue;
             if (!Data.Any(i => i.Selected))
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI
         
         public Action<IDictionary<string, object>, object> SerializeSelectList
         {
-            get { return AppendSelectList; }
+            get { return AppendAdditionalViewData; }
         }
     }
 }

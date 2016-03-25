@@ -289,9 +289,21 @@ namespace Kendo.Mvc.UI
             }
         }
 
-		public string GetEditor(IHtmlHelper helper, IHtmlEncoder encoder)
+        /// <summary>
+        /// Provide a hook to append additional view data by child columns
+        /// </summary>
+        /// <param name="viewData"></param>
+        /// <param name="dataItem"></param>
+        protected virtual void AppendAdditionalViewData(IDictionary<string, object> viewData, object dataItem)
+        {                                    
+        }
+
+        public string GetEditor(IHtmlHelper helper, IHtmlEncoder encoder)
 		{
-			((ICanHasViewContext)helper).Contextualize(Grid.ViewContext.ViewContextForType<TModel>(Grid.ModelMetadataProvider));
+            var viewContext = Grid.ViewContext.ViewContextForType<TModel>(Grid.ModelMetadataProvider);
+            ((ICanHasViewContext)helper).Contextualize(viewContext);
+
+            AppendAdditionalViewData(viewContext.ViewData, Grid.Editable.DefaultDataItem());
 
             var sb = new StringBuilder();
 
