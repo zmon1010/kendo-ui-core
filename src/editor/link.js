@@ -307,7 +307,8 @@ var LinkCommand = Command.extend({
             var range = this.getRange();
             var traverser = new LeftDomTextTraverser({
                 node: range.startContainer,
-                offset: range.startOffset
+                offset: range.startOffset,
+                cancelAtNode: function(node) { return node && dom.name(node) === "a"; }
             });
 
             var detection = new DomTextLinkDetection(traverser);
@@ -442,6 +443,7 @@ var UnlinkTool = Tool.extend({
         init: function (options) {
             this.node = options.node;
             this.offset = options.offset || (dom.isDataNode(this.node) && this.node.length) || 0;
+            this.cancelAtNode = options.cancelAtNode || this.cancelAtNode || $.noop;
         },
 
         traverse: function (callback) {
@@ -464,20 +466,24 @@ var UnlinkTool = Tool.extend({
                 this.cancel = (callback(text, node, offset) === false);
             }
             else {
+                console.log(this.cancel);
+                this.cancel = this.cancel || this.cancelAtNode(node.lastChild);
+                console.log(this.cancel);
                 return this._traverse(callback, node.lastChild);
             }
 
             var previous = node.previousSibling;
-            if (previous) {
-                this._traverse(callback, previous);
-            } else  {
+            if (!previous) {
                 var parent = node.parentNode;
                 while (!previous && dom.isInline(parent)) {
                     previous = parent.previousSibling;
                     parent = parent.parentNode;
                 }
-                this._traverse(callback, previous);
             }
+            console.log(this.cancel);
+            this.cancel = this.cancel || this.cancelAtNode(previous);
+            console.log(this.cancel);
+            this._traverse(callback, previous);
         }
     });
 

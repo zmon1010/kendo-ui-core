@@ -600,7 +600,7 @@
                     editor.keyboard.keydown(e);
                 },
                 "keypress": function(e) {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         editor.runPostContentKeyCommands(e);
                     }, 0);
                 },
