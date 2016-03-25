@@ -22,7 +22,6 @@ var kendo = window.kendo,
 
 var HTTP_PROTOCOL = "http://";
 var protocolRegExp = /^\w*:\/\//;
-var linkWordRegExp = /\s?([\w\/$-_.+!*'(),\ufeff]+)$/i;
 var endLinkCharsRegExp = /[\w\/\$\-_\*\)]/i;
 
 var LinkFormatFinder = Class.extend({
@@ -365,7 +364,7 @@ var UnlinkTool = Tool.extend({
             var offset = this.traverser.offset;
             if (dom.isDataNode(node)) {
                 var text = node.data.substring(0, offset);
-                if(/\s{2}$/.test(text)) {
+                if(/\s{2}$/.test(dom.stripBom(text))) {
                     return;
                 }
             } else if(offset === 0) {//heuristic for new line
@@ -398,7 +397,7 @@ var UnlinkTool = Tool.extend({
             }
         },
 
-        _detectEnd: function(text, node, offset) {
+        _detectEnd: function(text, node) {
             var i = lastIndexOfRegExp(text, endLinkCharsRegExp);
             if(i > -1) {
                 this.end.node = node;
@@ -408,7 +407,7 @@ var UnlinkTool = Tool.extend({
             }
         },
 
-        _detectStart: function(text, node, offset) {
+        _detectStart: function(text, node) {
             var i = lastIndexOfRegExp(text, /\s/);
             var ii = i + 1;
             this.text = text.substring(ii) + this.text;
@@ -465,21 +464,19 @@ var UnlinkTool = Tool.extend({
                 this.cancel = (callback(text, node, offset) === false);
             }
             else {
-                this._traverseNodes(callback, node.childNodes);
+                return this._traverse(callback, node.lastChild);
             }
 
-            this._traverse(callback, node.previousSibling);
-        },
-
-        _traverseNodes: function(callback, nodes) {
-            for (var i = nodes.length - 1; i >= 0; i--) {
-                var node = nodes[i];
-                if (node.nodeType === 3) {
-                    this._traverse(callback, node);
+            var previous = node.previousSibling;
+            if (previous) {
+                this._traverse(callback, previous);
+            } else  {
+                var parent = node.parentNode;
+                while (!previous && dom.isInline(parent)) {
+                    previous = parent.previousSibling;
+                    parent = parent.parentNode;
                 }
-                else {
-                    this._traverseNodes(callback, node.childNodes);
-                }
+                this._traverse(callback, previous);
             }
         }
     });
@@ -497,7 +494,6 @@ extend(kendo.ui.editor, {
 
 registerTool("createLink", new Tool({ key: "K", ctrl: true, command: LinkCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Create Link"})}));
 registerTool("unlink", new UnlinkTool({ key: "K", ctrl: true, shift: true, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Remove Link"})}));
-// registerTool("autoLinkDetection", new Tool({ key: 32, preventTyping: false, command: AutoLinkDetection }));
 registerTool("autoLink", new Tool({ key: [13, 32], keyPressCommand: true, command: AutoLinkCommand }));
 
 })(window.kendo.jQuery);

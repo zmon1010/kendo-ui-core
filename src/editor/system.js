@@ -503,13 +503,12 @@ var Keyboard = Class.extend({
             o,
             matchesKey,
             found = [];
+        var matchKey = function (toolKey) { return toolKey == key || toolKey == e.keyCode; };
 
         for (toolName in tools) {
             o = $.extend({ ctrl: false, alt: false, shift: false }, tools[toolName].options);
 
-            var matchKey = function (toolKey) { return toolKey == key || toolKey == e.keyCode };
-            var matchesKey = $.isArray(o.key) ? $.grep(o.key, matchKey).length > 0 : matchKey(o.key);
-
+            matchesKey = $.isArray(o.key) ? $.grep(o.key, matchKey).length > 0 : matchKey(o.key);
             if (matchesKey &&
                 o.ctrl == e.ctrlKey &&
                 o.alt == e.altKey &&

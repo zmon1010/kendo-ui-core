@@ -241,8 +241,6 @@
 
             that.undoRedoStack = new kendo.util.UndoRedoStack();
 
-            that._pendingKeyCommands = [];
-
             if (options && options.value) {
                 value = options.value;
             } else if (that.textarea) {
@@ -592,20 +590,18 @@
 
                         editor.trigger("keydown", e);
                         editor.exec(toolName);
-
-                        editor.runPendingKeyCommands(e);
+                        editor.runPostContentKeyCommands(e);
 
                         return false;
                     }
 
-                    editor._execTool = false;
                     editor.keyboard.clearTimeout();
 
                     editor.keyboard.keydown(e);
                 },
                 "keypress": function(e) {
                     setTimeout(function() {
-                        editor.runPendingKeyCommands(e);
+                        editor.runPostContentKeyCommands(e);
                     }, 0);
                 },
                 "keyup": function (e) {
@@ -675,7 +671,7 @@
             }
         },
 
-        runPendingKeyCommands: function (e) {
+        runPostContentKeyCommands: function (e) {
             var range = this.getRange();
             var tools = this.keyboard.toolsFromShortcut(this.toolbar.tools, e);
 
@@ -686,7 +682,6 @@
                     continue;
                 }
 
-                console.log("run");
                 var cmd = new o.command({range: range});
                 if (cmd.changesContent()) {
                     this.keyboard.endTyping(true);

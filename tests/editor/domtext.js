@@ -65,9 +65,29 @@
             equal(offset, offsets.pop());
         });
 
+        debugger
         traverser.traverse(callback);
 
         equal(callback.callCount, 4);
+    });
+
+    test("traverse from inline node", function () {
+        var content = addContent("conte<strong>nt</strong>");
+        var traverser = new LeftDomTextTraverser({
+            node: content.childNodes[1].firstChild,
+            offset: 1
+        });
+
+        var texts = ["conte", "n"];
+        var offsets = [undefined, 1];
+        var callback = initMock(function(text, node, offset) {
+            equal(text, texts.pop());
+            equal(offset, offsets.pop());
+        });
+
+        traverser.traverse(callback);
+
+        equal(callback.callCount, 2);
     });
 
     test("cancel midway", function() {

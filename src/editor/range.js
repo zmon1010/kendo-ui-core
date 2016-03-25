@@ -817,7 +817,7 @@ var Marker = Class.extend({
     add: function (range, expand) {
         var that = this;
 
-        // var collapsed = range.collapsed && !RangeUtils.isExpandable(range);
+        var collapsed = range.collapsed && !RangeUtils.isExpandable(range);
         var doc = RangeUtils.documentFromRange(range);
 
         if (expand && range.collapsed) {
@@ -836,13 +836,13 @@ var Marker = Class.extend({
         that.start = that.end.cloneNode(true);
         rangeBoundary.insertNode(that.start);
 
-        //that._removeDeadMarkers(that.start, that.end);
+        that._removeDeadMarkers(that.start, that.end);
 
-        // if (collapsed) {
-        //     var bom = doc.createTextNode("\ufeff");
-        //     dom.insertAfter(bom.cloneNode(), that.start);
-        //     dom.insertBefore(bom, that.end);
-        // }
+        if (collapsed) {
+            var bom = doc.createTextNode("\ufeff");
+            dom.insertAfter(bom.cloneNode(), that.start);
+            dom.insertBefore(bom, that.end);
+        }
 
         normalize(range.commonAncestorContainer);
 
