@@ -50,6 +50,7 @@
             this.element.on("click" + NS, this._click);
             this.element.on("mouseover" + NS, this._mouseenter);
             this.element.on("mouseout" + NS, this._mouseleave);
+            this.element.on("mousemove" + NS, this._mousemove);
 
             this.resize();
         },

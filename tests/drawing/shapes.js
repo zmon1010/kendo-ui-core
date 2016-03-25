@@ -605,6 +605,43 @@
         });
 
         // ------------------------------------------------------------
+        module("Group / containsPoint", {
+            setup: function() {
+                var circle = new Circle(new g.Circle(new Point(0, 0), 10), {fill: { color: "red"}});
+                group = new Group();
+                group.append(circle);
+            }
+        });
+
+        test("containsPoint returns false if group is not visible", function() {
+            group.visible(false);
+            ok(!group.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if children do not contain point", function() {
+            equal(group.containsPoint(new Point(15, 5)), false);
+        });
+
+        test("containsPoint returns true if a child contains the point", function() {
+            equal(group.containsPoint(new Point(5, 5)), true);
+        });
+
+        test("containsPoint returns true if a transformed child contains the point", function() {
+            group.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(group.containsPoint(new Point(100, 100)), true);
+        });
+
+        test("containsPoint passes current transformation to children", function() {
+            var transform = g.transform().translate(100, 100).rotate(-45);
+            group.transform(transform);
+            group.children[0].containsPoint = function(point, currentTransform) {
+                ok(transform.equals(currentTransform));
+            };
+            group.containsPoint(new Point(5, 5))
+        });
+
+        // ------------------------------------------------------------
         module("Group / insertAt", {
             setup: function() {
                 group = new Group();
@@ -908,6 +945,36 @@
             deepEqual(text.measure(), d.util.measureText("Foo", { font: "15px sans-serif" }));
         });
 
+        test("containsPoint returns false if text has no fill", function() {
+            text.fill("none");
+            ok(!text.containsPoint(new Point(105, 105)));
+        });
+
+        test("containsPoint returns false if text is not visible", function() {
+            text.visible(false);
+            ok(!text.containsPoint(new Point(105, 105)));
+        });
+
+        test("containsPoint returns false if point is out of text bounds", function() {
+            ok(!text.containsPoint(new Point(125, 105)));
+        });
+
+        test("containsPoint returns true if point is in text bounds", function() {
+            equal(text.containsPoint(new Point(105, 105)), true);
+        });
+
+        test("containsPoint returns true if point is in transformed text", function() {
+            text.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(text.containsPoint(new Point(255, 100)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed text", function() {
+            text.transform(g.transform().translate(100, 100).rotate(-45));
+
+            ok(!text.containsPoint(new Point(105, 105)));
+        });
+
         shapeBaseTests(Text, "Text");
     })();
 
@@ -1014,10 +1081,84 @@
             circle.bbox();
         });
 
+        test("bbox returns cached rect", function() {
+            var boundingBox,
+                geometry = new g.Circle(new Point()),
+                count = 0;
+
+            geometry.bbox = function() {
+                count++;
+                return new g.Rect(new Point(50, 50), [100, 100]);
+            };
+            circle = new Circle(geometry, {stroke: {width: 5}});
+            circle.bbox();
+            boundingBox = circle.bbox();
+
+            equal(count, 1);
+            compareBoundingBox(boundingBox, [47.5, 47.5, 152.5, 152.5]);
+        });
+
+        test("bbox returns new rect after geometry change", function() {
+            var boundingBox,
+                geometry = new g.Circle([0, 0], 10),
+                count = 0;
+
+            circle = new Circle(geometry, {stroke: {width: 1}});
+            circle.bbox();
+            geometry.setRadius(5);
+
+            boundingBox = circle.bbox();
+            compareBoundingBox(boundingBox, [-5.5, -5.5, 5.5, 5.5]);
+        });
+
         test("rawBBox returns geometry bounding box with no transformation applied", function() {
             circle.transform(g.transform().scale(2,2));
 
             compareBoundingBox(circle.rawBBox(), [-10, -10, 10, 10]);
+        });
+
+        test("containsPoint returns false if circle is not filled", function() {
+            ok(!circle.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if circle is not visible", function() {
+            circle.fill("red");
+            circle.visible(false);
+            ok(!circle.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if point is out of circle", function() {
+            circle.fill("red");
+            equal(circle.containsPoint(new Point(15, 5)), false);
+        });
+
+        test("containsPoint returns true if point is in circle", function() {
+            circle.fill("red");
+            equal(circle.containsPoint(new Point(5, 5)), true);
+        });
+
+        test("containsPoint returns true if stroked and point is on the path", function() {
+            circle.stroke("red", 2);
+            equal(circle.containsPoint(new Point(9, 6)), true);
+        });
+
+        test("containsPoint returns false if stroked and point is inside circle", function() {
+            circle.stroke("red", 2);
+            equal(circle.containsPoint(new Point(5, 5)), false);
+        });
+
+        test("containsPoint returns true if point is in transformed circle", function() {
+            circle.fill("red");
+            circle.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(circle.containsPoint(new Point(100, 100)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed circle", function() {
+            circle.fill("red");
+            circle.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(circle.containsPoint(new Point(5, 5)), false);
         });
 
         shapeBaseTests(Circle, "Circle");
@@ -1130,11 +1271,93 @@
             arc.bbox();
         });
 
+        test("bbox returns cached rect", function() {
+            var boundingBox,
+                geometry = new g.Arc(new Point()),
+                count = 0;
+
+            geometry.bbox = function() {
+                count++;
+                return new g.Rect(new Point(50, 50), [100, 100]);
+            };
+            arc = new Arc(geometry, {stroke: {width: 5}});
+
+            arc.bbox();
+            boundingBox = arc.bbox();
+
+            equal(count, 1);
+            compareBoundingBox(boundingBox, [47.5, 47.5, 152.5, 152.5]);
+        });
+
+        test("bbox returns new rect after geometry change", function() {
+            var boundingBox,
+                geometry = new g.Arc([0, 0], {
+                    startAngle: 0,
+                    endAngle: 360,
+                    radiusX: 10
+                }),
+                count = 0;
+
+            arc = new Arc(geometry, {stroke: {width: 1}});
+
+            arc.bbox();
+            geometry.setRadiusX(5);
+            geometry.setRadiusY(5);
+            boundingBox = arc.bbox();
+
+            compareBoundingBox(boundingBox, [-5.5, -5.5, 5.5, 5.5]);
+        });
+
         test("rawBBox returns geometry bounding box with no transformation applied", function() {
             arc.transform(g.transform().scale(2,2));
 
             compareBoundingBox(arc.rawBBox(), [50, 100, 150, 200]);
         });
+
+        test("containsPoint returns false if arc is not filled", function() {
+            ok(!arc.containsPoint(new Point(100, 110)));
+        });
+
+        test("containsPoint returns false if arc is not visible", function() {
+            arc.fill("red");
+            arc.visible(false);
+            ok(!arc.containsPoint(new Point(100, 110)));
+        });
+
+        test("containsPoint returns false if point is out of arc", function() {
+            arc.fill("red");
+            equal(arc.containsPoint(new Point(100, 95)), false);
+        });
+
+        test("containsPoint returns true if point is in arc", function() {
+            arc.fill("red");
+            equal(arc.containsPoint(new Point(100, 110)), true);
+        });
+
+        test("containsPoint returns true if stroked and point is on the path", function() {
+            arc.stroke("red", 2);
+            equal(arc.containsPoint(new Point(87, 197)), true);
+        });
+
+        test("containsPoint returns false if stroked and point is inside arc", function() {
+            arc.stroke("red", 2);
+            equal(arc.containsPoint(new Point(100, 110)), false);
+        });
+
+        test("containsPoint returns true if point is in transformed arc", function() {
+            arc.fill("red");
+            arc.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(arc.containsPoint(new Point(250, 150)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed arc", function() {
+            arc.fill("red");
+            arc.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(arc.containsPoint(new Point(100, 110)), false);
+        });
+
     })();
 
     // ------------------------------------------------------------
@@ -1695,11 +1918,166 @@
             compareBoundingBox(boundingBox, [-10.7,-4.1,32.5,52.5], TOLERANCE);
         });
 
+        test("bbox returns cached rect", function() {
+            path.moveTo(0, 0);
+            path.lineTo(50, 50);
+
+            var segment = path.segments[0];
+            var count = 0;
+            segment.bboxTo = function() {
+                count++;
+                return new g.Rect([0, 0], [50, 50]);
+            };
+            path.bbox();
+            var bbox = path.bbox();
+            equal(count, 1);
+            compareBoundingBox(bbox, [0, 0, 50, 50], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after stroke width change", function() {
+            path.moveTo(0, 0);
+            path.lineTo(50, 50);
+
+            path.bbox();
+            path.stroke("red", 10);
+            var bbox = path.bbox();
+
+            compareBoundingBox(bbox, [-5, -5, 55, 55], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after transformation change", function() {
+            path.moveTo(0, 0);
+            path.lineTo(50, 50);
+
+            path.bbox();
+            path.transform(g.transform().translate(100, 100));
+            var bbox = path.bbox();
+
+            compareBoundingBox(bbox, [100, 100, 150, 150], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after geometry change", function() {
+            path.moveTo(0, 0);
+            path.lineTo(50, 50);
+
+            path.bbox();
+            path.segments[1].anchor().setX(100);
+            var bbox = path.bbox();
+
+            compareBoundingBox(bbox, [0, 0, 100, 50], TOLERANCE);
+        });
+
         test("rawBBox returns the bounding rect without transformation", function() {
             path.moveTo(0, 0);
             path.lineTo(100, 100);
             path.transform(g.transform().scale(2,2));
             compareBoundingBox(path.rawBBox(), [0, 0, 100, 100]);
+        });
+
+        // ------------------------------------------------------------
+        module("Path / containsPoint", {
+            setup: function() {
+                path = new Path().fill("red");
+                path.moveTo(50, 50).lineTo(100, 100).lineTo(0, 100);
+            }
+        });
+
+        test("returns false if path is not filled", function() {
+            path.fill("none");
+            ok(!path.containsPoint(new Point(50, 80)));
+        });
+
+        test("returns false if path is not visible", function() {
+            path.visible(false);
+            ok(!path.containsPoint(new Point(50, 80)));
+        });
+
+        test("returns false if point is out of path", function() {
+            equal(path.containsPoint(new Point(80, 70)), false);
+        });
+
+        test("returns true if point is in path", function() {
+            equal(path.containsPoint(new Point(50, 80)), true);
+        });
+
+        test("detects points which ray passes through a vertex", function() {
+            path.moveTo(50, 50).lineTo(100, 50).lineTo(60, 80).lineTo(90, 100).lineTo(0, 100);
+            equal(path.containsPoint(new Point(90, 55)), true);
+        });
+
+        test("returns true if stroked and point is on the path", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(73, 63)), true);
+        });
+
+        test("returns false if stroked and point is inside path fill area", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(65, 85)), false);
+        });
+
+        test("returns true if point is in transformed path", function() {
+            path.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(path.containsPoint(new Point(200, 115)), true);
+        });
+
+        test("returns false if point is outside of transformed path", function() {
+            path.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(path.containsPoint(new Point(50, 80)), false);
+        });
+
+        // ------------------------------------------------------------
+        module("Path / containsPoint / curves", {
+            setup: function() {
+                path = new Path().fill("red");
+                path.moveTo(200, 200)
+                    .curveTo(Point.create(210, 290),
+                        Point.create(250, 110),
+                        Point.create(245, 200))
+                    .curveTo(Point.create(250, 310),
+                        Point.create(300, 250),
+                        Point.create(250, 150));
+            }
+        });
+
+        test("detects points in curve segments", function() {
+            equal(path.containsPoint(new Point(260, 190)), true);
+        });
+
+        test("detects points in bbox but outside of closed area", function() {
+            equal(path.containsPoint(new Point(240, 190)), false);
+        });
+
+        test("detects points in transformed curve segments", function() {
+            path.transform(g.transform().translate(100, 100).rotate(-45));
+            equal(path.containsPoint(new Point(400, 90)), true);
+        });
+
+        test("detects points out of transformed curve segments", function() {
+            path.transform(g.transform().translate(100, 100).rotate(-45));
+            equal(path.containsPoint(new Point(400, 60)), false);
+        });
+
+        test("returns true if stroked and point is on the path", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(195, 206)), true);
+        });
+
+        test("returns false if point is in end point are but out of stroke area", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(200, 193)), false);
+            equal(path.containsPoint(new Point(250, 143)), false);
+        });
+
+        test("returns false if stroked and point is inside path fill area", function() {
+            path.fill("none");
+            path.stroke("red", 20);
+            equal(path.containsPoint(new Point(260, 224)), false);
         });
 
         shapeBaseTests(Path, "Path");
@@ -1949,6 +2327,55 @@
             compareBoundingBox(boundingBox, [-16.3,-3.2,60,140], TOLERANCE);
         });
 
+        test("bbox returns cached rect", function() {
+            multiPath.moveTo(0, 0);
+            multiPath.lineTo(50, 50);
+
+            var path = multiPath.paths[0];
+            var count = 0;
+            path.bbox = function() {
+                count++;
+                return new g.Rect([0, 0], [50, 50]);
+            };
+            multiPath.bbox();
+            var bbox = multiPath.bbox();
+            equal(count, 1);
+            compareBoundingBox(bbox, [0, 0, 50, 50], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after stroke width change", function() {
+            multiPath.moveTo(0, 0);
+            multiPath.lineTo(50, 50);
+
+            multiPath.bbox();
+            multiPath.stroke("red", 10);
+            var bbox = multiPath.bbox();
+
+            compareBoundingBox(bbox, [-5, -5, 55, 55], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after transformation change", function() {
+            multiPath.moveTo(0, 0);
+            multiPath.lineTo(50, 50);
+
+            multiPath.bbox();
+            multiPath.transform(g.transform().translate(100, 100));
+            var bbox = multiPath.bbox();
+
+            compareBoundingBox(bbox, [100, 100, 150, 150], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after geometry change", function() {
+            multiPath.moveTo(0, 0);
+            multiPath.lineTo(50, 50);
+
+            multiPath.bbox();
+            multiPath.paths[0].segments[1].anchor().setX(100);
+            var bbox = multiPath.bbox();
+
+            compareBoundingBox(bbox, [0, 0, 100, 50], TOLERANCE);
+        });
+
         test("rawBBox return bounding box without transformation", function() {
             multiPath.moveTo(50, 50);
             multiPath.lineTo(100, 100);
@@ -1956,6 +2383,67 @@
             multiPath.transform(g.transform(Matrix.scale(2, 2)));
 
             compareBoundingBox(multiPath.rawBBox(), [50, 50, 200, 200]);
+        });
+
+        // ------------------------------------------------------------
+        module("MultiPath / containsPoint", {
+            setup: function() {
+                multiPath = new MultiPath();
+                multiPath.fill("red");
+                multiPath.moveTo(200, 200)
+                    .curveTo(Point.create(210, 290),
+                        Point.create(250, 110),
+                        Point.create(245, 200))
+                    .curveTo(Point.create(250, 310),
+                        Point.create(300, 250),
+                        Point.create(250, 150))
+
+
+                multiPath.moveTo(50, 50).lineTo(100, 100).lineTo(0, 100);
+            }
+        });
+
+        test("containsPoint returns false if path is not filled", function() {
+            multiPath.fill("none");
+            ok(!multiPath.containsPoint(new Point(50, 80)));
+        });
+
+        test("returns false if path is not visible", function() {
+            multiPath.visible(false);
+            ok(!multiPath.containsPoint(new Point(50, 80)));
+        });
+
+        test("returns false if point is out of path", function() {
+            equal(multiPath.containsPoint(new Point(80, 70)), false);
+        });
+
+        test("returns true if point is in one of the paths", function() {
+            equal(multiPath.containsPoint(new Point(50, 80)), true);
+            equal(multiPath.containsPoint(new Point(260, 190)), true);
+        });
+
+        test("returns true if stroked and point is on the path", function() {
+            multiPath.fill("none");
+            multiPath.stroke("red", 20);
+            equal(multiPath.containsPoint(new Point(195, 206)), true);
+        });
+
+        test("returns false if stroked and point is inside path fill area", function() {
+            multiPath.fill("none");
+            multiPath.stroke("red", 20);
+            equal(multiPath.containsPoint(new Point(260, 224)), false);
+        });
+
+        test("returns true if point is in transformed path", function() {
+            multiPath.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(multiPath.containsPoint(new Point(200, 115)), true);
+        });
+
+        test("returns false if point is outside of transformed path", function() {
+            multiPath.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(multiPath.containsPoint(new Point(50, 80)), false);
         });
 
         shapeBaseTests(MultiPath, "MultiPath");
@@ -2065,6 +2553,37 @@
             image.transform(g.transform().scale(2, 2));
             compareBoundingBox(image.rawBBox(), [0, 0, 100, 100]);
         });
+
+        test("containsPoint returns false if no source is set", function() {
+            image.src("");
+            ok(!image.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if image is not visible", function() {
+            image.visible(false);
+            ok(!image.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if point is out of image rect", function() {
+            ok(!image.containsPoint(new Point(105, 5)));
+        });
+
+        test("containsPoint returns true if point is in image rect", function() {
+            equal(image.containsPoint(new Point(5, 5)), true);
+        });
+
+        test("containsPoint returns true if point is in transformed image", function() {
+            image.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(image.containsPoint(new Point(150, 100)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed image", function() {
+            image.transform(g.transform().translate(100, 100).rotate(-45));
+
+            ok(!image.containsPoint(new Point(5, 5)));
+        });
+
     })();
 
     // ------------------------------------------------------------
@@ -2171,13 +2690,106 @@
             rect.bbox();
         });
 
+        test("bbox returns cached rect", function() {
+            var geometry = new g.Rect(),
+                count = 0;
+            rect = new Rect(geometry);
+
+            geometry.bbox = function() {
+                count++;
+                return new g.Rect([50, 50], [100, 100]);
+            };
+
+            rect.bbox();
+            var bbox = rect.bbox();
+            equal(count, 1);
+            compareBoundingBox(bbox, [50, 50, 150, 150], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after stroke width change", function() {
+            var geometry = new g.Rect([50, 50], [100, 100]);
+            rect = new Rect(geometry);
+
+            rect.bbox();
+            rect.stroke("red", 10);
+            var bbox = rect.bbox();
+
+            compareBoundingBox(bbox, [45, 45, 155, 155], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after transformation change", function() {
+            var geometry = new g.Rect([50, 50], [100, 100]);
+            rect = new Rect(geometry);
+
+            rect.bbox();
+            rect.transform(g.transform().translate(100, 100));
+            var bbox = rect.bbox();
+
+            compareBoundingBox(bbox, [150, 150, 250, 250], TOLERANCE);
+        });
+
+        test("bbox returns updated rect after geometry change", function() {
+            var geometry = new g.Rect([50, 50], [100, 100]);
+            rect = new Rect(geometry);
+
+            rect.bbox();
+            geometry.size.setWidth(200);
+            var bbox = rect.bbox();
+
+            compareBoundingBox(bbox, [50, 50, 250, 150], TOLERANCE);
+        });
+
         test("rawBBox returns geometry bounding box with no transformation applied", function() {
             rect.transform(g.transform().scale(2,2));
 
             compareBoundingBox(rect.rawBBox(), [0, 0, 10, 10]);
         });
 
-        shapeBaseTests(Circle, "Circle");
+        test("containsPoint returns false if rect is not filled", function() {
+            ok(!rect.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if rect is not visible", function() {
+            rect.fill("red");
+            rect.visible(false);
+            ok(!rect.containsPoint(new Point(5, 5)));
+        });
+
+        test("containsPoint returns false if point is out of rect", function() {
+            rect.fill("red");
+            equal(rect.containsPoint(new Point(15, 5)), false);
+        });
+
+        test("containsPoint returns true if point is in rect", function() {
+            rect.fill("red");
+            equal(rect.containsPoint(new Point(5, 5)), true);
+        });
+
+        test("containsPoint returns true if stroked and point is on the path", function() {
+            rect.stroke("red", 2);
+            equal(rect.containsPoint(new Point(11, 11)), true);
+        });
+
+        test("containsPoint returns false if stroked and point is inside rect", function() {
+            rect.stroke("red", 2);
+            equal(rect.containsPoint(new Point(8, 8)), false);
+        });
+
+        test("containsPoint returns true if point is in transformed rect", function() {
+            rect.fill("red");
+            rect.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(rect.containsPoint(new Point(110, 100)), true);
+        });
+
+        test("containsPoint returns false if point is outside of transformed rect", function() {
+            rect.fill("red");
+            rect.transform(g.transform().translate(100, 100).rotate(-45));
+
+            equal(rect.containsPoint(new Point(5, 5)), false);
+        });
+
+        shapeBaseTests(Rect, "Rect");
     })();
 
     // ------------------------------------------------------------

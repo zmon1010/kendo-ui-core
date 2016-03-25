@@ -10,6 +10,7 @@
         "./drawing/mixins",
         "./drawing/shapes",
         "./drawing/parser",
+        "./drawing/search",
         "./drawing/svg",
         "./drawing/canvas",
         "./drawing/vml",

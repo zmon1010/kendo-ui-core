@@ -157,6 +157,27 @@
             }
         },
 
+        containsPoint: function(point, parentTransform) {
+            if (this.visible()) {
+                var transform = this.currentTransform(parentTransform);
+                if (transform) {
+                    point = point.transformCopy(transform.matrix().invert());
+                }
+                return (this._hasFill() && this._containsPoint(point)) || (this._isOnPath && this._hasStroke() &&  this._isOnPath(point));
+            }
+            return false;
+        },
+
+        _hasFill: function() {
+            var fill = this.options.fill;
+            return fill && !util.isTransparent(fill.color);
+        },
+
+        _hasStroke: function() {
+            var stroke = this.options.stroke;
+            return stroke && stroke.width > 0 && !util.isTransparent(stroke.color);
+        },
+
         _clippedBBox: function(transformation) {
             return this.bbox(transformation);
         }
@@ -370,6 +391,19 @@
             return Element.fn.currentTransform.call(this, transformation) || null;
         },
 
+        containsPoint: function(point, parentTransform) {
+            if (this.visible()) {
+                var children = this.children;
+                var transform = this.currentTransform(parentTransform);
+                for (var idx = 0; idx < children.length; idx++) {
+                    if (children[idx].containsPoint(point, transform)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        },
+
         _reparent: function(elements, newParent) {
             for (var i = 0; i < elements.length; i++) {
                 var child = elements[i];
@@ -432,6 +466,10 @@
 
         rawBBox: function() {
             return this.rect().bbox();
+        },
+
+        _containsPoint: function(point) {
+            return this.rect().containsPoint(point);
         }
     });
     drawing.mixins.Paintable.extend(Text.fn);
@@ -449,22 +487,24 @@
             }
         },
 
-        bbox: function(transformation) {
-            var combinedMatrix = toMatrix(this.currentTransform(transformation));
-            var rect = this._geometry.bbox(combinedMatrix);
-            var strokeWidth = this.options.get("stroke.width");
-            if (strokeWidth) {
-                expandRect(rect, strokeWidth / 2);
-            }
-
-            return rect;
+        _bbox: function(matrix) {
+            return this._geometry.bbox(matrix);
         },
 
         rawBBox: function() {
             return this._geometry.bbox();
+        },
+
+        _containsPoint: function(point) {
+            return this.geometry().containsPoint(point);
+        },
+
+        _isOnPath: function(point) {
+            return this.geometry()._isOnPath(point, this.options.stroke.width / 2);
         }
     });
     drawing.mixins.Paintable.extend(Circle.fn);
+    drawing.mixins.Measurable.extend(Circle.fn);
     defineGeometryAccessors(Circle.fn, ["geometry"]);
 
     var Arc = Element.extend({
@@ -479,16 +519,8 @@
             }
         },
 
-        bbox: function(transformation) {
-            var combinedMatrix = toMatrix(this.currentTransform(transformation));
-            var rect = this.geometry().bbox(combinedMatrix);
-            var strokeWidth = this.options.get("stroke.width");
-
-            if (strokeWidth) {
-                expandRect(rect, strokeWidth / 2);
-            }
-
-            return rect;
+        _bbox: function(matrix) {
+            return this._geometry.bbox(matrix);
         },
 
         rawBBox: function() {
@@ -508,9 +540,18 @@
             }
 
             return path;
+        },
+
+        _containsPoint: function(point) {
+            return this.geometry().containsPoint(point);
+        },
+
+        _isOnPath: function(point) {
+            return this.geometry()._isOnPath(point, this.options.stroke.width / 2);
         }
     });
     drawing.mixins.Paintable.extend(Arc.fn);
+    drawing.mixins.Measurable.extend(Arc.fn);
     defineGeometryAccessors(Arc.fn, ["geometry"]);
 
     var GeometryElementsArray = ElementsArray.extend({
@@ -609,8 +650,61 @@
                 min: min,
                 max: max
             };
+        },
+
+        _intersectionsTo: function(segment, point) {
+            var intersectionsCount;
+            if (this.controlOut() && segment.controlIn()) {
+                intersectionsCount = g.curveIntersectionsCount([this.anchor(), this.controlOut(), segment.controlIn(), segment.anchor()], point, this.bboxTo(segment));
+            } else {
+                intersectionsCount = g.lineIntersectionsCount(this.anchor(), segment.anchor(), point);
+            }
+            return intersectionsCount;
+        },
+
+        _isOnCurveTo: function(segment, point, width, endSegment) {
+            var bbox = this.bboxTo(segment).expand(width, width);
+            if (bbox.containsPoint(point)) {
+                var p1 = this.anchor();
+                var p2 = this.controlOut();
+                var p3 = segment.controlIn();
+                var p4 = segment.anchor();
+                if (endSegment == "start" && p1.distanceTo(point) <= width) {
+                    return !g.isOutOfEndPoint(p1, p2, point);
+                } else if (endSegment == "end" && p4.distanceTo(point) <= width) {
+                    return !g.isOutOfEndPoint(p4, p3, point);
+                }
+                //the approach is not entirely correct but is close and the alternatives are solving a 6th degree polynomial or testing the segment points
+                var hasRootsInRange = g.hasRootsInRange;
+                var points = [p1, p2, p3, p4];
+                if (hasRootsInRange(points, point, "x", "y", width) || hasRootsInRange(points, point, "y", "x", width)) {
+                    return true;
+                }
+                var rotation = g.transform().rotate(45, point);
+                var rotatedPoints = [p1.transformCopy(rotation), p2.transformCopy(rotation), p3.transformCopy(rotation), p4.transformCopy(rotation)];
+                return hasRootsInRange(rotatedPoints, point, "x", "y", width) || hasRootsInRange(rotatedPoints, point, "y", "x", width);
+            }
+        },
+
+        _isOnLineTo: function(segment, point, width) {
+            var p1 = this.anchor();
+            var p2 = segment.anchor();
+            var angle = util.deg(math.atan2(p2.y - p1.y, p2.x - p1.x));
+            var rect = new g.Rect([p1.x, p1.y - width / 2], [p1.distanceTo(p2), width]);
+            return rect.containsPoint(point.transformCopy(g.transform().rotate(-angle, p1)));
+        },
+
+        _isOnPathTo: function(segment, point, width, endSegment) {
+            var isOnPath;
+            if (this.controlOut() && segment.controlIn()) {
+                isOnPath = this._isOnCurveTo(segment, point, width / 2, endSegment);
+            } else {
+                isOnPath = this._isOnLineTo(segment, point, width);
+            }
+            return isOnPath;
         }
     });
+
     definePointAccessors(Segment.fn, ["anchor", "controlIn", "controlOut"]);
     deepExtend(Segment.fn, ObserversMixin);
 
@@ -713,18 +807,50 @@
             return this;
         },
 
-        bbox: function(transformation) {
-            var combinedMatrix = toMatrix(this.currentTransform(transformation));
-            var boundingBox = this._bbox(combinedMatrix);
-            var strokeWidth = this.options.get("stroke.width");
-            if (strokeWidth) {
-                expandRect(boundingBox, strokeWidth / 2);
-            }
-            return boundingBox;
-        },
-
         rawBBox: function() {
             return this._bbox();
+        },
+
+        _containsPoint: function(point) {
+            var segments = this.segments;
+            var length = segments.length;
+            var intersectionsCount = 0;
+            var previous, current;
+
+            for (var idx = 1; idx < length; idx++) {
+                previous = segments[idx - 1];
+                current = segments[idx];
+                intersectionsCount += previous._intersectionsTo(current, point);
+            }
+
+            if (this.options.closed || !segments[0].anchor().equals(segments[length - 1].anchor())) {
+                intersectionsCount += g.lineIntersectionsCount(segments[0].anchor(), segments[length - 1].anchor(), point);
+            }
+
+            return intersectionsCount % 2 !== 0;
+        },
+
+        _isOnPath: function(point, width) {
+            var segments = this.segments;
+            var length = segments.length;
+            width = width || this.options.stroke.width;
+
+            if (length > 1) {
+                if (segments[0]._isOnPathTo(segments[1], point, width, "start")) {
+                    return true;
+                }
+
+                for (var idx = 2; idx < length - 2; idx++) {
+                    if (segments[idx - 1]._isOnPathTo(segments[idx], point, width)) {
+                        return true;
+                    }
+                }
+
+                if (segments[length - 2]._isOnPathTo(segments[length - 1], point, width, "end")) {
+                    return true;
+                }
+            }
+            return false;
         },
 
         _bbox: function(matrix) {
@@ -750,6 +876,7 @@
         }
     });
     drawing.mixins.Paintable.extend(Path.fn);
+    drawing.mixins.Measurable.extend(Path.fn);
 
     Path.fromRect = function(rect, options) {
         return new Path(options)
@@ -850,12 +977,35 @@
             return this;
         },
 
-        bbox: function(transformation) {
-            return elementsBoundingBox(this.paths, true, this.currentTransform(transformation));
+        _bbox: function(matrix) {
+            return elementsBoundingBox(this.paths, true, matrix);
         },
 
         rawBBox: function() {
             return elementsBoundingBox(this.paths, false);
+        },
+
+        _containsPoint: function(point) {
+            var paths = this.paths;
+
+            for (var idx = 0; idx < paths.length; idx++) {
+                if (paths[idx]._containsPoint(point)) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
+        _isOnPath: function(point) {
+            var paths = this.paths;
+            var width = this.options.stroke.width;
+
+            for (var idx = 0; idx < paths.length; idx++) {
+                if (paths[idx]._isOnPath(point, width)) {
+                    return true;
+                }
+            }
+            return false;
         },
 
         _clippedBBox: function(transformation) {
@@ -863,6 +1013,7 @@
         }
     });
     drawing.mixins.Paintable.extend(MultiPath.fn);
+    drawing.mixins.Measurable.extend(MultiPath.fn);
 
     var Image = Element.extend({
         nodeType: "Image",
@@ -890,6 +1041,14 @@
 
         rawBBox: function() {
             return this._rect.bbox();
+        },
+
+        _containsPoint: function(point) {
+            return this._rect.containsPoint(point);
+        },
+
+        _hasFill: function() {
+            return this.src();
         }
     });
     defineGeometryAccessors(Image.fn, ["rect"]);
@@ -1045,23 +1204,25 @@
             }
         },
 
-        bbox: function(transformation) {
-            var combinedMatrix = toMatrix(this.currentTransform(transformation));
-            var rect = this._geometry.bbox(combinedMatrix);
-            var strokeWidth = this.options.get("stroke.width");
-            if (strokeWidth) {
-                expandRect(rect, strokeWidth / 2);
-            }
-
-            return rect;
+        _bbox: function(matrix) {
+            return this._geometry.bbox(matrix);
         },
 
         rawBBox: function() {
             return this._geometry.bbox();
+        },
+
+        _containsPoint: function(point) {
+            return this._geometry.containsPoint(point);
+        },
+
+        _isOnPath: function(point) {
+            return this.geometry()._isOnPath(point, this.options.stroke.width / 2);
         }
     });
 
     drawing.mixins.Paintable.extend(Rect.fn);
+    drawing.mixins.Measurable.extend(Rect.fn);
     defineGeometryAccessors(Rect.fn, ["geometry"]);
 
     var Layout = Group.extend({
@@ -1267,13 +1428,6 @@
         }
 
         return boundingBox;
-    }
-
-    function expandRect(rect, value) {
-        rect.origin.x -= value;
-        rect.origin.y -= value;
-        rect.size.width += value * 2;
-        rect.size.height += value * 2;
     }
 
     function defineGeometryAccessors(fn, names) {
@@ -1519,6 +1673,7 @@
     function translateToPoint(point, bbox, element) {
         translate(point.x - bbox.origin.x, point.y - bbox.origin.y, element);
     }
+
 
     // Exports ================================================================
     deepExtend(drawing, {

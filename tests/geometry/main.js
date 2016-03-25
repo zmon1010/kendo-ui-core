@@ -723,6 +723,18 @@
         ok(!rect.equals());
     });
 
+    test("contains point returns true if point is inside area", function() {
+        equal(rect.containsPoint(new Point(5, 5)), true);
+    });
+
+    test("contains point returns true if point is on path", function() {
+        equal(rect.containsPoint(new Point(5, 0)), true);
+    });
+
+    test("contains point returns false if point is outside", function() {
+        equal(rect.containsPoint(new Point(11, 5)), false);
+    });
+
     // ------------------------------------------------------------
     (function() {
         module("Rect / Class methods");
@@ -873,6 +885,20 @@
     test("boundingBox returns the transformed circle bounding Rect", function() {
         var rect = circle.bbox(Matrix.scale(2,1));
         compareBoundingBox(rect, [-20,-10,20,10]);
+    });
+
+    test("contains point returns true if point is inside area", function() {
+        equal(circle.containsPoint(new Point(5, 5)), true);
+    });
+
+    test("contains point returns true if point is on path", function() {
+        equal(circle.containsPoint(circle.pointAt(45)), true);
+    });
+
+    test("contains point returns false if point is outside", function() {
+        var point = circle.pointAt(45);
+        point.x++;
+        equal(rect.containsPoint(point), false);
     });
 
     // ------------------------------------------------------------
@@ -1041,6 +1067,85 @@
         equal(arc.getEndAngle(), -120);
         equal(arc.getAnticlockwise(), false);
     });
+
+    // ------------------------------------------------------------
+    module("Arc / containsPoint / small arc", {
+        setup: function() {
+             arc = new Arc(new Point(100, 100), {
+                startAngle: 30,
+                endAngle: 120,
+                radiusX: 50,
+                radiusY: 100
+            });
+        }
+    });
+
+    test("returns true if point is inside area", function() {
+        equal(arc.containsPoint(new Point(115, 185)), true);
+    });
+
+    test("returns true if point is on the chord", function() {
+        equal(arc.containsPoint(new Point(108.47, 168.67)), true);
+    });
+
+    test("returns true for the start and end points", function() {
+        equal(arc.containsPoint(arc.pointAt(30)), true);
+        equal(arc.containsPoint(arc.pointAt(120)), true);
+    });
+
+    test("returns true if point is on the arc", function() {
+        equal(arc.containsPoint(arc.pointAt(60)), true);
+    });
+
+    test("returns false if point is outside of area", function() {
+        ok(!arc.containsPoint(new Point(125, 195)));
+    });
+
+    test("returns false if point is between start and end angle but outside of area", function() {
+        ok(!arc.containsPoint(new Point(100, 160)));
+    });
+
+    // ------------------------------------------------------------
+    module("Arc / containsPoint / large arc", {
+        setup: function() {
+             arc = new Arc(new Point(100, 100), {
+                startAngle: 0,
+                endAngle: 270,
+                radiusX: 50,
+                radiusY: 100
+            });
+        }
+    });
+
+    test("returns true if point is inside area", function() {
+        equal(arc.containsPoint(new Point(100, 80)), true);
+    });
+
+    test("returns true if point is on the chord", function() {
+        equal(arc.containsPoint(new Point(131, 62)), true);
+    });
+
+    test("returns true for the start and end points", function() {
+        equal(arc.containsPoint(arc.pointAt(0)), true);
+        equal(arc.containsPoint(arc.pointAt(270)), true);
+    });
+
+    test("returns true if point is on the arc", function() {
+        equal(arc.containsPoint(arc.pointAt(60)), true);
+    });
+
+    test("returns true if point is not between the start and end angle but inside the chord area", function() {
+        equal(arc.containsPoint(new Point(116, 52)), true);
+    });
+
+    test("returns false if point is outside of area", function() {
+        ok(!arc.containsPoint(new Point(62, 25)));
+    });
+
+    test("returns false if point is in the ellipse but not in the arc area", function() {
+        ok(!arc.containsPoint(new Point(125, 50)));
+    });
+
 
     // ------------------------------------------------------------
     (function() {

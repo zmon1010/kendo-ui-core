@@ -18,13 +18,16 @@
 
         g = kendo.geometry,
         d = kendo.drawing,
-        BaseNode = d.BaseNode;
+        BaseNode = d.BaseNode,
+
+        proxy = $.proxy;
 
     // Constants ==============================================================
     var BUTT = "butt",
         DASH_ARRAYS = d.DASH_ARRAYS,
         FRAME_DELAY = 1000 / 60,
-        SOLID = "solid";
+        SOLID = "solid",
+        NS = ".kendo";
 
     // Canvas Surface ==========================================================
     var Surface = d.Surface.extend({
@@ -47,6 +50,13 @@
                 this._root.destroy();
                 this._root = null;
             }
+
+            if (this._searchTree) {
+                this._searchTree.clear();
+                delete this._searchTree;
+            }
+
+            this.element.off(NS);
         },
 
         type: "canvas",
@@ -54,11 +64,19 @@
         draw: function(element) {
             d.Surface.fn.draw.call(this, element);
             this._root.load([element], undefined, this.options.cors);
+
+            if (this._searchTree) {
+                this._searchTree.add([element]);
+            }
         },
 
         clear: function() {
             d.Surface.fn.clear.call(this);
             this._root.clear();
+
+            if (this._searchTree) {
+                this._searchTree.clear();
+            }
         },
 
         image: function() {
@@ -98,7 +116,55 @@
 
         _template: renderTemplate(
             "<canvas style='width: 100%; height: 100%;'></canvas>"
-        )
+        ),
+
+        _enableTracking: function() {
+            this._searchTree = new d.ShapesQuadTree();
+            this._mouseTrackHandler = proxy(this._trackMouse, this);
+
+            this.element.on("click" + NS, this._mouseTrackHandler);
+            this.element.on("mousemove" + NS, this._mouseTrackHandler);
+
+            d.Surface.fn._enableTracking.call(this);
+        },
+
+        _trackMouse: function(e) {
+            var point = this._surfacePoint(e);
+            var shape = this._searchTree.pointShape(point);
+
+            if (e.type != "click") {
+                var currentShape = this._currentShape;
+                if (currentShape && currentShape !== shape) {
+                    this.trigger("mouseleave", {
+                        element: currentShape,
+                        originalEvent: e,
+                        type: "mouseleave"
+                    });
+                }
+
+                if (shape && currentShape !== shape) {
+                   this.trigger("mouseenter", {
+                       element: shape,
+                       originalEvent: e,
+                       type: "mouseenter"
+                   });
+                }
+
+                this.trigger("mousemove", {
+                   element: shape,
+                   originalEvent: e,
+                   type: "mousemove"
+                });
+
+                this._currentShape = shape;
+            } else if (shape) {
+                this.trigger("click", {
+                   element: shape,
+                   originalEvent: e,
+                   type: "click"
+                });
+            }
+        }
     });
 
     // Nodes ===================================================================
@@ -246,7 +312,7 @@
             this.canvas = canvas;
             this.ctx = canvas.getContext("2d");
 
-            var invalidateHandler = $.proxy(this._invalidate, this);
+            var invalidateHandler = proxy(this._invalidate, this);
             this.invalidate = kendo.throttle(function() {
                     kendo.animationFrame(invalidateHandler);
                 },
@@ -490,8 +556,8 @@
         init: function(srcElement, cors) {
             PathNode.fn.init.call(this, srcElement);
 
-            this.onLoad = $.proxy(this.onLoad, this);
-            this.onError = $.proxy(this.onError, this);
+            this.onLoad = proxy(this.onLoad, this);
+            this.onError = proxy(this.onError, this);
             this.loading = $.Deferred();
 
             var img = this.img = new Image();
