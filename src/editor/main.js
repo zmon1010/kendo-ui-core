@@ -676,11 +676,23 @@
         },
 
         runPendingKeyCommands: function (e) {
-            var tools = this.toolbar.tools;
-            var toolName = "autoLink";//this.keyboard.toolFromShortcut(tools, e);
-            if (toolName) {
-                this.keyboard.endTyping(true);
-                this.exec(toolName);
+            var range = this.getRange();
+            var tools = this.keyboard.toolsFromShortcut(this.toolbar.tools, e);
+
+            for (var i = 0; i < tools.length; i++) {
+                var tool = tools[i];
+                var o = tool.options;
+                if(!o.keyPressCommand) {
+                    continue;
+                }
+
+                console.log("run");
+                var cmd = new o.command({range: range});
+                if (cmd.changesContent()) {
+                    this.keyboard.endTyping(true);
+                }
+
+                this.exec(tool.name);
             }
         },
 

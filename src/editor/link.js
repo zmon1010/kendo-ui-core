@@ -279,31 +279,44 @@ var LinkCommand = Command.extend({
 
             this.formatter = new LinkFormatter();
         },
+
         exec: function () {
+            var detectedLink = this.detectLink();
+            if(!detectedLink) {
+                return;
+            }
+
+            var range = this.getRange();
+            var linkMarker = new kendo.ui.editor.Marker();
+            var linkRange = range.cloneRange();
+
+            linkRange.setStart(detectedLink.start.node, detectedLink.start.offset);
+            linkRange.setEnd(detectedLink.end.node, detectedLink.end.offset);
+
+            range = this.lockRange();
+            linkMarker.add(linkRange);
+
+            this.formatter.apply(linkRange, {
+                href: this._ensureWebProtocol(detectedLink.text)
+            });
+
+            linkMarker.remove(linkRange);
+            this.releaseRange(range);
+        },
+
+        detectLink: function () {
             var range = this.getRange();
             var traverser = new LeftDomTextTraverser({
                 node: range.startContainer,
                 offset: range.startOffset
             });
+
             var detection = new DomTextLinkDetection(traverser);
+            return detection.detectLink();
+        },
 
-            var detectedLink = detection.detectLink();
-            if (detectedLink) {
-                var linkRange = range.cloneRange();
-                linkRange.setStart(detectedLink.start.node, detectedLink.start.offset);
-                linkRange.setEnd(detectedLink.end.node, detectedLink.end.offset);
-
-                range = this.lockRange();
-                var linkMarker = new kendo.ui.editor.Marker();
-                linkMarker.add(linkRange);
-                this.formatter.apply(linkRange, {
-                    href: this._ensureWebProtocol(detectedLink.text)
-                });
-
-                linkMarker.remove(linkRange);
-
-                this.releaseRange(range);
-            }
+        changesContent: function() {
+            return !!this.detectLink();
         },
 
         _ensureWebProtocol: function (linkText) {
@@ -485,7 +498,7 @@ extend(kendo.ui.editor, {
 registerTool("createLink", new Tool({ key: "K", ctrl: true, command: LinkCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Create Link"})}));
 registerTool("unlink", new UnlinkTool({ key: "K", ctrl: true, shift: true, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Remove Link"})}));
 // registerTool("autoLinkDetection", new Tool({ key: 32, preventTyping: false, command: AutoLinkDetection }));
-registerTool("autoLink", new Tool({ key: 32, keyPressCommand: true, command: AutoLinkCommand }));
+registerTool("autoLink", new Tool({ key: [13, 32], keyPressCommand: true, command: AutoLinkCommand }));
 
 })(window.kendo.jQuery);
 
