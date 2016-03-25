@@ -582,8 +582,9 @@
 
                     var tools = editor.toolbar.tools;
                     var toolName = editor.keyboard.toolFromShortcut(tools, e);
-                    if (toolName && toolName !== "autoLink") {
-                        editor._execTool = true;
+                    var toolOptions = toolName ? tools[toolName].options : {};
+                    if (toolName && !toolOptions.keyPressCommand) {
+                        e.preventDefault();
 
                         if (!/^(undo|redo)$/.test(toolName)) {
                             editor.keyboard.endTyping(true);
@@ -592,7 +593,9 @@
                         editor.trigger("keydown", e);
                         editor.exec(toolName);
 
-                        return;
+                        editor.runPendingKeyCommands(e);
+
+                        return false;
                     }
 
                     editor._execTool = false;
@@ -604,11 +607,6 @@
                     setTimeout(function() {
                         editor.runPendingKeyCommands(e);
                     }, 0);
-
-                    if(editor._execTool) {
-                        e.preventDefault();
-                        return false;
-                    }
                 },
                 "keyup": function (e) {
                     var selectionCodes = [8, 9, 33, 34, 35, 36, 37, 38, 39, 40, 40, 45, 46];
@@ -677,13 +675,9 @@
             }
         },
 
-        addPendingKeyCommand: function(cmd) {
-            this._pendingKeyCommands.push(cmd);
-        },
-
         runPendingKeyCommands: function (e) {
             var tools = this.toolbar.tools;
-            var toolName = this.keyboard.toolFromShortcut(tools, e);
+            var toolName = "autoLink";//this.keyboard.toolFromShortcut(tools, e);
             if (toolName) {
                 this.keyboard.endTyping(true);
                 this.exec(toolName);

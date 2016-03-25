@@ -23,7 +23,6 @@ var kendo = window.kendo,
 var HTTP_PROTOCOL = "http://";
 var protocolRegExp = /^\w*:\/\//;
 var linkWordRegExp = /\s?([\w\/$-_.+!*'(),\ufeff]+)$/i;
-var linkCharsRegExp = /[\w\/\$\-_\.\+!\*'\(\),]/i;
 var endLinkCharsRegExp = /[\w\/\$\-_\*\)]/i;
 
 var LinkFormatFinder = Class.extend({
@@ -275,6 +274,11 @@ var LinkCommand = Command.extend({
 });
 
     var AutoLinkCommand = Command.extend({
+        init: function (options) {
+            Command.fn.init.call(this, options);
+
+            this.formatter = new LinkFormatter();
+        },
         exec: function () {
             var range = this.getRange();
             var traverser = new LeftDomTextTraverser({
@@ -290,11 +294,13 @@ var LinkCommand = Command.extend({
                 linkRange.setEnd(detectedLink.end.node, detectedLink.end.offset);
 
                 range = this.lockRange();
-                var formatter = new LinkFormatter();
-                formatter.apply(linkRange, {
-                    href: this._ensureWebProtocol(detectedLink.text),
-                    innerHTML: detectedLink.text
+                var linkMarker = new kendo.ui.editor.Marker();
+                linkMarker.add(linkRange);
+                this.formatter.apply(linkRange, {
+                    href: this._ensureWebProtocol(detectedLink.text)
                 });
+
+                linkMarker.remove(linkRange);
 
                 this.releaseRange(range);
             }
@@ -339,9 +345,25 @@ var UnlinkTool = Tool.extend({
             this.start = DomPos();
             this.end = DomPos();
             this.text = "";
-            this.skippedSingleSpaceAtEnd = false;
         },
-        detectLink: function() {
+
+        detectLink: function () {
+            var node = this.traverser.node;
+            var offset = this.traverser.offset;
+            if (dom.isDataNode(node)) {
+                var text = node.data.substring(0, offset);
+                if(/\s{2}$/.test(text)) {
+                    return;
+                }
+            } else if(offset === 0) {//heuristic for new line
+                var p = dom.closestEditableOfType(node, dom.blockElements);
+                if (p && p.previousSibling) {
+                    this.traverser.init({
+                        node: p.previousSibling
+                    });
+                }
+            }
+
             this.traverser.traverse($.proxy(this._detectEnd, this));
             if (!this.end.blank()) {
                 this.traverser.init(this.end);
@@ -364,14 +386,7 @@ var UnlinkTool = Tool.extend({
         },
 
         _detectEnd: function(text, node, offset) {
-            if(!this.skippedSingleSpaceAtEnd && /\s{2}$/.test(text)) {
-                return false;
-            }
-            this.skippedSingleSpaceAtEnd = true;
-            
-            var i = text.length;
-            while (i-- && !endLinkCharsRegExp.test(text[i])) {}
-
+            var i = lastIndexOfRegExp(text, endLinkCharsRegExp);
             if(i > -1) {
                 this.end.node = node;
                 this.end.offset = i + 1;
@@ -381,19 +396,25 @@ var UnlinkTool = Tool.extend({
         },
 
         _detectStart: function(text, node, offset) {
-            var i = text.length;
-            while (i-- && /\S/.test(text[i])) {
-                this.text = text[i] + this.text;
-            }
+            var i = lastIndexOfRegExp(text, /\s/);
+            var ii = i + 1;
+            this.text = text.substring(ii) + this.text;
 
             this.start.node = node;
-            this.start.offset = i + 1;
+            this.start.offset = ii;
 
             if (i > -1) {
                 return false;
             }
         }
     });
+
+    function lastIndexOfRegExp(str, search) {
+        var i = str.length;
+        while (i-- && !search.test(str[i])) {}
+
+        return i;
+    }
 
     var DomPos = function() {
         return {
@@ -403,7 +424,7 @@ var UnlinkTool = Tool.extend({
                 return this.node === null && this.offset === null;
             }
         };
-    }
+    };
 
     var LeftDomTextTraverser = Class.extend({
         init: function (options) {

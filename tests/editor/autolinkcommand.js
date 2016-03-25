@@ -53,6 +53,28 @@
         equal(link[0], resultRange.startContainer.previousSibling);
     });
 
+    test("autoLink formatted content", function () {
+        var cmd = newAutoLinkCommandForText("link http://te<strong>le</strong>rik.com/ ||");
+        cmd.exec();
+
+        equal(editor.value(), 'link <a href="http://telerik.com/">http://te<strong>le</strong>rik.com/</a> ');
+    });
+
+    test("range is in next empty paragraph", function() {
+        var cmd = newAutoLinkCommandForText("<p>link http://telerik.com</p><p>||</p>")
+        cmd.exec();
+
+        equal(editor.value(), '<p>link <a href="http://telerik.com">http://telerik.com</a></p><p></p>');
+    });
+
+    test("range is in next empty paragraph with formatting", function() {
+        var cmd = newAutoLinkCommandForText("<p>link http://telerik.com</p><p><strong>||</strong></p>")
+        debugger
+        cmd.exec();
+
+        equal(editor.value(), '<p>link <a href="http://telerik.com">http://telerik.com</a></p><p><strong></strong></p>');
+    });
+
     function newAutoLinkCommandForText(text) {
         var range = createRangeFromText(editor, text);
         return createAutoLinkCommand(range);
