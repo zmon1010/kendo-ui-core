@@ -392,11 +392,29 @@
         });
 
         // ------------------------------------------------------------
+
+        function testIsVisible(message, expected, testSetup, isVisible, delay) {
+            if (kendo.isFunction(expected)) {
+                delay = isVisible;
+                isVisible = testSetup;
+                testSetup = expected;
+                expected = null;
+            }
+            asyncTest(message, expected, function() {
+                testSetup();
+                setTimeout(function() {
+                    ok(tooltip.popup.visible() == isVisible);
+                    start();
+                }, delay || 0);
+            });
+        }
+
         module("Surface / tooltip / event handling", {
             setup: function() {
                 setup();
                 createTooltip(surface, {
-                    animation: false
+                    animation: false,
+                    showAfter: 0
                 });
                 shape = new d.Rect(new g.Rect([0, 0], [100, 100]));
                 group = new d.Group();
@@ -404,103 +422,117 @@
             teardown: teardown
         });
 
-        test("shows tooltip on click if the shape showOn option is equal to click", function() {
+        testIsVisible("shows tooltip on click if the shape showOn option is equal to click", function() {
             shape.options.tooltip = {
                 showOn: "click",
                 content: "foo"
             };
             surface.trigger("click", { element: shape, type: "click"});
-            ok(tooltip.popup.visible());
+        }, true);
+
+        asyncTest("shows tooltip on click with showAfter with delay", function() {
+            shape.options.tooltip = {
+                showOn: "click",
+                content: "foo",
+                showAfter: 50
+            };
+            surface.trigger("click", { element: shape, type: "click"});
+            setTimeout(function() {
+                ok(!tooltip.popup.visible());
+            }, 20);
+            setTimeout(function() {
+                ok(tooltip.popup.visible());
+                start();
+            }, 70);
         });
 
-        test("does not show tooltip on click if the shape showOn option is not equal to click", function() {
+        testIsVisible("does not show tooltip on click if the shape showOn option is not equal to click", function() {
             shape.options.tooltip = {
                 showOn: "mouseenter",
                 content: "foo"
             };
             surface.trigger("click", { element: shape, type: "click"});
-            ok(!tooltip.popup.visible());
-        });
+        }, false);
 
-        test("shows tooltip on click if the parent group shape showOn option is equal to click", function() {
+        testIsVisible("shows tooltip on click if the parent group shape showOn option is equal to click", function() {
             group.append(shape);
             group.options.tooltip = {
                 showOn: "click",
                 content: "foo"
             };
             surface.trigger("click", { element: shape, type: "click"});
-            ok(tooltip.popup.visible());
-        });
+        }, true);
 
-        test("shows tooltip on mouseenter if the shape showOn option is equal to mouseenter", function() {
+        testIsVisible("shows tooltip on mouseenter if the shape showOn option is equal to mouseenter", function() {
             shape.options.tooltip = {
                 showOn: "mouseenter",
                 content: "foo"
             };
             surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
-            ok(tooltip.popup.visible());
+        }, true);
+
+        asyncTest("shows tooltip on mouseenter with showAfter delay", function() {
+            shape.options.tooltip = {
+                showOn: "mouseenter",
+                content: "foo",
+                showAfter: 50
+            };
+            surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
+            setTimeout(function() {
+                ok(!tooltip.popup.visible());
+            }, 20);
+            setTimeout(function() {
+                ok(tooltip.popup.visible());
+                start();
+            }, 70);
         });
 
-        test("does not show tooltip on mouseenter if the shape showOn option is not equal to mouseenter", function() {
+        testIsVisible("does not show tooltip on mouseenter if the shape showOn option is not equal to mouseenter", function() {
             shape.options.tooltip = {
                 showOn: "click",
                 content: "foo"
             };
             surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
-            ok(!tooltip.popup.visible());
-        });
+        }, false);
 
-        test("shows tooltip on mouseenter if the parent group shape showOn option is equal to mouseenter", function() {
+        testIsVisible("shows tooltip on mouseenter if the parent group shape showOn option is equal to mouseenter", function() {
             group.append(shape);
             group.options.tooltip = {
                 showOn: "mouseenter",
                 content: "foo"
             };
             surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
-            ok(tooltip.popup.visible());
-        });
+        }, true);
 
-        asyncTest("hides tooltip on mouseleave with delay", 2, function() {
+        testIsVisible("hides tooltip on mouseleave with delay", 2, function() {
             shape.options.tooltip = {
                 content: "foo"
             };
             tooltip.show(shape);
-            surface.trigger("mouseleave", { element: shape, type: "mouseleave"});
+            surface.trigger("mouseleave", { element: shape, type: "mouseleave", originalEvent: {}});
             ok(tooltip.popup.visible());
-            setTimeout(function() {
-                ok(!tooltip.popup.visible());
-                start();
-            }, 0);
-        });
+        }, false);
 
-        asyncTest("does not hide tooltip on mouseleave if autoHide is false", function() {
+        testIsVisible("does not hide tooltip on mouseleave if autoHide is false", function() {
             shape.options.tooltip = {
                 content: "foo",
                 autoHide: false
             };
             tooltip.show(shape);
-            surface.trigger("mouseleave", { element: shape, type: "mouseleave"});
-            setTimeout(function() {
-                ok(tooltip.popup.visible());
-                start();
-            }, 0);
-        });
+            surface.trigger("mouseleave", { element: shape, type: "mouseleave", originalEvent: {}});
+        }, true);
 
-        asyncTest("does not hide tooltip on mouseleave before hideDelay expires", function() {
+        testIsVisible("does not hide tooltip on mouseleave before hideDelay expires", function() {
             shape.options.tooltip = {
                 content: "foo",
                 autoHide: false,
                 hideDelay: 100
             };
             tooltip.show(shape);
-            surface.trigger("mouseleave", { element: shape, type: "mouseleave"});
-            setTimeout(function() {
-                ok(tooltip.popup.visible());
-                start();
-            }, 50);
-        });
+            surface.trigger("mouseleave", { element: shape, type: "mouseleave", originalEvent: {}});
+        }, true, 50);
 
-        asyncTest("does not hide element if the mouse moves from one element of a group to another from the same group", 1, function() {
+        asyncTest("does not hide element if the mouse moves from one element of a group to another from the same group and the group option is true", 1, function() {
             var shape2 = new d.Rect(new g.Rect([50, 0], [100, 100]));
             group.append(shape, shape2);
 
@@ -514,11 +546,32 @@
             });
 
             surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
-            surface.trigger("mouseleave", { element: shape, type: "mouseleave"});
-            surface.trigger("mouseenter", { element: shape2, type: "mouseenter"});
-
             setTimeout(function() {
+                surface.trigger("mouseleave", { element: shape, type: "mouseleave", originalEvent: {}});
+                surface.trigger("mouseenter", { element: shape2, type: "mouseenter"});
                 ok(tooltip.popup.visible());
+                start();
+            }, 0);
+        });
+
+        asyncTest("hides element if the mouse moves from one element of a group to another from the same group but the group option is false", 2, function() {
+            var shape2 = new d.Rect(new g.Rect([50, 0], [100, 100]));
+            group.append(shape, shape2);
+
+            group.options.tooltip = {
+                content: "foo",
+                group: false
+            };
+
+            tooltip.popup.bind("close", function() {
+                ok(true);
+            });
+
+            surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
+            setTimeout(function() {
+                surface.trigger("mouseleave", { element: shape, type: "mouseleave", originalEvent: {}});
+                surface.trigger("mouseenter", { element: shape2, type: "mouseenter"});
+                ok(!tooltip.popup.visible());
                 start();
             }, 0);
         });

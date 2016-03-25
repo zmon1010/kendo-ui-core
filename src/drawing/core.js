@@ -424,6 +424,8 @@
                 collision: "fit fit"
             });
 
+            this._openPopupHandler = $.proxy(this._openPopup, this);
+
             this.surface = surface;
             this._bindEvents();
         },
@@ -433,7 +435,8 @@
             showOn: "mouseenter",
             offset: 7,
             autoHide: true,
-            hideDelay: 0
+            hideDelay: 0,
+            showAfter: 100
         },
 
         _bindEvents: function() {
@@ -487,7 +490,8 @@
                 height: options.height,
                 content: options.content,
                 group: options.group,
-                hideDelay: options.hideDelay
+                hideDelay: options.hideDelay,
+                showAfter: options.showAfter
             };
         },
 
@@ -524,10 +528,7 @@
 
             bbox.origin.translate(offset.left, offset.top);
 
-            if (position == "top" || !position) {
-                left = bbox.center().x - width / 2;
-                top = bbox.origin.y - height - tooltipOffset;
-            } else if (position == "cursor" && event) {
+            if (position == "cursor" && event) {
                 var coord = eventCoordinates(event);
                 left = coord.x - width / 2;
                 top = coord.y - height - tooltipOffset;
@@ -540,6 +541,9 @@
             } else if (position == "bottom") {
                 left = bbox.center().x - width / 2;
                 top = bbox.bottomRight().y + tooltipOffset;
+            } else {
+                left = bbox.center().x - width / 2;
+                top = bbox.origin.y - height - tooltipOffset;
             }
 
             return {
@@ -554,6 +558,7 @@
 
         hide: function() {
             var current = this._current;
+            delete this._current;
             if (this.popup.visible() && current &&
                 !this.surface.trigger("tooltipClose", { element: current.shape, target: current.target, popup: this.popup})) {
                 delete this._current;
@@ -566,37 +571,49 @@
             this.hide();
         },
 
-        _show: function(target, shape, options, event) {
-            var curent = this._current;
+        _show: function(target, shape, options, event, delay) {
+            var current = this._current;
 
             clearTimeout(this._timeout);
 
-            if (curent && options.group && curent.shape === shape) {
+            if (current && ((current.shape === shape && options.group) || current.target === target)) {
                 return;
             }
 
-            if (!this.surface.trigger("tooltipOpen", { element: shape, target: target, popup: this.popup}) &&
+            clearTimeout(this._showTimeout);
+
+            if (!this.surface.trigger("tooltipOpen", { element: shape, target: target, popup: this.popup }) &&
                 this._updateContent(target, shape, options)) {
 
                 this._autoHide(options);
                 var elementSize = this._measure(options);
-                var position = this._position(options.group ? shape: target, options, elementSize, event);
-                var popup = this.popup;
 
+                var popup = this.popup;
                 if (popup.visible()) {
                     popup.close(true);
-                    popup.element.kendoStop(true, true);
                 }
-
-                popup.open(position.left, position.top);
 
                 this._current = {
                     options: options,
                     elementSize: elementSize,
                     shape: shape,
-                    target: target
+                    target: target,
+                    position: this._position(options.group ? shape: target, options, elementSize, event)
                 };
+
+                if (delay) {
+                    this._showTimeout = setTimeout(this._openPopupHandler, options.showAfter || 0);
+                } else {
+                    this._openPopup();
+                }
             }
+        },
+
+        _openPopup: function() {
+            var current = this._current;
+            var position = current.position;
+
+            this.popup.open(position.left, position.top);
         },
 
         _autoHide: function(options) {
@@ -618,7 +635,7 @@
                 var options = deepExtend({}, this.options, this._tooltipOptions(shape.options.tooltip));
 
                 if (options && options.showOn == e.type) {
-                    this._show(e.element, shape, options, e.originalEvent);
+                    this._show(e.element, shape, options, e.originalEvent, true);
                 }
             }
         },
@@ -652,14 +669,17 @@
             };
         },
 
-        _mouseleave: function() {
-            var tooltip = this;
-            var current = tooltip._current;
+        _mouseleave: function(e) {
+            if (!this._popupRelatedTarget(e.originalEvent)) {
+                var tooltip = this;
+                var current = tooltip._current;
 
-            if (current && current.options.autoHide) {
-                tooltip._timeout = setTimeout(function() {
-                    tooltip.hide();
-                }, current.options.hideDelay || 0);
+                if (current && current.options.autoHide) {
+                    tooltip._timeout = setTimeout(function() {
+                        clearTimeout(tooltip._showTimeout);
+                        tooltip.hide();
+                    }, current.options.hideDelay || 0);
+                }
             }
         },
 
@@ -669,15 +689,21 @@
                 var options = current.options;
                 if (options.position == "cursor") {
                     var position = this._position(e.element, options, current.elementSize, e.originalEvent);
+                    current.position = position;
                     this.popup.wrapper.css({left: position.left, top: position.top});
                 }
             }
         },
 
         _surfaceLeave: function(e) {
-            if (!(e.relatedTarget && $(e.relatedTarget).closest(this.popup.wrapper).length)) {
+            if (!this._popupRelatedTarget(e)) {
+                clearTimeout(this._showTimeout);
                 this.hide();
             }
+        },
+
+        _popupRelatedTarget: function(e) {
+            return e.relatedTarget && $(e.relatedTarget).closest(this.popup.wrapper).length;
         }
     });
 
