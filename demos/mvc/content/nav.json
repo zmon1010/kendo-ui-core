@@ -6790,7 +6790,7 @@
         ]
     },
     {
-        "text": "Pdf Processing",
+        "text": "PDF Processing",
         "name": "pdfprocessing",
         "api": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview",
         "category": "Editors",
