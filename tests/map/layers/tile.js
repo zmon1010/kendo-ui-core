@@ -265,10 +265,10 @@
         var tile,
             pool;
 
-        function addItemsToPool(count) {
+        function addItemsToPool(count, visible) {
             count = count || 15;
             for (var i = 0; i < count; i++) {
-                pool.get({ x: 5, y: 5 },{
+                var tile = pool.get({ x: 5, y: 5 },{
                     index: new Point(i, i),
                     currentIndex: new Point(i, i),
                     point: new Point(i, i),
@@ -276,6 +276,10 @@
                     zoom: 4,
                     subdomain: "a"
                 });
+
+                if (!visible) {
+                    tile.hide();
+                }
             }
         }
 
@@ -289,6 +293,19 @@
         test("should not have more then 10 items", function() {
             pool.options.maxSize = 10;
             addItemsToPool();
+            equal(pool._items.length, 10);
+        });
+
+        test("keeps all visible items", function() {
+            pool.options.maxSize = 10;
+            addItemsToPool(20, true);
+            equal(pool._items.length, 20);
+        });
+
+        test("cleans up hidden items", function() {
+            pool.options.maxSize = 10;
+            addItemsToPool(5, false);
+            addItemsToPool(10, true);
             equal(pool._items.length, 10);
         });
 

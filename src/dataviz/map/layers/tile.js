@@ -398,6 +398,7 @@
             for (var i = 0; i < items.length; i++) {
                 if (items[i].id === id) {
                     tile = items[i];
+                    break;
                 }
             }
 
@@ -418,7 +419,7 @@
 
             for (var i = 0; i < items.length; i++) {
                 var dist = items[i].options.point.distanceTo(center);
-                if (dist > maxDist) {
+                if (dist > maxDist && !items[i].visible) {
                     index = i;
                     maxDist = dist;
                 }
