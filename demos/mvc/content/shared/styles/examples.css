@@ -56,11 +56,11 @@
 /* Widgets icons font */
 @font-face {
   font-family: 'widgets';
-  src: url('fonts/widgets-v3.eot');
-  src: url('fonts/widgets-v3.eot?#iefix') format('embedded-opentype'),
-       url('fonts/widgets-v3.woff') format('woff'),
-       url('fonts/widgets-v3.ttf') format('truetype'),
-       url('fonts/widgets-v3.svg') format('svg');
+  src: url('fonts/widgets-v4.eot');
+  src: url('fonts/widgets-v4.eot?#iefix') format('embedded-opentype'),
+       url('fonts/widgets-v4.woff') format('woff'),
+       url('fonts/widgets-v4.ttf') format('truetype'),
+       url('fonts/widgets-v4.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -578,6 +578,9 @@ div.submenu-box ol {
 .comboBoxIcon:after { content: '\e848'; }
 .responsivePanelIcon:after { content: '\e849'; }
 .spreadsheetIcon:after { content: '\e84b'; }
+.wordprocessingIcon:after { content: '\e84c'; }
+.spreadrocessingIcon:after { content: '\e84d'; }
+.pdfIcon:after { content: '\e84e'; }
 
 .themechooser
 {
