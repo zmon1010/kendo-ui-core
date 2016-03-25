@@ -139,6 +139,7 @@
     <Reference Include="WebGrease">
       <HintPath>..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\PdfProcessing\IndexController.cs" />
     <Compile Include="Controllers\Scatter_Charts\Pan_And_ZoomController.cs" />
     <Compile Include="Controllers\Spreadsheet\DataSourceController.cs" />
     <Compile Include="Controllers\Spreadsheet\Disabled_CellsController.cs" />
@@ -696,6 +698,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CreatePdfDocument.cs" />
     <Compile Include="Helpers\HyphenatedRouteHandler.cs" />
     <Compile Include="Helpers\KendoRazorViewEngine.cs" />
     <Compile Include="Helpers\KendoWebFormViewEngine.cs" />
@@ -2377,6 +2380,7 @@
     <Content Include="Content\web\panelbar\orgFoot.png" />
     <Content Include="Content\web\panelbar\orgHead.png" />
     <Content Include="Content\web\panelbar\robert.jpg" />
+    <Content Include="Content\web\pdfprocessing\documentAjax.png" />
     <Content Include="Content\web\popover\tag-people.jpg" />
     <Content Include="Content\web\psy-album.jpg" />
     <Content Include="Content\web\scheduler\fast-and-furious.jpg" />
@@ -3356,6 +3360,7 @@
     <Content Include="Areas\razor\Views\spreadsheet\validation.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\disabled_cells.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\datasource.cshtml" />
+    <Content Include="Areas\razor\Views\pdfprocessing\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
