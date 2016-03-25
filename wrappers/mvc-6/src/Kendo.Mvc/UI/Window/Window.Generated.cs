@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public bool? Iframe { get; set; }
 
+        public double? Height { get; set; }
+
         public double? MaxHeight { get; set; }
 
         public double? MaxWidth { get; set; }
@@ -39,8 +41,6 @@ namespace Kendo.Mvc.UI
 
         public double? Width { get; set; }
 
-        public double? Height { get; set; }
-
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -59,6 +59,11 @@ namespace Kendo.Mvc.UI
             if (Iframe.HasValue)
             {
                 settings["iframe"] = Iframe;
+            }
+
+            if (Height.HasValue)
+            {
+                settings["height"] = Height;
             }
 
             if (MaxHeight.HasValue)
@@ -115,11 +120,6 @@ namespace Kendo.Mvc.UI
             if (Width.HasValue)
             {
                 settings["width"] = Width;
-            }
-
-            if (Height.HasValue)
-            {
-                settings["height"] = Height;
             }
 
             return settings;

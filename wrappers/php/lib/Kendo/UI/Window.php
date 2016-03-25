@@ -83,6 +83,15 @@ Note that this does not constrain the window dragging within the given element.
     }
 
     /**
+    * Specifies height of the window.
+    * @param float|string $value
+    * @return \Kendo\UI\Window
+    */
+    public function height($value) {
+        return $this->setProperty('height', $value);
+    }
+
+    /**
     * The maximum height (in pixels) that may be achieved by resizing the window.
     * @param float $value
     * @return \Kendo\UI\Window
@@ -188,15 +197,6 @@ Note that this does not constrain the window dragging within the given element.
     */
     public function width($value) {
         return $this->setProperty('width', $value);
-    }
-
-    /**
-    * Specifies height of the window.
-    * @param float|string $value
-    * @return \Kendo\UI\Window
-    */
-    public function height($value) {
-        return $this->setProperty('height', $value);
     }
 
     /**

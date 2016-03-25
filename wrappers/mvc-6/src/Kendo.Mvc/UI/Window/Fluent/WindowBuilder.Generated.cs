@@ -40,6 +40,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies height of the window.
+        /// </summary>
+        /// <param name="value">The value for Height</param>
+        public WindowBuilder Height(double value)
+        {
+            Container.Height = value;
+            return this;
+        }
+
+        /// <summary>
         /// The maximum height (in pixels) that may be achieved by resizing the window.
         /// </summary>
         /// <param name="value">The value for MaxHeight</param>
@@ -167,16 +177,6 @@ namespace Kendo.Mvc.UI.Fluent
         public WindowBuilder Width(double value)
         {
             Container.Width = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Specifies height of the window.
-        /// </summary>
-        /// <param name="value">The value for Height</param>
-        public WindowBuilder Height(double value)
-        {
-            Container.Height = value;
             return this;
         }
 
