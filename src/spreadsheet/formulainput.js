@@ -591,7 +591,7 @@
                 this._textContainer();
             }
 
-            this._span.html("a" + element.html() + "a");
+            this._span.html(element.html());
 
             width = this._span.width() + this.options.scalePadding;
             height = this._span.height();
