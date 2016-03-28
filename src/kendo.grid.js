@@ -7328,6 +7328,8 @@ var __meta__ = { // jshint ignore:line
         _isActiveInTable: function() {
             var active = activeElement();
 
+            if (!active) { return false; }
+
             return this.table[0] === active ||
                 $.contains(this.table[0], active) ||
                 (this._isLocked() &&
