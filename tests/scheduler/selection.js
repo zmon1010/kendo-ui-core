@@ -132,7 +132,7 @@
         equal(container[0], document.activeElement);
     });
 
-    test("scheduler removes selected state on blur", function() {
+    test("scheduler keeps selected state on blur", function() {
         var td = container.find(".k-scheduler-content td:first");
 
         td.trigger({
@@ -142,7 +142,8 @@
 
         container.focusout();
 
-        ok(!td.hasClass("k-state-selected"));
+        ok(!td.hasClass("k-state-focused"));
+        ok(td.hasClass("k-state-selected"));
     });
 
     test("scheduler selects first cell on focus", function() {

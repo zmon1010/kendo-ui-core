@@ -1963,7 +1963,7 @@ var __meta__ = { // jshint ignore:line
             });
 
             wrapper.on("focusout" + NS, function() {
-                that.view().clearSelection();
+                //that.view().clearSelection();
                 that._ctrlKey = that._shiftKey = false;
             });
 
