@@ -516,9 +516,9 @@ var UnlinkTool = Tool.extend({
             this._traverse(callback, next);
         },
 
-        edgeNode: function(node) {},
-        next: function(node) {},
-        subText: function(text, offset) {}
+        edgeNode: function(node) {}, //jshint ignore: line
+        next: function(node) {}, //jshint ignore: line
+        subText: function(text, offset) {} //jshint ignore: line
 
     });
 
