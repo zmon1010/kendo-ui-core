@@ -162,6 +162,11 @@
 
             this.barInput.value(value);
             this.cellInput.value(value);
+        },
+
+        insertNewline: function() {
+            this.activeEditor().insertNewline();
+            this.scale();
         }
     });
 

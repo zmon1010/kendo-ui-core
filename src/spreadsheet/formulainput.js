@@ -49,7 +49,8 @@
 
             element.addClass(FormulaInput.classNames.wrapper)
                 .attr("contenteditable", true)
-                .attr("spellcheck", false);
+                .attr("spellcheck", false)
+                .css("white-space", "pre");
 
             if (this.options.autoScale) {
                 element.on("input", this.scale.bind(this));
@@ -377,7 +378,7 @@
             computedStyles.top = -3333;
             computedStyles.left = -3333;
 
-            this._span = $("<span/>").css(computedStyles).insertAfter(this.element);
+            this._span = $("<span style='white-space: pre'/>").css(computedStyles).insertAfter(this.element);
         },
 
         _tooltip: function() {
@@ -584,7 +585,7 @@
 
         scale: function() {
             var element = this.element;
-            var width;
+            var width, height;
 
             if (!this._span) {
                 this._textContainer();
@@ -593,9 +594,13 @@
             this._span.html(element.html());
 
             width = this._span.width() + this.options.scalePadding;
+            height = this._span.height();
 
             if (width > element.width()) {
                 element.width(width);
+            }
+            if (height > element.height()) {
+                element.height(height);
             }
         },
 
@@ -605,7 +610,8 @@
 
         value: function(value) {
             if (value === undefined) {
-                return this.element.text();
+                // jQuery's .text() discards the newlines for some reason
+                return this.element[0].innerText;
             }
 
             this._value(value);
@@ -635,10 +641,12 @@
             }
 
             if (!(/^=/.test(value))) {
-                // if an user deleted the initial =, we should discard
-                // any highlighting.  we still need to restore caret
-                // position thereafter.
-                if (this.element.html() != value) {
+                // if an user deleted the initial =, reset the text to
+                // discard any highlighting.  Only do that once
+                // (detect via _staticTokens or _highlightedRefs).
+                if (this._staticTokens.length || this._highlightedRefs.length) {
+                    this._staticTokens = [];
+                    this._highlightedRefs = [];
                     this.element.text(value);
                 }
 
@@ -646,6 +654,8 @@
                 if (this.popup) {
                     this.popup.close();
                 }
+
+                return; // avoid messing with the cursor position below
             } else {
                 tokens = kendo.spreadsheet.calc.tokenize(value, this.row(), this.col());
                 tokens.forEach(function(tok){
@@ -734,6 +744,15 @@
             this.popup = null;
 
             Widget.fn.destroy.call(this);
+        },
+
+        insertNewline: function() {
+            var val = this.value();
+            var pos = this.getPos();
+            var eof = pos.end == val.length;
+            val = val.substr(0, pos.begin) + (eof ? "\n\n" : "\n" + val.substr(pos.end));
+            this.value(val);
+            this.setPos(pos.begin + 1);
         }
     });
 
