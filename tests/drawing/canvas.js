@@ -110,6 +110,51 @@
             surface.destroy();
         });
 
+        test("eventTarget returns shape returned by the searchTree", function() {
+            var path = new d.Path();
+            surface._searchTree.pointShape = function() {
+                return path;
+            };
+
+            ok(surface.eventTarget({}) === path);
+        });
+
+        test("eventTarget passes point based on the event coordinates to searchTree", function() {
+            var path = new d.Path();
+            var offset = surface._elementOffset();
+            surface._searchTree.pointShape = function(point) {
+                equal(point.x, 100 - offset.left);
+                equal(point.y, 200 - offset.top);
+            };
+
+            surface.eventTarget({ pageX: 100, pageY: 200 });
+        });
+
+        test("eventTarget passes point based on the userevent coordinates to searchTree", function() {
+            var path = new d.Path();
+            var offset = surface._elementOffset();
+            surface._searchTree.pointShape = function(point) {
+                equal(point.x, 100 - offset.left);
+                equal(point.y, 200 - offset.top);
+            };
+
+            surface.eventTarget({
+                touch: {},
+                x: {
+                    location: 100
+                },
+                y: {
+                    location: 200
+                }
+            });
+        });
+
+        test("eventTarget returns undefined if there is no searchTree", function() {
+            delete surface._searchTree;
+
+            ok(surface.eventTarget() === undefined);
+        });
+
         // ------------------------------------------------------------
         module("Surface / Canvas / mouse tracking", {
             setup: setup,

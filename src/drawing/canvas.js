@@ -79,6 +79,14 @@
             }
         },
 
+        eventTarget: function(e) {
+            if (this._searchTree) {
+                var point = this._surfacePoint(e);
+                var shape = this._searchTree.pointShape(point);
+                return shape;
+            }
+        },
+
         image: function() {
             var root = this._root;
             var rootElement = this._rootElement;

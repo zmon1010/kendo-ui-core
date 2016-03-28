@@ -708,9 +708,18 @@
     });
 
     function eventCoordinates(event) {
+        var x, y;
+        if (event.touch) {
+            x = event.x.location;
+            y = event.y.location;
+        } else {
+            x = event.pageX || event.clientX || 0;
+            y = event.pageY || event.clientY || 0;
+        }
+
         return {
-            x: event.pageX || event.clientX || 0,
-            y: event.pageY || event.clientY || 0
+            x: x,
+            y: y
         };
     }
 
