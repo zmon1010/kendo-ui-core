@@ -8,6 +8,7 @@ using System;
 using Kendo.Mvc.Resources;
 using Kendo.Mvc.Extensions;
 using System.ComponentModel.DataAnnotations;
+using Kendo.Mvc.UI;
 
 namespace Kendo.Mvc.TagHelpers
 {
@@ -22,6 +23,16 @@ namespace Kendo.Mvc.TagHelpers
         /// </summary>
         public ModelExpression For { get; set; }
 
+        /// <summary>
+        /// MonthTemplateId to be used for rendering the cells of the Calendar.
+        /// </summary>
+        public string MonthTemplateId { get; set; }
+
+        /// <summary>
+        /// Templates for the cells rendered in the "month" view.
+        /// </summary>
+        public string MonthTemplate { get; set; }
+
         public DatePickerTagHelper(IKendoHtmlGenerator generator) : base(generator)
         {
         }
@@ -35,7 +46,7 @@ namespace Kendo.Mvc.TagHelpers
                 metadata = For.Metadata;
                 Name = For.Name;
 
-                Value = Value ??For.Model as DateTime?;
+                Value = Value ?? For.Model as DateTime?;
 
                 Format = ExtractEditFormat(For.ModelExplorer.Metadata.EditFormatString);
 
@@ -65,7 +76,15 @@ namespace Kendo.Mvc.TagHelpers
         {
             var settings = SerializeSettings();
 
-            // TODO: Manually serialized settings go here
+            if (MonthTemplateId?.HasValue() == true)
+            {
+                settings["month"] = new { content = new ClientHandlerDescriptor {
+                    HandlerName = string.Format("jQuery('{0}{1}').html()", IdPrefix, MonthTemplateId) } };
+            }
+            else if (MonthTemplate?.HasValue() == true)
+            {
+                settings["month"] = new { content = MonthTemplate };
+            }
 
             var initializationScript = Initializer.Initialize(Selector, "DatePicker", settings);
 
