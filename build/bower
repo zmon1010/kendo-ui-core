@@ -24,10 +24,10 @@ else
    sed_bin="sed"
 fi
 
-$sed_bin -i "s/\"[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+\"/\"$VERSION\"/" $2/bower.json
+$sed_bin -i "s/\"[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+\(+[[:alnum:]]\+\)\?\"/\"$VERSION\"/" $2/bower.json
 
 $bowergit add --all .
 $bowergit commit -m "Update to $VERSION"
-$bowergit tag -a "$TAG" -m "$VERSION"
+$bowergit tag -a "$VERSION" -m "$VERSION"
 $bowergit push origin master
-$bowergit push origin "$TAG"
+$bowergit push origin "$VERSION"

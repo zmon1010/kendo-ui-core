@@ -1,11 +1,11 @@
 def exec_bower_script(script, repository_url, work_dir, bundle_path, meta = nil)
     if meta
-        tag = "#{VERSION}+#{meta}"
+        version = "#{VERSION}+#{meta}"
     else
-        tag = VERSION
+        version = VERSION
     end
 
-    sh({ 'VERSION' => VERSION, 'TAG' => tag }, script, repository_url, work_dir, bundle_path)
+    sh({ 'VERSION' => version }, script, repository_url, work_dir, bundle_path)
 end
 
 def push_bower(repository_url, work_dir, bundle_path, meta = nil)
