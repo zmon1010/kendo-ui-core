@@ -591,8 +591,7 @@
                 this._textContainer();
             }
 
-            // add the BR so that a final newline will actually enlarge the element
-            this._span.html(element.html() + "<br/>");
+            this._span.html(element.html());
 
             width = this._span.width() + this.options.scalePadding;
             height = this._span.height();
@@ -748,43 +747,12 @@
         },
 
         insertNewline: function() {
-            if (kendo.support.browser.mozilla) {
-                return this._firefox_insertNewline();
-            }
-            return this._chrome_insertNewline();
-        },
-
-        _firefox_insertNewline: function() {
-            var selection = window.getSelection();
-            var range = selection.getRangeAt(0);
-            range.deleteContents();
-            var br = document.createElement("br");
-            range.insertNode(br);
-            selection.removeAllRanges();
-            range = document.createRange();
-            range.setStartAfter(br);
-            range.setEndAfter(br);
-            selection.addRange(range);
-        },
-
-        _chrome_insertNewline: function() {
-            var newline;
-            var selection = window.getSelection();
-            var range = selection.getRangeAt(0);
-
-            if (this.getPos().end == this.value().length) {
-                newline = document.createTextNode("\n\n");
-            } else {
-                newline = document.createTextNode("\n");
-            }
-
-            range.deleteContents();
-            range.insertNode(newline);
-            range.setStartAfter(newline);
-            range.setEndAfter(newline);
-            range.collapse(false);
-            selection.removeAllRanges();
-            selection.addRange(range);
+            var val = this.value();
+            var pos = this.getPos();
+            var eof = pos.end == val.length;
+            val = val.substr(0, pos.begin) + (eof ? "\n\n" : "\n" + val.substr(pos.end));
+            this.value(val);
+            this.setPos(pos.begin + 1);
         }
     });
 
