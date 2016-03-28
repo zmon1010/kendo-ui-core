@@ -14,7 +14,7 @@ def dependencies(component)
 end
 
 def maps(list)
-    FileList[list - CULTURES_AND_TIMEZONES].ext('min.js.map')
+    FileList[list].ext('min.js.map')
 end
 
 ASPNET_MVC = File.join(DIST_JS_ROOT, 'kendo.aspnetmvc.js')
