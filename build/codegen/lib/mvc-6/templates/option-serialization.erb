@@ -1,4 +1,26 @@
 %if serialize?
+% if string_and_function?
+            if (<%= csharp_types_and_names["ClientHandlerDescriptor"] %>?.HasValue() == true)
+            {
+                settings["<%= name %>"] = <%= csharp_types_and_names["ClientHandlerDescriptor"] %>;
+            }
+% csharp_types_and_names.each do |type, propertyName|
+% if !type.eql?("ClientHandlerDescriptor")
+% if type.eql?("string")
+            else if (<%= propertyName %>?.HasValue() == true)
+            {
+               settings["<%= name %>"] = <%= propertyName %>;
+            }
+% else #enum
+            else if (<%= propertyName %>.HasValue)
+            {
+                settings["<%= name %>"] = <%= propertyName %>?.Serialize();
+            }
+% end
+% end
+
+% end
+% else
 %if template?
             if (<%=csharp_name%>Id.HasValue())
             {
@@ -40,3 +62,4 @@
 %end
 
 %end
+% end

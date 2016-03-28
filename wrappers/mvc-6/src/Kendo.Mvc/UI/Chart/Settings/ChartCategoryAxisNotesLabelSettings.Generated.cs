@@ -9,11 +9,11 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisNotesLabelSettings class
     /// </summary>
-    public partial class ChartCategoryAxisNotesLabelSettings 
+    public partial class ChartCategoryAxisNotesLabelSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartCategoryAxisNotesLabelBorderSettings Border { get; } = new ChartCategoryAxisNotesLabelBorderSettings();
+        public ChartCategoryAxisNotesLabelBorderSettings<T> Border { get; } = new ChartCategoryAxisNotesLabelBorderSettings<T>();
 
         public string Color { get; set; }
 
@@ -32,7 +32,7 @@ namespace Kendo.Mvc.UI
         public string Position { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

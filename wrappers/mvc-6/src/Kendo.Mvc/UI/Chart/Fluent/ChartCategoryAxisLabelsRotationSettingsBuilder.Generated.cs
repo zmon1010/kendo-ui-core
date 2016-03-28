@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisLabelsRotationSettings
     /// </summary>
-    public partial class ChartCategoryAxisLabelsRotationSettingsBuilder
-        
+    public partial class ChartCategoryAxisLabelsRotationSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The alignment of the rotated labels relative to the slot center. The supported values are "end" and "center". By default the closest end of the label will be aligned to the center. If set to "center", the center of the rotated label will be aligned instead.
         /// </summary>
         /// <param name="value">The value for Align</param>
-        public ChartCategoryAxisLabelsRotationSettingsBuilder Align(string value)
+        public ChartCategoryAxisLabelsRotationSettingsBuilder<T> Align(string value)
         {
             Container.Align = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The rotation angle of the labels. By default the labels are not rotated. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.
         /// </summary>
         /// <param name="value">The value for Angle</param>
-        public ChartCategoryAxisLabelsRotationSettingsBuilder Angle(double value)
+        public ChartCategoryAxisLabelsRotationSettingsBuilder<T> Angle(double value)
         {
             Container.Angle = value;
             return this;

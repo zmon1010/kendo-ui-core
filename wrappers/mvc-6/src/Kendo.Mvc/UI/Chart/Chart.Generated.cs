@@ -9,43 +9,45 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI Chart component
     /// </summary>
-    public partial class Chart 
+    public partial class Chart<T> where T : class 
     {
         public bool? AutoBind { get; set; }
 
-        public List<ChartCategoryAxis> CategoryAxis { get; set; } = new List<ChartCategoryAxis>();
+        public ChartAxisDefaultsSettings<T> AxisDefaults { get; } = new ChartAxisDefaultsSettings<T>();
 
-        public ChartChartAreaSettings ChartArea { get; } = new ChartChartAreaSettings();
+        public List<ChartCategoryAxis<T>> CategoryAxis { get; set; } = new List<ChartCategoryAxis<T>>();
 
-        public ChartLegendSettings Legend { get; } = new ChartLegendSettings();
+        public ChartChartAreaSettings<T> ChartArea { get; } = new ChartChartAreaSettings<T>();
 
-        public List<ChartPane> Panes { get; set; } = new List<ChartPane>();
+        public ChartLegendSettings<T> Legend { get; } = new ChartLegendSettings<T>();
 
-        public ChartPannableSettings Pannable { get; } = new ChartPannableSettings();
+        public List<ChartPane<T>> Panes { get; set; } = new List<ChartPane<T>>();
 
-        public ChartPdfSettings Pdf { get; } = new ChartPdfSettings();
+        public ChartPannableSettings<T> Pannable { get; } = new ChartPannableSettings<T>();
 
-        public ChartPlotAreaSettings PlotArea { get; } = new ChartPlotAreaSettings();
+        public ChartPdfSettings<T> Pdf { get; } = new ChartPdfSettings<T>();
 
-        public List<ChartSeries> Series { get; set; } = new List<ChartSeries>();
+        public ChartPlotAreaSettings<T> PlotArea { get; } = new ChartPlotAreaSettings<T>();
+
+        public List<ChartSeries<T>> Series { get; set; } = new List<ChartSeries<T>>();
 
         public String[] SeriesColors { get; set; }
 
         public string Theme { get; set; }
 
-        public ChartTitleSettings Title { get; } = new ChartTitleSettings();
+        public ChartTitleSettings<T> Title { get; } = new ChartTitleSettings<T>();
 
-        public ChartTooltipSettings Tooltip { get; } = new ChartTooltipSettings();
+        public ChartTooltipSettings<T> Tooltip { get; } = new ChartTooltipSettings<T>();
 
         public bool? Transitions { get; set; }
 
-        public List<ChartValueAxis> ValueAxis { get; set; } = new List<ChartValueAxis>();
+        public List<ChartValueAxis<T>> ValueAxis { get; set; } = new List<ChartValueAxis<T>>();
 
-        public List<ChartXAxis> XAxis { get; set; } = new List<ChartXAxis>();
+        public List<ChartXAxis<T>> XAxis { get; set; } = new List<ChartXAxis<T>>();
 
-        public List<ChartYAxis> YAxis { get; set; } = new List<ChartYAxis>();
+        public List<ChartYAxis<T>> YAxis { get; set; } = new List<ChartYAxis<T>>();
 
-        public ChartZoomableSettings Zoomable { get; } = new ChartZoomableSettings();
+        public ChartZoomableSettings<T> Zoomable { get; } = new ChartZoomableSettings<T>();
 
         public RenderingMode? RenderAs { get; set; }
 
@@ -57,6 +59,12 @@ namespace Kendo.Mvc.UI
             if (AutoBind.HasValue)
             {
                 settings["autoBind"] = AutoBind;
+            }
+
+            var axisDefaults = AxisDefaults.Serialize();
+            if (axisDefaults.Any())
+            {
+                settings["axisDefaults"] = axisDefaults;
             }
 
             var categoryAxis = CategoryAxis.Select(i => i.Serialize());

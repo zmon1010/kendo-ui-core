@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartYAxisPlotBand class
     /// </summary>
-    public partial class ChartYAxisPlotBand 
+    public partial class ChartYAxisPlotBand<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

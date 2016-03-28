@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesErrorBarsSettings
     /// </summary>
-    public partial class ChartSeriesErrorBarsSettingsBuilder
-        
+    public partial class ChartSeriesErrorBarsSettingsBuilder<T>
+        where T : class 
     {
-        public ChartSeriesErrorBarsSettingsBuilder(ChartSeriesErrorBarsSettings container)
+        public ChartSeriesErrorBarsSettingsBuilder(ChartSeriesErrorBarsSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesErrorBarsSettings Container
+        protected ChartSeriesErrorBarsSettings<T> Container
         {
             get;
             private set;

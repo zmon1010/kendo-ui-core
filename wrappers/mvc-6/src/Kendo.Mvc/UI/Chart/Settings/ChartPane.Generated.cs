@@ -9,26 +9,26 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartPane class
     /// </summary>
-    public partial class ChartPane 
+    public partial class ChartPane<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartPaneBorderSettings Border { get; } = new ChartPaneBorderSettings();
+        public ChartPaneBorderSettings<T> Border { get; } = new ChartPaneBorderSettings<T>();
 
         public bool? Clip { get; set; }
 
         public double? Height { get; set; }
 
-        public ChartPaneMarginSettings Margin { get; } = new ChartPaneMarginSettings();
+        public ChartPaneMarginSettings<T> Margin { get; } = new ChartPaneMarginSettings<T>();
 
         public string Name { get; set; }
 
-        public ChartPanePaddingSettings Padding { get; } = new ChartPanePaddingSettings();
+        public ChartPanePaddingSettings<T> Padding { get; } = new ChartPanePaddingSettings<T>();
 
-        public ChartPaneTitleSettings Title { get; } = new ChartPaneTitleSettings();
+        public ChartPaneTitleSettings<T> Title { get; } = new ChartPaneTitleSettings<T>();
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

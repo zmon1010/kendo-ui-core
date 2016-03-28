@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisAutoBaseUnitStepsSettings class
     /// </summary>
-    public partial class ChartCategoryAxisAutoBaseUnitStepsSettings 
+    public partial class ChartCategoryAxisAutoBaseUnitStepsSettings<T> where T : class 
     {
         public int[] Seconds { get; set; }
 
@@ -26,7 +26,7 @@ namespace Kendo.Mvc.UI
         public int[] Years { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

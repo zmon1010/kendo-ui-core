@@ -9,15 +9,17 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesMarkersSettings class
     /// </summary>
-    public partial class ChartSeriesMarkersSettings 
+    public partial class ChartSeriesMarkersSettings<T> where T : class 
     {
         public string Background { get; set; }
+        public ClientHandlerDescriptor BackgroundHandler { get; set; }
 
-        public ChartSeriesMarkersBorderSettings Border { get; } = new ChartSeriesMarkersBorderSettings();
+        public ChartSeriesMarkersBorderSettings<T> Border { get; } = new ChartSeriesMarkersBorderSettings<T>();
 
         public double? Size { get; set; }
 
         public string Type { get; set; }
+        public ClientHandlerDescriptor TypeHandler { get; set; }
 
         public bool? Visible { get; set; }
 
@@ -26,16 +28,21 @@ namespace Kendo.Mvc.UI
         public double? Rotation { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-            if (Background?.HasValue() == true)
+            if (BackgroundHandler?.HasValue() == true)
             {
-                settings["background"] = Background;
+                settings["background"] = BackgroundHandler;
             }
+            else if (Background?.HasValue() == true)
+            {
+               settings["background"] = Background;
+            }
+
 
             var border = Border.Serialize();
             if (border.Any())
@@ -48,10 +55,15 @@ namespace Kendo.Mvc.UI
                 settings["size"] = Size;
             }
 
-            if (Type?.HasValue() == true)
+            if (TypeHandler?.HasValue() == true)
             {
-                settings["type"] = Type;
+                settings["type"] = TypeHandler;
             }
+            else if (Type?.HasValue() == true)
+            {
+               settings["type"] = Type;
+            }
+
 
             if (Visible.HasValue)
             {

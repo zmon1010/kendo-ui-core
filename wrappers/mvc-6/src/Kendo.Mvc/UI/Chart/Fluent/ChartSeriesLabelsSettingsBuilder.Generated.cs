@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesLabelsSettings
     /// </summary>
-    public partial class ChartSeriesLabelsSettingsBuilder
-        
+    public partial class ChartSeriesLabelsSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The label alignment when series.type is set to "donut", "funnel" or "pie".The supported values  for "donut" and "pie" are:The supported values for "funnel" are:
         /// </summary>
         /// <param name="value">The value for Align</param>
-        public ChartSeriesLabelsSettingsBuilder Align(string value)
+        public ChartSeriesLabelsSettingsBuilder<T> Align(string value)
         {
             Container.Align = value;
             return this;
@@ -24,9 +24,31 @@ namespace Kendo.Mvc.UI.Fluent
         /// The background color of the labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartSeriesLabelsSettingsBuilder Background(string value)
+        public ChartSeriesLabelsSettingsBuilder<T> Background(string value)
         {
+            Container.BackgroundHandler = null;
             Container.Background = value;
+            return this;
+        }
+        /// <summary>
+        /// The background color of the labels. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> BackgroundHandler(string handler)
+        {
+            Container.Background = null;
+            Container.BackgroundHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The background color of the labels. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> BackgroundHandler(Func<object, object> handler)
+        {
+            Container.Background = null;
+            Container.BackgroundHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -34,11 +56,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the labels.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartSeriesLabelsSettingsBuilder Border(Action<ChartSeriesLabelsBorderSettingsBuilder> configurator)
+        public ChartSeriesLabelsSettingsBuilder<T> Border(Action<ChartSeriesLabelsBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartSeriesLabelsBorderSettingsBuilder(Container.Border));
+            configurator(new ChartSeriesLabelsBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -47,9 +69,31 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text color of the labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartSeriesLabelsSettingsBuilder Color(string value)
+        public ChartSeriesLabelsSettingsBuilder<T> Color(string value)
         {
+            Container.ColorHandler = null;
             Container.Color = value;
+            return this;
+        }
+        /// <summary>
+        /// The text color of the labels. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> ColorHandler(string handler)
+        {
+            Container.Color = null;
+            Container.ColorHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The text color of the labels. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> ColorHandler(Func<object, object> handler)
+        {
+            Container.Color = null;
+            Container.ColorHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -57,7 +101,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The distance of the labels when series.type is set to "donut" or "pie".
         /// </summary>
         /// <param name="value">The value for Distance</param>
-        public ChartSeriesLabelsSettingsBuilder Distance(double value)
+        public ChartSeriesLabelsSettingsBuilder<T> Distance(double value)
         {
             Container.Distance = value;
             return this;
@@ -67,9 +111,31 @@ namespace Kendo.Mvc.UI.Fluent
         /// The font style of the labels.
         /// </summary>
         /// <param name="value">The value for Font</param>
-        public ChartSeriesLabelsSettingsBuilder Font(string value)
+        public ChartSeriesLabelsSettingsBuilder<T> Font(string value)
         {
+            Container.FontHandler = null;
             Container.Font = value;
+            return this;
+        }
+        /// <summary>
+        /// The font style of the labels.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> FontHandler(string handler)
+        {
+            Container.Font = null;
+            Container.FontHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The font style of the labels.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> FontHandler(Func<object, object> handler)
+        {
+            Container.Font = null;
+            Container.FontHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -77,9 +143,31 @@ namespace Kendo.Mvc.UI.Fluent
         /// The format of the labels. Uses kendo.format.
         /// </summary>
         /// <param name="value">The value for Format</param>
-        public ChartSeriesLabelsSettingsBuilder Format(string value)
+        public ChartSeriesLabelsSettingsBuilder<T> Format(string value)
         {
+            Container.FormatHandler = null;
             Container.Format = value;
+            return this;
+        }
+        /// <summary>
+        /// The format of the labels. Uses kendo.format.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> FormatHandler(string handler)
+        {
+            Container.Format = null;
+            Container.FormatHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The format of the labels. Uses kendo.format.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> FormatHandler(Func<object, object> handler)
+        {
+            Container.Format = null;
+            Container.FormatHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -87,11 +175,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the labels. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartSeriesLabelsSettingsBuilder Margin(Action<ChartSeriesLabelsMarginSettingsBuilder> configurator)
+        public ChartSeriesLabelsSettingsBuilder<T> Margin(Action<ChartSeriesLabelsMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartSeriesLabelsMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartSeriesLabelsMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -100,11 +188,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the labels. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartSeriesLabelsSettingsBuilder Padding(Action<ChartSeriesLabelsPaddingSettingsBuilder> configurator)
+        public ChartSeriesLabelsSettingsBuilder<T> Padding(Action<ChartSeriesLabelsPaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartSeriesLabelsPaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartSeriesLabelsPaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }
@@ -113,9 +201,31 @@ namespace Kendo.Mvc.UI.Fluent
         /// The position of the labels.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public ChartSeriesLabelsSettingsBuilder Position(string value)
+        public ChartSeriesLabelsSettingsBuilder<T> Position(string value)
         {
+            Container.PositionHandler = null;
             Container.Position = value;
+            return this;
+        }
+        /// <summary>
+        /// The position of the labels.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> PositionHandler(string handler)
+        {
+            Container.Position = null;
+            Container.PositionHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The position of the labels.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesLabelsSettingsBuilder<T> PositionHandler(Func<object, object> handler)
+        {
+            Container.Position = null;
+            Container.PositionHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
@@ -123,7 +233,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the chart series label.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for Template</param>
-        public ChartSeriesLabelsSettingsBuilder Template(string value)
+        public ChartSeriesLabelsSettingsBuilder<T> Template(string value)
         {
             Container.Template = value;
             return this;
@@ -133,7 +243,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the chart series label.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
-        public ChartSeriesLabelsSettingsBuilder TemplateId(string templateId)
+        public ChartSeriesLabelsSettingsBuilder<T> TemplateId(string templateId)
         {
             Container.TemplateId = templateId;
             return this;
@@ -143,7 +253,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the series labels. By default chart series labels are not displayed.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartSeriesLabelsSettingsBuilder Visible(bool value)
+        public ChartSeriesLabelsSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -152,7 +262,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will display the series labels. By default chart series labels are not displayed.
         /// </summary>
-        public ChartSeriesLabelsSettingsBuilder Visible()
+        public ChartSeriesLabelsSettingsBuilder<T> Visible()
         {
             Container.Visible = true;
             return this;
@@ -162,7 +272,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the labels. The available argument fields are:
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
-        public ChartSeriesLabelsSettingsBuilder Visual(string handler)
+        public ChartSeriesLabelsSettingsBuilder<T> Visual(string handler)
         {
             Container.Visual = new ClientHandlerDescriptor { HandlerName = handler };
             return this;
@@ -172,7 +282,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the labels. The available argument fields are:
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ChartSeriesLabelsSettingsBuilder Visual(Func<object, object> handler)
+        public ChartSeriesLabelsSettingsBuilder<T> Visual(Func<object, object> handler)
         {
             Container.Visual = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
@@ -181,11 +291,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series from label configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the from setting.</param>
-        public ChartSeriesLabelsSettingsBuilder From(Action<ChartSeriesLabelsFromSettingsBuilder> configurator)
+        public ChartSeriesLabelsSettingsBuilder<T> From(Action<ChartSeriesLabelsFromSettingsBuilder<T>> configurator)
         {
 
             Container.From.Chart = Container.Chart;
-            configurator(new ChartSeriesLabelsFromSettingsBuilder(Container.From));
+            configurator(new ChartSeriesLabelsFromSettingsBuilder<T>(Container.From));
 
             return this;
         }
@@ -194,11 +304,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart series to label configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the to setting.</param>
-        public ChartSeriesLabelsSettingsBuilder To(Action<ChartSeriesLabelsToSettingsBuilder> configurator)
+        public ChartSeriesLabelsSettingsBuilder<T> To(Action<ChartSeriesLabelsToSettingsBuilder<T>> configurator)
         {
 
             Container.To.Chart = Container.Chart;
-            configurator(new ChartSeriesLabelsToSettingsBuilder(Container.To));
+            configurator(new ChartSeriesLabelsToSettingsBuilder<T>(Container.To));
 
             return this;
         }

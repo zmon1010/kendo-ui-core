@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartPlotAreaSettings
     /// </summary>
-    public partial class ChartPlotAreaSettingsBuilder
-        
+    public partial class ChartPlotAreaSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the chart plot area. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartPlotAreaSettingsBuilder Background(string value)
+        public ChartPlotAreaSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the chart plot area.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartPlotAreaSettingsBuilder Border(Action<ChartPlotAreaBorderSettingsBuilder> configurator)
+        public ChartPlotAreaSettingsBuilder<T> Border(Action<ChartPlotAreaBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartPlotAreaBorderSettingsBuilder(Container.Border));
+            configurator(new ChartPlotAreaBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,11 +37,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the chart plot area. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartPlotAreaSettingsBuilder Margin(Action<ChartPlotAreaMarginSettingsBuilder> configurator)
+        public ChartPlotAreaSettingsBuilder<T> Margin(Action<ChartPlotAreaMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartPlotAreaMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartPlotAreaMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -50,7 +50,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The background opacity of the chart plot area. By default the background is opaque.
         /// </summary>
         /// <param name="value">The value for Opacity</param>
-        public ChartPlotAreaSettingsBuilder Opacity(double value)
+        public ChartPlotAreaSettingsBuilder<T> Opacity(double value)
         {
             Container.Opacity = value;
             return this;
@@ -60,11 +60,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the chart plot area. A numeric value will set all paddings.The default padding for pie, donut, radar and polar charts is proportional of the chart size.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartPlotAreaSettingsBuilder Padding(Action<ChartPlotAreaPaddingSettingsBuilder> configurator)
+        public ChartPlotAreaSettingsBuilder<T> Padding(Action<ChartPlotAreaPaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartPlotAreaPaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartPlotAreaPaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }

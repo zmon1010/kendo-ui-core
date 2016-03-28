@@ -9,19 +9,19 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisTitleSettings class
     /// </summary>
-    public partial class ChartCategoryAxisTitleSettings 
+    public partial class ChartCategoryAxisTitleSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartCategoryAxisTitleBorderSettings Border { get; } = new ChartCategoryAxisTitleBorderSettings();
+        public ChartCategoryAxisTitleBorderSettings<T> Border { get; } = new ChartCategoryAxisTitleBorderSettings<T>();
 
         public string Color { get; set; }
 
         public string Font { get; set; }
 
-        public ChartCategoryAxisTitleMarginSettings Margin { get; } = new ChartCategoryAxisTitleMarginSettings();
+        public ChartCategoryAxisTitleMarginSettings<T> Margin { get; } = new ChartCategoryAxisTitleMarginSettings<T>();
 
-        public ChartCategoryAxisTitlePaddingSettings Padding { get; } = new ChartCategoryAxisTitlePaddingSettings();
+        public ChartCategoryAxisTitlePaddingSettings<T> Padding { get; } = new ChartCategoryAxisTitlePaddingSettings<T>();
 
         public string Position { get; set; }
 
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI
         public ClientHandlerDescriptor Visual { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

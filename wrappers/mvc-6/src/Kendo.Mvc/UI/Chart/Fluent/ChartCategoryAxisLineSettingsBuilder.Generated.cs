@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisLineSettings
     /// </summary>
-    public partial class ChartCategoryAxisLineSettingsBuilder
-        
+    public partial class ChartCategoryAxisLineSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The color of the lines. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartCategoryAxisLineSettingsBuilder Color(string value)
+        public ChartCategoryAxisLineSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The dash type of the line.The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartCategoryAxisLineSettingsBuilder DashType(ChartDashType value)
+        public ChartCategoryAxisLineSettingsBuilder<T> DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the category axis lines. By default the category axis lines are visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartCategoryAxisLineSettingsBuilder Visible(bool value)
+        public ChartCategoryAxisLineSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The width of the line in pixels. Also affects the major and minor ticks, but not the grid lines.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartCategoryAxisLineSettingsBuilder Width(double value)
+        public ChartCategoryAxisLineSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;

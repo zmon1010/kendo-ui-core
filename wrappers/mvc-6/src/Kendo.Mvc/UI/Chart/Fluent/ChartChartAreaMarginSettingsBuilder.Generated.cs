@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartChartAreaMarginSettings
     /// </summary>
-    public partial class ChartChartAreaMarginSettingsBuilder
-        
+    public partial class ChartChartAreaMarginSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The bottom margin of the chart area.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public ChartChartAreaMarginSettingsBuilder Bottom(double value)
+        public ChartChartAreaMarginSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left margin of the chart area.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public ChartChartAreaMarginSettingsBuilder Left(double value)
+        public ChartChartAreaMarginSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right margin of the chart area.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public ChartChartAreaMarginSettingsBuilder Right(double value)
+        public ChartChartAreaMarginSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top margin of the chart area.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public ChartChartAreaMarginSettingsBuilder Top(double value)
+        public ChartChartAreaMarginSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

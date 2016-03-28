@@ -9,16 +9,17 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesTargetSettings class
     /// </summary>
-    public partial class ChartSeriesTargetSettings 
+    public partial class ChartSeriesTargetSettings<T> where T : class 
     {
-        public ChartSeriesTargetBorderSettings Border { get; } = new ChartSeriesTargetBorderSettings();
+        public ChartSeriesTargetBorderSettings<T> Border { get; } = new ChartSeriesTargetBorderSettings<T>();
 
         public string Color { get; set; }
+        public ClientHandlerDescriptor ColorHandler { get; set; }
 
-        public ChartSeriesTargetLineSettings Line { get; } = new ChartSeriesTargetLineSettings();
+        public ChartSeriesTargetLineSettings<T> Line { get; } = new ChartSeriesTargetLineSettings<T>();
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
@@ -30,10 +31,15 @@ namespace Kendo.Mvc.UI
                 settings["border"] = border;
             }
 
-            if (Color?.HasValue() == true)
+            if (ColorHandler?.HasValue() == true)
             {
-                settings["color"] = Color;
+                settings["color"] = ColorHandler;
             }
+            else if (Color?.HasValue() == true)
+            {
+               settings["color"] = Color;
+            }
+
 
             var line = Line.Serialize();
             if (line.Any())

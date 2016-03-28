@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartXAxisPlotBand
     /// </summary>
-    public partial class ChartXAxisPlotBandBuilder
-        
+    public partial class ChartXAxisPlotBandBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The color of the plot band.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartXAxisPlotBandBuilder Color(string value)
+        public ChartXAxisPlotBandBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The start position of the plot band in axis units.
         /// </summary>
         /// <param name="value">The value for From</param>
-        public ChartXAxisPlotBandBuilder From(double value)
+        public ChartXAxisPlotBandBuilder<T> From(object value)
         {
             Container.From = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The opacity of the plot band.
         /// </summary>
         /// <param name="value">The value for Opacity</param>
-        public ChartXAxisPlotBandBuilder Opacity(double value)
+        public ChartXAxisPlotBandBuilder<T> Opacity(double value)
         {
             Container.Opacity = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The end position of the plot band in axis units.
         /// </summary>
         /// <param name="value">The value for To</param>
-        public ChartXAxisPlotBandBuilder To(double value)
+        public ChartXAxisPlotBandBuilder<T> To(object value)
         {
             Container.To = value;
             return this;

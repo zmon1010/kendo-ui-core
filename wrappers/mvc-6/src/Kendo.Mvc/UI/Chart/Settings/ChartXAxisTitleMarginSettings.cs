@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartXAxisTitleMarginSettings class
     /// </summary>
-    public partial class ChartXAxisTitleMarginSettings 
+    public partial class ChartXAxisTitleMarginSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartXAxisMinorGridLinesSettings
     /// </summary>
-    public partial class ChartXAxisMinorGridLinesSettingsBuilder
-        
+    public partial class ChartXAxisMinorGridLinesSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The color of the minor grid lines. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartXAxisMinorGridLinesSettingsBuilder Color(string value)
+        public ChartXAxisMinorGridLinesSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The dash type of the minor grid lines.The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartXAxisMinorGridLinesSettingsBuilder DashType(ChartDashType value)
+        public ChartXAxisMinorGridLinesSettingsBuilder<T> DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the minor grid lines. By default the minor grid lines are visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartXAxisMinorGridLinesSettingsBuilder Visible(bool value)
+        public ChartXAxisMinorGridLinesSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will display the minor grid lines. By default the minor grid lines are visible.
         /// </summary>
-        public ChartXAxisMinorGridLinesSettingsBuilder Visible()
+        public ChartXAxisMinorGridLinesSettingsBuilder<T> Visible()
         {
             Container.Visible = true;
             return this;
@@ -53,7 +53,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The width of the category axis minor grid lines in pixels.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartXAxisMinorGridLinesSettingsBuilder Width(double value)
+        public ChartXAxisMinorGridLinesSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;
@@ -63,7 +63,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The step of the x axis minor grid lines.
         /// </summary>
         /// <param name="value">The value for Step</param>
-        public ChartXAxisMinorGridLinesSettingsBuilder Step(double value)
+        public ChartXAxisMinorGridLinesSettingsBuilder<T> Step(double value)
         {
             Container.Step = value;
             return this;
@@ -73,7 +73,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The skip of the x axis minor grid lines.
         /// </summary>
         /// <param name="value">The value for Skip</param>
-        public ChartXAxisMinorGridLinesSettingsBuilder Skip(double value)
+        public ChartXAxisMinorGridLinesSettingsBuilder<T> Skip(double value)
         {
             Container.Skip = value;
             return this;

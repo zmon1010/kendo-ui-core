@@ -9,28 +9,28 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesStackSettings class
     /// </summary>
-    public partial class ChartSeriesStackSettings 
+    public partial class ChartSeriesStackSettings<T> where T : class 
     {
-        public string Type { get; set; }
-
         public string Group { get; set; }
+
+        public ChartStackType? Type { get; set; }
 
         public bool? Enabled { get; set; }
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-            if (Type?.HasValue() == true)
-            {
-                settings["type"] = Type;
-            }
-
             if (Group?.HasValue() == true)
             {
                 settings["group"] = Group;
+            }
+
+            if (Type.HasValue)
+            {
+                settings["type"] = Type?.Serialize();
             }
 
             return settings;

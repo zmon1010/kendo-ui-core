@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisSelectSettings
     /// </summary>
-    public partial class ChartCategoryAxisSelectSettingsBuilder
-        
+    public partial class ChartCategoryAxisSelectSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The lower boundary of the selected range.
         /// </summary>
         /// <param name="value">The value for From</param>
-        public ChartCategoryAxisSelectSettingsBuilder From(object value)
+        public ChartCategoryAxisSelectSettingsBuilder<T> From(object value)
         {
             Container.From = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The maximum value which the user can select.
         /// </summary>
         /// <param name="value">The value for Max</param>
-        public ChartCategoryAxisSelectSettingsBuilder Max(object value)
+        public ChartCategoryAxisSelectSettingsBuilder<T> Max(object value)
         {
             Container.Max = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The minimum value which the user can select.
         /// </summary>
         /// <param name="value">The value for Min</param>
-        public ChartCategoryAxisSelectSettingsBuilder Min(object value)
+        public ChartCategoryAxisSelectSettingsBuilder<T> Min(object value)
         {
             Container.Min = value;
             return this;
@@ -44,11 +44,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The mouse wheel configuration of the selection.
         /// </summary>
         /// <param name="configurator">The configurator for the mousewheel setting.</param>
-        public ChartCategoryAxisSelectSettingsBuilder Mousewheel(Action<ChartCategoryAxisSelectMousewheelSettingsBuilder> configurator)
+        public ChartCategoryAxisSelectSettingsBuilder<T> Mousewheel(Action<ChartCategoryAxisSelectMousewheelSettingsBuilder<T>> configurator)
         {
 
             Container.Mousewheel.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisSelectMousewheelSettingsBuilder(Container.Mousewheel));
+            configurator(new ChartCategoryAxisSelectMousewheelSettingsBuilder<T>(Container.Mousewheel));
 
             return this;
         }
@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The upper boundary of the selected range.
         /// </summary>
         /// <param name="value">The value for To</param>
-        public ChartCategoryAxisSelectSettingsBuilder To(object value)
+        public ChartCategoryAxisSelectSettingsBuilder<T> To(object value)
         {
             Container.To = value;
             return this;

@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisSelectSettings class
     /// </summary>
-    public partial class ChartCategoryAxisSelectSettings 
+    public partial class ChartCategoryAxisSelectSettings<T> where T : class 
     {
         public object From { get; set; }
 
@@ -17,12 +17,12 @@ namespace Kendo.Mvc.UI
 
         public object Min { get; set; }
 
-        public ChartCategoryAxisSelectMousewheelSettings Mousewheel { get; } = new ChartCategoryAxisSelectMousewheelSettings();
+        public ChartCategoryAxisSelectMousewheelSettings<T> Mousewheel { get; } = new ChartCategoryAxisSelectMousewheelSettings<T>();
 
         public object To { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartXAxisLabelsPaddingSettings
     /// </summary>
-    public partial class ChartXAxisLabelsPaddingSettingsBuilder
-        
+    public partial class ChartXAxisLabelsPaddingSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The bottom padding of the labels.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public ChartXAxisLabelsPaddingSettingsBuilder Bottom(double value)
+        public ChartXAxisLabelsPaddingSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left padding of the labels.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public ChartXAxisLabelsPaddingSettingsBuilder Left(double value)
+        public ChartXAxisLabelsPaddingSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right padding of the labels.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public ChartXAxisLabelsPaddingSettingsBuilder Right(double value)
+        public ChartXAxisLabelsPaddingSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top padding of the labels.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public ChartXAxisLabelsPaddingSettingsBuilder Top(double value)
+        public ChartXAxisLabelsPaddingSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

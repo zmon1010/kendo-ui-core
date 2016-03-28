@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartLegendItemSettings
     /// </summary>
-    public partial class ChartLegendItemSettingsBuilder
-        
+    public partial class ChartLegendItemSettingsBuilder<T>
+        where T : class 
     {
-        public ChartLegendItemSettingsBuilder(ChartLegendItemSettings container)
+        public ChartLegendItemSettingsBuilder(ChartLegendItemSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartLegendItemSettings Container
+        protected ChartLegendItemSettings<T> Container
         {
             get;
             private set;

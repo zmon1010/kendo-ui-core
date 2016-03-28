@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisLabelsDateFormatsSettings class
     /// </summary>
-    public partial class ChartCategoryAxisLabelsDateFormatsSettings 
+    public partial class ChartCategoryAxisLabelsDateFormatsSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

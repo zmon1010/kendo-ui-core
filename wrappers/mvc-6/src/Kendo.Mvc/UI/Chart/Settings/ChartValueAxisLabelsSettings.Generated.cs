@@ -9,11 +9,11 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartValueAxisLabelsSettings class
     /// </summary>
-    public partial class ChartValueAxisLabelsSettings 
+    public partial class ChartValueAxisLabelsSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartValueAxisLabelsBorderSettings Border { get; } = new ChartValueAxisLabelsBorderSettings();
+        public ChartValueAxisLabelsBorderSettings<T> Border { get; } = new ChartValueAxisLabelsBorderSettings<T>();
 
         public string Color { get; set; }
 
@@ -21,13 +21,13 @@ namespace Kendo.Mvc.UI
 
         public string Format { get; set; }
 
-        public ChartValueAxisLabelsMarginSettings Margin { get; } = new ChartValueAxisLabelsMarginSettings();
+        public ChartValueAxisLabelsMarginSettings<T> Margin { get; } = new ChartValueAxisLabelsMarginSettings<T>();
 
         public bool? Mirror { get; set; }
 
-        public ChartValueAxisLabelsPaddingSettings Padding { get; } = new ChartValueAxisLabelsPaddingSettings();
+        public ChartValueAxisLabelsPaddingSettings<T> Padding { get; } = new ChartValueAxisLabelsPaddingSettings<T>();
 
-        public ChartValueAxisLabelsRotationSettings Rotation { get; } = new ChartValueAxisLabelsRotationSettings();
+        public ChartValueAxisLabelsRotationSettings<T> Rotation { get; } = new ChartValueAxisLabelsRotationSettings<T>();
 
         public double? Skip { get; set; }
 
@@ -42,7 +42,7 @@ namespace Kendo.Mvc.UI
         public ClientHandlerDescriptor Visual { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

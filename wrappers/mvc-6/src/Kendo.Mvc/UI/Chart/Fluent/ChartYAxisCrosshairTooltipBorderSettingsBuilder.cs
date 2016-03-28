@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisCrosshairTooltipBorderSettings
     /// </summary>
-    public partial class ChartYAxisCrosshairTooltipBorderSettingsBuilder
-        
+    public partial class ChartYAxisCrosshairTooltipBorderSettingsBuilder<T>
+        where T : class 
     {
-        public ChartYAxisCrosshairTooltipBorderSettingsBuilder(ChartYAxisCrosshairTooltipBorderSettings container)
+        public ChartYAxisCrosshairTooltipBorderSettingsBuilder(ChartYAxisCrosshairTooltipBorderSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartYAxisCrosshairTooltipBorderSettings Container
+        protected ChartYAxisCrosshairTooltipBorderSettings<T> Container
         {
             get;
             private set;

@@ -9,23 +9,23 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartLegendSettings class
     /// </summary>
-    public partial class ChartLegendSettings 
+    public partial class ChartLegendSettings<T> where T : class 
     {
         public string Align { get; set; }
 
         public string Background { get; set; }
 
-        public ChartLegendBorderSettings Border { get; } = new ChartLegendBorderSettings();
+        public ChartLegendBorderSettings<T> Border { get; } = new ChartLegendBorderSettings<T>();
 
         public double? Height { get; set; }
 
-        public ChartLegendInactiveItemsSettings InactiveItems { get; } = new ChartLegendInactiveItemsSettings();
+        public ChartLegendInactiveItemsSettings<T> InactiveItems { get; } = new ChartLegendInactiveItemsSettings<T>();
 
-        public ChartLegendItemSettings Item { get; } = new ChartLegendItemSettings();
+        public ChartLegendItemSettings<T> Item { get; } = new ChartLegendItemSettings<T>();
 
-        public ChartLegendLabelsSettings Labels { get; } = new ChartLegendLabelsSettings();
+        public ChartLegendLabelsSettings<T> Labels { get; } = new ChartLegendLabelsSettings<T>();
 
-        public ChartLegendMarginSettings Margin { get; } = new ChartLegendMarginSettings();
+        public ChartLegendMarginSettings<T> Margin { get; } = new ChartLegendMarginSettings<T>();
 
         public double? OffsetX { get; set; }
 
@@ -33,7 +33,7 @@ namespace Kendo.Mvc.UI
 
         public string Orientation { get; set; }
 
-        public ChartLegendPaddingSettings Padding { get; } = new ChartLegendPaddingSettings();
+        public ChartLegendPaddingSettings<T> Padding { get; } = new ChartLegendPaddingSettings<T>();
 
         public bool? Reverse { get; set; }
 
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI
         public ChartLegendPosition? Position { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

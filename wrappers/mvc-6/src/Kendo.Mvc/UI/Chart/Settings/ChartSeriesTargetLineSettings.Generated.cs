@@ -9,12 +9,12 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesTargetLineSettings class
     /// </summary>
-    public partial class ChartSeriesTargetLineSettings 
+    public partial class ChartSeriesTargetLineSettings<T> where T : class 
     {
         public double? Width { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

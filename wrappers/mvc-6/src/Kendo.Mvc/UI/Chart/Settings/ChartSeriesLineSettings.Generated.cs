@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesLineSettings class
     /// </summary>
-    public partial class ChartSeriesLineSettings 
+    public partial class ChartSeriesLineSettings<T> where T : class 
     {
         public string Color { get; set; }
 
@@ -17,10 +17,10 @@ namespace Kendo.Mvc.UI
 
         public string Width { get; set; }
 
-        public ChartLineStyle? Style { get; set; }
+        public ChartAreaStyle? Style { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

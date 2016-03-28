@@ -16,6 +16,10 @@ module CodeGen::MVC6::Wrappers::Options
             STRUCT_TYPES.include?(csharp_type) || enum?
         end
 
+        def nullable_type?(type)
+            STRUCT_TYPES.include?(type) || enum?
+        end
+
         def enum?
             enum_type || values
         end

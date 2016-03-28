@@ -9,29 +9,29 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartYAxisLabelsSettings class
     /// </summary>
-    public partial class ChartYAxisLabelsSettings 
+    public partial class ChartYAxisLabelsSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartYAxisLabelsBorderSettings Border { get; } = new ChartYAxisLabelsBorderSettings();
+        public ChartYAxisLabelsBorderSettings<T> Border { get; } = new ChartYAxisLabelsBorderSettings<T>();
 
         public string Color { get; set; }
 
         public string Culture { get; set; }
 
-        public ChartYAxisLabelsDateFormatsSettings DateFormats { get; } = new ChartYAxisLabelsDateFormatsSettings();
+        public ChartYAxisLabelsDateFormatsSettings<T> DateFormats { get; } = new ChartYAxisLabelsDateFormatsSettings<T>();
 
         public string Font { get; set; }
 
         public string Format { get; set; }
 
-        public ChartYAxisLabelsMarginSettings Margin { get; } = new ChartYAxisLabelsMarginSettings();
+        public ChartYAxisLabelsMarginSettings<T> Margin { get; } = new ChartYAxisLabelsMarginSettings<T>();
 
         public bool? Mirror { get; set; }
 
-        public ChartYAxisLabelsPaddingSettings Padding { get; } = new ChartYAxisLabelsPaddingSettings();
+        public ChartYAxisLabelsPaddingSettings<T> Padding { get; } = new ChartYAxisLabelsPaddingSettings<T>();
 
-        public ChartYAxisLabelsRotationSettings Rotation { get; } = new ChartYAxisLabelsRotationSettings();
+        public ChartYAxisLabelsRotationSettings<T> Rotation { get; } = new ChartYAxisLabelsRotationSettings<T>();
 
         public double? Skip { get; set; }
 
@@ -46,7 +46,7 @@ namespace Kendo.Mvc.UI
         public ClientHandlerDescriptor Visual { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

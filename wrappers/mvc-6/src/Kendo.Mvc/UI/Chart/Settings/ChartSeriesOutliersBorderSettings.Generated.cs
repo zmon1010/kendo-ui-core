@@ -9,23 +9,29 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesOutliersBorderSettings class
     /// </summary>
-    public partial class ChartSeriesOutliersBorderSettings 
+    public partial class ChartSeriesOutliersBorderSettings<T> where T : class 
     {
         public string Color { get; set; }
+        public ClientHandlerDescriptor ColorHandler { get; set; }
 
         public double? Width { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-            if (Color?.HasValue() == true)
+            if (ColorHandler?.HasValue() == true)
             {
-                settings["color"] = Color;
+                settings["color"] = ColorHandler;
             }
+            else if (Color?.HasValue() == true)
+            {
+               settings["color"] = Color;
+            }
+
 
             if (Width.HasValue)
             {

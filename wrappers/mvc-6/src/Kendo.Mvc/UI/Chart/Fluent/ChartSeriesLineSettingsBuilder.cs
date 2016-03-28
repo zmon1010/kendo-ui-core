@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesLineSettings
     /// </summary>
-    public partial class ChartSeriesLineSettingsBuilder
-        
+    public partial class ChartSeriesLineSettingsBuilder<T>
+        where T : class 
     {
-        public ChartSeriesLineSettingsBuilder(ChartSeriesLineSettings container)
+        public ChartSeriesLineSettingsBuilder(ChartSeriesLineSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesLineSettings Container
+        protected ChartSeriesLineSettings<T> Container
         {
             get;
             private set;

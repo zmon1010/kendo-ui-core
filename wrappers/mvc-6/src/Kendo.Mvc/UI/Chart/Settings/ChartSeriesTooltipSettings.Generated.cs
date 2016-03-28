@@ -9,11 +9,11 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesTooltipSettings class
     /// </summary>
-    public partial class ChartSeriesTooltipSettings 
+    public partial class ChartSeriesTooltipSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartSeriesTooltipBorderSettings Border { get; } = new ChartSeriesTooltipBorderSettings();
+        public ChartSeriesTooltipBorderSettings<T> Border { get; } = new ChartSeriesTooltipBorderSettings<T>();
 
         public string Color { get; set; }
 
@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
 
         public string Format { get; set; }
 
-        public ChartSeriesTooltipPaddingSettings Padding { get; } = new ChartSeriesTooltipPaddingSettings();
+        public ChartSeriesTooltipPaddingSettings<T> Padding { get; } = new ChartSeriesTooltipPaddingSettings<T>();
 
         public string Template { get; set; }
 
@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI
         public bool? Visible { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

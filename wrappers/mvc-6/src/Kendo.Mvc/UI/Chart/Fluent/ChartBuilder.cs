@@ -5,10 +5,10 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring the Kendo UI Chart
     /// </summary>
-    public partial class ChartBuilder: WidgetBuilderBase<Chart, ChartBuilder>
-        
+    public partial class ChartBuilder<T>: WidgetBuilderBase<Chart<T>, ChartBuilder<T>>
+        where T : class 
     {
-        public ChartBuilder(Chart component) : base(component)
+        public ChartBuilder(Chart<T> component) : base(component)
         {
         }
 
@@ -16,27 +16,63 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart title.
         /// </summary>
         /// <param name="title">The value of the Chart title</param>
-        public ChartBuilder Title(string title)
+        public ChartBuilder<T> Title(string title)
         {
             Container.Title.Text = title;
             return this;
         }
 
-        public ChartBuilder SeriesDefaults(Action<ChartSeriesDefaultsSettingsBuilder> configurator)
+        public ChartBuilder<T> SeriesDefaults(Action<ChartSeriesDefaultsSettingsBuilder<T>> configurator)
         {
-            configurator(new ChartSeriesDefaultsSettingsBuilder(Container.SeriesDefaults));
+            configurator(new ChartSeriesDefaultsSettingsBuilder<T>(Container.SeriesDefaults));
 
+            return this;
+        }
+        
+        /// <summary>
+        /// Configures the category axis
+        /// </summary>
+        /// <param name="configurator">The configurator</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Chart(Model)
+        ///             .Name("Chart")
+        ///             .CategoryAxis(axis => axis
+        ///                 .Categories(s => s.DateString)
+        ///             )
+        /// )
+        /// </code>
+        /// </example>
+        public ChartBuilder<T> CategoryAxis(Action<ChartCategoryAxisBuilder<T>> configurator)
+        {
+            var item = new ChartCategoryAxis<T>()
+            {
+                Chart = Container
+            };
+            Container.CategoryAxis.Add(item);
+            configurator(new ChartCategoryAxisBuilder<T>(item));
             return this;
         }
 
         /// <summary>
-        /// Configures the default category axis or adds a new one
+        /// Data Source configuration
         /// </summary>
-        /// <param name="configurator">The configurator for the axis</param>
-        /// <returns></returns>
-        public ChartBuilder CategoryAxis(Action<ChartCategoryAxisBuilder> configurator)
+        /// <param name="configurator">Use the configurator to set different data binding options.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  @(Html.Kendo().Chart()
+        ///             .Name("Chart")
+        ///             .DataSource(ds =>
+        ///             {
+        ///                 ds.Ajax().Read(r => r.Action("SalesData", "Chart"));
+        ///             })
+        /// )
+        /// </code>
+        /// </example>
+        public ChartBuilder<T> DataSource(Action<ReadOnlyAjaxDataSourceBuilder<T>> configurator)
         {
-            configurator(new ChartCategoryAxisFactory(Container.CategoryAxis).Add());
+            configurator(new ReadOnlyAjaxDataSourceBuilder<T>(Component.DataSource, this.Component.ViewContext, this.Component.UrlGenerator));
+
             return this;
         }
 
@@ -45,9 +81,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="configurator">The configurator for the axis</param>
         /// <returns></returns>
-        public ChartBuilder ValueAxis(Action<ChartValueAxisBuilder> configurator)
+        public ChartBuilder<T> ValueAxis(Action<ChartValueAxisBuilder<T>> configurator)
         {
-            configurator(new ChartValueAxisFactory(Container.ValueAxis).Add());
+            var axis = new ChartValueAxis<T>();
+            configurator(new ChartValueAxisBuilder<T>(axis));
+            Component.ValueAxis.Add(axis);
             return this;
         }
 
@@ -56,9 +94,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="configurator">The configurator for the axis</param>
         /// <returns></returns>
-        public ChartBuilder XAxis(Action<ChartXAxisBuilder> configurator)
+        public ChartBuilder<T> XAxis(Action<ChartXAxisBuilder<T>> configurator)
         {
-            configurator(new ChartXAxisFactory(Container.XAxis).Add());
+            configurator(new ChartXAxisFactory<T>(Container.XAxis).Add());
             return this;
         }
 
@@ -67,9 +105,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="configurator">The configurator for the axis</param>
         /// <returns></returns>
-        public ChartBuilder YAxis(Action<ChartYAxisBuilder> configurator)
+        public ChartBuilder<T> YAxis(Action<ChartYAxisBuilder<T>> configurator)
         {
-            configurator(new ChartYAxisFactory(Container.YAxis).Add());
+            configurator(new ChartYAxisFactory<T>(Container.YAxis).Add());
             return this;
         }
     }

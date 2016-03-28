@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisLabelsSettings
     /// </summary>
-    public partial class ChartYAxisLabelsSettingsBuilder
-        
+    public partial class ChartYAxisLabelsSettingsBuilder<T>
+        where T : class 
     {
-        public ChartYAxisLabelsSettingsBuilder(ChartYAxisLabelsSettings container)
+        public ChartYAxisLabelsSettingsBuilder(ChartYAxisLabelsSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartYAxisLabelsSettings Container
+        protected ChartYAxisLabelsSettings<T> Container
         {
             get;
             private set;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The rotation angle of the labels. By default the labels are not rotated.
         /// </summary>
         /// <param name="value">The value for Rotation</param>
-        public ChartYAxisLabelsSettingsBuilder Rotation(double value)
+        public ChartYAxisLabelsSettingsBuilder<T> Rotation(double value)
         {
             Container.Rotation.Angle = value;
             return this;

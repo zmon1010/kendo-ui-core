@@ -1,7 +1,7 @@
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Specifies the preferred line rendering style.
+    /// Specifies the preferred rendering style.
     /// </summary>
     public enum ChartLineStyle
     {

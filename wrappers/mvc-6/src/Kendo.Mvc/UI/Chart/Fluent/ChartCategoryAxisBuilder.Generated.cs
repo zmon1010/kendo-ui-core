@@ -7,8 +7,8 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxis
     /// </summary>
-    public partial class ChartCategoryAxisBuilder
-        
+    public partial class ChartCategoryAxisBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The discrete categoryAxis.baseUnitStep values when
@@ -20,11 +20,11 @@ namespace Kendo.Mvc.UI.Fluent
 		/// maxDateGroups.
         /// </summary>
         /// <param name="configurator">The configurator for the autobaseunitsteps setting.</param>
-        public ChartCategoryAxisBuilder AutoBaseUnitSteps(Action<ChartCategoryAxisAutoBaseUnitStepsSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> AutoBaseUnitSteps(Action<ChartCategoryAxisAutoBaseUnitStepsSettingsBuilder<T>> configurator)
         {
 
             Container.AutoBaseUnitSteps.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisAutoBaseUnitStepsSettingsBuilder(Container.AutoBaseUnitSteps));
+            configurator(new ChartCategoryAxisAutoBaseUnitStepsSettingsBuilder<T>(Container.AutoBaseUnitSteps));
 
             return this;
         }
@@ -33,7 +33,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Category index at which the first value axis crosses this axis (when set as an object).Category indices at which the value axes cross the category axis (when set as an array).
         /// </summary>
         /// <param name="value">The value for AxisCrossingValue</param>
-        public ChartCategoryAxisBuilder AxisCrossingValue(params object[] value)
+        public ChartCategoryAxisBuilder<T> AxisCrossingValue(params object[] value)
         {
             Container.AxisCrossingValue = value;
             return this;
@@ -43,21 +43,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// The background color of the axis.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartCategoryAxisBuilder Background(string value)
+        public ChartCategoryAxisBuilder<T> Background(string value)
         {
             Container.Background = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The base time interval for the date axis. The default base unit is determined automatically from the minimum difference
-		/// between subsequent categories.The supported values are:Setting baseUnit to "fit" will set such base unit and categoryAxis.baseUnitStep
-		/// that the total number of categories does not exceed categoryAxis.maxDateGroups.Series data is aggregated for the specified base unit using the series.aggregate function.
-        /// </summary>
-        /// <param name="value">The value for BaseUnit</param>
-        public ChartCategoryAxisBuilder BaseUnit(string value)
-        {
-            Container.BaseUnit = value;
             return this;
         }
 
@@ -66,7 +54,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".
         /// </summary>
         /// <param name="value">The value for BaseUnitStep</param>
-        public ChartCategoryAxisBuilder BaseUnitStep(int value)
+        public ChartCategoryAxisBuilder<T> BaseUnitStep(int value)
         {
             Container.BaseUnitStep = value;
             return this;
@@ -76,7 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The category names. The chart will create a category for every item of the array.
         /// </summary>
         /// <param name="value">The value for Categories</param>
-        public ChartCategoryAxisBuilder Categories(params object[] value)
+        public ChartCategoryAxisBuilder<T> Categories(params object[] value)
         {
             Container.Categories = value;
             return this;
@@ -87,7 +75,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// categoryAxis.line.color.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartCategoryAxisBuilder Color(string value)
+        public ChartCategoryAxisBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -97,11 +85,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The crosshair configuration options.
         /// </summary>
         /// <param name="configurator">The configurator for the crosshair setting.</param>
-        public ChartCategoryAxisBuilder Crosshair(Action<ChartCategoryAxisCrosshairSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> Crosshair(Action<ChartCategoryAxisCrosshairSettingsBuilder<T>> configurator)
         {
 
             Container.Crosshair.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisCrosshairSettingsBuilder(Container.Crosshair));
+            configurator(new ChartCategoryAxisCrosshairSettingsBuilder<T>(Container.Crosshair));
 
             return this;
         }
@@ -110,7 +98,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The data item field which contains the category name. Requires the dataSource option to be set.
         /// </summary>
         /// <param name="value">The value for Field</param>
-        public ChartCategoryAxisBuilder Field(string value)
+        public ChartCategoryAxisBuilder<T> Field(string value)
         {
             Container.Field = value;
             return this;
@@ -119,10 +107,19 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the chart will position categories and series points on major ticks. This removes the empty space before and after the series.The default value is false except for "area" and "verticalArea".
         /// </summary>
-        /// <param name="value">The value for Justified</param>
-        public ChartCategoryAxisBuilder Justified(bool value)
+        /// <param name="value">The value for Justify</param>
+        public ChartCategoryAxisBuilder<T> Justify(bool value)
         {
-            Container.Justified = value;
+            Container.Justify = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the chart will position categories and series points on major ticks. This removes the empty space before and after the series.The default value is false except for "area" and "verticalArea".
+        /// </summary>
+        public ChartCategoryAxisBuilder<T> Justify()
+        {
+            Container.Justify = true;
             return this;
         }
 
@@ -130,11 +127,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The axis labels configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the labels setting.</param>
-        public ChartCategoryAxisBuilder Labels(Action<ChartCategoryAxisLabelsSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> Labels(Action<ChartCategoryAxisLabelsSettingsBuilder<T>> configurator)
         {
 
             Container.Labels.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisLabelsSettingsBuilder(Container.Labels));
+            configurator(new ChartCategoryAxisLabelsSettingsBuilder<T>(Container.Labels));
 
             return this;
         }
@@ -143,11 +140,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The configuration of the axis lines. Also affects the major and minor ticks, but not the grid lines.
         /// </summary>
         /// <param name="configurator">The configurator for the line setting.</param>
-        public ChartCategoryAxisBuilder Line(Action<ChartCategoryAxisLineSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> Line(Action<ChartCategoryAxisLineSettingsBuilder<T>> configurator)
         {
 
             Container.Line.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisLineSettingsBuilder(Container.Line));
+            configurator(new ChartCategoryAxisLineSettingsBuilder<T>(Container.Line));
 
             return this;
         }
@@ -157,11 +154,11 @@ namespace Kendo.Mvc.UI.Fluent
 		/// body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the majorgridlines setting.</param>
-        public ChartCategoryAxisBuilder MajorGridLines(Action<ChartCategoryAxisMajorGridLinesSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> MajorGridLines(Action<ChartCategoryAxisMajorGridLinesSettingsBuilder<T>> configurator)
         {
 
             Container.MajorGridLines.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisMajorGridLinesSettingsBuilder(Container.MajorGridLines));
+            configurator(new ChartCategoryAxisMajorGridLinesSettingsBuilder<T>(Container.MajorGridLines));
 
             return this;
         }
@@ -170,11 +167,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The configuration of the category axis major ticks.
         /// </summary>
         /// <param name="configurator">The configurator for the majorticks setting.</param>
-        public ChartCategoryAxisBuilder MajorTicks(Action<ChartCategoryAxisMajorTicksSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> MajorTicks(Action<ChartCategoryAxisMajorTicksSettingsBuilder<T>> configurator)
         {
 
             Container.MajorTicks.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisMajorTicksSettingsBuilder(Container.MajorTicks));
+            configurator(new ChartCategoryAxisMajorTicksSettingsBuilder<T>(Container.MajorTicks));
 
             return this;
         }
@@ -185,7 +182,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// set up a fixed date range.
         /// </summary>
         /// <param name="value">The value for Max</param>
-        public ChartCategoryAxisBuilder Max(object value)
+        public ChartCategoryAxisBuilder<T> Max(object value)
         {
             Container.Max = value;
             return this;
@@ -197,7 +194,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// categoryAxis.baseUnitStep is set to "auto".
         /// </summary>
         /// <param name="value">The value for MaxDateGroups</param>
-        public ChartCategoryAxisBuilder MaxDateGroups(double value)
+        public ChartCategoryAxisBuilder<T> MaxDateGroups(double value)
         {
             Container.MaxDateGroups = value;
             return this;
@@ -209,7 +206,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// set up a fixed date range.
         /// </summary>
         /// <param name="value">The value for Min</param>
-        public ChartCategoryAxisBuilder Min(object value)
+        public ChartCategoryAxisBuilder<T> Min(object value)
         {
             Container.Min = value;
             return this;
@@ -220,11 +217,11 @@ namespace Kendo.Mvc.UI.Fluent
 		/// body of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the minorgridlines setting.</param>
-        public ChartCategoryAxisBuilder MinorGridLines(Action<ChartCategoryAxisMinorGridLinesSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> MinorGridLines(Action<ChartCategoryAxisMinorGridLinesSettingsBuilder<T>> configurator)
         {
 
             Container.MinorGridLines.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisMinorGridLinesSettingsBuilder(Container.MinorGridLines));
+            configurator(new ChartCategoryAxisMinorGridLinesSettingsBuilder<T>(Container.MinorGridLines));
 
             return this;
         }
@@ -233,11 +230,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The configuration of the category axis minor ticks.
         /// </summary>
         /// <param name="configurator">The configurator for the minorticks setting.</param>
-        public ChartCategoryAxisBuilder MinorTicks(Action<ChartCategoryAxisMinorTicksSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> MinorTicks(Action<ChartCategoryAxisMinorTicksSettingsBuilder<T>> configurator)
         {
 
             Container.MinorTicks.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisMinorTicksSettingsBuilder(Container.MinorTicks));
+            configurator(new ChartCategoryAxisMinorTicksSettingsBuilder<T>(Container.MinorTicks));
 
             return this;
         }
@@ -246,7 +243,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The unique axis name. Used to associate a series with a category axis using the series.categoryAxis option.
         /// </summary>
         /// <param name="value">The value for Name</param>
-        public ChartCategoryAxisBuilder Name(string value)
+        public ChartCategoryAxisBuilder<T> Name(string value)
         {
             Container.Name = value;
             return this;
@@ -257,7 +254,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// The axis will be rendered in the first (default) pane if not set.
         /// </summary>
         /// <param name="value">The value for Pane</param>
-        public ChartCategoryAxisBuilder Pane(string value)
+        public ChartCategoryAxisBuilder<T> Pane(string value)
         {
             Container.Pane = value;
             return this;
@@ -267,10 +264,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// The plot bands of the category axis.
         /// </summary>
         /// <param name="configurator">The configurator for the plotbands setting.</param>
-        public ChartCategoryAxisBuilder PlotBands(Action<ChartCategoryAxisPlotBandFactory> configurator)
+        public ChartCategoryAxisBuilder<T> PlotBands(Action<ChartCategoryAxisPlotBandFactory<T>> configurator)
         {
 
-            configurator(new ChartCategoryAxisPlotBandFactory(Container.PlotBands)
+            configurator(new ChartCategoryAxisPlotBandFactory<T>(Container.PlotBands)
             {
                 Chart = Container.Chart
             });
@@ -282,7 +279,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the category axis direction will be reversed. By default categories are listed from left to right and from bottom to top.
         /// </summary>
         /// <param name="value">The value for Reverse</param>
-        public ChartCategoryAxisBuilder Reverse(bool value)
+        public ChartCategoryAxisBuilder<T> Reverse(bool value)
         {
             Container.Reverse = value;
             return this;
@@ -291,7 +288,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the category axis direction will be reversed. By default categories are listed from left to right and from bottom to top.
         /// </summary>
-        public ChartCategoryAxisBuilder Reverse()
+        public ChartCategoryAxisBuilder<T> Reverse()
         {
             Container.Reverse = true;
             return this;
@@ -301,7 +298,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will round the first and last date to the nearest base unit.The roundToBaseUnit option will be ignored if series.type is set to "bar", "column", "boxPlot", "ohlc", "candlestick" or "waterfall".
         /// </summary>
         /// <param name="value">The value for RoundToBaseUnit</param>
-        public ChartCategoryAxisBuilder RoundToBaseUnit(bool value)
+        public ChartCategoryAxisBuilder<T> RoundToBaseUnit(bool value)
         {
             Container.RoundToBaseUnit = value;
             return this;
@@ -313,11 +310,11 @@ namespace Kendo.Mvc.UI.Fluent
 		/// That is, the last category in the range will not be included in the selection.If the categories are dates, the range must also be specified with date values.
         /// </summary>
         /// <param name="configurator">The configurator for the select setting.</param>
-        public ChartCategoryAxisBuilder Select(Action<ChartCategoryAxisSelectSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> Select(Action<ChartCategoryAxisSelectSettingsBuilder<T>> configurator)
         {
 
             Container.Select.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisSelectSettingsBuilder(Container.Select));
+            configurator(new ChartCategoryAxisSelectSettingsBuilder<T>(Container.Select));
 
             return this;
         }
@@ -326,7 +323,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The angle (degrees) of the first category on the axis.Angles increase clockwise and zero is to the left. Negative values are acceptable.
         /// </summary>
         /// <param name="value">The value for StartAngle</param>
-        public ChartCategoryAxisBuilder StartAngle(double value)
+        public ChartCategoryAxisBuilder<T> StartAngle(double value)
         {
             Container.StartAngle = value;
             return this;
@@ -336,22 +333,12 @@ namespace Kendo.Mvc.UI.Fluent
         /// The title configuration of the category axis.
         /// </summary>
         /// <param name="configurator">The configurator for the title setting.</param>
-        public ChartCategoryAxisBuilder Title(Action<ChartCategoryAxisTitleSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> Title(Action<ChartCategoryAxisTitleSettingsBuilder<T>> configurator)
         {
 
             Container.Title.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisTitleSettingsBuilder(Container.Title));
+            configurator(new ChartCategoryAxisTitleSettingsBuilder<T>(Container.Title));
 
-            return this;
-        }
-
-        /// <summary>
-        /// The category axis type.The supported values are:
-        /// </summary>
-        /// <param name="value">The value for Type</param>
-        public ChartCategoryAxisBuilder Type(string value)
-        {
-            Container.Type = value;
             return this;
         }
 
@@ -359,7 +346,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the category axis. By default the category axis is visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartCategoryAxisBuilder Visible(bool value)
+        public ChartCategoryAxisBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -369,7 +356,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The week start day when categoryAxis.baseUnit is set to "weeks".The supported values are:
         /// </summary>
         /// <param name="value">The value for WeekStartDay</param>
-        public ChartCategoryAxisBuilder WeekStartDay(double value)
+        public ChartCategoryAxisBuilder<T> WeekStartDay(double value)
         {
             Container.WeekStartDay = value;
             return this;
@@ -379,12 +366,32 @@ namespace Kendo.Mvc.UI.Fluent
         /// The category axis notes configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the notes setting.</param>
-        public ChartCategoryAxisBuilder Notes(Action<ChartCategoryAxisNotesSettingsBuilder> configurator)
+        public ChartCategoryAxisBuilder<T> Notes(Action<ChartCategoryAxisNotesSettingsBuilder<T>> configurator)
         {
 
             Container.Notes.Chart = Container.Chart;
-            configurator(new ChartCategoryAxisNotesSettingsBuilder(Container.Notes));
+            configurator(new ChartCategoryAxisNotesSettingsBuilder<T>(Container.Notes));
 
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the base time interval for the axis.
+        /// </summary>
+        /// <param name="value">The value for BaseUnit</param>
+        public ChartCategoryAxisBuilder<T> BaseUnit(ChartAxisBaseUnit value)
+        {
+            Container.BaseUnit = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the category axis type.
+        /// </summary>
+        /// <param name="value">The value for Type</param>
+        public ChartCategoryAxisBuilder<T> Type(ChartCategoryAxisType value)
+        {
+            Container.Type = value;
             return this;
         }
 

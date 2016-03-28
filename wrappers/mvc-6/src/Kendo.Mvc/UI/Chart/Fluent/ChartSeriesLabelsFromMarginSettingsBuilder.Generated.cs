@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesLabelsFromMarginSettings
     /// </summary>
-    public partial class ChartSeriesLabelsFromMarginSettingsBuilder
-        
+    public partial class ChartSeriesLabelsFromMarginSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The bottom margin of the from labels.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public ChartSeriesLabelsFromMarginSettingsBuilder Bottom(double value)
+        public ChartSeriesLabelsFromMarginSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left margin of the from labels.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public ChartSeriesLabelsFromMarginSettingsBuilder Left(double value)
+        public ChartSeriesLabelsFromMarginSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right margin of the from labels.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public ChartSeriesLabelsFromMarginSettingsBuilder Right(double value)
+        public ChartSeriesLabelsFromMarginSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top margin of the from labels.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public ChartSeriesLabelsFromMarginSettingsBuilder Top(double value)
+        public ChartSeriesLabelsFromMarginSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

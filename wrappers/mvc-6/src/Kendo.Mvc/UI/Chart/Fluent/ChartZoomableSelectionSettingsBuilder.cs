@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartZoomableSelectionSettings
     /// </summary>
-    public partial class ChartZoomableSelectionSettingsBuilder
-        
+    public partial class ChartZoomableSelectionSettingsBuilder<T>
+        where T : class 
     {
-        public ChartZoomableSelectionSettingsBuilder(ChartZoomableSelectionSettings container)
+        public ChartZoomableSelectionSettingsBuilder(ChartZoomableSelectionSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartZoomableSelectionSettings Container
+        protected ChartZoomableSelectionSettings<T> Container
         {
             get;
             private set;

@@ -9,11 +9,11 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartXAxisNotesIconSettings class
     /// </summary>
-    public partial class ChartXAxisNotesIconSettings 
+    public partial class ChartXAxisNotesIconSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartXAxisNotesIconBorderSettings Border { get; } = new ChartXAxisNotesIconBorderSettings();
+        public ChartXAxisNotesIconBorderSettings<T> Border { get; } = new ChartXAxisNotesIconBorderSettings<T>();
 
         public double? Size { get; set; }
 
@@ -22,7 +22,7 @@ namespace Kendo.Mvc.UI
         public bool? Visible { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

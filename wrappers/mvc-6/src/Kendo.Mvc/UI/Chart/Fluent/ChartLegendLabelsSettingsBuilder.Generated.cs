@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartLegendLabelsSettings
     /// </summary>
-    public partial class ChartLegendLabelsSettingsBuilder
-        
+    public partial class ChartLegendLabelsSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The text color of the labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartLegendLabelsSettingsBuilder Color(string value)
+        public ChartLegendLabelsSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The font style of the labels.
         /// </summary>
         /// <param name="value">The value for Font</param>
-        public ChartLegendLabelsSettingsBuilder Font(string value)
+        public ChartLegendLabelsSettingsBuilder<T> Font(string value)
         {
             Container.Font = value;
             return this;
@@ -34,11 +34,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the labels. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartLegendLabelsSettingsBuilder Margin(Action<ChartLegendLabelsMarginSettingsBuilder> configurator)
+        public ChartLegendLabelsSettingsBuilder<T> Margin(Action<ChartLegendLabelsMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartLegendLabelsMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartLegendLabelsMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -47,11 +47,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the labels. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartLegendLabelsSettingsBuilder Padding(Action<ChartLegendLabelsPaddingSettingsBuilder> configurator)
+        public ChartLegendLabelsSettingsBuilder<T> Padding(Action<ChartLegendLabelsPaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartLegendLabelsPaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartLegendLabelsPaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }
@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the labels.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for Template</param>
-        public ChartLegendLabelsSettingsBuilder Template(string value)
+        public ChartLegendLabelsSettingsBuilder<T> Template(string value)
         {
             Container.Template = value;
             return this;
@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the labels.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
-        public ChartLegendLabelsSettingsBuilder TemplateId(string templateId)
+        public ChartLegendLabelsSettingsBuilder<T> TemplateId(string templateId)
         {
             Container.TemplateId = templateId;
             return this;

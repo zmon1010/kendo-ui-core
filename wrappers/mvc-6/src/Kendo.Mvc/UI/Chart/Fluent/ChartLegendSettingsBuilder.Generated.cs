@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartLegendSettings
     /// </summary>
-    public partial class ChartLegendSettingsBuilder
-        
+    public partial class ChartLegendSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The legend horizontal alignment when the legend.position is "top" or "bottom" and the vertical alignment when the legend.position is "left" or "right".The supported values are:
         /// </summary>
         /// <param name="value">The value for Align</param>
-        public ChartLegendSettingsBuilder Align(string value)
+        public ChartLegendSettingsBuilder<T> Align(string value)
         {
             Container.Align = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The background color of the legend. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartLegendSettingsBuilder Background(string value)
+        public ChartLegendSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -34,11 +34,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the legend.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartLegendSettingsBuilder Border(Action<ChartLegendBorderSettingsBuilder> configurator)
+        public ChartLegendSettingsBuilder<T> Border(Action<ChartLegendBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartLegendBorderSettingsBuilder(Container.Border));
+            configurator(new ChartLegendBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The legend height when the legend.orientation is set to "vertical".
         /// </summary>
         /// <param name="value">The value for Height</param>
-        public ChartLegendSettingsBuilder Height(double value)
+        public ChartLegendSettingsBuilder<T> Height(double value)
         {
             Container.Height = value;
             return this;
@@ -57,11 +57,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart inactive legend items configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the inactiveitems setting.</param>
-        public ChartLegendSettingsBuilder InactiveItems(Action<ChartLegendInactiveItemsSettingsBuilder> configurator)
+        public ChartLegendSettingsBuilder<T> InactiveItems(Action<ChartLegendInactiveItemsSettingsBuilder<T>> configurator)
         {
 
             Container.InactiveItems.Chart = Container.Chart;
-            configurator(new ChartLegendInactiveItemsSettingsBuilder(Container.InactiveItems));
+            configurator(new ChartLegendInactiveItemsSettingsBuilder<T>(Container.InactiveItems));
 
             return this;
         }
@@ -70,11 +70,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart legend item configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the item setting.</param>
-        public ChartLegendSettingsBuilder Item(Action<ChartLegendItemSettingsBuilder> configurator)
+        public ChartLegendSettingsBuilder<T> Item(Action<ChartLegendItemSettingsBuilder<T>> configurator)
         {
 
             Container.Item.Chart = Container.Chart;
-            configurator(new ChartLegendItemSettingsBuilder(Container.Item));
+            configurator(new ChartLegendItemSettingsBuilder<T>(Container.Item));
 
             return this;
         }
@@ -83,11 +83,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The chart legend label configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the labels setting.</param>
-        public ChartLegendSettingsBuilder Labels(Action<ChartLegendLabelsSettingsBuilder> configurator)
+        public ChartLegendSettingsBuilder<T> Labels(Action<ChartLegendLabelsSettingsBuilder<T>> configurator)
         {
 
             Container.Labels.Chart = Container.Chart;
-            configurator(new ChartLegendLabelsSettingsBuilder(Container.Labels));
+            configurator(new ChartLegendLabelsSettingsBuilder<T>(Container.Labels));
 
             return this;
         }
@@ -96,11 +96,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the chart legend. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartLegendSettingsBuilder Margin(Action<ChartLegendMarginSettingsBuilder> configurator)
+        public ChartLegendSettingsBuilder<T> Margin(Action<ChartLegendMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartLegendMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartLegendMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -111,7 +111,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// A negative value will move the legend to the left of its current position.
         /// </summary>
         /// <param name="value">The value for OffsetX</param>
-        public ChartLegendSettingsBuilder OffsetX(double value)
+        public ChartLegendSettingsBuilder<T> OffsetX(double value)
         {
             Container.OffsetX = value;
             return this;
@@ -123,7 +123,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// A negative value will move the legend upwards from its current position.
         /// </summary>
         /// <param name="value">The value for OffsetY</param>
-        public ChartLegendSettingsBuilder OffsetY(double value)
+        public ChartLegendSettingsBuilder<T> OffsetY(double value)
         {
             Container.OffsetY = value;
             return this;
@@ -133,7 +133,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The orientation of the legend items.The supported values are:
         /// </summary>
         /// <param name="value">The value for Orientation</param>
-        public ChartLegendSettingsBuilder Orientation(string value)
+        public ChartLegendSettingsBuilder<T> Orientation(string value)
         {
             Container.Orientation = value;
             return this;
@@ -143,11 +143,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the chart legend. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartLegendSettingsBuilder Padding(Action<ChartLegendPaddingSettingsBuilder> configurator)
+        public ChartLegendSettingsBuilder<T> Padding(Action<ChartLegendPaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartLegendPaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartLegendPaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }
@@ -156,7 +156,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the legend items will be reversed.Available in versions 2013.3.1306 and later.
         /// </summary>
         /// <param name="value">The value for Reverse</param>
-        public ChartLegendSettingsBuilder Reverse(bool value)
+        public ChartLegendSettingsBuilder<T> Reverse(bool value)
         {
             Container.Reverse = value;
             return this;
@@ -165,7 +165,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the legend items will be reversed.Available in versions 2013.3.1306 and later.
         /// </summary>
-        public ChartLegendSettingsBuilder Reverse()
+        public ChartLegendSettingsBuilder<T> Reverse()
         {
             Container.Reverse = true;
             return this;
@@ -175,7 +175,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the legend. By default the chart legend is visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartLegendSettingsBuilder Visible(bool value)
+        public ChartLegendSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -185,7 +185,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The legend width when the legend.orientation is set to "horizontal".
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartLegendSettingsBuilder Width(double value)
+        public ChartLegendSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;
@@ -195,7 +195,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the legend position.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public ChartLegendSettingsBuilder Position(ChartLegendPosition value)
+        public ChartLegendSettingsBuilder<T> Position(ChartLegendPosition value)
         {
             Container.Position = value;
             return this;

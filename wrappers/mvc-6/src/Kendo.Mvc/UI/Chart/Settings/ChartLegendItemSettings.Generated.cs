@@ -9,14 +9,14 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartLegendItemSettings class
     /// </summary>
-    public partial class ChartLegendItemSettings 
+    public partial class ChartLegendItemSettings<T> where T : class 
     {
         public string Cursor { get; set; }
 
         public ClientHandlerDescriptor Visual { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

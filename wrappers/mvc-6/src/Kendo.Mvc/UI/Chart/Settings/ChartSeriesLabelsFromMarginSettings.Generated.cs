@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesLabelsFromMarginSettings class
     /// </summary>
-    public partial class ChartSeriesLabelsFromMarginSettings 
+    public partial class ChartSeriesLabelsFromMarginSettings<T> where T : class 
     {
         public double? Bottom { get; set; }
 
@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI
         public double? Top { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

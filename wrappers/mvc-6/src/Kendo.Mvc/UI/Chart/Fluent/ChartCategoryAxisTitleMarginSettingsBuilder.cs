@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisTitleMarginSettings
     /// </summary>
-    public partial class ChartCategoryAxisTitleMarginSettingsBuilder
-        
+    public partial class ChartCategoryAxisTitleMarginSettingsBuilder<T>
+        where T : class 
     {
-        public ChartCategoryAxisTitleMarginSettingsBuilder(ChartCategoryAxisTitleMarginSettings container)
+        public ChartCategoryAxisTitleMarginSettingsBuilder(ChartCategoryAxisTitleMarginSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartCategoryAxisTitleMarginSettings Container
+        protected ChartCategoryAxisTitleMarginSettings<T> Container
         {
             get;
             private set;

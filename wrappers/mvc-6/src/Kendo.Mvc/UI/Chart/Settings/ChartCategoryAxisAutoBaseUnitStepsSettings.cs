@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisAutoBaseUnitStepsSettings class
     /// </summary>
-    public partial class ChartCategoryAxisAutoBaseUnitStepsSettings 
+    public partial class ChartCategoryAxisAutoBaseUnitStepsSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

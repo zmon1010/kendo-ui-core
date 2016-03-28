@@ -1,6 +1,17 @@
+% if string_and_function?
+% csharp_types_and_names.each do |type, propertyName|
+% if type.eql?("ClientHandlerDescriptor")
+        public <%= type  %> <%= propertyName %> { get; set; }
+% else
+        public <%= nullable_type?(type) ? type + '?' : type  %> <%= propertyName %> { get; set; }
+% end
+% end
+
+% else
         public <%= struct? ? csharp_type + '?' : csharp_type%> <%= csharp_name %> { get; set; }
 %if template?
 
         public string <%= csharp_name %>Id { get; set; }
 %end
 
+% end

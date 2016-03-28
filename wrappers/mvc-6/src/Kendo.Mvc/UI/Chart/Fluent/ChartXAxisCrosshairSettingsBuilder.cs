@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartXAxisCrosshairSettings
     /// </summary>
-    public partial class ChartXAxisCrosshairSettingsBuilder
-        
+    public partial class ChartXAxisCrosshairSettingsBuilder<T>
+        where T : class 
     {
-        public ChartXAxisCrosshairSettingsBuilder(ChartXAxisCrosshairSettings container)
+        public ChartXAxisCrosshairSettingsBuilder(ChartXAxisCrosshairSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartXAxisCrosshairSettings Container
+        protected ChartXAxisCrosshairSettings<T> Container
         {
             get;
             private set;

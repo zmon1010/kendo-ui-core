@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesLabelsPaddingSettings class
     /// </summary>
-    public partial class ChartSeriesLabelsPaddingSettings 
+    public partial class ChartSeriesLabelsPaddingSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

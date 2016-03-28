@@ -6,27 +6,27 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Defines the Chart series defaults settings
     /// </summary>
-    public partial class ChartSeriesDefaultsSettings
+    public partial class ChartSeriesDefaultsSettings<T> where T : class
     {
-% CHART_SERIES.each do |type|
-        /// <summary>
-        /// The <%= type %> series default settings.
-        /// </summary>
-        public ChartSeries <%= type %> { get; } = new ChartSeries();
+% CHART_SERIES.each do |series|
 
+        /// <summary>
+        /// The <%= series[:type] %> series default settings.
+        /// </summary>
+        public ChartSeries<T> <%= series[:type] %> { get; } = new ChartSeries<T>();
 % end
 
         public IDictionary<string, object> Serialize()
         {
             var settings = new Dictionary<string, object>();
+% CHART_SERIES.each do |series|
 
-% CHART_SERIES.each do |type|
-            var <%= type.camelize %> = <%= type %>.Serialize();
-            if (<%= type.camelize %>.Any())
+            var <%= series[:type].camelize %> = <%= series[:type] %>.Serialize();
+
+            if (<%= series[:type].camelize %>.Any())
             {
-                settings["<%= type.camelize %>"] = <%= type.camelize %>;
+                settings["<%= series[:type].camelize %>"] = <%= series[:type].camelize %>;
             }
-
 % end
 
             return settings;

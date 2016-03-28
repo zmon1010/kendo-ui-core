@@ -1,3 +1,7 @@
+:chart:
+    - :name: T
+      :constraint: class
+
 :diagram:
     - :name: TShapeModel
       :constraint: class
@@ -41,3 +45,7 @@
 :rangeslider:
     - :name: T
       :constraint: struct, IComparable
+
+:stockchart:
+    - :name: T
+      :constraint: class

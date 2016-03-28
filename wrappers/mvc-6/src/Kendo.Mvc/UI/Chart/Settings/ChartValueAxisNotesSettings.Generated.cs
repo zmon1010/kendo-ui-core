@@ -9,20 +9,20 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartValueAxisNotesSettings class
     /// </summary>
-    public partial class ChartValueAxisNotesSettings 
+    public partial class ChartValueAxisNotesSettings<T> where T : class 
     {
         public string Position { get; set; }
 
-        public ChartValueAxisNotesIconSettings Icon { get; } = new ChartValueAxisNotesIconSettings();
+        public ChartValueAxisNotesIconSettings<T> Icon { get; } = new ChartValueAxisNotesIconSettings<T>();
 
-        public ChartValueAxisNotesLabelSettings Label { get; } = new ChartValueAxisNotesLabelSettings();
+        public ChartValueAxisNotesLabelSettings<T> Label { get; } = new ChartValueAxisNotesLabelSettings<T>();
 
-        public ChartValueAxisNotesLineSettings Line { get; } = new ChartValueAxisNotesLineSettings();
+        public ChartValueAxisNotesLineSettings<T> Line { get; } = new ChartValueAxisNotesLineSettings<T>();
 
         public ClientHandlerDescriptor Visual { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

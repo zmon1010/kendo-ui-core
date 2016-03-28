@@ -1,4 +1,8 @@
 :options:
+    - :name: columns.filterable.ui
+      :merge: true
+      :type: string
+
     - :name: sortable.mode
       :type: String
       :enum_type: TreeListSortMode

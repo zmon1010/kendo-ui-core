@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisMinorTicksSettings
     /// </summary>
-    public partial class ChartCategoryAxisMinorTicksSettingsBuilder
-        
+    public partial class ChartCategoryAxisMinorTicksSettingsBuilder<T>
+        where T : class 
     {
-        public ChartCategoryAxisMinorTicksSettingsBuilder(ChartCategoryAxisMinorTicksSettings container)
+        public ChartCategoryAxisMinorTicksSettingsBuilder(ChartCategoryAxisMinorTicksSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartCategoryAxisMinorTicksSettings Container
+        protected ChartCategoryAxisMinorTicksSettings<T> Container
         {
             get;
             private set;

@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartPdfSettings
     /// </summary>
-    public partial class ChartPdfSettingsBuilder
-        
+    public partial class ChartPdfSettingsBuilder<T>
+        where T : class 
     {
-        public ChartPdfSettingsBuilder(ChartPdfSettings container)
+        public ChartPdfSettingsBuilder(ChartPdfSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartPdfSettings Container
+        protected ChartPdfSettings<T> Container
         {
             get;
             private set;

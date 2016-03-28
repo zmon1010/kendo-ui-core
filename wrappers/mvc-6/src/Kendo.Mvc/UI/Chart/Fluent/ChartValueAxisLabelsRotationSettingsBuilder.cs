@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartValueAxisLabelsRotationSettings
     /// </summary>
-    public partial class ChartValueAxisLabelsRotationSettingsBuilder
-        
+    public partial class ChartValueAxisLabelsRotationSettingsBuilder<T>
+        where T : class 
     {
-        public ChartValueAxisLabelsRotationSettingsBuilder(ChartValueAxisLabelsRotationSettings container)
+        public ChartValueAxisLabelsRotationSettingsBuilder(ChartValueAxisLabelsRotationSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartValueAxisLabelsRotationSettings Container
+        protected ChartValueAxisLabelsRotationSettings<T> Container
         {
             get;
             private set;

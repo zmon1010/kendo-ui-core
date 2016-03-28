@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartChartAreaSettings
     /// </summary>
-    public partial class ChartChartAreaSettingsBuilder
-        
+    public partial class ChartChartAreaSettingsBuilder<T>
+        where T : class 
     {
-        public ChartChartAreaSettingsBuilder(ChartChartAreaSettings container)
+        public ChartChartAreaSettingsBuilder(ChartChartAreaSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartChartAreaSettings Container
+        protected ChartChartAreaSettings<T> Container
         {
             get;
             private set;

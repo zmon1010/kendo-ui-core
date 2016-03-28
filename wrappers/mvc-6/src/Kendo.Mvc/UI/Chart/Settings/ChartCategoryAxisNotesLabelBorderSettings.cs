@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisNotesLabelBorderSettings class
     /// </summary>
-    public partial class ChartCategoryAxisNotesLabelBorderSettings 
+    public partial class ChartCategoryAxisNotesLabelBorderSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

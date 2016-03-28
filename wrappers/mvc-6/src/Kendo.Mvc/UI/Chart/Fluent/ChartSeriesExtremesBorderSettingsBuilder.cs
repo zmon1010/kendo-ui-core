@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesExtremesBorderSettings
     /// </summary>
-    public partial class ChartSeriesExtremesBorderSettingsBuilder
-        
+    public partial class ChartSeriesExtremesBorderSettingsBuilder<T>
+        where T : class 
     {
-        public ChartSeriesExtremesBorderSettingsBuilder(ChartSeriesExtremesBorderSettings container)
+        public ChartSeriesExtremesBorderSettingsBuilder(ChartSeriesExtremesBorderSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesExtremesBorderSettings Container
+        protected ChartSeriesExtremesBorderSettings<T> Container
         {
             get;
             private set;

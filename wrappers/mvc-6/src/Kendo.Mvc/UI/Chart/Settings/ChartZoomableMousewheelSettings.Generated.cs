@@ -9,13 +9,13 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartZoomableMousewheelSettings class
     /// </summary>
-    public partial class ChartZoomableMousewheelSettings 
+    public partial class ChartZoomableMousewheelSettings<T> where T : class 
     {
         public string Lock { get; set; }
 
         public bool? Enabled { get; set; }
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

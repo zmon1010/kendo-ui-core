@@ -31,10 +31,29 @@ module CodeGen::MVC6::Wrappers::Options
     def delete_ignored(ignored)
         return if @options.nil?
 
+        regular_expressions =  ignored.find_all { |element| element.instance_of?(Regexp) }
+        
         @options.delete_if do |option|
             option.delete_ignored(ignored)
-            ignored.include?(option.full_name)
+            ignored.include?(option.full_name) || ignore_by_regexp?(regular_expressions, option.full_name)
         end
+    end
+
+    def ignore_by_regexp?(regular_expressions, string)
+        # the two flags are necessary when "lookahead" for regular expressions is used
+        matched_by_some_regexp = false
+        not_matched_by_some_regexp = false
+
+        regular_expressions.each do |regexp|
+            if string.match(regexp) != nil
+                matched_by_some_regexp = true
+            else
+                not_matched_by_some_regexp = true
+            end
+        end
+
+        # the string should match all regular expressions to be ignored when "lookahead" is used
+        return matched_by_some_regexp && !not_matched_by_some_regexp
     end
 
     def option_class
@@ -77,6 +96,14 @@ module CodeGen::MVC6::Wrappers::Options
 
     def csharp_array?
         csharp_type.match(/\[\]$/)
+    end
+
+    def string_and_function?
+        if type.length == 2 && !template? && type.include?("String") && type.include?("Function")
+            return true
+        end
+
+        false
     end
 
     def csharp_name
@@ -196,5 +223,46 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         return_type
+    end
+
+    def csharp_types_and_names
+        types_and_names = {}
+
+        if type.respond_to?('each')
+            if type.length == 2 && type.include?("String") && type.include?("Function")
+                type.each do |t|
+                    types_and_names[convert_to_csharp_type(t)] = modify_csharp_name_by_type(csharp_name, t)
+                end
+            end
+        else
+            puts "Cannot match #{full_name} with type #{type}"
+        end
+
+        types_and_names
+    end
+
+    def convert_to_csharp_type(type)
+        return_type = ''
+
+        if type.eql?("String") && enum?
+            # Manually specified enum type as String in YML
+            return_type = enum_type
+        else
+            return_type = CSHARP_TYPES[type]
+        end
+
+        if return_type.nil? || return_type.empty?
+            raise "Unknown type mapping for #{full_name}, source type is #{type}"
+        end
+
+        return_type
+    end
+
+    def modify_csharp_name_by_type(name, type)
+        if type == "Function"
+            return name + "Handler"
+        end
+
+        name
     end
 end

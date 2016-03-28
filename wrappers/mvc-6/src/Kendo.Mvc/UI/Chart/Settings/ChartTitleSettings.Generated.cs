@@ -9,21 +9,21 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartTitleSettings class
     /// </summary>
-    public partial class ChartTitleSettings 
+    public partial class ChartTitleSettings<T> where T : class 
     {
         public string Align { get; set; }
 
         public string Background { get; set; }
 
-        public ChartTitleBorderSettings Border { get; } = new ChartTitleBorderSettings();
+        public ChartTitleBorderSettings<T> Border { get; } = new ChartTitleBorderSettings<T>();
 
         public string Color { get; set; }
 
         public string Font { get; set; }
 
-        public ChartTitleMarginSettings Margin { get; } = new ChartTitleMarginSettings();
+        public ChartTitleMarginSettings<T> Margin { get; } = new ChartTitleMarginSettings<T>();
 
-        public ChartTitlePaddingSettings Padding { get; } = new ChartTitlePaddingSettings();
+        public ChartTitlePaddingSettings<T> Padding { get; } = new ChartTitlePaddingSettings<T>();
 
         public string Position { get; set; }
 
@@ -32,7 +32,7 @@ namespace Kendo.Mvc.UI
         public bool? Visible { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartLegendInactiveItemsLabelsSettings class
     /// </summary>
-    public partial class ChartLegendInactiveItemsLabelsSettings 
+    public partial class ChartLegendInactiveItemsLabelsSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

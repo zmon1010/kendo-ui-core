@@ -9,29 +9,29 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeries class
     /// </summary>
-    public partial class ChartSeries 
+    public partial class ChartSeries<T> where T : class 
     {
-        public string Aggregate { get; set; }
-
         public string Axis { get; set; }
 
-        public ChartSeriesBorderSettings Border { get; } = new ChartSeriesBorderSettings();
+        public ChartSeriesBorderSettings<T> Border { get; } = new ChartSeriesBorderSettings<T>();
 
         public string CategoryField { get; set; }
 
         public string CloseField { get; set; }
 
         public string Color { get; set; }
+        public ClientHandlerDescriptor ColorHandler { get; set; }
 
         public string ColorField { get; set; }
 
-        public ChartSeriesConnectorsSettings Connectors { get; } = new ChartSeriesConnectorsSettings();
+        public ChartSeriesConnectorsSettings<T> Connectors { get; } = new ChartSeriesConnectorsSettings<T>();
 
         public string CurrentField { get; set; }
 
         public ChartDashType? DashType { get; set; }
 
         public string DownColor { get; set; }
+        public ClientHandlerDescriptor DownColorHandler { get; set; }
 
         public string DownColorField { get; set; }
 
@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI
 
         public bool? DynamicHeight { get; set; }
 
-        public ChartSeriesErrorBarsSettings ErrorBars { get; } = new ChartSeriesErrorBarsSettings();
+        public ChartSeriesErrorBarsSettings<T> ErrorBars { get; } = new ChartSeriesErrorBarsSettings<T>();
 
         public string ErrorLowField { get; set; }
 
@@ -87,23 +87,23 @@ namespace Kendo.Mvc.UI
 
         public string HighField { get; set; }
 
-        public ChartSeriesHighlightSettings Highlight { get; } = new ChartSeriesHighlightSettings();
+        public ChartSeriesHighlightSettings<T> Highlight { get; } = new ChartSeriesHighlightSettings<T>();
 
         public double? HoleSize { get; set; }
 
-        public ChartSeriesLabelsSettings Labels { get; } = new ChartSeriesLabelsSettings();
+        public ChartSeriesLabelsSettings<T> Labels { get; } = new ChartSeriesLabelsSettings<T>();
 
-        public ChartSeriesLineSettings Line { get; } = new ChartSeriesLineSettings();
+        public ChartSeriesLineSettings<T> Line { get; } = new ChartSeriesLineSettings<T>();
 
         public string LowField { get; set; }
 
-        public ChartSeriesMarginSettings Margin { get; } = new ChartSeriesMarginSettings();
+        public ChartSeriesMarginSettings<T> Margin { get; } = new ChartSeriesMarginSettings<T>();
 
-        public ChartSeriesMarkersSettings Markers { get; } = new ChartSeriesMarkersSettings();
+        public ChartSeriesMarkersSettings<T> Markers { get; } = new ChartSeriesMarkersSettings<T>();
 
-        public ChartSeriesOutliersSettings Outliers { get; } = new ChartSeriesOutliersSettings();
+        public ChartSeriesOutliersSettings<T> Outliers { get; } = new ChartSeriesOutliersSettings<T>();
 
-        public ChartSeriesExtremesSettings Extremes { get; } = new ChartSeriesExtremesSettings();
+        public ChartSeriesExtremesSettings<T> Extremes { get; } = new ChartSeriesExtremesSettings<T>();
 
         public double? MaxSize { get; set; }
 
@@ -111,19 +111,17 @@ namespace Kendo.Mvc.UI
 
         public string MissingValues { get; set; }
 
-        public string Style { get; set; }
-
         public string Name { get; set; }
 
         public string NegativeColor { get; set; }
 
-        public ChartSeriesNegativeValuesSettings NegativeValues { get; } = new ChartSeriesNegativeValuesSettings();
+        public ChartSeriesNegativeValuesSettings<T> NegativeValues { get; } = new ChartSeriesNegativeValuesSettings<T>();
 
         public double? Opacity { get; set; }
 
         public string OpenField { get; set; }
 
-        public ChartSeriesOverlaySettings Overlay { get; } = new ChartSeriesOverlaySettings();
+        public ChartSeriesOverlaySettings<T> Overlay { get; } = new ChartSeriesOverlaySettings<T>();
 
         public double? Padding { get; set; }
 
@@ -133,15 +131,15 @@ namespace Kendo.Mvc.UI
 
         public double? Spacing { get; set; }
 
-        public ChartSeriesStackSettings Stack { get; } = new ChartSeriesStackSettings();
+        public ChartSeriesStackSettings<T> Stack { get; } = new ChartSeriesStackSettings<T>();
 
         public double? StartAngle { get; set; }
 
-        public ChartSeriesTargetSettings Target { get; } = new ChartSeriesTargetSettings();
+        public ChartSeriesTargetSettings<T> Target { get; } = new ChartSeriesTargetSettings<T>();
 
         public string TargetField { get; set; }
 
-        public ChartSeriesTooltipSettings Tooltip { get; } = new ChartSeriesTooltipSettings();
+        public ChartSeriesTooltipSettings<T> Tooltip { get; } = new ChartSeriesTooltipSettings<T>();
 
         public string Type { get; set; }
 
@@ -163,21 +161,21 @@ namespace Kendo.Mvc.UI
 
         public string YField { get; set; }
 
-        public ChartSeriesNotesSettings Notes { get; } = new ChartSeriesNotesSettings();
+        public ChartSeriesNotesSettings<T> Notes { get; } = new ChartSeriesNotesSettings<T>();
 
         public double? ZIndex { get; set; }
 
+        public ChartSeriesAggregate? Aggregate { get; set; }
+        public ClientHandlerDescriptor AggregateHandler { get; set; }
 
-        public Chart Chart { get; set; }
+        public ChartLineStyle? Style { get; set; }
+
+
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            if (Aggregate?.HasValue() == true)
-            {
-                settings["aggregate"] = Aggregate;
-            }
 
             if (Axis?.HasValue() == true)
             {
@@ -200,10 +198,15 @@ namespace Kendo.Mvc.UI
                 settings["closeField"] = CloseField;
             }
 
-            if (Color?.HasValue() == true)
+            if (ColorHandler?.HasValue() == true)
             {
-                settings["color"] = Color;
+                settings["color"] = ColorHandler;
             }
+            else if (Color?.HasValue() == true)
+            {
+               settings["color"] = Color;
+            }
+
 
             if (ColorField?.HasValue() == true)
             {
@@ -226,10 +229,15 @@ namespace Kendo.Mvc.UI
                 settings["dashType"] = DashType?.Serialize();
             }
 
-            if (DownColor?.HasValue() == true)
+            if (DownColorHandler?.HasValue() == true)
             {
-                settings["downColor"] = DownColor;
+                settings["downColor"] = DownColorHandler;
             }
+            else if (DownColor?.HasValue() == true)
+            {
+               settings["downColor"] = DownColor;
+            }
+
 
             if (DownColorField?.HasValue() == true)
             {
@@ -434,11 +442,6 @@ namespace Kendo.Mvc.UI
                 settings["missingValues"] = MissingValues;
             }
 
-            if (Style?.HasValue() == true)
-            {
-                settings["style"] = Style;
-            }
-
             if (Name?.HasValue() == true)
             {
                 settings["name"] = Name;
@@ -582,6 +585,21 @@ namespace Kendo.Mvc.UI
             if (ZIndex.HasValue)
             {
                 settings["zIndex"] = ZIndex;
+            }
+
+            if (AggregateHandler?.HasValue() == true)
+            {
+                settings["aggregate"] = AggregateHandler;
+            }
+            else if (Aggregate.HasValue)
+            {
+                settings["aggregate"] = Aggregate?.Serialize();
+            }
+
+
+            if (Style.HasValue)
+            {
+                settings["style"] = Style?.Serialize();
             }
 
             return settings;

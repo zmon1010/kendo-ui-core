@@ -9,14 +9,14 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartSeriesErrorBarsLineSettings class
     /// </summary>
-    public partial class ChartSeriesErrorBarsLineSettings 
+    public partial class ChartSeriesErrorBarsLineSettings<T> where T : class 
     {
         public double? Width { get; set; }
 
         public ChartDashType? DashType { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

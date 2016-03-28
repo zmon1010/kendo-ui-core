@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartXAxisMajorGridLinesSettings class
     /// </summary>
-    public partial class ChartXAxisMajorGridLinesSettings 
+    public partial class ChartXAxisMajorGridLinesSettings<T> where T : class 
     {
         public string Color { get; set; }
 
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI
         public double? Skip { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartPdfMarginSettings
     /// </summary>
-    public partial class ChartPdfMarginSettingsBuilder
-        
+    public partial class ChartPdfMarginSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The bottom margin. Numbers are considered as "pt" units.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public ChartPdfMarginSettingsBuilder Bottom(double value)
+        public ChartPdfMarginSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left margin. Numbers are considered as "pt" units.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public ChartPdfMarginSettingsBuilder Left(double value)
+        public ChartPdfMarginSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right margin. Numbers are considered as "pt" units.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public ChartPdfMarginSettingsBuilder Right(double value)
+        public ChartPdfMarginSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top margin. Numbers are considered as "pt" units.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public ChartPdfMarginSettingsBuilder Top(double value)
+        public ChartPdfMarginSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

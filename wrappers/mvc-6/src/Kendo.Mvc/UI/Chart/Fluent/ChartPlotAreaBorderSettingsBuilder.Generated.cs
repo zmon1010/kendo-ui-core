@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartPlotAreaBorderSettings
     /// </summary>
-    public partial class ChartPlotAreaBorderSettingsBuilder
-        
+    public partial class ChartPlotAreaBorderSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The color of the border. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartPlotAreaBorderSettingsBuilder Color(string value)
+        public ChartPlotAreaBorderSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The width of the border in pixels. By default the border width is set to zero which means that the border will not appear.
         /// </summary>
         /// <param name="value">The value for Width</param>
-        public ChartPlotAreaBorderSettingsBuilder Width(double value)
+        public ChartPlotAreaBorderSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the line dash type.
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartPlotAreaBorderSettingsBuilder DashType(ChartDashType value)
+        public ChartPlotAreaBorderSettingsBuilder<T> DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;

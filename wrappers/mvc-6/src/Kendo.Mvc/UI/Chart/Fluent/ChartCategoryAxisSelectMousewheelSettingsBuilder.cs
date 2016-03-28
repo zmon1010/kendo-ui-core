@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisSelectMousewheelSettings
     /// </summary>
-    public partial class ChartCategoryAxisSelectMousewheelSettingsBuilder
-        
+    public partial class ChartCategoryAxisSelectMousewheelSettingsBuilder<T>
+        where T : class 
     {
-        public ChartCategoryAxisSelectMousewheelSettingsBuilder(ChartCategoryAxisSelectMousewheelSettings container)
+        public ChartCategoryAxisSelectMousewheelSettingsBuilder(ChartCategoryAxisSelectMousewheelSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartCategoryAxisSelectMousewheelSettings Container
+        protected ChartCategoryAxisSelectMousewheelSettings<T> Container
         {
             get;
             private set;

@@ -9,29 +9,29 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisLabelsSettings class
     /// </summary>
-    public partial class ChartCategoryAxisLabelsSettings 
+    public partial class ChartCategoryAxisLabelsSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartCategoryAxisLabelsBorderSettings Border { get; } = new ChartCategoryAxisLabelsBorderSettings();
+        public ChartCategoryAxisLabelsBorderSettings<T> Border { get; } = new ChartCategoryAxisLabelsBorderSettings<T>();
 
         public string Color { get; set; }
 
         public string Culture { get; set; }
 
-        public ChartCategoryAxisLabelsDateFormatsSettings DateFormats { get; } = new ChartCategoryAxisLabelsDateFormatsSettings();
+        public ChartCategoryAxisLabelsDateFormatsSettings<T> DateFormats { get; } = new ChartCategoryAxisLabelsDateFormatsSettings<T>();
 
         public string Font { get; set; }
 
         public string Format { get; set; }
 
-        public ChartCategoryAxisLabelsMarginSettings Margin { get; } = new ChartCategoryAxisLabelsMarginSettings();
+        public ChartCategoryAxisLabelsMarginSettings<T> Margin { get; } = new ChartCategoryAxisLabelsMarginSettings<T>();
 
         public bool? Mirror { get; set; }
 
-        public ChartCategoryAxisLabelsPaddingSettings Padding { get; } = new ChartCategoryAxisLabelsPaddingSettings();
+        public ChartCategoryAxisLabelsPaddingSettings<T> Padding { get; } = new ChartCategoryAxisLabelsPaddingSettings<T>();
 
-        public ChartCategoryAxisLabelsRotationSettings Rotation { get; } = new ChartCategoryAxisLabelsRotationSettings();
+        public ChartCategoryAxisLabelsRotationSettings<T> Rotation { get; } = new ChartCategoryAxisLabelsRotationSettings<T>();
 
         public double? Skip { get; set; }
 
@@ -46,7 +46,7 @@ namespace Kendo.Mvc.UI
         public ClientHandlerDescriptor Visual { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

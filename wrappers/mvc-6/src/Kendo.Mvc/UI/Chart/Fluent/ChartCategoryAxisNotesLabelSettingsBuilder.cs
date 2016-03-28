@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisNotesLabelSettings
     /// </summary>
-    public partial class ChartCategoryAxisNotesLabelSettingsBuilder
-        
+    public partial class ChartCategoryAxisNotesLabelSettingsBuilder<T>
+        where T : class 
     {
-        public ChartCategoryAxisNotesLabelSettingsBuilder(ChartCategoryAxisNotesLabelSettings container)
+        public ChartCategoryAxisNotesLabelSettingsBuilder(ChartCategoryAxisNotesLabelSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartCategoryAxisNotesLabelSettings Container
+        protected ChartCategoryAxisNotesLabelSettings<T> Container
         {
             get;
             private set;

@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartSeriesTooltipSettings
     /// </summary>
-    public partial class ChartSeriesTooltipSettingsBuilder
-        
+    public partial class ChartSeriesTooltipSettingsBuilder<T>
+        where T : class 
     {
-        public ChartSeriesTooltipSettingsBuilder(ChartSeriesTooltipSettings container)
+        public ChartSeriesTooltipSettingsBuilder(ChartSeriesTooltipSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartSeriesTooltipSettings Container
+        protected ChartSeriesTooltipSettings<T> Container
         {
             get;
             private set;

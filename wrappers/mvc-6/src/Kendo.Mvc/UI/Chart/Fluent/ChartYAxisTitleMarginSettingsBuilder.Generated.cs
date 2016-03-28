@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartYAxisTitleMarginSettings
     /// </summary>
-    public partial class ChartYAxisTitleMarginSettingsBuilder
-        
+    public partial class ChartYAxisTitleMarginSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The bottom margin of the title.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public ChartYAxisTitleMarginSettingsBuilder Bottom(double value)
+        public ChartYAxisTitleMarginSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left margin of the title.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public ChartYAxisTitleMarginSettingsBuilder Left(double value)
+        public ChartYAxisTitleMarginSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right margin of the title.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public ChartYAxisTitleMarginSettingsBuilder Right(double value)
+        public ChartYAxisTitleMarginSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top margin of the title.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public ChartYAxisTitleMarginSettingsBuilder Top(double value)
+        public ChartYAxisTitleMarginSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

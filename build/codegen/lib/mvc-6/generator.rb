@@ -1,4 +1,5 @@
 module CodeGen::MVC6::Wrappers
+    IGNORED_ARRAY_BUILDERS = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_array_builders.yml"))
 
     class Generator
         include Rake::DSL
@@ -85,9 +86,13 @@ module CodeGen::MVC6::Wrappers
                 write_file(filename, option.to_factory)
             end
 
-            # Write *Factory.Generated.cs file
-            filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.Generated.cs"
-            write_file(filename, option.to_factory_generated)
+            if IGNORED_ARRAY_BUILDERS.include? option.csharp_builder_class
+                puts "Skipping #{option.csharp_builder_class}" if VERBOSE
+            else
+                # Write *Factory.Generated.cs file
+                filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.Generated.cs"
+                write_file(filename, option.to_factory_generated)
+            end
 
             write_composite(component, option.item)
         end
@@ -127,7 +132,6 @@ module CodeGen::MVC6::Wrappers
             $stderr.puts("Updating #{filename}") if VERBOSE
 
             ensure_path(filename)
-
             File.write(filename, content.dos)
         end
     end

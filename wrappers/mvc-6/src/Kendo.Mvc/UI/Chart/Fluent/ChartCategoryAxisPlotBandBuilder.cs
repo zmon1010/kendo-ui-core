@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartCategoryAxisPlotBand
     /// </summary>
-    public partial class ChartCategoryAxisPlotBandBuilder
-        
+    public partial class ChartCategoryAxisPlotBandBuilder<T>
+        where T : class 
     {
-        public ChartCategoryAxisPlotBandBuilder(ChartCategoryAxisPlotBand container)
+        public ChartCategoryAxisPlotBandBuilder(ChartCategoryAxisPlotBand<T> container)
         {
             Container = container;
         }
 
-        protected ChartCategoryAxisPlotBand Container
+        protected ChartCategoryAxisPlotBand<T> Container
         {
             get;
             private set;

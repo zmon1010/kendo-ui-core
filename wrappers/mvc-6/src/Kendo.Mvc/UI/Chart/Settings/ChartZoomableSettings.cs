@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartZoomableSettings class
     /// </summary>
-    public partial class ChartZoomableSettings 
+    public partial class ChartZoomableSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

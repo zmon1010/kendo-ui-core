@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartPdfSettings
     /// </summary>
-    public partial class ChartPdfSettingsBuilder
-        
+    public partial class ChartPdfSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The author of the PDF document.
         /// </summary>
         /// <param name="value">The value for Author</param>
-        public ChartPdfSettingsBuilder Author(string value)
+        public ChartPdfSettingsBuilder<T> Author(string value)
         {
             Container.Author = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The creator of the PDF document.
         /// </summary>
         /// <param name="value">The value for Creator</param>
-        public ChartPdfSettingsBuilder Creator(string value)
+        public ChartPdfSettingsBuilder<T> Creator(string value)
         {
             Container.Creator = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The date when the PDF document is created. Defaults to new Date().
         /// </summary>
         /// <param name="value">The value for Date</param>
-        public ChartPdfSettingsBuilder Date(DateTime value)
+        public ChartPdfSettingsBuilder<T> Date(DateTime value)
         {
             Container.Date = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.
         /// </summary>
         /// <param name="value">The value for ForceProxy</param>
-        public ChartPdfSettingsBuilder ForceProxy(bool value)
+        public ChartPdfSettingsBuilder<T> ForceProxy(bool value)
         {
             Container.ForceProxy = value;
             return this;
@@ -53,7 +53,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.
         /// </summary>
-        public ChartPdfSettingsBuilder ForceProxy()
+        public ChartPdfSettingsBuilder<T> ForceProxy()
         {
             Container.ForceProxy = true;
             return this;
@@ -63,7 +63,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the file name of the exported PDF file.
         /// </summary>
         /// <param name="value">The value for FileName</param>
-        public ChartPdfSettingsBuilder FileName(string value)
+        public ChartPdfSettingsBuilder<T> FileName(string value)
         {
             Container.FileName = value;
             return this;
@@ -73,7 +73,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the keywords of the exported PDF file.
         /// </summary>
         /// <param name="value">The value for Keywords</param>
-        public ChartPdfSettingsBuilder Keywords(string value)
+        public ChartPdfSettingsBuilder<T> Keywords(string value)
         {
             Container.Keywords = value;
             return this;
@@ -83,7 +83,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Set to true to reverse the paper dimensions if needed such that width is the larger edge.
         /// </summary>
         /// <param name="value">The value for Landscape</param>
-        public ChartPdfSettingsBuilder Landscape(bool value)
+        public ChartPdfSettingsBuilder<T> Landscape(bool value)
         {
             Container.Landscape = value;
             return this;
@@ -92,7 +92,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Set to true to reverse the paper dimensions if needed such that width is the larger edge.
         /// </summary>
-        public ChartPdfSettingsBuilder Landscape()
+        public ChartPdfSettingsBuilder<T> Landscape()
         {
             Container.Landscape = true;
             return this;
@@ -103,11 +103,11 @@ namespace Kendo.Mvc.UI.Fluent
 		/// units are "mm", "cm", "in" and "pt" (default).
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartPdfSettingsBuilder Margin(Action<ChartPdfMarginSettingsBuilder> configurator)
+        public ChartPdfSettingsBuilder<T> Margin(Action<ChartPdfMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartPdfMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartPdfMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -117,7 +117,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// The default "auto" means paper size is determined by content.Supported values:
         /// </summary>
         /// <param name="value">The value for PaperSize</param>
-        public ChartPdfSettingsBuilder PaperSize(string value)
+        public ChartPdfSettingsBuilder<T> PaperSize(string value)
         {
             Container.PaperSize = value;
             return this;
@@ -128,7 +128,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.
         /// </summary>
         /// <param name="value">The value for ProxyURL</param>
-        public ChartPdfSettingsBuilder ProxyURL(string value)
+        public ChartPdfSettingsBuilder<T> ProxyURL(string value)
         {
             Container.ProxyURL = value;
             return this;
@@ -139,7 +139,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".
         /// </summary>
         /// <param name="value">The value for ProxyTarget</param>
-        public ChartPdfSettingsBuilder ProxyTarget(string value)
+        public ChartPdfSettingsBuilder<T> ProxyTarget(string value)
         {
             Container.ProxyTarget = value;
             return this;
@@ -149,7 +149,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the subject of the PDF file.
         /// </summary>
         /// <param name="value">The value for Subject</param>
-        public ChartPdfSettingsBuilder Subject(string value)
+        public ChartPdfSettingsBuilder<T> Subject(string value)
         {
             Container.Subject = value;
             return this;
@@ -159,7 +159,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the title of the PDF file.
         /// </summary>
         /// <param name="value">The value for Title</param>
-        public ChartPdfSettingsBuilder Title(string value)
+        public ChartPdfSettingsBuilder<T> Title(string value)
         {
             Container.Title = value;
             return this;

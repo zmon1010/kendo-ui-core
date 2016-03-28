@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartPdfSettings class
     /// </summary>
-    public partial class ChartPdfSettings 
+    public partial class ChartPdfSettings<T> where T : class 
     {
         public string Author { get; set; }
 
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI
 
         public bool? Landscape { get; set; }
 
-        public ChartPdfMarginSettings Margin { get; } = new ChartPdfMarginSettings();
+        public ChartPdfMarginSettings<T> Margin { get; } = new ChartPdfMarginSettings<T>();
 
         public string PaperSize { get; set; }
 
@@ -38,7 +38,7 @@ namespace Kendo.Mvc.UI
         public string Title { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

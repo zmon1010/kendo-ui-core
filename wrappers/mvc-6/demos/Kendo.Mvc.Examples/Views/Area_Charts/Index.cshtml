@@ -1,16 +1,5 @@
-﻿@using Kendo.Mvc.UI
-
-@section HeadContent {
-	<style>
-    #chart {
-        background: center no-repeat url('@Url.Content("~/shared/world-map.png")');
-        height: 430px;
-    }
-	</style>
-}
-
-<div class="chart-wrapper">
-	@(Html.Kendo().Chart()
+﻿<div class="demo-section k-content wide">
+    @(Html.Kendo().Chart()
         .Name("chart")
         .Title("Gross domestic product growth \n /GDP annual %/")
         .Legend(legend => legend
@@ -20,7 +9,7 @@
             .Background("transparent")
         )
         .SeriesDefaults(seriesDefaults =>
-            seriesDefaults.Area().Line(line => line.Style(ChartLineStyle.Smooth))
+            seriesDefaults.Area().Line(line => line.Style(ChartAreaStyle.Smooth))
         )
         .Series(series =>
         {
@@ -43,5 +32,5 @@
             .Format("{0}%")
             .Template("#= series.name #: #= value #")
         )
-	)
+    )
 </div>

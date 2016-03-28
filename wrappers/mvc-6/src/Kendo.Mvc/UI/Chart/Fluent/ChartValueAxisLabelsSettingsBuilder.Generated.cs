@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartValueAxisLabelsSettings
     /// </summary>
-    public partial class ChartValueAxisLabelsSettingsBuilder
-        
+    public partial class ChartValueAxisLabelsSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The background color of the labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
-        public ChartValueAxisLabelsSettingsBuilder Background(string value)
+        public ChartValueAxisLabelsSettingsBuilder<T> Background(string value)
         {
             Container.Background = value;
             return this;
@@ -24,11 +24,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The border of the labels.
         /// </summary>
         /// <param name="configurator">The configurator for the border setting.</param>
-        public ChartValueAxisLabelsSettingsBuilder Border(Action<ChartValueAxisLabelsBorderSettingsBuilder> configurator)
+        public ChartValueAxisLabelsSettingsBuilder<T> Border(Action<ChartValueAxisLabelsBorderSettingsBuilder<T>> configurator)
         {
 
             Container.Border.Chart = Container.Chart;
-            configurator(new ChartValueAxisLabelsBorderSettingsBuilder(Container.Border));
+            configurator(new ChartValueAxisLabelsBorderSettingsBuilder<T>(Container.Border));
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text color of the labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>
-        public ChartValueAxisLabelsSettingsBuilder Color(string value)
+        public ChartValueAxisLabelsSettingsBuilder<T> Color(string value)
         {
             Container.Color = value;
             return this;
@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The font style of the labels.
         /// </summary>
         /// <param name="value">The value for Font</param>
-        public ChartValueAxisLabelsSettingsBuilder Font(string value)
+        public ChartValueAxisLabelsSettingsBuilder<T> Font(string value)
         {
             Container.Font = value;
             return this;
@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The format used to display the labels. Uses kendo.format. Contains one placeholder ("{0}") which represents the category value.
         /// </summary>
         /// <param name="value">The value for Format</param>
-        public ChartValueAxisLabelsSettingsBuilder Format(string value)
+        public ChartValueAxisLabelsSettingsBuilder<T> Format(string value)
         {
             Container.Format = value;
             return this;
@@ -67,11 +67,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The margin of the labels. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public ChartValueAxisLabelsSettingsBuilder Margin(Action<ChartValueAxisLabelsMarginSettingsBuilder> configurator)
+        public ChartValueAxisLabelsSettingsBuilder<T> Margin(Action<ChartValueAxisLabelsMarginSettingsBuilder<T>> configurator)
         {
 
             Container.Margin.Chart = Container.Chart;
-            configurator(new ChartValueAxisLabelsMarginSettingsBuilder(Container.Margin));
+            configurator(new ChartValueAxisLabelsMarginSettingsBuilder<T>(Container.Margin));
 
             return this;
         }
@@ -80,7 +80,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will mirror the axis labels and ticks. If the labels are normally on the left side of the axis, mirroring the axis will render them to the right.
         /// </summary>
         /// <param name="value">The value for Mirror</param>
-        public ChartValueAxisLabelsSettingsBuilder Mirror(bool value)
+        public ChartValueAxisLabelsSettingsBuilder<T> Mirror(bool value)
         {
             Container.Mirror = value;
             return this;
@@ -90,11 +90,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The padding of the labels. A numeric value will set all margins.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
-        public ChartValueAxisLabelsSettingsBuilder Padding(Action<ChartValueAxisLabelsPaddingSettingsBuilder> configurator)
+        public ChartValueAxisLabelsSettingsBuilder<T> Padding(Action<ChartValueAxisLabelsPaddingSettingsBuilder<T>> configurator)
         {
 
             Container.Padding.Chart = Container.Chart;
-            configurator(new ChartValueAxisLabelsPaddingSettingsBuilder(Container.Padding));
+            configurator(new ChartValueAxisLabelsPaddingSettingsBuilder<T>(Container.Padding));
 
             return this;
         }
@@ -103,11 +103,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The rotation angle (in degrees) of the labels. By default the labels are not rotated. Angles increase clockwise and zero is to the left. Negative values are acceptable. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.
         /// </summary>
         /// <param name="configurator">The configurator for the rotation setting.</param>
-        public ChartValueAxisLabelsSettingsBuilder Rotation(Action<ChartValueAxisLabelsRotationSettingsBuilder> configurator)
+        public ChartValueAxisLabelsSettingsBuilder<T> Rotation(Action<ChartValueAxisLabelsRotationSettingsBuilder<T>> configurator)
         {
 
             Container.Rotation.Chart = Container.Chart;
-            configurator(new ChartValueAxisLabelsRotationSettingsBuilder(Container.Rotation));
+            configurator(new ChartValueAxisLabelsRotationSettingsBuilder<T>(Container.Rotation));
 
             return this;
         }
@@ -116,7 +116,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The number of labels to skip. By default no labels are skipped.
         /// </summary>
         /// <param name="value">The value for Skip</param>
-        public ChartValueAxisLabelsSettingsBuilder Skip(double value)
+        public ChartValueAxisLabelsSettingsBuilder<T> Skip(double value)
         {
             Container.Skip = value;
             return this;
@@ -127,7 +127,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// Every n-th label is rendered where n is the step
         /// </summary>
         /// <param name="value">The value for Step</param>
-        public ChartValueAxisLabelsSettingsBuilder Step(double value)
+        public ChartValueAxisLabelsSettingsBuilder<T> Step(double value)
         {
             Container.Step = value;
             return this;
@@ -137,7 +137,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the labels.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for Template</param>
-        public ChartValueAxisLabelsSettingsBuilder Template(string value)
+        public ChartValueAxisLabelsSettingsBuilder<T> Template(string value)
         {
             Container.Template = value;
             return this;
@@ -147,7 +147,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The template which renders the labels.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
-        public ChartValueAxisLabelsSettingsBuilder TemplateId(string templateId)
+        public ChartValueAxisLabelsSettingsBuilder<T> TemplateId(string templateId)
         {
             Container.TemplateId = templateId;
             return this;
@@ -157,7 +157,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the chart will display the value axis labels. By default the category axis labels are visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
-        public ChartValueAxisLabelsSettingsBuilder Visible(bool value)
+        public ChartValueAxisLabelsSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
             return this;
@@ -167,7 +167,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the labels. The available argument fields are:
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
-        public ChartValueAxisLabelsSettingsBuilder Visual(string handler)
+        public ChartValueAxisLabelsSettingsBuilder<T> Visual(string handler)
         {
             Container.Visual = new ClientHandlerDescriptor { HandlerName = handler };
             return this;
@@ -177,7 +177,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// A function that can be used to create a custom visual for the labels. The available argument fields are:
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ChartValueAxisLabelsSettingsBuilder Visual(Func<object, object> handler)
+        public ChartValueAxisLabelsSettingsBuilder<T> Visual(Func<object, object> handler)
         {
             Container.Visual = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;

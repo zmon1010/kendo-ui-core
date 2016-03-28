@@ -9,11 +9,11 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartCategoryAxisCrosshairTooltipSettings class
     /// </summary>
-    public partial class ChartCategoryAxisCrosshairTooltipSettings 
+    public partial class ChartCategoryAxisCrosshairTooltipSettings<T> where T : class 
     {
         public string Background { get; set; }
 
-        public ChartCategoryAxisCrosshairTooltipBorderSettings Border { get; } = new ChartCategoryAxisCrosshairTooltipBorderSettings();
+        public ChartCategoryAxisCrosshairTooltipBorderSettings<T> Border { get; } = new ChartCategoryAxisCrosshairTooltipBorderSettings<T>();
 
         public string Color { get; set; }
 
@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
 
         public string Format { get; set; }
 
-        public ChartCategoryAxisCrosshairTooltipPaddingSettings Padding { get; } = new ChartCategoryAxisCrosshairTooltipPaddingSettings();
+        public ChartCategoryAxisCrosshairTooltipPaddingSettings<T> Padding { get; } = new ChartCategoryAxisCrosshairTooltipPaddingSettings<T>();
 
         public string Template { get; set; }
 
@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI
         public bool? Visible { get; set; }
 
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

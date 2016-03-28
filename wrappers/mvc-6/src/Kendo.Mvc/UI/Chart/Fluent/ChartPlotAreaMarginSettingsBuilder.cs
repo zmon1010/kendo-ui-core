@@ -6,15 +6,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartPlotAreaMarginSettings
     /// </summary>
-    public partial class ChartPlotAreaMarginSettingsBuilder
-        
+    public partial class ChartPlotAreaMarginSettingsBuilder<T>
+        where T : class 
     {
-        public ChartPlotAreaMarginSettingsBuilder(ChartPlotAreaMarginSettings container)
+        public ChartPlotAreaMarginSettingsBuilder(ChartPlotAreaMarginSettings<T> container)
         {
             Container = container;
         }
 
-        protected ChartPlotAreaMarginSettings Container
+        protected ChartPlotAreaMarginSettings<T> Container
         {
             get;
             private set;

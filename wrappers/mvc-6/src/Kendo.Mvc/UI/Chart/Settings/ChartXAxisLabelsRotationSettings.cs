@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI ChartXAxisLabelsRotationSettings class
     /// </summary>
-    public partial class ChartXAxisLabelsRotationSettings 
+    public partial class ChartXAxisLabelsRotationSettings<T> where T : class 
     {
         public Dictionary<string, object> Serialize()
         {

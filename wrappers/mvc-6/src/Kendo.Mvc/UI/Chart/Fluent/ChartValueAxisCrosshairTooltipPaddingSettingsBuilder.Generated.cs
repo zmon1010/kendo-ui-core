@@ -7,14 +7,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring ChartValueAxisCrosshairTooltipPaddingSettings
     /// </summary>
-    public partial class ChartValueAxisCrosshairTooltipPaddingSettingsBuilder
-        
+    public partial class ChartValueAxisCrosshairTooltipPaddingSettingsBuilder<T>
+        where T : class 
     {
         /// <summary>
         /// The bottom padding of the crosshair tooltip.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public ChartValueAxisCrosshairTooltipPaddingSettingsBuilder Bottom(double value)
+        public ChartValueAxisCrosshairTooltipPaddingSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left padding of the crosshair tooltip.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public ChartValueAxisCrosshairTooltipPaddingSettingsBuilder Left(double value)
+        public ChartValueAxisCrosshairTooltipPaddingSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right padding of the crosshair tooltip.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public ChartValueAxisCrosshairTooltipPaddingSettingsBuilder Right(double value)
+        public ChartValueAxisCrosshairTooltipPaddingSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top padding of the crosshair tooltip.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public ChartValueAxisCrosshairTooltipPaddingSettingsBuilder Top(double value)
+        public ChartValueAxisCrosshairTooltipPaddingSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

@@ -5,22 +5,22 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for adding items to Kendo UI ValueAxisItem
     /// </summary>
-    public partial class ChartValueAxisPlotBandFactory
-        
+    public partial class ChartValueAxisPlotBandFactory<T>
+        where T : class 
     {
 
-        public Chart Chart { get; set; }
+        public Chart<T> Chart { get; set; }
 
         /// <summary>
         /// Adds an item to the collection
         /// </summary>
-        public virtual ChartValueAxisPlotBandBuilder Add()
+        public virtual ChartValueAxisPlotBandBuilder<T> Add()
         {
-            var item = new ChartValueAxisPlotBand();
+            var item = new ChartValueAxisPlotBand<T>();
             item.Chart = Chart;
             Container.Add(item);
 
-            return new ChartValueAxisPlotBandBuilder(item);
+            return new ChartValueAxisPlotBandBuilder<T>(item);
         }
     }
 }
