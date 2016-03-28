@@ -3,11 +3,25 @@ using System.Collections.Generic;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using System.Linq;
+using Microsoft.AspNet.Razor.TagHelpers;
 
 namespace Kendo.Mvc.TagHelpers
 {
     public partial class DatePickerTagHelper
     {
+        /// <summary>
+        /// Specifies a template used to populate value of the aria-label attribute.
+        /// </summary>
+        [HtmlAttributeName("ariatemplate")]
+        public string ARIATemplate { get; set; }
+
+        /// <summary>
+        /// Specifies a template used to populate value of the aria-label attribute.
+        /// </summary>
+        /// <param name="value">The ID of the template element for ARIATemplate</param>    
+        [HtmlAttributeName("ariatemplate-id")]
+        public string ARIATemplateId { get; set; }
+
         /// <summary>
         /// Specifies the culture info used by the widget.
         /// </summary>
@@ -58,6 +72,19 @@ namespace Kendo.Mvc.TagHelpers
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
+
+            if (ARIATemplateId.HasValue())
+            {
+                settings["ARIATemplate"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, ARIATemplateId
+                    )
+                };
+            }
+            else if (ARIATemplate.HasValue())
+            {
+                settings["ARIATemplate"] = ARIATemplate;
+            }
 
             if (Culture?.HasValue() == true)
             {

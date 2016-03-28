@@ -12,3 +12,7 @@
     - :name: parseFormats
       :merge: true
       :type: string[]
+
+    - :name: ariaTemplate
+      :merge: true
+      :html_attribute_name: ariatemplate

@@ -1,13 +1,19 @@
         /// <summary>
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>
+%if html_attribute_name
+        [HtmlAttributeName("<%= html_attribute_name %>")]
+%end
         public <%= struct? ? csharp_type + '?' : csharp_type%> <%= csharp_name %> { get; set; }
 %if template?
 
         /// <summary>
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>
-        /// <param name="value">The ID of the template element for <%= csharp_name %></param>
+        /// <param name="value">The ID of the template element for <%= csharp_name %></param>    
+%if html_attribute_name
+        [HtmlAttributeName("<%= html_attribute_name %>-id")]
+%end
         public string <%= csharp_name %>Id { get; set; }
 %end
 
