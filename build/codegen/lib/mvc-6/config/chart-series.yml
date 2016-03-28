@@ -14,6 +14,22 @@
         :expression: categoryExpression
         :member: categoryMemberName
 
+- :name: bar
+  :type: Bar
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expression
+        :member: memberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: category
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName
+
 - :name: candlestick
   :type: Candlestick
   :fields:

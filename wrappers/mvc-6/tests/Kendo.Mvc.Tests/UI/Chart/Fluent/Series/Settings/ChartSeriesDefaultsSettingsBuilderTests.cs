@@ -23,6 +23,12 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Bar_series_should_return_builder()
+        {
+            builder.Bar().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void Candlestick_series_should_return_builder()
         {
             builder.Candlestick().ShouldBeType(typeof(ChartSeriesBuilder<object>));

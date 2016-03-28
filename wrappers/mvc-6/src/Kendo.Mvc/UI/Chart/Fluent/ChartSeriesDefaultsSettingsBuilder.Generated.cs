@@ -28,6 +28,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The bar series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the bar series settings.</param>
+        public ChartSeriesBuilder<T> Bar()
+        {
+            return new ChartSeriesBuilder<T>(Container.Bar);
+        }
+
+        /// <summary>
         /// The candlestick series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the candlestick series settings.</param>

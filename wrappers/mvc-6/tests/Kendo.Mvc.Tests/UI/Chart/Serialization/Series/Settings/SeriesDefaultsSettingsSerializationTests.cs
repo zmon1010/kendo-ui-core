@@ -31,6 +31,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_Bar_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("bar").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Bar_series_should_be_serialized()
+        {
+            settings.Bar.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("bar").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_Candlestick_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("candlestick").ShouldBeFalse();

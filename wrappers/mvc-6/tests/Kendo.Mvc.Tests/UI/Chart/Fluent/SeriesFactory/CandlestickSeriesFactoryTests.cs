@@ -16,7 +16,7 @@ namespace Kendo.Mvc.UI.Tests
         }
         
         [Fact]
-        public void Candlestick_series_with_custom_data_should_set_series_type()
+        public void Candlestick_series_with_custom_data_should_set_Type()
         {
             factory.Candlestick(new int[] { });
 
@@ -74,7 +74,7 @@ namespace Kendo.Mvc.UI.Tests
         }
         
         [Fact]
-        public void Candlestick_series_with_expression_should_set_series_type()
+        public void Candlestick_series_with_expression_should_set_Type()
         {
            factory.Candlestick(s => s.TotalSales, s => s.RepSalesHigh, s => s.RepSalesLow, s => s.RepSales);
 
@@ -82,7 +82,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Candlestick_series_with_expression_should_set_series_name()
+        public void Candlestick_series_with_expression_should_set_Name()
         {
             factory.Candlestick(s => s.TotalSales, s => s.RepSalesHigh, s => s.RepSalesLow, s => s.RepSales);
 
@@ -90,7 +90,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Candlestick_series_with_custom_name_should_override_default_series_name()
+        public void Candlestick_series_with_custom_name_should_override_default_Name()
         {
             factory.Candlestick(s => s.TotalSales, s => s.RepSalesHigh, s => s.RepSalesLow, s => s.RepSales)
                 .Name("customName");

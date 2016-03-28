@@ -86,6 +86,80 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines bar series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Bar(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Type = "bar",
+                Data = data
+            };
+
+            item.Chart = Chart;
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bar series bound to model member(s).
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Bar<TValue>(
+            Expression<Func<T, TValue>> expression)
+        {
+            return Bar(expression.MemberWithoutInstance());
+        }
+
+        /// <summary>
+        /// Defines bar series bound to model member(s).
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the category from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Bar<TValue, TCategory>(
+            Expression<Func<T, TValue>> expression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            return Bar(expression.MemberWithoutInstance(), categoryExpression.MemberWithoutInstance());
+        }
+
+        /// <summary>
+        /// Defines bound bar series.
+        /// </summary>
+        /// <param name="memberName">
+        /// The name of the value member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the category member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Bar(
+            string memberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "bar",
+                Name = memberName.AsTitle(),
+                Field = memberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines candlestick series bound to inline data.
         /// </summary>
         /// <param name="data">

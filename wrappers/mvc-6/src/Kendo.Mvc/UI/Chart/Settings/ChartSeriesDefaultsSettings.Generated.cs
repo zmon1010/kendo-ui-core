@@ -15,6 +15,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Area { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The Bar series default settings.
+        /// </summary>
+        public ChartSeries<T> Bar { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Candlestick series default settings.
         /// </summary>
         public ChartSeries<T> Candlestick { get; } = new ChartSeries<T>();
@@ -33,6 +38,13 @@ namespace Kendo.Mvc.UI
             if (area.Any())
             {
                 settings["area"] = area;
+            }
+
+            var bar = Bar.Serialize();
+
+            if (bar.Any())
+            {
+                settings["bar"] = bar;
             }
 
             var candlestick = Candlestick.Serialize();
