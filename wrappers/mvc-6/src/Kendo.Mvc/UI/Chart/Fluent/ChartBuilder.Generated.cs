@@ -21,6 +21,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The default options for all chart axes. Accepts the options supported by categoryAxis, valueAxis, xAxis and yAxis.
+        /// </summary>
+        /// <param name="configurator">The configurator for the axisdefaults setting.</param>
+        public ChartBuilder<T> AxisDefaults(Action<ChartAxisDefaultsSettingsBuilder<T>> configurator)
+        {
+
+            Container.AxisDefaults.Chart = Container;
+            configurator(new ChartAxisDefaultsSettingsBuilder<T>(Container.AxisDefaults));
+
+            return this;
+        }
+
+        /// <summary>
         /// The chart area configuration options. Represents the entire visible area of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the chartarea setting.</param>

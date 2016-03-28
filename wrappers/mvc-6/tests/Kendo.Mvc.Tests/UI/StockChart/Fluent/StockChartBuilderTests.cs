@@ -32,6 +32,22 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_AxisDefaults()
+        {
+            var value = "value";
+
+            builder.AxisDefaults(x => x.Color(value));
+
+            chart.AxisDefaults.Color.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void AxisDefaults_should_return_builder()
+        {
+            builder.AxisDefaults(delegate { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_ChartArea()
         {
             var value = "value";

@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public bool? AutoBind { get; set; }
 
+        public ChartAxisDefaultsSettings<T> AxisDefaults { get; } = new ChartAxisDefaultsSettings<T>();
+
         public List<ChartCategoryAxis<T>> CategoryAxis { get; set; } = new List<ChartCategoryAxis<T>>();
 
         public ChartChartAreaSettings<T> ChartArea { get; } = new ChartChartAreaSettings<T>();
@@ -57,6 +59,12 @@ namespace Kendo.Mvc.UI
             if (AutoBind.HasValue)
             {
                 settings["autoBind"] = AutoBind;
+            }
+
+            var axisDefaults = AxisDefaults.Serialize();
+            if (axisDefaults.Any())
+            {
+                settings["axisDefaults"] = axisDefaults;
             }
 
             var categoryAxis = CategoryAxis.Select(i => i.Serialize());

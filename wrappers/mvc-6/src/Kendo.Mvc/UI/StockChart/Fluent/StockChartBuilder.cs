@@ -58,7 +58,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
         /// <summary>
         /// Configures the default value axis or adds a new one
         /// </summary>
@@ -91,6 +91,18 @@ namespace Kendo.Mvc.UI.Fluent
         public StockChartBuilder<T> AutoBind(bool value)
         {
             Container.AutoBind = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The default options for all chart axes. Accepts the options supported by categoryAxis, valueAxis, xAxis and yAxis.
+        /// </summary>
+        /// <param name="configurator">The configurator for the axisdefaults setting.</param>
+        public StockChartBuilder<T> AxisDefaults(Action<ChartAxisDefaultsSettingsBuilder<T>> configurator)
+        {
+            Container.AxisDefaults.Chart = Container;
+            configurator(new ChartAxisDefaultsSettingsBuilder<T>(Container.AxisDefaults));
+
             return this;
         }
 
@@ -154,7 +166,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
         /// <summary>
         /// Specifies if the chart can be panned.
         /// </summary>
@@ -272,7 +284,7 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Title.Text = title;
             return this;
         }
-        
+
         /// <summary>
         /// The chart series tooltip configuration options.
         /// </summary>

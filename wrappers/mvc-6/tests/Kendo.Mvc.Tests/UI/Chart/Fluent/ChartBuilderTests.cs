@@ -34,6 +34,22 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_AxisDefaults()
+        {
+            var value = "value";
+
+            builder.AxisDefaults(x => x.Color(value));
+
+            chart.AxisDefaults.Color.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void AxisDefaults_should_return_builder()
+        {
+            builder.AxisDefaults(delegate { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_ChartArea()
         {
             var value = "value";
@@ -305,7 +321,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             var value = "value";
 
-             builder.Zoomable(x => x.Selection(s => s.Key(value)));
+            builder.Zoomable(x => x.Selection(s => s.Key(value)));
 
             chart.Zoomable.Enabled.ShouldEqual(true);
         }

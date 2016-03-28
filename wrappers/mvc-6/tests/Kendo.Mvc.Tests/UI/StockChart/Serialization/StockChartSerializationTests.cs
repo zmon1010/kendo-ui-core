@@ -17,6 +17,26 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_AxisDefaults_should_not_be_serialized()
+        {
+            chart.AssertSettings(settings =>
+            {
+                settings.ContainsKey("axisDefaults").ShouldBeFalse();
+            });
+        }
+
+        [Fact]
+        public void AxisDefaults_should_be_serialized()
+        {
+            chart.AxisDefaults.Color = "value";
+
+            chart.AssertSettings(settings =>
+            {
+                settings.ContainsKey("axisDefaults").ShouldBeTrue();
+            });
+        }
+
+        [Fact]
         public void Default_DateField_should_not_be_serialized()
         {
             chart.AssertSettings(settings =>
