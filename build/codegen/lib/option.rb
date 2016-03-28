@@ -1,7 +1,7 @@
 module CodeGen
 
     class Option
-        attr_accessor :name, :description, :type, :owner, :default, :values, :enum_type, :primitive, :item_type, :html_attribute_name
+        attr_accessor :name, :description, :type, :owner, :default, :values, :enum_type, :primitive, :item_type
 
         def initialize(options)
             @name = options[:name]
@@ -15,7 +15,6 @@ module CodeGen
             @enum_type = options[:enum_type]
             @primitive = options[:primitive]
             @item_type = options[:item_type]
-            @html_attribute_name = options[:html_attribute_name]
         end
 
         def content?
