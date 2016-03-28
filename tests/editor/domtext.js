@@ -286,6 +286,32 @@
         equal(result.text, "http://www.telerik.com");
     });
 
+    test("detect link after puntuation", function () {
+        var text = "word (http://www.telerik.com ";
+        var detection = initDetection(text, 0);
+
+        var result = detection.detectLink();
+
+        equal(result.start.node.data, text);
+        equal(result.start.offset, 6);
+        equal(result.end.node.data, text);
+        equal(result.end.offset, 28);
+        equal(result.text, "http://www.telerik.com");
+    });
+
+    test("detect link after formatted puntuation", function () {
+        var text = "word <em>(</em>http://www.telerik.com ";
+        var detection = initDetection(text, 2);
+
+        var result = detection.detectLink();
+
+        equal(result.start.node.data, "http://www.telerik.com ");
+        equal(result.start.offset, 0);
+        equal(result.end.node.data, "http://www.telerik.com ");
+        equal(result.end.offset, 22);
+        equal(result.text, "http://www.telerik.com");
+    });
+
     function initDetection(html, nodeIndex, offset) {
         var content = addContent(html);
         var traverser = new LeftDomTextTraverser({

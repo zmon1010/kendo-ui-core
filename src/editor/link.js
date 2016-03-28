@@ -442,7 +442,7 @@ var UnlinkTool = Tool.extend({
 
             this.text = this.text.substring(ii);
             this.start.node = node;
-            this.start.offset = ii + offset;
+            this.start.offset = ii + (offset |0);
 
             if (i > -1) {
                 return false;
@@ -459,7 +459,7 @@ var UnlinkTool = Tool.extend({
     function indexOfRegExp(str, search) {
         var r = search.exec(str);
 
-        return (r && r.index) || -1;
+        return r ? r.index : -1;
     }
 
     var DomPos = function() {
