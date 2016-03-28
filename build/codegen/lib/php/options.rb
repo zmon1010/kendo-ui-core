@@ -34,16 +34,31 @@ module CodeGen::PHP
         'transport' => ['signalr'],
 		'calendar' => ['disableDates'],
 		'datepicker' => ['disableDates'],
-		'datetimepicker' => ['disableDates']
+		'datetimepicker' => ['disableDates'],
+        'axisdefaults' => ['axisdefaults.']
     }
 
     def self.ignored?(component, option)
+        option_name = option.name.downcase
+        option_full_name = option.full_name.downcase
         ignored = IGNORED[component.downcase]
 
-        ignored && ignored.any? { |ignore| option.start_with?(ignore) }
+        ignored && ignored.any? do |ignore|
+            option_name.start_with?(ignore.downcase) || option_full_name.start_with?(ignore)
+        end
     end
 
     module Options
+        def full_name
+            name = @name
+
+            if !@owner.nil?
+                name = @owner.name + '.' + name
+            end
+
+            name
+        end
+
         def php_name
             return "_#{name}" if KEYWORDS.include?(@name)
 
@@ -77,7 +92,7 @@ module CodeGen::PHP
         end
 
         def delete_ignored
-           @options.delete_if { |o| CodeGen::PHP.ignored?(@name, o.name) }
+           @options.delete_if { |o| CodeGen::PHP.ignored?(@name, o) }
 
            composite_options.each { |o| o.delete_ignored }
         end

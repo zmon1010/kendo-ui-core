@@ -20,7 +20,7 @@ data source is fired. By default the widget will bind to the data source specifi
 
     /**
     * The default options for all chart axes. Accepts the options supported by categoryAxis, valueAxis, xAxis and yAxis.
-    * @param  $value
+    * @param \Kendo\Dataviz\UI\ChartAxisDefaults|array $value
     * @return \Kendo\Dataviz\UI\Chart
     */
     public function axisDefaults($value) {
