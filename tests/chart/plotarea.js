@@ -3864,6 +3864,54 @@
             equal(textBox.content, "Title");
         });
 
+        test("title color is inherited from chart title", function() {
+            createPlotArea({
+                title: {
+                    color: "salmon"
+                },
+                panes: [{
+                    name: "a",
+                    title: "Title"
+                }]
+            });
+
+            var textBox = plotArea.panes[0].title.children[0];
+            equal(textBox.options.color, "salmon");
+        });
+
+        test("title color can be set directly", function() {
+            createPlotArea({
+                panes: [{
+                    name: "a",
+                    title: {
+                        text: "Title",
+                        color: "salmon"
+                    }
+                }]
+            });
+
+            var textBox = plotArea.panes[0].title.children[0];
+            equal(textBox.options.color, "salmon");
+        });
+
+        test("title color overrides chart title color", function() {
+            createPlotArea({
+                title: {
+                    color: "fuschia"
+                },
+                panes: [{
+                    name: "a",
+                    title: {
+                        text: "Title",
+                        color: "salmon"
+                    }
+                }]
+            });
+
+            var textBox = plotArea.panes[0].title.children[0];
+            equal(textBox.options.color, "salmon");
+        });
+
         // ------------------------------------------------------------
         module("Categorical PlotArea / Panes / redraw", {
             setup: function() {

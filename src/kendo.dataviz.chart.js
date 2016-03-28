@@ -8918,6 +8918,7 @@ var __meta__ = { // jshint ignore:line
                     position: TOP
                 });
             }
+
             pane.title = Title.buildTitle(titleOptions, pane, Pane.fn.options.title);
         },
 
@@ -9188,14 +9189,28 @@ var __meta__ = { // jshint ignore:line
 
         createPanes: function() {
             var plotArea = this,
+                defaults = { title: { color: (plotArea.options.title || {}).color } },
                 panes = [],
                 paneOptions = plotArea.options.panes || [],
                 i,
                 panesLength = math.max(paneOptions.length, 1),
                 currentPane;
 
+            function setTitle(options, defaults) {
+                if (typeof options.title === "string") {
+                    options.title = {
+                        text: options.title
+                    };
+                }
+
+                options.title = deepExtend({}, defaults.title, options.title);
+            }
+
             for (i = 0; i < panesLength; i++) {
-                currentPane = new Pane(paneOptions[i]);
+                var options = paneOptions[i] || {};
+                setTitle(options, defaults);
+
+                currentPane = new Pane(options);
                 currentPane.paneIndex = i;
 
                 panes.push(currentPane);
