@@ -837,8 +837,9 @@ var __meta__ = { // jshint ignore:line
                 chart._startNavigation(e, DRAG_START);
             }
 
-            if (chart._pannable) {
-                chart._pannable.start(e);
+            if (chart._pannable && chart._pannable.start(e)) {
+                this.surface.suspendTracking();
+                this._unsetActivePoint();
             }
 
             if (chart._zoomSelection) {
@@ -904,8 +905,8 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
-            if (this._pannable) {
-                this._pannable.end(e);
+            if (this._pannable && this._pannable.end(e)) {
+                this.surface.resumeTracking();
             }
         },
 
@@ -925,14 +926,31 @@ var __meta__ = { // jshint ignore:line
 
             if (mousewheelZoom) {
                 var args = { delta: delta, axisRanges: axisRanges(this._plotArea.axes), originalEvent: e };
-                if (!chart.trigger(ZOOM_START, args)) {
+                if (chart._zooming || !chart.trigger(ZOOM_START, args)) {
                     e.preventDefault();
+
+                    if (!chart._zooming) {
+                        chart._unsetActivePoint();
+                        chart.surface.suspendTracking();
+                        chart._zooming = true;
+                    }
+
+                    if (chart._mwTimeout) {
+                        clearTimeout(chart._mwTimeout);
+                    }
 
                     args.axisRanges = ranges = mousewheelZoom.updateRanges(delta);
                     if (ranges && !chart.trigger(ZOOM, args)) {
                         mousewheelZoom.zoom();
-                        chart.trigger(ZOOM_END, args);
                     }
+
+                    chart._mwTimeout = setTimeout(function() {
+                        chart.trigger(ZOOM_END, args);
+                        chart._zooming = false;
+                        if (chart.surface) {
+                            chart.surface.resumeTracking();
+                        }
+                    }, MOUSEWHEEL_DELAY);
                 }
             } else {
                 if (!state) {
@@ -12499,6 +12517,7 @@ var __meta__ = { // jshint ignore:line
 
         start: function(e) {
             this._active = acceptKey(e.event, this.options.key);
+            return this._active;
         },
 
         move: function(e) {
@@ -12512,7 +12531,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         end: function() {
+            var active = this._active;
             this._active = false;
+
+            return active;
         },
 
         pan: function() {

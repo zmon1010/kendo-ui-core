@@ -83,6 +83,82 @@
 
             ok(true);
         });
+
+        // ------------------------------------------------------------
+
+        function triggerMousewheel(delta) {
+            chart._mousewheel({
+                originalEvent: {
+                    detail: delta * 3,
+                    clientX: 300,
+                    clientY: 300
+                },
+                preventDefault: function() {},
+                stopPropagation: function() {}
+            });
+        }
+
+        module("MousewheelZoom / event handling", {
+            setup: function() {
+                setup(chartOptions);
+            },
+            teardown: function() {
+                destroyChart();
+            }
+        });
+
+        test("unsets active point", 1, function() {
+            chart._unsetActivePoint = function() {
+                ok(true);
+            };
+            triggerMousewheel(1);
+
+            chart._unsetActivePoint = $.noop;
+        });
+
+        test("does not unset active point if zoomStart is prevented", 0, function() {
+            chart.bind("zoomStart", function(e) {
+                e.preventDefault();
+            });
+            chart._unsetActivePoint = function() {
+                ok(false);
+            };
+            triggerMousewheel(1);
+
+            chart._unsetActivePoint = $.noop;
+        });
+
+        test("suspends surface tracking", function() {
+            chart.surface.suspendTracking = function() {
+                ok(true);
+            };
+            triggerMousewheel(1);
+        });
+
+        test("does not suspend surface tracking if zoomStart is prevented", 0, function() {
+            chart.bind("zoomStart", function(e) {
+                e.preventDefault();
+            });
+            chart.surface.suspendTracking = function() {
+                ok(false);
+            };
+            triggerMousewheel(1);
+        });
+
+        asyncTest("resumes surface tracking on zoomEnd", 1, function() {
+            var zoomEndTriggered = false;
+            chart.bind("zoomEnd", function() {
+                zoomEndTriggered = true;
+            });
+
+            chart.surface.resumeTracking = function() {
+                ok(zoomEndTriggered);
+                start();
+            };
+            triggerMousewheel(1);
+        });
+
+
     })();
 
     (function() {

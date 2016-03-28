@@ -144,4 +144,78 @@
         equal(plotArea.options.categoryAxis.max, newAxisRange.max);
     });
 
+    // ------------------------------------------------------------
+    module("Pannable / event handling", {
+        setup: function() {
+            chart = createChart({
+                pannable: true
+            });
+            pannable = chart._pannable;
+        },
+        teardown: function() {
+            destroyChart();
+        }
+    });
+
+    test("unsets active point on start", 1, function() {
+        chart._unsetActivePoint = function() {
+            ok(true);
+        };
+        chart._start(eventArg);
+
+        chart._unsetActivePoint = $.noop;
+    });
+
+    test("does not unset active point if panning is not started", 0, function() {
+        pannable.start = function() {
+            return false;
+        };
+        chart._unsetActivePoint = function() {
+            ok(false);
+        };
+        chart._start(eventArg);
+
+        chart._unsetActivePoint = $.noop;
+    });
+
+    test("suspends surface tracking on start", 1, function() {
+        chart.surface.suspendTracking = function() {
+            ok(true);
+        };
+        chart._start(eventArg);
+
+        chart._unsetActivePoint = $.noop;
+    });
+
+    test("does not unset active point if panning is not started", 0, function() {
+        pannable.start = function() {
+            return false;
+        };
+        chart.surface.suspendTracking = function() {
+            ok(false);
+        };
+        chart._start(eventArg);
+
+        chart._unsetActivePoint = $.noop;
+    });
+
+    test("resumes surface tracking on end", function() {
+        chart._start(eventArg);
+        chart.surface.resumeTracking = function() {
+            ok(true);
+        };
+        chart._end(eventArg);
+    });
+
+    test("does not resume surface tracking on end if panning wasn't started", 0, function() {
+        pannable.start = function() {
+            return false;
+        };
+        chart._start(eventArg);
+        chart.surface.resumeTracking = function() {
+            ok(false);
+        };
+        chart._end(eventArg);
+    });
+
 })();
