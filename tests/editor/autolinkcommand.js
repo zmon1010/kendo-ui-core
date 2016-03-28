@@ -91,6 +91,12 @@
             'link (<a href="http://telerik.com/">http://telerik.com/</a>) ');
     });
 
+    test("question mark at the end", function () {
+        __autoLinkContentTest(
+            'link http://telerik.com/? ||',
+            'link <a href="http://telerik.com/?">http://telerik.com/?</a> ');
+    });
+
     function __autoLinkContentTest(content, expected) {
         var cmd = newAutoLinkCommandForText(content);
         cmd.exec();

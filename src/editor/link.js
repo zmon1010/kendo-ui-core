@@ -22,7 +22,7 @@ var kendo = window.kendo,
 
 var HTTP_PROTOCOL = "http://";
 var protocolRegExp = /^\w*:\/\//;
-var endLinkCharsRegExp = /[\w\/\$\-_\*]/i;
+var endLinkCharsRegExp = /[\w\/\$\-_\*\?]/i;
 
 var LinkFormatFinder = Class.extend({
     findSuitable: function (sourceNode) {
