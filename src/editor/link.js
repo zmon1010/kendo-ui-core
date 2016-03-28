@@ -22,7 +22,7 @@ var kendo = window.kendo,
 
 var HTTP_PROTOCOL = "http://";
 var protocolRegExp = /^\w*:\/\//;
-var endLinkCharsRegExp = /[\w\/\$\-_\*\)]/i;
+var endLinkCharsRegExp = /[\w\/\$\-_\*]/i;
 
 var LinkFormatFinder = Class.extend({
     findSuitable: function (sourceNode) {
@@ -382,8 +382,16 @@ var UnlinkTool = Tool.extend({
                 this.traverser.init(this.end);
                 this.traverser.traverse($.proxy(this._detectStart, this));
 
-                if (!protocolRegExp.test(this.text) && !/^w{3}\./i.test(this.text)) {
-                    this.start = DomPos();
+                if (!this._isLinkDetected()) {
+                    var puntuationTraverser = new RightDomTextTraverser({
+                        node: this.start.node,
+                        offset: this.start.offset,
+                        cancelAtNode: this.traverser.cancelAtNode
+                    });
+                    puntuationTraverser.traverse($.proxy(this._skipStartPuntuation, this));
+                    if(!this._isLinkDetected()) {
+                        this.start = DomPos();
+                    }
                 }
             }
 
@@ -396,6 +404,10 @@ var UnlinkTool = Tool.extend({
                     text: this.text
                 };
             }
+        },
+
+        _isLinkDetected: function() {
+            return protocolRegExp.test(this.text) || /^w{3}\./i.test(this.text);
         },
 
         _detectEnd: function(text, node) {
@@ -419,6 +431,22 @@ var UnlinkTool = Tool.extend({
             if (i > -1) {
                 return false;
             }
+        },
+
+        _skipStartPuntuation: function(text, node, offset) {
+            var i = indexOfRegExp(text, /\w/);
+            var ii = i;
+            if(i === -1) {
+                ii = text.length;
+            }
+
+            this.text = this.text.substring(ii);
+            this.start.node = node;
+            this.start.offset = ii + offset;
+
+            if (i > -1) {
+                return false;
+            }
         }
     });
 
@@ -427,6 +455,11 @@ var UnlinkTool = Tool.extend({
         while (i-- && !search.test(str[i])) {}
 
         return i;
+    }
+    function indexOfRegExp(str, search) {
+        var r = search.exec(str);
+
+        return (r && r.index) || -1;
     }
 
     var DomPos = function() {
@@ -439,10 +472,10 @@ var UnlinkTool = Tool.extend({
         };
     };
 
-    var LeftDomTextTraverser = Class.extend({
+    var DomTextTraverser = Class.extend({
         init: function (options) {
             this.node = options.node;
-            this.offset = options.offset || (dom.isDataNode(this.node) && this.node.length) || 0;
+            this.offset = options.offset === undefined ? (dom.isDataNode(this.node) && this.node.length) || 0 : options.offset;
             this.cancelAtNode = options.cancelAtNode || this.cancelAtNode || $.noop;
         },
 
@@ -461,29 +494,59 @@ var UnlinkTool = Tool.extend({
             if (node.nodeType === 3) {
                 var text = node.data;
                 if (offset !== undefined) {
-                    text = text.substring(0, offset);
+                    text = this.subText(text, offset);
                 }
                 this.cancel = (callback(text, node, offset) === false);
             }
             else {
-                console.log(this.cancel);
-                this.cancel = this.cancel || this.cancelAtNode(node.lastChild);
-                console.log(this.cancel);
-                return this._traverse(callback, node.lastChild);
+                var edgeNode = this.edgeNode(node);
+                this.cancel = this.cancel || this.cancelAtNode(edgeNode);
+                return this._traverse(callback, edgeNode);
             }
 
-            var previous = node.previousSibling;
-            if (!previous) {
+            var next = this.next(node);
+            if (!next) {
                 var parent = node.parentNode;
-                while (!previous && dom.isInline(parent)) {
-                    previous = parent.previousSibling;
+                while (!next && dom.isInline(parent)) {
+                    next = this.next(parent);
                     parent = parent.parentNode;
                 }
             }
-            console.log(this.cancel);
-            this.cancel = this.cancel || this.cancelAtNode(previous);
-            console.log(this.cancel);
-            this._traverse(callback, previous);
+            this.cancel = this.cancel || this.cancelAtNode(next);
+            this._traverse(callback, next);
+        },
+
+        edgeNode: function(node) {},
+        next: function(node) {},
+        subText: function(text, offset) {}
+
+    });
+
+    var LeftDomTextTraverser = DomTextTraverser.extend({
+        subText: function(text, splitIndex) {
+            return text.substring(0, splitIndex);
+        },
+
+        next: function(node) {
+            return node.previousSibling;
+        },
+
+        edgeNode: function(node) {
+            return node.lastChild;
+        }
+    });
+
+    var RightDomTextTraverser = DomTextTraverser.extend({
+        subText: function(text, splitIndex) {
+            return text.substring(splitIndex);
+        },
+
+        next: function(node) {
+            return node.nextSibling;
+        },
+
+        edgeNode: function(node) {
+            return node.firstChild;
         }
     });
 
@@ -495,7 +558,8 @@ extend(kendo.ui.editor, {
     AutoLinkCommand: AutoLinkCommand,
     UnlinkTool: UnlinkTool,
     DomTextLinkDetection: DomTextLinkDetection,
-    LeftDomTextTraverser: LeftDomTextTraverser
+    LeftDomTextTraverser: LeftDomTextTraverser,
+    RightDomTextTraverser: RightDomTextTraverser
 });
 
 registerTool("createLink", new Tool({ key: "K", ctrl: true, command: LinkCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Create Link"})}));

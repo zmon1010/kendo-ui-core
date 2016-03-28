@@ -3,6 +3,7 @@
     var detector;
     var DomTextLinkDetection = kendo.ui.editor.DomTextLinkDetection;
     var LeftDomTextTraverser = kendo.ui.editor.LeftDomTextTraverser;
+    var RightDomTextTraverser = kendo.ui.editor.RightDomTextTraverser;
 
     QUnit.module("left DOM text traverser");
 
@@ -65,7 +66,6 @@
             equal(offset, offsets.pop());
         });
 
-        debugger
         traverser.traverse(callback);
 
         equal(callback.callCount, 4);
@@ -102,6 +102,112 @@
         var callback = initMock(function(text, node, offset) {
             equal(text, texts.pop());
             equal(offset, offsets.pop());
+
+            return texts.length > 0;
+        });
+
+        traverser.traverse(callback);
+
+        equal(callback.callCount, 2);
+    });
+
+    QUnit.module("right DOM text traverser");
+
+    test("traverse from start of single text node", function() {
+        var content = addContent("content");
+        var traverser = new RightDomTextTraverser({
+            node: content.childNodes[0],
+            offset: 0
+        });
+
+        traverser.traverse(function (text, node, offset) {
+            equal(text, "content");
+        });
+    });
+
+    test("traverse from middle of text", function() {
+        var content = addContent("content");
+        var traverser = new RightDomTextTraverser({
+            node: content.childNodes[0],
+            offset: 3
+        });
+
+        traverser.traverse(function (text, node, offset) {
+            equal(text, "tent");
+            equal(offset, 3);
+        });
+    });
+
+    test("traverse over inline node", function() {
+        var content = addContent("con<strong>te</strong>nt");
+        var traverser = new RightDomTextTraverser({
+            node: content.childNodes[0],
+            offset: 1
+        });
+
+        var texts = ["on", "te", "nt"];
+        var offsets = [1, undefined, undefined];
+        var callback = initMock(function(text, node, offset) {
+            equal(text, texts.shift());
+            equal(offset, offsets.shift());
+        });
+
+        traverser.traverse(callback);
+
+        equal(callback.callCount, 3);
+    });
+
+    test("double inline formatting", function() {
+        var content = addContent("co<strong><em>n</em><em>te</em></strong>nt");
+        var traverser = new RightDomTextTraverser({
+            node: content.childNodes[0],
+            offset: 1
+        });
+
+        var texts = ["o", "n", "te", "nt"];
+        var offsets = [1, undefined, undefined, undefined];
+
+        var callback = initMock(function(text, node, offset) {
+            equal(text, texts.shift());
+            equal(offset, offsets.shift());
+        });
+
+        traverser.traverse(callback);
+
+        equal(callback.callCount, 4);
+    });
+
+    test("traverse from inline node", function () {
+        var content = addContent("<strong>con</strong>tent");
+        var traverser = new RightDomTextTraverser({
+            node: content.childNodes[0].firstChild,
+            offset: 1
+        });
+
+        var texts = ["on", "tent"];
+        var offsets = [1, undefined];
+        var callback = initMock(function(text, node, offset) {
+            equal(text, texts.shift());
+            equal(offset, offsets.shift());
+        });
+
+        traverser.traverse(callback);
+
+        equal(callback.callCount, 2);
+    });
+
+    test("cancel midway", function() {
+        var content = addContent("con<strong>te</strong>nt");
+        var traverser = new RightDomTextTraverser({
+            node: content.childNodes[0],
+            offset: 1
+        });
+
+        var texts = ["on", "te"];
+        var offsets = [1, undefined];
+        var callback = initMock(function(text, node, offset) {
+            equal(text, texts.shift());
+            equal(offset, offsets.shift());
 
             return texts.length > 0;
         });

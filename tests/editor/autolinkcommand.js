@@ -68,12 +68,35 @@
     });
 
     test("range is in next empty paragraph with formatting", function() {
-        var cmd = newAutoLinkCommandForText("<p>link http://telerik.com</p><p><strong>||</strong></p>")
-        debugger
+        __autoLinkContentTest(
+            "<p>link http://telerik.com</p><p><strong>||</strong></p>",
+            '<p>link <a href="http://telerik.com">http://telerik.com</a></p><p><strong></strong></p>');
+    });
+
+    test("do not autolink existing links", function() {
+        __autoLinkContentTest(
+            'link <a href="http://telerik.com/">http://telerik.com/</a>) ||',
+            'link <a href="http://telerik.com/">http://telerik.com/</a>) ');
+    });
+
+    test("skip puntuation at the beginning", function () {
+        __autoLinkContentTest(
+            'link (http://telerik.com/ ||',
+            'link (<a href="http://telerik.com/">http://telerik.com/</a> ');
+    });
+
+    test("the brackets test", function () {
+        __autoLinkContentTest(
+            'link (http://telerik.com/) ||',
+            'link (<a href="http://telerik.com/">http://telerik.com/</a>) ');
+    });
+
+    function __autoLinkContentTest(content, expected) {
+        var cmd = newAutoLinkCommandForText(content);
         cmd.exec();
 
-        equal(editor.value(), '<p>link <a href="http://telerik.com">http://telerik.com</a></p><p><strong></strong></p>');
-    });
+        equal(editor.value(), expected);
+    }
 
     function newAutoLinkCommandForText(text) {
         var range = createRangeFromText(editor, text);
