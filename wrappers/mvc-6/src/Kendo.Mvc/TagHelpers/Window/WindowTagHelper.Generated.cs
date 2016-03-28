@@ -24,6 +24,11 @@ namespace Kendo.Mvc.TagHelpers
         public bool? Iframe { get; set; }
 
         /// <summary>
+        /// Specifies height of the window.
+        /// </summary>
+        public double? Height { get; set; }
+
+        /// <summary>
         /// The maximum height (in pixels) that may be achieved by resizing the window.
         /// </summary>
         public double? MaxHeight { get; set; }
@@ -74,11 +79,6 @@ namespace Kendo.Mvc.TagHelpers
         public double? Width { get; set; }
 
         /// <summary>
-        /// Specifies height of the window.
-        /// </summary>
-        public double? Height { get; set; }
-
-        /// <summary>
         /// Enables or disables the ability for users to resize a Window.
         /// </summary>
         public bool? Resizable { get; set; }
@@ -101,6 +101,11 @@ namespace Kendo.Mvc.TagHelpers
             if (Iframe.HasValue)
             {
                 settings["iframe"] = Iframe;
+            }
+
+            if (Height.HasValue)
+            {
+                settings["height"] = Height;
             }
 
             if (MaxHeight.HasValue)
@@ -151,11 +156,6 @@ namespace Kendo.Mvc.TagHelpers
             if (Width.HasValue)
             {
                 settings["width"] = Width;
-            }
-
-            if (Height.HasValue)
-            {
-                settings["height"] = Height;
             }
 
             if (Resizable.HasValue)

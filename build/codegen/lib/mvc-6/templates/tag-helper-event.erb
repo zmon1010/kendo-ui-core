@@ -1,2 +1,6 @@
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, '\n\t\t/// ').html_encode()%>
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the <%= name %> event.</param>
         public string <%= tag_helper_event_name %> { get; set; }
 

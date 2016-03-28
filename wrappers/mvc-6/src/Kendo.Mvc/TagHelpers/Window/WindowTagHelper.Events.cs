@@ -5,26 +5,70 @@ namespace Kendo.Mvc.TagHelpers
 {
     public partial class WindowTagHelper
     {
+        /// <summary>
+        /// Triggered when a Window has finished its opening animation.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the activate event.</param>
         public string OnActivate { get; set; }
 
+        /// <summary>
+        /// Triggered when a Window is closed (by a user or through the close() method).
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the close event.</param>
         public string OnClose { get; set; }
 
+        /// <summary>
+        /// Triggered when a Window has finished its closing animation.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the deactivate event.</param>
         public string OnDeactivate { get; set; }
 
+        /// <summary>
+        /// Triggered when a Window has been moved by a user.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the dragend event.</param>
         public string OnDragend { get; set; }
 
+        /// <summary>
+        /// Triggered when the user starts to move the window.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the dragstart event.</param>
         public string OnDragstart { get; set; }
 
+        /// <summary>
+        /// Triggered when an AJAX request for content fails.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the error event.</param>
         public string OnError { get; set; }
 
+        /// <summary>
+        /// Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the maximize event.</param>
         public string OnMaximize { get; set; }
 
+        /// <summary>
+        /// Triggered when the window has been minimized by the user. Introduced in 2016.Q1.SP1
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the minimize event.</param>
         public string OnMinimize { get; set; }
 
+        /// <summary>
+        /// Triggered when a Window is opened (i.e. the open() method is called).
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the open event.</param>
         public string OnOpen { get; set; }
 
+        /// <summary>
+        /// Triggered when the content of a Window has finished loading via AJAX,\n\t\t/// when the window iframe has finished loading, or when the refresh button\n\t\t/// has been clicked on a window with static content.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the refresh event.</param>
         public string OnRefresh { get; set; }
 
+        /// <summary>
+        /// Triggered when a window has been resized by a user.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the resize event.</param>
         public string OnResize { get; set; }
 
 

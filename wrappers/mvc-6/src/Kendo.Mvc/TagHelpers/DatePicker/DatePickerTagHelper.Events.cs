@@ -5,10 +5,22 @@ namespace Kendo.Mvc.TagHelpers
 {
     public partial class DatePickerTagHelper
     {
+        /// <summary>
+        /// Fires when the selected date is changed
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
         public string OnChange { get; set; }
 
+        /// <summary>
+        /// Fires when the calendar is closed
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the close event.</param>
         public string OnClose { get; set; }
 
+        /// <summary>
+        /// Fires when the calendar is opened
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the open event.</param>
         public string OnOpen { get; set; }
 
 
