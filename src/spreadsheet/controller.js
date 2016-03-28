@@ -842,7 +842,8 @@
             this.clipboardElement.focus();
         },
 
-        insertNewline: function() {
+        insertNewline: function(e) {
+            e.preventDefault();
             this.editor.insertNewline();
         },
 

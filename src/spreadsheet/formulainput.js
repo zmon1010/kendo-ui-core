@@ -591,7 +591,8 @@
                 this._textContainer();
             }
 
-            this._span.html(element.html());
+            // add the BR so that a final newline will actually enlarge the element
+            this._span.html(element.html() + "<br/>");
 
             width = this._span.width() + this.options.scalePadding;
             height = this._span.height();
@@ -605,29 +606,13 @@
         },
 
         _value: function(value) {
-            // HACK needed for https://github.com/telerik/kendo/issues/4953 — a
-            // final newline is invisible so if you type "foo\n" (press
-            // Alt-Enter to get the newline), the cursor will still stay on the
-            // same line.  Curiously, this happens both in FF and Chrome — must
-            // be one of those "essential complexity" bugs.
-            //
-            // The only way I could convince browsers to display the newline and
-            // move the cursor on the empty line, is to add something after it
-            // (must be text; an empty HTML element won't help).  We use the
-            // wonderful Unicode 200B (ZERO-WIDTH-SPACE).  The downsides are:
-            //
-            // 1. we have to discard this character in the getter (below), so
-            // users won't be able to actually input this character.
-            //
-            // 2. if the cursor moves past it, it'll require pressing left arrow
-            // twice to move back.
-            value = value == null ? "" : value + "";
-            this.element.text(value.replace(/\u200b/g, "") + "\u200b");
+            this.element.text(value);
         },
 
         value: function(value) {
             if (value === undefined) {
-                return this.element.text().replace(/\u200b/g, "");
+                // jQuery's .text() discards the newlines for some reason
+                return this.element[0].innerText;
             }
 
             this._value(value);
@@ -657,10 +642,12 @@
             }
 
             if (!(/^=/.test(value))) {
-                // if an user deleted the initial =, we should discard
-                // any highlighting.  we still need to restore caret
-                // position thereafter.
-                if (this.element.html() != value) {
+                // if an user deleted the initial =, reset the text to
+                // discard any highlighting.  Only do that once
+                // (detect via _staticTokens or _highlightedRefs).
+                if (this._staticTokens.length || this._highlightedRefs.length) {
+                    this._staticTokens = [];
+                    this._highlightedRefs = [];
                     this.element.text(value);
                 }
 
@@ -668,6 +655,8 @@
                 if (this.popup) {
                     this.popup.close();
                 }
+
+                return; // avoid messing with the cursor position below
             } else {
                 tokens = kendo.spreadsheet.calc.tokenize(value, this.row(), this.col());
                 tokens.forEach(function(tok){
@@ -756,6 +745,46 @@
             this.popup = null;
 
             Widget.fn.destroy.call(this);
+        },
+
+        insertNewline: function() {
+            if (kendo.support.browser.mozilla) {
+                return this._firefox_insertNewline();
+            }
+            return this._chrome_insertNewline();
+        },
+
+        _firefox_insertNewline: function() {
+            var selection = window.getSelection();
+            var range = selection.getRangeAt(0);
+            range.deleteContents();
+            var br = document.createElement("br");
+            range.insertNode(br);
+            selection.removeAllRanges();
+            range = document.createRange();
+            range.setStartAfter(br);
+            range.setEndAfter(br);
+            selection.addRange(range);
+        },
+
+        _chrome_insertNewline: function() {
+            var newline;
+            var selection = window.getSelection();
+            var range = selection.getRangeAt(0);
+
+            if (this.getPos().end == this.value().length) {
+                newline = document.createTextNode("\n\n");
+            } else {
+                newline = document.createTextNode("\n");
+            }
+
+            range.deleteContents();
+            range.insertNode(newline);
+            range.setStartAfter(newline);
+            range.setEndAfter(newline);
+            range.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(range);
         }
     });
 
