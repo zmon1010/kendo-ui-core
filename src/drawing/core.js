@@ -136,6 +136,14 @@
             }
         },
 
+        suspendTracking: function() {
+            this._suspendedTracking = true;
+        },
+
+        resumeTracking: function() {
+            this._suspendedTracking = false;
+        },
+
         _resize: noop,
 
         _handler: function(event) {
@@ -143,7 +151,7 @@
 
             return function(e) {
                 var node = surface.eventTarget(e);
-                if (node) {
+                if (node && !surface._suspendedTracking) {
                     surface.trigger(event, {
                         element: node,
                         originalEvent: e,

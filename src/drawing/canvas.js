@@ -115,6 +115,28 @@
             return defer.promise();
         },
 
+        suspendTracking: function() {
+            this._suspendedTracking = true;
+            if (this._searchTree) {
+                this._searchTree.clear();
+                delete this._searchTree;
+            }
+        },
+
+        resumeTracking: function() {
+            this._suspendedTracking = false;
+            if (!this._searchTree) {
+                this._searchTree = new d.ShapesQuadTree();
+
+                var childNodes = this._root.childNodes;
+                var rootElements = [];
+                for (var idx = 0; idx < childNodes.length; idx++) {
+                    rootElements.push(childNodes[idx].srcElement);
+                }
+                this._searchTree.add(rootElements);
+            }
+        },
+
         _resize: function() {
             this._rootElement.width = this._size.width;
             this._rootElement.height = this._size.height;
@@ -137,8 +159,10 @@
         },
 
         _trackMouse: function(e) {
-            var point = this._surfacePoint(e);
-            var shape = this._searchTree.pointShape(point);
+            if (this._suspendedTracking){
+                return;
+            }
+            var shape = this.eventTarget(e);
 
             if (e.type != "click") {
                 var currentShape = this._currentShape;

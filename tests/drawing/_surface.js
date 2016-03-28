@@ -281,4 +281,45 @@ function baseSurfaceEventTests(name, TSurface) {
 
         surface.hideTooltip();
     });
+
+    // ------------------------------------------------------------
+
+    module("Surface Base Tests / " + name + " / tracking", {
+        setup: function() {
+            container = $("<div>").appendTo(QUnit.fixture);
+            createSurface();
+        },
+        teardown: function() {
+            surface.destroy();
+            container.remove();
+        }
+    });
+
+    test("does not trigger events if tracking is suspended", 0, function() {
+        surface.eventTarget = function() {
+            return { options: {}};
+        };
+
+        surface.bind("click", function() {
+            ok(false);
+        });
+
+        surface.suspendTracking();
+
+        surface.element.trigger("click");
+    });
+
+    test("triggers events if tracking is suspended and resumed", 1, function() {
+        surface.eventTarget = function() {
+            return { options: {}};
+        };
+
+        surface.bind("click", function() {
+            ok(true);
+        });
+        surface.suspendTracking();
+        surface.element.trigger("click");
+        surface.resumeTracking();
+        surface.element.trigger("click");
+    });
 }
