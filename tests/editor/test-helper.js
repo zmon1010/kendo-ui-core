@@ -154,7 +154,7 @@ function trackMethodCall(obj, methodName) {
 /* exported removeMocksIn */
 function removeMocksIn(obj) {
     for (var propName in obj) {
-        if (isMockFunc(obj[propName])) {
+        if (obj[propName] && isMockFunc(obj[propName])) {
             removeMock(obj, propName);
         }
     }
