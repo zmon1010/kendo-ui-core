@@ -8,7 +8,7 @@ namespace Kendo.Mvc.TagHelpers
 {
     public partial class <%= taghelper_class %>
     {
-% unique_options.map { |o| o.to_declaration  }.each do |ser|
+% unique_options.map { |o| o.to_full_declaration  }.each do |ser|
 % _erbout << ser
 %end
 

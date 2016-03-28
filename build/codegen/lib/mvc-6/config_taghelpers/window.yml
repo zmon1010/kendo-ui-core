@@ -1,3 +1,4 @@
 :options:
     - :name: resizable
       :type: Boolean
+      :description: Enables or disables the ability for users to resize a Window.

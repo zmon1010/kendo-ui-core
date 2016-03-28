@@ -8,26 +8,60 @@ namespace Kendo.Mvc.TagHelpers
 {
     public partial class DateTimePickerTagHelper
     {
+        /// <summary>
+        /// Specifies the culture info used by the widget.
+        /// </summary>
         public string Culture { get; set; }
 
+        /// <summary>
+        /// The template which renders the footer of the calendar. If false, the footer will not be rendered.
+        /// </summary>
         public string Footer { get; set; }
 
+        /// <summary>
+        /// Specifies the format, which is used to format the value of the DateTimePicker displayed in the input. The format also will be used to parse the input.
+        /// </summary>
         public string Format { get; set; }
 
+        /// <summary>
+        /// Specifies the interval, between values in the popup list, in minutes.
+        /// </summary>
         public double? Interval { get; set; }
 
+        /// <summary>
+        /// Specifies the maximum date, which the calendar can show.
+        /// </summary>
         public DateTime? Max { get; set; }
 
+        /// <summary>
+        /// Specifies the minimum date that the calendar can show.
+        /// </summary>
         public DateTime? Min { get; set; }
 
+        /// <summary>
+        /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.
+		///  Note that value of the format option is always used. The timeFormat value also will be used if defined.
+        /// </summary>
         public string[] ParseFormats { get; set; }
 
+        /// <summary>
+        /// Specifies the format, which is used to format the values in the time drop-down list.
+        /// </summary>
         public string TimeFormat { get; set; }
 
+        /// <summary>
+        /// Specifies the selected value.
+        /// </summary>
         public DateTime? Value { get; set; }
 
+        /// <summary>
+        /// Specifies the start view of the calendar.
+        /// </summary>
         public CalendarView? Start { get; set; }
 
+        /// <summary>
+        /// Specifies the navigation depth.
+        /// </summary>
         public CalendarView? Depth { get; set; }
 
 

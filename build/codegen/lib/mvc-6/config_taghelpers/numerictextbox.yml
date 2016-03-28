@@ -21,3 +21,4 @@
 
     - :name: enable
       :type: Boolean
+      :description: Enables or disables the textbox.

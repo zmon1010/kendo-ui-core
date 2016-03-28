@@ -2,10 +2,12 @@
     - :name: start
       :type: String
       :enum_type: CalendarView
+      :description: Specifies the start view of the calendar.
 
     - :name: depth
       :type: String
       :enum_type: CalendarView
+      :description: Specifies the navigation depth.
 
     - :name: parseFormats
       :merge: true

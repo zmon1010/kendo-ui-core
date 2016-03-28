@@ -6,6 +6,7 @@ module CodeGen::MVC6::Wrappers::Options
         include CodeGen::MVC6::Wrappers::Options
 
         DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-declaration.erb"), 0, '%<>')
+        FULL_DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-full-declaration.erb"), 0, '%<>')
         ENUM = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-enum.erb"), 0, '%<>')
         FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-fluent.erb"), 0, '%<>')
         SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-serialization.erb"), 0, '%<>')
@@ -41,6 +42,10 @@ module CodeGen::MVC6::Wrappers::Options
 
         def to_declaration
             DECLARATION.result(binding)
+        end
+
+        def to_full_declaration
+            FULL_DECLARATION.result(binding)
         end
 
         def to_fluent
