@@ -660,7 +660,9 @@
                 // if an user deleted the initial =, we should discard
                 // any highlighting.  we still need to restore caret
                 // position thereafter.
-                this._value(value);
+                if (this.element.html() != value) {
+                    this.element.text(value);
+                }
 
                 // also make sure the completion popup goes away
                 if (this.popup) {
