@@ -1193,6 +1193,7 @@ var __meta__ = { // jshint ignore:line
 
             xhr.open("POST", url, true);
             xhr.withCredentials = this.upload.options.async.withCredentials;
+            xhr.setRequestHeader("Accept", "*/*; q=0.5; application/json");
             xhr.send(data);
         },
 

@@ -1097,6 +1097,7 @@ test("files selected prior to initialization issue postFormData", function(){
 // ------------------------------------------------------------
 (function() {
     var xhr;
+    var headers = {};
 
     function stubXHR(options) {
         var uploadInstance = createUpload(options);
@@ -1105,6 +1106,9 @@ test("files selected prior to initialization issue postFormData", function(){
             xhr = {
                 append: $.noop,
                 addEventListener: $.noop,
+                setRequestHeader: function(name, value) {
+                    headers[name] = value;
+                },
                 upload: {
                     addEventListener: $.noop
                 },
@@ -1140,6 +1144,21 @@ test("files selected prior to initialization issue postFormData", function(){
 
         ok(!xhr.withCredentials);
     });
+
+    // ------------------------------------------------------------
+    (function() {
+        module("Upload / FormDataUpload / Headers", {
+            setup: moduleSetup,
+            teardown: moduleTeardown
+        });
+
+        test("Sets Accept header", function() {
+            stubXHR();
+            simulateFileSelect();
+
+            equal(headers["Accept"], "*/*; q=0.5; application/json");
+        });
+    })();
 })();
 
 })();
